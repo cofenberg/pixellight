@@ -228,6 +228,17 @@ cmaketools_debug_variable(CMAKETOOLS_DIR)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKETOOLS_DIR}/Modules)
 cmaketools_debug_variable(CMAKE_MODULE_PATH)
 
+# Linux standalone: Set Linux RPATH to "$ORIGIN" so shared libraries are first searched
+# within the directory of the executable (see http://www.cmake.org/Wiki/CMake_RPATH_handling)
+# Type e.g. "objdump -x libPLCore.so" and have a look at "Dynamic Section"->"RPATH",
+# should be "$ORIGIN" when this option is enabled
+if (CMAKETOOLS_SET_RPATH_TO_ORIGIN)
+	SET(CMAKE_SKIP_BUILD_RPATH				TRUE)		# TRUE for standalone
+	SET(CMAKE_BUILD_WITH_INSTALL_RPATH		ON) 		# ON for standalone
+	SET(CMAKE_INSTALL_RPATH					"$ORIGIN")	# NOT "." for the same directory, the executable is in!
+	SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH	FALSE)
+endif()
+
 # Get host system
 set(CMAKETOOLS_HOST_SYSTEM "")
 set(CMAKETOOLS_HOST_SYSTEM_WIN32)

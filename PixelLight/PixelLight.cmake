@@ -59,6 +59,19 @@ endif()
 # Use system libraries or build externals?
 set(CMAKETOOLS_USE_SYSTEM_LIBS "0" CACHE BOOL "Use system libraries or build own external libraries?")
 
+# The following is Linux only
+if(LINUX)
+	# Linux standalone: Set Linux RPATH to "$ORIGIN" so shared libraries are first searched
+	# within the directory of the executable (see http://www.cmake.org/Wiki/CMake_RPATH_handling)
+	# Type e.g. "objdump -x libPLCore.so" and have a look at "Dynamic Section"->"RPATH",
+	# should be "$ORIGIN" when this option is enabled
+	if(CMAKETOOLS_SET_RPATH_TO_ORIGIN)
+		set(CMAKETOOLS_SET_RPATH_TO_ORIGIN ${CMAKETOOLS_SET_RPATH_TO_ORIGIN} CACHE BOOL "Set \"RPATH\" to \"$ORIGIN\" so shared libraries are first searched within the directory of the executable?")
+	else()
+		set(CMAKETOOLS_SET_RPATH_TO_ORIGIN "0" CACHE BOOL "Set \"RPATH\" to \"$ORIGIN\" so shared libraries are first searched within the directory of the executable?")
+	endif()
+endif()
+
 # Repository URL (where to download the external pre-built packages from)
 set(PL_EXTERNAL_REPOSITORY "pixellight.sourceforge.net/externals" CACHE STRING "External repository")
 

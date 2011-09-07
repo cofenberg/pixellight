@@ -1,3 +1,9 @@
+>> 07.09.2011
+[CO]
+- Linux only: Added "CMAKETOOLS_SET_RPATH_TO_ORIGIN"-option, if this is on, "RPATH" is set to "$ORIGIN" so shared libraries are first searched within the directory of the executable
+
+
+
 >> 31.08.2011
 [CO]
 - Added CMake build triggers for "PLProject", "PLUpgrade" and "PLInstall" (those are e.g. not required when building for a mobile target platform)

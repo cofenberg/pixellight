@@ -10,6 +10,7 @@ set(CMAKETOOLS_CONFIG_NO_INLINE_ASM 1)
 
 # Internal options
 #set(CMAKETOOLS_TARGET_ARCH	${ARMEABI_NDK_NAME})	# Set at the end of this file, should be "ARM_TARGET=armeabi" for the Android emulator and "ARM_TARGET=armeabi-v7a" for an Android device
+set(CMAKETOOLS_SET_RPATH_TO_ORIGIN		1)	# Set "RPATH" to "$ORIGIN" so shared libraries are first searched within the directory of the executable
 set(PL_NATIVE_PLPROJECT					0)
 set(CMAKETOOLS_MINIMAL					1)
 set(PL_MOBILE							1)
