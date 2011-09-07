@@ -41,7 +41,7 @@ namespace PLCore {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class XmlElement;
-
+class ConfigGroup;
 
 
 //[-------------------------------------------------------]
