@@ -23,10 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#ifdef ANDROID
-	#include <inttypes.h>	// Required for "int32_t" within "android/rect.h" included by "android/native_window.h"
-	#include <android/native_window.h>
-#endif
 #include <PLCore/Log/Log.h>
 #include "PLRendererOpenGLES2/Context.h"
 

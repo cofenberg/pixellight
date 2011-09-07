@@ -178,7 +178,7 @@ if(WIN32)
 		src/System/MutexWindows.cpp
 		src/System/SemaphoreWindows.cpp
 	)
-else()
+elseif(LINUX)
 	##################################################
 	## Linux
 	##################################################
