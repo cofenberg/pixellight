@@ -49,5 +49,8 @@
 	#define PLINPUT_RTTI_EXPORT 0
 #endif
 
+// To create template instance
+#define PLINPUT_TEMPLATE_INSTANCE PLINPUT_TEMPLATE template class PLINPUT_API
+
 
 #endif // __PLINPUT_WINDOWS_H__

@@ -146,6 +146,9 @@
 	#define PLCORE_RTTI_EXPORT 0
 #endif
 
+// To create template instance
+#define PLCORE_TEMPLATE_INSTANCE PLCORE_TEMPLATE template class
+
 #if defined(HAVE_VISIBILITY_ATTR) && !defined(PLCORE_STATIC)
 		// To import/export class templates
 		#define PLCORE_TMPL __attribute__ ((visibility("default")))

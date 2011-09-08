@@ -266,15 +266,15 @@ class Localization : public Singleton<Localization> {
 
 
 //[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+PLCORE_TEMPLATE_INSTANCE Singleton<Localization>;
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
-
-
-//[-------------------------------------------------------]
-//[ Template instance                                     ]
-//[-------------------------------------------------------]
-PLCORE_TEMPLATE template class PLCore::Singleton<PLCore::Localization>;
 
 
 #endif // __PLCORE_LOCALIZATION_H__

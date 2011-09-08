@@ -51,6 +51,9 @@
 	#define PLINPUT_TEMPLATE extern
 #endif
 
+// To create template instance
+#define PLINPUT_TEMPLATE_INSTANCE PLINPUT_TEMPLATE template class
+
 // To export RTTI elements - unlike in MSVC for Microsoft Windows, this in here must always be 1 or the RTTI may not work correctly
 #define PLINPUT_RTTI_EXPORT 1
 

@@ -128,7 +128,7 @@ class Bluetooth : public PLCore::Singleton<Bluetooth> {
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
 namespace PLCore {
-	PLINPUT_TEMPLATE template class Singleton<PLInput::Bluetooth>;
+	PLINPUT_TEMPLATE_INSTANCE Singleton<PLInput::Bluetooth>;
 }
 
 

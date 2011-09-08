@@ -154,6 +154,9 @@ PL_WARNING_DISABLE(4481) // "nonstandard extension used: override specifier 'ove
 // To export/import class templates
 #define PLCORE_TMPL
 
+// To create template instance
+#define PLCORE_TEMPLATE_INSTANCE PLCORE_TEMPLATE template class PLCORE_API
+
 // To export plugin functions
 #ifdef PLCORE_STATIC
 	#define PLCORE_PLUGIN_API

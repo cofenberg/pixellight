@@ -49,12 +49,6 @@ class RawInputDevice;
 
 
 //[-------------------------------------------------------]
-//[ Template instance                                     ]
-//[-------------------------------------------------------]
-PLINPUT_TEMPLATE template class PLINPUT_API PLCore::Singleton<RawInput>;
-
-
-//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
@@ -194,6 +188,14 @@ class RawInput : public PLCore::Singleton<RawInput> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLInput
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+namespace PLCore {
+	PLINPUT_TEMPLATE_INSTANCE Singleton<PLInput::RawInput>;
+}
 
 
 #endif // __PLINPUT_RAWINPUT_H__

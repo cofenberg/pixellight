@@ -64,7 +64,7 @@ namespace PLCore {
 *      namespace PLCore {
 *        class System;
 *      }
-*      PLCore_TEMPLATE template class PLCORE_API Singleton<System>;
+*      PLCORE_TEMPLATE_INSTANCE Singleton<System>;
 *
 *  @note
 *    - As the class same indicates, this is an implementation of the singleton design pattern

@@ -512,7 +512,7 @@ class System : public Singleton<System> {
 //[-------------------------------------------------------]
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
-PLCORE_TEMPLATE template class Singleton<System>;
+PLCORE_TEMPLATE_INSTANCE Singleton<System>;
 
 
 //[-------------------------------------------------------]
