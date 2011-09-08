@@ -50,7 +50,7 @@ namespace PLCore {
 *    Implementation for up to 16 parameters without a return value
 */
 template <typename T0 = NullType, typename T1 = NullType, typename T2 = NullType, typename T3 = NullType, typename T4 = NullType, typename T5 = NullType, typename T6 = NullType, typename T7 = NullType, typename T8 = NullType, typename T9 = NullType, typename T10 = NullType, typename T11 = NullType, typename T12 = NullType, typename T13 = NullType, typename T14 = NullType, typename T15 = NullType>
-class Event : public DynEvent {
+class PLCORE_TMPL Event : public DynEvent {
 	public:
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
@@ -185,7 +185,7 @@ class Event : public DynEvent {
 *    Implementation for 15 parameters without a return value
 */
 template <typename T0, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13, typename T14>
-class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : public DynEvent {
+class PLCORE_TMPL Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : public DynEvent {
 	public:
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
@@ -318,7 +318,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14> : p
 *    Implementation for 14 parameters without a return value
 */
 template <typename T0, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12, typename T13>
-class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public DynEvent {
+class PLCORE_TMPL Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public DynEvent {
 	public:
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
@@ -449,7 +449,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : public
 *    Implementation for 13 parameters without a return value
 */
 template <typename T0, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11, typename T12>
-class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynEvent {
+class PLCORE_TMPL Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynEvent {
 	public:
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
@@ -578,7 +578,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public DynE
 *    Implementation for 12 parameters without a return value
 */
 template <typename T0, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10, typename T11>
-class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent {
+class PLCORE_TMPL Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent {
 	public:
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
@@ -703,7 +703,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public DynEvent 
 *    Implementation for 11 parameters without a return value
 */
 template <typename T0, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9, typename T10>
-class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
+class PLCORE_TMPL Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 	public:
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
@@ -826,7 +826,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public DynEvent {
 *    Implementation for 10 parameters without a return value
 */
 template <typename T0, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8, typename T9>
-class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
+class PLCORE_TMPL Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 	public:
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
@@ -947,7 +947,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public DynEvent {
 *    Implementation for 9 parameters without a return value
 */
 template <typename T0, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7, typename T8>
-class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
+class PLCORE_TMPL Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 	public:
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
@@ -1066,7 +1066,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7, T8> : public DynEvent {
 *    Implementation for 8 parameters without a return value
 */
 template <typename T0, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6, typename T7>
-class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
+class PLCORE_TMPL Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 	public:
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
@@ -1181,7 +1181,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6, T7> : public DynEvent {
 *    Implementation for 7 parameters without a return value
 */
 template <typename T0, typename T1, typename T2, typename T3, typename T4, typename T5, typename T6>
-class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
+class PLCORE_TMPL Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 	public:
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
@@ -1294,7 +1294,7 @@ class Event<T0, T1, T2, T3, T4, T5, T6> : public DynEvent {
 *    Implementation for 6 parameters without a return value
 */
 template <typename T0, typename T1, typename T2, typename T3, typename T4, typename T5>
-class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
+class PLCORE_TMPL Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 	public:
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
@@ -1405,7 +1405,7 @@ class Event<T0, T1, T2, T3, T4, T5> : public DynEvent {
 *    Implementation for 5 parameters without a return value
 */
 template <typename T0, typename T1, typename T2, typename T3, typename T4>
-class Event<T0, T1, T2, T3, T4> : public DynEvent {
+class PLCORE_TMPL Event<T0, T1, T2, T3, T4> : public DynEvent {
 	public:
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
@@ -1514,7 +1514,7 @@ class Event<T0, T1, T2, T3, T4> : public DynEvent {
 *    Implementation for 4 parameters without a return value
 */
 template <typename T0, typename T1, typename T2, typename T3>
-class Event<T0, T1, T2, T3> : public DynEvent {
+class PLCORE_TMPL Event<T0, T1, T2, T3> : public DynEvent {
 	public:
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
@@ -1619,7 +1619,7 @@ class Event<T0, T1, T2, T3> : public DynEvent {
 *    Implementation for 3 parameters without a return value
 */
 template <typename T0, typename T1, typename T2>
-class Event<T0, T1, T2> : public DynEvent {
+class PLCORE_TMPL Event<T0, T1, T2> : public DynEvent {
 	public:
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
@@ -1722,7 +1722,7 @@ class Event<T0, T1, T2> : public DynEvent {
 *    Implementation for 2 parameters without a return value
 */
 template <typename T0, typename T1>
-class Event<T0, T1> : public DynEvent {
+class PLCORE_TMPL Event<T0, T1> : public DynEvent {
 	public:
 		typedef typename Type<T0> ::_Type _T0;
 		typedef typename Type<T1> ::_Type _T1;
@@ -1823,7 +1823,7 @@ class Event<T0, T1> : public DynEvent {
 *    Implementation for 1 parameter without a return value
 */
 template <typename T0>
-class Event<T0> : public DynEvent {
+class PLCORE_TMPL Event<T0> : public DynEvent {
 	public:
 		typedef typename Type<T0>::_Type _T0;
 
@@ -1924,7 +1924,7 @@ class Event<T0> : public DynEvent {
 *    Implementation for 0 parameters without a return value
 */
 template <>
-class Event<> : public DynEvent {
+class PLCORE_TMPL Event<> : public DynEvent {
 	public:
 		typedef EventHandler<>	TypeHandler;
 		typedef Signature<void>	TypeSignature;

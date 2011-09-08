@@ -128,7 +128,7 @@ class HID : public PLCore::Singleton<HID> {
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
 namespace PLCore {
-	PLINPUT_TEMPLATE template class PLINPUT_API Singleton<PLInput::HID>;
+	PLINPUT_TEMPLATE template class Singleton<PLInput::HID>;
 }
 
 

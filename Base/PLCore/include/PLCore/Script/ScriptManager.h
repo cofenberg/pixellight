@@ -231,7 +231,7 @@ class ScriptManager : public Singleton<ScriptManager> {
 //[-------------------------------------------------------]
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
-PLCORE_TEMPLATE template class PLCORE_API PLCore::Singleton<PLCore::ScriptManager>;
+PLCORE_TEMPLATE template class PLCore::Singleton<PLCore::ScriptManager>;
 
 
 #endif // __PLCORE_SCRIPTMANAGER_H__

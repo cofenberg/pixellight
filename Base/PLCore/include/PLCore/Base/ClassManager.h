@@ -397,7 +397,7 @@ class ClassManager : public Singleton<ClassManager> {
 //[-------------------------------------------------------]
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
-PLCORE_TEMPLATE template class PLCORE_API PLCore::Singleton<PLCore::ClassManager>;
+PLCORE_TEMPLATE template class PLCore::Singleton<PLCore::ClassManager>;
 
 
 #endif // __PLCORE_CLASSMANAGER_H__

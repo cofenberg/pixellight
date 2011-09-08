@@ -32,6 +32,7 @@ set(LINUX_COMPILE_DEFS
 	LINUX								# Linux system
 	PIC									# Position-independent code
 	_REENTRANT							# Reentrant code
+	HAVE_VISIBILITY_ATTR				# Use visibility attribute (http://gcc.gnu.org/wiki/Visibility)
 )
 
 if((NOT CMAKETOOLS_TARGET_BITSIZE MATCHES 32) AND (CMAKE_SIZEOF_VOID_P MATCHES 8))
@@ -83,6 +84,8 @@ set(LINUX_COMPILE_FLAGS
 	-fno-rtti							# No C++ RTTI
 	-fno-exceptions						# No C++ exception handling
 	-pipe								# Use Pipes
+	-fvisibility=hidden					# In order to reduce the binary size, don't put private symbols into the resulting binary (http://gcc.gnu.org/wiki/Visibility)
+	-fvisibility-inlines-hidden			# In order to reduce the binary size, don't put private symbols into the resulting binary (http://gcc.gnu.org/wiki/Visibility)
 	# The following flag usage is basing on information from http://developer.amd.com/documentation/articles/pages/Compiler-FlagDrivenPerformanceGains.aspx
 	-ffast-math							# Perform floating point transformations that may break IEEE/ISO rules regarding floating point arithmetic
 	# Some dialect-options of gcc: http://gcc.gnu.org/onlinedocs/gcc/C_002b_002b-Dialect-Options.html
@@ -131,4 +134,5 @@ endif()
 set(LINUX_LINKER_FLAGS
 	${LINUX_LINKER_FLAGS}
 	-Wl,--as-needed						# Quote from http://www.gentoo.org/proj/en/qa/asneeded.xml : "The flag tells the linker to link in the produced binary only the libraries containing symbols actually used by the binary itself"
+	-Wl,--no-undefined					# Show undefined symbols as linker errors, else we only notice undefined symbols when using the shared library at runtime
 )

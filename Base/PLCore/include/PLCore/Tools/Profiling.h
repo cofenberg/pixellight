@@ -431,7 +431,7 @@ class Profiling : public ElementManager<ProfileGroup>, public Singleton<Profilin
 //[-------------------------------------------------------]
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
-PLCORE_TEMPLATE template class PLCORE_API Singleton<Profiling>;
+PLCORE_TEMPLATE template class Singleton<Profiling>;
 
 
 //[-------------------------------------------------------]

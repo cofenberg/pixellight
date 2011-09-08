@@ -484,7 +484,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 //[-------------------------------------------------------]
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
-PLCORE_TEMPLATE template class PLCORE_API PLCore::Singleton<PLCore::LoadableManager>;
+PLCORE_TEMPLATE template class PLCore::Singleton<PLCore::LoadableManager>;
 
 
 #endif // __PLCORE_LOADABLEMANAGER_H__

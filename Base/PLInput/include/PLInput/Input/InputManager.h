@@ -308,7 +308,7 @@ class InputManager : public PLCore::Singleton<InputManager> {
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
 namespace PLCore {
-	PLINPUT_TEMPLATE template class PLINPUT_API Singleton<PLInput::InputManager>;
+	PLINPUT_TEMPLATE template class Singleton<PLInput::InputManager>;
 }
 
 

@@ -274,7 +274,7 @@ class Localization : public Singleton<Localization> {
 //[-------------------------------------------------------]
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
-PLCORE_TEMPLATE template class PLCORE_API PLCore::Singleton<PLCore::Localization>;
+PLCORE_TEMPLATE template class PLCore::Singleton<PLCore::Localization>;
 
 
 #endif // __PLCORE_LOCALIZATION_H__

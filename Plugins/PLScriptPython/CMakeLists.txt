@@ -35,6 +35,16 @@ add_libs(
 	PLCore
 	${PYTHON_LIBRARIES}
 )
+if(LINUX)
+	##################################################
+	## Linux
+	##################################################
+	add_libs(
+		dl
+		util
+		pthread
+	)
+endif()
 
 ##################################################
 ## Preprocessor definitions

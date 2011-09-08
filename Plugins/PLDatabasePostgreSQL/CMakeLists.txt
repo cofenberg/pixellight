@@ -38,6 +38,14 @@ add_libs(
 	PLDatabase
 	${POSTGRESQL_LIBRARIES}
 )
+if(LINUX)
+	##################################################
+	## Linux
+	##################################################
+	add_libs(
+		pthread
+	)
+endif()
 
 ##################################################
 ## Preprocessor definitions

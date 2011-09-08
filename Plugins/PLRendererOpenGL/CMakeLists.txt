@@ -121,6 +121,7 @@ elseif(LINUX)
 	## Linux
 	##################################################
 	add_libs(
+		${LINUX_X11_LIBS}
 		GL
 		GLU
 		Xxf86vm

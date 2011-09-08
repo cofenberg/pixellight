@@ -87,6 +87,13 @@ elseif(ANDROID)
 	add_libs(
 		android	# Required for "ANativeWindow_setBuffersGeometry()"
 	)
+elseif(LINUX)
+	##################################################
+	## Linux
+	##################################################
+	add_libs(
+		${LINUX_X11_LIBS}
+	)
 endif()
 
 ##################################################

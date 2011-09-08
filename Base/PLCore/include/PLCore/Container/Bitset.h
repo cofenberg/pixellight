@@ -49,7 +49,7 @@ namespace PLCore {
 *    many bits will be put together in variables to save memory. The bit set is
 *    resized automatically if required.
 */
-class Bitset : public Container<bool> {
+class PLCORE_API Bitset : public Container<bool> {
 
 
 	//[-------------------------------------------------------]

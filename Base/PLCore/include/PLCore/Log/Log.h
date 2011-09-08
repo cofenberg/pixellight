@@ -394,7 +394,7 @@ class Log : public Singleton<Log> {
 //[-------------------------------------------------------]
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
-PLCORE_TEMPLATE template class PLCORE_API PLCore::Singleton<PLCore::Log>;
+PLCORE_TEMPLATE template class PLCore::Singleton<PLCore::Log>;
 
 
 #endif // __PLCORE_LOG_H__

@@ -491,7 +491,7 @@ class Timing : public Singleton<Timing> {
 //[-------------------------------------------------------]
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
-PLCORE_TEMPLATE template class PLCORE_API Singleton<Timing>;
+PLCORE_TEMPLATE template class Singleton<Timing>;
 
 
 //[-------------------------------------------------------]
