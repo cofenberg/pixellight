@@ -67,7 +67,7 @@ class PLCORE_API Bitset : public Container<bool> {
 		*  @param[in] bInit
 		*    Initialize new elements by setting them to null?
 		*/
-		PLCORE_API Bitset(uint32 nMaxNumOfElements = 0, bool bAdded = true, bool bInit = false);
+		Bitset(uint32 nMaxNumOfElements = 0, bool bAdded = true, bool bInit = false);
 
 		/**
 		*  @brief
@@ -80,7 +80,7 @@ class PLCORE_API Bitset : public Container<bool> {
 		*  @param[in] nCount
 		*    Number of elements to copy, if 0 copy all elements of lstSource behind nStart
 		*/
-		PLCORE_API Bitset(const Bitset &lstSource, uint32 nStart = 0, uint32 nCount = 0);
+		Bitset(const Bitset &lstSource, uint32 nStart = 0, uint32 nCount = 0);
 
 		/**
 		*  @brief
@@ -93,13 +93,13 @@ class PLCORE_API Bitset : public Container<bool> {
 		*  @param[in] nCount
 		*    Number of elements to copy, if 0 copy all elements of lstSource behind nStart
 		*/
-		PLCORE_API Bitset(const Container<bool> &lstSource, uint32 nStart = 0, uint32 nCount = 0);
+		Bitset(const Container<bool> &lstSource, uint32 nStart = 0, uint32 nCount = 0);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API virtual ~Bitset();
+		virtual ~Bitset();
 
 		/**
 		*  @brief
@@ -136,7 +136,7 @@ class PLCORE_API Bitset : public Container<bool> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool Resize(uint32 nMaxNumOfElements, bool bAdded = true, bool bInit = false);
+		bool Resize(uint32 nMaxNumOfElements, bool bAdded = true, bool bInit = false);
 
 		/**
 		*  @brief
@@ -180,7 +180,7 @@ class PLCORE_API Bitset : public Container<bool> {
 		*  @brief
 		*    Clears all bits to 0
 		*/
-		PLCORE_API void ClearAll();
+		void ClearAll();
 
 		/**
 		*  @brief
@@ -198,7 +198,7 @@ class PLCORE_API Bitset : public Container<bool> {
 		*  @brief
 		*    Sets all bits to 1
 		*/
-		PLCORE_API void SetAll();
+		void SetAll();
 
 		/**
 		*  @brief
@@ -237,7 +237,7 @@ class PLCORE_API Bitset : public Container<bool> {
 		*  @return
 		*    The number of set bits (value = 'true')
 		*/
-		PLCORE_API uint32 GetNumOfSetBits() const;
+		uint32 GetNumOfSetBits() const;
 
 		/**
 		*  @brief
@@ -278,17 +278,17 @@ class PLCORE_API Bitset : public Container<bool> {
 		uint32 *m_pnIntegers;			/**< Bits data, can be a null pointer */
 		uint32  m_nResizeCount;			/**< Automatic resize count */
 		// Static data
-		static PLCORE_API bool m_bBit;	/**< Last returned bit */
+		static bool m_bBit;	/**< Last returned bit */
 
 
 	//[-------------------------------------------------------]
 	//[ Public virtual Iterable functions                     ]
 	//[-------------------------------------------------------]
 	public:
-		PLCORE_API virtual Iterator<bool> GetIterator(uint32 nIndex = 0) const override;
-		PLCORE_API virtual ConstIterator<bool> GetConstIterator(uint32 nIndex = 0) const override;
-		PLCORE_API virtual Iterator<bool> GetEndIterator() const override;
-		PLCORE_API virtual ConstIterator<bool> GetConstEndIterator() const override;
+		virtual Iterator<bool> GetIterator(uint32 nIndex = 0) const override;
+		virtual ConstIterator<bool> GetConstIterator(uint32 nIndex = 0) const override;
+		virtual Iterator<bool> GetEndIterator() const override;
+		virtual ConstIterator<bool> GetConstEndIterator() const override;
 
 
 	//[-------------------------------------------------------]
@@ -299,29 +299,29 @@ class PLCORE_API Bitset : public Container<bool> {
 		inline virtual uint32 GetNumOfElements() const;
 		inline virtual uint32 GetElementSize() const;
 		inline virtual uint32 GetSize() const;
-		PLCORE_API virtual void Clear() override;
+		virtual void Clear() override;
 		inline virtual bool IsElement(const bool &Element) const;
 		inline virtual int GetIndex(const bool &Element) const;
 		inline virtual bool &Get(uint32 nIndex) const;
 		inline virtual bool &operator [](uint32 nIndex) const;
 		inline virtual bool Replace(const bool &Element1, const bool &Element2);
 		inline virtual bool ReplaceAtIndex(uint32 nIndex, const bool &Element);
-		PLCORE_API virtual bool &Add() override;
-		PLCORE_API virtual bool &Add(const bool &Element) override;
-		PLCORE_API virtual uint32 Add(const bool *pElements, uint32 nCount) override;
+		virtual bool &Add() override;
+		virtual bool &Add(const bool &Element) override;
+		virtual uint32 Add(const bool *pElements, uint32 nCount) override;
 		inline virtual Container<bool> &operator +=(const bool &Element);
-		PLCORE_API virtual bool Add(const Container<bool> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) override;
+		virtual bool Add(const Container<bool> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) override;
 		inline virtual Container<bool> &operator +=(const Container<bool> &lstContainer);
-		PLCORE_API virtual bool &AddAtIndex(int nIndex) override;
-		PLCORE_API virtual bool AddAtIndex(const bool &Element, int nIndex) override;
+		virtual bool &AddAtIndex(int nIndex) override;
+		virtual bool AddAtIndex(const bool &Element, int nIndex) override;
 		inline virtual bool Remove(const bool &Element);
-		PLCORE_API virtual bool RemoveAtIndex(uint32 nElement) override;
+		virtual bool RemoveAtIndex(uint32 nElement) override;
 		inline virtual Container<bool> &operator -=(const bool &Element);
-		PLCORE_API virtual bool Remove(const Container<bool> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) override;
+		virtual bool Remove(const Container<bool> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) override;
 		inline virtual Container<bool> &operator -=(const Container<bool> &lstContainer);
-		PLCORE_API virtual bool Copy(const Container<bool> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) override;
+		virtual bool Copy(const Container<bool> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) override;
 		inline virtual Container<bool> &operator =(const Container<bool> &lstContainer);
-		PLCORE_API virtual bool Compare(const Container<bool> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) const override;
+		virtual bool Compare(const Container<bool> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) const override;
 		inline virtual bool operator ==(const Container<bool> &lstContainer) const;
 		inline virtual bool operator !=(const Container<bool> &lstContainer) const;
 
