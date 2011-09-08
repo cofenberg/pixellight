@@ -9,6 +9,11 @@
   -> Changed e.g. "PLCORE_TEMPLATE template class PLCORE_API PLCore::Singleton<PLCore::ClassManager>;" into "PLCORE_TEMPLATE template class PLCore::Singleton<PLCore::ClassManager>;"
      so that "__attribute__ ((visibility("default")))" isn't added twice.
   -> "libPLScene.so" was previously 8.6 MB, by using "-fvisibility=hidden"&"-fvisibility-inlines-hidden" it's now 6.6 MB. Still bigger as the 1.3 MB MS Windows 32 Bit version, but a progress.
+- Linux: Added the compiler flags "-ffunction-sections" & -fdata-sections and the linker flag "--gc-sections" for a slightly (really, just a few bytes/Kb) reduced binary size
+  (http://gcc.gnu.org/onlinedocs/gcc-4.0.4/gcc/Optimize-Options.html)
+- Linux: Added the linker flag "--strip-all" to reduce the binary size. This option *really* helps a lot to reduce the binary size, "libPLScene.so" is now 4.5 MB (the Android version, compiled
+  for "armeabi" is 3.1 MB). Still bigger as the MS Windows version, but I think there's a visible improvement. *g*
+-> I only tested those changes with the GCC and Android toolchain, not Clang - if something isn't supported by Clang, we have to update the settings
 
 
 
