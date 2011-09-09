@@ -15,6 +15,7 @@ set(LINUX_COMPILE_DEFS
 	__STDC_INT64__						# We need "int64_t" and "uint64_t", so force this preprocessor definition (used in "PLCore/PLCoreLinux.h")
 	__STDINT_LIMITS						# We need "UINTMAX_MAX" (used in "PLCore/PLCoreLinux.cpp")
 	ANDROID								# We are using the ANDROID NDK toolchain
+	HAVE_VISIBILITY_ATTR				# Use visibility attribute (http://gcc.gnu.org/wiki/Visibility)
 )
 
 
@@ -24,6 +25,8 @@ set(LINUX_COMPILE_DEFS
 
 set(LINUX_COMPILE_FLAGS
 	${LINUX_COMPILE_FLAGS}
+	-fvisibility=hidden					# In order to reduce the binary size, don't put private symbols into the resulting binary (http://gcc.gnu.org/wiki/Visibility)
+	-fvisibility-inlines-hidden			# In order to reduce the binary size, don't put private symbols into the resulting binary (http://gcc.gnu.org/wiki/Visibility)
 	-Wstrict-null-sentinel				# Warn also about the use of an uncasted NULL as sentinel
 	-nostdlib							# Don't use the standard C library of the host system (Android uses a stripped down version of libc, called "bionic")
 	-nodefaultlibs						# Do not use the standard system libraries when linking
@@ -32,6 +35,7 @@ set(LINUX_COMPILE_FLAGS
 if(NOT CMAKE_BUILD_TYPE MATCHES Debug)
 	set(LINUX_COMPILE_FLAGS
 		${LINUX_COMPILE_FLAGS}
+		-Os								# Optimize for binary size, we're targeting mobile devices so size matters
 		-funroll-all-loops				# Perform the optimization of loop unrolling
 		-fpeel-loops					# Peels the loops for that there is enough information that they do not roll much (from profile feedback)
 		-ftree-vectorize				# Enable the vectorizer

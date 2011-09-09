@@ -54,3 +54,11 @@ set(LINUX_COMPILE_FLAGS
 	${LINUX_COMPILE_FLAGS}
 	-msse3								# Use SSE3 instruction set / code might not run on CPUs with no sse3 instruction
 )
+if(NOT CMAKE_BUILD_TYPE MATCHES Debug)
+	set(LINUX_COMPILE_FLAGS
+		${LINUX_COMPILE_FLAGS}
+		-O2								# Balance speed and binary size
+		# The following flag usage is basing on information from http://developer.amd.com/documentation/articles/pages/Compiler-FlagDrivenPerformanceGains.aspx
+		-fomit-frame-pointer			# Don't keep the frame pointer in a register for functions that don't need one
+	)
+endif()

@@ -32,7 +32,6 @@ set(LINUX_COMPILE_DEFS
 	LINUX								# Linux system
 	PIC									# Position-independent code
 	_REENTRANT							# Reentrant code
-	HAVE_VISIBILITY_ATTR				# Use visibility attribute (http://gcc.gnu.org/wiki/Visibility)
 )
 
 if((NOT CMAKETOOLS_TARGET_BITSIZE MATCHES 32) AND (CMAKE_SIZEOF_VOID_P MATCHES 8))
@@ -84,8 +83,6 @@ set(LINUX_COMPILE_FLAGS
 	-fno-rtti							# No C++ RTTI
 	-fno-exceptions						# No C++ exception handling
 	-pipe								# Use Pipes
-	-fvisibility=hidden					# In order to reduce the binary size, don't put private symbols into the resulting binary (http://gcc.gnu.org/wiki/Visibility)
-	-fvisibility-inlines-hidden			# In order to reduce the binary size, don't put private symbols into the resulting binary (http://gcc.gnu.org/wiki/Visibility)
 	-ffunction-sections					# For slightly reduced binary size (http://gcc.gnu.org/onlinedocs/gcc-4.0.4/gcc/Optimize-Options.html)
 	-fdata-sections						# For slightly reduced binary size (http://gcc.gnu.org/onlinedocs/gcc-4.0.4/gcc/Optimize-Options.html)
 	# The following flag usage is basing on information from http://developer.amd.com/documentation/articles/pages/Compiler-FlagDrivenPerformanceGains.aspx
@@ -105,16 +102,6 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
 		${LINUX_COMPILE_FLAGS}
 		-ggdb							# Use gdb debugger
 		-g3								# Debug level 3
-	)
-else()
-	##################################################
-	## Release
-	##################################################
-	set(LINUX_COMPILE_FLAGS
-		${LINUX_COMPILE_FLAGS}
-		-O3								# Very aggressive transformations (long compile times, but usally best runtime performance!)
-		# The following flag usage is basing on information from http://developer.amd.com/documentation/articles/pages/Compiler-FlagDrivenPerformanceGains.aspx
-		-fomit-frame-pointer			# Don't keep the frame pointer in a register for functions that don't need one
 	)
 endif()
 
