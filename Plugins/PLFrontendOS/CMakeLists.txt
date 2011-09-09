@@ -8,22 +8,32 @@ define_project(PLFrontendOS)
 ##################################################
 add_sources(
 	src/PLFrontendOS.cpp
-	src/Frontend.cpp
-	src/OSWindow.cpp
 )
 if(WIN32)
 	##################################################
 	## Win32
 	##################################################
 	add_sources(
+		src/Frontend.cpp
+		src/OSWindow.cpp
 		PLFrontendOS.rc
 		src/OSWindowWindows.cpp
+	)
+elseif(ANDROID)
+	##################################################
+	## Android
+	##################################################
+	add_sources(
+	#	src/FrontendAndroid.cpp
+		${ANDROID_NDK}/sources/android/native_app_glue/android_native_app_glue.c
 	)
 elseif(LINUX)
 	##################################################
 	## Linux
 	##################################################
 	add_sources(
+		src/Frontend.cpp
+		src/OSWindow.cpp
 		src/OSWindowLinux.cpp
 		src/XDnDFileDropHelper.cpp
 	)
@@ -36,6 +46,15 @@ add_include_directories(
 	include
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 )
+if(ANDROID)
+	##################################################
+	## Android
+	##################################################
+	add_include_directories(
+		# For the "android_native_app_glue.h"-header include
+		"${ANDROID_NDK}/sources/android/native_app_glue"
+	)
+endif()
 
 ##################################################
 ## Library directories
@@ -50,7 +69,15 @@ add_link_directories(
 add_libs(
 	PLCore
 )
-if(LINUX)
+if(ANDROID)
+	##################################################
+	## Android
+	##################################################
+	add_libs(
+		log
+		android
+	)
+elseif(LINUX)
 	##################################################
 	## Linux
 	##################################################
@@ -153,6 +180,23 @@ if(WIN32)
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_STATIC_LIB} ${PL_LIB_DIR}
 	)
+endif()
+
+# Create/copy Android apk related files
+if(ANDROID)
+	# Follow the package naming conventions (http://en.wikipedia.org/wiki/Java_package#Package_naming_conventions)
+	set(CMAKETOOLS_CURRENT_TARGET_TOP_LEVEL_DOMAIN	"org")			# Top level domain name of the organization 
+	set(CMAKETOOLS_CURRENT_TARGET_DOMAIN			"pixellight")	# Organization's domain
+	set(CMAKETOOLS_CURRENT_TARGET_SUBDOMAIN			"frontend")		# Any subdomains
+
+	# Create "AndroidManifest.xml"
+	configure_file("${CMAKE_SOURCE_DIR}/Plugins/PLFrontendOS/AndroidApk/AndroidManifest.xml.in" "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/AndroidApk/AndroidManifest.xml")
+
+	# Create "res/values/strings.xml"
+	configure_file("${CMAKE_SOURCE_DIR}/Plugins/PLFrontendOS/AndroidApk/res/values/strings.xml.in" "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/AndroidApk/res/values/strings.xml")
+
+	# Create Java file
+	configure_file("${CMAKE_SOURCE_DIR}/Plugins/PLFrontendOS/AndroidApk/src/org/pixellight/frontend/LoadLibraries.java.in" "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/AndroidApk/src/${CMAKETOOLS_CURRENT_TARGET_TOP_LEVEL_DOMAIN}/${CMAKETOOLS_CURRENT_TARGET_DOMAIN}/${CMAKETOOLS_CURRENT_TARGET_SUBDOMAIN}/LoadLibraries.java")
 endif()
 
 ##################################################
