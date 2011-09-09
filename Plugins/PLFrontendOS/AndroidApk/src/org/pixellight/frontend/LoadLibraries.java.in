@@ -16,7 +16,6 @@ public class LoadLibraries extends NativeActivity {
 		System.loadLibrary("PLPhysics");
 		System.loadLibrary("PLEngine");
 		System.loadLibrary("PLSound");
-		System.loadLibrary("PLFrontendOS");
 	}
 
 }

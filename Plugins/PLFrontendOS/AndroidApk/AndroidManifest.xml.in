@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="${CMAKETOOLS_CURRENT_TARGET_TOP_LEVEL_DOMAIN}.${CMAKETOOLS_CURRENT_TARGET_DOMAIN}.${CMAKETOOLS_CURRENT_TARGET_SUBDOMAIN}" android:versionCode="1" android:versionName="1.0">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="${CMAKETOOLS_CURRENT_TARGET_PACKAGE}" android:versionCode="1" android:versionName="1.0">
     <uses-sdk android:minSdkVersion="${ANDROID_API_LEVEL}" />
     <application android:label="@string/ApplicationName">
         <activity android:name=".LoadLibraries" android:label="@string/ApplicationName" android:configChanges="orientation|keyboardHidden">

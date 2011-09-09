@@ -183,11 +183,23 @@ if(WIN32)
 endif()
 
 # Create/copy Android apk related files
+#   Requires the following tools to be found automatically
+#   - "android" (part of the Android SDK)
+#   - "ant" (type e.g. "sudo apt-get install ant" on your Linux system to install Ant)
+#   - "jarsigner" (part of the JDK)
+#   - "zipalign" (part of the Android SDK)
 if(ANDROID)
 	# Follow the package naming conventions (http://en.wikipedia.org/wiki/Java_package#Package_naming_conventions)
-	set(CMAKETOOLS_CURRENT_TARGET_TOP_LEVEL_DOMAIN	"org")			# Top level domain name of the organization 
-	set(CMAKETOOLS_CURRENT_TARGET_DOMAIN			"pixellight")	# Organization's domain
-	set(CMAKETOOLS_CURRENT_TARGET_SUBDOMAIN			"frontend")		# Any subdomains
+	set(CMAKETOOLS_CURRENT_TARGET_TOP_LEVEL_DOMAIN	"org")							# Top level domain name of the organization 
+	set(CMAKETOOLS_CURRENT_TARGET_DOMAIN			"pixellight")					# Organization's domain
+	set(CMAKETOOLS_CURRENT_TARGET_SUBDOMAIN			"frontend")						# Any subdomains
+
+	# [TODO] Make those to general CMake options?
+	set(CMAKETOOLS_CURRENT_TARGET_SIGNER_KEYSTORE	"~/my-release-key.keystore")	# Keystore for signing the apk file ("~" means home directory)
+	set(CMAKETOOLS_CURRENT_TARGET_SIGNER_ALIAS		"myalias")						# Alias for signing the apk file
+
+	# Construct the current package name
+	set(CMAKETOOLS_CURRENT_TARGET_PACKAGE "${CMAKETOOLS_CURRENT_TARGET_TOP_LEVEL_DOMAIN}.${CMAKETOOLS_CURRENT_TARGET_DOMAIN}.${CMAKETOOLS_CURRENT_TARGET_SUBDOMAIN}")
 
 	# Create "AndroidManifest.xml"
 	configure_file("${CMAKE_SOURCE_DIR}/Plugins/PLFrontendOS/AndroidApk/AndroidManifest.xml.in" "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/AndroidApk/AndroidManifest.xml")
@@ -196,7 +208,64 @@ if(ANDROID)
 	configure_file("${CMAKE_SOURCE_DIR}/Plugins/PLFrontendOS/AndroidApk/res/values/strings.xml.in" "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/AndroidApk/res/values/strings.xml")
 
 	# Create Java file
+	# [TODO] Do also automatically add required libraries to load in (currently fixed build in within the Java file)
 	configure_file("${CMAKE_SOURCE_DIR}/Plugins/PLFrontendOS/AndroidApk/src/org/pixellight/frontend/LoadLibraries.java.in" "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/AndroidApk/src/${CMAKETOOLS_CURRENT_TARGET_TOP_LEVEL_DOMAIN}/${CMAKETOOLS_CURRENT_TARGET_DOMAIN}/${CMAKETOOLS_CURRENT_TARGET_SUBDOMAIN}/LoadLibraries.java")
+
+	# Create the directory for the libraries
+	file(MAKE_DIRECTORY "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/AndroidApk/libs/${ARM_TARGET}")
+
+	# Copy libraries
+	# [TODO] Do this in the install step when all files are there?
+	copy_files("${PL_RUNTIME_BIN_DIR}/*.*" "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/AndroidApk/libs/${ARM_TARGET}")
+
+	# Create "build.xml", "default.properties", "local.properties" and "proguard.cfg" files
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		COMMAND android update project -t android-${ANDROID_API_LEVEL} --name ${CMAKETOOLS_CURRENT_TARGET} --path "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/AndroidApk"
+	)
+
+	# Build the apk file
+	if(CMAKE_BUILD_TYPE MATCHES Debug)
+		##################################################
+		## Debug
+		##################################################
+		# Let Ant create the unsigned apk file
+		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+			COMMAND ant debug
+			WORKING_DIRECTORY "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/AndroidApk"
+		)
+	else()
+		##################################################
+		## Release
+		##################################################
+		# Let Ant create the unsigned apk file
+		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+			COMMAND ant release
+			WORKING_DIRECTORY "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/AndroidApk"
+		)
+
+		# Sign the apk file
+		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+			COMMAND jarsigner -verbose -keystore ${CMAKETOOLS_CURRENT_TARGET_SIGNER_KEYSTORE} bin/${CMAKETOOLS_CURRENT_TARGET}-unsigned.apk ${CMAKETOOLS_CURRENT_TARGET_SIGNER_ALIAS}
+			WORKING_DIRECTORY "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/AndroidApk"
+		)
+
+		# Align the apk file
+		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+			COMMAND zipalign -v -f 4 bin/${CMAKETOOLS_CURRENT_TARGET}-unsigned.apk bin/${CMAKETOOLS_CURRENT_TARGET}.apk
+			WORKING_DIRECTORY "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/AndroidApk"
+		)
+	endif()
+
+	# Uninstall previous version from the device/emulator (else we may get e.g. signature conflicts)
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+ 		COMMAND adb uninstall ${CMAKETOOLS_CURRENT_TARGET_PACKAGE}
+	)
+
+	# Install current version on the device/emulator
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+ 		COMMAND adb install -r bin/${CMAKETOOLS_CURRENT_TARGET}.apk
+		WORKING_DIRECTORY "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/AndroidApk"
+	)
 endif()
 
 ##################################################
