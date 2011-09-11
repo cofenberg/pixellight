@@ -1,0 +1,21 @@
+package ${CMAKETOOLS_CURRENT_TARGET_TOP_LEVEL_DOMAIN}.${CMAKETOOLS_CURRENT_TARGET_DOMAIN}.${CMAKETOOLS_CURRENT_TARGET_SUBDOMAIN};
+
+import android.app.NativeActivity;
+
+public class LoadLibraries extends NativeActivity {
+
+	static {
+		System.loadLibrary("PLCore");
+		System.loadLibrary("PLMath");
+		System.loadLibrary("PLDatabase");
+		System.loadLibrary("PLGraphics");
+		System.loadLibrary("PLInput");
+		System.loadLibrary("PLRenderer");
+		System.loadLibrary("PLMesh");
+		System.loadLibrary("PLScene");
+		System.loadLibrary("PLPhysics");
+		System.loadLibrary("PLEngine");
+		System.loadLibrary("PLSound");
+	}
+
+}
