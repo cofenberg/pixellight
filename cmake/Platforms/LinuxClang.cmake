@@ -5,6 +5,9 @@
 ##################################################
 
 
+# [TODO] Currently no visibility attribute (http://gcc.gnu.org/wiki/Visibility) because when using it, PixelLight failes to build with Clang
+
+
 ##################################################
 ## Version checks
 ##################################################

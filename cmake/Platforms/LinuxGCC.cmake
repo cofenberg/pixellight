@@ -9,11 +9,13 @@
 ## Preprocessor definitions
 ##################################################
 
+# Check gcc compiler
+include(${CMAKETOOLS_DIR}/Modules/CheckGCC.cmake)	# Adds e.g. visibility attribute (http://gcc.gnu.org/wiki/Visibility)
+
 # Preprocessor definitions
 set(LINUX_COMPILE_DEFS
 	${LINUX_COMPILE_DEFS}
 	GCC									# We are using the gcc/g++ compiler
-	HAVE_VISIBILITY_ATTR				# Use visibility attribute (http://gcc.gnu.org/wiki/Visibility)
 )
 
 
@@ -25,8 +27,6 @@ set(LINUX_COMPILE_FLAGS
 	${LINUX_COMPILE_FLAGS}
 	-mtune=generic						# Produce code optimized for the most common IA32/AMD64/EM64T processors
 	-msse3								# Use SSE3 instruction set / code might not run on CPUs with no sse3 instruction
-	-fvisibility=hidden					# In order to reduce the binary size, don't put private symbols into the resulting binary (http://gcc.gnu.org/wiki/Visibility)
-	-fvisibility-inlines-hidden			# In order to reduce the binary size, don't put private symbols into the resulting binary (http://gcc.gnu.org/wiki/Visibility)
 	-Wstrict-null-sentinel				# Warn also about the use of an uncasted NULL as sentinel
 )
 

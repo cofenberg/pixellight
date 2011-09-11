@@ -1,11 +1,11 @@
 ##################################################
 ## CheckGCC
 ##
-## Additional checks for the gcc compiler
+## Additional checks for the GCC compiler
 ##
 ##
 ## Variables:
-##   CMAKETOOLS_GCC_VISIBILITY_FLAG     Set if gcc has the visibility flag available
+##   CMAKETOOLS_GCC_VISIBILITY_FLAG     Set if GCC has the visibility flag available (http://gcc.gnu.org/wiki/Visibility)
 ##################################################
 
 
@@ -16,7 +16,7 @@ INCLUDE (CheckCXXSourceCompiles)
 
 
 ##################################################
-## Macro: Check if gcc visibility flag is available
+## Macro: Check if GCC visibility flag is available
 ##################################################
 macro(cmaketools_check_cxx_visibility_flag var)
    set(SAFE_CMAKE_REQUIRED_DEFINITIONS "${CMAKE_REQUIRED_DEFINITIONS}")
@@ -28,14 +28,13 @@ endmacro(cmaketools_check_cxx_visibility_flag)
 
 
 ##################################################
-## Check gcc compatibilities
+## Check GCC compatibilities
 ##################################################
 
 # Check GCC visibility flag
-# [TODO] Make this work, currently we end up with some 'undefined reference to vtable for PLMath::Vector2/3/4[i] or PLCore::Object
 if(CMAKE_COMPILER_IS_GNUCXX)
   cmaketools_check_cxx_visibility_flag(CMAKETOOLS_GCC_VISIBILITY_FLAG)
   if(CMAKETOOLS_GCC_VISIBILITY_FLAG)
-#    ADD_DEFINITIONS(-fvisibility=hidden -fvisibility-inlines-hidden -DHAVE_VISIBILITY_ATTR)
+    ADD_DEFINITIONS(-fvisibility=hidden -fvisibility-inlines-hidden -DHAVE_VISIBILITY_ATTR)
   endif()
 endif(CMAKE_COMPILER_IS_GNUCXX)

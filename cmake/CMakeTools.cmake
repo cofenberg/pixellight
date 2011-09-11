@@ -309,9 +309,6 @@ else()
 	set(CMAKETOOLS_CONFIG_DEBUG_SUFFIX "")
 endif()
 
-# Check gcc compiler
-include(${CMAKETOOLS_DIR}/Modules/CheckGCC.cmake)
-
 # Find VC command line tools
 find_package(VCTools)
 
