@@ -250,7 +250,11 @@ elseif(LINUX)
 	# just for this usually never used function would be overkill
 	# (used within "PLCore::ConsoleLinux::GetCursorPosition()" & "PLCore::ConsoleLinux::SetCursorPosition()")
 	# No need to link "pthread", it's already within Androids c library
-	if(NOT ANDROID)
+	if(ANDROID)
+		add_libs(
+			log
+		)
+	else()
 		add_libs(
 			pthread
 			ncurses

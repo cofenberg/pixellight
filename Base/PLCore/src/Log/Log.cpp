@@ -23,7 +23,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <stdio.h>	// For "fputs" and "stdout" inside "Log::Write()"
+#ifdef ANDROID
+	#include <android/log.h>
+#else
+	#include <stdio.h>	// For "fputs" and "stdout" inside "Log::Write()"
+#endif
 #include "PLCore/File/Url.h"
 #include "PLCore/Log/LogFormaterText.h"
 #include "PLCore/Log/LogFormaterXml.h"
@@ -203,7 +207,7 @@ void Log::SetLogLevel(uint8 nLogLevel)
 		m_nLogLevel = nLogLevel;
 
 		// Write log message
-		Write(0, "[Enter log level \"" + LogLevelToString(nLogLevel) + "\"]");
+		Write(Debug, "[Enter log level \"" + LogLevelToString(nLogLevel) + "\"]");
 	}
 }
 
@@ -390,6 +394,49 @@ bool Log::Write(uint8 nLogLevel, const String &sText)
 			// but this may cause problems when de-initializing the static variables :/
 			#ifdef WIN32
 				(sLogMessage.GetFormat() == String::ASCII) ? fputs(sLogMessage.GetASCII(), stdout) : fputws(sLogMessage.GetUnicode(), stdout);
+			#elif ANDROID
+				// Lookout! "__android_log_write" doesn't check for null pointer!
+				const char *pszLogMessage = sLogMessage.GetASCII();
+				if (pszLogMessage) {
+					android_LogPriority nAndroidLogPriority = ANDROID_LOG_DEFAULT;
+					switch (nLogLevel) {
+						// No log outputs
+						case Quiet:
+							nAndroidLogPriority = ANDROID_LOG_SILENT;
+							break;
+
+						// Should be used if the message should be logged always
+						case Always:
+							nAndroidLogPriority = ANDROID_LOG_VERBOSE;
+							break;
+
+						// Should be used if an critical error occurs
+						case Critical:
+							nAndroidLogPriority = ANDROID_LOG_FATAL;
+							break;
+
+						// Should be used if an error occurs
+						case Error:
+							nAndroidLogPriority = ANDROID_LOG_ERROR;
+							break;
+
+						// Should be used for warning texts
+						case Warning:
+							nAndroidLogPriority = ANDROID_LOG_WARN;
+							break;
+
+						// Should be used for info texts
+						case Info:
+							nAndroidLogPriority = ANDROID_LOG_INFO;
+							break;
+
+						// Should be used for debug level texts
+						case Debug:
+							nAndroidLogPriority = ANDROID_LOG_DEBUG;
+							break;
+					}
+					__android_log_write(nAndroidLogPriority, "PixelLight", sLogMessage.GetASCII());
+				}
 			#else
 				fputs((sLogMessage.GetFormat() == String::ASCII) ? sLogMessage.GetASCII() : sLogMessage.GetUTF8(), stdout);
 			#endif

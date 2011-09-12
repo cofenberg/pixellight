@@ -62,6 +62,59 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
+//[ Global functions                                      ]
+//[-------------------------------------------------------]
+// This global locale stuff is really nasty and shouldn't be visible within the string header, so, global functions are used.
+// We REALLY need to set the locale to a known setting... else we may get floats like "1,123" instead of "1.123"! (meaning hell breaks loose!)
+/**
+*  @brief
+*    Backup the current locale and set it back to the "C"-default
+*
+*  @return
+*    Previously set locale, can be a null pointer, if not null, don't forget to free the memory when you're done
+*/
+inline char *ResetLocaleToC()
+{
+	// Get the currently set locale, if it's a null pointer just do nothing
+	const char *pszCurrentLocale = setlocale(LC_ALL, nullptr);
+	if (pszCurrentLocale) {
+		// Do never ever pass a null pointer into "strdup" because the behaviour isn't specified in POSIX (http://pubs.opengroup.org/onlinepubs/9699919799/functions/strdup.html)
+		// -> On MS Windows and Linux a null pointer will be returned, on Android it just crashes...
+
+		// Duplicate the string
+		char *pszLocaleBackup = strdup(pszCurrentLocale);
+
+		// Set the locale back to the default
+		setlocale(LC_ALL, "C");
+
+		// Return the saved locale, the user is responsible to free it
+		return pszLocaleBackup;
+	} else {
+		// Nothing to do
+		return nullptr;
+	}
+}
+
+/**
+*  @brief
+*    Restores the previously set locale
+*
+*  @param[in] pszPreviousLocale
+*    Previously set locale, can be a null pointer, if it's no null pointer the memory will be freed within this function
+*/
+inline void RestorePreviousLocale(char *pszPreviousLocale)
+{
+	if (pszPreviousLocale) {
+		// Be polite and restore the previously set locale
+		setlocale(LC_ALL, pszPreviousLocale);
+
+		// ... and don't forget to free the memory of our locale backup...
+		free(pszPreviousLocale);
+	}
+}
+
+
+//[-------------------------------------------------------]
 //[ String Implementation                                 ]
 //[-------------------------------------------------------]
 /**
@@ -74,9 +127,8 @@ String String::Format(const char *pszFormat, ...)
 
 	// Check format string
 	if (pszFormat && pszFormat[0] != '\0') {
-		// We REALLY need to set the locale to a known setting... else we may get floats like "1,123" instead of "1.123"!
-		char *pSaveLocale = strdup(setlocale(LC_ALL, nullptr));	// Get the current set locale, we REALLY need to backup the locale because it "may" be changed by "setlocale"
-		setlocale(LC_ALL, "C");
+		// Ensure that the locale is set to the C default
+		char *pszPreviousLocale = ResetLocaleToC();
 
 		// Get the required buffer length, does not include the terminating zero character
 		va_list vaList;
@@ -104,9 +156,8 @@ String String::Format(const char *pszFormat, ...)
 			}
 		}
 
-		// Be polite and restore the previously set locale
-		setlocale(LC_ALL, pSaveLocale);
-		free(pSaveLocale);	// ... and don't forget to free the memory of our locale backup...
+		// Be polite and restore the previously set locale (memory is freed automatically in this function)
+		RestorePreviousLocale(pszPreviousLocale);
 	}
 
 	// Return new string
@@ -119,9 +170,8 @@ String String::Format(const wchar_t *pszFormat, ...)
 
 	// Check format string
 	if (pszFormat && pszFormat[0] != L'\0') {
-		// We REALLY need to set the locale to a known setting... else we may get floats like "1,123" instead of "1.123"!
-		char *pSaveLocale = strdup(setlocale(LC_ALL, nullptr));	// Get the current set locale, we REALLY need to backup the locale because it "may" be changed by "setlocale"
-		setlocale(LC_ALL, "C");
+		// Ensure that the locale is set to the C default
+		char *pszPreviousLocale = ResetLocaleToC();
 
 		// Get the required buffer length, does not include the terminating zero character
 		va_list vaList;
@@ -149,9 +199,8 @@ String String::Format(const wchar_t *pszFormat, ...)
 			}
 		}
 
-		// Be polite and restore the previously set locale
-		setlocale(LC_ALL, pSaveLocale);
-		free(pSaveLocale);	// ... and don't forget to free the memory of our locale backup...
+		// Be polite and restore the previously set locale (memory is freed automatically in this function)
+		RestorePreviousLocale(pszPreviousLocale);
 	}
 
 	// Return new string
@@ -2418,9 +2467,8 @@ uint_ptr String::GetUIntPtr() const
 float String::GetFloat() const
 {
 	if (m_pStringBuffer) {
-		// We REALLY need to set the locale to a known setting... else we may get floats like "1,123" instead of "1.123"!
-		char *pSaveLocale = strdup(setlocale(LC_ALL, nullptr));	// Get the current set locale, we REALLY need to backup the locale because it "may" be changed by "setlocale"
-		setlocale(LC_ALL, "C");
+		// Ensure that the locale is set to the C default
+		char *pszPreviousLocale = ResetLocaleToC();
 
 		float fReturnValue;
 		switch (m_pStringBuffer->GetFormat()) {
@@ -2437,9 +2485,8 @@ float String::GetFloat() const
 				break;
 		}
 
-		// Be polite and restore the previously set locale
-		setlocale(LC_ALL, pSaveLocale);
-		free(pSaveLocale);	// ... and don't forget to free the memory of our locale backup...
+		// Be polite and restore the previously set locale (memory is freed automatically in this function)
+		RestorePreviousLocale(pszPreviousLocale);
 
 		return fReturnValue;
 	} else {
@@ -2451,9 +2498,8 @@ float String::GetFloat() const
 double String::GetDouble() const
 {
 	if (m_pStringBuffer) {
-		// We REALLY need to set the locale to a known setting... else we may get floats like "1,123" instead of "1.123"!
-		char *pSaveLocale = strdup(setlocale(LC_ALL, nullptr));	// Get the current set locale, we REALLY need to backup the locale because it "may" be changed by "setlocale"
-		setlocale(LC_ALL, "C");
+		// Ensure that the locale is set to the C default
+		char *pszPreviousLocale = ResetLocaleToC();
 
 		double fReturnValue;
 		switch (m_pStringBuffer->GetFormat()) {
@@ -2470,9 +2516,8 @@ double String::GetDouble() const
 				break;
 		}
 
-		// Be polite and restore the previously set locale
-		setlocale(LC_ALL, pSaveLocale);
-		free(pSaveLocale);	// ... and don't forget to free the memory of our locale backup...
+		// Be polite and restore the previously set locale (memory is freed automatically in this function)
+		RestorePreviousLocale(pszPreviousLocale);
 
 		return fReturnValue;
 	} else {

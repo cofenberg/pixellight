@@ -1,3 +1,12 @@
+>> 12.09.2011
+[CO]
+- "String"-class: Do never ever pass a null pointer into "strdup" because the behaviour isn't specified in POSIX (http://pubs.opengroup.org/onlinepubs/9699919799/functions/strdup.html)
+  -> On MS Windows and Linux a null pointer will be returned, on Android it just crashes...
+- "Log"-class Android: In verbose mode, messages are not written into the console (there isn't easy access to it on Android), instead the Android in-kernel log buffer is used (use Androids "logcat"
+  utility to access this system log)
+
+
+
 >> 06.09.2011
 [CO]
 - Android port related: The Android NDK has no support for "mbtowc()", added the implementation from http://bsd.unixdev.net/4.5BSD/src/usr.libexec/dictd/mbtowc.c

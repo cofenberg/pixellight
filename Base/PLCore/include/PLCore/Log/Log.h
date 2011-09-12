@@ -131,6 +131,8 @@ class Log : public Singleton<Log> {
 		*  @note
 		*    - In addition to using an optional log formater, the log also writes into the console in verbose mode
 		*    - The log does not need be to be opened to write into the console
+		*    - Android: Messages are not written into the console, instead the Android in-kernel log buffer is used
+		*              (use Androids "logcat" utility to access this system log)
 		*    - By default the log does not write into the console
 		*/
 		PLCORE_API bool IsVerbose() const;
