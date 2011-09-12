@@ -23,9 +23,9 @@
 // GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by hand
 static const PLCore::String sVertexShaderSourceCodeGLSL = "\
 // Attributes\n\
-attribute vec3 VertexPosition;	// Object space vertex position input\n\
-attribute vec4 VertexColor;		// Vertex color input\n\
-varying   vec4 VertexColorVS;	// Vertex color output\n\
+attribute highp vec3 VertexPosition;	// Object space vertex position input\n\
+attribute highp vec4 VertexColor;		// Vertex color input\n\
+varying   highp vec4 VertexColorVS;		// Vertex color output\n\
 \n\
 // Uniforms\n\
 uniform highp mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix\n\
@@ -48,9 +48,9 @@ static const PLCore::String sVertexShaderSourceCodeGLSL_UniformBuffer = "\
 #extension GL_ARB_uniform_buffer_object : enable\n\
 \n\
 // Attributes\n\
-attribute vec3 VertexPosition;	// Object space vertex position input\n\
-attribute vec4 VertexColor;		// Vertex color input\n\
-varying   vec4 VertexColorVS;	// Vertex color output\n\
+attribute highp vec3 VertexPosition;	// Object space vertex position input\n\
+attribute highp vec4 VertexColor;		// Vertex color input\n\
+varying   highp vec4 VertexColorVS;		// Vertex color output\n\
 \n\
 // Uniforms\n\
 layout(std140) uniform UniformBlock\n\
@@ -79,8 +79,8 @@ static const PLCore::String sGeometryShaderSourceCodeGLSL = "\
 #extension GL_EXT_geometry_shader4 : enable\n\
 \n\
 // Attributes\n\
-varying in  vec4 VertexColorVS[];	// Interpolated vertex color input from vertex shader\n\
-varying out vec4 VertexColorGS;		// Interpolated vertex color output\n\
+varying in  highp vec4 VertexColorVS[];	// Interpolated vertex color input from vertex shader\n\
+varying out highp vec4 VertexColorGS;	// Interpolated vertex color output\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -105,7 +105,7 @@ void main()\n\
 // GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) fragment shader source code, "#version" is added by hand
 static const PLCore::String sFragmentShaderSourceCodeGLSL = "\
 // Attributes\n\
-varying vec4 VertexColorVS;	// Interpolated vertex color input from vertex shader\n\
+varying highp vec4 VertexColorVS;	// Interpolated vertex color input from vertex shader\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -121,7 +121,7 @@ static const PLCore::String sFragmentShaderSourceCodeGLSL_GS = "\
 #version 110	// OpenGL 2.0\n\
 \n\
 // Attributes\n\
-in vec4 VertexColorGS;	// Interpolated vertex color input from geometry shader\n\
+in highp vec4 VertexColorGS;	// Interpolated vertex color input from geometry shader\n\
 \n\
 // Programs\n\
 void main()\n\

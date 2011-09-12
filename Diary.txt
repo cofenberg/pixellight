@@ -4,6 +4,37 @@
 
 
 
+>> 12.09.2011
+[CO]
+- WOW, PixelLight is running on my "LG P990 Optimus Speed"!
+  -> It looks like my roadmap from month ago is really working... the frontend refactoring was a step towards Android support (as well as webbrowsers :)...
+     my goal was that one can develop native applications as usual with e.g. Visual Studio for desktop PC, with comfortable graphical debugging etc... and then when an application should be "ported" to e.g. mobile
+     devices, it should only be required to recompile the native application into a shared library instead of an executable. That's all. On Android, even native applications have to go though Java, even when it's
+     an native activity. So, the native application must be a shared library. That's also the reason why it was important to me to be able to use OpenGL ES 2.0 nativly on my desktop PC - so that I'am able to develop
+     on and for an desktop PC... it's really no fun to debug with command line or by just using log outputs.
+  -> It looks like that this approach works really good... just compiled "50RendererTriangle" & "52RendererMesh" as "so", and my experimental Android frontend (not yet within PLFrontendOS) can load in and use the given
+     RTTI application class at once. This CMake frontend project also creates automatically a mini Java file which is responsible to load in the shared libaries (this doesn't happen automatically in Android!). Everything
+     an apk requires is configurated automatically by this CMake script, the apk is packed and optionally signed for release, it's also automatically directly moved to the device - meaning I just have to say "do it" and
+     after 5-10 seconds I see my application on my LG P990. :D
+  -> When using e.g. Lua scripts, it's not even required to recompile an application, that's why adding script support month ago was so important to me. I'am sure that this will be the preferred way to go... just writing
+     applications using scripts, and then "publishing" it by using a default precompiled PixelLight runtime apk.
+  -> I was afraid that PixelLight would consume to much memory by default, would be to slow and so on - but it's the opposite, my PixelLight app starts faster then on MS Windows! (including the setup of a huge
+     number of RTTI classes) Right now, I can't see memory or performance issues - I hope that more complex applications are also possible... meaning to just recompile existing projects into an "so"-file
+     and then directly running them on the mobile device. I'am sure that fine tuning is a little bit more work - the mobile devices usually have other texture compression formats. There's no mouse, only touchscreen
+     by default etc. - but just details. *g*
+  -> Enough for today, right now I'am somewhat too exited that it's finally working as planned, without real problems. PixelLight on a smartphone, wow. The next steps should be more fun then the last past two weeks...
+     it was often frustrating to get into native Android development, to understand all the tools, getting more into development under Linux, getting more into CMake, working out the workflow, how an apk is generated
+     and then trying to make this to an automatic CMake process, porting PixelLight using the Android NDK, solving some minor issues, some hours with several crashes (other behaviour of POSIX functions!!) on Android
+     until I saw something, or not... and in the end I noticed that the Android Emulator doesn't support OpenGL ES 2.0... and my "LG P990 Optimus Speed" no Android 2.3 because LG *still* has no official updated published...
+     so, I was at a dead end with the Android Emulator and had no other choice as to root my mobile device the first time in order to install a custom Android 2.3 rom. Lucky me that there's "CyanogenMod"
+     (http://www.cyanogenmod.com/). I was really impressed how easy it is to get this on an Android device, just root with a nice one-click-tool (I love such tools *g*), install "Clockwork Recovery" on the device, download
+     CyanogenMod, put CyanogenMod on the device, boot the device and get into the boot manager and a few seconds later the new custom rom is installing... and a few minutes later, tata, Android 2.3! Now I'am really happy
+     that I just did it instead of waiting for LG even longer for an official update... and shortly after Android 2.3 was running, PixelLight was running on Android. :D
+     (ok, I assume that the last steps were only so easy because I worked relativly slowly in the last past weeks so that I was able to see potential issues and resolving them before they cause an problem on
+     the device :)
+
+
+
 >> 06.09.2011
 [CO]
 - Finally! Took me quite some time to figure out the "crtbegin_so.o: No such file: No such file or director" linker issue when compiling for Android. For this, I stopped for two days to get to the very
