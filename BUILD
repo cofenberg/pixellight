@@ -380,7 +380,8 @@ Warning: We noticed several issues when using the Android NDK under MS Windows (
 3.1.1. Prerequisites
 --------------------
 
-Warning: In case you want to use OpenGL ES 2.0, you'll need a physical device because currently the Android Emulator has no support for OpenGL ES 2.0
+- PixelLight requires at least Android 2.3 (Gingerbread, NDK API level 9), previous Android versions had no decent native support
+- In case you want to use OpenGL ES 2.0, you'll need a physical device because currently the Android Emulator has no support for OpenGL ES 2.0
 
 Install the usual Android development tools (the following versions are those used when writing this, other versions may work as well)
 - Java JDK & JRE
