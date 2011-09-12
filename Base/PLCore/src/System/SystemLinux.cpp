@@ -109,7 +109,11 @@ bool SystemLinux::GetMemoryInformation(MemoryInformation &sMemoryInformation) co
 //[-------------------------------------------------------]
 String SystemLinux::GetPlatform() const
 {
-	static const String sString = "Linux";
+	#ifdef ANDROID
+		static const String sString = "Android";
+	#else
+		static const String sString = "Linux";
+	#endif
 	return sString;
 }
 
@@ -124,7 +128,11 @@ String SystemLinux::GetOS() const
 		sVersion += m_sName.release;
 		return sVersion;
 	} else {
-		return "Linux unknown";
+		#ifdef ANDROID
+			return "Android unknown";
+		#else
+			return "Linux unknown";
+		#endif
 	}
 }
 

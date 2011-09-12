@@ -226,15 +226,12 @@ bool Context::Init(uint32 nMultisampleAntialiasingSamples)
 				}
 			} else {
 				// Error!
-				PL_LOG(Error, "Failed to choose EGL configuration!")
+				PL_LOG(Error, "Failed to choose EGL configuration! (OpenGL ES 2.0 not supported?)")
 			}
 		} else {
 			// Error!
 			PL_LOG(Error, "Failed to initialize EGL!")
 		}
-
-		// Cleanup
-		eglTerminate(m_hDisplay);
 	} else {
 		// Error!
 		PL_LOG(Error, "Failed to get EGL default display!")
@@ -275,24 +272,27 @@ void Context::DeInit()
 	// Don't touch anything in case we don't have a displayb
 	if (m_hDisplay != EGL_NO_DISPLAY) {
 		// Make 'nothing' current
-		eglMakeCurrent(EGL_DEFAULT_DISPLAY, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
+		eglMakeCurrent(m_hDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
 
 		// Destroy the EGL dummy surface
-		if (eglDestroySurface(m_hDisplay, m_hDummySurface) == EGL_FALSE) {
+		if (m_hDummySurface != EGL_NO_SURFACE && eglDestroySurface(m_hDisplay, m_hDummySurface) == EGL_FALSE) {
 			// Error!
 			PL_LOG(Error, "Failed to destroy the used EGL dummy surface!")
 		}
 		m_hDummySurface = EGL_NO_SURFACE;
 
 		// Destroy the EGL context
-		if (eglDestroyContext(m_hDisplay, m_hContext) == EGL_FALSE) {
-			// Error!
-			PL_LOG(Error, "Failed to destroy the used EGL context!")
-		}
-		m_hContext = EGL_NO_CONTEXT;
+		if (m_hContext != EGL_NO_CONTEXT) {
+			// Release all resources allocated by the shader compiler
+			glReleaseShaderCompiler();
 
-		// Release all resources allocated by the shader compiler
-		glReleaseShaderCompiler();
+			// Destroy the EGL context
+			if (eglDestroyContext(m_hDisplay, m_hContext) == EGL_FALSE) {
+				// Error!
+				PL_LOG(Error, "Failed to destroy the used EGL context!")
+			}
+			m_hContext = EGL_NO_CONTEXT;
+		}
 
 		// Return EGL to it's state at thread initialization
 		if (eglReleaseThread() == EGL_FALSE) {

@@ -271,12 +271,10 @@ bool ContextRuntimeLinking::LoadGLESEntryPoints()
 {
 	bool bResult = true;	// Success by default
 
-	// Define a helper macro (The specification states "eglGetProcAddress" is only for extension functions, but in here we have no other choice, do we?)
+	// Define a helper macro
 	#define IMPORT_FUNC(funcName)																																				\
 		if (bResult) {																																							\
-			void *pSymbol = eglGetProcAddress(#funcName);		/* The "correct"-way */																							\
-			if (!pSymbol)																																						\
-				pSymbol = m_pGLESDynLib->GetSymbol(#funcName);	/* The "emulator fallback"-way */																				\
+			void *pSymbol = m_pGLESDynLib->GetSymbol(#funcName);																												\
 			if (pSymbol) {																																						\
 				*(reinterpret_cast<void**>(&(funcName))) = pSymbol;																												\
 			} else {																																							\
