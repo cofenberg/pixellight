@@ -435,7 +435,7 @@ bool Log::Write(uint8 nLogLevel, const String &sText)
 							nAndroidLogPriority = ANDROID_LOG_DEBUG;
 							break;
 					}
-					__android_log_write(nAndroidLogPriority, "PixelLight", sLogMessage.GetASCII());
+					__android_log_write(nAndroidLogPriority, "PixelLight", (sLogMessage.GetFormat() == String::ASCII) ? sLogMessage.GetASCII() : sLogMessage.GetUTF8());
 				}
 			#else
 				fputs((sLogMessage.GetFormat() == String::ASCII) ? sLogMessage.GetASCII() : sLogMessage.GetUTF8(), stdout);
