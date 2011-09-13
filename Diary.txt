@@ -4,6 +4,12 @@
 
 
 
+>> 13.09.2011
+[CO]
+- Android port progress: "51RendererTexturing" & "54RendererRTT" (without MRT) are now running as well on my smartphone
+
+
+
 >> 12.09.2011
 [CO]
 - WOW, PixelLight is running on my "LG P990 Optimus Speed"!
