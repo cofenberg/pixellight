@@ -23,7 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Math.h>
+#include <PLMath/Vector3i.h>
 #include <PLGraphics/Image/Image.h>
+#include <PLGraphics/Image/ImageBuffer.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
 #include "SPTexturing.h"
@@ -32,6 +35,8 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLCore;
+using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLRenderer;
 
@@ -139,12 +144,31 @@ SPTexturing::SPTexturing(Renderer &cRenderer) : SurfacePainter(cRenderer),
 	}
 
 	{ // Setup the renderer texture buffer for our quad
-		// Load in the image we want to use as texture
-		Image cImage;
-		if (cImage.Load("Data/Textures/PLLogo.dds")) {	// Within "Runtime/Data/Standard.zip"
-			// Create the texture buffer instance by using our image data
-			m_pTextureBuffer = reinterpret_cast<TextureBuffer*>(GetRenderer().CreateTextureBuffer2D(cImage));
+		// Create the image we want to use as texture (to keep this sample free of external resources, we don't just load in an image)
+		// -> Intentionally low resolution so that one can see that it's a texture, and also can see the texture filtering in action
+		const uint32 nWidth  = 16;
+		const uint32 nHeight = 16;
+		Image cImage = Image::CreateImage(DataByte, ColorGrayscale, Vector3i(nWidth, nHeight, 1));
+		{ // Fill the image
+			ImageBuffer *pImageBuffer = cImage.GetBuffer();
+
+			// Create the texture data
+			const float fWidthHalf  = static_cast<float>(nWidth/2)-0.5f;
+			const float fHeightHalf = static_cast<float>(nHeight/2)-0.5f;
+			const float fMin		= Color4::Gray.r;
+			uint8 *pData = pImageBuffer->GetData();
+			for (uint32 j=0; j<nWidth; j++) {
+				for (uint32 i=0; i<nHeight; i++) {
+					const float x  = (i - fWidthHalf)/fWidthHalf;
+					const float y  = (j - fHeightHalf)/fHeightHalf;
+					const float ls = Math::Max(1 - (x*x + y*y), fMin);
+					pData[j*nWidth+i] = static_cast<uint8>(255*ls);
+				}
+			}
 		}
+
+		// Create the texture buffer instance by using our image data
+		m_pTextureBuffer = reinterpret_cast<TextureBuffer*>(GetRenderer().CreateTextureBuffer2D(cImage));
 	}
 }
 

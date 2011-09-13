@@ -157,7 +157,7 @@ void SPTexturingShaders::OnPaint(Surface &cSurface)
 			// Calculate the view matrix
 			Matrix4x4 mView;
 			{
-				mView.SetTranslation(0.0f, 0.0f, -5.0f);
+				mView.SetTranslation(0.0f, 0.0f, -2.5f);
 			}
 
 			// Calculate the projection matrix

@@ -3,6 +3,8 @@
 - Whenever possible, the background is now cleared to gray. This way, in case on an graphics error we might still see at least something. This should make porting and
   first time debugging a little bit easier... if you see a black something on a gray background, you're half way there *g*. In general, black is still the default
   because this is more universal.
+- "51RendererTexturing": The used texture is now generated at runtime instead of loading it in. This way, this primitive sample doesn't need any additional external
+  resources and makes it therefore more suitable for a first texture mapping test when e.g. porting to new platforms.
 
 
 
