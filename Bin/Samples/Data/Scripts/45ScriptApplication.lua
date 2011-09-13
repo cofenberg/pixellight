@@ -23,6 +23,10 @@ function OnInit()
 	-- Set the used scene renderer (optional filename of a fallback scene renderer to use in case the desired scene renderer can't be used as second parameter)
 	if this:GetSceneRendererTool():SetSceneRenderer(this:GetScene(), "Deferred.sr", "FixedFunctions.sr") == true then
 		-- Configure the compositing system by using the comfort scene renderer tool.
+
+		-- Clear the content of the current used render target by using gray (this way, in case on an graphics error we might still see at least something)
+		this:GetSceneRendererTool():SetPassAttribute("Begin", "ColorClear", "0.5 0.5 0.5 0")
+
 		-- We're setting the attribute "Flags" of the scene renderer step named "DeferredSPAAO" to the value "Inactive" -
 		-- this has the effect that the fillrate eating HBAO post processing effect is deactivated. Please note, that
 		-- internally "just" the generic PixelLight RTTI is used. PixelLight itself doesn't offer such settings as

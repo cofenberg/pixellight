@@ -95,6 +95,13 @@ class Application : public PLEngine::EngineApplication {
 
 
 	//[-------------------------------------------------------]
+	//[ Private virtual PLCore::CoreApplication functions     ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void OnInit() override;
+
+
+	//[-------------------------------------------------------]
 	//[ Private virtual PLEngine::EngineApplication functions ]
 	//[-------------------------------------------------------]
 	private:

@@ -134,8 +134,8 @@ void SPTexturingShaders::OnPaint(Surface &cSurface)
 	// Get the used renderer
 	Renderer &cRenderer = GetRenderer();
 
-	// Clear the content of the current used render target (color to black and depth to 1.0 by default)
-	cRenderer.Clear();
+	// Clear the content of the current used render target by using gray (this way, in case on an graphics error we might still see at least something)
+	cRenderer.Clear(Clear::Color | Clear::ZBuffer, Color4::Gray);
 
 	// Make our program to the current one
 	if (cRenderer.SetProgram(m_pProgram)) {

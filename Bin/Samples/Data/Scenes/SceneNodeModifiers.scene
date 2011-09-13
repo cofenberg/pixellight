@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Scene Version="1">
-    <Node Class="PLScene::SNKeyValue" Key="ClearColor" Value="0.4 0.4 0.4 1.0" />
+    <Node Class="PLScene::SNKeyValue" Key="ClearColor" Value="0.5 0.5 0.5" />
     <Node Class="PLScene::SNPointLight" Position="1.0 2.0 10.0" Flags="Flares|Corona|Blend">
         <Modifier Class="PLScene::SNMLightRandomAnimation" Speed="3.0" Radius="0.4" FixColor="0.6 0.6 0.6" />
         <Modifier Class="PLScene::SNMLightRandomAnimation" FixColor="0.1 0.1 0.1" Color="1.0 0.0 0.0" />

@@ -1,3 +1,11 @@
+>> 13.09.2011
+[CO]
+- Whenever possible, the background is now cleared to gray. This way, in case on an graphics error we might still see at least something. This should make porting and
+  first time debugging a little bit easier... if you see a black something on a gray background, you're half way there *g*. In general, black is still the default
+  because this is more universal.
+
+
+
 >> 04.08.2011
 [CO]
 - The primitive renderer samples "50RendererTriangle", "51RendererTexturing", "52RendererMesh", "53RendererMultiView" and "54RendererRTT" no longer use input stuff. Focus

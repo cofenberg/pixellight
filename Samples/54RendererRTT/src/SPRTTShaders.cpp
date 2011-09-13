@@ -240,8 +240,8 @@ SPRTTShaders::~SPRTTShaders()
 */
 void SPRTTShaders::DrawScene(Renderer &cRenderer)
 {
-	// Clear the content of the current used render target
-	cRenderer.Clear();
+	// Clear the content of the current used render target by using gray (this way, in case on an graphics error we might still see at least something)
+	cRenderer.Clear(Clear::Color | Clear::ZBuffer, Color4::Gray);
 
 	// Make our program to the current one
 	if (cRenderer.SetProgram(m_pSceneProgram)) {
@@ -337,8 +337,8 @@ void SPRTTShaders::OnPaint(Surface &cSurface)
 	// Get the used renderer
 	Renderer &cRenderer = GetRenderer();
 
-	// Clear the content of the current used render target
-	cRenderer.Clear();
+	// Clear the content of the current used render target by using gray (this way, in case on an graphics error we might still see at least something)
+	cRenderer.Clear(Clear::Color | Clear::ZBuffer, Color4::Gray);
 
 	// Backup current render target and set the new one to render in our texture buffer
 	Surface *pRenderSurfaceBackup = cRenderer.GetRenderTarget();

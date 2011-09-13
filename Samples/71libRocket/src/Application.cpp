@@ -169,6 +169,9 @@ void Application::OnInit()
 			}
 		}
 	}
+
+	// Clear the content of the current used render target by using gray (this way, in case on an graphics error we might still see at least something)
+	GetSceneRendererTool().SetPassAttribute("Begin", "ColorClear", "0.5 0.5 0.5 0");
 }
 
 

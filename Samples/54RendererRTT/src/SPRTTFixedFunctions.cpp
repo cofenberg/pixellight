@@ -110,8 +110,8 @@ void SPRTTFixedFunctions::DrawScene(Renderer &cRenderer)
 	// Get the fixed functions interface - if we're in here, we now it exists...
 	FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
 
-	// Clear the content of the current used render target
-	cRenderer.Clear();
+	// Clear the content of the current used render target by using gray (this way, in case on an graphics error we might still see at least something)
+	cRenderer.Clear(Clear::Color | Clear::ZBuffer, Color4::Gray);
 
 	{ // Setup light
 		FixedFunctions::Light sLight;
@@ -161,8 +161,8 @@ void SPRTTFixedFunctions::OnPaint(Surface &cSurface)
 	// Get the used renderer
 	Renderer &cRenderer = GetRenderer();
 
-	// Clear the content of the current used render target
-	cRenderer.Clear();
+	// Clear the content of the current used render target by using gray (this way, in case on an graphics error we might still see at least something)
+	cRenderer.Clear(Clear::Color | Clear::ZBuffer, Color4::Gray);
 
 	// Fixed functions support required
 	FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();

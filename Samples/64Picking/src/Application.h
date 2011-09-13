@@ -103,6 +103,13 @@ class Application : public PLEngine::EngineApplication {
 
 
 	//[-------------------------------------------------------]
+	//[ Private virtual PLCore::CoreApplication functions     ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void OnInit() override;
+
+
+	//[-------------------------------------------------------]
 	//[ Private virtual PLCore::AbstractFrontend functions    ]
 	//[-------------------------------------------------------]
 	private:

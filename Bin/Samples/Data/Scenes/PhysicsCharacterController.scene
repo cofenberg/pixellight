@@ -1,5 +1,6 @@
 <?xml version="1.0" ?>
 <Scene Version="1" Name="Scene">
+    <Node Class="PLScene::SNKeyValue" Key="ClearColor" Value="0.5 0.5 0.5" />
     <Container Class="PLPhysics::SCPhysicsWorld" Name="PhysicsWorld" PhysicsAPI="PLPhysicsNewton::World" CacheDirectory="_Cache/PLPhysicsNewton/PLSDK/" AABBMin="-10 -10 -10" AABBMax="10 10 10">
         <Node Class="PLScene::SNMesh" Position="0 -2.1 -5" Scale="4 0.1 4" Rotation="0 180 0" Name="Floor" Mesh="Default">
             <Modifier Class="PLPhysics::SNMPhysicsBodyBox" />

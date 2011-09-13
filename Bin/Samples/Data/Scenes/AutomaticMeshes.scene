@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <Scene Version="1">
+    <Node Class="PLScene::SNKeyValue" Key="ClearColor" Value="0.5 0.5 0.5" />
     <Node Class="PLScene::SNCamera" Name="FreeCamera" Position="0.0 0.0 10.0" Rotation="0.0 180.0 0.0">
         <Modifier Class="PLEngine::SNMLookController" />
         <Modifier Class="PLScene::SNMRotationFixRoll" />
