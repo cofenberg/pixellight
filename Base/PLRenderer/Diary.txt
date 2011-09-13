@@ -1,6 +1,10 @@
 >> 13.09.2011
 [CO]
 - "PLCore::FrontendConfig" and "PLRenderer::Config" have now the same default size (800x600 still feels quite fine during development)
+- "PLRendererOpenGLES2": Implemented render to texture using "PLRendererOpenGL" as base. Please note that this is definitly not optimal and not final... but
+  right now I don't want to do the required render to texture refactoring within PLRenderer... the current render to texture design is from the time were one had
+  to use e.g. "pbuffer" and the "framebuffer"-extension of OpenGL was not yet existing. So, the current PLRenderer render to texture interface is somewhat out-of-date
+  (but for now, it is still usable).
 
 
 

@@ -12,6 +12,7 @@ add_sources(
 	src/IndexBuffer.cpp
 	src/PLRendererOpenGLES2.cpp
 	src/Renderer.cpp
+	src/FrameBufferObject.cpp
 	src/SurfaceTextureBuffer.cpp
 	src/SurfaceWindow.cpp
 	src/TextureBuffer2D.cpp

@@ -39,11 +39,17 @@ namespace PLRendererOpenGLES2 {
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class FrameBufferObject;
+
+
+//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    A null texture buffer renderer surface where we can render in
+*    A OpenGL ES 2.0 texture buffer renderer surface where we can render in
 */
 class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 
@@ -64,6 +70,26 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 		*/
 		virtual ~SurfaceTextureBuffer();
 
+		/**
+		*  @brief
+		*    Returns whether FBO is used or not
+		*
+		*  @return
+		*    'true' if a FBO is used, else 'false'
+		*/
+		bool IsFBOUsed() const;
+
+		/**
+		*  @brief
+		*    Sets a color render target
+		*
+		*  @param[in] nColorIndex
+		*    Index of the color render target to set
+		*  @param[in] pTextureBuffer
+		*    Texture buffer to render in, can be a null pointer
+		*/
+		void SetColorRenderTarget(PLCore::uint8 nColorIndex, PLRenderer::TextureBuffer *pTextureBuffer);
+
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
@@ -80,19 +106,30 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 		*  @param[in] nFlags
 		*    Texture buffer surface flags (see EFlags)
 		*  @param[in] nMaxColorTargets
-		*    Maximum number of color render targets. This must be at least 1 - main renderer
-		*    target color.
+		*    Maximum number of color render targets. This must be at least 1 - main renderer target color.
 		*/
-		SurfaceTextureBuffer(PLRenderer::Renderer &cRenderer, PLRenderer::TextureBuffer &cTextureBuffer,
+		SurfaceTextureBuffer(PLRenderer::Renderer &cRenderer, PLRenderer::TextureBuffer &cTexture,
 							 PLCore::uint32 nFlags = Depth | Stencil, PLCore::uint8 nMaxColorTargets = 1);
+
+		/*
+		*  @brief
+		*    Create a FBO
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		bool CreateFBO();
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::ResourceHandler m_cTextureBufferHandler;	/**< Texture buffer to render in */
-		PLCore::uint8			 	m_nFace;					/**< Texture buffer face currently rendered in (cube map) */
+		FrameBufferObject			*m_pFrameBufferObject;		/**< Nice frame buffer object, can be a null pointer */
+		PLRenderer::ResourceHandler	 m_cTextureBufferHandler;	/**< Texture buffer to render in */
+		PLCore::uint8			 	 m_nFace;					/**< Texture buffer face currently rendered in (cube map) */
+
+		PLCore::List<PLRenderer::ResourceHandler*> m_lstTextureBufferHandler;
 
 
 	//[-------------------------------------------------------]
@@ -120,6 +157,8 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 		virtual bool MakeCurrent(PLCore::uint8 nFace = 0) override;
 		virtual bool UnmakeCurrent() override;
 		virtual bool Present() override;
+		virtual void BackupDeviceData() override;
+		virtual void RestoreDeviceData() override;
 
 
 };

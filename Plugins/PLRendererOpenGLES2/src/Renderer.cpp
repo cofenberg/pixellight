@@ -701,12 +701,13 @@ PLRenderer::SurfaceWindow *Renderer::CreateSurfaceWindow(PLRenderer::SurfaceWind
 
 PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBuffer2D(const Vector2i &vSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, uint32 nFlags, uint8 nMaxColorTargets)
 {
-	// [TODO] Implement render to texture
-	/*
 	// Check maximum render targets and dimension
 	if (nMaxColorTargets && nMaxColorTargets <= m_sCapabilities.nMaxColorRenderTargets && IsValidTextureBuffer2DSize(vSize.x) && IsValidTextureBuffer2DSize(vSize.y)) {
 		// Create and register renderer surface
-		PLRenderer::TextureBuffer *pTextureBuffer = new TextureBuffer2D(*this, vSize, nFormat, PLRenderer::TextureBuffer::RenderTarget);
+		uint32 nTextureBufferFlags = PLRenderer::TextureBuffer::RenderTarget;
+		if (nFlags & PLRenderer::SurfaceTextureBuffer::Mipmaps)
+			nTextureBufferFlags |= PLRenderer::TextureBuffer::Mipmaps;
+		PLRenderer::TextureBuffer *pTextureBuffer = new TextureBuffer2D(*this, vSize, nFormat, nTextureBufferFlags);
 		PLRenderer::SurfaceTextureBuffer *pRendererSurface = new SurfaceTextureBuffer(*this, *pTextureBuffer, nFlags, nMaxColorTargets);
 		m_lstSurfaces.Add(pRendererSurface);
 
@@ -716,20 +717,17 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBuffer2D(const V
 		// Error!
 		return nullptr;
 	}
-//	*/
-	// Error!
-	return nullptr;
 }
 
 PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferRectangle(const Vector2i &vSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, uint32 nFlags, uint8 nMaxColorTargets)
 {
-	// [TODO] Implement render to texture
-	/*
 	// Check maximum render targets and dimension
-	if (nMaxColorTargets && nMaxColorTargets <= m_sCapabilities.nMaxColorRenderTargets && vSize.x && vSize.y &&
-		vSize.x <= m_sCapabilities.nMaxRectangleTextureBufferSize && vSize.y <= m_sCapabilities.nMaxRectangleTextureBufferSize) {
+	if (nMaxColorTargets && nMaxColorTargets <= m_sCapabilities.nMaxColorRenderTargets && IsValidTextureBufferRectangleSize(vSize.x) && IsValidTextureBufferRectangleSize(vSize.y)) {
 		// Create and register renderer surface
-		PLRenderer::TextureBuffer *pTextureBuffer = new TextureBufferRectangle(*this, vSize, nFormat, PLRenderer::TextureBuffer::RenderTarget);
+		uint32 nTextureBufferFlags = PLRenderer::TextureBuffer::RenderTarget;
+		if (nFlags & PLRenderer::SurfaceTextureBuffer::Mipmaps)
+			nTextureBufferFlags |= PLRenderer::TextureBuffer::Mipmaps;
+		PLRenderer::TextureBuffer *pTextureBuffer = new TextureBuffer2D(*this, vSize, nFormat, nTextureBufferFlags);
 		PLRenderer::SurfaceTextureBuffer *pRendererSurface = new SurfaceTextureBuffer(*this, *pTextureBuffer, nFlags, nMaxColorTargets);
 		m_lstSurfaces.Add(pRendererSurface);
 
@@ -739,29 +737,24 @@ PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferRectangle(
 		// Error!
 		return nullptr;
 	}
-	*/
-	// Error!
-	return nullptr;
 }
 
 PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBufferCube(uint16 nSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, uint32 nFlags)
 {
-	// [TODO] Implement render to texture
-	/*
 	// Valid dimension?
 	if (!IsValidTextureBufferCubeSize(nSize))
 		return nullptr; // Error!
 
 	// Create and register renderer surface
-	PLRenderer::TextureBuffer *pTextureBuffer = new TextureBufferCube(*this, nSize, nFormat, PLRenderer::TextureBuffer::RenderTarget);
+	uint32 nTextureBufferFlags = PLRenderer::TextureBuffer::RenderTarget;
+	if (nFlags & PLRenderer::SurfaceTextureBuffer::Mipmaps)
+		nTextureBufferFlags |= PLRenderer::TextureBuffer::Mipmaps;
+	PLRenderer::TextureBuffer *pTextureBuffer = new TextureBufferCube(*this, nSize, nFormat, nTextureBufferFlags);
 	PLRenderer::SurfaceTextureBuffer *pRendererSurface = new SurfaceTextureBuffer(*this, *pTextureBuffer, nFlags, 1);
 	m_lstSurfaces.Add(pRendererSurface);
 
 	// Return created renderer surface
 	return pRendererSurface;
-	*/
-	// Error!
-	return nullptr;
 }
 
 PLRenderer::TextureBuffer1D *Renderer::CreateTextureBuffer1D(Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
@@ -1675,21 +1668,22 @@ bool Renderer::SetRenderTarget(PLRenderer::Surface *pSurface, uint8 nFace)
 
 bool Renderer::SetColorRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, uint8 nColorIndex, uint8 nFace)
 {
-/*	// Check parameter
-	if (!m_lstSurfaces.IsElement(pSurface))
-		return true;
-	if (m_cCurrentSurface.GetSurface())
-		m_cCurrentSurface.GetSurface()->UnmakeCurrent();
-	m_cCurrentSurface.SetSurface(pSurface);
+	// Check current surface
+	PLRenderer::Surface *pSurface = m_cCurrentSurface.GetSurface();
+	if (pSurface && pSurface->GetType() == PLRenderer::Surface::TextureBuffer) {
+		// Same texture buffer format?
+		PLRenderer::SurfaceTextureBuffer *pSurfaceTextureBuffer = static_cast<PLRenderer::SurfaceTextureBuffer*>(pSurface);
+		if (pTextureBuffer && pTextureBuffer->GetFormat() == pSurfaceTextureBuffer->GetFormat()) {
+			// Setup
+			static_cast<SurfaceTextureBuffer*>(m_cCurrentSurface.GetSurface())->SetColorRenderTarget(nColorIndex, pTextureBuffer);
 
-	// Make the surface to the current render target
-	const bool bError = pSurface->MakeCurrent(nFace);
+			// Done
+			return true;
+		}
+	}
 
-	// Done
-	return bError;
-	*/
-	// [TODO] Implement
-	return false; // Error!
+	// Error!
+	return false;
 }
 
 bool Renderer::MakeScreenshot(PLGraphics::Image &cImage)
