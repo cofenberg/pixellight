@@ -6,6 +6,8 @@
 - "PLCore::FrontendConfig" and "PLRenderer::Config" have now the same default size (800x600 still feels quite fine during development)
 - "Frontend::Run()": By default, this method is now allowed to show an urgent message to the user in case of a failure (see also dirary entry "23.08.2011")
 - Android port: "SystemLinux::UrgentMessage()" writes into the Android kernel log buffer
+- Added "SystemAndroid" which is derived from "SystemLinux". In here, an "AAssetManager"-instance can be set for example by the Android frontend and received
+  for instance by a special Android file implementation.
 
 
 

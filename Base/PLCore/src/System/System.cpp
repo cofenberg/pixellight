@@ -26,6 +26,8 @@
 #include "PLCore/System/Thread.h"
 #if defined(WIN32)
 	#include "PLCore/System/SystemWindows.h"
+#elif defined(ANDROID)
+	#include "PLCore/System/SystemAndroid.h"
 #elif defined(LINUX)
 	#include "PLCore/System/SystemLinux.h"
 #endif
@@ -411,6 +413,9 @@ System::System() :
 	#if defined(WIN32)
 		// Create Windows implementation
 		m_pSystemImpl = new SystemWindows();
+	#elif defined(ANDROID)
+		// Create Android implementation
+		m_pSystemImpl = new SystemAndroid();
 	#elif defined(LINUX)
 		// Create Linux implementation
 		m_pSystemImpl = new SystemLinux();

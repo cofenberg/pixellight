@@ -56,9 +56,9 @@ class SystemLinux : public SystemImpl {
 
 
 	//[-------------------------------------------------------]
-	//[ Private structures                                    ]
+	//[ Protected structures                                  ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		/**
 		*  @brief
 		*    Holds memory information
@@ -72,9 +72,9 @@ class SystemLinux : public SystemImpl {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		/**
 		*  @brief
 		*    Constructor
@@ -101,9 +101,9 @@ class SystemLinux : public SystemImpl {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual SystemImpl functions                  ]
+	//[ Protected virtual SystemImpl functions                ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		virtual String GetPlatform() const override;
 		virtual String GetOS() const override;
 		virtual char GetSeparator() const override;
@@ -138,9 +138,9 @@ class SystemLinux : public SystemImpl {
 
 
 	//[-------------------------------------------------------]
-	//[ Private data                                          ]
+	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		ConsoleLinux   m_cConsole;		/**< Console instance */
 		bool		   m_bSysInfoInit;	/**< Has 'm_sName' a valid value? */
 		struct utsname m_sName;			/**< Basic system information */

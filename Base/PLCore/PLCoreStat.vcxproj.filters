@@ -574,6 +574,9 @@
     <ClCompile Include="src\Runtime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\System\SystemAndroid.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLCore\ModuleMain.h">
@@ -1316,6 +1319,9 @@
     </ClInclude>
     <ClInclude Include="include\PLCore\Runtime.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\System\SystemAndroid.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

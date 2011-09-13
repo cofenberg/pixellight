@@ -1323,6 +1323,12 @@
     <ClInclude Include="include\PLCore\Runtime.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\PLCore\System\SystemAndroid.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\System\SystemAndroid.cpp">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\PLCore\Base\Type\TypeBool.inl">

@@ -193,6 +193,15 @@ elseif(LINUX)
 		src/System/MutexLinux.cpp
 		src/System/SemaphoreLinux.cpp
 	)
+
+	if(ANDROID)
+		##################################################
+		## Android
+		##################################################
+		add_sources(
+			src/System/SystemAndroid.cpp
+		)
+	endif()
 endif()
 
 ##################################################

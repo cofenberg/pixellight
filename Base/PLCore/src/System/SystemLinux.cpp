@@ -23,9 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#ifdef ANDROID
-	#include <android/log.h>
-#endif
 #include <pwd.h>
 #include <time.h>
 #include <errno.h>
@@ -45,7 +42,7 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -108,15 +105,11 @@ bool SystemLinux::GetMemoryInformation(MemoryInformation &sMemoryInformation) co
 
 
 //[-------------------------------------------------------]
-//[ Private virtual SystemImpl functions                  ]
+//[ Protected virtual SystemImpl functions                ]
 //[-------------------------------------------------------]
 String SystemLinux::GetPlatform() const
 {
-	#ifdef ANDROID
-		static const String sString = "Android";
-	#else
-		static const String sString = "Linux";
-	#endif
+	static const String sString = "Linux";
 	return sString;
 }
 
@@ -131,11 +124,7 @@ String SystemLinux::GetOS() const
 		sVersion += m_sName.release;
 		return sVersion;
 	} else {
-		#ifdef ANDROID
-			return "Android unknown";
-		#else
-			return "Linux unknown";
-		#endif
+		return "Linux unknown";
 	}
 }
 
@@ -334,21 +323,16 @@ const Console &SystemLinux::GetConsole() const
 
 void SystemLinux::UrgentMessage(const String &sMessage) const
 {
-	#ifdef ANDROID
-		// Write into the Android kernel log buffer (use Androids "logcat" utility to access this system log)
-		__android_log_write(ANDROID_LOG_FATAL, "PixelLight", (sMessage.GetFormat() == String::ASCII) ? sMessage.GetASCII() : sMessage.GetUTF8());
-	#else
-		// Do also feed the console, safe is safe
-		fputs((sMessage.GetFormat() == String::ASCII) ? sMessage.GetASCII() : sMessage.GetUTF8(), stdout);
-		fputs("\n", stdout);
-		fflush(stdout);
+	// Do also feed the console, safe is safe
+	fputs((sMessage.GetFormat() == String::ASCII) ? sMessage.GetASCII() : sMessage.GetUTF8(), stdout);
+	fputs("\n", stdout);
+	fflush(stdout);
 
-		// There's no such thing as "MessageBox()" from MS Windows and using a GUI system
-		// like Qt would be a total overkill in here, so, go the easiest possible way...
-		char szCommand[1024];
-		sprintf(szCommand, "xmessage -center \"%s\"", sMessage.GetASCII());
-		system(szCommand);
-	#endif
+	// There's no such thing as "MessageBox()" from MS Windows and using a GUI system
+	// like Qt would be a total overkill in here, so, go the easiest possible way...
+	char szCommand[1024];
+	sprintf(szCommand, "xmessage -center \"%s\"", sMessage.GetASCII());
+	system(szCommand);
 }
 
 Time SystemLinux::GetTime() const
