@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLMath/Matrix3x3.h>
 #include <PLGraphics/Image/Image.h>
-#include <PLGraphics/Image/ImagePart.h>
 #include <PLGraphics/Image/ImageBuffer.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/Program.h>

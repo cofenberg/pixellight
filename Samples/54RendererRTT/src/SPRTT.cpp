@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLGraphics/Image/Image.h>
-#include <PLGraphics/Image/ImagePart.h>
 #include <PLGraphics/Image/ImageBuffer.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>

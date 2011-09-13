@@ -27,7 +27,6 @@
 #include <PLMath/Matrix4x4.h>
 #include <PLMath/Rectangle.h>
 #include <PLGraphics/Image/Image.h>
-#include <PLGraphics/Image/ImagePart.h>
 #include <PLGraphics/Image/ImageBuffer.h>
 #include <PLRenderer/Renderer/Program.h>
 #include <PLRenderer/Renderer/Renderer.h>
