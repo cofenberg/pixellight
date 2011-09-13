@@ -8,6 +8,7 @@
 - Android port: "SystemLinux::UrgentMessage()" writes into the Android kernel log buffer
 - Added "SystemAndroid" which is derived from "SystemLinux". In here, an "AAssetManager"-instance can be set for example by the Android frontend and received
   for instance by a special Android file implementation.
+- Added "FileAndroid" using the Android asset manager (implementation is not yet tested)
 
 
 

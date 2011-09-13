@@ -229,6 +229,12 @@
     <ClCompile Include="src\File\Directory.cpp" />
     <ClCompile Include="src\File\File.cpp" />
     <ClCompile Include="src\File\FileAccess.cpp" />
+    <ClCompile Include="src\File\FileAndroid.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="src\File\FileHttp.cpp" />
     <ClCompile Include="src\File\FileImpl.cpp" />
     <ClCompile Include="src\File\FileLinux.cpp">
@@ -508,6 +514,7 @@
     <ClInclude Include="include\PLCore\File\Directory.h" />
     <ClInclude Include="include\PLCore\File\File.h" />
     <ClInclude Include="include\PLCore\File\FileAccess.h" />
+    <ClInclude Include="include\PLCore\File\FileAndroid.h" />
     <ClInclude Include="include\PLCore\File\FileHttp.h" />
     <ClInclude Include="include\PLCore\File\FileImpl.h" />
     <ClInclude Include="include\PLCore\File\FileLinux.h" />

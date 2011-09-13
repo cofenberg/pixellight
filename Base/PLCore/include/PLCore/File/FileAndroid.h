@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SystemAndroid.h                                *
+ *  File: FileAndroid.h                                  *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,22 +20,22 @@
 \*********************************************************/
 
 
-#ifndef __PLCORE_SYSTEM_ANDROID_H__
-#define __PLCORE_SYSTEM_ANDROID_H__
+#ifndef __PLCORE_FILE_ANDROID_H__
+#define __PLCORE_FILE_ANDROID_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/System/SystemLinux.h"
+#include "PLCore/File/FileImpl.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-struct AAssetManager;
-typedef struct AAssetManager AAssetManager;
+struct AAsset;
+typedef struct AAsset AAsset;
 
 
 //[-------------------------------------------------------]
@@ -49,38 +49,19 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Android 'System' implementation
+*    Android implementation of FileImpl
+*
+*  @note
+*    - Implementation of the state design pattern, this class is a concrete state of the 'FileImpl'-state of the 'FileObject'-context
+*    - This implementation is using the Android asset manager received from "SystemAndroid::GetAssetManager()"
 */
-class SystemAndroid : public SystemLinux {
+class FileAndroid : public FileImpl {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class System;
-
-
-	//[-------------------------------------------------------]
-	//[ Public static functions                               ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Returns the Android asset manager
-		*
-		*  @return
-		*    The Android asset manager, can be a null pointer, do not delete the returned instance
-		*/
-		static PLCORE_API AAssetManager *GetAssetManager();
-
-		/**
-		*  @brief
-		*    Sets the Android asset manager
-		*
-		*  @param[in] pAAssetManager
-		*    Android asset manager, can be a null pointer, the given instance is just shared and not destroyed by this class
-		*/
-		static PLCORE_API void SetAssetManager(AAssetManager *pAAssetManager);
+	friend class FileObject;
 
 
 	//[-------------------------------------------------------]
@@ -90,30 +71,61 @@ class SystemAndroid : public SystemLinux {
 		/**
 		*  @brief
 		*    Constructor
+		*
+		*  @param[in] cUrl
+		*    URL of the file or directory
+		*  @param[in] pAccess
+		*    Additional file access information (can be a null pointer)
 		*/
-		SystemAndroid();
+		FileAndroid(const Url &cUrl, const FileAccess *pAccess);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~SystemAndroid();
+		virtual ~FileAndroid();
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual SystemImpl functions                  ]
-	//[-------------------------------------------------------]
-	private:
-		virtual String GetPlatform() const override;
-		virtual String GetOS() const override;
-		virtual void UrgentMessage(const String &sMessage) const override;
-
-
-	//[-------------------------------------------------------]
-	//[ Private static data                                   ]
+	//[ Private virtual FileImpl functions                    ]
 	//[-------------------------------------------------------]
 	private:
-		static AAssetManager *g_pAAssetManager = nullptr;	/**< Android asset manager, can be a null pointer, the given instance is just shared and not destroyed by this class */
+		virtual bool Exists() const override;
+		virtual bool IsFile() const override;
+		virtual bool IsDirectory() const override;
+		virtual bool CopyTo(const String &sDest, bool bOverwrite) const override;
+		virtual bool MoveTo(const String &sDest) override;
+		virtual bool Rename(const String &sName) override;
+		virtual bool CreateNewFile(bool bAlways) override;
+		virtual bool CreateNewDirectory() override;
+		virtual bool Delete() override;
+		virtual bool DeleteDirectory() override;
+		virtual void Close() override;
+		virtual bool Open(uint32 nAccess) override;
+		virtual bool IsOpen() const override;
+		virtual bool IsReadable() const override;
+		virtual bool IsWritable() const override;
+		virtual bool IsEof() const override;
+		virtual int GetC() override;
+		virtual bool PutC(int nChar) override;
+		virtual String GetS() override;
+		virtual int PutS(const String &sString) override;
+		virtual uint32 Read(void *pBuffer, uint32 nSize, uint32 nCount) override;
+		virtual uint32 Write(const void *pBuffer, uint32 nSize, uint32 nCount) override;
+		virtual bool Flush() override;
+		virtual bool Seek(int32 nOffset, File::ESeek nLocation) override;
+		virtual int32 Tell() const override;
+		virtual uint32 GetSize() const override;
+		virtual FileSearchImpl *CreateSearch() override;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		String	 m_sFilename;	/**< File name (in Linux notation) */
+		uint32	 m_nAccess;		/**< File access modes (see EAccess) */
+		AAsset	*m_pAAsset;		/**< Pointer to the Android asset, can be a null pointer */
 
 
 };
@@ -125,4 +137,4 @@ class SystemAndroid : public SystemLinux {
 } // PLCore
 
 
-#endif // __PLCORE_SYSTEM_ANDROID_H__
+#endif // __PLCORE_FILE_ANDROID_H__

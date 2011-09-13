@@ -194,11 +194,13 @@ elseif(LINUX)
 		src/System/SemaphoreLinux.cpp
 	)
 
+	# The Android port is reusing the Linux port whenever possible
 	if(ANDROID)
 		##################################################
 		## Android
 		##################################################
 		add_sources(
+			src/File/FileAndroid.cpp
 			src/System/SystemAndroid.cpp
 		)
 	endif()

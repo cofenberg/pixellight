@@ -29,6 +29,8 @@
 #include "PLCore/File/FileHttp.h"
 #if defined(WIN32)
 	#include "PLCore/File/FileWindows.h"
+#elif defined(ANDROID)
+	#include "PLCore/File/FileAndroid.h"
 #elif defined(LINUX)
 	#include "PLCore/File/FileLinux.h"
 #endif
@@ -157,6 +159,8 @@ void FileObject::Assign(const Url &cUrl, const FileAccess *pAccess)
 	} else {
 		#if defined(WIN32)
 			m_pFileImpl = new FileWindows(cFinalUrl, pAccess);
+		#elif defined(ANDROID)
+			m_pFileImpl = new FileAndroid(cFinalUrl, pAccess);
 		#elif defined(LINUX)
 			m_pFileImpl = new FileLinux(cFinalUrl, pAccess);
 		#else
