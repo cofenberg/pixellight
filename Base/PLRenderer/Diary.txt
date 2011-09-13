@@ -1,3 +1,9 @@
+>> 13.09.2011
+[CO]
+- "PLCore::FrontendConfig" and "PLRenderer::Config" have now the same default size (800x600 still feels quite fine during development)
+
+
+
 >> 06.09.2011
 [CO]
 - "PLRendererOpenGLES2": Added Android part to the EGL headers

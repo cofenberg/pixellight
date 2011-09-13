@@ -125,8 +125,8 @@ class FrontendConfig : public CoreConfigGroup {
 		// Attributes
 		pl_attribute(X,			int,	0,		ReadWrite,	DirectValue,	"X position of the frontend (in screen coordinates)",	"")
 		pl_attribute(Y,			int,	0,		ReadWrite,	DirectValue,	"Y position of the frontend (in screen coordinates)",	"")
-		pl_attribute(Width,		uint32,	1024,	ReadWrite,	DirectValue,	"Width of the frontend",								"")
-		pl_attribute(Height,	uint32,	768,	ReadWrite,	DirectValue,	"Height of the frontend",								"")
+		pl_attribute(Width,		uint32,	800,	ReadWrite,	DirectValue,	"Width of the frontend",								"")
+		pl_attribute(Height,	uint32,	600,	ReadWrite,	DirectValue,	"Height of the frontend",								"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
