@@ -446,6 +446,7 @@ class EngineApplication : public PLScene::SceneApplication {
 		PLScene::SceneNodeHandler				   m_cSceneContainerHandler;	/**< Scene node handler for the scene container */
 		PLScene::SceneNodeHandler				   m_cCameraHandler;			/**< Scene node handler for the camera */
 		PLCore::String							   m_sDefaultSceneRenderer;		/**< Default scene renderer */
+		PLCore::String							   m_sClearColor;				/**< Clear color */
 		PLCore::String							   m_sStartCamera;				/**< Name of the given start camera */
 		PLScene::SceneNode						  *m_pFirstFoundCamera;			/**< First found camera, can be a null pointer */
 		PLCore::Array<const PLScene::SNKeyValue*>  m_lstPostKeys;				/**< Keys to process AFTER all other */

@@ -1,3 +1,9 @@
+>> 13.09.2011
+[CO]
+- "EngineApplication": The clear color hint within scenes is working again
+
+
+
 >> 19.08.2011
 [CO]
 - "MousePicking" is now using the frontend instead of PLGui directly. Of course, this means that this helper class just works with one single

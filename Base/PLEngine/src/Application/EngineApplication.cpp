@@ -288,8 +288,9 @@ bool EngineApplication::LoadScene(const String &sFilename)
 	bool bResult = pContainer->Load(sFilename);
 	if (bResult) {
 		// Set a null pointer camera and default scene renderer
-		m_pFirstFoundCamera = nullptr;
+		m_sClearColor		= "";
 		m_sStartCamera		= "";
+		m_pFirstFoundCamera = nullptr;
 		m_bHasLoadScreen	= false;
 
 		// Get scene surface painter
@@ -317,6 +318,9 @@ bool EngineApplication::LoadScene(const String &sFilename)
 
 			// Set the used scene renderer
 			GetSceneRendererTool().SetSceneRenderer(pContainer, m_sDefaultSceneRenderer, DefaultSceneRenderer);
+
+			// Set clear color
+			GetSceneRendererTool().SetPassAttribute("Begin", "ColorClear", m_sClearColor);
 
 			// Is there a given start camera?
 			SceneNode *pCamera = nullptr;
@@ -650,16 +654,7 @@ void EngineApplication::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 
 		// ClearColor
 		} else if (cKeyValue.Key.GetString() == "ClearColor") {
-			// Get scene surface painter
-			SurfacePainter *pPainter = GetPainter();
-			if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
-				SceneRenderer *pSceneRenderer = static_cast<SPScene*>(pPainter)->GetDefaultSceneRenderer();
-				if (pSceneRenderer) {
-					SceneRendererPass *pSceneRendererPass = pSceneRenderer->GetByName("Begin");
-					if (pSceneRendererPass)
-						pSceneRendererPass->SetAttribute("ColorClear", cKeyValue.Value.GetString());
-				}
-			}
+			m_sClearColor = cKeyValue.Value.GetString();
 
 		// StartCamera
 		} else if (cKeyValue.Key.GetString() == "StartCamera") {
