@@ -520,7 +520,7 @@ void OSWindowWindows::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHei
 
 		// Lookout! "MoveWindow()" sets the window size, not the window client area size
 		// -> We have to calculate this window size basing on the given client area size
-		RECT cRect = {nX, nY, nWidth, nHeight};
+		RECT cRect = {nX, nY, nX+nWidth, nY+nHeight};
 		if (::AdjustWindowRect(&cRect, GetWindowLong(m_hWnd, GWL_STYLE), FALSE)) {
 			// Set OS window position and size
 			::MoveWindow(m_hWnd, nX, nY, cRect.right-cRect.left, cRect.bottom-cRect.top, TRUE);
