@@ -275,6 +275,11 @@ bool ContextRuntimeLinking::LoadGLESEntryPoints()
 	#define IMPORT_FUNC(funcName)																																				\
 		if (bResult) {																																							\
 			void *pSymbol = m_pGLESDynLib->GetSymbol(#funcName);																												\
+			if (!pSymbol) {																																						\
+				/* The specification states that "eglGetProcAddress" is only for extension functions, but when using OpenGL ES 2.0 on desktop PC by using a						\
+				   native OpenGL ES 2.0 capable graphics driver (tested with "AMD Catalyst 11.8"), only this way will work */													\
+				pSymbol = eglGetProcAddress(#funcName);																															\
+			}																																									\
 			if (pSymbol) {																																						\
 				*(reinterpret_cast<void**>(&(funcName))) = pSymbol;																												\
 			} else {																																							\
