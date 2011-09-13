@@ -2,6 +2,7 @@
 [CO]
 - Bugfix: "PLFrontendOS::OSWindowWindows::SetPositionSize()": The MS Windows function "MoveWindow()" sets the window size, not the window client area size
   -> We have to calculate this window size basing on the given client area size
+- Bugfix: "PLFrontendPLGui" was not returning and setting the window size correctly (the window border must be ignored)
 
 
 

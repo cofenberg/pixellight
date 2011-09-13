@@ -235,27 +235,37 @@ int Frontend::GetY() const
 
 uint32 Frontend::GetWidth() const
 {
-	// Query the main window
-	return m_pMainWindow ? m_pMainWindow->GetSize().x : 0;
+	// Query the main window (the window border must be ignored, we're only interested in the client area, not the window itself)
+	return (m_pMainWindow && m_pMainWindow->GetContentWidget()) ? m_pMainWindow->GetContentWidget()->GetSize().x : 0;
 }
 
 uint32 Frontend::GetHeight() const
 {
-	return m_pMainWindow ? m_pMainWindow->GetSize().y : 0;
+	// Query the main window (the window border must be ignored, we're only interested in the client area, not the window itself)
+	return (m_pMainWindow && m_pMainWindow->GetContentWidget()) ? m_pMainWindow->GetContentWidget()->GetSize().y : 0;
 }
 
 void Frontend::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
-	if (m_pMainWindow) {
+	if (m_pMainWindow && m_pMainWindow->GetContentWidget()) {
 		// Get the default screen (never a null pointer)
 		Screen *pScreen = Gui::GetSystemGui()->GetDefaultScreen();
 
 		// Correct frontend position and size settings
 		CorrectPositionSize(nX, nY, nWidth, nHeight, pScreen->GetPos().x, pScreen->GetPos().y, pScreen->GetSize().x, pScreen->GetSize().y);
 
-		// Set position and size settings
+		// Set position
 		m_pMainWindow->SetPos(Vector2i(nX, nY));
-		m_pMainWindow->SetSize(Vector2i(nWidth, nHeight));
+
+		{ // Set size (the window border must be ignored, we're only interested in the client area, not the window itself)
+			// Calculate the space the window decoration is consuming
+			const Vector2i vSize(nWidth, nHeight);
+			m_pMainWindow->SetSize(vSize);
+			const Vector2i vDecorationSize = vSize - m_pMainWindow->GetContentWidget()->GetSize();
+
+			// Now, set the real window size
+			m_pMainWindow->SetSize(vSize + vDecorationSize);
+		}
 	}
 }
 
