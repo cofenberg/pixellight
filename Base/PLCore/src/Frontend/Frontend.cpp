@@ -26,6 +26,7 @@
 #include "PLCore/Runtime.h"
 #include "PLCore/Log/Log.h"
 #include "PLCore/Base/Class.h"
+#include "PLCore/System/System.h"
 #include "PLCore/Frontend/FrontendImpl.h"
 #include "PLCore/Frontend/FrontendContext.h"
 #include "PLCore/Frontend/Frontend.h"
@@ -50,7 +51,7 @@ pl_implement_class(Frontend)
 *  @brief
 *    Run the frontend
 */
-int Frontend::Run(const FrontendContext &cFrontendContext)
+int Frontend::Run(const FrontendContext &cFrontendContext, bool bUrgentMessageAllowed)
 {
 	int nResult = -1;	// Error by default
 
@@ -74,10 +75,18 @@ int Frontend::Run(const FrontendContext &cFrontendContext)
 
 			// Destroy the frontend
 			delete pFrontend;
+		} else {
+			// Error!
+			if (bUrgentMessageAllowed)
+				System::GetInstance()->UrgentMessage("Failed to create the frontend instance (\"" + cFrontendContext.GetFrontend() + "\")");
 		}
 
 		// Destroy the frontend implementation
 		delete pFrontendImpl;
+	} else {
+		// Error!
+		if (bUrgentMessageAllowed)
+			System::GetInstance()->UrgentMessage("Failed to create the frontend implementation instance (\"" + cFrontendContext.GetFrontendImplementation() + "\")");
 	}
 
 	// Done

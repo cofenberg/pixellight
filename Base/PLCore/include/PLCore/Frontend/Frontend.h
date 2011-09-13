@@ -135,12 +135,14 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*
 		*  @param[in] cFrontendContext
 		*    Frontend context to use (just shared, the given instance must stay valid as long as this frontend lives)
+		*  @param[in] bUrgentMessageAllowed
+		*    Is this method allowed to show an urgent message to the user in case of a failure?
 		*
 		*  @return
 		*    Exit code (usually 0 means no error), usually <0 when there was an error
 		*    (e.g. an embedded frontend implementation is run and controlled by another application and can't be run by using this method)
 		*/
-		static PLCORE_API int Run(const FrontendContext &cFrontendContext);
+		static PLCORE_API int Run(const FrontendContext &cFrontendContext, bool bUrgentMessageAllowed = true);
 
 
 	//[-------------------------------------------------------]
