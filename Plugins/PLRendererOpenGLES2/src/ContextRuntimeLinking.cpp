@@ -118,11 +118,14 @@ EGLConfig ContextRuntimeLinking::ChooseConfig(uint32 nMultisampleAntialiasingSam
 			EGL_LEVEL,				0,										// Frame buffer level
 			EGL_SURFACE_TYPE,		EGL_WINDOW_BIT,							// Which types of EGL surfaces are supported
 			EGL_RENDERABLE_TYPE,	EGL_OPENGL_ES2_BIT,						// Which client APIs are supported
-			EGL_DEPTH_SIZE,			EGL_DONT_CARE,							// Bits of Z in the depth buffer
+			EGL_RED_SIZE,			8,										// Bits of red color component
+			EGL_GREEN_SIZE,			8,										// Bits of red color component
+			EGL_BLUE_SIZE,			8,										// Bits of red color component
+			EGL_DEPTH_SIZE,			16,										// Bits of Z in the depth buffer [TODO] Make it possible to set this from the outside, but do also automatically go down if it fails, e.g. 24 doesn't work for me
 			// [TODO] Currently something looks wrong when using the desktop drivers - just black screen when using multisample ("AMD Catalyst 11.8" on a "ATI Mobility Radeon HD 4850")
-//			EGL_SAMPLE_BUFFERS,		nMultisampleAntialiasingSampleBuffers,	// Number of multisample buffers (enable/disable multisample antialiasing)
-//			EGL_SAMPLES,			nMultisampleAntialiasingSamplesCurrent,	// Number of samples per pixel (multisample antialiasing samples)
-			EGL_BUFFER_SIZE,		16,
+			//       -> No issues with Android on the device (but it looks like there's no antialiasing, check it later in detail)
+		//	EGL_SAMPLE_BUFFERS,		nMultisampleAntialiasingSampleBuffers,	// Number of multisample buffers (enable/disable multisample antialiasing)
+		//	EGL_SAMPLES,			nMultisampleAntialiasingSamplesCurrent,	// Number of samples per pixel (multisample antialiasing samples)
 			EGL_NONE
 		};
 

@@ -108,7 +108,7 @@ bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, u
 			bDepthStencil = true;
 		} else {
 		*/
-			if (nFormat & Depth16)
+//			if (nFormat & Depth16)
 				nDepth = GL_DEPTH_COMPONENT16;
 			// [TODO] Check me
 			/*
