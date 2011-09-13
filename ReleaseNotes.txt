@@ -3,6 +3,7 @@ Changes in PixelLight 0.9.9-R1 (not yet released)
 - Change (Linux): Tweaked the compiler and linker settings to reduce the binary size
 - Bugfix: PLRendererOpenGL & PLRendererOpenGLES2: Automatic texture uncompression was broken ("Passing "empty" images to the GPU no longer creates internal image data"-change in PixelLight 0.9.6-R1)
 - Bugfix: "PLEngine::EngineApplication": The clear color hint within scenes was broken
+- Bugfix (Windows): "PLFrontendOS::OSWindowWindows::SetPositionSize()" was not setting the window size correctly (the window border must be ignored)
 
 
 Changes in PixelLight 0.9.8-R1 (released on August 23, 2011 - one year after the first public PixelLight release and nearly 9 years after development start on September 16, 2002)

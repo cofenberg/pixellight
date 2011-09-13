@@ -1,3 +1,10 @@
+>> 13.09.2011
+[CO]
+- Bugfix: "PLFrontendOS::OSWindowWindows::SetPositionSize()": The MS Windows function "MoveWindow()" sets the window size, not the window client area size
+  -> We have to calculate this window size basing on the given client area size
+
+
+
 >> 12.09.2011
 [CO]
 - "String"-class: Do never ever pass a null pointer into "strdup" because the behaviour isn't specified in POSIX (http://pubs.opengroup.org/onlinepubs/9699919799/functions/strdup.html)

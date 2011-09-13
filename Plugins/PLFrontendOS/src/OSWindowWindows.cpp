@@ -518,11 +518,16 @@ void OSWindowWindows::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHei
 		// Correct frontend position and size settings
 		Frontend::CorrectPositionSize(nX, nY, nWidth, nHeight, GetSystemMetrics(SM_XVIRTUALSCREEN), GetSystemMetrics(SM_YVIRTUALSCREEN), GetSystemMetrics(SM_CXVIRTUALSCREEN), GetSystemMetrics(SM_CYVIRTUALSCREEN));
 
-		// Set OS window position and size
-		::MoveWindow(m_hWnd, nX, nY, nWidth, nHeight, TRUE);
+		// Lookout! "MoveWindow()" sets the window size, not the window client area size
+		// -> We have to calculate this window size basing on the given client area size
+		RECT cRect = {nX, nY, nWidth, nHeight};
+		if (::AdjustWindowRect(&cRect, GetWindowLong(m_hWnd, GWL_STYLE), FALSE)) {
+			// Set OS window position and size
+			::MoveWindow(m_hWnd, nX, nY, cRect.right-cRect.left, cRect.bottom-cRect.top, TRUE);
 
-		// If the window is not visible yet, make it visible right now
-		MakeVisible();
+			// If the window is not visible yet, make it visible right now
+			MakeVisible();
+		}
 	}
 }
 
