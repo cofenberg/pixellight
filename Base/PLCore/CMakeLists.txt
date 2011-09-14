@@ -264,6 +264,7 @@ elseif(LINUX)
 	if(ANDROID)
 		add_libs(
 			log
+			android
 		)
 	else()
 		add_libs(

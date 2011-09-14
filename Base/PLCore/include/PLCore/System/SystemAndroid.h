@@ -113,7 +113,7 @@ class SystemAndroid : public SystemLinux {
 	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
 	private:
-		static AAssetManager *g_pAAssetManager = nullptr;	/**< Android asset manager, can be a null pointer, the given instance is just shared and not destroyed by this class */
+		static AAssetManager *g_pAAssetManager;	/**< Android asset manager, can be a null pointer, the given instance is just shared and not destroyed by this class */
 
 
 };

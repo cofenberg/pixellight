@@ -23,6 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <stdio.h>	// For e.g. "off_t"
+#include <stdint.h>	// For e.g. "size_t"
 #include <android/asset_manager.h>
 #include "PLCore/System/SystemAndroid.h"
 #include "PLCore/File/FileAndroid.h"
@@ -71,7 +73,7 @@ bool FileAndroid::Exists() const
 		AAsset *pAAsset = AAssetManager_open(pAAssetManager, (m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : m_sFilename.GetUTF8(), AASSET_MODE_RANDOM);
 		if (pAAsset) {
 			// Close the asset
-			AAssetDir_close(pAAsset);
+			AAsset_close(pAAsset);
 
 			// Done - it exists
 			return true;

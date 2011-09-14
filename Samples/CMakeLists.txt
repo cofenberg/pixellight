@@ -13,7 +13,7 @@ set(PL_SAMPLES_BIN_DIR "${PL_BIN_DIR}/Samples/${CMAKETOOLS_TARGET_ARCHBITSIZE}")
 file(MAKE_DIRECTORY ${PL_SAMPLES_BIN_DIR})
 file(MAKE_DIRECTORY ${PL_BIN_DIR}/Samples/Data)
 
-# Copy runtime data
+# Copy samples data
 file(MAKE_DIRECTORY "${PL_BIN_DIR}/Samples/Data")
 copy_files("${CMAKE_SOURCE_DIR}/Bin/Samples/Data/*.*" "${PL_BIN_DIR}/Samples/Data")
 
