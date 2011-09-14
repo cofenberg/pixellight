@@ -152,6 +152,11 @@ elseif(LINUX)
 	##################################################
 	## GCC Compiler
 	##################################################
+	if(ANDROID)
+		add_linker_flags(
+			-L${STL_LIBRARIES_PATH}	# SPARK is using stl, adding this line results in slightly bigger executables so we don't do this within "LinuxNDK.cmake"
+		)
+	endif()
 	add_linker_flags(
 		${LINUX_LINKER_FLAGS}
 	)

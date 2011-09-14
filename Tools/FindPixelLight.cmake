@@ -103,6 +103,7 @@ _pixellight_find_lib(PL_PLJABBER			PLJabber/PLJabber.h							PLJabber			Plugins/
 _pixellight_find_lib(PL_PLGUIXMLTEXT		PLGuiXmlText/PLGuiXmlText.h					PLGuiXmlText		Plugins/PLGuiXmlText/include)
 _pixellight_find_lib(PL_PLFRONTENDPLGUI		PLFrontendPLGui/PLFrontendPLGui.h			PLFrontendPLGui		Plugins/PLFrontendPLGui/include)
 _pixellight_find_lib(PL_PLRENDEREROPENGLES2	PLRendererOpenGLES2/PLRendererOpenGLES2.h	PLRendererOpenGLES2	Plugins/PLRendererOpenGLES2/include)
+_pixellight_find_lib(PL_PLSPARK_PL			SPARK_PL/SPARK_PL.h							SPARK_PL			Plugins/SPARK_PL/include)
 
 
 # Directories
