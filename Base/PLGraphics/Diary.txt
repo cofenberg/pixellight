@@ -1,3 +1,10 @@
+>> 14.09.2011
+[CO]
+- "Color3::SwapRB()" & "Color4::SwapRB()": The fallback C implementation was just wrong... fix it... I'am not sure who wrote this in the first place, and why
+  the heck I didn't found this bug earlier...
+
+
+
 >> 06.09.2011
 [CO]
 - Fixed inconsistency: "Image" is derived from "Loadable" which has a "Unload()"-method, but the image class introduced it's own "Clear()"-method for the

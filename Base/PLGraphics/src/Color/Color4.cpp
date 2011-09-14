@@ -148,7 +148,8 @@ void Color4::SwapRB(uint8 nBuffer[], uint32 nNumOfPixels)
 	);*/
 #else
 	// C++ method
-	for (uint32 i=0; i<nNumOfPixels; i+=4) {
+	const uint32 nNumOfElements = nNumOfPixels*4;
+	for (uint32 i=0; i<nNumOfElements; i+=4) {
 		const uint8 nTemp = nBuffer[i];
 		nBuffer[i] = nBuffer[i+2];
 		nBuffer[i+2] = nTemp;
