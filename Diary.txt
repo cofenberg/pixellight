@@ -7,6 +7,8 @@
 >> 14.09.2011
 [CO]
 - Android port progress: Loading files (= assets) from apk is working as well as the sample "60Scene" (without shadow mapping, but with dynamic lighting)
+- Android port related: Tested with "armeabi-v7a" (tested with "armeabi" before), works quite fine as well
+- Android port related: "67Game2D" is running (but currently without input)
 
 
 
