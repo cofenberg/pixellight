@@ -6,11 +6,16 @@ define_external_project(zlib)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-if(CMAKETOOLS_USE_SYSTEM_LIBS)
+# Android hasn't that many public shared libraries on it's system, but zlib is there, so do always use the system version to save memory
+# (just in case you may say "Why the heck don't you use "CMAKETOOLS_USE_SYSTEM_LIBS" in the first place?" -> right now, "CMAKETOOLS_USE_SYSTEM_LIBS"
+#  means "use system library or just fail", to fail is no option just because we want to use this single system library in here... maybe when
+#  using "CMAKETOOLS_USE_SYSTEM_LIBS" there should be a fallback in case there's no such system library?)
+if(CMAKETOOLS_USE_SYSTEM_LIBS OR ANDROID)
 	##################################################
 	## Use system libraries
 	##################################################
 	find_package(ZLIB)
+
 	# The find module from cmake itself doesn't add the XXX_LIBRARIES var and XXX_INCLUDE_DIR var to the cache, which is the correct behaviour.
 	# This vars should normaly only be visible within the cmake file in which the find module was called.
 	# Otherwise the vars would be visible for all other projects if wanted or not
