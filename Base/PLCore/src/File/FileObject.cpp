@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#ifndef DISABLE_ZIP_SUPPORT	// Altough not recommended, it's possible to life without ZIP support for minimal builds
+#ifndef DISABLE_ZIP_SUPPORT	// Although not recommended, it's possible to life without ZIP support for minimal builds
 	#include "PLCore/File/FileZip.h"
 #endif
 #include "PLCore/File/FileHttp.h"
@@ -144,7 +144,7 @@ void FileObject::Assign(const Url &cUrl, const FileAccess *pAccess)
 	const String sUrlLower = cFinalUrl.GetUrl().ToLower();
 	const int nPos = sUrlLower.LastIndexOf(".zip/");
 	if (nPos > -1) {
-		// Altough not recommended, it's possible to life without ZIP support for minimal builds
+		// Although not recommended, it's possible to life without ZIP support for minimal builds
 		#ifndef DISABLE_ZIP_SUPPORT
 			const String sZipFile   = cFinalUrl.GetUrl().GetSubstring(0, nPos+4);
 			const String sPathInZip = cFinalUrl.GetUrl().GetSubstring(nPos+5);

@@ -43,7 +43,7 @@ namespace PLRendererOpenGLES2 {
 */
 Context::~Context()
 {
-	// Everything must be done in "DeInit()" because when we're in here, the dynamic libaries
+	// Everything must be done in "DeInit()" because when we're in here, the dynamic libraries
 	// are already unloaded and we are no longer allowed to use EGL or OpenGL ES 2.0 functions
 }
 
@@ -269,7 +269,7 @@ Context::Context(Renderer &cRenderer, handle nNativeWindowHandle) :
 */
 void Context::DeInit()
 {
-	// Don't touch anything in case we don't have a displayb
+	// Don't touch anything in case we don't have a display
 	if (m_hDisplay != EGL_NO_DISPLAY) {
 		// Make 'nothing' current
 		eglMakeCurrent(m_hDisplay, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);

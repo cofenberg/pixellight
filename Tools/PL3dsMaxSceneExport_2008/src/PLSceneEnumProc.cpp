@@ -196,7 +196,7 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 			if (!sCurFilePath.length())
 				g_pLog->LogFLine(PLLog::Warning, "There's no current 3ds Max scene filename! Maybe scene was loaded using Drag'n'Drop and the scene was not dropped within a render viewport?");
 
-			// Initialise the IGame interface
+			// Initialize the IGame interface
 			IGameScene *pIGame = GetIGameInterface();
 			if (pIGame) {
 				// Setup IGame conversion manager

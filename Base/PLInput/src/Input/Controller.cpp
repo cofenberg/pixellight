@@ -244,7 +244,6 @@ void Controller::Connect(const String &sControl, Control *pControl, float fScale
 
 /**
 *  @brief
-* 
 *    Connect to another controller
 */
 void Controller::ConnectAll(Controller *pController, const String &sPrefixOut, const String &sPrefixIn)

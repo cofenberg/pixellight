@@ -245,6 +245,12 @@
     </ClCompile>
     <ClCompile Include="src\File\FileObject.cpp" />
     <ClCompile Include="src\File\FileSearch.cpp" />
+    <ClCompile Include="src\File\FileSearchAndroid.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="src\File\FileSearchHttp.cpp" />
     <ClCompile Include="src\File\FileSearchImpl.cpp" />
     <ClCompile Include="src\File\FileSearchLinux.cpp">
@@ -520,6 +526,7 @@
     <ClInclude Include="include\PLCore\File\FileLinux.h" />
     <ClInclude Include="include\PLCore\File\FileObject.h" />
     <ClInclude Include="include\PLCore\File\FileSearch.h" />
+    <ClInclude Include="include\PLCore\File\FileSearchAndroid.h" />
     <ClInclude Include="include\PLCore\File\FileSearchHttp.h" />
     <ClInclude Include="include\PLCore\File\FileSearchImpl.h" />
     <ClInclude Include="include\PLCore\File\FileSearchLinux.h" />

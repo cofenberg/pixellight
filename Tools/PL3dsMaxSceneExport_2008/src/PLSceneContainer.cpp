@@ -365,7 +365,7 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 						pszNameT++;
 					sSceneNodeName.insert(sSceneNodeName.length(), pszName, pszNameT-pszName);
 
-					// Is there an instance name? - No log hint because people find this behaviour annoying...
+					// Is there an instance name? - No log hint because people find this behavior annoying...
 				//	if (!(pszNameT-pszName))
 				//		g_pLog->LogFLine(PLLog::Hint, "Node name '%s' does not follow the name convention cell_<cell name>_<mesh name>_<instance name>. <instance name> is missing!", cIGameNode.GetName());
 
@@ -435,7 +435,7 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 
 	// ...
 	} else {
-		// No log hint because people find this behaviour annoying...
+		// No log hint because people find this behavior annoying...
 	//	g_pLog->LogFLine(PLLog::Hint, "Node name '%s' does not follow the name convention cell_<cell name>_<node name> or cell_<cell name>_<mesh name>_<instance name>. Node is added to the scene root.", cIGameNode.GetName());
 
 		// Set scene node name

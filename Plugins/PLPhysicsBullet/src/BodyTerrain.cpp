@@ -82,7 +82,7 @@ BodyTerrain::BodyTerrain(PLPhysics::World &cWorld,  PLCore::uint32 nWidth, PLCor
 																		 0/* <min height, float>*/,
 																		 0/* <max height, float>*/,
 																		 1 /* y-axis is up */,
-																		 PHY_FLOAT /* Heightfield values are float*/,
+																		 PHY_FLOAT /* Highfield values are float*/,
 																		 false /*flip quatEdges*/
 																		);
 		

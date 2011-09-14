@@ -580,6 +580,9 @@
     <ClCompile Include="src\File\FileAndroid.cpp">
       <Filter>File</Filter>
     </ClCompile>
+    <ClCompile Include="src\File\FileSearchAndroid.cpp">
+      <Filter>File</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLCore\ModuleMain.h">
@@ -1333,6 +1336,9 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\File\FileAndroid.h">
+      <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\File\FileSearchAndroid.h">
       <Filter>File</Filter>
     </ClInclude>
   </ItemGroup>

@@ -71,7 +71,7 @@ class IEScale : public ImageEffect {
 		*  @param[in] bUseMipmaps
 		*    If there are mipmaps and one of them matches the new dimension... is it allowed to
 		*    just make this mipmap to the new base image and destroy the now unused other mipmaps?
-		*    (extremly fast 'scale', but no set filters are applied and may cause problems on 'none standard'
+		*    (extremely fast 'scale', but no set filters are applied and may cause problems on 'none standard'
 		*    images)
 		*/
 		PLGRAPHICS_API IEScale(const PLMath::Vector3i &vNewSize, bool bUseMipmaps);

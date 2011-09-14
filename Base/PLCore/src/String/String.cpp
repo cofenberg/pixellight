@@ -78,7 +78,7 @@ inline char *ResetLocaleToC()
 	// Get the currently set locale, if it's a null pointer just do nothing
 	const char *pszCurrentLocale = setlocale(LC_ALL, nullptr);
 	if (pszCurrentLocale) {
-		// Do never ever pass a null pointer into "strdup" because the behaviour isn't specified in POSIX (http://pubs.opengroup.org/onlinepubs/9699919799/functions/strdup.html)
+		// Do never ever pass a null pointer into "strdup" because the behavior isn't specified in POSIX (http://pubs.opengroup.org/onlinepubs/9699919799/functions/strdup.html)
 		// -> On MS Windows and Linux a null pointer will be returned, on Android it just crashes...
 
 		// Duplicate the string
@@ -2381,12 +2381,12 @@ uint8 String::GetUInt8() const
 		switch (m_pStringBuffer->GetFormat()) {
 			case ASCII:
 				// We don't use "return atol(((StringBufferASCII*)m_pStringBuffer)->m_pszString);"
-				// because "atol" seems to have a different behaviour under Linux and Windows (uint32 values from string...)
+				// because "atol" seems to have a different behavior under Linux and Windows (uint32 values from string...)
 				return static_cast<uint8>(strtoul(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString, nullptr, 10));
 
 			case Unicode:
 				// We don't use "return _wtol(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);"
-				// because "_wtol" seems to have a different behaviour under Linux and Windows (uint32 values from string...)
+				// because "_wtol" seems to have a different behavior under Linux and Windows (uint32 values from string...)
 				return static_cast<uint8>(wcstoul(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString, nullptr, 10));
 		}
 	}
@@ -2401,12 +2401,12 @@ uint16 String::GetUInt16() const
 		switch (m_pStringBuffer->GetFormat()) {
 			case ASCII:
 				// We don't use "return atol(((StringBufferASCII*)m_pStringBuffer)->m_pszString);"
-				// because "atol" seems to have a different behaviour under Linux and Windows (uint32 values from string...)
+				// because "atol" seems to have a different behavior under Linux and Windows (uint32 values from string...)
 				return static_cast<uint16>(strtoul(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString, nullptr, 10));
 
 			case Unicode:
 				// We don't use "return _wtol(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);"
-				// because "_wtol" seems to have a different behaviour under Linux and Windows (uint32 values from string...)
+				// because "_wtol" seems to have a different behavior under Linux and Windows (uint32 values from string...)
 				return static_cast<uint16>(wcstoul(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString, nullptr, 10));
 		}
 	}
@@ -2421,12 +2421,12 @@ uint32 String::GetUInt32() const
 		switch (m_pStringBuffer->GetFormat()) {
 			case ASCII:
 				// We don't use "return atol(((StringBufferASCII*)m_pStringBuffer)->m_pszString);"
-				// because "atol" seems to have a different behaviour under Linux and Windows (uint32 values from string...)
+				// because "atol" seems to have a different behavior under Linux and Windows (uint32 values from string...)
 				return strtoul(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString, nullptr, 10);
 
 			case Unicode:
 				// We don't use "return _wtol(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);"
-				// because "_wtol" seems to have a different behaviour under Linux and Windows (uint32 values from string...)
+				// because "_wtol" seems to have a different behavior under Linux and Windows (uint32 values from string...)
 				return wcstoul(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString, nullptr, 10);
 		}
 	}

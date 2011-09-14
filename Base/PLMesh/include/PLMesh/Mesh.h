@@ -70,7 +70,7 @@ class MeshTriangle {
 	public:
 	PLCore::uint32 nGeometry;		/**< Index of the geometry this triangle is in */
 	PLCore::uint32 nVertex[3];		/**< The three vertex indices */
-	int			  nNeighbour[3];	/**< Neighbour triangles */
+	int			  nNeighbour[3];	/**< Neighbor triangles */
 
 	PLMESH_API MeshTriangle &operator =(const MeshTriangle &cSource);
 	PLMESH_API bool operator ==(const MeshTriangle &cMeshTriangle) const;

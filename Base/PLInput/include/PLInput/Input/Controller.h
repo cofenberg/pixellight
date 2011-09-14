@@ -257,7 +257,7 @@ class Controller : public PLCore::Object {
 		*    Connect to another controller
 		*
 		*  @param[in] pController
-		*    Pointer to controller containing the input controls, must be valid!
+		*    Pointer to controller containing the input controls, shouldn't be a null pointer (but a null pointer is caught internally)
 		*  @param[in] sPrefixOut
 		*    Prefix for controls of this controller
 		*  @param[in] sPrefixIn

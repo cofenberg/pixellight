@@ -688,7 +688,7 @@ void CoreApplication::OnInitData()
 	// Get localization language (from config or from default)
 	String sLanguage = m_cConfig.GetVar("PLCore::CoreConfig", "Language");
 	if (!sLanguage.GetLength()) {
-		// Use always English instead of the current program locale language so that we have a known default behaviour
+		// Use always English instead of the current program locale language so that we have a known default behavior
 		sLanguage = "English";
 	}
 

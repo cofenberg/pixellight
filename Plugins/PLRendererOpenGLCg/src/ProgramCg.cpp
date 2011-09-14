@@ -111,7 +111,7 @@ CGprogram ProgramCg::GetCgCombinedProgram(bool bAutomaticLink)
 				// Load the Cg combined program
 				cgGLLoadProgram(m_pCgCombinedProgram);
 
-				// cgGLIsProgramLoaded has an ugly different behaviour when not using GLSL...
+				// cgGLIsProgramLoaded has an ugly different behavior when not using GLSL...
 				if (bGLSL) {
 					// Was the program loaded successfully?
 					if (cgGLIsProgramLoaded(m_pCgCombinedProgram)) {

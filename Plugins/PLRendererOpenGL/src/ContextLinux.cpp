@@ -69,7 +69,7 @@ ContextLinux::ContextLinux(Renderer &cRenderer) :
 			// Create a GLX context
 			m_hDummyWindowRenderContext = glXCreateContext(m_pDisplay, m_pDummyVisualInfo, 0, GL_TRUE);
 			if (m_hDummyWindowRenderContext) {
-				// Create a colormap
+				// Create a color map
 				XSetWindowAttributes sSetWindowAttributes;
 				sSetWindowAttributes.colormap = XCreateColormap(m_pDisplay, RootWindow(m_pDisplay, m_pDummyVisualInfo->screen), m_pDummyVisualInfo->visual, AllocNone);
 

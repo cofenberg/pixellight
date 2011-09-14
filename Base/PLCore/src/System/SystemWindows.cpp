@@ -94,7 +94,7 @@ SystemWindows::SystemWindows()
 	// Force the main thread to always run on CPU 0.
 	// This is done because on some systems QueryPerformanceCounter returns a bit different counter values
 	// on the different CPUs (contrary to what it's supposed to do), which can cause negative frame times
-	// if the thread is scheduled on the other CPU in the next frame. This can cause very jerky behaviour and
+	// if the thread is scheduled on the other CPU in the next frame. This can cause very jerky behavior and
 	// appear as if frames return out of order.
 	SetThreadAffinityMask(GetCurrentThread(), 1);
 
@@ -701,7 +701,7 @@ void SystemWindows::Sleep(uint64 nMilliseconds) const
 
 void SystemWindows::Yield() const
 {
-	// By passing 0 to the sleep Windows function it behaves like desired (this is from Microsoft documented behaviour)
+	// By passing 0 to the sleep Windows function it behaves like desired (this is from Microsoft documented behavior)
 	SleepEx(0, false);
 }
 

@@ -341,7 +341,7 @@ void OSWindowLinux::SetTitle(const String &sTitle)
 		// String::GetNumOfBytes can't be used here because the String class doesn't support UTF-8 as an internal Format.
 		// Even if the String class uses UNICODE as internal format this wouldn't work either.
 		// Because the UNICODE String format uses wchar_t as datatype and the size of this type is greater than 1 byte.
-		// And each character in a string needs the same ammount of bytes.
+		// And each character in a string needs the same amount of bytes.
 		// But in an utf-8 encoded string the byte-count per character can differ between 1 byte (ASCII char) and 4 bytes (UNICODE char in Unicode Code point range 	U+010000 to U+10FFFF)
 		int numOfElements = strlen(reinterpret_cast<const char*>(pszWindowTitle));
 		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME,				 UTF8_STRING, 8, PropModeReplace, pszWindowTitle, numOfElements);
