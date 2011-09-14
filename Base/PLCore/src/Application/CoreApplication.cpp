@@ -678,10 +678,12 @@ void CoreApplication::OnInitData()
 		pLoadableManager->AddBaseDir(m_cApplicationContext.GetAppDirectory());
 
 	// Scan for packages in current "Data" directory
-	pLoadableManager->ScanPackages(System::GetInstance()->GetCurrentDir() + "/Data/");
+	const String sCurrentDir = System::GetInstance()->GetCurrentDir();
+	pLoadableManager->ScanPackages(sCurrentDir.GetLength() ? (sCurrentDir + "/Data") : "Data");
 
 	// Scan for packages in application's "Data" directory
-	pLoadableManager->ScanPackages(m_cApplicationContext.GetAppDirectory() + "/Data/");
+	if (sCurrentDir != m_cApplicationContext.GetAppDirectory())
+		pLoadableManager->ScanPackages(m_cApplicationContext.GetAppDirectory().GetLength() ? (m_cApplicationContext.GetAppDirectory() + "/Data") : "Data");
 
 	// Get localization language (from config or from default)
 	String sLanguage = m_cConfig.GetVar("PLCore::CoreConfig", "Language");

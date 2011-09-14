@@ -201,6 +201,7 @@ elseif(LINUX)
 		##################################################
 		add_sources(
 			src/File/FileAndroid.cpp
+			src/File/FileSearchAndroid.cpp
 			src/System/SystemAndroid.cpp
 		)
 	endif()

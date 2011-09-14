@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: FileSearchWindows.h                            *
+ *  File: FileSearchAndroid.h                            *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,16 +20,22 @@
 \*********************************************************/
 
 
-#ifndef __PLCORE_FILESEARCH_WINDOWS_H__
-#define __PLCORE_FILESEARCH_WINDOWS_H__
+#ifndef __PLCORE_FILESEARCH_ANDROID_H__
+#define __PLCORE_FILESEARCH_ANDROID_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/PLCoreWindowsIncludes.h"
 #include "PLCore/File/FileSearchImpl.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+struct AAssetDir;
+typedef struct AAssetDir AAssetDir;
 
 
 //[-------------------------------------------------------]
@@ -43,15 +49,15 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Windows implementation of 'FileSearchImpl'
+*    Android implementation of 'FileSearchImpl'
 */
-class FileSearchWindows : public FileSearchImpl {
+class FileSearchAndroid : public FileSearchImpl {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class FileWindows;
+	friend class FileAndroid;
 
 
 	//[-------------------------------------------------------]
@@ -67,13 +73,13 @@ class FileSearchWindows : public FileSearchImpl {
 		*  @param[in] pAccess
 		*    Additional file access information (can be a null pointer)
 		*/
-		FileSearchWindows(const String &sPath, const FileAccess *pAccess);
+		FileSearchAndroid(const String &sPath, const FileAccess *pAccess);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~FileSearchWindows();
+		virtual ~FileSearchAndroid();
 
 
 	//[-------------------------------------------------------]
@@ -88,12 +94,10 @@ class FileSearchWindows : public FileSearchImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		HANDLE			m_hFind;
-		String			m_sPath;
-		String			m_sFind;
-		WIN32_FIND_DATA	m_sFindData;
-		bool			m_bHasNext;
-		String			m_sFilename;
+		AAssetDir  *m_pAAssetDir;		/**< Android asset directory, can be a null pointer */
+		String      m_sPath;
+		const char *m_pszNextFilename;
+		String      m_sFilename;
 
 
 };
@@ -105,4 +109,4 @@ class FileSearchWindows : public FileSearchImpl {
 } // PLCore
 
 
-#endif // __PLCORE_FILESEARCH_WINDOWS_H__
+#endif // __PLCORE_FILESEARCH_ANDROID_H__

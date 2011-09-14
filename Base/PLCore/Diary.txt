@@ -1,3 +1,9 @@
+>> 14.09.2011
+[CO]
+- Android port: Added "FileSearchAndroid" implementation
+
+
+
 >> 13.09.2011
 [CO]
 - Bugfix: "PLFrontendOS::OSWindowWindows::SetPositionSize()": The MS Windows function "MoveWindow()" sets the window size, not the window client area size

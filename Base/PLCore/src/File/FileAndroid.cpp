@@ -27,6 +27,7 @@
 #include <stdint.h>	// For e.g. "size_t"
 #include <android/asset_manager.h>
 #include "PLCore/System/SystemAndroid.h"
+#include "PLCore/File/FileSearchAndroid.h"
 #include "PLCore/File/FileAndroid.h"
 
 
@@ -66,6 +67,12 @@ FileAndroid::~FileAndroid()
 //[-------------------------------------------------------]
 bool FileAndroid::Exists() const
 {
+	// Just reuse "IsFile()" and "IsDirectory()"
+	return (IsFile() || IsDirectory());
+}
+
+bool FileAndroid::IsFile() const
+{
 	// Get the Android asset manager instance
 	AAssetManager *pAAssetManager = SystemAndroid::GetAssetManager();
 	if (pAAssetManager) {
@@ -80,19 +87,27 @@ bool FileAndroid::Exists() const
 		}
 	}
 
-	// Done - it doesn't exist
+	// Done - it's no file
 	return false;
-}
-
-bool FileAndroid::IsFile() const
-{
-	// Same as "Exists()"
-	return Exists();
 }
 
 bool FileAndroid::IsDirectory() const
 {
-	// Only files supported
+	// Get the Android asset manager instance
+	AAssetManager *pAAssetManager = SystemAndroid::GetAssetManager();
+	if (pAAssetManager) {
+		// Open the asset directory
+		AAssetDir *pAAssetDir = AAssetManager_openDir(pAAssetManager, (m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : m_sFilename.GetUTF8());
+		if (pAAssetDir) {
+			// Close the asset directory
+			AAssetDir_close(pAAssetDir);
+
+			// Done - it exists
+			return true;
+		}
+	}
+
+	// Done - it's no directory
 	return false;
 }
 
@@ -322,8 +337,8 @@ uint32 FileAndroid::GetSize() const
 
 FileSearchImpl *FileAndroid::CreateSearch()
 {
-	// Error - Create a file searcher not supported
-	return nullptr;
+	// Create a file searcher
+	return new FileSearchAndroid(m_cUrl.GetUnixPath(), m_pAccess);
 }
 
 

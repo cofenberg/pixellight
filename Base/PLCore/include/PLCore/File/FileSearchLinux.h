@@ -52,7 +52,6 @@ class FileSearchLinux : public FileSearchImpl {
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class FileSearch;
 	friend class FileLinux;
 
 
