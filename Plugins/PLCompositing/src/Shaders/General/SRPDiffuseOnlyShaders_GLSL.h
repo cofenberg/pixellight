@@ -23,14 +23,14 @@
 // GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLCore::String sDiffuseOnly_GLSL_VS = "\
 // Attributes\n\
-attribute highp vec4 VertexPosition;		// Object space vertex position input\n\
+attribute mediump vec4 VertexPosition;			// Object space vertex position input\n\
 #ifdef VS_TEXCOORD0\n\
-	attribute highp vec2 VertexTexCoord0;	// Vertex texture coordinate 0 input\n\
-	varying   highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
+	attribute mediump vec2 VertexTexCoord0;		// Vertex texture coordinate 0 input\n\
+	varying   mediump vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
 #endif\n\
 \n\
 // Uniforms\n\
-uniform highp mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix\n\
+uniform mediump mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -49,7 +49,7 @@ void main()\n\
 static const PLCore::String sDiffuseOnly_GLSL_FS = "\
 // Attributes\n\
 #ifdef FS_DIFFUSEMAP\n\
-	varying highp vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
+	varying mediump vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
 #endif\n\
 \n\
 // Uniforms\n\

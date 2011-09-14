@@ -1,3 +1,10 @@
+>> 14.09.2011
+[CO]
+- GLSL shaders: Changed within some first shaders "highp" into "mediump", still looks ok and we really have to get the most out of the limited
+  resources on a mobile device
+
+
+
 >> 02.06.2011
 [CO]
 - A few months ago, when installing the "ATI Catalyst™ 11.3 driver" I noticed that the god-rays were not longer visible, but there was no

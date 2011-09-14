@@ -23,42 +23,42 @@
 // GLSL (OpenGL 2.1 ("#version 120") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLCore::String sLighting_GLSL_VS = "\
 // In attributes\n\
-attribute highp vec4 VertexPosition;			// Object space vertex position input\n\
+attribute mediump vec4 VertexPosition;			// Object space vertex position input\n\
 #ifdef VS_TEXCOORD0\n\
-	attribute highp vec2 VertexTexCoord0;		// Vertex texture coordinate 0 input\n\
+	attribute mediump vec2 VertexTexCoord0;		// Vertex texture coordinate 0 input\n\
 #endif\n\
 #ifdef VS_NORMAL\n\
-	attribute highp vec3 VertexNormal;			// Object space vertex normal input\n\
+	attribute mediump vec3 VertexNormal;		// Object space vertex normal input\n\
 	#ifdef VS_TANGENT_BINORMAL\n\
-		attribute highp vec3 VertexTangent;		// Object space vertex tangent input\n\
-		attribute highp vec3 VertexBinormal;	// Object space vertex binormal input\n\
+		attribute mediump vec3 VertexTangent;	// Object space vertex tangent input\n\
+		attribute mediump vec3 VertexBinormal;	// Object space vertex binormal input\n\
 	#endif\n\
 #endif\n\
 \n\
 // Out attributes\n\
 #ifdef VS_TEXCOORD0\n\
-	varying highp vec2 VertexTexCoordVS;		// Vertex texture coordinate 0 output\n\
+	varying mediump vec2 VertexTexCoordVS;		// Vertex texture coordinate 0 output\n\
 #endif\n\
-varying highp vec3 VertexPositionVS;			// View space vertex position output\n\
+varying mediump vec3 VertexPositionVS;			// View space vertex position output\n\
 #ifdef VS_NORMAL\n\
-	varying highp vec3 VertexNormalVS;			// View space vertex normal output\n\
+	varying mediump vec3 VertexNormalVS;		// View space vertex normal output\n\
 	#ifdef VS_TANGENT_BINORMAL\n\
-		varying highp vec3 VertexTangentVS;		// View space vertex tangent output\n\
-		varying highp vec3 VertexBinormalVS;	// View space vertex binormal output\n\
+		varying mediump vec3 VertexTangentVS;	// View space vertex tangent output\n\
+		varying mediump vec3 VertexBinormalVS;	// View space vertex binormal output\n\
 		#ifdef VS_PARALLAXMAPPING\n\
-			varying highp vec3 EyeVecVS;		// Tangent space vector pointing from the pixel to the eye point\n\
+			varying mediump vec3 EyeVecVS;		// Tangent space vector pointing from the pixel to the eye point\n\
 		#endif\n\
 	#endif\n\
 #endif\n\
 \n\
 // Uniforms\n\
 #if defined(VS_NORMAL) && defined(VS_TWOSIDEDLIGHTING)\n\
-	uniform highp float NormalScale;					// Normal scale (negative to flip normals)\n\
+	uniform mediump float NormalScale;					// Normal scale (negative to flip normals)\n\
 #endif\n\
-uniform highp mat4 ObjectSpaceToViewSpaceMatrix;		// Object space to view space matrix\n\
-uniform highp mat4 ObjectSpaceToClipSpaceMatrix;		// Object space to clip space matrix\n\
+uniform mediump mat4 ObjectSpaceToViewSpaceMatrix;		// Object space to view space matrix\n\
+uniform mediump mat4 ObjectSpaceToClipSpaceMatrix;		// Object space to clip space matrix\n\
 #if defined(VS_NORMAL) && defined(VS_TANGENT_BINORMAL) && defined(VS_PARALLAXMAPPING)\n\
-	uniform highp vec3 EyePos;							// Object space eye position\n\
+	uniform mediump vec3 EyePos;						// Object space eye position\n\
 #endif\n\
 \n\
 // Programs\n\
@@ -73,12 +73,12 @@ void main()\n\
 #endif\n\
 \n\
 	// Transform vertex position to view space\n\
-	highp vec4 viewSpacePosition = ObjectSpaceToViewSpaceMatrix*VertexPosition;\n\
+	mediump vec4 viewSpacePosition = ObjectSpaceToViewSpaceMatrix*VertexPosition;\n\
 	VertexPositionVS = viewSpacePosition.xyz;\n\
 \n\
 #ifdef VS_NORMAL\n\
 	// Transform vertex normal to view space\n\
-	VertexNormalVS = highp mat3(ObjectSpaceToViewSpaceMatrix)*VertexNormal;\n\
+	VertexNormalVS = mediump mat3(ObjectSpaceToViewSpaceMatrix)*VertexNormal;\n\
 \n\
 	#ifdef VS_TWOSIDEDLIGHTING\n\
 		// Allow vertex normal flip if required for proper two sided lighting\n\
@@ -87,12 +87,12 @@ void main()\n\
 \n\
 	#ifdef VS_TANGENT_BINORMAL\n\
 		// Transform vertex tangent and binormal to view space\n\
-		VertexTangentVS  = highp mat3(ObjectSpaceToViewSpaceMatrix)*VertexTangent;\n\
-		VertexBinormalVS = highp mat3(ObjectSpaceToViewSpaceMatrix)*VertexBinormal;\n\
+		VertexTangentVS  = mediump mat3(ObjectSpaceToViewSpaceMatrix)*VertexTangent;\n\
+		VertexBinormalVS = mediump mat3(ObjectSpaceToViewSpaceMatrix)*VertexBinormal;\n\
 \n\
 		#ifdef VS_PARALLAXMAPPING\n\
 			// Calculate the tangent space vector pointing from the pixel to the eye point for parallax mapping	\n\
-			EyeVecVS = highp mat3(VertexTangent, VertexBinormal, VertexNormal)*(EyePos - VertexPosition.xyz);\n\
+			EyeVecVS = mediump mat3(VertexTangent, VertexBinormal, VertexNormal)*(EyePos - VertexPosition.xyz);\n\
 		#endif\n\
 	#endif\n\
 #endif\n\
@@ -103,16 +103,16 @@ void main()\n\
 static const PLCore::String sLighting_GLSL_FS_Part1 = "\
 // Attributes\n\
 #ifdef FS_TEXCOORD0\n\
-	varying highp vec2 VertexTexCoordVS;		// Vertex texture coordinate 0 from vertex shader\n\
+	varying mediump vec2 VertexTexCoordVS;		// Vertex texture coordinate 0 from vertex shader\n\
 #endif\n\
-	varying highp vec3 VertexPositionVS;		// View space vertex position from vertex shader\n\
+	varying mediump vec3 VertexPositionVS;		// View space vertex position from vertex shader\n\
 #ifdef FS_NORMAL\n\
-	varying highp vec3 VertexNormalVS;			// View space vertex normal from vertex shader\n\
+	varying mediump vec3 VertexNormalVS;		// View space vertex normal from vertex shader\n\
 	#ifdef FS_TANGENT_BINORMAL\n\
-		varying highp vec3 VertexTangentVS;		// View space vertex tangent from vertex shader\n\
-		varying highp vec3 VertexBinormalVS;	// View space vertex binormal from vertex shader\n\
+		varying mediump vec3 VertexTangentVS;	// View space vertex tangent from vertex shader\n\
+		varying mediump vec3 VertexBinormalVS;	// View space vertex binormal from vertex shader\n\
 		#ifdef FS_PARALLAXMAPPING\n\
-			varying highp vec3 EyeVecVS;		// Tangent space vector pointing from the pixel to the eye point from vertex shader\n\
+			varying mediump vec3 EyeVecVS;		// Tangent space vector pointing from the pixel to the eye point from vertex shader\n\
 		#endif\n\
 	#endif\n\
 #endif\n\
@@ -126,7 +126,7 @@ uniform lowp vec3 DiffuseColor;\n\
 	#endif\n\
 #endif\n\
 #ifdef FS_DIFFUSERAMPMAP\n\
-     uniform highp sampler1D DiffuseRampMap;\n\
+     uniform mediump sampler1D DiffuseRampMap;\n\
 #endif\n\
 #ifdef FS_REFLECTION\n\
 	uniform lowp vec3  ReflectionColor;\n\
@@ -135,14 +135,14 @@ uniform lowp vec3 DiffuseColor;\n\
 		uniform lowp sampler2D ReflectivityMap;\n\
 	#endif\n\
 	#ifdef FS_FRESNELREFLECTION\n\
-		uniform highp vec2 FresnelConstants; // x = R0 [0..1] and y = Power, always >0\n\
+		uniform mediump vec2 FresnelConstants; // x = R0 [0..1] and y = Power, always >0\n\
 	#endif\n\
 	#ifdef FS_2DREFLECTIONMAP\n\
-		uniform lowp  sampler2D ReflectionMap;\n\
-		uniform highp mat3      ViewSpaceToWorldSpace;		// View space to world space transform matrix\n\
+		uniform lowp    sampler2D ReflectionMap;\n\
+		uniform mediump mat3      ViewSpaceToWorldSpace;	// View space to world space transform matrix\n\
 	#elif defined(FS_CUBEREFLECTIONMAP)\n\
-		uniform lowp  samplerCube ReflectionMap;\n\
-		uniform highp mat3        ViewSpaceToWorldSpace;	// View space to world space transform matrix\n\
+		uniform lowp    samplerCube ReflectionMap;\n\
+		uniform mediump mat3        ViewSpaceToWorldSpace;	// View space to world space transform matrix\n\
 	#endif\n\
 #endif\n\
 #ifdef FS_NORMALMAP\n\
@@ -159,40 +159,40 @@ uniform lowp vec3 DiffuseColor;\n\
 	uniform mediump vec2      ParallaxScaleBias;\n\
 #endif\n\
 #ifdef FS_DIRECTIONAL\n\
-	uniform highp vec3 LightDirection;									// View space normalized light direction\n\
+	uniform mediump vec3 LightDirection;								// View space normalized light direction\n\
 #else\n\
-	uniform highp vec3  LightPosition;									// View space light position\n\
-	uniform highp float LightRadius;									// View space light radius\n\
+	uniform mediump vec3  LightPosition;								// View space light position\n\
+	uniform mediump float LightRadius;									// View space light radius\n\
 	#ifdef FS_PROJECTIVE_POINT\n\
-		uniform highp samplerCube ProjectivePointCubeMap;				// Cube map texture for projective point light\n\
-		uniform highp mat3        ViewSpaceToCubeMapSpace;				// View space to cube map space transform matrix\n\
+		uniform mediump samplerCube ProjectivePointCubeMap;				// Cube map texture for projective point light\n\
+		uniform mediump mat3        ViewSpaceToCubeMapSpace;			// View space to cube map space transform matrix\n\
 	#else\n\
 		#ifdef FS_SPOT\n\
-			uniform highp vec3	        LightDirection;					// View space normalized light direction\n\
+			uniform mediump vec3	      LightDirection;				// View space normalized light direction\n\
 			#ifdef FS_SPOT_PROJECTIVE\n\
-				uniform highp sampler2D ProjectiveSpotMap;				// Texture for projective spot light\n\
-				uniform highp mat4      ViewSpaceToSpotMapSpace;		// View space to spot map space transform matrix\n\
+				uniform mediump sampler2D ProjectiveSpotMap;			// Texture for projective spot light\n\
+				uniform mediump mat4      ViewSpaceToSpotMapSpace;		// View space to spot map space transform matrix\n\
 			#endif\n\
 			#ifdef FS_SPOT_CONE\n\
 				#ifdef FS_SPOT_SMOOTHCONE\n\
-					uniform highp vec2  SpotConeCos;					// Cosinus of the outer and inner cone angle in view space\n\
+					uniform mediump vec2  SpotConeCos;					// Cosinus of the outer and inner cone angle in view space\n\
 				#else\n\
-					uniform highp float SpotConeCos;					// Cosinus of the cone angle in view space\n\
+					uniform mediump float SpotConeCos;					// Cosinus of the cone angle in view space\n\
 				#endif\n\
 			#endif\n\
 		#endif\n\
 	#endif\n\
 	#ifdef FS_SHADOWMAPPING\n\
 		#ifdef FS_SPOT\n\
-			uniform highp sampler2DShadow ShadowMap;					// 2D shadow map - [TODO] This will not work with OpenGL ES 2.0 because there's no sampler2DShadow/shadow2DProj\n\
-			uniform highp mat4			  ViewSpaceToShadowMapSpace;	// View space to shadow map space transform matrix\n\
+			uniform mediump sampler2DShadow ShadowMap;					// 2D shadow map - [TODO] This will not work with OpenGL ES 2.0 because there's no sampler2DShadow/shadow2DProj\n\
+			uniform mediump mat4			ViewSpaceToShadowMapSpace;	// View space to shadow map space transform matrix\n\
 		#else\n\
-			uniform highp samplerCube ShadowMap;						// Cube shadow map\n\
-			uniform highp mat3        ViewSpaceToShadowCubeMapSpace;	// View space to shadow cube map space transform matrix\n\
-			uniform highp float	      InvLightRadius;					// 1/LightRadius\n\
+			uniform mediump samplerCube ShadowMap;						// Cube shadow map\n\
+			uniform mediump mat3        ViewSpaceToShadowCubeMapSpace;	// View space to shadow cube map space transform matrix\n\
+			uniform mediump float	    InvLightRadius;					// 1/LightRadius\n\
 		#endif\n\
 		#ifdef FS_SOFTSHADOWMAPPING\n\
-			uniform highp float TexelSize;								// Shadow map texel size\n\
+			uniform mediump float TexelSize;							// Shadow map texel size\n\
 		#endif\n\
 	#endif\n\
 #endif\n\
@@ -204,38 +204,38 @@ uniform lowp vec3 LightColor;	// Light color\n\
 		uniform lowp sampler2D SpecularMap;\n\
 	#endif\n\
 	#ifdef FS_SPECULARRAMPMAP\n\
-		uniform highp sampler1D SpecularRampMap;\n\
+		uniform mediump sampler1D SpecularRampMap;\n\
 	#endif\n\
 #endif\n\
 #ifdef FS_EDGERAMPMAP\n\
-	uniform highp sampler1D EdgeRampMap;\n\
+	uniform mediump sampler1D EdgeRampMap;\n\
 #endif\n\
 \n\
 // Programs\n\
 #ifdef FS_FRESNELREFLECTION\n\
-	highp float fresnel(highp vec3 light, highp vec3 normal, highp vec2 constants)\n\
+	mediump float fresnel(mediump vec3 light, mediump vec3 normal, mediump vec2 constants)\n\
 	{\n\
 		// Light and normal are assumed to be normalized\n\
 		// constants.x = R0 [0..1]\n\
 		// constants.y = Power, always >0\n\
-		highp float cosAngle = clamp(1.0 - dot(light, normal), 0.0, 1.0); // We REALLY need to clamp in here or pow may hurt us when using negative numbers!\n\
+		mediump float cosAngle = clamp(1.0 - dot(light, normal), 0.0, 1.0); // We REALLY need to clamp in here or pow may hurt us when using negative numbers!\n\
 		return constants.x + (1.0 - constants.x) * pow(cosAngle, constants.y);\n\
 	}\n\
 #endif\n\
 \n\
 // Performs the Blinn-Phong lighting calculation\n\
-lowp vec3 BlinnPhong(highp vec3 lightVector, lowp vec3 lightColor, highp vec3 viewVector, highp vec3 normalVector, lowp vec3 diffuseColor, lowp vec3 specularColor, lowp float specularExponent)\n\
+lowp vec3 BlinnPhong(mediump vec3 lightVector, lowp vec3 lightColor, mediump vec3 viewVector, mediump vec3 normalVector, lowp vec3 diffuseColor, lowp vec3 specularColor, lowp float specularExponent)\n\
 {\n\
 	// [TODO] There seem to be invalid normal vectors here (NAN) - IEEE standard: NaN != NaN - I don't use isnan so I can use lower shader versions\n\
 	if (normalVector.x != normalVector.x || normalVector.y != normalVector.y || normalVector.z != normalVector.z)\n\
-		normalVector = highp vec3(0.0, 0.0, 1.0);\n\
+		normalVector = mediump vec3(0.0, 0.0, 1.0);\n\
 	if (lightVector.x != lightVector.x || lightVector.y != lightVector.y || lightVector.z != lightVector.z)\n\
-		lightVector = highp vec3(0.0, 0.0, 1.0);\n\
+		lightVector = mediump vec3(0.0, 0.0, 1.0);\n\
 	if (viewVector.x != viewVector.x || viewVector.y != viewVector.y || viewVector.z != viewVector.z)\n\
-		viewVector = highp vec3(0.0, 0.0, 1.0);\n\
+		viewVector = mediump vec3(0.0, 0.0, 1.0);\n\
 \n\
 	// Diffuse term\n\
-	highp float diffuse = clamp(dot(lightVector, normalVector), 0.0, 1.0);\n\
+	mediump float diffuse = clamp(dot(lightVector, normalVector), 0.0, 1.0);\n\
 	#ifdef FS_DIFFUSERAMPMAP\n\
 		diffuse *= texture1D(DiffuseRampMap, diffuse).x;\n\
 	#endif\n\
@@ -244,7 +244,7 @@ lowp vec3 BlinnPhong(highp vec3 lightVector, lowp vec3 lightColor, highp vec3 vi
 	// Specular term\n\
 	#ifdef FS_SPECULAR\n\
 		// Calculate the half vector between the light vector and the view vector. This is cheaper then calculating the actual reflective vector.\n\
-		highp vec3 halfVector = normalize(lightVector + viewVector);\n\
+		mediump vec3 halfVector = normalize(lightVector + viewVector);\n\
 \n\
 		// Ensure that the specular exponent is never ever <=0, else NANs may be produced by pow!\n\
 		#define FLT_MIN 1.175494351e-38 // Minimum positive value\n\
@@ -253,13 +253,13 @@ lowp vec3 BlinnPhong(highp vec3 lightVector, lowp vec3 lightColor, highp vec3 vi
 		#undef FLT_MIN\n\
 \n\
 		// Specular term\n\
-		highp float specular = pow(clamp(dot(halfVector, normalVector), 0.0, 1.0), specularExponent);\n\
+		mediump float specular = pow(clamp(dot(halfVector, normalVector), 0.0, 1.0), specularExponent);\n\
 		lowp vec3 specularLighting = specular*specularColor*lightColor;\n\
 		#ifdef FS_SPECULARRAMPMAP\n\
 			specularLighting *= texture1D(SpecularRampMap, specular).x;\n\
 		#endif\n\
 	#else\n\
-		#define specularLighting highp vec3(0.0, 0.0, 0.0)\n\
+		#define specularLighting mediump vec3(0.0, 0.0, 0.0)\n\
 	#endif\n\
 \n\
 	// Edge detection\n\
@@ -275,15 +275,15 @@ lowp vec3 BlinnPhong(highp vec3 lightVector, lowp vec3 lightColor, highp vec3 vi
 \n\
 #ifdef FS_SOFTSHADOWMAPPING\n\
 	// Fake PCF (percentage-closer filtering)\n\
-	highp vec4 texPCF(highp sampler2DShadow map, highp vec4 location, highp vec2 offset)\n\
+	mediump vec4 texPCF(mediump sampler2DShadow map, mediump vec4 location, mediump vec2 offset)\n\
 	{\n\
-		return shadow2DProj(map, highp vec4(location.xy + location.w*offset, location.z, location.w));\n\
+		return shadow2DProj(map, mediump vec4(location.xy + location.w*offset, location.z, location.w));\n\
 	}\n\
 \n\
-	highp float texPCF(highp samplerCube map, highp vec3 location, highp vec3 offset)\n\
+	mediump float texPCF(mediump samplerCube map, mediump vec3 location, mediump vec3 offset)\n\
 	{\n\
 		// Get shadow map data\n\
-		highp vec4 shadowMap = textureCube(map, location + offset);\n\
+		mediump vec4 shadowMap = textureCube(map, location + offset);\n\
 \n\
 		// Unpack\n\
 		return shadowMap.r/1.0 + shadowMap.g/256.0 + shadowMap.b/65536.0 + shadowMap.a/16777216.0;\n\
@@ -291,10 +291,10 @@ lowp vec3 BlinnPhong(highp vec3 lightVector, lowp vec3 lightColor, highp vec3 vi
 #endif\n\
 \n\
 #ifdef FS_SHADOWMAPPING\n\
-	highp float texPCF(highp samplerCube map, highp vec3 location)\n\
+	mediump float texPCF(mediump samplerCube map, mediump vec3 location)\n\
 	{\n\
 		// Get shadow map data\n\
-		highp vec4 shadowMap = textureCube(map, location);\n\
+		mediump vec4 shadowMap = textureCube(map, location);\n\
 \n\
 		// Unpack\n\
 		return shadowMap.r/1.0 + shadowMap.g/256.0 + shadowMap.b/65536.0 + shadowMap.a/16777216.0;\n\
@@ -306,7 +306,7 @@ void main()\n\
 {\n\
 	// Define were the texture coordinates come from\n\
 	#ifdef FS_TEXCOORD0\n\
-		highp vec2 TexCoord0 = VertexTexCoordVS;\n\
+		mediump vec2 TexCoord0 = VertexTexCoordVS;\n\
 	#endif\n\
 \n\
 	#ifdef FS_PARALLAXMAPPING\n\
@@ -314,14 +314,14 @@ void main()\n\
 		// where the ray would hit the surface. The height map indicates how far to offset.\n\
 		// The approximation assumes that all heights in the height-map is equal, which of\n\
 		// course won't be the case, but if the bump map is fairly smooth it works well enough.\n\
-		highp vec3  eyeVec = normalize(EyeVecVS);\n\
-		lowp  float scale  = ParallaxScaleBias.x;\n\
-		lowp  float bias   = ParallaxScaleBias.y;\n\
-		lowp  float height = texture2D(HeightMap, TexCoord0).r;\n\
+		mediump vec3  eyeVec = normalize(EyeVecVS);\n\
+		lowp    float scale  = ParallaxScaleBias.x;\n\
+		lowp    float bias   = ParallaxScaleBias.y;\n\
+		lowp    float height = texture2D(HeightMap, TexCoord0).r;\n\
 \n\
 		// First offset pass with offset limiting (no division through eyeVec.z)\n\
 		lowp float offset = height*scale + bias;\n\
-		highp vec2 textureCoordinate = TexCoord0 + offset*eyeVec.xy;\n\
+		mediump vec2 textureCoordinate = TexCoord0 + offset*eyeVec.xy;\n\
 \n\
 		// For better quality: Refine the parallax by making another lookup at where we ended\n\
 		// up in the first parallax computation, then averaging the results.\n\
@@ -339,7 +339,7 @@ void main()\n\
 				discard; // Throw the fragment away and don't draw it!\n\
 		#endif\n\
 		#ifdef FS_GAMMACORRECTION\n\
-			diffuseMapTexel.rgb = pow(diffuseMapTexel.rgb, highp vec3(2.2, 2.2, 2.2));	// Perform sRGB to linear space conversion (gamma correction)\n\
+			diffuseMapTexel.rgb = pow(diffuseMapTexel.rgb, mediump vec3(2.2, 2.2, 2.2));	// Perform sRGB to linear space conversion (gamma correction)\n\
 		#endif\n\
 		lowp vec3 diffuseColor = diffuseMapTexel.rgb*DiffuseColor;\n\
 	#else\n\
@@ -390,10 +390,10 @@ void main()\n\
 		#endif\n\
 		// [TODO] There seem to be invalid normal vectors here (NAN) - IEEE standard: NaN != NaN - I don't use isnan so I can use lower shader versions\n\
 		if (normal.x != normal.x || normal.y != normal.y || normal.z != normal.z)\n\
-			normal = highp vec3(0.0, 0.0, 1.0); // I had situations with invalid normal vectors...\n\
+			normal = mediump vec3(0.0, 0.0, 1.0); // I had situations with invalid normal vectors...\n\
 	#else\n\
 		// Define a dummy normal so, when using reflections, we get at least some 'kind of reflection' effect\n\
-		#define normal highp vec3(0.0, 0.0, 1.0)\n\
+		#define normal mediump vec3(0.0, 0.0, 1.0)\n\
 	#endif\n\
 \n\
 	// Apply reflection - modifies the diffuse color\n\
@@ -410,16 +410,16 @@ void main()\n\
 		#endif\n\
 \n\
 		// Reflection color\n\
-		lowp vec3 reflectionColor = highp vec3(1.0, 1.0, 1.0);\n\
+		lowp vec3 reflectionColor = mediump vec3(1.0, 1.0, 1.0);\n\
 		#ifdef FS_2DREFLECTIONMAP\n\
 			// Spherical environment mapping\n\
-			highp vec3  r = ViewSpaceToWorldSpace*normalize(reflect(VertexPositionVS, normal));\n\
-			highp float m = 2.0*sqrt(r.x*r.x + r.y*r.y + (r.z + 1.0)*(r.z + 1.0));\n\
+			mediump vec3  r = ViewSpaceToWorldSpace*normalize(reflect(VertexPositionVS, normal));\n\
+			mediump float m = 2.0*sqrt(r.x*r.x + r.y*r.y + (r.z + 1.0)*(r.z + 1.0));\n\
 			#define FLT_MIN 1.175494351e-38 // Minimum positive value\n\
 			if (m < FLT_MIN)\n\
 				m = FLT_MIN;\n\
 			#undef FLT_MIN\n\
-			reflectionColor = texture2D(ReflectionMap, highp vec2(r.x/m + 0.5, 1.0 - (r.y/m + 0.5))).rgb;\n\
+			reflectionColor = texture2D(ReflectionMap, mediump vec2(r.x/m + 0.5, 1.0 - (r.y/m + 0.5))).rgb;\n\
 		#elif defined(FS_CUBEREFLECTIONMAP)\n\
 			// Cubic environment mapping\n\
 			// There's no need to normalize the reflection vector when using cube maps\n\
@@ -427,7 +427,7 @@ void main()\n\
 		#endif\n\
 		// Perform sRGB to linear space conversion (gamma correction)\n\
 		#ifdef FS_GAMMACORRECTION\n\
-			reflectionColor = pow(reflectionColor, highp vec3(2.2, 2.2, 2.2));\n\
+			reflectionColor = pow(reflectionColor, mediump vec3(2.2, 2.2, 2.2));\n\
 		#endif\n\
 		// Apply reflection color\n\
 		reflectionColor *= ReflectionColor;\n\
@@ -447,12 +447,12 @@ void main()\n\
 			#define specularExponent SpecularExponent\n\
 		#endif\n\
 	#else\n\
-		#define specularColor highp vec3(0.0, 0.0, 0.0)\n\
+		#define specularColor mediump vec3(0.0, 0.0, 0.0)\n\
 		#define specularExponent 0.0\n\
 	#endif\n\
 \n\
 	// Perform the lighting calculation in view space\n\
-	highp vec3 position = VertexPositionVS;\n\
+	mediump vec3 position = VertexPositionVS;\n\
 	#ifdef FS_DIRECTIONAL\n\
 		// Perform the Blinn-Phong lighting calculation\n\
 		lowp vec3 lightingColor = BlinnPhong(LightDirection, LightColor, normalize(-position), normal, diffuseColor, specularColor, specularExponent);\n\
@@ -461,10 +461,10 @@ void main()\n\
 		#define shadow 1.0\n\
 	#else\n\
 		// Calculate the view space light vector pointing from the position to the light position\n\
-		highp vec3 lightVector = LightPosition - position;\n\
+		mediump vec3 lightVector = LightPosition - position;\n\
 \n\
 		// Get the distance between the light and position\n\
-		highp float distance = length(lightVector);\n\
+		mediump float distance = length(lightVector);\n\
 \n\
 		// If the position is outside of area of effect, discard position\n\
 		if (distance > LightRadius) {\n\
@@ -472,7 +472,7 @@ void main()\n\
 			#ifdef FS_DISCARD\n\
 				discard;\n\
 			#else\n\
-				gl_FragColor = highp vec4(0.0, 0.0, 0.0, 0.0);\n\
+				gl_FragColor = mediump vec4(0.0, 0.0, 0.0, 0.0);\n\
 				return;\n\
 			#endif\n\
 		}\n\
@@ -481,37 +481,37 @@ void main()\n\
 		#ifdef FS_SHADOWMAPPING\n\
 			#ifdef FS_SPOT\n\
 				// Calculate the shadow vector\n\
-				highp vec4 shadowVector = ViewSpaceToShadowMapSpace*(highp vec4(position, 1.0));\n\
+				mediump vec4 shadowVector = ViewSpaceToShadowMapSpace*(mediump vec4(position, 1.0));\n\
 \n\
 				// Shadow mapping\n\
 				#ifdef FS_SOFTSHADOWMAPPING\n\
 					// Fake PCF (percentage-closer filtering)\n\
-					highp float shadow = (texPCF(ShadowMap, shadowVector, highp vec2(-TexelSize,  TexelSize)).x +\n\
-										  texPCF(ShadowMap, shadowVector, highp vec2( TexelSize,  TexelSize)).x +\n\
-										  texPCF(ShadowMap, shadowVector, highp vec2(-TexelSize, -TexelSize)).x +\n\
-										  texPCF(ShadowMap, shadowVector, highp vec2( TexelSize, -TexelSize)).x) * 0.25;\n\
+					mediump float shadow = (texPCF(ShadowMap, shadowVector, mediump vec2(-TexelSize,  TexelSize)).x +\n\
+										    texPCF(ShadowMap, shadowVector, mediump vec2( TexelSize,  TexelSize)).x +\n\
+										    texPCF(ShadowMap, shadowVector, mediump vec2(-TexelSize, -TexelSize)).x +\n\
+										    texPCF(ShadowMap, shadowVector, mediump vec2( TexelSize, -TexelSize)).x) * 0.25;\n\
 				#else\n\
-					highp float shadow = shadow2DProj(ShadowMap, shadowVector).x;\n\
+					mediump float shadow = shadow2DProj(ShadowMap, shadowVector).x;\n\
 				#endif\n\
 			#else\n\
 				// Shadow mapping\n\
-				highp vec3 shadowVector = ViewSpaceToShadowCubeMapSpace*(-lightVector*InvLightRadius);\n\
-				highp float shadowVecLength = length(shadowVector);\n\
+				mediump vec3 shadowVector = ViewSpaceToShadowCubeMapSpace*(-lightVector*InvLightRadius);\n\
+				mediump float shadowVecLength = length(shadowVector);\n\
 				#ifdef FS_SOFTSHADOWMAPPING\n\
 					// Shadowed?\n\
-					highp float shadow = (shadowVecLength < texPCF(ShadowMap, shadowVector, highp vec3(TexelSize, TexelSize, TexelSize))) ? 0.16666667 : 0.0;\n\
-					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, highp vec3(-TexelSize, -TexelSize, -TexelSize))) ? 0.16666667 : 0.0;\n\
-					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, highp vec3( TexelSize, -TexelSize, -TexelSize))) ? 0.16666667 : 0.0;\n\
-					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, highp vec3(-TexelSize,  TexelSize, -TexelSize))) ? 0.16666667 : 0.0;\n\
-					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, highp vec3( TexelSize, -TexelSize,  TexelSize))) ? 0.16666667 : 0.0;\n\
-					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, highp vec3(-TexelSize,  TexelSize,  TexelSize))) ? 0.16666667 : 0.0;\n\
+					mediump float shadow = (shadowVecLength < texPCF(ShadowMap, shadowVector, mediump vec3(TexelSize, TexelSize, TexelSize))) ? 0.16666667 : 0.0;\n\
+					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, mediump vec3(-TexelSize, -TexelSize, -TexelSize))) ? 0.16666667 : 0.0;\n\
+					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, mediump vec3( TexelSize, -TexelSize, -TexelSize))) ? 0.16666667 : 0.0;\n\
+					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, mediump vec3(-TexelSize,  TexelSize, -TexelSize))) ? 0.16666667 : 0.0;\n\
+					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, mediump vec3( TexelSize, -TexelSize,  TexelSize))) ? 0.16666667 : 0.0;\n\
+					shadow += (shadowVecLength < texPCF(ShadowMap, shadowVector, mediump vec3(-TexelSize,  TexelSize,  TexelSize))) ? 0.16666667 : 0.0;\n\
 					shadow = clamp(shadow, 0.0, 1.0);\n\
 				#else\n\
 					// Unpack\n\
-					highp float depthValue = texPCF(ShadowMap, shadowVector);\n\
+					mediump float depthValue = texPCF(ShadowMap, shadowVector);\n\
 \n\
 					// Shadowed?\n\
-					highp float shadow = (shadowVecLength < depthValue) ? 1.0 : 0.0;\n\
+					mediump float shadow = (shadowVecLength < depthValue) ? 1.0 : 0.0;\n\
 				#endif\n\
 			#endif\n\
 \n\
@@ -521,7 +521,7 @@ void main()\n\
 				#ifdef FS_DISCARD\n\
 					discard;\n\
 				#else\n\
-					gl_FragColor = highp vec4(0.0, 0.0, 0.0, 0.0);\n\
+					gl_FragColor = mediump vec4(0.0, 0.0, 0.0, 0.0);\n\
 					return;\n\
 				#endif\n\
 			}\n\
@@ -533,13 +533,13 @@ void main()\n\
 		// Get the light color (lightColor)\n\
 		#ifdef FS_PROJECTIVE_POINT\n\
 			// Calculate the cube map space vector ('-' -> The light is the source of the ray, not the surface!)\n\
-			highp vec3 cubeMapVector = ViewSpaceToCubeMapSpace*(-lightVector);\n\
+			mediump vec3 cubeMapVector = ViewSpaceToCubeMapSpace*(-lightVector);\n\
 \n\
 			// Get cube map texture for projective point light\n\
 			lowp vec3 lightColor = textureCube(ProjectivePointCubeMap, cubeMapVector).rgb;\n\
 			// Perform sRGB to linear space conversion (gamma correction)\n\
 			#ifdef FS_GAMMACORRECTION\n\
-				lightColor = pow(lightColor, highp vec3(2.2, 2.2, 2.2));\n\
+				lightColor = pow(lightColor, mediump vec3(2.2, 2.2, 2.2));\n\
 			#endif\n\
 			// Apply light color\n\
 			lightColor *= LightColor;\n\
@@ -552,7 +552,7 @@ void main()\n\
 				// Projective spot map\n\
 				#ifdef FS_SPOT_PROJECTIVE\n\
 					// Calculate the projective spot map texture coordinate\n\
-					highp vec4 projectiveSpotMapUV = ViewSpaceToSpotMapSpace*(-(highp vec4(position, 1.0)));\n\
+					mediump vec4 projectiveSpotMapUV = ViewSpaceToSpotMapSpace*(-(mediump vec4(position, 1.0)));\n\
 \n\
 					// No back projection, please!\n\
 					if (projectiveSpotMapUV.z < 0.0) {\n\
@@ -560,7 +560,7 @@ void main()\n\
 						#ifdef FS_DISCARD\n\
 							discard;\n\
 						#else\n\
-							gl_FragColor = highp vec4(0.0, 0.0, 0.0, 0.0);\n\
+							gl_FragColor = mediump vec4(0.0, 0.0, 0.0, 0.0);\n\
 							return;\n\
 						#endif\n\
 					}\n\
@@ -569,7 +569,7 @@ void main()\n\
 					lowp vec3 projectiveSpotMapTexel = texture2DProj(ProjectiveSpotMap, projectiveSpotMapUV).rgb;\n\
 					// Perform sRGB to linear space conversion (gamma correction)\n\
 					#ifdef FS_GAMMACORRECTION\n\
-						projectiveSpotMapTexel = pow(projectiveSpotMapTexel, highp vec3(2.2, 2.2, 2.2));\n\
+						projectiveSpotMapTexel = pow(projectiveSpotMapTexel, mediump vec3(2.2, 2.2, 2.2));\n\
 					#endif\n\
 					// Modulate the color of the light using the projective spot map texel data\n\
 					lightColor *= projectiveSpotMapTexel;\n\
@@ -578,12 +578,12 @@ void main()\n\
 				// Spot light with cone\n\
 				#ifdef FS_SPOT_CONE\n\
 					// Calculate the angle between the current position and the spot light\n\
-					highp float currentSpotConeCos = dot(normalize(position - LightPosition), LightDirection);\n\
+					mediump float currentSpotConeCos = dot(normalize(position - LightPosition), LightDirection);\n\
 \n\
 					// Spot light with smooth cone\n\
 					#ifdef FS_SPOT_SMOOTHCONE\n\
 						// Get the current smooth spot cone attenuation\n\
-						highp float currentSpotConeCosAttenuation = smoothstep(SpotConeCos.x, SpotConeCos.y, currentSpotConeCos);\n\
+						mediump float currentSpotConeCosAttenuation = smoothstep(SpotConeCos.x, SpotConeCos.y, currentSpotConeCos);\n\
 \n\
 						// Is the position completely outside the spot cone?\n\
 						if (currentSpotConeCosAttenuation <= 0.0) {\n\
@@ -591,7 +591,7 @@ void main()\n\
 							#ifdef FS_DISCARD\n\
 								discard;\n\
 							#else\n\
-								gl_FragColor = highp vec4(0.0, 0.0, 0.0, 0.0);\n\
+								gl_FragColor = mediump vec4(0.0, 0.0, 0.0, 0.0);\n\
 								return;\n\
 							#endif\n\
 						}\n\
@@ -605,7 +605,7 @@ void main()\n\
 							#ifdef FS_DISCARD\n\
 								discard;\n\
 							#else\n\
-								gl_FragColor = highp vec4(0.0, 0.0, 0.0, 0.0);\n\
+								gl_FragColor = mediump vec4(0.0, 0.0, 0.0, 0.0);\n\
 								return;\n\
 							#endif\n\
 						}\n\
@@ -622,7 +622,7 @@ void main()\n\
 	#endif\n\
 \n\
 	// Calculate the fragment color\n\
-	gl_FragColor = highp vec4(lightingColor*shadow, 1.0);\n\
+	gl_FragColor = mediump vec4(lightingColor*shadow, 1.0);\n\
 \n\
 }";
 static const PLCore::String sLighting_GLSL_FS = sLighting_GLSL_FS_Part1 + sLighting_GLSL_FS_Part2;
