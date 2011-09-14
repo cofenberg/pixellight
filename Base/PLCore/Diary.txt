@@ -1,6 +1,8 @@
 >> 14.09.2011
 [CO]
 - Android port: Added "FileSearchAndroid" implementation
+- Bugfix (Linux): "PLFrontendOS::OSWindowLinux::GetX()" & "PLFrontendOS::OSWindowLinux::GetY()" were not returning the window position correctly (window decoration issue). Tested it now several times,
+  and when restarting an application, the previous window position and size is now restored correctly (even when using two monitors).
 
 
 

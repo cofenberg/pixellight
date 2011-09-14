@@ -90,7 +90,7 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 		// Create the native OS window instance
 		m_nNativeWindowHandle = XCreateWindow(m_pDisplay, XRootWindow(m_pDisplay, nScreen), 0, 0, nWidth, nHeight, 0, nDepth, InputOutput, pVisual, CWEventMask, &sXSetWindowAttributes);
 		XSetWMProtocols(m_pDisplay, m_nNativeWindowHandle, &WM_DELETE_WINDOW, 1);
-		
+
 		// Set icon
 		Atom wmIcon = XInternAtom(m_pDisplay, "_NET_WM_ICON", False);
 		Atom wmCardinal = XInternAtom(m_pDisplay, "CARDINAL", False);
@@ -314,15 +314,15 @@ String OSWindowLinux::GetTitle() const
 		unsigned long  nBytesLeft;
 		unsigned long  nNumberOfUnits;
 		unsigned char *pszName;
-		
+
 		// Try first getting as utf-8 string
 		if (XGetWindowProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME, 0, 65536/sizeof(long), False, UTF8_STRING,
 							   &sPropertyType, &nDataUnit, &nNumberOfUnits, &nBytesLeft, &pszName) == XLib::Success) {
 			// Return the window title
 			return String::FromUTF8(reinterpret_cast<const char*>(pszName));
-		}
+
 		// Try getting as plain text
-		else if (XGetWindowProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME, 0, 65536/sizeof(long), False, XA_STRING,
+		} else if (XGetWindowProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME, 0, 65536/sizeof(long), False, XA_STRING,
 							   &sPropertyType, &nDataUnit, &nNumberOfUnits, &nBytesLeft, &pszName) == XLib::Success) {
 			// Return the window title
 			return String::FromUTF8(reinterpret_cast<const char*>(pszName));
@@ -336,17 +336,17 @@ String OSWindowLinux::GetTitle() const
 void OSWindowLinux::SetTitle(const String &sTitle)
 {
 	if (m_nNativeWindowHandle) {
-		const unsigned char* pszWindowTitle = reinterpret_cast<const unsigned char*>(sTitle.GetUTF8());
 		// We need here the number of bytes of the string because the number of characters (returned by String::GetLength) and the used number of bytes can differ in an utf-8 string
-		// String::GetNumOfBytes can't be used here because the String class doesn't support UTF-8 as an internal Format.
+		// String::GetNumOfBytes can't be used here because the String class doesn't support UTF-8 as an internal format.
 		// Even if the String class uses UNICODE as internal format this wouldn't work either.
 		// Because the UNICODE String format uses wchar_t as datatype and the size of this type is greater than 1 byte.
-		// And each character in a string needs the same amount of bytes.
-		// But in an utf-8 encoded string the byte-count per character can differ between 1 byte (ASCII char) and 4 bytes (UNICODE char in Unicode Code point range 	U+010000 to U+10FFFF)
-		int numOfElements = strlen(reinterpret_cast<const char*>(pszWindowTitle));
-		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME,				 UTF8_STRING, 8, PropModeReplace, pszWindowTitle, numOfElements);
-		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_NAME,		 UTF8_STRING, 8, PropModeReplace, pszWindowTitle, numOfElements);
-		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_VISIBLE_NAME, UTF8_STRING, 8, PropModeReplace, pszWindowTitle, numOfElements);
+		// Each character in a string needs the same amount of bytes.
+		// In an utf-8 encoded string the byte-count per character can differ between 1 byte (ASCII char) and 4 bytes (UNICODE char in Unicode Code point range 	U+010000 to U+10FFFF)
+		const unsigned char *pszWindowTitle = reinterpret_cast<const unsigned char*>(sTitle.GetUTF8());
+		const int nNumOfElements = strlen(reinterpret_cast<const char*>(pszWindowTitle));
+		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, WM_NAME,				 UTF8_STRING, 8, PropModeReplace, pszWindowTitle, nNumOfElements);
+		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_NAME,		 UTF8_STRING, 8, PropModeReplace, pszWindowTitle, nNumOfElements);
+		XChangeProperty(m_pDisplay, m_nNativeWindowHandle, _NET_WM_VISIBLE_NAME, UTF8_STRING, 8, PropModeReplace, pszWindowTitle, nNumOfElements);
 	}
 }
 
@@ -358,6 +358,11 @@ int OSWindowLinux::GetX() const
 		int nPositionX = 0, nPositionY = 0;
 		unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
 		XGetGeometry(m_pDisplay, m_nNativeWindowHandle, &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
+
+		// Lookout! We need the position relative to the root window! (window decoration topic, don't do the horror below and you just get wrong position data)
+		::Window nChildWindow = 0;
+		XTranslateCoordinates(m_pDisplay, m_nNativeWindowHandle, nRootWindow, nPositionX, nPositionY, &nPositionX, &nPositionY, &nChildWindow);
+		XGetGeometry(m_pDisplay, nChildWindow, &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
 
 		// Return the window x position (in screen coordinates)
 		return nPositionX;
@@ -375,6 +380,11 @@ int OSWindowLinux::GetY() const
 		int nPositionX = 0, nPositionY = 0;
 		unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
 		XGetGeometry(m_pDisplay, m_nNativeWindowHandle, &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
+
+		// Lookout! We need the position relative to the root window! (window decoration topic, don't do the horror below and you just get wrong position data)
+		::Window nChildWindow = 0;
+		XTranslateCoordinates(m_pDisplay, m_nNativeWindowHandle, nRootWindow, nPositionX, nPositionY, &nPositionX, &nPositionY, &nChildWindow);
+		XGetGeometry(m_pDisplay, nChildWindow, &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
 
 		// Return the window y position (in screen coordinates)
 		return nPositionY;
@@ -429,8 +439,11 @@ void OSWindowLinux::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeigh
 			Frontend::CorrectPositionSize(nX, nY, nWidth, nHeight, 0, 0, XWidthOfScreen(pScreenInfo), XHeightOfScreen(pScreenInfo));
 		}
 
+		// If the window is not visible yet, make it visible right now
+		MakeVisible();
+
 		{ // Set OS window position and size
-			// Set position and size
+			// Set position and size (only works correctly when the window is already visible, that's why the "MakeVisible()" call must be done first)
 			XWindowChanges sChanges;
 			sChanges.x		= nX;
 			sChanges.y		= nY;
@@ -441,9 +454,6 @@ void OSWindowLinux::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeigh
 			// Do it!
 			XSync(m_pDisplay, False);
 		}
-
-		// If the window is not visible yet, make it visible right now
-		MakeVisible();
 	}
 }
 
