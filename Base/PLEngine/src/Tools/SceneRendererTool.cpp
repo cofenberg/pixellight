@@ -120,7 +120,7 @@ bool SceneRendererTool::SetSceneRenderer(SceneContainer *pSceneContainer, const 
 		// use a quite primitive scene renderer!
 		String sSceneRendererFilename = sFilename;
 		{
-			// [TODO] Detect required capabilities of a scene renderer?
+			// [TODO] Detect required capabilities of a scene renderer? (important)
 
 			// OpenGL
 			uint32 nVersion = 0;
@@ -130,6 +130,12 @@ bool SceneRendererTool::SetSceneRenderer(SceneContainer *pSceneContainer, const 
 					PL_LOG(Warning, "Your graphics card is too old to support proper shader rendering. "
 									"At least a OpenGL 1.4 compatible graphics card is recommended. A fallback fill be used.")
 				}
+
+			// OpenGL ES 2.0
+			} else if (m_pSurfacePainter->GetRenderer().GetAPI(&nVersion) == "OpenGL ES 2.0") {
+				// [TODO] Remove this build in tests
+				if (sSceneRendererFilename == "Deferred.sr" || sSceneRendererFilename == "FixedFunctions.sr")
+					sSceneRendererFilename = "Forward.sr";
 
 			// Direct3D
 			} else if (m_pSurfacePainter->GetRenderer().GetAPI(&nVersion) == "Direct3D") {

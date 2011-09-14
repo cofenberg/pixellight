@@ -244,25 +244,28 @@ void Controller::Connect(const String &sControl, Control *pControl, float fScale
 
 /**
 *  @brief
+* 
 *    Connect to another controller
 */
 void Controller::ConnectAll(Controller *pController, const String &sPrefixOut, const String &sPrefixIn)
 {
-	// Get all controls of input controller
-	const List<Control*> &lstControls = pController->GetControls();
-	for (uint32 i=0; i<lstControls.GetNumOfElements(); i++) {
-		// Get control
-		Control *pInput = lstControls[i];
+	if (pController) {
+		// Get all controls of input controller
+		const List<Control*> &lstControls = pController->GetControls();
+		for (uint32 i=0; i<lstControls.GetNumOfElements(); i++) {
+			// Get control
+			Control *pInput = lstControls[i];
 
-		// Check if input control has the right prefix
-		String sNameIn = pInput->GetName();
-		if (sPrefixIn.GetLength() == 0 || sNameIn.IndexOf(sPrefixIn) == 0) {
-			// Get output name
-			String sRoot = sNameIn.GetSubstring(sPrefixIn.GetLength());
-			String sNameOut = sPrefixOut + sRoot;
+			// Check if input control has the right prefix
+			String sNameIn = pInput->GetName();
+			if (sPrefixIn.GetLength() == 0 || sNameIn.IndexOf(sPrefixIn) == 0) {
+				// Get output name
+				String sRoot = sNameIn.GetSubstring(sPrefixIn.GetLength());
+				String sNameOut = sPrefixOut + sRoot;
 
-			// Try to create connection
-			Connect(sNameOut, pInput);
+				// Try to create connection
+				Connect(sNameOut, pInput);
+			}
 		}
 	}
 }

@@ -23,17 +23,17 @@
 // OpenGL 2.0 ("#version 110") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLCore::String sSRPShadowMapping_GLSL_VS = "\
 // Attributes\n\
-attribute vec4 VertexPosition;		// Object space vertex position input\n\
-varying   vec3 LightVecVS;\n\
+attribute highp vec4 VertexPosition;		// Object space vertex position input\n\
+varying   highp vec3 LightVecVS;\n\
 #ifdef VS_TEXCOORD0\n\
-	varying vec2 VertexTexCoord0;	// Vertex texture coordinate 0 input\n\
-	varying vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
+	varying highp vec2 VertexTexCoord0;		// Vertex texture coordinate 0 input\n\
+	varying highp vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output\n\
 #endif\n\
 \n\
 // Uniforms\n\
-uniform mat4  WorldVP;		// World view projection matrix\n\
-uniform mat4  WorldV;		// World view matrix\n\
-uniform float InvRadius;	// World space inverse light radius\n\
+uniform highp mat4  WorldVP;	// World view projection matrix\n\
+uniform highp mat4  WorldV;		// World view matrix\n\
+uniform highp float InvRadius;	// World space inverse light radius\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -54,15 +54,15 @@ void main()\n\
 // OpenGL 2.0 ("#version 110") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLCore::String sSRPShadowMapping_GLSL_FS = "\
 // Attributes\n\
-varying vec3 LightVecVS;\n\
+varying highp vec3 LightVecVS;\n\
 #ifdef FS_ALPHATEST\n\
-	varying vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
+	varying highp vec2 VertexTexCoordVS;	// Vertex texture coordinate input from vertex shader\n\
 #endif\n\
 \n\
 // Uniforms\n\
 #ifdef FS_ALPHATEST\n\
-	uniform sampler2D DiffuseMap;\n\
-	uniform float    AlphaReference;\n\
+	uniform highp sampler2D DiffuseMap;\n\
+	uniform highp float    AlphaReference;\n\
 #endif\n\
 \n\
 // Programs\n\
@@ -70,7 +70,7 @@ void main()\n\
 {\n\
 	#ifdef FS_ALPHATEST\n\
 		// Fetch the required texel data\n\
-		vec4 sample = texture2D(DiffuseMap, VertexTexCoordVS);\n\
+		highp vec4 sample = texture2D(DiffuseMap, VertexTexCoordVS);\n\
 \n\
 		// Perform an alpha test to discard fragments\n\
 		if (sample.a < AlphaReference)\n\
@@ -78,6 +78,6 @@ void main()\n\
 	#endif\n\
 \n\
 	// + '0.005' => Set polygon offset to avoid nasty shadow artefacts\n\
-	vec4 pack = vec4(1.0, 256.0, 65536.0, 16777216.0);\n\
+	highp vec4 pack = vec4(1.0, 256.0, 65536.0, 16777216.0);\n\
 	gl_FragColor = pack * (length(LightVecVS) + 0.005);\n\
 }";

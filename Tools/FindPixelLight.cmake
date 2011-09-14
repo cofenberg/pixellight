@@ -105,7 +105,11 @@ _pixellight_find_lib(PL_PLFRONTENDPLGUI		PLFrontendPLGui/PLFrontendPLGui.h			PLF
 _pixellight_find_lib(PL_PLRENDEREROPENGLES2	PLRendererOpenGLES2/PLRendererOpenGLES2.h	PLRendererOpenGLES2	Plugins/PLRendererOpenGLES2/include)
 
 
-# Samples directory
+# Directories
+FIND_PATH(PL_PLRUNTIME_DIR 	"Data"
+			"${pl_runtime_env}/.."
+			"${pl_runtime_reg}/.."
+)
 FIND_PATH(PL_PLSAMPLES_DIR 	"Data"
 			"${pl_runtime_env}/../../Samples"
 			"${pl_runtime_reg}/../../Samples"

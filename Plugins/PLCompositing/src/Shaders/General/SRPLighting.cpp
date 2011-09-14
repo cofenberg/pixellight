@@ -223,20 +223,23 @@ void SRPLighting::RenderLight(Renderer &cRenderer, const SQCull &cCullQuery, SNL
 {
 	// Get the shadow mapping scene renderer pass
 	SRPShadowMapping *pSRPShadowMapping = nullptr;
-	static const String sClassName = "PLCompositing::SRPShadowMapping";
-	pSRPShadowMapping = static_cast<SRPShadowMapping*>(GetFirstInstanceOfSceneRendererPassClass(sClassName));
+	// [TODO] Currently, shadow mapping is deactivated on the Android platform
+	#ifndef ANDROID
+		static const String sClassName = "PLCompositing::SRPShadowMapping";
+		pSRPShadowMapping = static_cast<SRPShadowMapping*>(GetFirstInstanceOfSceneRendererPassClass(sClassName));
 
-	// Is the shadow mapping scene renderer pass active?
-	if (pSRPShadowMapping && !pSRPShadowMapping->IsActive())
-		pSRPShadowMapping = nullptr;	// Just do like there's no shadow mapping scene renderer pass at all
+		// Is the shadow mapping scene renderer pass active?
+		if (pSRPShadowMapping && !pSRPShadowMapping->IsActive())
+			pSRPShadowMapping = nullptr;	// Just do like there's no shadow mapping scene renderer pass at all
 
-	// Updates shadow maps
-	if (!(GetFlags() & NoShadow) && (cLight.GetFlags() & SNLight::CastShadow) && pSRPShadowMapping) {
-		pSRPShadowMapping->UpdateShadowMap(cRenderer, cLight, cCullQuery, cLightVisNode.GetSquaredDistanceToCamera());
+		// Updates shadow maps
+		if (!(GetFlags() & NoShadow) && (cLight.GetFlags() & SNLight::CastShadow) && pSRPShadowMapping) {
+			pSRPShadowMapping->UpdateShadowMap(cRenderer, cLight, cCullQuery, cLightVisNode.GetSquaredDistanceToCamera());
 
-		// Sets the initial render states
-		SetInitialRenderStates(cRenderer);
-	}
+			// Sets the initial render states
+			SetInitialRenderStates(cRenderer);
+		}
+	#endif
 
 	// Is lighting allowed for this scene container?
 	if (!(cCullQuery.GetSceneContainer().GetFlags() & SceneNode::NoLighting))

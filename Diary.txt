@@ -4,6 +4,12 @@
 
 
 
+>> 14.09.2011
+[CO]
+- Android port progress: Loading files (= assets) from apk is working as well as the sample "60Scene" (without shadow mapping, but with dynamic lighting)
+
+
+
 >> 13.09.2011
 [CO]
 - Android port progress: "51RendererTexturing" & "54RendererRTT" (without MRT) are now running as well on my smartphone
