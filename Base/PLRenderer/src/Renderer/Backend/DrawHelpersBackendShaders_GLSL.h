@@ -23,30 +23,30 @@
 // GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
 static const PLCore::String sVertexShaderSourceCodeGLSL = "\
 // Attributes\n\
-attribute highp vec3 VertexPosition;				// Object space vertex position input\n\
+attribute mediump vec3 VertexPosition;					// Object space vertex position input\n\
 #ifdef VS_TEXCOORD0\n\
-	attribute highp vec2 VertexTextureCoordinate;	// Vertex texture coordinate input\n\
-	varying   highp vec2 VertexTextureCoordinateVS;	// Vertex texture coordinate output\n\
+	attribute mediump vec2 VertexTextureCoordinate;		// Vertex texture coordinate input\n\
+	varying   mediump vec2 VertexTextureCoordinateVS;	// Vertex texture coordinate output\n\
 #endif\n\
 \n\
 // Uniforms\n\
-uniform highp mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix\n\
+uniform mediump mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix\n\
 #ifdef VS_TEXCOORD0\n\
-	uniform highp mat4 TextureMatrix;				// Texture matrix\n\
+	uniform mediump mat4 TextureMatrix;				// Texture matrix\n\
 #endif\n\
 #ifdef VS_POINTSIZE\n\
-	uniform highp float PointSize;					// Point size\n\
+	uniform mediump float PointSize;				// Point size\n\
 #endif\n\
 \n\
 // Programs\n\
 void main()\n\
 {\n\
 	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	gl_Position = ObjectSpaceToClipSpaceMatrix*vec4(VertexPosition, 1);\n\
+	gl_Position = ObjectSpaceToClipSpaceMatrix*(mediump vec4(VertexPosition, 1));\n\
 \n\
 	#ifdef VS_TEXCOORD0\n\
 		// Pass through the texture coordinate\n\
-		VertexTextureCoordinateVS = (TextureMatrix*vec4(VertexTextureCoordinate, 1, 1)).xy;\n\
+		VertexTextureCoordinateVS = (TextureMatrix*(mediump vec4(VertexTextureCoordinate, 1, 1))).xy;\n\
 	#endif\n\
 \n\
 	#ifdef VS_POINTSIZE\n\
@@ -60,11 +60,11 @@ void main()\n\
 static const PLCore::String sFragmentShaderSourceCodeGLSL = "\
 \n\
 // GLSL extensions\n\
-#extension GL_ARB_texture_rectangle : enable // [TODO] Will this create problems when using OpenGL ES 2.0?\n\
+#extension GL_ARB_texture_rectangle : enable\n\
 \n\
 // Attributes\n\
 #ifdef FS_DIFFUSEMAP\n\
-	varying highp vec2 VertexTextureCoordinateVS;	// Vertex texture coordinate input from vertex shader\n\
+	varying mediump vec2 VertexTextureCoordinateVS;	// Vertex texture coordinate input from vertex shader\n\
 #endif\n\
 \n\
 // Uniforms\n\
@@ -76,7 +76,7 @@ uniform lowp vec4 Color;						// Color\n\
 		uniform lowp sampler2DRect DiffuseMap;	// Rectangle diffuse map\n\
 	#endif\n\
 	#ifdef FS_ALPHATEST\n\
-		uniform highp float AlphaReference;		// Alpha reference\n\
+		uniform mediump float AlphaReference;	// Alpha reference\n\
 	#endif\n\
 #endif\n\
 \n\
