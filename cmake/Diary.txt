@@ -1,3 +1,13 @@
+>> 15.09.2011
+[CO]
+- Added "cmake/Android" containing an Android apk CMake macro which is able to create an apk file automatically, including all files like "AndroidManifest.xml.in" and even an automatically generated
+  Java file which loads in the shared libraries for you. (sadly, on Android, those have to be loaded in this way)
+  This macro can also automatically install & run the created apk on the device - meaning you just have to enter "make" and shortly after this your application is running on your device. :D
+  Took me quite some time to figure out all the details and possible issues which may occure... but I think it was really worth the effort. :D
+  I designed "cmake/Android" in a way so that it's possible to just copy the directory into an own project in order to use it.
+
+
+
 >> 09.09.2011
 [CO]
 - Clang: Disabled visibility attribute because there are currently some issues within PixelLight when compiling it with Clang and enabled visibility attribute. Had a look into it for the past few
