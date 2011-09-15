@@ -5,6 +5,8 @@
   This macro can also automatically install & run the created apk on the device - meaning you just have to enter "make" and shortly after this your application is running on your device. :D
   Took me quite some time to figure out all the details and possible issues which may occure... but I think it was really worth the effort. :D
   I designed "cmake/Android" in a way so that it's possible to just copy the directory into an own project in order to use it.
+- CMake: Changed "cmake_minimum_required(VERSION 2.6)" into "cmake_minimum_required(VERSION 2.8.3)". One script is using "CMAKE_CURRENT_LIST_DIR" (http://cmake.org/Wiki/CMake_Useful_Variables) and I
+  don't want to miss this variable introduced in CMake 2.8.3. The current CMake version is 2.8.5, so 2.8.3 shoudn't be a problem.
 
 
 
