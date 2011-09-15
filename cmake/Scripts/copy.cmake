@@ -1,3 +1,25 @@
+#*********************************************************#
+#*  File: copy.cmake                                     *
+#*
+#*  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+#*
+#*  This file is part of PixelLight.
+#*
+#*  PixelLight is free software: you can redistribute it and/or modify
+#*  it under the terms of the GNU Lesser General Public License as published by
+#*  the Free Software Foundation, either version 3 of the License, or
+#*  (at your option) any later version.
+#*
+#*  PixelLight is distributed in the hope that it will be useful,
+#*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#*  GNU Lesser General Public License for more details.
+#*
+#*  You should have received a copy of the GNU Lesser General Public License
+#*  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
+#*********************************************************#
+
+
 # Helper script to copy files to a specific destination. This is required in order to copy symlinks under Linux as symlinks (cmake -E copy doesn't copy symlinks as symlinks).
 
 # Background: When the FILE command is listed in a "CMakeLists.txt"-file, the command is executed immediately as soon as CMake is parsing the "CMakeLists.txt"-file.
