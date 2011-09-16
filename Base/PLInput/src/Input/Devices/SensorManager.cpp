@@ -47,7 +47,23 @@ pl_implement_class(SensorManager)
 *  @brief
 *    Constructor
 */
-SensorManager::SensorManager(const String &sName, DeviceImpl *pImpl) : Device(sName, "Sensor manager input controller", pImpl)
+SensorManager::SensorManager(const String &sName, DeviceImpl *pImpl) : Device(sName, "Sensor manager input controller", pImpl),
+	// Accelerometer
+	AccelerationX	(this,	"AccelerationX",	"X acceleration axis (Accelerometer)"),
+	AccelerationY	(this,	"AccelerationY",	"Y acceleration axis (Accelerometer)"),
+	AccelerationZ	(this,	"AccelerationZ",	"Z acceleration axis (Accelerometer)"),
+	// Magnetic field
+	MagneticX		(this,	"MagneticX",		"X magnetic axis (Magnetic field)"),
+	MagneticY		(this,	"MagneticY",		"Y magnetic axis (Magnetic field)"),
+	MagneticZ		(this,	"MagneticZ",		"Z magnetic axis (Magnetic field)"),
+	// Gyroscope
+	RotationX		(this,	"RotationX",		"X rotation axis (Gyroscope)"),
+	RotationY		(this,	"RotationY",		"Y rotation axis (Gyroscope)"),
+	RotationZ		(this,	"RotationZ",		"Z rotation axis (Gyroscope)"),
+	// Light
+	Light			(this,	"Light",			"Light"),
+	// Proximity
+	Proximity		(this,	"Proximity",		"Proximity")
 {
 }
 

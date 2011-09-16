@@ -1,3 +1,10 @@
+>> 16.09.2011
+[CO]
+- Although console based, "30Input" is now also using the frontend system in order to make it possible to e.g. use it also on Android to test the input. This change didn't really
+  made the sample more complex - in fact, I was now able to remove the MS Windows specific message dispatch by just calling the "Ping()"-method of the frontend. :D
+
+
+
 >> 13.09.2011
 [CO]
 - Whenever possible, the background is now cleared to gray. This way, in case on an graphics error we might still see at least something. This should make porting and

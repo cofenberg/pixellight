@@ -32,6 +32,17 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+struct ASensorManager;
+typedef struct ASensorManager ASensorManager;
+struct ASensorEventQueue;
+typedef struct ASensorEventQueue ASensorEventQueue;
+struct ASensor;
+typedef struct ASensor ASensor;
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLInput {
@@ -69,6 +80,19 @@ class AndroidSensorManagerDevice : public UpdateDevice {
 	//[-------------------------------------------------------]
 	public:
 		virtual void Update() override;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		ASensorManager    *m_pSensorManager;		/**< Android sensor manager, can be a null pointer */
+		ASensorEventQueue *m_pSensorEventQueue;		/**< Sensor event queue, can be a null pointer */
+		const ASensor     *m_pAccelerometerSensor;	/**< Accelerometer sensor, can be a null pointer */
+		const ASensor     *m_pMagneticFieldSensor;	/**< Magnetic field sensor, can be a null pointer */
+		const ASensor     *m_pGyroscopeSensor;		/**< Gyroscope sensor, can be a null pointer */
+		const ASensor     *m_pLightSensor;			/**< Light sensor, can be a null pointer */
+		const ASensor     *m_pProximitySensor;		/**< Proximity sensor, can be a null pointer */
 
 
 };

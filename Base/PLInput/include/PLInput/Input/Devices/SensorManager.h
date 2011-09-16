@@ -47,6 +47,13 @@ namespace PLInput {
 *    Sensor manager input device
 *
 *  @remarks
+*    The sensor manager is a collection of sensors usually available on a mobile device:
+*    - Accelerometer
+*    - Magnetic field
+*    - Gyroscope
+*    - Light
+*    - Proximity
+*
 *    This class supports the following device backend types:
 *    - UpdateDevice
 */
@@ -64,7 +71,22 @@ class SensorManager : public Device {
 	//[ Controller definition                                 ]
 	//[-------------------------------------------------------]
 	public:
-		// [TODO] Implement me
+		// Accelerometer
+		PLInput::Axis	AccelerationX;	/**< X acceleration axis (Accelerometer) */
+		PLInput::Axis	AccelerationY;	/**< Y acceleration axis (Accelerometer) */
+		PLInput::Axis	AccelerationZ;	/**< Z acceleration axis (Accelerometer) */
+		// Magnetic field
+		PLInput::Axis	MagneticX;		/**< X magnetic axis (Magnetic field) */
+		PLInput::Axis	MagneticY;		/**< Y magnetic axis (Magnetic field) */
+		PLInput::Axis	MagneticZ;		/**< Z magnetic axis (Magnetic field) */
+		// Gyroscope
+		PLInput::Axis	RotationX;		/**< X rotation axis (Gyroscope) */
+		PLInput::Axis	RotationY;		/**< Y rotation axis (Gyroscope) */
+		PLInput::Axis	RotationZ;		/**< Z rotation axis (Gyroscope) */
+		// Light
+		PLInput::Axis	Light;			/**< Light */
+		// Proximity
+		PLInput::Axis	Proximity;		/**< Proximity */
 
 
 	//[-------------------------------------------------------]

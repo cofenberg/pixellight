@@ -380,6 +380,7 @@ bool Application::OnStart()
 	//	TestInput("Joystick0");
 	//	TestInput("WiiMote0");
 	//	TestInput("SpaceMouse0");
+	//	TestInput("SensorManager");
 	//	TestGetChar("Keyboard");
 		TestConnections();
 

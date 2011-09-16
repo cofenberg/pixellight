@@ -108,17 +108,22 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 )
-if(LINUX)
+if(ANDROID)
+	##################################################
+	## Android
+	##################################################
+	# For the "android_native_app_glue.h"-header include
+	add_include_directories(
+		${ANDROID_NDK}/sources/android/native_app_glue
+	)
+elseif(LINUX)
 	##################################################
 	## Linux
 	##################################################
-	# No DBUS headers available in the Android NDK
-	if(NOT ANDROID)
-		add_include_directories(
-			/usr/include/dbus-1.0
-			/usr/lib/dbus-1.0/include
-		)
-	endif()
+	add_include_directories(
+		/usr/include/dbus-1.0
+		/usr/lib/dbus-1.0/include
+	)
 endif()
 
 ##################################################
@@ -144,17 +149,21 @@ if(WIN32)
 		${WIN32_WINMM_LIB}
 		${WIN32_SETUPAPI_LIB}
 	)
+elseif(ANDROID)
+	##################################################
+	## Android
+	##################################################
+	add_libs(
+		android
+	)
 elseif(LINUX)
 	##################################################
 	## Linux
 	##################################################
-	# No X11 and DBUS libraries available in the Android NDK
-	if(NOT ANDROID)
-		add_libs(
-			${LINUX_X11_LIBS}
-			dbus-1
-		)
-	endif()
+	add_libs(
+		${LINUX_X11_LIBS}
+		dbus-1
+	)
 endif()
 
 ##################################################
