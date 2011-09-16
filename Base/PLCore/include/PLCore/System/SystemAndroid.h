@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLCore/System/ConsoleAndroid.h"
 #include "PLCore/System/SystemLinux.h"
 
 
@@ -82,6 +83,24 @@ class SystemAndroid : public SystemLinux {
 		*/
 		static PLCORE_API void SetAssetManager(AAssetManager *pAAssetManager);
 
+		/**
+		*  @brief
+		*    Returns whether or not console messages are also written into the Android in-kernel log buffer (use Androids "logcat" utility to access this system log)
+		*
+		*  @return
+		*    'true' if console messages are also written into the Android in-kernel log buffer, else 'false'
+		*/
+		static PLCORE_API bool GetConsoleToKernelLog();
+
+		/**
+		*  @brief
+		*    Sets whether or not console messages are also written into the Android in-kernel log buffer (use Androids "logcat" utility to access this system log)
+		*
+		*  @param[in] bKernelLog
+		*    'true' if console messages are also written into the Android in-kernel log buffer, else 'false', default is 'false'
+		*/
+		static PLCORE_API void SetConsoleToKernelLog(bool bConsoleToKernelLog);
+
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
@@ -106,6 +125,7 @@ class SystemAndroid : public SystemLinux {
 	private:
 		virtual String GetPlatform() const override;
 		virtual String GetOS() const override;
+		virtual const Console &GetConsole() const override;
 		virtual void UrgentMessage(const String &sMessage) const override;
 
 
@@ -113,7 +133,15 @@ class SystemAndroid : public SystemLinux {
 	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
 	private:
-		static AAssetManager *g_pAAssetManager;	/**< Android asset manager, can be a null pointer, the given instance is just shared and not destroyed by this class */
+		static AAssetManager *g_pAAssetManager;			/**< Android asset manager, can be a null pointer, the given instance is just shared and not destroyed by this class */
+		static bool			  g_bConsoleToKernelLog;	/**< 'true' if console messages are also written into the Android in-kernel log buffer, else 'false', default is 'false' */
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		ConsoleAndroid m_cConsole;	/**< Console instance (messages will be written into the Android in-kernel log buffer) */
 
 
 };

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: Mouse.h                                        *
+ *  File: SensorManager.h                                *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLINPUT_MOUSE_H__
-#define __PLINPUT_MOUSE_H__
+#ifndef __PLINPUT_SENSORMANAGER_H__
+#define __PLINPUT_SENSORMANAGER_H__
 #pragma once
 
 
@@ -44,19 +44,19 @@ namespace PLInput {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Mouse input device
+*    Sensor manager input device
 *
 *  @remarks
 *    This class supports the following device backend types:
 *    - UpdateDevice
 */
-class Mouse : public Device {
+class SensorManager : public Device {
 
 
 	//[-------------------------------------------------------]
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
-	pl_class(PLINPUT_RTTI_EXPORT, Mouse, "PLInput", PLInput::Device, "Mouse input controller")
+	pl_class(PLINPUT_RTTI_EXPORT, SensorManager, "PLInput", PLInput::Device, "Sensor manager input controller")
 	pl_class_end
 
 
@@ -64,21 +64,7 @@ class Mouse : public Device {
 	//[ Controller definition                                 ]
 	//[-------------------------------------------------------]
 	public:
-		PLInput::Axis	X;			/**< X axis */
-		PLInput::Axis	Y;			/**< Y axis */
-		PLInput::Axis	Wheel;		/**< Mouse wheel */
-		PLInput::Button	Left;		/**< Left mouse button  */
-		PLInput::Button	Right;		/**< Right mouse button  */
-		PLInput::Button	Middle;		/**< Middle mouse button  */
-		PLInput::Button	Button4;	/**< Mouse button #4 */
-		PLInput::Button	Button5;	/**< Mouse button #5 */
-		PLInput::Button	Button6;	/**< Mouse button #6 */
-		PLInput::Button	Button7;	/**< Mouse button #7 */
-		PLInput::Button	Button8;	/**< Mouse button #8 */
-		PLInput::Button	Button9;	/**< Mouse button #9 */
-		PLInput::Button	Button10;	/**< Mouse button #10 */
-		PLInput::Button	Button11;	/**< Mouse button #11 */
-		PLInput::Button	Button12;	/**< Mouse button #12 */
+		// [TODO] Implement me
 
 
 	//[-------------------------------------------------------]
@@ -94,13 +80,13 @@ class Mouse : public Device {
 		*  @param[in] pImpl
 		*    System specific device implementation, can, but shouldn't be a null pointer
 		*/
-		PLINPUT_API Mouse(const PLCore::String &sName, DeviceImpl *pImpl);
+		PLINPUT_API SensorManager(const PLCore::String &sName, DeviceImpl *pImpl);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLINPUT_API virtual ~Mouse();
+		PLINPUT_API virtual ~SensorManager();
 
 
 	//[-------------------------------------------------------]
@@ -119,4 +105,4 @@ class Mouse : public Device {
 } // PLInput
 
 
-#endif // __PLINPUT_MOUSE_H__
+#endif // __PLINPUT_SENSORMANAGER_H__

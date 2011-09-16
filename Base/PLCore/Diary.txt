@@ -1,3 +1,12 @@
+>> 16.09.2011
+[CO]
+- Added "ConsoleAndroid" which is derived from "ConsoleLinux" and just overrides the "Print()"-implementation. Even on Android, it's possible to write into the console, meaning "stdout"... but it's somewhat
+  complicated to "see" this output when starting an apk file (meaning: not starting an native application via shell). In this console implementation, messages are not only written into the console,
+  the Android in-kernel log buffer is used as well (use Androids "logcat" utility to access this system log).
+- "SystemAndroid" now also overrides "GetConsole()" in order to make it possible to toggle the used console implementation ("ConsoleAndroid"/"ConsoleLinux")
+
+
+
 >> 14.09.2011
 [CO]
 - Android port: Added "FileSearchAndroid" implementation

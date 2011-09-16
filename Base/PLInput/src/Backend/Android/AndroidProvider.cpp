@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: LinuxProvider.cpp                              *
+ *  File: AndroidProvider.cpp                            *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -24,27 +24,22 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLInput/Input/Devices/Keyboard.h"
-#include "PLInput/Input/Devices/Mouse.h"
-#include "PLInput/Input/Devices/Joystick.h"
-#include "PLInput/Backend/Linux/LinuxKeyboardDevice.h"
-#include "PLInput/Backend/Linux/LinuxMouseDevice.h"
-#include "PLInput/Backend/Linux/LinuxEventDevice.h"
-#include "PLInput/Backend/Linux/LinuxProvider.h"
-#include <dirent.h>
-#include <fcntl.h>
+#include "PLInput/Input/Devices/SensorManager.h"
+#include "PLInput/Backend/Android/AndroidKeyboardDevice.h"
+#include "PLInput/Backend/Android/AndroidSensorManagerDevice.h"
+#include "PLInput/Backend/Android/AndroidProvider.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLCore;
 namespace PLInput {
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(LinuxProvider)
+pl_implement_class(AndroidProvider)
 
 
 //[-------------------------------------------------------]
@@ -54,7 +49,7 @@ pl_implement_class(LinuxProvider)
 *  @brief
 *    Default constructor
 */
-LinuxProvider::LinuxProvider()
+AndroidProvider::AndroidProvider()
 {
 }
 
@@ -62,7 +57,7 @@ LinuxProvider::LinuxProvider()
 *  @brief
 *    Destructor
 */
-LinuxProvider::~LinuxProvider()
+AndroidProvider::~AndroidProvider()
 {
 }
 
@@ -70,49 +65,19 @@ LinuxProvider::~LinuxProvider()
 //[-------------------------------------------------------]
 //[ Private virtual Provider functions                    ]
 //[-------------------------------------------------------]
-void LinuxProvider::QueryDevices()
+void AndroidProvider::QueryDevices()
 {
 	// Create a keyboard device
 	if (!CheckDevice("Keyboard")) {
 		// Add device
-		LinuxKeyboardDevice *pImpl = new LinuxKeyboardDevice();
+		AndroidKeyboardDevice *pImpl = new AndroidKeyboardDevice();
 		AddDevice("Keyboard", new Keyboard("Keyboard", pImpl));
 	}
 
-	// Create a mouse device
-	if (!CheckDevice("Mouse")) {
-		LinuxMouseDevice *pImpl = new LinuxMouseDevice();
-		AddDevice("Mouse", new Mouse("Mouse", pImpl));
-	}
-
-	// List devices in "/dev/input/event*"
-	DIR *pDir = opendir("/dev/input");
-	if (pDir) {
-		int nDevice = 0;
-
-		// Read first entry
-		dirent *pEntry = readdir(pDir);
-		while (pEntry) {
-			// Check if filename is "eventX"
-			String sFilename = pEntry->d_name;
-			if (sFilename.GetSubstring(0, 5) == "event") {
-				// Try to open the device
-				int f = open(("/dev/input/" + sFilename).GetASCII(), O_RDWR | O_NONBLOCK);
-				if (f > 0) {
-					// Create device
-					LinuxEventDevice *pImpl = new LinuxEventDevice(f);
-					String sName = String("Joystick") + nDevice;
-					AddDevice(sName, new Joystick(sName, pImpl));
-					nDevice++;
-				}
-			}
-
-			// Read next entry
-			pEntry = readdir(pDir);
-		}
-
-		// Be polite and close the directory after we're done...
-		closedir(pDir);
+	// Create a sensor manager device
+	if (!CheckDevice("SensorManager")) {
+		AndroidSensorManagerDevice *pImpl = new AndroidSensorManagerDevice();
+		AddDevice("SensorManager", new SensorManager("SensorManager", pImpl));
 	}
 }
 

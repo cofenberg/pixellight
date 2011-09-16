@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ConsoleLinux.h                                 *
+ *  File: AndroidKeyboardDevice.cpp                      *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,75 +20,57 @@
 \*********************************************************/
 
 
-#ifndef __PLCORE_CONSOLE_LINUX_H__
-#define __PLCORE_CONSOLE_LINUX_H__
-#pragma once
-
-
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/System/Console.h"
+#include "PLInput/Input/Devices/Keyboard.h"
+#include "PLInput/Backend/Android/AndroidKeyboardDevice.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLCore {
+namespace PLInput {
 
 
 //[-------------------------------------------------------]
-//[ Classes                                               ]
+//[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Linux 'Console' implementation
+*    Constructor
 */
-class ConsoleLinux : public Console {
+AndroidKeyboardDevice::AndroidKeyboardDevice()
+{
+	// Destroy device implementation automatically
+	m_bDelete = true;
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+AndroidKeyboardDevice::~AndroidKeyboardDevice()
+{
+}
 
 
-	//[-------------------------------------------------------]
-	//[ Friends                                               ]
-	//[-------------------------------------------------------]
-	friend class SystemLinux;
+//[-------------------------------------------------------]
+//[ Public virtual UpdateDevice functions                 ]
+//[-------------------------------------------------------]
+void AndroidKeyboardDevice::Update()
+{
+	// Check if input device is valid
+	if (m_pDevice) {
+		// Get keyboard device
+		Keyboard *pKeyboard = static_cast<Keyboard*>(m_pDevice);
 
-
-	//[-------------------------------------------------------]
-	//[ Public virtual Console functions                      ]
-	//[-------------------------------------------------------]
-	public:
-		virtual void Print(const String &sString) const override;
-		virtual int IsKeyHit() const override;
-		virtual int GetCharacter(bool bEcho = false) const override;
-		virtual void ClearScreen() const override;
-		virtual void GetCursorPosition(uint16 &nX, uint16 &nY) const override;
-		virtual void SetCursorPosition(uint16 nX, uint16 nY) const override;
-
-
-	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
-	//[-------------------------------------------------------]
-	protected:
-		/**
-		*  @brief
-		*    Constructor
-		*/
-		ConsoleLinux();
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		virtual ~ConsoleLinux();
-
-
-};
+		// [TODO] Implement me
+	}
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLCore
-
-
-#endif // __PLCORE_CONSOLE_LINUX_H__
+} // PLInput

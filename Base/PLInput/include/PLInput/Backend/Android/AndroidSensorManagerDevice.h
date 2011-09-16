@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: Mouse.h                                        *
+ *  File: AndroidSensorManagerDevice.h                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,17 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLINPUT_MOUSE_H__
-#define __PLINPUT_MOUSE_H__
+#ifndef __PLINPUT_ANDROIDSENSORMANAGERDEVICE_H__
+#define __PLINPUT_ANDROIDSENSORMANAGERDEVICE_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLInput/Input/Devices/Device.h"
-#include "PLInput/Input/Controls/Axis.h"
-#include "PLInput/Input/Controls/Button.h"
+#include "PLInput/Backend/UpdateDevice.h"
 
 
 //[-------------------------------------------------------]
@@ -44,41 +42,9 @@ namespace PLInput {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Mouse input device
-*
-*  @remarks
-*    This class supports the following device backend types:
-*    - UpdateDevice
+*    Sensor manager implementation for Android
 */
-class Mouse : public Device {
-
-
-	//[-------------------------------------------------------]
-	//[ Class definition                                      ]
-	//[-------------------------------------------------------]
-	pl_class(PLINPUT_RTTI_EXPORT, Mouse, "PLInput", PLInput::Device, "Mouse input controller")
-	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Controller definition                                 ]
-	//[-------------------------------------------------------]
-	public:
-		PLInput::Axis	X;			/**< X axis */
-		PLInput::Axis	Y;			/**< Y axis */
-		PLInput::Axis	Wheel;		/**< Mouse wheel */
-		PLInput::Button	Left;		/**< Left mouse button  */
-		PLInput::Button	Right;		/**< Right mouse button  */
-		PLInput::Button	Middle;		/**< Middle mouse button  */
-		PLInput::Button	Button4;	/**< Mouse button #4 */
-		PLInput::Button	Button5;	/**< Mouse button #5 */
-		PLInput::Button	Button6;	/**< Mouse button #6 */
-		PLInput::Button	Button7;	/**< Mouse button #7 */
-		PLInput::Button	Button8;	/**< Mouse button #8 */
-		PLInput::Button	Button9;	/**< Mouse button #9 */
-		PLInput::Button	Button10;	/**< Mouse button #10 */
-		PLInput::Button	Button11;	/**< Mouse button #11 */
-		PLInput::Button	Button12;	/**< Mouse button #12 */
+class AndroidSensorManagerDevice : public UpdateDevice {
 
 
 	//[-------------------------------------------------------]
@@ -88,26 +54,21 @@ class Mouse : public Device {
 		/**
 		*  @brief
 		*    Constructor
-		*
-		*  @param[in] sName
-		*    Device name
-		*  @param[in] pImpl
-		*    System specific device implementation, can, but shouldn't be a null pointer
 		*/
-		PLINPUT_API Mouse(const PLCore::String &sName, DeviceImpl *pImpl);
+		AndroidSensorManagerDevice();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLINPUT_API virtual ~Mouse();
+		virtual ~AndroidSensorManagerDevice();
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual Controller functions                   ]
+	//[ Public virtual UpdateDevice functions                 ]
 	//[-------------------------------------------------------]
 	public:
-		PLINPUT_API virtual void Update() override;
+		virtual void Update() override;
 
 
 };
@@ -119,4 +80,4 @@ class Mouse : public Device {
 } // PLInput
 
 
-#endif // __PLINPUT_MOUSE_H__
+#endif // __PLINPUT_ANDROIDSENSORMANAGERDEVICE_H__

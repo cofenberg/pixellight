@@ -149,7 +149,7 @@ void ConsoleLinux::SetCursorPosition(uint16 nX, uint16 nY) const
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
 *  @brief

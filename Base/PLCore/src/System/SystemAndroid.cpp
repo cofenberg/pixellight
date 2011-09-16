@@ -36,7 +36,8 @@ namespace PLCore {
 //[-------------------------------------------------------]
 //[ Private static data                                   ]
 //[-------------------------------------------------------]
-AAssetManager *SystemAndroid::g_pAAssetManager = nullptr;	/**< Android asset manager, can be a null pointer, the given instance is just shared and not destroyed by this class */
+AAssetManager *SystemAndroid::g_pAAssetManager      = nullptr;	/**< Android asset manager, can be a null pointer, the given instance is just shared and not destroyed by this class */
+bool		   SystemAndroid::g_bConsoleToKernelLog = false;	/**< 'true' if console messages are also written into the Android in-kernel log buffer, else 'false', default is 'false' */
 
 
 //[-------------------------------------------------------]
@@ -58,6 +59,24 @@ AAssetManager *SystemAndroid::GetAssetManager()
 void SystemAndroid::SetAssetManager(AAssetManager *pAAssetManager)
 {
 	g_pAAssetManager = pAAssetManager;
+}
+
+/**
+*  @brief
+*    Returns whether or not console messages are also written into the Android in-kernel log buffer (use Androids "logcat" utility to access this system log)
+*/
+bool SystemAndroid::GetConsoleToKernelLog()
+{
+	return g_bConsoleToKernelLog;
+}
+
+/**
+*  @brief
+*    Sets whether or not console messages are also written into the Android in-kernel log buffer (use Androids "logcat" utility to access this system log)
+*/
+void SystemAndroid::SetConsoleToKernelLog(bool bConsoleToKernelLog)
+{
+	g_bConsoleToKernelLog = bConsoleToKernelLog;
 }
 
 
@@ -103,6 +122,11 @@ String SystemAndroid::GetOS() const
 	} else {
 		return "Android unknown";
 	}
+}
+
+const Console &SystemAndroid::GetConsole() const
+{
+	return g_bConsoleToKernelLog ? m_cConsole : SystemLinux::m_cConsole;
 }
 
 void SystemAndroid::UrgentMessage(const String &sMessage) const

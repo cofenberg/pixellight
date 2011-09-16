@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: Mouse.h                                        *
+ *  File: ConsoleAndroid.h                               *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,23 +20,21 @@
 \*********************************************************/
 
 
-#ifndef __PLINPUT_MOUSE_H__
-#define __PLINPUT_MOUSE_H__
+#ifndef __PLCORE_CONSOLE_ANDROID_H__
+#define __PLCORE_CONSOLE_ANDROID_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLInput/Input/Devices/Device.h"
-#include "PLInput/Input/Controls/Axis.h"
-#include "PLInput/Input/Controls/Button.h"
+#include "PLCore/System/ConsoleLinux.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLInput {
+namespace PLCore {
 
 
 //[-------------------------------------------------------]
@@ -44,70 +42,45 @@ namespace PLInput {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Mouse input device
+*    Android 'Console' implementation
 *
 *  @remarks
-*    This class supports the following device backend types:
-*    - UpdateDevice
+*    Even on Android, it's possible to write into the console, meaning "stdout"... but it's somewhat
+*    complicated to "see" this output when starting an apk file (meaning: not starting an native
+*    application via shell). In this console implementation, messages are not only written into the console,
+*    the Android in-kernel log buffer is used as well (use Androids "logcat" utility to access this system log).
 */
-class Mouse : public Device {
+class ConsoleAndroid : public ConsoleLinux {
 
 
 	//[-------------------------------------------------------]
-	//[ Class definition                                      ]
+	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	pl_class(PLINPUT_RTTI_EXPORT, Mouse, "PLInput", PLInput::Device, "Mouse input controller")
-	pl_class_end
+	friend class SystemAndroid;
 
 
 	//[-------------------------------------------------------]
-	//[ Controller definition                                 ]
-	//[-------------------------------------------------------]
-	public:
-		PLInput::Axis	X;			/**< X axis */
-		PLInput::Axis	Y;			/**< Y axis */
-		PLInput::Axis	Wheel;		/**< Mouse wheel */
-		PLInput::Button	Left;		/**< Left mouse button  */
-		PLInput::Button	Right;		/**< Right mouse button  */
-		PLInput::Button	Middle;		/**< Middle mouse button  */
-		PLInput::Button	Button4;	/**< Mouse button #4 */
-		PLInput::Button	Button5;	/**< Mouse button #5 */
-		PLInput::Button	Button6;	/**< Mouse button #6 */
-		PLInput::Button	Button7;	/**< Mouse button #7 */
-		PLInput::Button	Button8;	/**< Mouse button #8 */
-		PLInput::Button	Button9;	/**< Mouse button #9 */
-		PLInput::Button	Button10;	/**< Mouse button #10 */
-		PLInput::Button	Button11;	/**< Mouse button #11 */
-		PLInput::Button	Button12;	/**< Mouse button #12 */
-
-
-	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
+	//[ Public virtual Console functions                      ]
 	//[-------------------------------------------------------]
 	public:
+		virtual void Print(const String &sString) const override;
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
 		/**
 		*  @brief
 		*    Constructor
-		*
-		*  @param[in] sName
-		*    Device name
-		*  @param[in] pImpl
-		*    System specific device implementation, can, but shouldn't be a null pointer
 		*/
-		PLINPUT_API Mouse(const PLCore::String &sName, DeviceImpl *pImpl);
+		ConsoleAndroid();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLINPUT_API virtual ~Mouse();
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual Controller functions                   ]
-	//[-------------------------------------------------------]
-	public:
-		PLINPUT_API virtual void Update() override;
+		virtual ~ConsoleAndroid();
 
 
 };
@@ -116,7 +89,7 @@ class Mouse : public Device {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLInput
+} // PLCore
 
 
-#endif // __PLINPUT_MOUSE_H__
+#endif // __PLCORE_CONSOLE_ANDROID_H__

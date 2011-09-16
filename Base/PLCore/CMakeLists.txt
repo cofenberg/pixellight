@@ -225,6 +225,7 @@ elseif(LINUX)
 			src/File/FileAndroid.cpp
 			src/File/FileSearchAndroid.cpp
 			src/System/SystemAndroid.cpp
+			src/System/ConsoleAndroid.cpp
 		)
 	endif()
 endif()

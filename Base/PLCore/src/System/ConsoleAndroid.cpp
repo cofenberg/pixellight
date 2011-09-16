@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ConsoleLinux.h                                 *
+ *  File: ConsoleAndroid.cpp                             *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,15 +20,12 @@
 \*********************************************************/
 
 
-#ifndef __PLCORE_CONSOLE_LINUX_H__
-#define __PLCORE_CONSOLE_LINUX_H__
-#pragma once
-
-
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/System/Console.h"
+#include <android/log.h>
+#include "PLCore/String/String.h"
+#include "PLCore/System/ConsoleAndroid.h"
 
 
 //[-------------------------------------------------------]
@@ -38,57 +35,40 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Classes                                               ]
+//[ Public virtual Console functions                      ]
+//[-------------------------------------------------------]
+void ConsoleAndroid::Print(const String &sString) const
+{
+	// Write into the Android in-kernel log buffer (use Androids "logcat" utility to access this system log)
+	const String sLogMessage = "[Console] " + sString;
+	__android_log_write(ANDROID_LOG_INFO, "PixelLight", (sLogMessage.GetFormat() == String::ASCII) ? sLogMessage.GetASCII() : sLogMessage.GetUTF8());
+
+	// Do also do the normal console output
+	ConsoleLinux::Print(sString);
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Linux 'Console' implementation
+*    Constructor
 */
-class ConsoleLinux : public Console {
+ConsoleAndroid::ConsoleAndroid()
+{
+}
 
-
-	//[-------------------------------------------------------]
-	//[ Friends                                               ]
-	//[-------------------------------------------------------]
-	friend class SystemLinux;
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual Console functions                      ]
-	//[-------------------------------------------------------]
-	public:
-		virtual void Print(const String &sString) const override;
-		virtual int IsKeyHit() const override;
-		virtual int GetCharacter(bool bEcho = false) const override;
-		virtual void ClearScreen() const override;
-		virtual void GetCursorPosition(uint16 &nX, uint16 &nY) const override;
-		virtual void SetCursorPosition(uint16 nX, uint16 nY) const override;
-
-
-	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
-	//[-------------------------------------------------------]
-	protected:
-		/**
-		*  @brief
-		*    Constructor
-		*/
-		ConsoleLinux();
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		virtual ~ConsoleLinux();
-
-
-};
+/**
+*  @brief
+*    Destructor
+*/
+ConsoleAndroid::~ConsoleAndroid()
+{
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
-
-
-#endif // __PLCORE_CONSOLE_LINUX_H__

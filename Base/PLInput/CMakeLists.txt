@@ -38,6 +38,7 @@ add_sources(
 	src/Input/Devices/Joystick.cpp
 	src/Input/Devices/SpaceMouse.cpp
 	src/Input/Devices/WiiMote.cpp
+	src/Input/Devices/SensorManager.cpp
 	src/Input/Controls/Control.cpp
 	src/Input/Controls/Button.cpp
 	src/Input/Controls/Axis.cpp
@@ -73,6 +74,16 @@ if(WIN32)
 		src/Backend/HID/HIDWindows.cpp
 		src/Backend/HID/HIDDeviceWindows.cpp
 	)
+elseif(ANDROID)
+	##################################################
+	## Android
+	##################################################
+	add_sources(
+		src/Backend/Android/AndroidProvider.cpp
+		src/Backend/Android/AndroidKeyboardDevice.cpp
+		src/Backend/Android/AndroidSensorManagerDevice.cpp
+		src/Backend/HID/HIDLinux.cpp
+	)
 elseif(LINUX)
 	##################################################
 	## Linux
@@ -80,21 +91,13 @@ elseif(LINUX)
 	add_sources(
 		src/Backend/Linux/LinuxProvider.cpp
 		src/Backend/Linux/LinuxEventDevice.cpp
+		src/Backend/Linux/LinuxKeyboardDevice.cpp
+		src/Backend/Linux/LinuxMouseDevice.cpp
+		src/Backend/Bluetooth/BTLinux.cpp
+		src/Backend/Bluetooth/BTDeviceLinux.cpp
 		src/Backend/HID/HIDLinux.cpp
 		src/Backend/HID/HIDDeviceLinux.cpp
 	)
-
-	# No X server display connection on Android possible, so,
-	# deactivate the default keyboard & mouse implementation.
-	# No Bluetooth in the way currently used available on Android.
-	if(NOT ANDROID)
-		add_sources(
-			src/Backend/Linux/LinuxKeyboardDevice.cpp
-			src/Backend/Linux/LinuxMouseDevice.cpp
-			src/Backend/Bluetooth/BTLinux.cpp
-			src/Backend/Bluetooth/BTDeviceLinux.cpp
-		)
-	endif()
 endif()
 
 ##################################################

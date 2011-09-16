@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: LinuxProvider.cpp                              *
+ *  File: SensorManager.cpp                              *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,15 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLInput/Input/Devices/Keyboard.h"
-#include "PLInput/Input/Devices/Mouse.h"
-#include "PLInput/Input/Devices/Joystick.h"
-#include "PLInput/Backend/Linux/LinuxKeyboardDevice.h"
-#include "PLInput/Backend/Linux/LinuxMouseDevice.h"
-#include "PLInput/Backend/Linux/LinuxEventDevice.h"
-#include "PLInput/Backend/Linux/LinuxProvider.h"
-#include <dirent.h>
-#include <fcntl.h>
+#include "PLInput/Backend/UpdateDevice.h"
+#include "PLInput/Input/Devices/SensorManager.h"
 
 
 //[-------------------------------------------------------]
@@ -42,9 +35,9 @@ namespace PLInput {
 
 
 //[-------------------------------------------------------]
-//[ RTTI interface                                        ]
+//[ Class implementation                                  ]
 //[-------------------------------------------------------]
-pl_implement_class(LinuxProvider)
+pl_implement_class(SensorManager)
 
 
 //[-------------------------------------------------------]
@@ -52,9 +45,9 @@ pl_implement_class(LinuxProvider)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Default constructor
+*    Constructor
 */
-LinuxProvider::LinuxProvider()
+SensorManager::SensorManager(const String &sName, DeviceImpl *pImpl) : Device(sName, "Sensor manager input controller", pImpl)
 {
 }
 
@@ -62,57 +55,19 @@ LinuxProvider::LinuxProvider()
 *  @brief
 *    Destructor
 */
-LinuxProvider::~LinuxProvider()
+SensorManager::~SensorManager()
 {
 }
 
 
 //[-------------------------------------------------------]
-//[ Private virtual Provider functions                    ]
+//[ Public virtual Controller functions                   ]
 //[-------------------------------------------------------]
-void LinuxProvider::QueryDevices()
+void SensorManager::Update()
 {
-	// Create a keyboard device
-	if (!CheckDevice("Keyboard")) {
-		// Add device
-		LinuxKeyboardDevice *pImpl = new LinuxKeyboardDevice();
-		AddDevice("Keyboard", new Keyboard("Keyboard", pImpl));
-	}
-
-	// Create a mouse device
-	if (!CheckDevice("Mouse")) {
-		LinuxMouseDevice *pImpl = new LinuxMouseDevice();
-		AddDevice("Mouse", new Mouse("Mouse", pImpl));
-	}
-
-	// List devices in "/dev/input/event*"
-	DIR *pDir = opendir("/dev/input");
-	if (pDir) {
-		int nDevice = 0;
-
-		// Read first entry
-		dirent *pEntry = readdir(pDir);
-		while (pEntry) {
-			// Check if filename is "eventX"
-			String sFilename = pEntry->d_name;
-			if (sFilename.GetSubstring(0, 5) == "event") {
-				// Try to open the device
-				int f = open(("/dev/input/" + sFilename).GetASCII(), O_RDWR | O_NONBLOCK);
-				if (f > 0) {
-					// Create device
-					LinuxEventDevice *pImpl = new LinuxEventDevice(f);
-					String sName = String("Joystick") + nDevice;
-					AddDevice(sName, new Joystick(sName, pImpl));
-					nDevice++;
-				}
-			}
-
-			// Read next entry
-			pEntry = readdir(pDir);
-		}
-
-		// Be polite and close the directory after we're done...
-		closedir(pDir);
+	// Update device backend
+	if (m_pImpl && m_pImpl->GetBackendType() == BackendUpdateDevice) {
+		static_cast<UpdateDevice*>(m_pImpl)->Update();
 	}
 }
 

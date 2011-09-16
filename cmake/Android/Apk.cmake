@@ -102,11 +102,19 @@ macro(android_create_apk name apk_directory shared_libraries assets data_directo
 		configure_file("${ANDROID_THIS_DIRECTORY}/LoadLibraries.java.in" "${apk_directory}/src/${ANDROID_APK_TOP_LEVEL_DOMAIN}/${ANDROID_APK_DOMAIN}/${ANDROID_APK_SUBDOMAIN}/LoadLibraries.java")
 
 		# Create the directory for the libraries
-		file(MAKE_DIRECTORY "${apk_directory}/libs/${ARM_TARGET}")
+ 		add_custom_command(TARGET ${ANDROID_NAME}
+			PRE_BUILD
+			COMMAND ${CMAKE_COMMAND} -E remove_directory "${apk_directory}/libs"
+		)
+		add_custom_command(TARGET ${ANDROID_NAME}
+			PRE_BUILD
+			COMMAND ${CMAKE_COMMAND} -E make_directory "${apk_directory}/libs/${ARM_TARGET}"
+		)
 
 		# Copy the used shared libraries
 		foreach(value ${shared_libraries})
 			add_custom_command(TARGET ${ANDROID_NAME}
+				POST_BUILD
 				COMMAND ${CMAKE_COMMAND} -E copy ${value} "${apk_directory}/libs/${ARM_TARGET}"
 			)
 		endforeach()
@@ -117,7 +125,14 @@ macro(android_create_apk name apk_directory shared_libraries assets data_directo
 		)
 
 		# Copy assets
-		file(MAKE_DIRECTORY "${apk_directory}/assets/${data_directory}")
+		add_custom_command(TARGET ${ANDROID_NAME}
+			PRE_BUILD
+			COMMAND ${CMAKE_COMMAND} -E remove_directory "${apk_directory}/assets"
+		)
+		add_custom_command(TARGET ${ANDROID_NAME}
+			PRE_BUILD
+			COMMAND ${CMAKE_COMMAND} -E make_directory "${apk_directory}/assets/${data_directory}"
+		)
 		foreach(value ${assets})
 			android_copy_files(${value} "${apk_directory}/assets/${data_directory}")
 		endforeach()
@@ -218,7 +233,10 @@ macro(android_copy_files src dest)
 			file(MAKE_DIRECTORY ${dst_path})
 
 			# Copy file
-			execute_process(COMMAND ${CMAKE_COMMAND} -E copy ${src_file} ${dst_file})
+			add_custom_command(TARGET ${ANDROID_NAME}
+				PRE_BUILD
+				COMMAND ${CMAKE_COMMAND} -E copy ${src_file} ${dst_file}
+			)
 		endif()
 	endforeach(file ${files})
 endmacro(android_copy_files src dest)

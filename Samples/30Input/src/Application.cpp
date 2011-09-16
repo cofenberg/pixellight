@@ -33,9 +33,6 @@
 #include <PLInput/Input/Virtual/VirtualStandardController.h>
 #include "Application.h"
 #include "GameBoyController.h"
-#ifdef WIN32
-	#include <Windows.h>
-#endif
 
 
 //[-------------------------------------------------------]
@@ -58,7 +55,7 @@ pl_implement_class(Application)
 *  @brief
 *    Constructor
 */
-Application::Application() :
+Application::Application(Frontend &cFrontend) : FrontendApplication(cFrontend),
 	EventHandlerOnControl(&Application::OnControl, this),
 	EventHandlerOnControlExit(&Application::OnControlExit, this),
 	m_bExit(false)
@@ -174,15 +171,8 @@ void Application::TestInput(const String &sDevice)
 			// Update devices
 			InputManager::GetInstance()->Update();
 
-			// Get messages
-			#ifdef WIN32
-				MSG sMsg;
-				if (PeekMessage(&sMsg, nullptr, 0, 0, FALSE)) {
-					GetMessage(&sMsg, nullptr, 0, 0);
-					TranslateMessage(&sMsg);
-					DispatchMessage(&sMsg);
-				}
-			#endif
+			// Ping the frontend
+			GetFrontend().Ping();
 
 			// Wait 10 milliseconds
 			System::GetInstance()->Sleep(10);
@@ -210,15 +200,8 @@ void Application::TestGetChar(const String &sDevice)
 		// Main loop
 		m_bExit = false;
 		while (!m_bExit) {
-			// Get messages
-			#ifdef WIN32
-				MSG sMsg;
-				if (PeekMessage(&sMsg, nullptr, 0, 0, FALSE)) {
-					GetMessage(&sMsg, nullptr, 0, 0);
-					TranslateMessage(&sMsg);
-					DispatchMessage(&sMsg);
-				}
-			#endif
+			// Ping the frontend
+			GetFrontend().Ping();
 
 			// Update devices
 			InputManager::GetInstance()->Update();
@@ -299,15 +282,8 @@ void Application::TestConnections()
 			// Update devices
 			InputManager::GetInstance()->Update();
 
-			// Get messages
-			#ifdef WIN32
-				MSG sMsg;
-				if (PeekMessage(&sMsg, nullptr, 0, 0, FALSE)) {
-					GetMessage(&sMsg, nullptr, 0, 0);
-					TranslateMessage(&sMsg);
-					DispatchMessage(&sMsg);
-				}
-			#endif
+			// Ping the frontend
+			GetFrontend().Ping();
 
 			// Wait 10 milliseconds
 			System::GetInstance()->Sleep(10);
@@ -385,23 +361,35 @@ void Application::OnControlExit(Control &cControl)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLCore::CoreApplication functions     ]
+//[ Private virtual PLCore::AbstractLifecycle functions   ]
 //[-------------------------------------------------------]
-void Application::Main()
+bool Application::OnStart()
 {
-	// Detect input devices
-	System::GetInstance()->GetConsole().Print("Detecting input devices: ");
-	InputManager::GetInstance()->DetectDevices();
-	System::GetInstance()->GetConsole().Print("done.\n");
+	// Call base implementation
+	if (FrontendApplication::OnStart()) {
+		// Detect input devices
+		System::GetInstance()->GetConsole().Print("Detecting input devices: ");
+		InputManager::GetInstance()->DetectDevices();
+		System::GetInstance()->GetConsole().Print("done.\n");
 
-	// Run test
-	TestDevices();
-//	TestController();
-//	TestInput("Keyboard");
-//	TestInput("Mouse");
-//	TestInput("Joystick0");
-//	TestInput("WiiMote0");
-//	TestInput("SpaceMouse0");
-//	TestGetChar("Keyboard");
-	TestConnections();
+		// Run test
+		TestDevices();
+	//	TestController();
+	//	TestInput("Keyboard");
+	//	TestInput("Mouse");
+	//	TestInput("Joystick0");
+	//	TestInput("WiiMote0");
+	//	TestInput("SpaceMouse0");
+	//	TestGetChar("Keyboard");
+		TestConnections();
+
+		// Exit the application
+		Exit(0);
+
+		// Done
+		return true;
+	}
+
+	// Error
+	return false;
 }
