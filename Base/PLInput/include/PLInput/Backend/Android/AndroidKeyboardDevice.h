@@ -32,6 +32,17 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declaration                                   ]
+//[-------------------------------------------------------]
+struct AInputEvent;
+typedef struct AInputEvent AInputEvent;
+namespace PLInput {
+	class Button;
+	class Keyboard;
+}
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLInput {
@@ -63,12 +74,57 @@ class AndroidKeyboardDevice : public UpdateDevice {
 		*/
 		virtual ~AndroidKeyboardDevice();
 
+		/**
+		*  @brief
+		*    Call this to process the next key input event
+		*
+		*  @param[in] cAKeyInputEvent
+		*    Key input event to process
+		*
+		*  @return
+		*    'true' if the key event was handled, else 'false'
+		*/
+		bool OnKeyInputEvent(const struct AInputEvent &cAKeyInputEvent);
+
 
 	//[-------------------------------------------------------]
 	//[ Public virtual UpdateDevice functions                 ]
 	//[-------------------------------------------------------]
 	public:
 		virtual void Update() override;
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Get key for Android key code
+		*
+		*  @param[in] cKeyboard
+		*    Reference to keyboard device
+		*  @param[in] int32_t
+		*    Key code
+		*
+		*  @return
+		*    Corresponding key, a null pointer if Android key code is invalid
+		*/
+		Button *GetKeyboardKey(Keyboard &cKeyboard, int32_t nKeyCode);
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::Array<int32_t> m_lstProcessedKeys;
+		class KeyInfo {
+			public:
+				int32_t nKeyCode;
+				bool    bPressed;
+				bool operator ==(const KeyInfo &cSource) { return false; }
+		};
+		PLCore::Array<KeyInfo> m_lstDelayedKeys;
 
 
 };

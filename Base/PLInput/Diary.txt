@@ -1,3 +1,11 @@
+>> 16.09.2011
+[CO]
+- Implemented "AndroidProvider" -> We need to pass in Android input events from outside into this system (done in the Android frontend)
+- Implemented "AndroidKeyboardDevice"
+- Implemented "AndroidSensorManagerDevice"... altought I'am not sure if this will stay this way...
+
+
+
 >> 31.08.2011
 [CO]
 - Android port related: No X server display connection on Android possible (there's no X11 stuff available in the Android NDK). So, on Android the keyboard & mouse
