@@ -1,3 +1,9 @@
+>> 17.09.2011
+[CO]
+- PLGui (no native backend) & PLFrontendPLGui & PLGuiXmlText can now also be compiled for Android
+
+
+
 >> 12.06.2011
 [CO]
 - "Gui::GetSystemGui()": The internal "SystemGui" class is no longer derived from multiple classes to keep it simple

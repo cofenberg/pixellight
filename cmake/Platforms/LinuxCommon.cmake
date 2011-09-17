@@ -31,21 +31,6 @@
 
 
 ##################################################
-## Libraries
-##################################################
-
-# X11 libraries
-set(LINUX_X11_LIBS
-	X11									# X-Lib
-	Xext								# X extentions library
-	Xcursor								# X cursor library
-)
-set(LINUX_X11_LIB		X11)			# X-Lib
-set(LINUX_XEXT_LIB		Xext)			# X extentions library
-set(LINUX_XCURSOR_LIB	Xcursor)		# X cursor library
-
-
-##################################################
 ## Preprocessor definitions
 ##################################################
 

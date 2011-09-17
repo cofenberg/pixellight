@@ -130,6 +130,20 @@ if(WIN32)
 		src/Backend/Windows/TrayIconWindows.cpp
 		src/Backend/Windows/ClipBoardWindows.cpp
 	)
+elseif(ANDROID)
+	##################################################
+	## Android
+	##################################################
+	add_sources(
+		src/Backend/Null/GraphicsNull.cpp
+		src/Backend/Null/GuiNull.cpp
+		src/Backend/Null/ImageNull.cpp
+		src/Backend/Null/FontNull.cpp
+		src/Backend/Null/WidgetNull.cpp
+		src/Backend/Null/CursorNull.cpp
+		src/Backend/Null/TrayIconNull.cpp
+		src/Backend/Null/ClipBoardNull.cpp
+	)
 elseif(LINUX)
 	##################################################
 	## Linux
@@ -181,7 +195,7 @@ if(WIN32)
 		${WIN32_STANDARD_LIBS}
 		${WIN32_GDI_LIBS}
 	)
-elseif(LINUX)
+elseif(LINUX AND NOT ANDROID)
 	##################################################
 	## Linux
 	##################################################

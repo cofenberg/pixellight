@@ -32,7 +32,7 @@ namespace PLGui {
 
 
 //[-------------------------------------------------------]
-//[ Definitions                                           ]
+//[ MS Windows definitions                                ]
 //[-------------------------------------------------------]
 #ifdef WIN32
 
@@ -148,6 +148,123 @@ namespace PLGui {
 
 #define 	 PLGUIKEY_CIRCUMFLEX		0xDC		// ^ circumflex */
 
+
+//[-------------------------------------------------------]
+//[ Android definitions                                   ]
+//[-------------------------------------------------------]
+#elif defined(ANDROID)
+
+// Do not include this header in here or we get thousends of compiler erros because this header is messing up the global namespace
+//#include <android/keycodes.h>
+
+//           Virtual code               Hex Value                   Key
+#define		 PLGUIMOD_ALT				57							// alt										- AKEYCODE_ALT_LEFT
+#define		 PLGUIMOD_CONTROL			0xF000						// control									- not supported
+#define		 PLGUIMOD_ALTGR				58							// alt-gr									- AKEYCODE_ALT_RIGHT
+#define		 PLGUIMOD_SHIFT				59							// shift									- AKEYCODE_SHIFT_LEFT
+#define		 PLGUIMOD_WIN				0xF001						// Windows key								- not supported
+
+#define 	 PLGUIKEY_LBUTTON			0xF002						// left mouse button						- not supported
+#define 	 PLGUIKEY_RBUTTON			0xF003						// right mouse button						- not supported
+#define 	 PLGUIKEY_CANCEL			0xF004	 					// control-break processing					- not supported
+#define 	 PLGUIKEY_MBUTTON			0xF005						// middle mouse button (three-button mouse)	- not supported
+#define 	 PLGUIKEY_BACK				4							// backspace								- AKEYCODE_BACK
+#define 	 PLGUIKEY_TAB				61							// tab										- AKEYCODE_TAB
+#define 	 PLGUIKEY_CLEAR				28							// clear									- AKEYCODE_CLEAR
+#define 	 PLGUIKEY_RETURN			66							// enter									- AKEYCODE_ENTER
+#define 	 PLGUIKEY_SHIFT				59							// shift									- AKEYCODE_SHIFT_LEFT
+#define 	 PLGUIKEY_CONTROL			0xF006						// ctrl										- not supported
+#define 	 PLGUIKEY_MENU				82							// alt										- AKEYCODE_MENU
+#define 	 PLGUIKEY_PAUSE				85							// pause									- AKEYCODE_MEDIA_PLAY_PAUSE
+#define 	 PLGUIKEY_CAPITAL			0xF007						// caps lock								- not supported
+#define 	 PLGUIKEY_ESCAPE			0xF008						// esc										- not supported
+#define 	 PLGUIKEY_SPACE				62							// spacebar									- AKEYCODE_SPACE
+#define 	 PLGUIKEY_PRIOR				88							// page up									- AKEYCODE_MEDIA_PREVIOUS
+#define 	 PLGUIKEY_NEXT				87							// page down								- AKEYCODE_MEDIA_NEXT
+#define 	 PLGUIKEY_END				0xF009						// end key									- not supported
+#define 	 PLGUIKEY_HOME				3							// home key									- AKEYCODE_HOME
+#define 	 PLGUIKEY_LEFT				21							// left arrow								- AKEYCODE_DPAD_LEFT
+#define 	 PLGUIKEY_UP				19							// up arrow									- AKEYCODE_DPAD_UP
+#define 	 PLGUIKEY_RIGHT				22							// right arrow								- AKEYCODE_DPAD_RIGHT
+#define 	 PLGUIKEY_DOWN				20							// down arrow								- AKEYCODE_DPAD_DOWN
+#define 	 PLGUIKEY_SELECT			109							// select key								- AKEYCODE_BUTTON_SELECT	
+#define 	 PLGUIKEY_EXECUTE			0xF00A						// execute key								- not supported
+#define 	 PLGUIKEY_SNAPSHOT			0xF00B						// print screen key							- not supported
+#define 	 PLGUIKEY_INSERT			0xF00C						// insert key								- not supported
+#define 	 PLGUIKEY_DELETE			67							// delete key								- AKEYCODE_DEL
+#define 	 PLGUIKEY_HELP				0xF00D						// help key									- not supported
+#define 	 PLGUIKEY_0					7							// 0										- AKEYCODE_0
+#define 	 PLGUIKEY_1					8							// 1										- AKEYCODE_1
+#define 	 PLGUIKEY_2					9							// 2										- AKEYCODE_2
+#define 	 PLGUIKEY_3					10							// 3										- AKEYCODE_3
+#define 	 PLGUIKEY_4					11							// 4										- AKEYCODE_4
+#define 	 PLGUIKEY_5					12							// 5										- AKEYCODE_5
+#define 	 PLGUIKEY_6					13							// 6										- AKEYCODE_6
+#define 	 PLGUIKEY_7					14							// 7										- AKEYCODE_7
+#define 	 PLGUIKEY_8					15							// 8										- AKEYCODE_8
+#define 	 PLGUIKEY_9					16							// 9										- AKEYCODE_9
+#define 	 PLGUIKEY_A					29							// a										- AKEYCODE_A
+#define 	 PLGUIKEY_B					30							// b										- AKEYCODE_B
+#define 	 PLGUIKEY_C					31							// c										- AKEYCODE_C
+#define 	 PLGUIKEY_D					32							// d										- AKEYCODE_D
+#define 	 PLGUIKEY_E					33							// e										- AKEYCODE_E
+#define 	 PLGUIKEY_F					34							// f										- AKEYCODE_F
+#define 	 PLGUIKEY_G					35							// g										- AKEYCODE_G
+#define 	 PLGUIKEY_H					36							// h										- AKEYCODE_H
+#define 	 PLGUIKEY_I					37							// i										- AKEYCODE_I
+#define 	 PLGUIKEY_J					38							// j										- AKEYCODE_J
+#define 	 PLGUIKEY_K					39							// k										- AKEYCODE_K
+#define 	 PLGUIKEY_L					40							// l										- AKEYCODE_L
+#define 	 PLGUIKEY_M					41							// m										- AKEYCODE_M
+#define 	 PLGUIKEY_N					42							// n										- AKEYCODE_N
+#define		 PLGUIKEY_O					43							// o										- AKEYCODE_O
+#define 	 PLGUIKEY_P					44							// p										- AKEYCODE_P
+#define		 PLGUIKEY_Q					45							// q										- AKEYCODE_Q
+#define 	 PLGUIKEY_R					46							// r										- AKEYCODE_R
+#define 	 PLGUIKEY_S					47							// s										- AKEYCODE_S
+#define 	 PLGUIKEY_T					48							// t										- AKEYCODE_T
+#define 	 PLGUIKEY_U					49							// u										- AKEYCODE_U
+#define 	 PLGUIKEY_V					50							// v										- AKEYCODE_V
+#define 	 PLGUIKEY_W					51							// w										- AKEYCODE_W
+#define 	 PLGUIKEY_X					52							// x										- AKEYCODE_X
+#define 	 PLGUIKEY_Y					53							// y										- AKEYCODE_Y
+#define 	 PLGUIKEY_Z					54							// z										- AKEYCODE_Z
+#define 	 PLGUIKEY_NUMPAD0			0xF00E						// Numeric keypad 0 key						- not supported
+#define 	 PLGUIKEY_NUMPAD1			0xF00F						// Numeric keypad 1 key						- not supported
+#define 	 PLGUIKEY_NUMPAD2			0xF010						// Numeric keypad 2 key						- not supported
+#define 	 PLGUIKEY_NUMPAD3			0xF011						// Numeric keypad 3 key						- not supported
+#define 	 PLGUIKEY_NUMPAD4			0xF012						// Numeric keypad 4 key						- not supported
+#define 	 PLGUIKEY_NUMPAD5			0xF013						// Numeric keypad 5 key						- not supported
+#define 	 PLGUIKEY_NUMPAD6			0xF014						// Numeric keypad 6 key						- not supported
+#define 	 PLGUIKEY_NUMPAD7			0xF015						// Numeric keypad 7 key						- not supported
+#define 	 PLGUIKEY_NUMPAD8			0xF016						// Numeric keypad 8 key						- not supported
+#define 	 PLGUIKEY_NUMPAD9			0xF017						// Numeric keypad 9 key						- not supported
+#define 	 PLGUIKEY_MULTIPLY			0xF018						// Multiply key								- not supported
+#define 	 PLGUIKEY_ADD				0xF019						// Add key									- not supported
+#define 	 PLGUIKEY_SEPARATOR			0xF01A						// Separator key							- not supported
+#define 	 PLGUIKEY_SUBTRACT			69							// Subtract key								- AKEYCODE_MINUS
+#define 	 PLGUIKEY_DECIMAL			0xF01B						// Decimal key								- not supported
+#define 	 PLGUIKEY_DIVIDE			0xF01C						// Divide key								- not supported
+#define 	 PLGUIKEY_F1				0xF01D						// F1 key									- not supported
+#define 	 PLGUIKEY_F2				0xF01E						// F2 key									- not supported
+#define 	 PLGUIKEY_F3				0xF01F						// F3 key									- not supported
+#define 	 PLGUIKEY_F4				0xF020						// F4 key									- not supported
+#define 	 PLGUIKEY_F5				0xF021						// F5 key									- not supported
+#define 	 PLGUIKEY_F6				0xF022						// F6 key									- not supported
+#define 	 PLGUIKEY_F7				0xF023						// F7 key									- not supported
+#define 	 PLGUIKEY_F8				0xF024						// F8 key									- not supported
+#define 	 PLGUIKEY_F9				0xF025						// F9 key									- not supported
+#define 	 PLGUIKEY_F10				0xF026						// F10 key									- not supported
+#define 	 PLGUIKEY_F11				0xF027						// F11 key									- not supported
+#define 	 PLGUIKEY_F12				0xF028						// F12 key									- not supported
+#define 	 PLGUIKEY_NUMLOCK			0xF029						// num lock key								- not supported
+#define 	 PLGUIKEY_SCROLL			0xF030						// scroll lock key							- not supported
+#define 	 PLGUIKEY_CIRCUMFLEX		0xF031						// ^ circumflex								- not supported
+
+
+//[-------------------------------------------------------]
+//[ Linux definitions                                     ]
+//[-------------------------------------------------------]
 #elif defined(LINUX)
 
 #include <X11/keysym.h>

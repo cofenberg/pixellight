@@ -229,7 +229,7 @@ Button *AndroidKeyboardDevice::GetKeyboardKey(Keyboard &cKeyboard, int32_t nKeyC
 		// AKEYCODE_MENU				-> ignored
 		// AKEYCODE_NOTIFICATION		-> ignored
 		// AKEYCODE_SEARCH				-> ignored
-		// AKEYCODE_MEDIA_PLAY_PAUSE	-> ignored
+		case AKEYCODE_MEDIA_PLAY_PAUSE:	return &cKeyboard.KeyPause;
 		// AKEYCODE_MEDIA_STOP			-> ignored
 		// AKEYCODE_MEDIA_NEXT			-> ignored
 		// AKEYCODE_MEDIA_PREVIOUS		-> ignored

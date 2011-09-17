@@ -36,6 +36,8 @@
 #include "PLGui/Widgets/Popups/Tooltip.h"
 #if defined(WIN32)
 	#include "PLGui/Backend/Windows/GuiWindows.h"
+#elif defined(ANDROID)
+	#include "PLGui/Backend/Null/GuiNull.h"
 #elif defined(LINUX)
 	#include "PLGui/Backend/Linux/GuiLinux.h"
 #endif
@@ -211,6 +213,8 @@ Gui::Gui(const String &sGui) :
 		// Create system GUI
 		#if defined(WIN32)
 			m_pGuiImpl = new GuiWindows(this);
+		#elif defined(ANDROID)
+			m_pGuiImpl = new GuiNull(this);
 		#elif defined(LINUX)
 			m_pGuiImpl = new GuiLinux(this);
 		#else
