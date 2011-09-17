@@ -191,7 +191,8 @@ bool FileAndroid::Open(uint32 nAccess)
 	Close();
 
 	// Check the access flags, only binary reading is supported
-	if (!(nAccess & File::FileWrite) && !(nAccess & File::FileAppend) && !(nAccess & File::FileCreate) && !(nAccess & File::FileText)) {
+	// -> Don't check whether or not "File::FileText" is set, just ignore it and hope everything works... doing a check is causing more applications to fail...
+	if (!(nAccess & File::FileWrite) && !(nAccess & File::FileAppend) && !(nAccess & File::FileCreate)) {
 		// Get the Android asset manager instance
 		AAssetManager *pAAssetManager = SystemAndroid::GetAssetManager();
 		if (pAAssetManager) {

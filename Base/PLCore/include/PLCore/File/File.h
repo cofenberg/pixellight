@@ -60,7 +60,7 @@ class File : public FileObject {
 			FileWrite	=  2,	/**< File can be written */
 			FileAppend	=  4,	/**< File will be appended */
 			FileCreate	=  8,	/**< File will be created */
-			FileText	= 16,	/**< File will be opened in text mode */
+			FileText	= 16,	/**< File will be opened in text mode (whenever possible, don't set this flag because not each platform may support it) */
 			FileMemBuf	= 32	/**< File will be opened memory buffered (only usable for reading!) */
 		};
 
