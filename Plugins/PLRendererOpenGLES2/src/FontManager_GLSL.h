@@ -42,13 +42,13 @@ void main()\n\
 \n\
 	// Set the normalized vertex texture coordinate\n\
 	if (int(VertexPosition.z) == 0)			// Vertex 0 - lower/left corner\n\
-		VertexTexCoordVS = mediump vec2(TextureCoordinateMinMax.x, TextureCoordinateMinMax.w);\n\
+		VertexTexCoordVS = vec2(TextureCoordinateMinMax.x, TextureCoordinateMinMax.w);\n\
 	else if (int(VertexPosition.z) == 1)	// Vertex 1 - lower/right corner\n\
 		VertexTexCoordVS = TextureCoordinateMinMax.zw;\n\
 	else if (int(VertexPosition.z) == 2)	// Vertex 2 - upper/left corner\n\
 		VertexTexCoordVS = TextureCoordinateMinMax.xy;\n\
 	else if (int(VertexPosition.z) == 3)	// Vertex 3 - upper/right corner\n\
-		VertexTexCoordVS = mediump vec2(TextureCoordinateMinMax.z, TextureCoordinateMinMax.y);\n\
+		VertexTexCoordVS = vec2(TextureCoordinateMinMax.z, TextureCoordinateMinMax.y);\n\
 }";
 
 
@@ -64,5 +64,5 @@ uniform lowp vec4	   Color;		// Text color\n\
 // Programs\n\
 void main()\n\
 {\n\
-	gl_FragColor = mediump vec4(Color.r, Color.g, Color.b, texture2D(GlyphMap, VertexTexCoordVS).a*Color.a);\n\
+	gl_FragColor = vec4(Color.r, Color.g, Color.b, texture2D(GlyphMap, VertexTexCoordVS).a*Color.a);\n\
 }";

@@ -42,11 +42,11 @@ uniform mediump mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space
 void main()\n\
 {\n\
 	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	gl_Position = ObjectSpaceToClipSpaceMatrix*(mediump vec4(VertexPosition, 1));\n\
+	gl_Position = ObjectSpaceToClipSpaceMatrix*vec4(VertexPosition, 1);\n\
 \n\
 	#ifdef VS_TEXCOORD0\n\
 		// Pass through the texture coordinate\n\
-		VertexTextureCoordinateVS = (TextureMatrix*(mediump vec4(VertexTextureCoordinate, 1, 1))).xy;\n\
+		VertexTextureCoordinateVS = (TextureMatrix*vec4(VertexTextureCoordinate, 1, 1)).xy;\n\
 	#endif\n\
 \n\
 	#ifdef VS_POINTSIZE\n\

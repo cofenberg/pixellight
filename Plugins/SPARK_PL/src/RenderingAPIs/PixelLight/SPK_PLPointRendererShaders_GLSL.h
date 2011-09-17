@@ -35,7 +35,7 @@ uniform mediump vec4 PointParameters;				// Point parameters: point size, point 
 void main()\n\
 {\n\
 	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	gl_Position = ObjectSpaceToClipSpaceMatrix*(mediump vec4(VertexPosition, 1.0));\n\
+	gl_Position = ObjectSpaceToClipSpaceMatrix*vec4(VertexPosition, 1.0);\n\
 \n\
 	// Calculate the point size (formulas from http://www.opengl.org/registry/specs/ARB/point_parameters.txt)\n\
 	mediump float distance = -gl_Position.z;\n\

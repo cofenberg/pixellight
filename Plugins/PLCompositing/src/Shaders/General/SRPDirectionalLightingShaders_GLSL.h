@@ -81,7 +81,7 @@ void main()\n\
 #ifdef VS_TEXCOORD0\n\
 	#ifdef VS_TEXCOORD1\n\
 		// Pass through the vertex texture coordinate 0 and 1 together\n\
-		VertexTexCoordVS = mediump vec4(VertexTexCoord0, VertexTexCoord1);\n\
+		VertexTexCoordVS = vec4(VertexTexCoord0, VertexTexCoord1);\n\
 	#else\n\
 		// Pass through the vertex texture coordinate 0\n\
 		VertexTexCoordVS = VertexTexCoord0;\n\
@@ -248,11 +248,11 @@ uniform lowp vec4 DiffuseColor;	// Alpha stores the opacity\n\
 	{\n\
 		// [TODO] There seem to be invalid normal vectors here (NAN) - IEEE standard: NaN != NaN - I don't use isnan so I can use lower shader versions\n\
 		if (normalVector.x != normalVector.x || normalVector.y != normalVector.y || normalVector.z != normalVector.z)\n\
-			normalVector = mediump vec3(0.0, 0.0, 1.0);\n\
+			normalVector = vec3(0.0, 0.0, 1.0);\n\
 		if (lightVector.x != lightVector.x || lightVector.y != lightVector.y || lightVector.z != lightVector.z)\n\
-			lightVector = mediump vec3(0.0, 0.0, 1.0);\n\
+			lightVector = vec3(0.0, 0.0, 1.0);\n\
 		if (viewVector.x != viewVector.x || viewVector.y != viewVector.y || viewVector.z != viewVector.z)\n\
-			viewVector = mediump vec3(0.0, 0.0, 1.0);\n\
+			viewVector = vec3(0.0, 0.0, 1.0);\n\
 \n\
 		// Diffuse term\n\
 		mediump float diffuse = clamp(dot(lightVector, normalVector), 0.0, 1.0);\n\
@@ -279,7 +279,7 @@ uniform lowp vec4 DiffuseColor;	// Alpha stores the opacity\n\
 				specularLighting *= texture1D(SpecularRampMap, specular).x;\n\
 			#endif\n\
 		#else\n\
-			#define specularLighting mediump vec3(0.0, 0.0, 0.0)\n\
+			#define specularLighting vec3(0.0, 0.0, 0.0)\n\
 		#endif\n\
 \n\
 		// Edge detection\n\
@@ -341,22 +341,22 @@ void main()\n\
 	#ifdef FS_LIGHTMAP\n\
 		lowp vec3 lightMapColor = texture2D(LightMap, TexCoord1).rgb;\n\
 		#ifdef FS_GAMMACORRECTION\n\
-			lightMapColor = pow(lightMapColor, mediump vec3(2.2, 2.2, 2.2));	// Perform sRGB to linear space conversion (gamma correction)\n\
+			lightMapColor = pow(lightMapColor, vec3(2.2, 2.2, 2.2));	// Perform sRGB to linear space conversion (gamma correction)\n\
 		#endif\n\
 		lightMapColor *= LightMapColor;\n\
 	#else\n\
-		#define lightMapColor mediump vec3(0.0, 0.0, 0.0)\n\
+		#define lightMapColor vec3(0.0, 0.0, 0.0)\n\
 	#endif\n\
 \n\
 	// Get the emissive color\n\
 	#ifdef FS_EMISSIVEMAP\n\
 		lowp vec3 emissiveColor = texture2D(EmissiveMap, TexCoord0).rgb;\n\
 		#ifdef FS_GAMMACORRECTION\n\
-			emissiveColor = pow(emissiveColor, mediump vec3(2.2, 2.2, 2.2));	// Perform sRGB to linear space conversion (gamma correction)\n\
+			emissiveColor = pow(emissiveColor, vec3(2.2, 2.2, 2.2));	// Perform sRGB to linear space conversion (gamma correction)\n\
 		#endif\n\
 		emissiveColor *= EmissiveMapColor;\n\
 	#else\n\
-		#define emissiveColor mediump vec3(0.0, 0.0, 0.0)\n\
+		#define emissiveColor vec3(0.0, 0.0, 0.0)\n\
 	#endif\n\
 \n\
 	// Get the diffuse color\n\
@@ -368,7 +368,7 @@ void main()\n\
 				discard; // Throw the fragment away and don't draw it!\n\
 		#endif\n\
 		#ifdef FS_GAMMACORRECTION\n\
-			diffuseMapTexel.rgb = pow(diffuseMapTexel.rgb, mediump vec3(2.2, 2.2, 2.2));	// Perform sRGB to linear space conversion (gamma correction)\n\
+			diffuseMapTexel.rgb = pow(diffuseMapTexel.rgb, vec3(2.2, 2.2, 2.2));	// Perform sRGB to linear space conversion (gamma correction)\n\
 		#endif\n\
 		lowp vec3 diffuseColor = diffuseMapTexel.rgb*DiffuseColor.rgb;\n\
 	#else\n\
@@ -418,10 +418,10 @@ void main()\n\
 			lowp vec3 normal = normalize(VertexNormalVS);\n\
 		#endif\n\
 		if (normal.x != normal.x || normal.y != normal.y || normal.z != normal.z)	// IEEE standard: NaN != NaN - I don't use isnan so I can use lower shader versions\n\
-			normal = mediump vec3(0.0, 0.0, 1.0); // I had situations with invalid normal vectors...\n\
+			normal = vec3(0.0, 0.0, 1.0); // I had situations with invalid normal vectors...\n\
 	#else\n\
 		// Define a dummy normal so, when using reflections, we get at least some 'kind of reflection' effect\n\
-		#define normal mediump vec3(0.0, 0.0, 1.0)\n\
+		#define normal vec3(0.0, 0.0, 1.0)\n\
 	#endif\n\
 \n\
 	// Apply reflection - modifies the diffuse color\n\
@@ -438,7 +438,7 @@ void main()\n\
 		#endif\n\
 \n\
 		// Reflection color\n\
-		lowp vec3 reflectionColor = mediump vec3(1.0, 1.0, 1.0);\n\
+		lowp vec3 reflectionColor = vec3(1.0, 1.0, 1.0);\n\
 		#ifdef FS_2DREFLECTIONMAP\n\
 			// Spherical environment mapping\n\
 			mediump vec3  r = ViewSpaceToWorldSpace*normalize(reflect(VertexPositionVS, normal));\n\
@@ -447,7 +447,7 @@ void main()\n\
 			if (m < FLT_MIN)\n\
 				m = FLT_MIN;\n\
 			#undef FLT_MIN\n\
-			reflectionColor = texture2D(ReflectionMap, mediump vec2(r.x/m + 0.5, 1.0 - (r.y/m + 0.5))).rgb;\n\
+			reflectionColor = texture2D(ReflectionMap, vec2(r.x/m + 0.5, 1.0 - (r.y/m + 0.5))).rgb;\n\
 		#elif defined(FS_CUBEREFLECTIONMAP)\n\
 			// Cubic environment mapping\n\
 			// There's no need to normalize the reflection vector when using cube maps\n\
@@ -455,7 +455,7 @@ void main()\n\
 		#endif\n\
 		// Perform sRGB to linear space conversion (gamma correction)\n\
 		#ifdef FS_GAMMACORRECTION\n\
-			reflectionColor = pow(reflectionColor, mediump vec3(2.2, 2.2, 2.2));\n\
+			reflectionColor = pow(reflectionColor, vec3(2.2, 2.2, 2.2));\n\
 		#endif\n\
 		// Apply reflection color\n\
 		reflectionColor *= ReflectionColor;\n\
@@ -477,7 +477,7 @@ void main()\n\
 				#define specularExponent SpecularExponent\n\
 			#endif\n\
 		#else\n\
-			#define specularColor mediump vec3(0.0, 0.0, 0.0)\n\
+			#define specularColor vec3(0.0, 0.0, 0.0)\n\
 			#define specularExponent 0.0\n\
 		#endif\n\
 \n\
@@ -519,6 +519,6 @@ void main()\n\
 	#endif\n\
 \n\
 	// Calculate the fragment color\n\
-	gl_FragColor = mediump vec4(ambientColor*diffuseColor + lightMapColor*diffuseColor + emissiveColor + lightingColor, alphaValue);\n\
+	gl_FragColor = vec4(ambientColor*diffuseColor + lightMapColor*diffuseColor + emissiveColor + lightingColor, alphaValue);\n\
 \n\
 }";
