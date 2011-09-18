@@ -5,6 +5,7 @@
 - Added "armeabi" & "armeabi-v7a" package of Lua
 - Added "armeabi" & "armeabi-v7a" package of libRocket
 - Added "armeabi" & "armeabi-v7a" package of Newton
+- Added "armeabi" & "armeabi-v7a" package of Bullet
 
 
 
