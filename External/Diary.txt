@@ -1,3 +1,9 @@
+>> 19.09.2011
+[CO]
+- Updated "armeabi" & "armeabi-v7a" package of jpg
+
+
+
 >> 04.09.2011
 [CO]
 - Moved "libpng" and "libjpg" from "Base" into "Recommended"... this was on my list for quite some time now... and now that I'am working on the Android port
