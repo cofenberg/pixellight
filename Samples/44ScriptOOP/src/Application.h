@@ -20,15 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLSAMPLE_44_SCRIPTOOP_H__
-#define __PLSAMPLE_44_SCRIPTOOP_H__
+#ifndef __PLSAMPLE_44_APPLICATION_H__
+#define __PLSAMPLE_44_APPLICATION_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Application/CoreApplication.h>
+#include <PLCore/Frontend/FrontendApplication.h>
 
 
 //[-------------------------------------------------------]
@@ -44,15 +44,15 @@ class MyRTTIClass;
 *  @brief
 *    Application class
 */
-class Application : public PLCore::CoreApplication {
+class Application : public PLCore::FrontendApplication {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, Application, "", PLCore::CoreApplication, "Application class")
+	pl_class(pl_rtti_export, Application, "", PLCore::FrontendApplication, "Application class")
 		// Constructors
-		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		pl_constructor_1(ParameterConstructor,	PLCore::Frontend&,	"Parameter constructor. Frontend this application instance is running in as first parameter.",	"")
 		// Slots
 		pl_slot_1(OnMySignal,	PLCore::String,	"Called on MySignal signal, a string as first parameter",	"")
 	pl_class_end
@@ -65,8 +65,11 @@ class Application : public PLCore::CoreApplication {
 		/**
 		*  @brief
 		*    Constructor
+		*
+		*  @param[in] cFrontend
+		*    Frontend this application instance is running in
 		*/
-		Application();
+		Application(PLCore::Frontend &cFrontend);
 
 		/**
 		*  @brief
@@ -111,10 +114,10 @@ class Application : public PLCore::CoreApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLCore::CoreApplication functions     ]
+	//[ Private virtual PLCore::AbstractLifecycle functions   ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void Main() override;
+		virtual bool OnStart() override;
 
 
 	//[-------------------------------------------------------]
@@ -127,4 +130,4 @@ class Application : public PLCore::CoreApplication {
 };
 
 
-#endif // __PLSAMPLE_44_SCRIPTOOP_H__
+#endif // __PLSAMPLE_44_APPLICATION_H__

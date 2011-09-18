@@ -1,3 +1,10 @@
+>> 18.09.2011
+[CO]
+- The following samples are now using the frontend application as well to make it possible to run them easily on Android: "40ScriptHelloWorld", "41ScriptGlobalVariables",
+  "42ScriptFunctors", "43ScriptBindings", "44ScriptOOP"
+
+
+
 >> 16.09.2011
 [CO]
 - Although console based, "30Input" is now also using the frontend system in order to make it possible to e.g. use it also on Android to test the input. This change didn't really

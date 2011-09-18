@@ -138,7 +138,6 @@ add_dependencies(Samples						${CMAKETOOLS_CURRENT_TARGET})
 ##################################################
 ## Post-Build
 ##################################################
-
 if(ANDROID)
 	# Dynamic library
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
@@ -154,7 +153,6 @@ endif()
 ##################################################
 ## Install
 ##################################################
-
 if(ANDROID)
 	# Library
 	install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}

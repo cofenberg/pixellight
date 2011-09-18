@@ -30,6 +30,7 @@ define_project(41ScriptGlobalVariables NOSUFFIX)
 ##################################################
 add_sources(
 	src/Main.cpp
+	src/Application.cpp
 )
 
 ##################################################
@@ -113,7 +114,11 @@ endif()
 ##################################################
 ## Build
 ##################################################
-build_executable(${CMAKETOOLS_CURRENT_TARGET} CONSOLE)
+if(ANDROID)
+	build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
+else()
+	build_executable(${CMAKETOOLS_CURRENT_TARGET} CONSOLE)
+endif()
 
 ##################################################
 ## Dependencies
@@ -124,20 +129,34 @@ add_dependencies(Samples						${CMAKETOOLS_CURRENT_TARGET})
 ##################################################
 ## Post-Build
 ##################################################
-
-# Executable
-add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} ${PL_SAMPLES_BIN_DIR}
-)
+if(ANDROID)
+	# Dynamic library
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} ${PL_SAMPLES_BIN_DIR}
+	)
+else()
+	# Executable
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} ${PL_SAMPLES_BIN_DIR}
+	)
+endif()
 
 ##################################################
 ## Install
 ##################################################
-
-# Executable
-install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
-	RUNTIME DESTINATION ${PL_INSTALL_SAMPLES_BIN}	COMPONENT SDK
-)
+if(ANDROID)
+	# Library
+	install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
+		RUNTIME DESTINATION ${PL_INSTALL_SAMPLES_BIN}	COMPONENT Samples
+		LIBRARY DESTINATION ${PL_INSTALL_SAMPLES_BIN}	COMPONENT Samples
+		ARCHIVE DESTINATION ${PL_INSTALL_LIB}			COMPONENT SDK
+	)
+else()
+	# Executable
+	install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
+		RUNTIME DESTINATION ${PL_INSTALL_SAMPLES_BIN}	COMPONENT SDK
+	)
+endif()
 
 # Source files
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}

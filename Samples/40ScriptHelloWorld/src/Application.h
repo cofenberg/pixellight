@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSAMPLE_40_H__
-#define __PLSAMPLE_40_H__
+#ifndef __PLSAMPLE_40_APPLICATION_H__
+#define __PLSAMPLE_40_APPLICATION_H__
 #pragma once
 
 
@@ -94,4 +94,4 @@ class Application : public PLCore::FrontendApplication {
 };
 
 
-#endif // __PLSAMPLE_40_H__
+#endif // __PLSAMPLE_40_APPLICATION_H__

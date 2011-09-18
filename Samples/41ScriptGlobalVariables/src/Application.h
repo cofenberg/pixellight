@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSAMPLE_42_APPLICATION_H__
-#define __PLSAMPLE_42_APPLICATION_H__
+#ifndef __PLSAMPLE_41_APPLICATION_H__
+#define __PLSAMPLE_41_APPLICATION_H__
 #pragma once
 
 
@@ -71,6 +71,13 @@ class Application : public PLCore::FrontendApplication {
 
 
 	//[-------------------------------------------------------]
+	//[ Private virtual PLCore::AbstractLifecycle functions   ]
+	//[-------------------------------------------------------]
+	private:
+		virtual bool OnStart() override;
+
+
+	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
@@ -79,67 +86,12 @@ class Application : public PLCore::FrontendApplication {
 		*    Runs a script
 		*
 		*  @param[in] sScriptFilename
-		*    Filename of the script to use
-		*  @param[in] fFirst
-		*    First number
-		*  @param[in] fSecond
-		*    Second number
-		*
-		*  @return
-		*    The result
+		*    Filename of the script to run
 		*/
-		float RunScript(const PLCore::String &sScriptFilename, float fFirst, float fSecond);
-
-		/**
-		*  @brief
-		*    A method
-		*
-		*  @param[in] nFirst
-		*    First number
-		*
-		*  @return
-		*    The result
-		*/
-		int Method(int nFirst);
-
-
-	//[-------------------------------------------------------]
-	//[ Private static functions                              ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    A static method
-		*
-		*  @param[in] nFirst
-		*    First number
-		*
-		*  @return
-		*    The result
-		*/
-		static int StaticMethod(int nFirst);
-
-		/**
-		*  @brief
-		*    A static string method
-		*
-		*  @param[in] sFirst
-		*    First string
-		*
-		*  @return
-		*    The result
-		*/
-		static PLCore::String StaticStringMethod(PLCore::String sFirst);
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual PLCore::AbstractLifecycle functions   ]
-	//[-------------------------------------------------------]
-	private:
-		virtual bool OnStart() override;
+		void RunScript(const PLCore::String &sScriptFilename);
 
 
 };
 
 
-#endif // __PLSAMPLE_42_APPLICATION_H__
+#endif // __PLSAMPLE_41_APPLICATION_H__

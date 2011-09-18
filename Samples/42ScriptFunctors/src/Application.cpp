@@ -53,7 +53,7 @@ pl_implement_class(Application)
 *  @brief
 *    Constructor
 */
-Application::Application() : CoreApplication()
+Application::Application(Frontend &cFrontend) : FrontendApplication(cFrontend)
 {
 	// Bring the log into the verbose mode so that the log also writes log entries
 	// directly into the console. This way, we can e.g. see script errors at once.
@@ -247,30 +247,42 @@ String Application::StaticStringMethod(String sFirst)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLCore::CoreApplication functions     ]
+//[ Private virtual PLCore::AbstractLifecycle functions   ]
 //[-------------------------------------------------------]
-void Application::Main()
+bool Application::OnStart()
 {
-	// Get a list of supported script languages
-	const Array<String> &lstScriptLanguages = ScriptManager::GetInstance()->GetScriptLanguages();
-	for (uint32 i=0; i<lstScriptLanguages.GetNumOfElements(); i++) {
-		// Get the name of the found script language
-		const String sScriptLanguage = lstScriptLanguages[i];
+	// Call base implementation
+	if (FrontendApplication::OnStart()) {
+		// Get a list of supported script languages
+		const Array<String> &lstScriptLanguages = ScriptManager::GetInstance()->GetScriptLanguages();
+		for (uint32 i=0; i<lstScriptLanguages.GetNumOfElements(); i++) {
+			// Get the name of the found script language
+			const String sScriptLanguage = lstScriptLanguages[i];
 
-		// Write the name of the found script language into the console
-		System::GetInstance()->GetConsole().Print("- " + sScriptLanguage + '\n');
+			// Write the name of the found script language into the console
+			System::GetInstance()->GetConsole().Print("- " + sScriptLanguage + '\n');
 
-		// Get the filename extension of the found script language
-		const String sScriptLanguageExtension = ScriptManager::GetInstance()->GetScriptLanguageExtension(sScriptLanguage);
-		if (sScriptLanguageExtension.GetLength()) {
-			// Run a script
-			RunScript("Data/Scripts/42ScriptFunctors." + sScriptLanguageExtension, 42.0f, 5.0f);
-		} else {
-			// This script language has no filename extension?!
-			System::GetInstance()->GetConsole().Print(sScriptLanguage + " has no filename extension\n");
+			// Get the filename extension of the found script language
+			const String sScriptLanguageExtension = ScriptManager::GetInstance()->GetScriptLanguageExtension(sScriptLanguage);
+			if (sScriptLanguageExtension.GetLength()) {
+				// Run a script
+				RunScript("Data/Scripts/42ScriptFunctors." + sScriptLanguageExtension, 42.0f, 5.0f);
+			} else {
+				// This script language has no filename extension?!
+				System::GetInstance()->GetConsole().Print(sScriptLanguage + " has no filename extension\n");
+			}
+
+			// Write a new line into the console
+			System::GetInstance()->GetConsole().Print('\n');
 		}
 
-		// Write a new line into the console
-		System::GetInstance()->GetConsole().Print('\n');
+		// Exit the application
+		Exit(0);
+
+		// Done
+		return true;
 	}
+
+	// Error
+	return false;
 }

@@ -25,32 +25,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Main.h>
-#include <PLCore/ModuleMain.h>
-#include "Application.h"
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
-using namespace PLCore;
+#include <PLCore/Frontend/FrontendMain.h>
 
 
 //[-------------------------------------------------------]
 //[ Module definition                                     ]
 //[-------------------------------------------------------]
-pl_module("44ScriptOOP")
+pl_module_application_frontend("44ScriptOOP", "Application", "PLFrontendNull::Frontend")
 	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
 	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
 	pl_module_description("PixelLight Sample 44 - Script OOP")
 pl_module_end
-
-
-//[-------------------------------------------------------]
-//[ Program entry point                                   ]
-//[-------------------------------------------------------]
-int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
-{
-	Application cApplication;
-	return cApplication.Run(sExecutableFilename, lstArguments);
-}
