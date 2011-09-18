@@ -1,6 +1,7 @@
 >> 19.09.2011
 [CO]
 - Updated "armeabi" & "armeabi-v7a" package of jpg
+- Updated "armeabi" & "armeabi-v7a" package of freetype
 
 
 
