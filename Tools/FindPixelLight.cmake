@@ -123,7 +123,11 @@ _pixellight_find_lib(PL_PLSPARK_PL			SPARK_PL/SPARK_PL.h							SPARK_PL			Plugin
 _pixellight_find_lib(PL_PLSCRIPTBINDINGS	PLScriptBindings/PLScriptBindings.h			PLScriptBindings	Plugins/PLScriptBindings/include)
 _pixellight_find_lib(PL_PLSCRIPTLUA			PLScriptLua/PLScriptLua.h					PLScriptLua			Plugins/PLScriptLua/include)
 _pixellight_find_lib(PL_PLLIBROCKET			PLlibRocket/PLlibRocket.h					PLlibRocket			Plugins/PLlibRocket/include)
+_pixellight_find_lib(PL_PLPHYSICSNEWTON		PLPhysicsNewton/PLPhysicsNewton.h			PLPhysicsNewton		Plugins/PLPhysicsNewton/include)
 
+
+# Newton
+_pixellight_find_lib(PL_NEWTON				Newton/Newton.h								Newton				"")
 
 # libRocket
 _pixellight_find_lib(PL_LIBROCKETCORE		Rocket/Core.h								RocketCore			"")

@@ -4,6 +4,7 @@
 - Updated "armeabi" & "armeabi-v7a" package of freetype
 - Added "armeabi" & "armeabi-v7a" package of Lua
 - Added "armeabi" & "armeabi-v7a" package of libRocket
+- Added "armeabi" & "armeabi-v7a" package of Newton
 
 
 
