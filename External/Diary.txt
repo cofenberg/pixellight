@@ -2,6 +2,7 @@
 [CO]
 - Updated "armeabi" & "armeabi-v7a" package of jpg
 - Updated "armeabi" & "armeabi-v7a" package of freetype
+- Added "armeabi" & "armeabi-v7a" package of Lua
 
 
 

@@ -1,0 +1,1 @@
+"CMakeLists.txt" used to compile the library (without using the PixelLight CMake build system)
