@@ -59,6 +59,9 @@
     <Filter Include="Application">
       <UniqueIdentifier>{2328fec7-128a-4454-a1e6-5eaa17721e8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Backend\Null">
+      <UniqueIdentifier>{677793e6-4158-4119-b699-a6450722b7a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\PLGui.cpp">
@@ -348,6 +351,30 @@
     </ClCompile>
     <ClCompile Include="src\Application\GuiApplication.cpp">
       <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Backend\Null\ImageNull.cpp">
+      <Filter>Backend\Null</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Backend\Null\TrayIconNull.cpp">
+      <Filter>Backend\Null</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Backend\Null\WidgetNull.cpp">
+      <Filter>Backend\Null</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Backend\Null\ClipBoardNull.cpp">
+      <Filter>Backend\Null</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Backend\Null\CursorNull.cpp">
+      <Filter>Backend\Null</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Backend\Null\FontNull.cpp">
+      <Filter>Backend\Null</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Backend\Null\GraphicsNull.cpp">
+      <Filter>Backend\Null</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Backend\Null\GuiNull.cpp">
+      <Filter>Backend\Null</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -656,6 +683,30 @@
     </ClInclude>
     <ClInclude Include="include\PLGui\Application\GuiApplication.h">
       <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGui\Backend\Null\GraphicsNull.h">
+      <Filter>Backend\Null</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGui\Backend\Null\GuiNull.h">
+      <Filter>Backend\Null</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGui\Backend\Null\ImageNull.h">
+      <Filter>Backend\Null</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGui\Backend\Null\TrayIconNull.h">
+      <Filter>Backend\Null</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGui\Backend\Null\WidgetNull.h">
+      <Filter>Backend\Null</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGui\Backend\Null\ClipBoardNull.h">
+      <Filter>Backend\Null</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGui\Backend\Null\CursorNull.h">
+      <Filter>Backend\Null</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGui\Backend\Null\FontNull.h">
+      <Filter>Backend\Null</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
