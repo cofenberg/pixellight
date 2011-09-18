@@ -23,15 +23,15 @@
 // GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by hand (the depreciated "attribute" and "varying" instead of "in" and "out" are used because we want to stay compatible to OpenGL ES 2.0)
 static const PLCore::String sVertexShaderSourceCodeGLSL = "\
 // Attributes\n\
-attribute highp vec2 VertexPosition;	// Window space vertex position input\n\
-attribute lowp  vec2 VertexTexCoord;	// Vertex texture coordinate input\n\
-varying   lowp  vec2 VertexTexCoordVS;	// Vertex texture coordinate output\n\
-attribute lowp  vec4 VertexColor;		// Vertex color input\n\
-varying   lowp  vec4 VertexColorVS;		// Vertex color output\n\
+attribute mediump vec2 VertexPosition;		// Window space vertex position input\n\
+attribute lowp    vec2 VertexTexCoord;		// Vertex texture coordinate input\n\
+varying   lowp    vec2 VertexTexCoordVS;	// Vertex texture coordinate output\n\
+attribute lowp    vec4 VertexColor;			// Vertex color input\n\
+varying   lowp    vec4 VertexColorVS;		// Vertex color output\n\
 \n\
 // Uniforms\n\
-uniform highp vec2 Translation;		// Window space translation\n\
-uniform highp vec2 WindowSizeInv;	// 1/(window size)\n\
+uniform mediump vec2 Translation;	// Window space translation\n\
+uniform mediump vec2 WindowSizeInv;	// 1/(window size)\n\
 \n\
 // Programs\n\
 void main()\n\

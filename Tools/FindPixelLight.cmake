@@ -122,6 +122,13 @@ _pixellight_find_lib(PL_PLRENDEREROPENGLES2	PLRendererOpenGLES2/PLRendererOpenGL
 _pixellight_find_lib(PL_PLSPARK_PL			SPARK_PL/SPARK_PL.h							SPARK_PL			Plugins/SPARK_PL/include)
 _pixellight_find_lib(PL_PLSCRIPTBINDINGS	PLScriptBindings/PLScriptBindings.h			PLScriptBindings	Plugins/PLScriptBindings/include)
 _pixellight_find_lib(PL_PLSCRIPTLUA			PLScriptLua/PLScriptLua.h					PLScriptLua			Plugins/PLScriptLua/include)
+_pixellight_find_lib(PL_PLLIBROCKET			PLlibRocket/PLlibRocket.h					PLlibRocket			Plugins/PLlibRocket/include)
+
+
+# libRocket
+_pixellight_find_lib(PL_LIBROCKETCORE		Rocket/Core.h								RocketCore			"")
+_pixellight_find_lib(PL_LIBROCKETCONTROLS	Rocket/Controls.h							RocketControls		"")
+_pixellight_find_lib(PL_LIBROCKETDEBUGGER	Rocket/Debugger.h							RocketDebugger		"")
 
 
 # Directories
