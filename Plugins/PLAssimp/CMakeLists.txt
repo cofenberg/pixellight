@@ -165,6 +165,16 @@ elseif(LINUX)
 	add_compile_defs(
 		${LINUX_COMPILE_DEFS}
 	)
+
+	if(ANDROID)
+		##################################################
+		## Android
+		##################################################
+		add_compile_defs(
+			__GNUC_
+			__x86_32__
+		)
+	endif()
 endif()
 
 ##################################################
@@ -200,6 +210,11 @@ elseif(LINUX)
 	##################################################
 	## GCC Compiler
 	##################################################
+	if(ANDROID)
+		add_linker_flags(
+			-L${STL_LIBRARIES_PATH}	# ASSIMP is using stl, adding this line results in slightly bigger executables so we don't do this within "LinuxNDK.cmake"
+		)
+	endif()
 	add_linker_flags(
 		${LINUX_LINKER_FLAGS}
 	)
@@ -225,7 +240,8 @@ add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} ${PL_RUNTIME_BIN_DIR}
 )
-if(LINUX)
+# [TODO] Rebuild ASSIMP as static library (already done for Android, was just one changed word :)
+if(LINUX AND NOT ANDROID)
 	# Create relative symbolic links?
 	if(CMAKETOOLS_DETAILED_VERSION_INFORMATION)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
@@ -249,7 +265,8 @@ install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
 	RUNTIME DESTINATION ${PL_INSTALL_RUNTIME_BIN}	COMPONENT Runtime
 	LIBRARY DESTINATION ${PL_INSTALL_RUNTIME_BIN}	COMPONENT Runtime
 )
-if(LINUX)
+# [TODO] Rebuild ASSIMP as static library (already done for Android, was just one changed word :)
+if(LINUX AND NOT ANDROID)
 	install(FILES ${PL_RUNTIME_BIN_DIR}/libassimp.so.2
 		DESTINATION ${PL_INSTALL_RUNTIME_BIN}		COMPONENT Runtime
 	)

@@ -6,6 +6,7 @@
 - Added "armeabi" & "armeabi-v7a" package of libRocket
 - Added "armeabi" & "armeabi-v7a" package of Newton
 - Added "armeabi" & "armeabi-v7a" package of Bullet
+- Added "armeabi" & "armeabi-v7a" package of ASSIMP
 
 
 
