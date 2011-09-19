@@ -46,10 +46,11 @@ namespace SPK
 		registerChild(zone,registerAll);
 	}
 
-	void Modifier::copyChildren(const Modifier& modifier,bool createBase)
+	void Modifier::copyChildren(const Registerable& object,bool createBase)
 	{
+		const Modifier& modifier = dynamic_cast<const Modifier&>(object);
 		Registerable::copyChildren(modifier,createBase);
-		zone = static_cast<Zone*>(copyChild(modifier.zone,createBase));
+		zone = dynamic_cast<Zone*>(copyChild(modifier.zone,createBase));
 	}
 
 	void Modifier::destroyChildren(bool keepChildren)

@@ -32,5 +32,5 @@
 pl_module_plugin("SPARK_PL")
 	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
 	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
-	pl_module_description("Integrates the free open source particle engine \"SPARK\" (http://spark.developpez.com) as a plugin into PixelLight")
+	pl_module_description("Integrates the free open source particle engine \"SPARK\" (http://spark.developpez.com) 1.5.5 as a plugin into PixelLight")
 pl_module_end

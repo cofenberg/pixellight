@@ -1,4 +1,10 @@
-﻿>> 21.04.2011
+﻿>> 19.09.2011
+[CO]
+- Updated to version 1.5.5
+
+
+
+>> 21.04.2011
 [CO]
 - Implemented "SPK_PLLineRendererShaders" and "SPK_PLLineTrailRendererShaders"
 - Implemented "SPK_PLQuadRendererShaders"

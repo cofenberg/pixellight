@@ -84,9 +84,9 @@ namespace SPK
 		particleCurrentParams = new float[pool.getNbReserved() * model->getSizeOfParticleCurrentArray()];
 		particleExtendedParams = new float[pool.getNbReserved() * model->getSizeOfParticleExtendedArray()];
 
-		memcpy(particleData,group.particleData,pool.getNbTotal() * sizeof(Particle::ParticleData));
-		memcpy(particleCurrentParams,group.particleCurrentParams,pool.getNbTotal() * sizeof(float) * model->getSizeOfParticleCurrentArray());
-		memcpy(particleExtendedParams,group.particleExtendedParams,pool.getNbTotal() * sizeof(float) * model->getSizeOfParticleExtendedArray());
+		std::memcpy(particleData,group.particleData,pool.getNbTotal() * sizeof(Particle::ParticleData));
+		std::memcpy(particleCurrentParams,group.particleCurrentParams,pool.getNbTotal() * sizeof(float) * model->getSizeOfParticleCurrentArray());
+		std::memcpy(particleExtendedParams,group.particleExtendedParams,pool.getNbTotal() * sizeof(float) * model->getSizeOfParticleExtendedArray());
 
 		for (Pool<Particle>::iterator it = pool.begin(); it != pool.endInactive(); ++it)
 		{
@@ -120,21 +120,22 @@ namespace SPK
 			registerChild(*it,registerAll);
 	}
 
-	void Group::copyChildren(const Group& group,bool createBase)
+	void Group::copyChildren(const Registerable& object,bool createBase)
 	{
+		const Group& group = dynamic_cast<const Group&>(object);
 		Registerable::copyChildren(group,createBase);
 
-		model = static_cast<Model*>(copyChild(group.model,createBase));
-		renderer = static_cast<Renderer*>(copyChild(group.renderer,createBase));
+		model = dynamic_cast<Model*>(copyChild(group.model,createBase));
+		renderer = dynamic_cast<Renderer*>(copyChild(group.renderer,createBase));
 
 		// we clear the copies of pointers pushed in the vectors by the copy constructor
 		emitters.clear();
 		modifiers.clear();
 
 		for (std::vector<Emitter*>::const_iterator it = group.emitters.begin(); it != group.emitters.end(); ++it)
-			emitters.push_back(static_cast<Emitter*>(copyChild(*it,createBase)));
+			emitters.push_back(dynamic_cast<Emitter*>(copyChild(*it,createBase)));
 		for (std::vector<Modifier*>::const_iterator it = group.modifiers.begin(); it != group.modifiers.end(); ++it)
-			modifiers.push_back(static_cast<Modifier*>(copyChild(*it,createBase)));
+			modifiers.push_back(dynamic_cast<Modifier*>(copyChild(*it,createBase)));
 	}
 
 	void Group::destroyChildren(bool keepChildren)
@@ -577,9 +578,9 @@ namespace SPK
 			float* newCurrentParams = new float[pool.getNbReserved() * model->getSizeOfParticleCurrentArray()];
 			float* newExtendedParams = new float[pool.getNbReserved() * model->getSizeOfParticleExtendedArray()];
 
-			memcpy(newData,particleData,pool.getNbTotal() * sizeof(Particle::ParticleData));
-			memcpy(newCurrentParams,particleCurrentParams,pool.getNbTotal() * sizeof(float) * model->getSizeOfParticleCurrentArray());
-			memcpy(newExtendedParams,particleExtendedParams,pool.getNbTotal() * sizeof(float) * model->getSizeOfParticleExtendedArray());
+			std::memcpy(newData,particleData,pool.getNbTotal() * sizeof(Particle::ParticleData));
+			std::memcpy(newCurrentParams,particleCurrentParams,pool.getNbTotal() * sizeof(float) * model->getSizeOfParticleCurrentArray());
+			std::memcpy(newExtendedParams,particleExtendedParams,pool.getNbTotal() * sizeof(float) * model->getSizeOfParticleExtendedArray());
 
 			delete[] particleData;
 			delete[] particleCurrentParams;

@@ -52,6 +52,7 @@
 #include "Extensions/Zones/SPK_Plane.h"
 #include "Extensions/Zones/SPK_Line.h" // 1.01
 #include "Extensions/Zones/SPK_Ring.h" // 1.05
+#include "Extensions/Zones/SPK_Cylinder.h"
 
 // Emitters
 #include "Extensions/Emitters/SPK_StraightEmitter.h"
@@ -74,5 +75,6 @@
 #include "Extensions/Renderers/SPK_PointRendererInterface.h" // 1.04
 #include "Extensions/Renderers/SPK_LineRendererInterface.h" // 1.04
 #include "Extensions/Renderers/SPK_Oriented3DRendererInterface.h" // 1.04
+#include "Extensions/Renderers/SPK_QuadRendererInterface.h"
 
 #endif

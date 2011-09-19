@@ -284,6 +284,7 @@ copy build\release64\SPARK_PL64.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\Extensions\Renderers\SPK_Oriented3DRendererInterface.cpp" />
     <ClCompile Include="src\Extensions\Renderers\SPK_QuadRendererInterface.cpp" />
     <ClCompile Include="src\Extensions\Zones\SPK_AABox.cpp" />
+    <ClCompile Include="src\Extensions\Zones\SPK_Cylinder.cpp" />
     <ClCompile Include="src\Extensions\Zones\SPK_Line.cpp" />
     <ClCompile Include="src\Extensions\Zones\SPK_Plane.cpp" />
     <ClCompile Include="src\Extensions\Zones\SPK_Point.cpp" />
@@ -349,6 +350,7 @@ copy build\release64\SPARK_PL64.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\SPARK_PL\Extensions\Renderers\SPK_PointRendererInterface.h" />
     <ClInclude Include="include\SPARK_PL\Extensions\Renderers\SPK_QuadRendererInterface.h" />
     <ClInclude Include="include\SPARK_PL\Extensions\Zones\SPK_AABox.h" />
+    <ClInclude Include="include\SPARK_PL\Extensions\Zones\SPK_Cylinder.h" />
     <ClInclude Include="include\SPARK_PL\Extensions\Zones\SPK_Line.h" />
     <ClInclude Include="include\SPARK_PL\Extensions\Zones\SPK_Plane.h" />
     <ClInclude Include="include\SPARK_PL\Extensions\Zones\SPK_Point.h" />

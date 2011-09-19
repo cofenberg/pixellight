@@ -45,10 +45,11 @@ namespace SPK
 		registerChild(zone,registerAll);
 	}
 
-	void Emitter::copyChildren(const Emitter& emitter,bool createBase)
+	void Emitter::copyChildren(const Registerable& object,bool createBase)
 	{
+		const Emitter& emitter = dynamic_cast<const Emitter&>(object);
 		Registerable::copyChildren(emitter,createBase);
-		zone = static_cast<Zone*>(copyChild(emitter.zone,createBase));	
+		zone = dynamic_cast<Zone*>(copyChild(emitter.zone,createBase));	
 	}
 	
 	void Emitter::destroyChildren(bool keepChildren)

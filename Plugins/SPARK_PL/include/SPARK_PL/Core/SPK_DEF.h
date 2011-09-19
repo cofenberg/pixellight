@@ -43,23 +43,9 @@
 #endif
 
 #ifdef SPK_CORE_EXPORT
-	// [HACK](begin) Changed for the SPARK_PL project so it also compiles fine under Linux
-	#ifdef WIN32
-		#define SPK_PREFIX __declspec(dllexport)
-	#else
-		#if defined(HAVE_VISIBILITY_ATTR)
-			#define SPK_PREFIX __attribute__ ((visibility("default")))
-		#else
-			#define SPK_PREFIX
-		#endif
-	#endif
+#define SPK_PREFIX __declspec(dllexport)
 #elif defined(SPK_IMPORT) || defined(SPK_CORE_IMPORT)
-	#ifdef WIN32
-		#define SPK_PREFIX __declspec(dllimport)
-	#else
-		#define SPK_PREFIX
-	#endif
-	// [HACK](end) Changed for the SPARK_PL project so it also compiles fine under Linux
+#define SPK_PREFIX __declspec(dllimport)
 #else
 #define SPK_PREFIX
 #endif

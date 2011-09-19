@@ -161,6 +161,9 @@
     <ClCompile Include="src\RenderingAPIs\PixelLight\SPK_PLLineTrailRendererShaders.cpp">
       <Filter>RenderingAPIs\PixelLight</Filter>
     </ClCompile>
+    <ClCompile Include="src\Extensions\Zones\SPK_Cylinder.cpp">
+      <Filter>Extensions\Zones</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\SPARK_PL\SPARK_PL.h" />
@@ -370,6 +373,9 @@
     </ClInclude>
     <ClInclude Include="src\RenderingAPIs\PixelLight\SPK_PLPointRendererShaders_GLSL.h">
       <Filter>RenderingAPIs\PixelLight</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SPARK_PL\Extensions\Zones\SPK_Cylinder.h">
+      <Filter>Extensions\Zones</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
