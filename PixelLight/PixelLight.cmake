@@ -317,7 +317,9 @@ if(ANDROID)
 	set (PL_PLUGIN_SOUND_FMODEX			VAR-NOT-FOUND CACHE INTERNAL "")
 	set (PL_PLUGIN_FRONTEND_QT			VAR-NOT-FOUND CACHE INTERNAL "")
 	set (PL_EDITOR						VAR-NOT-FOUND CACHE INTERNAL "")
+	set (PL_TOOL_PLPROJECT				VAR-NOT-FOUND CACHE INTERNAL "")	# No plugin files required because for Android, we need to load in all shared libraries right at the beginning
 	set (PL_TOOL_PLUPGRADE				VAR-NOT-FOUND CACHE INTERNAL "")
+	set (PL_NATIVE_PLPROJECT			VAR-NOT-FOUND CACHE INTERNAL "")	# No plugin files required because for Android, we need to load in all shared libraries right at the beginning
 	# Set to null
 	set (PL_PLUGIN_RENDERER_OPENGL		0)
 	set (PL_PLUGIN_RENDERER_OPENGL_FONT	0)
@@ -327,7 +329,9 @@ if(ANDROID)
 	set (PL_PLUGIN_SOUND_FMODEX			0)
 	set (PL_PLUGIN_FRONTEND_QT			0)
 	set (PL_EDITOR						0)
+	set (PL_TOOL_PLPROJECT				0)	# No plugin files required because for Android, we need to load in all shared libraries right at the beginning
 	set (PL_TOOL_PLUPGRADE				0)
+	set (PL_NATIVE_PLPROJECT			0)	# No plugin files required because for Android, we need to load in all shared libraries right at the beginning
 else()
 	# Remove Android only features
 	# Remove from cache
@@ -438,20 +442,22 @@ endmacro(pl_plproject dir outputpath writeplugin)
 ## Create PixelLight plugin description
 ##################################################
 macro(pl_create_plugin_description src dest)
-	if(CMAKETOOLS_CONFIG_SUFFIX)
-		set(suffix --suffix ${CMAKETOOLS_CONFIG_SUFFIX})
-	else()
-		set(suffix "")
-	endif()
+	if(PL_PLPROJECT_COMMAND)
+		if(CMAKETOOLS_CONFIG_SUFFIX)
+			set(suffix --suffix ${CMAKETOOLS_CONFIG_SUFFIX})
+		else()
+			set(suffix "")
+		endif()
 
-	if("${ARGV2}" STREQUAL "")
-		set(entryFile "")
-	else()
-		set(entryFile --entry-file ${ARGV2})
-	endif()
+		if("${ARGV2}" STREQUAL "")
+			set(entryFile "")
+		else()
+			set(entryFile --entry-file ${ARGV2})
+		endif()
 
-	# Call PLProject
-	pl_plproject(${src} ${dest} "${suffix}" "${entryFile}")
+		# Call PLProject
+		pl_plproject(${src} ${dest} "${suffix}" "${entryFile}")
+	endif()
 endmacro(pl_create_plugin_description src dest)
 
 
@@ -460,14 +466,17 @@ endmacro(pl_create_plugin_description src dest)
 ##################################################
 
 # Set path to PLProject
-if(PL_NATIVE_PLPROJECT)
-	if(CMAKE_BUILD_TYPE MATCHES "Debug")
-		set(PL_PLPROJECT_COMMAND "${CMAKE_SOURCE_DIR}/Bin-${CMAKETOOLS_HOST_SYSTEM}/Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}/PLProjectD${CMAKE_EXECUTABLE_SUFFIX}")
+# -> No plugin files required because for Android, we need to load in all shared libraries right at the beginning
+if(NOT ANDROID)
+	if(PL_NATIVE_PLPROJECT)
+		if(CMAKE_BUILD_TYPE MATCHES "Debug")
+			set(PL_PLPROJECT_COMMAND "${CMAKE_SOURCE_DIR}/Bin-${CMAKETOOLS_HOST_SYSTEM}/Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}/PLProjectD${CMAKE_EXECUTABLE_SUFFIX}")
+		else()
+			set(PL_PLPROJECT_COMMAND "${CMAKE_SOURCE_DIR}/Bin-${CMAKETOOLS_HOST_SYSTEM}/Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}/PLProject${CMAKE_EXECUTABLE_SUFFIX}")
+		endif()
 	else()
-		set(PL_PLPROJECT_COMMAND "${CMAKE_SOURCE_DIR}/Bin-${CMAKETOOLS_HOST_SYSTEM}/Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}/PLProject${CMAKE_EXECUTABLE_SUFFIX}")
+		set(PL_PLPROJECT_COMMAND "${CMAKE_SOURCE_DIR}/Tools/PLProject/src/PLProject.py")
 	endif()
-else()
-	set(PL_PLPROJECT_COMMAND "${CMAKE_SOURCE_DIR}/Tools/PLProject/src/PLProject.py")
 endif()
 
 # Configure use of inline assembly
