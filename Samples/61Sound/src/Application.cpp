@@ -60,7 +60,11 @@ Application::Application(Frontend &cFrontend) : EngineApplication(cFrontend),
 	SlotOnControl(this)
 {
 	// Add command line argument for choosing the sound API
-	m_cCommandLine.AddArgument("SoundAPI", "Sound API", "PLSoundOpenAL::SoundManager", false);
+	#ifdef ANDROID
+		m_cCommandLine.AddArgument("SoundAPI", "Sound API", "PLSoundOpenSLES::SoundManager", false);
+	#else
+		m_cCommandLine.AddArgument("SoundAPI", "Sound API", "PLSoundOpenAL::SoundManager", false);
+	#endif
 }
 
 /**
@@ -127,7 +131,11 @@ bool Application::ChooseSoundAPI()
 			bResult = true; // Done
 		} else {
 			// Use the default sound API
-			m_sSoundAPI = "PLSoundOpenAL::SoundManager";
+			#ifdef ANDROID
+				m_sSoundAPI = "PLSoundOpenSLES::SoundManager";
+			#else
+				m_sSoundAPI = "PLSoundOpenAL::SoundManager";
+			#endif
 			bResult = true; // Done
 		}
 
