@@ -62,6 +62,9 @@
     <Filter Include="Backend\Null">
       <UniqueIdentifier>{677793e6-4158-4119-b699-a6450722b7a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Backend\Android">
+      <UniqueIdentifier>{c2b8467e-a774-4b59-9ae9-ae0e1696cfe2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\PLGui.cpp">
@@ -375,6 +378,9 @@
     </ClCompile>
     <ClCompile Include="src\Backend\Null\GuiNull.cpp">
       <Filter>Backend\Null</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Backend\Android\GuiAndroid.cpp">
+      <Filter>Backend\Android</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -707,6 +713,9 @@
     </ClInclude>
     <ClInclude Include="include\PLGui\Backend\Null\FontNull.h">
       <Filter>Backend\Null</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLGui\Backend\Android\GuiAndroid.h">
+      <Filter>Backend\Android</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

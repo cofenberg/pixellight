@@ -48,7 +48,7 @@ namespace PLGui {
 */
 GuiAndroid::GuiAndroid(Gui *pGui) : GuiNull(pGui),
 	SlotInputEvent(&GuiAndroid::OnInputEvent, this),
- 	m_bLeftMouseButton(false)
+	m_bLeftMouseButton(false)
 {
 	// Connect the Android input event handler
 	SystemAndroid::EventInputEvent.Connect(SlotInputEvent);
