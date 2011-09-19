@@ -63,7 +63,7 @@ IngameGui::IngameGui(Application &cApplication, Widget *pParent) : Widget(pParen
 	pButton->SetColor(Color4::Red);
 	pButton->SetMouseOverColor(Color4::Green);
 	pButton->SetText("GuiButton");
-	pButton->SetBackgroundImageFilename("PLGui/button.png");
+	pButton->SetBackgroundImageFilename("PLGui/button.tga");
 	pButton->SetVisible(true);
 }
 

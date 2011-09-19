@@ -126,6 +126,7 @@ _pixellight_find_lib(PL_PLLIBROCKET			PLlibRocket/PLlibRocket.h					PLlibRocket	
 _pixellight_find_lib(PL_PLPHYSICSNEWTON		PLPhysicsNewton/PLPhysicsNewton.h			PLPhysicsNewton		Plugins/PLPhysicsNewton/include)
 _pixellight_find_lib(PL_PLPHYSICSBULLET		PLPhysicsBullet/PLPhysicsBullet.h			PLPhysicsBullet		Plugins/PLPhysicsBullet/include)
 _pixellight_find_lib(PL_PLASSIMP			PLAssimp/PLAssimp.h							PLAssimp			Plugins/PLAssimp/include)
+_pixellight_find_lib(PL_PLSOUNDOPENSLES		PLSoundOpenSLES/PLSoundOpenSLES.h			PLSoundOpenSLES		Plugins/PLSoundOpenSLES/include)
 
 
 # Newton
