@@ -37,7 +37,7 @@
 #if defined(WIN32)
 	#include "PLGui/Backend/Windows/GuiWindows.h"
 #elif defined(ANDROID)
-	#include "PLGui/Backend/Null/GuiNull.h"
+	#include "PLGui/Backend/Android/GuiAndroid.h"
 #elif defined(LINUX)
 	#include "PLGui/Backend/Linux/GuiLinux.h"
 #endif
@@ -214,7 +214,7 @@ Gui::Gui(const String &sGui) :
 		#if defined(WIN32)
 			m_pGuiImpl = new GuiWindows(this);
 		#elif defined(ANDROID)
-			m_pGuiImpl = new GuiNull(this);
+			m_pGuiImpl = new GuiAndroid(this);
 		#elif defined(LINUX)
 			m_pGuiImpl = new GuiLinux(this);
 		#else

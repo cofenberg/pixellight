@@ -255,7 +255,7 @@ Button *AndroidKeyboardDevice::GetKeyboardKey(Keyboard &cKeyboard, int32_t nKeyC
 		// AKEYCODE_BUTTON_START		-> ignored
 		case AKEYCODE_BUTTON_SELECT:	return &cKeyboard.KeySelect;
 		// AKEYCODE_BUTTON_MODE			-> ignored
-		default:						return  nullptr;
+		default:						return nullptr;
 	}
 }
 
