@@ -2,6 +2,7 @@
 [CO]
 - Added GuiAndroid
 - Implemented Android key input event processing within GuiAndroid
+- Implemented Android touchscreen (= handled as mouse) input event processing within GuiAndroid (not yet perfect, but a start :)
 
 
 

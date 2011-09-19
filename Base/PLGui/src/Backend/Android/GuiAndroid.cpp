@@ -35,6 +35,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
+using namespace PLMath;
 namespace PLGui {
 
 
@@ -46,7 +47,8 @@ namespace PLGui {
 *    Constructor
 */
 GuiAndroid::GuiAndroid(Gui *pGui) : GuiNull(pGui),
-	SlotInputEvent(&GuiAndroid::OnInputEvent, this)
+	SlotInputEvent(&GuiAndroid::OnInputEvent, this),
+ 	m_bLeftMouseButton(false)
 {
 	// Connect the Android input event handler
 	SystemAndroid::EventInputEvent.Connect(SlotInputEvent);
@@ -79,7 +81,7 @@ void GuiAndroid::OnInputEvent(const struct AInputEvent &cAInputEvent)
 
 		// Motion (e.g. from the touchscreen)
 		case AINPUT_EVENT_TYPE_MOTION:
-			// [TODO] Implement me
+			OnMotionInputEvent(cAInputEvent);
 			break;
 	}
 }
@@ -230,6 +232,68 @@ uint32 GuiAndroid::GetKeyboardKey(int32_t nKeyCode)
 		case AKEYCODE_BUTTON_SELECT:	return PLGUIKEY_SELECT;
 		// AKEYCODE_BUTTON_MODE			-> ignored
 		default:						return 0;
+	}
+}
+
+/**
+*  @brief
+*    Call this to process the next motion input event
+*/
+void GuiAndroid::OnMotionInputEvent(const struct AInputEvent &cAMotionInputEvent)
+{
+	// No widget handling, just raw input
+
+	// Get the number of pointers of data contained in this event
+	const size_t nAndroidPointerCount = AMotionEvent_getPointerCount(&cAMotionInputEvent);
+	if (nAndroidPointerCount) {
+		// Get the current X and Y coordinate of this event for the given pointer index
+		const float fAndroidX = AMotionEvent_getX(&cAMotionInputEvent, 0);
+		const float fAndroidY = AMotionEvent_getY(&cAMotionInputEvent, 0);
+
+		// Mouse position
+		const Vector2i vPos(static_cast<int>(fAndroidX), static_cast<int>(fAndroidY));
+
+		// Get the root widget
+		Widget *pRootWidget = m_pGui->GetRootWidget();
+
+		// Get the combined motion event action code and pointer index
+		const int32_t nAndroidAction = AMotionEvent_getAction(&cAMotionInputEvent);
+		if ((nAndroidAction & AMOTION_EVENT_ACTION_MASK) == AMOTION_EVENT_ACTION_UP) {
+			// Is the left mouse button currently down?
+			if (m_bLeftMouseButton) {
+				// Jap, the left mouse button is now no longer down
+				m_bLeftMouseButton = false;
+
+				// Send OnMouseButtonUp message
+				m_pGui->SendMessage(GuiMessage::OnMouseButtonUp(pRootWidget, LeftButton, vPos));
+
+				// [TODO] When to send a click-event, and when not?
+				// Send OnMouseButtonClick message
+				m_pGui->SendMessage(GuiMessage::OnMouseButtonClick(pRootWidget, LeftButton, vPos));
+			}
+		} else {
+			// Mouse position changed?
+			if (m_vMousePosition != vPos) {
+				// Set the new mouse position
+				m_vMousePosition = vPos;
+
+				// Send OnMouseMove message
+				m_pGui->SendMessage(GuiMessage::OnMouseMove(pRootWidget, vPos));
+			}
+
+			// Get the current pressure of this event for the given pointer index, ranges from 0 (no pressure at all) to 1 (normal pressure)
+			const float fPressure = AMotionEvent_getPressure(&cAMotionInputEvent, 0);
+			if (fPressure > 0.3f) {
+				// Is the left mouse button already down?
+				if (!m_bLeftMouseButton) {
+					// Nope, start left mouse button down mode
+					m_bLeftMouseButton = true;
+
+					// Send OnMouseButtonDown message
+					m_pGui->SendMessage(GuiMessage::OnMouseButtonDown(pRootWidget, LeftButton, vPos));
+				}
+			}
+		}
 	}
 }
 

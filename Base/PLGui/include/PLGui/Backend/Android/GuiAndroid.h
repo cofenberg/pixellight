@@ -109,12 +109,29 @@ class GuiAndroid : public GuiNull {
 		*/
 		PLCore::uint32 GetKeyboardKey(int32_t nKeyCode);
 
+		/**
+		*  @brief
+		*    Call this to process the next motion input event
+		*
+		*  @param[in] cAMotionInputEvent
+		*    Motion input event to process
+		*/
+		void OnMotionInputEvent(const struct AInputEvent &cAMotionInputEvent);
+
 
 	//[-------------------------------------------------------]
 	//[ Private slots                                         ]
 	//[-------------------------------------------------------]
 	private:
 		PLCore::EventHandler<const struct AInputEvent&> SlotInputEvent;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLMath::Vector2i m_vMousePosition;		/**< Current mouse position */
+		bool			 m_bLeftMouseButton;	/**< Is the left mouse button currently down? */
 
 
 };
