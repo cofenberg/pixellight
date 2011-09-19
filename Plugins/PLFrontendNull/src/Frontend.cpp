@@ -23,6 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#ifdef WIN32
+	#include <PLCore/PLCoreWindowsIncludes.h>
+#endif
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/System/System.h>
 #include <PLCore/Frontend/Frontend.h>
@@ -114,6 +117,16 @@ void Frontend::Redraw()
 
 void Frontend::Ping()
 {
+	// MS Windows: Get and dispatch messages, an application using this frontend may need it for e.g. proper input processing
+	#ifdef WIN32
+		MSG sMsg;
+		while (PeekMessage(&sMsg, nullptr, 0, 0, FALSE)) {
+			GetMessage(&sMsg, nullptr, 0, 0);
+			TranslateMessage(&sMsg);
+			DispatchMessage(&sMsg);
+		}
+	#endif
+
 	// Check if we're allowed to perform an update right now
 	if (Timing::GetInstance()->Update(&m_nTimeToWait)) {
 		// Let the frontend update it's states
