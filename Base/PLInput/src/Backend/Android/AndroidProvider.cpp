@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <android/input.h>
+#include <PLCore/System/SystemAndroid.h>
 #include "PLInput/Input/Devices/Keyboard.h"
 #include "PLInput/Input/Devices/SensorManager.h"
 #include "PLInput/Backend/Android/AndroidKeyboardDevice.h"
@@ -34,6 +35,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLCore;
 namespace PLInput {
 
 
@@ -51,8 +53,11 @@ pl_implement_class(AndroidProvider)
 *    Default constructor
 */
 AndroidProvider::AndroidProvider() :
+	SlotInputEvent(&AndroidProvider::OnInputEvent, this),
 	m_pAndroidKeyboardDevice(nullptr)
 {
+	// Connect the Android input event handler
+	SystemAndroid::EventInputEvent.Connect(SlotInputEvent);
 }
 
 /**
@@ -61,31 +66,6 @@ AndroidProvider::AndroidProvider() :
 */
 AndroidProvider::~AndroidProvider()
 {
-}
-
-/**
-*  @brief
-*    Call this to process the next input event
-*/
-bool AndroidProvider::OnInputEvent(const struct AInputEvent &cAInputEvent)
-{
-	// Check the input event type
-	switch (AInputEvent_getType(&cAInputEvent)) {
-		// Key (e.g. from the soft keyboard)
-		case AINPUT_EVENT_TYPE_KEY:
-			if (m_pAndroidKeyboardDevice)
-				return m_pAndroidKeyboardDevice->OnKeyInputEvent(cAInputEvent);
-			break;
-
-		// Motion (e.g. from the touchscreen)
-		case AINPUT_EVENT_TYPE_MOTION:
-			// [TODO] Implement me
-			// Input event processed
-			return true;
-	}
-
-	// Input event not processed
-	return false;
 }
 
 
@@ -105,6 +85,31 @@ void AndroidProvider::QueryDevices()
 	if (!CheckDevice("SensorManager")) {
 		AndroidSensorManagerDevice *pImpl = new AndroidSensorManagerDevice();
 		AddDevice("SensorManager", new SensorManager("SensorManager", pImpl));
+	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called to process the next Android input event
+*/
+void AndroidProvider::OnInputEvent(const struct AInputEvent &cAInputEvent)
+{
+	// Check the input event type
+	switch (AInputEvent_getType(&cAInputEvent)) {
+		// Key (e.g. from the soft keyboard)
+		case AINPUT_EVENT_TYPE_KEY:
+			if (m_pAndroidKeyboardDevice)
+				m_pAndroidKeyboardDevice->OnKeyInputEvent(cAInputEvent);
+			break;
+
+		// Motion (e.g. from the touchscreen)
+		case AINPUT_EVENT_TYPE_MOTION:
+			// [TODO] Implement me
+			break;
 	}
 }
 

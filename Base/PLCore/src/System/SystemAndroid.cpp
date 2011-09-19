@@ -34,6 +34,12 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
+//[ Public static events                                  ]
+//[-------------------------------------------------------]
+Event<const struct AInputEvent&> SystemAndroid::EventInputEvent;	/**< Android input event, input event to be processed as first parameter */
+
+
+//[-------------------------------------------------------]
 //[ Private static data                                   ]
 //[-------------------------------------------------------]
 AAssetManager *SystemAndroid::g_pAAssetManager      = nullptr;	/**< Android asset manager, can be a null pointer, the given instance is just shared and not destroyed by this class */
@@ -59,6 +65,15 @@ AAssetManager *SystemAndroid::GetAssetManager()
 void SystemAndroid::SetAssetManager(AAssetManager *pAAssetManager)
 {
 	g_pAAssetManager = pAAssetManager;
+}
+
+/**
+*  @brief
+*    Emit Android input event
+*/
+void SystemAndroid::EmitInputEvent(const struct AInputEvent &sAInputEvent)
+{
+	EventInputEvent(sAInputEvent);
 }
 
 /**

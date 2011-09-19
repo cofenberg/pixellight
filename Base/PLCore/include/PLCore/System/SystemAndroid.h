@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLCore/Base/Event/Event.h"
 #include "PLCore/System/ConsoleAndroid.h"
 #include "PLCore/System/SystemLinux.h"
 
@@ -37,6 +38,8 @@
 //[-------------------------------------------------------]
 struct AAssetManager;
 typedef struct AAssetManager AAssetManager;
+struct AInputEvent;
+typedef struct AInputEvent AInputEvent;
 
 
 //[-------------------------------------------------------]
@@ -62,6 +65,13 @@ class SystemAndroid : public SystemLinux {
 
 
 	//[-------------------------------------------------------]
+	//[ Public static events                                  ]
+	//[-------------------------------------------------------]
+	public:
+		static PLCORE_API Event<const struct AInputEvent&> EventInputEvent;	/**< Android input event, input event to be processed as first parameter */
+
+
+	//[-------------------------------------------------------]
 	//[ Public static functions                               ]
 	//[-------------------------------------------------------]
 	public:
@@ -82,6 +92,15 @@ class SystemAndroid : public SystemLinux {
 		*    Android asset manager, can be a null pointer, the given instance is just shared and not destroyed by this class
 		*/
 		static PLCORE_API void SetAssetManager(AAssetManager *pAAssetManager);
+
+		/**
+		*  @brief
+		*    Emit Android input event
+		*
+		*  @param[in] sAInputEvent
+		*    Android input event to emit
+		*/
+		static PLCORE_API void EmitInputEvent(const struct AInputEvent &sAInputEvent);
 
 		/**
 		*  @brief

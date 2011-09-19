@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Event/EventHandler.h>
 #include "PLInput/Backend/Provider.h"
 
 
@@ -82,24 +83,33 @@ class AndroidProvider : public Provider {
 		*/
 		PLINPUT_API virtual ~AndroidProvider();
 
-		/**
-		*  @brief
-		*    Call this to process the next input event
-		*
-		*  @param[in] cAInputEvent
-		*    Input event to process
-		*
-		*  @return
-		*    'true' if the event was handled, else 'false'
-		*/
-		PLINPUT_API bool OnInputEvent(const struct AInputEvent &cAInputEvent);
-
 
 	//[-------------------------------------------------------]
 	//[ Private virtual Provider functions                    ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void QueryDevices() override;
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Called to process the next Android input event
+		*
+		*  @param[in] cAInputEvent
+		*    Android input event to process
+		*/
+		void OnInputEvent(const struct AInputEvent &cAInputEvent);
+
+
+	//[-------------------------------------------------------]
+	//[ Private slots                                         ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<const struct AInputEvent&> SlotInputEvent;
 
 
 	//[-------------------------------------------------------]
