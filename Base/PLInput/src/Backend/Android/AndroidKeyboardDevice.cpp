@@ -60,7 +60,7 @@ AndroidKeyboardDevice::~AndroidKeyboardDevice()
 *  @brief
 *    Call this to process the next key input event
 */
-bool AndroidKeyboardDevice::OnKeyInputEvent(const struct AInputEvent &cAKeyInputEvent)
+void AndroidKeyboardDevice::OnKeyInputEvent(const struct AInputEvent &cAKeyInputEvent)
 {
 	// Check if input device is valid
 	if (m_pDevice) {
@@ -93,13 +93,7 @@ bool AndroidKeyboardDevice::OnKeyInputEvent(const struct AInputEvent &cAKeyInput
 			// Add this key to the processed keys
 			m_lstProcessedKeys.Add(nKeyCode);
 		}
-
-		// Input event processed
-		return true;
 	}
-
-	// Input event not processed
-	return false;
 }
 
 

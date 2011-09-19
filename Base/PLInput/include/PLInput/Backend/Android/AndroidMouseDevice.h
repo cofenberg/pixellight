@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: AndroidKeyboardDevice.h                        *
+ *  File: AndroidMouseDevice.h                           *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLINPUT_ANDROIDKEYBOARDDEVICE_H__
-#define __PLINPUT_ANDROIDKEYBOARDDEVICE_H__
+#ifndef __PLINPUT_ANDROIDMOUSEDEVICE_H__
+#define __PLINPUT_ANDROIDMOUSEDEVICE_H__
 #pragma once
 
 
@@ -37,8 +37,7 @@
 struct AInputEvent;
 typedef struct AInputEvent AInputEvent;
 namespace PLInput {
-	class Button;
-	class Keyboard;
+	class Mouse;
 }
 
 
@@ -53,9 +52,12 @@ namespace PLInput {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Keyboard implementation for Android
+*    Mouse implementation for Android
+*
+*  @note
+*    - Mouse emulation by using the touchscreen
 */
-class AndroidKeyboardDevice : public UpdateDevice {
+class AndroidMouseDevice : public UpdateDevice {
 
 
 	//[-------------------------------------------------------]
@@ -66,22 +68,22 @@ class AndroidKeyboardDevice : public UpdateDevice {
 		*  @brief
 		*    Constructor
 		*/
-		AndroidKeyboardDevice();
+		AndroidMouseDevice();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~AndroidKeyboardDevice();
+		virtual ~AndroidMouseDevice();
 
 		/**
 		*  @brief
-		*    Call this to process the next key input event
+		*    Call this to process the next motion input event
 		*
-		*  @param[in] cAKeyInputEvent
-		*    Key input event to process
+		*  @param[in] cAMotionInputEvent
+		*    Motion input event to process
 		*/
-		void OnKeyInputEvent(const struct AInputEvent &cAKeyInputEvent);
+		void OnMotionInputEvent(const struct AInputEvent &cAMotionInputEvent);
 
 
 	//[-------------------------------------------------------]
@@ -92,36 +94,15 @@ class AndroidKeyboardDevice : public UpdateDevice {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Get key for Android key code
-		*
-		*  @param[in] cKeyboard
-		*    Reference to keyboard device
-		*  @param[in] int32_t
-		*    Key code
-		*
-		*  @return
-		*    Corresponding key, a null pointer if Android key code is invalid
-		*/
-		Button *GetKeyboardKey(Keyboard &cKeyboard, int32_t nKeyCode);
-
-
-	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::Array<int32_t> m_lstProcessedKeys;
-		class KeyInfo {
-			public:
-				int32_t nKeyCode;
-				bool    bPressed;
-				bool operator ==(const KeyInfo &cSource) { return false; }
-		};
-		PLCore::Array<KeyInfo> m_lstDelayedKeys;
+		bool  m_bTouched;					/**< Currently touched? */
+		float m_fPreviousMousePositionX;	/**< Previous mouse x position */
+		float m_fPreviousMousePositionY;	/**< Previous mouse y position */
+		float m_fMousePositionX;			/**< Current mouse x position */
+		float m_fMousePositionY;			/**< Current mouse y position */
+		bool  m_bLeftMouseButton;			/**< Is the left mouse button currently down? */
 
 
 };
@@ -133,4 +114,4 @@ class AndroidKeyboardDevice : public UpdateDevice {
 } // PLInput
 
 
-#endif // __PLINPUT_ANDROIDKEYBOARDDEVICE_H__
+#endif // __PLINPUT_ANDROIDMOUSEDEVICE_H__

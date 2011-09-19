@@ -1,3 +1,9 @@
+>> 19.09.2011
+[CO]
+- Implemented "AndroidMouseDevice" (I'am sure a real touchscreen device will follow, but a mouse emulation is a nice thing to have for compability)
+
+
+
 >> 16.09.2011
 [CO]
 - Implemented "AndroidProvider" -> We need to pass in Android input events from outside into this system (done in the Android frontend)

@@ -25,8 +25,10 @@
 //[-------------------------------------------------------]
 #include <android/input.h>
 #include <PLCore/System/SystemAndroid.h>
+#include "PLInput/Input/Devices/Mouse.h"
 #include "PLInput/Input/Devices/Keyboard.h"
 #include "PLInput/Input/Devices/SensorManager.h"
+#include "PLInput/Backend/Android/AndroidMouseDevice.h"
 #include "PLInput/Backend/Android/AndroidKeyboardDevice.h"
 #include "PLInput/Backend/Android/AndroidSensorManagerDevice.h"
 #include "PLInput/Backend/Android/AndroidProvider.h"
@@ -54,7 +56,8 @@ pl_implement_class(AndroidProvider)
 */
 AndroidProvider::AndroidProvider() :
 	SlotInputEvent(&AndroidProvider::OnInputEvent, this),
-	m_pAndroidKeyboardDevice(nullptr)
+	m_pAndroidKeyboardDevice(nullptr),
+	m_pAndroidMouseDevice(nullptr)
 {
 	// Connect the Android input event handler
 	SystemAndroid::EventInputEvent.Connect(SlotInputEvent);
@@ -79,6 +82,13 @@ void AndroidProvider::QueryDevices()
 		// Add device
 		m_pAndroidKeyboardDevice = new AndroidKeyboardDevice();
 		AddDevice("Keyboard", new Keyboard("Keyboard", m_pAndroidKeyboardDevice));
+	}
+
+	// Create a mouse device
+	if (!CheckDevice("Mouse")) {
+		// Add device
+		m_pAndroidMouseDevice = new AndroidMouseDevice();
+		AddDevice("Mouse", new Mouse("Mouse", m_pAndroidMouseDevice));
 	}
 
 	// Create a sensor manager device
@@ -108,7 +118,8 @@ void AndroidProvider::OnInputEvent(const struct AInputEvent &cAInputEvent)
 
 		// Motion (e.g. from the touchscreen)
 		case AINPUT_EVENT_TYPE_MOTION:
-			// [TODO] Implement me
+			if (m_pAndroidMouseDevice)
+				m_pAndroidMouseDevice->OnMotionInputEvent(cAInputEvent);
 			break;
 	}
 }
