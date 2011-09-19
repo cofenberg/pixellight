@@ -277,67 +277,37 @@ endif()
 # Windows
 if(NOT WIN32)
 	# Windows only features, for other targets, don't show this options
-	# Remove from cache
-	set (PL_PLUGIN_PHYSICS_PHYSX		VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_PLUGIN_RENDERER_D3D9		VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_PLUGIN_RENDERER_D3D11		VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_PLUGIN_FRONTEND_ACTIVEX		VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_PLUGIN_FRONTEND_MOZILLA		VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_EXPORTER_3DSMAX_2008		VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_EXPORTER_3DSMAX_2009		VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_EXPORTER_3DSMAX_2010		VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_EXPORTER_3DSMAX_2011		VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_EXPORTER_3DSMAX_2012		VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_PLUGIN_ENGINE_IMAGEEXR		VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_TOOL_PLINSTALL				VAR-NOT-FOUND CACHE INTERNAL "")
-	# Set to null
-	set (PL_PLUGIN_PHYSICS_PHYSX		0)
-	set (PL_PLUGIN_RENDERER_D3D9		0)
-	set (PL_PLUGIN_RENDERER_D3D11		0)
-	set (PL_PLUGIN_FRONTEND_ACTIVEX		0)
-	set (PL_PLUGIN_FRONTEND_MOZILLA		0)
-	set (PL_EXPORTER_3DSMAX_2008		0)
-	set (PL_EXPORTER_3DSMAX_2009		0)
-	set (PL_EXPORTER_3DSMAX_2010		0)
-	set (PL_EXPORTER_3DSMAX_2011		0)
-	set (PL_EXPORTER_3DSMAX_2012		0)
-	set (PL_PLUGIN_ENGINE_IMAGEEXR		0)
-	set (PL_TOOL_PLINSTALL				0)
+	unset (PL_PLUGIN_PHYSICS_PHYSX			CACHE)
+	unset (PL_PLUGIN_RENDERER_D3D9			CACHE)
+	unset (PL_PLUGIN_RENDERER_D3D11			CACHE)
+	unset (PL_PLUGIN_FRONTEND_ACTIVEX		CACHE)
+	unset (PL_PLUGIN_FRONTEND_MOZILLA		CACHE)
+	unset (PL_EXPORTER_3DSMAX_2008			CACHE)
+	unset (PL_EXPORTER_3DSMAX_2009			CACHE)
+	unset (PL_EXPORTER_3DSMAX_2010			CACHE)
+	unset (PL_EXPORTER_3DSMAX_2011			CACHE)
+	unset (PL_EXPORTER_3DSMAX_2012			CACHE)
+	unset (PL_PLUGIN_ENGINE_IMAGEEXR		CACHE)
+	unset (PL_TOOL_PLINSTALL				CACHE)
 endif()
 
 # Android
 if(ANDROID)
 	# Remove features not supported or required for Android
-	# Remove from cache
-	set (PL_PLUGIN_RENDERER_OPENGL		VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_PLUGIN_RENDERER_OPENGL_FONT	VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_PLUGIN_RENDERER_OPENGLCG	VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_PLUGIN_SOUND_OPENAL			VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_PLUGIN_SOUND_FMOD			VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_PLUGIN_SOUND_FMODEX			VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_PLUGIN_FRONTEND_QT			VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_EDITOR						VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_TOOL_PLPROJECT				VAR-NOT-FOUND CACHE INTERNAL "")	# No plugin files required because for Android, we need to load in all shared libraries right at the beginning
-	set (PL_TOOL_PLUPGRADE				VAR-NOT-FOUND CACHE INTERNAL "")
-	set (PL_NATIVE_PLPROJECT			VAR-NOT-FOUND CACHE INTERNAL "")	# No plugin files required because for Android, we need to load in all shared libraries right at the beginning
-	# Set to null
-	set (PL_PLUGIN_RENDERER_OPENGL		0)
-	set (PL_PLUGIN_RENDERER_OPENGL_FONT	0)
-	set (PL_PLUGIN_RENDERER_OPENGLCG	0)
-	set (PL_PLUGIN_SOUND_OPENAL			0)
-	set (PL_PLUGIN_SOUND_FMOD			0)
-	set (PL_PLUGIN_SOUND_FMODEX			0)
-	set (PL_PLUGIN_FRONTEND_QT			0)
-	set (PL_EDITOR						0)
-	set (PL_TOOL_PLPROJECT				0)	# No plugin files required because for Android, we need to load in all shared libraries right at the beginning
-	set (PL_TOOL_PLUPGRADE				0)
-	set (PL_NATIVE_PLPROJECT			0)	# No plugin files required because for Android, we need to load in all shared libraries right at the beginning
+	unset (PL_PLUGIN_RENDERER_OPENGL		CACHE)
+	unset (PL_PLUGIN_RENDERER_OPENGL_FONT	CACHE)
+	unset (PL_PLUGIN_RENDERER_OPENGLCG		CACHE)
+	unset (PL_PLUGIN_SOUND_OPENAL			CACHE)
+	unset (PL_PLUGIN_SOUND_FMOD				CACHE)
+	unset (PL_PLUGIN_SOUND_FMODEX			CACHE)
+	unset (PL_PLUGIN_FRONTEND_QT			CACHE)
+	unset (PL_EDITOR						CACHE)
+	unset (PL_TOOL_PLPROJECT				CACHE)	# No plugin files required because for Android, we need to load in all shared libraries right at the beginning
+	unset (PL_TOOL_PLUPGRADE				CACHE)
+	unset (PL_NATIVE_PLPROJECT				CACHE)	# No plugin files required because for Android, we need to load in all shared libraries right at the beginning
 else()
 	# Remove Android only features
-	# Remove from cache
-	set (PL_PLUGIN_SOUND_OPENSLES		VAR-NOT-FOUND CACHE INTERNAL "")
-	# Set to null
-	set (PL_PLUGIN_SOUND_OPENSLES		0)
+	unset (PL_PLUGIN_SOUND_OPENSLES			CACHE)
 endif()
 
 # Project suffix
