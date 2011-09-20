@@ -299,7 +299,6 @@ if(ANDROID)
 	unset (PL_PLUGIN_RENDERER_OPENGLCG		CACHE)
 	unset (PL_PLUGIN_SOUND_OPENAL			CACHE)
 	unset (PL_PLUGIN_SOUND_FMOD				CACHE)
-	unset (PL_PLUGIN_SOUND_FMODEX			CACHE)
 	unset (PL_PLUGIN_FRONTEND_QT			CACHE)
 	unset (PL_EDITOR						CACHE)
 	unset (PL_TOOL_PLPROJECT				CACHE)	# No plugin files required because for Android, we need to load in all shared libraries right at the beginning
