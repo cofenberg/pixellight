@@ -287,7 +287,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 				pCamera->AddModifier("PLEngine::SNMMoveController", "Speed=\"2\"");
 
 				// Make this camera to the 'sound listener'
-				pSceneContainer->SetAttribute("Listener", "Camera");
+				pSceneContainer->SetAttribute("Listener", pCamera->GetName());
 			}
 
 			// Create the floor

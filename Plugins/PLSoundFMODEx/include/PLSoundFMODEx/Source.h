@@ -78,6 +78,15 @@ class Source : public PLSound::Source {
 		*/
 		Source(PLSound::SoundManager &cSoundManager);
 
+		/**
+		*  @brief
+		*    Returns the current FMOD Ex mode
+		*
+		*  @return
+		*    The current FMOD Ex mode
+		*/
+		FMOD_MODE GetFMODExMode() const;
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]

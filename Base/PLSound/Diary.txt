@@ -1,4 +1,10 @@
-﻿>> 19.09.2011
+﻿>> 21.09.2011
+[CO]
+- PLSoundFMODEx: Some years past since real changes within this project. Loop and 2D are now working.
+
+
+
+>> 19.09.2011
 [CO]
 - Started the OpenSL ES (http://www.khronos.org/opensles/) sound plugin "PLSoundOpenSLES" basing on "PLSoundNull". On Android, OpenSL ES will be used for sound. Android supports
   nativly OpenSL ES 1.0.1 (1.1 is the up-to-date standard).

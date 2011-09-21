@@ -97,7 +97,7 @@ bool Buffer::LoadBuffer(const String &sFilename, bool bStream)
 			if (bStream)
 				nResult = pSystem->createStream(sFilename, FMOD_DEFAULT | FMOD_3D, 0, &m_pSound);
 			else
-				nResult = pSystem->createSound (sFilename, FMOD_DEFAULT | FMOD_3D, 0, &m_pSound);
+				nResult = pSystem->createSound(sFilename, FMOD_DEFAULT | FMOD_3D, 0, &m_pSound);
 			if (SoundManager::ErrorCheck(nResult)) {
 				m_bStreamed = bStream;
 

@@ -76,6 +76,24 @@ Source::Source(PLSound::SoundManager &cSoundManager) : PLSound::Source(cSoundMan
 {
 }
 
+/**
+*  @brief
+*    Returns the current FMOD Ex mode
+*/
+FMOD_MODE Source::GetFMODExMode() const
+{
+	FMOD_MODE nFMODExMode = FMOD_HARDWARE;
+
+	// 2D or 3D sound?
+	nFMODExMode |= m_b2D ? FMOD_2D : FMOD_3D;
+
+	// Loop?
+	nFMODExMode |= m_bLooping ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF;
+
+	// Return the current FMOD Ex mode
+	return nFMODExMode;
+}
+
 
 //[-------------------------------------------------------]
 //[ Public virtual PLSound::Source functions              ]
@@ -128,12 +146,7 @@ bool Source::Play(bool bRestart)
 					static_cast<SoundManager&>(GetSoundManager()).AddActiveSource(*this);
 
 					// Set mode
-					if (m_b2D)
-						m_pChannel->setMode(FMOD_DEFAULT);
-//						m_pChannel->setMode(FMOD_DEFAULT | FMOD_3D_LINEARROLLOFF);
-					else
-						m_pChannel->setMode(FMOD_DEFAULT | FMOD_3D);
-//						m_pChannel->setMode(FMOD_DEFAULT | FMOD_3D_LINEARROLLOFF | FMOD_3D);
+					m_pChannel->setMode(GetFMODExMode());
 
 					// Get frequency and setup pitch
 					m_pChannel->getFrequency(&m_fFrequency);
@@ -238,14 +251,8 @@ void Source::Set2D(bool b2D)
 	// Set 2D state
 	if (m_b2D != b2D) {
 		m_b2D = b2D;
-		if (m_pChannel) {
-			if (m_b2D)
-				m_pChannel->setMode(FMOD_DEFAULT);
-//				m_pChannel->setMode(FMOD_DEFAULT | FMOD_3D_LINEARROLLOFF);
-			else//
-				m_pChannel->setMode(FMOD_DEFAULT | FMOD_3D);
-//				m_pChannel->setMode(FMOD_DEFAULT | FMOD_3D_LINEARROLLOFF | FMOD_3D);
-		}
+		if (m_pChannel)
+			m_pChannel->setMode(GetFMODExMode());
 	}
 }
 
@@ -260,7 +267,7 @@ void Source::SetLooping(bool bLooping)
 	if (m_bLooping != bLooping) {
 		m_bLooping = bLooping;
 		if (m_pChannel)
-			m_pChannel->setLoopCount(m_bLooping ? -1 : 0);
+			m_pChannel->setMode(GetFMODExMode());
 	}
 }
 
