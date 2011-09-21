@@ -1,3 +1,9 @@
+>> 21.09.2011
+[CO]
+- Android port: Improved mouse emulation by using the touchscreen
+
+
+
 >> 19.09.2011
 [CO]
 - Implemented "AndroidMouseDevice" (I'am sure a real touchscreen device will follow, but a mouse emulation is a nice thing to have for compability)

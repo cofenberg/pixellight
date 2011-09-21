@@ -51,6 +51,14 @@ namespace PLGui {
 /**
 *  @brief
 *    Android GUI implementation
+*
+*  @remarks
+*    Mouse emulation by using the touchscreen is supported. When moving around the finger on the touchscreen,
+*    the change in movement is used for the mouse axis. A short touch without any movement is handled
+*    as "left mouse button clicked". As soon the mouse is moved, no "left mouse button"-events can be
+*    generated anymore during the current touch. When touching without movement for half a second, the
+*    emulation changes into "left mouse button hold down"-mode, following mouse movement will not change
+*    this mode.
 */
 class GuiAndroid : public GuiNull {
 
@@ -130,8 +138,13 @@ class GuiAndroid : public GuiNull {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLMath::Vector2i m_vMousePosition;		/**< Current mouse position */
-		bool			 m_bLeftMouseButton;	/**< Is the left mouse button currently down? */
+		// Mouse emulation by using the touchscreen
+		bool  m_bMouseMoved;				/**< Mouse moved during the current touch? */
+		float m_fPreviousMousePositionX;	/**< Previous mouse x position */
+		float m_fPreviousMousePositionY;	/**< Previous mouse y position */
+		float m_fMousePositionX;			/**< Current mouse x position */
+		float m_fMousePositionY;			/**< Current mouse y position */
+		bool  m_bLeftMouseButton;			/**< Is the left mouse button currently down? */
 
 
 };

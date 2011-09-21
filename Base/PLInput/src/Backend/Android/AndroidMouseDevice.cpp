@@ -42,7 +42,7 @@ namespace PLInput {
 *    Constructor
 */
 AndroidMouseDevice::AndroidMouseDevice() :
-	m_bTouched(false),
+	m_bMouseMoved(false),
 	m_fPreviousMousePositionX(0.0f),
 	m_fPreviousMousePositionY(0.0f),
 	m_fMousePositionX(0.0f),
@@ -74,29 +74,55 @@ void AndroidMouseDevice::OnMotionInputEvent(const struct AInputEvent &cAMotionIn
 		m_fMousePositionX = AMotionEvent_getX(&cAMotionInputEvent, 0);
 		m_fMousePositionY = AMotionEvent_getY(&cAMotionInputEvent, 0);
 
-		// Get the combined motion event action code and pointer index
-		const int32_t nAndroidAction = AMotionEvent_getAction(&cAMotionInputEvent);
-		if ((nAndroidAction & AMOTION_EVENT_ACTION_MASK) == AMOTION_EVENT_ACTION_UP) {
+		// Get the combined motion event action code and the action code
+		const int32_t nAndroidCombinedAction = AMotionEvent_getAction(&cAMotionInputEvent);
+		const int32_t nAndroidAction		 = (nAndroidCombinedAction & AMOTION_EVENT_ACTION_MASK);
+
+		// Touch end?
+		if (nAndroidAction == AMOTION_EVENT_ACTION_UP) {
+			// Jap, touch end, previous mouse position = current mouse position
+			m_fPreviousMousePositionX = m_fMousePositionX;
+			m_fPreviousMousePositionY = m_fMousePositionY;
+
+			// Mouse moved during the current touch? If no, this is handled as a left mouse button click as well.
+			if (!m_bMouseMoved && !m_bLeftMouseButton) {
+				// Check if input device is valid
+				if (m_pDevice) {
+					// Get mouse device
+					Mouse *pMouse = static_cast<Mouse*>(m_pDevice);
+
+					// Update button
+					if (pMouse->Left.IsPressed() != true)
+						pMouse->Left.SetPressed(true);
+				}
+			}
+
 			// The left mouse button is now no longer down
 			m_bLeftMouseButton = false;
-
-			// We're no longer touched
-			m_bTouched = false;
 		} else {
-			// Touch started?
-			if ((nAndroidAction & AMOTION_EVENT_ACTION_MASK) == AMOTION_EVENT_ACTION_DOWN) {
+			// Touch start?
+			if (nAndroidAction == AMOTION_EVENT_ACTION_DOWN) {
+				// Jap, touch start, previous mouse position = current mouse position
 				m_fPreviousMousePositionX = m_fMousePositionX;
 				m_fPreviousMousePositionY = m_fMousePositionY;
 
-				// We're now touched
-				m_bTouched = true;
+				// The mouse was not yet moved
+				m_bMouseMoved = false;
+
+				// The left mouse button is not pressed
+				m_bLeftMouseButton = false;
 			}
 
-			// Get the current pressure of this event for the given pointer index, ranges from 0 (no pressure at all) to 1 (normal pressure)
-			const float fPressure = AMotionEvent_getPressure(&cAMotionInputEvent, 0);
-			if (fPressure > 0.3f) {
-				// The left mouse button is now down
-				m_bLeftMouseButton = true;
+			// As long as the mouse was not yet moved, a "left mouse button is hold down" can still be generated
+			if (!m_bMouseMoved && !m_bLeftMouseButton) {
+				// Get the past time since the touch has been started (in nanoseconds)
+				const int64_t nPastTime = AMotionEvent_getEventTime(&cAMotionInputEvent) - AMotionEvent_getDownTime(&cAMotionInputEvent);
+
+				// If the mouse has not been moved for half a second, we go into "left mouse button is hold down"-mode
+				if (nPastTime > 500*1000*1000) {
+					// The left mouse button is now down
+					m_bLeftMouseButton = true;
+				}
 			}
 		}
 	}
@@ -113,17 +139,29 @@ void AndroidMouseDevice::Update()
 		// Get mouse device
 		Mouse *pMouse = static_cast<Mouse*>(m_pDevice);
 
-		// Are we currently touched?
-		if (m_bTouched) {
+		{ // Update axes
+			// Get the mouse movement
+			float fDeltaX = m_fMousePositionX - m_fPreviousMousePositionX;
+			float fDeltaY = m_fMousePositionY - m_fPreviousMousePositionY;
+
+			// Was the mouse already moved? (if so, we're in "mouse move"-mode, not in "left mouse button click"-mode)
+			if (!m_bMouseMoved) {
+				// Check whether or not the mouse was moved - with a little bit of tollerance
+				if (fDeltaX > 3 || fDeltaY > 3)
+					m_bMouseMoved = true;
+				else
+					fDeltaX = fDeltaY = 0.0f;
+			}
+
 			// Update axes
-			const float fDeltaX = m_fMousePositionX - m_fPreviousMousePositionX;
-			const float fDeltaY = m_fMousePositionY - m_fPreviousMousePositionY;
-			m_fPreviousMousePositionX = m_fMousePositionX;
-			m_fPreviousMousePositionY = m_fMousePositionY;
 			if (pMouse->X.GetValue() != fDeltaX)
 				pMouse->X.SetValue(fDeltaX, true);
 			if (pMouse->Y.GetValue() != fDeltaY)
 				pMouse->Y.SetValue(fDeltaY, true);
+
+			// The current mouse position becomes the previous mouse position
+			m_fPreviousMousePositionX = m_fMousePositionX;
+			m_fPreviousMousePositionY = m_fMousePositionY;
 		}
 
 		// Update buttons

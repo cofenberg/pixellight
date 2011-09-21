@@ -48,6 +48,11 @@ namespace PLGui {
 */
 GuiAndroid::GuiAndroid(Gui *pGui) : GuiNull(pGui),
 	SlotInputEvent(&GuiAndroid::OnInputEvent, this),
+	m_bMouseMoved(false),
+	m_fPreviousMousePositionX(0.0f),
+	m_fPreviousMousePositionY(0.0f),
+	m_fMousePositionX(0.0f),
+	m_fMousePositionY(0.0f),
 	m_bLeftMouseButton(false)
 {
 	// Connect the Android input event handler
@@ -247,50 +252,102 @@ void GuiAndroid::OnMotionInputEvent(const struct AInputEvent &cAMotionInputEvent
 	const size_t nAndroidPointerCount = AMotionEvent_getPointerCount(&cAMotionInputEvent);
 	if (nAndroidPointerCount) {
 		// Get the current X and Y coordinate of this event for the given pointer index
-		const float fAndroidX = AMotionEvent_getX(&cAMotionInputEvent, 0);
-		const float fAndroidY = AMotionEvent_getY(&cAMotionInputEvent, 0);
+		m_fMousePositionX = AMotionEvent_getX(&cAMotionInputEvent, 0);
+		m_fMousePositionY = AMotionEvent_getY(&cAMotionInputEvent, 0);
 
 		// Mouse position
-		const Vector2i vPos(static_cast<int>(fAndroidX), static_cast<int>(fAndroidY));
+		const Vector2i vMousePosition(static_cast<int>(m_fMousePositionX), static_cast<int>(m_fMousePositionY));
 
 		// Get the root widget
 		Widget *pRootWidget = m_pGui->GetRootWidget();
 
-		// Get the combined motion event action code and pointer index
-		const int32_t nAndroidAction = AMotionEvent_getAction(&cAMotionInputEvent);
-		if ((nAndroidAction & AMOTION_EVENT_ACTION_MASK) == AMOTION_EVENT_ACTION_UP) {
+		// Get the combined motion event action code and the action code
+		const int32_t nAndroidCombinedAction = AMotionEvent_getAction(&cAMotionInputEvent);
+		const int32_t nAndroidAction		 = (nAndroidCombinedAction & AMOTION_EVENT_ACTION_MASK);
+
+		// Touch end?
+		if (nAndroidAction == AMOTION_EVENT_ACTION_UP) {
+			// Jap, touch end, previous mouse position = current mouse position
+			m_fPreviousMousePositionX = m_fMousePositionX;
+			m_fPreviousMousePositionY = m_fMousePositionY;
+
+			// Mouse moved during the current touch? If no, this is handled as a left mouse button click as well.
+			if (!m_bMouseMoved && !m_bLeftMouseButton) {
+				// Send OnMouseButtonDown message
+				m_pGui->SendMessage(GuiMessage::OnMouseButtonDown(pRootWidget, LeftButton, vMousePosition));
+
+				// Send OnMouseButtonUp message
+				m_pGui->SendMessage(GuiMessage::OnMouseButtonUp(pRootWidget, LeftButton, vMousePosition));
+
+				// [TODO] When to send a click-event, and when not?
+				// Send OnMouseButtonClick message
+				m_pGui->SendMessage(GuiMessage::OnMouseButtonClick(pRootWidget, LeftButton, vMousePosition));
+
 			// Is the left mouse button currently down?
-			if (m_bLeftMouseButton) {
+			} else if (m_bLeftMouseButton) {
 				// Jap, the left mouse button is now no longer down
 				m_bLeftMouseButton = false;
 
 				// Send OnMouseButtonUp message
-				m_pGui->SendMessage(GuiMessage::OnMouseButtonUp(pRootWidget, LeftButton, vPos));
+				m_pGui->SendMessage(GuiMessage::OnMouseButtonUp(pRootWidget, LeftButton, vMousePosition));
 
 				// [TODO] When to send a click-event, and when not?
 				// Send OnMouseButtonClick message
-				m_pGui->SendMessage(GuiMessage::OnMouseButtonClick(pRootWidget, LeftButton, vPos));
+				m_pGui->SendMessage(GuiMessage::OnMouseButtonClick(pRootWidget, LeftButton, vMousePosition));
 			}
 		} else {
-			// Mouse position changed?
-			if (m_vMousePosition != vPos) {
-				// Set the new mouse position
-				m_vMousePosition = vPos;
+			// Touch start?
+			if (nAndroidAction == AMOTION_EVENT_ACTION_DOWN) {
+				// Jap, touch start, previous mouse position = current mouse position
+				m_fPreviousMousePositionX = m_fMousePositionX;
+				m_fPreviousMousePositionY = m_fMousePositionY;
+
+				// The mouse was not yet moved
+				m_bMouseMoved = false;
+
+				// The left mouse button is not pressed
+				m_bLeftMouseButton = false;
 
 				// Send OnMouseMove message
-				m_pGui->SendMessage(GuiMessage::OnMouseMove(pRootWidget, vPos));
+				m_pGui->SendMessage(GuiMessage::OnMouseMove(pRootWidget, vMousePosition));
+			} else {
+				// Get the mouse movement
+				float fDeltaX = m_fMousePositionX - m_fPreviousMousePositionX;
+				float fDeltaY = m_fMousePositionY - m_fPreviousMousePositionY;
+
+				// Was the mouse already moved? (if so, we're in "mouse move"-mode, not in "left mouse button click"-mode)
+				if (!m_bMouseMoved) {
+					// Check whether or not the mouse was moved - with a little bit of tollerance
+					if (fDeltaX > 3 || fDeltaY > 3)
+						m_bMouseMoved = true;
+					else
+						fDeltaX = fDeltaY = 0.0f;
+				}
+
+				// Update axes
+				if (static_cast<int>(m_fPreviousMousePositionX) != static_cast<int>(m_fMousePositionX) &&
+					static_cast<int>(m_fPreviousMousePositionY) != static_cast<int>(m_fMousePositionY)) {
+					// Send OnMouseMove message
+					m_pGui->SendMessage(GuiMessage::OnMouseMove(pRootWidget, vMousePosition));
+				}
+
+				// The current mouse position becomes the previous mouse position
+				m_fPreviousMousePositionX = m_fMousePositionX;
+				m_fPreviousMousePositionY = m_fMousePositionY;
 			}
 
-			// Get the current pressure of this event for the given pointer index, ranges from 0 (no pressure at all) to 1 (normal pressure)
-			const float fPressure = AMotionEvent_getPressure(&cAMotionInputEvent, 0);
-			if (fPressure > 0.3f) {
-				// Is the left mouse button already down?
-				if (!m_bLeftMouseButton) {
-					// Nope, start left mouse button down mode
+			// As long as the mouse was not yet moved, a "left mouse button is hold down" can still be generated
+			if (!m_bMouseMoved && !m_bLeftMouseButton) {
+				// Get the past time since the touch has been started (in nanoseconds)
+				const int64_t nPastTime = AMotionEvent_getEventTime(&cAMotionInputEvent) - AMotionEvent_getDownTime(&cAMotionInputEvent);
+
+				// If the mouse has not been moved for half a second, we go into "left mouse button is hold down"-mode
+				if (nPastTime > 500*1000*1000) {
+					// The left mouse button is now down
 					m_bLeftMouseButton = true;
 
 					// Send OnMouseButtonDown message
-					m_pGui->SendMessage(GuiMessage::OnMouseButtonDown(pRootWidget, LeftButton, vPos));
+					m_pGui->SendMessage(GuiMessage::OnMouseButtonDown(pRootWidget, LeftButton, vMousePosition));
 				}
 			}
 		}
