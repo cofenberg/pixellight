@@ -127,6 +127,7 @@ _pixellight_find_lib(PL_PLPHYSICSNEWTON		PLPhysicsNewton/PLPhysicsNewton.h			PLP
 _pixellight_find_lib(PL_PLPHYSICSBULLET		PLPhysicsBullet/PLPhysicsBullet.h			PLPhysicsBullet		Plugins/PLPhysicsBullet/include)
 _pixellight_find_lib(PL_PLASSIMP			PLAssimp/PLAssimp.h							PLAssimp			Plugins/PLAssimp/include)
 _pixellight_find_lib(PL_PLSOUNDOPENSLES		PLSoundOpenSLES/PLSoundOpenSLES.h			PLSoundOpenSLES		Plugins/PLSoundOpenSLES/include)
+_pixellight_find_lib(PL_PLSOUNDFMODEX		PLSoundFMODEx/PLSoundFMODEx.h				PLSoundFMODEx		Plugins/PLSoundFMODEx/include)
 
 
 # Newton
@@ -137,6 +138,10 @@ _pixellight_find_lib(PL_NEWTON				Newton/Newton.h								Newton				"")
 _pixellight_find_lib(PL_LIBROCKETCORE		Rocket/Core.h								RocketCore			"")
 _pixellight_find_lib(PL_LIBROCKETCONTROLS	Rocket/Controls.h							RocketControls		"")
 _pixellight_find_lib(PL_LIBROCKETDEBUGGER	Rocket/Debugger.h							RocketDebugger		"")
+
+
+# FMOD Ex
+_pixellight_find_lib(PL_FMODEX				FMODEx/FMODEx.h								fmodex				"")
 
 
 # Directories

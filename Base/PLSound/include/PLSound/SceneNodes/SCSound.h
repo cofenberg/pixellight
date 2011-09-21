@@ -61,7 +61,9 @@ class SCSound : public PLScene::SceneContainer {
 	pl_class(PLSOUND_RTTI_EXPORT, SCSound, "PLSound", PLScene::SceneContainer, "Sound scene node container")
 		// Attributes
 	#ifdef ANDROID
-		pl_attribute(SoundAPI,	PLCore::String,	"PLSoundOpenSLES::SoundManager",	ReadWrite,	DirectValue,	"Name of the sound API this scene container is using",						"")
+		// [TODO] Make PLSoundOpenSLES to the default (because it's open and free) as soon as it's implemented
+		pl_attribute(SoundAPI,	PLCore::String,	"PLSoundFMODEx::SoundManager",		ReadWrite,	DirectValue,	"Name of the sound API this scene container is using",						"")
+//		pl_attribute(SoundAPI,	PLCore::String,	"PLSoundOpenSLES::SoundManager",	ReadWrite,	DirectValue,	"Name of the sound API this scene container is using",						"")
 	#else
 		pl_attribute(SoundAPI,	PLCore::String,	"PLSoundOpenAL::SoundManager",		ReadWrite,	DirectValue,	"Name of the sound API this scene container is using",						"")
 	#endif
