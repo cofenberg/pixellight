@@ -195,7 +195,7 @@ When using the maketool flag '--syslibs', you also need the following packages:
 - libvorbis-dev (PLSoundOpenAL)
 To install all required packages at once, just use:
 
-  apt-get install libpcre3-de libjpeg62-dev libpng12-dev libfreetype6-dev libopenal-dev libogg-dev libvorbis-dev
+  apt-get install libpcre3-dev libjpeg62-dev libpng12-dev libfreetype6-dev libopenal-dev libogg-dev libvorbis-dev
 
 Currently we're using the following compilers and compiler versions:
 - GCC 4.6
@@ -393,7 +393,7 @@ Install the usual Android development tools (the following versions are those us
 	- Linux
 		- This example assumes that the data has been extracted directly within the home ("~") directory: Open hidden "~/.bashrc"-file and add:
 			# Important Android SDK and NDK paths
-			export ANDROID_SDK=~/android-sdk-linux_86
+			export ANDROID_SDK=~/android-sdk-linux_x86
 			export ANDROID_NDK=~/android-ndk-r6b
 			export PATH=${PATH}:${ANDROID_SDK}/tools:${ANDROID_SDK}/platform-tools:~/${ANDROID_NDK}
 	- Windows
