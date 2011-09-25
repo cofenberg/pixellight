@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGLES2_RUNTIMELINKING_H__
-#define __PLRENDEREROPENGLES2_RUNTIMELINKING_H__
+#ifndef __PLRENDEREROPENGLES2_CONTEXTRUNTIMELINKING_H__
+#define __PLRENDEREROPENGLES2_CONTEXTRUNTIMELINKING_H__
 #pragma once
 
 
@@ -37,6 +37,9 @@
 namespace PLCore {
 	class DynLib;
 }
+namespace PLRendererOpenGLES2 {
+	class ExtensionsRuntimeLinking;
+}
 
 
 //[-------------------------------------------------------]
@@ -50,7 +53,7 @@ namespace PLRendererOpenGLES2 {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OpenGL ES 2.0 desktop context
+*    OpenGL ES 2.0 runtime linking context
 *
 *  @remarks
 *    This context implementation links against the OpenGL ES 2.0 dynamic libraries at runtime. There are
@@ -99,6 +102,7 @@ class ContextRuntimeLinking : public Context {
 	//[-------------------------------------------------------]
 	public:
 		virtual bool Init(PLCore::uint32 nMultisampleAntialiasingSamples) override;
+		virtual const Extensions &GetExtensions() const;
 
 
 	//[-------------------------------------------------------]
@@ -150,9 +154,10 @@ class ContextRuntimeLinking : public Context {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::DynLib *m_pEGLDynLib;				/**< EGL dynamic library, always valid! (at least the class instance) */
-		PLCore::DynLib *m_pGLESDynLib;				/**< OpenGL ES 2.0 dynamic library, always valid! (at least the class instance) */
-		bool			m_bEntryPointsRegistered;	/**< Entry points successfully registered? */
+		PLCore::DynLib			 *m_pEGLDynLib;				/**< EGL dynamic library, always valid! (at least the class instance) */
+		PLCore::DynLib			 *m_pGLESDynLib;			/**< OpenGL ES 2.0 dynamic library, always valid! (at least the class instance) */
+		bool					  m_bEntryPointsRegistered;	/**< Entry points successfully registered? */
+		ExtensionsRuntimeLinking *m_pExtensions;			/**< Extensions instance, always valid! */
 
 
 };
@@ -172,7 +177,7 @@ class ContextRuntimeLinking : public Context {
 //[-------------------------------------------------------]
 //[ EGL functions                                         ]
 //[-------------------------------------------------------]
-#ifdef DEFINEDESKTOP
+#ifdef DEFINERUNTIMELINKING
 	#define FNDEF_EGL(retType, funcName, args) retType (EGLAPIENTRY *funcPtr_##funcName) args
 #else
 	#define FNDEF_EGL(retType, funcName, args) extern retType (EGLAPIENTRY *funcPtr_##funcName) args
@@ -213,7 +218,7 @@ FNDEF_EGL(void*,		eglGetProcAddress,		(const char *procname));
 //[-------------------------------------------------------]
 //[ GL core functions                                     ]
 //[-------------------------------------------------------]
-#ifdef DEFINEDESKTOP
+#ifdef DEFINERUNTIMELINKING
 	#define FNDEF_GL(retType, funcName, args) retType (GL_APIENTRY *funcPtr_##funcName) args
 #else
 	#define FNDEF_GL(retType, funcName, args) extern retType (GL_APIENTRY *funcPtr_##funcName) args
@@ -553,4 +558,4 @@ FNDEF_GL(void,				glViewport,								(GLint x, GLint y, GLsizei width, GLsizei h
 } // PLRendererOpenGLES2
 
 
-#endif // __PLRENDEREROPENGLES2_RUNTIMELINKING_H__
+#endif // __PLRENDEREROPENGLES2_CONTEXTRUNTIMELINKING_H__

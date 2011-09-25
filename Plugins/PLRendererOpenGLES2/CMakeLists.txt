@@ -31,6 +31,8 @@ define_project(PLRendererOpenGLES2)
 add_sources(
 	src/Context.cpp
 	src/ContextRuntimeLinking.cpp
+	src/Extensions.cpp
+	src/ExtensionsRuntimeLinking.cpp
 	src/IndexBuffer.cpp
 	src/PLRendererOpenGLES2.cpp
 	src/Renderer.cpp

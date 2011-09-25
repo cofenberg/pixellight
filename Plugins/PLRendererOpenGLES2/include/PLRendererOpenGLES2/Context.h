@@ -44,17 +44,16 @@
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLRendererOpenGLES2 {
-	class Renderer;
-}
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLRendererOpenGLES2 {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Renderer;
+class Extensions;
 
 
 //[-------------------------------------------------------]
@@ -159,6 +158,15 @@ class Context : public PLCore::AbstractContext {
 		*    'true' if all went fine, else 'false'
 		*/
 		virtual bool Init(PLCore::uint32 nMultisampleAntialiasingSamples);
+
+		/**
+		*  @brief
+		*    Returns the available extensions
+		*
+		*  @return
+		*    The available extensions
+		*/
+		virtual const Extensions &GetExtensions() const = 0;
 
 
 	//[-------------------------------------------------------]

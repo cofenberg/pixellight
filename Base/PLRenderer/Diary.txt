@@ -1,3 +1,9 @@
+>> 25.09.2011
+[CO]
+- "PLRendererOpenGLES2": Added support for "GL_EXT_texture_compression_s3tc", "GL_EXT_texture_compression_latc" and "GL_AMD_compressed_3DC_texture"
+
+
+
 >> 13.09.2011
 [CO]
 - "PLCore::FrontendConfig" and "PLRenderer::Config" have now the same default size (800x600 still feels quite fine during development)

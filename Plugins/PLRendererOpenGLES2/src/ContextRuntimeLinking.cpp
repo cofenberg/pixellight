@@ -25,7 +25,8 @@
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
 #include <PLCore/System/DynLib.h>
-#define DEFINEDESKTOP
+#define DEFINERUNTIMELINKING
+#include "PLRendererOpenGLES2/ExtensionsRuntimeLinking.h"
 #include "PLRendererOpenGLES2/ContextRuntimeLinking.h"
 
 
@@ -46,7 +47,8 @@ namespace PLRendererOpenGLES2 {
 ContextRuntimeLinking::ContextRuntimeLinking(Renderer &cRenderer, handle nNativeWindowHandle) : Context(cRenderer, nNativeWindowHandle),
 	m_pEGLDynLib(new DynLib()),
 	m_pGLESDynLib(new DynLib()),
-	m_bEntryPointsRegistered(false)
+	m_bEntryPointsRegistered(false),
+	m_pExtensions(new ExtensionsRuntimeLinking())
 {
 	// Output log information
 	PL_LOG(Info, "Performing OpenGL ES 2.0 dynamic runtime linking")
@@ -73,6 +75,9 @@ ContextRuntimeLinking::~ContextRuntimeLinking()
 	// De-initialize the context while we still can
 	DeInit();
 
+	// Destroy the extensions instance
+	delete m_pExtensions;
+
 	// Destroy the dynamic library instances
 	delete m_pEGLDynLib;
 	delete m_pGLESDynLib;
@@ -87,11 +92,22 @@ bool ContextRuntimeLinking::Init(uint32 nMultisampleAntialiasingSamples)
 	// Entry points successfully registered?
 	if (m_bEntryPointsRegistered) {
 		// Call base implementation
-		return Context::Init(nMultisampleAntialiasingSamples);
-	} else {
-		// Error!;
-		return false;
+		if (Context::Init(nMultisampleAntialiasingSamples)) {
+			// Initialize the supported extensions
+			m_pExtensions->Init();
+
+			// Done
+			return true;
+		}
 	}
+
+	// Error!;
+	return false;
+}
+
+const Extensions &ContextRuntimeLinking::GetExtensions() const
+{
+	return *m_pExtensions;
 }
 
 

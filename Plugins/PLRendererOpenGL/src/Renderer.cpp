@@ -443,7 +443,7 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 		// If the given image is pre compressed, but the hardware does not support the used compression format
 		// we have to use the uncompressed image instead.
 		if (!IsGL_ARB_texture_compression() ||
-			(nImageFormat <= PLRenderer::TextureBuffer::DXT5 && !IsGL_EXT_texture_compression_s3tc()) ||
+			(nImageFormat <= PLRenderer::TextureBuffer::DXT5  && !IsGL_EXT_texture_compression_s3tc()) ||
 			(nImageFormat == PLRenderer::TextureBuffer::LATC1 && !IsGL_EXT_texture_compression_latc()) ||
 			(nImageFormat == PLRenderer::TextureBuffer::LATC2 && !IsGL_EXT_texture_compression_latc() && !IsGL_ATI_texture_compression_3dc())) {
 			// Do not use texture buffer compression
@@ -458,7 +458,7 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 	if (nInternalFormat != PLRenderer::TextureBuffer::Unknown) {
 		nChosenInternalFormat = nInternalFormat;
 		if (PLRenderer::TextureBuffer::IsCompressedFormat(nChosenInternalFormat) &&
-			((nChosenInternalFormat <= PLRenderer::TextureBuffer::DXT5 && !IsGL_EXT_texture_compression_s3tc()) ||
+			((nChosenInternalFormat <= PLRenderer::TextureBuffer::DXT5  && !IsGL_EXT_texture_compression_s3tc()) ||
 			 (nChosenInternalFormat == PLRenderer::TextureBuffer::LATC1 && !IsGL_EXT_texture_compression_latc()) ||
 			 (nChosenInternalFormat == PLRenderer::TextureBuffer::LATC2 && !IsGL_EXT_texture_compression_latc() && !IsGL_ATI_texture_compression_3dc()))) {
 			// Hm, the user want's to use a certain compressed format, but the desired format is NOT available...
