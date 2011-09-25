@@ -429,6 +429,10 @@ void Context::ShowOpenGLESInformation()
 {
 	GLint nValue = 0;
 
+	// Print a list of all available extensions into the log
+	PL_LOG(Info, "Extensions info:")
+	WriteExtensionStringIntoLog(reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS)));
+
 	// Show some OpenGL ES information
 	PL_LOG(Info, String::Format("OpenGL ES 2.0 version: %s",		glGetString(GL_VERSION)	 ? reinterpret_cast<const char*>(glGetString(GL_VERSION))  : "-"))
 	PL_LOG(Info, String::Format("OpenGL ES 2.0 vendor info: %s",	glGetString(GL_VENDOR)	 ? reinterpret_cast<const char*>(glGetString(GL_VENDOR))   : "-"))
@@ -482,6 +486,32 @@ void Context::ShowOpenGLESInformation()
 		GLint nDimension[2] = {0, 0};
 		glGetIntegerv(GL_MAX_VIEWPORT_DIMS, nDimension);
 		PL_LOG(Info, String::Format("OpenGL ES 2.0 maximum viewport dimension: %dx%d", nDimension[0], nDimension[1]))
+	}
+}
+
+/**
+*  @brief
+*    Writes the extensions within a given extension string into the log
+*/
+void Context::WriteExtensionStringIntoLog(const char *pszExtensions) const
+{
+	// Check whether or not the given extensions string pointer is valid
+	if (pszExtensions) {
+		// Write the extensions into the log
+		const char *pszSpace = pszExtensions;
+		while (*pszSpace != '\0') {
+			while (*pszSpace != ' ' && *pszSpace != '\0')
+				pszSpace++;
+			if (pszSpace-pszExtensions) {
+				String sExtension;
+				sExtension.Copy(pszExtensions, static_cast<uint32>(pszSpace-pszExtensions));
+				PL_LOG(Info, sExtension)
+			}
+			if (*pszSpace != '\0') {
+				pszSpace++; // Skip the space
+				pszExtensions = pszSpace;
+			}
+		}
 	}
 }
 

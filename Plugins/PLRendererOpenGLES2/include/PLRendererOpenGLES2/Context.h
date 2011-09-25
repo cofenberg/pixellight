@@ -253,6 +253,15 @@ class Context : public PLCore::AbstractContext {
 		*/
 		void ShowOpenGLESInformation();
 
+		/**
+		*  @brief
+		*    Writes the extensions within a given extension string into the log
+		*
+		*  @param[in] pszExtensions
+		*    Extension string, if a null pointer, nothing happens
+		*/
+		void WriteExtensionStringIntoLog(const char *pszExtensions) const;
+
 
 };
 

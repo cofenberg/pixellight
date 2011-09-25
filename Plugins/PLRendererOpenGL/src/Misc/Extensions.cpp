@@ -783,6 +783,11 @@ void OpenGLExtensions::ShowOpenGLShaderProgramInformation(uint32 nTarget) const
 {
 	GLint i;
 
+	{ // Print a list of all available extensions into the log
+		PL_LOG(Info, "Extensions info:")
+		WriteExtensionStringIntoLog(reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS)));
+	}
+
 // Vertex and fragment
 	glGetProgramivARB(nTarget, GL_MAX_PROGRAM_INSTRUCTIONS_ARB, &i);
 	PL_LOG(Info, String::Format("  GL_MAX_PROGRAM_INSTRUCTIONS_ARB: %d", i))
