@@ -1,3 +1,9 @@
+>> 26.09.2011
+[CO]
+- "LoadableManager::OpenFile()" now resolves "./" because we always want to work with absolute paths so the user can easily figure out the absolute path later on by using "cFile.GetUrl()"
+
+
+
 >> 16.09.2011
 [CO]
 - Added "ConsoleAndroid" which is derived from "ConsoleLinux" and just overrides the "Print()"-implementation. Even on Android, it's possible to write into the console, meaning "stdout"... but it's somewhat

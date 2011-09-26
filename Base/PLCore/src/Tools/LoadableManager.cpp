@@ -28,6 +28,7 @@
 #include "PLCore/File/File.h"
 #include "PLCore/File/Directory.h"
 #include "PLCore/File/FileSearch.h"
+#include "PLCore/System/System.h"
 #include "PLCore/Base/Class.h"
 #include "PLCore/Base/ClassManager.h"
 #include "PLCore/Tools/Loader.h"
@@ -429,8 +430,11 @@ bool LoadableManager::OpenFile(File &cFile, const String &sFilename, bool bCreat
 			// Loop through all base directories
 			bool bFileFound = false;
 			for (uint32 nBaseDir=0; nBaseDir<nNumOfBaseDirs && !bFileFound; nBaseDir++) {
-				// Try to open the file directly
-				const String sAbsFilename = m_lstBaseDirs[nBaseDir] + sFilename;
+				// Get the base directory
+				const String sBaseDir = m_lstBaseDirs[nBaseDir];
+
+				// Try to open the file directly (resolve "./" because we always want to work with absolute paths so the user can figure out the absolute path later on)
+				const String sAbsFilename = (sBaseDir == "./") ? (System::GetInstance()->GetCurrentDir() + '/' + sFilename) : (sBaseDir + sFilename);
 				cFile.Assign(sAbsFilename);
 
 				// File found?
