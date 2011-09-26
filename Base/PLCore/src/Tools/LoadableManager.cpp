@@ -434,8 +434,14 @@ bool LoadableManager::OpenFile(File &cFile, const String &sFilename, bool bCreat
 				const String sBaseDir = m_lstBaseDirs[nBaseDir];
 
 				// Try to open the file directly (resolve "./" because we always want to work with absolute paths so the user can figure out the absolute path later on)
-				const String sAbsFilename = (sBaseDir == "./") ? (System::GetInstance()->GetCurrentDir() + '/' + sFilename) : (sBaseDir + sFilename);
-				cFile.Assign(sAbsFilename);
+				if (sBaseDir == "./") {
+					// Use current directory
+					const String sCurrentDir = System::GetInstance()->GetCurrentDir();
+					cFile.Assign(sCurrentDir.GetLength() ? (sCurrentDir + '/' + sFilename) : sFilename);
+				} else {
+					// Use given gase directory
+					cFile.Assign(sBaseDir + sFilename);
+				}
 
 				// File found?
 				bFileFound = cFile.IsFile();
