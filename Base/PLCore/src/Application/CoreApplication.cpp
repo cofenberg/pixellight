@@ -677,6 +677,10 @@ void CoreApplication::OnInitData()
 	if (!pLoadableManager->IsBaseDir(m_cApplicationContext.GetAppDirectory()))
 		pLoadableManager->AddBaseDir(m_cApplicationContext.GetAppDirectory());
 
+	// The application and current directories should have the highest priority of all base directories because the application data is most likly in those directories
+	pLoadableManager->SetBaseDirPriority(m_cApplicationContext.GetAppDirectory(), pLoadableManager->GetBaseDir(0));
+	pLoadableManager->SetBaseDirPriority('.', pLoadableManager->GetBaseDir(1));
+
 	// Scan for packages in current "Data" directory
 	const String sCurrentDir = System::GetInstance()->GetCurrentDir();
 	pLoadableManager->ScanPackages(sCurrentDir.GetLength() ? (sCurrentDir + "/Data") : "Data");

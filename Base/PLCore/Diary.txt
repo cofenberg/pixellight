@@ -1,6 +1,8 @@
 >> 26.09.2011
 [CO]
 - "LoadableManager::OpenFile()" now resolves "./" because we always want to work with absolute paths so the user can easily figure out the absolute path later on by using "cFile.GetUrl()"
+- "FrontendApplication::OnInitData()" & "CoreApplication::OnInitData()": The application and current directories should have the highest priority of all base directories because the application data is
+  most likly in those directories
 
 
 
