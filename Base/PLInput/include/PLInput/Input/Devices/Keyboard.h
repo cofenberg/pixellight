@@ -66,7 +66,7 @@ class Keyboard : public Device {
 		PLInput::Button	KeyBack;			/**< Backspace */
 		PLInput::Button	KeyTab;				/**< Tab */
 		PLInput::Button	KeyClear;			/**< Clear (not available everywhere) */
-		PLInput::Button	KeyReturn;			/**< Enter */
+		PLInput::Button	KeyReturn;			/**< Return (often the same as "Enter") */
 		PLInput::Button	KeyShift;			/**< Shift */
 		PLInput::Button	KeyControl;			/**< Ctrl */
 		PLInput::Button	KeyAlt;				/**< Alt */

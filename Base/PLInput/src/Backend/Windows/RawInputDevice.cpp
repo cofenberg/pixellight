@@ -42,7 +42,7 @@ enum EKey {
 	KeyBack				= 0x08,		/**< Backspace */
 	KeyTab				= 0x09,		/**< Tab */
 	KeyClear			= 0x0C,		/**< Clear (not available everywhere) */
-	KeyReturn			= 0x0D,		/**< Enter */
+	KeyReturn			= 0x0D,		/**< Return (often the same as "Enter") */
 	KeyShift			= 0x10,		/**< Shift */
 	KeyControl			= 0x11,		/**< Ctrl */
 	KeyAlt				= 0x12,		/**< Alt */

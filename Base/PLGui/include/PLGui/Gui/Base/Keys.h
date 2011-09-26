@@ -52,7 +52,7 @@ namespace PLGui {
 #define 	 PLGUIKEY_TAB				0x09		/**< tab */
 
 #define 	 PLGUIKEY_CLEAR				0x0C		/**< clear */
-#define 	 PLGUIKEY_RETURN			0x0D		/**< enter */
+#define 	 PLGUIKEY_RETURN			0x0D		/**< return (often the same as "enter") */
 
 #define 	 PLGUIKEY_SHIFT				0x10		/**< shift */
 #define 	 PLGUIKEY_CONTROL			0x11		/**< ctrl */
@@ -171,7 +171,7 @@ namespace PLGui {
 #define 	 PLGUIKEY_BACK				4							// backspace								- AKEYCODE_BACK
 #define 	 PLGUIKEY_TAB				61							// tab										- AKEYCODE_TAB
 #define 	 PLGUIKEY_CLEAR				28							// clear									- AKEYCODE_CLEAR
-#define 	 PLGUIKEY_RETURN			66							// enter									- AKEYCODE_ENTER
+#define 	 PLGUIKEY_RETURN			66							// return (often the same as "enter")		- AKEYCODE_ENTER
 #define 	 PLGUIKEY_SHIFT				59							// shift									- AKEYCODE_SHIFT_LEFT
 #define 	 PLGUIKEY_CONTROL			0xF006						// ctrl										- not supported
 #define 	 PLGUIKEY_MENU				82							// alt										- AKEYCODE_MENU
@@ -287,7 +287,7 @@ namespace PLGui {
 #define 	 PLGUIKEY_BACK				XK_BackSpace		// backspace  
 #define 	 PLGUIKEY_TAB				XK_Tab				// tab  
 #define 	 PLGUIKEY_CLEAR				XK_Clear			// clear  
-#define 	 PLGUIKEY_RETURN			XK_Return			// enter  
+#define 	 PLGUIKEY_RETURN			XK_Return			// return (often the same as "enter")
 #define 	 PLGUIKEY_SHIFT				XK_Shift_L			// shift
 #define 	 PLGUIKEY_CONTROL			XK_Control_L		// ctrl
 #define 	 PLGUIKEY_MENU				XK_Menu				// alt
