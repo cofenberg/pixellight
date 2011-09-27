@@ -185,7 +185,7 @@ bool ContextRuntimeLinking::LoadLibraries()
 
 	// Load in the dynamic library
 	#ifdef WIN32
-		// First, try the OpenGL ES 2.0 Emulator from ARM (it's possible to move around this dll without issues, so, this one first)
+		// First, try the OpenGL ES 2.0 emulator from ARM (it's possible to move around this dll without issues, so, this one first)
 		bResult = m_pEGLDynLib->Load("libEGL.dll");
 		if (bResult) {
 			bResult = m_pGLESDynLib->Load("libGLESv2.dll");
@@ -206,7 +206,7 @@ bool ContextRuntimeLinking::LoadLibraries()
 		if (bResult)
 			bResult = m_pGLESDynLib->Load("libGLESv2.so");
 	#elif LINUX
-		// First, try the OpenGL ES 2.0 Emulator from ARM (it's possible to move around this dll without issues, so, this one first)
+		// First, try the OpenGL ES 2.0 emulator from ARM (it's possible to move around this dll without issues, so, this one first)
 		// Give Linux an absolute path, if this is not done, I just rececive a polite "[PLCore] error while loading libEGL.so " -> "libEGL.so: cannot open shared object file: No such file or directory"
 		const String sRuntimeDirectory = Runtime::GetDirectory();
 		bResult = m_pEGLDynLib->Load(sRuntimeDirectory.GetLength() ? (sRuntimeDirectory + "/libEGL.so") : "libEGL.so");
@@ -244,6 +244,11 @@ bool ContextRuntimeLinking::LoadEGLEntryPoints()
 	#define IMPORT_FUNC(funcName)																																	\
 		if (bResult) {																																				\
 			void *pSymbol = m_pEGLDynLib->GetSymbol(#funcName);																										\
+			if (!pSymbol) {																																			\
+				/* The specification states that "eglGetProcAddress" is only for extension functions, but when using OpenGL ES 2.0 on desktop PC by using a			\
+				   native OpenGL ES 2.0 capable graphics driver under Linux (tested with "AMD Catalyst 11.8"), only this way will work */							\
+				pSymbol = eglGetProcAddress(#funcName);																												\
+			}																																						\
 			if (pSymbol) {																																			\
 				*(reinterpret_cast<void**>(&(funcName))) = pSymbol;																									\
 			} else {																																				\
@@ -253,6 +258,7 @@ bool ContextRuntimeLinking::LoadEGLEntryPoints()
 		}																																							\
 
 	// Load the entry points
+	IMPORT_FUNC(eglGetProcAddress);
 	IMPORT_FUNC(eglGetError);
 	IMPORT_FUNC(eglGetDisplay);
 	IMPORT_FUNC(eglInitialize);
@@ -283,7 +289,6 @@ bool ContextRuntimeLinking::LoadEGLEntryPoints()
 	IMPORT_FUNC(eglWaitNative);
 	IMPORT_FUNC(eglSwapBuffers);
 	IMPORT_FUNC(eglCopyBuffers);
-	IMPORT_FUNC(eglGetProcAddress);
 
 	// Undefine the helper macro
 	#undef IMPORT_FUNC

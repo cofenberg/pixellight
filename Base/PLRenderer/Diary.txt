@@ -1,3 +1,12 @@
+>> 27.09.2011
+[CO]
+PLRendererOpenGLES2:
+- The OpenGL ES 2.0 emulator from ARM can now be used under Linux as well (although it's horrible slow compared to MS Windows, at least on my system)
+- Using native OpenGL ES 2.0 on a desktop PC under Linux is now working as well, at least the initalization... right now, when running something there's just a black
+  flickering something visible (all EGL and OpenGL ES 2.0 entry points were found, no errors within the log etc.)...
+
+
+
 >> 25.09.2011
 [CO]
 - "PLRendererOpenGLES2": Added support for "GL_EXT_texture_compression_s3tc", "GL_EXT_texture_compression_latc" and "GL_AMD_compressed_3DC_texture"

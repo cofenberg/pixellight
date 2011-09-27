@@ -182,6 +182,7 @@ class ContextRuntimeLinking : public Context {
 #else
 	#define FNDEF_EGL(retType, funcName, args) extern retType (EGLAPIENTRY *funcPtr_##funcName) args
 #endif
+FNDEF_EGL(void*,		eglGetProcAddress,		(const char *procname));
 FNDEF_EGL(EGLint,		eglGetError,			(void));
 FNDEF_EGL(EGLDisplay,	eglGetDisplay,			(NativeDisplayType display));
 FNDEF_EGL(EGLBoolean,	eglInitialize,			(EGLDisplay dpy, EGLint *major, EGLint *minor));
@@ -212,7 +213,6 @@ FNDEF_EGL(EGLBoolean,	eglWaitGL,				(void));
 FNDEF_EGL(EGLBoolean,	eglWaitNative,			(EGLint engine));
 FNDEF_EGL(EGLBoolean,	eglSwapBuffers,			(EGLDisplay dpy, EGLSurface draw));
 FNDEF_EGL(EGLBoolean,	eglCopyBuffers,			(EGLDisplay dpy, EGLSurface surface, EGLNativePixmapType target));
-FNDEF_EGL(void*,		eglGetProcAddress,		(const char *procname));
 
 
 //[-------------------------------------------------------]
@@ -375,6 +375,7 @@ FNDEF_GL(void,				glViewport,								(GLint x, GLint y, GLsizei width, GLsizei h
 // Redirect egl* and gl* function calls to funcPtr_egl* and funcPtr_gl*
 
 // EGL 1.4
+#define eglGetProcAddress		FNPTR(eglGetProcAddress)
 #define eglGetError				FNPTR(eglGetError)
 #define eglGetDisplay			FNPTR(eglGetDisplay)
 #define eglInitialize			FNPTR(eglInitialize)
@@ -405,7 +406,6 @@ FNDEF_GL(void,				glViewport,								(GLint x, GLint y, GLsizei width, GLsizei h
 #define eglWaitNative			FNPTR(eglWaitNative)
 #define eglSwapBuffers			FNPTR(eglSwapBuffers)
 #define eglCopyBuffers			FNPTR(eglCopyBuffers)
-#define eglGetProcAddress		FNPTR(eglGetProcAddress)
 
 // ES 2.0
 #define	glActiveTexture							FNPTR(glActiveTexture)
