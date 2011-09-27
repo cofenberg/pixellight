@@ -427,14 +427,14 @@ void Frontend::OnCreateMainWindow()
 	// Set main window
 	SetMainWindow(pWindow);
 
-	// Show the window, but do not activate it right now
+	// Show the window
 	pWindow->SetVisible(true);
-
-	// Do the frontend life cycle thing - start
-	OnStart();
 
 	// Show and activate the window
 	pWindow->Activate();
+
+	// Do the frontend life cycle thing - start
+	OnStart();
 }
 
 

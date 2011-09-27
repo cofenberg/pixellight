@@ -83,9 +83,6 @@ FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) : QMainWindow(null
 
 	// If the widget is not visible yet, make it visible right now
 	MakeVisible();
-
-	// Activate the window by giving it the focus
-	setFocus(Qt::ActiveWindowFocusReason);
 }
 
 /**
@@ -112,8 +109,11 @@ void FrontendMainWindow::MakeVisible()
 		// The widget is now considered to be visible
 		m_bVisible = true;
 
-		// Show the widget, but do not activate it right now
+		// Show the widget
 		show();
+
+		// Activate the window by giving it the focus
+		setFocus(Qt::ActiveWindowFocusReason);
 	}
 }
 

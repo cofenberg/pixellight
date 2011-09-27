@@ -298,9 +298,6 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 
 			// If the window is not visible yet, make it visible right now
 			MakeVisible();
-
-			// Show and activate the window
-			::SetForegroundWindow(m_hWnd);
 		} else {
 			// Could not create window
 			m_bDestroyed = true;
@@ -382,8 +379,8 @@ void OSWindowWindows::MakeVisible()
 		// The window is now considered to be visible
 		m_bVisible = true;
 
-		// Show the window, but do not activate it right now - this also sends WM_ERASEBKGND which now clears the content to black
-		::ShowWindow(m_hWnd, SW_SHOWNOACTIVATE);
+		// Show the window and activate it right now - this also sends WM_ERASEBKGND which now clears the content to black
+		::ShowWindow(m_hWnd, SW_SHOW);
 	}
 }
 
