@@ -5,6 +5,7 @@
   gets the focus, the frontend window is still on the top and you may even not notice that you've reached a breakpoint. I think, when implementing the frontends, I delayed
   the window activation until everything is initialized so e.g. input controls are correctly activated/deactivated when the window gets active/inactive. Due to the progress
   in frontend fine tuning, this delay is no longer required.
+- "DynLibLinux::Load()": If a shared libarary failed to load in dynamically, the application completly shut down. Fixed that.
 
 
 
