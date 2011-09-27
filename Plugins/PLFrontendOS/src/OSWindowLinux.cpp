@@ -83,12 +83,11 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 		Visual             *pVisual = DefaultVisual(m_pDisplay, nScreen);
 		const int           nDepth  = DefaultDepth(m_pDisplay, nScreen);
 
-		// X events
+		// Create the native OS window instance with a black background (else we will see trash if nothing has been drawn, yet)
 		XSetWindowAttributes sXSetWindowAttributes;
+		sXSetWindowAttributes.background_pixel = 0;
 		sXSetWindowAttributes.event_mask = ExposureMask | StructureNotifyMask | EnterWindowMask | LeaveWindowMask | FocusChangeMask | VisibilityChangeMask | KeyPressMask | MotionNotify;
-
-		// Create the native OS window instance
-		m_nNativeWindowHandle = XCreateWindow(m_pDisplay, XRootWindow(m_pDisplay, nScreen), 0, 0, nWidth, nHeight, 0, nDepth, InputOutput, pVisual, CWEventMask, &sXSetWindowAttributes);
+		m_nNativeWindowHandle = XCreateWindow(m_pDisplay, XRootWindow(m_pDisplay, nScreen), 0, 0, nWidth, nHeight, 0, nDepth, InputOutput, pVisual, CWBackPixel | CWEventMask, &sXSetWindowAttributes);
 		XSetWMProtocols(m_pDisplay, m_nNativeWindowHandle, &WM_DELETE_WINDOW, 1);
 
 		// Set icon

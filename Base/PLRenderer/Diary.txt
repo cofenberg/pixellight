@@ -6,6 +6,9 @@ PLRendererOpenGLES2:
   flickering something visible (all EGL and OpenGL ES 2.0 entry points were found, no errors within the log etc.)...
 - Linux: "ContextRuntimeLinking::LoadGLESEntryPoints()": When "eglGetProcAddress()" is used to get the OpenGL ES 2.0 function entry points, I see at least something
   (although there's some window flickering from time to time)
+- Linux: Ok, it looks like that the "flickering" has something to do with the colormap and that EGL creates an own colormap. When moving around the window, one can clearly
+  see that the rendering area stays at the previous position and the window content is black - after stopping the window move around, the render area snaps to the new window
+  position. I tried to fix that, but without any luck... maybe someone else can figure out how to solve this?
 
 
 
