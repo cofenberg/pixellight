@@ -306,21 +306,33 @@ bool ContextRuntimeLinking::LoadGLESEntryPoints()
 	bool bResult = true;	// Success by default
 
 	// Define a helper macro
-	#define IMPORT_FUNC(funcName)																																				\
-		if (bResult) {																																							\
-			void *pSymbol = m_pGLESDynLib->GetSymbol(#funcName);																												\
-			if (!pSymbol) {																																						\
-				/* The specification states that "eglGetProcAddress" is only for extension functions, but when using OpenGL ES 2.0 on desktop PC by using a						\
-				   native OpenGL ES 2.0 capable graphics driver (tested with "AMD Catalyst 11.8"), only this way will work */													\
-				pSymbol = eglGetProcAddress(#funcName);																															\
-			}																																									\
-			if (pSymbol) {																																						\
-				*(reinterpret_cast<void**>(&(funcName))) = pSymbol;																												\
-			} else {																																							\
-				PL_LOG(Error, String("Failed to find the entry point \"") + #funcName + "\" within the OpenGL ES 2.0 dynamic library \"" + m_pGLESDynLib->GetAbsPath() + '\"')	\
-				bResult = false;																																				\
-			}																																									\
-		}																																										\
+	#ifdef ANDROID
+		// Native OpenGL ES 2.0 on mobile device
+		#define IMPORT_FUNC(funcName)																																				\
+			if (bResult) {																																							\
+				void *pSymbol = m_pGLESDynLib->GetSymbol(#funcName);																												\
+				if (pSymbol) {																																						\
+					*(reinterpret_cast<void**>(&(funcName))) = pSymbol;																												\
+				} else {																																							\
+					PL_LOG(Error, String("Failed to find the entry point \"") + #funcName + "\" within the OpenGL ES 2.0 dynamic library \"" + m_pGLESDynLib->GetAbsPath() + '\"')	\
+					bResult = false;																																				\
+				}																																									\
+			}
+	#else
+		// Native OpenGL ES 2.0 on desktop PC, we need an function entry point work around for this
+		#define IMPORT_FUNC(funcName)																																				\
+			if (bResult) {																																							\
+				/* The specification states that "eglGetProcAddress" is only for extension functions, but when using OpenGL ES 2.0 on desktop PC by using a							\
+				   native OpenGL ES 2.0 capable graphics driver (tested with "AMD Catalyst 11.8"), only this way will work */														\
+				void *pSymbol = eglGetProcAddress(#funcName);																														\
+				if (pSymbol) {																																						\
+					*(reinterpret_cast<void**>(&(funcName))) = pSymbol;																												\
+				} else {																																							\
+					PL_LOG(Error, String("Failed to find the entry point \"") + #funcName + "\" within the OpenGL ES 2.0 dynamic library \"" + m_pGLESDynLib->GetAbsPath() + '\"')	\
+					bResult = false;																																				\
+				}																																									\
+			}
+	#endif
 
 	// Load the entry points
 	IMPORT_FUNC(glActiveTexture);
