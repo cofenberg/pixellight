@@ -46,6 +46,7 @@ ExtensionsRuntimeLinking::ExtensionsRuntimeLinking() :
 	// EXT
 	m_bGL_EXT_texture_compression_s3tc(false),
 	m_bGL_EXT_texture_compression_latc(false),
+	m_bGL_EXT_texture_filter_anisotropic(false),
 	// AMD
 	m_bGL_AMD_compressed_3DC_texture(false),
 	// OES
@@ -71,8 +72,9 @@ void ExtensionsRuntimeLinking::Init()
 	const String sExtensions = reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS));
 
 	// EXT
-	m_bGL_EXT_texture_compression_s3tc = sExtensions.IsSubstring("GL_EXT_texture_compression_s3tc");
-	m_bGL_EXT_texture_compression_latc = sExtensions.IsSubstring("GL_EXT_texture_compression_latc");
+	m_bGL_EXT_texture_compression_s3tc   = sExtensions.IsSubstring("GL_EXT_texture_compression_s3tc");
+	m_bGL_EXT_texture_compression_latc   = sExtensions.IsSubstring("GL_EXT_texture_compression_latc");
+	m_bGL_EXT_texture_filter_anisotropic = sExtensions.IsSubstring("GL_EXT_texture_filter_anisotropic");
 
 	// AMD
 	m_bGL_AMD_compressed_3DC_texture = sExtensions.IsSubstring("GL_AMD_compressed_3DC_texture");
@@ -94,6 +96,11 @@ bool ExtensionsRuntimeLinking::IsGL_EXT_texture_compression_s3tc() const
 bool ExtensionsRuntimeLinking::IsGL_EXT_texture_compression_latc() const
 {
 	return m_bGL_EXT_texture_compression_latc;
+}
+
+bool ExtensionsRuntimeLinking::IsGL_EXT_texture_filter_anisotropic() const
+{
+	return m_bGL_EXT_texture_filter_anisotropic;
 }
 
 // AMD

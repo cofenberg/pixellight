@@ -589,7 +589,17 @@ void Renderer::SetupCapabilities()
 {
 	m_sCapabilities.nMaxColorRenderTargets			= 1;
 	m_sCapabilities.nMaxTextureUnits				= 8;
-	m_sCapabilities.nMaxAnisotropy					= 16;
+
+	// "GL_EXT_texture_filter_anisotropic"-extension available?
+	if (GetContext().GetExtensions().IsGL_EXT_texture_filter_anisotropic()) {
+		GLint nGLTemp = 0;
+		glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &nGLTemp);
+		m_sCapabilities.nMaxAnisotropy				= static_cast<uint16>(nGLTemp);
+	} else {
+		// Anisotropy texture filtering is not supported by OpenGL ES 2.0
+		m_sCapabilities.nMaxAnisotropy				= 0;
+	}
+
 	m_sCapabilities.nMaxTessellationFactor			= 1;
 	m_sCapabilities.nMaxTextureBufferSize			= 4096;
 	m_sCapabilities.bTextureBufferNonPowerOfTwo		= true;
@@ -1522,15 +1532,13 @@ bool Renderer::SetSamplerState(uint32 nStage, PLRenderer::Sampler::Enum nState, 
 				break;
 
 			case PLRenderer::Sampler::MaxAnisotropy:
-			/*
-				// [TODO] GL_EXT_texture_filter_anisotropic
+				// "GL_EXT_texture_filter_anisotropic"-extension (no extension check required in here)
 				if (m_sCapabilities.nMaxAnisotropy) {
 					if (nValue > m_sCapabilities.nMaxAnisotropy)
 						nValue = m_sCapabilities.nMaxAnisotropy;
 					glTexParameteri(nType, GL_TEXTURE_MAX_ANISOTROPY_EXT, nValue);
 					break;
 				}
-			*/
 				break;
 
 			default:

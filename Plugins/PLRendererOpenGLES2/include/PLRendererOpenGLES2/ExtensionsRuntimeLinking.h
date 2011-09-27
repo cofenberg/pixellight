@@ -85,6 +85,7 @@ class ExtensionsRuntimeLinking : public Extensions {
 		// EXT
 		virtual bool IsGL_EXT_texture_compression_s3tc() const override;
 		virtual bool IsGL_EXT_texture_compression_latc() const override;
+		virtual bool IsGL_EXT_texture_filter_anisotropic() const override;
 		// AMD
 		virtual bool IsGL_AMD_compressed_3DC_texture() const override;
 		// OES
@@ -98,6 +99,7 @@ class ExtensionsRuntimeLinking : public Extensions {
 		// EXT
 		bool m_bGL_EXT_texture_compression_s3tc;
 		bool m_bGL_EXT_texture_compression_latc;
+		bool m_bGL_EXT_texture_filter_anisotropic;
 		// AMD
 		bool m_bGL_AMD_compressed_3DC_texture;
 		// OES
@@ -121,6 +123,10 @@ class ExtensionsRuntimeLinking : public Extensions {
 #define GL_COMPRESSED_SIGNED_LUMINANCE_LATC1_EXT		0x8C71
 #define GL_COMPRESSED_LUMINANCE_ALPHA_LATC2_EXT			0x8C72
 #define GL_COMPRESSED_SIGNED_LUMINANCE_ALPHA_LATC2_EXT	0x8C73
+
+// GL_EXT_texture_filter_anisotropic
+#define GL_TEXTURE_MAX_ANISOTROPY_EXT		0x84FE
+#define GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT	0x84FF
 
 
 //[-------------------------------------------------------]
