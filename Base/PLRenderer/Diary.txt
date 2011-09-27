@@ -11,6 +11,7 @@ PLRendererOpenGLES2:
   position. I tried to fix that, but without any luck... maybe someone else can figure out how to solve this?
 - Added support for "GL_OES_element_index_uint"
 - Added support for "GL_EXT_texture_filter_anisotropic"
+- Implemented "Renderer::SetupCapabilities()"
 
 
 

@@ -587,12 +587,16 @@ void Renderer::InitWrappers()
 */
 void Renderer::SetupCapabilities()
 {
+	GLint nGLTemp = 0;
+
+	// [TODO] Add "GL_ARB_draw_buffers"-support
 	m_sCapabilities.nMaxColorRenderTargets			= 1;
+
+	// [TODO] Get value
 	m_sCapabilities.nMaxTextureUnits				= 8;
 
 	// "GL_EXT_texture_filter_anisotropic"-extension available?
 	if (GetContext().GetExtensions().IsGL_EXT_texture_filter_anisotropic()) {
-		GLint nGLTemp = 0;
 		glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &nGLTemp);
 		m_sCapabilities.nMaxAnisotropy				= static_cast<uint16>(nGLTemp);
 	} else {
@@ -600,22 +604,47 @@ void Renderer::SetupCapabilities()
 		m_sCapabilities.nMaxAnisotropy				= 0;
 	}
 
+	// Tessellation is not supported by OpenGL ES 2.0
 	m_sCapabilities.nMaxTessellationFactor			= 1;
-	m_sCapabilities.nMaxTextureBufferSize			= 4096;
+
+	// Maximum texture buffer size
+	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &nGLTemp);
+	m_sCapabilities.nMaxTextureBufferSize = static_cast<uint16>(nGLTemp);
+
+	// Non power of two textures are always supported by OpenGL ES 2.0
 	m_sCapabilities.bTextureBufferNonPowerOfTwo		= true;
+
+	// Same as texture 2D - so it's supported by OpenGL ES 2.0 (altought it's not really the same, e.g. normalized texture coordinates are used)
 	m_sCapabilities.bTextureBufferRectangle			= true;
-	m_sCapabilities.nMaxRectangleTextureBufferSize	= 4096;
-	m_sCapabilities.bTextureBuffer3D				= true;
-	m_sCapabilities.nMax3DTextureBufferSize			= 512;
+	m_sCapabilities.nMaxRectangleTextureBufferSize	= m_sCapabilities.nMaxTextureBufferSize;
+
+	// 3D textures are not supported by OpenGL ES 2.0
+	m_sCapabilities.bTextureBuffer3D				= false;
+	m_sCapabilities.nMax3DTextureBufferSize			= 0;
+
+	// Cube map textures are always supported by OpenGL ES 2.0 - get maximum cube texture buffer size
 	m_sCapabilities.bTextureBufferCube				= true;
-	m_sCapabilities.nMaxCubeTextureBufferSize		= 2048;
-	m_sCapabilities.bStencilWrap					= false;
+	glGetIntegerv(GL_MAX_CUBE_MAP_TEXTURE_SIZE, &nGLTemp);
+	m_sCapabilities.nMaxCubeTextureBufferSize = static_cast<uint16>(nGLTemp);
+
+	// Stencil wrap is always supported by OpenGL ES 2.0
+	m_sCapabilities.bStencilWrap					= true;
+
+	// Two sided stencil tests are always supported by OpenGL ES 2.0
 	m_sCapabilities.bTwoSidedStencils				= true;
+
+	// Depth bounds test are not supported by OpenGL ES 2.0
 	m_sCapabilities.bDepthBoundsTest				= false;
-	m_sCapabilities.bPointSprite					= false;
-	m_sCapabilities.bPointParameters				= false;
+
+	// Point sprites are always supported by OpenGL ES 2.0
+	m_sCapabilities.bPointSprite					= true;
+	m_sCapabilities.bPointParameters				= true;
+
+	// Occlusion queries are not supported by OpenGL ES 2.0
 	m_sCapabilities.bOcclusionQuery					= false;
-	m_sCapabilities.bVertexBufferSecondaryColor		= false;
+
+	// There's no such legacy thing as secondary vertex color in OpenGL ES 2.0, it's generic - so, yes, one can say it's supported...
+	m_sCapabilities.bVertexBufferSecondaryColor		= true;
 
 	// Show renderer capabilities
 	ShowRendererCapabilities();
