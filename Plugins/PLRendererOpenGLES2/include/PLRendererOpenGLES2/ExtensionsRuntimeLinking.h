@@ -87,6 +87,8 @@ class ExtensionsRuntimeLinking : public Extensions {
 		virtual bool IsGL_EXT_texture_compression_latc() const override;
 		// AMD
 		virtual bool IsGL_AMD_compressed_3DC_texture() const override;
+		// OES
+		virtual bool IsGL_OES_element_index_uint() const override;
 
 
 	//[-------------------------------------------------------]
@@ -98,6 +100,8 @@ class ExtensionsRuntimeLinking : public Extensions {
 		bool m_bGL_EXT_texture_compression_latc;
 		// AMD
 		bool m_bGL_AMD_compressed_3DC_texture;
+		// OES
+		bool m_bGL_OES_element_index_uint;
 
 
 };
@@ -125,6 +129,13 @@ class ExtensionsRuntimeLinking : public Extensions {
 // GL_AMD_compressed_3DC_texture
 #define GL_3DC_X_AMD	0x87F9
 #define GL_3DC_XY_AMD	0x87FA
+
+
+//[-------------------------------------------------------]
+//[ OES definitions                                       ]
+//[-------------------------------------------------------]
+// GL_OES_element_index_uint
+#define GL_UNSIGNED_INT	0x1405
 
 
 //[-------------------------------------------------------]

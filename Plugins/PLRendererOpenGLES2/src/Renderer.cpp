@@ -1923,15 +1923,24 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 	// Get API dependent type
 	uint32 nTypeSize;
 	uint32 nTypeAPI = m_pCurrentIndexBuffer->GetElementType();
-	if (nTypeAPI == PLRenderer::IndexBuffer::UShort) {
+	if (nTypeAPI == PLRenderer::IndexBuffer::UInt) {
+		// "GL_OES_element_index_uint"-extension available?
+		if (GetContext().GetExtensions().IsGL_OES_element_index_uint()) {
+			nTypeSize = sizeof(uint32);
+			nTypeAPI  = GL_UNSIGNED_INT;
+		} else {
+			// UInt is not supported by OpenGL ES 2.0
+
+			// Error!
+			return false;
+		}
+	} else if (nTypeAPI == PLRenderer::IndexBuffer::UShort) {
 		nTypeSize = sizeof(uint16);
 		nTypeAPI = GL_UNSIGNED_SHORT;
 	} else if (nTypeAPI == PLRenderer::IndexBuffer::UByte) {
 		nTypeSize = sizeof(uint8);
 		nTypeAPI = GL_UNSIGNED_BYTE;
 	} else {
-		// UInt is not supported by OpenGL ES 2.0
-
 		// Error!
 		return false;
 	}

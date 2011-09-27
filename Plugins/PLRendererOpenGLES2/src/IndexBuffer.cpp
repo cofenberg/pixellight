@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/System/System.h>
 #include "PLRendererOpenGLES2/Renderer.h"
+#include "PLRendererOpenGLES2/Extensions.h"
 #include "PLRendererOpenGLES2/IndexBuffer.h"
 
 
@@ -119,16 +120,27 @@ bool IndexBuffer::IsAllocated() const
 
 bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bool bManaged, bool bKeepData)
 {
+	// Get the renderer instance
+	Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
+
 	// Get API dependent type
 	uint32 nElementSizeAPI;
-	if (m_nElementType == UShort)
-		nElementSizeAPI = sizeof(uint16);
-	else if (m_nElementType == UByte)
-		nElementSizeAPI = sizeof(uint8);
-	else {
-		// UInt is not supported by OpenGL ES 2.0
+	if (m_nElementType == UInt) {
+		// "GL_OES_element_index_uint"-extension available?
+		if (cRenderer.GetContext().GetExtensions().IsGL_OES_element_index_uint()) {
+			nElementSizeAPI = sizeof(uint32);
+		} else {
+			// UInt is not supported by OpenGL ES 2.0
 
-		// Error!
+			// Error!
+			return false;
+		}
+	} else if (m_nElementType == UShort) {
+		nElementSizeAPI = sizeof(uint16);
+	} else if (m_nElementType == UByte) {
+		nElementSizeAPI = sizeof(uint8);
+	} else {
+		 // Error!
 		return false;
 	}
 
@@ -153,7 +165,7 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 	}
 
 	// Update renderer statistics
-	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nIndexBufferMem -= m_nSize;
+	cRenderer.GetWritableStatistics().nIndexBufferMem -= m_nSize;
 
 	// Init data
 	uint8 *pDataBackup = nullptr;

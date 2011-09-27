@@ -43,9 +43,13 @@ namespace PLRendererOpenGLES2 {
 *    Constructor
 */
 ExtensionsRuntimeLinking::ExtensionsRuntimeLinking() :
+	// EXT
 	m_bGL_EXT_texture_compression_s3tc(false),
 	m_bGL_EXT_texture_compression_latc(false),
-	m_bGL_AMD_compressed_3DC_texture(false)
+	// AMD
+	m_bGL_AMD_compressed_3DC_texture(false),
+	// OES
+	m_bGL_OES_element_index_uint(false)
 {
 }
 
@@ -72,6 +76,9 @@ void ExtensionsRuntimeLinking::Init()
 
 	// AMD
 	m_bGL_AMD_compressed_3DC_texture = sExtensions.IsSubstring("GL_AMD_compressed_3DC_texture");
+
+	// OES
+	m_bGL_OES_element_index_uint = sExtensions.IsSubstring("GL_OES_element_index_uint");
 }
 
 
@@ -93,6 +100,12 @@ bool ExtensionsRuntimeLinking::IsGL_EXT_texture_compression_latc() const
 bool ExtensionsRuntimeLinking::IsGL_AMD_compressed_3DC_texture() const
 {
 	return m_bGL_AMD_compressed_3DC_texture;
+}
+
+// OES
+bool ExtensionsRuntimeLinking::IsGL_OES_element_index_uint() const
+{
+	return m_bGL_OES_element_index_uint;
 }
 
 
