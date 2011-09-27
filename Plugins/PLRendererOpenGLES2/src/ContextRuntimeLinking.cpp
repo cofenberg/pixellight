@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Runtime.h>
 #include <PLCore/Log/Log.h>
 #include <PLCore/System/DynLib.h>
 #define DEFINERUNTIMELINKING
@@ -205,9 +206,18 @@ bool ContextRuntimeLinking::LoadLibraries()
 		if (bResult)
 			bResult = m_pGLESDynLib->Load("libGLESv2.so");
 	#elif LINUX
-		bResult = m_pEGLDynLib->Load("libGL.so");
-		if (bResult)
-			bResult = m_pGLESDynLib->Load("libGL.so");
+		// First, try the OpenGL ES 2.0 Emulator from ARM (it's possible to move around this dll without issues, so, this one first)
+		// Give Linux an absolute path, if this is not done, I just rececive a polite "[PLCore] error while loading libEGL.so " -> "libEGL.so: cannot open shared object file: No such file or directory"
+		const String sRuntimeDirectory = Runtime::GetDirectory();
+		bResult = m_pEGLDynLib->Load(sRuntimeDirectory.GetLength() ? (sRuntimeDirectory + "/libEGL.so") : "libEGL.so");
+		if (bResult) {
+			bResult = m_pGLESDynLib->Load(sRuntimeDirectory.GetLength() ? (sRuntimeDirectory + "/libGLESv2.so") : "libGLESv2.so");
+		} else {
+			// Second, try the system driver
+			bResult = m_pEGLDynLib->Load("libGL.so");
+			if (bResult)
+				bResult = m_pGLESDynLib->Load("libGL.so");
+		}
 	#endif
 
 	// Success?
