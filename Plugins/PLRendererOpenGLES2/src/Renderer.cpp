@@ -346,7 +346,8 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 	if (PLRenderer::TextureBuffer::IsCompressedFormat(nImageFormat)) {
 		// If the given image is pre compressed, but the hardware does not support the used compression format
 		// we have to use the uncompressed image instead.
-		if ((nImageFormat <= PLRenderer::TextureBuffer::DXT5 && !cExtensions.IsGL_EXT_texture_compression_s3tc()) ||
+		if ((nImageFormat <= PLRenderer::TextureBuffer::DXT1 && !cExtensions.IsGL_EXT_texture_compression_dxt1()) ||
+			(nImageFormat <= PLRenderer::TextureBuffer::DXT5 && !cExtensions.IsGL_EXT_texture_compression_s3tc()) ||
 			((nImageFormat == PLRenderer::TextureBuffer::LATC1 || nImageFormat == PLRenderer::TextureBuffer::LATC2) && !cExtensions.IsGL_EXT_texture_compression_latc() && !cExtensions.IsGL_AMD_compressed_3DC_texture())) {
 			// Do not use texture buffer compression
 			nImageFormat = PLRenderer::TextureBuffer::GetFormatFromImage(cImage, true);
@@ -360,8 +361,9 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 	if (nInternalFormat != PLRenderer::TextureBuffer::Unknown) {
 		nChosenInternalFormat = nInternalFormat;
 		if (PLRenderer::TextureBuffer::IsCompressedFormat(nChosenInternalFormat) &&
-			((nChosenInternalFormat <= PLRenderer::TextureBuffer::DXT5 && !cExtensions.IsGL_EXT_texture_compression_s3tc()) ||
-			((nChosenInternalFormat == PLRenderer::TextureBuffer::LATC1 || nChosenInternalFormat == PLRenderer::TextureBuffer::LATC2) && !cExtensions.IsGL_EXT_texture_compression_latc() && !cExtensions.IsGL_AMD_compressed_3DC_texture()))) {
+			((nChosenInternalFormat <= PLRenderer::TextureBuffer::DXT1 && !cExtensions.IsGL_EXT_texture_compression_dxt1()) ||
+			 (nChosenInternalFormat <= PLRenderer::TextureBuffer::DXT5 && !cExtensions.IsGL_EXT_texture_compression_s3tc()) ||
+			 ((nChosenInternalFormat == PLRenderer::TextureBuffer::LATC1 || nChosenInternalFormat == PLRenderer::TextureBuffer::LATC2) && !cExtensions.IsGL_EXT_texture_compression_latc() && !cExtensions.IsGL_AMD_compressed_3DC_texture()))) {
 			// Hm, the user want's to use a certain compressed format, but the desired format is NOT available...
 			// we have to choose a fallback format.
 			switch (nChosenInternalFormat) {
@@ -412,7 +414,7 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 						break;
 
 					case 3:
-						if (cExtensions.IsGL_EXT_texture_compression_s3tc())
+						if (cExtensions.IsGL_EXT_texture_compression_s3tc() || cExtensions.IsGL_EXT_texture_compression_dxt1())
 							nChosenInternalFormat = PLRenderer::TextureBuffer::DXT1;
 						break;
 
@@ -562,7 +564,10 @@ void Renderer::InitWrappers()
 		m_cPLE_TPFWrapper += GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;			// 17: PLRenderer::TextureBuffer::DXT3
 		m_cPLE_TPFWrapper += GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;			// 18: PLRenderer::TextureBuffer::DXT5
 	} else {
-		m_cPLE_TPFWrapper += GL_RGB;									// 16: PLRenderer::TextureBuffer::DXT1			- not supported by OpenGL ES 2.0
+		if (cExtensions.IsGL_EXT_texture_compression_dxt1())
+			m_cPLE_TPFWrapper += GL_COMPRESSED_RGB_S3TC_DXT1_EXT;		// 16: PLRenderer::TextureBuffer::DXT1
+		else
+			m_cPLE_TPFWrapper += GL_RGB;								// 16: PLRenderer::TextureBuffer::DXT1			- not supported by OpenGL ES 2.0
 		m_cPLE_TPFWrapper += GL_RGBA;									// 17: PLRenderer::TextureBuffer::DXT3			- not supported by OpenGL ES 2.0
 		m_cPLE_TPFWrapper += GL_RGBA;									// 18: PLRenderer::TextureBuffer::DXT5			- not supported by OpenGL ES 2.0
 	}

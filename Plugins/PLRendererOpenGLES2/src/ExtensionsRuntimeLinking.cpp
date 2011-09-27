@@ -45,6 +45,7 @@ namespace PLRendererOpenGLES2 {
 ExtensionsRuntimeLinking::ExtensionsRuntimeLinking() :
 	// EXT
 	m_bGL_EXT_texture_compression_s3tc(false),
+	m_bGL_EXT_texture_compression_dxt1(false),
 	m_bGL_EXT_texture_compression_latc(false),
 	m_bGL_EXT_texture_filter_anisotropic(false),
 	// AMD
@@ -73,6 +74,7 @@ void ExtensionsRuntimeLinking::Init()
 
 	// EXT
 	m_bGL_EXT_texture_compression_s3tc   = sExtensions.IsSubstring("GL_EXT_texture_compression_s3tc");
+	m_bGL_EXT_texture_compression_dxt1   = sExtensions.IsSubstring("GL_EXT_texture_compression_dxt1");
 	m_bGL_EXT_texture_compression_latc   = sExtensions.IsSubstring("GL_EXT_texture_compression_latc");
 	m_bGL_EXT_texture_filter_anisotropic = sExtensions.IsSubstring("GL_EXT_texture_filter_anisotropic");
 
@@ -91,6 +93,11 @@ void ExtensionsRuntimeLinking::Init()
 bool ExtensionsRuntimeLinking::IsGL_EXT_texture_compression_s3tc() const
 {
 	return m_bGL_EXT_texture_compression_s3tc;
+}
+
+bool ExtensionsRuntimeLinking::IsGL_EXT_texture_compression_dxt1() const
+{
+	return m_bGL_EXT_texture_compression_dxt1;
 }
 
 bool ExtensionsRuntimeLinking::IsGL_EXT_texture_compression_latc() const

@@ -64,6 +64,7 @@ class Extensions {
 		///////////////////////////////////////////////////////////
 		// EXT
 		virtual bool IsGL_EXT_texture_compression_s3tc() const = 0;
+		virtual bool IsGL_EXT_texture_compression_dxt1() const = 0;
 		virtual bool IsGL_EXT_texture_compression_latc() const = 0;
 		virtual bool IsGL_EXT_texture_filter_anisotropic() const = 0;
 		// AMD
