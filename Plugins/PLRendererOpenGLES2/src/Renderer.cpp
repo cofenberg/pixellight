@@ -397,6 +397,8 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 			return PLRenderer::TextureBuffer::Unknown; // Error!
 		nChosenInternalFormat = nImageFormat;
 
+		// [TODO] OpenGL ES 2.0 is not able to compress uncompressed data on the fly, so the image class has to do this job
+		/*
 		// Use compression?
 		if ((nFlags & PLRenderer::TextureBuffer::Compression) && !bUsePreCompressedData) {
 			// Get the first image buffer
@@ -425,6 +427,7 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 				}
 			}
 		}
+		*/
 	}
 
 	// Return the chosen internal format
