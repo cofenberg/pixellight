@@ -93,21 +93,6 @@ bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, u
 			// Get multisample antialiasing samples
 			const uint32 nMultisampleAntialiasingSamples = (!bNoMultisampleAntialiasing && cRenderer.IsGL_EXT_framebuffer_multisample() && cRenderer.IsGL_EXT_framebuffer_blit()) ? cRenderer.GetMultisampleAntialiasingSamples() : 0;
 
-			// Get depth&stencil information
-			GLuint nDepth = 0;
-			bool bDepthStencil = false;
-			if ((nFormat & Depth24) && (nFormat & Stencil) && cRenderer.IsGL_EXT_packed_depth_stencil()) {
-				nDepth        = GL_DEPTH24_STENCIL8_EXT;
-				bDepthStencil = true;
-			} else {
-				if (nFormat & Depth16)
-					nDepth = GL_DEPTH_COMPONENT16;
-				else if (nFormat & Depth24)
-					nDepth = GL_DEPTH_COMPONENT24;
-				else if (nFormat & Depth32)
-					nDepth = GL_DEPTH_COMPONENT32;
-			}
-
 			// Get current bound FBO
 			GLint nFrameBufferT;
 			glGetIntegerv(GL_FRAMEBUFFER_BINDING_EXT, &nFrameBufferT);
@@ -127,6 +112,19 @@ bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, u
 			}
 
 			// Create depth&stencil buffer
+			GLuint nDepth = 0;
+			bool bDepthStencil = false;
+			if ((nFormat & Depth24) && (nFormat & Stencil) && cRenderer.IsGL_EXT_packed_depth_stencil()) {
+				nDepth        = GL_DEPTH24_STENCIL8_EXT;
+				bDepthStencil = true;
+			} else {
+				if (nFormat & Depth16)
+					nDepth = GL_DEPTH_COMPONENT16;
+				else if (nFormat & Depth24)
+					nDepth = GL_DEPTH_COMPONENT24;
+				else if (nFormat & Depth32)
+					nDepth = GL_DEPTH_COMPONENT32;
+			}
 			if (nDepth) {
 				glGenRenderbuffersEXT(1, &m_nDepthBufferIndex);
 				glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, m_nDepthBufferIndex);

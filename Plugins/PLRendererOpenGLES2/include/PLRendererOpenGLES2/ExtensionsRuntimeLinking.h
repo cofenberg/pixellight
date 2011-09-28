@@ -244,7 +244,7 @@ FNDEF_EX(void,	glGetTexLevelParameterivNV,	(GLenum target, GLint level, GLenum p
 #define glGetTexLevelParameterivNV	FNPTR(glGetTexLevelParameterivNV)
 
 // GL_NV_fbo_color_attachments
-#define GL_COLOR_ATTACHMENT0_NV		0x8CE0
+#define GL_COLOR_ATTACHMENT0_NV		0x8CE0	// Same value as GL_COLOR_ATTACHMENT0
 #define GL_COLOR_ATTACHMENT1_NV		0x8CE1
 #define GL_COLOR_ATTACHMENT2_NV		0x8CE2
 #define GL_COLOR_ATTACHMENT3_NV		0x8CE3

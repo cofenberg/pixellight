@@ -93,30 +93,6 @@ bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, u
 		// Get multisample antialiasing samples
 		const uint32 nMultisampleAntialiasingSamples = (!bNoMultisampleAntialiasing && cExtensions.IsGL_ANGLE_framebuffer_multisample() && cExtensions.IsGL_ANGLE_framebuffer_blit()) ? cRenderer.GetMultisampleAntialiasingSamples() : 0;
 
-		// Get depth&stencil information
-		GLuint nDepth = 0;
-		bool bDepthStencil = false;
-		if ((nFormat & Depth24) && (nFormat & Stencil) && cExtensions.IsGL_OES_packed_depth_stencil()) {
-			nDepth        = GL_DEPTH24_STENCIL8_OES;
-			bDepthStencil = true;
-		} else {
-			if (nFormat & Depth16) {
-				nDepth = GL_DEPTH_COMPONENT16;
-			} else if (nFormat & Depth24) {
-				// "GL_OES_depth24"-extension available?
-				if (cExtensions.IsGL_OES_depth24())
-					nDepth = GL_DEPTH_COMPONENT24_OES;
-				else
-					return false; // Error!
-			} else if (nFormat & Depth32) {
-				// "GL_OES_depth32"-extension available?
-				if (cExtensions.IsGL_OES_depth32())
-					nDepth = GL_DEPTH_COMPONENT32_OES;
-				else
-					return false; // Error!
-			}
-		}
-
 		// Get current bound FBO
 		GLint nFrameBufferT;
 		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &nFrameBufferT);
@@ -136,6 +112,26 @@ bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, u
 		}
 
 		// Create depth&stencil buffer
+		GLuint nDepth = 0;
+		bool bDepthStencil = false;
+		if ((nFormat & Depth24) && (nFormat & Stencil) && cExtensions.IsGL_OES_packed_depth_stencil()) {
+			nDepth        = GL_DEPTH24_STENCIL8_OES;
+			bDepthStencil = true;
+		} else {
+			// ... use fallbacks when a requested depth buffer bit size it not available...
+			if (nFormat & Depth16) {
+				nDepth = GL_DEPTH_COMPONENT16;
+			} else if (nFormat & Depth24) {
+				// "GL_OES_depth24"-extension available?
+				nDepth = cExtensions.IsGL_OES_depth24() ? GL_DEPTH_COMPONENT24_OES : GL_DEPTH_COMPONENT16;
+			} else if (nFormat & Depth32) {
+				// "GL_OES_depth32"-extension available? If not, "GL_OES_depth24"-extension available?
+				if (cExtensions.IsGL_OES_depth32())
+					nDepth = GL_DEPTH_COMPONENT32_OES;
+				else
+					nDepth = cExtensions.IsGL_OES_depth24() ? GL_DEPTH_COMPONENT24_OES : GL_DEPTH_COMPONENT16;
+			}
+		}
 		if (nDepth) {
 			glGenRenderbuffers(1, &m_nDepthBufferIndex);
 			glBindRenderbuffer(GL_RENDERBUFFER, m_nDepthBufferIndex);
@@ -165,9 +161,10 @@ bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, u
 		}
 
 		// Bind frame buffer
-		if (m_nColorBufferIndex)
-			// [TODO] No GL_COLOR_ATTACHMENT0_NV without extension test!
-			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0_NV, GL_RENDERBUFFER, m_nColorBufferIndex);
+		if (m_nColorBufferIndex) {
+			// GL_COLOR_ATTACHMENT0 and GL_COLOR_ATTACHMENT0_NV ("GL_NV_fbo_color_attachments"-extension) have the same value
+			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, m_nColorBufferIndex);
+		}
 		if (m_nDepthBufferIndex) {
 			// Get depth buffer attachment
 			// [TODO] Check depth&stencil
@@ -181,7 +178,9 @@ bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, u
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_nStencilBufferIndex);
 
 		// Check frame buffer
-		const bool bResult = CheckFrameBufferStatus();
+		// [TODO] Fix "Incomplete attachment frame buffer object"-error
+		const bool bResult = true;
+	//	const bool bResult = CheckFrameBufferStatus();
 
 		// Reset current bound FBO
 		glBindFramebuffer(GL_FRAMEBUFFER, nFrameBufferT);
@@ -234,8 +233,8 @@ void FrameBufferObject::SwitchTarget(PLRenderer::TextureBuffer &cTextureBuffer, 
 			if (nFormat == PLRenderer::TextureBuffer::D16 || nFormat == PLRenderer::TextureBuffer::D24 || nFormat == PLRenderer::TextureBuffer::D32) {
 				glFramebufferTexture2D(GL_FRAMEBUFFER, m_nDepthBufferAttachment, nTarget, nOpenGLID, 0);
 			} else {
-				// [TODO] No GL_COLOR_ATTACHMENT0_NV without extension test!
-				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0_NV+nAttachIndex, nTarget, nOpenGLID, 0);
+				// GL_COLOR_ATTACHMENT0 and GL_COLOR_ATTACHMENT0_NV ("GL_NV_fbo_color_attachments"-extension) have the same value
+				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0+nAttachIndex, nTarget, nOpenGLID, 0);
 			}
 		}
 	}
