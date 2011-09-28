@@ -43,7 +43,7 @@ namespace PLRendererOpenGLES2 {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OpenGL ES GLSL renderer fragment shader resource
+*    OpenGL ES renderer GLSL fragment shader resource
 */
 class FragmentShaderGLSL : public PLRenderer::FragmentShader {
 
@@ -75,17 +75,19 @@ class FragmentShaderGLSL : public PLRenderer::FragmentShader {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		/**
 		*  @brief
 		*    Constructor
 		*
 		*  @param[in] cRenderer
 		*    Owner renderer
+		*  @param[in] nShaderType
+		*    Shader type (GLSL or Cg fragment shader)
 		*/
-		FragmentShaderGLSL(PLRenderer::Renderer &cRenderer);
+		FragmentShaderGLSL(PLRenderer::Renderer &cRenderer, GLenum nShaderType = GL_FRAGMENT_SHADER);
 
 
 	//[-------------------------------------------------------]

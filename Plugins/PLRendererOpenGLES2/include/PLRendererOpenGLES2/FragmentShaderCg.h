@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: VertexShaderGLSL.h                             *
+ *  File: FragmentShaderCg.h                             *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,16 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGLES2_VERTEXSHADERGLSL_H__
-#define __PLRENDEREROPENGLES2_VERTEXSHADERGLSL_H__
+#ifndef __PLRENDEREROPENGLES2_FRAGMENTSHADERCG_H__
+#define __PLRENDEREROPENGLES2_FRAGMENTSHADERCG_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLRenderer/Renderer/VertexShader.h>
-#include "PLRendererOpenGLES2/Context.h"
+#include "PLRendererOpenGLES2/FragmentShaderGLSL.h"
 
 
 //[-------------------------------------------------------]
@@ -43,15 +42,18 @@ namespace PLRendererOpenGLES2 {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OpenGL ES renderer GLSL vertex shader resource
+*    OpenGL ES renderer Cg fragment shader resource using the "GL_EXT_Cg_shader"-extension
+*
+*  @see
+*    - ShaderLanguageCg
 */
-class VertexShaderGLSL : public PLRenderer::VertexShader {
+class FragmentShaderCg : public FragmentShaderGLSL {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class ShaderLanguageGLSL;
+	friend class ShaderLanguageCg;
 
 
 	//[-------------------------------------------------------]
@@ -62,39 +64,21 @@ class VertexShaderGLSL : public PLRenderer::VertexShader {
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~VertexShaderGLSL();
-
-		/**
-		*  @brief
-		*    Returns the OpenGL ES vertex shader
-		*
-		*  @return
-		*    The OpenGL ES vertex shader, do not destroy it!
-		*/
-		GLuint GetOpenGLESVertexShader() const;
+		virtual ~FragmentShaderCg();
 
 
 	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
+	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
-	protected:
+	private:
 		/**
 		*  @brief
 		*    Constructor
 		*
 		*  @param[in] cRenderer
 		*    Owner renderer
-		*  @param[in] nShaderType
-		*    Shader type (GLSL or Cg vertex shader)
 		*/
-		VertexShaderGLSL(PLRenderer::Renderer &cRenderer, GLenum nShaderType = GL_VERTEX_SHADER);
-
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
-		GLuint m_nOpenGLESVertexShader;	/**< OpenGL ES vertex shader, always valid! */
+		FragmentShaderCg(PLRenderer::Renderer &cRenderer);
 
 
 	//[-------------------------------------------------------]
@@ -102,10 +86,6 @@ class VertexShaderGLSL : public PLRenderer::VertexShader {
 	//[-------------------------------------------------------]
 	public:
 		virtual PLCore::String GetShaderLanguage() const override;
-		virtual PLCore::String GetSourceCode() const override;
-		virtual PLCore::String GetProfile() const override;
-		virtual PLCore::String GetEntry() const override;
-		virtual bool SetSourceCode(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "") override;
 
 
 };
@@ -117,4 +97,4 @@ class VertexShaderGLSL : public PLRenderer::VertexShader {
 } // PLRendererOpenGLES2
 
 
-#endif // __PLRENDEREROPENGLES2_VERTEXSHADERGLSL_H__
+#endif // __PLRENDEREROPENGLES2_FRAGMENTSHADERCG_H__

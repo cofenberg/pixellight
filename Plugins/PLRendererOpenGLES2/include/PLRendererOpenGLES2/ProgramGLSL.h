@@ -45,7 +45,7 @@ namespace PLRendererOpenGLES2 {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OpenGL ES GLSL renderer program resource
+*    OpenGL ES renderer GLSL program resource
 */
 class ProgramGLSL : public PLRenderer::Program {
 
@@ -90,9 +90,9 @@ class ProgramGLSL : public PLRenderer::Program {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		/**
 		*  @brief
 		*    Constructor
@@ -134,9 +134,9 @@ class ProgramGLSL : public PLRenderer::Program {
 
 
 	//[-------------------------------------------------------]
-	//[ Private data                                          ]
+	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		// Program
 		GLuint															m_nOpenGLESProgram;				/**< OpenGL ES program, always valid! */
 		bool															m_bLinked;						/**< Is the OpenGL ES program currently linked? */

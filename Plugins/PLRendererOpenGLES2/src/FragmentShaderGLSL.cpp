@@ -60,14 +60,14 @@ GLuint FragmentShaderGLSL::GetOpenGLESFragmentShader() const
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Constructor
 */
-FragmentShaderGLSL::FragmentShaderGLSL(PLRenderer::Renderer &cRenderer) : PLRenderer::FragmentShader(cRenderer),
-	m_nOpenGLESFragmentShader(glCreateShader(GL_FRAGMENT_SHADER))
+FragmentShaderGLSL::FragmentShaderGLSL(PLRenderer::Renderer &cRenderer, GLenum nShaderType) : PLRenderer::FragmentShader(cRenderer),
+	m_nOpenGLESFragmentShader(glCreateShader(nShaderType))
 {
 }
 

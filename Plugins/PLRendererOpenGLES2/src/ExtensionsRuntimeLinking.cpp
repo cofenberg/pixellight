@@ -48,6 +48,7 @@ ExtensionsRuntimeLinking::ExtensionsRuntimeLinking() :
 	m_bGL_EXT_texture_compression_dxt1(false),
 	m_bGL_EXT_texture_compression_latc(false),
 	m_bGL_EXT_texture_filter_anisotropic(false),
+	m_bGL_EXT_Cg_shader(false),
 	// AMD
 	m_bGL_AMD_compressed_3DC_texture(false),
 	// OES
@@ -77,6 +78,7 @@ void ExtensionsRuntimeLinking::Init()
 	m_bGL_EXT_texture_compression_dxt1   = sExtensions.IsSubstring("GL_EXT_texture_compression_dxt1");
 	m_bGL_EXT_texture_compression_latc   = sExtensions.IsSubstring("GL_EXT_texture_compression_latc");
 	m_bGL_EXT_texture_filter_anisotropic = sExtensions.IsSubstring("GL_EXT_texture_filter_anisotropic");
+	m_bGL_EXT_Cg_shader					 = sExtensions.IsSubstring("GL_EXT_Cg_shader");
 
 	// AMD
 	m_bGL_AMD_compressed_3DC_texture = sExtensions.IsSubstring("GL_AMD_compressed_3DC_texture");
@@ -108,6 +110,11 @@ bool ExtensionsRuntimeLinking::IsGL_EXT_texture_compression_latc() const
 bool ExtensionsRuntimeLinking::IsGL_EXT_texture_filter_anisotropic() const
 {
 	return m_bGL_EXT_texture_filter_anisotropic;
+}
+
+bool ExtensionsRuntimeLinking::IsGL_EXT_Cg_shader() const
+{
+	return m_bGL_EXT_Cg_shader;
 }
 
 // AMD

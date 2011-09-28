@@ -50,6 +50,10 @@ add_sources(
 	src/ProgramAttributeGLSL.cpp
 	src/ProgramUniformGLSL.cpp
 	src/ShaderToolsGLSL.cpp
+	src/ShaderLanguageCg.cpp
+	src/VertexShaderCg.cpp
+	src/FragmentShaderCg.cpp
+	src/ProgramCg.cpp
 )
 if(PL_PLUGIN_RENDERER_OPENGLES2_FONT)
 	add_sources(

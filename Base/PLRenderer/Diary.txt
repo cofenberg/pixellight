@@ -1,3 +1,20 @@
+>> 28.09.2011
+[CO]
+PLRendererOpenGLES2:
+- Added support for "GL_EXT_Cg_shader" (ftp://download.nvidia.com/developer/GLSL/GLSL%20Release%20Notes%20for%20Release%2060.pdf - page 13)... a REALLY
+  cool extension: If this extension is available (on Tegra 2, it is) one can directly feed OpenGL ES 2.0 with Cg shaders!
+  This means that in this case, there's no need for the Cg runtime (> 6 MB) - altought there's no Cg runtime for Android anyway. Adding support within
+  "PLRendererOpenGL" for this extension would be easy - but there's always the high possibility that this extension is not available (like on AMD GPUs
+  as my own :). I'am sure that it's no good idea to use Cg shaders for official released Android apps because one has to assume that this extension is
+  not available - but during development I'am also sure that this will become usefull, e.g. for "quick'n'dirty" rapid prototyping using already written
+  Cg shaders.
+  I noticed two issues with the Cg shaders:
+    - When using semantics within Cg attributes, "glGetActiveAttrib()" returns the semantic (e.g. "POSITION") instead of the real attribute name
+    - Inverse for matrices required
+  ... so, still some minor usage details to figure out for an easy and generic usage... but hey, Cg shaders on a mobile device! :D
+
+
+
 >> 27.09.2011
 [CO]
 PLRendererOpenGLES2:

@@ -41,6 +41,7 @@ namespace PLRendererOpenGLES2 {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+class ShaderLanguageCg;
 class ShaderLanguageGLSL;
 
 
@@ -195,6 +196,7 @@ class Renderer : public PLRenderer::RendererBackend {
 		Context					*m_pContext;			/**< OpenGL ES context, always valid! */
 		PLRenderer::FontManager	*m_pFontManager;		/**< OpenGL ES renderer font manager, always valid! */
 		ShaderLanguageGLSL		*m_pShaderLanguageGLSL;	/**< Build in GLSL shader language, always valid! */
+		ShaderLanguageCg		*m_pShaderLanguageCg;	/**< Build in Cg shader language, can be a null pointer */
 		PLCore::uint32			 m_nViewPortX;
 		PLCore::uint32		 	 m_nViewPortY;
 		PLCore::uint32	 		 m_nViewPortWidth;

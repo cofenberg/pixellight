@@ -45,6 +45,7 @@
 #include "PLRendererOpenGLES2/VertexBuffer.h"
 #include "PLRendererOpenGLES2/ProgramGLSL.h"
 #include "PLRendererOpenGLES2/ShaderLanguageGLSL.h"
+#include "PLRendererOpenGLES2/ShaderLanguageCg.h"
 #include "PLRendererOpenGLES2/Extensions.h"
 #include "PLRendererOpenGLES2/Renderer.h"
 
@@ -79,7 +80,8 @@ Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits,
 	#else
 		m_pFontManager(new FontManager(*this)),
 	#endif
-	m_pShaderLanguageGLSL(new ShaderLanguageGLSL(*this))
+	m_pShaderLanguageGLSL(new ShaderLanguageGLSL(*this)),
+	m_pShaderLanguageCg(nullptr)
 {
 	// This renderer implementation has just support for GLSL as shader language, so ignore sDefaultShaderLanguage
 
@@ -153,6 +155,10 @@ Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits,
 			SetRenderState(static_cast<PLRenderer::RenderState::Enum>(i), nState);
 		}
 
+		// "GL_EXT_Cg_shader"-extension available?
+		if (GetContext().GetExtensions().IsGL_EXT_Cg_shader())
+			m_pShaderLanguageCg = new ShaderLanguageCg(*this);
+
 		// Reset render
 		Reset();
 
@@ -186,6 +192,12 @@ Renderer::~Renderer()
 	// Destroy the GLSL shader language instance
 	delete m_pShaderLanguageGLSL;
 	m_pShaderLanguageGLSL = nullptr;
+
+	// Destroy the Cg shader language instance, if there's one
+	if (m_pShaderLanguageCg) {
+		delete m_pShaderLanguageCg;
+		m_pShaderLanguageCg = nullptr;
+	}
 
 	// Destroy the draw helpers instance
 	delete m_pDrawHelpers;
@@ -779,8 +791,11 @@ String Renderer::GetDefaultShaderLanguage() const
 
 PLRenderer::ShaderLanguage *Renderer::GetShaderLanguage(const String &sShaderLanguage)
 {
-	// Only the build in GLSL shader language is supported
-	return (!sShaderLanguage.GetLength() || sShaderLanguage == ShaderLanguageGLSL::GLSL) ? m_pShaderLanguageGLSL : nullptr;
+	// Only the build in GLSL and Cg shader languages are supported
+	if (!sShaderLanguage.GetLength() || sShaderLanguage == ShaderLanguageGLSL::GLSL)
+		return m_pShaderLanguageGLSL;
+	else
+		return (sShaderLanguage == ShaderLanguageCg::Cg) ? m_pShaderLanguageCg : nullptr;
 }
 
 PLRenderer::FixedFunctions *Renderer::GetFixedFunctions() const

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: VertexShaderGLSL.cpp                           *
+ *  File: FragmentShaderCg.cpp                           *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,10 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGLES2/ShaderLanguageGLSL.h"
-#include "PLRendererOpenGLES2/ShaderToolsGLSL.h"
-#include "PLRendererOpenGLES2/Renderer.h"
-#include "PLRendererOpenGLES2/VertexShaderGLSL.h"
+#include "PLRendererOpenGLES2/Extensions.h"
+#include "PLRendererOpenGLES2/ShaderLanguageCg.h"
+#include "PLRendererOpenGLES2/FragmentShaderCg.h"
 
 
 //[-------------------------------------------------------]
@@ -43,76 +42,31 @@ namespace PLRendererOpenGLES2 {
 *  @brief
 *    Destructor
 */
-VertexShaderGLSL::~VertexShaderGLSL()
+FragmentShaderCg::~FragmentShaderCg()
 {
-	// Destroy the OpenGL ES vertex shader
-	glDeleteShader(m_nOpenGLESVertexShader);
-}
-
-/**
-*  @brief
-*    Returns the OpenGL ES vertex shader
-*/
-GLuint VertexShaderGLSL::GetOpenGLESVertexShader() const
-{
-	return m_nOpenGLESVertexShader;
+	// Nothing to do in here
 }
 
 
 //[-------------------------------------------------------]
-//[ Protected functions                                   ]
+//[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Constructor
 */
-VertexShaderGLSL::VertexShaderGLSL(PLRenderer::Renderer &cRenderer, GLenum nShaderType) : PLRenderer::VertexShader(cRenderer),
-	m_nOpenGLESVertexShader(glCreateShader(nShaderType))
+FragmentShaderCg::FragmentShaderCg(PLRenderer::Renderer &cRenderer) : FragmentShaderGLSL(cRenderer, GL_CG_FRAGMENT_SHADER_EXT)
 {
+	// Nothing to do in here
 }
 
 
 //[-------------------------------------------------------]
 //[ Public virtual PLRenderer::Shader functions           ]
 //[-------------------------------------------------------]
-String VertexShaderGLSL::GetShaderLanguage() const
+String FragmentShaderCg::GetShaderLanguage() const
 {
-	return ShaderLanguageGLSL::GLSL;
-}
-
-String VertexShaderGLSL::GetSourceCode() const
-{
-	// Get the length of the shader source, including the null termination character
-	GLint nShaderSourceLength = 0;
-	glGetShaderiv(m_nOpenGLESVertexShader, GL_SHADER_SOURCE_LENGTH, &nShaderSourceLength);
-	if (nShaderSourceLength > 1) {
-		// The string class takes over the control of the string memory and also deletes it
-		char *pszSourceCode = new char[nShaderSourceLength];
-		glGetShaderSource(m_nOpenGLESVertexShader, nShaderSourceLength, nullptr, pszSourceCode);
-		return String(pszSourceCode, false, nShaderSourceLength-1);	// -1 = excluding the null termination character
-	}
-
-	// Error!
-	return "";
-}
-
-String VertexShaderGLSL::GetProfile() const
-{
-	// GLSL doesn't have profiles
-	return "";
-}
-
-String VertexShaderGLSL::GetEntry() const
-{
-	// GLSL doesn't have an user defined entry point
-	return "";
-}
-
-bool VertexShaderGLSL::SetSourceCode(const String &sSourceCode, const String &sProfile, const String &sEntry)
-{
-	// GLSL doesn't have profiles, so sProfile is just ignored
-	// GLSL doesn't have an user defined entry point, so sEntry is just ignored
-	return ShaderToolsGLSL::SetSourceCode(m_nOpenGLESVertexShader, sSourceCode);
+	return ShaderLanguageCg::Cg;
 }
 
 
