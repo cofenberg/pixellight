@@ -10,8 +10,9 @@ PLRendererOpenGLES2:
   Cg shaders.
   I noticed two issues with the Cg shaders:
     - When using semantics within Cg attributes, "glGetActiveAttrib()" returns the semantic (e.g. "POSITION") instead of the real attribute name
-    - Inverse for matrices required
+	- Inverse for matrices required
   ... so, still some minor usage details to figure out for an easy and generic usage... but hey, Cg shaders on a mobile device! :D
+- Added support for "GL_OES_texture_3D"
 
 
 

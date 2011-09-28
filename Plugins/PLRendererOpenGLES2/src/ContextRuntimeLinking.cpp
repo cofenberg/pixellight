@@ -26,7 +26,7 @@
 #include <PLCore/Runtime.h>
 #include <PLCore/Log/Log.h>
 #include <PLCore/System/DynLib.h>
-#define DEFINERUNTIMELINKING
+#define CONTEXT_DEFINERUNTIMELINKING
 #include "PLRendererOpenGLES2/ExtensionsRuntimeLinking.h"
 #include "PLRendererOpenGLES2/ContextRuntimeLinking.h"
 

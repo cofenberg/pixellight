@@ -28,7 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLRenderer/Renderer/Types.h>
 #include <PLRenderer/Renderer/TextureBuffer3D.h>
+#include "PLRendererOpenGLES2/PLRendererOpenGLES2.h"
 
 
 //[-------------------------------------------------------]
@@ -63,6 +65,15 @@ class TextureBuffer3D : public PLRenderer::TextureBuffer3D {
 		*/
 		virtual ~TextureBuffer3D();
 
+		/**
+		*  @brief
+		*    Returns the OpenGL ES resource ID of the texture buffer
+		*
+		*  @return
+		*    OpenGL ES resource ID of the texture buffer
+		*/
+		PLCore::uint32 GetOpenGLESTexture() const;
+
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
@@ -86,6 +97,13 @@ class TextureBuffer3D : public PLRenderer::TextureBuffer3D {
 		*      create function
 		*/
 		TextureBuffer3D(PLRenderer::Renderer &cRenderer, PLGraphics::Image &cImage, EPixelFormat nInternalFormat, PLCore::uint32 nFlags);
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::uint32 m_nOpenGLESTexture;	/**< OpenGL ES texture ID */
 
 
 	//[-------------------------------------------------------]

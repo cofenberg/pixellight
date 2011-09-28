@@ -23,7 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/String/String.h>
+#include <PLCore/Log/Log.h>
+#define EXTENSIONS_DEFINERUNTIMELINKING
 #include "PLRendererOpenGLES2/Context.h"
 #include "PLRendererOpenGLES2/ExtensionsRuntimeLinking.h"
 
@@ -52,7 +53,8 @@ ExtensionsRuntimeLinking::ExtensionsRuntimeLinking() :
 	// AMD
 	m_bGL_AMD_compressed_3DC_texture(false),
 	// OES
-	m_bGL_OES_element_index_uint(false)
+	m_bGL_OES_element_index_uint(false),
+	m_bGL_OES_texture_3D(false)
 {
 }
 
@@ -70,6 +72,18 @@ ExtensionsRuntimeLinking::~ExtensionsRuntimeLinking()
 */
 void ExtensionsRuntimeLinking::Init()
 {
+	// Define a helper macro
+	#define IMPORT_FUNC(funcName)																										\
+		if (bResult) {																													\
+			void *pSymbol = eglGetProcAddress(#funcName);																				\
+			if (pSymbol) {																												\
+				*(reinterpret_cast<void**>(&(funcName))) = pSymbol;																		\
+			} else {																													\
+				PL_LOG(Error, String("Failed to find the entry point \"") + #funcName + "\" within the OpenGL ES 2.0 dynamic library")	\
+				bResult = false;																										\
+			}																															\
+		}
+
 	// Get the extensions string
 	const String sExtensions = reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS));
 
@@ -85,6 +99,21 @@ void ExtensionsRuntimeLinking::Init()
 
 	// OES
 	m_bGL_OES_element_index_uint = sExtensions.IsSubstring("GL_OES_element_index_uint");
+	m_bGL_OES_texture_3D = sExtensions.IsSubstring("GL_OES_texture_3D");
+	if (m_bGL_OES_texture_3D) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glTexImage3DOES)
+		IMPORT_FUNC(glTexSubImage3DOES)
+		IMPORT_FUNC(glCopyTexSubImage3DOES)
+		IMPORT_FUNC(glCompressedTexImage3DOES)
+		IMPORT_FUNC(glCompressedTexSubImage3DOES)
+		IMPORT_FUNC(glFramebufferTexture3DOES)
+		m_bGL_OES_texture_3D = bResult;
+	}
+
+	// Undefine the helper macro
+	#undef IMPORT_FUNC
 }
 
 
@@ -127,6 +156,11 @@ bool ExtensionsRuntimeLinking::IsGL_AMD_compressed_3DC_texture() const
 bool ExtensionsRuntimeLinking::IsGL_OES_element_index_uint() const
 {
 	return m_bGL_OES_element_index_uint;
+}
+
+bool ExtensionsRuntimeLinking::IsGL_OES_texture_3D() const
+{
+	return m_bGL_OES_texture_3D;
 }
 
 

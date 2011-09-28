@@ -177,7 +177,7 @@ class ContextRuntimeLinking : public Context {
 //[-------------------------------------------------------]
 //[ EGL functions                                         ]
 //[-------------------------------------------------------]
-#ifdef DEFINERUNTIMELINKING
+#ifdef CONTEXT_DEFINERUNTIMELINKING
 	#define FNDEF_EGL(retType, funcName, args) retType (EGLAPIENTRY *funcPtr_##funcName) args
 #else
 	#define FNDEF_EGL(retType, funcName, args) extern retType (EGLAPIENTRY *funcPtr_##funcName) args
@@ -213,12 +213,13 @@ FNDEF_EGL(EGLBoolean,	eglWaitGL,				(void));
 FNDEF_EGL(EGLBoolean,	eglWaitNative,			(EGLint engine));
 FNDEF_EGL(EGLBoolean,	eglSwapBuffers,			(EGLDisplay dpy, EGLSurface draw));
 FNDEF_EGL(EGLBoolean,	eglCopyBuffers,			(EGLDisplay dpy, EGLSurface surface, EGLNativePixmapType target));
+#undef FNDEF_EGL
 
 
 //[-------------------------------------------------------]
 //[ GL core functions                                     ]
 //[-------------------------------------------------------]
-#ifdef DEFINERUNTIMELINKING
+#ifdef CONTEXT_DEFINERUNTIMELINKING
 	#define FNDEF_GL(retType, funcName, args) retType (GL_APIENTRY *funcPtr_##funcName) args
 #else
 	#define FNDEF_GL(retType, funcName, args) extern retType (GL_APIENTRY *funcPtr_##funcName) args
@@ -365,12 +366,15 @@ FNDEF_GL(void,				glVertexAttrib4f,						(GLuint indx, GLfloat x, GLfloat y, GLf
 FNDEF_GL(void,				glVertexAttrib4fv,						(GLuint indx, const GLfloat* values));
 FNDEF_GL(void,				glVertexAttribPointer,					(GLuint indx, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const GLvoid* ptr));
 FNDEF_GL(void,				glViewport,								(GLint x, GLint y, GLsizei width, GLsizei height));
+#undef FNDEF_GL
 
 
 //[-------------------------------------------------------]
 //[ Macros & definitions                                  ]
 //[-------------------------------------------------------]
-#define FNPTR(name) funcPtr_##name
+#ifndef FNPTR
+	#define FNPTR(name) funcPtr_##name
+#endif
 
 // Redirect egl* and gl* function calls to funcPtr_egl* and funcPtr_gl*
 

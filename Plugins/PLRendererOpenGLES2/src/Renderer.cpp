@@ -638,9 +638,16 @@ void Renderer::SetupCapabilities()
 	m_sCapabilities.bTextureBufferRectangle			= true;
 	m_sCapabilities.nMaxRectangleTextureBufferSize	= m_sCapabilities.nMaxTextureBufferSize;
 
-	// 3D textures are not supported by OpenGL ES 2.0
-	m_sCapabilities.bTextureBuffer3D				= false;
-	m_sCapabilities.nMax3DTextureBufferSize			= 0;
+	// "GL_OES_texture_3D"-extension available?
+	if (GetContext().GetExtensions().IsGL_OES_texture_3D()) {
+		m_sCapabilities.bTextureBuffer3D			= true;
+		glGetIntegerv(GL_MAX_3D_TEXTURE_SIZE_OES, &nGLTemp);
+		m_sCapabilities.nMax3DTextureBufferSize		= static_cast<uint16>(nGLTemp);
+	} else {
+		// 3D textures are not supported by OpenGL ES 2.0
+		m_sCapabilities.bTextureBuffer3D			= false;
+		m_sCapabilities.nMax3DTextureBufferSize		= 0;
+	}
 
 	// Cube map textures are always supported by OpenGL ES 2.0 - get maximum cube texture buffer size
 	m_sCapabilities.bTextureBufferCube				= true;
@@ -916,10 +923,10 @@ PLRenderer::TextureBuffer *Renderer::CreateTextureBufferRectangle(Image &cImage,
 PLRenderer::TextureBuffer3D *Renderer::CreateTextureBuffer3D(Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
 {
 	// Check texture buffer
-	if (!CheckTextureBuffer3D(cImage, nInternalFormat))
+	if (!m_sCapabilities.bTextureBuffer3D || !CheckTextureBuffer3D(cImage, nInternalFormat))
 		return nullptr; // Error!
 
-	// Create the null 3D texture buffer
+	// Create the OpenGL ES 2.0 3D texture buffer
 	return new TextureBuffer3D(*this, cImage, nInternalFormat, nFlags);
 }
 
@@ -929,19 +936,19 @@ PLRenderer::TextureBufferCube *Renderer::CreateTextureBufferCube(Image &cImage, 
 	if (!CheckTextureBufferCube(cImage, nInternalFormat))
 		return nullptr; // Error!
 
-	// Create the null cube texture buffer
+	// Create the OpenGL ES 2.0 cube texture buffer
 	return new TextureBufferCube(*this, cImage, nInternalFormat, nFlags);
 }
 
 PLRenderer::IndexBuffer *Renderer::CreateIndexBuffer()
 {
-	// Create the null index buffer
+	// Create the OpenGL ES 2.0 index buffer
 	return new IndexBuffer(*this);
 }
 
 PLRenderer::VertexBuffer *Renderer::CreateVertexBuffer()
 {
-	// Create the null vertex buffer
+	// Create the OpenGL ES 2.0 vertex buffer
 	return new VertexBuffer(*this);
 }
 
@@ -1537,17 +1544,20 @@ bool Renderer::SetSamplerState(uint32 nStage, PLRenderer::Sampler::Enum nState, 
 			}
 
 			case PLRenderer::Sampler::AddressW:
-			{
-				const uint32 &nAPIValue = m_cPLE_TAWrapper[nValue];
-				if (&nAPIValue != &Array<uint32>::Null) {
-					// [TODO] GL_OES_texture3D
-					// glTexParameteri(nType, GL_TEXTURE_WRAP_R_OES, nAPIValue);
+				// "GL_OES_texture_3D"-extension available?
+				if (GetContext().GetExtensions().IsGL_OES_texture_3D()) {
+					const uint32 &nAPIValue = m_cPLE_TAWrapper[nValue];
+					if (&nAPIValue != &Array<uint32>::Null) {
+						glTexParameteri(nType, GL_TEXTURE_WRAP_R_OES, nAPIValue);
+					} else {
+						// Error, invalid value!
+						return false;
+					}
 				} else {
 					// Error, invalid value!
 					return false;
 				}
 				break;
-			}
 
 		// Filter
 			case PLRenderer::Sampler::MinFilter:

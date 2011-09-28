@@ -288,21 +288,21 @@ bool TextureBuffer3D::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *p
 					return false; // Error!
 
 				// Bind this texture buffer
-				glBindTexture(GL_TEXTURE_3D, m_nOpenGLTexture);
+				glBindTexture(GL_TEXTURE_3D_EXT, m_nOpenGLTexture);
 
 				// Get the number of bytes
 				const uint32 nNumOfBytes = GetNumOfBytes(nMipmap);
 
 				// Upload
-				glCompressedTexImage3DARB(GL_TEXTURE_3D, nMipmap, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, nNumOfBytes, pData);
+				glCompressedTexImage3DARB(GL_TEXTURE_3D_EXT, nMipmap, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, nNumOfBytes, pData);
 			} else {
 				// Bind this texture buffer
-				glBindTexture(GL_TEXTURE_3D, m_nOpenGLTexture);
+				glBindTexture(GL_TEXTURE_3D_EXT, m_nOpenGLTexture);
 
 				// Upload
 				const uint32 nPixelFormat = cRendererOpenGL.GetOpenGLPixelFormat(nFormat);
-				const uint32 nDataFormat   = cRendererOpenGL.GetOpenGLDataFormat(nFormat);
-				glTexImage3DEXT(GL_TEXTURE_3D, nMipmap, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, nPixelFormat, nDataFormat, pData);
+				const uint32 nDataFormat  = cRendererOpenGL.GetOpenGLDataFormat(nFormat);
+				glTexImage3DEXT(GL_TEXTURE_3D_EXT, nMipmap, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, nPixelFormat, nDataFormat, pData);
 			}
 
 			// Done
@@ -327,13 +327,13 @@ bool TextureBuffer3D::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData
 			return false; // Error!
 
 		// Bind this texture buffer
-		glBindTexture(GL_TEXTURE_3D, m_nOpenGLTexture);
+		glBindTexture(GL_TEXTURE_3D_EXT, m_nOpenGLTexture);
 
 		// Download
-		glGetCompressedTexImageARB(GL_TEXTURE_3D, nMipmap, pData);
+		glGetCompressedTexImageARB(GL_TEXTURE_3D_EXT, nMipmap, pData);
 	} else {
 		// Bind this texture buffer
-		glBindTexture(GL_TEXTURE_3D, m_nOpenGLTexture);
+		glBindTexture(GL_TEXTURE_3D_EXT, m_nOpenGLTexture);
 
 		// Get the OpenGL renderer instance
 		const Renderer &cRendererOpenGL = static_cast<Renderer&>(GetRenderer());
@@ -341,7 +341,7 @@ bool TextureBuffer3D::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData
 		// Download
 		const uint32 nPixelFormat = cRendererOpenGL.GetOpenGLPixelFormat(nFormat);
 		const uint32 nDataFormat  = cRendererOpenGL.GetOpenGLDataFormat(nFormat);
-		glGetTexImage(GL_TEXTURE_3D, nMipmap, nPixelFormat, nDataFormat, pData);
+		glGetTexImage(GL_TEXTURE_3D_EXT, nMipmap, nPixelFormat, nDataFormat, pData);
 	}
 
 	// Done
@@ -389,7 +389,7 @@ void TextureBuffer3D::BackupDeviceData(uint8 **ppBackup)
 				// Loop through all mipmaps
 				for (uint32 nLevel=0; nLevel<=m_nNumOfMipmaps; nLevel++) {
 					// Get the data from the GPU
-					glGetCompressedTexImageARB(GL_TEXTURE_3D, nLevel, pData);
+					glGetCompressedTexImageARB(GL_TEXTURE_3D_EXT, nLevel, pData);
 
 					// Next level, please
 					pData += GetNumOfBytes(nLevel);
@@ -405,7 +405,7 @@ void TextureBuffer3D::BackupDeviceData(uint8 **ppBackup)
 				// Loop through all mipmaps
 				for (uint32 nLevel=0; nLevel<=m_nNumOfMipmaps; nLevel++) {
 					// Get the data from the GPU
-					glGetTexImage(GL_TEXTURE_3D, nLevel, nPixelFormat, nDataFormat, pData);
+					glGetTexImage(GL_TEXTURE_3D_EXT, nLevel, nPixelFormat, nDataFormat, pData);
 
 					// Next level, please
 					pData += GetNumOfBytes(nLevel);
@@ -454,9 +454,9 @@ void TextureBuffer3D::RestoreDeviceData(uint8 **ppBackup)
 
 				// Upload the texture buffer
 				if (bCompressedFormat)
-					glCompressedTexImage3DARB(GL_TEXTURE_3D, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, nNumOfBytes, pData);
+					glCompressedTexImage3DARB(GL_TEXTURE_3D_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, nNumOfBytes, pData);
 				else
-					glTexImage3DEXT(GL_TEXTURE_3D, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, nPixelFormat, nDataFormat, pData);
+					glTexImage3DEXT(GL_TEXTURE_3D_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, nPixelFormat, nDataFormat, pData);
 
 				// Next level, please
 				pData += nNumOfBytes;

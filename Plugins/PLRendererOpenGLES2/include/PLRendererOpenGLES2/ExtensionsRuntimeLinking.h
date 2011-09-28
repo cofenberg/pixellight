@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/PLCore.h>
+#include "PLRendererOpenGLES2/Context.h"
 #include "PLRendererOpenGLES2/Extensions.h"
 
 
@@ -92,6 +93,7 @@ class ExtensionsRuntimeLinking : public Extensions {
 		virtual bool IsGL_AMD_compressed_3DC_texture() const override;
 		// OES
 		virtual bool IsGL_OES_element_index_uint() const override;
+		virtual bool IsGL_OES_texture_3D() const override;
 
 
 	//[-------------------------------------------------------]
@@ -108,9 +110,23 @@ class ExtensionsRuntimeLinking : public Extensions {
 		bool m_bGL_AMD_compressed_3DC_texture;
 		// OES
 		bool m_bGL_OES_element_index_uint;
+		bool m_bGL_OES_texture_3D;
 
 
 };
+
+
+//[-------------------------------------------------------]
+//[ Define helper macro                                   ]
+//[-------------------------------------------------------]
+#ifdef EXTENSIONS_DEFINERUNTIMELINKING
+	#define FNDEF_EX(retType, funcName, args) retType (GL_APIENTRY *funcPtr_##funcName) args
+#else
+	#define FNDEF_EX(retType, funcName, args) extern retType (GL_APIENTRY *funcPtr_##funcName) args
+#endif
+#ifndef FNPTR
+	#define FNPTR(name) funcPtr_##name
+#endif
 
 
 //[-------------------------------------------------------]
@@ -153,6 +169,30 @@ class ExtensionsRuntimeLinking : public Extensions {
 //[-------------------------------------------------------]
 // GL_OES_element_index_uint
 #define GL_UNSIGNED_INT	0x1405
+
+// GL_OES_texture_3D
+#define GL_TEXTURE_3D_OES			0x806F
+#define GL_TEXTURE_WRAP_R_OES		0x8072
+#define GL_MAX_3D_TEXTURE_SIZE_OES	0x8073
+#define GL_TEXTURE_BINDING_3D_OES	0x806A
+FNDEF_EX(void,	glTexImage3DOES,				(GLenum target, int level, GLenum internalFormat, GLsizei width, GLsizei height, GLsizei depth, int border, GLenum format, GLenum type, const void *pixels));
+FNDEF_EX(void,	glTexSubImage3DOES,				(GLenum target, int level, int xoffset, int yoffset, int zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLenum type, const void *pixels));
+FNDEF_EX(void,	glCopyTexSubImage3DOES,			(GLenum target, int level, int xoffset, int yoffset, int zoffset, int x, int y, GLsizei width, GLsizei height));
+FNDEF_EX(void,	glCompressedTexImage3DOES,		(GLenum target, int level, GLenum internalformat, GLsizei width, GLsizei height, GLsizei depth, int border, GLsizei imageSize, const void *data));
+FNDEF_EX(void,	glCompressedTexSubImage3DOES,	(GLenum target, int level, int xoffset, int yoffset, int zoffset, GLsizei width, GLsizei height, GLsizei depth, GLenum format, GLsizei imageSize, const void *data));
+FNDEF_EX(void,	glFramebufferTexture3DOES,		(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, int level, int zoffset));
+#define glTexImage3DOES					FNPTR(glTexImage3DOES)
+#define glTexSubImage3DOES				FNPTR(glTexSubImage3DOES)
+#define glCopyTexSubImage3DOES			FNPTR(glCopyTexSubImage3DOES)
+#define glCompressedTexImage3DOES		FNPTR(glCompressedTexImage3DOES)
+#define glCompressedTexSubImage3DOES	FNPTR(glCompressedTexSubImage3DOES)
+#define glFramebufferTexture3DOES		FNPTR(glFramebufferTexture3DOES)
+
+
+//[-------------------------------------------------------]
+//[ Undefine helper macro                                 ]
+//[-------------------------------------------------------]
+#undef FNDEF_EX
 
 
 //[-------------------------------------------------------]
