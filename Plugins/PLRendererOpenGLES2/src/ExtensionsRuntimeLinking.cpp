@@ -44,6 +44,8 @@ namespace PLRendererOpenGLES2 {
 *    Constructor
 */
 ExtensionsRuntimeLinking::ExtensionsRuntimeLinking() :
+	// ARB
+	m_bGL_ARB_draw_buffers(false),
 	// EXT
 	m_bGL_EXT_texture_compression_s3tc(false),
 	m_bGL_EXT_texture_compression_dxt1(false),
@@ -54,10 +56,18 @@ ExtensionsRuntimeLinking::ExtensionsRuntimeLinking() :
 	m_bGL_AMD_compressed_3DC_texture(false),
 	// NV
 	m_bGL_NV_get_tex_image(false),
+	m_bGL_NV_fbo_color_attachments(false),
+	m_bGL_NV_read_buffer(false),
 	// OES
 	m_bGL_OES_mapbuffer(false),
 	m_bGL_OES_element_index_uint(false),
-	m_bGL_OES_texture_3D(false)
+	m_bGL_OES_texture_3D(false),
+	m_bGL_OES_packed_depth_stencil(false),
+	m_bGL_OES_depth24(false),
+	m_bGL_OES_depth32(false),
+	// ANGLE
+	m_bGL_ANGLE_framebuffer_blit(false),
+	m_bGL_ANGLE_framebuffer_multisample(false)
 {
 }
 
@@ -90,6 +100,15 @@ void ExtensionsRuntimeLinking::Init()
 	// Get the extensions string
 	const String sExtensions = reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS));
 
+	// ARB
+	m_bGL_ARB_draw_buffers = sExtensions.IsSubstring("GL_ARB_draw_buffers");
+	if (m_bGL_ARB_draw_buffers) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glDrawBuffersARB)
+		m_bGL_ARB_draw_buffers = bResult;
+	}
+
 	// EXT
 	m_bGL_EXT_texture_compression_s3tc   = sExtensions.IsSubstring("GL_EXT_texture_compression_s3tc");
 	m_bGL_EXT_texture_compression_dxt1   = sExtensions.IsSubstring("GL_EXT_texture_compression_dxt1");
@@ -111,9 +130,17 @@ void ExtensionsRuntimeLinking::Init()
 		IMPORT_FUNC(glGetTexLevelParameterivNV)
 		m_bGL_NV_get_tex_image = bResult;
 	}
+	m_bGL_NV_fbo_color_attachments = sExtensions.IsSubstring("GL_NV_fbo_color_attachments");
+	m_bGL_NV_read_buffer		   = sExtensions.IsSubstring("GL_NV_read_buffer");
+	if (m_bGL_NV_read_buffer) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glReadBufferNV)
+		m_bGL_NV_read_buffer = bResult;
+	}
 
 	// OES
-	m_bGL_OES_mapbuffer			 = sExtensions.IsSubstring("GL_OES_mapbuffer");
+	m_bGL_OES_mapbuffer = sExtensions.IsSubstring("GL_OES_mapbuffer");
 	if (m_bGL_OES_mapbuffer) {
 		// Load the entry points
 		bool bResult = true;	// Success by default
@@ -135,6 +162,25 @@ void ExtensionsRuntimeLinking::Init()
 		IMPORT_FUNC(glFramebufferTexture3DOES)
 		m_bGL_OES_texture_3D = bResult;
 	}
+	m_bGL_OES_packed_depth_stencil = sExtensions.IsSubstring("GL_OES_packed_depth_stencil");
+	m_bGL_OES_depth24			   = sExtensions.IsSubstring("GL_OES_depth24");
+	m_bGL_OES_depth32			   = sExtensions.IsSubstring("GL_OES_depth32");
+
+	// ANGLE
+	m_bGL_ANGLE_framebuffer_blit = sExtensions.IsSubstring("GL_ANGLE_framebuffer_blit");
+	if (m_bGL_ANGLE_framebuffer_blit) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glBlitFramebufferEXT)
+		m_bGL_ANGLE_framebuffer_blit = bResult;
+	}
+	m_bGL_ANGLE_framebuffer_multisample = sExtensions.IsSubstring("GL_ANGLE_framebuffer_multisample");
+	if (m_bGL_ANGLE_framebuffer_multisample) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glRenderbufferStorageMultisampleANGLE)
+		m_bGL_ANGLE_framebuffer_multisample = bResult;
+	}
 
 	// Undefine the helper macro
 	#undef IMPORT_FUNC
@@ -144,6 +190,12 @@ void ExtensionsRuntimeLinking::Init()
 //[-------------------------------------------------------]
 //[ Public virtual Extensions functions                   ]
 //[-------------------------------------------------------]
+// ARB
+bool ExtensionsRuntimeLinking::IsGL_ARB_draw_buffers() const
+{
+	return m_bGL_ARB_draw_buffers;
+}
+
 // EXT
 bool ExtensionsRuntimeLinking::IsGL_EXT_texture_compression_s3tc() const
 {
@@ -182,6 +234,16 @@ bool ExtensionsRuntimeLinking::IsGL_NV_get_tex_image() const
 	return m_bGL_NV_get_tex_image;
 }
 
+bool ExtensionsRuntimeLinking::IsGL_NV_fbo_color_attachments() const
+{
+	return m_bGL_NV_fbo_color_attachments;
+}
+
+bool ExtensionsRuntimeLinking::IsGL_NV_read_buffer() const
+{
+	return m_bGL_NV_read_buffer;
+}
+
 // OES
 bool ExtensionsRuntimeLinking::IsGL_OES_mapbuffer() const
 {
@@ -196,6 +258,32 @@ bool ExtensionsRuntimeLinking::IsGL_OES_element_index_uint() const
 bool ExtensionsRuntimeLinking::IsGL_OES_texture_3D() const
 {
 	return m_bGL_OES_texture_3D;
+}
+
+bool ExtensionsRuntimeLinking::IsGL_OES_packed_depth_stencil() const
+{
+	return m_bGL_OES_packed_depth_stencil;
+}
+
+bool ExtensionsRuntimeLinking::IsGL_OES_depth24() const
+{
+	return m_bGL_OES_depth24;
+}
+
+bool ExtensionsRuntimeLinking::IsGL_OES_depth32() const
+{
+	return m_bGL_OES_depth32;
+}
+
+// ANGLE
+bool ExtensionsRuntimeLinking::IsGL_ANGLE_framebuffer_blit() const
+{
+	return m_bGL_ANGLE_framebuffer_blit;
+}
+
+bool ExtensionsRuntimeLinking::IsGL_ANGLE_framebuffer_multisample() const
+{
+	return m_bGL_ANGLE_framebuffer_multisample;
 }
 
 

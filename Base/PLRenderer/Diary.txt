@@ -15,6 +15,9 @@ PLRendererOpenGLES2:
 - Added support for "GL_OES_texture_3D"
 - Added support for "GL_NV_get_tex_image"
 - Added support for "GL_OES_mapbuffer"
+- Added support for "GL_ARB_draw_buffers", "GL_NV_fbo_color_attachments", "GL_NV_read_buffer", "GL_ANGLE_framebuffer_blit", "GL_ANGLE_framebuffer_multisample",
+  "GL_OES_packed_depth_stencil", "GL_OES_depth24" and "GL_OES_depth32"
+  -> "FrameBufferObject" has now the same feature set as the OpenGL renderer (and there's still a render to texture refactoring on my list :)
 
 
 

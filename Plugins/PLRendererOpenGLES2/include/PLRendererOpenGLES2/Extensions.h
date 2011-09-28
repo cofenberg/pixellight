@@ -62,6 +62,8 @@ class Extensions {
 		///////////////////////////////////////////////////////////
 		// Returns whether an extension is supported or not
 		///////////////////////////////////////////////////////////
+		// ARB
+		virtual bool IsGL_ARB_draw_buffers() const = 0;
 		// EXT
 		virtual bool IsGL_EXT_texture_compression_s3tc() const = 0;
 		virtual bool IsGL_EXT_texture_compression_dxt1() const = 0;
@@ -72,10 +74,18 @@ class Extensions {
 		virtual bool IsGL_AMD_compressed_3DC_texture() const = 0;
 		// NV
 		virtual bool IsGL_NV_get_tex_image() const = 0;
+		virtual bool IsGL_NV_fbo_color_attachments() const = 0;
+		virtual bool IsGL_NV_read_buffer() const = 0;
 		// OES
 		virtual bool IsGL_OES_mapbuffer() const = 0;
 		virtual bool IsGL_OES_element_index_uint() const = 0;
 		virtual bool IsGL_OES_texture_3D() const = 0;
+		virtual bool IsGL_OES_packed_depth_stencil() const = 0;
+		virtual bool IsGL_OES_depth24() const = 0;
+		virtual bool IsGL_OES_depth32() const = 0;
+		// ANGLE
+		virtual bool IsGL_ANGLE_framebuffer_blit() const = 0;
+		virtual bool IsGL_ANGLE_framebuffer_multisample() const = 0;
 
 
 	//[-------------------------------------------------------]

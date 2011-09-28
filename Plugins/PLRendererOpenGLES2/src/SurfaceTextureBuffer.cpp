@@ -23,9 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGLES2/Renderer.h"
 #include <PLRenderer/Renderer/TextureBuffer2D.h>
 #include <PLRenderer/Renderer/TextureBufferCube.h>
+#include "PLRendererOpenGLES2/Renderer.h"
+#include "PLRendererOpenGLES2/Extensions.h"
 #include "PLRendererOpenGLES2/FrameBufferObject.h"
 #include "PLRendererOpenGLES2/SurfaceTextureBuffer.h"
 
@@ -85,20 +86,29 @@ void SurfaceTextureBuffer::SetColorRenderTarget(uint8 nColorIndex, PLRenderer::T
 			m_pFrameBufferObject->Bind();
 			m_pFrameBufferObject->SwitchTarget(*pTextureBuffer, nColorIndex);
 
-			// [TODO] Check me
-			/*
-			// Set draw buffers
-			static const GLuint db[16] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3,
-										   GL_COLOR_ATTACHMENT4, GL_COLOR_ATTACHMENT5, GL_COLOR_ATTACHMENT6, GL_COLOR_ATTACHMENT7,
-										   GL_COLOR_ATTACHMENT8, GL_COLOR_ATTACHMENT9, GL_COLOR_ATTACHMENT10, GL_COLOR_ATTACHMENT11,
-										   GL_COLOR_ATTACHMENT12, GL_COLOR_ATTACHMENT13, GL_COLOR_ATTACHMENT14, GL_COLOR_ATTACHMENT15};
-			if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_draw_buffers())
+			// "GL_ARB_draw_buffers" & "GL_NV_fbo_color_attachments" extensions available?
+			const Extensions &cExtensions = static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions();
+			if (cExtensions.IsGL_ARB_draw_buffers() && cExtensions.IsGL_NV_fbo_color_attachments()) {
+				// Set draw buffers
+				static const GLenum db[16] = { GL_COLOR_ATTACHMENT0_NV, GL_COLOR_ATTACHMENT1_NV, GL_COLOR_ATTACHMENT2_NV, GL_COLOR_ATTACHMENT3_NV,
+											   GL_COLOR_ATTACHMENT4_NV, GL_COLOR_ATTACHMENT5_NV, GL_COLOR_ATTACHMENT6_NV, GL_COLOR_ATTACHMENT7_NV,
+											   GL_COLOR_ATTACHMENT8_NV, GL_COLOR_ATTACHMENT9_NV, GL_COLOR_ATTACHMENT10_NV, GL_COLOR_ATTACHMENT11_NV,
+											   GL_COLOR_ATTACHMENT12_NV, GL_COLOR_ATTACHMENT13_NV, GL_COLOR_ATTACHMENT14_NV, GL_COLOR_ATTACHMENT15_NV};
 				glDrawBuffersARB(m_nMaxColorTargets, db);
-			else if (static_cast<Renderer&>(GetRenderer()).IsGL_ATI_draw_buffers())
-				glDrawBuffersATI(m_nMaxColorTargets, db);
-				*/
+			}
 		}
 	}
+}
+
+/**
+*  @brief
+*    Finishes the process
+*/
+void SurfaceTextureBuffer::Finish()
+{
+	// Check whether the data is valid and whether frame buffer object used
+	if (m_cTextureBufferHandler.GetResource() && m_pFrameBufferObject)
+		m_pFrameBufferObject->Finish();
 }
 
 
@@ -164,7 +174,7 @@ bool SurfaceTextureBuffer::CreateFBO()
 			// Stencil buffer requested?
 			if (m_nFlags & Stencil)
 				nFormat |= FrameBufferObject::Stencil;
-			if (m_pFrameBufferObject->Initialize(cRenderer, vSize, nFormat, pTextureBuffer->GetFormat())) {
+			if (m_pFrameBufferObject->Initialize(cRenderer, vSize, nFormat, pTextureBuffer->GetFormat(), (m_nFlags & NoMultisampleAntialiasing) != 0)) {
 				// Jipi, all went fine and we are still here! :)
 				return true;
 			} else {
@@ -234,7 +244,7 @@ Vector2i SurfaceTextureBuffer::GetSize() const
 //[-------------------------------------------------------]
 bool SurfaceTextureBuffer::Init()
 {
-	// First, de-initialize old PBuffer
+	// First, de-initialize the old stuff
 	DeInit();
 
 	// Can we use a nice frame buffer object?
@@ -287,23 +297,21 @@ bool SurfaceTextureBuffer::MakeCurrent(uint8 nFace)
 
 			// Need rendering to depth only
 			PLRenderer::TextureBuffer::EPixelFormat nFormat = GetTextureBuffer()->GetFormat();
+			const Extensions &cExtensions = static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions();
 			if (nFormat == PLRenderer::TextureBuffer::D16 || nFormat == PLRenderer::TextureBuffer::D24 || nFormat == PLRenderer::TextureBuffer::D32) {
-				// [TODO] Check me
-				/*
-				glDrawBuffer(GL_NONE);
-				glReadBuffer(GL_NONE);
-				*/
+				// "GL_NV_read_buffer"-extension available?
+				if (cExtensions.IsGL_NV_read_buffer())
+					glReadBufferNV(GL_NONE);
 			} else {
-				// [TODO] Check me
-				/*
-				// Set draw buffers
-				GLuint db[4] = { GL_COLOR_ATTACHMENT0_EXT, GL_COLOR_ATTACHMENT1_EXT,
-								 GL_COLOR_ATTACHMENT2_EXT, GL_COLOR_ATTACHMENT3_EXT };
-				if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_draw_buffers())
+				// "GL_ARB_draw_buffers" & "GL_NV_fbo_color_attachments" extensions available?
+				if (cExtensions.IsGL_ARB_draw_buffers() && cExtensions.IsGL_NV_fbo_color_attachments()) {
+					// Set draw buffers
+					static const GLenum db[16] = { GL_COLOR_ATTACHMENT0_NV, GL_COLOR_ATTACHMENT1_NV, GL_COLOR_ATTACHMENT2_NV, GL_COLOR_ATTACHMENT3_NV,
+												   GL_COLOR_ATTACHMENT4_NV, GL_COLOR_ATTACHMENT5_NV, GL_COLOR_ATTACHMENT6_NV, GL_COLOR_ATTACHMENT7_NV,
+												   GL_COLOR_ATTACHMENT8_NV, GL_COLOR_ATTACHMENT9_NV, GL_COLOR_ATTACHMENT10_NV, GL_COLOR_ATTACHMENT11_NV,
+												   GL_COLOR_ATTACHMENT12_NV, GL_COLOR_ATTACHMENT13_NV, GL_COLOR_ATTACHMENT14_NV, GL_COLOR_ATTACHMENT15_NV};
 					glDrawBuffersARB(m_nMaxColorTargets, db);
-				else if (static_cast<Renderer&>(GetRenderer()).IsGL_ATI_draw_buffers())
-					glDrawBuffersATI(m_nMaxColorTargets, db);
-					*/
+				}
 			}
 		}
 
@@ -345,13 +353,12 @@ bool SurfaceTextureBuffer::UnmakeCurrent()
 			cRenderer.SetTextureBuffer(0, pTextureBuffer);
 		}
 
-		// [TODO] Check me
-		/*
 		PLRenderer::TextureBuffer::EPixelFormat nFormat = GetTextureBuffer()->GetFormat();
 		if (nFormat == PLRenderer::TextureBuffer::D16 || nFormat == PLRenderer::TextureBuffer::D24 || nFormat == PLRenderer::TextureBuffer::D32) {
-			glDrawBuffer(GL_BACK);
-			glReadBuffer(GL_BACK);
-		}*/
+			// "GL_NV_read_buffer"-extension available?
+			if (static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_NV_read_buffer())
+				glReadBufferNV(GL_NONE);
+		}
 
 	// Do only use glCopyTexSubImage2D()
 	} else if (m_lstTextureBufferHandler.GetNumOfElements()) {

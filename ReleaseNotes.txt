@@ -1,7 +1,9 @@
 Changes in PixelLight 0.9.9-R1 (not yet released)
 - Feature: "PLRendererOpenGLES2" now also supports desktop PC GPU drivers capable of native OpenGL ES 2.0 instead of just an emulator when developing on a desktop PC
 - Feature: "PLRendererOpenGLES2" now supports the following extensions: GL_EXT_texture_compression_s3tc, GL_EXT_texture_compression_dxt1, GL_EXT_texture_compression_latc,
-           GL_EXT_texture_filter_anisotropic, GL_EXT_Cg_shader, GL_AMD_compressed_3DC_texture, GL_NV_get_tex_image, GL_OES_mapbuffer, GL_OES_element_index_uint, GL_OES_texture_3D
+           GL_EXT_texture_filter_anisotropic, GL_EXT_Cg_shader, GL_AMD_compressed_3DC_texture, GL_NV_get_tex_image, GL_OES_mapbuffer, GL_OES_element_index_uint, GL_OES_texture_3D,
+           GL_ARB_draw_buffers, GL_NV_fbo_color_attachments, GL_NV_read_buffer, GL_ANGLE_framebuffer_blit, GL_ANGLE_framebuffer_multisample, GL_OES_packed_depth_stencil,
+           GL_OES_depth24 and GL_OES_depth32
 - Change (Linux): Tweaked the compiler and linker settings to reduce the binary size
 - Change: Updated the free open source particle engine "SPARK" (http://spark.developpez.com) to version 1.5.5
 - Change: Updated FMOD Ex from version "4.32.08" to "4.36.04" (has Android support)

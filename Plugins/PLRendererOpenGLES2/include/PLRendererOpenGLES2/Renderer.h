@@ -112,6 +112,15 @@ class Renderer : public PLRenderer::RendererBackend {
 
 		/**
 		*  @brief
+		*    Returns the used multisample antialiasing samples per pixel
+		*
+		*  @return
+		*    The used multisample antialiasing samples per pixel
+		*/
+		PLCore::uint32 GetMultisampleAntialiasingSamples() const;
+
+		/**
+		*  @brief
 		*    Returns a PL format as OpenGL ES format
 		*
 		*  @param[in] nFormat
@@ -192,11 +201,12 @@ class Renderer : public PLRenderer::RendererBackend {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		bool					 m_bInitialized;		/**< 'true' if the renderer instance was initialized successfully within it's constructor, else 'false' */
-		Context					*m_pContext;			/**< OpenGL ES context, always valid! */
-		PLRenderer::FontManager	*m_pFontManager;		/**< OpenGL ES renderer font manager, always valid! */
-		ShaderLanguageGLSL		*m_pShaderLanguageGLSL;	/**< Build in GLSL shader language, always valid! */
-		ShaderLanguageCg		*m_pShaderLanguageCg;	/**< Build in Cg shader language, can be a null pointer */
+		bool					 m_bInitialized;					/**< 'true' if the renderer instance was initialized successfully within it's constructor, else 'false' */
+		Context					*m_pContext;						/**< OpenGL ES context, always valid! */
+		PLRenderer::FontManager	*m_pFontManager;					/**< OpenGL ES renderer font manager, always valid! */
+		PLCore::uint32			 m_nMultisampleAntialiasingSamples;	/**< Multisample antialiasing samples per pixel */
+		ShaderLanguageGLSL		*m_pShaderLanguageGLSL;				/**< Build in GLSL shader language, always valid! */
+		ShaderLanguageCg		*m_pShaderLanguageCg;				/**< Build in Cg shader language, can be a null pointer */
 		PLCore::uint32			 m_nViewPortX;
 		PLCore::uint32		 	 m_nViewPortY;
 		PLCore::uint32	 		 m_nViewPortWidth;
@@ -209,7 +219,7 @@ class Renderer : public PLRenderer::RendererBackend {
 		PLCore::uint32	 		 m_nScissorRectHeight;
 		float			 		 m_fDepthBoundsZMin;
 		float			 		 m_fDepthBoundsZMax;
-		PLCore::uint32	 		 m_nVertexOffset;		/**< Current vertex offset */
+		PLCore::uint32	 		 m_nVertexOffset;					/**< Current vertex offset */
 
 
 	//[-------------------------------------------------------]

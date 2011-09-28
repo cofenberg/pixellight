@@ -83,6 +83,8 @@ class ExtensionsRuntimeLinking : public Extensions {
 		///////////////////////////////////////////////////////////
 		// Returns whether an extension is supported or not
 		///////////////////////////////////////////////////////////
+		// ARB
+		virtual bool IsGL_ARB_draw_buffers() const override;
 		// EXT
 		virtual bool IsGL_EXT_texture_compression_s3tc() const override;
 		virtual bool IsGL_EXT_texture_compression_dxt1() const override;
@@ -93,16 +95,26 @@ class ExtensionsRuntimeLinking : public Extensions {
 		virtual bool IsGL_AMD_compressed_3DC_texture() const override;
 		// NV
 		virtual bool IsGL_NV_get_tex_image() const override;
+		virtual bool IsGL_NV_fbo_color_attachments() const override;
+		virtual bool IsGL_NV_read_buffer() const override;
 		// OES
 		virtual bool IsGL_OES_mapbuffer() const override;
 		virtual bool IsGL_OES_element_index_uint() const override;
 		virtual bool IsGL_OES_texture_3D() const override;
+		virtual bool IsGL_OES_packed_depth_stencil() const override;
+		virtual bool IsGL_OES_depth24() const override;
+		virtual bool IsGL_OES_depth32() const override;
+		// ANGLE
+		virtual bool IsGL_ANGLE_framebuffer_blit() const override;
+		virtual bool IsGL_ANGLE_framebuffer_multisample() const override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
+		// ARB
+		bool m_bGL_ARB_draw_buffers;
 		// EXT
 		bool m_bGL_EXT_texture_compression_s3tc;
 		bool m_bGL_EXT_texture_compression_dxt1;
@@ -113,10 +125,18 @@ class ExtensionsRuntimeLinking : public Extensions {
 		bool m_bGL_AMD_compressed_3DC_texture;
 		// NV
 		bool m_bGL_NV_get_tex_image;
+		bool m_bGL_NV_fbo_color_attachments;
+		bool m_bGL_NV_read_buffer;
 		// OES
 		bool m_bGL_OES_mapbuffer;
 		bool m_bGL_OES_element_index_uint;
 		bool m_bGL_OES_texture_3D;
+		bool m_bGL_OES_packed_depth_stencil;
+		bool m_bGL_OES_depth24;
+		bool m_bGL_OES_depth32;
+		// ANGLE
+		bool m_bGL_ANGLE_framebuffer_blit;
+		bool m_bGL_ANGLE_framebuffer_multisample;
 
 
 };
@@ -133,6 +153,31 @@ class ExtensionsRuntimeLinking : public Extensions {
 #ifndef FNPTR
 	#define FNPTR(name) funcPtr_##name
 #endif
+
+
+//[-------------------------------------------------------]
+//[ ARB definitions                                       ]
+//[-------------------------------------------------------]
+// GL_ARB_draw_buffers
+#define GL_MAX_DRAW_BUFFERS_ARB	0x8824
+#define GL_DRAW_BUFFER0_ARB		0x8825
+#define GL_DRAW_BUFFER1_ARB		0x8826
+#define GL_DRAW_BUFFER2_ARB		0x8827
+#define GL_DRAW_BUFFER3_ARB		0x8828
+#define GL_DRAW_BUFFER4_ARB		0x8829
+#define GL_DRAW_BUFFER5_ARB		0x882A
+#define GL_DRAW_BUFFER6_ARB		0x882B
+#define GL_DRAW_BUFFER7_ARB		0x882C
+#define GL_DRAW_BUFFER8_ARB		0x882D
+#define GL_DRAW_BUFFER9_ARB		0x882E
+#define GL_DRAW_BUFFER10_ARB	0x882F
+#define GL_DRAW_BUFFER11_ARB	0x8830
+#define GL_DRAW_BUFFER12_ARB	0x8831
+#define GL_DRAW_BUFFER13_ARB	0x8832
+#define GL_DRAW_BUFFER14_ARB	0x8833
+#define GL_DRAW_BUFFER15_ARB	0x8834
+FNDEF_EX(void,	glDrawBuffersARB,	(GLsizei n, const GLenum *bufs));
+#define glDrawBuffersARB	FNPTR(glDrawBuffersARB)
 
 
 //[-------------------------------------------------------]
@@ -198,6 +243,29 @@ FNDEF_EX(void,	glGetTexLevelParameterivNV,	(GLenum target, GLint level, GLenum p
 #define glGetTexLevelParameterfvNV	FNPTR(glGetTexLevelParameterfvNV)
 #define glGetTexLevelParameterivNV	FNPTR(glGetTexLevelParameterivNV)
 
+// GL_NV_fbo_color_attachments
+#define GL_COLOR_ATTACHMENT0_NV		0x8CE0
+#define GL_COLOR_ATTACHMENT1_NV		0x8CE1
+#define GL_COLOR_ATTACHMENT2_NV		0x8CE2
+#define GL_COLOR_ATTACHMENT3_NV		0x8CE3
+#define GL_COLOR_ATTACHMENT4_NV		0x8CE4
+#define GL_COLOR_ATTACHMENT5_NV		0x8CE5
+#define GL_COLOR_ATTACHMENT6_NV		0x8CE6
+#define GL_COLOR_ATTACHMENT7_NV		0x8CE7
+#define GL_COLOR_ATTACHMENT8_NV		0x8CE8
+#define GL_COLOR_ATTACHMENT9_NV		0x8CE9
+#define GL_COLOR_ATTACHMENT10_NV	0x8CEA
+#define GL_COLOR_ATTACHMENT11_NV	0x8CEB
+#define GL_COLOR_ATTACHMENT12_NV	0x8CEC
+#define GL_COLOR_ATTACHMENT13_NV	0x8CED
+#define GL_COLOR_ATTACHMENT14_NV	0x8CEE
+#define GL_COLOR_ATTACHMENT15_NV	0x8CEF
+
+// GL_NV_read_buffer
+#define GL_READ_BUFFER_NV	0x0C02
+FNDEF_EX(void,	glReadBufferNV,	(GLenum src));
+#define glReadBufferNV	FNPTR(glReadBufferNV)
+
 
 //[-------------------------------------------------------]
 //[ OES definitions                                       ]
@@ -234,6 +302,36 @@ FNDEF_EX(void,	glFramebufferTexture3DOES,		(GLenum target, GLenum attachment, GL
 #define glCompressedTexImage3DOES		FNPTR(glCompressedTexImage3DOES)
 #define glCompressedTexSubImage3DOES	FNPTR(glCompressedTexSubImage3DOES)
 #define glFramebufferTexture3DOES		FNPTR(glFramebufferTexture3DOES)
+
+// GL_OES_packed_depth_stencil
+#define GL_DEPTH_STENCIL_OES		0x84F9
+#define GL_UNSIGNED_INT_24_8_OES	0x84FA
+#define GL_DEPTH24_STENCIL8_OES		0x88F0
+
+// GL_OES_depth24
+#define GL_DEPTH_COMPONENT24_OES	0x81A6
+
+// GL_OES_depth32
+#define GL_DEPTH_COMPONENT32_OES	0x81A7 
+
+
+//[-------------------------------------------------------]
+//[ ANGLE definitions                                     ]
+//[-------------------------------------------------------]
+// GL_ANGLE_framebuffer_blit
+#define GL_READ_FRAMEBUFFER_EXT			0x8CA8
+#define GL_DRAW_FRAMEBUFFER_EXT			0x8CA9
+#define GL_DRAW_FRAMEBUFFER_BINDING_EXT	0x8CA6
+#define GL_READ_FRAMEBUFFER_BINDING_EXT	0x8CAA
+FNDEF_EX(void,	glBlitFramebufferEXT,	(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, GLbitfield mask, GLenum filter));
+#define glBlitFramebufferEXT	FNPTR(glBlitFramebufferEXT)
+
+// GL_ANGLE_framebuffer_multisample
+#define GL_RENDERBUFFER_SAMPLES_ANGLE				0x8CAB
+#define GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_ANGLE	0x8D56
+#define GL_MAX_SAMPLES_ANGLE						0x8D57
+FNDEF_EX(void,	glRenderbufferStorageMultisampleANGLE,	(GLenum target, GLsizei samples, GLenum internalformat, GLsizei width, GLsizei height));
+#define glRenderbufferStorageMultisampleANGLE	FNPTR(glRenderbufferStorageMultisampleANGLE)
 
 
 //[-------------------------------------------------------]

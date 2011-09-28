@@ -80,6 +80,7 @@ Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits,
 	#else
 		m_pFontManager(new FontManager(*this)),
 	#endif
+	m_nMultisampleAntialiasingSamples(nMultisampleAntialiasingSamples),
 	m_pShaderLanguageGLSL(new ShaderLanguageGLSL(*this)),
 	m_pShaderLanguageCg(nullptr)
 {
@@ -240,6 +241,15 @@ Renderer::~Renderer()
 Context &Renderer::GetContext() const
 {
 	return *m_pContext;
+}
+
+/**
+*  @brief
+*    Returns the used multisample antialiasing samples per pixel
+*/
+uint32 Renderer::GetMultisampleAntialiasingSamples() const
+{
+	return m_nMultisampleAntialiasingSamples;
 }
 
 /**
@@ -609,14 +619,26 @@ void Renderer::SetupCapabilities()
 {
 	GLint nGLTemp = 0;
 
-	// [TODO] Add "GL_ARB_draw_buffers"-support
-	m_sCapabilities.nMaxColorRenderTargets			= 1;
+	// Get the extensions class instance
+	const Extensions &cExtensions = GetContext().GetExtensions();
+
+	// "GL_ARB_draw_buffers"-extension available?
+	if (cExtensions.IsGL_ARB_draw_buffers()) {
+		// Maximum number of color render targets
+		glGetIntegerv(GL_MAX_DRAW_BUFFERS_ARB, &nGLTemp);
+
+		// At the moment, this render backend supports up to 16 color render targets
+		m_sCapabilities.nMaxColorRenderTargets		= (nGLTemp > 16) ? 16 : static_cast<uint8>(nGLTemp);
+	} else {
+		// OpenGL ES 2.0 has no MRT support
+		m_sCapabilities.nMaxColorRenderTargets		= 1;
+	}
 
 	// [TODO] Get value
 	m_sCapabilities.nMaxTextureUnits				= 8;
 
 	// "GL_EXT_texture_filter_anisotropic"-extension available?
-	if (GetContext().GetExtensions().IsGL_EXT_texture_filter_anisotropic()) {
+	if (cExtensions.IsGL_EXT_texture_filter_anisotropic()) {
 		glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &nGLTemp);
 		m_sCapabilities.nMaxAnisotropy				= static_cast<uint16>(nGLTemp);
 	} else {
@@ -639,7 +661,7 @@ void Renderer::SetupCapabilities()
 	m_sCapabilities.nMaxRectangleTextureBufferSize	= m_sCapabilities.nMaxTextureBufferSize;
 
 	// "GL_OES_texture_3D"-extension available?
-	if (GetContext().GetExtensions().IsGL_OES_texture_3D()) {
+	if (cExtensions.IsGL_OES_texture_3D()) {
 		m_sCapabilities.bTextureBuffer3D			= true;
 		glGetIntegerv(GL_MAX_3D_TEXTURE_SIZE_OES, &nGLTemp);
 		m_sCapabilities.nMax3DTextureBufferSize		= static_cast<uint16>(nGLTemp);
@@ -1824,11 +1846,10 @@ bool Renderer::SetColorRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, u
 
 bool Renderer::MakeScreenshot(PLGraphics::Image &cImage)
 {
-	// [TODO] Render To Texture
 	// In case the current surface is a texture, we need to 'finish' the current rendering process
-//	PLRenderer::Surface *pSurface = m_cCurrentSurface.GetSurface();
-//	if (pSurface && pSurface->GetType() == PLRenderer::Surface::TextureBuffer)
-//		static_cast<SurfaceTextureBuffer*>(pSurface)->Finish();
+	PLRenderer::Surface *pSurface = m_cCurrentSurface.GetSurface();
+	if (pSurface && pSurface->GetType() == PLRenderer::Surface::TextureBuffer)
+		static_cast<SurfaceTextureBuffer*>(pSurface)->Finish();
 
 	// Get viewport data
 	GLint nViewPort[4];
