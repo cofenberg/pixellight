@@ -55,6 +55,7 @@ ExtensionsRuntimeLinking::ExtensionsRuntimeLinking() :
 	// NV
 	m_bGL_NV_get_tex_image(false),
 	// OES
+	m_bGL_OES_mapbuffer(false),
 	m_bGL_OES_element_index_uint(false),
 	m_bGL_OES_texture_3D(false)
 {
@@ -112,8 +113,17 @@ void ExtensionsRuntimeLinking::Init()
 	}
 
 	// OES
+	m_bGL_OES_mapbuffer			 = sExtensions.IsSubstring("GL_OES_mapbuffer");
+	if (m_bGL_OES_mapbuffer) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glGetBufferPointervOES)
+		IMPORT_FUNC(glMapBufferOES)
+		IMPORT_FUNC(glUnmapBufferOES)
+		m_bGL_OES_mapbuffer = bResult;
+	}
 	m_bGL_OES_element_index_uint = sExtensions.IsSubstring("GL_OES_element_index_uint");
-	m_bGL_OES_texture_3D = sExtensions.IsSubstring("GL_OES_texture_3D");
+	m_bGL_OES_texture_3D		 = sExtensions.IsSubstring("GL_OES_texture_3D");
 	if (m_bGL_OES_texture_3D) {
 		// Load the entry points
 		bool bResult = true;	// Success by default
@@ -173,6 +183,11 @@ bool ExtensionsRuntimeLinking::IsGL_NV_get_tex_image() const
 }
 
 // OES
+bool ExtensionsRuntimeLinking::IsGL_OES_mapbuffer() const
+{
+	return m_bGL_OES_mapbuffer;
+}
+
 bool ExtensionsRuntimeLinking::IsGL_OES_element_index_uint() const
 {
 	return m_bGL_OES_element_index_uint;

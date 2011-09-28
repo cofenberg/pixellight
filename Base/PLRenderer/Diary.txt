@@ -14,6 +14,7 @@ PLRendererOpenGLES2:
   ... so, still some minor usage details to figure out for an easy and generic usage... but hey, Cg shaders on a mobile device! :D
 - Added support for "GL_OES_texture_3D"
 - Added support for "GL_NV_get_tex_image"
+- Added support for "GL_OES_mapbuffer"
 
 
 

@@ -300,20 +300,14 @@ void *IndexBuffer::Lock(uint32 nFlag)
 	m_nLockCount++;
 	if (!m_pLockedData) {
 		// Get lock mode
-		// [TODO] GL_OES_mapbuffer
-//		uint32 nFlagAPI;
-		if (nFlag == PLRenderer::Lock::ReadOnly) {
-	//		nFlagAPI        = GL_READ_ONLY_ARB;
+		if (nFlag == PLRenderer::Lock::ReadOnly)
 			m_bLockReadOnly = true;
-		} else if (nFlag == PLRenderer::Lock::WriteOnly) {
-//			nFlagAPI        = GL_WRITE_ONLY_OES;
+		else if (nFlag == PLRenderer::Lock::WriteOnly)
 			m_bLockReadOnly = false;
-		} else if (nFlag == PLRenderer::Lock::ReadWrite) {
-	//		nFlagAPI        = GL_READ_WRITE_ARB;
+		else if (nFlag == PLRenderer::Lock::ReadWrite)
 			m_bLockReadOnly = false;
-		} else {
+		else
 			return nullptr; // Error!
-		}
 
 		// Map the index buffer
 		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nIndexBufferLocks++;
@@ -321,12 +315,14 @@ void *IndexBuffer::Lock(uint32 nFlag)
 		if (m_pData)
 			m_pLockedData = m_pData;
 		else if (m_nIndexBuffer) {
-			// Make this index buffer to the current one
-			MakeCurrent();
+			// "GL_OES_mapbuffer"-extension available? (there's only support for "write only")
+			if (nFlag == PLRenderer::Lock::WriteOnly && static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_OES_mapbuffer()) {
+				// Make this index buffer to the current one
+				MakeCurrent();
 
-			// [TODO] GL_OES_mapbuffer
-			// Map
-			//m_pLockedData = glMapBufferOES(GL_ELEMENT_ARRAY_BUFFER, nFlagAPI);
+				// Map
+				m_pLockedData = glMapBufferOES(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY_OES);
+			}
 		}
 
 		// Lock valid?
@@ -359,13 +355,13 @@ bool IndexBuffer::Unlock()
 		if (m_nIndexBuffer && !m_bLockReadOnly)
 			m_bUpdateIBO = true;
 	} else {
-		if (m_nIndexBuffer) {
+		// "GL_OES_mapbuffer"-extension available?
+		if (m_nIndexBuffer && static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_OES_mapbuffer()) {
 			// Make this index buffer to the current one
 			MakeCurrent();
 
-			// [TODO] GL_OES_mapbuffer
 			// Unmap
-		//	glUnmapBufferOES(GL_ELEMENT_ARRAY_BUFFER);
+			glUnmapBufferOES(GL_ELEMENT_ARRAY_BUFFER);
 		}
 	}
 	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nIndexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;

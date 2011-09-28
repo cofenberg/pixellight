@@ -94,6 +94,7 @@ class ExtensionsRuntimeLinking : public Extensions {
 		// NV
 		virtual bool IsGL_NV_get_tex_image() const override;
 		// OES
+		virtual bool IsGL_OES_mapbuffer() const override;
 		virtual bool IsGL_OES_element_index_uint() const override;
 		virtual bool IsGL_OES_texture_3D() const override;
 
@@ -113,6 +114,7 @@ class ExtensionsRuntimeLinking : public Extensions {
 		// NV
 		bool m_bGL_NV_get_tex_image;
 		// OES
+		bool m_bGL_OES_mapbuffer;
 		bool m_bGL_OES_element_index_uint;
 		bool m_bGL_OES_texture_3D;
 
@@ -200,6 +202,18 @@ FNDEF_EX(void,	glGetTexLevelParameterivNV,	(GLenum target, GLint level, GLenum p
 //[-------------------------------------------------------]
 //[ OES definitions                                       ]
 //[-------------------------------------------------------]
+// GL_OES_mapbuffer
+#define GL_WRITE_ONLY_OES			0x88B9
+#define GL_BUFFER_ACCESS_OES		0x88BB
+#define GL_BUFFER_MAPPED_OES		0x88BC
+#define GL_BUFFER_MAP_POINTER_OES	0x88BD
+FNDEF_EX(void,		glGetBufferPointervOES,	(GLenum target, GLenum pname, void **params));
+FNDEF_EX(void *,	glMapBufferOES,			(GLenum target, GLenum access));
+FNDEF_EX(GLboolean,	glUnmapBufferOES,		(GLenum target));
+#define glGetBufferPointervOES	FNPTR(glGetBufferPointervOES)
+#define glMapBufferOES			FNPTR(glMapBufferOES)
+#define glUnmapBufferOES		FNPTR(glUnmapBufferOES)
+
 // GL_OES_element_index_uint
 #define GL_UNSIGNED_INT	0x1405
 

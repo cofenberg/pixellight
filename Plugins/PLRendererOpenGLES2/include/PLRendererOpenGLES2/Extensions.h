@@ -73,6 +73,7 @@ class Extensions {
 		// NV
 		virtual bool IsGL_NV_get_tex_image() const = 0;
 		// OES
+		virtual bool IsGL_OES_mapbuffer() const = 0;
 		virtual bool IsGL_OES_element_index_uint() const = 0;
 		virtual bool IsGL_OES_texture_3D() const = 0;
 
