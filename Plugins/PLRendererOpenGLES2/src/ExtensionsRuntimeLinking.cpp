@@ -52,6 +52,8 @@ ExtensionsRuntimeLinking::ExtensionsRuntimeLinking() :
 	m_bGL_EXT_Cg_shader(false),
 	// AMD
 	m_bGL_AMD_compressed_3DC_texture(false),
+	// NV
+	m_bGL_NV_get_tex_image(false),
 	// OES
 	m_bGL_OES_element_index_uint(false),
 	m_bGL_OES_texture_3D(false)
@@ -96,6 +98,18 @@ void ExtensionsRuntimeLinking::Init()
 
 	// AMD
 	m_bGL_AMD_compressed_3DC_texture = sExtensions.IsSubstring("GL_AMD_compressed_3DC_texture");
+
+	// NV
+	m_bGL_NV_get_tex_image = sExtensions.IsSubstring("GL_NV_get_tex_image");
+	if (m_bGL_NV_get_tex_image) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glGetTexImageNV)
+		IMPORT_FUNC(glGetCompressedTexImageNV)
+		IMPORT_FUNC(glGetTexLevelParameterfvNV)
+		IMPORT_FUNC(glGetTexLevelParameterivNV)
+		m_bGL_NV_get_tex_image = bResult;
+	}
 
 	// OES
 	m_bGL_OES_element_index_uint = sExtensions.IsSubstring("GL_OES_element_index_uint");
@@ -150,6 +164,12 @@ bool ExtensionsRuntimeLinking::IsGL_EXT_Cg_shader() const
 bool ExtensionsRuntimeLinking::IsGL_AMD_compressed_3DC_texture() const
 {
 	return m_bGL_AMD_compressed_3DC_texture;
+}
+
+// NV
+bool ExtensionsRuntimeLinking::IsGL_NV_get_tex_image() const
+{
+	return m_bGL_NV_get_tex_image;
 }
 
 // OES

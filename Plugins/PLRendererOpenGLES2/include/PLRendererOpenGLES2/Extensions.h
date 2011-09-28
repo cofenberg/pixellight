@@ -70,6 +70,8 @@ class Extensions {
 		virtual bool IsGL_EXT_Cg_shader() const = 0;
 		// AMD
 		virtual bool IsGL_AMD_compressed_3DC_texture() const = 0;
+		// NV
+		virtual bool IsGL_NV_get_tex_image() const = 0;
 		// OES
 		virtual bool IsGL_OES_element_index_uint() const = 0;
 		virtual bool IsGL_OES_texture_3D() const = 0;

@@ -91,6 +91,8 @@ class ExtensionsRuntimeLinking : public Extensions {
 		virtual bool IsGL_EXT_Cg_shader() const override;
 		// AMD
 		virtual bool IsGL_AMD_compressed_3DC_texture() const override;
+		// NV
+		virtual bool IsGL_NV_get_tex_image() const override;
 		// OES
 		virtual bool IsGL_OES_element_index_uint() const override;
 		virtual bool IsGL_OES_texture_3D() const override;
@@ -108,6 +110,8 @@ class ExtensionsRuntimeLinking : public Extensions {
 		bool m_bGL_EXT_Cg_shader;
 		// AMD
 		bool m_bGL_AMD_compressed_3DC_texture;
+		// NV
+		bool m_bGL_NV_get_tex_image;
 		// OES
 		bool m_bGL_OES_element_index_uint;
 		bool m_bGL_OES_texture_3D;
@@ -162,6 +166,35 @@ class ExtensionsRuntimeLinking : public Extensions {
 // GL_AMD_compressed_3DC_texture
 #define GL_3DC_X_AMD	0x87F9
 #define GL_3DC_XY_AMD	0x87FA
+
+
+//[-------------------------------------------------------]
+//[ NV definitions                                        ]
+//[-------------------------------------------------------]
+// GL_NV_get_tex_image
+#define GL_TEXTURE_WIDTH_NV					0x1000
+#define GL_TEXTURE_HEIGHT_NV				0x1001
+#define GL_TEXTURE_INTERNAL_FORMAT_NV		0x1003
+#define GL_TEXTURE_COMPONENTS_NV			GL_TEXTURE_INTERNAL_FORMAT_NV
+#define GL_TEXTURE_BORDER_NV				0x1005
+#define GL_TEXTURE_RED_SIZE_NV				0x805C
+#define GL_TEXTURE_GREEN_SIZE_NV			0x805D
+#define GL_TEXTURE_BLUE_SIZE_NV				0x805E
+#define GL_TEXTURE_ALPHA_SIZE_NV			0x805F
+#define GL_TEXTURE_LUMINANCE_SIZE_NV		0x8060
+#define GL_TEXTURE_INTENSITY_SIZE_NV		0x8061
+#define GL_TEXTURE_DEPTH_NV					0x8071
+#define GL_TEXTURE_COMPRESSED_IMAGE_SIZE_NV	0x86A0
+#define GL_TEXTURE_COMPRESSED_NV			0x86A1
+#define GL_TEXTURE_DEPTH_SIZE_NV			0x884A
+FNDEF_EX(void,	glGetTexImageNV,			(GLenum target, GLint level, GLenum format, GLenum type, GLvoid *img));
+FNDEF_EX(void,	glGetCompressedTexImageNV,	(GLenum target, GLint level, GLvoid *img));
+FNDEF_EX(void,	glGetTexLevelParameterfvNV,	(GLenum target, GLint level, GLenum pname, GLfloat *params));
+FNDEF_EX(void,	glGetTexLevelParameterivNV,	(GLenum target, GLint level, GLenum pname, GLint *params));
+#define glGetTexImageNV				FNPTR(glGetTexImageNV)
+#define glGetCompressedTexImageNV	FNPTR(glGetCompressedTexImageNV)
+#define glGetTexLevelParameterfvNV	FNPTR(glGetTexLevelParameterfvNV)
+#define glGetTexLevelParameterivNV	FNPTR(glGetTexLevelParameterivNV)
 
 
 //[-------------------------------------------------------]
