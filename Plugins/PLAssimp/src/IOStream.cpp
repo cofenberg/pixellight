@@ -65,7 +65,7 @@ IOStream::IOStream(File &cFile, bool bTakeOver) :
 
 //[-------------------------------------------------------]
 //[ Public virtual Assimp::IOStream functions             ]
-//[------------------------------------------------------]
+//[-------------------------------------------------------]
 size_t IOStream::Read(void *pvBuffer, size_t pSize, size_t pCount)
 {
 	return m_pFile->Read(pvBuffer, pSize, pCount);

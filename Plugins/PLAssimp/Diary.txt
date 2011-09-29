@@ -1,4 +1,10 @@
-﻿>> 26.07.2011
+﻿>> 29.09.2011
+[CO]
+- Added base class "AssimpLoader" implementing features used by "AssimpMeshLoader" and "AssimpSceneLoader"
+
+
+
+>> 26.07.2011
 [CO]
 - Added custom "IOSystem" and "IOStream"
 

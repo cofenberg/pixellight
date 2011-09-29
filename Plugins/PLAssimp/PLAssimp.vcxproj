@@ -255,6 +255,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\AssimpLoader.cpp" />
     <ClCompile Include="src\AssimpMeshLoader.cpp" />
     <ClCompile Include="src\AssimpSceneLoader.cpp" />
     <ClCompile Include="src\IOStream.cpp" />
@@ -340,6 +341,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\PLAssimp\AssimpLoader.h" />
     <ClInclude Include="include\PLAssimp\AssimpMeshLoader.h" />
     <ClInclude Include="include\PLAssimp\AssimpSceneLoader.h" />
     <ClInclude Include="include\PLAssimp\IOStream.h" />

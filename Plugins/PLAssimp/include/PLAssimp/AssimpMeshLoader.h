@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLMesh/Geometry.h>
+#include "PLAssimp/AssimpLoader.h"
 
 
 //[-------------------------------------------------------]
@@ -62,7 +63,7 @@ namespace PLAssimp {
 *  @brief
 *    Mesh loader using Assimp
 */
-class AssimpMeshLoader {
+class AssimpMeshLoader : public AssimpLoader {
 
 
 	//[-------------------------------------------------------]
@@ -161,9 +162,9 @@ class AssimpMeshLoader {
 		PLMesh::Mesh  *m_pMesh;										/**< Mesh to fill, can be a null pointer */
 		const aiScene *m_pAssimpScene;								/**< Used Assimp scene, can be a null pointer */
 		bool		   m_bHasNormals;								/**< Are there normals? */
-		bool		   m_bbHasTangentsAndBitangents;				/**< Are there tangents and bitangents? */
+		bool		   m_bHasTangentsAndBitangents;					/**< Are there tangents and bitangents? */
 		bool		   m_bHasTexCoords;								/**< Are there texture coordinates? */
-		unsigned int   m_mNumUVComponents[MaxNumOfTextureCoords];	/**< Specifies the number of components for a given UV channel (see aiMesh for details) */
+		unsigned int   m_nNumUVComponents[MaxNumOfTextureCoords];	/**< Specifies the number of components for a given UV channel (see aiMesh for details) */
 
 
 };

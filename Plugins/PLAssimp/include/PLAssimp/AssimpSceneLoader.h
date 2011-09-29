@@ -29,16 +29,19 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLScene/Scene/SceneLoader/SceneLoader.h>
+#include "PLAssimp/AssimpLoader.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+struct aiNode;
 struct aiScene;
 namespace PLCore {
 	class File;
 }
 namespace PLScene {
+	class SceneNode;
 	class SceneContainer;
 }
 
@@ -56,7 +59,7 @@ namespace PLAssimp {
 *  @brief
 *    Scene loader using Assimp
 */
-class AssimpSceneLoader {
+class AssimpSceneLoader : public AssimpLoader {
 
 
 	//[-------------------------------------------------------]
@@ -91,6 +94,84 @@ class AssimpSceneLoader {
 		*    'true' if all went fine, else 'false'
 		*/
 		bool Load(PLScene::SceneContainer &cContainer, PLCore::File &cFile, const PLCore::String &sHint = "");
+
+
+	//[-------------------------------------------------------]
+	//[ Private definitions                                   ]
+	//[-------------------------------------------------------]
+	private:
+		static const PLCore::uint32 MaxNumOfTextureCoords = 0x4;	/**< Supported number of texture coord sets (UV(W) channels) - same as AI_MAX_NUMBER_OF_TEXTURECOORDS */
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Loads the scene recursively
+		*
+		*  @param[in] cParentContainer
+		*    Current PixelLight parent scene container
+		*  @param[in] cAssimpNode
+		*    Current Assimp node
+		*/
+		void LoadRec(PLScene::SceneContainer &cParentContainer, const aiNode &cAssimpNode);
+
+		/**
+		*  @brief
+		*    Loads the given Assimp node (not recursively)
+		*
+		*  @param[in] cParentContainer
+		*    Current PixelLight parent scene container
+		*  @param[in] cAssimpNode
+		*    Assimp node to load
+		*  @param[in] bSetTransformation
+		*    Set PixelLight scene node transformation?
+		*/
+		void LoadNode(PLScene::SceneContainer &cParentContainer, const aiNode &cAssimpNode, bool bSetTransformation);
+
+		/**
+		*  @brief
+		*    Set's the transformation (relative to the parent) of a PixelLight scene node by using a given Assimp node
+		*
+		*  @param[in] cSceneNode
+		*    PixelLight scene node
+		*  @param[in] cAssimpNode
+		*    Assimp node
+		*/
+		void SetNodeTransformation(PLScene::SceneNode &cSceneNode, const aiNode &cAssimpNode) const;
+
+		/**
+		*  @brief
+		*    Loads the mesh of the given Assimp node
+		*
+		*  @param[in] cAssimpNode
+		*    Assimp node to load the mesh from
+		*/
+		void LoadMesh(const aiNode &cAssimpNode);
+
+		/**
+		*  @brief
+		*    Gets the total number of vertices and indices required for everything within a given Assimp node as one PixelLight mesh
+		*
+		*  @param[in]  cAssimpNode
+		*    Assimp node to gather the data from
+		*  @param[out] nNumOfVertices
+		*    Receives the number of vertices
+		*  @param[out] nNumOfIndices
+		*    Receives the number of indices
+		*  @param[out] bHasNormals
+		*    Receives 'true' if there are normals, else 'false'
+		*  @param[out] bHasTangentsAndBitangents
+		*    Receives 'true' if there are tangents and bitangents, else 'false'
+		*  @param[out] bHasTexCoords
+		*    Receives 'true' if there are texture coordinates, else 'false'
+		*  @param[out] nNumUVComponents
+		*    Receives the number of components for a given UV channel (see aiMesh for details), must have at least "MaxNumOfTextureCoords"-elements
+		*/
+		void GetNumOfVerticesAndIndices(const aiNode &cAssimpNode, PLCore::uint32 &nNumOfVertices, PLCore::uint32 &nNumOfIndices, bool &bHasNormals,
+										bool &bHasTangentsAndBitangents, bool &bHasTexCoords, unsigned int nNumUVComponents[]);
 
 
 	//[-------------------------------------------------------]
