@@ -355,9 +355,50 @@ void AssimpSceneLoader::LoadMesh(const aiMesh &cAssimpMesh, Mesh &cPLMesh)
 */
 void AssimpSceneLoader::AddMaterial(const aiMesh &cAssimpMesh, Mesh &cPLMesh)
 {
-	// [TODO]
-	if (cPLMesh.GetRenderer())
-		cPLMesh.AddMaterial(cPLMesh.GetRenderer()->GetRendererContext().GetMaterialManager().GetStandard());
+	// Get the material manager instance
+	if (cPLMesh.GetRenderer()) {
+		MaterialManager &cMaterialManager = cPLMesh.GetRenderer()->GetRendererContext().GetMaterialManager();
+
+		// Valid material?
+		Material *pPLMaterial = nullptr;
+		if (cAssimpMesh.mMaterialIndex < m_pAssimpScene->mNumMaterials) {
+			// Get the Assimp material
+			const aiMaterial &cAssimpMaterial = *m_pAssimpScene->mMaterials[cAssimpMesh.mMaterialIndex];
+
+			// Is this material already registered?
+			const String sAssimpMaterial = Type<const aiMaterial&>::ConvertToString(cAssimpMaterial);
+			pPLMaterial = m_mapAssimpMaterialToPL.Get(sAssimpMaterial);
+			if (!pPLMaterial) {
+				// Nope, create and register this material right now
+
+				// AI_MATKEY_NAME - Get Assimp material name
+				aiString sAssimpMaterialName;
+				cAssimpMaterial.Get(AI_MATKEY_NAME, sAssimpMaterialName);
+
+				// Construct an unique material name to avoid material conflicts
+				const String sMaterialNameOriginal = cPLMesh.GetName() + '_' + AssimpStringToPL(sAssimpMaterialName);
+				String sMaterialName = sMaterialNameOriginal;
+				uint32 nIndex = 0;
+				while (cMaterialManager.GetByName(sMaterialName)) {
+					sMaterialName = sMaterialNameOriginal + '_' + nIndex;
+					nIndex++;
+				}
+
+				// Add the PixelLight material
+				pPLMaterial = cMaterialManager.Create(sMaterialName);
+				if (pPLMaterial) {
+					// Register this material so that we know it's already there
+					m_mapAssimpMaterialToPL.Add(sAssimpMaterial, pPLMaterial);
+
+					// Convert the Assimp material into the PixelLight material
+					AssimpMaterialToPL(cAssimpMaterial, *pPLMaterial);
+				}
+			}
+		}
+
+		// Add the PixelLight material to the PixelLight mesh - Use default material as fallback so we can see at least something
+		cPLMesh.AddMaterial(pPLMaterial ? pPLMaterial : cMaterialManager.GetStandard());
+	}
 }
 
 /**
