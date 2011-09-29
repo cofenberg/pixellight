@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMesh/Geometry.h>
 #include <PLScene/Scene/SceneLoader/SceneLoader.h>
 #include "PLAssimp/AssimpLoader.h"
 
@@ -36,9 +37,17 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 struct aiNode;
+struct aiMesh;
 struct aiScene;
 namespace PLCore {
 	class File;
+}
+namespace PLRenderer {
+	class IndexBuffer;
+	class VertexBuffer;
+}
+namespace PLMesh {
+	class Mesh;
 }
 namespace PLScene {
 	class SceneNode;
@@ -156,34 +165,56 @@ class AssimpSceneLoader : public AssimpLoader {
 
 		/**
 		*  @brief
-		*    Loads the mesh of the given Assimp node
+		*    Loads the PixelLight mesh scene node of the given Assimp mesh
 		*
-		*  @param[in] cAssimpNode
-		*    Assimp node to load the mesh from
+		*  @param[in] cParentContainer
+		*    Current PixelLight parent scene container
+		*  @param[in] cAssimpMesh
+		*    Assimp mesh to load the PixelLight mesh scene node from
+		*  @param[in] sSceneNodeName
+		*    Name of the PixelLight mesh scene node to create
+		*
+		*  @return
+		*    The created PixelLight mesh scene node, null pointer on error
 		*/
-		void LoadMesh(const aiNode &cAssimpNode);
+		PLScene::SceneNode *LoadMeshNode(PLScene::SceneContainer &cParentContainer, const aiMesh &cAssimpMesh, const PLCore::String &sSceneNodeName);
 
 		/**
 		*  @brief
-		*    Gets the total number of vertices and indices required for everything within a given Assimp node as one PixelLight mesh
+		*    Loads the PixelLight mesh of the given Assimp mesh
 		*
-		*  @param[in]  cAssimpNode
-		*    Assimp node to gather the data from
-		*  @param[out] nNumOfVertices
-		*    Receives the number of vertices
-		*  @param[out] nNumOfIndices
-		*    Receives the number of indices
-		*  @param[out] bHasNormals
-		*    Receives 'true' if there are normals, else 'false'
-		*  @param[out] bHasTangentsAndBitangents
-		*    Receives 'true' if there are tangents and bitangents, else 'false'
-		*  @param[out] bHasTexCoords
-		*    Receives 'true' if there are texture coordinates, else 'false'
-		*  @param[out] nNumUVComponents
-		*    Receives the number of components for a given UV channel (see aiMesh for details), must have at least "MaxNumOfTextureCoords"-elements
+		*  @param[in]  cAssimpMesh
+		*    Assimp mesh to load the PixelLight mesh from
+		*  @param[out] cPLMesh
+		*    PixelLight mesh to fill (this mesh is not cleared before it's filled)
 		*/
-		void GetNumOfVerticesAndIndices(const aiNode &cAssimpNode, PLCore::uint32 &nNumOfVertices, PLCore::uint32 &nNumOfIndices, bool &bHasNormals,
-										bool &bHasTangentsAndBitangents, bool &bHasTexCoords, unsigned int nNumUVComponents[]);
+		void LoadMesh(const aiMesh &cAssimpMesh, PLMesh::Mesh &cPLMesh);
+
+		/**
+		*  @brief
+		*    Adds the mesh material (there's only one in here)
+		*
+		*  @param[in]  cAssimpMesh
+		*    Assimp mesh to load the PixelLight mesh from
+		*  @param[out] cPLMesh
+		*    PixelLight mesh to fill (this mesh is not cleared before it's filled)
+		*/
+		void AddMaterial(const aiMesh &cAssimpMesh, PLMesh::Mesh &cPLMesh);
+
+		/**
+		*  @brief
+		*    Fills the mesh data
+		*
+		*  @param[in]  cAssimpMesh
+		*    Assimp mesh to gather the data from
+		*  @param[in]  cVertexBuffer
+		*    Vertex buffer to fill
+		*  @param[in]  cIndexBuffer
+		*    Index buffer to fill
+		*  @param[in]  lstGeometries
+		*    Geometries to fill
+		*/
+		void FillMesh(const aiMesh &cAssimpMesh, PLRenderer::VertexBuffer &cVertexBuffer, PLRenderer::IndexBuffer &cIndexBuffer, PLCore::Array<PLMesh::Geometry> &lstGeometries);
 
 
 	//[-------------------------------------------------------]

@@ -170,7 +170,7 @@ bool AssimpMeshLoader::Load(Mesh &cMesh, File &cFile, bool bStatic, const String
 				if (pVertexBuffer->Lock(Lock::WriteOnly)) {
 					// Lock the index buffer
 					if (pIndexBuffer->Lock(Lock::WriteOnly)) {
-						// Fills the mesh data recursively
+						// Fill the mesh data recursively
 						nNumOfVertices = 0;
 						nNumOfIndices  = 0;
 						FillMeshRec(*m_pAssimpScene->mRootNode, *pVertexBuffer, *pIndexBuffer, *pLODLevel->GetGeometries(), aiMatrix4x4(), nNumOfVertices, nNumOfIndices);
