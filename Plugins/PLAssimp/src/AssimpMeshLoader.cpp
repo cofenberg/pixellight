@@ -116,7 +116,7 @@ bool AssimpMeshLoader::Load(Mesh &cMesh, File &cFile, bool bStatic, const String
 
 	// Let Assimp load in the scene (scene remains in possession of the importer instance)
 	// [TODO] Make it possible to select the post processing quality from the outside
-	m_pAssimpScene = cAssimpImporter.ReadFile(sMagicFilename.GetUTF8(), aiProcessPreset_TargetRealtime_Quality|aiProcess_TransformUVCoords|aiProcess_FlipUVs);
+	m_pAssimpScene = cAssimpImporter.ReadFile(sMagicFilename.GetUTF8(), aiProcessPreset_TargetRealtime_MaxQuality|aiProcess_TransformUVCoords|aiProcess_FlipUVs);
 	if (m_pAssimpScene) {
 		// Get the total number of vertices and indices required for everything as one PixelLight mesh recursively
 		uint32 nNumOfVertices = 0;

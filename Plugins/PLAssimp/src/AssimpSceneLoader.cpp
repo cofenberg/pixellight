@@ -107,7 +107,7 @@ bool AssimpSceneLoader::Load(SceneContainer &cContainer, File &cFile, const Stri
 
 	// Let Assimp load in the scene (scene remains in possession of the importer instance)
 	// [TODO] Make it possible to select the post processing quality from the outside
-	m_pAssimpScene = cAssimpImporter.ReadFile(sMagicFilename.GetUTF8(), aiProcessPreset_TargetRealtime_Quality|aiProcess_TransformUVCoords|aiProcess_FlipUVs);
+	m_pAssimpScene = cAssimpImporter.ReadFile(sMagicFilename.GetUTF8(), aiProcessPreset_TargetRealtime_MaxQuality|aiProcess_TransformUVCoords|aiProcess_FlipUVs);
 	if (m_pAssimpScene) {
 		// Load the scene recursively
 		LoadRec(cContainer, *m_pAssimpScene->mRootNode);
@@ -115,8 +115,8 @@ bool AssimpSceneLoader::Load(SceneContainer &cContainer, File &cFile, const Stri
 		// [TODO] Load lights
 		// [TODO] Load cameras
 
-		// Error!
-		return false;
+		// Done
+		return true;
 	} else {
 		// Write an error message into the log
 		PL_LOG(Error, cAssimpImporter.GetErrorString())
@@ -244,7 +244,7 @@ void AssimpSceneLoader::SetNodeTransformation(SceneNode &cSceneNode, const aiNod
 */
 SceneNode *AssimpSceneLoader::LoadMeshNode(SceneContainer &cParentContainer, const aiMesh &cAssimpMesh, const String &sSceneNodeName)
 {
-	Mesh *pMesh = nullptr;
+	Mesh *pPLMesh = nullptr;
 
 	{ // Load the PixelLight mesh of the given Assimp mesh, this method takes also care of instanced meshes (each PixelLight mesh has an unique resource name)
 		// Get the scene context
@@ -254,21 +254,24 @@ SceneNode *AssimpSceneLoader::LoadMeshNode(SceneContainer &cParentContainer, con
 			MeshManager &cMeshManager = pSceneContext->GetMeshManager();
 
 			// Mesh already loaded?
-			// [TODO] Add support for mesh instancing
-		//	Mesh *pMesh = cMeshManager.GetByName();
-			if (!pMesh) {
+			const String sAssimpMesh = Type<const aiMesh&>::ConvertToString(cAssimpMesh);
+			pPLMesh = m_mapAssimpMeshToPL.Get(sAssimpMesh);
+			if (!pPLMesh) {
 				// Create a new PixelLight mesh
-				pMesh = cMeshManager.Create();
-				if (pMesh) {
+				pPLMesh = cMeshManager.Create();
+				if (pPLMesh) {
+					// Register this mesh so that we know it's already there
+					m_mapAssimpMeshToPL.Add(sAssimpMesh, pPLMesh);
+
 					// Load the PixelLight mesh of the given Assimp mesh
-					LoadMesh(cAssimpMesh, *pMesh);
+					LoadMesh(cAssimpMesh, *pPLMesh);
 				}
 			}
 		}
 	}
 
 	// Create an "PLScene::SNMesh"-instance
-	return cParentContainer.Create("PLScene::SNMesh", sSceneNodeName, pMesh ? ("Mesh=\"" + pMesh->GetName() + '\"') : "");
+	return cParentContainer.Create("PLScene::SNMesh", sSceneNodeName, pPLMesh ? ("Mesh=\"" + pPLMesh->GetName() + '\"') : "");
 }
 
 /**

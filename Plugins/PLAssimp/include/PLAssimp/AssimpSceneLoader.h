@@ -223,6 +223,7 @@ class AssimpSceneLoader : public AssimpLoader {
 	private:
 		PLScene::SceneContainer								   *m_pContainer;				/**< Scene container to fill, can be a null pointer */
 		const aiScene										   *m_pAssimpScene;				/**< Used Assimp scene, can be a null pointer */
+		PLCore::HashMap<PLCore::String, PLMesh::Mesh*>			m_mapAssimpMeshToPL;		/**< Maps a Assimp mesh onto a PixelLight mesh */
 		PLCore::HashMap<PLCore::String, PLRenderer::Material*>  m_mapAssimpMaterialToPL;	/**< Maps a Assimp material onto a PixelLight material */
 
 
