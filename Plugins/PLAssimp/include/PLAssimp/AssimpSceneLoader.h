@@ -130,6 +130,24 @@ class AssimpSceneLoader : public AssimpLoader {
 	private:
 		/**
 		*  @brief
+		*    Loads the scene lights
+		*
+		*  @param[in] cParentContainer
+		*    PixelLight parent scene container
+		*/
+		void LoadLights(PLScene::SceneContainer &cParentContainer);
+
+		/**
+		*  @brief
+		*    Loads the scene cameras
+		*
+		*  @param[in] cParentContainer
+		*    PixelLight parent scene container
+		*/
+		void LoadCameras(PLScene::SceneContainer &cParentContainer);
+
+		/**
+		*  @brief
 		*    Loads the scene recursively
 		*
 		*  @param[in] cParentContainer

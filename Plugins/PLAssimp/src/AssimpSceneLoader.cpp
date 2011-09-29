@@ -28,7 +28,7 @@
 #include <Assimp/aiPostProcess.h>
 #include <PLCore/Log/Log.h>
 #include <PLCore/File/File.h>
-#include <PLMath/Matrix4x4.h>
+#include <PLMath/Matrix3x3.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/IndexBuffer.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
@@ -38,6 +38,8 @@
 #include <PLMesh/MeshManager.h>
 #include <PLMesh/MeshLODLevel.h>
 #include <PLMesh/MeshMorphTarget.h>
+#include <PLScene/Scene/SNCamera.h>
+#include <PLScene/Scene/SNSpotLight.h>
 #include <PLScene/Scene/SceneContext.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include "PLAssimp/IOSystem.h"
@@ -49,6 +51,7 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLMath;
+using namespace PLGraphics;
 using namespace PLRenderer;
 using namespace PLMesh;
 using namespace PLScene;
@@ -112,8 +115,11 @@ bool AssimpSceneLoader::Load(SceneContainer &cContainer, File &cFile, const Stri
 		// Load the scene recursively
 		LoadRec(cContainer, *m_pAssimpScene->mRootNode);
 
-		// [TODO] Load lights
-		// [TODO] Load cameras
+		// Load the scene lights
+		LoadLights(cContainer);
+
+		// Load the scene cameras
+		LoadCameras(cContainer);
 
 		// Done
 		return true;
@@ -130,6 +136,127 @@ bool AssimpSceneLoader::Load(SceneContainer &cContainer, File &cFile, const Stri
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Loads the scene lights
+*/
+void AssimpSceneLoader::LoadLights(SceneContainer &cParentContainer)
+{
+	// Loop through all lights this Assimp scene is providing
+	for (unsigned int nAssimpLight=0; nAssimpLight<m_pAssimpScene->mNumLights; nAssimpLight++) {
+		// Get the Assimp light instance
+		const aiLight &cAssimpLight = *m_pAssimpScene->mLights[nAssimpLight];
+
+		// Create the PixelLight light scene node
+		SNLight *pPLLight = nullptr;
+		switch (cAssimpLight.mType) {
+			case aiLightSource_DIRECTIONAL:
+				pPLLight = static_cast<SNLight*>(cParentContainer.Create("PLScene::SNDirectionalLight", AssimpStringToPL(cAssimpLight.mName)));
+				break;
+
+			case aiLightSource_POINT:
+				pPLLight = static_cast<SNLight*>(cParentContainer.Create("PLScene::SNPointLight", AssimpStringToPL(cAssimpLight.mName)));
+				break;
+
+			case aiLightSource_SPOT:
+				pPLLight = static_cast<SNLight*>(cParentContainer.Create("PLScene::SNSpotLight", AssimpStringToPL(cAssimpLight.mName)));
+				if (pPLLight) {
+					// Cast to the spot light class
+					SNSpotLight *pSNSpotLight = static_cast<SNSpotLight*>(pPLLight);
+
+					// Set inner angle of a spot light's light cone
+					// -> Assimp: The angle is given in radians
+					// -> PixelLight: Inner cone angle in degree for better artists usability (smaller than the outer angle)
+					pSNSpotLight->SetInnerAngle(static_cast<float>(cAssimpLight.mAngleInnerCone*Math::RadToDeg));
+
+					// Set outer angle of a spot light's light cone
+					// -> Assimp: The angle is given in radians
+					// -> PixelLight: Outer cone angle in degree for better artists usability
+					pSNSpotLight->SetOuterAngle(static_cast<float>(cAssimpLight.mAngleOuterCone*Math::RadToDeg));
+				}
+				break;
+		}
+		if (pPLLight) {
+			// Set position
+			pPLLight->SetPosition(Vector3(cAssimpLight.mPosition.x, cAssimpLight.mPosition.y, cAssimpLight.mPosition.z));
+
+			{ // Set rotation (= direction)
+				Matrix3x3 mRotation;
+				mRotation.LookAt(Vector3::Zero,
+									Vector3(cAssimpLight.mDirection.x, cAssimpLight.mDirection.y, cAssimpLight.mDirection.z),
+									Vector3::UnitY);
+				Quaternion qRotation;
+				qRotation.FromRotationMatrix(mRotation);
+				pPLLight->GetTransform().SetRotation(qRotation);
+			}
+
+			// Set light color
+			static_cast<SNLight*>(pPLLight)->Color = Color3(cAssimpLight.mColorDiffuse.r, cAssimpLight.mColorDiffuse.g, cAssimpLight.mColorDiffuse.b);
+
+			// There's no specular color within PixelLight lights ("aiLight::mColorDiffuse")
+
+			// There's no ambient color within PixelLight lights ("aiLight::mColorAmbient")
+
+			// Is it a point light or a light derived from this type?
+			if (pPLLight->IsPointLight()) {
+				// Cast to the point light class
+				SNPointLight *pSNPointLight = static_cast<SNPointLight*>(pPLLight);
+
+				// There's no constant attenuation within PixelLight lights ("aiLight::mAttenuationConstant")
+
+				// Set range
+				pSNPointLight->SetRange(cAssimpLight.mAttenuationLinear);
+
+				// There's no quadratic attenuation within PixelLight lights ("aiLight::mAttenuationQuadratic")
+			}
+		}
+	}
+}
+
+/**
+*  @brief
+*    Loads the scene cameras
+*/
+void AssimpSceneLoader::LoadCameras(SceneContainer &cParentContainer)
+{
+	// Loop through all cameras this Assimp scene is providing
+	for (unsigned int nAssimpCamera=0; nAssimpCamera<m_pAssimpScene->mNumCameras; nAssimpCamera++) {
+		// Get the Assimp camera instance
+		const aiCamera &cAssimpCamera = *m_pAssimpScene->mCameras[nAssimpCamera];
+
+		// Create the PixelLight camera scene node
+		SNCamera *pPLCamera = static_cast<SNCamera*>(cParentContainer.Create("PLScene::SNCamera", AssimpStringToPL(cAssimpCamera.mName)));
+		if (pPLCamera) {
+			// Set position
+			pPLCamera->SetPosition(Vector3(cAssimpCamera.mPosition.x, cAssimpCamera.mPosition.y, cAssimpCamera.mPosition.z));
+
+			{ // Set rotation
+				Matrix3x3 mRotation;
+				mRotation.LookAt(Vector3::Zero,
+									Vector3(cAssimpCamera.mLookAt.x, cAssimpCamera.mLookAt.y, cAssimpCamera.mLookAt.z),
+									Vector3(cAssimpCamera.mUp.x, cAssimpCamera.mUp.y, cAssimpCamera.mUp.z));
+				Quaternion qRotation;
+				qRotation.FromRotationMatrix(mRotation);
+				pPLCamera->GetTransform().SetRotation(qRotation);
+			}
+
+			// Set field of view in degree
+			// -> Assimp is using half horizontal field of view angle, in radians
+			// -> For better artists usability PixelLight is using degree and full horizontal field of view angle
+			pPLCamera->SetFOV(static_cast<float>(cAssimpCamera.mHorizontalFOV*Math::RadToDeg*2));
+
+			// Set aspect factor
+			pPLCamera->SetAspect(cAssimpCamera.mAspect);
+
+			// Set near clipping plane
+			pPLCamera->SetZNear(cAssimpCamera.mClipPlaneNear);
+
+			// Set far clipping plane
+			pPLCamera->SetZFar(cAssimpCamera.mClipPlaneFar);
+		}
+	}
+}
+
 /**
 *  @brief
 *    Loads the scene recursively
