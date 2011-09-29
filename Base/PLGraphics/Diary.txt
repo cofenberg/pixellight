@@ -1,3 +1,9 @@
+>> 29.09.2011
+[CO]
+- Bugfix: Uncompressed dds images with mipmaps and "DDS_LINEARSIZE" set were not loaded correctly
+
+
+
 >> 14.09.2011
 [CO]
 - "Color3::SwapRB()" & "Color4::SwapRB()": The fallback C implementation was just wrong... fix it... I'am not sure who wrote this in the first place, and why

@@ -15,6 +15,7 @@ Changes in PixelLight 0.9.9-R1 (not yet released)
 - Bugfix (Linux): "PLFrontendOS::OSWindowLinux::GetX()" & "PLFrontendOS::OSWindowLinux::GetY()" were not returning the window position correctly (window decoration issue)
 - Bugfix: "PLFrontendPLGui" was not returning and setting the window size correctly (the window border must be ignored)
 - Bugfix: "PLInput::Keyboard" & "PLInput::VirtualStandardController": Fixed naming mix up between "Return" and "Enter", it's now always "Return" (in PixelLight, there's no difference between those two keys)
+- Bugfix: Uncompressed dds images with mipmaps and "DDS_LINEARSIZE" set were not loaded correctly
 
 
 Changes in PixelLight 0.9.8-R1 (released on August 23, 2011 - one year after the first public PixelLight release and nearly 9 years after development start on September 16, 2002)

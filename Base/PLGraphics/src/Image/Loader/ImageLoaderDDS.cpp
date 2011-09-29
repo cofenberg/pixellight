@@ -363,10 +363,8 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 			}
 
 			// Microsoft bug, they're not following their own documentation.
-			if (!(sHeader.ddpfPixelFormat.nFlags & (DDS_LINEARSIZE | DDS_PITCH)) || !sHeader.nPitchOrLinearSize) {
+			if (!(sHeader.ddpfPixelFormat.nFlags & (DDS_LINEARSIZE | DDS_PITCH)) || !sHeader.nPitchOrLinearSize)
 				sHeader.ddpfPixelFormat.nFlags |= DDS_LINEARSIZE;
-				sHeader.nPitchOrLinearSize		= (sHeader.nWidth * sHeader.nHeight * nDepth * (sHeader.ddpfPixelFormat.nRGBBitCount >> 3));
-			}
 		}
 
 		// Get the number of mipmaps
@@ -375,47 +373,54 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 		// Cube map?
 		const uint32 nNumOfFaces = (sHeader.ddsCaps.nCaps2 & DDSCAPS2_CUBEMAP) ? 6 : 1;
 
-		// Loop through all faces
-		for (uint32 nFace=0; nFace<nNumOfFaces; nFace++){
-			// Create image part with reasonable semantic
-			ImagePart *pImagePart = cImage.CreatePart((nNumOfFaces == 6) ? ImagePartCubeSidePosX + nFace : 0);
-			if (pImagePart) {
-				// Load in all mipmaps
-				for (uint32 nMipmap=0; nMipmap<nMipmaps; nMipmap++) {
-					// Create image buffer
-					ImageBuffer *pImageBuffer = pImagePart->CreateMipmap();
-					pImageBuffer->CreateImage(nDataFormat,
-											  nColorFormat,
-											  Vector3i(ImageBuffer::GetMipmapSize(sHeader.nWidth,  nMipmap),
-													   ImageBuffer::GetMipmapSize(sHeader.nHeight, nMipmap),
-													   nDepth),
-											  nCompression);
+		{ // Loop through all faces
+			uint8 *pnTempData = nullptr;	// Used when "DDS_LINEARSIZE" is set
+			for (uint32 nFace=0; nFace<nNumOfFaces; nFace++){
+				// Create image part with reasonable semantic
+				ImagePart *pImagePart = cImage.CreatePart((nNumOfFaces == 6) ? ImagePartCubeSidePosX + nFace : 0);
+				if (pImagePart) {
+					// Load in all mipmaps
+					for (uint32 nMipmap=0; nMipmap<nMipmaps; nMipmap++) {
+						// Create image buffer
+						ImageBuffer *pImageBuffer = pImagePart->CreateMipmap();
+						pImageBuffer->CreateImage(nDataFormat,
+												  nColorFormat,
+												  Vector3i(ImageBuffer::GetMipmapSize(sHeader.nWidth,  nMipmap),
+														   ImageBuffer::GetMipmapSize(sHeader.nHeight, nMipmap),
+														   nDepth),
+												  nCompression);
 
-					// Read in compressed data?
-					if (nCompression == CompressionNone) {
-						// If the "DDS_LINEARSIZE" flag is set we need to do some more work...
-						if (sHeader.ddpfPixelFormat.nFlags & DDS_LINEARSIZE) {
-							// Allocate temp data
-							uint8 *pnTempData = new uint8[sHeader.nPitchOrLinearSize];
+						// Read in compressed data?
+						if (nCompression == CompressionNone) {
+							// If the "DDS_LINEARSIZE" flag is set we need to do some more work...
+							if (sHeader.ddpfPixelFormat.nFlags & DDS_LINEARSIZE) {
+								// Calculate the current linear size
+								const uint32 nPitchOrLinearSize = (pImageBuffer->GetSize().x * pImageBuffer->GetSize().y * nDepth * (sHeader.ddpfPixelFormat.nRGBBitCount >> 3));
 
-							// Read the data
-							cFile.Read(pnTempData, 1, sHeader.nPitchOrLinearSize);
+								// Allocate temp data right now? (we can reuse it for the following smaller mipmaps)
+								if (!pnTempData)
+									pnTempData = new uint8[nPitchOrLinearSize];
 
-							// Decompress the image data
-							DecompressRGBA(sHeader, *pImageBuffer, pnTempData);
+								// Read the data
+								cFile.Read(pnTempData, 1, nPitchOrLinearSize);
 
-							// Cleanup temp data
-							delete [] pnTempData;
+								// Decompress the image data
+								DecompressRGBA(sHeader, *pImageBuffer, pnTempData);
+							} else {
+								// A simple one: Just read in the whole uncompressed data
+								cFile.Read(pImageBuffer->GetData(), 1, pImageBuffer->GetDataSize());
+							}
 						} else {
-							// A simple one: Just read in the whole uncompressed data
-							cFile.Read(pImageBuffer->GetData(), 1, pImageBuffer->GetDataSize());
+							// A simple one: Just read in the whole compressed data
+							cFile.Read(pImageBuffer->GetCompressedData(), 1, pImageBuffer->GetCompressedDataSize());
 						}
-					} else {
-						// A simple one: Just read in the whole compressed data
-						cFile.Read(pImageBuffer->GetCompressedData(), 1, pImageBuffer->GetCompressedDataSize());
 					}
 				}
 			}
+
+			// Cleanup temp data
+			if (pnTempData)
+				delete [] pnTempData;
 		}
 
 		// Convert BGR(A) to RGB(A)
