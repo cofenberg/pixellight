@@ -24,7 +24,10 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <Assimp/aiMaterial.h>
+#include <PLRenderer/RendererContext.h>
+#include <PLRenderer/Texture/TextureManager.h>
 #include <PLRenderer/Material/Material.h>
+#include <PLRenderer/Material/Parameter.h>
 #include <PLRenderer/Material/ParameterManager.h>
 #include "PLAssimp/AssimpLoader.h"
 
@@ -50,10 +53,28 @@ AssimpLoader::AssimpLoader()
 
 /**
 *  @brief
+*    Constructor
+*/
+AssimpLoader::AssimpLoader(const String &sDefaultTextureFileExtension) :
+	m_sDefaultTextureFileExtension(sDefaultTextureFileExtension)
+{
+}
+
+/**
+*  @brief
 *    Destructor
 */
 AssimpLoader::~AssimpLoader()
 {
+}
+
+/**
+*  @brief
+*    Returns the default texture file extension
+*/
+String AssimpLoader::GetDefaultTextureFileExtension() const
+{
+	return m_sDefaultTextureFileExtension;
 }
 
 /**
@@ -137,19 +158,19 @@ void AssimpLoader::AssimpMaterialToPL(const aiMaterial &cAssimpMaterial, Materia
 	{ // aiTextureType_DIFFUSE
 		aiString sAssimpFilename;
 		if (cAssimpMaterial.GetTexture(aiTextureType_DIFFUSE, 0, &sAssimpFilename) == AI_SUCCESS)
-			cParameterManager.SetParameterTexture("DiffuseMap", AssimpStringToPL(sAssimpFilename));
+			SetParameterTexture(cParameterManager, "DiffuseMap", AssimpStringToPL(sAssimpFilename));
 	}
 
 	{ // aiTextureType_SPECULAR
 		aiString sAssimpFilename;
 		if (cAssimpMaterial.GetTexture(aiTextureType_SPECULAR, 0, &sAssimpFilename) == AI_SUCCESS)
-			cParameterManager.SetParameterTexture("SpecularMap", AssimpStringToPL(sAssimpFilename));
+			SetParameterTexture(cParameterManager, "SpecularMap", AssimpStringToPL(sAssimpFilename));
 	}
 
 	{ // aiTextureType_SPECULAR
 		aiString sAssimpFilename;
 		if (cAssimpMaterial.GetTexture(aiTextureType_SPECULAR, 0, &sAssimpFilename) == AI_SUCCESS)
-			cParameterManager.SetParameterTexture("SpecularMap", AssimpStringToPL(sAssimpFilename));
+			SetParameterTexture(cParameterManager, "SpecularMap", AssimpStringToPL(sAssimpFilename));
 	}
 
 	// aiTextureType_AMBIENT - not supported
@@ -157,19 +178,19 @@ void AssimpLoader::AssimpMaterialToPL(const aiMaterial &cAssimpMaterial, Materia
 	{ // aiTextureType_EMISSIVE
 		aiString sAssimpFilename;
 		if (cAssimpMaterial.GetTexture(aiTextureType_EMISSIVE, 0, &sAssimpFilename) == AI_SUCCESS)
-			cParameterManager.SetParameterTexture("EmissiveMap", AssimpStringToPL(sAssimpFilename));
+			SetParameterTexture(cParameterManager, "EmissiveMap", AssimpStringToPL(sAssimpFilename));
 	}
 
 	{ // aiTextureType_HEIGHT
 		aiString sAssimpFilename;
 		if (cAssimpMaterial.GetTexture(aiTextureType_HEIGHT, 0, &sAssimpFilename) == AI_SUCCESS)
-			cParameterManager.SetParameterTexture("HeightMap", AssimpStringToPL(sAssimpFilename));
+			SetParameterTexture(cParameterManager, "HeightMap", AssimpStringToPL(sAssimpFilename));
 	}
 
 	{ // aiTextureType_NORMALS
 		aiString sAssimpFilename;
 		if (cAssimpMaterial.GetTexture(aiTextureType_NORMALS, 0, &sAssimpFilename) == AI_SUCCESS)
-			cParameterManager.SetParameterTexture("NormalMap", AssimpStringToPL(sAssimpFilename));
+			SetParameterTexture(cParameterManager, "NormalMap", AssimpStringToPL(sAssimpFilename));
 	}
 
 	//  aiTextureType_SHININESS - not supported
@@ -179,13 +200,13 @@ void AssimpLoader::AssimpMaterialToPL(const aiMaterial &cAssimpMaterial, Materia
 	{ // aiTextureType_LIGHTMAP
 		aiString sAssimpFilename;
 		if (cAssimpMaterial.GetTexture(aiTextureType_LIGHTMAP, 0, &sAssimpFilename) == AI_SUCCESS)
-			cParameterManager.SetParameterTexture("LightMap", AssimpStringToPL(sAssimpFilename));
+			SetParameterTexture(cParameterManager, "LightMap", AssimpStringToPL(sAssimpFilename));
 	}
 
 	{ // aiTextureType_REFLECTION
 		aiString sAssimpFilename;
 		if (cAssimpMaterial.GetTexture(aiTextureType_REFLECTION, 0, &sAssimpFilename) == AI_SUCCESS)
-			cParameterManager.SetParameterTexture("ReflectionColor", AssimpStringToPL(sAssimpFilename));
+			SetParameterTexture(cParameterManager, "ReflectionColor", AssimpStringToPL(sAssimpFilename));
 	}
 }
 
@@ -210,6 +231,41 @@ AssimpLoader &AssimpLoader::operator =(const AssimpLoader &cSource)
 {
 	// No implementation because the copy operator is never used
 	return *this;
+}
+
+/**
+*  @brief
+*    Sets the texture of a material parameter
+*/
+void AssimpLoader::SetParameterTexture(ParameterManager &cParameterManager, const String &sName, const String &sFilename) const
+{
+	// Get/create the material parameter
+	Parameter *pParameter = cParameterManager.CreateParameter(ParameterManager::TextureBuffer, sName);
+	if (pParameter) {
+		// Get the texture manager instance
+		TextureManager &cTextureManager = cParameterManager.GetRendererContext().GetTextureManager();
+
+		// First, try to use the provided filename directly
+		Texture *pTexture = cTextureManager.LoadResource(sFilename);
+		if (!pTexture) {
+			// Hm, we were not able to load in the given texture, so, append the given default texture file extension and try it again
+			pTexture = cTextureManager.LoadResource(sFilename + '.' + m_sDefaultTextureFileExtension);
+			if (!pTexture) {
+				// It failed, again...
+
+				#ifndef WIN32
+					// If we're not on MS Windows, there might be a chance that there's an issue with upper/lower case within the used default texture file extension... our last chance...
+					String sUpperDefaultTextureFileExtension = m_sDefaultTextureFileExtension;
+					sUpperDefaultTextureFileExtension.ToUpper();
+					pTexture = cTextureManager.LoadResource(sFilename + '.' + sUpperDefaultTextureFileExtension);
+				#endif
+			}
+		}
+
+		// Texture successfully loaded?
+		if (pTexture)
+			pParameter->SetValueTexture(pTexture);
+	}
 }
 
 

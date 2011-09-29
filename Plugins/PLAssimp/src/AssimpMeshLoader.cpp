@@ -69,6 +69,21 @@ AssimpMeshLoader::AssimpMeshLoader() :
 
 /**
 *  @brief
+*    Constructor
+*/
+AssimpMeshLoader::AssimpMeshLoader(const String &sDefaultTextureFileExtension) : AssimpLoader(sDefaultTextureFileExtension),
+	m_pMesh(nullptr),
+	m_pAssimpScene(nullptr),
+	m_bHasNormals(false),
+	m_bHasTangentsAndBitangents(false),
+	m_bHasTexCoords(false)
+{
+	for (uint32 nChannel=0; nChannel<MaxNumOfTextureCoords; nChannel++)
+		m_nNumUVComponents[nChannel] = 0;
+}
+
+/**
+*  @brief
 *    Destructor
 */
 AssimpMeshLoader::~AssimpMeshLoader()
@@ -100,7 +115,8 @@ bool AssimpMeshLoader::Load(Mesh &cMesh, File &cFile, bool bStatic, const String
 	cAssimpImporter.SetIOHandler(new IOSystem(cFile, sMagicFilename.GetASCII(), sMagicFilename.GetLength()));
 
 	// Let Assimp load in the scene (scene remains in possession of the importer instance)
-	m_pAssimpScene = cAssimpImporter.ReadFile(sMagicFilename.GetUTF8(), aiProcessPreset_TargetRealtime_Quality|aiProcess_TransformUVCoords);
+	// [TODO] Make it possible to select the post processing quality from the outside
+	m_pAssimpScene = cAssimpImporter.ReadFile(sMagicFilename.GetUTF8(), aiProcessPreset_TargetRealtime_Quality|aiProcess_TransformUVCoords|aiProcess_FlipUVs);
 	if (m_pAssimpScene) {
 		// Get the total number of vertices and indices required for everything as one PixelLight mesh recursively
 		uint32 nNumOfVertices = 0;
@@ -370,9 +386,7 @@ void AssimpMeshLoader::FillMeshRec(const aiNode &cAssimpNode, VertexBuffer &cVer
 							pfVertex[0] = cAssimpVertexTexCoord.x;
 							if (m_nNumUVComponents[nChannel] > 1) {
 								if (cAssimpMesh.mNumUVComponents[nChannel] > 1) {
-									// [TODO] When do I need to flip and when not? ("Koerper.mesh.xml" no flip, "duck.dae" flip... ?!)
-//									pfVertex[1] = cAssimpVertexTexCoord.y;
-									pfVertex[1] = 1.0f - cAssimpVertexTexCoord.y;
+									pfVertex[1] = cAssimpVertexTexCoord.y;
 									if (m_nNumUVComponents[nChannel] > 2) {
 										if (cAssimpMesh.mNumUVComponents[nChannel] > 2)
 											pfVertex[2] = cAssimpVertexTexCoord.z;

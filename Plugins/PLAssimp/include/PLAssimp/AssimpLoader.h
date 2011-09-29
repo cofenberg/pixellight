@@ -38,6 +38,7 @@ struct aiString;
 struct aiMaterial;
 namespace PLRenderer {
 	class Material;
+	class ParameterManager;
 }
 
 
@@ -69,12 +70,38 @@ class AssimpLoader {
 
 		/**
 		*  @brief
+		*    Constructor
+		*
+		*  @param[in] sDefaultTextureFileExtension
+		*    Default texture file extension (completely in lower case is highly recommended)
+		*
+		*  @see
+		*   - "GetDefaultTextureFileExtension()"
+		*/
+		AssimpLoader(const PLCore::String &sDefaultTextureFileExtension);
+
+		/**
+		*  @brief
 		*    Destructor
 		*
 		*  @note
 		*    - Intentionally not virtual because there's no need to make it virtual
 		*/
 		~AssimpLoader();
+
+		/**
+		*  @brief
+		*    Returns the default texture file extension
+		*
+		*  @return
+		*    Default texture file extension
+		*
+		*  @remarks
+		*    Within some files, textures are addressed by using e.g. "Houses" (without directory, without extension) and we have to guess
+		*    which resource should be used. This is of course a really nasty situation, but by providing a default texture file extension
+		*    like "dds" there's at least a slim chance that we're able to load in the requested resources.
+		*/
+		PLCore::String GetDefaultTextureFileExtension() const;
 
 		/**
 		*  @brief
@@ -124,6 +151,26 @@ class AssimpLoader {
 		*    Reference to this instance
 		*/
 		AssimpLoader &operator =(const AssimpLoader &cSource);
+
+		/**
+		*  @brief
+		*    Sets the texture of a material parameter
+		*
+		*  @param[in] cParameterManager
+		*    Parameter manager of the material
+		*  @param[in] sName
+		*    Name of the material parameter where to set the texture
+		*  @param[in] sFilename
+		*    Texture filename
+		*/
+		void SetParameterTexture(PLRenderer::ParameterManager &cParameterManager, const PLCore::String &sName, const PLCore::String &sFilename) const;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		const PLCore::String m_sDefaultTextureFileExtension;	/**< Default texture file extension (e.g. "dds") */
 
 
 };

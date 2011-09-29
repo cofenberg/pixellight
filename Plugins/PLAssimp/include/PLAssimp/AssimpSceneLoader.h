@@ -74,6 +74,18 @@ class AssimpSceneLoader : public AssimpLoader {
 
 		/**
 		*  @brief
+		*    Constructor
+		*
+		*  @param[in] sDefaultTextureFileExtension
+		*    Default texture file extension (completely in lower case is highly recommended)
+		*
+		*  @see
+		*   - "AssimpLoader::GetDefaultTextureFileExtension()"
+		*/
+		AssimpSceneLoader(const PLCore::String &sDefaultTextureFileExtension);
+
+		/**
+		*  @brief
 		*    Destructor
 		*/
 		~AssimpSceneLoader();

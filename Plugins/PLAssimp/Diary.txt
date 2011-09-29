@@ -1,6 +1,10 @@
 ﻿>> 29.09.2011
 [CO]
 - Added base class "AssimpLoader" implementing features used by "AssimpMeshLoader" and "AssimpSceneLoader"
+- "AssimpLoader" can now be provided with a default texture file extension. Within some files, textures are addressed by using
+  e.g. "Houses" (without directory, without extension) and we have to guess which resource should be used. This is of course a
+  really nasty situation, but by providing a default texture file extension like "dds" there's at least a slim chance that we're
+  able to load in the requested resources.
 
 
 

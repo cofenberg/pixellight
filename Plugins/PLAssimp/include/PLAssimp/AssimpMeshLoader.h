@@ -78,6 +78,18 @@ class AssimpMeshLoader : public AssimpLoader {
 
 		/**
 		*  @brief
+		*    Constructor
+		*
+		*  @param[in] sDefaultTextureFileExtension
+		*    Default texture file extension (completely in lower case is highly recommended)
+		*
+		*  @see
+		*   - "AssimpLoader::GetDefaultTextureFileExtension()"
+		*/
+		AssimpMeshLoader(const PLCore::String &sDefaultTextureFileExtension);
+
+		/**
+		*  @brief
 		*    Destructor
 		*/
 		~AssimpMeshLoader();
