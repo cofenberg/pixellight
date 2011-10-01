@@ -1,0 +1,41 @@
+\chapter{External Dependencies}
+\label{Chapter:ExternalDependencies}
+In order to build the PixelLight engine for instance with MSVC, all the external packages used by the engine need to be in the right place for the build. Have a look at the \emph{External}-directory, there you can find a readme file for every library, that describes what files are needed.
+
+
+
+
+\section{Dependencies}
+When writing this documentation in September 2011, there are 37 external dependencies. Please note that this doesn't mean that you have to take care of 37 external libraries before you can start building and using PixelLight. In the most minimal build, PixelLight only depends on PCRE used within PLCore for regular expressions. zlib for zip support within PLCore is highly recommended, but can be deactivated. The same is true for jpg and png support within PLGraphics. Nice to have, but no must have, especially when you just want to do your first steps in building PixelLight. As you can see, the 12 base projects of PixelLight don't have a lot of external dependencies.
+
+Everything else is completely optional, most of them are just dynamically loaded plugins. If you need no Cg shaders, don't use Cg, if you need no Newton physics, don't use it. For scripting, you only need to compile PLCore and e.g. the Lua scripting plugin, that's it. For developing new plugins, you even don't need to compile PixelLight itself, just start a new plugin project and PixelLight will be able to use the new dynamic library providing e.g. RTTI classes for new script languages.
+
+This means that the base of PixelLight is really slim when it comes to external dependencies. Those 37 external libraries only mean that there are a lot of optional plugins available for you so that you don't have to write them by yourself if you need them.
+
+
+
+
+\section{External Packages}
+You can find the libraries pre-packed in the files-section on our homepage: \url{http://pixellight.sourceforge.net/externals/}. Examples:
+\begin{itemize}
+\item{zlib package for MS Windows 32 bit: \url{http://pixellight.sourceforge.net/externals/Windows_x86_32/zlib.tar.gz}}
+\item{zlib package for Linux 32 bit: \url{http://pixellight.sourceforge.net/externals/Linux_x86_32/zlib.tar.gz}}
+\end{itemize}
+
+There are also downloads available containing all public external packages. Examples:
+\begin{itemize}
+\item{All public packages for MS Windows 32 bit: \url{http://sourceforge.net/projects/pixellight/files/PixelLight%20v0.9/0.9.8-R1/PixelLight-0.9.8-R1-Externals-Windows_x86_32.tar.gz/download}}
+\item{All public packages for Linux 32 bit: \url{http://sourceforge.net/projects/pixellight/files/PixelLight%20v0.9/0.9.8-R1/PixelLight-0.9.8-R1-Externals-Linux_x86_32.tar.gz/download}}
+\end{itemize}
+
+Unfortunately, we can't provide some of those libraries due to their licensing terms. Have a look at the according \emph{Readme.txt} to determine where to obtain those libraries and where to put the resulting files into your source tree.
+
+The library packages must be unpacked and need to be at the right position for your specific build type, e.g. on Windows and 32 Bit, put everything into the directory \emph{\textless PixelLight root directory\textgreater /External/\_Windows\_x86\_32}. Examples:
+\begin{itemize}
+\item{\emph{C:/PixelLight/External/\_Windows\_x86\_32/zlib/include}}
+\item{\emph{C:/PixelLight/External/\_Windows\_x86\_32/zlib/lib}}
+\item{\emph{C:/PixelLight/External/\_Windows\_x86\_32/libpcre/include}}
+\item{\emph{C:/PixelLight/External/\_Windows\_x86\_32/libpcre/lib}}
+\end{itemize}
+
+The easiest way to install at least the public packages is to use the CMake based build and make the project \emph{External} (see next section). This will download and unpack all public externals for you in the right directory. The non-public externals must still be installed manually.

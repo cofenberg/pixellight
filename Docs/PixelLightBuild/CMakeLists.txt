@@ -23,57 +23,37 @@
 ##################################################
 ## Project
 ##################################################
-project(Docs)
+cmaketools_doc_project(PixelLightBuild)
 
 ##################################################
-## Prerequisites
+## Latex document
 ##################################################
-
-# Create 'Docs'-directory
-set(PL_DOCS_DIR "${PL_BIN_DIR}/Docs")
-file(MAKE_DIRECTORY ${PL_DOCS_DIR})
-
-# Create temp dir
-file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/Common)
-
-# Copy file format samples
-file(MAKE_DIRECTORY "${PL_DOCS_DIR}/FileFormats")
-copy_files("${CMAKE_SOURCE_DIR}/Docs/FileFormats/*.*" "${PL_DOCS_DIR}/FileFormats")
-
-# Create title file used within the PixelLight documentations
-configure_file("${CMAKE_SOURCE_DIR}/Docs/Common/Title.tex.in" "${CMAKE_SOURCE_DIR}/Docs/Common/Title.tex")
+cmaketools_add_dvi_document(${CMAKETOOLS_CURRENT_TARGET} PixelLightBuild.tex)
 
 ##################################################
-## Target
+## PDF document
 ##################################################
-add_custom_target(Docs)
-set_target_properties(Docs PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
-
-##################################################
-## Projects
-##################################################
-add_subdirectory(Doc-Sample)
-add_subdirectory(PixelLightFeatures)
-add_subdirectory(PixelLightBase)
-add_subdirectory(PixelLightAPI)
-add_subdirectory(PixelLightCompositing)
-add_subdirectory(PixelLightCodingConventions)
-add_subdirectory(PixelLightBuild)
-add_subdirectory(PixelLightScript)
-add_subdirectory(PixelLight3dsMaxSceneExport)
-if(WIN32)
-	add_subdirectory(SDKBrowser)
-endif()
+cmaketools_add_pdf_document(${CMAKETOOLS_CURRENT_TARGET} ${CMAKETOOLS_CURRENT_TARGET_DVI})
 
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(PixelLight Docs)
+add_dependencies(Docs Docs-PixelLightBuild)
+
+##################################################
+## Post-Build
+##################################################
+
+# PDF
+add_custom_command(TARGET Docs-${CMAKETOOLS_CURRENT_TARGET}
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_TARGET_PDF} ${PL_DOCS_DIR}
+)
 
 ##################################################
 ## Install
 ##################################################
 
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/Docs/FileFormats
-	DESTINATION ${PL_INSTALL_DOCS}		COMPONENT Docs		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
+# PDF
+install(FILES ${CMAKETOOLS_CURRENT_TARGET_PDF}
+	DESTINATION ${PL_INSTALL_DOCS}		COMPONENT Docs
 )

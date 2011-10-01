@@ -1,3 +1,11 @@
+>> 01.10.2011
+[CO]
+- Added "PixelLightBuild"-document as replacement for the "BUILD" text file within the root directory. This previous text file got bigger and bigger and while it did,
+  it got harder to read and to maintain it. This new document also provides some new information as well as a native Android build tutorial. If everything goes as
+  planned, the Apple Mac and iOS port will start this month - and I'am sure that this document will grow, again. So, a simple text file is no longer handy for this job.
+
+
+
 >> 06.08.2011
 [CO]
 - Updated "PixelLightFeatures" (plugins & tools chapters)
