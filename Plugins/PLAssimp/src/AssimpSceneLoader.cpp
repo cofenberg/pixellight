@@ -408,11 +408,11 @@ SceneNode *AssimpSceneLoader::LoadMeshNode(SceneContainer &cParentContainer, con
 void AssimpSceneLoader::LoadMesh(const aiMesh &cAssimpMesh, Mesh &cPLMesh)
 {
 	// General mesh information
-	const bool   bHasNormals			   = cAssimpMesh.HasNormals();					/**< Are there normals? */
-	const bool   bHasTangentsAndBitangents = cAssimpMesh.HasTangentsAndBitangents();	/**< Are there tangents and bitangents? */
-	const bool   bHasTexCoords			   = (cAssimpMesh.GetNumUVChannels() != 0);		/**< Are there texture coordinates? */
-	const uint32 nNumOfVertices			   = cAssimpMesh.mNumVertices;					/**< Number of vertices */
-		  uint32 nNumOfIndices			   = 0;											/**< Number of indices (must be calculated) */
+	const bool   bHasNormals			   = cAssimpMesh.HasNormals();					// Are there normals?
+	const bool   bHasTangentsAndBitangents = cAssimpMesh.HasTangentsAndBitangents();	// Are there tangents and bitangents?
+	const bool   bHasTexCoords			   = (cAssimpMesh.GetNumUVChannels() != 0);		// Are there texture coordinates?
+	const uint32 nNumOfVertices			   = cAssimpMesh.mNumVertices;					// Number of vertices
+		  uint32 nNumOfIndices			   = 0;											// Number of indices (must be calculated)
 
 	// Loop through all mesh faces and update the number of indices
 	for (unsigned int nAssimpFace=0; nAssimpFace<cAssimpMesh.mNumFaces; nAssimpFace++)
@@ -538,10 +538,10 @@ void AssimpSceneLoader::AddMaterial(const aiMesh &cAssimpMesh, Mesh &cPLMesh)
 void AssimpSceneLoader::FillMesh(const aiMesh &cAssimpMesh, VertexBuffer &cVertexBuffer, IndexBuffer &cIndexBuffer, Array<Geometry> &lstGeometries)
 {
 	// General mesh information
-	const bool			bHasNormals				  = cAssimpMesh.HasNormals();				/**< Are there normals? */
-	const bool			bHasTangentsAndBitangents = cAssimpMesh.HasTangentsAndBitangents();	/**< Are there tangents and bitangents? */
-	const bool			bHasTexCoords			  = (cAssimpMesh.GetNumUVChannels() != 0);	/**< Are there texture coordinates? */
-	const unsigned int *pnNumUVComponents		  = cAssimpMesh.mNumUVComponents;			/**< Specifies the number of components for a given UV channel (see aiMesh for details) */
+	const bool			bHasNormals				  = cAssimpMesh.HasNormals();				// Are there normals?
+	const bool			bHasTangentsAndBitangents = cAssimpMesh.HasTangentsAndBitangents();	// Are there tangents and bitangents?
+	const bool			bHasTexCoords			  = (cAssimpMesh.GetNumUVChannels() != 0);	// Are there texture coordinates?
+	const unsigned int *pnNumUVComponents		  = cAssimpMesh.mNumUVComponents;			// Specifies the number of components for a given UV channel (see aiMesh for details)
 
 	// Loop through the Assimp mesh vertices
 	for (unsigned int nAssimpVertex=0; nAssimpVertex<cAssimpMesh.mNumVertices; nAssimpVertex++) {
