@@ -67,24 +67,28 @@ BTLinux::~BTLinux()
 	m_lstDevices.Clear();
 }
 
-void BTLinux::EnumerateBluetoothDevices(List<BTDevice*> &lstDevices, DBusConnection *pConnection)
+/**
+*  @brief
+*    Enumerate bluetooth devices
+*/
+void BTLinux::EnumerateBluetoothDevices(List<BTDevice*> &lstDevices, DBusConnection &cConnection)
 {
 	// Initialize error value
 	DBusError sError;
 	dbus_error_init(&sError);
-	
-	DBusMessage *pMessage;
-	
+
 	// Listen to signals from org.bluez.Adapter
-	dbus_bus_add_match(pConnection, "type='signal',interface='org.bluez.Adapter'", &sError);
-	dbus_connection_flush(pConnection);
-	if (!dbus_error_is_set(&sError)) {
+	dbus_bus_add_match(&cConnection, "type='signal',interface='org.bluez.Adapter'", &sError);
+	dbus_connection_flush(&cConnection);
+	if (dbus_error_is_set(&sError)) {
+		PL_LOG(Error, "BTLinux: DBUS match error (" + String(sError.message) + ')')
+	} else {
 		// Listen for signals
 		bool bAbort = false;
 		while (!bAbort) {
 			// Read next message
-			dbus_connection_read_write(pConnection, 0);
-			pMessage = dbus_connection_pop_message(pConnection);
+			dbus_connection_read_write(&cConnection, 0);
+			DBusMessage *pMessage = dbus_connection_pop_message(&cConnection);
 			if (pMessage) {
 				// Check signal
 				if (dbus_message_is_signal(pMessage, "org.bluez.Adapter", "DeviceFound")) {
@@ -162,12 +166,12 @@ void BTLinux::EnumerateBluetoothDevices(List<BTDevice*> &lstDevices, DBusConnect
 					PL_LOG(Info, "BTLinux: Found device '" + sDeviceName + "', Address = " + sDeviceAddress)
 
 					// Convert address from string to bytes
-					int nAddress0 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring( 0, 2));
-					int nAddress1 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring( 3, 2));
-					int nAddress2 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring( 6, 2));
-					int nAddress3 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring( 9, 2));
-					int nAddress4 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring(12, 2));
-					int nAddress5 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring(15, 2));
+					const int nAddress0 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring( 0, 2));
+					const int nAddress1 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring( 3, 2));
+					const int nAddress2 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring( 6, 2));
+					const int nAddress3 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring( 9, 2));
+					const int nAddress4 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring(12, 2));
+					const int nAddress5 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring(15, 2));
 
 					// Set device info
 					BTDeviceLinux *pDevice = new BTDeviceLinux();
@@ -186,7 +190,7 @@ void BTLinux::EnumerateBluetoothDevices(List<BTDevice*> &lstDevices, DBusConnect
 
 					// Add device
 					m_lstDevices.Add(pDevice);
-						lstDevices.Add(pDevice);
+					lstDevices.Add(pDevice);
 
 					// Device found, not stop
 					bAbort = true;
@@ -214,7 +218,8 @@ void BTLinux::EnumerateBluetoothDevices(List<BTDevice*> &lstDevices, DBusConnect
 									dbus_message_iter_get_basic(&sVariantIter, &bState);
 
 									// Stop loop when Discovering=false
-									if (!bState) bAbort = true;
+									if (!bState)
+										bAbort = true;
 								}
 							}
 						}
@@ -225,11 +230,9 @@ void BTLinux::EnumerateBluetoothDevices(List<BTDevice*> &lstDevices, DBusConnect
 				dbus_message_unref(pMessage);
 			}
 		}
-	} else {
-		PL_LOG(Error, "BTLinux: DBUS match error (" + String(sError.message) + ')')
 	}
-	
-	// DeInitialize error value
+
+	// De-initialize error value
 	dbus_error_free(&sError);
 }
 
@@ -278,22 +281,26 @@ void BTLinux::EnumerateDevices(List<BTDevice*> &lstDevices)
 			dbus_message_iter_append_basic(&sVariantIter, DBUS_TYPE_UINT32, &nTimeout);
 			dbus_message_iter_close_container(&sIter, &sVariantIter);
 			pReply = dbus_connection_send_with_reply_and_block(pConnection, pMessage, -1, &sError);
-			if (pReply)   dbus_message_unref(pReply);
-			if (pMessage) dbus_message_unref(pMessage);
-			
-			if(!dbus_error_is_set(&sError)) {
+			if (pReply)
+				dbus_message_unref(pReply);
+			if (pMessage)
+				dbus_message_unref(pMessage);
+
+			if (dbus_error_is_set(&sError)) {
+				PL_LOG(Error, "BTLinux (Set timeout for device discovery): DBUS error (" + String(sError.message) + ')')
+			} else {
 				// Start device discovery
 				pMessage = dbus_message_new_method_call("org.bluez", sAdapter.GetASCII(), "org.bluez.Adapter", "StartDiscovery");
 				pReply = dbus_connection_send_with_reply_and_block(pConnection, pMessage, -1, &sError);
-				if (pReply)   dbus_message_unref(pReply);
-				if (pMessage) dbus_message_unref(pMessage);
+				if (pReply)
+					dbus_message_unref(pReply);
+				if (pMessage)
+					dbus_message_unref(pMessage);
 
-				if(!dbus_error_is_set(&sError))
-					EnumerateBluetoothDevices(lstDevices, pConnection);
-				else
+				if (dbus_error_is_set(&sError))
 					PL_LOG(Error, "BTLinux (Start device discovery): DBUS error (" + String(sError.message) + ')')
-			} else {
-				PL_LOG(Error, "BTLinux (Set timeout for device discovery): DBUS error (" + String(sError.message) + ')')
+				else
+					EnumerateBluetoothDevices(lstDevices, *pConnection);
 			}
 		}
 
@@ -310,4 +317,3 @@ void BTLinux::EnumerateDevices(List<BTDevice*> &lstDevices)
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLInput
-

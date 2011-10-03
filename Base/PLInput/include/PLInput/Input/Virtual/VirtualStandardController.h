@@ -75,9 +75,9 @@ class VirtualStandardController : public VirtualController {
 		Axis		MouseX;				/**< X axis */
 		Axis		MouseY;				/**< Y axis */
 		Axis		MouseWheel;			/**< Mouse wheel */
-		Button		MouseLeft;			/**< Left mouse button  */
-		Button		MouseRight;			/**< Right mouse button  */
-		Button		MouseMiddle;		/**< Middle mouse button  */
+		Button		MouseLeft;			/**< Left mouse button (mouse button #0) */
+		Button		MouseRight;			/**< Right mouse button (mouse button #1) */
+		Button		MouseMiddle;		/**< Middle mouse button (mouse button #2) */
 		Button		MouseButton4;		/**< Mouse button #4 */
 		Button		MouseButton5;		/**< Mouse button #5 */
 		Button		MouseButton6;		/**< Mouse button #6 */

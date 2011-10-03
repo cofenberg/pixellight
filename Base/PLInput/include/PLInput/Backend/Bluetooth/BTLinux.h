@@ -83,9 +83,14 @@ class BTLinux : public BTImpl {
 
 		/**
 		*  @brief
-		*    EnumerateBluetoothDevices
+		*    Enumerate bluetooth devices
+		*
+		*  @param[out] lstDevices
+		*    List that will receive the devices
+		*  @param[in]  cConnection
+		*    Used DBus connection
 		*/
-		void EnumerateBluetoothDevices(PLCore::List<BTDevice*> &lstDevices, DBusConnection *pConnection);
+		void EnumerateBluetoothDevices(PLCore::List<BTDevice*> &lstDevices, DBusConnection &cConnection);
 
 
 	//[-------------------------------------------------------]
