@@ -166,6 +166,10 @@ endif()
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 			COMMAND ${CMAKE_COMMAND} -E copy ${PL_RUNTIME_BIN_GITDIR}/fmodex.dll ${PL_RUNTIME_BIN_DIR}
 		)
+	elseif(LINUX)
+		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/FMODEx/lib/libfmodex.so   ${PL_RUNTIME_BIN_DIR}
+		)
 	endif()
 #endif()
 

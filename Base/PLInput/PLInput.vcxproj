@@ -242,6 +242,30 @@ copy build\release_x64\PLInput.lib ..\..\Bin\Lib\x64\
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Backend\Android\AndroidKeyboardDevice.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Backend\Android\AndroidMouseDevice.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Backend\Android\AndroidProvider.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Backend\Android\AndroidSensorManagerDevice.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="src\PLInput.cpp" />
     <ClCompile Include="src\Input\Controller.cpp" />
     <ClCompile Include="src\Input\InputManager.cpp" />
@@ -329,6 +353,10 @@ copy build\release_x64\PLInput.lib ..\..\Bin\Lib\x64\
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\PLInput\Backend\Android\AndroidKeyboardDevice.h" />
+    <ClInclude Include="include\PLInput\Backend\Android\AndroidMouseDevice.h" />
+    <ClInclude Include="include\PLInput\Backend\Android\AndroidProvider.h" />
+    <ClInclude Include="include\PLInput\Backend\Android\AndroidSensorManagerDevice.h" />
     <ClInclude Include="include\PLInput\PLInput.h" />
     <ClInclude Include="include\PLInput\PLInputDefinitions.h" />
     <ClInclude Include="include\PLInput\PLInputLinux.h" />

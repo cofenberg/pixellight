@@ -62,6 +62,7 @@ add_sources(
 	src/Extensions/Zones/SPK_Point.cpp
 	src/Extensions/Zones/SPK_Ring.cpp
 	src/Extensions/Zones/SPK_Sphere.cpp
+	src/Extensions/Zones/SPK_Cylinder.cpp
 	src/Extensions/Renderers/SPK_Oriented3DRendererInterface.cpp
 	src/Extensions/Renderers/SPK_QuadRendererInterface.cpp
 	src/PLSceneNodes/SNSystem.cpp

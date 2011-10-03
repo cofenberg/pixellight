@@ -47,7 +47,7 @@ pl_implement_class(SceneLoaderDirectXX)
 bool SceneLoaderDirectXX::Load(SceneContainer &cContainer, File &cFile)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "x");
+	return AssimpSceneLoader("dds").Load(cContainer, cFile, "x");
 }
 
 bool SceneLoaderDirectXX::Save(SceneContainer &cContainer, File &cFile)

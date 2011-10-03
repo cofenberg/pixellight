@@ -1,3 +1,22 @@
+>> 27.09.2011
+[CO]
+- More fine tuning on "PLFrontendOS" & "PLFrontendQt" & "PLFrontendPLGui": When making the window visible, it's now also made active at once. If this is not done, debugging
+  in Visual Studio doesn't make that much fun because the frontend window appears, a breakpoint is reached - but Visual Studio doesn't automatically come into foreground and
+  gets the focus, the frontend window is still on the top and you may even not notice that you've reached a breakpoint. I think, when implementing the frontends, I delayed
+  the window activation until everything is initialized so e.g. input controls are correctly activated/deactivated when the window gets active/inactive. Due to the progress
+  in frontend fine tuning, this delay is no longer required.
+- "DynLibLinux::Load()": If a shared libarary failed to load in dynamically, the application completly shut down. Fixed that.
+
+
+
+>> 26.09.2011
+[CO]
+- "LoadableManager::OpenFile()" now resolves "./" because we always want to work with absolute paths so the user can easily figure out the absolute path later on by using "cFile.GetUrl()"
+- "FrontendApplication::OnInitData()" & "CoreApplication::OnInitData()": The application and current directories should have the highest priority of all base directories because the application data is
+  most likly in those directories
+
+
+
 >> 16.09.2011
 [CO]
 - Added "ConsoleAndroid" which is derived from "ConsoleLinux" and just overrides the "Print()"-implementation. Even on Android, it's possible to write into the console, meaning "stdout"... but it's somewhat

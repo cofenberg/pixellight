@@ -128,6 +128,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\PixelLightAPI.chm.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\PixelLightAPI.chm\\\"
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\PixelLightCompositing.pdf.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\PixelLightCompositing.pdf\\\"
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\PixelLightCodingConventions.pdf.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\PixelLightCodingConventions.pdf\\\"
+		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\PixelLightBuild.pdf.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\PixelLightBuild.pdf\\\"
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\PixelLightScript.pdf.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\PixelLightScript.pdf\\\"
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Documentation\\\\PixelLight3dsMaxSceneExport.pdf.lnk\\\" \\\"$INSTDIR\\\\Docs\\\\PixelLight3dsMaxSceneExport.pdf\\\"
 	")
@@ -163,6 +164,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\PixelLightAPI.chm.lnk\\\"
 		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\PixelLightCompositing.pdf.lnk\\\"
 		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\PixelLightCodingConventions.pdf.lnk\\\"
+		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\PixelLightBuild.pdf.lnk\\\"
 		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\PixelLightScript.pdf.lnk\\\"
 		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\\PixelLight3dsMaxSceneExport.pdf.lnk\\\"
 		RMDir  \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Documentation\\\"

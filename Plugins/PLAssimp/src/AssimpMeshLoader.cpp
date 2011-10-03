@@ -28,13 +28,10 @@
 #include <Assimp/aiPostProcess.h>
 #include <PLCore/Log/Log.h>
 #include <PLCore/File/File.h>
-#include <PLCore/File/Url.h>
-#include <PLMath/Matrix4x4.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/IndexBuffer.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
 #include <PLRenderer/Material/MaterialManager.h>
-#include <PLRenderer/Material/ParameterManager.h>
 #include <PLMesh/Geometry.h>
 #include <PLMesh/MeshLODLevel.h>
 #include <PLMesh/MeshMorphTarget.h>
@@ -63,11 +60,26 @@ AssimpMeshLoader::AssimpMeshLoader() :
 	m_pMesh(nullptr),
 	m_pAssimpScene(nullptr),
 	m_bHasNormals(false),
-	m_bbHasTangentsAndBitangents(false),
+	m_bHasTangentsAndBitangents(false),
 	m_bHasTexCoords(false)
 {
 	for (uint32 nChannel=0; nChannel<MaxNumOfTextureCoords; nChannel++)
-		m_mNumUVComponents[nChannel] = 0;
+		m_nNumUVComponents[nChannel] = 0;
+}
+
+/**
+*  @brief
+*    Constructor
+*/
+AssimpMeshLoader::AssimpMeshLoader(const String &sDefaultTextureFileExtension) : AssimpLoader(sDefaultTextureFileExtension),
+	m_pMesh(nullptr),
+	m_pAssimpScene(nullptr),
+	m_bHasNormals(false),
+	m_bHasTangentsAndBitangents(false),
+	m_bHasTexCoords(false)
+{
+	for (uint32 nChannel=0; nChannel<MaxNumOfTextureCoords; nChannel++)
+		m_nNumUVComponents[nChannel] = 0;
 }
 
 /**
@@ -88,10 +100,10 @@ bool AssimpMeshLoader::Load(Mesh &cMesh, File &cFile, bool bStatic, const String
 	m_pMesh							= &cMesh;
 	m_pAssimpScene					= nullptr;
 	m_bHasNormals					= false;
-	m_bbHasTangentsAndBitangents	= false;
+	m_bHasTangentsAndBitangents	= false;
 	m_bHasTexCoords					= false;
 	for (uint32 nChannel=0; nChannel<MaxNumOfTextureCoords; nChannel++)
-		m_mNumUVComponents[nChannel] = 0;
+		m_nNumUVComponents[nChannel] = 0;
 
 	// Create an instance of the Assimp importer class
 	Assimp::Importer cAssimpImporter;
@@ -103,7 +115,8 @@ bool AssimpMeshLoader::Load(Mesh &cMesh, File &cFile, bool bStatic, const String
 	cAssimpImporter.SetIOHandler(new IOSystem(cFile, sMagicFilename.GetASCII(), sMagicFilename.GetLength()));
 
 	// Let Assimp load in the scene (scene remains in possession of the importer instance)
-	m_pAssimpScene = cAssimpImporter.ReadFile(sMagicFilename.GetUTF8(), aiProcessPreset_TargetRealtime_Quality|aiProcess_TransformUVCoords);
+	// [TODO] Make it possible to select the post processing quality from the outside
+	m_pAssimpScene = cAssimpImporter.ReadFile(sMagicFilename.GetUTF8(), aiProcessPreset_TargetRealtime_MaxQuality|aiProcess_TransformUVCoords|aiProcess_FlipUVs);
 	if (m_pAssimpScene) {
 		// Get the total number of vertices and indices required for everything as one PixelLight mesh recursively
 		uint32 nNumOfVertices = 0;
@@ -126,14 +139,14 @@ bool AssimpMeshLoader::Load(Mesh &cMesh, File &cFile, bool bStatic, const String
 		pVertexBuffer->AddVertexAttribute(VertexBuffer::Position, 0, VertexBuffer::Float3);
 		if (m_bHasNormals)
 			pVertexBuffer->AddVertexAttribute(VertexBuffer::Normal, 0, VertexBuffer::Float3);
-		if (m_bbHasTangentsAndBitangents) {
+		if (m_bHasTangentsAndBitangents) {
 			pVertexBuffer->AddVertexAttribute(VertexBuffer::Tangent,  0, VertexBuffer::Float3);
 			pVertexBuffer->AddVertexAttribute(VertexBuffer::Binormal, 0, VertexBuffer::Float3);
 		}
 		if (m_bHasTexCoords) {
 			// Loop through the supported number of texture coord sets (UV(W) channels)
 			for (uint32 nChannel=0; nChannel<MaxNumOfTextureCoords; nChannel++) {
-				switch (m_mNumUVComponents[nChannel]) {
+				switch (m_nNumUVComponents[nChannel]) {
 					case 1:
 						pVertexBuffer->AddVertexAttribute(VertexBuffer::TexCoord, nChannel, VertexBuffer::Float1);
 						break;
@@ -157,7 +170,7 @@ bool AssimpMeshLoader::Load(Mesh &cMesh, File &cFile, bool bStatic, const String
 				if (pVertexBuffer->Lock(Lock::WriteOnly)) {
 					// Lock the index buffer
 					if (pIndexBuffer->Lock(Lock::WriteOnly)) {
-						// Fills the mesh data recursively
+						// Fill the mesh data recursively
 						nNumOfVertices = 0;
 						nNumOfIndices  = 0;
 						FillMeshRec(*m_pAssimpScene->mRootNode, *pVertexBuffer, *pIndexBuffer, *pLODLevel->GetGeometries(), aiMatrix4x4(), nNumOfVertices, nNumOfIndices);
@@ -215,7 +228,7 @@ void AssimpMeshLoader::AddMaterials()
 		cAssimpMaterial.Get(AI_MATKEY_NAME, sAssimpMaterialName);
 
 		// Construct an unique material name to avoid material conflicts
-		const String sMaterialNameOriginal = m_pMesh->GetName() + '_' + String::FromUTF8(sAssimpMaterialName.data, -1, sAssimpMaterialName.length);
+		const String sMaterialNameOriginal = m_pMesh->GetName() + '_' + AssimpStringToPL(sAssimpMaterialName);
 		String sMaterialName = sMaterialNameOriginal;
 		uint32 nIndex = 0;
 		while (cMaterialManager.GetByName(sMaterialName)) {
@@ -227,125 +240,9 @@ void AssimpMeshLoader::AddMaterials()
 		Material *pMaterial = cMaterialManager.Create(sMaterialName);
 		m_pMesh->AddMaterial(pMaterial);
 
-		// Fill the material
-		if (pMaterial) {
-			// Get the parameter manager of the material
-			ParameterManager &cParameterManager = pMaterial->GetParameterManager();
-
-			{ // AI_MATKEY_TWOSIDED - default: 0
-				int nTwoSided = 0;
-				aiGetMaterialInteger(&cAssimpMaterial, AI_MATKEY_TWOSIDED, &nTwoSided);
-				if (nTwoSided)
-					cParameterManager.SetParameter1i("TwoSided", 1);
-			}
-
-			// AI_MATKEY_SHADING_MODEL - not supported
-			// AI_MATKEY_ENABLE_WIREFRAME - not supported
-			// AI_MATKEY_BLEND_FUNC - not supported
-
-			{ // AI_MATKEY_OPACITY - default: 1.0
-				float fOpacity = 1.0f;
-				aiGetMaterialFloat(&cAssimpMaterial, AI_MATKEY_OPACITY, &fOpacity);
-				if (fOpacity < 1.0f)
-					cParameterManager.SetParameter1f("Opacity", fOpacity);
-			}
-
-			{ // AI_MATKEY_BUMPSCALING - default: 1.0
-				float fBumpScaling = 1.0f;
-				aiGetMaterialFloat(&cAssimpMaterial, AI_MATKEY_BUMPSCALING, &fBumpScaling);
-				if (fBumpScaling != 1.0f)
-					cParameterManager.SetParameter1f("NormalMapBumpiness", fBumpScaling);
-			}
-
-			{ // AI_MATKEY_SHININESS - default: 45.0
-				float fShininess = 45.0f;
-				aiGetMaterialFloat(&cAssimpMaterial, AI_MATKEY_SHININESS, &fShininess);
-				if (fShininess != 45.0f)
-					cParameterManager.SetParameter1f("SpecularExponent", fShininess);
-			}
-
-			// AI_MATKEY_REFLECTIVITY - not supported
-			// AI_MATKEY_SHININESS_STRENGTH - not supported
-			// AI_MATKEY_REFRACTI - not supported
-
-			{ // AI_MATKEY_COLOR_DIFFUSE - default: 1.0 1.0 1.0
-				aiColor3D cColor(1.0f, 1.0f, 1.0f);
-				if (cAssimpMaterial.Get(AI_MATKEY_COLOR_DIFFUSE, cColor) == AI_SUCCESS)
-					cParameterManager.SetParameter3f("DiffuseColor", cColor.r, cColor.g, cColor.b);
-			}
-
-			// AI_MATKEY_COLOR_AMBIENT - not supported
-
-			{ // AI_MATKEY_COLOR_SPECULAR - default: 1.0 1.0 1.0
-				aiColor3D cColor(1.0f, 1.0f, 1.0f);
-				if (cAssimpMaterial.Get(AI_MATKEY_COLOR_SPECULAR, cColor) == AI_SUCCESS)
-					cParameterManager.SetParameter3f("SpecularColor", cColor.r, cColor.g, cColor.b);
-			}
-
-			{ // AI_MATKEY_COLOR_EMISSIVE - default: 1.0 1.0 1.0
-				aiColor3D cColor(1.0f, 1.0f, 1.0f);
-				if (cAssimpMaterial.Get(AI_MATKEY_COLOR_EMISSIVE, cColor) == AI_SUCCESS)
-					cParameterManager.SetParameter3f("EmissiveMapColor", cColor.r, cColor.g, cColor.b);
-			}
-
-			// AI_MATKEY_COLOR_TRANSPARENT - not supported
-			// AI_MATKEY_COLOR_REFLECTIVE - not supported
-			// AI_MATKEY_GLOBAL_BACKGROUND_IMAGE - not supported
-
-			{ // aiTextureType_DIFFUSE
-				aiString sAssimpFilename;
-				if (cAssimpMaterial.GetTexture(aiTextureType_DIFFUSE, 0, &sAssimpFilename) == AI_SUCCESS)
-					cParameterManager.SetParameterTexture("DiffuseMap", String::FromUTF8(sAssimpFilename.data, -1, sAssimpFilename.length));
-			}
-
-			{ // aiTextureType_SPECULAR
-				aiString sAssimpFilename;
-				if (cAssimpMaterial.GetTexture(aiTextureType_SPECULAR, 0, &sAssimpFilename) == AI_SUCCESS)
-					cParameterManager.SetParameterTexture("SpecularMap", String::FromUTF8(sAssimpFilename.data, -1, sAssimpFilename.length));
-			}
-
-			{ // aiTextureType_SPECULAR
-				aiString sAssimpFilename;
-				if (cAssimpMaterial.GetTexture(aiTextureType_SPECULAR, 0, &sAssimpFilename) == AI_SUCCESS)
-					cParameterManager.SetParameterTexture("SpecularMap", String::FromUTF8(sAssimpFilename.data, -1, sAssimpFilename.length));
-			}
-
-			// aiTextureType_AMBIENT - not supported
-
-			{ // aiTextureType_EMISSIVE
-				aiString sAssimpFilename;
-				if (cAssimpMaterial.GetTexture(aiTextureType_EMISSIVE, 0, &sAssimpFilename) == AI_SUCCESS)
-					cParameterManager.SetParameterTexture("EmissiveMap", String::FromUTF8(sAssimpFilename.data, -1, sAssimpFilename.length));
-			}
-
-			{ // aiTextureType_HEIGHT
-				aiString sAssimpFilename;
-				if (cAssimpMaterial.GetTexture(aiTextureType_HEIGHT, 0, &sAssimpFilename) == AI_SUCCESS)
-					cParameterManager.SetParameterTexture("HeightMap", String::FromUTF8(sAssimpFilename.data, -1, sAssimpFilename.length));
-			}
-
-			{ // aiTextureType_NORMALS
-				aiString sAssimpFilename;
-				if (cAssimpMaterial.GetTexture(aiTextureType_NORMALS, 0, &sAssimpFilename) == AI_SUCCESS)
-					cParameterManager.SetParameterTexture("NormalMap", String::FromUTF8(sAssimpFilename.data, -1, sAssimpFilename.length));
-			}
-
-			//  aiTextureType_SHININESS - not supported
-			//  aiTextureType_OPACITY - not supported
-			//  aiTextureType_DISPLACEMENT - not supported
-
-			{ // aiTextureType_LIGHTMAP
-				aiString sAssimpFilename;
-				if (cAssimpMaterial.GetTexture(aiTextureType_LIGHTMAP, 0, &sAssimpFilename) == AI_SUCCESS)
-					cParameterManager.SetParameterTexture("LightMap", String::FromUTF8(sAssimpFilename.data, -1, sAssimpFilename.length));
-			}
-
-			{ // aiTextureType_REFLECTION
-				aiString sAssimpFilename;
-				if (cAssimpMaterial.GetTexture(aiTextureType_REFLECTION, 0, &sAssimpFilename) == AI_SUCCESS)
-					cParameterManager.SetParameterTexture("ReflectionColor", String::FromUTF8(sAssimpFilename.data, -1, sAssimpFilename.length));
-			}
-		}
+		// Convert the Assimp material into the PixelLight material
+		if (pMaterial)
+			AssimpMaterialToPL(cAssimpMaterial, *pMaterial);
 	}
 }
 
@@ -373,7 +270,7 @@ void AssimpMeshLoader::GetNumOfVerticesAndIndicesRec(const aiNode &cAssimpNode, 
 
 		// Are there tangents and bitangents?
 		if (cAssimpMesh.HasTangentsAndBitangents())
-			m_bbHasTangentsAndBitangents = true;
+			m_bHasTangentsAndBitangents = true;
 
 		// Are there texture coordinates?
 		if (cAssimpMesh.GetNumUVChannels()) {
@@ -381,8 +278,8 @@ void AssimpMeshLoader::GetNumOfVerticesAndIndicesRec(const aiNode &cAssimpNode, 
 
 			// Loop through the supported number of texture coord sets (UV(W) channels)
 			for (uint32 nChannel=0; nChannel<MaxNumOfTextureCoords; nChannel++) {
-				if (m_mNumUVComponents[nChannel] < cAssimpMesh.mNumUVComponents[nChannel])
-					m_mNumUVComponents[nChannel] = cAssimpMesh.mNumUVComponents[nChannel];
+				if (m_nNumUVComponents[nChannel] < cAssimpMesh.mNumUVComponents[nChannel])
+					m_nNumUVComponents[nChannel] = cAssimpMesh.mNumUVComponents[nChannel];
 			}
 		}
 	}
@@ -446,7 +343,7 @@ void AssimpMeshLoader::FillMeshRec(const aiNode &cAssimpNode, VertexBuffer &cVer
 			}
 
 			// Are there any tangents and bitangents at all?
-			if (m_bbHasTangentsAndBitangents) {
+			if (m_bHasTangentsAndBitangents) {
 				// Are there tangents and bitangents within the current mesh?
 				if (cAssimpMesh.HasTangentsAndBitangents()) {
 					{ // Tangent
@@ -481,18 +378,16 @@ void AssimpMeshLoader::FillMeshRec(const aiNode &cAssimpNode, VertexBuffer &cVer
 				// Loop through the supported number of texture coord sets (UV(W) channels)
 				for (uint32 nChannel=0; nChannel<MaxNumOfTextureCoords; nChannel++) {
 					// Are there any texture coordinates within the current channel at all?
-					if (m_mNumUVComponents[nChannel]) {
+					if (m_nNumUVComponents[nChannel]) {
 						// Are there texture coordinates within the current mesh?
 						if (cAssimpMesh.HasTextureCoords(nChannel)) {
 							const aiVector3D &cAssimpVertexTexCoord = cAssimpMesh.mTextureCoords[nChannel][nAssimpVertex];
 							pfVertex = static_cast<float*>(cVertexBuffer.GetData(nNumOfVertices, VertexBuffer::TexCoord, nChannel));
 							pfVertex[0] = cAssimpVertexTexCoord.x;
-							if (m_mNumUVComponents[nChannel] > 1) {
+							if (m_nNumUVComponents[nChannel] > 1) {
 								if (cAssimpMesh.mNumUVComponents[nChannel] > 1) {
-									// [TODO] When do I need to flip and when not? ("Koerper.mesh.xml" no flip, "duck.dae" flip... ?!)
 									pfVertex[1] = cAssimpVertexTexCoord.y;
-//									pfVertex[1] = 1.0f - cAssimpVertexTexCoord.y;
-									if (m_mNumUVComponents[nChannel] > 2) {
+									if (m_nNumUVComponents[nChannel] > 2) {
 										if (cAssimpMesh.mNumUVComponents[nChannel] > 2)
 											pfVertex[2] = cAssimpVertexTexCoord.z;
 										else
@@ -501,7 +396,7 @@ void AssimpMeshLoader::FillMeshRec(const aiNode &cAssimpNode, VertexBuffer &cVer
 								} else {
 									// Fallback
 									pfVertex[1] = 0.0f;
-									if (m_mNumUVComponents[nChannel] > 2)
+									if (m_nNumUVComponents[nChannel] > 2)
 										pfVertex[2] = 0.0f;
 								}
 							}
@@ -509,9 +404,9 @@ void AssimpMeshLoader::FillMeshRec(const aiNode &cAssimpNode, VertexBuffer &cVer
 							// Fallback
 							pfVertex = static_cast<float*>(cVertexBuffer.GetData(nNumOfVertices, VertexBuffer::TexCoord, nChannel));
 							pfVertex[0] = 0.0f;
-							if (m_mNumUVComponents[nChannel] > 1) {
+							if (m_nNumUVComponents[nChannel] > 1) {
 								pfVertex[1] = 0.0f;
-								if (m_mNumUVComponents[nChannel] > 2)
+								if (m_nNumUVComponents[nChannel] > 2)
 									pfVertex[2] = 0.0f;
 							}
 						}
@@ -538,7 +433,7 @@ void AssimpMeshLoader::FillMeshRec(const aiNode &cAssimpNode, VertexBuffer &cVer
 
 					// Loop through all indices of the Assimp face and set the PixelLight mesh vertex indices
 					for (unsigned int nAssimpIndex=0; nAssimpIndex<cAssimpFace.mNumIndices; nAssimpIndex++, pnIndex++) {
-						//			   Assimp mesh vertex index         Where the Assimp mesh starts within the PixelLight mesh vertex buffer
+						//			Assimp mesh vertex index			Where the Assimp mesh starts within the PixelLight mesh vertex buffer
 						*pnIndex = cAssimpFace.mIndices[nAssimpIndex] + nStarVertex;
 					}
 
@@ -558,7 +453,7 @@ void AssimpMeshLoader::FillMeshRec(const aiNode &cAssimpNode, VertexBuffer &cVer
 
 					// Loop through all indices of the Assimp face and set the PixelLight mesh vertex indices
 					for (unsigned int nAssimpIndex=0; nAssimpIndex<cAssimpFace.mNumIndices; nAssimpIndex++, pnIndex++) {
-						//			   Assimp mesh vertex index         Where the Assimp mesh starts within the PixelLight mesh vertex buffer
+						//			Assimp mesh vertex index								Where the Assimp mesh starts within the PixelLight mesh vertex buffer
 						*pnIndex = static_cast<uint16>(cAssimpFace.mIndices[nAssimpIndex] + nStarVertex);
 					}
 
@@ -578,7 +473,7 @@ void AssimpMeshLoader::FillMeshRec(const aiNode &cAssimpNode, VertexBuffer &cVer
 
 					// Loop through all indices of the Assimp face and set the PixelLight mesh vertex indices
 					for (unsigned int nAssimpIndex=0; nAssimpIndex<cAssimpFace.mNumIndices; nAssimpIndex++, pnIndex++) {
-						//			   Assimp mesh vertex index         Where the Assimp mesh starts within the PixelLight mesh vertex buffer
+						//			sAsimp mesh vertex index								Where the Assimp mesh starts within the PixelLight mesh vertex buffer
 						*pnIndex = static_cast<uint8>(cAssimpFace.mIndices[nAssimpIndex] + nStarVertex);
 					}
 
@@ -600,7 +495,7 @@ void AssimpMeshLoader::FillMeshRec(const aiNode &cAssimpNode, VertexBuffer &cVer
 		if (nPrimitiveType != Primitive::Unknown) {
 			// Add the geometry
 			Geometry &cGeometry = lstGeometries.Add();
-			cGeometry.SetName(String::FromUTF8(cAssimpMesh.mName.data, -1, cAssimpMesh.mName.length));
+			cGeometry.SetName(AssimpStringToPL(cAssimpMesh.mName));
 			cGeometry.SetFlags(0);
 			cGeometry.SetActive(true);
 			cGeometry.SetPrimitiveType(nPrimitiveType);

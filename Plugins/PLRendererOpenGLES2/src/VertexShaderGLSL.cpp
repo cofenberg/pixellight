@@ -60,14 +60,14 @@ GLuint VertexShaderGLSL::GetOpenGLESVertexShader() const
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Constructor
 */
-VertexShaderGLSL::VertexShaderGLSL(PLRenderer::Renderer &cRenderer) : PLRenderer::VertexShader(cRenderer),
-	m_nOpenGLESVertexShader(glCreateShader(GL_VERTEX_SHADER))
+VertexShaderGLSL::VertexShaderGLSL(PLRenderer::Renderer &cRenderer, GLenum nShaderType) : PLRenderer::VertexShader(cRenderer),
+	m_nOpenGLESVertexShader(glCreateShader(nShaderType))
 {
 }
 

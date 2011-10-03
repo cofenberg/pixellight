@@ -35,6 +35,9 @@
     <Filter Include="Backend\Bluetooth">
       <UniqueIdentifier>{611a8c16-4380-49bb-a027-55f78989546a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Backend\Android">
+      <UniqueIdentifier>{fecbd9d9-2512-4511-918d-79158f110f0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\PLInput.cpp">
@@ -171,6 +174,18 @@
     </ClCompile>
     <ClCompile Include="src\Backend\Bluetooth\BTLinux.cpp">
       <Filter>Backend\Bluetooth</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Backend\Android\AndroidMouseDevice.cpp">
+      <Filter>Backend\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Backend\Android\AndroidProvider.cpp">
+      <Filter>Backend\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Backend\Android\AndroidSensorManagerDevice.cpp">
+      <Filter>Backend\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Backend\Android\AndroidKeyboardDevice.cpp">
+      <Filter>Backend\Android</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -326,6 +341,18 @@
     </ClInclude>
     <ClInclude Include="include\PLInput\Backend\Bluetooth\BTLinux.h">
       <Filter>Backend\Bluetooth</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLInput\Backend\Android\AndroidProvider.h">
+      <Filter>Backend\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLInput\Backend\Android\AndroidSensorManagerDevice.h">
+      <Filter>Backend\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLInput\Backend\Android\AndroidKeyboardDevice.h">
+      <Filter>Backend\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLInput\Backend\Android\AndroidMouseDevice.h">
+      <Filter>Backend\Android</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

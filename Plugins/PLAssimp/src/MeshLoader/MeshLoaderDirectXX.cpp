@@ -52,7 +52,7 @@ bool MeshLoaderDirectXX::Load(Mesh &cMesh, File &cFile)
 bool MeshLoaderDirectXX::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "x");
+	return AssimpMeshLoader("dds").Load(cMesh, cFile, bStatic, "x");
 }
 
 bool MeshLoaderDirectXX::Save(Mesh &cMesh, File &cFile)

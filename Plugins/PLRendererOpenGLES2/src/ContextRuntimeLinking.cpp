@@ -23,9 +23,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Runtime.h>
 #include <PLCore/Log/Log.h>
 #include <PLCore/System/DynLib.h>
-#define DEFINEDESKTOP
+#define CONTEXT_DEFINERUNTIMELINKING
+#include "PLRendererOpenGLES2/ExtensionsRuntimeLinking.h"
 #include "PLRendererOpenGLES2/ContextRuntimeLinking.h"
 
 
@@ -46,7 +48,8 @@ namespace PLRendererOpenGLES2 {
 ContextRuntimeLinking::ContextRuntimeLinking(Renderer &cRenderer, handle nNativeWindowHandle) : Context(cRenderer, nNativeWindowHandle),
 	m_pEGLDynLib(new DynLib()),
 	m_pGLESDynLib(new DynLib()),
-	m_bEntryPointsRegistered(false)
+	m_bEntryPointsRegistered(false),
+	m_pExtensions(new ExtensionsRuntimeLinking())
 {
 	// Output log information
 	PL_LOG(Info, "Performing OpenGL ES 2.0 dynamic runtime linking")
@@ -73,6 +76,9 @@ ContextRuntimeLinking::~ContextRuntimeLinking()
 	// De-initialize the context while we still can
 	DeInit();
 
+	// Destroy the extensions instance
+	delete m_pExtensions;
+
 	// Destroy the dynamic library instances
 	delete m_pEGLDynLib;
 	delete m_pGLESDynLib;
@@ -87,11 +93,22 @@ bool ContextRuntimeLinking::Init(uint32 nMultisampleAntialiasingSamples)
 	// Entry points successfully registered?
 	if (m_bEntryPointsRegistered) {
 		// Call base implementation
-		return Context::Init(nMultisampleAntialiasingSamples);
-	} else {
-		// Error!;
-		return false;
+		if (Context::Init(nMultisampleAntialiasingSamples)) {
+			// Initialize the supported extensions
+			m_pExtensions->Init();
+
+			// Done
+			return true;
+		}
 	}
+
+	// Error!;
+	return false;
+}
+
+const Extensions &ContextRuntimeLinking::GetExtensions() const
+{
+	return *m_pExtensions;
 }
 
 
@@ -168,7 +185,7 @@ bool ContextRuntimeLinking::LoadLibraries()
 
 	// Load in the dynamic library
 	#ifdef WIN32
-		// First, try the OpenGL ES 2.0 Emulator from ARM (it's possible to move around this dll without issues, so, this one first)
+		// First, try the OpenGL ES 2.0 emulator from ARM (it's possible to move around this dll without issues, so, this one first)
 		bResult = m_pEGLDynLib->Load("libEGL.dll");
 		if (bResult) {
 			bResult = m_pGLESDynLib->Load("libGLESv2.dll");
@@ -189,9 +206,18 @@ bool ContextRuntimeLinking::LoadLibraries()
 		if (bResult)
 			bResult = m_pGLESDynLib->Load("libGLESv2.so");
 	#elif LINUX
-		bResult = m_pEGLDynLib->Load("libGL.so");
-		if (bResult)
-			bResult = m_pGLESDynLib->Load("libGL.so");
+		// First, try the OpenGL ES 2.0 emulator from ARM (it's possible to move around this dll without issues, so, this one first)
+		// Give Linux an absolute path, if this is not done, I just rececive a polite "[PLCore] error while loading libEGL.so " -> "libEGL.so: cannot open shared object file: No such file or directory"
+		const String sRuntimeDirectory = Runtime::GetDirectory();
+		bResult = m_pEGLDynLib->Load(sRuntimeDirectory.GetLength() ? (sRuntimeDirectory + "/libEGL.so") : "libEGL.so");
+		if (bResult) {
+			bResult = m_pGLESDynLib->Load(sRuntimeDirectory.GetLength() ? (sRuntimeDirectory + "/libGLESv2.so") : "libGLESv2.so");
+		} else {
+			// Second, try the system driver
+			bResult = m_pEGLDynLib->Load("libGL.so");
+			if (bResult)
+				bResult = m_pGLESDynLib->Load("libGL.so");
+		}
 	#endif
 
 	// Success?
@@ -218,6 +244,11 @@ bool ContextRuntimeLinking::LoadEGLEntryPoints()
 	#define IMPORT_FUNC(funcName)																																	\
 		if (bResult) {																																				\
 			void *pSymbol = m_pEGLDynLib->GetSymbol(#funcName);																										\
+			if (!pSymbol) {																																			\
+				/* The specification states that "eglGetProcAddress" is only for extension functions, but when using OpenGL ES 2.0 on desktop PC by using a			\
+				   native OpenGL ES 2.0 capable graphics driver under Linux (tested with "AMD Catalyst 11.8"), only this way will work */							\
+				pSymbol = eglGetProcAddress(#funcName);																												\
+			}																																						\
 			if (pSymbol) {																																			\
 				*(reinterpret_cast<void**>(&(funcName))) = pSymbol;																									\
 			} else {																																				\
@@ -227,6 +258,7 @@ bool ContextRuntimeLinking::LoadEGLEntryPoints()
 		}																																							\
 
 	// Load the entry points
+	IMPORT_FUNC(eglGetProcAddress);
 	IMPORT_FUNC(eglGetError);
 	IMPORT_FUNC(eglGetDisplay);
 	IMPORT_FUNC(eglInitialize);
@@ -257,7 +289,6 @@ bool ContextRuntimeLinking::LoadEGLEntryPoints()
 	IMPORT_FUNC(eglWaitNative);
 	IMPORT_FUNC(eglSwapBuffers);
 	IMPORT_FUNC(eglCopyBuffers);
-	IMPORT_FUNC(eglGetProcAddress);
 
 	// Undefine the helper macro
 	#undef IMPORT_FUNC
@@ -275,21 +306,33 @@ bool ContextRuntimeLinking::LoadGLESEntryPoints()
 	bool bResult = true;	// Success by default
 
 	// Define a helper macro
-	#define IMPORT_FUNC(funcName)																																				\
-		if (bResult) {																																							\
-			void *pSymbol = m_pGLESDynLib->GetSymbol(#funcName);																												\
-			if (!pSymbol) {																																						\
-				/* The specification states that "eglGetProcAddress" is only for extension functions, but when using OpenGL ES 2.0 on desktop PC by using a						\
-				   native OpenGL ES 2.0 capable graphics driver (tested with "AMD Catalyst 11.8"), only this way will work */													\
-				pSymbol = eglGetProcAddress(#funcName);																															\
-			}																																									\
-			if (pSymbol) {																																						\
-				*(reinterpret_cast<void**>(&(funcName))) = pSymbol;																												\
-			} else {																																							\
-				PL_LOG(Error, String("Failed to find the entry point \"") + #funcName + "\" within the OpenGL ES 2.0 dynamic library \"" + m_pGLESDynLib->GetAbsPath() + '\"')	\
-				bResult = false;																																				\
-			}																																									\
-		}																																										\
+	#ifdef ANDROID
+		// Native OpenGL ES 2.0 on mobile device
+		#define IMPORT_FUNC(funcName)																																				\
+			if (bResult) {																																							\
+				void *pSymbol = m_pGLESDynLib->GetSymbol(#funcName);																												\
+				if (pSymbol) {																																						\
+					*(reinterpret_cast<void**>(&(funcName))) = pSymbol;																												\
+				} else {																																							\
+					PL_LOG(Error, String("Failed to find the entry point \"") + #funcName + "\" within the OpenGL ES 2.0 dynamic library \"" + m_pGLESDynLib->GetAbsPath() + '\"')	\
+					bResult = false;																																				\
+				}																																									\
+			}
+	#else
+		// Native OpenGL ES 2.0 on desktop PC, we need an function entry point work around for this
+		#define IMPORT_FUNC(funcName)																																				\
+			if (bResult) {																																							\
+				/* The specification states that "eglGetProcAddress" is only for extension functions, but when using OpenGL ES 2.0 on desktop PC by using a							\
+				   native OpenGL ES 2.0 capable graphics driver (tested with "AMD Catalyst 11.8"), only this way will work */														\
+				void *pSymbol = eglGetProcAddress(#funcName);																														\
+				if (pSymbol) {																																						\
+					*(reinterpret_cast<void**>(&(funcName))) = pSymbol;																												\
+				} else {																																							\
+					PL_LOG(Error, String("Failed to find the entry point \"") + #funcName + "\" within the OpenGL ES 2.0 dynamic library \"" + m_pGLESDynLib->GetAbsPath() + '\"')	\
+					bResult = false;																																				\
+				}																																									\
+			}
+	#endif
 
 	// Load the entry points
 	IMPORT_FUNC(glActiveTexture);

@@ -46,8 +46,11 @@ define_external_project(Assimp)
 	set(ASSIMP_INCLUDE_DIRS ${CMAKETOOLS_CURRENT_INCLUDE_DIR} CACHE INTERNAL "")
 	if(WIN32)
 		set(ASSIMP_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/assimp.lib CACHE INTERNAL "")
+	elseif(ANDROID)
+		set(ASSIMP_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/libassimp.a CACHE INTERNAL "")
 	elseif(LINUX)
 		# Under Linux, only a dynamic library is currently buildable by the build system of Assimp
+		# [TODO] Rebuild ASSIMP as static library (already done for Android, was just one changed word :)
 		set(ASSIMP_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/libassimp.so CACHE INTERNAL "")
 	endif()
 

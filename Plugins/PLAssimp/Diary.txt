@@ -1,4 +1,44 @@
-﻿>> 26.07.2011
+﻿>> 29.09.2011
+[CO]
+- Added base class "AssimpLoader" implementing features used by "AssimpMeshLoader" and "AssimpSceneLoader"
+- "AssimpLoader" can now be provided with a default texture file extension. Within some files, textures are addressed by using
+  e.g. "Houses" (without directory, without extension) and we have to guess which resource should be used. This is of course a
+  really nasty situation, but by providing a default texture file extension like "dds" there's at least a slim chance that we're
+  able to load in the requested resources.
+- The plugin "PLAssimp" using "ASSIMP - Open Asset Import Library" is now also able to load in complete scenes (without merging
+  everything into one huge mesh). For testing, I jused the x-scene from http://www.daniel-sadowski.com/nyx/
+  -> For testing: Just download http://www.daniel-sadowski.com/nyx/nyx_exec.exe and extract it. Then create a Lua script
+     file within the same directory as "Nyx.exe" with the following content:
+		-- Lua script start
+		function OnInit()
+			this:SetBaseDirectory("data/tex/")	-- The loaded scene is using just texture names like "Houses"
+			this:ClearScene()
+			local sceneContainer = this:GetScene()
+			if sceneContainer ~= nil then
+				sceneContainer:Create("PLScene::SceneContainer", "Scene", "Scale='0.05 0.05 0.05' Filename='data/msh/serenael.x'")
+				sceneContainer:Create("PLScene::SNDirectionalLight", "Sun", "Rotation='45 0 0'")
+				local camera = sceneContainer:Create("PLScene::SNCamera", "FreeCamera")
+				if camera ~= nil then
+					camera:AddModifier("PLEngine::SNMLookController")
+					camera:AddModifier("PLScene::SNMRotationFixRoll")
+					camera:AddModifier("PLEngine::SNMMoveController")
+				end
+				this:SetCamera(camera)
+			end
+		end
+		-- Lua script end
+     ... and just load this script with PLViewer and you should be able to fly through this fantasy citiy within the PixelLight viewer.
+     You can also replace
+		sceneContainer:Create("PLScene::SceneContainer", "Scene", "Scale='0.05 0.05 0.05' Filename='data/msh/serenael.x'")
+     by
+		sceneContainer:Create("PLScene::SNMesh", "Serenael", "Scale='0.05 0.05 0.05' Mesh='data/msh/serenael.x'")
+     in order to load in this x scene as one single huge mesh. By the way, Assimp was able to detect 80 mesh instances in this scene.
+  -> Sadly, this scene mentioned above has no cameras or lights in it, so I wasn't able to test the camera and light import
+     (but I implemented it anyway because I'am currently in the topic, bugfixing is easier then implementing from zero :)
+
+
+
+>> 26.07.2011
 [CO]
 - Added custom "IOSystem" and "IOStream"
 

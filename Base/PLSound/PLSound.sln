@@ -10,6 +10,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLSoundNull", "..\..\Plugin
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLSoundOpenAL", "..\..\Plugins\PLSoundOpenAL\PLSoundOpenAL.vcxproj", "{7B682D38-14C7-4DA2-8A6A-6A3A0D5AF5BE}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLSoundOpenSLES", "..\..\Plugins\PLSoundOpenSLES\PLSoundOpenSLES.vcxproj", "{083D507F-F7FA-413D-973A-6663CA92D990}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -58,6 +60,14 @@ Global
 		{7B682D38-14C7-4DA2-8A6A-6A3A0D5AF5BE}.Release|Win32.Build.0 = Release|Win32
 		{7B682D38-14C7-4DA2-8A6A-6A3A0D5AF5BE}.Release|x64.ActiveCfg = Release|x64
 		{7B682D38-14C7-4DA2-8A6A-6A3A0D5AF5BE}.Release|x64.Build.0 = Release|x64
+		{083D507F-F7FA-413D-973A-6663CA92D990}.Debug|Win32.ActiveCfg = Debug|Win32
+		{083D507F-F7FA-413D-973A-6663CA92D990}.Debug|Win32.Build.0 = Debug|Win32
+		{083D507F-F7FA-413D-973A-6663CA92D990}.Debug|x64.ActiveCfg = Debug|x64
+		{083D507F-F7FA-413D-973A-6663CA92D990}.Debug|x64.Build.0 = Debug|x64
+		{083D507F-F7FA-413D-973A-6663CA92D990}.Release|Win32.ActiveCfg = Release|Win32
+		{083D507F-F7FA-413D-973A-6663CA92D990}.Release|Win32.Build.0 = Release|Win32
+		{083D507F-F7FA-413D-973A-6663CA92D990}.Release|x64.ActiveCfg = Release|x64
+		{083D507F-F7FA-413D-973A-6663CA92D990}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -152,7 +152,7 @@ void Application::OnControl(Control &cControl)
 void Application::OnCreateScene(SceneContainer &cContainer)
 {
 	// Create a scene container with our 'concrete sound scene' using the default sound API
-	SceneNode *pSceneContainerNode = cContainer.Create("PLSound::SCSound", "SoundScene", "Pitch=\"0.6\"");
+	SceneNode *pSceneContainerNode = cContainer.Create("PLSound::SCSound", "SoundScene");
 	if (pSceneContainerNode && pSceneContainerNode->IsInstanceOf("PLScene::SceneContainer")) {
 		SceneContainer *pSceneContainer = static_cast<SceneContainer*>(pSceneContainerNode);
 

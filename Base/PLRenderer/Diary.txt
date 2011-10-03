@@ -1,3 +1,52 @@
+>> 28.09.2011
+[CO]
+PLRendererOpenGLES2:
+- Added support for "GL_EXT_Cg_shader" (ftp://download.nvidia.com/developer/GLSL/GLSL%20Release%20Notes%20for%20Release%2060.pdf - page 13)... a REALLY
+  cool extension: If this extension is available (on Tegra 2, it is) one can directly feed OpenGL ES 2.0 with Cg shaders!
+  This means that in this case, there's no need for the Cg runtime (> 6 MB) - altought there's no Cg runtime for Android anyway. Adding support within
+  "PLRendererOpenGL" for this extension would be easy - but there's always the high possibility that this extension is not available (like on AMD GPUs
+  as my own :). I'am sure that it's no good idea to use Cg shaders for official released Android apps because one has to assume that this extension is
+  not available - but during development I'am also sure that this will become usefull, e.g. for "quick'n'dirty" rapid prototyping using already written
+  Cg shaders.
+  I noticed two issues with the Cg shaders:
+    - When using semantics within Cg attributes, "glGetActiveAttrib()" returns the semantic (e.g. "POSITION") instead of the real attribute name
+    - Inverse for matrices required
+  ... so, still some minor usage details to figure out for an easy and generic usage... but hey, Cg shaders on a mobile device! :D
+- Added support for "GL_OES_texture_3D"
+- Added support for "GL_NV_get_tex_image"
+- Added support for "GL_OES_mapbuffer"
+- Added support for "GL_ARB_draw_buffers", "GL_NV_fbo_color_attachments", "GL_NV_read_buffer", "GL_ANGLE_framebuffer_blit", "GL_ANGLE_framebuffer_multisample",
+  "GL_OES_packed_depth_stencil", "GL_OES_depth24" and "GL_OES_depth32"
+  -> "FrameBufferObject" has now the same feature set as the OpenGL renderer (and there's still a render to texture refactoring on my list :)
+  -> Multi render targets (MRT) is now working on my Tegra 2 smartphone, tested it with 4 render targets, there are up to 8 render targets supported... WOW! :D
+    (meaning it's technically possible to also use deferred rendering on Tegra 2 smartphones)
+
+
+
+>> 27.09.2011
+[CO]
+PLRendererOpenGLES2:
+- The OpenGL ES 2.0 emulator from ARM can now be used under Linux as well (although it's horrible slow compared to MS Windows, at least on my system)
+- Using native OpenGL ES 2.0 on a desktop PC under Linux is now working as well, at least the initalization... right now, when running something there's just a black
+  flickering something visible (all EGL and OpenGL ES 2.0 entry points were found, no errors within the log etc.)...
+- Linux: "ContextRuntimeLinking::LoadGLESEntryPoints()": When "eglGetProcAddress()" is used to get the OpenGL ES 2.0 function entry points, I see at least something
+  (although there's some window flickering from time to time)
+- Linux: Ok, it looks like that the "flickering" has something to do with the colormap and that EGL creates an own colormap. When moving around the window, one can clearly
+  see that the rendering area stays at the previous position and the window content is black - after stopping the window move around, the render area snaps to the new window
+  position. I tried to fix that, but without any luck... maybe someone else can figure out how to solve this?
+- Added support for "GL_OES_element_index_uint"
+- Added support for "GL_EXT_texture_filter_anisotropic"
+- Implemented "Renderer::SetupCapabilities()"
+- Added support for "GL_EXT_texture_compression_dxt1" (just a subset of "GL_EXT_texture_compression_s3tc")
+
+
+
+>> 25.09.2011
+[CO]
+- "PLRendererOpenGLES2": Added support for "GL_EXT_texture_compression_s3tc", "GL_EXT_texture_compression_latc" and "GL_AMD_compressed_3DC_texture"
+
+
+
 >> 13.09.2011
 [CO]
 - "PLCore::FrontendConfig" and "PLRenderer::Config" have now the same default size (800x600 still feels quite fine during development)

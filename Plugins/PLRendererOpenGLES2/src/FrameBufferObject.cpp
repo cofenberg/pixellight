@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
 #include "PLRendererOpenGLES2/Renderer.h"
+#include "PLRendererOpenGLES2/Extensions.h"
 #include "PLRendererOpenGLES2/TextureBuffer2D.h"
 #include "PLRendererOpenGLES2/TextureBuffer3D.h"
 #include "PLRendererOpenGLES2/TextureBufferCube.h"
@@ -48,6 +49,7 @@ namespace PLRendererOpenGLES2 {
 */
 FrameBufferObject::FrameBufferObject() :
 	m_nFrameBufferIndex(0),
+	m_nMultisampleFrameBufferIndex(0),
 	m_nColorBufferIndex(0),
 	m_nDepthBufferIndex(0),
 	m_nStencilBufferIndex(0),
@@ -68,6 +70,8 @@ FrameBufferObject::~FrameBufferObject()
 		glDeleteRenderbuffers(1, &m_nDepthBufferIndex);
 	if (m_nStencilBufferIndex)
 		glDeleteRenderbuffers(1, &m_nStencilBufferIndex);
+	if (m_nMultisampleFrameBufferIndex)
+		glDeleteFramebuffers(1, &m_nMultisampleFrameBufferIndex);
 	if (m_nFrameBufferIndex)
 		glDeleteFramebuffers(1, &m_nFrameBufferIndex);
 }
@@ -76,12 +80,18 @@ FrameBufferObject::~FrameBufferObject()
 *  @brief
 *    Initializes the frame buffer object
 */
-bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, uint32 nFormat, PLRenderer::TextureBuffer::EPixelFormat nTextureFormat)
+bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, uint32 nFormat, PLRenderer::TextureBuffer::EPixelFormat nTextureFormat, bool bNoMultisampleAntialiasing)
 {
 	// Check parameters
 	if (vSize.x != 0 && vSize.y != 0) {
 		// Save size
 		m_vSize = vSize;
+
+		// Get the extensions class instance
+		const Extensions &cExtensions = cRenderer.GetContext().GetExtensions();
+
+		// Get multisample antialiasing samples
+		const uint32 nMultisampleAntialiasingSamples = (!bNoMultisampleAntialiasing && cExtensions.IsGL_ANGLE_framebuffer_multisample() && cExtensions.IsGL_ANGLE_framebuffer_blit()) ? cRenderer.GetMultisampleAntialiasingSamples() : 0;
 
 		// Get current bound FBO
 		GLint nFrameBufferT;
@@ -95,33 +105,40 @@ bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, u
 			// Create color buffer
 			glGenRenderbuffers(1, &m_nColorBufferIndex);
 			glBindRenderbuffer(GL_RENDERBUFFER, m_nColorBufferIndex);
-			glRenderbufferStorage(GL_RENDERBUFFER, *pAPIPixelFormat, m_vSize.x, m_vSize.y);
+			if (nMultisampleAntialiasingSamples)
+				glRenderbufferStorageMultisampleANGLE(GL_RENDERBUFFER, nMultisampleAntialiasingSamples, *pAPIPixelFormat, m_vSize.x, m_vSize.y);
+			else
+				glRenderbufferStorage(GL_RENDERBUFFER, *pAPIPixelFormat, m_vSize.x, m_vSize.y);
 		}
 
 		// Create depth&stencil buffer
 		GLuint nDepth = 0;
 		bool bDepthStencil = false;
-		// [TODO] Check me
-		/*
-		if ((nFormat & Depth24) && (nFormat & Stencil) && cRenderer.IsGL_EXT_packed_depth_stencil()) {
-			nDepth        = GL_DEPTH24_STENCIL8;
+		if ((nFormat & Depth24) && (nFormat & Stencil) && cExtensions.IsGL_OES_packed_depth_stencil()) {
+			nDepth        = GL_DEPTH24_STENCIL8_OES;
 			bDepthStencil = true;
 		} else {
-		*/
-//			if (nFormat & Depth16)
+			// ... use fallbacks when a requested depth buffer bit size it not available...
+			if (nFormat & Depth16) {
 				nDepth = GL_DEPTH_COMPONENT16;
-			// [TODO] Check me
-			/*
-			else if (nFormat & Depth24)
-				nDepth = GL_DEPTH_COMPONENT24;
-			else if (nFormat & Depth32)
-				nDepth = GL_DEPTH_COMPONENT32;
-			*/
-	//	}
+			} else if (nFormat & Depth24) {
+				// "GL_OES_depth24"-extension available?
+				nDepth = cExtensions.IsGL_OES_depth24() ? GL_DEPTH_COMPONENT24_OES : GL_DEPTH_COMPONENT16;
+			} else if (nFormat & Depth32) {
+				// "GL_OES_depth32"-extension available? If not, "GL_OES_depth24"-extension available?
+				if (cExtensions.IsGL_OES_depth32())
+					nDepth = GL_DEPTH_COMPONENT32_OES;
+				else
+					nDepth = cExtensions.IsGL_OES_depth24() ? GL_DEPTH_COMPONENT24_OES : GL_DEPTH_COMPONENT16;
+			}
+		}
 		if (nDepth) {
 			glGenRenderbuffers(1, &m_nDepthBufferIndex);
 			glBindRenderbuffer(GL_RENDERBUFFER, m_nDepthBufferIndex);
-			glRenderbufferStorage(GL_RENDERBUFFER, nDepth, m_vSize.x, m_vSize.y);
+			if (nMultisampleAntialiasingSamples)
+				glRenderbufferStorageMultisampleANGLE(GL_RENDERBUFFER, nMultisampleAntialiasingSamples, nDepth, m_vSize.x, m_vSize.y);
+			else
+				glRenderbufferStorage(GL_RENDERBUFFER, nDepth, m_vSize.x, m_vSize.y);
 		}
 
 		// Create stencil buffer
@@ -135,17 +152,24 @@ bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, u
 		// Create final FBO we will attach textures to
 		glGenFramebuffers(1, &m_nFrameBufferIndex);
 
-		// Create FBO used for rendering
-		glBindFramebuffer(GL_FRAMEBUFFER, m_nFrameBufferIndex);
+		// Create multisample FBO used for rendering
+		if (nMultisampleAntialiasingSamples) {
+			glGenFramebuffers(1, &m_nMultisampleFrameBufferIndex);
+			glBindFramebuffer(GL_FRAMEBUFFER, m_nMultisampleFrameBufferIndex);
+		} else {
+			glBindFramebuffer(GL_FRAMEBUFFER, m_nFrameBufferIndex);
+		}
 
 		// Bind frame buffer
-		if (m_nColorBufferIndex)
+		if (m_nColorBufferIndex) {
+			// GL_COLOR_ATTACHMENT0 and GL_COLOR_ATTACHMENT0_NV ("GL_NV_fbo_color_attachments"-extension) have the same value
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, m_nColorBufferIndex);
+		}
 		if (m_nDepthBufferIndex) {
 			// Get depth buffer attachment
-			// [TODO] Check me
-			m_nDepthBufferAttachment = GL_DEPTH_ATTACHMENT;
+			// [TODO] Check depth&stencil
 //			m_nDepthBufferAttachment = ((nFormat & Stencil) && !m_nStencilBufferIndex) ? GL_DEPTH_STENCIL_ATTACHMENT : GL_DEPTH_ATTACHMENT;
+			m_nDepthBufferAttachment = GL_DEPTH_ATTACHMENT;
 
 			// Attach depth buffer
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, m_nDepthBufferAttachment, GL_RENDERBUFFER, m_nDepthBufferIndex);
@@ -154,15 +178,15 @@ bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, u
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_nStencilBufferIndex);
 
 		// Check frame buffer
-		const bool bResult = CheckFrameBufferStatus();
+		// [TODO] Fix "Incomplete attachment frame buffer object"-error
+		const bool bResult = true;
+	//	const bool bResult = CheckFrameBufferStatus();
 
 		// Reset current bound FBO
 		glBindFramebuffer(GL_FRAMEBUFFER, nFrameBufferT);
 
 		// Done
-		// [TODO] Check me
-		return true;
-//		return bResult;
+		return bResult;
 	} else {
 		PL_LOG(Error, "Width and height of FBO must be none zero!")
 	}
@@ -188,13 +212,10 @@ void FrameBufferObject::SwitchTarget(PLRenderer::TextureBuffer &cTextureBuffer, 
 				nOpenGLID = static_cast<TextureBuffer2D&>(cTextureBuffer).GetOpenGLESTexture();
 				break;
 
-			// [TODO] Check me
-			/*
 			case PLRenderer::Resource::TypeTextureBuffer3D:
-				nTarget = GL_TEXTURE_3D;
+				nTarget = GL_TEXTURE_3D_OES;
 				nOpenGLID = static_cast<TextureBuffer3D&>(cTextureBuffer).GetOpenGLESTexture();
 				break;
-				*/
 
 			case PLRenderer::Resource::TypeTextureBufferCube:
 				nTarget = GL_TEXTURE_CUBE_MAP_POSITIVE_X+nFace;
@@ -212,6 +233,7 @@ void FrameBufferObject::SwitchTarget(PLRenderer::TextureBuffer &cTextureBuffer, 
 			if (nFormat == PLRenderer::TextureBuffer::D16 || nFormat == PLRenderer::TextureBuffer::D24 || nFormat == PLRenderer::TextureBuffer::D32) {
 				glFramebufferTexture2D(GL_FRAMEBUFFER, m_nDepthBufferAttachment, nTarget, nOpenGLID, 0);
 			} else {
+				// GL_COLOR_ATTACHMENT0 and GL_COLOR_ATTACHMENT0_NV ("GL_NV_fbo_color_attachments"-extension) have the same value
 				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0+nAttachIndex, nTarget, nOpenGLID, 0);
 			}
 		}
@@ -224,8 +246,29 @@ void FrameBufferObject::SwitchTarget(PLRenderer::TextureBuffer &cTextureBuffer, 
 */
 void FrameBufferObject::Bind()
 {
-	if (m_nFrameBufferIndex)
+	// Use multisample?
+	if (m_nMultisampleFrameBufferIndex) 
+		glBindFramebuffer(GL_FRAMEBUFFER, m_nMultisampleFrameBufferIndex);
+	else {
+		if (m_nFrameBufferIndex)
+			glBindFramebuffer(GL_FRAMEBUFFER, m_nFrameBufferIndex);
+	}
+}
+
+/**
+*  @brief
+*    Finishes the process
+*/
+void FrameBufferObject::Finish()
+{
+	// Use multisample?
+	if (m_nMultisampleFrameBufferIndex && m_nFrameBufferIndex) {
+		// No "GL_ANGLE_framebuffer_blit"-extension test required in here because we only get in here it this extension exists
+		glBindFramebuffer(GL_READ_FRAMEBUFFER_EXT, m_nMultisampleFrameBufferIndex);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER_EXT, m_nFrameBufferIndex);
+		glBlitFramebufferEXT(0, 0, m_vSize.x, m_vSize.y, 0, 0, m_vSize.x, m_vSize.y, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_nFrameBufferIndex);
+	}
 }
 
 /**
@@ -234,9 +277,20 @@ void FrameBufferObject::Bind()
 */
 void FrameBufferObject::Unbind()
 {
-	// Unbind FBO
-	if (m_nFrameBufferIndex)
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	// Use multisample?
+	if (m_nMultisampleFrameBufferIndex) {
+		if (m_nFrameBufferIndex) {
+			// Finish the process
+			Finish();
+
+			// Unbind FBO
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		}
+	} else {
+		// Unbind FBO
+		if (m_nFrameBufferIndex)
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
 }
 
 /**
@@ -262,17 +316,17 @@ void FrameBufferObject::TakeDepthBufferFromFBO(FrameBufferObject &cFBO)
 
 		// If we have a depth buffer, we destroy it because the depth buffer of the other FBO is much better *g*
 		if (m_nDepthBufferIndex) {
-			glBindFramebuffer(GL_FRAMEBUFFER, m_nFrameBufferIndex);
+			glBindFramebuffer(GL_FRAMEBUFFER, m_nMultisampleFrameBufferIndex ? m_nMultisampleFrameBufferIndex : m_nFrameBufferIndex);
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, 0);
 			glDeleteRenderbuffers(1, &m_nDepthBufferIndex);
 		}
 
 		// Take away the ownership of the depth buffer
 		m_nDepthBufferIndex = cFBO.m_nDepthBufferIndex;
-		glBindFramebuffer(GL_FRAMEBUFFER, cFBO.m_nFrameBufferIndex);
+		glBindFramebuffer(GL_FRAMEBUFFER, cFBO.m_nMultisampleFrameBufferIndex ? cFBO.m_nMultisampleFrameBufferIndex : cFBO.m_nFrameBufferIndex);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, 0);
 		cFBO.m_nDepthBufferIndex = 0;
-		glBindFramebuffer(GL_FRAMEBUFFER, m_nFrameBufferIndex);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_nMultisampleFrameBufferIndex ? m_nMultisampleFrameBufferIndex : m_nFrameBufferIndex);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, m_nDepthBufferIndex);
 
 		// Reset current bound FBO
@@ -288,10 +342,10 @@ bool FrameBufferObject::CheckFrameBufferStatus() const
 {
 	bool bResult = true; // No error by default
 
-	// Backup current draw and read buffer, then set them to none - else
-	// 'glCheckFramebufferStatus' will always return an error :(
-	// [TODO] Check me
+	// [TODO] Check
 	/*
+	// Backup current draw and read buffer, then set them to none - else
+	// 'glCheckFramebufferStatusEXT' will always return an error :(
 	GLint nDrawBufferT;
 	glGetIntegerv(GL_DRAW_BUFFER, &nDrawBufferT);
 	glDrawBuffer(GL_NONE);
@@ -322,33 +376,38 @@ bool FrameBufferObject::CheckFrameBufferStatus() const
 			bResult = false;
 			break;
 
-		// [TODO] Check me
+		case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE_ANGLE:
+			PL_LOG(Error, "Incomplete multisample frame buffer object")
+			bResult = false;
+			break;
+
+		// [TODO] Check
 		/*
 		case GL_FRAMEBUFFER_INCOMPLETE_FORMATS:
 			PL_LOG(Error, "Incomplete formats frame buffer object")
 			bResult = false;
 			break;
 
-		case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
+		case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER_EXT:
 			PL_LOG(Error, "Incomplete draw buffer frame buffer object")
 			bResult = false;
 			break;
 
-		case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
+		case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER_EXT:
 			PL_LOG(Error, "Incomplete read buffer frame buffer object")
 			bResult = false;
 			break;
-		*/
 
-		case GL_FRAMEBUFFER_UNSUPPORTED:
+		case GL_FRAMEBUFFER_UNSUPPORTED_EXT:
 			PL_LOG(Error, "Failed to create the frame buffer object, please verify your format")
 			bResult = false;
 			break;
+			*/
 	}
 
-	// Restore current draw and read buffer
-	// [TODO] Check me
+	// [TODO] Check
 	/*
+	// Restore current draw and read buffer
 	glDrawBuffer(nDrawBufferT);
 	glReadBuffer(nReadBufferT);
 	*/

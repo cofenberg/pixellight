@@ -73,17 +73,21 @@ bool DynLibLinux::Load(const Url &cUrl)
 	if (m_pLib)
 		return false; // Error!
 
-	// Load library
-	// [TODO] Check whether there's something like 'LOAD_WITH_ALTERED_SEARCH_PATH' so the other files
-	// will be searched within the same directory as this one. If not, we must change the current directory
-	// in here...
+	// Load library. Under Linux, there's nothing like 'LOAD_WITH_ALTERED_SEARCH_PATH' from MS Windows so the other files
+	// will be searched within the same directory as this one. This has to be configurated by using the RPATH when linking
+	// the resulting binary (see http://www.cmake.org/Wiki/CMake_RPATH_handling). Type e.g. "objdump -x libPLCore.so" and
+	// have a look at "Dynamic Section"->"RPATH", should be "$ORIGIN" when this option is enabled.
 	const String sPath = cUrl.GetUnixPath();
-	m_pLib = dlopen((sPath.GetFormat() == String::ASCII) ? sPath.GetASCII() : sPath.GetUTF8(), RTLD_NOW);
-	if (!m_pLib)
-		printf("[PLCore] error while loading %s \n %s\n", sPath.GetASCII(), dlerror());
+	m_pLib = dlopen((sPath.GetFormat() == String::ASCII) ? sPath.GetASCII() : sPath.GetUTF8(), RTLD_LAZY);
 
 	// Return whether loading of the library was successful
-	return m_pLib;
+	if (m_pLib) {
+		// Done
+		return true;
+	} else {
+		// Error: Failed to load dll!
+		return false;
+	}
 }
 
 String DynLibLinux::GetAbsPath() const

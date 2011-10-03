@@ -120,6 +120,9 @@ class ApplicationContext : public AbstractContext {
 		*  @remarks
 		*    This is just a convenience function and is the same as using
 		*      Url(Url(GetExecutableFile()).CutFilename() + "../").Collapse().GetUrl()
+		*
+		*  @note
+		*    - Please note that the returned string can also be empty
 		*/
 		PLCORE_API String GetAppDirectory() const;
 

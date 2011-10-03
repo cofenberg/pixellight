@@ -150,13 +150,14 @@ Rocket::Core::CompiledGeometryHandle RenderInterfacePL::CompileGeometry(Rocket::
 		IndexBuffer *pIndexBuffer = pRocketPLCompiledGeometry->pIndexBuffer = m_pRendererContext->GetRenderer().CreateIndexBuffer();
 
 		// Allocate the index buffer
-		pIndexBuffer->SetElementType(IndexBuffer::UInt);
+		pIndexBuffer->SetElementTypeByMaximumIndex(num_vertices);
 		pIndexBuffer->Allocate(num_indices, Usage::Static);
 
 		// Setup the index buffer data
 		if (pIndexBuffer->Lock(Lock::WriteOnly)) {
-			// Just copy over the indices
-			MemoryManager::Copy(pIndexBuffer->GetData(), indices, sizeof(int)*num_indices);
+			// Copy over the indices
+			for (int i=0; i<num_indices; i++)
+				pIndexBuffer->SetData(i, indices[i]);
 
 			// Unlock the index buffer
 			pIndexBuffer->Unlock();

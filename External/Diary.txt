@@ -1,8 +1,24 @@
+>> 20.09.2011
+[CO]
+- Updated FMOD Ex from version "4.32.08" to "4.36.04" (has Android support)
+
+
+
 >> 19.09.2011
+[CO]
+- Added OpenSL ES (http://www.khronos.org/opensles/)
+
+
+
+>> 18.09.2011
 [CO]
 - Updated "armeabi" & "armeabi-v7a" package of jpg
 - Updated "armeabi" & "armeabi-v7a" package of freetype
 - Added "armeabi" & "armeabi-v7a" package of Lua
+- Added "armeabi" & "armeabi-v7a" package of libRocket
+- Added "armeabi" & "armeabi-v7a" package of Newton
+- Added "armeabi" & "armeabi-v7a" package of Bullet
+- Added "armeabi" & "armeabi-v7a" package of ASSIMP
 
 
 

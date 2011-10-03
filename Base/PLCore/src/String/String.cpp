@@ -215,28 +215,33 @@ String String::FromUTF8(const char *pszUTF8, int nLength, uint32 nNumOfBytes)
 {
 	// Valid string?
 	if (pszUTF8) {
-		// Get the number of characters and number of bytes of the given string
-		if (nLength > 0) {
-			if (!nNumOfBytes)
-				UTF8Tools::GetNumOfCharactersAndBytes(pszUTF8, nNumOfBytes);
-		} else {
-			if (nNumOfBytes)
-				nLength = UTF8Tools::GetNumOfCharacters(pszUTF8, nNumOfBytes);
-			else
-				nLength = UTF8Tools::GetNumOfCharactersAndBytes(pszUTF8, nNumOfBytes);
-		}
+		#if ANDROID
+			// [TODO] "String::FromUTF8()" currently now working correctly on Android?
+			return String(pszUTF8);
+		#else
+			// Get the number of characters and number of bytes of the given string
+			if (nLength > 0) {
+				if (!nNumOfBytes)
+					UTF8Tools::GetNumOfCharactersAndBytes(pszUTF8, nNumOfBytes);
+			} else {
+				if (nNumOfBytes)
+					nLength = UTF8Tools::GetNumOfCharacters(pszUTF8, nNumOfBytes);
+				else
+					nLength = UTF8Tools::GetNumOfCharactersAndBytes(pszUTF8, nNumOfBytes);
+			}
 
-		// Valid string?
-		if (nLength && nNumOfBytes) {
-			// Allocate the wide character string (+1 for the terminating zero)
-			wchar_t *pszWideCharacterString = new wchar_t[nLength + 1];
+			// Valid string?
+			if (nLength && nNumOfBytes) {
+				// Allocate the wide character string (+1 for the terminating zero)
+				wchar_t *pszWideCharacterString = new wchar_t[nLength + 1];
 
-			// Get the wide character string (+1 for the terminating zero)
-			UTF8Tools::ToWideCharacterString(pszWideCharacterString, nLength + 1, pszUTF8, nNumOfBytes);
+				// Get the wide character string (+1 for the terminating zero)
+				UTF8Tools::ToWideCharacterString(pszWideCharacterString, nLength + 1, pszUTF8, nNumOfBytes);
 
-			// Create a new string buffer and take over the control of the given memory
-			return String(pszWideCharacterString, false, nLength);
-		}
+				// Create a new string buffer and take over the control of the given memory
+				return String(pszWideCharacterString, false, nLength);
+			}
+		#endif
 	}
 
 	// Just return an empty string...

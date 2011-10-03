@@ -1,3 +1,7 @@
+# Changes in the following third party script
+# [CHANGED] Changed default Android API level from 8 to 9 (we need native EGL and native activity introduced in this version)
+
+
 # ----------------------------------------------------------------------------
 #  Android CMake toolchain file, for use with the ndk r5,r6
 #  See home page: http://code.google.com/p/android-cmake/
@@ -28,7 +32,7 @@
 #    ANDROID_NDK_TOOLCHAIN_ROOT=/opt/android-toolchain - path to standalone toolchain.
 #      Option is not used if full NDK is found. Can be set as environment variable.
 #
-#    ANDROID_API_LEVEL=android-8 - level of android API to use.
+#    ANDROID_API_LEVEL=android-9 - level of android API to use.
 #      Option is ignored when build uses stanalone toolchain.
 #
 #    ARM_TARGET=armeabi-v7a - type of floating point support.
@@ -173,7 +177,7 @@ if( EXISTS "${ANDROID_NDK}" )
  set_property( CACHE ANDROID_API_LEVEL PROPERTY STRINGS ${PossibleAndroidLevels} )
  
  if( NOT ANDROID_API_LEVEL GREATER 2 )
-  set( ANDROID_API_LEVEL 8)
+  set( ANDROID_API_LEVEL 9)
   message( STATUS "Using default android API level android-${ANDROID_API_LEVEL}" )
   message( STATUS "  If you prefer to use a different API level, please define the variable: ANDROID_API_LEVEL" )
  endif()

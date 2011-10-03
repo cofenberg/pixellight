@@ -118,19 +118,19 @@ FMOD_RESULT F_CALLBACK FSSeek(void *pHandle, unsigned int nPos, void *pUserData)
 //[-------------------------------------------------------]
 //[ Custom FMOD Ex memory callbacks                       ]
 //[-------------------------------------------------------]
-void * F_CALLBACK FMODExAllocationFunction(unsigned int nSize, FMOD_MEMORY_TYPE nType)
+void * F_CALLBACK FMODExAllocationFunction(unsigned int nSize, FMOD_MEMORY_TYPE nType, const char *pszSourceString)
 {
 	// 'nType' is not used (that's NO problem!)
 	return MemoryManager::Allocator(MemoryManager::NewArray, nSize);
 }
 
-void * F_CALLBACK FMODExReallocationFunction(void *pAddress, unsigned int nSize, FMOD_MEMORY_TYPE nType)
+void * F_CALLBACK FMODExReallocationFunction(void *pAddress, unsigned int nSize, FMOD_MEMORY_TYPE nType, const char *pszSourceString)
 {
 	// 'nType' is not used (that's NO problem!)
 	return MemoryManager::Reallocator(pAddress, nSize);
 }
 
-void F_CALLBACK FMODExDeallocationFunction(void *pAddress, FMOD_MEMORY_TYPE nType)
+void F_CALLBACK FMODExDeallocationFunction(void *pAddress, FMOD_MEMORY_TYPE nType, const char *pszSourceString)
 {
 	// 'nType' is not used (that's NO problem!)
 	if (pAddress)

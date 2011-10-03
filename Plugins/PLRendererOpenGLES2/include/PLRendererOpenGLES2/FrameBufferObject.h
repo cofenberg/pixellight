@@ -99,11 +99,13 @@ class FrameBufferObject {
 		*    Frame buffer size
 		*  @param[in] nFormat
 		*    Frame buffer format
+		*  @param[in] bNoMultisampleAntialiasing
+		*    Do not use multisample antialiasing
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool Initialize(Renderer &cRenderer, const PLMath::Vector2i &vSize, PLCore::uint32 nFormat, PLRenderer::TextureBuffer::EPixelFormat nTextureFormat);
+		bool Initialize(Renderer &cRenderer, const PLMath::Vector2i &vSize, PLCore::uint32 nFormat, PLRenderer::TextureBuffer::EPixelFormat nTextureFormat, bool bNoMultisampleAntialiasing);
 
 		/**
 		*  @brief
@@ -123,6 +125,12 @@ class FrameBufferObject {
 		*    Binds the frame buffer
 		*/
 		void Bind();
+
+		/**
+		*  @brief
+		*    Finishes the process
+		*/
+		void Finish();
 
 		/**
 		*  @brief
@@ -169,10 +177,11 @@ class FrameBufferObject {
 	private:
 		PLMath::Vector2i m_vSize;
 		GLuint			 m_nFrameBufferIndex;
+		GLuint			 m_nMultisampleFrameBufferIndex;
 		GLuint			 m_nColorBufferIndex;
 		GLuint			 m_nDepthBufferIndex;
 		GLuint			 m_nStencilBufferIndex;
-		GLuint			 m_nDepthBufferAttachment;	/**< Depth buffer attachment (GL_DEPTH_ATTACHMENT_EXT or GL_DEPTH_STENCIL_ATTACHMENT) */
+		GLuint			 m_nDepthBufferAttachment;	/**< Depth buffer attachment (GL_DEPTH_ATTACHMENT) */
 
 
 };

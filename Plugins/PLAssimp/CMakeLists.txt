@@ -32,6 +32,7 @@ add_sources(
 	src/PLAssimp.cpp
 	src/IOSystem.cpp
 	src/IOStream.cpp
+	src/AssimpLoader.cpp
 # Mesh loaders
 	src/AssimpMeshLoader.cpp
 	# Common interchange formats (13 formats)
@@ -72,45 +73,44 @@ add_sources(
 	src/MeshLoader/MeshLoader3DGameStudioTerrain.cpp			# 3D GameStudio Terrain ( .hmp )
 	src/MeshLoader/MeshLoaderIzwareNendo.cpp					# Izware Nendo ( .ndo )
 # Scene loaders
-# [TODO] Under construction
-#	src/AssimpSceneLoader.cpp
+	src/AssimpSceneLoader.cpp
 	# Common interchange formats (13 formats)
-#	src/SceneLoader/SceneLoaderCollada.cpp						# Collada ( .dae )
-#	src/SceneLoader/SceneLoaderBlender3D.cpp					# Blender 3D ( .blend )
-#	src/SceneLoader/SceneLoader3dsMax3DS.cpp					# 3ds Max 3DS ( .3ds )
-#	src/SceneLoader/SceneLoader3dsMaxASE.cpp					# 3ds Max ASE ( .ase )
-#	src/SceneLoader/SceneLoaderWavefrontObject.cpp				# Wavefront Object ( .obj )
-#	src/SceneLoader/SceneLoaderStanfordPolygonLibrary.cpp		# Stanford Polygon Library ( .ply )
-#	src/SceneLoader/SceneLoaderAutoCADDXF.cpp					# AutoCAD DXF ( .dxf )
-#	src/SceneLoader/SceneLoaderLightWave.cpp					# LightWave ( .lwo )
-#	src/SceneLoader/SceneLoaderModo.cpp							# Modo ( .lxo )
-#	src/SceneLoader/SceneLoaderStereolithography.cpp			# Stereolithography ( .stl )
-#	src/SceneLoader/SceneLoaderAC3D.cpp							# AC3D ( .ac )
-#	src/SceneLoader/SceneLoaderMilkshape3D.cpp					# Milkshape 3D ( .ms3d )
-#	src/SceneLoader/SceneLoaderTrueSpace.cpp					# TrueSpace ( .cob, .scn )
+	src/SceneLoader/SceneLoaderCollada.cpp						# Collada ( .dae )
+	src/SceneLoader/SceneLoaderBlender3D.cpp					# Blender 3D ( .blend )
+	src/SceneLoader/SceneLoader3dsMax3DS.cpp					# 3ds Max 3DS ( .3ds )
+	src/SceneLoader/SceneLoader3dsMaxASE.cpp					# 3ds Max ASE ( .ase )
+	src/SceneLoader/SceneLoaderWavefrontObject.cpp				# Wavefront Object ( .obj )
+	src/SceneLoader/SceneLoaderStanfordPolygonLibrary.cpp		# Stanford Polygon Library ( .ply )
+	src/SceneLoader/SceneLoaderAutoCADDXF.cpp					# AutoCAD DXF ( .dxf )
+	src/SceneLoader/SceneLoaderLightWave.cpp					# LightWave ( .lwo )
+	src/SceneLoader/SceneLoaderModo.cpp							# Modo ( .lxo )
+	src/SceneLoader/SceneLoaderStereolithography.cpp			# Stereolithography ( .stl )
+	src/SceneLoader/SceneLoaderAC3D.cpp							# AC3D ( .ac )
+	src/SceneLoader/SceneLoaderMilkshape3D.cpp					# Milkshape 3D ( .ms3d )
+	src/SceneLoader/SceneLoaderTrueSpace.cpp					# TrueSpace ( .cob, .scn )
 	# Game file formats (7 formats)
-#	src/SceneLoader/SceneLoaderValveModel.cpp					# Valve Model ( .smd, .vta )
-#	src/SceneLoader/SceneLoaderQuakeIMesh.cpp					# Quake I Mesh ( .mdl )
-#	src/SceneLoader/SceneLoaderQuakeIIMesh.cpp					# Quake II Mesh ( .md2 )
-#	src/SceneLoader/SceneLoaderQuakeIIIMesh.cpp					# Quake III Mesh ( .md3 )
-#	src/SceneLoader/SceneLoaderQuakeIIIBSP.cpp					# Quake III BSP ( .pk3 )
-#	src/SceneLoader/SceneLoaderReturnToCastleWolfenstein.cpp	# Return to Castle Wolfenstein ( .mdc )
-#	src/SceneLoader/SceneLoaderDoom3.cpp						# Doom 3 ( .md5 )
+	src/SceneLoader/SceneLoaderValveModel.cpp					# Valve Model ( .smd, .vta )
+	src/SceneLoader/SceneLoaderQuakeIMesh.cpp					# Quake I Mesh ( .mdl )
+	src/SceneLoader/SceneLoaderQuakeIIMesh.cpp					# Quake II Mesh ( .md2 )
+	src/SceneLoader/SceneLoaderQuakeIIIMesh.cpp					# Quake III Mesh ( .md3 )
+	src/SceneLoader/SceneLoaderQuakeIIIBSP.cpp					# Quake III BSP ( .pk3 )
+	src/SceneLoader/SceneLoaderReturnToCastleWolfenstein.cpp	# Return to Castle Wolfenstein ( .mdc )
+	src/SceneLoader/SceneLoaderDoom3.cpp						# Doom 3 ( .md5 )
 	# Other file formats (14 formats)
-#	src/SceneLoader/SceneLoaderDirectXX.cpp						# DirectX X ( .x )
-#	src/SceneLoader/SceneLoaderBlitzBasic3D.cpp					# BlitzBasic 3D ( .b3d )
-#	src/SceneLoader/SceneLoaderQuick3D.cpp						# Quick3D ( .q3d, .q3s )
-#	src/SceneLoader/SceneLoaderOgreXML.cpp						# Ogre XML ( .mesh.xml )
-#	src/SceneLoader/SceneLoaderIrrlichtMesh.cpp					# Irrlicht Mesh ( .irrmesh )
-#	src/SceneLoader/SceneLoaderIrrlichtScene.cpp				# Irrlicht Scene ( .irr )
-#	src/SceneLoader/SceneLoaderNeutralFileFormat.cpp			# Neutral File Format ( .nff )
-#	src/SceneLoader/SceneLoaderSense8WorldToolKit.cpp			# Sense8 WorldToolKit ( .nff )
-#	src/SceneLoader/SceneLoaderObjectFileFormat.cpp				# Object File Format ( .off )
-#	src/SceneLoader/SceneLoaderPovRAYRaw.cpp					# PovRAY Raw ( .raw )
-#	src/SceneLoader/SceneLoaderTerragenTerrain.cpp				# Terragen Terrain ( .ter )
-#	src/SceneLoader/SceneLoader3DGameStudio.cpp					# 3D GameStudio ( .mdl )
-#	src/SceneLoader/SceneLoader3DGameStudioTerrain.cpp			# 3D GameStudio Terrain ( .hmp )
-#	src/SceneLoader/SceneLoaderIzwareNendo.cpp					# Izware Nendo ( .ndo )
+	src/SceneLoader/SceneLoaderDirectXX.cpp						# DirectX X ( .x )
+	src/SceneLoader/SceneLoaderBlitzBasic3D.cpp					# BlitzBasic 3D ( .b3d )
+	src/SceneLoader/SceneLoaderQuick3D.cpp						# Quick3D ( .q3d, .q3s )
+	src/SceneLoader/SceneLoaderOgreXML.cpp						# Ogre XML ( .mesh.xml )
+	src/SceneLoader/SceneLoaderIrrlichtMesh.cpp					# Irrlicht Mesh ( .irrmesh )
+	src/SceneLoader/SceneLoaderIrrlichtScene.cpp				# Irrlicht Scene ( .irr )
+	src/SceneLoader/SceneLoaderNeutralFileFormat.cpp			# Neutral File Format ( .nff )
+	src/SceneLoader/SceneLoaderSense8WorldToolKit.cpp			# Sense8 WorldToolKit ( .nff )
+	src/SceneLoader/SceneLoaderObjectFileFormat.cpp				# Object File Format ( .off )
+	src/SceneLoader/SceneLoaderPovRAYRaw.cpp					# PovRAY Raw ( .raw )
+	src/SceneLoader/SceneLoaderTerragenTerrain.cpp				# Terragen Terrain ( .ter )
+	src/SceneLoader/SceneLoader3DGameStudio.cpp					# 3D GameStudio ( .mdl )
+	src/SceneLoader/SceneLoader3DGameStudioTerrain.cpp			# 3D GameStudio Terrain ( .hmp )
+	src/SceneLoader/SceneLoaderIzwareNendo.cpp					# Izware Nendo ( .ndo )
 )
 
 ##################################################
@@ -165,6 +165,16 @@ elseif(LINUX)
 	add_compile_defs(
 		${LINUX_COMPILE_DEFS}
 	)
+
+	if(ANDROID)
+		##################################################
+		## Android
+		##################################################
+		add_compile_defs(
+			__GNUC_
+			__x86_32__
+		)
+	endif()
 endif()
 
 ##################################################
@@ -200,6 +210,11 @@ elseif(LINUX)
 	##################################################
 	## GCC Compiler
 	##################################################
+	if(ANDROID)
+		add_linker_flags(
+			-L${STL_LIBRARIES_PATH}	# ASSIMP is using stl, adding this line results in slightly bigger executables so we don't do this within "LinuxNDK.cmake"
+		)
+	endif()
 	add_linker_flags(
 		${LINUX_LINKER_FLAGS}
 	)
@@ -225,7 +240,8 @@ add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} ${PL_RUNTIME_BIN_DIR}
 )
-if(LINUX)
+# [TODO] Rebuild ASSIMP as static library (already done for Android, was just one changed word :)
+if(LINUX AND NOT ANDROID)
 	# Create relative symbolic links?
 	if(CMAKETOOLS_DETAILED_VERSION_INFORMATION)
 		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
@@ -249,7 +265,8 @@ install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
 	RUNTIME DESTINATION ${PL_INSTALL_RUNTIME_BIN}	COMPONENT Runtime
 	LIBRARY DESTINATION ${PL_INSTALL_RUNTIME_BIN}	COMPONENT Runtime
 )
-if(LINUX)
+# [TODO] Rebuild ASSIMP as static library (already done for Android, was just one changed word :)
+if(LINUX AND NOT ANDROID)
 	install(FILES ${PL_RUNTIME_BIN_DIR}/libassimp.so.2
 		DESTINATION ${PL_INSTALL_RUNTIME_BIN}		COMPONENT Runtime
 	)

@@ -1,0 +1,27 @@
+%----- Preamble ----------------------------------
+\input{../Common/Preamble}	% "input" instead of "include" is used to avoid problems with write permissions during TeX processing
+\begin{document}
+
+
+%----- Title -------------------------------------
+\include{Title}
+\tableofcontents
+
+
+%----- Document ----------------------------------
+\include{Introduction}
+\include{ExternalDependencies}
+\include{Windows}
+\include{Linux}
+\include{Android}
+\input{../Common/Contact}	% "input" instead of "include" is used to avoid problems with write permissions during TeX processing
+
+
+%----- Appendix ----------------------------------
+\begin{appendix}
+\input{Appendix_Android}
+\end{appendix}
+
+
+%----- End ---------------------------------------
+\end{document}

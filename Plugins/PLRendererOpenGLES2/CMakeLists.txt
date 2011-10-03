@@ -31,6 +31,8 @@ define_project(PLRendererOpenGLES2)
 add_sources(
 	src/Context.cpp
 	src/ContextRuntimeLinking.cpp
+	src/Extensions.cpp
+	src/ExtensionsRuntimeLinking.cpp
 	src/IndexBuffer.cpp
 	src/PLRendererOpenGLES2.cpp
 	src/Renderer.cpp
@@ -48,6 +50,10 @@ add_sources(
 	src/ProgramAttributeGLSL.cpp
 	src/ProgramUniformGLSL.cpp
 	src/ShaderToolsGLSL.cpp
+	src/ShaderLanguageCg.cpp
+	src/VertexShaderCg.cpp
+	src/FragmentShaderCg.cpp
+	src/ProgramCg.cpp
 )
 if(PL_PLUGIN_RENDERER_OPENGLES2_FONT)
 	add_sources(

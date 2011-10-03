@@ -73,7 +73,7 @@ VirtualStandardController::VirtualStandardController() : VirtualController("Virt
 	KeyBack				(this, "Backspace",		"Backspace",														0x08),
 	KeyTab				(this, "Tab",			"Tabulator",														0x09),
 	KeyClear			(this, "Clear",			"Clear (not available everywhere)",									0x00),
-	KeyReturn			(this, "Enter",			"Enter",															0x0D),
+	KeyReturn			(this, "Return",		"Return (often the same as \"Enter\")",								0x0D),
 	KeyShift			(this, "Shift",			"Shift",															0x00),
 	KeyControl			(this, "Ctrl",			"Ctrl",																0x00),
 	KeyAlt				(this, "Alt",			"Alt",																0x00),

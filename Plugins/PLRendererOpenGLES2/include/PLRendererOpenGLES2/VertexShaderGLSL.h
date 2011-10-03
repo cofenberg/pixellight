@@ -43,7 +43,7 @@ namespace PLRendererOpenGLES2 {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OpenGL ES GLSL renderer vertex shader resource
+*    OpenGL ES renderer GLSL vertex shader resource
 */
 class VertexShaderGLSL : public PLRenderer::VertexShader {
 
@@ -75,17 +75,19 @@ class VertexShaderGLSL : public PLRenderer::VertexShader {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		/**
 		*  @brief
 		*    Constructor
 		*
 		*  @param[in] cRenderer
 		*    Owner renderer
+		*  @param[in] nShaderType
+		*    Shader type (GLSL or Cg vertex shader)
 		*/
-		VertexShaderGLSL(PLRenderer::Renderer &cRenderer);
+		VertexShaderGLSL(PLRenderer::Renderer &cRenderer, GLenum nShaderType = GL_VERTEX_SHADER);
 
 
 	//[-------------------------------------------------------]

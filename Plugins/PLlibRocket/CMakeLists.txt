@@ -189,14 +189,17 @@ endif()
 	if(LINUX)
 		# Set COPY_SOURCE to files which should be copied (this variable is used by the "copy.cmake"-script)
 		set(COPY_SOURCE ${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so
-						${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so.1
-						${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so.1.2.1
 						${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so
-						${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so.1
-						${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so.1.2.1
-						${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so
-						${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so.1
-						${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so.1.2.1)
+						${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so)
+		if(NOT ANDROID)
+			set(COPY_SOURCE ${COPY_SOURCE}
+							${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so.1
+							${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketCore.so.1.2.1
+							${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so.1
+							${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketControls.so.1.2.1
+							${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so.1
+							${LIBROCKET_INCLUDE_DIRS}/../lib/libRocketDebugger.so.1.2.1)
+		endif()
 
 		# Set COPY_DEST to a directory to which the files in COPY_SOURCE should be copied into (this variable is used by the "copy.cmake"-script)
 		set(COPY_DEST ${PL_RUNTIME_BIN_DIR})
@@ -259,8 +262,13 @@ if(WIN32)
 					${PL_LIB_DIR}/RocketDebugger.lib
 		DESTINATION ${PL_INSTALL_LIB}				COMPONENT SDK
 	)
-endif()
-if(LINUX)
+elseif(ANDROID)
+	install(FILES	${PL_RUNTIME_BIN_DIR}/libRocketCore.so
+					${PL_RUNTIME_BIN_DIR}/libRocketControls.so
+					${PL_RUNTIME_BIN_DIR}/libRocketDebugger.so
+		DESTINATION ${PL_INSTALL_RUNTIME_BIN}		COMPONENT SDK
+	)
+elseif(LINUX)
 	install(FILES	${PL_RUNTIME_BIN_DIR}/libRocketCore.so
 					${PL_RUNTIME_BIN_DIR}/libRocketCore.so.1
 					${PL_RUNTIME_BIN_DIR}/libRocketCore.so.1.2.1

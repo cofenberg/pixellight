@@ -93,25 +93,6 @@ void Application::OnControl(Control &cControl)
 //[-------------------------------------------------------]
 //[ Private virtual PLCore::CoreApplication functions     ]
 //[-------------------------------------------------------]
-void Application::OnDeInit()
-{
-	// Remove message filter that feeds PLGui messages into libRocket
-	if (m_pPLGuiMessageFilterRocket) {
-		// PLGui destroys automatically the "m_pPLGuiMessageFilterRocket"-instance
-		PLGui::Gui::GetSystemGui()->RemoveMessageFilter(m_pPLGuiMessageFilterRocket);
-		m_pPLGuiMessageFilterRocket = nullptr;
-	}
-
-	// Destroy the libRocket adapter instance
-	if (m_pRocketAdapter) {
-		delete m_pRocketAdapter;
-		m_pRocketAdapter = nullptr;
-	}
-
-	// Call base implementation
-	EngineApplication::OnDeInit();
-}
-
 void Application::OnInit()
 {
 	// This method is call by the application framework when application should initialize itself.
@@ -138,22 +119,24 @@ void Application::OnInit()
 			// is the same as were the executable is in. If we do so, for example starting the application by using
 			// a MS Windows menu shortcut will not work... and just changing the current work directory by using
 			// "PLCore::System::GetInstance()->SetCurrentDir(GetApplicationContext().GetAppDirectory())" isn't the polite way...
-			const String sAppDirectory = GetApplicationContext().GetAppDirectory();
+			String sAppDirectory = GetApplicationContext().GetAppDirectory();
+			if (sAppDirectory.GetLength())
+				sAppDirectory += '/';	// Do only add '/' when the application directory is not an empty string
 
 			// Load the fonts
-			Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-Roman.otf").GetUTF8());
-			Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-Bold.otf").GetUTF8());
-			Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-Italic.otf").GetUTF8());
-			Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "/Data/libRocket/Delicious-BoldItalic.otf").GetUTF8());
+			Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "Data/libRocket/Delicious-Roman.otf").GetUTF8());
+			Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "Data/libRocket/Delicious-Bold.otf").GetUTF8());
+			Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "Data/libRocket/Delicious-Italic.otf").GetUTF8());
+			Rocket::Core::FontDatabase::LoadFontFace((sAppDirectory + "Data/libRocket/Delicious-BoldItalic.otf").GetUTF8());
 
 			{ // Load the mouse cursor and release the caller's reference
-				Rocket::Core::ElementDocument *pElementDocumentCursor = pRocketContext->LoadMouseCursor((sAppDirectory + "/Data/libRocket/cursor.rml").GetUTF8());
+				Rocket::Core::ElementDocument *pElementDocumentCursor = pRocketContext->LoadMouseCursor((sAppDirectory + "Data/libRocket/cursor.rml").GetUTF8());
 				if (pElementDocumentCursor)
 					pElementDocumentCursor->RemoveReference();
 			}
 
 			{ // Load the document and release the caller's reference
-				Rocket::Core::ElementDocument *pElementDocumentDocument = pRocketContext->LoadDocument((sAppDirectory + "/Data/libRocket/demo.rml").GetUTF8());
+				Rocket::Core::ElementDocument *pElementDocumentDocument = pRocketContext->LoadDocument((sAppDirectory + "Data/libRocket/demo.rml").GetUTF8());
 				if (pElementDocumentDocument) {
 					pElementDocumentDocument->Show();
 					pElementDocumentDocument->RemoveReference();
@@ -172,6 +155,25 @@ void Application::OnInit()
 
 	// Clear the content of the current used render target by using gray (this way, in case on an graphics error we might still see at least something)
 	GetSceneRendererTool().SetPassAttribute("Begin", "ColorClear", "0.5 0.5 0.5 0");
+}
+
+void Application::OnDeInit()
+{
+	// Remove message filter that feeds PLGui messages into libRocket
+	if (m_pPLGuiMessageFilterRocket) {
+		// PLGui destroys automatically the "m_pPLGuiMessageFilterRocket"-instance
+		PLGui::Gui::GetSystemGui()->RemoveMessageFilter(m_pPLGuiMessageFilterRocket);
+		m_pPLGuiMessageFilterRocket = nullptr;
+	}
+
+	// Destroy the libRocket adapter instance
+	if (m_pRocketAdapter) {
+		delete m_pRocketAdapter;
+		m_pRocketAdapter = nullptr;
+	}
+
+	// Call base implementation
+	EngineApplication::OnDeInit();
 }
 
 

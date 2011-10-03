@@ -129,17 +129,22 @@ copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libGLESv2.dll ..\..\Bin\Runtime
   <ItemGroup>
     <ClCompile Include="src\Context.cpp" />
     <ClCompile Include="src\ContextRuntimeLinking.cpp" />
+    <ClCompile Include="src\Extensions.cpp" />
+    <ClCompile Include="src\ExtensionsRuntimeLinking.cpp" />
     <ClCompile Include="src\FontGlyphTexture.cpp" />
     <ClCompile Include="src\FontManager.cpp" />
     <ClCompile Include="src\FontTexture.cpp" />
+    <ClCompile Include="src\FragmentShaderCg.cpp" />
     <ClCompile Include="src\FragmentShaderGLSL.cpp" />
     <ClCompile Include="src\FrameBufferObject.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
     <ClCompile Include="src\PLRendererOpenGLES2.cpp" />
     <ClCompile Include="src\ProgramAttributeGLSL.cpp" />
+    <ClCompile Include="src\ProgramCg.cpp" />
     <ClCompile Include="src\ProgramGLSL.cpp" />
     <ClCompile Include="src\ProgramUniformGLSL.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
+    <ClCompile Include="src\ShaderLanguageCg.cpp" />
     <ClCompile Include="src\ShaderLanguageGLSL.cpp" />
     <ClCompile Include="src\ShaderToolsGLSL.cpp" />
     <ClCompile Include="src\SurfaceTextureBuffer.cpp" />
@@ -148,14 +153,21 @@ copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libGLESv2.dll ..\..\Bin\Runtime
     <ClCompile Include="src\TextureBuffer3D.cpp" />
     <ClCompile Include="src\TextureBufferCube.cpp" />
     <ClCompile Include="src\VertexBuffer.cpp" />
+    <ClCompile Include="src\VertexShaderCg.cpp" />
     <ClCompile Include="src\VertexShaderGLSL.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRendererOpenGLES2\Context.h" />
     <ClInclude Include="include\PLRendererOpenGLES2\ContextRuntimeLinking.h" />
+    <ClInclude Include="include\PLRendererOpenGLES2\Extensions.h" />
+    <ClInclude Include="include\PLRendererOpenGLES2\ExtensionsRuntimeLinking.h" />
     <ClInclude Include="include\PLRendererOpenGLES2\FontGlyphTexture.h" />
     <ClInclude Include="include\PLRendererOpenGLES2\FontManager.h" />
+    <ClInclude Include="include\PLRendererOpenGLES2\FragmentShaderCg.h" />
     <ClInclude Include="include\PLRendererOpenGLES2\FrameBufferObject.h" />
+    <ClInclude Include="include\PLRendererOpenGLES2\ProgramCg.h" />
+    <ClInclude Include="include\PLRendererOpenGLES2\ShaderLanguageCg.h" />
+    <ClInclude Include="include\PLRendererOpenGLES2\VertexShaderCg.h" />
     <ClInclude Include="src\FontManager_GLSL.h" />
     <ClInclude Include="include\PLRendererOpenGLES2\FontTexture.h" />
     <ClInclude Include="include\PLRendererOpenGLES2\FragmentShaderGLSL.h" />

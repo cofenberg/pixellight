@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Event/EventHandler.h>
 #include "PLInput/Backend/Provider.h"
 
 
@@ -38,6 +39,7 @@ struct AInputEvent;
 typedef struct AInputEvent AInputEvent;
 namespace PLInput {
 	class AndroidKeyboardDevice;
+	class AndroidMouseDevice;
 }
 
 
@@ -82,18 +84,6 @@ class AndroidProvider : public Provider {
 		*/
 		PLINPUT_API virtual ~AndroidProvider();
 
-		/**
-		*  @brief
-		*    Call this to process the next input event
-		*
-		*  @param[in] cAInputEvent
-		*    Input event to process
-		*
-		*  @return
-		*    'true' if the event was handled, else 'false'
-		*/
-		PLINPUT_API bool OnInputEvent(const struct AInputEvent &cAInputEvent);
-
 
 	//[-------------------------------------------------------]
 	//[ Private virtual Provider functions                    ]
@@ -103,10 +93,32 @@ class AndroidProvider : public Provider {
 
 
 	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Called to process the next Android input event
+		*
+		*  @param[in] cAInputEvent
+		*    Android input event to process
+		*/
+		void OnInputEvent(const struct AInputEvent &cAInputEvent);
+
+
+	//[-------------------------------------------------------]
+	//[ Private slots                                         ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<const struct AInputEvent&> SlotInputEvent;
+
+
+	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
 		AndroidKeyboardDevice *m_pAndroidKeyboardDevice;	/**< Android keyboard device instance, can be a null pointer */
+		AndroidMouseDevice    *m_pAndroidMouseDevice;		/**< Android mouse device instance, can be a null pointer */
 
 
 };

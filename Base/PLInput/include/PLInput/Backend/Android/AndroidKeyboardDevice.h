@@ -80,11 +80,8 @@ class AndroidKeyboardDevice : public UpdateDevice {
 		*
 		*  @param[in] cAKeyInputEvent
 		*    Key input event to process
-		*
-		*  @return
-		*    'true' if the key event was handled, else 'false'
 		*/
-		bool OnKeyInputEvent(const struct AInputEvent &cAKeyInputEvent);
+		void OnKeyInputEvent(const struct AInputEvent &cAKeyInputEvent);
 
 
 	//[-------------------------------------------------------]

@@ -1,0 +1,261 @@
+\chapter{Linux}
+To build PixelLight on Linux, use the CMake based (\url{http://www.cmake.org/}) cross-platform build system of PixelLight.
+
+
+
+
+\section{Prerequisites}
+You need to install certain dependencies on your system that are needed build PixelLight, including build tools and used development libraries.
+
+The following package list applies to the Linux distribution "Ubuntu 10.04 - Lucid Lynx". If you use another distribution, please have a look at their package repository to find out which packages you need (in most cases, the package names will not be that different).
+
+The following packages are required in order to be able to compile everything (Ubuntu):
+\begin{itemize}
+\item{\emph{build-essential} (GNU C++ compiler and other important build tools)}
+\item{\emph{git-core} (version control)}
+\item{\emph{cmake} (build tool)}
+\item{\emph{doxygen} (required to compile the automatic code documentation)}
+\item{\emph{graphviz} (required to create the diagrams of the automatic code documentation)}
+\item{\emph{texlive} (\LaTeX system for compiling the documentation) - Ensure that \emph{dvipdfmx} is installed which is included within the \emph{texlive-base"-package} (e.g. \emph{dvipdf} will probably fail)}
+\item{\emph{texlive-science} (\LaTeX package for compiling the documentation)}
+\item{\emph{texlive-latex-extra} (\LaTeX package for compiling the documentation)}
+\item{\emph{libncurses5-dev} (required by PLCore)}
+\item{\emph{libzip-dev} (required by libpng used by PLGraphics)}
+\item{\emph{libxcursor-dev} (required by PLGui)}
+\item{\emph{libxext-dev} (required by PLGui)}
+\item{\emph{libdbus-1-dev} (required by PLInput)}
+\item{\emph{libxxf86vm-dev} (required by PLRendererOpenGL)}
+\item{\emph{libglu1-mesa-dev} (required by PLRendererOpenGL)}
+\item{\emph{libxrandr-dev} (required by PLRendererOpenGL)}
+\end{itemize}
+
+To install all required packages at once, just use: (This has to be done as root! Use e.g. \emph{sudo} or \emph{su} for this task)
+\begin{lstlisting}[language=bash]
+apt-get install build-essential git-core cmake doxygen graphviz texlive texlive-science texlive-latex-extra libncurses5-dev libzip-dev libxcursor-dev libxext-dev libdbus-1-dev libxxf86vm-dev libglu1-mesa-dev libxrandr-dev
+\end{lstlisting}
+
+When using the \emph{maketool} flag \verb+--syslibs+, you also need the following packages:
+\begin{itemize}
+\item{\emph{libpcre3-dev} (required by PLCore)}
+\item{\emph{libjpeg62-dev} (required by PLGraphics)}
+\item{\emph{libpng12-dev} (required by PLGraphics)}
+\item{\emph{libfreetype6-dev} (required by PLRendererOpenGL and PLRendererOpenGLES)}
+\item{\emph{nvidia-cg-toolkit} (required by PLRendererOpenGLCg - >= Cg Toolkit 3.0 - February 2011 required) - \emph{nvidia-cg-toolkit} may be out-of-date, install a newer Cg SDK: \url{http://developer.download.nvidia.com/cg/Cg_3.0/Cg-3.0_February2011_x86.deb}}
+\item{\emph{libopenal-dev} (required by PLSoundOpenAL)}
+\item{\emph{libogg-dev} (PLSoundOpenAL)}
+\item{\emph{libvorbis-dev} (PLSoundOpenAL)}
+\end{itemize}
+
+To install all required packages at once, just use: (This has to be done as root! Use e.g. \emph{sudo} or \emph{su} for this task)
+\begin{lstlisting}[language=bash]
+apt-get install libpcre3-dev libjpeg62-dev libpng12-dev libfreetype6-dev libopenal-dev libogg-dev libvorbis-dev
+\end{lstlisting}
+
+
+
+
+\section{Maketool}
+The shell script \emph{maketool} performs the required build steps automatically.
+
+After cloning the Git repository, you first have to call
+\begin{lstlisting}[language=bash]
+chmod +x maketool
+\end{lstlisting}
+in order to make the script executable.
+
+To generate the project files just call
+\begin{lstlisting}[language=bash]
+./maketool setup [--release] [--syslibs]
+\end{lstlisting}
+
+On Linux, it is generally recommended to use the flag \verb+--syslibs+, this will cause the build system to use and depend on the libraries found on your system, rather than using our own externals. Although this may cause troubles when distributing an application, you have to ensure that the end user has the required dependencies installed.
+
+After the project files were generated, the project can be compiled by writing
+\begin{lstlisting}[language=bash]
+./maketool build [--release]
+\end{lstlisting}
+
+Here's a list of the most important \emph{maketool}-commands:
+\begin{itemize}
+\item{"./maketool setup"	- Create project files}
+\item{"./maketool build"	- Compile the project}
+\item{"./maketool docs"		- Compile the documentation}
+\item{"./maketool pack"		- Generate an installable package}
+\item{"./maketool clean"	- Delete the build directories}
+\end{itemize}
+
+Here's a list of the most important \emph{maketool}-options:
+\begin{itemize}
+\item{\verb+--debug+								- Create a debug version (default)}
+\item{\verb+--release+								- Create a release version}
+\item{\verb+--suffix+ \textless suffix\textgreater	- Add a suffix to all library names}
+\item{\verb+--externals+							- Repository URL were to download the packages with the external dependencies from (e.g. \url{http://pixellight.sourceforge.net/externals/})}
+\item{\verb+--username+								- User name for access to restricted packages within the repository}
+\item{\verb+--password+								- User password for access to restricted packages within the repository}
+\item{\verb+--arch+									- Architecture (e.g. \emph{x86}, \emph{arm})}
+\item{\verb+--bitsize+								- Bit size (e.g. \emph{32} or \emph{64})}
+\item{\verb+--syslibs+								- Use system libraries}
+\item{\verb+--minimal+								- Do only compile the most important projects}
+\end{itemize}
+
+To avoid setting the parameters \verb+--externals+, \verb+--username+ and \verb+--password+ over and over again, create a file \emph{pl\_config.cfg} in your home directory (Perl-Script, included and just executed) with the following content:
+\begin{lstlisting}[language=bash]
+$pl_external_url = "";
+$pl_external_user = "";
+$pl_external_pass = "";
+\end{lstlisting}
+
+
+
+\subsection{External Packages}
+Just as with the Windows build, it is necessary to obtain all the external packages used by the engine and install them in the right place for the build. Have a look at the \emph{External} directory, there you find a readme file for every library that describes what files are needed.
+
+You can find the libraries pre-packed in our files-section on our homepage: \url{http://pixellight.sourceforge.net/externals/}. Unfortunately, we can't provide some of those libraries due to their licensing terms. Have a look at the according \emph{Readme.txt} to determine where to obtain those libraries and where to put the resulting files into your source tree.
+
+The library packages need to be unpacked and at the right position for your specific build type, e.g. on Linux and 32 Bit, put everything in the directory \emph{External/\_Linux\_x86\_32}.
+
+The CMake based build will try to download the needed packages automatically from our homepage when you build a project that depends on an external. This will download and unpack all public externals for you in the right directory. The non-public externals must still be installed manually. You should also use the maketool flag \verb+--syslibs+ to use the libraries installed on your system rather than our own external packages whenever that is possible (however, not all externals can be used that way).
+
+For more information about the external dependencies, please have a look at chapter~\ref{Chapter:ExternalDependencies}.
+
+
+
+
+\section{CMake}
+In case you don't want to use the shell script \emph{maketool}, here's how to compile PixelLight by using the CMake-GUI:
+\begin{itemize}
+\item{Start "CMake (cmake-gui)"}
+\item{"Where is the source code"-field: e.g. "\textasciitilde /PixelLight"}
+\item{"Where to build the binaries"-field: e.g. "\textasciitilde /PixelLight/CMakeOutput"}
+\item{Press the "Configure"-button}
+\item{Choose the generator "Unix Makefiles"}
+\item{Press the "Generate"-button}
+\item{(The CMake part is done, you can close "CMake (cmake-gui)" now)}
+\item{(Ensure you have all required external packages, see chapter~\ref{Chapter:ExternalDependencies})}
+\item{Open a terminal and change into e.g. "\textasciitilde /PixelLight/CMakeOutput"}
+\item{Type "make" (example: "make -j 4 -k" will use four CPU cores and will keep on going when there are errors)}
+\end{itemize}
+
+
+
+
+\section{Build}
+To build PixelLight, either use maketool to do everything automatically:
+\begin{lstlisting}[language=bash]
+./maketool build [--release]
+\end{lstlisting}
+
+Or change into the build-directory for your configuration (e.g. \emph{build-Debug} or \emph{build-Release}) and run make yourself:
+\begin{lstlisting}[language=bash]
+cd build-Release
+make
+\end{lstlisting}
+
+The latter option has the advantage that you can also build individual projects rather than only the whole SDK. To build projects individually, change into the \emph{build-Debug} or \emph{build-Release} directory and type
+\begin{lstlisting}[language=bash]
+make <project name>
+\end{lstlisting}
+(for example: \emph{make PLCore})
+
+In order to use make options, change into the \emph{build-Debug} or \emph{build-Release} directory and type for example
+\begin{lstlisting}[language=bash]
+make
+\end{lstlisting}
+In order to make all projects using four CPU cores to significantly speed up the make process, add the option "-j 4". You may also add the option \emph{-k} to tell the compiler "Keep on going" if there are errors within the build - useful if you're going for a walk or having some fresh coffee while the build is running. Example:
+\begin{lstlisting}[language=bash]
+make -j 4 -k
+\end{lstlisting}
+
+
+
+
+\section{Create Documentation and Packages}
+To create the documentation, build project \emph{Docs}:
+\begin{lstlisting}[language=bash]
+cd build-Release
+make Docs
+\end{lstlisting}
+
+Or use maketool to do it for you:
+\begin{lstlisting}[language=bash]
+./maketool docs
+\end{lstlisting}
+
+To create the PixelLight SDK and create a Debian installation file, build project \emph{Pack}:
+\begin{lstlisting}[language=bash]
+cd build-Release
+make Pack
+\end{lstlisting}
+
+Or use maketool to do it for you:
+\begin{lstlisting}[language=bash]
+./maketool pack
+\end{lstlisting}
+
+
+
+
+\section{Running from a Local Build and Installing}
+Once you have built PixelLight, you may want to run e.g. the sample applications. In order for this to work correctly, PixelLight must know where to search for data files and plugins, which is not always an easy task on Linux systems. You have several options here.
+
+
+
+\subsection{1. Run from a your Local Source Directory}
+This means that everything stays in your source directory. All libraries and applications have already been copied into the directory \emph{Bin-Linux} by means of post-build commands.
+
+Now you only have to tell PixelLight where it can find the runtime and data files. This can be done by setting the environment variable \emph{PL\_RUNTIME} to the \emph{Runtime} directory.
+
+If you're in the root of the source tree, you can use the script \emph{profile} to do this for you:
+\begin{lstlisting}[language=bash]
+source ./profile
+\end{lstlisting}
+or
+\begin{lstlisting}[language=bash]
+. ./profile
+\end{lstlisting}
+(sets the environment variable \emph{PL\_RUNTIME})
+
+To inspect the content of \emph{PL\_RUNTIME}, call
+\begin{lstlisting}[language=bash]
+echo $PL_RUNTIME
+\end{lstlisting}
+
+To delete the environment variable \emph{PL\_RUNTIME}, call
+\begin{lstlisting}[language=bash]
+unset PL_RUNTIME
+\end{lstlisting}
+
+Of course you can also set this variable e.g. inside your profile or bash-scripts so that they are always available. Within your home (\emph{\textasciitilde}) directory, open the hidden \emph{\textasciitilde /.bashrc} file and add:
+\begin{lstlisting}[language=bash]
+export PL_RUNTIME="<PixelLight root path>/Bin-Linux/Runtime/x86"
+\end{lstlisting}
+This is the most comfortable way, because you only have to do this once, and then you can use the PixelLight runtime even across multiple terminal instances.
+
+
+
+\subsection{2. Install the PixelLight SDK Locally}
+Installing means copying the files built by the project into your local Linux system so that the libraries and applications can be found there. The CMake build script therefore provides you with an \emph{install} target that installs everything on your local machine into the \emph{/usr/local} directory.
+
+Change into the build directory, e.g.:
+\begin{lstlisting}[language=bash]
+cd build-Release
+\end{lstlisting}
+
+Install: (This has to be done as root! Use e.g. \emph{sudo} or \emph{su} for this task)
+\begin{lstlisting}[language=bash]
+make install
+\end{lstlisting}
+
+Update libraries: (This has to be done as root! Use e.g. \emph{sudo} or \emph{su} for this task)
+\begin{lstlisting}[language=bash]
+ldconfig /usr/local/lib
+\end{lstlisting}
+(if this is not done, new dynamic libs may not be found correctly)
+
+If you used this way, you will find the PixelLight runtime in \emph{/usr/local/share/pixellight/Runtime}, and the samples e.g. in \emph{/usr/local/share/pixellight/Samples}.
+
+Now you should be able to run the applications built by the PixelLight project, e.g. run one of the samples:
+\begin{lstlisting}[language=bash]
+cd Bin-Linux/Samples/x86
+./50RendererTriangle
+\end{lstlisting}

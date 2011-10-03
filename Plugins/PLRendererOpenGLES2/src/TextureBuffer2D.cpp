@@ -28,6 +28,7 @@
 #include <PLGraphics/Image/ImagePart.h>
 #include <PLGraphics/Image/ImageBuffer.h>
 #include "PLRendererOpenGLES2/Renderer.h"
+#include "PLRendererOpenGLES2/Extensions.h"
 #include "PLRendererOpenGLES2/TextureBuffer2D.h"
 
 
@@ -331,8 +332,42 @@ bool TextureBuffer2D::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *p
 
 bool TextureBuffer2D::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace)
 {
-	// Error, texture read back is not supported by OpenGL ES 2.0
-	return false;
+	// "GL_NV_get_tex_image"-extension available?
+	if (static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_NV_get_tex_image()) {
+		// Check parameters
+		if (nMipmap > m_nNumOfMipmaps || nFormat == Unknown || !pData || nFace)
+			return false; // Error!
+
+		// Compressed format?
+		if (IsCompressedFormat(nFormat)) {
+			// Internal format MUST be the same as the given format
+			if (m_nFormat != nFormat)
+				return false; // Error!
+
+			// Bind this texture buffer
+			glBindTexture(GL_TEXTURE_2D, m_nOpenGLESTexture);
+
+			// Download
+			glGetCompressedTexImageNV(GL_TEXTURE_2D, nMipmap, pData);
+		} else {
+			// Bind this texture buffer
+			glBindTexture(GL_TEXTURE_2D, m_nOpenGLESTexture);
+
+			// Get the OpenGL ES renderer instance
+			const Renderer &cRendererOpenGLES = static_cast<Renderer&>(GetRenderer());
+
+			// Download
+			const uint32 nPixelFormat = cRendererOpenGLES.GetOpenGLESPixelFormat(nFormat);
+			const uint32 nDataFormat  = cRendererOpenGLES.GetOpenGLESDataFormat(nFormat);
+			glGetTexImageNV(GL_TEXTURE_2D, nMipmap, nPixelFormat, nDataFormat, pData);
+		}
+
+		// Done
+		return true;
+	} else {
+		// Error, texture read back is not supported by OpenGL ES 2.0
+		return false;
+	}
 }
 
 

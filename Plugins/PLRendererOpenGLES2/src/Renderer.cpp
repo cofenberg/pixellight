@@ -45,6 +45,8 @@
 #include "PLRendererOpenGLES2/VertexBuffer.h"
 #include "PLRendererOpenGLES2/ProgramGLSL.h"
 #include "PLRendererOpenGLES2/ShaderLanguageGLSL.h"
+#include "PLRendererOpenGLES2/ShaderLanguageCg.h"
+#include "PLRendererOpenGLES2/Extensions.h"
 #include "PLRendererOpenGLES2/Renderer.h"
 
 
@@ -78,7 +80,9 @@ Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits,
 	#else
 		m_pFontManager(new FontManager(*this)),
 	#endif
-	m_pShaderLanguageGLSL(new ShaderLanguageGLSL(*this))
+	m_nMultisampleAntialiasingSamples(nMultisampleAntialiasingSamples),
+	m_pShaderLanguageGLSL(new ShaderLanguageGLSL(*this)),
+	m_pShaderLanguageCg(nullptr)
 {
 	// This renderer implementation has just support for GLSL as shader language, so ignore sDefaultShaderLanguage
 
@@ -152,6 +156,10 @@ Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits,
 			SetRenderState(static_cast<PLRenderer::RenderState::Enum>(i), nState);
 		}
 
+		// "GL_EXT_Cg_shader"-extension available?
+		if (GetContext().GetExtensions().IsGL_EXT_Cg_shader())
+			m_pShaderLanguageCg = new ShaderLanguageCg(*this);
+
 		// Reset render
 		Reset();
 
@@ -185,6 +193,12 @@ Renderer::~Renderer()
 	// Destroy the GLSL shader language instance
 	delete m_pShaderLanguageGLSL;
 	m_pShaderLanguageGLSL = nullptr;
+
+	// Destroy the Cg shader language instance, if there's one
+	if (m_pShaderLanguageCg) {
+		delete m_pShaderLanguageCg;
+		m_pShaderLanguageCg = nullptr;
+	}
 
 	// Destroy the draw helpers instance
 	delete m_pDrawHelpers;
@@ -227,6 +241,15 @@ Renderer::~Renderer()
 Context &Renderer::GetContext() const
 {
 	return *m_pContext;
+}
+
+/**
+*  @brief
+*    Returns the used multisample antialiasing samples per pixel
+*/
+uint32 Renderer::GetMultisampleAntialiasingSamples() const
+{
+	return m_nMultisampleAntialiasingSamples;
 }
 
 /**
@@ -336,19 +359,33 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 {
 	PLRenderer::TextureBuffer::EPixelFormat nChosenInternalFormat = PLRenderer::TextureBuffer::Unknown;
 
+	// Get the instance of the extensions class
+	const Extensions &cExtensions = GetContext().GetExtensions();
+
 	// Get image pixel format
 	nImageFormat = PLRenderer::TextureBuffer::GetFormatFromImage(cImage, !(nFlags & PLRenderer::TextureBuffer::Compression));
 	bUsePreCompressedData = false;
 	if (PLRenderer::TextureBuffer::IsCompressedFormat(nImageFormat)) {
-		// Currently, we don't support texture compression within the OpenGL ES renderer
-		// Do not use texture buffer compression
-		nImageFormat = PLRenderer::TextureBuffer::GetFormatFromImage(cImage, true);
+		// If the given image is pre compressed, but the hardware does not support the used compression format
+		// we have to use the uncompressed image instead.
+		if ((nImageFormat <= PLRenderer::TextureBuffer::DXT1 && !cExtensions.IsGL_EXT_texture_compression_dxt1()) ||
+			(nImageFormat <= PLRenderer::TextureBuffer::DXT5 && !cExtensions.IsGL_EXT_texture_compression_s3tc()) ||
+			((nImageFormat == PLRenderer::TextureBuffer::LATC1 || nImageFormat == PLRenderer::TextureBuffer::LATC2) && !cExtensions.IsGL_EXT_texture_compression_latc() && !cExtensions.IsGL_AMD_compressed_3DC_texture())) {
+			// Do not use texture buffer compression
+			nImageFormat = PLRenderer::TextureBuffer::GetFormatFromImage(cImage, true);
+		} else {
+			// Use the pre compressed data
+			bUsePreCompressedData = true;
+		}
 	}
 
 	// Get internal pixel format
 	if (nInternalFormat != PLRenderer::TextureBuffer::Unknown) {
 		nChosenInternalFormat = nInternalFormat;
-		if (PLRenderer::TextureBuffer::IsCompressedFormat(nChosenInternalFormat)) {
+		if (PLRenderer::TextureBuffer::IsCompressedFormat(nChosenInternalFormat) &&
+			((nChosenInternalFormat <= PLRenderer::TextureBuffer::DXT1 && !cExtensions.IsGL_EXT_texture_compression_dxt1()) ||
+			 (nChosenInternalFormat <= PLRenderer::TextureBuffer::DXT5 && !cExtensions.IsGL_EXT_texture_compression_s3tc()) ||
+			 ((nChosenInternalFormat == PLRenderer::TextureBuffer::LATC1 || nChosenInternalFormat == PLRenderer::TextureBuffer::LATC2) && !cExtensions.IsGL_EXT_texture_compression_latc() && !cExtensions.IsGL_AMD_compressed_3DC_texture()))) {
 			// Hm, the user want's to use a certain compressed format, but the desired format is NOT available...
 			// we have to choose a fallback format.
 			switch (nChosenInternalFormat) {
@@ -370,10 +407,49 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 					break;
 			}
 		}
+
+		// Can we still use the pre compressed image data? (if available)
+		if (bUsePreCompressedData && nChosenInternalFormat != nImageFormat) {
+			// Nope, sorry, the user want to use another internal format :(
+			bUsePreCompressedData = false;
+			nImageFormat = PLRenderer::TextureBuffer::GetFormatFromImage(cImage, true);
+		}
 	} else {
 		if (nImageFormat == PLRenderer::TextureBuffer::Unknown)
 			return PLRenderer::TextureBuffer::Unknown; // Error!
 		nChosenInternalFormat = nImageFormat;
+
+		// [TODO] OpenGL ES 2.0 is not able to compress uncompressed data on the fly, so the image class has to do this job
+		/*
+		// Use compression?
+		if ((nFlags & PLRenderer::TextureBuffer::Compression) && !bUsePreCompressedData) {
+			// Get the first image buffer
+			ImageBuffer *pImageBuffer = cImage.GetBuffer();
+			if (pImageBuffer) {
+				switch (pImageBuffer->GetComponentsPerPixel()) {
+					case 1:
+						if (cExtensions.IsGL_EXT_texture_compression_latc() || cExtensions.IsGL_AMD_compressed_3DC_texture())
+							nChosenInternalFormat = PLRenderer::TextureBuffer::LATC1;
+						break;
+
+					case 2:
+						if (cExtensions.IsGL_EXT_texture_compression_latc() || cExtensions.IsGL_AMD_compressed_3DC_texture())
+							nChosenInternalFormat = PLRenderer::TextureBuffer::LATC2;
+						break;
+
+					case 3:
+						if (cExtensions.IsGL_EXT_texture_compression_s3tc() || cExtensions.IsGL_EXT_texture_compression_dxt1())
+							nChosenInternalFormat = PLRenderer::TextureBuffer::DXT1;
+						break;
+
+					case 4:
+						if (cExtensions.IsGL_EXT_texture_compression_s3tc())
+							nChosenInternalFormat = PLRenderer::TextureBuffer::DXT5;
+						break;
+				}
+			}
+		}
+		*/
 	}
 
 	// Return the chosen internal format
@@ -423,6 +499,9 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 */
 void Renderer::InitWrappers()
 {
+	// Get the instance of the extensions class
+	const Extensions &cExtensions = GetContext().GetExtensions();
+
 	// Fill modes - not supported by OpenGL ES 2.0
 
 	// Cull modes
@@ -489,27 +568,44 @@ void Renderer::InitWrappers()
 
 	// Texture buffer pixel formats (internal)
 	m_cPLE_TPFWrapper.Resize(PLRenderer::TextureBuffer::NumOfPixelFormats, false, false);
-	m_cPLE_TPFWrapper += GL_LUMINANCE;			//  0: PLRenderer::TextureBuffer::L8
-	m_cPLE_TPFWrapper += GL_LUMINANCE;			//  1: PLRenderer::TextureBuffer::L16			- not supported by OpenGL ES 2.0
-	m_cPLE_TPFWrapper += GL_ALPHA;				//  2: PLRenderer::TextureBuffer::A8
-	m_cPLE_TPFWrapper += GL_LUMINANCE_ALPHA;	//  3: PLRenderer::TextureBuffer::L4A4			- not supported by OpenGL ES 2.0
-	m_cPLE_TPFWrapper += GL_LUMINANCE_ALPHA;	//  4: PLRenderer::TextureBuffer::L8A8
-	m_cPLE_TPFWrapper += GL_DEPTH_COMPONENT;	//  5: PLRenderer::TextureBuffer::D16
-	m_cPLE_TPFWrapper += GL_DEPTH_COMPONENT;	//  6: PLRenderer::TextureBuffer::D24
-	m_cPLE_TPFWrapper += GL_DEPTH_COMPONENT;	//  7: PLRenderer::TextureBuffer::D32
-	m_cPLE_TPFWrapper += GL_RGB;				//  8: PLRenderer::TextureBuffer::R3G3B2		- not supported by OpenGL ES 2.0
-	m_cPLE_TPFWrapper += GL_RGB;				//  9: PLRenderer::TextureBuffer::R5G6B5		- not supported by OpenGL ES 2.0
-	m_cPLE_TPFWrapper += GL_RGBA;				// 10: PLRenderer::TextureBuffer::R5G5B5A1		- not supported by OpenGL ES 2.0
-	m_cPLE_TPFWrapper += GL_RGBA;				// 11: PLRenderer::TextureBuffer::R4G4B4A4		- not supported by OpenGL ES 2.0
-	m_cPLE_TPFWrapper += GL_RGB;				// 12: PLRenderer::TextureBuffer::R8G8B8
-	m_cPLE_TPFWrapper += GL_RGBA;				// 13: PLRenderer::TextureBuffer::R8G8B8A8
-	m_cPLE_TPFWrapper += GL_RGBA;				// 14: PLRenderer::TextureBuffer::R10G10B10A2	- not supported by OpenGL ES 2.0
-	m_cPLE_TPFWrapper += GL_RGBA;				// 15: PLRenderer::TextureBuffer::R16G16B16A16	- not supported by OpenGL ES 2.0
-	m_cPLE_TPFWrapper += GL_RGB;				// 16: PLRenderer::TextureBuffer::DXT1			- not supported by OpenGL ES 2.0
-	m_cPLE_TPFWrapper += GL_RGBA;				// 17: PLRenderer::TextureBuffer::DXT3			- not supported by OpenGL ES 2.0
-	m_cPLE_TPFWrapper += GL_RGBA;				// 18: PLRenderer::TextureBuffer::DXT5			- not supported by OpenGL ES 2.0
-	m_cPLE_TPFWrapper += GL_LUMINANCE;			// 19: PLRenderer::TextureBuffer::LATC1			- not supported by OpenGL ES 2.0
-	m_cPLE_TPFWrapper += GL_LUMINANCE_ALPHA;	// 20: PLRenderer::TextureBuffer::LATC2			- not supported by OpenGL ES 2.0
+	m_cPLE_TPFWrapper += GL_LUMINANCE;									//  0: PLRenderer::TextureBuffer::L8
+	m_cPLE_TPFWrapper += GL_LUMINANCE;									//  1: PLRenderer::TextureBuffer::L16			- not supported by OpenGL ES 2.0
+	m_cPLE_TPFWrapper += GL_ALPHA;										//  2: PLRenderer::TextureBuffer::A8
+	m_cPLE_TPFWrapper += GL_LUMINANCE_ALPHA;							//  3: PLRenderer::TextureBuffer::L4A4			- not supported by OpenGL ES 2.0
+	m_cPLE_TPFWrapper += GL_LUMINANCE_ALPHA;							//  4: PLRenderer::TextureBuffer::L8A8
+	m_cPLE_TPFWrapper += GL_DEPTH_COMPONENT;							//  5: PLRenderer::TextureBuffer::D16
+	m_cPLE_TPFWrapper += GL_DEPTH_COMPONENT;							//  6: PLRenderer::TextureBuffer::D24
+	m_cPLE_TPFWrapper += GL_DEPTH_COMPONENT;							//  7: PLRenderer::TextureBuffer::D32
+	m_cPLE_TPFWrapper += GL_RGB;										//  8: PLRenderer::TextureBuffer::R3G3B2		- not supported by OpenGL ES 2.0
+	m_cPLE_TPFWrapper += GL_RGB;										//  9: PLRenderer::TextureBuffer::R5G6B5		- not supported by OpenGL ES 2.0
+	m_cPLE_TPFWrapper += GL_RGBA;										// 10: PLRenderer::TextureBuffer::R5G5B5A1		- not supported by OpenGL ES 2.0
+	m_cPLE_TPFWrapper += GL_RGBA;										// 11: PLRenderer::TextureBuffer::R4G4B4A4		- not supported by OpenGL ES 2.0
+	m_cPLE_TPFWrapper += GL_RGB;										// 12: PLRenderer::TextureBuffer::R8G8B8
+	m_cPLE_TPFWrapper += GL_RGBA;										// 13: PLRenderer::TextureBuffer::R8G8B8A8
+	m_cPLE_TPFWrapper += GL_RGBA;										// 14: PLRenderer::TextureBuffer::R10G10B10A2	- not supported by OpenGL ES 2.0
+	m_cPLE_TPFWrapper += GL_RGBA;										// 15: PLRenderer::TextureBuffer::R16G16B16A16	- not supported by OpenGL ES 2.0
+	if (cExtensions.IsGL_EXT_texture_compression_s3tc()) {
+		m_cPLE_TPFWrapper += GL_COMPRESSED_RGB_S3TC_DXT1_EXT;			// 16: PLRenderer::TextureBuffer::DXT1
+		m_cPLE_TPFWrapper += GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;			// 17: PLRenderer::TextureBuffer::DXT3
+		m_cPLE_TPFWrapper += GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;			// 18: PLRenderer::TextureBuffer::DXT5
+	} else {
+		if (cExtensions.IsGL_EXT_texture_compression_dxt1())
+			m_cPLE_TPFWrapper += GL_COMPRESSED_RGB_S3TC_DXT1_EXT;		// 16: PLRenderer::TextureBuffer::DXT1
+		else
+			m_cPLE_TPFWrapper += GL_RGB;								// 16: PLRenderer::TextureBuffer::DXT1			- not supported by OpenGL ES 2.0
+		m_cPLE_TPFWrapper += GL_RGBA;									// 17: PLRenderer::TextureBuffer::DXT3			- not supported by OpenGL ES 2.0
+		m_cPLE_TPFWrapper += GL_RGBA;									// 18: PLRenderer::TextureBuffer::DXT5			- not supported by OpenGL ES 2.0
+	}
+	if (cExtensions.IsGL_EXT_texture_compression_latc()) {
+		m_cPLE_TPFWrapper += GL_COMPRESSED_LUMINANCE_LATC1_EXT;			// 19: PLRenderer::TextureBuffer::LATC1
+		m_cPLE_TPFWrapper += GL_COMPRESSED_LUMINANCE_ALPHA_LATC2_EXT;	// 20: PLRenderer::TextureBuffer::LATC2
+	} else if (cExtensions.IsGL_AMD_compressed_3DC_texture()) {
+		m_cPLE_TPFWrapper += GL_3DC_X_AMD;								// 19: PLRenderer::TextureBuffer::LATC1
+		m_cPLE_TPFWrapper += GL_3DC_XY_AMD;								// 20: PLRenderer::TextureBuffer::LATC2
+	} else {
+		m_cPLE_TPFWrapper += GL_LUMINANCE;								// 19: PLRenderer::TextureBuffer::LATC1			- not supported by OpenGL ES 2.0
+		m_cPLE_TPFWrapper += GL_LUMINANCE_ALPHA;						// 20: PLRenderer::TextureBuffer::LATC2			- not supported by OpenGL ES 2.0
+	}
 
 	// [TODO]
 	// Float pixel format
@@ -521,25 +617,83 @@ void Renderer::InitWrappers()
 */
 void Renderer::SetupCapabilities()
 {
-	m_sCapabilities.nMaxColorRenderTargets			= 1;
+	GLint nGLTemp = 0;
+
+	// Get the extensions class instance
+	const Extensions &cExtensions = GetContext().GetExtensions();
+
+	// "GL_ARB_draw_buffers"-extension available?
+	if (cExtensions.IsGL_ARB_draw_buffers()) {
+		// Maximum number of color render targets
+		glGetIntegerv(GL_MAX_DRAW_BUFFERS_ARB, &nGLTemp);
+
+		// At the moment, this render backend supports up to 16 color render targets
+		m_sCapabilities.nMaxColorRenderTargets		= (nGLTemp > 16) ? 16 : static_cast<uint8>(nGLTemp);
+	} else {
+		// OpenGL ES 2.0 has no MRT support
+		m_sCapabilities.nMaxColorRenderTargets		= 1;
+	}
+
+	// [TODO] Get value
 	m_sCapabilities.nMaxTextureUnits				= 8;
-	m_sCapabilities.nMaxAnisotropy					= 16;
+
+	// "GL_EXT_texture_filter_anisotropic"-extension available?
+	if (cExtensions.IsGL_EXT_texture_filter_anisotropic()) {
+		glGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &nGLTemp);
+		m_sCapabilities.nMaxAnisotropy				= static_cast<uint16>(nGLTemp);
+	} else {
+		// Anisotropy texture filtering is not supported by OpenGL ES 2.0
+		m_sCapabilities.nMaxAnisotropy				= 0;
+	}
+
+	// Tessellation is not supported by OpenGL ES 2.0
 	m_sCapabilities.nMaxTessellationFactor			= 1;
-	m_sCapabilities.nMaxTextureBufferSize			= 4096;
+
+	// Maximum texture buffer size
+	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &nGLTemp);
+	m_sCapabilities.nMaxTextureBufferSize = static_cast<uint16>(nGLTemp);
+
+	// Non power of two textures are always supported by OpenGL ES 2.0
 	m_sCapabilities.bTextureBufferNonPowerOfTwo		= true;
+
+	// Same as texture 2D - so it's supported by OpenGL ES 2.0 (altought it's not really the same, e.g. normalized texture coordinates are used)
 	m_sCapabilities.bTextureBufferRectangle			= true;
-	m_sCapabilities.nMaxRectangleTextureBufferSize	= 4096;
-	m_sCapabilities.bTextureBuffer3D				= true;
-	m_sCapabilities.nMax3DTextureBufferSize			= 512;
+	m_sCapabilities.nMaxRectangleTextureBufferSize	= m_sCapabilities.nMaxTextureBufferSize;
+
+	// "GL_OES_texture_3D"-extension available?
+	if (cExtensions.IsGL_OES_texture_3D()) {
+		m_sCapabilities.bTextureBuffer3D			= true;
+		glGetIntegerv(GL_MAX_3D_TEXTURE_SIZE_OES, &nGLTemp);
+		m_sCapabilities.nMax3DTextureBufferSize		= static_cast<uint16>(nGLTemp);
+	} else {
+		// 3D textures are not supported by OpenGL ES 2.0
+		m_sCapabilities.bTextureBuffer3D			= false;
+		m_sCapabilities.nMax3DTextureBufferSize		= 0;
+	}
+
+	// Cube map textures are always supported by OpenGL ES 2.0 - get maximum cube texture buffer size
 	m_sCapabilities.bTextureBufferCube				= true;
-	m_sCapabilities.nMaxCubeTextureBufferSize		= 2048;
-	m_sCapabilities.bStencilWrap					= false;
+	glGetIntegerv(GL_MAX_CUBE_MAP_TEXTURE_SIZE, &nGLTemp);
+	m_sCapabilities.nMaxCubeTextureBufferSize = static_cast<uint16>(nGLTemp);
+
+	// Stencil wrap is always supported by OpenGL ES 2.0
+	m_sCapabilities.bStencilWrap					= true;
+
+	// Two sided stencil tests are always supported by OpenGL ES 2.0
 	m_sCapabilities.bTwoSidedStencils				= true;
+
+	// Depth bounds test are not supported by OpenGL ES 2.0
 	m_sCapabilities.bDepthBoundsTest				= false;
-	m_sCapabilities.bPointSprite					= false;
-	m_sCapabilities.bPointParameters				= false;
+
+	// Point sprites are always supported by OpenGL ES 2.0
+	m_sCapabilities.bPointSprite					= true;
+	m_sCapabilities.bPointParameters				= true;
+
+	// Occlusion queries are not supported by OpenGL ES 2.0
 	m_sCapabilities.bOcclusionQuery					= false;
-	m_sCapabilities.bVertexBufferSecondaryColor		= false;
+
+	// There's no such legacy thing as secondary vertex color in OpenGL ES 2.0, it's generic - so, yes, one can say it's supported...
+	m_sCapabilities.bVertexBufferSecondaryColor		= true;
 
 	// Show renderer capabilities
 	ShowRendererCapabilities();
@@ -666,8 +820,11 @@ String Renderer::GetDefaultShaderLanguage() const
 
 PLRenderer::ShaderLanguage *Renderer::GetShaderLanguage(const String &sShaderLanguage)
 {
-	// Only the build in GLSL shader language is supported
-	return (!sShaderLanguage.GetLength() || sShaderLanguage == ShaderLanguageGLSL::GLSL) ? m_pShaderLanguageGLSL : nullptr;
+	// Only the build in GLSL and Cg shader languages are supported
+	if (!sShaderLanguage.GetLength() || sShaderLanguage == ShaderLanguageGLSL::GLSL)
+		return m_pShaderLanguageGLSL;
+	else
+		return (sShaderLanguage == ShaderLanguageCg::Cg) ? m_pShaderLanguageCg : nullptr;
 }
 
 PLRenderer::FixedFunctions *Renderer::GetFixedFunctions() const
@@ -788,10 +945,10 @@ PLRenderer::TextureBuffer *Renderer::CreateTextureBufferRectangle(Image &cImage,
 PLRenderer::TextureBuffer3D *Renderer::CreateTextureBuffer3D(Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
 {
 	// Check texture buffer
-	if (!CheckTextureBuffer3D(cImage, nInternalFormat))
+	if (!m_sCapabilities.bTextureBuffer3D || !CheckTextureBuffer3D(cImage, nInternalFormat))
 		return nullptr; // Error!
 
-	// Create the null 3D texture buffer
+	// Create the OpenGL ES 2.0 3D texture buffer
 	return new TextureBuffer3D(*this, cImage, nInternalFormat, nFlags);
 }
 
@@ -801,19 +958,19 @@ PLRenderer::TextureBufferCube *Renderer::CreateTextureBufferCube(Image &cImage, 
 	if (!CheckTextureBufferCube(cImage, nInternalFormat))
 		return nullptr; // Error!
 
-	// Create the null cube texture buffer
+	// Create the OpenGL ES 2.0 cube texture buffer
 	return new TextureBufferCube(*this, cImage, nInternalFormat, nFlags);
 }
 
 PLRenderer::IndexBuffer *Renderer::CreateIndexBuffer()
 {
-	// Create the null index buffer
+	// Create the OpenGL ES 2.0 index buffer
 	return new IndexBuffer(*this);
 }
 
 PLRenderer::VertexBuffer *Renderer::CreateVertexBuffer()
 {
-	// Create the null vertex buffer
+	// Create the OpenGL ES 2.0 vertex buffer
 	return new VertexBuffer(*this);
 }
 
@@ -1409,17 +1566,20 @@ bool Renderer::SetSamplerState(uint32 nStage, PLRenderer::Sampler::Enum nState, 
 			}
 
 			case PLRenderer::Sampler::AddressW:
-			{
-				const uint32 &nAPIValue = m_cPLE_TAWrapper[nValue];
-				if (&nAPIValue != &Array<uint32>::Null) {
-					// [TODO] GL_OES_texture3D
-					// glTexParameteri(nType, GL_TEXTURE_WRAP_R_OES, nAPIValue);
+				// "GL_OES_texture_3D"-extension available?
+				if (GetContext().GetExtensions().IsGL_OES_texture_3D()) {
+					const uint32 &nAPIValue = m_cPLE_TAWrapper[nValue];
+					if (&nAPIValue != &Array<uint32>::Null) {
+						glTexParameteri(nType, GL_TEXTURE_WRAP_R_OES, nAPIValue);
+					} else {
+						// Error, invalid value!
+						return false;
+					}
 				} else {
 					// Error, invalid value!
 					return false;
 				}
 				break;
-			}
 
 		// Filter
 			case PLRenderer::Sampler::MinFilter:
@@ -1456,15 +1616,13 @@ bool Renderer::SetSamplerState(uint32 nStage, PLRenderer::Sampler::Enum nState, 
 				break;
 
 			case PLRenderer::Sampler::MaxAnisotropy:
-			/*
-				// [TODO] GL_EXT_texture_filter_anisotropic
+				// "GL_EXT_texture_filter_anisotropic"-extension (no extension check required in here)
 				if (m_sCapabilities.nMaxAnisotropy) {
 					if (nValue > m_sCapabilities.nMaxAnisotropy)
 						nValue = m_sCapabilities.nMaxAnisotropy;
 					glTexParameteri(nType, GL_TEXTURE_MAX_ANISOTROPY_EXT, nValue);
 					break;
 				}
-			*/
 				break;
 
 			default:
@@ -1688,11 +1846,10 @@ bool Renderer::SetColorRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, u
 
 bool Renderer::MakeScreenshot(PLGraphics::Image &cImage)
 {
-	// [TODO] Render To Texture
 	// In case the current surface is a texture, we need to 'finish' the current rendering process
-//	PLRenderer::Surface *pSurface = m_cCurrentSurface.GetSurface();
-//	if (pSurface && pSurface->GetType() == PLRenderer::Surface::TextureBuffer)
-//		static_cast<SurfaceTextureBuffer*>(pSurface)->Finish();
+	PLRenderer::Surface *pSurface = m_cCurrentSurface.GetSurface();
+	if (pSurface && pSurface->GetType() == PLRenderer::Surface::TextureBuffer)
+		static_cast<SurfaceTextureBuffer*>(pSurface)->Finish();
 
 	// Get viewport data
 	GLint nViewPort[4];
@@ -1857,15 +2014,24 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 	// Get API dependent type
 	uint32 nTypeSize;
 	uint32 nTypeAPI = m_pCurrentIndexBuffer->GetElementType();
-	if (nTypeAPI == PLRenderer::IndexBuffer::UShort) {
+	if (nTypeAPI == PLRenderer::IndexBuffer::UInt) {
+		// "GL_OES_element_index_uint"-extension available?
+		if (GetContext().GetExtensions().IsGL_OES_element_index_uint()) {
+			nTypeSize = sizeof(uint32);
+			nTypeAPI  = GL_UNSIGNED_INT;
+		} else {
+			// UInt is not supported by OpenGL ES 2.0
+
+			// Error!
+			return false;
+		}
+	} else if (nTypeAPI == PLRenderer::IndexBuffer::UShort) {
 		nTypeSize = sizeof(uint16);
 		nTypeAPI = GL_UNSIGNED_SHORT;
 	} else if (nTypeAPI == PLRenderer::IndexBuffer::UByte) {
 		nTypeSize = sizeof(uint8);
 		nTypeAPI = GL_UNSIGNED_BYTE;
 	} else {
-		// UInt is not supported by OpenGL ES 2.0
-
 		// Error!
 		return false;
 	}

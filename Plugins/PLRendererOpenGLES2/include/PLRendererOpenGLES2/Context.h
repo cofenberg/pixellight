@@ -44,17 +44,16 @@
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLRendererOpenGLES2 {
-	class Renderer;
-}
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLRendererOpenGLES2 {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Renderer;
+class Extensions;
 
 
 //[-------------------------------------------------------]
@@ -160,6 +159,15 @@ class Context : public PLCore::AbstractContext {
 		*/
 		virtual bool Init(PLCore::uint32 nMultisampleAntialiasingSamples);
 
+		/**
+		*  @brief
+		*    Returns the available extensions
+		*
+		*  @return
+		*    The available extensions
+		*/
+		virtual const Extensions &GetExtensions() const = 0;
+
 
 	//[-------------------------------------------------------]
 	//[ Protected methods                                     ]
@@ -252,6 +260,15 @@ class Context : public PLCore::AbstractContext {
 		*    Shows some OpenGL ES information
 		*/
 		void ShowOpenGLESInformation();
+
+		/**
+		*  @brief
+		*    Writes the extensions within a given extension string into the log
+		*
+		*  @param[in] pszExtensions
+		*    Extension string, if a null pointer, nothing happens
+		*/
+		void WriteExtensionStringIntoLog(const char *pszExtensions) const;
 
 
 };

@@ -1,4 +1,4 @@
-FMOD Ex 4.32.08 - FMOD Sound System, copyright © Firelight Technologies Pty, Ltd., 1994-2011.
+FMOD Ex 4.36.04 - FMOD Sound System, copyright © Firelight Technologies Pty, Ltd., 1994-2011.
 - Used by the sound backend "PLSoundFMODEx" (external Windows dependencies: "fmodex.dll")
 - FMOD Ex is supporting many different sound formats. But it's only free if your software is
   freeware. For commercial software you have to pay for a license!

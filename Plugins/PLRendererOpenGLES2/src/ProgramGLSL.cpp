@@ -99,7 +99,7 @@ bool ProgramGLSL::IsLinked() const
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
 *  @brief

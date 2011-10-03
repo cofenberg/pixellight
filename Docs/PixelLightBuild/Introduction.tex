@@ -1,0 +1,41 @@
+\chapter{Introduction}
+
+
+\paragraph{Target Audience}
+This document is meant for programmers. Please note that also trivial stuff will be mentioned. A lot. Especially the Linux part is quite detailed because this document should also enable MS Windows user, without or with just a little experience with Linux, to build PixelLight under Linux.
+
+
+\paragraph{Motivation}
+This document describes how to build PixelLight from the sources. Don't be shocked when looking at the size of this document, this doesn't imply that it's highly complicated or near impossible to build the project. Right from the beginning, one of our goals was, that it should be really easy to build the technology. A lot of efforts were and are put into this goal as one may see when looking at this document, or the fact that such a document exists in the first place.
+
+Sadly, across all the supported platforms and external dependencies, there may be some pitfalls - especially for users without much experience within a certain target platform or toolset. The purpose of this document is therefore to provide you with as many, probably useful, information as possible to reduce frustration in building PixelLight as much as possible. Please note that this document can't avoid frustration completely, especially if you plan to compile with a not officially supported compiler or for a new, untested platform.
+
+Due to the really small development team compared to the dimension of the project, we can't support every compiler or IDE existing out there (meaning adding support and especially maintaining it). We have to focus on the mainstream, or what we consider as mainstream. Currently we're using the following compilers and compiler versions:
+\begin{itemize}
+\item{MS Windows: Microsoft Visual Studio 10}
+\item{Linux: GCC 4.6}
+\item{Linux: Clang 3.0 (September 2011, currently in development)}
+\item{Android NDK Toolchain}
+\end{itemize}
+If you stick to those, you should be on the safe side. Other compilers and compiler versions may work as well, but are untested. Although 64 bit may work for MS Windows and Linux and there are also some pre-packed external 64 bit packages available, 64 bit is not officially supported. So, if you encounter issues when using 64 bit, please provide us with feedback so we can fix it.
+
+In general, if you encounter time consuming pitfalls not yet described in this document, please tell us by using e.g. the official forum. If there's no feedback, we can't make improvements to make it even easier to use in the future.
+
+
+\paragraph{Source Codes}
+We use Git version control to manage our source code repository. This repository contains the main source code of the PixelLight framework. For anonymous access, it is readable only. Write access to the repository is only available for team members of the development team to ensure as high quality source code as possible.
+
+To checkout the current source code, use the following Git command line:
+\begin{lstlisting}[language=bash]
+git clone git://pixellight.git.sourceforge.net/gitroot/pixellight/pixellight
+\end{lstlisting}
+
+Or use this URL to checkout the source code with your favorite Git client:
+\begin{lstlisting}[language=bash]
+git://pixellight.git.sourceforge.net/gitroot/pixellight/pixellight
+\end{lstlisting}
+
+You can use the following RSS feed to get informed automatically about changes within the public Git repository:
+\begin{lstlisting}[language=bash]
+http://pixellight.git.sourceforge.net/git/gitweb.cgi?p=pixellight/pixellight;a=rss
+\end{lstlisting}

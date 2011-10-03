@@ -85,6 +85,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPhysicsBullet", "PLPhysic
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLRendererOpenGLES2", "PLRendererOpenGLES2\PLRendererOpenGLES2.vcxproj", "{D757706B-9792-4101-BF6C-E8838292EC48}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLSoundOpenSLES", "PLSoundOpenSLES\PLSoundOpenSLES.vcxproj", "{083D507F-F7FA-413D-973A-6663CA92D990}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -417,6 +419,14 @@ Global
 		{D757706B-9792-4101-BF6C-E8838292EC48}.Release|Win32.ActiveCfg = Release|Win32
 		{D757706B-9792-4101-BF6C-E8838292EC48}.Release|Win32.Build.0 = Release|Win32
 		{D757706B-9792-4101-BF6C-E8838292EC48}.Release|x64.ActiveCfg = Release|Win32
+		{083D507F-F7FA-413D-973A-6663CA92D990}.Debug|Win32.ActiveCfg = Debug|Win32
+		{083D507F-F7FA-413D-973A-6663CA92D990}.Debug|Win32.Build.0 = Debug|Win32
+		{083D507F-F7FA-413D-973A-6663CA92D990}.Debug|x64.ActiveCfg = Debug|x64
+		{083D507F-F7FA-413D-973A-6663CA92D990}.Debug|x64.Build.0 = Debug|x64
+		{083D507F-F7FA-413D-973A-6663CA92D990}.Release|Win32.ActiveCfg = Release|Win32
+		{083D507F-F7FA-413D-973A-6663CA92D990}.Release|Win32.Build.0 = Release|Win32
+		{083D507F-F7FA-413D-973A-6663CA92D990}.Release|x64.ActiveCfg = Release|x64
+		{083D507F-F7FA-413D-973A-6663CA92D990}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

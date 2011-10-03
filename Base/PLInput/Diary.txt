@@ -4,6 +4,24 @@
 
 
 
+>> 26.09.2011
+[CO]
+- "Keyboard" & "VirtualStandardController": There was a confusing naming mix up between "Return" and "Enter", it's now always "Return" (in PixelLight, there's no difference between those two keys)
+
+
+
+>> 21.09.2011
+[CO]
+- Android port: Improved mouse emulation by using the touchscreen
+
+
+
+>> 19.09.2011
+[CO]
+- Implemented "AndroidMouseDevice" (I'am sure a real touchscreen device will follow, but a mouse emulation is a nice thing to have for compability)
+
+
+
 >> 16.09.2011
 [CO]
 - Implemented "AndroidProvider" -> We need to pass in Android input events from outside into this system (done in the Android frontend)

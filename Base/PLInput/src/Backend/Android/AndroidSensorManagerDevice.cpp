@@ -61,7 +61,7 @@ AndroidSensorManagerDevice::AndroidSensorManagerDevice() :
 	//    option to be enabled/disabled + event rate configuration?
 
 	// Get the Android sensor manager instance
-    m_pSensorManager = ASensorManager_getInstance();
+	m_pSensorManager = ASensorManager_getInstance();
 	if (m_pSensorManager) {
 		// Create sensor event queue instance
 		m_pSensorEventQueue = ASensorManager_createEventQueue(m_pSensorManager, ALooper_forThread(), LOOPER_ID_USER, nullptr, nullptr);

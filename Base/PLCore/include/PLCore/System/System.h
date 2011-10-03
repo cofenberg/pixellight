@@ -286,6 +286,9 @@ class System : public Singleton<System> {
 		*
 		*  @return
 		*    Path to the current directory as native path (never ends with "/"!)
+		*
+		*  @note
+		*    - Please note that the returned string can also be empty
 		*/
 		PLCORE_API String GetCurrentDir() const;
 

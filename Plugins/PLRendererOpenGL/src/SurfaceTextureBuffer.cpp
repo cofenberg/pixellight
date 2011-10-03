@@ -23,11 +23,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGL/Renderer.h"
 #include <PLRenderer/Renderer/TextureBuffer1D.h>
 #include <PLRenderer/Renderer/TextureBuffer2D.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLRenderer/Renderer/TextureBufferCube.h>
+#include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/Misc/pbuffer.h"
 #include "PLRendererOpenGL/Misc/FrameBufferObject.h"
 #include "PLRendererOpenGL/SurfaceTextureBuffer.h"
@@ -412,7 +412,7 @@ Vector2i SurfaceTextureBuffer::GetSize() const
 //[-------------------------------------------------------]
 bool SurfaceTextureBuffer::Init()
 {
-	// First, de-initialize old PBuffer
+	// First, de-initialize the old stuff
 	DeInit();
 
 	// Can we use a nice frame buffer object?
@@ -502,8 +502,10 @@ bool SurfaceTextureBuffer::MakeCurrent(uint8 nFace)
 				glReadBuffer(GL_NONE);
 			} else {
 				// Set draw buffers
-				GLuint db[4] = { GL_COLOR_ATTACHMENT0_EXT, GL_COLOR_ATTACHMENT1_EXT,
-								 GL_COLOR_ATTACHMENT2_EXT, GL_COLOR_ATTACHMENT3_EXT };
+				static const GLuint db[16] = { GL_COLOR_ATTACHMENT0_EXT, GL_COLOR_ATTACHMENT1_EXT, GL_COLOR_ATTACHMENT2_EXT, GL_COLOR_ATTACHMENT3_EXT,
+											   GL_COLOR_ATTACHMENT4_EXT, GL_COLOR_ATTACHMENT5_EXT, GL_COLOR_ATTACHMENT6_EXT, GL_COLOR_ATTACHMENT7_EXT,
+											   GL_COLOR_ATTACHMENT8_EXT, GL_COLOR_ATTACHMENT9_EXT, GL_COLOR_ATTACHMENT10_EXT, GL_COLOR_ATTACHMENT11_EXT,
+											   GL_COLOR_ATTACHMENT12_EXT, GL_COLOR_ATTACHMENT13_EXT, GL_COLOR_ATTACHMENT14_EXT, GL_COLOR_ATTACHMENT15_EXT};
 				if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_draw_buffers())
 					glDrawBuffersARB(m_nMaxColorTargets, db);
 				else if (static_cast<Renderer&>(GetRenderer()).IsGL_ATI_draw_buffers())

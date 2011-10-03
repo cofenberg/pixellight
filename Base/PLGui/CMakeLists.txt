@@ -143,6 +143,7 @@ elseif(ANDROID)
 		src/Backend/Null/CursorNull.cpp
 		src/Backend/Null/TrayIconNull.cpp
 		src/Backend/Null/ClipBoardNull.cpp
+		src/Backend/Android/GuiAndroid.cpp
 	)
 elseif(LINUX)
 	##################################################
@@ -195,7 +196,14 @@ if(WIN32)
 		${WIN32_STANDARD_LIBS}
 		${WIN32_GDI_LIBS}
 	)
-elseif(LINUX AND NOT ANDROID)
+elseif(ANDROID)
+	##################################################
+	## Android
+	##################################################
+	add_libs(
+		android
+	)
+elseif(LINUX)
 	##################################################
 	## Linux
 	##################################################

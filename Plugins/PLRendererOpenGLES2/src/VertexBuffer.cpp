@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/System/System.h>
 #include "PLRendererOpenGLES2/Renderer.h"
+#include "PLRendererOpenGLES2/Extensions.h"
 #include "PLRendererOpenGLES2/VertexBuffer.h"
 
 
@@ -392,21 +393,15 @@ void *VertexBuffer::Lock(uint32 nFlag)
 	if (m_pLockedData)
 		return m_pLockedData;
 
-	// [TODO] GL_OES_mapbuffer
 	// Get lock mode
-//	uint32 nFlagAPI;
-	if (nFlag == PLRenderer::Lock::ReadOnly) {
-//		nFlagAPI        = GL_READ_ONLY_ARB;
+	if (nFlag == PLRenderer::Lock::ReadOnly)
 		m_bLockReadOnly = true;
-	} else if (nFlag == PLRenderer::Lock::WriteOnly) {
-//		nFlagAPI        = GL_WRITE_ONLY_OES;
+	else if (nFlag == PLRenderer::Lock::WriteOnly)
 		m_bLockReadOnly = false;
-	} else if (nFlag == PLRenderer::Lock::ReadWrite) {
-//		nFlagAPI        = GL_READ_WRITE_ARB;
+	else if (nFlag == PLRenderer::Lock::ReadWrite)
 		m_bLockReadOnly = false;
-	} else {
+	else
 		return nullptr; // Error!
-	}
 
 	// Map the vertex buffer
 	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nVertexBufferLocks++;
@@ -414,12 +409,14 @@ void *VertexBuffer::Lock(uint32 nFlag)
 	if (m_pData)
 		m_pLockedData = m_pData;
 	else if (m_nVertexBuffer) {
-		// Bind and update the vertex buffer if required
-		BindAndUpdate();
+		// "GL_OES_mapbuffer"-extension available? (there's only support for "write only")
+		if (nFlag == PLRenderer::Lock::WriteOnly && static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_OES_mapbuffer()) {
+			// Bind and update the vertex buffer if required
+			BindAndUpdate();
 
-		// [TODO] GL_OES_mapbuffer
-		// Map
-		//m_pLockedData = glMapBufferOES(GL_ARRAY_BUFFER, nFlagAPI);
+			// Map
+			m_pLockedData = glMapBufferOES(GL_ARRAY_BUFFER, GL_WRITE_ONLY_OES);
+		}
 	}
 
 	// Lock valid?
@@ -451,13 +448,13 @@ bool VertexBuffer::Unlock()
 		if (m_nVertexBuffer && !m_bLockReadOnly)
 			m_bUpdateVBO = true;
 	} else {
-		if (m_nVertexBuffer) {
+		// "GL_OES_mapbuffer"-extension available?
+		if (m_nVertexBuffer && static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_OES_mapbuffer()) {
 			// Bind and update the vertex buffer if required
 			BindAndUpdate();
 
-			// [TODO] GL_OES_mapbuffer
 			// Unmap
-			//glUnmapBufferOES(GL_ARRAY_BUFFER);
+			glUnmapBufferOES(GL_ARRAY_BUFFER);
 		}
 	}
 	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nVertexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;

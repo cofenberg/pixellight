@@ -1,3 +1,17 @@
+>> 21.09.2011
+[CO]
+- Android port: Improved mouse emulation by using the touchscreen
+
+
+
+>> 19.09.2011
+[CO]
+- Added GuiAndroid
+- Implemented Android key input event processing within GuiAndroid
+- Implemented Android touchscreen (= handled as mouse) input event processing within GuiAndroid (not yet perfect, but a start :)
+
+
+
 >> 17.09.2011
 [CO]
 - PLGui (no native backend) & PLFrontendPLGui & PLGuiXmlText can now also be compiled for Android

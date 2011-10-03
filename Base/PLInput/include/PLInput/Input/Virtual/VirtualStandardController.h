@@ -92,7 +92,7 @@ class VirtualStandardController : public VirtualController {
 		Button		KeyBack;			/**< Backspace */
 		Button		KeyTab;				/**< Tab */
 		Button		KeyClear;			/**< Clear (not available everywhere) */
-		Button		KeyReturn;			/**< Enter */
+		Button		KeyReturn;			/**< Return (often the same as "Enter") */
 		Button		KeyShift;			/**< Shift */
 		Button		KeyControl;			/**< Ctrl */
 		Button		KeyAlt;				/**< Alt */

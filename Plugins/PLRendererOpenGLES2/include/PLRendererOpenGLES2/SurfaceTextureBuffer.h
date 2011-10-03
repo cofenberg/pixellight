@@ -90,6 +90,12 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 		*/
 		void SetColorRenderTarget(PLCore::uint8 nColorIndex, PLRenderer::TextureBuffer *pTextureBuffer);
 
+		/**
+		*  @brief
+		*    Finishes the process
+		*/
+		void Finish();
+
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]

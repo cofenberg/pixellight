@@ -81,6 +81,7 @@ elseif(ANDROID)
 	add_sources(
 		src/Backend/Android/AndroidProvider.cpp
 		src/Backend/Android/AndroidKeyboardDevice.cpp
+		src/Backend/Android/AndroidMouseDevice.cpp
 		src/Backend/Android/AndroidSensorManagerDevice.cpp
 		src/Backend/HID/HIDLinux.cpp
 	)
