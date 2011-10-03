@@ -1,3 +1,9 @@
+>> 03.10.2011
+[SW]
+- fixed abort when trying to enumerate bluetooth devices.
+
+
+
 >> 16.09.2011
 [CO]
 - Implemented "AndroidProvider" -> We need to pass in Android input events from outside into this system (done in the Android frontend)

@@ -289,6 +289,12 @@ void QPLSceneContext::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 	}*/
 }
 
+void QPLSceneContext::PLSceneContextCleanUp()
+{
+	if(m_pSceneContext)
+		m_pSceneContext->Cleanup();
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

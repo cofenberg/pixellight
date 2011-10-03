@@ -66,7 +66,6 @@ BodySphere::BodySphere(PLPhysics::World &cWorld, float fRadius, bool bStatic) :
 	// Get the Bullet physics world
 	btDynamicsWorld *pBulletWorld = ((World&)cWorld).GetBulletWorld();
 	if (pBulletWorld) {
-		
 		btCollisionShape* collisionShape = new btSphereShape(fRadius);
 		
 		// Initialize the Bullet physics body

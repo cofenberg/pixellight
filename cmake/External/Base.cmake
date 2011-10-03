@@ -285,14 +285,15 @@ macro(external_extract_tar format file dest_dir)
 	# Create target directory
 	file(MAKE_DIRECTORY ${dest_dir})
 
-external_message(STATUS "extract ${format} ${file} to ${dest_dir}")
+	external_message(STATUS "extract ${format} ${file} to ${dest_dir}")
 	# Extract archive
 	execute_process(
 		COMMAND ${CMAKE_COMMAND} -E tar ${opts} ${file}
 		WORKING_DIRECTORY ${dest_dir}
 		OUTPUT_FILE ${TEMP_LOG}
+		RESULT_VARIABLE ResultVar
 	)
-external_message(STATUS "extract ${file} to ${dest_dir} done")
+	external_message(STATUS "extract ${file} to ${dest_dir} done: ${ResultVar}")
 
 	# Update Log
 	external_append_log(${CMAKETOOLS_CURRENT_LOG} ${TEMP_LOG})

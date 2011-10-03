@@ -26,7 +26,47 @@
 ## This file contains compiler and linker settings which are specific to the GCC compiler suit under Linux
 ##################################################
 
+IF(CMAKE_GENERATOR MATCHES "Makefiles")
+    MESSAGE(STATUS "Check for GCC compiler version")
+    SET(CMAKE_TEST_COMPILER ${CMAKE_C_COMPILER})
+    IF (NOT CMAKE_C_COMPILER)
+      SET(CMAKE_TEST_COMPILER ${CMAKE_CXX_COMPILER})
+    ENDIF(NOT CMAKE_C_COMPILER)
+	
+    EXEC_PROGRAM(${CMAKE_TEST_COMPILER}
+      ARGS -dumpversion
+      OUTPUT_VARIABLE CMAKE_COMPILER_OUTPUT
+      RETURN_VALUE CMAKE_COMPILER_RETURN
+      )
+    IF(NOT CMAKE_COMPILER_RETURN)
+      FILE(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeOutput.log
+        "Determining the version of compiler passed with the following output:\n"
+        "${CMAKE_COMPILER_OUTPUT}\n\n")
+      STRING(REGEX REPLACE "\n" " " compilerVersion "${CMAKE_COMPILER_OUTPUT}")
+      MESSAGE(STATUS "Check for GCC compiler version - ${compilerVersion}")
+      SET(GCC44)
+      SET(GCC45)
+      SET(GCC46)
+      STRING(REGEX REPLACE "^([0-9]+).([0-9]+).([0-9]+)\$" "\\1"
+        compilerVersionMajor "${compilerVersion}")
+	  STRING(REGEX REPLACE "^([0-9]+)[.]+([0-9]+)[.]+([0-9]+)\$" "\\2"
+        compilerVersionMinor "${compilerVersion}")
+	  STRING(REGEX REPLACE "^([0-9]+)[.]+([0-9]+)[.]+([0-9]+)\$" "\\3"
+        compilerVersionBuild "${compilerVersion}")
+      SET(GCC${compilerVersionMajor}${compilerVersionMinor} 1)
+	  SET(GCC${compilerVersionMajor}${compilerVersionMinor}${compilerVersionBuild} 1)
+      SET(GCC_VERSION "${compilerVersion}")
+    ELSE(NOT CMAKE_COMPILER_RETURN)
+      MESSAGE(STATUS "Check for GCC compiler version - failed")
+      FILE(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeError.log
+        "Determining the version of compiler failed with the following output:\n"
+        "${CMAKE_COMPILER_OUTPUT}\n\n")
+    ENDIF(NOT CMAKE_COMPILER_RETURN)
+ENDIF(CMAKE_GENERATOR MATCHES "Makefiles")
 
+# if(GCC45)
+# 	Message
+# endif(GCC45)
 ##################################################
 ## Libraries
 ##################################################
