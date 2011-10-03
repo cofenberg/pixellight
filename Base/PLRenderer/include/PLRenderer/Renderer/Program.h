@@ -73,7 +73,7 @@ class Program : public Resource {
 	//[ Events                                                ]
 	//[-------------------------------------------------------]
 	public:
-		PLCore::Event<Program*>	EventDirty;	/**< The program became dirty, previous pointers to attributes or uniforms may no longer be valid, pointer to this program as parameter (always valid, do NOT delete it!) */
+		PLCore::Event<Program*>	EventDirty;	/**< The program became dirty, previous pointers to attributes or uniforms may no longer be valid, pointer to this program as parameter (always valid, do not delete it) */
 
 
 	//[-------------------------------------------------------]
@@ -105,7 +105,7 @@ class Program : public Resource {
 		*    Returns the vertex shader the program is using
 		*
 		*  @return
-		*    Vertex shader the program is using (do NOT delete it!), can be a null pointer
+		*    Vertex shader the program is using (do not delete it), can be a null pointer
 		*/
 		virtual PLRenderer::VertexShader *GetVertexShader() const = 0;
 
@@ -130,7 +130,7 @@ class Program : public Resource {
 		*    Returns the geometry shader the program is using
 		*
 		*  @return
-		*    Geometry shader the program is using (do NOT delete it!), can be a null pointer
+		*    Geometry shader the program is using (do not delete it), can be a null pointer
 		*/
 		virtual PLRenderer::GeometryShader *GetGeometryShader() const = 0;
 
@@ -155,7 +155,7 @@ class Program : public Resource {
 		*    Returns the fragment shader the program is using
 		*
 		*  @return
-		*    Fragment shader the program is using (do NOT delete it!), can be a null pointer
+		*    Fragment shader the program is using (do not delete it), can be a null pointer
 		*/
 		virtual PLRenderer::FragmentShader *GetFragmentShader() const = 0;
 
@@ -226,7 +226,7 @@ class Program : public Resource {
 		*    Attribute name
 		*
 		*  @return
-		*    Attribute (do NOT delete it!, can be a null pointer, if no attribute with that name could be found)
+		*    Attribute (do not delete it, can be a null pointer, if no attribute with that name could be found)
 		*/
 		virtual ProgramAttribute *GetAttribute(const PLCore::String &sName) = 0;
 
@@ -247,7 +247,7 @@ class Program : public Resource {
 		*    Uniform name
 		*
 		*  @return
-		*    Uniform (do NOT delete it!, can be a null pointer, if no uniform with that name could be found)
+		*    Uniform (do not delete it, can be a null pointer, if no uniform with that name could be found)
 		*/
 		virtual ProgramUniform *GetUniform(const PLCore::String &sName) = 0;
 
@@ -268,7 +268,7 @@ class Program : public Resource {
 		*    Uniform block name
 		*
 		*  @return
-		*    Uniform block (do NOT delete it!, can be a null pointer, if no uniform block with that name could be found)
+		*    Uniform block (do not delete it, can be a null pointer, if no uniform block with that name could be found)
 		*/
 		virtual ProgramUniformBlock *GetUniformBlock(const PLCore::String &sName) = 0;
 

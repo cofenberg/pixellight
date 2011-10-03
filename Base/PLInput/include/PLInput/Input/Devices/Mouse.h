@@ -67,9 +67,9 @@ class Mouse : public Device {
 		PLInput::Axis	X;			/**< X axis */
 		PLInput::Axis	Y;			/**< Y axis */
 		PLInput::Axis	Wheel;		/**< Mouse wheel */
-		PLInput::Button	Left;		/**< Left mouse button  */
-		PLInput::Button	Right;		/**< Right mouse button  */
-		PLInput::Button	Middle;		/**< Middle mouse button  */
+		PLInput::Button	Left;		/**< Left mouse button (mouse button #0) */
+		PLInput::Button	Right;		/**< Right mouse button (mouse button #1) */
+		PLInput::Button	Middle;		/**< Middle mouse button (mouse button #2) */
 		PLInput::Button	Button4;	/**< Mouse button #4 */
 		PLInput::Button	Button5;	/**< Mouse button #5 */
 		PLInput::Button	Button6;	/**< Mouse button #6 */
