@@ -281,3 +281,9 @@ elseif(LINUX)
 		DESTINATION ${PL_INSTALL_RUNTIME_BIN}		COMPONENT SDK
 	)
 endif()
+
+# Copy the copyright information into the include directory
+install(FILES	"${LIBROCKET_INCLUDE_DIRS}/../Readme.txt"
+				"${LIBROCKET_INCLUDE_DIRS}/../MIT_license.txt"
+	DESTINATION "${PL_INSTALL_INCLUDE}/Rocket"		COMPONENT SDK
+)
