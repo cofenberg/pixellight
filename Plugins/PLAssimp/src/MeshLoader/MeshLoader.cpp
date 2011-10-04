@@ -45,7 +45,7 @@ pl_implement_class(MeshLoader)
 //[-------------------------------------------------------]
 bool MeshLoader::Load(Mesh &cMesh, File &cFile)
 {
-	return LoadParams(cMesh, cFile, true);
+	return LoadParams(cMesh, cFile, true, 3);
 }
 
 bool MeshLoader::Save(Mesh &cMesh, File &cFile)

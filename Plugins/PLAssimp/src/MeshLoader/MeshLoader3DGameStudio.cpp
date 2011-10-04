@@ -44,10 +44,10 @@ pl_implement_class(MeshLoader3DGameStudio)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoader3DGameStudio::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoader3DGameStudio::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "mdl");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "mdl");
 }
 
 

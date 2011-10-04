@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderQuick3D)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderQuick3D::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderQuick3D::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "q3o");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "q3o");
 }
 
 

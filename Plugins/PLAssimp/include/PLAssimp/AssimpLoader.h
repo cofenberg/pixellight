@@ -117,6 +117,15 @@ class AssimpLoader {
 
 		/**
 		*  @brief
+		*    Returns the Assimp post processing flags for the given quality step
+		*
+		*  @param[in] nQuality
+		*    Integer parameter for post processing quality (0=none ... 3=maximum quality but slowest processing)
+		*/
+		unsigned int QualityToAssimpFlags(PLCore::uint8 nQuality) const;
+
+		/**
+		*  @brief
 		*    Converts a given Assimp material into a PixelLight material
 		*
 		*  @param[in]  cAssimpMaterial

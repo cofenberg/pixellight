@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderSense8WorldToolKit)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderSense8WorldToolKit::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderSense8WorldToolKit::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "nff");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "nff");
 }
 
 

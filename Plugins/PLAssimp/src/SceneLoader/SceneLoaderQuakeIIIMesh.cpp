@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderQuakeIIIMesh)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderQuakeIIIMesh::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderQuakeIIIMesh::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "md3");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "md3");
 }
 
 

@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <Assimp/aiMaterial.h>
+#include <Assimp/aiPostProcess.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Texture/TextureManager.h>
 #include <PLRenderer/Material/Material.h>
@@ -85,6 +86,28 @@ String AssimpLoader::AssimpStringToPL(const aiString &sAssimpString) const
 {
 	return String::FromUTF8(sAssimpString.data, -1, sAssimpString.length);
 }
+
+/**
+*  @brief
+*    Returns the Assimp post processing flags for the given quality step
+*/
+unsigned int AssimpLoader::QualityToAssimpFlags(uint8 nQuality) const
+{
+	switch (nQuality) {
+		case 0:
+			return 0;
+
+		case 1:
+			return aiProcessPreset_TargetRealtime_Fast;
+
+		case 2:
+			return aiProcessPreset_TargetRealtime_Quality;
+
+		default:
+			return aiProcessPreset_TargetRealtime_MaxQuality;
+	}
+}
+
 
 /**
 *  @brief

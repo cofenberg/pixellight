@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderWavefrontObject)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderWavefrontObject::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderWavefrontObject::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "obj");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "obj");
 }
 
 

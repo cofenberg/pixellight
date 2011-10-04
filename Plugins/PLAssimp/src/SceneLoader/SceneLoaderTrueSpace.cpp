@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderTrueSpace)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderTrueSpace::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderTrueSpace::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "cob");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "cob");
 }
 
 

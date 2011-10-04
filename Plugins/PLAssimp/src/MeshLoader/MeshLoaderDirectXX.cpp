@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderDirectXX)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderDirectXX::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderDirectXX::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader("dds").Load(cMesh, cFile, bStatic, "x");
+	return AssimpMeshLoader("dds").Load(cMesh, cFile, bStatic, nQuality, "x");
 }
 
 

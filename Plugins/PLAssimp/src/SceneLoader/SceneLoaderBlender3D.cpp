@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderBlender3D)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderBlender3D::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderBlender3D::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "blend");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "blend");
 }
 
 

@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderBlitzBasic3D)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderBlitzBasic3D::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderBlitzBasic3D::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "b3d");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "b3d");
 }
 
 

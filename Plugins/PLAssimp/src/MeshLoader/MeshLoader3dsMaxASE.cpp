@@ -44,10 +44,10 @@ pl_implement_class(MeshLoader3dsMaxASE)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoader3dsMaxASE::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoader3dsMaxASE::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "ase");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "ase");
 }
 
 

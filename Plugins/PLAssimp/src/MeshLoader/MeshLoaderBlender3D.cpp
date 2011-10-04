@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderBlender3D)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderBlender3D::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderBlender3D::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "blend");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "blend");
 }
 
 

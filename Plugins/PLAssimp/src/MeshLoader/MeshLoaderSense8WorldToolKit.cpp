@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderSense8WorldToolKit)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderSense8WorldToolKit::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderSense8WorldToolKit::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "nff");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "nff");
 }
 
 

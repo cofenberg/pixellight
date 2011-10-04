@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderStanfordPolygonLibrary)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderStanfordPolygonLibrary::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderStanfordPolygonLibrary::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "ply");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "ply");
 }
 
 

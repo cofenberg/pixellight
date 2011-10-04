@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderAutoCADDXF)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderAutoCADDXF::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderAutoCADDXF::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "dxf");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "dxf");
 }
 
 

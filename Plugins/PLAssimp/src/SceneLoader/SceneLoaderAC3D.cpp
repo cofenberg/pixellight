@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderAC3D)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderAC3D::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderAC3D::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "ac");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "ac");
 }
 
 

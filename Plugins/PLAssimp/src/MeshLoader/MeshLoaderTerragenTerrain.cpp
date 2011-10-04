@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderTerragenTerrain)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderTerragenTerrain::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderTerragenTerrain::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "ter");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "ter");
 }
 
 

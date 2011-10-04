@@ -42,12 +42,12 @@ pl_implement_class(SceneLoader3dsMax3DS)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoader3dsMax3DS::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoader3dsMax3DS::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "3ds");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "3ds");
 }
 
 

@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderIzwareNendo)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderIzwareNendo::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderIzwareNendo::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "ndo");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "ndo");
 }
 
 

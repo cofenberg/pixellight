@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderIrrlichtMesh)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderIrrlichtMesh::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderIrrlichtMesh::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "irrmesh");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "irrmesh");
 }
 
 

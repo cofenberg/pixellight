@@ -65,7 +65,9 @@ class SceneLoader : public PLScene::SceneLoader {
 			pl_property("Save",	"0")
 		pl_properties_end
 		// Methods
-		pl_method_2(Save,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLCore::File&,	"Save method",	"")
+		pl_method_2(Load,		pl_ret_type(bool),	PLScene::SceneContainer&,	PLCore::File&,					"Load method. The loaded scene is post processed for maximum quality.",																	"")
+		pl_method_3(LoadParams,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLCore::File&,	PLCore::uint8,	"Load method. Parameters: First integer parameter for post processing quality (0=none ... 3=maximum quality but slowest processing).",	"")
+		pl_method_2(Save,		pl_ret_type(bool),	PLScene::SceneContainer&,	PLCore::File&,					"Save method",																															"")
 	pl_class_end
 
 
@@ -73,6 +75,8 @@ class SceneLoader : public PLScene::SceneLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
+		bool Load(PLScene::SceneContainer &cContainer, PLCore::File &cFile);
+		virtual bool LoadParams(PLScene::SceneContainer &cContainer, PLCore::File &cFile, PLCore::uint8 nQuality) = 0;
 		bool Save(PLScene::SceneContainer &cContainer, PLCore::File &cFile);
 
 

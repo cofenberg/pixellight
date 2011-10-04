@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderOgreXML)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderOgreXML::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderOgreXML::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "mesh.xml");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "mesh.xml");
 }
 
 

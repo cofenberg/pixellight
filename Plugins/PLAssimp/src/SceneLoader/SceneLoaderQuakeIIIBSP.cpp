@@ -1,3 +1,4 @@
+
 /*********************************************************\
  *  File: SceneLoaderQuakeIIIBSP.cpp                     *
  *
@@ -42,12 +43,12 @@ pl_implement_class(SceneLoaderQuakeIIIBSP)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderQuakeIIIBSP::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderQuakeIIIBSP::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "pk3");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "pk3");
 }
 
 

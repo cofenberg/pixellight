@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderReturnToCastleWolfenstein)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderReturnToCastleWolfenstein::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderReturnToCastleWolfenstein::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "mdc");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "mdc");
 }
 
 

@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderQuakeIIIMesh)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderQuakeIIIMesh::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderQuakeIIIMesh::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "md3");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "md3");
 }
 
 

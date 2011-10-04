@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderValveModel)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderValveModel::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderValveModel::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "smd");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "smd");
 }
 
 

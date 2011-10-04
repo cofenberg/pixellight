@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderQuakeIIMesh)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderQuakeIIMesh::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderQuakeIIMesh::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "md2");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "md2");
 }
 
 

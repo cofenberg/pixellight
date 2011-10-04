@@ -107,6 +107,8 @@ class AssimpSceneLoader : public AssimpLoader {
 		*    Scene container to fill
 		*  @param[in]     cFile
 		*    File to load from, must be opened and readable
+		*  @param[in]     nQuality
+		*    Integer parameter for post processing quality (0=none ... 3=maximum quality but slowest processing)
 		*  @param[in]     sHint
 		*    Filename extension hint for Assimp, if empty string (e.g. load from memory), the filename
 		*    extension (if there's one) of the used file will be given to Assimp
@@ -114,7 +116,7 @@ class AssimpSceneLoader : public AssimpLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool Load(PLScene::SceneContainer &cContainer, PLCore::File &cFile, const PLCore::String &sHint = "");
+		bool Load(PLScene::SceneContainer &cContainer, PLCore::File &cFile, PLCore::uint8 nQuality, const PLCore::String &sHint = "");
 
 
 	//[-------------------------------------------------------]

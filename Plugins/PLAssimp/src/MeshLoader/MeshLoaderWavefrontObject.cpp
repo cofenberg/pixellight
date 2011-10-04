@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderWavefrontObject)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderWavefrontObject::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderWavefrontObject::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "obj");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "obj");
 }
 
 

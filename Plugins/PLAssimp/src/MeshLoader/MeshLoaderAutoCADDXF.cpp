@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderAutoCADDXF)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderAutoCADDXF::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderAutoCADDXF::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "dxf");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "dxf");
 }
 
 

@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderStanfordPolygonLibrary)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderStanfordPolygonLibrary::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderStanfordPolygonLibrary::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "ply");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "ply");
 }
 
 

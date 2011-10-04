@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderIzwareNendo)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderIzwareNendo::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderIzwareNendo::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "ndo");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "ndo");
 }
 
 

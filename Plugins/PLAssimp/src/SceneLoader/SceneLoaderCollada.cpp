@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderCollada)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderCollada::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderCollada::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "dae");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "dae");
 }
 
 

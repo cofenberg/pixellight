@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderMilkshape3D)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderMilkshape3D::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderMilkshape3D::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "ms3d");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "ms3d");
 }
 
 

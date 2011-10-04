@@ -104,6 +104,8 @@ class AssimpMeshLoader : public AssimpLoader {
 		*    File to load from, must be opened and readable
 		*  @param[in]     bStatic
 		*    'true' if the mesh is static, else 'false'
+		*  @param[in]     nQuality
+		*    Integer parameter for post processing quality (0=none ... 3=maximum quality but slowest processing)
 		*  @param[in]     sHint
 		*    Filename extension hint for Assimp, if empty string (e.g. load from memory), the filename
 		*    extension (if there's one) of the used file will be given to Assimp
@@ -111,7 +113,7 @@ class AssimpMeshLoader : public AssimpLoader {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool Load(PLMesh::Mesh &cMesh, PLCore::File &cFile, bool bStatic, const PLCore::String &sHint = "");
+		bool Load(PLMesh::Mesh &cMesh, PLCore::File &cFile, bool bStatic, PLCore::uint8 nQuality, const PLCore::String &sHint = "");
 
 
 	//[-------------------------------------------------------]

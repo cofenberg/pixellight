@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderMilkshape3D)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderMilkshape3D::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderMilkshape3D::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "ms3d");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "ms3d");
 }
 
 

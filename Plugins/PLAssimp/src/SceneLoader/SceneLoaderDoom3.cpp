@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderDoom3)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderDoom3::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderDoom3::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "md5mesh");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "md5mesh");
 }
 
 

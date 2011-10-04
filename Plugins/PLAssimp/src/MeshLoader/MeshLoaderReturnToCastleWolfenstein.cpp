@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderReturnToCastleWolfenstein)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderReturnToCastleWolfenstein::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderReturnToCastleWolfenstein::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "mdc");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "mdc");
 }
 
 

@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderValveModel)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderValveModel::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderValveModel::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "smd");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "smd");
 }
 
 

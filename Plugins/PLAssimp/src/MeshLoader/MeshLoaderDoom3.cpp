@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderDoom3)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderDoom3::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderDoom3::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "md5mesh");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "md5mesh");
 }
 
 

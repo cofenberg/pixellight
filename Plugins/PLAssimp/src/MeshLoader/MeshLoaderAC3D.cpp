@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderAC3D)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderAC3D::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderAC3D::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "ac");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "ac");
 }
 
 

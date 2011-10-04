@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderLightWave)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderLightWave::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderLightWave::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "lwo");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "lwo");
 }
 
 

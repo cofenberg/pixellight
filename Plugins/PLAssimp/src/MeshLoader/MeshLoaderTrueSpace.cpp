@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderTrueSpace)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderTrueSpace::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderTrueSpace::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "cob");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "cob");
 }
 
 

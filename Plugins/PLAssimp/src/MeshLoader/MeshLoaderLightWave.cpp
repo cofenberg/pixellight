@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderLightWave)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderLightWave::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderLightWave::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "lwo");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "lwo");
 }
 
 

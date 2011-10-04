@@ -64,7 +64,7 @@ class MeshLoaderDoom3 : public MeshLoader {
 	//[ Public virtual MeshLoader functions                   ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool LoadParams(PLMesh::Mesh &cMesh, PLCore::File &cFile, bool bStatic) override;
+		virtual bool LoadParams(PLMesh::Mesh &cMesh, PLCore::File &cFile, bool bStatic, PLCore::uint8 nQuality) override;
 
 
 	//[-------------------------------------------------------]

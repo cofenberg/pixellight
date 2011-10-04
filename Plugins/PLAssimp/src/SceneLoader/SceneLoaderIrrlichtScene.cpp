@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderIrrlichtScene)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderIrrlichtScene::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderIrrlichtScene::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "irr");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "irr");
 }
 
 

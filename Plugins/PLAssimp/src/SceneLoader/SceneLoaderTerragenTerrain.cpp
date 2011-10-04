@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderTerragenTerrain)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderTerragenTerrain::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderTerragenTerrain::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "ter");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "ter");
 }
 
 

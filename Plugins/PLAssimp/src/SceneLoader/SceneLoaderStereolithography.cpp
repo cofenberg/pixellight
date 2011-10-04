@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderStereolithography)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderStereolithography::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderStereolithography::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "stl");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "stl");
 }
 
 

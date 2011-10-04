@@ -42,12 +42,12 @@ pl_implement_class(SceneLoader3DGameStudio)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoader3DGameStudio::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoader3DGameStudio::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader().Load(cContainer, cFile, "mdl");
+	return AssimpSceneLoader().Load(cContainer, cFile, nQuality, "mdl");
 }
 
 

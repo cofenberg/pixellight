@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderNeutralFileFormat)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderNeutralFileFormat::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderNeutralFileFormat::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "nff");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "nff");
 }
 
 

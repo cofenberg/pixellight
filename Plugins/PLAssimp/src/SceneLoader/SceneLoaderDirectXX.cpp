@@ -42,12 +42,12 @@ pl_implement_class(SceneLoaderDirectXX)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual SceneLoader functions                  ]
 //[-------------------------------------------------------]
-bool SceneLoaderDirectXX::Load(SceneContainer &cContainer, File &cFile)
+bool SceneLoaderDirectXX::LoadParams(SceneContainer &cContainer, File &cFile, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpSceneLoader("dds").Load(cContainer, cFile, "x");
+	return AssimpSceneLoader("dds").Load(cContainer, cFile, nQuality, "x");
 }
 
 

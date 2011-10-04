@@ -44,10 +44,10 @@ pl_implement_class(MeshLoaderBlitzBasic3D)
 //[-------------------------------------------------------]
 //[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderBlitzBasic3D::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoaderBlitzBasic3D::LoadParams(Mesh &cMesh, File &cFile, bool bStatic, uint8 nQuality)
 {
 	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "b3d");
+	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, nQuality, "b3d");
 }
 
 

@@ -57,16 +57,14 @@ class SceneLoaderBlender3D : public SceneLoader {
 		pl_properties_end
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
-		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLCore::File&,	"Load method",	"")
 	pl_class_end
 
 
 	//[-------------------------------------------------------]
-	//[ Public RTTI methods                                   ]
+	//[ Public virtual SceneLoader functions                  ]
 	//[-------------------------------------------------------]
 	public:
-		bool Load(PLScene::SceneContainer &cContainer, PLCore::File &cFile);
+		virtual bool LoadParams(PLScene::SceneContainer &cContainer, PLCore::File &cFile, PLCore::uint8 nQuality) override;
 
 
 	//[-------------------------------------------------------]

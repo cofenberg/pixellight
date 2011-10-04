@@ -93,7 +93,7 @@ AssimpSceneLoader::~AssimpSceneLoader()
 *  @brief
 *    Loads the scene
 */
-bool AssimpSceneLoader::Load(SceneContainer &cContainer, File &cFile, const String &sHint)
+bool AssimpSceneLoader::Load(SceneContainer &cContainer, File &cFile, uint8 nQuality, const String &sHint)
 {
 	// Reset states
 	m_pContainer	= &cContainer;
@@ -109,8 +109,7 @@ bool AssimpSceneLoader::Load(SceneContainer &cContainer, File &cFile, const Stri
 	cAssimpImporter.SetIOHandler(new IOSystem(cFile, sMagicFilename.GetASCII(), sMagicFilename.GetLength()));
 
 	// Let Assimp load in the scene (scene remains in possession of the importer instance)
-	// [TODO] Make it possible to select the post processing quality from the outside
-	m_pAssimpScene = cAssimpImporter.ReadFile(sMagicFilename.GetUTF8(), aiProcessPreset_TargetRealtime_MaxQuality|aiProcess_TransformUVCoords|aiProcess_FlipUVs);
+	m_pAssimpScene = cAssimpImporter.ReadFile(sMagicFilename.GetUTF8(), QualityToAssimpFlags(nQuality)|aiProcess_TransformUVCoords|aiProcess_FlipUVs);
 	if (m_pAssimpScene) {
 		// Load the scene recursively
 		LoadRec(cContainer, *m_pAssimpScene->mRootNode);

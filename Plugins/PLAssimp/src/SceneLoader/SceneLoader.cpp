@@ -43,6 +43,11 @@ pl_implement_class(SceneLoader)
 //[-------------------------------------------------------]
 //[ Public RTTI methods                                   ]
 //[-------------------------------------------------------]
+bool SceneLoader::Load(SceneContainer &cContainer, File &cFile)
+{
+	return LoadParams(cContainer, cFile, 3);
+}
+
 bool SceneLoader::Save(SceneContainer &cContainer, File &cFile)
 {
 	// Error - not implemented!
