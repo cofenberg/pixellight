@@ -46,7 +46,7 @@
 *    Text which should be written into the log
 */
 #define PL_LOG(Level, Text) { \
-	if (PLCore::Log::GetInstance()->GetLogLevel() >= PLCore::Log::Level) { \
+	if (PLCore::Log::HasInstance() && PLCore::Log::GetInstance()->GetLogLevel() >= PLCore::Log::Level) { \
 		PLCore::Log::LogLevel nLogLevel = PLCore::Log::Level; /* Avoid 'expression is constant' warning */ \
 		if (nLogLevel >= PLCore::Log::Debug) { \
 			PLCore::String sLogString = Text; \
