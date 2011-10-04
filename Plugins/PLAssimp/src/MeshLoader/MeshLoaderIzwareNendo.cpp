@@ -44,21 +44,10 @@ pl_implement_class(MeshLoaderIzwareNendo)
 //[-------------------------------------------------------]
 //[ Public RTTI methods                                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderIzwareNendo::Load(Mesh &cMesh, File &cFile)
-{
-	return LoadParams(cMesh, cFile, true);
-}
-
 bool MeshLoaderIzwareNendo::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {
 	// Just let Assimp do all the hard work for us
 	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "ndo");
-}
-
-bool MeshLoaderIzwareNendo::Save(Mesh &cMesh, File &cFile)
-{
-	// Error - not implemented!
-	return false;
 }
 
 

@@ -50,12 +50,6 @@ bool SceneLoaderQuakeIIIBSP::Load(SceneContainer &cContainer, File &cFile)
 	return AssimpSceneLoader().Load(cContainer, cFile, "pk3");
 }
 
-bool SceneLoaderQuakeIIIBSP::Save(SceneContainer &cContainer, File &cFile)
-{
-	// Error - not implemented!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

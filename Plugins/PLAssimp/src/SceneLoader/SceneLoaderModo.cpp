@@ -50,12 +50,6 @@ bool SceneLoaderModo::Load(SceneContainer &cContainer, File &cFile)
 	return AssimpSceneLoader().Load(cContainer, cFile, "lxo");
 }
 
-bool SceneLoaderModo::Save(SceneContainer &cContainer, File &cFile)
-{
-	// Error - not implemented!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

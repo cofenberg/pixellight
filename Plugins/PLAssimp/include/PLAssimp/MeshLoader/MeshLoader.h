@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SceneLoaderModo.h                              *
+ *  File: MeshLoader.h                                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,15 +20,23 @@
 \*********************************************************/
 
 
-#ifndef __PLASSIMP_SCENELOADER_MODO_H__
-#define __PLASSIMP_SCENELOADER_MODO_H__
+#ifndef __PLASSIMP_MESHLOADER_H__
+#define __PLASSIMP_MESHLOADER_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLAssimp/SceneLoader/SceneLoader.h"
+#include <PLMesh/Loader/MeshLoader.h>
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLMesh {
+	class Mesh;
+}
 
 
 //[-------------------------------------------------------]
@@ -42,23 +50,24 @@ namespace PLAssimp {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene loader implementation for lxo (Modo) using Assimp
+*    Abstract mesh loader implementation using Assimp base class
 */
-class SceneLoaderModo : public SceneLoader {
+class MeshLoader : public PLMesh::MeshLoader {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, SceneLoaderModo, "PLAssimp", PLAssimp::SceneLoader, "Scene loader implementation for lxo (Modo) using Assimp")
+	pl_class(pl_rtti_export, MeshLoader, "PLAssimp", PLMesh::MeshLoader, "Abstract mesh loader implementation using Assimp base class")
 		// Properties
 		pl_properties
-			pl_property("Formats",	"lxo,LXO")
+			pl_property("Type",	"Mesh")
+			pl_property("Load",	"1")
+			pl_property("Save",	"0")
 		pl_properties_end
-		// Constructors
-		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLCore::File&,	"Load method",	"")
+		pl_method_2(Load,	pl_ret_type(bool),	PLMesh::Mesh&,	PLCore::File&,	"Load method. The loaded mesh is static.",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	PLMesh::Mesh&,	PLCore::File&,	"Save method",								"")
 	pl_class_end
 
 
@@ -66,24 +75,26 @@ class SceneLoaderModo : public SceneLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		bool Load(PLScene::SceneContainer &cContainer, PLCore::File &cFile);
+		bool Load(PLMesh::Mesh &cMesh, PLCore::File &cFile);
+		virtual bool LoadParams(PLMesh::Mesh &cMesh, PLCore::File &cFile, bool bStatic) = 0;
+		bool Save(PLMesh::Mesh &cMesh, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
-	public:
+	protected:
 		/**
 		*  @brief
 		*    Default constructor
 		*/
-		SceneLoaderModo();
+		MeshLoader();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~SceneLoaderModo();
+		virtual ~MeshLoader();
 
 
 };
@@ -95,4 +106,4 @@ class SceneLoaderModo : public SceneLoader {
 } // PLAssimp
 
 
-#endif // __PLASSIMP_SCENELOADER_MODO_H__
+#endif // __PLASSIMP_MESHLOADER_H__

@@ -44,21 +44,10 @@ pl_implement_class(MeshLoader3dsMax3DS)
 //[-------------------------------------------------------]
 //[ Public RTTI methods                                   ]
 //[-------------------------------------------------------]
-bool MeshLoader3dsMax3DS::Load(Mesh &cMesh, File &cFile)
-{
-	return LoadParams(cMesh, cFile, true);
-}
-
 bool MeshLoader3dsMax3DS::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {
 	// Just let Assimp do all the hard work for us
 	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "3ds");
-}
-
-bool MeshLoader3dsMax3DS::Save(Mesh &cMesh, File &cFile)
-{
-	// Error - not implemented!
-	return false;
 }
 
 

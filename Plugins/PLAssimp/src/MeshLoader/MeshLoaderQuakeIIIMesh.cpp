@@ -44,21 +44,10 @@ pl_implement_class(MeshLoaderQuakeIIIMesh)
 //[-------------------------------------------------------]
 //[ Public RTTI methods                                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderQuakeIIIMesh::Load(Mesh &cMesh, File &cFile)
-{
-	return LoadParams(cMesh, cFile, true);
-}
-
 bool MeshLoaderQuakeIIIMesh::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {
 	// Just let Assimp do all the hard work for us
 	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "md3");
-}
-
-bool MeshLoaderQuakeIIIMesh::Save(Mesh &cMesh, File &cFile)
-{
-	// Error - not implemented!
-	return false;
 }
 
 

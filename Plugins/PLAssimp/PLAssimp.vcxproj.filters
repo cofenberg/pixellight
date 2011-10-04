@@ -235,6 +235,12 @@
     <ClCompile Include="src\AssimpLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\MeshLoader\MeshLoader.cpp">
+      <Filter>MeshLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SceneLoader\SceneLoader.cpp">
+      <Filter>SceneLoader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
@@ -459,6 +465,12 @@
     </ClInclude>
     <ClInclude Include="include\PLAssimp\AssimpLoader.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\SceneLoader\SceneLoader.h">
+      <Filter>SceneLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLAssimp\MeshLoader\MeshLoader.h">
+      <Filter>MeshLoader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

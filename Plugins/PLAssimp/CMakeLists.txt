@@ -35,6 +35,7 @@ add_sources(
 	src/AssimpLoader.cpp
 # Mesh loaders
 	src/AssimpMeshLoader.cpp
+	src/MeshLoader/MeshLoader.cpp
 	# Common interchange formats (13 formats)
 	src/MeshLoader/MeshLoaderCollada.cpp						# Collada ( .dae )
 	src/MeshLoader/MeshLoaderBlender3D.cpp						# Blender 3D ( .blend )
@@ -74,6 +75,7 @@ add_sources(
 	src/MeshLoader/MeshLoaderIzwareNendo.cpp					# Izware Nendo ( .ndo )
 # Scene loaders
 	src/AssimpSceneLoader.cpp
+	src/SceneLoader/SceneLoader.cpp
 	# Common interchange formats (13 formats)
 	src/SceneLoader/SceneLoaderCollada.cpp						# Collada ( .dae )
 	src/SceneLoader/SceneLoaderBlender3D.cpp					# Blender 3D ( .blend )

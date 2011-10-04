@@ -50,12 +50,6 @@ bool SceneLoaderMilkshape3D::Load(SceneContainer &cContainer, File &cFile)
 	return AssimpSceneLoader().Load(cContainer, cFile, "ms3d");
 }
 
-bool SceneLoaderMilkshape3D::Save(SceneContainer &cContainer, File &cFile)
-{
-	// Error - not implemented!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

@@ -44,21 +44,10 @@ pl_implement_class(MeshLoaderMilkshape3D)
 //[-------------------------------------------------------]
 //[ Public RTTI methods                                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderMilkshape3D::Load(Mesh &cMesh, File &cFile)
-{
-	return LoadParams(cMesh, cFile, true);
-}
-
 bool MeshLoaderMilkshape3D::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {
 	// Just let Assimp do all the hard work for us
 	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "ms3d");
-}
-
-bool MeshLoaderMilkshape3D::Save(Mesh &cMesh, File &cFile)
-{
-	// Error - not implemented!
-	return false;
 }
 
 

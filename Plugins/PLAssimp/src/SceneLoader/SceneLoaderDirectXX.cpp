@@ -50,12 +50,6 @@ bool SceneLoaderDirectXX::Load(SceneContainer &cContainer, File &cFile)
 	return AssimpSceneLoader("dds").Load(cContainer, cFile, "x");
 }
 
-bool SceneLoaderDirectXX::Save(SceneContainer &cContainer, File &cFile)
-{
-	// Error - not implemented!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

@@ -50,12 +50,6 @@ bool SceneLoaderQuick3D::Load(SceneContainer &cContainer, File &cFile)
 	return AssimpSceneLoader().Load(cContainer, cFile, "q3o");
 }
 
-bool SceneLoaderQuick3D::Save(SceneContainer &cContainer, File &cFile)
-{
-	// Error - not implemented!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

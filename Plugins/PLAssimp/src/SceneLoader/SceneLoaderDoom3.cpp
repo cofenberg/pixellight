@@ -50,12 +50,6 @@ bool SceneLoaderDoom3::Load(SceneContainer &cContainer, File &cFile)
 	return AssimpSceneLoader().Load(cContainer, cFile, "md5mesh");
 }
 
-bool SceneLoaderDoom3::Save(SceneContainer &cContainer, File &cFile)
-{
-	// Error - not implemented!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

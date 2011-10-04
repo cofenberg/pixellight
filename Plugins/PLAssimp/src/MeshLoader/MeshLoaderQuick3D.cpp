@@ -44,21 +44,10 @@ pl_implement_class(MeshLoaderQuick3D)
 //[-------------------------------------------------------]
 //[ Public RTTI methods                                   ]
 //[-------------------------------------------------------]
-bool MeshLoaderQuick3D::Load(Mesh &cMesh, File &cFile)
-{
-	return LoadParams(cMesh, cFile, true);
-}
-
 bool MeshLoaderQuick3D::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {
 	// Just let Assimp do all the hard work for us
 	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "q3o");
-}
-
-bool MeshLoaderQuick3D::Save(Mesh &cMesh, File &cFile)
-{
-	// Error - not implemented!
-	return false;
 }
 
 

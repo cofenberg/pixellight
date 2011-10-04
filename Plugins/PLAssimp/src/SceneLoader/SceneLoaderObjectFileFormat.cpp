@@ -50,12 +50,6 @@ bool SceneLoaderObjectFileFormat::Load(SceneContainer &cContainer, File &cFile)
 	return AssimpSceneLoader().Load(cContainer, cFile, "off");
 }
 
-bool SceneLoaderObjectFileFormat::Save(SceneContainer &cContainer, File &cFile)
-{
-	// Error - not implemented!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

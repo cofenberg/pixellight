@@ -50,12 +50,6 @@ bool SceneLoaderIzwareNendo::Load(SceneContainer &cContainer, File &cFile)
 	return AssimpSceneLoader().Load(cContainer, cFile, "ndo");
 }
 
-bool SceneLoaderIzwareNendo::Save(SceneContainer &cContainer, File &cFile)
-{
-	// Error - not implemented!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

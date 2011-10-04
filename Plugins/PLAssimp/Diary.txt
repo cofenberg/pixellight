@@ -1,4 +1,10 @@
-﻿>> 29.09.2011
+﻿>> 04.10.2011
+[CO]
+- Added base classes "SceneLoader" and "MeshLoader", all other RTTI Assimp loader classes are derived from one of them
+
+
+
+>> 29.09.2011
 [CO]
 - Added base class "AssimpLoader" implementing features used by "AssimpMeshLoader" and "AssimpSceneLoader"
 - "AssimpLoader" can now be provided with a default texture file extension. Within some files, textures are addressed by using

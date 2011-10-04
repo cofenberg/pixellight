@@ -50,12 +50,6 @@ bool SceneLoaderSense8WorldToolKit::Load(SceneContainer &cContainer, File &cFile
 	return AssimpSceneLoader().Load(cContainer, cFile, "nff");
 }
 
-bool SceneLoaderSense8WorldToolKit::Save(SceneContainer &cContainer, File &cFile)
-{
-	// Error - not implemented!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

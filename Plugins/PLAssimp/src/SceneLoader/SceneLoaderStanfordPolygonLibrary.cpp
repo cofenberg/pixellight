@@ -50,12 +50,6 @@ bool SceneLoaderStanfordPolygonLibrary::Load(SceneContainer &cContainer, File &c
 	return AssimpSceneLoader().Load(cContainer, cFile, "ply");
 }
 
-bool SceneLoaderStanfordPolygonLibrary::Save(SceneContainer &cContainer, File &cFile)
-{
-	// Error - not implemented!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

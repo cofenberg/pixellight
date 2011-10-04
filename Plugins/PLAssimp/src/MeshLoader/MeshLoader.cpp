@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: MeshLoader3DGameStudio.cpp                     *
+ *  File: MeshLoader.cpp                                 *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,8 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLAssimp/AssimpMeshLoader.h"
-#include "PLAssimp/MeshLoader/MeshLoader3DGameStudio.h"
+#include "PLAssimp/MeshLoader/MeshLoader.h"
 
 
 //[-------------------------------------------------------]
@@ -38,27 +37,32 @@ namespace PLAssimp {
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(MeshLoader3DGameStudio)
+pl_implement_class(MeshLoader)
 
 
 //[-------------------------------------------------------]
 //[ Public RTTI methods                                   ]
 //[-------------------------------------------------------]
-bool MeshLoader3DGameStudio::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
+bool MeshLoader::Load(Mesh &cMesh, File &cFile)
 {
-	// Just let Assimp do all the hard work for us
-	return AssimpMeshLoader().Load(cMesh, cFile, bStatic, "mdl");
+	return LoadParams(cMesh, cFile, true);
+}
+
+bool MeshLoader::Save(Mesh &cMesh, File &cFile)
+{
+	// Error - not implemented!
+	return false;
 }
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Default constructor
 */
-MeshLoader3DGameStudio::MeshLoader3DGameStudio()
+MeshLoader::MeshLoader()
 {
 }
 
@@ -66,7 +70,7 @@ MeshLoader3DGameStudio::MeshLoader3DGameStudio()
 *  @brief
 *    Destructor
 */
-MeshLoader3DGameStudio::~MeshLoader3DGameStudio()
+MeshLoader::~MeshLoader()
 {
 }
 

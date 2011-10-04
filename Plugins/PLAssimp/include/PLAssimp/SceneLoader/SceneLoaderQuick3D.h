@@ -28,15 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Scene/SceneLoader/SceneLoader.h>
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLScene {
-	class SceneContainer;
-}
+#include "PLAssimp/SceneLoader/SceneLoader.h"
 
 
 //[-------------------------------------------------------]
@@ -52,24 +44,21 @@ namespace PLAssimp {
 *  @brief
 *    Scene loader implementation for q3d/q3s (Quick3D) using Assimp
 */
-class SceneLoaderQuick3D : public PLScene::SceneLoader {
+class SceneLoaderQuick3D : public SceneLoader {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, SceneLoaderQuick3D, "PLAssimp", PLScene::SceneLoader, "Scene loader implementation for q3d/q3s (Quick3D) using Assimp")
+	pl_class(pl_rtti_export, SceneLoaderQuick3D, "PLAssimp", PLAssimp::SceneLoader, "Scene loader implementation for q3d/q3s (Quick3D) using Assimp")
 		// Properties
 		pl_properties
 			pl_property("Formats",	"q3d,q3s,q3o,Q3D,Q3S,Q3O")
-			pl_property("Load",		"1")
-			pl_property("Save",		"0")
 		pl_properties_end
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
 		pl_method_2(Load,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLCore::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -78,7 +67,6 @@ class SceneLoaderQuick3D : public PLScene::SceneLoader {
 	//[-------------------------------------------------------]
 	public:
 		bool Load(PLScene::SceneContainer &cContainer, PLCore::File &cFile);
-		bool Save(PLScene::SceneContainer &cContainer, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]

@@ -50,12 +50,6 @@ bool SceneLoaderReturnToCastleWolfenstein::Load(SceneContainer &cContainer, File
 	return AssimpSceneLoader().Load(cContainer, cFile, "mdc");
 }
 
-bool SceneLoaderReturnToCastleWolfenstein::Save(SceneContainer &cContainer, File &cFile)
-{
-	// Error - not implemented!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

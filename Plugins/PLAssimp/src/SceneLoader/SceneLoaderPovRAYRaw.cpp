@@ -50,12 +50,6 @@ bool SceneLoaderPovRAYRaw::Load(SceneContainer &cContainer, File &cFile)
 	return AssimpSceneLoader().Load(cContainer, cFile, "raw");
 }
 
-bool SceneLoaderPovRAYRaw::Save(SceneContainer &cContainer, File &cFile)
-{
-	// Error - not implemented!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

@@ -28,15 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Scene/SceneLoader/SceneLoader.h>
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLScene {
-	class SceneContainer;
-}
+#include "PLAssimp/SceneLoader/SceneLoader.h"
 
 
 //[-------------------------------------------------------]
@@ -52,24 +44,21 @@ namespace PLAssimp {
 *  @brief
 *    Scene loader implementation for raw (PovRAY Raw) using Assimp
 */
-class SceneLoaderPovRAYRaw : public PLScene::SceneLoader {
+class SceneLoaderPovRAYRaw : public SceneLoader {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, SceneLoaderPovRAYRaw, "PLAssimp", PLScene::SceneLoader, "Scene loader implementation for raw (PovRAY Raw) using Assimp")
+	pl_class(pl_rtti_export, SceneLoaderPovRAYRaw, "PLAssimp", PLAssimp::SceneLoader, "Scene loader implementation for raw (PovRAY Raw) using Assimp")
 		// Properties
 		pl_properties
 			pl_property("Formats",	"raw,RAW")
-			pl_property("Load",		"1")
-			pl_property("Save",		"0")
 		pl_properties_end
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
 		pl_method_2(Load,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLCore::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -78,7 +67,6 @@ class SceneLoaderPovRAYRaw : public PLScene::SceneLoader {
 	//[-------------------------------------------------------]
 	public:
 		bool Load(PLScene::SceneContainer &cContainer, PLCore::File &cFile);
-		bool Save(PLScene::SceneContainer &cContainer, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]

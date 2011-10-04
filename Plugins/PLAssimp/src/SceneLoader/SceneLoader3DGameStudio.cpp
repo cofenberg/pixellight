@@ -50,12 +50,6 @@ bool SceneLoader3DGameStudio::Load(SceneContainer &cContainer, File &cFile)
 	return AssimpSceneLoader().Load(cContainer, cFile, "mdl");
 }
 
-bool SceneLoader3DGameStudio::Save(SceneContainer &cContainer, File &cFile)
-{
-	// Error - not implemented!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

@@ -50,12 +50,6 @@ bool SceneLoader3dsMaxASE::Load(SceneContainer &cContainer, File &cFile)
 	return AssimpSceneLoader().Load(cContainer, cFile, "ase");
 }
 
-bool SceneLoader3dsMaxASE::Save(SceneContainer &cContainer, File &cFile)
-{
-	// Error - not implemented!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

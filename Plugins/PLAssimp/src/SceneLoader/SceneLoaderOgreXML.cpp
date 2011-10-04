@@ -50,12 +50,6 @@ bool SceneLoaderOgreXML::Load(SceneContainer &cContainer, File &cFile)
 	return AssimpSceneLoader().Load(cContainer, cFile, "mesh.xml");
 }
 
-bool SceneLoaderOgreXML::Save(SceneContainer &cContainer, File &cFile)
-{
-	// Error - not implemented!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

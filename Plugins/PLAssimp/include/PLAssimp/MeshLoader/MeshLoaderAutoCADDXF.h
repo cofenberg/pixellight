@@ -28,15 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLMesh/Loader/MeshLoader.h>
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLMesh {
-	class Mesh;
-}
+#include "PLAssimp/MeshLoader/MeshLoader.h"
 
 
 //[-------------------------------------------------------]
@@ -52,25 +44,21 @@ namespace PLAssimp {
 *  @brief
 *    Mesh loader implementation for dxf (AutoCAD DXF) using Assimp
 */
-class MeshLoaderAutoCADDXF : public PLMesh::MeshLoader {
+class MeshLoaderAutoCADDXF : public MeshLoader {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, MeshLoaderAutoCADDXF, "PLAssimp", PLMesh::MeshLoader, "Mesh loader implementation for dxf (AutoCAD DXF) using Assimp")
+	pl_class(pl_rtti_export, MeshLoaderAutoCADDXF, "PLAssimp", PLAssimp::MeshLoader, "Mesh loader implementation for dxf (AutoCAD DXF) using Assimp")
 		// Properties
 		pl_properties
 			pl_property("Formats",	"dxf,DXF")
-			pl_property("Load",		"1")
-			pl_property("Save",		"0")
 		pl_properties_end
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,		pl_ret_type(bool),	PLMesh::Mesh&,	PLCore::File&,			"Load method. The loaded mesh is static.",															"")
 		pl_method_3(LoadParams,	pl_ret_type(bool),	PLMesh::Mesh&,	PLCore::File&,	bool,	"Load method. Parameters: First 'bool' parameter determines whether or not the mesh is static.",	"")
-		pl_method_2(Save,		pl_ret_type(bool),	PLMesh::Mesh&,	PLCore::File&,			"Save method",																						"")
 	pl_class_end
 
 
@@ -78,9 +66,7 @@ class MeshLoaderAutoCADDXF : public PLMesh::MeshLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		bool Load(PLMesh::Mesh &cMesh, PLCore::File &cFile);
 		bool LoadParams(PLMesh::Mesh &cMesh, PLCore::File &cFile, bool bStatic);
-		bool Save(PLMesh::Mesh &cMesh, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]

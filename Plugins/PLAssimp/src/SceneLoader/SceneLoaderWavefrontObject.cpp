@@ -50,12 +50,6 @@ bool SceneLoaderWavefrontObject::Load(SceneContainer &cContainer, File &cFile)
 	return AssimpSceneLoader().Load(cContainer, cFile, "obj");
 }
 
-bool SceneLoaderWavefrontObject::Save(SceneContainer &cContainer, File &cFile)
-{
-	// Error - not implemented!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

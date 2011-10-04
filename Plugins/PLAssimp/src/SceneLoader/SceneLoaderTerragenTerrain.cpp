@@ -50,12 +50,6 @@ bool SceneLoaderTerragenTerrain::Load(SceneContainer &cContainer, File &cFile)
 	return AssimpSceneLoader().Load(cContainer, cFile, "ter");
 }
 
-bool SceneLoaderTerragenTerrain::Save(SceneContainer &cContainer, File &cFile)
-{
-	// Error - not implemented!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

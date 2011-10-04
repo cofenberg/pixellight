@@ -50,12 +50,6 @@ bool SceneLoaderAutoCADDXF::Load(SceneContainer &cContainer, File &cFile)
 	return AssimpSceneLoader().Load(cContainer, cFile, "dxf");
 }
 
-bool SceneLoaderAutoCADDXF::Save(SceneContainer &cContainer, File &cFile)
-{
-	// Error - not implemented!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

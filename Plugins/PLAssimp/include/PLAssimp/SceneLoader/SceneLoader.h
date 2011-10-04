@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SceneLoaderModo.h                              *
+ *  File: SceneLoader.h                                  *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,15 +20,23 @@
 \*********************************************************/
 
 
-#ifndef __PLASSIMP_SCENELOADER_MODO_H__
-#define __PLASSIMP_SCENELOADER_MODO_H__
+#ifndef __PLASSIMP_SCENELOADER_H__
+#define __PLASSIMP_SCENELOADER_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLAssimp/SceneLoader/SceneLoader.h"
+#include <PLScene/Scene/SceneLoader/SceneLoader.h>
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLScene {
+	class SceneContainer;
+}
 
 
 //[-------------------------------------------------------]
@@ -42,23 +50,23 @@ namespace PLAssimp {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene loader implementation for lxo (Modo) using Assimp
+*    Abstract scene loader implementation using Assimp base class
 */
-class SceneLoaderModo : public SceneLoader {
+class SceneLoader : public PLScene::SceneLoader {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, SceneLoaderModo, "PLAssimp", PLAssimp::SceneLoader, "Scene loader implementation for lxo (Modo) using Assimp")
+	pl_class(pl_rtti_export, SceneLoader, "PLAssimp", PLScene::SceneLoader, "Abstract scene loader implementation using Assimp base class")
 		// Properties
 		pl_properties
-			pl_property("Formats",	"lxo,LXO")
+			pl_property("Type",	"Scene")
+			pl_property("Load",	"1")
+			pl_property("Save",	"0")
 		pl_properties_end
-		// Constructors
-		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLCore::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
@@ -66,24 +74,24 @@ class SceneLoaderModo : public SceneLoader {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		bool Load(PLScene::SceneContainer &cContainer, PLCore::File &cFile);
+		bool Save(PLScene::SceneContainer &cContainer, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
-	public:
+	protected:
 		/**
 		*  @brief
 		*    Default constructor
 		*/
-		SceneLoaderModo();
+		SceneLoader();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~SceneLoaderModo();
+		virtual ~SceneLoader();
 
 
 };
@@ -95,4 +103,4 @@ class SceneLoaderModo : public SceneLoader {
 } // PLAssimp
 
 
-#endif // __PLASSIMP_SCENELOADER_MODO_H__
+#endif // __PLASSIMP_SCENELOADER_H__

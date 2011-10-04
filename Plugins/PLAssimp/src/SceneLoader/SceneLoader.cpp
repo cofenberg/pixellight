@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SceneLoaderModo.h                              *
+ *  File: SceneLoader.cpp                                *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,11 +20,6 @@
 \*********************************************************/
 
 
-#ifndef __PLASSIMP_SCENELOADER_MODO_H__
-#define __PLASSIMP_SCENELOADER_MODO_H__
-#pragma once
-
-
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
@@ -34,65 +29,48 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLCore;
+using namespace PLScene;
 namespace PLAssimp {
 
 
 //[-------------------------------------------------------]
-//[ Classes                                               ]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_implement_class(SceneLoader)
+
+
+//[-------------------------------------------------------]
+//[ Public RTTI methods                                   ]
+//[-------------------------------------------------------]
+bool SceneLoader::Save(SceneContainer &cContainer, File &cFile)
+{
+	// Error - not implemented!
+	return false;
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene loader implementation for lxo (Modo) using Assimp
+*    Default constructor
 */
-class SceneLoaderModo : public SceneLoader {
+SceneLoader::SceneLoader()
+{
+}
 
-
-	//[-------------------------------------------------------]
-	//[ RTTI interface                                        ]
-	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, SceneLoaderModo, "PLAssimp", PLAssimp::SceneLoader, "Scene loader implementation for lxo (Modo) using Assimp")
-		// Properties
-		pl_properties
-			pl_property("Formats",	"lxo,LXO")
-		pl_properties_end
-		// Constructors
-		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
-		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	PLScene::SceneContainer&,	PLCore::File&,	"Load method",	"")
-	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public RTTI methods                                   ]
-	//[-------------------------------------------------------]
-	public:
-		bool Load(PLScene::SceneContainer &cContainer, PLCore::File &cFile);
-
-
-	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Default constructor
-		*/
-		SceneLoaderModo();
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		virtual ~SceneLoaderModo();
-
-
-};
+/**
+*  @brief
+*    Destructor
+*/
+SceneLoader::~SceneLoader()
+{
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLAssimp
-
-
-#endif // __PLASSIMP_SCENELOADER_MODO_H__

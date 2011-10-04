@@ -50,12 +50,6 @@ bool SceneLoader3DGameStudioTerrain::Load(SceneContainer &cContainer, File &cFil
 	return AssimpSceneLoader().Load(cContainer, cFile, "hmp");
 }
 
-bool SceneLoader3DGameStudioTerrain::Save(SceneContainer &cContainer, File &cFile)
-{
-	// Error - not implemented!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
