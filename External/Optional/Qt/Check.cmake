@@ -36,10 +36,10 @@ if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
 	if(WIN32)
 		if(CMAKETOOLS_TARGET_BITSIZE MATCHES "64")
 			# md5sum of the 64bit Windows package
-			set(md5sum "74d39e277063fb8d2c25fecc1a4953f2")
+			set(md5sum "539df50c1261e9bf899a8ae0d1a7ea2d")
 		else()
 			# md5sum of the 32bit Windows package
-			set(md5sum "73bface5601c78f2ed5ad6c23ab70221")
+			set(md5sum "c153b611ebd229e843f255c5f8bb6f79")
 		endif()
 	elseif(LINUX)
 		if(CMAKETOOLS_TARGET_BITSIZE MATCHES "64")

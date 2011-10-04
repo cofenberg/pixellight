@@ -1,3 +1,11 @@
+>> 01.10.2011
+[CO]
+- Windows: PLFrontendQt includes simplification: "Include\Qt" instead of "Include\Qt\Qt" (when building Qt, an additional install step was required to make real Qt headers,
+  not headers just redirecting into the "src"-directory)
+  -> Updated Windows Qt packages
+
+
+
 >> 20.09.2011
 [CO]
 - Updated FMOD Ex from version "4.32.08" to "4.36.04" (has Android support)

@@ -15,3 +15,8 @@ Building Qt on MS Windows for Visual Studio 2010
 	2. To make the 64-bit build of Qt, go to Visual Studio 2010->Visual Studio tools in the start menu and click on Visual Studio 2010 x64 Win64 Command Prompt and change into your Qt directory (e.g. "C:\Qt\4.7.0")
 	3. Type "build_dll_x64.bat" within the "Visual Studio 2010 x64 Win64 Command Prompt"
 	4. ... go for a long walk while compiling...
+
+	Configurated Qt include files
+	- The official Qt include files redirect to files within another directory
+	- In case you only want to have one include files directory, add a prefix path by using "-prefix <path>" within "configure" inside "build_dll_x86.bat" or "build_dll_x64.bat" (e.g. "configure -prefix "C:\Qt" ...")
+	- When the build is complete, type "nmake install"
