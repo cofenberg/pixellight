@@ -1,7 +1,11 @@
->> 01.10.2011
+>> 04.10.2011
 [CO]
 - Windows: PLFrontendQt includes simplification: "Include\Qt" instead of "Include\Qt\Qt" (when building Qt, an additional install step was required to make real Qt headers,
   not headers just redirecting into the "src"-directory)
+- "ClassReal::InitClass()" and "ClassDummy::InitClass()" didn't register the properties of the base class as expected. While all methods and so on from the base class and
+  the base class of the base class and so on were registered, only the "own" properties of the base class were added to a derived class. Meaning that a derived class was missing
+  properties of the base class it's base class was derived from. This looks like a bug (if it's no bug, it's a odd behaviour). Fixed it.
+  (noticed it when implementing "PLAssimp::MeshLoader" and "PLAssimp::SceneLoader")
 
 
 

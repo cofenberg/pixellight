@@ -61,7 +61,6 @@ class MeshLoader : public PLMesh::MeshLoader {
 	pl_class(pl_rtti_export, MeshLoader, "PLAssimp", PLMesh::MeshLoader, "Abstract mesh loader implementation using Assimp base class")
 		// Properties
 		pl_properties
-			pl_property("Type",	"Mesh")
 			pl_property("Load",	"1")
 			pl_property("Save",	"0")
 		pl_properties_end

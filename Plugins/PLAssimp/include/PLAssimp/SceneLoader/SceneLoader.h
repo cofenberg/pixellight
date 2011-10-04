@@ -61,7 +61,6 @@ class SceneLoader : public PLScene::SceneLoader {
 	pl_class(pl_rtti_export, SceneLoader, "PLAssimp", PLScene::SceneLoader, "Abstract scene loader implementation using Assimp base class")
 		// Properties
 		pl_properties
-			pl_property("Type",	"Scene")
 			pl_property("Load",	"1")
 			pl_property("Save",	"0")
 		pl_properties_end

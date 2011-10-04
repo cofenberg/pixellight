@@ -1,4 +1,4 @@
->> 01.10.2011
+>> 04.10.2011
 [CO]
 - Windows: PLFrontendQt includes simplification: "Include\Qt" instead of "Include\Qt\Qt" (when building Qt, an additional install step was required to make real Qt headers,
   not headers just redirecting into the "src"-directory)

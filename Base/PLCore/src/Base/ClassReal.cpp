@@ -97,10 +97,10 @@ void ClassReal::InitClass() const
 
 				{ // Add properties from base class
 					ClassImpl *pBaseClassReal = static_cast<ClassImpl*>(m_pBaseClass->m_pClassImpl);
-					Iterator<String> cIterator = pBaseClassReal->m_mapOwnProperties.GetKeyIterator();
+					Iterator<String> cIterator = pBaseClassReal->m_mapProperties.GetKeyIterator();
 					while (cIterator.HasNext()) {
 						const String sName  = cIterator.Next();
-						const String sValue = pBaseClassReal->m_mapOwnProperties.Get(sName);
+						const String sValue = pBaseClassReal->m_mapProperties.Get(sName);
 						m_mapProperties.Set(sName, sValue);
 					}
 				}
