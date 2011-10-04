@@ -57,16 +57,14 @@ class MeshLoaderQuakeIIMesh : public MeshLoader {
 		pl_properties_end
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
-		// Methods
-		pl_method_3(LoadParams,	pl_ret_type(bool),	PLMesh::Mesh&,	PLCore::File&,	bool,	"Load method. Parameters: First 'bool' parameter determines whether or not the mesh is static.",	"")
 	pl_class_end
 
 
 	//[-------------------------------------------------------]
-	//[ Public RTTI methods                                   ]
+	//[ Public virtual MeshLoader functions                   ]
 	//[-------------------------------------------------------]
 	public:
-		bool LoadParams(PLMesh::Mesh &cMesh, PLCore::File &cFile, bool bStatic);
+		virtual bool LoadParams(PLMesh::Mesh &cMesh, PLCore::File &cFile, bool bStatic) override;
 
 
 	//[-------------------------------------------------------]

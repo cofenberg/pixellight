@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderAutoCADDXF)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderAutoCADDXF::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

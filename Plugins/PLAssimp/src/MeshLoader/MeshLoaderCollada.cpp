@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderCollada)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderCollada::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

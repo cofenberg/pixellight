@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderPovRAYRaw)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderPovRAYRaw::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

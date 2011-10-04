@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderWavefrontObject)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderWavefrontObject::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderValveModel)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderValveModel::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

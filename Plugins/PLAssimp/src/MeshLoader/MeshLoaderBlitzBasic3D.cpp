@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderBlitzBasic3D)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderBlitzBasic3D::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

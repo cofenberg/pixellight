@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderNeutralFileFormat)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderNeutralFileFormat::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderLightWave)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderLightWave::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

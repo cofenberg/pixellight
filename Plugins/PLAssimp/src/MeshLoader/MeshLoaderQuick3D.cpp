@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderQuick3D)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderQuick3D::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

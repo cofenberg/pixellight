@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderDirectXX)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderDirectXX::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

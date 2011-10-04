@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderSense8WorldToolKit)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderSense8WorldToolKit::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

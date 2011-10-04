@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderBlender3D)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderBlender3D::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

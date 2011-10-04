@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderDoom3)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderDoom3::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

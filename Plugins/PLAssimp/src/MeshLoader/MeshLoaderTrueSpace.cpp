@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderTrueSpace)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderTrueSpace::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

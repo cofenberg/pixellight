@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderMilkshape3D)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderMilkshape3D::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

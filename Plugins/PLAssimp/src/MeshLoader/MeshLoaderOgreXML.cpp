@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderOgreXML)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderOgreXML::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

@@ -42,7 +42,7 @@ pl_implement_class(MeshLoader3DGameStudio)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoader3DGameStudio::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

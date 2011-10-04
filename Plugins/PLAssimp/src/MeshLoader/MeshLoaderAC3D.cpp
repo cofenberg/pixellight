@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderAC3D)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderAC3D::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

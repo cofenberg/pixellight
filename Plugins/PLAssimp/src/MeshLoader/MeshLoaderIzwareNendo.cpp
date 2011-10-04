@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderIzwareNendo)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderIzwareNendo::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

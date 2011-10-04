@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderIrrlichtScene)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderIrrlichtScene::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

@@ -42,7 +42,7 @@ pl_implement_class(MeshLoader3dsMax3DS)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoader3dsMax3DS::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

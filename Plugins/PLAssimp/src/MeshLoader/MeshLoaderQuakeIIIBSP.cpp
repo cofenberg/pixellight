@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderQuakeIIIBSP)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderQuakeIIIBSP::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

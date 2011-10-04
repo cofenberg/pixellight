@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderReturnToCastleWolfenstein)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderReturnToCastleWolfenstein::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

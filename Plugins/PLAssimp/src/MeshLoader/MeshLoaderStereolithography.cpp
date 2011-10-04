@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderStereolithography)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderStereolithography::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

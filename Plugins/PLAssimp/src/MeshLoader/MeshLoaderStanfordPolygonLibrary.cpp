@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderStanfordPolygonLibrary)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderStanfordPolygonLibrary::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {

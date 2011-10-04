@@ -42,7 +42,7 @@ pl_implement_class(MeshLoaderTerragenTerrain)
 
 
 //[-------------------------------------------------------]
-//[ Public RTTI methods                                   ]
+//[ Public virtual MeshLoader functions                   ]
 //[-------------------------------------------------------]
 bool MeshLoaderTerragenTerrain::LoadParams(Mesh &cMesh, File &cFile, bool bStatic)
 {
