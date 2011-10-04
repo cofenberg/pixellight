@@ -26,6 +26,44 @@
 ## This file contains compiler and linker settings which are specific to the GCC compiler suit under Linux
 ##################################################
 
+if(CMAKE_GENERATOR MATCHES "Makefiles")
+	message(STATUS "Check for GCC compiler version")
+	set(CMAKE_TEST_COMPILER ${CMAKE_C_COMPILER})
+	if(NOT CMAKE_C_COMPILER)
+		set(CMAKE_TEST_COMPILER ${CMAKE_CXX_COMPILER})
+	endif()
+
+	exec_program(${CMAKE_TEST_COMPILER}
+		ARGS -dumpversion
+		OUTPUT_VARIABLE CMAKE_COMPILER_OUTPUT
+		RETURN_VALUE CMAKE_COMPILER_RETURN
+		)
+	if(NOT CMAKE_COMPILER_RETURN)
+		file(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeOutput.log
+		"Determining the version of compiler passed with the following output:\n"
+		"${CMAKE_COMPILER_OUTPUT}\n\n")
+		string(REGEX REPLACE "\n" " " compilerVersion "${CMAKE_COMPILER_OUTPUT}")
+		message(STATUS "Check for GCC compiler version - ${compilerVersion}")
+		set(GCC44)
+		set(GCC45)
+		set(GCC46)
+		string(REGEX REPLACE "^([0-9]+).([0-9]+).([0-9]+)\$" "\\1"
+		compilerVersionMajor "${compilerVersion}")
+		string(REGEX REPLACE "^([0-9]+)[.]+([0-9]+)[.]+([0-9]+)\$" "\\2"
+		compilerVersionMinor "${compilerVersion}")
+		string(REGEX REPLACE "^([0-9]+)[.]+([0-9]+)[.]+([0-9]+)\$" "\\3"
+		compilerVersionBuild "${compilerVersion}")
+		set(GCC${compilerVersionMajor}${compilerVersionMinor} 1)
+		set(GCC${compilerVersionMajor}${compilerVersionMinor}${compilerVersionBuild} 1)
+		set(GCC_VERSION "${compilerVersion}")
+	else()
+		message(STATUS "Check for GCC compiler version - failed")
+		file(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeError.log
+		"Determining the version of compiler failed with the following output:\n"
+		"${CMAKE_COMPILER_OUTPUT}\n\n")
+	endif()
+endif()
+
 
 ##################################################
 ## Libraries

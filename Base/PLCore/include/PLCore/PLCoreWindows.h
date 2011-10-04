@@ -91,15 +91,15 @@
 
 
 //[-------------------------------------------------------]
-//[ C++0x definitions                                     ]
+//[ C++11 definitions                                     ]
 //[-------------------------------------------------------]
-// Microsoft Visual Studio 2010: Have a look at http://blogs.msdn.com/b/vcblog/archive/2010/04/06/c-0x-core-language-features-in-vc10-the-table.aspx see which C++0x features are supported
+// Microsoft Visual Studio 2010: Have a look at http://blogs.msdn.com/b/vcblog/archive/2010/04/06/c-0x-core-language-features-in-vc10-the-table.aspx see which C++11 features are supported
 
 // "nullptr"-definition
 #if defined(__INTEL_COMPILER) || !defined(_MSC_VER) || _MSC_VER < 1600	// The Intel C++ compiler has no support for nullptr, 1600 = Microsoft Visual Studio 2010
 	/**
 	*  @brief
-	*    nullptr definition for compilers don't supporting this C++0x feature
+	*    nullptr definition for compilers don't supporting this C++11 feature
 	*
 	*  @note
 	*    - The implementation comes from the "A name for the null pointer: nullptr"-document (http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2431.pdf)
@@ -119,8 +119,8 @@
 //[-------------------------------------------------------]
 PL_WARNING_DISABLE(4100) // "'identifier' : unreferenced formal parameter"
 PL_WARNING_DISABLE(4201) // "nonstandard extension used : nameless struct/union"
-PL_WARNING_DISABLE(4231) // "nonstandard extension used : 'identifier' before template explicit instantiation" -> It's part of C++0x (see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-PL_WARNING_DISABLE(4481) // "nonstandard extension used: override specifier 'override'" -> It's part of C++0x (see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#override)
+PL_WARNING_DISABLE(4231) // "nonstandard extension used : 'identifier' before template explicit instantiation" -> It's part of C++11 (see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
+PL_WARNING_DISABLE(4481) // "nonstandard extension used: override specifier 'override'" -> It's part of C++11 (see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#override)
 
 
 //[-------------------------------------------------------]
@@ -144,7 +144,7 @@ PL_WARNING_DISABLE(4481) // "nonstandard extension used: override specifier 'ove
 	// To import classes, methods and variables
 	#define PLCORE_API __declspec(dllimport)
 
-	// To import explicit template instantiations (C++0x, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
+	// To import explicit template instantiations (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
 	#define PLCORE_TEMPLATE extern
 
 	// To import RTTI elements

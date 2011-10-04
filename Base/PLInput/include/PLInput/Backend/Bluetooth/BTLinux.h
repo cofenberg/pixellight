@@ -32,6 +32,12 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+struct DBusConnection;
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLInput {
@@ -74,6 +80,17 @@ class BTLinux : public BTImpl {
 		*    Destructor
 		*/
 		virtual ~BTLinux();
+
+		/**
+		*  @brief
+		*    Enumerate bluetooth devices
+		*
+		*  @param[out] lstDevices
+		*    List that will receive the devices
+		*  @param[in]  cConnection
+		*    Used DBus connection
+		*/
+		void EnumerateBluetoothDevices(PLCore::List<BTDevice*> &lstDevices, DBusConnection &cConnection);
 
 
 	//[-------------------------------------------------------]

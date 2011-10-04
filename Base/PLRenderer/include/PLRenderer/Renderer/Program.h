@@ -73,7 +73,7 @@ class Program : public Resource {
 	//[ Events                                                ]
 	//[-------------------------------------------------------]
 	public:
-		PLCore::Event<Program*>	EventDirty;	/**< The program became dirty, previous pointers to attributes or uniforms may no longer be valid, pointer to this program as parameter */
+		PLCore::Event<Program*>	EventDirty;	/**< The program became dirty, previous pointers to attributes or uniforms may no longer be valid, pointer to this program as parameter (always valid, do not delete it) */
 
 
 	//[-------------------------------------------------------]
@@ -105,7 +105,7 @@ class Program : public Resource {
 		*    Returns the vertex shader the program is using
 		*
 		*  @return
-		*    Vertex shader the program is using, can be a null pointer
+		*    Vertex shader the program is using (do not delete it), can be a null pointer
 		*/
 		virtual PLRenderer::VertexShader *GetVertexShader() const = 0;
 
@@ -118,6 +118,10 @@ class Program : public Resource {
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe shader language mismatch?)
+		*
+		*  @notes
+		*    - The given vertex shader instance is just shared and will not be destroyed automatically by this program
+		*    - The given vertex shader instance must stay valid as long as it's used within this program
 		*/
 		virtual bool SetVertexShader(PLRenderer::VertexShader *pVertexShader) = 0;
 
@@ -126,7 +130,7 @@ class Program : public Resource {
 		*    Returns the geometry shader the program is using
 		*
 		*  @return
-		*    Geometry shader the program is using, can be a null pointer
+		*    Geometry shader the program is using (do not delete it), can be a null pointer
 		*/
 		virtual PLRenderer::GeometryShader *GetGeometryShader() const = 0;
 
@@ -139,6 +143,10 @@ class Program : public Resource {
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe shader language mismatch?)
+		*
+		*  @notes
+		*    - The given geometry shader instance is just shared and will not be destroyed automatically by this program
+		*    - The given geometry shader instance must stay valid as long as it's used within this program
 		*/
 		virtual bool SetGeometryShader(PLRenderer::GeometryShader *pGeometryShader) = 0;
 
@@ -147,7 +155,7 @@ class Program : public Resource {
 		*    Returns the fragment shader the program is using
 		*
 		*  @return
-		*    Fragment shader the program is using, can be a null pointer
+		*    Fragment shader the program is using (do not delete it), can be a null pointer
 		*/
 		virtual PLRenderer::FragmentShader *GetFragmentShader() const = 0;
 
@@ -160,6 +168,10 @@ class Program : public Resource {
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe shader language mismatch?)
+		*
+		*  @notes
+		*    - The given fragment shader instance is just shared and will not be destroyed automatically by this program
+		*    - The given fragment shader instance must stay valid as long as it's used within this program
 		*/
 		virtual bool SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader) = 0;
 
@@ -202,7 +214,7 @@ class Program : public Resource {
 		*    Get attributes
 		*
 		*  @return
-		*    List of attributes
+		*    List of attributes (do NOT delete the program attribute instances!)
 		*/
 		virtual const PLCore::Array<ProgramAttribute*> &GetAttributes() = 0;
 
@@ -214,7 +226,7 @@ class Program : public Resource {
 		*    Attribute name
 		*
 		*  @return
-		*    Attribute (can be a null pointer, if no attribute with that name could be found)
+		*    Attribute (do not delete it, can be a null pointer, if no attribute with that name could be found)
 		*/
 		virtual ProgramAttribute *GetAttribute(const PLCore::String &sName) = 0;
 
@@ -223,7 +235,7 @@ class Program : public Resource {
 		*    Get uniforms
 		*
 		*  @return
-		*    List of uniforms
+		*    List of uniforms (do NOT delete the program uniform instances!)
 		*/
 		virtual const PLCore::Array<ProgramUniform*> &GetUniforms() = 0;
 
@@ -235,7 +247,7 @@ class Program : public Resource {
 		*    Uniform name
 		*
 		*  @return
-		*    Uniform (can be a null pointer, if no uniform with that name could be found)
+		*    Uniform (do not delete it, can be a null pointer, if no uniform with that name could be found)
 		*/
 		virtual ProgramUniform *GetUniform(const PLCore::String &sName) = 0;
 
@@ -244,7 +256,7 @@ class Program : public Resource {
 		*    Get uniform blocks
 		*
 		*  @return
-		*    List of uniform blocks
+		*    List of uniform blocks (do NOT delete the program uniform block instances!)
 		*/
 		virtual const PLCore::Array<ProgramUniformBlock*> &GetUniformBlocks() = 0;
 
@@ -256,7 +268,7 @@ class Program : public Resource {
 		*    Uniform block name
 		*
 		*  @return
-		*    Uniform block (can be a null pointer, if no uniform block with that name could be found)
+		*    Uniform block (do not delete it, can be a null pointer, if no uniform block with that name could be found)
 		*/
 		virtual ProgramUniformBlock *GetUniformBlock(const PLCore::String &sName) = 0;
 

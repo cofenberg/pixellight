@@ -69,9 +69,9 @@
 
 
 //[-------------------------------------------------------]
-//[ C++0x definitions                                     ]
+//[ C++11 definitions                                     ]
 //[-------------------------------------------------------]
-// GCC: Have a look at http://gcc.gnu.org/projects/cxx0x.html see which C++0x features are supported
+// GCC: Have a look at http://gcc.gnu.org/projects/cxx0x.html see which C++11 features are supported
 
 // "nullptr"-definition
 #if (__GNUC__ == 4 && __GNUC_MINOR__ == 5 && __GNUC_PATCHLEVEL__ < 3)
@@ -83,7 +83,7 @@
 #elif ((__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ < 6)) && !defined(__clang__))
 	/**
 	*  @brief
-	*    nullptr definition for compilers don't supporting this C++0x feature
+	*    nullptr definition for compilers don't supporting this C++11 feature
 	*
 	*  @note
 	*    - The implementation comes from the "A name for the null pointer: nullptr"-document (http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2007/n2431.pdf)
@@ -97,7 +97,7 @@
 	} nullptr = {};
 #endif
 
-// "override"-definition, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#override (C++0x keyword is introduced in GCC 4.7 or clang 2.9)
+// "override"-definition, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#override (C++11 keyword is introduced in GCC 4.7 or clang 2.9)
 #if ((__GNUC__ < 4 || __GNUC_MINOR__ < 7) && !defined(__clang__))
 	#define override
 #endif
@@ -139,7 +139,7 @@
 	// To import classes, methods and variables
 	#define PLCORE_API
 
-	// To import explicit template instantiations (C++0x, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
+	// To import explicit template instantiations (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
 	#define PLCORE_TEMPLATE extern
 
 	// To import RTTI elements

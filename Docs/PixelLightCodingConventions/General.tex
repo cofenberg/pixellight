@@ -21,14 +21,14 @@ First of all, we use the old fashion \emph{.h}-file extension to mark header fil
 
 
 
-\section{C++0x Language Features}
-Using C++0x language features is fine as long as
+\section{C++11 Language Features}
+Using C++11 (previously known as C++0x) language features is fine as long as
 \begin{itemize}
 \item{It's possible to emulate, or at least deactivate the feature within compilers don't supporting it (yet)}
 \item{There's no comfortable/acceptable way to solve a task without using the feature, \emph{extern templates} is an example for such a situation - ugly hacks just to support out-of-date compilers often isn't worth the effort}
 \end{itemize}
 \textsl{}
-Currently the following C++0x language features are used:
+Currently the following C++11 language features are used:
 \begin{itemize}
 \item{\emph{nullptr} - a null pointer literal}
 \item{\emph{extern templates} - avoid template instantiation in other modules}
@@ -52,7 +52,7 @@ i = 20;  // i has already gone out of scope
 
 
 \section{Null Pointer}
-For null pointers, use \emph{nullptr}\footnote{For example \emph{Microsoft Visual Studio 2010} and \emph{GCC 4.6} have native support for \emph{nullptr}} from \emph{C++0x} and not for example the legacy, but traditional \emph{NULL} definition or even directly a integer $0$.
+For null pointers, use \emph{nullptr}\footnote{For example \emph{Microsoft Visual Studio 2010} and \emph{GCC 4.6} have native support for \emph{nullptr}} from \emph{C++11} and not for example the legacy, but traditional \emph{NULL} definition or even directly a integer $0$.
 
 \begin{lstlisting}[caption=Null pointer]
 char *pszMyString = nullptr;
@@ -77,7 +77,7 @@ When overwriting virtual methods within a derived class, put the overwritten met
 //[-------------------------------------------------------]
 virtual void MyMethod() override;
 \end{lstlisting}
-Although technically not required, do also add a \emph{virtual} to make it absolutely clear that this is a virtual method. To give the compiler a chance to find and blame possible errors like a signature change within the base class, use the C++0x language keyword \emph{override}.
+Although technically not required, do also add a \emph{virtual} to make it absolutely clear that this is a virtual method. To give the compiler a chance to find and blame possible errors like a signature change within the base class, use the C++11 language keyword \emph{override}.
 
 
 

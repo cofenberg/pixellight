@@ -45,7 +45,7 @@ static const int TIMEOUT = 10;		/**< Timeout for detecting devices */
 
 
 //[-------------------------------------------------------]
-//[ Protected functions                                   ]
+//[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -65,6 +65,175 @@ BTLinux::~BTLinux()
 	for (uint32 i=0; i<m_lstDevices.GetNumOfElements(); i++)
 		delete m_lstDevices[i];
 	m_lstDevices.Clear();
+}
+
+/**
+*  @brief
+*    Enumerate bluetooth devices
+*/
+void BTLinux::EnumerateBluetoothDevices(List<BTDevice*> &lstDevices, DBusConnection &cConnection)
+{
+	// Initialize error value
+	DBusError sError;
+	dbus_error_init(&sError);
+
+	// Listen to signals from org.bluez.Adapter
+	dbus_bus_add_match(&cConnection, "type='signal',interface='org.bluez.Adapter'", &sError);
+	dbus_connection_flush(&cConnection);
+	if (dbus_error_is_set(&sError)) {
+		PL_LOG(Error, "BTLinux: DBUS match error (" + String(sError.message) + ')')
+	} else {
+		// Listen for signals
+		bool bAbort = false;
+		while (!bAbort) {
+			// Read next message
+			dbus_connection_read_write(&cConnection, 0);
+			DBusMessage *pMessage = dbus_connection_pop_message(&cConnection);
+			if (pMessage) {
+				// Check signal
+				if (dbus_message_is_signal(pMessage, "org.bluez.Adapter", "DeviceFound")) {
+					// org.bluez.Adapter.DeviceFound
+					String sDeviceAddress;
+					String sDeviceName;
+					uint32 nDeviceClass = 0;
+
+					// Get arguments
+					DBusMessageIter sIter;
+					dbus_message_iter_init(pMessage, &sIter);
+					int nType = 0;
+					while ((nType = dbus_message_iter_get_arg_type(&sIter)) != DBUS_TYPE_INVALID) {
+						// Check argument type
+						if (nType == DBUS_TYPE_STRING) {
+							// Device address
+							char *pszAddress = nullptr;
+							dbus_message_iter_get_basic(&sIter, &pszAddress);
+							if (pszAddress) {
+								sDeviceAddress = pszAddress;
+							}
+						} else if (nType == DBUS_TYPE_ARRAY) {
+							// Get device infos
+							DBusMessageIter sArrayIter;
+							for (dbus_message_iter_recurse(&sIter, &sArrayIter);
+									dbus_message_iter_get_arg_type(&sArrayIter) != DBUS_TYPE_INVALID;
+									dbus_message_iter_next(&sArrayIter))
+							{
+								// Dictionary entry
+								if (dbus_message_iter_get_arg_type(&sArrayIter) == DBUS_TYPE_DICT_ENTRY) {
+									// Get values
+									DBusMessageIter sDictIter;
+									dbus_message_iter_recurse (&sArrayIter, &sDictIter);
+									if (dbus_message_iter_get_arg_type(&sDictIter) == DBUS_TYPE_STRING) {
+										// Get name
+										char *pszName;
+										dbus_message_iter_get_basic(&sDictIter, &pszName);
+										String sName = pszName;
+
+										// Next
+										dbus_message_iter_next(&sDictIter);
+										if (dbus_message_iter_get_arg_type(&sDictIter) == DBUS_TYPE_VARIANT) {
+											DBusMessageIter sVariantIter;
+											dbus_message_iter_recurse(&sDictIter, &sVariantIter);
+											if (dbus_message_iter_get_arg_type(&sVariantIter) == DBUS_TYPE_STRING) {
+												// Get value
+												char *pszValue = nullptr;
+												dbus_message_iter_get_basic(&sVariantIter, &pszValue);
+
+												// Save value
+												if (sName == "Name" && pszValue) {
+													// Device name
+													sDeviceName = pszValue;
+												}
+											} else if (dbus_message_iter_get_arg_type(&sVariantIter) == DBUS_TYPE_UINT32) {
+												// Get value
+												uint32 nValue = 0;
+												dbus_message_iter_get_basic(&sVariantIter, &nValue);
+
+												// Save value
+												if (sName == "Class") {
+													nDeviceClass = nValue;
+												}
+											}
+										}
+									}
+								}
+							}
+
+						}
+						dbus_message_iter_next(&sIter);
+					}
+
+					// Device info
+					PL_LOG(Info, "BTLinux: Found device '" + sDeviceName + "', Address = " + sDeviceAddress)
+
+					// Convert address from string to bytes
+					const int nAddress0 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring( 0, 2));
+					const int nAddress1 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring( 3, 2));
+					const int nAddress2 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring( 6, 2));
+					const int nAddress3 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring( 9, 2));
+					const int nAddress4 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring(12, 2));
+					const int nAddress5 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring(15, 2));
+
+					// Set device info
+					BTDeviceLinux *pDevice = new BTDeviceLinux();
+					pDevice->m_sName = sDeviceName;
+					pDevice->m_nAddress[0] = nAddress5;
+					pDevice->m_nAddress[1] = nAddress4;
+					pDevice->m_nAddress[2] = nAddress3;
+					pDevice->m_nAddress[3] = nAddress2;
+					pDevice->m_nAddress[4] = nAddress1;
+					pDevice->m_nAddress[5] = nAddress0;
+					pDevice->m_nAddress[6] = 0;
+					pDevice->m_nAddress[7] = 0;
+					pDevice->m_nClass[0] = (nDeviceClass >>  0) & 255;
+					pDevice->m_nClass[1] = (nDeviceClass >>  8) & 255;
+					pDevice->m_nClass[2] = (nDeviceClass >> 16) & 255;
+
+					// Add device
+					m_lstDevices.Add(pDevice);
+					lstDevices.Add(pDevice);
+
+					// Device found, not stop
+					bAbort = true;
+				} else if (dbus_message_is_signal(pMessage, "org.bluez.Adapter", "PropertyChanged")) {
+					// org.bluez.Adapter.PropertyChanged
+					DBusMessageIter sIter;
+					dbus_message_iter_init(pMessage, &sIter);
+					if (dbus_message_iter_get_arg_type(&sIter) == DBUS_TYPE_STRING) {
+						// Get name
+						char *pszName;
+						dbus_message_iter_get_basic(&sIter, &pszName);
+						String sName = pszName;
+
+						// 'Discovering'
+						if (sName == "Discovering") {
+							// Get value
+							dbus_message_iter_next(&sIter);
+							if (dbus_message_iter_get_arg_type(&sIter) == DBUS_TYPE_VARIANT) {
+								// Get variant
+								DBusMessageIter sVariantIter;
+								dbus_message_iter_recurse(&sIter, &sVariantIter);
+								if (dbus_message_iter_get_arg_type(&sVariantIter) == DBUS_TYPE_BOOLEAN) {
+									// Get device discovery state
+									bool bState = false;
+									dbus_message_iter_get_basic(&sVariantIter, &bState);
+
+									// Stop loop when Discovering=false
+									if (!bState)
+										bAbort = true;
+								}
+							}
+						}
+					}
+				}
+
+				// Release message
+				dbus_message_unref(pMessage);
+			}
+		}
+	}
+
+	// De-initialize error value
+	dbus_error_free(&sError);
 }
 
 
@@ -112,167 +281,26 @@ void BTLinux::EnumerateDevices(List<BTDevice*> &lstDevices)
 			dbus_message_iter_append_basic(&sVariantIter, DBUS_TYPE_UINT32, &nTimeout);
 			dbus_message_iter_close_container(&sIter, &sVariantIter);
 			pReply = dbus_connection_send_with_reply_and_block(pConnection, pMessage, -1, &sError);
-			if (pReply)   dbus_message_unref(pReply);
-			if (pMessage) dbus_message_unref(pMessage);
+			if (pReply)
+				dbus_message_unref(pReply);
+			if (pMessage)
+				dbus_message_unref(pMessage);
 
-			// Start device discovery
-			pMessage = dbus_message_new_method_call("org.bluez", sAdapter.GetASCII(), "org.bluez.Adapter", "StartDiscovery");
-			pReply = dbus_connection_send_with_reply_and_block(pConnection, pMessage, -1, &sError);
-			if (pReply)   dbus_message_unref(pReply);
-			if (pMessage) dbus_message_unref(pMessage);
-
-			// Listen to signals from org.bluez.Adapter
-			dbus_bus_add_match(pConnection, "type='signal',interface='org.bluez.Adapter'", &sError);
-			dbus_connection_flush(pConnection);
-			if (!dbus_error_is_set(&sError)) {
-				// Listen for signals
-				bool bAbort = false;
-				while (!bAbort) {
-					// Read next message
-					dbus_connection_read_write(pConnection, 0);
-					pMessage = dbus_connection_pop_message(pConnection);
-					if (pMessage) {
-						// Check signal
-						if (dbus_message_is_signal(pMessage, "org.bluez.Adapter", "DeviceFound")) {
-							// org.bluez.Adapter.DeviceFound
-							String sDeviceAddress;
-							String sDeviceName;
-							uint32 nDeviceClass = 0;
-
-							// Get arguments
-							DBusMessageIter sIter;
-							dbus_message_iter_init(pMessage, &sIter);
-							int nType = 0;
-							while ((nType = dbus_message_iter_get_arg_type(&sIter)) != DBUS_TYPE_INVALID) {
-								// Check argument type
-								if (nType == DBUS_TYPE_STRING) {
-									// Device address
-									char *pszAddress = nullptr;
-									dbus_message_iter_get_basic(&sIter, &pszAddress);
-									if (pszAddress) {
-										sDeviceAddress = pszAddress;
-									}
-								} else if (nType == DBUS_TYPE_ARRAY) {
-									// Get device infos
-									DBusMessageIter sArrayIter;
-									for (dbus_message_iter_recurse(&sIter, &sArrayIter);
-										 dbus_message_iter_get_arg_type(&sArrayIter) != DBUS_TYPE_INVALID;
-										 dbus_message_iter_next(&sArrayIter))
-									{
-										// Dictionary entry
-										if (dbus_message_iter_get_arg_type(&sArrayIter) == DBUS_TYPE_DICT_ENTRY) {
-											// Get values
-											DBusMessageIter sDictIter;
-											dbus_message_iter_recurse (&sArrayIter, &sDictIter);
-											if (dbus_message_iter_get_arg_type(&sDictIter) == DBUS_TYPE_STRING) {
-												// Get name
-												char *pszName;
-												dbus_message_iter_get_basic(&sDictIter, &pszName);
-												String sName = pszName;
-
-												// Next
-												dbus_message_iter_next(&sDictIter);
-												if (dbus_message_iter_get_arg_type(&sDictIter) == DBUS_TYPE_VARIANT) {
-													DBusMessageIter sVariantIter;
-													dbus_message_iter_recurse(&sDictIter, &sVariantIter);
-													if (dbus_message_iter_get_arg_type(&sVariantIter) == DBUS_TYPE_STRING) {
-														// Get value
-														char *pszValue = nullptr;
-														dbus_message_iter_get_basic(&sVariantIter, &pszValue);
-
-														// Save value
-														if (sName == "Name" && pszValue) {
-															// Device name
-															sDeviceName = pszValue;
-														}
-													} else if (dbus_message_iter_get_arg_type(&sVariantIter) == DBUS_TYPE_UINT32) {
-														// Get value
-														uint32 nValue = 0;
-														dbus_message_iter_get_basic(&sVariantIter, &nValue);
-
-														// Save value
-														if (sName == "Class") {
-															nDeviceClass = nValue;
-														}
-													}
-												}
-											}
-										}
-									}
-
-								}
-								dbus_message_iter_next(&sIter);
-							}
-
-							// Device info
-							PL_LOG(Info, "BTLinux: Found device '" + sDeviceName + "', Address = " + sDeviceAddress)
-
-							// Convert address from string to bytes
-							int nAddress0 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring( 0, 2));
-							int nAddress1 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring( 3, 2));
-							int nAddress2 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring( 6, 2));
-							int nAddress3 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring( 9, 2));
-							int nAddress4 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring(12, 2));
-							int nAddress5 = ParseTools::ParseHexValue(sDeviceAddress.GetSubstring(15, 2));
-
-							// Set device info
-							BTDeviceLinux *pDevice = new BTDeviceLinux();
-							pDevice->m_sName = sDeviceName;
-							pDevice->m_nAddress[0] = nAddress5;
-							pDevice->m_nAddress[1] = nAddress4;
-							pDevice->m_nAddress[2] = nAddress3;
-							pDevice->m_nAddress[3] = nAddress2;
-							pDevice->m_nAddress[4] = nAddress1;
-							pDevice->m_nAddress[5] = nAddress0;
-							pDevice->m_nAddress[6] = 0;
-							pDevice->m_nAddress[7] = 0;
-							pDevice->m_nClass[0] = (nDeviceClass >>  0) & 255;
-							pDevice->m_nClass[1] = (nDeviceClass >>  8) & 255;
-							pDevice->m_nClass[2] = (nDeviceClass >> 16) & 255;
-
-							// Add device
-							m_lstDevices.Add(pDevice);
-							  lstDevices.Add(pDevice);
-
-							// Device found, not stop
-							bAbort = true;
-						} else if (dbus_message_is_signal(pMessage, "org.bluez.Adapter", "PropertyChanged")) {
-							// org.bluez.Adapter.PropertyChanged
-							DBusMessageIter sIter;
-							dbus_message_iter_init(pMessage, &sIter);
-							if (dbus_message_iter_get_arg_type(&sIter) == DBUS_TYPE_STRING) {
-								// Get name
-								char *pszName;
-								dbus_message_iter_get_basic(&sIter, &pszName);
-								String sName = pszName;
-
-								// 'Discovering'
-								if (sName == "Discovering") {
-									// Get value
-									dbus_message_iter_next(&sIter);
-									if (dbus_message_iter_get_arg_type(&sIter) == DBUS_TYPE_VARIANT) {
-										// Get variant
-										DBusMessageIter sVariantIter;
-										dbus_message_iter_recurse(&sIter, &sVariantIter);
-										if (dbus_message_iter_get_arg_type(&sVariantIter) == DBUS_TYPE_BOOLEAN) {
-											// Get device discovery state
-											bool bState = false;
-											dbus_message_iter_get_basic(&sVariantIter, &bState);
-
-											// Stop loop when Discovering=false
-											if (!bState) bAbort = true;
-										}
-									}
-								}
-							}
-						}
-
-						// Release message
-						dbus_message_unref(pMessage);
-					}
-				}
+			if (dbus_error_is_set(&sError)) {
+				PL_LOG(Error, "BTLinux (Set timeout for device discovery): DBUS error (" + String(sError.message) + ')')
 			} else {
-				PL_LOG(Error, "BTLinux: DBUS match error (" + String(sError.message) + ')')
+				// Start device discovery
+				pMessage = dbus_message_new_method_call("org.bluez", sAdapter.GetASCII(), "org.bluez.Adapter", "StartDiscovery");
+				pReply = dbus_connection_send_with_reply_and_block(pConnection, pMessage, -1, &sError);
+				if (pReply)
+					dbus_message_unref(pReply);
+				if (pMessage)
+					dbus_message_unref(pMessage);
+
+				if (dbus_error_is_set(&sError))
+					PL_LOG(Error, "BTLinux (Start device discovery): DBUS error (" + String(sError.message) + ')')
+				else
+					EnumerateBluetoothDevices(lstDevices, *pConnection);
 			}
 		}
 
@@ -289,4 +317,3 @@ void BTLinux::EnumerateDevices(List<BTDevice*> &lstDevices)
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLInput
-
