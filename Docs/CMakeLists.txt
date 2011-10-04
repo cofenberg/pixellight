@@ -49,6 +49,8 @@ configure_file("${CMAKE_SOURCE_DIR}/Docs/Common/Title.tex.in" "${CMAKE_SOURCE_DI
 add_custom_target(Docs)
 set_target_properties(Docs PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
 
+add_custom_target(Docs-install)
+set_target_properties(Docs-install PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
 ##################################################
 ## Projects
 ##################################################
@@ -76,4 +78,8 @@ add_dependencies(PixelLight Docs)
 
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/Docs/FileFormats
 	DESTINATION ${PL_INSTALL_DOCS}		COMPONENT Docs		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
+)
+
+add_custom_command(TARGET Docs-install
+ 	COMMAND ${CMAKE_COMMAND} -P cmake_install.cmake
 )

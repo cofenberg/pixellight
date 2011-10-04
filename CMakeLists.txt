@@ -89,7 +89,7 @@ add_subdirectory(Plugins)
 add_subdirectory(Samples)
 add_subdirectory(Tests)
 add_subdirectory(Tools)
-add_subdirectory(Docs)
+add_subdirectory(Docs EXCLUDE_FROM_ALL)
 
 ##################################################
 ## Install

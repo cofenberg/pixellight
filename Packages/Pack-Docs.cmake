@@ -56,7 +56,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	##################################################
 	## Install files
 	##################################################
-	set(CPACK_INSTALL_CMAKE_PROJECTS		"${CMAKE_BINARY_DIR};Docs;Docs;/")
+	set(CPACK_INSTALL_CMAKE_PROJECTS		"${CMAKE_BINARY_DIR}/Docs;Docs;Docs;/")
 	set(CPACK_PACKAGE_INSTALL_DIRECTORY		"PixelLight-Docs")
 	set(CPACK_PACKAGE_INSTALL_REGISTRY_KEY	"PixelLight-Docs")
 

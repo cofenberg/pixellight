@@ -1,3 +1,13 @@
+>> 04.10.2011
+[SW]
+- Fixed generating of the Docs under linux. The latex \include{} command doesn't work with relative paths so i replaced them with the \input{} command
+- Added the additional custom target Docs-install and excluded the Docs directory from the ALL target (the all target is used when no target is given when invoking e.g. make)
+  With this change a make install in the build root doesn't throws an error that it could not find a pdf file under the Docs build dir when the Docs target wasn't build before the make install call.
+  The custom Docs-install target works only when the target is called from either the build root or from the build Docs directory
+- Updated Pack-Docs.cmake Pack-SDK.cmake to reflect the change that the Docs aren't installed anymore via make install in the build root
+
+
+
 >> 01.10.2011
 [CO]
 - Added "PixelLightBuild"-document as replacement for the "BUILD" text file within the root directory. This previous text file got bigger and bigger and while it did,
