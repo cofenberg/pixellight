@@ -100,7 +100,7 @@ Font *GuiLabel::GetFont() const
 void GuiLabel::SetFont(Font *pFont)
 {
 	// Set font
-	m_pFont = pFont;;
+	m_pFont = pFont;
 }
 
 /**

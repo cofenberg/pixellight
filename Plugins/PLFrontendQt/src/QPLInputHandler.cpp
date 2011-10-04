@@ -204,7 +204,7 @@ void QPLInputHandler::HandleKeyboardEvents(QKeyEvent* ev, bool pressed)
 
 void QPLInputHandler::HandleMousePressReleaseEvents(QMouseEvent* ev, bool pressed)
 {
-	bool handled = false;;
+	bool handled = false;
 	if (ev->button() == Qt::LeftButton) {
 		virtController.MouseLeft.SetPressed(pressed);
 		virtController.Rotate.SetPressed(pressed);

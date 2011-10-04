@@ -103,7 +103,7 @@ Font *GuiButton::GetFont() const
 void GuiButton::SetFont(Font *pFont)
 {
 	// Set font
-	m_pFont = pFont;;
+	m_pFont = pFont;
 }
 
 /**

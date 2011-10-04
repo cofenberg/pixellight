@@ -192,7 +192,7 @@ int AbstractSlider::GetStepSizeFast() const
 void AbstractSlider::SetStepSizeFast(int nStepSize)
 {
 	// Set step-size
-	m_nStepSizeFast = nStepSize;;
+	m_nStepSizeFast = nStepSize;
 }
 
 /**
