@@ -3130,7 +3130,7 @@ void String::SetStringBuffer(StringBuffer *pStringBuffer)
 	if (m_pStringBuffer != pStringBuffer) {
 		// Release old string buffer
 		if (m_pStringBuffer)
-			StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);;
+			StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);
 
 		// Set the a new string buffer
 		m_pStringBuffer = pStringBuffer;
@@ -3147,7 +3147,7 @@ void String::ReleaseStringBuffer()
 {
 	// Check string buffer
 	if (m_pStringBuffer) {
-		StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);;
+		StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);
 		m_pStringBuffer = nullptr;
 	}
 }
