@@ -156,3 +156,9 @@ Neues Projekt: PLPlugins_idSoftware:
   ich einfach nicht mehr direkt in PLMesh haben. So vermeidet man auch eventuelle Rechtliche Probleme + kann locker andere
   diese Plugins weiterentwickeln lassen so das sich später eventuell ganze Doom3-Level direkt einladen und darstellen
   lassen können.
+
+
+
+/*********************************************************\
+ *  Ältere Einträge: Siehe PLMesh-Tagebuch
+\*********************************************************/

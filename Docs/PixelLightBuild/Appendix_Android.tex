@@ -23,7 +23,7 @@ The tutorial is written in brief sentences to keep it compact. But this doesn't 
 
 \paragraph{Install Android NDK}
 \begin{itemize}
-\item{\textbf{Download} from \url{http://developer.android.com/sdk/ndk/index.html} \textrightarrow  "android-ndk-r6b-linux-x86.tar.bz2"}
+\item{\textbf{Download} from \url{http://developer.android.com/sdk/ndk/index.html} \textrightarrow{} "android-ndk-r6b-linux-x86.tar.bz2"}
 \item{\textbf{Extract} to for example "\textasciitilde /android-ndk-r6b" ("\textasciitilde /" is your home directory)}
 \end{itemize}
 
@@ -31,7 +31,7 @@ The tutorial is written in brief sentences to keep it compact. But this doesn't 
 
 \paragraph{Install Android SDK}
 \begin{itemize}
-\item{\textbf{Download} from \url{http://developer.android.com/sdk/index.html} \textrightarrow  "android-sdk\_r12-linux\_x86.tgz"}
+\item{\textbf{Download} from \url{http://developer.android.com/sdk/index.html} \textrightarrow{} "android-sdk\_r12-linux\_x86.tgz"}
 \item{\textbf{Extract} to for example "\textasciitilde /android-sdk-linux\_x86" ("\textasciitilde /" is your home directory)}
 \end{itemize}
 
@@ -52,7 +52,7 @@ export PATH=${PATH}:${ANDROID_SDK}/tools:${ANDROID_SDK}/platform-tools:~/${ANDRO
 \paragraph{Android SDK and AVD Manager}
 Type "\textbf{android}" to open the "Android SDK and AVD Manager"-GUI:
 \begin{itemize}
-\item{"Available packages" \textrightarrow  disable the "Display updates only"-checkbox (you may need to enlarge the window to see this checkbox) \textrightarrow  install at least the following:}
+\item{"Available packages" \textrightarrow{} disable the "Display updates only"-checkbox (you may need to enlarge the window to see this checkbox) \textrightarrow{} install at least the following:}
 \item{"Android SDK Tools, revision 12"}
 \item{"Android SDK Platform-tools, revision 6"}
 \item{"SDK Platform Android 2.3.1, API 9, revision 2" (it's marked "Obsolete", but within the NDK r6b there's only up to API level 9 available and we don't want to mix)}
@@ -63,13 +63,13 @@ Type "\textbf{android}" to open the "Android SDK and AVD Manager"-GUI:
 
 \section{Android Emulator and Device}
 \begin{itemize}
-\item{Android emulator\footnote{General information: \url{http://developer.android.com/guide/developing/devices/emulator.html}} \textrightarrow  Type "\textbf{android}" to open the "Android SDK and AVD Manager"-GUI and do the emulator configuration in here}
-\item{Android device\footnote{General information: \url{http://developer.android.com/guide/developing/device.html}} \textrightarrow  Configuration: Just connect your device to your computer and it should work at once... if you have enabled "USB-Debugging" on your device (launch "Settings", tap "Applications", tap "Development" and enable the checkbox for USB debugging)}
+\item{Android emulator\footnote{General information: \url{http://developer.android.com/guide/developing/devices/emulator.html}} \textrightarrow{} Type "\textbf{android}" to open the "Android SDK and AVD Manager"-GUI and do the emulator configuration in here}
+\item{Android device\footnote{General information: \url{http://developer.android.com/guide/developing/device.html}} \textrightarrow{} Configuration: Just connect your device to your computer and it should work at once... if you have enabled "USB-Debugging" on your device (launch "Settings", tap "Applications", tap "Development" and enable the checkbox for USB debugging)}
 \end{itemize}
 
 
 \paragraph{Not Required but Nice to Know}
-Check available devices: Type "\textbf{adb devices}" \textrightarrow   You should see at least one entry when your device is connected. The result may look like the following:
+Check available devices: Type "\textbf{adb devices}" \textrightarrow{} You should see at least one entry when your device is connected. The result may look like the following:
 \begin{lstlisting}[language=bash]
 "List of devices attached
 028842074300d157	device
@@ -77,7 +77,7 @@ emulator-5554	device"
 \end{lstlisting}
 
 \begin{itemize}
-\item{The output for each instance is formatted like this: \textrightarrow  "[serialNumber] [state]"}
+\item{The output for each instance is formatted like this: \textrightarrow{} "[serialNumber] [state]"}
 \item{In this case "028842074300d157	device" is my connected smartphone}
 \item{In this case "emulator-5554	device" is the emulator I created and started}
 \end{itemize}
@@ -95,11 +95,11 @@ Time for a first experiment. Sadly, as on September 2011, it appears that some o
 Run the following command to generate a \emph{build.xml} file:
 \begin{itemize}
 \item{\textbf{Change} to the "\textasciitilde /android-ndk-r6b/samples/native-activity" \textbf{directory}}
-\item{\textrightarrow  Don't follow the official sample instructions: "android update project -p . -s" \textrightarrow  "Error: The project either has no target set or the target is invalid. Please provide a \verb+--target+ to the 'android update' command."}
-\item{\textrightarrow  Type \verb+"android --help"+ to see available options}
-\item{\textrightarrow  Type "android list targets" so see available targets (= API levels)}
+\item{\textrightarrow{} Don't follow the official sample instructions: "android update project -p . -s" \textrightarrow{} "Error: The project either has no target set or the target is invalid. Please provide a \verb+--target+ to the 'android update' command."}
+\item{\textrightarrow{} Type \verb+"android --help"+ to see available options}
+\item{\textrightarrow{} Type "android list targets" so see available targets (= API levels)}
 \item{Type "\textbf{android update project -t android-9 -p .}" ("." means "the current directory")}
-\item{\textrightarrow  You now have a "build.xml"-file in the same directory as the "AndroidManifest.xml"-file, this is required for the apk creation step}
+\item{\textrightarrow{} You now have a "build.xml"-file in the same directory as the "AndroidManifest.xml"-file, this is required for the apk creation step}
 \end{itemize}
 
 
@@ -107,7 +107,7 @@ Run the following command to generate a \emph{build.xml} file:
 Compile the native code using the ndk-build command.
 \begin{itemize}
 \item{"\textbf{ndk-build}"}
-\item{\textrightarrow  You now have "\textasciitilde /android-ndk-r6b/samples/native-activity/libs/armeabi/libnative-activity.so"}
+\item{\textrightarrow{} You now have "\textasciitilde /android-ndk-r6b/samples/native-activity/libs/armeabi/libnative-activity.so"}
 \end{itemize}
 
 
@@ -115,11 +115,11 @@ Compile the native code using the ndk-build command.
 Create "apk"-file
 \begin{itemize}
 \item{Type "\textbf{ant debug}" ("debug" is only for developing and testing using easy automatically signing, see http://developer.android.com/guide/publishing/app-signing.html)}
-\item{\textrightarrow  You now have "\textasciitilde /android-ndk-r6b/samples/native-activity/bin" with some files in it}
+\item{\textrightarrow{} You now have "\textasciitilde /android-ndk-r6b/samples/native-activity/bin" with some files in it}
 \item{Start the emulator, or connect your device (ensure that it has Android 2.3 > on it, else the app will just crash)}
 \item{Type "\textbf{adb install -r bin/NativeActivity-debug.apk}" ("-r"-option to avoid "Failure [INSTALL\_FAILED\_ALREADY\_EXISTS]"-error when the apk is already installed, default destination is "/data/local/tmp/NativeActivity-debug.apk")}
-\item{\textrightarrow  The app is now available and ready to be started within your emulator or on your device}
-\item{\textrightarrow  To uninstall the app, type "\textbf{adb uninstall com.example.native\_activity}"}
+\item{\textrightarrow{} The app is now available and ready to be started within your emulator or on your device}
+\item{\textrightarrow{} To uninstall the app, type "\textbf{adb uninstall com.example.native\_activity}"}
 \end{itemize}
 
 
@@ -127,15 +127,15 @@ Create "apk"-file
 Create release "apk"-file\footnote{See \url{http://developer.android.com/guide/publishing/app-signing.html for detailed information}}
 \begin{itemize}
 \item{Type "\textbf{ant release}" (you now have "bin/NativeActivity-unsigned.apk")}
-\item{\textrightarrow  Don't try "adb install -r bin/NativeActivity-unsigned.apk", this will just result in "Failure [INSTALL\_PARSE\_FAILED\_NO\_CERTIFICATES]"}
-\item{\textrightarrow  The JDK tools Jarsigner and Keytool will be used (ensure they're available, if you installed JRE they are usually available)}
-\item{\textrightarrow  You need a private key to sign your apk file with, if you don't have any: Type e.g. "keytool -genkey -v -keystore my-release-key.keystore -alias myalias -keyalg RSA -keysize 2048 -validity 10000" (you now have a "my-release-key.keystore"-file)}
+\item{\textrightarrow{} Don't try "adb install -r bin/NativeActivity-unsigned.apk", this will just result in "Failure [INSTALL\_PARSE\_FAILED\_NO\_CERTIFICATES]"}
+\item{\textrightarrow{} The JDK tools Jarsigner and Keytool will be used (ensure they're available, if you installed JRE they are usually available)}
+\item{\textrightarrow{} You need a private key to sign your apk file with, if you don't have any: Type e.g. "keytool -genkey -v -keystore my-release-key.keystore -alias myalias -keyalg RSA -keysize 2048 -validity 10000" (you now have a "my-release-key.keystore"-file)}
 \item{For signing the apk file, type: "\textbf{jarsigner -verbose -keystore my-release-key.keystore bin/NativeActivity-unsigned.apk myalias}" (no new file, it's still "bin/NativeActivity-unsigned.apk" and you may rename it later, but for now we don't touch the name)}
-\item{\textrightarrow  Type "jarsigner -verify bin/NativeActivity-unsigned.apk" to verify that everything went fine and "jarsigner -verify -verbose -certs bin/NativeActivity-unsigned.apk" to get additional information}
+\item{\textrightarrow{} Type "jarsigner -verify bin/NativeActivity-unsigned.apk" to verify that everything went fine and "jarsigner -verify -verbose -certs bin/NativeActivity-unsigned.apk" to get additional information}
 \item{Finally, align your apk file by typing "\textbf{zipalign -v 4 bin/NativeActivity-unsigned.apk bin/NativeActivity.apk}" (you now have the ready to be released file "bin/NativeActivity.apk")}
 \item{To install this file right now, type "\textbf{adb install -r bin/NativeActivity.apk}"}
-\item{\textrightarrow  If you receive a "Failure [INSTALL\_PARSE\_FAILED\_INCONSISTENT\_CERTIFICATES]" you need to remove the previously installed application by typing "adb uninstall com.example.native\_activity"}
-\item{\textrightarrow  To uninstall the app, type "\textbf{adb uninstall com.example.native\_activity}"}
+\item{\textrightarrow{} If you receive a "Failure [INSTALL\_PARSE\_FAILED\_INCONSISTENT\_CERTIFICATES]" you need to remove the previously installed application by typing "adb uninstall com.example.native\_activity"}
+\item{\textrightarrow{} To uninstall the app, type "\textbf{adb uninstall com.example.native\_activity}"}
 \end{itemize}
 
 
@@ -177,9 +177,9 @@ Type:
 \item{"\textbf{mkdir build}"}
 \item{"\textbf{cd build}"}
 \item{"\textbf{android-cmake -DARM\_TARGET=armeabi ..}"}
-\item{\textrightarrow  The Android SDK emulator supports only "armeabi", but "android-cmake" has "armeabi-v7a" as default. If you don't change this, the application will just crash when you try to start it within the emulator. For more complex 3D applications, "armeabi-v7a" is highly recommended due to hardware floating point support. So, for more advanced stuff you really need a real device instead of the emulator.}
+\item{\textrightarrow{} The Android SDK emulator supports only "armeabi", but "android-cmake" has "armeabi-v7a" as default. If you don't change this, the application will just crash when you try to start it within the emulator. For more complex 3D applications, "armeabi-v7a" is highly recommended due to hardware floating point support. So, for more advanced stuff you really need a real device instead of the emulator.}
 \item{"\textbf{make}"}
-\item{\textrightarrow  You now have "\textasciitilde hello-gl2/libs/armeabi/libgl2jni.so"}
+\item{\textrightarrow{} You now have "\textasciitilde hello-gl2/libs/armeabi/libgl2jni.so"}
 \end{itemize}
 
 
@@ -247,7 +247,7 @@ We're going to use the native activity which was introduced in Android 2.3 (Ging
 
 
 \paragraph{Nice to Know}
-In case you want to write "\textbf{android-cmake -DARM\_TARGET=armeabi ..}" instead of "\textbf{android-cmake -DARM\_TARGET=armeabi -DANDROID\_API\_LEVEL=9 ..}" \textrightarrow  Open hidden "\textasciitilde /.bashrc"-file and add:
+In case you want to write "\textbf{android-cmake -DARM\_TARGET=armeabi ..}" instead of "\textbf{android-cmake -DARM\_TARGET=armeabi -DANDROID\_API\_LEVEL=9 ..}" \textrightarrow{} Open hidden "\textasciitilde /.bashrc"-file and add:
 \begin{lstlisting}[language=bash]
 export ANDROID_API_LEVEL=9
 \end{lstlisting}
@@ -262,7 +262,7 @@ export ANDROID_API_LEVEL=9
 \paragraph{Apk}
 Back to the "native-activity"-directory and type:
 \begin{itemize}
-\item{\verb"\textbf{android update project -t android-9 --name native-activity --path .}"+}
+\item{\verb+"android update project -t android-9 --name native-activity --path ."+}
 \item{"\textbf{ant release}"}
 \item{"\textbf{jarsigner -verbose -keystore my-release-key.keystore bin/native-activity-unsigned.apk myalias}"}
 \item{"\textbf{zipalign -v 4 bin/native-activity-unsigned.apk bin/native-activity.apk}"}
@@ -304,7 +304,7 @@ Command glossary (only terms I wasn't really familiar with)
 	\begin{tabular}{ | l | p{10cm} |}
 	\hline
 	Command						& Result \\ \hline
-	android						& Start "Android SDK and AVD Manager" (e.g. to start the emulator)  \\ \hline
+	android						& Start "Android SDK and AVD Manager" (e.g. to start the emulator) \\ \hline
 	adb devices					& See all available emulators/devices \\ \hline
 	adb logcat					& Show Android log (called "logcat"), this is realtime, so the command prompt will block and show new upcoming log entries at once, more information: \url{http://developer.android.com/guide/developing/tools/adb.html#logcat} \\ \hline
 	adb push <local> <remote>	& Copy <local> (file or directory recursively) to the emulator/device to destination <remote>, example: "adb push foo.txt /sdcard/foo.txt" \\ \hline
@@ -340,7 +340,7 @@ Android NDK build system related:
 \begin{itemize}
 \item{Is the build target correct?}
 \item{The Android Emulator is only able to deal with "armeabi", not e.g. "armeabi-v7a"}
-\item{\textrightarrow  When using CMake-GUI, add the string entry "ARM\_TARGET"="armeabi"}
+\item{\textrightarrow{} When using CMake-GUI, add the string entry "ARM\_TARGET"="armeabi"}
 \end{itemize}
 
 
