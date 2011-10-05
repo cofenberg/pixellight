@@ -16,11 +16,12 @@ The following packages are required in order to be able to compile everything (U
 \item{\emph{cmake} (build tool)}
 \item{\emph{doxygen} (required to compile the automatic code documentation)}
 \item{\emph{graphviz} (required to create the diagrams of the automatic code documentation)}
-\item{\emph{texlive} (\LaTeX{} system for compiling the documentation) - Ensure that \emph{dvipdfmx} is installed which is included within the \emph{texlive-base"-package} (e.g. \emph{dvipdf} will probably fail) Note: under gentoo dvipdfmx is a separate package}
+\item{\emph{texlive} (\LaTeX{} system for compiling the documentation)}
 \item{\emph{texlive-science} (\LaTeX{} package for compiling the documentation)}
-\item{\emph{texlive-latex-extra} (\LaTeX{} package for compiling the documentation. Note under gentoo this package has the name \emph{texlive-latexextra})}
+\item{\emph{texlive-latex-extra} (\LaTeX{} package for compiling the documentation. Note under Gentoo this package has the name \emph{texlive-latexextra})}
 \item{\emph{texlive-latex3} (\LaTeX{} package for compiling the documentation)}
-\item{\emph{dvipdfm} (\LaTeX{} package for compiling the documentation, maybe only gentoo related separate package)}
+\item{\emph{dvipdfm} (\LaTeX{} package for compiling the documentation)}
+\item{\emph{dvipdfmx} (\LaTeX{} package for compiling the documentation)}
 \item{\emph{libncurses5-dev} (required by PLCore)}
 \item{\emph{libzip-dev} (required by libpng used by PLGraphics)}
 \item{\emph{libxcursor-dev} (required by PLGui)}
@@ -33,8 +34,9 @@ The following packages are required in order to be able to compile everything (U
 
 To install all required packages at once, just use: (This has to be done as root! Use e.g. \emph{sudo} or \emph{su} for this task)
 \begin{lstlisting}[language=bash]
-apt-get install build-essential git-core cmake doxygen graphviz texlive texlive-science texlive-latex-extra libncurses5-dev libzip-dev libxcursor-dev libxext-dev libdbus-1-dev libxxf86vm-dev libglu1-mesa-dev libxrandr-dev
+apt-get install build-essential git-core cmake doxygen graphviz texlive texlive-science texlive-latex-extra texlive-latexextra texlive-latex3 dvipdfm dvipdfmx libncurses5-dev libzip-dev libxcursor-dev libxext-dev libdbus-1-dev libxxf86vm-dev libglu1-mesa-dev libxrandr-dev
 \end{lstlisting}
+When using this single line, please ignore error messages like \begin{quote}E: Unable to locate package texlive-latexextra\end{quote}. This single line should work on as many distributations as possible, so certain packages may not be available within your distributation.
 
 When using the \emph{maketool} flag \verb+--syslibs+, you also need the following packages:
 \begin{itemize}
