@@ -1,3 +1,9 @@
+>> 05.10.2011
+[CO]
+- Added "armeabi" & "armeabi-v7a" package of AngelScript (looks like it's working, but the PL script plugin for this script language is currently hightly experimental)
+
+
+
 >> 04.10.2011
 [CO]
 - Windows: PLFrontendQt includes simplification: "Include\Qt" instead of "Include\Qt\Qt" (when building Qt, an additional install step was required to make real Qt headers,
