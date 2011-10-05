@@ -1,6 +1,6 @@
 /*********************************************************\
- *  File: PLFrontendOS.h                                 *
- *      Main header file of this project
+ *  File: PLFrontendOSWindows.h                          *
+ *      Windows definitions for PLFrontendOS
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -21,32 +21,27 @@
 \*********************************************************/
 
 
-/**
-*  @mainpage PLFrontendOS
-*
-*  @section intro_sec Introduction
-*
-*  This is the PLFrontendOS reference.
-*/
-
-
-#ifndef __PLFRONTENDOS_H__
-#define __PLFRONTENDOS_H__
+#ifndef __PLFRONTENDOS_WINDOWS_H__
+#define __PLFRONTENDOS_WINDOWS_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
-//[ OS definitions                                        ]
+//[ Import/Export                                         ]
 //[-------------------------------------------------------]
-// Windows platform
-#ifdef WIN32
-	#include "PLFrontendOS/PLFrontendOSWindows.h"
+#ifdef PLFRONTENDOS_EXPORTS
+	// To import classes, methods and variables
+	#define PLFRONTENDOS_API __declspec(dllexport)
+
+	// To export RTTI elements
+	#define PLFRONTENDOS_RTTI_EXPORT 1
+#else
+	// To import classes, methods and variables
+	#define PLFRONTENDOS_API __declspec(dllimport)
+
+	// To import RTTI elements
+	#define PLFRONTENDOS_RTTI_EXPORT 0
 #endif
 
-// Linux platform
-#ifdef LINUX
-	#include "PLFrontendOS/PLFrontendOSLinux.h"
-#endif
 
-
-#endif // __PLFRONTENDOS_H__
+#endif // __PLFRONTENDOS_WINDOWS_H__
