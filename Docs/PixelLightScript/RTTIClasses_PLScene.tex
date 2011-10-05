@@ -212,6 +212,9 @@ Write \emph{<RTTI object>:Create(<string>, <string>, <string>)} in order to crea
 \paragraph{CalculateAABoundingBox()}
 Write \emph{<RTTI object>:CalculateAABoundingBox()} in order to calculate and sets the axis align bounding box in \emph{scene node space}. Because the \emph{scene node space} axis aligned bounding box should always cover all scene nodes of this container, you can use this function to calculate and set this a bounding box automatically.
 
+\paragraph{LoadByFilename(<string>, <string>, <string>))}
+Write \emph{<RTTI object>:LoadByFilename()} in order to load a scene from a file given by filename. Scene filename as first parameter, optional load method parameters as second parameter, optional name of the load method to use as third parameter. Returns \emph{true} if all went fine, else \emph{false}.
+
 
 \subsection{Signals}
 

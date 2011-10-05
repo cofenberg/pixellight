@@ -1,3 +1,26 @@
+>> 05.08.2011
+[CO]
+- "SceneContainer": Exposed "LoadByFilename()"-method to the RTTI. With this method, one can now also write within a Lua script e.g.
+	local serenaelContainer = sceneContainer:Create("PLScene::SceneContainer", "Serenael", "Scale='0.05 0.05 0.05'")
+	if serenaelContainer ~= nil then
+		serenaelContainer:LoadByFilename("data/msh/serenael.x", "Quality=1")
+	end
+  in order to load in a scene and proving the loader with additional parameters, or even decide which concrete loader method should be used by writing
+	local serenaelContainer = sceneContainer:Create("PLScene::SceneContainer", "Serenael", "Scale='0.05 0.05 0.05'")
+	if serenaelContainer ~= nil then
+		serenaelContainer:LoadByFilename("data/msh/serenael.x", "Quality=1", "LoadParams")
+	end
+  If there's no need for additional settings,
+	local serenaelContainer = sceneContainer:Create("PLScene::SceneContainer", "Serenael", "Scale='0.05 0.05 0.05'")
+	if serenaelContainer ~= nil then
+		serenaelContainer:LoadByFilename("data/msh/serenael.x")
+	end
+  or
+	sceneContainer:Create("PLScene::SceneContainer", "Serenael", "Scale='0.05 0.05 0.05' Filename='data/msh/serenael.x'")
+  also does the job. :D (see "PLAssimp" diary entry "29.09.2011" for the complete Lua script)
+
+
+
 >> 04.08.2011
 [CO]
 - Moved "SceneApplication" from "PLEngine" into "PLScene"
