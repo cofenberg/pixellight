@@ -113,21 +113,57 @@ _pixellight_find_lib(PL_PLSOUND		PLSound/PLSound.h		PLSound		Base/PLSound/includ
 
 
 # Plugins
-_pixellight_find_lib(PL_PLCOMPOSITING		PLCompositing/PLCompositing.h				PLCompositing		PLEngine/PLCompositing/include)
-_pixellight_find_lib(PL_PLIRC				PLIRC/PLIRC.h								PLIRC				Plugins/PLIRC/include)
-_pixellight_find_lib(PL_PLJABBER			PLJabber/PLJabber.h							PLJabber			Plugins/PLJabber/include)
-_pixellight_find_lib(PL_PLGUIXMLTEXT		PLGuiXmlText/PLGuiXmlText.h					PLGuiXmlText		Plugins/PLGuiXmlText/include)
-_pixellight_find_lib(PL_PLFRONTENDPLGUI		PLFrontendPLGui/PLFrontendPLGui.h			PLFrontendPLGui		Plugins/PLFrontendPLGui/include)
-_pixellight_find_lib(PL_PLRENDEREROPENGLES2	PLRendererOpenGLES2/PLRendererOpenGLES2.h	PLRendererOpenGLES2	Plugins/PLRendererOpenGLES2/include)
-_pixellight_find_lib(PL_PLSPARK_PL			SPARK_PL/SPARK_PL.h							SPARK_PL			Plugins/SPARK_PL/include)
-_pixellight_find_lib(PL_PLSCRIPTBINDINGS	PLScriptBindings/PLScriptBindings.h			PLScriptBindings	Plugins/PLScriptBindings/include)
-_pixellight_find_lib(PL_PLSCRIPTLUA			PLScriptLua/PLScriptLua.h					PLScriptLua			Plugins/PLScriptLua/include)
-_pixellight_find_lib(PL_PLLIBROCKET			PLlibRocket/PLlibRocket.h					PLlibRocket			Plugins/PLlibRocket/include)
-_pixellight_find_lib(PL_PLPHYSICSNEWTON		PLPhysicsNewton/PLPhysicsNewton.h			PLPhysicsNewton		Plugins/PLPhysicsNewton/include)
-_pixellight_find_lib(PL_PLPHYSICSBULLET		PLPhysicsBullet/PLPhysicsBullet.h			PLPhysicsBullet		Plugins/PLPhysicsBullet/include)
-_pixellight_find_lib(PL_PLASSIMP			PLAssimp/PLAssimp.h							PLAssimp			Plugins/PLAssimp/include)
-_pixellight_find_lib(PL_PLSOUNDOPENSLES		PLSoundOpenSLES/PLSoundOpenSLES.h			PLSoundOpenSLES		Plugins/PLSoundOpenSLES/include)
-_pixellight_find_lib(PL_PLSOUNDFMODEX		PLSoundFMODEx/PLSoundFMODEx.h				PLSoundFMODEx		Plugins/PLSoundFMODEx/include)
+_pixellight_find_lib(PL_PLASSIMP				PLAssimp/PLAssimp.h							PLAssimp				Plugins/PLAssimp/include)
+_pixellight_find_lib(PL_PLCOMPOSITING			PLCompositing/PLCompositing.h				PLCompositing			PLEngine/PLCompositing/include)
+# Database plugins
+_pixellight_find_lib(PL_PLDATABASEMYSQL			PLDatabaseMySQL/PLDatabaseMySQL.h			PLDatabaseMySQL			Plugins/PLDatabaseMySQL/include)
+_pixellight_find_lib(PL_PLDATABASENULL			PLDatabaseNull/PLDatabaseNull.h				PLDatabaseNull			Plugins/PLDatabaseNull/include)
+_pixellight_find_lib(PL_PLDATABASEPOSTGRESQL	PLDatabasePostgreSQL/PLDatabasePostgreSQL.h	PLDatabasePostgreSQL	Plugins/PLDatabasePostgreSQL/include)
+_pixellight_find_lib(PL_PLDATABASESQLITE		PLDatabaseSQLite/PLDatabaseSQLite.h			PLDatabaseSQLite		Plugins/PLDatabaseSQLite/include)
+# Frontend plugins
+_pixellight_find_lib(PL_PLFRONTENDACTIVEX		PLFrontendActiveX/PLFrontendActiveX.h		PLFrontendActiveX		Plugins/PLFrontendActiveX/include)
+_pixellight_find_lib(PL_PLFRONTENDMOZILLA		PLFrontendMozilla/PLFrontendMozilla.h		PLFrontendMozilla		Plugins/PLFrontendMozilla/include)
+_pixellight_find_lib(PL_PLFRONTENDNULL			PLFrontendNull/PLFrontendNull.h				PLFrontendNull			Plugins/PLFrontendNull/include)
+_pixellight_find_lib(PL_PLFRONTENDOS			PLFrontendOS/PLFrontendOS.h					PLFrontendOS			Plugins/PLFrontendOS/include)
+_pixellight_find_lib(PL_PLFRONTENDPLGUI			PLFrontendPLGui/PLFrontendPLGui.h			PLFrontendPLGui			Plugins/PLFrontendPLGui/include)
+_pixellight_find_lib(PL_PLFRONTENDQT			PLFrontendQt/PLFrontendQt.h					PLFrontendQt			Plugins/PLFrontendQt/include)
+# Misc plugins
+_pixellight_find_lib(PL_PLGUIXMLTEXT			PLGuiXmlText/PLGuiXmlText.h					PLGuiXmlText			Plugins/PLGuiXmlText/include)
+_pixellight_find_lib(PL_PLIMAGELOADEREXR		PLImageLoaderEXR/PLImageLoaderEXR.h			PLImageLoaderEXR		Plugins/PLImageLoaderEXR/include)
+_pixellight_find_lib(PL_PLIRC					PLIRC/PLIRC.h								PLIRC					Plugins/PLIRC/include)
+_pixellight_find_lib(PL_PLJABBER				PLJabber/PLJabber.h							PLJabber				Plugins/PLJabber/include)
+_pixellight_find_lib(PL_PLLIBROCKET				PLlibRocket/PLlibRocket.h					PLlibRocket				Plugins/PLlibRocket/include)
+_pixellight_find_lib(PL_PLPARTICLEGROUPS		PLParticleGroups/PLParticleGroups.h			PLParticleGroups		Plugins/PLParticleGroups/include)
+# Physics plugins
+_pixellight_find_lib(PL_PLPHYSICSBULLET			PLPhysicsBullet/PLPhysicsBullet.h			PLPhysicsBullet			Plugins/PLPhysicsBullet/include)
+_pixellight_find_lib(PL_PLPHYSICSNEWTON			PLPhysicsNewton/PLPhysicsNewton.h			PLPhysicsNewton			Plugins/PLPhysicsNewton/include)
+_pixellight_find_lib(PL_PLPHYSICSNULL			PLPhysicsNull/PLPhysicsNull.h				PLPhysicsNull			Plugins/PLPhysicsNull/include)
+_pixellight_find_lib(PL_PLPHYSICSODE			PLPhysicsODE/PLPhysicsODE.h					PLPhysicsODE			Plugins/PLPhysicsODE/include)
+_pixellight_find_lib(PL_PLPHYSICSPHYSX			PLPhysicsPhysX/PLPhysicsPhysX.h				PLPhysicsPhysX			Plugins/PLPhysicsPhysX/include)
+# Misc plugins
+_pixellight_find_lib(PL_PLPOSTPROCESSEFFECTS	PLPostProcessEffects/PLPostProcessEffects.h	PLPostProcessEffects	Plugins/PLPostProcessEffects/include)
+# Renderer plugins
+_pixellight_find_lib(PL_PLRENDERERD3D9			PLRendererD3D9/PLRendererD3D9.h				PLRendererD3D9			Plugins/PLRendererD3D9/include)
+_pixellight_find_lib(PL_PLRENDERERD3D11			PLRendererD3D11/PLRendererD3D11.h			PLRendererD3D11			Plugins/PLRendererD3D11/include)
+_pixellight_find_lib(PL_PLRENDERERNULL			PLRendererNull/PLRendererNull.h				PLRendererNull			Plugins/PLRendererNull/include)
+_pixellight_find_lib(PL_PLRENDEREROPENGL		PLRendererOpenGL/PLRendererOpenGL.h			PLRendererOpenGL		Plugins/PLRendererOpenGL/include)
+_pixellight_find_lib(PL_PLRENDEREROPENGLCG		PLRendererOpenGLCg/PLRendererOpenGLCg.h		PLRendererOpenGLCg		Plugins/PLRendererOpenGLCg/include)
+_pixellight_find_lib(PL_PLRENDEREROPENGLES2		PLRendererOpenGLES2/PLRendererOpenGLES2.h	PLRendererOpenGLES2		Plugins/PLRendererOpenGLES2/include)
+# Script plugins
+_pixellight_find_lib(PL_PLSCRIPTANGELSCRIPT		PLScriptAngelScript/PLScriptAngelScript.h	PLScriptAngelScript		Plugins/PLScriptAngelScript/include)
+_pixellight_find_lib(PL_PLSCRIPTBINDINGS		PLScriptBindings/PLScriptBindings.h			PLScriptBindings		Plugins/PLScriptBindings/include)
+_pixellight_find_lib(PL_PLSCRIPTLUA				PLScriptLua/PLScriptLua.h					PLScriptLua				Plugins/PLScriptLua/include)
+_pixellight_find_lib(PL_PLSCRIPTNULL			PLScriptNull/PLScriptNull.h					PLScriptNull			Plugins/PLScriptNull/include)
+_pixellight_find_lib(PL_PLSCRIPTPHYTON			PLScriptPython/PLScriptPython.h				PLScriptPython			Plugins/PLScriptPython/include)
+_pixellight_find_lib(PL_PLSCRIPTV8				PLScriptV8/PLScriptV8.h						PLScriptV8				Plugins/PLScriptV8/include)
+# Sound plugins
+_pixellight_find_lib(PL_PLSOUNDFMOD				PLSoundFMOD/PLSoundFMOD.h					PLSoundFMOD				Plugins/PLSoundFMOD/include)
+_pixellight_find_lib(PL_PLSOUNDFMODEX			PLSoundFMODEx/PLSoundFMODEx.h				PLSoundFMODEx			Plugins/PLSoundFMODEx/include)
+_pixellight_find_lib(PL_PLSOUNDNULL				PLSoundNull/PLSoundNull.h					PLSoundNull				Plugins/PLSoundNull/include)
+_pixellight_find_lib(PL_PLSOUNDOPENAL			PLSoundOpenAL/PLSoundOpenAL.h				PLSoundOpenAL			Plugins/PLSoundOpenAL/include)
+_pixellight_find_lib(PL_PLSOUNDOPENSLES			PLSoundOpenSLES/PLSoundOpenSLES.h			PLSoundOpenSLES			Plugins/PLSoundOpenSLES/include)
+# Misc plugins
+_pixellight_find_lib(PL_PLSPARK_PL				SPARK_PL/SPARK_PL.h							SPARK_PL				Plugins/SPARK_PL/include)
 
 
 # Newton
