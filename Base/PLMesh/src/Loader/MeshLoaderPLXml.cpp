@@ -256,9 +256,6 @@ bool MeshLoaderPLXml::ReadMaterials(Mesh &cMesh, const XmlElement &cMaterialsEle
 
 bool MeshLoaderPLXml::ReadLODLevels(Mesh &cMesh, const XmlElement &cLODLevelsElement, bool bStatic) const
 {
-	// Clear all previous LOD levels
-	cMesh.ClearLODLevels();
-
 	// Read LOD levels
 	const XmlElement *pLODLevelElement = cLODLevelsElement.GetFirstChildElement("LODLevel");
 	while (pLODLevelElement) {
@@ -402,9 +399,6 @@ bool MeshLoaderPLXml::ReadGeometry(Geometry &cGeometry, const XmlElement &cGeome
 
 bool MeshLoaderPLXml::ReadMorphTargets(Mesh &cMesh, const XmlElement &cMorphTargetsElement, bool bStatic) const
 {
-	// Clear all previous morph targets
-	cMesh.ClearMorphTargets();
-
 	// Read morph targets
 	const XmlElement *pMorphTargetElement = cMorphTargetsElement.GetFirstChildElement("MorphTarget");
 	while (pMorphTargetElement) {

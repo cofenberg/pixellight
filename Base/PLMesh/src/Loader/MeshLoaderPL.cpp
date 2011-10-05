@@ -218,7 +218,6 @@ bool MeshLoaderPL::ReadMesh(Mesh &cMesh, File &cFile, bool bStatic) const
 		return false; // Error!
 
 	// Read LOD levels
-	cMesh.ClearLODLevels();
 	for (uint32 i=0; i<sMesh.nLODLevels; i++) {
 		// Read LOD level
 		MeshFile::Chunk sChunk = ReadChunk(cFile);
@@ -230,7 +229,6 @@ bool MeshLoaderPL::ReadMesh(Mesh &cMesh, File &cFile, bool bStatic) const
 	}
 
 	// Read morph targets
-	cMesh.ClearMorphTargets();
 	for (uint32 i=0; i<sMesh.nMorphTargets; i++) {
 		// Read morph target
 		MeshFile::Chunk sChunk = ReadChunk(cFile);
