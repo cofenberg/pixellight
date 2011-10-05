@@ -158,7 +158,7 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 		QImage GetQImage(const PLCore::String imageName)
 		{
 			PLGraphics::Image cImage;
-			bool bRet = cImage.Load(imageName);
+			bool bRet = cImage.LoadByFilename(imageName);
 			QImage img;
 
 			if (bRet) {

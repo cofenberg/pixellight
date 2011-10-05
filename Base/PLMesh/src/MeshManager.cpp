@@ -239,13 +239,13 @@ Mesh *MeshManager::LoadMesh(const String &sFilename, const String &sParams, cons
 				if (pMesh) {
 					if (bStatic) {
 						// We do NOT need to give parameters because 'Static' is 'true' by default!
-						if (!pMesh->Load(sFilename, sParams, sMethod)) {
+						if (!pMesh->LoadByFilename(sFilename, sParams, sMethod)) {
 							// Can't load mesh...
 							delete pMesh;
 							pMesh = nullptr;
 						}
 					} else {
-						if (!pMesh->Load(sFilename, String("Static=") + bStatic + '\"')) {
+						if (!pMesh->LoadByFilename(sFilename, String("Static=") + bStatic + '\"')) {
 							// Can't load mesh...
 							delete pMesh;
 							pMesh = nullptr;

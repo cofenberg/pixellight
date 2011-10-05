@@ -67,7 +67,7 @@ void SNTerrain::SetFilename(const String &sValue)
 	if (m_sFilename != sValue) {
 		m_sFilename = sValue;
 		if (IsInitialized())
-			Load(m_sFilename);
+			LoadByFilename(m_sFilename);
 	}
 }
 
@@ -123,7 +123,7 @@ bool SNTerrain::LoadHeightMap(const String &sHeightMap, Image &cHeightMap)
 	// Check parameter
 	if (sHeightMap.GetLength()) {
 		// Load height map
-		if (cHeightMap.Load(sHeightMap)) {
+		if (cHeightMap.LoadByFilename(sHeightMap)) {
 			// Get the image buffer
 			ImageBuffer *pImageBuffer = cHeightMap.GetBuffer();
 			if (pImageBuffer) {
@@ -218,7 +218,7 @@ void SNTerrain::InitFunction()
 		m_pGMMSurface = new GMMSurface(GetSceneContext()->GetRendererContext().GetRenderer());
 
 	// Load the terrain
-	Load(m_sFilename);
+	LoadByFilename(m_sFilename);
 }
 
 

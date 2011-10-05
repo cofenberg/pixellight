@@ -107,7 +107,7 @@ bool ImagePL::Load(const String &sFilename)
 			if (pRenderer) {
 				// Load the image
 				PLGraphics::Image cImage;
-				if (cImage.Load(sFilename)) {
+				if (cImage.LoadByFilename(sFilename)) {
 					// Create rectangle texture buffer
 					m_pTextureBuffer = pRenderer->CreateTextureBufferRectangle(cImage);
 					if (m_pTextureBuffer) {
@@ -151,7 +151,7 @@ bool ImagePL::LoadWithColorKey(const String &sFilename, const Color3 &cColor)
 			if (pRenderer) {
 				// Load the image
 				PLGraphics::Image cImage;
-				if (cImage.Load(sFilename)) {
+				if (cImage.LoadByFilename(sFilename)) {
 					// Apply color key
 					cImage.ApplyEffect(ImageEffects::ColorKey(cColor, 0.0f));
 

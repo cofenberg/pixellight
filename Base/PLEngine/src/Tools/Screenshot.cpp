@@ -142,7 +142,7 @@ bool Screenshot::SaveScreenshot(const String &sFilename) const
 		GetRendererContext()->GetRenderer().MakeScreenshot(cImage);
 
 		// Save screenshot
-		return cImage.Save((sFilename.GetLength() > 0 ? sFilename : GetScreenshotFilename()));
+		return cImage.SaveByFilename((sFilename.GetLength() > 0 ? sFilename : GetScreenshotFilename()));
 	} else {
 		// Error!
 		return false;
@@ -181,7 +181,7 @@ bool Screenshot::SaveCustomScreenshot(const String &sFilename, uint16 nWidth, ui
 				cRenderer.MakeScreenshot(cImage);
 
 				// Save screenshot
-				bResult = cImage.Save((sFilename.GetLength() > 0 ? sFilename : GetScreenshotFilename()));
+				bResult = cImage.SaveByFilename((sFilename.GetLength() > 0 ? sFilename : GetScreenshotFilename()));
 
 				// Restore previous render target
 				cRenderer.SetRenderTarget(pRenderTargetBackup);

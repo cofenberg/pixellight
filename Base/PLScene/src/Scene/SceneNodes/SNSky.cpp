@@ -355,7 +355,7 @@ void SNSky::SetFilename(const String &sValue)
 	if (m_sFilename != sValue) {
 		m_sFilename = sValue;
 		if (IsInitialized())
-			Load(m_sFilename);
+			LoadByFilename(m_sFilename);
 	}
 }
 
@@ -442,7 +442,7 @@ void SNSky::InitFunction()
 	SceneNode::InitFunction();
 
 	// Init data
-	Load(m_sFilename);
+	LoadByFilename(m_sFilename);
 }
 
 void SNSky::OnActivate(bool bActivate)

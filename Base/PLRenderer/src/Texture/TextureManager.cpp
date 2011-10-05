@@ -147,7 +147,7 @@ bool TextureManager::ReloadTextures()
 	// Reload every texture
 	for (uint32 i=0; i<m_lstResources.GetNumOfElements(); i++) {
 		Texture *pTexture = m_lstResources[i];
-		if (!pTexture->Load(pTexture->GetName()))
+		if (!pTexture->LoadByFilename(pTexture->GetName()))
 			bResult = false; // Error!
 	}
 

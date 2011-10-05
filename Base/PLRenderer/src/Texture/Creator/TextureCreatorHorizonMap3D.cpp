@@ -88,7 +88,7 @@ Texture *TextureCreatorHorizonMap3D::Create(TextureManager &cTextureManager, Tex
 {
 	// Try to load the 2D ASCII texture
 	Image cImage2D;
-	if (cImage2D.Load(Filename2D)) {
+	if (cImage2D.LoadByFilename(Filename2D)) {
 		// Get the image buffer
 		ImageBuffer *pImageBuffer = cImage2D.GetBuffer();
 		if (pImageBuffer) {

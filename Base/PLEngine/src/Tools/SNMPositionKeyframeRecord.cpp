@@ -190,7 +190,7 @@ void SNMPositionKeyframeRecord::StopRecord()
 
 		// If a chunk filename is given, save the chunk right now
 		if (Keys.Get().GetLength())
-			m_pChunk->Save(Keys);
+			m_pChunk->SaveByFilename(Keys);
 	}
 }
 

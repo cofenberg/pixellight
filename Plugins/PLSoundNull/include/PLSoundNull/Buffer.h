@@ -97,7 +97,7 @@ class Buffer : public PLSound::Buffer {
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Load(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
+		virtual bool LoadByFilename(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
 		virtual bool Unload() override;
 
 

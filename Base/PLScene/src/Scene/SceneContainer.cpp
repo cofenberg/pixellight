@@ -75,7 +75,7 @@ void SceneContainer::SetFilename(const String &sValue)
 
 		// Load the container
 		if (IsInitialized())
-			Load(m_sFilename);
+			LoadByFilename(m_sFilename);
 	}
 }
 
@@ -476,7 +476,7 @@ void SceneContainer::InitFunction()
 
 	// Load the container?
 	if (m_sFilename.GetLength())
-		Load(m_sFilename);
+		LoadByFilename(m_sFilename);
 }
 
 void SceneContainer::DeInitFunction()
@@ -591,14 +591,14 @@ SceneNode *SceneContainer::GetByName(const String &sName) const
 //[-------------------------------------------------------]
 //[ Public virtual PLCore::Loadable functions             ]
 //[-------------------------------------------------------]
-bool SceneContainer::Load(const String &sFilename, const String &sParams, const String &sMethod)
+bool SceneContainer::LoadByFilename(const String &sFilename, const String &sParams, const String &sMethod)
 {
 	// Pause all to avoid timing problems
 	const bool bIsPaused = Timing::GetInstance()->IsPaused();
 	Timing::GetInstance()->Pause(true);
 
 	// Call base implementation
-	const bool bResult = Loadable::Load(sFilename, sParams, sMethod);
+	const bool bResult = Loadable::LoadByFilename(sFilename, sParams, sMethod);
 
 	// Restore previous pause state
 	Timing::GetInstance()->Pause(bIsPaused);
@@ -607,14 +607,14 @@ bool SceneContainer::Load(const String &sFilename, const String &sParams, const 
 	return bResult;
 }
 
-bool SceneContainer::Load(File &cFile, const String &sParams, const String &sMethod)
+bool SceneContainer::LoadByFile(File &cFile, const String &sParams, const String &sMethod)
 {
 	// Pause all to avoid timing problems
 	const bool bIsPaused = Timing::GetInstance()->IsPaused();
 	Timing::GetInstance()->Pause(true);
 
 	// Call base implementation
-	const bool bResult = Loadable::Load(cFile, sParams, sMethod);
+	const bool bResult = Loadable::LoadByFile(cFile, sParams, sMethod);
 
 	// Restore previous pause state
 	Timing::GetInstance()->Pause(bIsPaused);

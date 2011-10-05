@@ -182,7 +182,7 @@ bool QPLSceneContext::LoadSceneFromFile(const QString &sSceneFile)
 		m_pSceneContext->Cleanup();
 
 	// Load the scene
-	bool bResult = pContainer->Load(QtStringAdapter::QtToPL(sSceneFile));
+	bool bResult = pContainer->LoadByFilename(QtStringAdapter::QtToPL(sSceneFile));
 	if (!bResult) {
 		emit QPLContext::EndContextChange();
 		return bResult;

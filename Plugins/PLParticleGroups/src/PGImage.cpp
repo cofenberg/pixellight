@@ -93,7 +93,7 @@ void PGImage::InitFunction()
 
 	// Load image
 	Image cImage;
-	if (cImage.Load(ImageFilename.Get())) {
+	if (cImage.LoadByFilename(ImageFilename.Get())) {
 		// Get the image buffer
 		ImageBuffer *pImageBuffer = cImage.GetBuffer();
 		if (pImageBuffer) {

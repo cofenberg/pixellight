@@ -128,11 +128,11 @@ void LocalizationTest::Test()
 
 	// LocalizationGroup::Save(const String &sFilename)
 	StartTask("LocalizationGroup::Save(const String &sFilename)");
-	EndTask(pGroup->Save(pGroup->GetName() + ".loc"));
+	EndTask(pGroup->SaveByFilename(pGroup->GetName() + ".loc"));
 
 	// LocalizationGroup::Load(const String &sFilename)
 	StartTask("LocalizationGroup::Load(const String &sFilename)");
-	EndTask(pGroup->Load(pGroup->GetName() + ".loc"));
+	EndTask(pGroup->LoadByFilename(pGroup->GetName() + ".loc"));
 
 	// Test get functions, again :)
 	TestGetFunctions("Loaded: ");

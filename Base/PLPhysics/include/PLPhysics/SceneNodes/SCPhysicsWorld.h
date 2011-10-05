@@ -187,8 +187,8 @@ class SCPhysicsWorld : public PLScene::SceneContainer {
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API virtual bool Load(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
-		PLPHYSICS_API virtual bool Load(PLCore::File &cFile, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
+		PLPHYSICS_API virtual bool LoadByFilename(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
+		PLPHYSICS_API virtual bool LoadByFile(PLCore::File &cFile, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
 
 
 };

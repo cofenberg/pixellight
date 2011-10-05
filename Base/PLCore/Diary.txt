@@ -1,3 +1,15 @@
+>> 05.10.2011
+[CO]
+- Loadable: Renamed "Load()"-method using a filename into "LoadByFileame()"
+- Loadable: Renamed "Save()"-method using a filename into "SaveByFileame()"
+- Loadable: Renamed "Load()"-method using a file into "LoadByFile()"
+- Loadable: Renamed "Save()"-method using a file into "SaveByFile()"
+-> This change was necessary to make it possible to expose this methods to the RTTI (method names must be unique for this)
+-> I fist thought about just renaming the file versions, but in the end I decided to be consiquent even if the method is now a little bit longer... but therefore one
+   can guess what the method expects as parameters (and it's consitent to "GetByIndex()" & "GetByName()" and so on).
+
+
+
 >> 04.10.2011
 [CO]
 - Windows: PLFrontendQt includes simplification: "Include\Qt" instead of "Include\Qt\Qt" (when building Qt, an additional install step was required to make real Qt headers,

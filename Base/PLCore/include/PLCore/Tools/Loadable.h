@@ -102,7 +102,7 @@ class Loadable {
 		*  @note
 		*    - If no method name was provided, 'Load' if sParams is empty, or 'LoadParams' if sParams is not empty is used automatically
 		*/
-		PLCORE_API virtual bool Load(const String &sFilename, const String &sParams = "", const String &sMethod = "");
+		PLCORE_API virtual bool LoadByFilename(const String &sFilename, const String &sParams = "", const String &sMethod = "");
 
 		/**
 		*  @brief
@@ -121,7 +121,7 @@ class Loadable {
 		*  @note
 		*    - If no method name was provided, 'Load' if sParams is empty, or 'LoadParams' if sParams is not empty is used automatically
 		*/
-		PLCORE_API virtual bool Load(File &cFile, const String &sParams = "", const String &sMethod = "");
+		PLCORE_API virtual bool LoadByFile(File &cFile, const String &sParams = "", const String &sMethod = "");
 
 		/**
 		*  @brief
@@ -140,7 +140,7 @@ class Loadable {
 		*  @note
 		*    - If no method name was provided, 'Save' if sParams is empty, or 'SaveParams' if sParams is not empty is used automatically
 		*/
-		PLCORE_API virtual bool Save(const String &sFilename, const String &sParams = "", const String &sMethod = "");
+		PLCORE_API virtual bool SaveByFilename(const String &sFilename, const String &sParams = "", const String &sMethod = "");
 
 		/**
 		*  @brief
@@ -159,7 +159,7 @@ class Loadable {
 		*  @note
 		*    - If no method name was provided, 'Save' if sParams is empty, or 'SaveParams' if sParams is not empty is used automatically
 		*/
-		PLCORE_API virtual bool Save(File &cFile, const String &sParams = "", const String &sMethod = "");
+		PLCORE_API virtual bool SaveByFile(File &cFile, const String &sParams = "", const String &sMethod = "");
 
 		/**
 		*  @brief

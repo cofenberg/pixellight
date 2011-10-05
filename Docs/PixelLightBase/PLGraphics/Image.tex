@@ -8,7 +8,7 @@ The image class may look quite complex on the first look, but using it is... now
 Image cImage;
 
 // Load an image
-if (cImage.Load("MyImage.png")) {
+if (cImage.LoadByFilename("MyImage.png")) {
   // Get a pointer to the image buffer
   ImageBuffer *pImageBuffer = cImage.GetBuffer();
   if (pImageBuffer && pImageBuffer->GetDataFormat() == DataByte) {
@@ -20,7 +20,7 @@ if (cImage.Load("MyImage.png")) {
       *pData = ((*pData) + i) % 255;
 
     // Save the manipulated image
-    cImage.Save("MyManipulatedImage.png");
+    cImage.SaveByFilename("MyManipulatedImage.png");
   }
 }
 \end{lstlisting}

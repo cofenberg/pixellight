@@ -85,9 +85,9 @@ void GraphPathTest::Test()
 	cPath.SetClosed(true);
 
 	// Save the path
-	cPath.Save("Test.path");
+	cPath.SaveByFilename("Test.path");
 
 	// Load and save it again
-	cPath.Load("Test.path");
-	cPath.Save("Test_.path");
+	cPath.LoadByFilename("Test.path");
+	cPath.SaveByFilename("Test_.path");
 }

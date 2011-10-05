@@ -60,7 +60,7 @@ void SNMRotationKeyframeAnimation::SetKeys(const String &sValue)
 		m_sKeys = sValue;
 
 		// Load the chunk
-		if (m_pChunk->Load(m_sKeys)) {
+		if (m_pChunk->LoadByFilename(m_sKeys)) {
 			bool bValid = false;
 
 			// Check semantic

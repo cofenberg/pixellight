@@ -121,7 +121,7 @@ bool ImageWindows::Load(const String &sFilename)
 
 		// Load the image
 		PLGraphics::Image cImage;
-		if (cImage.Load(sFilename)) {
+		if (cImage.LoadByFilename(sFilename)) {
 			// Get the image buffer
 			const PLGraphics::ImageBuffer *pImageBuffer = cImage.GetBuffer();
 			if (pImageBuffer) {
@@ -163,7 +163,7 @@ bool ImageWindows::LoadWithColorKey(const String &sFilename, const Color3 &cColo
 
 		// Load the image
 		PLGraphics::Image cImage;
-		if (cImage.Load(sFilename)) {
+		if (cImage.LoadByFilename(sFilename)) {
 			// Apply color key
 			cImage.ApplyEffect(ImageEffects::ColorKey(cColor, 0.0f));
 

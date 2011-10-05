@@ -49,11 +49,11 @@ const char *ChunkTest::GetName() const
 void ChunkTest::Test()
 {
 	Chunk cChunk;
-	if (cChunk.Load("ScaleData.chunk")) {
+	if (cChunk.LoadByFilename("ScaleData.chunk")) {
 		uint8 *pData = new uint8[cChunk.GetTotalNumOfBytes()];
 		MemoryManager::Copy(pData, cChunk.GetData(), cChunk.GetTotalNumOfBytes());
-		if (cChunk.Save("ScaleData.xchunk")) {
-			if (cChunk.Load("ScaleData.xchunk")) {
+		if (cChunk.SaveByFilename("ScaleData.xchunk")) {
+			if (cChunk.LoadByFilename("ScaleData.xchunk")) {
 				// When using floating point data, we may have a loss in precision...
 				for (uint32 i=0; i<cChunk.GetTotalNumOfBytes(); i++) {
 					uint8 nByte1 = pData[i];
@@ -63,8 +63,8 @@ void ChunkTest::Test()
 						nError = 1;
 					}
 				}
-				cChunk.Save("ScaleData_Copy.chunk");
-				cChunk.Save("ScaleData_Copy.xchunk");
+				cChunk.SaveByFilename("ScaleData_Copy.chunk");
+				cChunk.SaveByFilename("ScaleData_Copy.xchunk");
 			}
 		}
 	}

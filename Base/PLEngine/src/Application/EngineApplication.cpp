@@ -285,7 +285,7 @@ bool EngineApplication::LoadScene(const String &sFilename)
 	ClearScene();
 
 	// Load the scene
-	bool bResult = pContainer->Load(sFilename);
+	bool bResult = pContainer->LoadByFilename(sFilename);
 	if (bResult) {
 		// Set a null pointer camera and default scene renderer
 		m_sClearColor		= "";

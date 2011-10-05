@@ -69,7 +69,7 @@ String Loadable::GetUrl() const
 *  @brief
 *    Loads the loadable from a file given by filename
 */
-bool Loadable::Load(const String &sFilename, const String &sParams, const String &sMethod)
+bool Loadable::LoadByFilename(const String &sFilename, const String &sParams, const String &sMethod)
 {
 	// Check the given filename
 	if (sFilename.GetLength()) {
@@ -127,7 +127,7 @@ bool Loadable::Load(const String &sFilename, const String &sParams, const String
 *  @brief
 *    Loads the loadable from a file given by a reference
 */
-bool Loadable::Load(File &cFile, const String &sParams, const String &sMethod)
+bool Loadable::LoadByFile(File &cFile, const String &sParams, const String &sMethod)
 {
 	// Check whether file reading is allowed
 	if (cFile.IsReadable()) {
@@ -174,7 +174,7 @@ bool Loadable::Load(File &cFile, const String &sParams, const String &sMethod)
 *  @brief
 *    Saves the loadable to a file given by filename
 */
-bool Loadable::Save(const String &sFilename, const String &sParams, const String &sMethod)
+bool Loadable::SaveByFilename(const String &sFilename, const String &sParams, const String &sMethod)
 {
 	// Check the given filename
 	if (sFilename.GetLength()) {
@@ -229,7 +229,7 @@ bool Loadable::Save(const String &sFilename, const String &sParams, const String
 *  @brief
 *    Saves the loadable to a file given by reference
 */
-bool Loadable::Save(File &cFile, const String &sParams, const String &sMethod)
+bool Loadable::SaveByFile(File &cFile, const String &sParams, const String &sMethod)
 {
 	// Check whether file writing is allowed
 	if (cFile.IsWritable()) {
@@ -294,7 +294,7 @@ bool Loadable::Reload()
 		String sUrl = m_sUrl;
 
 		// Load
-		return Load(sUrl);
+		return LoadByFilename(sUrl);
 	}
 
 	// Done

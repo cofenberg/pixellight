@@ -445,9 +445,9 @@ void CoreApplication::OnPause()
 void CoreApplication::OnStop()
 {
 	// Save configuration
-	String sConfig = m_cApplicationContext.GetConfigFilename();
-	if (sConfig.GetLength())
-		m_cConfig.Save(sConfig);
+	const String sFilename = m_cApplicationContext.GetConfigFilename();
+	if (sFilename.GetLength())
+		m_cConfig.SaveByFilename(sFilename);
 
 	// Close log
 	Log::GetInstance()->Close();
@@ -587,10 +587,10 @@ void CoreApplication::OnInitCmdLine()
 void CoreApplication::OnInitConfig()
 {
 	// Check if a config file has been given on the command line
-	String sConfig = m_cCommandLine.GetValue("--configfile");
-	if (sConfig.GetLength()) {
+	String sFilename = m_cCommandLine.GetValue("--configfile");
+	if (sFilename.GetLength()) {
 		// Try to load, do nothing if that fails - command line is command line ;-)
-		m_cConfig.Load(sConfig);
+		m_cConfig.LoadByFilename(sFilename);
 	} else {
 		// Could not open config file, try standard locations
 		if (m_sConfigName.GetLength()) {
@@ -600,33 +600,33 @@ void CoreApplication::OnInitConfig()
 				cDir.Create();
 
 			// Try user directory first, then use application (!) directory
-			sConfig = System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir + '/' + m_sConfigName;
-			if (!(m_bMultiUser && m_cConfig.Load(sConfig))) {
+			sFilename = System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir + '/' + m_sConfigName;
+			if (!(m_bMultiUser && m_cConfig.LoadByFilename(sFilename))) {
 				// Not successful, so try application directory instead
-				sConfig = m_cApplicationContext.GetAppDirectory() + '/' + m_sConfigName;
-				if (!m_cConfig.Load(sConfig)) {
+				sFilename = m_cApplicationContext.GetAppDirectory() + '/' + m_sConfigName;
+				if (!m_cConfig.LoadByFilename(sFilename)) {
 					// Error: Could not open config file
-					sConfig = "";
+					sFilename = "";
 				}
 			}
 		}
 	}
 
 	// If no config file could be found, set a filename anyway so that the config can be saved later
-	if (!sConfig.GetLength()) {
+	if (!sFilename.GetLength()) {
 		// Only if we want a config at all
 		if (m_sConfigName.GetLength()) {
 			// Try user directory first, then use application directory
 			Directory cDir(System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir);
 			if (m_bMultiUser && cDir.Exists())
-				sConfig = System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir + '/' + m_sConfigName;
+				sFilename = System::GetInstance()->GetUserDataDir() + '/' + m_sAppDataSubdir + '/' + m_sConfigName;
 			else
-				sConfig = m_cApplicationContext.GetAppDirectory() + '/' + m_sConfigName;
+				sFilename = m_cApplicationContext.GetAppDirectory() + '/' + m_sConfigName;
 		}
 	}
 
 	// Save config filename in application context
-	m_cApplicationContext.SetConfigFilename(sConfig);
+	m_cApplicationContext.SetConfigFilename(sFilename);
 
 	// Analyze configuration
 	if (m_sConfigName.GetLength()) {
@@ -701,7 +701,7 @@ void CoreApplication::OnInitData()
 	if (sLanguage.GetLength()) {
 		LocalizationGroup *pLocalizationGroup = Localization::GetInstance()->AddGroup(Localization::PixelLight);
 		if (pLocalizationGroup)
-			pLocalizationGroup->Load("Data/Misc/" + Localization::PixelLight + '_' + sLanguage + ".loc");
+			pLocalizationGroup->LoadByFilename("Data/Misc/" + Localization::PixelLight + '_' + sLanguage + ".loc");
 	}
 }
 

@@ -208,7 +208,7 @@ void Texture::DestroyTextureBuffer()
 //[-------------------------------------------------------]
 //[ Public virtual PLCore::Resource functions             ]
 //[-------------------------------------------------------]
-bool Texture::Load(const String &sFilename, const String &sParams, const String &sMethod)
+bool Texture::LoadByFilename(const String &sFilename, const String &sParams, const String &sMethod)
 {
 	// Unload texture
 	Unload();
@@ -220,7 +220,7 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 
 		// Load the image
 		Image cImage;
-		if (cImage.Load(sFilename, sParams, sMethod)) {
+		if (cImage.LoadByFilename(sFilename, sParams, sMethod)) {
 			// Get the image buffer
 			ImageBuffer *pImageBuffer = cImage.GetBuffer();
 			if (pImageBuffer) {
@@ -771,13 +771,13 @@ bool Texture::Load(const String &sFilename, const String &sParams, const String 
 	return false;
 }
 
-bool Texture::Save(const String &sFilename, const String &sParams, const String &sMethod)
+bool Texture::SaveByFilename(const String &sFilename, const String &sParams, const String &sMethod)
 {
 	// [TODO] Implement me
 	return false;
 }
 
-bool Texture::Save(File &cFile, const String &sParams, const String &sMethod)
+bool Texture::SaveByFile(File &cFile, const String &sParams, const String &sMethod)
 {
 	// [TODO] Implement me
 	return false;

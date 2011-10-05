@@ -58,7 +58,7 @@ void SNMPostProcess::SetFilename(const String &sValue)
 	if (m_sFilename != sValue) {
 		m_sFilename = sValue;
 		if (m_pPostProcessManager)
-			m_pPostProcessManager->Load(m_sFilename);
+			m_pPostProcessManager->LoadByFilename(m_sFilename);
 	}
 }
 
@@ -76,7 +76,7 @@ PostProcessManager &SNMPostProcess::GetPostProcessManager()
 	if (!m_pPostProcessManager) {
 		m_pPostProcessManager = new PostProcessManager(GetSceneNode().GetSceneContext()->GetRendererContext());
 		if (m_sFilename.GetLength())
-			m_pPostProcessManager->Load(m_sFilename);
+			m_pPostProcessManager->LoadByFilename(m_sFilename);
 	}
 
 	// Return the post process manager instance

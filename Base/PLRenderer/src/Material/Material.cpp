@@ -423,7 +423,7 @@ void Material::OnParameterChanged(Parameter &cParameter)
 //[-------------------------------------------------------]
 //[ Public virtual PLCore::Loadable functions             ]
 //[-------------------------------------------------------]
-bool Material::Load(const String &sFilename, const String &sParams, const String &sMethod)
+bool Material::LoadByFilename(const String &sFilename, const String &sParams, const String &sMethod)
 {
 	// Unload old data
 	Unload();
@@ -434,7 +434,7 @@ bool Material::Load(const String &sFilename, const String &sParams, const String
 		// Material file given?
 		if (LoadableManager::GetInstance()->IsFormatLoadSupported(sExtension, "Material")) {
 			// Call base implementation, m_sAbsFilename is set automatically :)
-			return PLCore::Resource<Material>::Load(sFilename, sParams, sMethod);
+			return PLCore::Resource<Material>::LoadByFilename(sFilename, sParams, sMethod);
 
 		// Effect given?
 		} else if (LoadableManager::GetInstance()->IsFormatLoadSupported(sExtension, "Effect")) {

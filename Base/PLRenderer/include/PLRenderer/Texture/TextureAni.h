@@ -254,9 +254,9 @@ class TextureAni : public Texture {
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLRENDERER_API virtual bool Load(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
-		PLRENDERER_API virtual bool Save(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
-		PLRENDERER_API virtual bool Save(PLCore::File &cFile, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
+		PLRENDERER_API virtual bool LoadByFilename(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
+		PLRENDERER_API virtual bool SaveByFilename(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
+		PLRENDERER_API virtual bool SaveByFile(PLCore::File &cFile, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
 		PLRENDERER_API virtual bool Unload() override;
 		PLRENDERER_API virtual PLCore::String GetLoadableTypeName() const override;
 

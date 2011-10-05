@@ -54,7 +54,7 @@ void ImageTest::Test()
 	// Load(const String &sFilename)
 	Image cImage;
 	StartTask("Load(const String &sFilename)");
-	if (!cImage.Load("test.tga"))
+	if (!cImage.LoadByFilename("test.tga"))
 		bResult = false;
 
 	// Get the image buffer
@@ -79,5 +79,5 @@ void ImageTest::Test()
 
 	// Save(const String &sFilename)
 	StartTask("Save(const String &sFilename)");
-	EndTask(cImage.Save("test_saved.tga"));
+	EndTask(cImage.SaveByFilename("test_saved.tga"));
 }

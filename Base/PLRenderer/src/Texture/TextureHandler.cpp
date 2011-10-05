@@ -358,7 +358,7 @@ bool TextureHandler::Load(TextureManager &cTextureManager, const String &sFilena
 			TextureAni *pTextureAni = static_cast<TextureAni*>(pTexture);
 			if (!pTextureAni) {
 				pTextureAni = new TextureAni(cTextureManager, sFilename);
-				if (!pTextureAni->Load(sFilename)) {
+				if (!pTextureAni->LoadByFilename(sFilename)) {
 					delete pTextureAni;
 
 					// Error!
@@ -381,7 +381,7 @@ bool TextureHandler::Load(TextureManager &cTextureManager, const String &sFilena
 				else {
 					SetResource(cTextureManager.Create(sFilename));
 					if (GetTexture())
-						GetTexture()->Load(sFilename);
+						GetTexture()->LoadByFilename(sFilename);
 				}
 
 				// Done
@@ -444,7 +444,7 @@ bool TextureHandler::Load(TextureManager &cTextureManager, const String &sFilena
 				pTexture = cTextureManager.GetByName(sFilename);
 				if (!pTexture && sExtension.GetLength()) {
 					pTexture = cTextureManager.Create(sFilename);
-					if (pTexture && !pTexture->Load(sFilename)) {
+					if (pTexture && !pTexture->LoadByFilename(sFilename)) {
 						// Can't load texture...
 						delete pTexture;
 						pTexture = nullptr;

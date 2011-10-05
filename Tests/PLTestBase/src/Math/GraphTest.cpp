@@ -115,11 +115,11 @@ void GraphTest::Test()
 	pNodeF->AddNeighbour(*pNodeE, bUsePosition ? -1.0f : 2.0f);
 
 	// Save the graph
-	cGraph.Save("Test.graph");
+	cGraph.SaveByFilename("Test.graph");
 
 	// Load and save it again
-	cGraph.Load("Test.graph");
-	cGraph.Save("Test_.graph");
+	cGraph.LoadByFilename("Test.graph");
+	cGraph.SaveByFilename("Test_.graph");
 
 	// [TODO]
 	// Find shortest path

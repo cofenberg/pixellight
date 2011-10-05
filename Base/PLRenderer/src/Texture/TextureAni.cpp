@@ -271,22 +271,22 @@ bool TextureAni::IsAnimated() const
 //[-------------------------------------------------------]
 //[ Public virtual PLCore::Loadable functions             ]
 //[-------------------------------------------------------]
-bool TextureAni::Load(const String &sFilename, const String &sParams, const String &sMethod)
+bool TextureAni::LoadByFilename(const String &sFilename, const String &sParams, const String &sMethod)
 {
 	// Skip the texture implementation
-	return PLCore::Resource<Texture>::Load(sFilename, sParams, sMethod);
+	return PLCore::Resource<Texture>::LoadByFilename(sFilename, sParams, sMethod);
 }
 
-bool TextureAni::Save(const String &sFilename, const String &sParams, const String &sMethod)
+bool TextureAni::SaveByFilename(const String &sFilename, const String &sParams, const String &sMethod)
 {
 	// Skip the texture implementation
-	return PLCore::Resource<Texture>::Save(sFilename, sParams, sMethod);
+	return PLCore::Resource<Texture>::SaveByFilename(sFilename, sParams, sMethod);
 }
 
-bool TextureAni::Save(File &cFile, const String &sParams, const String &sMethod)
+bool TextureAni::SaveByFile(File &cFile, const String &sParams, const String &sMethod)
 {
 	// Skip the texture implementation
-	return PLCore::Resource<Texture>::Save(cFile, sParams, sMethod);
+	return PLCore::Resource<Texture>::SaveByFile(cFile, sParams, sMethod);
 }
 
 bool TextureAni::Unload()

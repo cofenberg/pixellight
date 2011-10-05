@@ -79,7 +79,7 @@ void SNRagdoll::SetRagdollFilename(const String &sValue)
 	if (m_sRagdollFilename != sValue) {
 		m_sRagdollFilename = sValue;
 		if (IsInitialized())
-			Load(m_sRagdollFilename, "AllowAttachToWorld=\"" + m_bAttachToWorldEnabled + '\"');
+			LoadByFilename(m_sRagdollFilename, "AllowAttachToWorld=\"" + m_bAttachToWorldEnabled + '\"');
 	}
 }
 
@@ -93,7 +93,7 @@ void SNRagdoll::SetAttachToWorldEnabled(bool bValue)
 	if (m_bAttachToWorldEnabled != bValue) {
 		m_bAttachToWorldEnabled = bValue;
 		if (IsInitialized())
-			Load(m_sRagdollFilename, "AllowAttachToWorld=\"" + m_bAttachToWorldEnabled + '\"');
+			LoadByFilename(m_sRagdollFilename, "AllowAttachToWorld=\"" + m_bAttachToWorldEnabled + '\"');
 	}
 }
 
@@ -1120,7 +1120,7 @@ void SNRagdoll::InitFunction()
 
 	// Load/create the ragdoll
 	if (m_sRagdollFilename.GetLength())
-		Load(m_sRagdollFilename);
+		LoadByFilename(m_sRagdollFilename);
 	else
 		CreateRagdoll(pMeshSkeletonHandler);
 

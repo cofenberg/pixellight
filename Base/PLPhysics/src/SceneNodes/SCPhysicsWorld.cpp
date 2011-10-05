@@ -312,7 +312,7 @@ void SCPhysicsWorld::OnActivate(bool bActivate)
 //[-------------------------------------------------------]
 //[ Public virtual PLCore::Loadable functions             ]
 //[-------------------------------------------------------]
-bool SCPhysicsWorld::Load(const String &sFilename, const String &sParams, const String &sMethod)
+bool SCPhysicsWorld::LoadByFilename(const String &sFilename, const String &sParams, const String &sMethod)
 {
 	// Deactivate the physics simulation if required (else the loading may be terrible slow :)
 	bool bSimulationActive = false;
@@ -323,7 +323,7 @@ bool SCPhysicsWorld::Load(const String &sFilename, const String &sParams, const 
 	}
 
 	// Load
-	const bool bResult = SceneContainer::Load(sFilename, sParams, sMethod);
+	const bool bResult = SceneContainer::LoadByFilename(sFilename, sParams, sMethod);
 
 	// Reactivate the physics simulation if required
 	if (bSimulationActive)
@@ -333,7 +333,7 @@ bool SCPhysicsWorld::Load(const String &sFilename, const String &sParams, const 
 	return bResult;
 }
 
-bool SCPhysicsWorld::Load(File &cFile, const String &sParams, const String &sMethod)
+bool SCPhysicsWorld::LoadByFile(File &cFile, const String &sParams, const String &sMethod)
 {
 	// Deactivate the physics simulation if required (else the loading may be terrible slow :)
 	bool bSimulationActive = false;
@@ -344,7 +344,7 @@ bool SCPhysicsWorld::Load(File &cFile, const String &sParams, const String &sMet
 	}
 
 	// Load
-	const bool bResult = SceneContainer::Load(cFile, sParams, sMethod);
+	const bool bResult = SceneContainer::LoadByFile(cFile, sParams, sMethod);
 
 	// Reactivate the physics simulation if required
 	if (bSimulationActive)

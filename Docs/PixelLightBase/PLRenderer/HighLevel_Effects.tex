@@ -102,7 +102,7 @@ render it!
 
 %----- Section: Using materials ------------------
 \section{Using materials}
-When using PLTMaterial normally you only will use a few functions. Load() to load a material,
+When using PLTMaterial normally you only will use a few functions. LoadByFilename() to load a material,
 Bind() to activate it, SetupPass() so setup the given render pass and Unbind() if rendering using the
 material is finished.\\
 
@@ -111,7 +111,7 @@ material is finished.\\
 PLTMaterial m_cMaterial;
 
 // Load up your material (default extension is 'mat')
-m_cMaterial.Load("MyMaterial");
+m_cMaterial.LoadByFilename("MyMaterial");
 
 // Rendering
 m_cMaterial.Bind(); // Activate material
@@ -125,7 +125,7 @@ m_cMaterial.Unbind(); // Deactivate material
 You don't have to care about how exactly the material is defined internally like if it is using
 normal fixpass functions or even advanced shader effects. But you are able to check and change ALL
 the settings during runtime!
-When loading a material using the Load() function there are different types of possible useable
+When loading a material using the LoadByFilename() function there are different types of possible useable
 material data.\\
 - A simple texture like a jpg texture, all other material settings will be set to default.\\
 - An PixelLight texture animation file. (tani) This is handled in the same way as a simple texture

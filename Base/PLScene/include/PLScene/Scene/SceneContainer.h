@@ -359,8 +359,8 @@ class SceneContainer : public SceneNode, public PLCore::ElementManager<SceneNode
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual bool Load(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
-		PLS_API virtual bool Load(PLCore::File &cFile, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
+		PLS_API virtual bool LoadByFilename(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
+		PLS_API virtual bool LoadByFile(PLCore::File &cFile, const PLCore::String &sParams = "", const PLCore::String &sMethod = "") override;
 		PLS_API virtual bool Unload() override;
 		PLS_API virtual PLCore::String GetLoadableTypeName() const override;
 

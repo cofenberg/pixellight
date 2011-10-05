@@ -229,7 +229,7 @@ void FrontendApplication::OnInitData()
 	if (sLanguage.GetLength()) {
 		LocalizationGroup *pLocalizationGroup = Localization::GetInstance()->AddGroup(Localization::PixelLight);
 		if (pLocalizationGroup)
-			pLocalizationGroup->Load("Data/Misc/" + Localization::PixelLight + '_' + sLanguage + ".loc");
+			pLocalizationGroup->LoadByFilename("Data/Misc/" + Localization::PixelLight + '_' + sLanguage + ".loc");
 	}
 }
 

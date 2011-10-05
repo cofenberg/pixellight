@@ -74,7 +74,7 @@ Texture *TextureCreatorASCII3D::Create(TextureManager &cTextureManager, Texture 
 {
 	// Try to load the 2D ASCII texture
 	Image cImage2D;
-	if (cImage2D.Load(ASCIIFilename)) {
+	if (cImage2D.LoadByFilename(ASCIIFilename)) {
 		// Get the image buffer
 		ImageBuffer *p2DImageBuffer = cImage2D.GetBuffer();
 		if (p2DImageBuffer) {

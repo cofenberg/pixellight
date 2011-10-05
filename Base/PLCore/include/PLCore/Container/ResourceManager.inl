@@ -270,7 +270,7 @@ AType *ResourceManager<AType>::LoadResource(const String &sFilename)
 	pResource = Create(sFilename);
 	if (pResource) {
 		// Load the resource
-		if (pResource->Load(sFilename))
+		if (pResource->LoadByFilename(sFilename))
 			return pResource; // Return the new resource
 		else
 			delete pResource;
