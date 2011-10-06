@@ -1,3 +1,10 @@
+>> 06.10.2011
+[CO]
+- LaTex documents: Updated "Common"-content, e.g. the document class "scrbook" (Komascript-Book, http://ftp.uni-erlangen.de/mirrors/CTAN/macros/latex/contrib/koma-script/scrguien.pdf)
+  is now used because when using "book" as document class, there are gigantic borders wasting a lot of space (especially source code examples are no fun this way).
+
+
+
 >> 04.10.2011
 [SW]
 - Fixed generating of the Docs under linux. The latex \include{} command doesn't work with relative paths so i replaced them with the \input{} command
