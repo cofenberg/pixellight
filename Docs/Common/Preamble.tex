@@ -18,10 +18,15 @@
 \usepackage{textcomp}
 \flushbottom
 
-\sloppy	% Avoid writing over linebreak
-\hbadness=10000
-\clubpenalty = 10000 % schliesst Schusterjungen aus
-\widowpenalty = 10000 % schliesst Hurenkinder aus
+% Avoid writing over linebreak (can happen with technical quotes, but it's not useful when we print outside the visible page)
+\tolerance 1414
+\hbadness 1414
+\emergencystretch 1.5em
+\hfuzz 0.3pt
+\widowpenalty=10000
+\clubpenalty=10000
+\vfuzz \hfuzz
+\raggedbottom
 
 % Links
 \usepackage[dvipdfm, colorlinks=true, urlcolor=black, linkcolor=black]{hyperref}
