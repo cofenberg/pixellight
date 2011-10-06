@@ -2,6 +2,7 @@
 [CO]
 - LaTex documents: Updated "Common"-content, e.g. the document class "scrbook" (Komascript-Book, http://ftp.uni-erlangen.de/mirrors/CTAN/macros/latex/contrib/koma-script/scrguien.pdf)
   is now used because when using "book" as document class, there are gigantic borders wasting a lot of space (especially source code examples are no fun this way).
+- LaTex documents: The background of source codes is now white instead of light grey - this way it's easier to read (higher contrast) and cheaper to print (less ink)
 
 
 
