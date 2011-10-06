@@ -319,11 +319,6 @@ if(NOT CMAKE_BUILD_TYPE)
 endif(NOT CMAKE_BUILD_TYPE)
 cmaketools_debug_variable(CMAKE_BUILD_TYPE)
 
-# Get current revision number
-set(SVN_REPOSITORY_REVISION "0")
-message(STATUS "Looking up subversion revision number...")
-message(STATUS "Looking up subversion revision number... - unknown")
-
 # Set suffix based on build type
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
 	set(CMAKETOOLS_CONFIG_DEBUG_SUFFIX "D")
