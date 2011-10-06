@@ -11,7 +11,7 @@ This document only describes the deferred scene renderer of PixelLight.
 
 
 \section{Deferred Scene Renderer}
-The deferred scene renderer of PixelLight is, like other PixelLight scene renderer implementations, a collection of render passes working together to form the render pipeline. This scene renderer is using \emph{Image Based Lighting} (IBL) and requires Shader 3.0 as a minimum. The XML-file \emph{DeferredRendering.sr} describes the render passes to use and their order.
+The deferred scene renderer of PixelLight is, like other PixelLight scene renderer implementations, a collection of render passes working together to form the render pipeline. This scene renderer is using \ac{IBL} and requires Shader 3.0 as a minimum. The \ac{XML}-file \emph{DeferredRendering.sr} describes the render passes to use and their order.
 \begin{itemize}
 \item{PLScene::SRPBegin (independent from the deferred scene renderer)}
 \item{PLCompositing::SRPDeferredGBuffer (with gamma correction support)}
@@ -47,7 +47,7 @@ The deferred scene renderer is using so called \emph{Über Shaders}. This simply 
 
 
 
-\subsection{GBuffer Layout}
+\subsection{\ac{GBuffer} Layout}
 Table ~\ref{Table:GBufferLayout}.
 \begin{table}[htb]
 	\centering
@@ -59,7 +59,7 @@ Table ~\ref{Table:GBufferLayout}.
 		DS & Depth Buffer & Depth Buffer & Depth Buffer & Stencil\\
 		\hline
 		\hline
-		RT0 & Albedo R & Albedo G & Albedo B & Ambient Occlusion\\
+		RT0 & Albedo R & Albedo G & Albedo B & \ac{AO}\\
 		\hline
 		RT1 & Normal X & Normal Y & Depth & -\\
 		\hline
@@ -69,14 +69,14 @@ Table ~\ref{Table:GBufferLayout}.
 		\hline
 		\hline
 	\end{tabular} 
-	\caption{GBuffer Layout}
+	\caption{\ac{GBuffer} Layout}
 	\label{Table:GBufferLayout}
 \end{table}
-By default, the GBuffer is using FP16 render targets - but FP32 render targets can be enabled as well.
+By default, the \ac{GBuffer} is using FP16 render targets - but FP32 render targets can be enabled as well.
 
 
 \paragraph{Stencil Buffer}
-By default, the \emph{PLCompositing::SRPDeferredGBuffer} scene renderer pass writes into the stencil buffer whether or not a pixel has valid content. 1 within the stencil buffer means: The GBuffer has no information about the pixel because no geometry is covering it. Later on, for example within the \emph{PLCompositing::SRPDeferredAmbient} scene render pass, this stencil buffer information can be used to draw only pixels with valid GBuffer content, everything else is not drawn. This is quite useful if there's for example a bitmap or sky already drawn and should remain in the \emph{background}.
+By default, the \emph{PLCompositing::SRPDeferredGBuffer} scene renderer pass writes into the stencil buffer whether or not a pixel has valid content. 1 within the stencil buffer means: The \ac{GBuffer} has no information about the pixel because no geometry is covering it. Later on, for example within the \emph{PLCompositing::SRPDeferredAmbient} scene render pass, this stencil buffer information can be used to draw only pixels with valid \ac{GBuffer} content, everything else is not drawn. This is quite useful if there's for example a bitmap or sky already drawn and should remain in the \emph{background}.
 
 
 \paragraph{Parallax Mapping}
@@ -84,21 +84,21 @@ Parallax Mapping as described in \url{http://www8.cs.umu.se/kurser/5DV051/VT09/l
 
 
 \paragraph{Two-Sided Polygons}
-Two-sided polygons are handled when filling the GBuffer by drawing the mesh a second time, but with flipped normal vectors. This is a simple, universal and robust way to solve this problem. As a result, there's no need to implement special two-sided lighting in later render passes.
+Two-sided polygons are handled when filling the \ac{GBuffer} by drawing the mesh a second time, but with flipped normal vectors. This is a simple, universal and robust way to solve this problem. As a result, there's no need to implement special two-sided lighting in later render passes.
 
 
 \paragraph{Gamma Correction}
 Usually, color textures like hand-painted images or photos are stored in sRGB space, therefore, they must be converted from sRGB to linear space during rendering. This is automatically done for the material parameters \emph{DiffuseMap}, \emph{LightMap}, \emph{EmissiveMap} and \emph{ReflectionMap}. If this wouldn't be done, the colors of this texture maps would look bleached out.
 Cg source~code~\ref{Code::GBufferGammaCorrection} shows how the used gamma correction technique.
-\begin{lstlisting}[float=htb,label=Code::GBufferGammaCorrection,caption={GBuffer gamma correction}]
+\begin{lstlisting}[float=htb,label=Code::GBufferGammaCorrection,caption={\ac{GBuffer} gamma correction}]
 float3 linearRGBColor = pow(sRGBColor, 2.2);
 \end{lstlisting}
 
 
 
 
-\subsubsection{GBuffer RT0}
-The \textbf{rgb}-components of \emph{RT0} contain the albedo. The albedo is calculated using \emph{DiffuseMap.rgb * DiffuseColor.rgb}. The \textbf{a}-component of \emph{RT0} is used for ambient occlusion, either static\footnote{Some call it \emph{Baked Occ}} pre-calculated or dynamic\footnote{Later on within the scene renderer pipeline, for example \emph{PLCompositing::SRPDeferredHBAO} renders ambient occlusion into this alpha channel}.
+\subsubsection{\ac{GBuffer} RT0}
+The \textbf{rgb}-components of \emph{RT0} contain the albedo. The albedo is calculated using \emph{DiffuseMap.rgb * DiffuseColor.rgb}. The \textbf{a}-component of \emph{RT0} is used for \ac{AO}, either static\footnote{Some call it \emph{Baked Occ}} pre-calculated or dynamic\footnote{Later on within the scene renderer pipeline, for example \emph{PLCompositing::SRPDeferredHBAO} renders \ac{AO} into this alpha channel}.
 
 
 \paragraph{Fresnel Reflection}
@@ -120,9 +120,9 @@ If the given \emph{ReflectionMap} material parameter is a cube map, cubic enviro
 
 
 
-\subsubsection{GBuffer RT1}
-The \textbf{rg}-components of \emph{RT1} contain the normal vector within view space. To save components within the GBuffer, only x and y of the normal vector are saved. The 3D normal vector is rebuild later by using z reconstruction. To archive this, the encode and decode functions from \url{http://aras-p.info/texts/CompactNormalStorage.html#method04spheremap} are used. Cg source code \ref{Code::NormalToGBuffer} shows how the xy-components of the normal vector are stored into the GBuffer.
-\begin{lstlisting}[float=htb,label=Code::NormalToGBuffer,caption={Normal vector to GBuffer}]
+\subsubsection{\ac{GBuffer} RT1}
+The \textbf{rg}-components of \emph{RT1} contain the normal vector within view space. To save components within the \ac{GBuffer}, only x and y of the normal vector are saved. The 3D normal vector is rebuild later by using z reconstruction. To archive this, the encode and decode functions from \url{http://aras-p.info/texts/CompactNormalStorage.html#method04spheremap} are used. Cg source code \ref{Code::NormalToGBuffer} shows how the xy-components of the normal vector are stored into the \ac{GBuffer}.
+\begin{lstlisting}[float=htb,label=Code::NormalToGBuffer,caption={Normal vector to \ac{GBuffer}}]
 // encodes a 3 component normal vector to a 2 component normal vector
 float2 encodeNormalVector(float3 normal)
 {
@@ -130,8 +130,8 @@ float2 encodeNormalVector(float3 normal)
 	return float2(normal.xy/p + 0.5f);
 }
 \end{lstlisting}
-Cg source code \ref{Code::GBufferToNormal} shows how the normal vector is restored from the GBuffer.
-\begin{lstlisting}[float=htb,label=Code::GBufferToNormal,caption={GBuffer to normal vector}]
+Cg source code \ref{Code::GBufferToNormal} shows how the normal vector is restored from the \ac{GBuffer}.
+\begin{lstlisting}[float=htb,label=Code::GBufferToNormal,caption={\ac{GBuffer} to normal vector}]
 // decodes a 2 component normal vector to a 3 component normal vector
 float3 decodeNormalVector(float2 normal)
 {
@@ -147,20 +147,20 @@ float3 decodeNormalVector(float2 normal)
 
 The \textbf{b}-component of \emph{RT1} contains the view space linear depth [0...far plane].
 
-Storing normal vector and depth information within one render target is useful for the SSAO render effect. It just needs the texture from this render target.
+Storing normal vector and depth information within one render target is useful for the \ac{SSAO} render effect. It just needs the texture from this render target.
 
 
 
 
-\subsubsection{GBuffer RT2}
+\subsubsection{\ac{GBuffer} RT2}
 The \textbf{rgb}-components of \emph{RT2} contain the specular color. The specular color is calculated using \emph{SpecularMap.rgb * SpecularColor.rgb}. The \textbf{a}-component of \emph{RT2} contains the specular exponent and is calculated using \emph{SpecularMap.a * SpecularExponent}. As result, if a \emph{SpecularMap} has an alpha channel, it's used for per texel specular power control.
 
 
 
 
-\subsubsection{GBuffer RT3}
+\subsubsection{\ac{GBuffer} RT3}
 The \textbf{rgb}-components of \emph{RT3} contains the composition of emissive maps and light maps. Alpha is for glow. (outshine effect) 
-Lighting, wich is not connected to a particular realtime light, is also rendered during the GBuffer fill. 
+Lighting, wich is not connected to a particular realtime light, is also rendered during the \ac{GBuffer} fill. 
 
 
 
@@ -175,7 +175,7 @@ As BRDF model, Blinn-Phong with half vector specular highlights was chosen.
 \paragraph{Gamma Correction}
 Usually, color textures like hand-painted images or photos are stored in sRGB space, therefore, they must be converted from sRGB to linear space during rendering. This is automatically done for the texture maps of projective light sources. If this wouldn't be done, the colors of this texture maps would look bleached out.
 Cg source~code~\ref{Code::LightingGammaCorrection} shows how the used gamma correction technique.
-\begin{lstlisting}[float=htb,label=Code::LightingGammaCorrection,caption={GBuffer gamma correction}]
+\begin{lstlisting}[float=htb,label=Code::LightingGammaCorrection,caption={\ac{GBuffer} gamma correction}]
 float3 linearRGBColor = pow(sRGBColor, 2.2);
 \end{lstlisting}
 
@@ -183,12 +183,12 @@ float3 linearRGBColor = pow(sRGBColor, 2.2);
 
 
 \section{Post Process Effects}
-PixelLight comes with a compact and comfortable post processing (is also called 'image processing') system. For image processing like bloom the scene is rendered into a texture instead the usual output. Then the post processing manager is taking this texture and applies different effects on it. At the end you will receive the final composition you can draw on screen using for instance a full screen rectangle. In today's hardware, high dynamic range (HDR) rendering must also be  implemented as image processing because of the lack of the output devices like monitor to display such HDR data directly. Therefore this HDR data must be mapped to the 'usual' RGB data using tone mapping.
+PixelLight comes with a compact and comfortable post processing (is also called 'image processing') system. For image processing like bloom the scene is rendered into a texture instead the usual output. Then the post processing manager is taking this texture and applies different effects on it. At the end you will receive the final composition you can draw on screen using for instance a full screen rectangle. In today's mainstream hardware, \ac{HDR} rendering must also be implemented as image processing because of the lack of the output devices like monitor to display such \ac{HDR} data directly. Therefore this \ac{HDR} data must be mapped to the 'usual' RGB data using tone mapping.
 
 The post processing system of PixelLight can be subdivided into two categories:
 \begin{itemize}
 \item The Scene Render Pipeline Post Processing integrates into the scene render
-process and is using for example data from the deferred rendering GBuffer. This type of post processing is fixed build in.
+process and is using for example data from the deferred rendering \ac{GBuffer}. This type of post processing is fixed build in.
 \item Post Post Processing is completely decoupled from the scene render process
 and is performed after the scene rendering is finished. This type of post processing is not fixed build in.
 \end{itemize}
@@ -211,17 +211,17 @@ This effect is implemented within the \emph{PLCompositing::SRPDeferredDepthFog} 
 Anti-aliasing is realized using resolution-independent edge detection as described within \url{http://http.developer.nvidia.com/GPUGems3/gpugems3_ch19.html}. This effect is implemented within the \emph{PLCompositing::SRPDeferredEdgeAA} scene renderer pass.
 
 
-\paragraph{Screen-Space Ambient Occlusion (SSAO)}
-SSAO is calculated dynamically during runtime using per fragment depth and optionally also normal data. SSAO overwrites the static ambient occlusion value from GBuffer RT0. As a result, you can either have static ambient occlusion maps, or dynamic ambient occlusion, but not both at the same time. SSAO can be implemented in several ways. Currently the following techniques are implemented:
+\paragraph{\ac{SSAO}}
+\ac{SSAO} is calculated dynamically during runtime using per fragment depth and optionally also normal data. \ac{SSAO} overwrites the static \ac{AO} value from \ac{GBuffer} RT0. As a result, you can either have static \ac{AO} maps, or dynamic \ac{AO}, but not both at the same time. \ac{SSAO} can be implemented in several ways. Currently the following techniques are implemented:
 \begin{itemize}
-\item{PLCompositing::SRPDeferredHBAO: Horizon Based Ambient Occlusion (HBAO) as described within the NVIDIA Direct3D SDK 10 Code Samples \url{http://developer.download.nvidia.com/SDK/10.5/direct3d/Source/ScreenSpaceAO/doc/ScreenSpaceAO.pdf}}
-\item{PLCompositing::SRPDeferredHDAO: High Definition Ambient Occlusion (HDAO) as described within the ATI Radeon SDK \url{http://developer.amd.com/Downloads/HDAO10.1.zip}}
+\item{PLCompositing::SRPDeferredHBAO: \ac{HBAO} as described within the NVIDIA Direct3D \ac{SDK} 10 Code Samples \url{http://developer.download.nvidia.com/SDK/10.5/direct3d/Source/ScreenSpaceAO/doc/ScreenSpaceAO.pdf}}
+\item{PLCompositing::SRPDeferredHDAO: \ac{HDAO} as described within the ATI Radeon \ac{SDK} \url{http://developer.amd.com/Downloads/HDAO10.1.zip}}
 \end{itemize}
-The concrete SSAO implementations are derived from the \emph{PLCompositing::SRPDeferredSSAO} class which offers \emph{Cross Bilateral Filter} as described within the NVIDIA Direct3D SDK 10 Code Samples \url{http://developer.download.nvidia.com/SDK/10.5/direct3d/Source/ScreenSpaceAO/doc/ScreenSpaceAO.pdf}.
+The concrete \ac{SSAO} implementations are derived from the \emph{PLCompositing::SRPDeferredSSAO} class which offers \emph{Cross Bilateral Filter} as described within the NVIDIA Direct3D \ac{SDK} 10 Code Samples \url{http://developer.download.nvidia.com/SDK/10.5/direct3d/Source/ScreenSpaceAO/doc/ScreenSpaceAO.pdf}.
 
 
 \paragraph{Volumetric Light Scattering}
-\emph{Volumetric Light Scattering} as described within \url{http://http.developer.nvidia.com/GPUGems3/gpugems3_ch13.html}. This effect is also known as crepuscular rays, sunbeams, sunbursts, star flare, god rays, sun shafts, or light shafts. Within PixelLight, we chosen the name \emph{god rays} because it's short. The emissive/light map content of the GBuffer is used as glowing parts. This effect is implemented within the \emph{PLCompositing::SRPDeferredGodRays} scene renderer pass.
+\emph{Volumetric Light Scattering} as described within \url{http://http.developer.nvidia.com/GPUGems3/gpugems3_ch13.html}. This effect is also known as crepuscular rays, sunbeams, sunbursts, star flare, god rays, sun shafts, or light shafts. Within PixelLight, we chosen the name \emph{god rays} because it's short. The emissive/light map content of the \ac{GBuffer} is used as glowing parts. This effect is implemented within the \emph{PLCompositing::SRPDeferredGodRays} scene renderer pass.
 
 
 \paragraph{Glow}
@@ -232,20 +232,20 @@ This effect is implemented within the \emph{PLCompositing::SRPDeferredGlow} scen
 This effect is implemented within the \emph{PLCompositing::SRPDeferredDOF} scene renderer pass and is using the technique described within \url{http://ati.amd.com/developer/gdc/Scheuermann_DepthOfField.pdf}.
 
 
-\paragraph{HDR Tone Mapping}
-The scene render pass \emph{SRPEndHDR} finishes the HDR render pipeline by converting the HDR image using tone mapping into an LDR image (the available color range is compressed). As tone mapping operator we've chosen \emph{Reinhard tone mapping} as described within \url{http://www.cs.ucf.edu/~reinhard/cdrom/}.
+\paragraph{\ac{HDR} Tone Mapping}
+The scene render pass \emph{SRPEndHDR} finishes the \ac{HDR} render pipeline by converting the \ac{HDR} image using tone mapping into an \ac{LDR} image (the available color range is compressed). As tone mapping operator we've chosen \emph{Reinhard tone mapping} as described within \url{http://www.cs.ucf.edu/~reinhard/cdrom/}.
 
-For the tone mapping, the logarithmic average luminance of the current HDR image is required. While calculating this luminance value on the CPU is trivial, a parallel approach is required for calculating this value on the GPU. Within the literature, there are many ways this logarithmic average luminance can be calculated on the GPU. We decided to use the technique described within \url{http://developer.download.nvidia.com/SDK/9.5/Samples/DEMOS/Direct3D9/HDR_FP16x2.zip}, it looks like this is one of the more popular ways to solve the problem. The technique consists of three steps:
+For the tone mapping, the logarithmic average luminance of the current \ac{HDR} image is required. While calculating this luminance value on the \ac{CPU} is trivial, a parallel approach is required for calculating this value on the \ac{GPU}. Within the literature, there are many ways this logarithmic average luminance can be calculated on the \ac{GPU}. We decided to use the technique described within \url{http://developer.download.nvidia.com/SDK/9.5/Samples/DEMOS/Direct3D9/HDR_FP16x2.zip}, it looks like this is one of the more popular ways to solve the problem. The technique consists of three steps:
 \begin{itemize}
 \item{First downsample pass with calculation of the pixel luminance and log calculation}
 \item{Downsample the 1 component texture until it has a size of 4x4 pixels}
 \item{Calculate the final 1x1 and it's exponential value}
 \end{itemize}
-Although the last step is a waste of the tremendous GPU power, it's more efficient than downloading the result to the CPU and passing on the logarithmic average luminance to the tone mapping fragment shader.
+Although the last step is a waste of the tremendous \ac{GPU} power, it's more efficient than downloading the result to the \ac{CPU} and passing on the logarithmic average luminance to the tone mapping fragment shader.
 
 For \emph{light adaptation}, the Pattanaik exponential decay function described within \url{http://www.coretechniques.info/PostFX.zip} is used. By using this technique, the change of the logarithmic average luminance is smoothed to simulate the gradual adaptation of the human eye to different lighting conditions.
 
-\emph{HDR bloom} is also supported.
+\emph{\ac{HDR} bloom} is also supported.
 % [TODO] Any references? (bloom is not that complex :)
 % http://www.gamasutra.com/features/20061003/kylmamaa_03.shtml
 % http://harkal.sylphis3d.com/2006/05/20/how-to-do-good-bloom-for-hdr-rendering/
@@ -261,7 +261,7 @@ float3 sRGBColor = pow(linearRGBColor, 1/gamma);
 
 
 \subsection{Post Post Processing}
-The post processing that is performed after the scene rendering is finished, is completely based on script like XML files defining how a post process is created. Multiple post processes can be performed one after another.
+The post processing that is performed after the scene rendering is finished, is completely based on script like \ac{XML} files defining how a post process is created. Multiple post processes can be performed one after another.
 
 \begin{itemize}
 \item Each post process material can have annotation for additional information. (Material parameters fScaleX \& fScaleY, default value for both 1.0f)
@@ -288,7 +288,7 @@ Here's a list of some provided post processing effects defined within PLPostProc
       -> ColorDownFilter4.mat + ColorGBlurH.mat + ColorGBlurV.mat + ColorUpFilter4.mat
 \item Bloom: Bright things 'glow'\\
       -> ColorDownFilter8.mat + ColorBrightPass.mat + ColorBloomH.mat + ColorBloomV.mat + ColorBloomH.mat +	ColorBloomV.mat + ColorCombine8.mat
-\item HDR (tone map): Nice high-dynamic-range rendering. A floating point render target is used instead the standard RGB unsigned char format. As post process a tone map effect is applied.\\
+\item \ac{HDR} (tone map): Nice high-dynamic-range rendering. A floating point render target is used instead the standard RGB unsigned char format. As post process a tone map effect is applied.\\
       -> ColorToneMap.mat
 \item Edge detect: Edge detection\\
       -> ColorEdgeDetect.mat
@@ -341,4 +341,4 @@ And here's the DTD of this format:
 ]>
 \end{lstlisting}
 
-As you can see, within a post process file, there are optional general information defining for instance the required render to texture format. Default setting for 'TextureFormat' is 'R8G8B8'. 'TextureFormat' can also be R8G8B8A8 if an alpha channel is required or R16G16B16A16F/R32G32B32A32F for floating point formats. The different passes are the main thing of this format. Each pass is in fact a material which will be applied to the current render to texture result. By using different passes after each other one can create different final effects. 'Pass' element can have a special class controlling/animating for instance certain unique shader parameters. The main work of the post processes is done within the materials and shaders.
+As you can see, within a post process file, there are optional general information defining for instance the required \ac{RTT} format. Default setting for 'TextureFormat' is 'R8G8B8'. 'TextureFormat' can also be R8G8B8A8 if an alpha channel is required or R16G16B16A16F/R32G32B32A32F for floating point formats. The different passes are the main thing of this format. Each pass is in fact a material which will be applied to the current \ac{RTT} result. By using different passes after each other one can create different final effects. 'Pass' element can have a special class controlling/animating for instance certain unique shader parameters. The main work of the post processes is done within the materials and shaders.

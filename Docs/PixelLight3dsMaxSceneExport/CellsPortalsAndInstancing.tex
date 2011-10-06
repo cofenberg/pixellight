@@ -3,7 +3,7 @@
 
 Your scene should be divided into cells which are connected through portals. Each node of your scene must be within a cell, else the exporter will write a hint into the log and append this node at the root of the exported PixelLight scene. The spatial subdivision of your scene is defined by using the \emph{Autodesk 3ds Max} node names. \emph{cell\_Room1\_Table1}, \emph{cell\_Room1\_Wall2}, \emph{cell\_Room2\_Monster}, \emph{cell\_Room2\_Floor} -> This will result in two cells called \emph{Room1} and \emph{Room2}. Within \emph{Room1} are the nodes \emph{Table1} and \emph{Wall2}, within \emph{Room2} are the nodes \emph{Monster} and \emph{Floor}.
 
-The scene exporter will detect instanced meshes automatically. In this case, this mesh is only saved once and then used for multiple nodes within your scene. This way the scene is exported faster, the exported scene will need less space on the hard-drive - but most important, the time to load this scene will be shorter and the scene will eat up less system \& GPU memory during runtime.
+The scene exporter will detect instanced meshes automatically. In this case, this mesh is only saved once and then used for multiple nodes within your scene. This way the scene is exported faster, the exported scene will need less space on the hard-drive - but most important, the time to load this scene will be shorter and the scene will eat up less system \& \ac{GPU} memory during runtime.
 
 \textbf{Use instancing whenever possible.}\footnote{There are \emph{Autodesk 3ds Max} scripts like \url{http://www.scriptspot.com/3ds-max/scripts/instance-replace} helping with instancing}
 

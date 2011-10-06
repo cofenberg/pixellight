@@ -52,7 +52,7 @@ Originally, the string class had native UTF8 support build in. For each \emph{ch
 
 Due to the complexity of the UTF8 implementation and the possible combinations with \emph{char} and \emph{wchar\_t} and a constant lack of time, the UTF8 implementation was not fully implemented and there were a lot of TODO-points. At the end of the year 2010 the decision was made to give up the internal native UTF8 implementation - the alternatives were to keep the unfinished string codes for some more years, or to spend some weeks in completing and testing the native UTF8 implementation... with the possibility that the resulting implementation would have a poor performance and tons of hidden bugs (waiting quietly in the dark to attack) due to it's complexity. Both options were not that attractive.
 
-Now, the string class offers a \emph{ToUTF8}-method to return the current string content as, internally cached, UTF8 formatted string as well as a \emph{FromUTF8}-method to create a PixelLight string instance by using a given UTF8 formatted string. This two methods can be used to exchange strings with for example UNIX systems or with other APIs like Qt.
+Now, the string class offers a \emph{ToUTF8}-method to return the current string content as, internally cached, UTF8 formatted string as well as a \emph{FromUTF8}-method to create a PixelLight string instance by using a given UTF8 formatted string. This two methods can be used to exchange strings with for example UNIX systems or with other \ac{API}s like Qt.
 
 
 \paragraph{wchar\_t}
@@ -156,9 +156,9 @@ It's practical to only support regular expressions or wildcards, but not both - 
 
 
 \subsection{Qt String Adapter}
-Within the project \emph{PLFrontendQt}, there's a static adapter class for mapping Qt\footnote{Qt is a cross-platform application and UI framework, \url{http://qt.nokia.com/}} strings to PixelLight strings and vice versa.
+Within the project \emph{PLFrontendQt}, there's a static adapter class for mapping Qt\footnote{Qt is a cross-platform application and \ac{UI} framework, \url{http://qt.nokia.com/}} strings to PixelLight strings and vice versa.
 
-We provide this string adapter class because it's nice to be able to use PixelLight within Qt as comfortable as possible. Please note that the existence of this adapter class doesn't mean that PixelLight depends on Qt - inside PixelLight, neither this class nor Qt are used!\footnote{That's the reason why there's just a header file for this class, and no c++ file}
+We provide this string adapter class because it's nice to be able to use PixelLight within Qt as comfortable as possible. Please note that the existence of this adapter class doesn't mean that PixelLight depends on Qt - inside PixelLight, neither this class nor Qt are used!\footnote{That's the reason why there's just a header file for this class, and no C++ file}
 
 The following source code example shows how to convert a Qt string to \emph{PLCore::String}.
 \begin{lstlisting}[caption=Qt string to PLCore::String]

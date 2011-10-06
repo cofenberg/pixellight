@@ -1,7 +1,7 @@
-\chapter{GPU Programs}
-There's a broad range of shader languages and APIs like GLSL, HLSL and Cg. Therefore, when designing the GPU program interfaces for PLRenderer, one design goal was to be able to implement as many GPU program backends as possible - and this without producing to much internal overhead.
+\chapter{\ac{GPU} Programs}
+There's a broad range of shader languages and \ac{API}s like \ac{GLSL}, \ac{HLSL} and Cg. Therefore, when designing the \ac{GPU} program interfaces for PLRenderer, one design goal was to be able to implement as many \ac{GPU} program backends as possible - and this without producing to much internal overhead.
 
-In PixelLight, we're using OpenGL and GLSL terminology if not otherwise mentioned. The reason for this is simple: OpenGL and GLSL are popular open, multi-platform standard.
+In PixelLight, we're using OpenGL and \ac{GLSL} terminology if not otherwise mentioned. The reason for this is simple: OpenGL and \ac{GLSL} are popular open, multi-platform standard.
 
 
 
@@ -24,13 +24,13 @@ Vertex attributes are the per-vertex values.
 
 
 \paragraph{Varying Vertex Shader Input}
-In the first years of programmable shaders, there was a need to connect the legacy fixed functions with the new programmable shaders. Therefore, within certain shader languages, binding semantic names for varying vertex shader input were introduces. Table~\ref{Table:VaryingVertexShaderInput} gives an overview over the first 16 vertex shader input arguments within GLSL and Cg and their corresponding binding semantic names.
+In the first years of programmable shaders, there was a need to connect the legacy fixed functions with the new programmable shaders. Therefore, within certain shader languages, binding semantic names for varying vertex shader input were introduces. Table~\ref{Table:VaryingVertexShaderInput} gives an overview over the first 16 vertex shader input arguments within \ac{GLSL} and Cg and their corresponding binding semantic names.
 \begin{table}[htb]
 	\centering
 	\begin{ThreePartTable}
 		\begin{tabular}{|l|l|p{0.2\textwidth}|l|}
 			\toprule
-				\textbf{Index} & \textbf{GLSL\tnote{1}} & \textbf{Cg\tnote{2}} & \textbf{Description}\\
+				\textbf{Index} & \textbf{\ac{GLSL}\tnote{1}} & \textbf{Cg\tnote{2}} & \textbf{Description}\\
 			\midrule
 				\hline
 				0	&	gl\_Vertex			&	POSITION, ATTR0				&	Position\\
@@ -71,11 +71,11 @@ In the first years of programmable shaders, there was a need to connect the lega
 			\item[1] Cg Users Manual (2.2, Release 1.4 September 2005), \url{http://developer.download.nvidia.com/cg/Cg\_2.2/CgUsersManual.pdf}, Page 299, Table 30. vp20 Varying Input Binding Semantics
 			\item[2] OpenGL Shading Language 3.30.6 Specification (updated March 11, 2010), \url{http://www.opengl.org/registry/doc/GLSLangSpec.3.30.6.clean.pdf} Page 73, 7.3 Compatibility Profile Vertex Shader Built-In Inputs
 		\end{tablenotes}
-		\caption{Binding semantic names for varying vertex shader input in GLSL and Cg}
+		\caption{Binding semantic names for varying vertex shader input in \ac{GLSL} and Cg}
 		\label{Table:VaryingVertexShaderInput}
 	\end{ThreePartTable}
 \end{table}
-Nowadays, one should avoid using this binding semantic names because they are often depriciated and in general, restricts the usage of programmable shaders. Modern graphic API's and shader languages no longer demand that for example, the first vertex shader input argument is the vertex position. One should carefully plan the vertex shader input design. If not otherwise mentioned we're using within PixelLight the vertex shader input layout as seen within the table~\ref{Table:VaryingVertexShaderInput} above - this way we stay compatible to fixed function stuff and in general, it's less confusing to use a standard layout if possible.
+Nowadays, one should avoid using this binding semantic names because they are often depriciated and in general, restricts the usage of programmable shaders. Modern graphic \ac{API}s and shader languages no longer demand that for example, the first vertex shader input argument is the vertex position. One should carefully plan the vertex shader input design. If not otherwise mentioned we're using within PixelLight the vertex shader input layout as seen within the table~\ref{Table:VaryingVertexShaderInput} above - this way we stay compatible to fixed function stuff and in general, it's less confusing to use a standard layout if possible.
 
 
 

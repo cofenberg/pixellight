@@ -44,7 +44,7 @@ When using the \emph{maketool} flag \verb+--syslibs+, you also need the followin
 \item{\emph{libjpeg62-dev} (required by PLGraphics)}
 \item{\emph{libpng12-dev} (required by PLGraphics)}
 \item{\emph{libfreetype6-dev} (required by PLRendererOpenGL and PLRendererOpenGLES)}
-\item{\emph{nvidia-cg-toolkit} (required by PLRendererOpenGLCg - >= Cg Toolkit 3.0 - February 2011 required) - \emph{nvidia-cg-toolkit} may be out-of-date, install a newer Cg SDK: \url{http://developer.download.nvidia.com/cg/Cg_3.0/Cg-3.0_February2011_x86.deb}}
+\item{\emph{nvidia-cg-toolkit} (required by PLRendererOpenGLCg - >= Cg Toolkit 3.0 - February 2011 required) - \emph{nvidia-cg-toolkit} may be out-of-date, install a newer Cg \ac{SDK}: \url{http://developer.download.nvidia.com/cg/Cg_3.0/Cg-3.0_February2011_x86.deb}}
 \item{\emph{libopenal-dev} (required by PLSoundOpenAL)}
 \item{\emph{libogg-dev} (PLSoundOpenAL)}
 \item{\emph{libvorbis-dev} (PLSoundOpenAL)}
@@ -93,7 +93,7 @@ Here's a list of the most important \emph{maketool}-options:
 \item{\verb+--debug+								- Create a debug version (default)}
 \item{\verb+--release+								- Create a release version}
 \item{\verb+--suffix+ \textless suffix\textgreater	- Add a suffix to all library names}
-\item{\verb+--externals+							- Repository URL were to download the packages with the external dependencies from (e.g. \url{http://pixellight.sourceforge.net/externals/})}
+\item{\verb+--externals+							- Repository \ac{URL} were to download the packages with the external dependencies from (e.g. \url{http://pixellight.sourceforge.net/externals/})}
 \item{\verb+--username+								- User name for access to restricted packages within the repository}
 \item{\verb+--password+								- User password for access to restricted packages within the repository}
 \item{\verb+--arch+									- Architecture (e.g. \emph{x86}, \emph{arm})}
@@ -126,7 +126,7 @@ For more information about the external dependencies, please have a look at chap
 
 
 \section{CMake}
-In case you don't want to use the shell script \emph{maketool}, here's how to compile PixelLight by using the CMake-GUI:
+In case you don't want to use the shell script \emph{maketool}, here's how to compile PixelLight by using the CMake-\ac{GUI}:
 \begin{itemize}
 \item{Start "CMake (cmake-gui)"}
 \item{"Where is the source code"-field: e.g. "\textasciitilde /PixelLight"}
@@ -137,7 +137,7 @@ In case you don't want to use the shell script \emph{maketool}, here's how to co
 \item{(The CMake part is done, you can close "CMake (cmake-gui)" now)}
 \item{(Ensure you have all required external packages, see chapter~\ref{Chapter:ExternalDependencies})}
 \item{Open a terminal and change into e.g. "\textasciitilde /PixelLight/CMakeOutput"}
-\item{Type "make" (example: "make -j 4 -k" will use four CPU cores and will keep on going when there are errors)}
+\item{Type "make" (example: "make -j 4 -k" will use four \ac{CPU} cores and will keep on going when there are errors)}
 \end{itemize}
 
 
@@ -155,7 +155,7 @@ cd build-Release
 make
 \end{lstlisting}
 
-The latter option has the advantage that you can also build individual projects rather than only the whole SDK. To build projects individually, change into the \emph{build-Debug} or \emph{build-Release} directory and type
+The latter option has the advantage that you can also build individual projects rather than only the whole \ac{SDK}. To build projects individually, change into the \emph{build-Debug} or \emph{build-Release} directory and type
 \begin{lstlisting}[language=sh]
 make <project name>
 \end{lstlisting}
@@ -165,7 +165,7 @@ In order to use make options, change into the \emph{build-Debug} or \emph{build-
 \begin{lstlisting}[language=sh]
 make
 \end{lstlisting}
-In order to make all projects using four CPU cores to significantly speed up the make process, add the option "-j 4". You may also add the option \emph{-k} to tell the compiler "Keep on going" if there are errors within the build - useful if you're going for a walk or having some fresh coffee while the build is running. Example:
+In order to make all projects using four \ac{CPU} cores to significantly speed up the make process, add the option "-j 4". You may also add the option \emph{-k} to tell the compiler "Keep on going" if there are errors within the build - useful if you're going for a walk or having some fresh coffee while the build is running. Example:
 \begin{lstlisting}[language=sh]
 make -j 4 -k
 \end{lstlisting}
@@ -185,7 +185,7 @@ Or use maketool to do it for you:
 ./maketool docs
 \end{lstlisting}
 
-To create the PixelLight SDK and create a Debian installation file, build project \emph{Pack}:
+To create the PixelLight \ac{SDK} and create a Debian installation file, build project \emph{Pack}:
 \begin{lstlisting}[language=sh]
 cd build-Release
 make Pack
@@ -237,7 +237,7 @@ This is the most comfortable way, because you only have to do this once, and the
 
 
 
-\subsection{2. Install the PixelLight SDK Locally}
+\subsection{2. Install the PixelLight \ac{SDK} Locally}
 Installing means copying the files built by the project into your local Linux system so that the libraries and applications can be found there. The CMake build script therefore provides you with an \emph{install} target that installs everything on your local machine into the \emph{/usr/local} directory.
 
 Change into the build directory, e.g.:

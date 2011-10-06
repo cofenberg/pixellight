@@ -1,7 +1,7 @@
 \chapter{Android}
 In principle, there's no difference in building PixelLight for Android on a MS Windows or Linux host. So, the following description is e.g. not MS Windows only.
 
-Warning: We noticed several issues when using the Android NDK under MS Windows (tested with \emph{"ndk r6b})
+Warning: We noticed several issues when using the \ac{NDK} under MS Windows (tested with \emph{"ndk r6b})
 \begin{itemize}
 \item{The linker eat characters resulting in errors like "CMakeFiles/PLCore.dr/src/File/FileSearchLinux.cpp not found" while the filename was "CMakeFiles/PLCore.dir/src/File/FileSearchLinux.cpp"}
 \item{Performance issues, the build process is slow, really slow}
@@ -12,26 +12,26 @@ Warning: We noticed several issues when using the Android NDK under MS Windows (
 
 \section{Prerequisites}
 \begin{itemize}
-\item{PixelLight requires at least Android 2.3 (Gingerbread, NDK API level 9), previous Android versions had no decent native support}
+\item{PixelLight requires at least Android 2.3 (Gingerbread, \ac{NDK} \ac{API} level 9), previous Android versions had no decent native support}
 \item{In case you want to use OpenGL ES 2.0, you'll need a physical device because currently the Android Emulator has no support for OpenGL ES 2.0}
 \end{itemize}
 
 Install the usual Android development tools (the following versions are those used when writing this, other versions may work as well)
 
 
-\paragraph{Java JDK and JRE}
+\paragraph{\ac{JDK} and \ac{JRE}}
 Required for the Android build, not for PixelLight itself.
 
 
-\paragraph{Android SDK (\emph{r12})}
+\paragraph{Android \ac{SDK} (\emph{r12})}
 \begin{itemize}
-\item{Android SDK Tools, revision 12}
-\item{Android SDK Platform-tools, revision 6}
-\item{SDK Platform Android 2.2, API 9, revision 3}
+\item{Android \ac{SDK} Tools, revision 12}
+\item{Android \ac{SDK} Platform-tools, revision 6}
+\item{\ac{SDK} Platform Android 2.2, \ac{API} 9, revision 3}
 \end{itemize}
 
 
-\paragraph{Android NDK (\emph{ndk r6b}) - Linux}
+\paragraph{\ac{NDK} (\emph{ndk r6b}) - Linux}
 This example assumes that the data has been extracted directly within the home (\emph{\textasciitilde}) directory: Open hidden \emph{\textasciitilde /.bashrc} and add:
 \begin{lstlisting}[language=sh]
 # Important Android SDK and NDK paths
@@ -41,18 +41,18 @@ export PATH=${PATH}:${ANDROID_SDK}/tools:${ANDROID_SDK}/platform-tools:~/${ANDRO
 \end{lstlisting}
 
 
-\paragraph{Android NDK (\emph{ndk r6b}) - MS Windows}
+\paragraph{\ac{NDK} (\emph{ndk r6b}) - MS Windows}
 \begin{itemize}
-\item{Extract it and set the MS Windows PATH environment variable \emph{ANDROID\_NDK} to the NDK root directory}
-\item{Set the MS Windows \emph{PATH} environment variable \emph{ANDROID\_NDK\_TOOLCHAIN\_ROOT} to the NDK toolchain root directory (e.g. "C:/android-ndk-r6b/toolchains/arm-linux-androideabi-4.4.3/prebuilt/windows/arm-linux-androideabi")}
-\item{(Those variables can also be added/set within the CMake-GUI)}
+\item{Extract it and set the MS Windows PATH environment variable \emph{ANDROID\_NDK} to the \ac{NDK} root directory}
+\item{Set the MS Windows \emph{PATH} environment variable \emph{ANDROID\_NDK\_TOOLCHAIN\_ROOT} to the \ac{NDK} toolchain root directory (e.g. "C:/android-ndk-r6b/toolchains/arm-linux-androideabi-4.4.3/prebuilt/windows/arm-linux-androideabi")}
+\item{(Those variables can also be added/set within the CMake-\ac{GUI})}
 \end{itemize}
 
 
 \paragraph{make (Windows)}
 \begin{itemize}
 \item{\emph{Make for Windows}: Make: GNU make utility to maintain groups of programs}
-\item{Directly used by the CMake scripts under MS Windows when using the Android NDK toolchain}
+\item{Directly used by the CMake scripts under MS Windows when using the \ac{NDK} toolchain}
 \item{\emph{cmake/UsedTools/make/make.exe} was downloaded from \url{http://gnuwin32.sourceforge.net/packages/make.htm}}
 \end{itemize}
 This tool can't be set within a CMake file automatically, there are several options:
@@ -69,7 +69,7 @@ cmake.exe -G"Unix Makefiles" -DCMAKE\_MAKE\_PROGRAM="<PixelLight root path>/cmak
 
 
 \section{Create Makefiles and Build}
-Here's how to compile PixelLight by using the CMake-GUI:
+Here's how to compile PixelLight by using the CMake-\ac{GUI}:
 \begin{itemize}
 \item{Ensure "make" (GNU make utility to maintain groups of programs) can be found by CMake (add for instance "\textless PixelLight root path\textgreater /cmake/UsedTools/make" to the MS Windows \emph{PATH} environment variable)}
 \item{Start "CMake (cmake-gui)"}
@@ -84,6 +84,6 @@ Here's how to compile PixelLight by using the CMake-GUI:
 \item{(The CMake part is done, you can close "CMake (cmake-gui)" now)}
 \item{(Ensure you have all required external packages, see chapter~\ref{Chapter:ExternalDependencies})}
 \item{Open a command prompt and change into e.g. "C:/PixelLight/CMakeOutput" (MS Windows: by typing "cd /D C:/PixelLight/CMakeOutput" -> "/D" is only required when changing into another partition)}
-\item{Type "make" (example: "make -j 4 -k" will use four CPU cores and will keep on going when there are errors)}
+\item{Type "make" (example: "make -j 4 -k" will use four \ac{CPU} cores and will keep on going when there are errors)}
 \item{(You now should have the ready to be used Android shared library files)}
 \end{itemize}

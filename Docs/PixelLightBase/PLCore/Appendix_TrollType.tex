@@ -1,9 +1,9 @@
-\chapter{PLCore - User Defined RTTI Data Type}
+\chapter{PLCore - User Defined \ac{RTTI} Data Type}
 \label{Appendix:UserDefinedRTTIDataType}
-Although the RTTI comes with many standard RTTI data types, additional data types can be defined as well. In here, we create a user defined data type to show how this is done. Please note that this data type is not totally serious and we think it's possible to write applications without the use of this data type. We implement a \emph{troll} data type which is able to remember a complete number, as long as it's 0, 1 or 2 - in short: a completely useless example data type. The data type is defined within the source~codes~\ref{Code:UserDefinedRTTIDataTypeHeader}, \ref{Code:UserDefinedRTTIDataTypeInline} and \ref{Code:UserDefinedRTTIDataTypeSource}.
+Although the \ac{RTTI} comes with many standard \ac{RTTI} data types, additional data types can be defined as well. In here, we create a user defined data type to show how this is done. Please note that this data type is not totally serious and we think it's possible to write applications without the use of this data type. We implement a \emph{troll} data type which is able to remember a complete number, as long as it's 0, 1 or 2 - in short: a completely useless example data type. The data type is defined within the source~codes~\ref{Code:UserDefinedRTTIDataTypeHeader}, \ref{Code:UserDefinedRTTIDataTypeInline} and \ref{Code:UserDefinedRTTIDataTypeSource}.
 
-The new RTTI data type can then be used like all the other data types as shown within source~code~\ref{Code:UserDefinedRTTIDataTypeClassDefinition}.
-\begin{lstlisting}[label=Code:UserDefinedRTTIDataTypeClassDefinition,caption={RTTI class using a user defined RTTI data type}]
+The new \ac{RTTI} data type can then be used like all the other data types as shown within source~code~\ref{Code:UserDefinedRTTIDataTypeClassDefinition}.
+\begin{lstlisting}[label=Code:UserDefinedRTTIDataTypeClassDefinition,caption={\ac{RTTI} class using a user defined \ac{RTTI} data type}]
 // Class definition of MyClass
 #include <PLCore/Base/Object.h>
 class MyClass : public PLCore::Object {
@@ -23,8 +23,8 @@ class MyClass : public PLCore::Object {
 // MyClass RTTI implementation (not done within headers)
 pl_implement_class(MyClass)
 \end{lstlisting}
-The RTTI class containing a user defined RTTI data type can than be used as seen within source~code~\ref{Code:UserDefinedRTTIDataTypeClassDefinition}.
-\begin{lstlisting}[label=Code:UserDefinedRTTIDataTypeClassUsage,caption={Using a RTTI class containing a user defined RTTI data type}]
+The \ac{RTTI} class containing a user defined \ac{RTTI} data type can than be used as seen within source~code~\ref{Code:UserDefinedRTTIDataTypeClassDefinition}.
+\begin{lstlisting}[label=Code:UserDefinedRTTIDataTypeClassUsage,caption={Using a \ac{RTTI} class containing a user defined \ac{RTTI} data type}]
 // Get RTTI class description
 const PLCore::Class *pMyClass = PLCore::ClassManager::GetInstance()->GetClass("MyClass");
 if (pMyClass != nullptr) {
@@ -52,8 +52,8 @@ if (pMyClass != nullptr) {
 \end{lstlisting}
 
 
-\paragraph{Header of the User Defined RTTI Data Type}
-\begin{lstlisting}[label=Code:UserDefinedRTTIDataTypeHeader,caption={Header of the user defined RTTI data type}]
+\paragraph{Header of the User Defined \ac{RTTI} Data Type}
+\begin{lstlisting}[label=Code:UserDefinedRTTIDataTypeHeader,caption={Header of the user defined \ac{RTTI} data type}]
 #pragma once
 
 // Includes
@@ -85,8 +85,8 @@ class TrollType {
 \end{lstlisting}
 
 
-\paragraph{Inline of the User Defined RTTI Data Type}
-\begin{lstlisting}[label=Code:UserDefinedRTTIDataTypeInline,caption={Inline of the user defined RTTI data type}]
+\paragraph{Inline of the User Defined \ac{RTTI} Data Type}
+\begin{lstlisting}[label=Code:UserDefinedRTTIDataTypeInline,caption={Inline of the user defined \ac{RTTI} data type}]
 #pragma once
 
 // Namespace
@@ -230,11 +230,11 @@ class Type<TrollType> {
 // Namespace
 } // PLCore
 \end{lstlisting}
-Please note that the declaration of new RTTI data types, in this case \emph{Type<TrollType>} must happen within the \emph{PLCore} namespace. If you don't do it this way, it may work on the \emph{Microsoft Visual Studio Compiler} but may fail on the \emph{gcc compiler for Linux}.
+Please note that the declaration of new \ac{RTTI} data types, in this case \emph{Type<TrollType>} must happen within the \emph{PLCore} namespace. If you don't do it this way, it may work on the \ac{MSVC} but may fail on the \emph{\ac{GCC} for Linux}.
 
 
-\paragraph{Source of the User Defined RTTI Data Type}
-\begin{lstlisting}[label=Code:UserDefinedRTTIDataTypeSource,caption={Source of the user defined RTTI data type}]
+\paragraph{Source of the User Defined \ac{RTTI} Data Type}
+\begin{lstlisting}[label=Code:UserDefinedRTTIDataTypeSource,caption={Source of the user defined \ac{RTTI} data type}]
 // Includes
 #include "TrollType.h"
 

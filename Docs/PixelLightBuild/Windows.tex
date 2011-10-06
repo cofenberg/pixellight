@@ -1,19 +1,19 @@
 \chapter{Windows}
 If you want to build PixelLight on Windows, you have two choices:
 \begin{itemize}
-\item{Use the provided Microsoft Visual Studio (MSVC) solutions to build the engine}
+\item{Use the provided \ac{MSVC} solutions to build the engine}
 \item{Use the CMake based build system}
 \end{itemize}
 
-If you want to create SDK packages or documentation or intend to e.g. use the mingw compiler or something like that, stick to the CMake path.
+If you want to create \ac{SDK} packages or documentation or intend to e.g. use the mingw compiler or something like that, stick to the CMake path.
 
-If you want to build only a local version of PixelLight but do not intend to create documentations or SDK packes, you can just use the MSVC solutions files which are much easier to use. Note however, that you need to unpack the needed external packages first (see chapter~\ref{Chapter:ExternalDependencies}).
-
-
+If you want to build only a local version of PixelLight but do not intend to create documentations or \ac{SDK} packes, you can just use the \ac{MSVC} solutions files which are much easier to use. Note however, that you need to unpack the needed external packages first (see chapter~\ref{Chapter:ExternalDependencies}).
 
 
 
-\section{MSVC Solutions}
+
+
+\section{\ac{MSVC} Solutions}
 
 
 
@@ -28,21 +28,21 @@ Open the solution \emph{PixelLight.sln} with Microsoft Visual Studio, which incl
 
 
 \subsection{Prerequisites}
-Here's a list of required programs that you need to fully build the SDK on Windows.
+Here's a list of required programs that you need to fully build the \ac{SDK} on Windows.
 
 
 \paragraph{CMake}
 \begin{itemize}
-\item{Cross platform build tool used to build the SDK}
+\item{Cross platform build tool used to build the \ac{SDK}}
 \item{Download CMake at \url{http://www.cmake.org}}
 \item{Tested with \emph{cmake-2.8.5-win32-x86.exe}}
 \end{itemize}
 
 
-\paragraph{NSIS}
+\paragraph{\ac{NSIS}}
 \begin{itemize}
 \item{Used to create the Windows installer}
-\item{Download NSIS (Nullsoft Scriptable Install System) at \url{http://nsis.sourceforge.net/}}
+\item{Download \ac{NSIS} at \url{http://nsis.sourceforge.net/}}
 \item{Tested with \emph{nsis-2.46-setup.exe}}
 \end{itemize}
 
@@ -72,11 +72,11 @@ Here's a list of required programs that you need to fully build the SDK on Windo
 \end{itemize}
 
 
-\paragraph{Microsoft HTML Help Compiler}
+\paragraph{Microsoft \ac{HTML} Help Compiler}
 \begin{itemize}
-\item{Used to create chm documentations from the html help files created by Doxygen}
-\item{The CMake system automatically searches for an installed Microsoft HTML Help Compiler (\emph{hhc.exe})}
-\item{Download MS HTML Help Workshop at \url{http://msdn.microsoft.com/en-us/library/ms669985} if it's not yet on your system}
+\item{Used to create chm documentations from the \ac{HTML} help files created by Doxygen}
+\item{The CMake system automatically searches for an installed Microsoft \ac{HTML} Help Compiler (\emph{hhc.exe})}
+\item{Download Microsoft \ac{HTML} Help Workshop at \url{http://msdn.microsoft.com/en-us/library/ms669985} if it's not yet on your system}
 \end{itemize}
 
 
@@ -97,8 +97,8 @@ Here's a list of required programs that you need to fully build the SDK on Windo
 
 
 
-\subsection{MSVC: Create Solutions and Build}
-Here's how to compile PixelLight by using the CMake-GUI:
+\subsection{\ac{MSVC}: Create Solutions and Build}
+Here's how to compile PixelLight by using the CMake-\ac{GUI}:
 \begin{itemize}
 \item{Start "CMake (cmake-gui)"}
 \item{"Where is the source code"-field: e.g. "C:/PixelLight"}
@@ -109,6 +109,6 @@ Here's how to compile PixelLight by using the CMake-GUI:
 \item{(The CMake part is done, you can close "CMake (cmake-gui)" now)}
 \item{(Ensure you have all required external packages, see chapter~\ref{Chapter:ExternalDependencies})}
 \item{Open "CMakeOutput/PixelLight.sln" with Microsoft Visual Studio}
-\item{To create a PixelLight SDK, choose "Pack-SDK", please note that you are free to compile projects individually as well}
+\item{To create a PixelLight \ac{SDK}, choose "Pack-SDK", please note that you are free to compile projects individually as well}
 \item{To build the documentation, choose "Docs"}
 \end{itemize}

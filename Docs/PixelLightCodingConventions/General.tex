@@ -52,7 +52,7 @@ i = 20;	// i has already gone out of scope
 
 
 \section{Null Pointer}
-For null pointers, use \emph{nullptr}\footnote{For example \emph{Microsoft Visual Studio 2010} and \emph{GCC 4.6} have native support for \emph{nullptr}} from \emph{C++11} and not for example the legacy, but traditional \emph{NULL} definition or even directly a integer $0$.
+For null pointers, use \emph{nullptr}\footnote{For example \emph{Microsoft Visual Studio 2010} and \emph{\ac{GCC} 4.6} have native support for \emph{nullptr}} from \emph{C++11} and not for example the legacy, but traditional \emph{NULL} definition or even directly a integer $0$.
 
 \begin{lstlisting}[caption=Null pointer]
 char *pszMyString = nullptr;
@@ -85,8 +85,8 @@ Although technically not required, do also add a \emph{virtual} to make it absol
 \section{Casting}
 PixelLight is using \emph{C++ style casts} (\emph{int i = static\_cast<int>(42.21f)}), not \emph{C style casts} (\emph{int i = (int)42.21f}). It's much easier to search for \emph{C++ style casts}\footnote{\emph{static\_cast}, \emph{reinterpret\_cast}, \emph{const\_cast}, and \emph{dynamic\_cast}} and they are less vulnerable to unintended effects as well - and because they are not that compact as the \emph{C style casts}, one may think about it a second time why there's a need for a cast.
 
-\paragraph{GCC}
-GCC, the GNU compiler, offers an option called \emph{-Wold-style-cast} to let the compiler warn if an old-style (C-style) cast to a non-void type is used within a C++ program.
+\paragraph{\ac{GCC}}
+\ac{GCC}, offers an option called \emph{-Wold-style-cast} to let the compiler warn if an old-style (C-style) cast to a non-void type is used within a C++ program.
 
 
 
@@ -118,7 +118,7 @@ because the user should be able to see whether or not a function is going to man
 
 
 \section{static const Vs. const static}
-Use \emph{static const} instead of \emph{const static}. Have a look at e.g. the GCC option \emph{Wold-style-declaration} resulting in the warning \begin{quote}`static' is not at beginning of declaration\end{quote} or into chapter 6.11 of ISO C99 (\emph{Future Language Directions} -> \emph{Storage-class specifiers}).
+Use \emph{static const} instead of \emph{const static}. Have a look at e.g. the \ac{GCC} option \emph{Wold-style-declaration} resulting in the warning \begin{quote}`static' is not at beginning of declaration\end{quote} or into chapter 6.11 of ISO C99 (\emph{Future Language Directions} -> \emph{Storage-class specifiers}).
 
 
 
@@ -247,13 +247,13 @@ As soon as an event is inside a class, we refer to it as \emph{signal}. As such,
 
 
 \section{Event Handlers and Slots}
-Within our name convention for event handlers and RTTI slot names, there's a \emph{On} within for example \emph{OnMyEvent} indicating that this is a handler/slot method. The other part of the name consists of the name of the event/signal - for \emph{OnMyEvent} this would be an event/signal with the name \emph{MyEvent}.
+Within our name convention for event handlers and \ac{RTTI} slot names, there's a \emph{On} within for example \emph{OnMyEvent} indicating that this is a handler/slot method. The other part of the name consists of the name of the event/signal - for \emph{OnMyEvent} this would be an event/signal with the name \emph{MyEvent}.
 
 
 
 
-\section{RTTI Interface}
-Within PixelLight, the RTTI class properties and members are always defined in the following order:
+\section{\ac{RTTI} Interface}
+Within PixelLight, the \ac{RTTI} class properties and members are always defined in the following order:
 \begin{itemize}
 \item Properties
 \item Attributes
@@ -262,10 +262,10 @@ Within PixelLight, the RTTI class properties and members are always defined in t
 \item Signals
 \item Slots
 \end{itemize}
-This way one knows exactly were to look for something. Further, within the RTTI class properties and members definitions, only tabs and no spaces are used to make it easier to write the definitions like a table. This makes it more comfortable for the eyes and brain to navigate to certain definition parts without to much searching around.
+This way one knows exactly were to look for something. Further, within the \ac{RTTI} class properties and members definitions, only tabs and no spaces are used to make it easier to write the definitions like a table. This makes it more comfortable for the eyes and brain to navigate to certain definition parts without to much searching around.
 
-Here's an example source code showing the common RTTI interface layout (without the word wrap):
-\begin{lstlisting}[caption=RTTI interface (without the word wrap)]
+Here's an example source code showing the common \ac{RTTI} interface layout (without the word wrap):
+\begin{lstlisting}[caption=\ac{RTTI} interface (without the word wrap)]
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]

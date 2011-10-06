@@ -1,5 +1,5 @@
 \chapter{Headers}
-During the development of PixelLight we take especially care of the headers because the time the projects need to compile depends heavily on how the headers are build up and how platform and API independent the project is.
+During the development of PixelLight we take especially care of the headers because the time the projects need to compile depends heavily on how the headers are build up and how platform and \ac{API} independent the project is.
 
 We have several rules for our header files. See below. At the first look some or all may look extreme, maybe even crazy to you - but it works really well and solves many problems occurring when using such \emph{nasty} headers directly.
 
@@ -110,8 +110,8 @@ namespace <Project name> {
 
 
 
-\section{OS and API}
-To be as platform and API independent as possible, we keep the usage of OS and API headers - even so called \emph{standard headers} to a minimum. As a nice side effect, the compiler time becomes much shorter because this mentioned headers often come with an extreme overhead and we reduce unsolvable name conflicts - there are many headers out there using ton's of definitions that don't work with namespaces and introducing annoying name problems! A general rule for our PixelLight headers is to never ever include such headers in own public headers the application programmer will work with when it's possible to avoid this usage.
+\section{\ac{OS} and \ac{API}}
+To be as platform and \ac{API} independent as possible, we keep the usage of \ac{OS} and \ac{API} headers - even so called \emph{standard headers} to a minimum. As a nice side effect, the compiler time becomes much shorter because this mentioned headers often come with an extreme overhead and we reduce unsolvable name conflicts - there are many headers out there using ton's of definitions that don't work with namespaces and introducing annoying name problems! A general rule for our PixelLight headers is to never ever include such headers in own public headers the application programmer will work with when it's possible to avoid this usage.
 
 
 

@@ -1,27 +1,27 @@
 \chapter{Script}
-Because Lua is shipped with the official PixelLight SDK, this script language will be used within the examples. Please note that the PixelLight script API is script language independent. In fact, there's not even such a PixelLight script API. Everything that is connected to the RTTI of PixelLight can be accessed through script languages as long as the script backend has support for RTTI objects.
+Because Lua is shipped with the official PixelLight \ac{SDK}, this script language will be used within the examples. Please note that the PixelLight script \ac{API} is script language independent. In fact, there's not even such a PixelLight script \ac{API}. Everything that is connected to the \ac{RTTI} of PixelLight can be accessed through script languages as long as the script backend has support for \ac{RTTI} objects.
 
-Within the PLCore documentation, there's a lot of inside detail information on how the RTTI works. The script support itself is implemented within PLCore because scripting is heavily using PLCore features like the RTTI. Therefore, adding script bindings or using RTTI objects within scripts is fairly straightforward and doesn't require the writing of thousands of proxy/wrapper classes exposing C++ functionality to script languages.
+Within the PLCore documentation, there's a lot of inside detail information on how the \ac{RTTI} works. The script support itself is implemented within PLCore because scripting is heavily using PLCore features like the \ac{RTTI}. Therefore, adding script bindings or using \ac{RTTI} objects within scripts is fairly straightforward and doesn't require the writing of thousands of proxy/wrapper classes exposing C++ functionality to script languages.
 
-Certain non-RTTI parts of PixelLight are exposed to script languages through the loose plugin \emph{PLScriptBindings}. Please note that within PixelLight, scripting is completely optional, not mandatory - unlike some other engines out there were one is only able to use scripting. So, you can use scripting, but you are not forced to do so.
+Certain non-\ac{RTTI} parts of PixelLight are exposed to script languages through the loose plugin \emph{PLScriptBindings}. Please note that within PixelLight, scripting is completely optional, not mandatory - unlike some other engines out there were one is only able to use scripting. So, you can use scripting, but you are not forced to do so.
 
 In general, the abstract script interface of PixelLight supports the following script features:
 \begin{itemize}
 \item{Global variables (with namespace support)}
 \item{Global functions, C++ calls script and script calls C++ (with namespace support)}
-\item{RTTI objects}
+\item{\ac{RTTI} objects}
 \end{itemize}
 
-As you will see when reading this document and playing around with the script support, the access to RTTI objects makes the script support quite powerful and universal. You're able to access properties (constant RTTI class information), attributes (variables within an object), methods (functions within an object), signals (events within an object) and slots (event handlers within an object).
+As you will see when reading this document and playing around with the script support, the access to \ac{RTTI} objects makes the script support quite powerful and universal. You're able to access properties (constant \ac{RTTI} class information), attributes (variables within an object), methods (functions within an object), signals (events within an object) and slots (event handlers within an object).
 
 Supported primitive data types are: \begin{quote}bool, float, double, int8, int16, int32, int64, uint8, uint16, uint32, uint64, PLCore::Object*, PLCore::Object\&\end{quote}
 
-Please note that not each script language/API may make such a detailed data type distinction. Because strings are fundamental within scripts, PLCore::String is supported as well. But if you're a 100\% script programmer, without writing own new C++ components, the mentioned information is probably already too technically.
+Please note that not each script language/\ac{API} may make such a detailed data type distinction. Because strings are fundamental within scripts, PLCore::String is supported as well. But if you're a 100\% script programmer, without writing own new C++ components, the mentioned information is probably already too technically.
 
 In general, the script support of PixelLight can be subdivided into the two following use-cases:
 \begin{itemize}
 \item{A C++ component is using an own script instance in a highly specialized way. The script scene node modifier is a good example for this. Such a script scene node modifier is attached to a scene node and is adding logic through a script.}
-\item{A scripted stand-alone application, meaning that the complete application logic is implemented within, for instance Lua, and can be executed by \emph{PLViewer} which comes with the PixelLight SDK or custom applications. This doesn't mean that it's 100\% script only because the more complex stuff will probably done by used C++ components, but the wires are tied up by a script.}
+\item{A scripted stand-alone application, meaning that the complete application logic is implemented within, for instance Lua, and can be executed by \emph{PLViewer} which comes with the PixelLight \ac{SDK} or custom applications. This doesn't mean that it's 100\% script only because the more complex stuff will probably done by used C++ components, but the wires are tied up by a script.}
 \end{itemize}
 
 
@@ -31,7 +31,7 @@ In general, the script support of PixelLight can be subdivided into the two foll
 \label{Script_Namespaces}
 When a project is growing, one may run out of decent names or name conflicts happen by accident more often. Even if you're just starting a project and don't think that you'll end up with much source code, you should consider to use namespaces right from the beginning. That's the reason why this section comes even before introducing, for instance, global variables.
 
-Most modern high-level computer languages support the concept of namespaces which, when used in the proper way, can help a developer with the naming task. An even bigger benefit in using namespaces than reducing name conflicts is, that elements are grouped together. An editor may, for example, just look for global variables inside a namespace called \emph{PublicVariables} in order to make them visible and editable through a GUI - while other internal script variables will be hidden from the editor user. This way, it's not required to \emph{extend} already existing, maybe even normed script languages like JavaScript (ECMA-262), by own constructs like a \emph{public}-modifier to denote that a script variable should be accessible to the outside world. Please note that this was just an example, within the PixelLight core there's nothing like \emph{PublicVariables} fixed build in.
+Most modern high-level computer languages support the concept of namespaces which, when used in the proper way, can help a developer with the naming task. An even bigger benefit in using namespaces than reducing name conflicts is, that elements are grouped together. An editor may, for example, just look for global variables inside a namespace called \emph{PublicVariables} in order to make them visible and editable through a \ac{GUI} - while other internal script variables will be hidden from the editor user. This way, it's not required to \emph{extend} already existing, maybe even normed script languages like JavaScript (ECMA-262), by own constructs like a \emph{public}-modifier to denote that a script variable should be accessible to the outside world. Please note that this was just an example, within the PixelLight core there's nothing like \emph{PublicVariables} fixed build in.
 
 While, on the first look, several script languages have no namespace support, they have so on the second look or it can be at least emulated. Let's take Lua as an example. Lua is a really compact language and many important features are missing within the core of the language... but on a deeper look they can be realized by using Lua's powerful and universal table concept. This is also true for namespaces.
 
@@ -89,7 +89,7 @@ From the C++ side, it's possible to interact with global variables while local v
 
 
 \paragraph{Global Variables added by the C++ Host}
-The C++ side is also able to create new, or to delete existing global variables. Whether or not this is in general useful is up to you. PixelLight components using scripts dynamically add a global variable named \emph{this} pointing back to the script calling RTTI object. If you want to know more about the global \emph{this} variable, have a look into section~\ref{Script_RTTIObjects}.
+The C++ side is also able to create new, or to delete existing global variables. Whether or not this is in general useful is up to you. PixelLight components using scripts dynamically add a global variable named \emph{this} pointing back to the script calling \ac{RTTI} object. If you want to know more about the global \emph{this} variable, have a look into section~\ref{Script_RTTIObjects}.
 
 
 
@@ -109,7 +109,7 @@ From the C++ side, it's possible to interact with global functions. Such global 
 
 
 \paragraph{Global Functions added by the C++ Host}
-Beside writing own global functions directly within the script, the C++ side is able to add global functions during runtime to expose stuff written in C++ to the script. This allows a script to communicate with it's C++ host. In general, global functions added by C++ should be kept to a bare minimum because they introduce script initialization cost and also trash the global script namespace, although there's namespace support to reduce the probability of name conflicts. A far more advanced, universal and powerful way of exposing C++ stuff to the script is by using RTTI objects as discussed in section~\ref{Script_RTTIObjects}. Within the Lua script backend, the RTTI object approach is not adding script initialization cost.
+Beside writing own global functions directly within the script, the C++ side is able to add global functions during runtime to expose stuff written in C++ to the script. This allows a script to communicate with it's C++ host. In general, global functions added by C++ should be kept to a bare minimum because they introduce script initialization cost and also trash the global script namespace, although there's namespace support to reduce the probability of name conflicts. A far more advanced, universal and powerful way of exposing C++ stuff to the script is by using \ac{RTTI} objects as discussed in section~\ref{Script_RTTIObjects}. Within the Lua script backend, the \ac{RTTI} object approach is not adding script initialization cost.
 
 
 \paragraph{Functions used as Callbacks}
@@ -145,7 +145,7 @@ MyMovie(MyCallbackFunction)
 
 
 \section{Object-Oriented Programming (OOP)}
-First at all, please note that this section has nothing to do with PixelLight RTTI objects which are explained in section~\ref{Script_RTTIObjects}.
+First at all, please note that this section has nothing to do with PixelLight \ac{RTTI} objects which are explained in section~\ref{Script_RTTIObjects}.
 
 Let's directly jump into the topic. The OOP Lua skeleton shown in source~code~\ref{Code:OOPSkeleton} has proven to be useful.
 \begin{lstlisting}[label=Code:OOPSkeleton,caption={Object-oriented programming (OOP) Lua skeleton}]
@@ -233,17 +233,17 @@ At this point you may possibly ask yourself: \begin{quote}''Why use OOP at all w
 
 
 
-\section{RTTI Objects}
+\section{\ac{RTTI} Objects}
 \label{Script_RTTIObjects}
-RTTI objects is, were the scripting gets really interesting because it's possible to directly access and manipulate PixelLight RTTI C++ objects by using a script. Within the Lua script backend, RTTI objects are realized by using the \emph{user data} feature of Lua together with Lua's metatables. Whenever Lua is not able to resolve for instance a function call, this request is redirected into the script backend implementation which is then accessing the RTTI system of PixelLight.
+\ac{RTTI} objects is, were the scripting gets really interesting because it's possible to directly access and manipulate PixelLight \ac{RTTI} C++ objects by using a script. Within the Lua script backend, \ac{RTTI} objects are realized by using the \emph{user data} feature of Lua together with Lua's metatables. Whenever Lua is not able to resolve for instance a function call, this request is redirected into the script backend implementation which is then accessing the \ac{RTTI} system of PixelLight.
 
 \paragraph{this}
-PixelLight components using scripts dynamically add a global variable named \emph{this} pointing back to the script calling RTTI object. Of course, the type of the RTTI object depends on the use-case. For example when running a scripted stand-alone application by using \emph{PLViewer}, \emph{this} points to an instance of the \emph{PLEngine::ScriptApplication} RTTI class. Another example would be the script scene node modifier called \emph{PLScriptBindings::SNMScript} where \emph{this} points to an instance of \emph{PLScriptBindings::SNMScript}. All RTTI objects are derived from the base class \emph{PLCore::Object} and therefore share a common feature set. To check the RTTI object type, just write within a Lua script \emph{myRTTIObject:IsInstanceOf("PLEngine::ScriptApplication")} in order to figure out whether the RTTI object you currently dealing with is an instance of \emph{PLEngine::ScriptApplication}. In case you've wondered why it's called \emph{this} and not \emph{self} as it's commonly named in Lua scripts: The answer is, that PixelLight is using a generic script language independent script interface. Components like \emph{PLEngine::ScriptApplication} or \emph{PLScriptBindings::SNMScript} don't use e.g. Lua directly, they're only using the generic script language independent script interface. Not every script language is using \emph{self} to identify \emph{this instance}. PixelLight itself is written in C++, so the name \emph{this} was obviously a better choice then \emph{self} because this way, there are not to many different names describing one and the same concept.
+PixelLight components using scripts dynamically add a global variable named \emph{this} pointing back to the script calling \ac{RTTI} object. Of course, the type of the \ac{RTTI} object depends on the use-case. For example when running a scripted stand-alone application by using \emph{PLViewer}, \emph{this} points to an instance of the \emph{PLEngine::ScriptApplication} \ac{RTTI} class. Another example would be the script scene node modifier called \emph{PLScriptBindings::SNMScript} where \emph{this} points to an instance of \emph{PLScriptBindings::SNMScript}. All \ac{RTTI} objects are derived from the base class \emph{PLCore::Object} and therefore share a common feature set. To check the \ac{RTTI} object type, just write within a Lua script \emph{myRTTIObject:IsInstanceOf("PLEngine::ScriptApplication")} in order to figure out whether the \ac{RTTI} object you currently dealing with is an instance of \emph{PLEngine::ScriptApplication}. In case you've wondered why it's called \emph{this} and not \emph{self} as it's commonly named in Lua scripts: The answer is, that PixelLight is using a generic script language independent script interface. Components like \emph{PLEngine::ScriptApplication} or \emph{PLScriptBindings::SNMScript} don't use e.g. Lua directly, they're only using the generic script language independent script interface. Not every script language is using \emph{self} to identify \emph{this instance}. PixelLight itself is written in C++, so the name \emph{this} was obviously a better choice then \emph{self} because this way, there are not to many different names describing one and the same concept.
 
 
 \subsection{Properties}
-Within PixelLight, RTTI class properties are constant RTTI class information which are defined within C++ as seen in source~code~\ref{Code:RTTIClassPropertiesDefinition} (see PLCore documentation for details).
-\begin{lstlisting}[label=Code:RTTIClassPropertiesDefinition,caption={Defining a new RTTI class with properties (C++)}]
+Within PixelLight, \ac{RTTI} class properties are constant \ac{RTTI} class information which are defined within C++ as seen in source~code~\ref{Code:RTTIClassPropertiesDefinition} (see PLCore documentation for details).
+\begin{lstlisting}[label=Code:RTTIClassPropertiesDefinition,caption={Defining a new \ac{RTTI} class with properties (C++)}]
 #include <PLCore/Base/Object.h>
 class MyClass : public PLCore::Object {
 	pl_class(MY_RTTI_EXPORT, MyClass, "", PLCore::Object, "Description of my RTTI class")
@@ -258,12 +258,12 @@ class MyClass : public PLCore::Object {
 };
 \end{lstlisting}
 
-Within a script language, these properties can be accessed by writing \emph{<property value> = <RTTI object>.<property name>}. For example, if your RTTI object instance is named \emph{myRTTIObject} and you want to get the value of the property with the name \emph{MyFirstProperty} then just write \begin{quote}value = myRTTIObject.MyFirstProperty\end{quote}
+Within a script language, these properties can be accessed by writing \emph{<property value> = <RTTI object>.<property name>}. For example, if your \ac{RTTI} object instance is named \emph{myRTTIObject} and you want to get the value of the property with the name \emph{MyFirstProperty} then just write \begin{quote}value = myRTTIObject.MyFirstProperty\end{quote}
 
 
 \subsection{Attributes}
-Within PixelLight, RTTI class attributes are member variables of a class which are defined within C++ as seen in source~code~\ref{Code:RTTIClassWithAttributes} (see PLCore documentation for details).
-\begin{lstlisting}[label=Code:RTTIClassWithAttributes,caption={Defining a new RTTI class with attributes (C++)}]
+Within PixelLight, \ac{RTTI} class attributes are member variables of a class which are defined within C++ as seen in source~code~\ref{Code:RTTIClassWithAttributes} (see PLCore documentation for details).
+\begin{lstlisting}[label=Code:RTTIClassWithAttributes,caption={Defining a new \ac{RTTI} class with attributes (C++)}]
 // Class definition of MyClass
 #include <PLCore/Base/Object.h>
 class MyClass : public PLCore::Object {
@@ -287,12 +287,12 @@ class MyClass : public PLCore::Object {
 pl_implement_class(MyClass)
 \end{lstlisting}
 
-Within a script language, these attributes can be accessed by writing \emph{<attribute value> = <RTTI object>.<attribute name>} to read a value and by writing \emph{<RTTI object>.<attribute name> = <attribute value>} to write a value. For example, if your RTTI object instance is named \emph{myRTTIObject} and you want to get the value of the attribute with the name \emph{MyInt} then just write \begin{quote}value = myRTTIObject.MyInt\end{quote}
+Within a script language, these attributes can be accessed by writing \emph{<attribute value> = <RTTI object>.<attribute name>} to read a value and by writing \emph{<RTTI object>.<attribute name> = <attribute value>} to write a value. For example, if your \ac{RTTI} object instance is named \emph{myRTTIObject} and you want to get the value of the attribute with the name \emph{MyInt} then just write \begin{quote}value = myRTTIObject.MyInt\end{quote}
 
 
 \subsection{Methods}
-Within PixelLight, RTTI class methods are member functions of a class which are defined within C++ as seen in source~code~\ref{Code:RTTIMethods} (see PLCore documentation for details).
-\begin{lstlisting}[label=Code:RTTIMethods,caption={Definition of RTTI class methods with parameters (C++)}]
+Within PixelLight, \ac{RTTI} class methods are member functions of a class which are defined within C++ as seen in source~code~\ref{Code:RTTIMethods} (see PLCore documentation for details).
+\begin{lstlisting}[label=Code:RTTIMethods,caption={Definition of \ac{RTTI} class methods with parameters (C++)}]
 // Class definition of MyClass
 #include <PLCore/Base/Object.h>
 class MyClass : public PLCore::Object {
@@ -319,15 +319,15 @@ class MyClass : public PLCore::Object {
 pl_implement_class(MyClass)
 \end{lstlisting}
 
-Within a script language, these methods can be accessed by writing \emph{<result> = <RTTI object>:<method name>(<parameters>)}. For example, if your RTTI object instance is named \emph{myRTTIObject} and you want to call the method with the name \emph{MyMethodParameters} then just write \begin{quote}result = myRTTIObject:MyMethodParameters(42, 21.21)\end{quote}
+Within a script language, these methods can be accessed by writing \emph{<result> = <RTTI object>:<method name>(<parameters>)}. For example, if your \ac{RTTI} object instance is named \emph{myRTTIObject} and you want to call the method with the name \emph{MyMethodParameters} then just write \begin{quote}result = myRTTIObject:MyMethodParameters(42, 21.21)\end{quote}
 
-Please note that the result of such an RTTI object method call can be an RTTI object. You're able to call methods of this returned RTTI object as well... and from RTTI objects returned by this call and so on.
+Please note that the result of such an \ac{RTTI} object method call can be an \ac{RTTI} object. You're able to call methods of this returned \ac{RTTI} object as well... and from \ac{RTTI} objects returned by this call and so on.
 
 
 \subsection{Slots}
 \label{Script_RTTIObjects_Slots}
-Within PixelLight, RTTI class slots are event handlers within a class which are defined within C++ as seen in source~code~\ref{Code:RTTISlots} (see PLCore documentation for details).
-\begin{lstlisting}[label=Code:RTTISlots,caption={Definition of RTTI class slots with parameters (C++)}]
+Within PixelLight, \ac{RTTI} class slots are event handlers within a class which are defined within C++ as seen in source~code~\ref{Code:RTTISlots} (see PLCore documentation for details).
+\begin{lstlisting}[label=Code:RTTISlots,caption={Definition of \ac{RTTI} class slots with parameters (C++)}]
 // Class definition of MyClass
 #include <PLCore/Base/Object.h>
 class MyClass : public PLCore::Object {
@@ -353,13 +353,13 @@ class MyClass : public PLCore::Object {
 pl_implement_class(MyClass)
 \end{lstlisting}
 
-Within a script language, these slots can be connect to and disconnect from a RTTI class signal. Have a look at the following section~\ref{Script_RTTIObjects_Signals} to see how this can be done.
+Within a script language, these slots can be connect to and disconnect from a \ac{RTTI} class signal. Have a look at the following section~\ref{Script_RTTIObjects_Signals} to see how this can be done.
 
 
 \subsection{Signals}
 \label{Script_RTTIObjects_Signals}
-Within PixelLight, RTTI class signals are events within a class which are defined within C++ as seen in source~code~\ref{Code:RTTISignalDefinition} (see PLCore documentation for details).
-\begin{lstlisting}[label=Code:RTTISignalDefinition,caption={Defining a RTTI class with signals (C++)}]
+Within PixelLight, \ac{RTTI} class signals are events within a class which are defined within C++ as seen in source~code~\ref{Code:RTTISignalDefinition} (see PLCore documentation for details).
+\begin{lstlisting}[label=Code:RTTISignalDefinition,caption={Defining a \ac{RTTI} class with signals (C++)}]
 // Class definition of MyClass
 #include <PLCore/Base/Object.h>
 class MyClass : public PLCore::Object {
@@ -383,17 +383,17 @@ class MyClass : public PLCore::Object {
 pl_implement_class(MyClass)
 \end{lstlisting}
 
-Within a script language, these signals can be accessed by writing \emph{<RTTI object>:<signal name>(<parameters>)} to emit the signal. For example, if your RTTI object instance is named \emph{myRTTIObject} and you want to emit the signal with the name \emph{MySignalParameter} then just write \begin{quote}myRTTIObject:MySignalParameter(42)\end{quote}
+Within a script language, these signals can be accessed by writing \emph{<RTTI object>:<signal name>(<parameters>)} to emit the signal. For example, if your \ac{RTTI} object instance is named \emph{myRTTIObject} and you want to emit the signal with the name \emph{MySignalParameter} then just write \begin{quote}myRTTIObject:MySignalParameter(42)\end{quote}
 
-Within a script, signals can be connected to an RTTI object slot (see section~\ref{Script_RTTIObjects_Slots} for details about RTTI slots) or to a global function (section~\ref{Script_GlobalFunctions} for information about global functions) with then is used as a script slot. There are two fixed build in script methods for signals:
+Within a script, signals can be connected to an \ac{RTTI} object slot (see section~\ref{Script_RTTIObjects_Slots} for details about \ac{RTTI} slots) or to a global function (section~\ref{Script_GlobalFunctions} for information about global functions) with then is used as a script slot. There are two fixed build in script methods for signals:
 \begin{itemize}
 \item{\emph{Connect} is used to connect a slot, which is provided as parameter, to the signal}
 \item{\emph{Disconnect} is used to disconnect a slot, which is provided as parameter, from the signal}
 \end{itemize}
 
-For example, if your RTTI object instance is named \emph{myRTTIObject} and you want to connect the RTTI class slot with the name \emph{MySlot} of the same RTTI object to a signal with the name \emph{MySignalParameter}, then just write \begin{quote}myRTTIObject.MySignalParameter.Connect(myRTTIObject.MySlot)\end{quote}
+For example, if your \ac{RTTI} object instance is named \emph{myRTTIObject} and you want to connect the \ac{RTTI} class slot with the name \emph{MySlot} of the same \ac{RTTI} object to a signal with the name \emph{MySignalParameter}, then just write \begin{quote}myRTTIObject.MySignalParameter.Connect(myRTTIObject.MySlot)\end{quote}
 
-As mentioned before, global as well as local script functions can also be used as slots. If the RTTI class signal is emitted, the global script function will be called. Source~code~\ref{Code:FunctionAsSlot} shows how this can be used in practice.
+As mentioned before, global as well as local script functions can also be used as slots. If the \ac{RTTI} class signal is emitted, the global script function will be called. Source~code~\ref{Code:FunctionAsSlot} shows how this can be used in practice.
 \begin{lstlisting}[float=htb,label=Code:FunctionAsSlot,caption={Function as slot}]
 -- Global script function which is used as slot
 function MySlotFunction()

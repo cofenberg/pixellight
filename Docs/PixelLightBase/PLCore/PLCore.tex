@@ -2,13 +2,13 @@
 
 
 \paragraph{Motivation}
-\emph{PLCore} is the most basic library of PixelLight. In here, you'll find container implementations like linked lists, arrays up to hash maps. Strings, files, checksum, XML, log and interfaces for the general interaction with the used operation system are also available. Usually, every PixelLight basing project is using \emph{PLCore} features because they are just essential and by using it, one can avoid to implement linked lists, strings etc. multiple times within multiple projects which would just be inefficient and error prone.\footnote{When using external third party libraries, it's usually fact that they implement their own linked lists, strings and so on - this shouldn't be the case for PixelLight based projects.}
+\emph{PLCore} is the most basic library of PixelLight. In here, you'll find container implementations like linked lists, arrays up to hash maps. Strings, files, checksum, \ac{XML}, log and interfaces for the general interaction with the used operation system are also available. Usually, every PixelLight basing project is using \emph{PLCore} features because they are just essential and by using it, one can avoid to implement linked lists, strings etc. multiple times within multiple projects which would just be inefficient and error prone.\footnote{When using external third party libraries, it's usually fact that they implement their own linked lists, strings and so on - this shouldn't be the case for PixelLight based projects.}
 
-The PixelLight core component also provides more advanced features that are usually quite useful for all types of projects. As the project name \emph{PLCore} implies, it's the foundation of the PixelLight framework which is used for the development of complete applications. RTTI, plugins, the application framework.
+The PixelLight core component also provides more advanced features that are usually quite useful for all types of projects. As the project name \emph{PLCore} implies, it's the foundation of the PixelLight framework which is used for the development of complete applications. \ac{RTTI}, plugins, the application framework.
 
 
 \paragraph{Overview}
-The heart of PLCore is the RTTI which is completely basing on C++ templates and additionally offers some macros to enhance the readability and usability. By using C++ templates, the system is type safe. The RTTI is using several fundamental components like variables, functions, events and event handler. This components, the RTTI is composed of, can be subdivided into three levels as summarized within table~\ref{Table:FundamentalRTTIComponents}.
+The heart of PLCore is the \ac{RTTI} which is completely basing on C++ templates and additionally offers some macros to enhance the readability and usability. By using C++ templates, the system is type safe. The \ac{RTTI} is using several fundamental components like variables, functions, events and event handler. This components, the \ac{RTTI} is composed of, can be subdivided into three levels as summarized within table~\ref{Table:FundamentalRTTIComponents}.
 \begin{table}[htb]
 	\centering
 	\begin{tabular}{|l||l|l|l|}
@@ -25,7 +25,7 @@ The heart of PLCore is the RTTI which is completely basing on C++ templates and 
 		EventHandler & DynEventHandler & EventHandler\textless type\textgreater & Slot\textless type\textgreater\\
 		\hline
 	\end{tabular} 
-	\caption{Fundamental RTTI components and their levels}
+	\caption{Fundamental \ac{RTTI} components and their levels}
 	\label{Table:FundamentalRTTIComponents}
 \end{table}
 

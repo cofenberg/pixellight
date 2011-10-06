@@ -38,7 +38,7 @@ Each texture file (bmp, tga etc.) can have additional PixelLight relevant inform
 in a plt-file with the same texture filename but with the filename ending 'plt' e.g. 'MyTexture.bmp'
 would have a 'MyTexture.plt' plt-file which is in the same directory as the owner texture. In this
 additional texture file you are able to setup different fixed properties for this texture like if
-the texture can be scaled, if GPU texture compression is allowed, the color key for alpha transparency
+the texture can be scaled, if \ac{GPU} texture compression is allowed, the color key for alpha transparency
 etc. (such a color key can also be defined in a tga RGBA texture)\\
 In the \hyperlink{tani}{tani-format} format you can define texture animations like sliding/rolling
 texturs, texture animations through different texture frames etc. Such tani-files can be loaded by
@@ -99,7 +99,7 @@ Compression	& config & Is texture compression allowed? (less quality but better 
                        compression for normal maps, because this textures stores vector data instead of visible colors 
                        the result would be wrong. If for instance the loaded dds texture is already compressed by
                        default, this compression option is ignored because it would be pretty useless to uncompress
-                       this texture before uploading to the GPU... there's already a loss of quality.\\
+                       this texture before uploading to the \ac{GPU}... there's already a loss of quality.\\
 \hline
 Gamma		& 1.0	 & Gamma factor\\
 \hline
@@ -108,7 +108,7 @@ FitLower	& ?		 & Specifies the automatic texture scale behaviour.
 					   the next valid lower texture size is used, if 0 the next higher one.\\
 \hline
 Rectangle	& 0		 & If 1 there's no power of 2 limitation for the texture size. If 0, the texture will normally be
-                       resized automatically to a valid dimension. If rectangle textures are not supported by the GPU,
+                       resized automatically to a valid dimension. If rectangle textures are not supported by the \ac{GPU},
                        this settings is ignored and the texture is resized automatically.
  \\
 \hline
@@ -122,8 +122,8 @@ Texture resize settings\\
 \textbf{Command} & \textbf{Default} & \textbf{Description}\\
 \hline
 Active	  & 1 & Can the texture size be resized to reduce the texture quality? If the texture dimension
-                is not correct and the GPU can't use the texture without resizing it this is internally
-                always set to true. Use the 'force' settings below to force a given size even if the GPU
+                is not correct and the \ac{GPU} can't use the texture without resizing it this is internally
+                always set to true. Use the 'force' settings below to force a given size even if the \ac{GPU}
                 can't handle it.\\
 \hline
 MinWidth  & 4 & The minimum allow texture width (should normally be a power of 2!)\\
@@ -136,7 +136,7 @@ MinDepth  & 1 & The minimum allow texture depth (should normally be a power of 2
 
 
 Forces a special static texture size if not -1. (texture resizing will be disabled!)\\
-Use this only in special situations because the GPU may not be able to handle certain
+Use this only in special situations because the \ac{GPU} may not be able to handle certain
 sizes...
 
 \begin{tabular}{|p{2.5cm}|p{2.5cm}|p{9cm}|}
@@ -376,7 +376,7 @@ void SNProceduralTexture::UpdateFunction()
 \end{lstlisting}
 
 This example creates a new texture using the texture manager function CreateTexture(). Then from
-time to time the texture data is filled up with random color values and is finally uploaded to the GPU.
+time to time the texture data is filled up with random color values and is finally uploaded to the \ac{GPU}.
 This would result in a dynamic random noise texture. Dynamic created textures are used like all other normal
 textures. E.g. you can load them in a texture handler using Load("Texturename"). But note that
 this texture must already exist before you are able load them in a texture handler or material else
@@ -384,7 +384,7 @@ this texture will be unknown!\\
 In this way you can also create special textures you e.g. need for your shaders. For instance
 if you need a normalization cube map you implement an scene node which will create this texture for you
 so that you can use it in the materials like all other textures, too! But note that this textures
-must be created BEFORE a material is loading them! This is an intuitive way to deal with self calculated
+must be created before a material is loading them! This is an intuitive way to deal with self calculated
 textures without to be forced to handle such textures in a special manner.
 
 
@@ -398,7 +398,7 @@ using an application-specified comparison function. If the fragment passes the t
 be processed by the subsequent fragment operation, otherwise it will be discarded. Alpha
 test does not incur any extra overhead even if all the fragments pass the test. Unlike
 stencil testing, depth testing, texturing, and blending, alpha testing do not involve
-fetching data from memories external to the GPU. Alpha test is only available in RGBA
+fetching data from memories external to the \ac{GPU}. Alpha test is only available in RGBA
 mode for instance when using tga textures with an alpha channel. You can setup the alpha
 test withing the render state section, either directly by hand in the renderer (for programmers)
 or in the render state section of a material technique pass. (see the material format in another chapter)

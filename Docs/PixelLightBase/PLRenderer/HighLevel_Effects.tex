@@ -18,18 +18,18 @@ editor provided.
 \section{Introduction}
 Advanced material effects which will increase the visual quality of the surfaces is a must have
 for modern graphics engines. Therefore PixelLight provides an extensive material system which enables you
-to use the capabilities of modern GPU's to create amazing visual effects.\\
+to use the capabilities of modern \ac{GPU}s to create amazing visual effects.\\
 
 This PixelLight material guide will teach you what in detail such a material is, how to use and
 build it - further some background information about e.g. what a 3D texture is are provided, but for
 detailed information you have to use other documents you can for instance find in the internet. This document
 is for both programmers and graphic artists because a material is a complex
 and powerful surface description and it's also possible to programm byself advanced shaders to
-control how each vertex and fragment is processed by GPU. In this section we will tell you some
+control how each vertex and fragment is processed by \ac{GPU}. In this section we will tell you some
 backgrounds about the materials to give you an overview over this topic. In section 2 we will talk
 about textures because this is the base of the materials. You will learn in section 3 how to use
 materials in practice. Section 4 consists of a material format description. In the section
-5 we will talk about shaders. Section 6 is a faq.\\
+5 we will talk about shaders. Section 6 is a \ac{FAQ}.\\
 
 A PixelLight material is a powerfull surface description. It will manage the different render techniques
 automatically (also called 'fallbacks') for you so that in fact you don't need to know which technique is
@@ -66,7 +66,7 @@ move etc the texture by changing it's texture matrix or using all this texture a
 to create amazing materials full of life! :)\\
 
 An advanced material rendering control is supplied through the vertex and fragment shader you can apply
-to each pass. A shader is a program running on the GPU. It will 'overwrite' the API (e.g. OpenGL)
+to each pass. A shader is a program running on the \ac{GPU}. It will 'overwrite' the \ac{API} (e.g. OpenGL)
 fixpass functions which normally process vertices (transformations etc.) and fragments. (get the color
 of each fragment etc.) Therefore when using a vertex shader you have to transform the vertices by self
 or when using a fragment shader calculating the single fragment colors by hand. In this case the
@@ -75,7 +75,7 @@ different texture layers automatically. Further you have to consider things like
 in your shaders when you want to use it - in contrast to the fixpass some things don't done automatically!
 Note that per pass there's only one vertex and one fragment active shader! But for instance you can
 combine different passes to a final result. It's a lot of work to write such materials with individual
-shader effects but therefore you have FULL CONTROL over how it is rendered and you can create impressive
+shader effects but therefore you have full control over how it is rendered and you can create impressive
 and unique material effects! If it is too much work for you to do all by self you can use the 'standard'
 fixpass functions which which will also product good results in less development time - but you haven't
 the full freedom shaders offering you.\\
@@ -311,8 +311,8 @@ ZFunc                & LessEqual & Z/depth buffer comparison function\newline
                                    See 'Comparison functions'\\
 \hline
 ZBias                & 0.0       & Depth bias/polygon offset units, <0 = towards camera (e.g. -0.001)\newline
-                                   Because SlopeScaleDepthBias and DepthBias below are API and 
-                                   GPU dependent, their results are not the same on each system \& API. Whenever possible, do not use 
+                                   Because SlopeScaleDepthBias and DepthBias below are \ac{API} and 
+                                   \ac{GPU} dependent, their results are not the same on each system \& \ac{API}. Whenever possible, do not use 
                                    this 'classic' render states, use ZBias instead. If this state is not null, the renderer 
                                    will automatically manipulate the internal projection matrix to perform an 'z bias' which is more 
                                    predictable as the 'classic' polygon offset.\\
@@ -722,7 +722,7 @@ MaxAnisotropy & 1      & Maximum anisotropy\\
 
 
 MipMapLodBias:\\
-The renderer API computes a texture level-of-detail parameter, called lambda
+The renderer \ac{API} computes a texture level-of-detail parameter, called lambda
 in the specification, that determines which mipmap levels and
 their relative mipmap weights for use in mipmapped texture filtering.\\
 

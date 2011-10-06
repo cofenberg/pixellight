@@ -10,19 +10,19 @@
 \section{Overview}
 In general PixelLight is using the Cg shader language for vertex and fragment shader effects. Have 
 a look at e.g. \url{http://www.shadertech.com/} or developer.nvidia.com/cg to learn the basics
-about this technology. Because Cg is API and platform independent you can work with Cg functions
+about this technology. Because Cg is \ac{API} and platform independent you can work with Cg functions
 directly - therefore have a look at the Cg documentation to see how to use the Cg functions.\\
 The PixelLight material is encapsulating this shaders and you haven't to work with them directly. But
 because you can do alot with shaders you have also low level access to the shaders to be able
 to create e.g. grass effects etc.\\
 
-Vertex/fragment programs will process every vertices/fragments on the GPU. When using such programs
+Vertex/fragment programs will process every vertices/fragments on the \ac{GPU}. When using such programs
 you normally will only work with the provided program parameters. The PixelLight shader system will give the
 programmer the ability to use this shaders in the application.\\
 The PixelLight shader handler PLTShaderHandler provides an interface with all required functions to work with
 such programs. Each individual program needs it's own derived shader handler because each program has
 different parameters and functionality! So, if you want to use a certain vertex/fragment program you
-have to use it through its own shader handler. The shader handler is the obverse of the program on the GPU.
+have to use it through its own shader handler. The shader handler is the obverse of the program on the \ac{GPU}.
 
 
 
@@ -151,8 +151,8 @@ itself has less control because he isn't able to manipulate this cg programs dir
 \section{CgFX}
 During development graphic artists can use CgFX which also provides the environment the vertex/fragment
 programs will work in and is setting its own render states, used textures etc. Further the fx files
-provide in contrast to cg files also a description of the program parameters with default values, gui
-definitions in annotations to manipulare this values in editors using gui elements etc.
+provide in contrast to cg files also a description of the program parameters with default values, \ac{GUI}
+definitions in annotations to manipulare this values in editors using \ac{GUI} elements etc.
 Also different techniques/fallbacks can be defined. The 'fx' file format is nealy the same as the
 DirectX effect format and if you write your own programs in there it is identical to Cg or assembly
 programs. There are plugins for \emph{Autodesk 3ds Max} etc which enables the graphic artists to develop the
