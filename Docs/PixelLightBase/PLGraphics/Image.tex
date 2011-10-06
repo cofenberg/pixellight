@@ -9,19 +9,19 @@ Image cImage;
 
 // Load an image
 if (cImage.LoadByFilename("MyImage.png")) {
-  // Get a pointer to the image buffer
-  ImageBuffer *pImageBuffer = cImage.GetBuffer();
-  if (pImageBuffer && pImageBuffer->GetDataFormat() == DataByte) {
-    // Get a pointer to the image data
-    uint8 *pData = pImageBuffer->GetData();
+	// Get a pointer to the image buffer
+	ImageBuffer *pImageBuffer = cImage.GetBuffer();
+	if (pImageBuffer && pImageBuffer->GetDataFormat() == DataByte) {
+		// Get a pointer to the image data
+		uint8 *pData = pImageBuffer->GetData();
 
-    // Loop through the hole image data and mess it up
-    for (uint32 i=0; i<pImageBuffer->GetDataSize(); i++, pData++)
-      *pData = ((*pData) + i) % 255;
+		// Loop through the hole image data and mess it up
+		for (uint32 i=0; i<pImageBuffer->GetDataSize(); i++, pData++)
+			*pData = ((*pData) + i) % 255;
 
-    // Save the manipulated image
-    cImage.SaveByFilename("MyManipulatedImage.png");
-  }
+		// Save the manipulated image
+		cImage.SaveByFilename("MyManipulatedImage.png");
+	}
 }
 \end{lstlisting}
 

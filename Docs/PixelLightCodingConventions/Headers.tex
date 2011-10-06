@@ -121,7 +121,7 @@ Use \emph{forward declarations} whenever possible instead of includes when somet
 
 \begin{lstlisting}[caption=Using forward declaration]
 class MyInterface {
-    void SetName(const PLCore::String &sName);
+	void SetName(const PLCore::String &sName);
 };
 \end{lstlisting}
 
@@ -137,7 +137,7 @@ Now someone may cry out \emph{Use cool precompiled headers!}, but this is no opt
 
 \begin{lstlisting}[caption=Forward declaration]
 namespace PLCore {
-    class String;
+	class String;
 }
 \end{lstlisting}
 
@@ -155,8 +155,8 @@ Except for headers for the final application, each header has to put it's conten
 
 \begin{lstlisting}[caption=Namespace definition]
 namespace PLCore {
-  class MyClass {
-  };
+	class MyClass {
+	};
 } // PLCore
 \end{lstlisting}
 

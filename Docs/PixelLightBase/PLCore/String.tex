@@ -104,22 +104,22 @@ Example:
 
 \begin{lstlisting}[caption=Error prone string usage example]
 class StringMessUp {
-  public:
-    const String &GetFilename() const
-    {
-      return m_sFilename;
-    }
-    void Cleanup()
-    {
-      m_sFilename = "";
-    }
-    void Load(const String &sFilename)
-    {
-      Cleanup();
-      m_sFilename = sFilename;
-    }
-  private:
-    String m_sFilename;
+	public:
+		const String &GetFilename() const
+		{
+			return m_sFilename;
+		}
+		void Cleanup()
+		{
+			m_sFilename = "";
+		}
+		void Load(const String &sFilename)
+		{
+			Cleanup();
+			m_sFilename = sFilename;
+		}
+	private:
+		String m_sFilename;
 };
 
 // Somewhere in the deep of the codes...
@@ -138,10 +138,10 @@ Often a clean up or similar is used as shown in the situation above - but in thi
 Regular expressions\footnote{At \url{http://www.regular-expressions.info/} are some good regular expression tutorials online available, as well as a basic syntax reference at \url{http://www.regular-expressions.info/reference.html}} are an universal and powerful tool to deal with string operations like \emph{seach for}. Here's a compact example how to use regular expressions to check whether or not a string is a substring of another one:
 
 \begin{lstlisting}[caption=Regular expression example]
-  String sBeer = "BeerNumber99";
-  RegEx cRegEx("^BeerNumber.*$");
-  if (cRegEx.Match(sBeer))
-    sBeer = "Drunk";
+	String sBeer = "BeerNumber99";
+	RegEx cRegEx("^BeerNumber.*$");
+	if (cRegEx.Match(sBeer))
+		sBeer = "Drunk";
 \end{lstlisting}
 
 Because the string \emph{BeerNumber99} matches the expression \emph{\textasciicircum BeerNumber.*\$} the beer is now gone. Strings like \emph{\_BeerNumber99} or \emph{Number99} don't match the given expression.

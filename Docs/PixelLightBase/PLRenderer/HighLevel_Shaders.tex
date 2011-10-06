@@ -80,22 +80,22 @@ handler. Example:\\
 \begin{lstlisting}[caption=Creating own shader handler]
 class TVertexShaderHandler : public PLTShaderHandler {
 
-    // Private data
-    private:
-        float m_fTime;
+	// Private data
+	private:
+		float m_fTime;
 
-    // Programm parameters
-    private:
-        CGparameter m_ConstantsParam;
-        CGparameter m_ModelViewProjParam;
-        CGparameter m_ModelViewITParam;
-        CGparameter m_ModelViewParam;
+	// Programm parameters
+	private:
+		CGparameter m_ConstantsParam;
+		CGparameter m_ModelViewProjParam;
+		CGparameter m_ModelViewITParam;
+		CGparameter m_ModelViewParam;
 
-    // Virtual PLTShaderHandler functions
-    private:
-        virtual void CustomLoad();
-        virtual void CustomBind();
-        virtual void CustomUpdate();
+	// Virtual PLTShaderHandler functions
+	private:
+		virtual void CustomLoad();
+		virtual void CustomBind();
+		virtual void CustomUpdate();
 
 
 };

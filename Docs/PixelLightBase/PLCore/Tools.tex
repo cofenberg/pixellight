@@ -96,31 +96,31 @@ using namespace PLCore;
 //[-------------------------------------------------------]
 int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
-  // Use the executable directory as the current directory
-  System::GetInstance()->SetCurrentDir(Url(sExecutableFilename).CutFilename());
+	// Use the executable directory as the current directory
+	System::GetInstance()->SetCurrentDir(Url(sExecutableFilename).CutFilename());
 
-  // Setup the localization system
-  String sGroup = "MyApplication";
-  String sLanguage = "German";
-  Localization::GetInstance()->SetLanguage(sLanguage);
-  LocalizationGroup *pLocalizationGroup =
-    Localization::GetInstance()->AddGroup(sGroup);
-  if (pLocalizationGroup)
-    pLocalizationGroup->LoadByFilename(sGroup + '_' + sLanguage + ".loc");
+	// Setup the localization system
+	String sGroup = "MyApplication";
+	String sLanguage = "German";
+	Localization::GetInstance()->SetLanguage(sLanguage);
+	LocalizationGroup *pLocalizationGroup =
+	Localization::GetInstance()->AddGroup(sGroup);
+	if (pLocalizationGroup)
+		pLocalizationGroup->LoadByFilename(sGroup + '_' + sLanguage + ".loc");
 
-  // Get the console
-  const Console &cConsole = System::GetInstance()->GetConsole();
+	// Get the console
+	const Console &cConsole = System::GetInstance()->GetConsole();
 
-  // Show a translated text
-  cConsole.Print(PL_TEXT("Hello", sGroup));
-  cConsole.Print(PL_TEXT("This is a test", sGroup));
+	// Show a translated text
+	cConsole.Print(PL_TEXT("Hello", sGroup));
+	cConsole.Print(PL_TEXT("This is a test", sGroup));
 
-  // Wait until a key is hit
-  cConsole.Print("\nPress any key to quit...\n");
-  cConsole.GetCharacter();
+	// Wait until a key is hit
+	cConsole.Print("\nPress any key to quit...\n");
+	cConsole.GetCharacter();
 
-  // Done
-  return 0;
+	// Done
+	return 0;
 }
 \end{lstlisting}
 

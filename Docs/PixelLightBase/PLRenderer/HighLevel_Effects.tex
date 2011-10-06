@@ -116,8 +116,8 @@ m_cMaterial.LoadByFilename("MyMaterial");
 // Rendering
 m_cMaterial.Bind(); // Activate material
 for (int nPass=0; nPass<m_cMaterial.GetNumOfPasses(); nPass++) {
-    m_cMaterial.SetupPass(nPass); // Setup the current render pass
-    // Render something
+	m_cMaterial.SetupPass(nPass); // Setup the current render pass
+	// Render something
 }
 m_cMaterial.Unbind(); // Deactivate material
 \end{lstlisting}

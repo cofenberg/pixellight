@@ -15,23 +15,23 @@ File cFile("MyFile.my");
 
 // Open the existing file to read in text
 if (cFile.Open(File::FileRead | File::FileText)) {
-  // Read a string from the file
-  String sLine = cFile.GetS();
+	// Read a string from the file
+	String sLine = cFile.GetS();
 
-  // Close the file
-  cFile.Close();
+	// Close the file
+	cFile.Close();
 }
 
 // Open the existing file to write in binary data
 if (cFile.Open(File::FileWrite)) {
-  // Write the byte sequence 'Blub', 1 byte per item, 4 items
-  cFile.Write("Blub", 1, 4);
+	// Write the byte sequence 'Blub', 1 byte per item, 4 items
+	cFile.Write("Blub", 1, 4);
 
-  // Read a string from the file
-  String sLine = cFile.GetS();
+	// Read a string from the file
+	String sLine = cFile.GetS();
 
-  // Close the file
-  cFile.Close();
+	// Close the file
+	cFile.Close();
 }
 \end{lstlisting}
 
@@ -44,28 +44,28 @@ File cFile("http://www.pixellight.org/test.zip/Test/1.txt");
 
 // Open the file to read in text
 if (cFile.Open(File::FileRead | File::FileText)) {
-  // Get the OS console instance
-  const Console &cConsole = System::GetInstance()->GetConsole();
+	// Get the OS console instance
+	const Console &cConsole = System::GetInstance()->GetConsole();
 
-  // Write some start information into the OS console
-  cConsole.Print("Reading content of '" +
-      cFile.GetUrl().GetUrl() + "' (text):\n");
+	// Write some start information into the OS console
+	cConsole.Print("Reading content of '" +
+		cFile.GetUrl().GetUrl() + "' (text):\n");
 
-  // Read until the end of the file is reached
-  while (!cFile.IsEof()) {
-    // Read a line from the file
-    String sLine = cFile.GetS();
+	// Read until the end of the file is reached
+	while (!cFile.IsEof()) {
+		// Read a line from the file
+		String sLine = cFile.GetS();
 
-    // Modify some escape codes
-    sLine.Replace("\r", "\\R");
-    sLine.Replace("\n", "\\N");
+		// Modify some escape codes
+		sLine.Replace("\r", "\\R");
+		sLine.Replace("\n", "\\N");
 
-    // Show the read line on the OS console
-    cConsole.Print("- " + sLine + '\n');
-  }
+		// Show the read line on the OS console
+		cConsole.Print("- " + sLine + '\n');
+	}
 
-  // Close the file
-  cFile.Close();
+	// Close the file
+	cFile.Close();
 }
 \end{lstlisting}
 
@@ -79,14 +79,14 @@ Let's directly jump into code action, open a directory and list all files within
 // Open directory
 Directory cDir("MyDirectory");
 if (cDir.Exists() && cDir.IsDirectory()) {
-  // Initialize search handle
-  FileSearch cSearch(cDir);
+	// Initialize search handle
+	FileSearch cSearch(cDir);
 
-  // Loop through all found files
-  while (cSearch.HasNextFile()) {
-    // Get the name of the found file
-    String sName = cSearch.GetNextFile();
-  }
+	// Loop through all found files
+	while (cSearch.HasNextFile()) {
+		// Get the name of the found file
+		String sName = cSearch.GetNextFile();
+	}
 }
 \end{lstlisting}
 
@@ -128,16 +128,16 @@ String sFilename = "MyDirectory/Thing.ext";
 String sPath;
 int nPathIndex = sFilename.LastIndexOf('\\');
 if (nPathIndex < 0)
-  nPathIndex = sFilename.LastIndexOf('/');
+	nPathIndex = sFilename.LastIndexOf('/');
 if (nPathIndex >= 0)
-  sPath = sFilename.GetSubstring(0, nPathIndex+1);
+	sPath = sFilename.GetSubstring(0, nPathIndex+1);
 
 // Get the title and extension of the file
 String sTitle, sExtension;
 int nTitleIndex = sFilename.IndexOf('.');
 if (nTitleIndex >= 0) {
-  sTitle = sFilename.GetSubstring(nPathIndex+1, nTitleIndex-nPathIndex-1);
-  sExtension = sFilename.GetSubstring(nTitleIndex+1);
+	sTitle = sFilename.GetSubstring(nPathIndex+1, nTitleIndex-nPathIndex-1);
+	sExtension = sFilename.GetSubstring(nTitleIndex+1);
 }
 \end{lstlisting}
 

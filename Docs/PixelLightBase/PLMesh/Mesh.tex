@@ -22,10 +22,10 @@ The mesh manager then will load up the mesh if it's not already loaded. There's 
 Each mesh can have a skeleton assigned to it. You can access it using the mesh handler function \emph{GetSkeletonHandler()}. A skeleton is a set of connected joints vertices connected to. By manipulating a joint, all children and vertices of the joint will be manipulated, too.
 
 \begin{figure}
-  \centering
-  \includegraphics[scale=0.5]{pics/Skeleton.eps}
-  \caption{Skeleton}
-  \label{fig:Skeleton}
+	\centering
+	\includegraphics[scale=0.5]{pics/Skeleton.eps}
+	\caption{Skeleton}
+	\label{fig:Skeleton}
 \end{figure}
 
 
@@ -40,17 +40,17 @@ You can use the \emph{GetAnimationsList()} function of the mesh handler to reque
 // Get/create the animation manager of our mesh handler
 MeshAnimationManager *pAniManager = pMeshHandler->GetMeshAnimationManager();
 if (!pAniManager)
-  pAniManager = pMeshHandler->CreateMeshAnimationManager();
+	pAniManager = pMeshHandler->CreateMeshAnimationManager();
 if (pAniManager) {
-  // Get a list of all available animations
-  Array<String> lstAnimations;
-  pMeshHandler->GetAnimationsList(lstAnimations);
-  for (uint32 i=0; i<lstAnimations.GetNumOfElements(); i++) {
-    AnimationInfo *pAniInfo = pMeshHandler->GetAnimationInfo(*lstAnimations[i]);
-    Animation *pAni = pAniManager->Create(*lstAnimations[i]);
-    if (pAniInfo && pAni)
-      pAni->Start(pAniInfo);
-  }
+	// Get a list of all available animations
+	Array<String> lstAnimations;
+	pMeshHandler->GetAnimationsList(lstAnimations);
+	for (uint32 i=0; i<lstAnimations.GetNumOfElements(); i++) {
+		AnimationInfo *pAniInfo = pMeshHandler->GetAnimationInfo(*lstAnimations[i]);
+		Animation *pAni = pAniManager->Create(*lstAnimations[i]);
+		if (pAniInfo && pAni)
+			pAni->Start(pAniInfo);
+	}
 }
 \end{lstlisting}
 

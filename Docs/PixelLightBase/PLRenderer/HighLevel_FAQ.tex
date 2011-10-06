@@ -39,7 +39,7 @@ texture shoult NEVER use texture compression. Example:\\
 \begin{lstlisting}[caption=plt-file disable texture compression]
 <?xml version="1.0"?>
 <Texture>
-    <General Compression="0" />
+	<General Compression="0" />
 </Texture>
 \end{lstlisting}
 
@@ -55,7 +55,7 @@ textures in special situations like for menus. In the plt file you have to setup
 \begin{lstlisting}[caption=plt-file rectangle texture]
 <?xml version="1.0"?>
 <Texture>
-    <General Rectangle="1" />
+	<General Rectangle="1" />
 </Texture>
 \end{lstlisting}
 
@@ -80,7 +80,7 @@ texture is a cube map or not is defined in the texture plt-file:\\
 \begin{lstlisting}[caption=plt-file cube map]
 <?xml version="1.0"?>
 <Texture>
-    <General CubeMap="1" />
+	<General CubeMap="1" />
 </Texture>
 \end{lstlisting}
 
@@ -99,7 +99,7 @@ using the plt format by writing:\\
 \begin{lstlisting}[caption=plt-file color key]
 <?xml version="1.0"?>
 <Texture>
-  <ColorKey R="0" G="0" B="0" Tolerance="0" />
+	<ColorKey R="0" G="0" B="0" Tolerance="0" />
 </Texture>
 \end{lstlisting}
 
@@ -114,14 +114,14 @@ using the semi-transparent texture. Example:\\
 \begin{lstlisting}[caption=Semi-transparent material]
 <?xml version="1.0"?>
 <Material>
-    <Technique Name="Semi transparent">
-        <Pass Name="Pass0">
-            <RenderStates AlphaTestEnable="1" />
-            <Layer>
-                <Texture>MyTexture.tga</Texture>
-            </Layer>
-        </Pass>
-    </Technique>
+	<Technique Name="Semi transparent">
+		<Pass Name="Pass0">
+			<RenderStates AlphaTestEnable="1" />
+			<Layer>
+				<Texture>MyTexture.tga</Texture>
+			</Layer>
+		</Pass>
+	</Technique>
 </Material>
 \end{lstlisting}
 
@@ -166,17 +166,17 @@ the fill mode is set to wireframe. Example:\\
 \begin{lstlisting}[caption=Silhouette material]
 <?xml version="1.0"?>
 <Material>
-    <Technique Name="Simple silhouette">
-        <Pass Name="Mesh">
-            <Layer>
-                <Texture>MyTexture.bmp</Texture>
-            </Layer>
-        </Pass>
-        <Pass Name="Silhouette">
-            <RenderStates FillMode="line" CullMode="cw" Lighting="0" />
-            <Material Color="0.0 0.0 0 0.0" />
-        </Pass>
-    </Technique>
+	<Technique Name="Simple silhouette">
+		<Pass Name="Mesh">
+			<Layer>
+				<Texture>MyTexture.bmp</Texture>
+			</Layer>
+		</Pass>
+		<Pass Name="Silhouette">
+			<RenderStates FillMode="line" CullMode="cw" Lighting="0" />
+			<Material Color="0.0 0.0 0 0.0" />
+		</Pass>
+	</Technique>
 </Material>
 \end{lstlisting}
 
@@ -191,15 +191,15 @@ also known as depth bias. You can set the polygon offset in the material using:\
 \begin{lstlisting}[caption=Polygon offset]
 <?xml version="1.0"?>
 <Material>
-    <Technique Name="Polygon offset">
-        <Pass Name="Pass0">
-            <RenderStates SlopeScaleDepthBias="-1" 
-                          DepthBias="-2" />
-            <Layer>
-                <Texture>MyTexture.bmp</Texture>
-            </Layer>
-        </Pass>
-    </Technique>
+	<Technique Name="Polygon offset">
+		<Pass Name="Pass0">
+			<RenderStates SlopeScaleDepthBias="-1" 
+							DepthBias="-2" />
+			<Layer>
+				<Texture>MyTexture.bmp</Texture>
+			</Layer>
+		</Pass>
+	</Technique>
 </Material>
 \end{lstlisting}
 
@@ -214,12 +214,12 @@ and/or fragment shaders to each material per pass.\\
 \begin{lstlisting}[caption=Material and shaders]
 <?xml version="1.0"?>
 <Material>
-    <Technique Name="Shaders">
-        <Pass Name="Pass0">
-            <VertexShader Filename="MyShader.cg" />
-            <FragmentShader Filename="MyShader.cg" />
-        </Pass>
-    </Technique>
+	<Technique Name="Shaders">
+		<Pass Name="Pass0">
+			<VertexShader Filename="MyShader.cg" />
+			<FragmentShader Filename="MyShader.cg" />
+		</Pass>
+	</Technique>
 </Material>
 \end{lstlisting}
 
@@ -241,14 +241,14 @@ layer. Example:\\
 \begin{lstlisting}[caption=Environment mapping]
 <?xml version="1.0"?>
 <Material>
-    <Technique Name="Environment mapping">
-        <Pass Name="Pass0">
-            <Layer>
-                <Texture>EnvironmentMap.jpg</Texture>
-                <TextureStageStates TexGen="sphere_map" />
-            </Layer>
-        </Pass>
-    </Technique>
+	<Technique Name="Environment mapping">
+		<Pass Name="Pass0">
+			<Layer>
+				<Texture>EnvironmentMap.jpg</Texture>
+				<TextureStageStates TexGen="sphere_map" />
+			</Layer>
+		</Pass>
+	</Technique>
 </Material>
 \end{lstlisting}
 
@@ -260,14 +260,14 @@ receive a 'highlight' effect. Example:\\
 \begin{lstlisting}[caption=Specular highlights]
 <?xml version="1.0"?>
 <Material>
-    <Technique Name="Specular highlight">
-        <Pass Name="Pass0">
-            <Layer>
-                <Texture>Highlight.jpg</Texture>
-                <TextureStageStates ColorTexEnv="add" TexGen="sphere_map" />
-            </Layer>
-        </Pass>
-    </Technique>
+	<Technique Name="Specular highlight">
+		<Pass Name="Pass0">
+			<Layer>
+				<Texture>Highlight.jpg</Texture>
+				<TextureStageStates ColorTexEnv="add" TexGen="sphere_map" />
+			</Layer>
+		</Pass>
+	</Technique>
 </Material>
 \end{lstlisting}
 
@@ -283,16 +283,16 @@ repeat if the texture coordinates pointing 'outside' the texture. Example:\\
 \begin{lstlisting}[caption=Detail texture]
 <?xml version="1.0"?>
 <Material>
-    <Technique Name="Detail texture">
-        <Pass Name="Pass0">
-            <Layer>
-                <Texture>MyTexture.bmp</Texture>
-            </Layer>
-            <Layer>
-                <Texture>MyDetailMap.bmp</Texture>
-            </Layer>
-        </Pass>
-    </Technique>
+	<Technique Name="Detail texture">
+		<Pass Name="Pass0">
+			<Layer>
+				<Texture>MyTexture.bmp</Texture>
+			</Layer>
+			<Layer>
+				<Texture>MyDetailMap.bmp</Texture>
+			</Layer>
+		</Pass>
+	</Technique>
 </Material>
 \end{lstlisting}
 
@@ -303,16 +303,16 @@ texture to add static lighting. Example:\\
 \begin{lstlisting}[caption=Light mapping]
 <?xml version="1.0"?>
 <Material>
-    <Technique Name="Light mapping">
-        <Pass Name="Pass0">
-            <Layer>
-                <Texture>MyTexture.bmp</Texture>
-            </Layer>
-            <Layer>
-                <Texture>MyLightMap.bmp</Texture>
-            </Layer>
-        </Pass>
-    </Technique>
+	<Technique Name="Light mapping">
+		<Pass Name="Pass0">
+			<Layer>
+				<Texture>MyTexture.bmp</Texture>
+			</Layer>
+			<Layer>
+				<Texture>MyLightMap.bmp</Texture>
+			</Layer>
+		</Pass>
+	</Technique>
 </Material>
 \end{lstlisting}
 
@@ -326,25 +326,25 @@ like:\\
 \begin{lstlisting}[caption=BumpMapping]
 <?xml version="1.0"?>
 <Material>
-    <Parameter Name="mvp" Type="float4x4" Semantic="WorldViewProjection" />
-    <Parameter Name="camPos" Type="float4" Semantic="EyePos" />
-    <Parameter Name="lightPos" Type="float3" />
-    <Parameter Name="invRad" Type="float" />
-    <Parameter Name="lightColor" Type="float4" />
-    <Parameter Name="Base" Type="texture" Semantic="Texture0" />
-    <Parameter Name="Normal" Type="texture" Semantic="Texture1" />
-    <Technique Name="Lighting">
-        <Pass Name="Pass0">
-            <Layer>
-                <Texture>Fieldstone.jpg</Texture>
-            </Layer>
-            <Layer>
-                <Texture>FieldstoneNormal.tga</Texture>
-            </Layer>
-            <VertexShader Filename="BumpMapping.cg" />
-            <FragmentShader Filename="BumpMapping.cg" />
-        </Pass>
-    </Technique>
+	<Parameter Name="mvp" Type="float4x4" Semantic="WorldViewProjection" />
+	<Parameter Name="camPos" Type="float4" Semantic="EyePos" />
+	<Parameter Name="lightPos" Type="float3" />
+	<Parameter Name="invRad" Type="float" />
+	<Parameter Name="lightColor" Type="float4" />
+	<Parameter Name="Base" Type="texture" Semantic="Texture0" />
+	<Parameter Name="Normal" Type="texture" Semantic="Texture1" />
+	<Technique Name="Lighting">
+		<Pass Name="Pass0">
+			<Layer>
+				<Texture>Fieldstone.jpg</Texture>
+			</Layer>
+			<Layer>
+				<Texture>FieldstoneNormal.tga</Texture>
+			</Layer>
+			<VertexShader Filename="BumpMapping.cg" />
+			<FragmentShader Filename="BumpMapping.cg" />
+		</Pass>
+	</Technique>
 </Material>
 \end{lstlisting}
 
@@ -365,15 +365,15 @@ Example:\\
 \begin{lstlisting}[caption=Transparent/blended material]
 <?xml version="1.0"?>
 <Material>
-    <General Blend="1" />
-    <Technique Name="Transparent">
-        <Pass Name="Pass0">
-            <RenderStates ZWriteEnable="0" BlendEnable="1" 
-                          ScrBlendFunc="scr_alpha" DstBlendFunc="one" />
-            <Layer>
-                <Texture>MyTexture.bmp</Texture>
-            </Layer>
-        </Pass>
-    </Technique>
+	<General Blend="1" />
+	<Technique Name="Transparent">
+		<Pass Name="Pass0">
+			<RenderStates ZWriteEnable="0" BlendEnable="1" 
+							ScrBlendFunc="scr_alpha" DstBlendFunc="one" />
+			<Layer>
+				<Texture>MyTexture.bmp</Texture>
+			</Layer>
+		</Pass>
+	</Technique>
 </Material>
 \end{lstlisting}

@@ -107,17 +107,17 @@ If you need this node frequently or if you have multiple containers it's the bes
 
 \begin{lstlisting}[caption=Scene node handler]
 SceneNodeHandler cNodeHandler;
-cNodeHandler.SetElement(pNode);     // Set handled node
-pNode = cNodeHandler.GetElement();  // Get handled node
+cNodeHandler.SetElement(pNode);		// Set handled node
+pNode = cNodeHandler.GetElement();	// Get handled node
 \end{lstlisting}
 
 DO NEVER define/embed nodes (like all resources) direct into classes like
 
 \begin{lstlisting}[caption=Invalid scene node instance usage]
 class MyClass {
-  private:
-    int       m_nCounter;
-    SceneNode m_cMyNode;
+	private:
+		int       m_nCounter;
+		SceneNode m_cMyNode;
 }
 \end{lstlisting}
 
@@ -161,16 +161,16 @@ PixelLight saves it's scenes within the XML (eXtensible Markup Language) scene f
 \begin{lstlisting}[caption=Scene file example]
 <?xml version="1.0"?>
 <Scene Version="1" Name="Scene" Hierarchy="PLScene::SHList">
-  <Container Class="PLPhysics::SCPhysicsWorld" Name="PhysicsWorld" PhysicsAPI="PLPhysicsNewton::World">
-    <Modifier Class="DoAnything"/>
-    <Node Class="SNMyEye" Name="Hero" Position="-3.0 12.0 5.0" Scale="0.5 1.0 0.5">
-      <Modifier Class="PLPhysics::SNMPhysicsBodySphere" Mass="1.0" Radius="1.0"/>
-      <Modifier Class="PLEngine::SNMPhysicsCharacterController"/>
-    </Node>
-    <Node Class="PLScene::SNMesh" Position="1.0 0.0 0.0">
-      <Modifier Class="PLPhysics::SNMPhysicsBodyBox" Mass="1.0" />
-    </Node>
-  </Container>
+	<Container Class="PLPhysics::SCPhysicsWorld" Name="PhysicsWorld" PhysicsAPI="PLPhysicsNewton::World">
+	<Modifier Class="DoAnything"/>
+	<Node Class="SNMyEye" Name="Hero" Position="-3.0 12.0 5.0" Scale="0.5 1.0 0.5">
+		<Modifier Class="PLPhysics::SNMPhysicsBodySphere" Mass="1.0" Radius="1.0"/>
+		<Modifier Class="PLEngine::SNMPhysicsCharacterController"/>
+	</Node>
+	<Node Class="PLScene::SNMesh" Position="1.0 0.0 0.0">
+		<Modifier Class="PLPhysics::SNMPhysicsBodyBox" Mass="1.0" />
+	</Node>
+	</Container>
 </Scene>
 \end{lstlisting}
 
@@ -179,8 +179,8 @@ Here's another example using a scene node defined within another project:
 \begin{lstlisting}[caption=Another scene file example]
 <?xml version="1.0"?>
 <Scene Version="1">
-  <Node Class="PLScene::SNCamera" Name="Camera" Position="10.0 2.0 0.0" Rotation="0.0 -90.0 0.0" />
-  <Node Class="PLParticleGroups::PGSmoke" Position="-50 0 -50" />
+	<Node Class="PLScene::SNCamera" Name="Camera" Position="10.0 2.0 0.0" Rotation="0.0 -90.0 0.0" />
+	<Node Class="PLParticleGroups::PGSmoke" Position="-50 0 -50" />
 </Scene>
 \end{lstlisting}
 
@@ -189,12 +189,12 @@ Because each scene itself is in fact a scene container you can also add nodes di
 \begin{lstlisting}[caption=Scene file format DTD]
 <?xml version="1.0"?>
 <!DOCTYPE Scene [
-  <!ELEMENT Modifier EMPTY>
-  <!ATTLIST Modifier Class CDATA #REQUIRED>
-  <!ELEMENT Node (Modifier*)>
-  <!ATTLIST Node Class CDATA #REQUIRED>
-  <!ELEMENT Container (Modifier*, Node*, Container*)>
-  <!ATTLIST Container Class CDATA #REQUIRED>
+	<!ELEMENT Modifier EMPTY>
+	<!ATTLIST Modifier Class CDATA #REQUIRED>
+	<!ELEMENT Node (Modifier*)>
+	<!ATTLIST Node Class CDATA #REQUIRED>
+	<!ELEMENT Container (Modifier*, Node*, Container*)>
+	<!ATTLIST Container Class CDATA #REQUIRED>
 ]>
 \end{lstlisting}
 
@@ -240,13 +240,12 @@ The next section will teach you how to use the PixelLight RTTI together with the
 All nodes classes must be registered in the RTTI plugin system in order to be able to use them within the framework. If this nodes are defined within shared libraries all other programs using the framework are able to use this node class, too. For instance you can create instances of this scene nodes within the scene editor. The class registration is done through:
 
 \begin{lstlisting}[caption=RTTI and own new scene node class]
-class MyFlickerLight : public PLScene::SceneNode { 
-  public:
-    // Register new scene node class using RTTI macros
+class MyFlickerLight : public PLScene::SceneNode {
+	// Register new scene node class using RTTI macros
 
-    // Define new RTTI class called 'MyFlickerLight' which is derived from 'PLScene::SceneNode'
+	// Define new RTTI class called 'MyFlickerLight' which is derived from 'PLScene::SceneNode'
 	pl_class(PLS_RTTI_EXPORT, MyFlickerLight, "", PLScene::SceneNode, "My flicker light")
-      // Your new node can be created public using the Create() function of a scene node container
+		// Your new node can be created public using the Create() function of a scene node container
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 	pl_class_end
 
@@ -286,14 +285,14 @@ class MyGoblin : public PLScene::SNMesh {
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 	pl_class_end
 
-  private:
-    // Animations
-    AnimationInfo *m_pStandAnimation,
-                  *m_pRunAnimation;
+	private:
+		// Animations
+		AnimationInfo *m_pStandAnimation,
+					  *m_pRunAnimation;
 
-  protected:
-    virtual void MeshInitFunction();
-    virtual void InitFunction();
+	protected:
+		virtual void MeshInitFunction();
+		virtual void InitFunction();
 
 }
 

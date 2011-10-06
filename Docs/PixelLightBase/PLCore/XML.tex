@@ -5,39 +5,39 @@ All text based file formats\footnote{Have a look at \emph{SDKBrowser.chm} for a 
 // Create XML document
 XmlDocument cDocument;
 if (!cDocument.Load(cFile)) {
-  PL_LOG(Error, cDocument.GetValue() + ": " + cDocument.GetErrorDesc())
+	PL_LOG(Error, cDocument.GetValue() + ": " + cDocument.GetErrorDesc())
 
-  // Error!
-  return false;
+	// Error!
+	return false;
 }
 
 // Get config element
-const XmlElement *pConfigElement =
-  cDocument.GetFirstChildElement("Config");
+XmlElement *pConfigElement =
+	cDocument.GetFirstChildElement("Config");
 if (!pConfigElement) {
-  PL_LOG(Error, "Can't find 'Config' element")
+	PL_LOG(Error, "Can't find 'Config' element")
 
-  // Error!
-  return false;
+	// Error!
+	return false;
 }
 
 // Iterate through all groups
-const XmlElement *pGroupElement =
-  pConfigElement->GetFirstChildElement("Group");
+XmlElement *pGroupElement =
+	pConfigElement->GetFirstChildElement("Group");
 while (pGroupElement) {
-  // Get group class name
-  String sClass = pGroupElement->GetAttribute("Class");
-  if (sClass.GetLength()) {
-    // Get config class instance
-    ConfigGroup *pClass = cConfig.GetClass(sClass);
-    if (pClass) {
-      // Set variables
-      pClass->SetVarsFromXMLElement(*pGroupElement, 0);
-    }
-  }
+	// Get group class name
+	String sClass = pGroupElement->GetAttribute("Class");
+	if (sClass.GetLength()) {
+		// Get config class instance
+		ConfigGroup *pClass = cConfig.GetClass(sClass);
+		if (pClass) {
+			// Set variables
+			pClass->SetVarsFromXMLElement(*pGroupElement, 0);
+		}
+	}
 
-  // Next element, please
-  pGroupElement = pConfigElement->GetNextSiblingElement("Group");
+	// Next element, please
+	pGroupElement = pConfigElement->GetNextSiblingElement("Group");
 }
 
 // Done

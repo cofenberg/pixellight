@@ -322,56 +322,56 @@ an example how such an procedural texture entity might look:\\
 
 \begin{lstlisting}[caption=Procedural texture class]
 class SNProceduralTexture : public PLTSceneNode {
-    ...
-    private:
-        float m_fTimer;             // Timer
-        
-        // Exported variables
-        char  m_szTextureName[64];  // Name of the texture
-        int   m_nWidth;             // Texture width
-        int   m_nHeight;            // Texture height
-        float m_fSpeed;             // Animation speed
+	...
+	private:
+		float m_fTimer;             // Timer
 
-    private:
-        virtual void InitFunction();
-        virtual void DeInitFunction();
-        virtual void UpdateFunction();
+		// Exported variables
+		char  m_szTextureName[64];  // Name of the texture
+		int   m_nWidth;             // Texture width
+		int   m_nHeight;            // Texture height
+		float m_fSpeed;             // Animation speed
+
+	private:
+		virtual void InitFunction();
+		virtual void DeInitFunction();
+		virtual void UpdateFunction();
 	...
 };
 
 void SNProceduralTexture::InitFunction()
 {
-    // Init data
-    m_fTimer = 0.f;
-    
-    // Create texture
-    PLTTextureManager::GetInstance()->CreateTexture(m_szTextureName, m_nWidth, m_nHeight);
+	// Init data
+	m_fTimer = 0.f;
+
+	// Create texture
+	PLTTextureManager::GetInstance()->CreateTexture(m_szTextureName, m_nWidth, m_nHeight);
 }
 
 void SNProceduralTexture::DeInitFunction()
 {
-    PLTTextureManager::GetInstance()->Unload(PLTTextureManager::GetInstance()->Get(m_szTextureName));
+	PLTTextureManager::GetInstance()->Unload(PLTTextureManager::GetInstance()->Get(m_szTextureName));
 }
 
 void SNProceduralTexture::UpdateFunction()
 {
-    // Animation speed
-    m_fTimer += PLTTimer::GetInstance()->GetTimeDifference()*m_fSpeed;
-    if (m_fTimer < 1.f) return;
-    m_fTimer = 0.f;
+	// Animation speed
+	m_fTimer += PLTTimer::GetInstance()->GetTimeDifference()*m_fSpeed;
+	if (m_fTimer < 1.f) return;
+	m_fTimer = 0.f;
 
-    // Create texture
-    PLTTexture *pTex = PLTTextureManager::GetInstance()->Get(m_szTextureName);
-    if (!pTex) return;
-    unsigned char *pData = pTex->GetData();
-    if (!pData) return;
-    for (int i=0; i<pTex->GetWidth()*pTex->GetHeight(); i++) {
-        *pData = *(pData+1) = *(pData+2) = PL::Math.GetRand() % 255;
-        pData += 3;
-    }
+	// Create texture
+	PLTTexture *pTex = PLTTextureManager::GetInstance()->Get(m_szTextureName);
+	if (!pTex) return;
+	unsigned char *pData = pTex->GetData();
+	if (!pData) return;
+	for (int i=0; i<pTex->GetWidth()*pTex->GetHeight(); i++) {
+		*pData = *(pData+1) = *(pData+2) = PL::Math.GetRand() % 255;
+		pData += 3;
+	}
 
-    // Upload new texture
-    pTex->Upload();
+	// Upload new texture
+	pTex->Upload();
 }
 \end{lstlisting}
 

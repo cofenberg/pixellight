@@ -135,13 +135,13 @@ Cg source code \ref{Code::GBufferToNormal} shows how the normal vector is restor
 // decodes a 2 component normal vector to a 3 component normal vector
 float3 decodeNormalVector(float2 normal)
 {
-    float2 fenc = normal*4 - 2;
-    float f = dot(fenc, fenc);
-    float g = sqrt(1 - f/4);
-    float3 n;
-    n.xy = fenc*g;
-    n.z = 1 - f/2;
-    return n;
+	float2 fenc = normal*4 - 2;
+	float f = dot(fenc, fenc);
+	float g = sqrt(1 - f/4);
+	float3 n;
+	n.xy = fenc*g;
+	n.z = 1 - f/2;
+	return n;
 }
 \end{lstlisting}
 
@@ -322,10 +322,10 @@ Here's a short post process file ('pp' extension) example:
 \begin{lstlisting}[caption=Post process file example]
 <?xml version="1.0"?>
 <PostProcess Version="1">
-  <General TextureFormat="R8G8B8" />
-  <Pass Material="PostProcess/ColorEdgeDetect.mat" />
-  <Pass Material="PostProcess/ColorInverse.mat" />
-  <Pass Class="PostProcessOldFilm" Material="PostProcess/ColorOldFilm.mat" />
+	<General TextureFormat="R8G8B8" />
+	<Pass Material="PostProcess/ColorEdgeDetect.mat" />
+	<Pass Material="PostProcess/ColorInverse.mat" />
+	<Pass Class="PostProcessOldFilm" Material="PostProcess/ColorOldFilm.mat" />
 </PostProcess>
 \end{lstlisting}
 
@@ -334,10 +334,10 @@ And here's the DTD of this format:
 \begin{lstlisting}[caption=Post process file format DTD]
 <?xml version="1.0"?>
 <!DOCTYPE PostProcess [
-  <!ELEMENT General EMPTY>
-  <!ATTLIST General TextureFormat CDATA #IMPLIED>
-  <!ELEMENT Pass EMPTY>
-  <!ATTLIST Pass Material CDATA #REQUIRED>
+	<!ELEMENT General EMPTY>
+	<!ATTLIST General TextureFormat CDATA #IMPLIED>
+	<!ELEMENT Pass EMPTY>
+	<!ATTLIST Pass Material CDATA #REQUIRED>
 ]>
 \end{lstlisting}
 

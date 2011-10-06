@@ -5,30 +5,30 @@ The PLDatabase component is quite compact. Here's a short example how to use it:
 // Create an instance of the 'MySQL' database backend
 Database *pDatabase = Database::Create("DatabaseMySQL");
 if (pDatabase) {
-  // Connect to a database:
-  // server, user name, password, database
-  if (pDatabase->Connect("localhost", "TestUser", "12345", "TestDatabase")) {
-    // Create a database query
-    DatabaseQuery *pQuery = pDatabase->CreateQuery();
-    if (pQuery) {
-      // Perform a primitive SELECT query
-      DatabaseQueryResult *pResult = pQuery->Execute("SELECT * from TestTable");
-      if (pResult) {
-        // Do something with the result
+	// Connect to a database:
+	// server, user name, password, database
+	if (pDatabase->Connect("localhost", "TestUser", "12345", "TestDatabase")) {
+		// Create a database query
+		DatabaseQuery *pQuery = pDatabase->CreateQuery();
+		if (pQuery) {
+			// Perform a primitive SELECT query
+			DatabaseQueryResult *pResult = pQuery->Execute("SELECT * from TestTable");
+			if (pResult) {
+				// Do something with the result
 
-        // Cleanup the result instance
-        delete pResult;
-      }
+				// Cleanup the result instance
+				delete pResult;
+			}
 
-      // Cleanup the query instance
-      delete pQuery;
-    }
+			// Cleanup the query instance
+			delete pQuery;
+		}
 
-    // Disconnect from the database
-    pDatabase->Disconnect();
-  }
+		// Disconnect from the database
+		pDatabase->Disconnect();
+	}
 
-  // Cleanup the database instance
-  delete pDatabase;
+	// Cleanup the database instance
+	delete pDatabase;
 }
 \end{lstlisting}
