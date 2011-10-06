@@ -4,6 +4,7 @@
   is now used because when using "book" as document class, there are gigantic borders wasting a lot of space (especially source code examples are no fun this way).
 - LaTex documents: The background of source codes is now white instead of light grey - this way it's easier to read (higher contrast) and cheaper to print (less ink)
 - LaTex documents: Added abbreviations handling using the "acronym" LaTex package
+- "PixelLightBuild": Added "Running from a Local Build" Windows section
 
 
 
