@@ -8,8 +8,8 @@ Meshes are 3D shapes which consists of vertices, indices and polygons. Not only 
 You should use mesh handlers in order to use mesh and to access their data over this provided interface. To load up a mesh do this:
 
 \begin{lstlisting}[caption=Loading a mesh]
-Mesh *pMesh = pMyMeshManager->LoadMesh("MyMesh.mesh");
-MeshHandler cMeshHandler;
+PLMesh::Mesh *pMesh = pMyMeshManager->LoadMesh("MyMesh.mesh");
+PLMesh::MeshHandler cMeshHandler;
 cMeshHandler.SetMesh(pMesh);
 \end{lstlisting}
 
@@ -38,16 +38,16 @@ You can use the \emph{GetAnimationsList()} function of the mesh handler to reque
 
 \begin{lstlisting}[caption=Animation playback]
 // Get/create the animation manager of our mesh handler
-MeshAnimationManager *pAniManager = pMeshHandler->GetMeshAnimationManager();
+PLMesh::MeshAnimationManager *pAniManager = pMeshHandler->GetMeshAnimationManager();
 if (!pAniManager)
 	pAniManager = pMeshHandler->CreateMeshAnimationManager();
 if (pAniManager) {
 	// Get a list of all available animations
-	Array<String> lstAnimations;
+	PLCore::Array<PLCore::String> lstAnimations;
 	pMeshHandler->GetAnimationsList(lstAnimations);
-	for (uint32 i=0; i<lstAnimations.GetNumOfElements(); i++) {
-		AnimationInfo *pAniInfo = pMeshHandler->GetAnimationInfo(*lstAnimations[i]);
-		Animation *pAni = pAniManager->Create(*lstAnimations[i]);
+	for (PLCore::uint32 i=0; i<lstAnimations.GetNumOfElements(); i++) {
+		PLMesh::AnimationInfo *pAniInfo = pMeshHandler->GetAnimationInfo(*lstAnimations[i]);
+		PLMesh::Animation *pAni = pAniManager->Create(*lstAnimations[i]);
 		if (pAniInfo && pAni)
 			pAni->Start(pAniInfo);
 	}

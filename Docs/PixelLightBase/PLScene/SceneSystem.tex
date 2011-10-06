@@ -23,11 +23,11 @@ In general such a query informs you only about \emph{touched} nodes. For instanc
 
 
 \paragraph{Scene Renderer}
-As mentioned before, a scene renderer itself is also a kind of query. First, we define what we mean with the term \emph{scene renderer}. If something is drawn on the screen you will often read the word renderer - \emph{amazing per pixel lighting renderer}... but WHAT is a renderer, and can I eat it? You known that there are different graphics API's like OpenGL or Direct3D - we call them \emph{renderer API}. Their main task is to deal with render states, textures, shaders, primitives and so on - in short, the most basic rendering stuff. Ignore here that Direct3D is in fact a small framework itself with the possibility to also render whole complex meshes. The PixelLight renderer is a wrapper around this renderer APIs, so the user normally don't have to care about which renderer API is used internally and how for instance rendering into texture is managed internally. So, this renderer will only deal with the basics of rendering - it is NOT able to render large and complex scenes by self, it even does not know that where is something like a \emph{mesh} or a \emph{large scene}. It's world only consists of render states, textures, shaders, primitives and so on. :)
+As mentioned before, a scene renderer itself is also a kind of query. First, we define what we mean with the term \emph{scene renderer}. If something is drawn on the screen you will often read the word renderer - \emph{amazing per pixel lighting renderer}... but WHAT is a renderer, and can I eat it? You known that there are different graphics API's like OpenGL or Direct3D - we call them \emph{renderer API}. Their main task is to deal with render states, textures, shaders, primitives and so on - in short, the most basic rendering stuff. Ignore here that Direct3D is in fact a small framework itself with the possibility to also render whole complex meshes. The PixelLight renderer is a wrapper around this renderer APIs, so the user normally don't have to care about which renderer API is used internally and how for instance rendering into texture is managed internally. So, this renderer will only deal with the basics of rendering - it is not able to render large and complex scenes by self, it even does not know that where is something like a \emph{mesh} or a \emph{large scene}. It's world only consists of render states, textures, shaders, primitives and so on. :)
 
 A scene renderer is using the \emph{scene database} (THE scene graph) you provided and the PixelLight renderer tries to visualize your scene in a performant and suitable manner. A very basic scene renderer will traverse your scene and draws each found node using the draw functions of the node interface - maybe before the node is drawn, someone is checking whether or not this node is potential visible by checking whether or not this node is within the camera frustum. But even it such a frustum intersection test is performed, for a large scene with some thousand of nodes this will be quite inefficent to \emph{touch} each node visible or not. The task of a \emph{real} scene renderer can be divided into two parts: visibility determination (optimal: frustum, occlusion \& lod processing) and rendering. If the scene renderer is using complex per pixel lighting, the rendering of the scene is different to the rendering of the basic scene using old fashioned fix pass rendering. Instead only calling the draw functions of the node interface this renderer must set the different render states, textures, shaders etc. by self and therefore the user itself has less control over the rendering itself. But here, such user limitations are required to overcome more complex rendering. Such a complex renderer normally comes with it's internal \emph{shader library} which offers certain shaders for different purposes. For instance shaders for different light types like spot, projective or volumetric light and per light type variations for different surfaces and shading. If the scene renderer should render something, it will \emph{look into} it's shader library to find a shader which fits the requirements. Here, the PixelLight materials are only a kind of \emph{would nice to have} wishes from the artist. If a material doesn't provide a normal map, there's no need to perform normal mapping. Instead a more simple and more performant shader can be chosen. Or if the surface should use nice environment mapping a special shader combination must be chosen by the renderer. As you see, this is a more advanced and not that universal topic - but  you have to make compromises if something should be able to look good and be fast at the same time. Therefore, for PixelLight we decided to implement this scene renderer as \emph{loose} plugins - \footnote{As nearly everything in PixelLight - thank's to the clever RTTI system} and usually, a scene renderer consists of several scene renderer passes, a realtime compositing.
 
-So, there are different scene renderer for different requirements, each with other limitations - it's possible that you have to write/modify a scene renderer for your own project if the provided stuff doesn't match your requirements. Also, it's recommended to write multiple versions of one and the same renderer - like different versions of an advanced per pixel lighting renderer. One for the latest GPU generation which can profit of the latest shader generation and features - and one for older GPU generations with less render details and features so that your product will also run on this hardware. As mentioned, because of the GPU limitations and the different system specifications, it's impossible to create ONE universal scene renderer which supports the whole palette of GPU generations and different systems and can also be used for each scene for any project.\footnote{In Germany we would say to such a thing \emph{Eierlegende Wollmilch Sau}}
+So, there are different scene renderer for different requirements, each with other limitations - it's possible that you have to write/modify a scene renderer for your own project if the provided stuff doesn't match your requirements. Also, it's recommended to write multiple versions of one and the same renderer - like different versions of an advanced per pixel lighting renderer. One for the latest GPU generation which can profit of the latest shader generation and features - and one for older GPU generations with less render details and features so that your product will also run on this hardware. As mentioned, because of the GPU limitations and the different system specifications, it's impossible to create one universal scene renderer which supports the whole palette of GPU generations and different systems and can also be used for each scene for any project.\footnote{In Germany we would say to such a thing \emph{Eierlegende Wollmilch Sau}}
 
 
 
@@ -69,9 +69,9 @@ All objects within your 3D environment are scene nodes. The most obvious example
 
 
 \section{Scene Node Names}
-Because there can be multiple scene nodes in different scene containers with the same names we need a name convention for scene nodes. If you have a pointer to a container and want to get a scene node from it, one can use for instance \emph{pMyContainer->GetByName("MyNode")} without any troubles. If a camera should always look at a target scene node and both, the camera and the target scene nodes are in the same container, you can use \emph{pMyCamera->SetAttribute("TargetNode", "MyTargetNode")}\footnote{Just an example, the camera scene node does not offer this} and you will get the assumed result - your camera will look at the scene node \emph{MyTargetNode}. But what if you have multiple containers and you only know that there's a scene container children node or parent node which has a node with the name \emph{MyTargetNode} inside it, but you don't know the container name at the moment? The scene system overloads the virtual \emph{Get()}-function of the element manager template to deal with such situations - the \emph{Get()}-function of a scene container is not restricted to \emph{it's own nodes} but also to ALL scene nodes available. Therefore you can use \emph{absolute names} like \emph{Root.DefaultSceneRoot.Scene.MyTargetNode} or \emph{relative names} like \emph{Scene.MyTargetNode} if you currently \emph{in} a container which has a scene container named \emph{Scene} which has a scene node called \emph{MyTargetNode}.
+Because there can be multiple scene nodes in different scene containers with the same names we need a name convention for scene nodes. If you have a pointer to a container and want to get a scene node from it, one can use for instance \emph{pMyContainer->GetByName("MyNode")} without any troubles. If a camera should always look at a target scene node and both, the camera and the target scene nodes are in the same container, you can use \emph{pMyCamera->SetAttribute("TargetNode", "MyTargetNode")}\footnote{Just an example, the camera scene node does not offer this} and you will get the assumed result - your camera will look at the scene node \emph{MyTargetNode}. But what if you have multiple containers and you only know that there's a scene container children node or parent node which has a node with the name \emph{MyTargetNode} inside it, but you don't know the container name at the moment? The scene system overloads the virtual \emph{Get()}-function of the element manager template to deal with such situations - the \emph{Get()}-function of a scene container is not restricted to \emph{it's own nodes} but also to all scene nodes available. Therefore you can use \emph{absolute names} like \emph{Root.DefaultSceneRoot.Scene.MyTargetNode} or \emph{relative names} like \emph{Scene.MyTargetNode} if you currently \emph{in} a container which has a scene container named \emph{Scene} which has a scene node called \emph{MyTargetNode}.
 
-Because this, you are NOT allowed to use \emph{.} characters within \emph{concrete} scene node names you can set for instance by using \emph{pMyNode->SetName("MyNode")}. Further the name \emph{Root} is NOT allowed for scene nodes, this name is reserved for the \emph{scene root container} of PixelLight you can request using \emph{SceneContext::GetRoot()} or by \emph{pMyContainer->GetByName("Root")}. The name of the this \emph{root scene container} can NOT be changed. \emph{pMyContainer->GetByName("Parent")} will return the parent scene container. \emph{pMyContainer->GetByName("Parent.MyNode")} returns the scene node \emph{MyNode} of the parent scene container. \emph{pMyContainer->GetByName("This")} will return \emph{pMyContainer}. The sample application \emph{PLDemoSimpleScene} shipped with the SDK contains some more name examples using a concrete scene.
+Because this, you are not allowed to use \emph{.} characters within \emph{concrete} scene node names you can set for instance by using \emph{pMyNode->SetName("MyNode")}. Further the name \emph{Root} is not allowed for scene nodes, this name is reserved for the \emph{scene root container} of PixelLight you can request using \emph{SceneContext::GetRoot()} or by \emph{pMyContainer->GetByName("Root")}. The name of the this \emph{root scene container} can not be changed. \emph{pMyContainer->GetByName("Parent")} will return the parent scene container. \emph{pMyContainer->GetByName("Parent.MyNode")} returns the scene node \emph{MyNode} of the parent scene container. \emph{pMyContainer->GetByName("This")} will return \emph{pMyContainer}. The sample application \emph{PLDemoSimpleScene} shipped with the SDK contains some more name examples using a concrete scene.
 
 
 
@@ -80,16 +80,16 @@ Because this, you are NOT allowed to use \emph{.} characters within \emph{concre
 OK, enough scene system theory - now to praxis. First at all, we need to create a scene context using an existing renderer context.
 
 \begin{lstlisting}[caption=Creating a scene context instance]
-SceneContext *pSceneContext = new SceneContext(cRendererContext);
+PLScene::SceneContext *pSceneContext = new PLScene::SceneContext(cRendererContext);
 \end{lstlisting}
 
-Within a scene context, there's a root scene container holding ALL scenes. Do NEVER use this root scene directly, instead, add for instance a container and use this as your application scene:
+Within a scene context, there's a root scene container holding all scenes. Do never use this root scene directly, instead, add for instance a container and use this as your application scene:
 
 \begin{lstlisting}[caption=Creating a new scene container instance]
-SceneContainer *pContainer = pSceneContext->GetRoot()->Create("PLScene::SceneContainer");
+PLScene::SceneContainer *pContainer = pSceneContext->GetRoot()->Create("PLScene::SceneContainer");
 \end{lstlisting}
 
-As nearly anywhere in PixelLight the scene system is heavily using the RTTI - and the plugin stuff comes for free. If you are not familiar with the PixelLight runtime type information system (RTTI) it's time to read the RTTI documentation\footnote{\emph{PLCore}-documentation} NOW to understand what it is and how to work with it. Your nodes can be implemented within your executable or within in another shared library, there's no different. Just use the node class name, an optional node name and optional node variable parameters when adding a new node into your scene container. Variables that are not set have a default setting.
+As nearly anywhere in PixelLight the scene system is heavily using the RTTI - and the plugin stuff comes for free. If you are not familiar with the PixelLight runtime type information system (RTTI) it's time to read the RTTI documentation\footnote{\emph{PLCore}-documentation} now to understand what it is and how to work with it. Your nodes can be implemented within your executable or within in another shared library, there's no different. Just use the node class name, an optional node name and optional node variable parameters when adding a new node into your scene container. Variables that are not set have a default setting.
 
 \begin{lstlisting}[caption=Creating a new scene node instance]
 pContainer->Create("PLScene::SNPointLight", "PointLight", "Color=\"1.0 1.0 1.0\"");
@@ -97,27 +97,27 @@ pContainer->Create("PLScene::SNPointLight", "PointLight", "Color=\"1.0 1.0 1.0\"
 
 This adds a node of the type \emph{PLScene::SNPointLight} with the (optional) name \emph{PointLight} and sets the light color (Color) to white (1.0, 1.0, 1.0).
 
-Note that each scene node MUST have it's one, unique name within a scene container - but there can be different nodes with the same name within different containers. If the name is already used then a number will be added behind the name automatically. If no name is provided, the node name is generated automatically using the class name and a number behind it. The third parameter is for optional node parameters. This allows to to set up different registered node variables on creation. The function will return a pointer to the new node, or a null pointer if an error occurred. Because the nodes are managed by the container they are in, the returned node pointer is only used in special situations. Note that you should NEVER store a direct pointer to an node by self because it's possible that the node is removed and then the pointer is invalid! (that's the case for all resources!) Instead store the node name and request a pointer to the node if you need one with:
+Note that each scene node must have it's one, unique name within a scene container - but there can be different nodes with the same name within different containers. If the name is already used then a number will be added behind the name automatically. If no name is provided, the node name is generated automatically using the class name and a number behind it. The third parameter is for optional node parameters. This allows to to set up different registered node variables on creation. The function will return a pointer to the new node, or a null pointer if an error occurred. Because the nodes are managed by the container they are in, the returned node pointer is only used in special situations. Note that you should never store a direct pointer to an node by self because it's possible that the node is removed and then the pointer is invalid! (that's the case for all resources!) Instead store the node name and request a pointer to the node if you need one with:
 
 \begin{lstlisting}[caption=Requesting a scene node by name]
-SceneNode *pNode = pContainer->GetByName("PointLight");
+PLScene::SceneNode *pNode = pContainer->GetByName("PointLight");
 \end{lstlisting}
 
 If you need this node frequently or if you have multiple containers it's the best to use an scene node handler which keeps track of the node.
 
 \begin{lstlisting}[caption=Scene node handler]
-SceneNodeHandler cNodeHandler;
+PLScene::SceneNodeHandler cNodeHandler;
 cNodeHandler.SetElement(pNode);		// Set handled node
 pNode = cNodeHandler.GetElement();	// Get handled node
 \end{lstlisting}
 
-DO NEVER define/embed nodes (like all resources) direct into classes like
+Do never define/embed nodes (like all resources) direct into classes like
 
 \begin{lstlisting}[caption=Invalid scene node instance usage]
 class MyClass {
 	private:
-		int       m_nCounter;
-		SceneNode m_cMyNode;
+		int				   m_nCounter;
+		PLScene::SceneNode m_cMyNode;
 }
 \end{lstlisting}
 
@@ -130,7 +130,7 @@ pContainer->Create("PLScene::SNMesh", "Statue", "Position=\"0.0 0.0 5.0\" Rotati
 Nothing new here. Create an instance of \emph{PLScene::SNMesh} which can deal with meshes, setup the position and rotation of the node, define the filename of the used mesh and tell the node that it should (re-)calculate normals for this mesh. Now we need a camera node which can be seen as your window into the scene and backup a pointer to it, we will need it soon:
 
 \begin{lstlisting}[caption=Creating a new camera scene node instance]
-SNCamera *pCamera = (SNCamera*)pContainer->Create("PLScene::SNCamera");
+PLScene::SNCamera *pCamera = (PLScene::SNCamera*)pContainer->Create("PLScene::SNCamera");
 \end{lstlisting}
 
 Can you already see this scene within your head? Hopefully not because there's no light within this scene! OK, let's create a light illuminating the scene:
@@ -287,8 +287,8 @@ class MyGoblin : public PLScene::SNMesh {
 
 	private:
 		// Animations
-		AnimationInfo *m_pStandAnimation,
-					  *m_pRunAnimation;
+		PLMesh::AnimationInfo *m_pStandAnimation;
+		PLMesh::AnimationInfo *m_pRunAnimation;
 
 	protected:
 		virtual void MeshInitFunction();

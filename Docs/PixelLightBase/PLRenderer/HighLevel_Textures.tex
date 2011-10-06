@@ -95,7 +95,7 @@ Sky1.tga Sky2.tga Sky3.tga Sky4.tga Sky5.tga (loaded automatically)\\
 \hline
 Mipmaps		& config & Are mipmaps allowed?\\
 \hline
-Compression	& config & Is texture compression allowed? (less quality but better performance) Do NOT use standard texture 
+Compression	& config & Is texture compression allowed? (less quality but better performance) Do not use standard texture 
                        compression for normal maps, because this textures stores vector data instead of visible colors 
                        the result would be wrong. If for instance the loaded dds texture is already compressed by
                        default, this compression option is ignored because it would be pretty useless to uncompress
@@ -122,7 +122,7 @@ Texture resize settings\\
 \textbf{Command} & \textbf{Default} & \textbf{Description}\\
 \hline
 Active	  & 1 & Can the texture size be resized to reduce the texture quality? If the texture dimension
-                is NOT correct and the GPU can't use the texture without resizing it this is internally
+                is not correct and the GPU can't use the texture without resizing it this is internally
                 always set to true. Use the 'force' settings below to force a given size even if the GPU
                 can't handle it.\\
 \hline
@@ -136,7 +136,7 @@ MinDepth  & 1 & The minimum allow texture depth (should normally be a power of 2
 
 
 Forces a special static texture size if not -1. (texture resizing will be disabled!)\\
-Use this ONLY in special situations because the GPU may not be able to handle certain
+Use this only in special situations because the GPU may not be able to handle certain
 sizes...
 
 \begin{tabular}{|p{2.5cm}|p{2.5cm}|p{9cm}|}

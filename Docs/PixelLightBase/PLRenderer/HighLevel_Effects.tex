@@ -62,7 +62,7 @@ layers and up to 16 and more layers when using shaders accessing this layers. Us
 blend together different textures without be forced to redraw the geometry which will blow up the
 polycount and reduce problems like z-fighting. Further each layer can have another texture with other properties... 
 you can also animate each textur using different changing subtextures to create a cartoon like animation or rotate, 
-move etc the texture by changing it's texture matrix or using all this texture animation effects at the SAME TIME
+move etc the texture by changing it's texture matrix or using all this texture animation effects at the same time
 to create amazing materials full of life! :)\\
 
 An advanced material rendering control is supplied through the vertex and fragment shader you can apply
@@ -73,7 +73,7 @@ or when using a fragment shader calculating the single fragment colors by hand. 
 different pass layers will only feed the active shaders with e.g. the desired textures but not combining
 different texture layers automatically. Further you have to consider things like texture matrix animations
 in your shaders when you want to use it - in contrast to the fixpass some things don't done automatically!
-Note that per pass there's only ONE vertex and ONE fragment active shader! But for instance you can
+Note that per pass there's only one vertex and one fragment active shader! But for instance you can
 combine different passes to a final result. It's a lot of work to write such materials with individual
 shader effects but therefore you have FULL CONTROL over how it is rendered and you can create impressive
 and unique material effects! If it is too much work for you to do all by self you can use the 'standard'
@@ -123,7 +123,7 @@ m_cMaterial.Unbind(); // Deactivate material
 \end{lstlisting}
 
 You don't have to care about how exactly the material is defined internally like if it is using
-normal fixpass functions or even advanced shader effects. But you are able to check and change ALL
+normal fixpass functions or even advanced shader effects. But you are able to check and change all
 the settings during runtime!
 When loading a material using the LoadByFilename() function there are different types of possible useable
 material data.\\
@@ -312,7 +312,7 @@ ZFunc                & LessEqual & Z/depth buffer comparison function\newline
 \hline
 ZBias                & 0.0       & Depth bias/polygon offset units, <0 = towards camera (e.g. -0.001)\newline
                                    Because SlopeScaleDepthBias and DepthBias below are API and 
-                                   GPU dependent, their results are NOT the same on each system \& API. Whenever possible, do NOT use 
+                                   GPU dependent, their results are not the same on each system \& API. Whenever possible, do not use 
                                    this 'classic' render states, use ZBias instead. If this state is not null, the renderer 
                                    will automatically manipulate the internal projection matrix to perform an 'z bias' which is more 
                                    predictable as the 'classic' polygon offset.\\

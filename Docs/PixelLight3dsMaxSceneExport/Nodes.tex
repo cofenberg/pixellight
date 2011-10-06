@@ -4,7 +4,7 @@
 
 
 \section{Cameras}
-Within every scene there should be at least ONE camera! Camera's MUST be within cells, too. (for instance \emph{cell\_Room1\_Camera}) One can place multiple cameras in a scene which can for instance be used as observer cameras. But one camera should be marked as \emph{main camera} which may be (= application dependent!) chosen by default if a scene is loaded. If there's a camera assigned with the current active viewport, this camera is used as \emph{start camera}. If the current active viewport has no camera node assigned to it, the exporter will automatically create a camera scene node called \emph{ActiveViewportCamera} to represent this \emph{Autodesk 3ds Max} viewport - to make your life as comfortable as possible, the exporter also adds some modifiers to this automatically created camera:
+Within every scene there should be at least one camera! Camera's must be within cells, too. (for instance \emph{cell\_Room1\_Camera}) One can place multiple cameras in a scene which can for instance be used as observer cameras. But one camera should be marked as \emph{main camera} which may be (= application dependent!) chosen by default if a scene is loaded. If there's a camera assigned with the current active viewport, this camera is used as \emph{start camera}. If the current active viewport has no camera node assigned to it, the exporter will automatically create a camera scene node called \emph{ActiveViewportCamera} to represent this \emph{Autodesk 3ds Max} viewport - to make your life as comfortable as possible, the exporter also adds some modifiers to this automatically created camera:
 \begin{itemize}
 \item{If currently within \emph{Autodesk 3ds Max} \emph{Walk Through} is active, the exporter adds modifiers resulting in a \emph{free moveable} camera (have a look at your scene scale!)}
 \item{If currently within \emph{Autodesk 3ds Max} \emph{Walk Through} is not active, the exporter adds modifiers resulting in an \emph{orbiter} camera orbiting around the automatically created target scene node \emph{ActiveViewportCameraTarget}}
@@ -13,7 +13,7 @@ Within every scene there should be at least ONE camera! Camera's MUST be within 
 Supported properties:
 \begin{itemize}
 \item{The \textbf{FOV} of the camera is saved within the \emph{FOV} variable of the PixelLight camera.}
-\item{If \textbf{Clipping Planes: Clip Manually} is active, near clip is saved within the variable \emph{ZNear} and far clip within \emph{ZFar}. Do NOT make the far clip to small if you don't want to see the scene disappearing in the void. Please take into account, that even if you don't \emph{activate} clipping manually there is a near and far clipping using default settings. If your world scale is to small or to huge this default settings may cause visible artefacts. (z-fighting/tearing)}
+\item{If \textbf{Clipping Planes: Clip Manually} is active, near clip is saved within the variable \emph{ZNear} and far clip within \emph{ZFar}. Do not make the far clip to small if you don't want to see the scene disappearing in the void. Please take into account, that even if you don't \emph{activate} clipping manually there is a near and far clipping using default settings. If your world scale is to small or to huge this default settings may cause visible artefacts. (z-fighting/tearing)}
 \end{itemize}
 
 Sometimes you want to \emph{move around} a camera for debugging purposes. (to inspect the exported scene) PixelLight comes with some default controller scene node modifiers that enable you to move around scene nodes. Add this scene node modifiers to your camera node:
@@ -24,7 +24,7 @@ Mod1=Class="PLEngine::SNMRotationFixRoll"
 Mod2=Class="PLEngine::SNMMoveController"
 \end{lstlisting}
 
-If you select the camera within \emph{PLViewer} for instance, you can move around this camera. The first modifier modifies the rotation of the camera by using user input. The second scene node modifier fixes undesired \emph{roll} by align the rotation along a given \emph{up-vector} which is \emph{(0 1 0)} by default. If you have a \emph{target camera}, this second modifier is not required. The last modifier is for the movement. If you don't already know HOW to add such PixelLight scene node modifiers within \emph{Autodesk 3ds Max}, you should have a look at the \emph{User Properties}-section below.
+If you select the camera within \emph{PLViewer} for instance, you can move around this camera. The first modifier modifies the rotation of the camera by using user input. The second scene node modifier fixes undesired \emph{roll} by align the rotation along a given \emph{up-vector} which is \emph{(0 1 0)} by default. If you have a \emph{target camera}, this second modifier is not required. The last modifier is for the movement. If you don't already know how to add such PixelLight scene node modifiers within \emph{Autodesk 3ds Max}, you should have a look at the \emph{User Properties}-section below.
 
 
 
@@ -41,7 +41,7 @@ Supported light types:
 
 If a light is not \emph{on} within \emph{Autodesk 3ds Max}, the PixelLight light scene node receives an \emph{Invisible}-flag.
 
-Shadow map for shadow casting lights is supported. For performance reasons, it's NOT recommended to set this flag for each light! If a light with another shadow technique than shadow mapping is found, a hint is written into the log and shadow casting is ignored for that light.
+Shadow map for shadow casting lights is supported. For performance reasons, it's not recommended to set this flag for each light! If a light with another shadow technique than shadow mapping is found, a hint is written into the log and shadow casting is ignored for that light.
 
 Light color multiplier is supported.
 

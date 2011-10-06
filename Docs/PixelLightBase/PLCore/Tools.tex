@@ -15,7 +15,7 @@ This log will receive e.g. system information and warning/error messages. After 
 
 Example:
 \begin{lstlisting}[caption=Using the log singleton directly]
-Log::GetInstance()->Output(String::Format("State of my variable is %d", nMyVariable));
+PLCore::Log::GetInstance()->Output(PLCore::String::Format("State of my variable is %d", nMyVariable));
 \end{lstlisting}
 
 There's a special log write function for debugging proposes taking as first parameter the log mode level at which this message should be written into the log. This should be used if you want to write special messages into the log only if the framework currently runs in a special log mode. The current log level of the log can be set with \emph{Log::SetLogLevel()}. There's a log macro that is more comfortable to use than using the log singleton directly.
@@ -34,7 +34,7 @@ The PixelLight framework offers a class with a huge set of timing relevant funct
 
 
 \paragraph{Getting the Time}
-Within the \emph{Timing}-class, there are different functions dealing with timing relevant data. The most important of them is the \emph{GetTimeDifference()}-function which returns the time difference in seconds since the last frame. This information is that important because it is used to create FPS independent movement, meaning that your actors will always walk with the same velocity at 100 FPS or 10 FPS. If the time difference is less your actors will move smooth\ldots if your FPS is low the time difference between two frames is high and your actors will stammer or even jump around. If your system is blocked through something and the program holds for a while, this unexpected extreme high time difference could cause many problems. Therefore you are able to set a maximum allowed time difference with \emph{SetMaxTimeDifference()}. Normally 0.15 is a good setting which is set by default. Now you could ensure that the time difference is NEVER higher than this value! If the FPS is extreme low and the time difference is clamped always to the maximum allow your actors would apparent slow down but that's better then jumping into something terrible which would brother the user. Go sure that you ALWAYS multiply the time difference if you move, animate etc. something. If you don't do this it might look OK on our system in the tested situation, but on another system or situation the animation would be too fast or slow which might end in unexpected errors. By holding this rule you will automatically profit of different features coming with the timer e.g. you get slow motion for free!
+Within the \emph{Timing}-class, there are different functions dealing with timing relevant data. The most important of them is the \emph{GetTimeDifference()}-function which returns the time difference in seconds since the last frame. This information is that important because it is used to create FPS independent movement, meaning that your actors will always walk with the same velocity at 100 FPS or 10 FPS. If the time difference is less your actors will move smooth\ldots if your FPS is low the time difference between two frames is high and your actors will stammer or even jump around. If your system is blocked through something and the program holds for a while, this unexpected extreme high time difference could cause many problems. Therefore you are able to set a maximum allowed time difference with \emph{SetMaxTimeDifference()}. Normally 0.15 is a good setting which is set by default. Now you could ensure that the time difference is never higher than this value! If the FPS is extreme low and the time difference is clamped always to the maximum allow your actors would apparent slow down but that's better then jumping into something terrible which would brother the user. Go sure that you always multiply the time difference if you move, animate etc. something. If you don't do this it might look OK on our system in the tested situation, but on another system or situation the animation would be too fast or slow which might end in unexpected errors. By holding this rule you will automatically profit of different features coming with the timer e.g. you get slow motion for free!
 
 
 \paragraph{Timing Effects}
@@ -55,13 +55,13 @@ By default the PixelLight console offers all required commands to handle the pro
 
 
 \paragraph{Adding own Groups and Elements}
-The profiling information can be expand with own information you maybe want to add to inspect the runtime behaviour of certain codes. In fact that's much easier as it may sound first\ldots in real it's only ONE function called \emph{Profiling::Set()} you need to use to customize the PixelLight profiling tool!!
+The profiling information can be expand with own information you maybe want to add to inspect the runtime behaviour of certain codes. In fact that's much easier as it may sound first\ldots in real it's only one function called \emph{Profiling::Set()} you need to use to customize the PixelLight profiling tool!!
 
 Example:
 
 \begin{lstlisting}[caption=Profiling usage example]
 // Add profiling information
-Profiling *pProfiling = Profiling::GetInstance()
+PLCore::Profiling *pProfiling = PLCore::Profiling::GetInstance()
 pProfiling->Set("MyProfilingGroup", "Name: " + sName);
 pProfiling->Set("MyProfilingGroup", "Level: " + nLevel);
 \end{lstlisting}

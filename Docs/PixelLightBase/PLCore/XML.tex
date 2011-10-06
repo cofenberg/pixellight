@@ -3,7 +3,7 @@ All text based file formats\footnote{Have a look at \emph{SDKBrowser.chm} for a 
 
 \begin{lstlisting}[caption=XML DOM usage example]
 // Create XML document
-XmlDocument cDocument;
+PLCore::XmlDocument cDocument;
 if (!cDocument.Load(cFile)) {
 	PL_LOG(Error, cDocument.GetValue() + ": " + cDocument.GetErrorDesc())
 
@@ -12,7 +12,7 @@ if (!cDocument.Load(cFile)) {
 }
 
 // Get config element
-XmlElement *pConfigElement =
+PLCore::XmlElement *pConfigElement =
 	cDocument.GetFirstChildElement("Config");
 if (!pConfigElement) {
 	PL_LOG(Error, "Can't find 'Config' element")
@@ -22,14 +22,14 @@ if (!pConfigElement) {
 }
 
 // Iterate through all groups
-XmlElement *pGroupElement =
+PLCore::XmlElement *pGroupElement =
 	pConfigElement->GetFirstChildElement("Group");
 while (pGroupElement) {
 	// Get group class name
-	String sClass = pGroupElement->GetAttribute("Class");
+	PLCore::String sClass = pGroupElement->GetAttribute("Class");
 	if (sClass.GetLength()) {
 		// Get config class instance
-		ConfigGroup *pClass = cConfig.GetClass(sClass);
+		PLCore::ConfigGroup *pClass = cConfig.GetClass(sClass);
 		if (pClass) {
 			// Set variables
 			pClass->SetVarsFromXMLElement(*pGroupElement, 0);
@@ -47,7 +47,7 @@ return true;
 To print a XML document into the console you can write for example the following:
 
 \begin{lstlisting}[caption=Print XML document into the console]
-XmlDocument cDocument;
+PLCore::XmlDocument cDocument;
 cDocument.Load(cFile);
-cDocument.Save(File::StandardOutput);
+cDocument.Save(PLCore::File::StandardOutput);
 \end{lstlisting}

@@ -138,7 +138,7 @@ using namespace PLCore;
 String sMyString;
 \end{lstlisting}
 
-Try to avoid using \emph{using namespace} too often or this will result in name conflicts which you then have to resolve by hand by adding for instance \emph{PLCore::}. We recommend to NEVER use \emph{using namespace} within header files!
+Try to avoid using \emph{using namespace} too often or this will result in name conflicts which you then have to resolve by hand by adding for instance \emph{PLCore::}. We recommend to never use \emph{using namespace} within header files!
 
 
 
@@ -296,4 +296,4 @@ pl_class_end
 \section{Reuseability and adding new Stuff}
 Before you add new classes, functions an so on - check first whether there's already something similar within PixelLight. If there's something you can already use directly, use it instead of writing new stuff. If there's something quite similar, have a more detailed look at it and contact your team colleagues to discuss whether a refactoring is possible and reasonable to update and/or to enhance existing stuff.
 
-Reuseability is one of the most important concepts when creating frameworks like PixelLight... and reuseability does NOT mean that it's possible to copy'n'past it and then hacking around for a certain project! Reuseability means that it's possible to directly reuse, to share, something between multiple projects in a quite universal way without the need to enhance and hack around constantly!
+Reuseability is one of the most important concepts when creating frameworks like PixelLight... and reuseability does not mean that it's possible to copy'n'past it and then hacking around for a certain project! Reuseability means that it's possible to directly reuse, to share, something between multiple projects in a quite universal way without the need to enhance and hack around constantly!

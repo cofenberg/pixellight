@@ -34,7 +34,7 @@ bmp, jpg, pcx, png, pnm, raw, sgi, tga, tif, pal, hdr, exr\\
 
 \emph{How can I foce a texture to never use texture compression?}\\
 This can be set in the plt-file in the general block using Compression=0 to define that this
-texture shoult NEVER use texture compression. Example:\\
+texture shoult never use texture compression. Example:\\
 
 \begin{lstlisting}[caption=plt-file disable texture compression]
 <?xml version="1.0"?>
@@ -106,7 +106,7 @@ using the plt format by writing:\\
 ... were in this example all texel which are black (0/0/0) should be transparent. Internally a
 alpha channel for the texture is created using the color key. We recommend to e.g. use a tga
 texture to supply a alpha channel because there you have more control over it - there you can
-also control HOW transparent a texel is.\\
+also control how transparent a texel is.\\
     
 When using the texture in a material you have to activate the alpha test for the material pass
 using the semi-transparent texture. Example:\\
@@ -224,7 +224,7 @@ and/or fragment shaders to each material per pass.\\
 \end{lstlisting}
 
 ... if the shaders will not work on the current hardware this this technique will be 'invalid'
-- when using shaders you should ALWAYS supply additional techniques with simpler shaders and or
+- when using shaders you should always supply additional techniques with simpler shaders and or
 techniques without any shaders to catch the worst case. (fallbacks issue)\\
 
 

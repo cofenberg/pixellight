@@ -93,7 +93,7 @@ Write \emph{<RTTI object>:SetPressed(<bool>)} in order to set the button status.
 Write \emph{<RTTI object>:IsHit()} in order to check whether or not the button was just hit. Returns \emph{true}, if the button has been hit since the last call of this function, else \emph{false}. This will return the hit-state of the button and also reset it immediatly (so the next call to \emph{IsHit()} will return \emph{false}). If you only want to check, but not reset the hit-state of a button, you should call \emph{CheckHit()}.
 
 \paragraph{<float> CheckHit()}
-Write \emph{<RTTI object>:GetValue()} in order to check if the button has been hit. \emph{true} as first parameter, if the button has been hit since the last call of this function, else \emph{false}. This function will NOT reset the hit-state after being called (see \emph{IsHit()}).
+Write \emph{<RTTI object>:GetValue()} in order to check if the button has been hit. \emph{true} as first parameter, if the button has been hit since the last call of this function, else \emph{false}. This function will not reset the hit-state after being called (see \emph{IsHit()}).
 
 
 

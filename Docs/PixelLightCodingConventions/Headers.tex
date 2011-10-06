@@ -1,7 +1,7 @@
 \chapter{Headers}
 During the development of PixelLight we take especially care of the headers because the time the projects need to compile depends heavily on how the headers are build up and how platform and API independent the project is.
 
-We have several rules for our header files. See below. At the first look some or all may look extreme, maybe even crazy to you - but it works REALLY well and solves many problems occurring when using such \emph{nasty} headers directly.
+We have several rules for our header files. See below. At the first look some or all may look extreme, maybe even crazy to you - but it works really well and solves many problems occurring when using such \emph{nasty} headers directly.
 
 
 
@@ -29,7 +29,7 @@ We have a strict layout for the header files so someone now's exactly were to lo
 //[-------------------------------------------------------]
 \end{lstlisting}
 
-This is also used inside class definitions to mark private, public, etc. class parts. Further we tried to make the code as clean and well designed as possible because when working with THAT many lines of codes it would break your neck if the code is ugly because you will need longer find certain sections and understand the code itself.
+This is also used inside class definitions to mark private, public, etc. class parts. Further we tried to make the code as clean and well designed as possible because when working with that many lines of codes it would break your neck if the code is ugly because you will need longer find certain sections and understand the code itself.
 
 Below you can see the complete header layout. If a block is not required, do not use it in a header.
 
@@ -131,7 +131,7 @@ Someone can now just throw in an include like:
 #include <PLCore/String/String.h>
 \end{lstlisting}
 
-But now, your header depends on another one and \emph{PLCore/String/String.h} is always processed if your header is used, even if the string class is never used! Even worse, if \emph{PLCore/String/String.h} is changed a lot of other codes need to be recompiled, if really required or not. Long compiler times are definitively NOT productive!
+But now, your header depends on another one and \emph{PLCore/String/String.h} is always processed if your header is used, even if the string class is never used! Even worse, if \emph{PLCore/String/String.h} is changed a lot of other codes need to be recompiled, if really required or not. Long compiler times are definitively not productive!
 
 Now someone may cry out \emph{Use cool precompiled headers!}, but this is no option for us to use additional stuff just to fix messy and not well profound headers. Keep it simple! We grab the problem on it's root by doing for example the following:
 

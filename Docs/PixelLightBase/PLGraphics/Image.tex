@@ -5,18 +5,18 @@ The image class may look quite complex on the first look, but using it is... now
 
 \begin{lstlisting}[caption=Image usage]
 // Image instance
-Image cImage;
+PLGraphics::Image cImage;
 
 // Load an image
 if (cImage.LoadByFilename("MyImage.png")) {
 	// Get a pointer to the image buffer
-	ImageBuffer *pImageBuffer = cImage.GetBuffer();
-	if (pImageBuffer && pImageBuffer->GetDataFormat() == DataByte) {
+	PLGraphics::ImageBuffer *pImageBuffer = cImage.GetBuffer();
+	if (pImageBuffer && pImageBuffer->GetDataFormat() == PLGraphics::DataByte) {
 		// Get a pointer to the image data
-		uint8 *pData = pImageBuffer->GetData();
+		PLCore::uint8 *pData = pImageBuffer->GetData();
 
 		// Loop through the hole image data and mess it up
-		for (uint32 i=0; i<pImageBuffer->GetDataSize(); i++, pData++)
+		for (PLCore::uint32 i=0; i<pImageBuffer->GetDataSize(); i++, pData++)
 			*pData = ((*pData) + i) % 255;
 
 		// Save the manipulated image
@@ -32,7 +32,7 @@ if (cImage.LoadByFilename("MyImage.png")) {
 Mipmaps are the same image - but in multiple resolutions.\footnote{Although it's also possible to put a totally different image into each of the mipmaps}
 
 Mipmaps are usually used for textures to improve the performance and the visual quality.
-Within PLRenderer: If a texture is allowed to use mipmapping, mipmaps are created automatically if the loaded texture doesn't provide such information. Image formats like dds can provide predefined mipmap information. In this case, you have to define ALL mipmap levels down to 1x1 otherwise the texture is invalid when you try to use any min filter that uses mipmaps. OpenGL normally uses white color when invalid/incomplete texture is enabled.
+Within PLRenderer: If a texture is allowed to use mipmapping, mipmaps are created automatically if the loaded texture doesn't provide such information. Image formats like dds can provide predefined mipmap information. In this case, you have to define all mipmap levels down to 1x1 otherwise the texture is invalid when you try to use any min filter that uses mipmaps. OpenGL normally uses white color when invalid/incomplete texture is enabled.
 
 
 

@@ -14,7 +14,7 @@ Here's a short usage example how to use the \emph{String}-class and how do deal 
 
 \begin{lstlisting}[caption=ASCII/Unicode/UTF8 string example]
 // Test string instance
-String sS;
+PLCore::String sS;
 
 // Set string to 'Mini' as ASCII
 sS = "Mini";
@@ -37,7 +37,7 @@ sS = L"Mini";
 sS = L"\u65e5\u672c\u8a9e";
 
 // Set string to 'Mini' as UTF8
-sS = String::FromUTF8("Mini");
+sS = PLCore::String::FromUTF8("Mini");
 \end{lstlisting}
 
 As you can see the well known \emph{char*} and \emph{wchar\_t*} are used for ASCII and Unicode strings. We strongly recommend that you don't brother yourself with this stuff as long as not necessary. So, just use \emph{String sS = "Mini";} instead of \emph{String sS = L"Mini";}. It's more readable and ASCII is more performant and requires less memory. The \emph{String}-class takes automatically care of ASCII/Unicode for you, so you can even mix strings with different internal formats!
@@ -68,20 +68,20 @@ If you care about best possible performance (even if nearly not measurable), use
 
 
 \paragraph{Strings and Dynamic Variable Parameters}
-Often it's required to give for instance a function a string which is composed of different substrings. For instance \emph{DrawText("My text")} is trivial, \emph{DrawText("\%d: My text '\%s'", 1, "Text")} will only work if the function supports dynamic variable parameters. For PixelLight, we decided to NOT providing such functions with dynamic variable parameters for various reasons. Instead, one can compose own strings by hand or by using the \emph{PLCore::String}-class. With \emph{String} the previous example would look like this \emph{DrawText(String::Format("\%d: My text '\%s'", 1, "Text"))}. \emph{String::Format} will compose the string for you and there can't be a buffer overflow if the resulting string gets to long.
+Often it's required to give for instance a function a string which is composed of different substrings. For instance \emph{DrawText("My text")} is trivial, \emph{DrawText("\%d: My text '\%s'", 1, "Text")} will only work if the function supports dynamic variable parameters. For PixelLight, we decided to not providing such functions with dynamic variable parameters for various reasons. Instead, one can compose own strings by hand or by using the \emph{PLCore::String}-class. With \emph{String} the previous example would look like this \emph{DrawText(String::Format("\%d: My text '\%s'", 1, "Text"))}. \emph{String::Format} will compose the string for you and there can't be a buffer overflow if the resulting string gets to long.
 
 Here's an example how to use this string class and how not:
 
 \begin{lstlisting}[caption=Valid and invalid string usage example]
-String sOldString = "Moin";
-String sNewString;
+PLCore::String sOldString = "Moin";
+PLCore::String sNewString;
 
-// NOT correct! (pointer to string object
+// Not correct! (pointer to string object
 // instead of string content is used...)
-sNewString = String::Format("Old string: %s", sOldString);
+sNewString = PLCore::String::Format("Old string: %s", sOldString);
 
 // Correct
-sNewString = String::Format("Old string: %s", sOldString.GetASCII());
+sNewString = PLCore::String::Format("Old string: %s", sOldString.GetASCII());
 
 // Even better because for example Unicode safe
 sNewString = "Old string: " + sOldString;
@@ -95,17 +95,17 @@ If possible, try to avoid to use this method because it's usually considered to 
 When using strings as function parameters and/or return values we recommend the following solution:
 
 \begin{lstlisting}[caption=String as function parameter and return value]
-String GetOtherString(const String &sString);
+PLCore::String GetOtherString(const PLCore::String &sString);
 \end{lstlisting}
 
-The string parameter is given as reference which is quite performant as you may now. The returned string on the other hand is an object on the runtime stack - please note that this is not performance critical because the internal string data is NOT copied, it's only shared as long as possible! By doing so, you can avoid tricky situations like giving a function a reference to it's own internal string you received from another function of the same class.
+The string parameter is given as reference which is quite performant as you may now. The returned string on the other hand is an object on the runtime stack - please note that this is not performance critical because the internal string data is not copied, it's only shared as long as possible! By doing so, you can avoid tricky situations like giving a function a reference to it's own internal string you received from another function of the same class.
 
 Example:
 
 \begin{lstlisting}[caption=Error prone string usage example]
 class StringMessUp {
 	public:
-		const String &GetFilename() const
+		const PLCore::String &GetFilename() const
 		{
 			return m_sFilename;
 		}
@@ -113,13 +113,13 @@ class StringMessUp {
 		{
 			m_sFilename = "";
 		}
-		void Load(const String &sFilename)
+		void Load(const PLCore::String &sFilename)
 		{
 			Cleanup();
 			m_sFilename = sFilename;
 		}
 	private:
-		String m_sFilename;
+		PLCore::String m_sFilename;
 };
 
 // Somewhere in the deep of the codes...
@@ -138,8 +138,8 @@ Often a clean up or similar is used as shown in the situation above - but in thi
 Regular expressions\footnote{At \url{http://www.regular-expressions.info/} are some good regular expression tutorials online available, as well as a basic syntax reference at \url{http://www.regular-expressions.info/reference.html}} are an universal and powerful tool to deal with string operations like \emph{seach for}. Here's a compact example how to use regular expressions to check whether or not a string is a substring of another one:
 
 \begin{lstlisting}[caption=Regular expression example]
-	String sBeer = "BeerNumber99";
-	RegEx cRegEx("^BeerNumber.*$");
+	PLCore::String sBeer = "BeerNumber99";
+	PLCore::RegEx cRegEx("^BeerNumber.*$");
 	if (cRegEx.Match(sBeer))
 		sBeer = "Drunk";
 \end{lstlisting}
@@ -162,14 +162,14 @@ We provide this string adapter class because it's nice to be able to use PixelLi
 
 The following source code example shows how to convert a Qt string to \emph{PLCore::String}.
 \begin{lstlisting}[caption=Qt string to PLCore::String]
-	QString sQtString = "Qt says hello to PixelLight";
-	String sPLString = QtStringAdapter::QtToPL(sQtString);
+	PLFrontendQt::QString sQtString = "Qt says hello to PixelLight";
+	PLCore::String sPLString = PLFrontendQt::QtStringAdapter::QtToPL(sQtString);
 \end{lstlisting}
 
 The following source code example shows how to convert \emph{PLCore::String} to a Qt string.
 \begin{lstlisting}[caption=PLCore::String string to Qt]
-	String sPLString = "Greetings from PixelLight to Qt";
-	QString sQtString = QtStringAdapter::PLToQt(sPLString);
+	PLCore::String sPLString = "Greetings from PixelLight to Qt";
+	PLFrontendQt::QString sQtString = PLFrontendQt::QtStringAdapter::PLToQt(sPLString);
 \end{lstlisting}
 
 
