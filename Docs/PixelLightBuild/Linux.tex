@@ -33,7 +33,7 @@ The following packages are required in order to be able to compile everything (U
 \end{itemize}
 
 To install all required packages at once, just use: (This has to be done as root! Use e.g. \emph{sudo} or \emph{su} for this task)
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 apt-get install build-essential git-core cmake doxygen graphviz texlive texlive-science texlive-latex-extra texlive-latexextra texlive-latex3 dvipdfm dvipdfmx libncurses5-dev libzip-dev libxcursor-dev libxext-dev libdbus-1-dev libxxf86vm-dev libglu1-mesa-dev libxrandr-dev
 \end{lstlisting}
 When using this single line, please ignore error messages like \begin{quote}E: Unable to locate package texlive-latexextra\end{quote}. This single line should work on as many distributations as possible, so certain packages may not be available within your distributation.
@@ -51,7 +51,7 @@ When using the \emph{maketool} flag \verb+--syslibs+, you also need the followin
 \end{itemize}
 
 To install all required packages at once, just use: (This has to be done as root! Use e.g. \emph{sudo} or \emph{su} for this task)
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 apt-get install libpcre3-dev libjpeg62-dev libpng12-dev libfreetype6-dev libopenal-dev libogg-dev libvorbis-dev
 \end{lstlisting}
 
@@ -62,20 +62,20 @@ apt-get install libpcre3-dev libjpeg62-dev libpng12-dev libfreetype6-dev libopen
 The shell script \emph{maketool} performs the required build steps automatically.
 
 After cloning the Git repository, you first have to call
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 chmod +x maketool
 \end{lstlisting}
 in order to make the script executable.
 
 To generate the project files just call
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 ./maketool setup [--release] [--syslibs]
 \end{lstlisting}
 
 On Linux, it is generally recommended to use the flag \verb+--syslibs+, this will cause the build system to use and depend on the libraries found on your system, rather than using our own externals. Although this may cause troubles when distributing an application, you have to ensure that the end user has the required dependencies installed.
 
 After the project files were generated, the project can be compiled by writing
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 ./maketool build [--release]
 \end{lstlisting}
 
@@ -103,7 +103,7 @@ Here's a list of the most important \emph{maketool}-options:
 \end{itemize}
 
 To avoid setting the parameters \verb+--externals+, \verb+--username+ and \verb+--password+ over and over again, create a file \emph{pl\_config.cfg} in your home directory (Perl-Script, included and just executed) with the following content:
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 $pl_external_url = "";
 $pl_external_user = "";
 $pl_external_pass = "";
@@ -145,28 +145,28 @@ In case you don't want to use the shell script \emph{maketool}, here's how to co
 
 \section{Build}
 To build PixelLight, either use maketool to do everything automatically:
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 ./maketool build [--release]
 \end{lstlisting}
 
 Or change into the build-directory for your configuration (e.g. \emph{build-Debug} or \emph{build-Release}) and run make yourself:
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 cd build-Release
 make
 \end{lstlisting}
 
 The latter option has the advantage that you can also build individual projects rather than only the whole SDK. To build projects individually, change into the \emph{build-Debug} or \emph{build-Release} directory and type
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 make <project name>
 \end{lstlisting}
 (for example: \emph{make PLCore})
 
 In order to use make options, change into the \emph{build-Debug} or \emph{build-Release} directory and type for example
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 make
 \end{lstlisting}
 In order to make all projects using four CPU cores to significantly speed up the make process, add the option "-j 4". You may also add the option \emph{-k} to tell the compiler "Keep on going" if there are errors within the build - useful if you're going for a walk or having some fresh coffee while the build is running. Example:
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 make -j 4 -k
 \end{lstlisting}
 
@@ -175,24 +175,24 @@ make -j 4 -k
 
 \section{Create Documentation and Packages}
 To create the documentation, build project \emph{Docs}:
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 cd build-Release
 make Docs
 \end{lstlisting}
 
 Or use maketool to do it for you:
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 ./maketool docs
 \end{lstlisting}
 
 To create the PixelLight SDK and create a Debian installation file, build project \emph{Pack}:
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 cd build-Release
 make Pack
 \end{lstlisting}
 
 Or use maketool to do it for you:
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 ./maketool pack
 \end{lstlisting}
 
@@ -210,27 +210,27 @@ This means that everything stays in your source directory. All libraries and app
 Now you only have to tell PixelLight where it can find the runtime and data files. This can be done by setting the environment variable \emph{PL\_RUNTIME} to the \emph{Runtime} directory.
 
 If you're in the root of the source tree, you can use the script \emph{profile} to do this for you:
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 source ./profile
 \end{lstlisting}
 or
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 . ./profile
 \end{lstlisting}
 (sets the environment variable \emph{PL\_RUNTIME})
 
 To inspect the content of \emph{PL\_RUNTIME}, call
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 echo $PL_RUNTIME
 \end{lstlisting}
 
 To delete the environment variable \emph{PL\_RUNTIME}, call
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 unset PL_RUNTIME
 \end{lstlisting}
 
 Of course you can also set this variable e.g. inside your profile or bash-scripts so that they are always available. Within your home (\emph{\textasciitilde}) directory, open the hidden \emph{\textasciitilde /.bashrc} file and add:
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 export PL_RUNTIME="<PixelLight root path>/Bin-Linux/Runtime/x86"
 \end{lstlisting}
 This is the most comfortable way, because you only have to do this once, and then you can use the PixelLight runtime even across multiple terminal instances.
@@ -241,17 +241,17 @@ This is the most comfortable way, because you only have to do this once, and the
 Installing means copying the files built by the project into your local Linux system so that the libraries and applications can be found there. The CMake build script therefore provides you with an \emph{install} target that installs everything on your local machine into the \emph{/usr/local} directory.
 
 Change into the build directory, e.g.:
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 cd build-Release
 \end{lstlisting}
 
 Install: (This has to be done as root! Use e.g. \emph{sudo} or \emph{su} for this task)
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 make install
 \end{lstlisting}
 
 Update libraries: (This has to be done as root! Use e.g. \emph{sudo} or \emph{su} for this task)
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 ldconfig /usr/local/lib
 \end{lstlisting}
 (if this is not done, new dynamic libs may not be found correctly)
@@ -259,7 +259,7 @@ ldconfig /usr/local/lib
 If you used this way, you will find the PixelLight runtime in \emph{/usr/local/share/pixellight/Runtime}, and the samples e.g. in \emph{/usr/local/share/pixellight/Samples}.
 
 Now you should be able to run the applications built by the PixelLight project, e.g. run one of the samples:
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 cd Bin-Linux/Samples/x86
 ./50RendererTriangle
 \end{lstlisting}

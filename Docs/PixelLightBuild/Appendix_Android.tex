@@ -38,7 +38,7 @@ The tutorial is written in brief sentences to keep it compact. But this doesn't 
 
 \paragraph{Optional but Highly Recommended for a Decent Workflow}
 Open hidden "\textasciitilde /.bashrc"-file and add:
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 # Important Android SDK and NDK paths
 export ANDROID_SDK=~/android-sdk-linux_x86
 export ANDROID_NDK=~/android-ndk-r6b
@@ -70,7 +70,7 @@ Type "\textbf{android}" to open the "Android SDK and AVD Manager"-GUI:
 
 \paragraph{Not Required but Nice to Know}
 Check available devices: Type "\textbf{adb devices}" \textrightarrow{} You should see at least one entry when your device is connected. The result may look like the following:
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 "List of devices attached
 028842074300d157	device
 emulator-5554	device"
@@ -151,7 +151,7 @@ We want to use the universal CMake build system, not the special Android NDK bui
 
 \paragraph{Optional but Highly recommended for a Decent Workflow}
 Open hidden "\textasciitilde /.bashrc"-file and add:
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 # CMake toolchain "android-cmake" from \url{http://code.google.com/p/android-cmake/}
 export ANDROID_CMAKE=~/android-cmake
 export ANDTOOLCHAIN=$ANDROID_CMAKE/toolchain/android.toolchain.cmake
@@ -213,7 +213,7 @@ Another experiment, "native-activity" for a native activity of the Android NDK.
 
 \paragraph{CMakeLists.txt within the "native-activity"-directory}
 Within the "native-activity"-directory, create a text file named \emph{CMakeLists.txt} with the following content:
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 cmake_minimum_required(VERSION 2.8)
 project(native-activity)
 add_subdirectory(jni)
@@ -222,7 +222,7 @@ add_subdirectory(jni)
 
 \paragraph{CMakeLists.txt within the "native-activity/jni"-directory}
 Within the "native-activity/jni"-directory, create a text file named \emph{CMakeLists.txt} with the following content:
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 include_directories("${ANDROID_NDK}/sources/android/native_app_glue")
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
@@ -248,7 +248,7 @@ We're going to use the native activity which was introduced in Android 2.3 (Ging
 
 \paragraph{Nice to Know}
 In case you want to write "\textbf{android-cmake -DARM\_TARGET=armeabi ..}" instead of "\textbf{android-cmake -DARM\_TARGET=armeabi -DANDROID\_API\_LEVEL=9 ..}" \textrightarrow{} Open hidden "\textasciitilde /.bashrc"-file and add:
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 export ANDROID_API_LEVEL=9
 \end{lstlisting}
 
@@ -271,7 +271,7 @@ Back to the "native-activity"-directory and type:
 \end{itemize}
 
 All in one single command line row:
-\begin{lstlisting}[language=bash]
+\begin{lstlisting}[language=sh]
 mkdir build;cd build;android-cmake -DARM_TARGET=armeabi ..;make;cd ..;android update project -t android-9 --name native-activity --path .;ant release;jarsigner -verbose -keystore my-release-key.keystore bin/native-activity-unsigned.apk myalias;rm bin/native-activity.apk;zipalign -v 4 bin/native-activity-unsigned.apk bin/native-activity.apk;adb uninstall com.example.native_activity;adb install -r bin/native-activity.apk
 \end{lstlisting}
 
