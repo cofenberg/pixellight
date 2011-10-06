@@ -56,8 +56,8 @@ This will avoid an unproductive version chaos.<br>
 The
 installer also adds a key to the
 registry, so that the path to the installed SDK can be found
-during runtime. This key is normally found at <span style="font-weight: bold;">'HKEY_LOCAL_MACHINE\SOFTWARE\PixelLight\PixelLight-SDK\Runtime'</span>
- (or within <span style="font-weight: bold;">'HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\PixelLight\PixelLight-SDK\Runtime'</span> if you are using a 32 bit PixelLight SDK on a 64 bit Windows)
+during runtime. This key has to be at <span style="font-weight: bold;">'HKEY_LOCAL_MACHINE\SOFTWARE\PixelLight\PixelLight-SDK\Runtime'</span>
+ (or at <span style="font-weight: bold;">'HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\PixelLight\PixelLight-SDK\Runtime'</span> if you are using a 32 bit PixelLight SDK on a 64 bit Windows). This 'Runtime'-key has e.g. the string value 'C:\PixelLight-SDK\Runtime\x86\' (same as the PATH environment variable entry). 
 <br><br>
 
 
@@ -202,7 +202,7 @@ Click the &#8217;Environment Variables&#8217; Button<br>
 5.
 Scroll to the end of the text, add a new semi-colon and
 enter the location of your PixelLight runtime directory. (for example
-'c:\PixelLight-SDK\Runtime\x86\')<br>
+'C:\PixelLight-SDK\Runtime\x86\')<br>
 
 
 
