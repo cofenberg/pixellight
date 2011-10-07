@@ -2,6 +2,7 @@
 [CO]
 - Cleanup: Removed "Doc-Sample", we moved to standard LaTex packages like "listings" for source codes within documents years ago, there's no longer a need for this custom minimal framework
 - "PixelLightScript": Added scene examples appendix
+- "PixelLightScript": Added input examples appendix
 
 
 
