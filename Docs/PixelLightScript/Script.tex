@@ -36,7 +36,7 @@ Most modern high-level computer languages support the concept of namespaces whic
 While, on the first look, several script languages have no namespace support, they have so on the second look or it can be at least emulated. Let's take Lua as an example. Lua is a really compact language and many important features are missing within the core of the language... but on a deeper look they can be realized by using Lua's powerful and universal table concept. This is also true for namespaces.
 
 When searching the internet for information how to do namespaces in Lua, one often finds examples like seen in source~code~\ref{Code:GlobalVariablesWithinANamespace1}.
-\begin{lstlisting}[float=htb,label=Code:GlobalVariablesWithinANamespace1,caption={Global variables within a namespace (1)}]
+\begin{lstlisting}[language=lua,float=htb,label=Code:GlobalVariablesWithinANamespace1,caption={Global variables within a namespace (1)}]
 -- Create the "PublicVariables"-namespace
 PublicVariables = {}
 -- Create the variable "Health" within
@@ -49,7 +49,7 @@ PublicVariables.Gold	= 21
 By writing \emph{PublicVariables = \{\}}, a new global variable named \emph{PublicVariables} is created and an empty table \emph{\{\}} is assigned to it. The name \emph{PublicVariables} is now addressing a Lua table. By writing \emph{PublicVariables.Health = 42} the table \emph{PublicVariables} gets a new entry with the key \emph{Health} and the value \emph{42}.
 
 Personally, I don't like the style used in source~code~\ref{Code:GlobalVariablesWithinANamespace1}, it looks complicated to me. The result of source~code~\ref{Code:GlobalVariablesWithinANamespace2} is the same, but in my personal opinion it's more readable and reminds me at e.g. C++.
-\begin{lstlisting}[float=htb,label=Code:GlobalVariablesWithinANamespace2,caption={Global variables within a namespace (2)}]
+\begin{lstlisting}[language=lua,float=htb,label=Code:GlobalVariablesWithinANamespace2,caption={Global variables within a namespace (2)}]
 -- Create the "PublicVariables"-namespace
 PublicVariables = {
 	-- Create the variable "Health" within
@@ -71,7 +71,7 @@ I hope you got the idea why using namespaces, even in scripts, is a good and han
 \section{Global Variables}
 \label{Script_GlobalVariables}
 There's nothing fancy about global variables, so this section is quite compact. When using Lua, just assign somewhere within your script, as seen in source~code~\ref{Code:GlobalVariables}, a value to a name and et voila, you've created a new global variable\footnote{Lua is loosely typed, the type of a variable depends on the value assigned to it and can be changed every time by just assigning another value with another type to it}.
-\begin{lstlisting}[float=htb,label=Code:GlobalVariables,caption={Global variables}]
+\begin{lstlisting}[language=lua,float=htb,label=Code:GlobalVariables,caption={Global variables}]
 -- Create the global variable "Health"
 Health = 42
 -- Create the global variable "Gold"
@@ -79,7 +79,7 @@ Gold = 21
 \end{lstlisting}
 
 Lua does also have the concept of local variables by writing the keyword \emph{local} in front of the variable declaration as seen within source~code~\ref{Code:LocalVariables}.
-\begin{lstlisting}[float=htb,label=Code:LocalVariables,caption={Local variables}]
+\begin{lstlisting}[language=lua,float=htb,label=Code:LocalVariables,caption={Local variables}]
 -- Create the global variable "Health"
 Health = 42
 -- Create the local variable "Gold"
@@ -98,7 +98,7 @@ The C++ side is also able to create new, or to delete existing global variables.
 \section{Global Functions}
 \label{Script_GlobalFunctions}
 As soon as your script grows over a hand full of source code lines, the need for functions arises. Within Lua, global functions look like as seen in source~code~\ref{Code:GlobalFunctions}.
-\begin{lstlisting}[float=htb,label=Code:GlobalFunctions,caption={Global functions}]
+\begin{lstlisting}[language=lua,float=htb,label=Code:GlobalFunctions,caption={Global functions}]
 function MyFunction()
 	-- ... do some fancy stuff...
 end
@@ -116,14 +116,14 @@ Beside writing own global functions directly within the script, the C++ side is 
 Just calling global function directly is not the only possible way to use them. Global functions can also be used as slots, meaning that when the signal they are connected with is emitted, the global function is called. Please note that this is also true for local functions, local functions can be used as slots as well. See section~\ref{Script_RTTIObjects_Slots} for details about slots and section~\ref{Script_RTTIObjects_Signals} for information about signals.
 
 As seen within the following source~code~\ref{Code:VariableWithAFunctionAsValue}, within Lua it's also possible to use a function as a value of a variable.
-\begin{lstlisting}[float=htb,label=Code:VariableWithAFunctionAsValue,caption={Variable with a function as value}]
+\begin{lstlisting}[language=lua,float=htb,label=Code:VariableWithAFunctionAsValue,caption={Variable with a function as value}]
 function MyFunction()
 	-- ... do some fancy stuff...
 end
 myVariable = MyFunction
 \end{lstlisting}
 Therefore, a function can also be used as callback, name it \emph{slot} if you want. This way, a function pointer can be passed around within your script which can become really handy. Imagine that there's a movie script which accepts such a function pointer as parameter. As soon as the movie playback has been finished this given function is called. The script which is using the movie script can then react on this signal/event and change, for instance, into an interactive mode. Source~code~\ref{Code:FunctionAsCallback} summes this up.
-\begin{lstlisting}[float=htb,label=Code:FunctionAsCallback,caption={Function as callback}]
+\begin{lstlisting}[language=lua,float=htb,label=Code:FunctionAsCallback,caption={Function as callback}]
 function MyCallbackFunction()
 	-- ... do some fancy stuff...
 end
@@ -148,7 +148,7 @@ MyMovie(MyCallbackFunction)
 First at all, please note that this section has nothing to do with PixelLight \ac{RTTI} objects which are explained in section~\ref{Script_RTTIObjects}.
 
 Let's directly jump into the topic. The OOP Lua skeleton shown in source~code~\ref{Code:OOPSkeleton} has proven to be useful.
-\begin{lstlisting}[label=Code:OOPSkeleton,caption={Object-oriented programming (OOP) Lua skeleton}]
+\begin{lstlisting}[language=lua,label=Code:OOPSkeleton,caption={Object-oriented programming (OOP) Lua skeleton}]
 --[-------------------------------------------------------]
 --[ Includes                                              ]
 --[-------------------------------------------------------]
@@ -394,7 +394,7 @@ Within a script, signals can be connected to an \ac{RTTI} object slot (see secti
 For example, if your \ac{RTTI} object instance is named \emph{myRTTIObject} and you want to connect the \ac{RTTI} class slot with the name \emph{MySlot} of the same \ac{RTTI} object to a signal with the name \emph{MySignalParameter}, then just write \begin{quote}myRTTIObject.MySignalParameter.Connect(myRTTIObject.MySlot)\end{quote}
 
 As mentioned before, global as well as local script functions can also be used as slots. If the \ac{RTTI} class signal is emitted, the global script function will be called. Source~code~\ref{Code:FunctionAsSlot} shows how this can be used in practice.
-\begin{lstlisting}[float=htb,label=Code:FunctionAsSlot,caption={Function as slot}]
+\begin{lstlisting}[language=lua,float=htb,label=Code:FunctionAsSlot,caption={Function as slot}]
 -- Global script function which is used as slot
 function MySlotFunction()
 	-- ... do some fancy stuff...

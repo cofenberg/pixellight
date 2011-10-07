@@ -3,6 +3,8 @@
 - Cleanup: Removed "Doc-Sample", we moved to standard LaTex packages like "listings" for source codes within documents years ago, there's no longer a need for this custom minimal framework
 - "PixelLightScript": Added scene examples appendix
 - "PixelLightScript": Added input examples appendix
+- Within "PixelLightScript", a lot of Lua script source codes are used, so, added "Common/lua.def" from http://rsmith.home.xs4all.nl/software/#lua.def to have proper Lua
+  syntax highlighting
 
 
 

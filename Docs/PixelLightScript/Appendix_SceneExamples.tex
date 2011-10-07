@@ -11,7 +11,7 @@ In this appendix, the global variable \emph{this} points to the C++ \ac{RTTI} ap
 
 
 \section{Constructing Scenes}
-\begin{lstlisting}
+\begin{lstlisting}[language=lua]
 function OnInit()
 	this:ClearScene()
 	local sceneContainer = this:GetScene()
@@ -31,11 +31,11 @@ end
 \end{lstlisting}
 
 Instead of
-\begin{lstlisting}
+\begin{lstlisting}[language=lua]
 sceneContainer:Create("PLScene::SNMesh", "Floor", "Position='0 -2.1 5' Scale='4 0.1 4' Rotation='0 180 0' Mesh='Default'")
 \end{lstlisting}
 one could also write
-\begin{lstlisting}
+\begin{lstlisting}[language=lua]
 local sceneNode = sceneContainer:Create("PLScene::SNMesh")
 if sceneNode ~= nil then
 	sceneNode.Name = "Floor"
@@ -55,7 +55,7 @@ Have a look at \emph{45ScriptApplication.lua} within the PixelLight \ac{SDK} for
 In this section we're going to use the plugin \emph{PLAssimp} using \ac{ASSIMP} to be able to load in a complete scene, without merging everything into one huge mesh. The following example is using the x-scene from \url{http://www.daniel-sadowski.com/nyx/}.
 
 Download \url{http://www.daniel-sadowski.com/nyx/nyx_exec.exe} and extract it. Then create a Lua script file within the same directory as "Nyx.exe" with the following content:
-\begin{lstlisting}
+\begin{lstlisting}[language=lua]
 function OnInit()
 	this:SetBaseDirectory("data/tex/")	-- The loaded scene is using just texture names like "Houses"
 	this:ClearScene()
@@ -76,38 +76,38 @@ end
 ... and just load this script with PLViewer and you should be able to fly through this fantasy city within the PixelLight viewer.
 
 You can also replace
-\begin{lstlisting}
+\begin{lstlisting}[language=lua]
 sceneContainer:Create("PLScene::SceneContainer", "Serenael", "Scale='0.05 0.05 0.05' Filename='data/msh/serenael.x'")
 \end{lstlisting}
 by
-\begin{lstlisting}
+\begin{lstlisting}[language=lua]
 sceneContainer:Create("PLScene::SNMesh", "Serenael", "Scale='0.05 0.05 0.05' Mesh='data/msh/serenael.x'")
 \end{lstlisting}
 in order to load in this x-scene as one single huge mesh. By the way, \ac{ASSIMP} was able to detect 80 mesh instances in this scene, meaning it optimizes the data quite well.
 
 \emph{PLScene::SceneContainer} offers a RTTI method named \emph{LoadByFilename()}. With this method, one can now also write within a Lua script e.g.
-\begin{lstlisting}
+\begin{lstlisting}[language=lua]
 local serenaelContainer = sceneContainer:Create("PLScene::SceneContainer", "Serenael", "Scale='0.05 0.05 0.05'")
 if serenaelContainer ~= nil then
 	serenaelContainer:LoadByFilename("data/msh/serenael.x", "Quality=1")
 end
 \end{lstlisting}
 in order to load in a scene and proving the loader with additional parameters, or even decide which concrete loader method should be used by writing
-\begin{lstlisting}
+\begin{lstlisting}[language=lua]
 local serenaelContainer = sceneContainer:Create("PLScene::SceneContainer", "Serenael", "Scale='0.05 0.05 0.05'")
 if serenaelContainer ~= nil then
 	serenaelContainer:LoadByFilename("data/msh/serenael.x", "Quality=1", "LoadParams")
 end
 \end{lstlisting}
 Due to the flexibility the \ac{RTTI} introduces, the available loader parameters depend on the used loader implementation. If there's no need for additional settings,
-\begin{lstlisting}
+\begin{lstlisting}[language=lua]
 local serenaelContainer = sceneContainer:Create("PLScene::SceneContainer", "Serenael", "Scale='0.05 0.05 0.05'")
 if serenaelContainer ~= nil then
 	serenaelContainer:LoadByFilename("data/msh/serenael.x")
 end
 \end{lstlisting}
 or
-\begin{lstlisting}
+\begin{lstlisting}[language=lua]
 sceneContainer:Create("PLScene::SceneContainer", "Serenael", "Scale='0.05 0.05 0.05' Filename='data/msh/serenael.x'")
 \end{lstlisting}
 ...  also does the job.
