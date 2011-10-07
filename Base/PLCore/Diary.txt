@@ -1,3 +1,13 @@
+>> 07.10.2011
+[CO]
+- "Runtime::ScanDirectoryPluginsAndData()" & "Frontend::Run()": In case of a total failure, there's now also the hint
+    "Is the PixelLight runtime registered correctly? (see e.g. "PixelLightBuild.pdf" for details)"
+  within the message to give at least a hint what's usually wrong when this failure happens. Of course, this means that an end-user will see this message as well... but
+  on the other side, when delivering an application, the PixelLight runtime is usually directly put in the same directory as the executable so that everything can be found
+  (= no chance that this message can occure).
+
+
+
 >> 05.10.2011
 [CO]
 - Loadable: Renamed "Load()"-method using a filename into "LoadByFileame()"

@@ -86,7 +86,10 @@ int Frontend::Run(const FrontendContext &cFrontendContext, bool bUrgentMessageAl
 	} else {
 		// Error!
 		if (bUrgentMessageAllowed)
-			System::GetInstance()->UrgentMessage("Failed to create the frontend implementation instance (\"" + cFrontendContext.GetFrontendImplementation() + "\")");
+			System::GetInstance()->UrgentMessage("Failed to create the frontend implementation instance \"" + cFrontendContext.GetFrontendImplementation() + "\".\n\n" \
+												 "-> Is the PixelLight runtime registered correctly? (see e.g. \"PixelLightBuild.pdf\" for details)\n" \
+												 "-> If yes, is there a RTTI class with the given name?\n" \
+												 "-> If yes, if the RTTI class within a plugin, is this plugin active and is it possible to load it?");
 	}
 
 	// Done

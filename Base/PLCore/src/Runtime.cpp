@@ -342,7 +342,8 @@ bool Runtime::ScanDirectoryPluginsAndData(bool bUrgentMessageAllowed)
 	} else {
 		// Error!
 		if (bUrgentMessageAllowed)
-			System::GetInstance()->UrgentMessage("Failed to locate the PixelLight runtime");
+			System::GetInstance()->UrgentMessage("Failed to locate the PixelLight runtime.\n\n" \
+												 "-> Is the PixelLight runtime registered correctly? (see e.g. \"PixelLightBuild.pdf\" for details)");
 		return false;
 	}
 }
