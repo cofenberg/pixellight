@@ -117,6 +117,8 @@ Here's how to compile PixelLight by using the CMake-\ac{GUI}:
 
 
 \section{Running from a Local Build}
+Please note that the following information should only be required during development using PixelLight. Release versions of your application should always contain everything so it can be run out-of-the-box. It should not be required to manipulate the \emph{PATH environment variable} nor the \emph{registry} on the system of end-users.
+
 Once you have built PixelLight, you may want to run e.g. the sample applications. In order for this to work correctly, PixelLight must know where to search for data files and plugins. The simplest solution is to just start \emph{PLInstall.exe}, which is inside your build PixelLight runtime directory (e.g. "C:/PixelLight/Bin/Runtime/x86/"). This tool automatically adds the required \emph{PATH environment variable} and the \emph{registry key}. In case you want to do this manually, continue reading.
 
 
