@@ -166,9 +166,9 @@ void SNConsole::OnUpdate()
 				// Get keyboard input device
 				Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
 				if (pKeyboard) {
-					if (pKeyboard->KeyPageUp.IsHit())
+					if (pKeyboard->PageUp.IsHit())
 						m_nRow += 27;
-					if (pKeyboard->KeyPageDown.IsHit()) {
+					if (pKeyboard->PageDown.IsHit()) {
 						m_nRow -= 27;
 						if (m_nRow < 0)
 							m_nRow = 0;

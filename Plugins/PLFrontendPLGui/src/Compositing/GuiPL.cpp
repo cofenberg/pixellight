@@ -449,9 +449,9 @@ void GuiPL::OnTimer()
 uint32 GuiPL::GetKeyModifiers(Keyboard &cKeyboard) const
 {
 	uint32 nModifiers = 0;
-	if (cKeyboard.KeyAlt.IsPressed())	  nModifiers |= PLGUIMOD_ALT;
-	if (cKeyboard.KeyControl.IsPressed()) nModifiers |= PLGUIMOD_CONTROL;
-	if (cKeyboard.KeyShift.IsPressed())	  nModifiers |= PLGUIMOD_SHIFT;
+	if (cKeyboard.Alt.IsPressed())		nModifiers |= PLGUIMOD_ALT;
+	if (cKeyboard.Control.IsPressed())	nModifiers |= PLGUIMOD_CONTROL;
+	if (cKeyboard.Shift.IsPressed())	nModifiers |= PLGUIMOD_SHIFT;
 //	if (GetAsyncKeyState(VK_LWIN))	  nModifiers |= PLGUIMOD_WIN;	// [TODO] PLInput key?
 //	if (GetAsyncKeyState(VK_RWIN))	  nModifiers |= PLGUIMOD_WIN;	// [TODO] PLInput key?
 	return nModifiers;

@@ -183,12 +183,12 @@ void Application::OnControl(Control &cControl)
 	// Is it a button?
 	if (cControl.GetType() == ControlButton) {
 		// Check whether the escape key was pressed
-		if (cControl.GetName() == "Escape") {
+		if (cControl.GetName() == "KeyboardEscape") {
 			// Shut down the application?
 			Exit(0);
 
 		// Reset the small falling physics box?
-		} else if (cControl.GetName() == "R") {
+		} else if (cControl.GetName() == "KeyboardR") {
 			// Check your pointer to the ragdoll
 			if (reinterpret_cast<Button&>(cControl).IsHit() && m_pRagdoll) {
 				// Reset the position and rotation
@@ -200,7 +200,7 @@ void Application::OnControl(Control &cControl)
 			}
 
 		// Apply a force to the ragdoll?
-		} else if (cControl.GetName() == "F") {
+		} else if (cControl.GetName() == "KeyboardF") {
 			// Toggle state
 			m_bApplyForce = !m_bApplyForce;
 
@@ -211,12 +211,12 @@ void Application::OnControl(Control &cControl)
 			}
 
 		// Apply a torque to the ragdoll?
-		} else if (cControl.GetName() == "T") {
+		} else if (cControl.GetName() == "KeyboardT") {
 			// Toggle state
 			m_bTorqueForce = !m_bTorqueForce;
 
 		// Toggle gravity?
-		} else if (cControl.GetName() == "G") {
+		} else if (cControl.GetName() == "KeyboardG") {
 			// Check your pointer to the ragdoll
 			if (reinterpret_cast<Button&>(cControl).IsHit() && m_pRagdoll) {
 				// Toggle state

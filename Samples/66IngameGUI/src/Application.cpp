@@ -91,7 +91,7 @@ Application::~Application()
 void Application::OnControl(Control &cControl)
 {
 	// Check whether the escape key was pressed
-	if (cControl.GetType() == ControlButton && cControl.GetName() == "Escape")
+	if (cControl.GetType() == ControlButton && cControl.GetName() == "KeyboardEscape")
 		Exit(0); // Shut down the application
 }
 

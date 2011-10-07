@@ -249,7 +249,7 @@ void SNConsoleBase::ProcessKeyMessage()
 			}
 
 			// Console toggle
-			if (pKeyboard->KeyCircumflex.IsHit()) {
+			if (pKeyboard->Circumflex.IsHit()) {
 				if (IsActive() || !bActivated)
 					Deactivate();
 				else
@@ -264,7 +264,7 @@ void SNConsoleBase::ProcessKeyMessage()
 				return;
 
 			// Clear command
-			if (pKeyboard->KeyEscape.IsHit()) {
+			if (pKeyboard->Escape.IsHit()) {
 				m_sCommand      = "";
 				m_sFoundCommand = "";
 				m_nCursor = 0;
@@ -275,9 +275,9 @@ void SNConsoleBase::ProcessKeyMessage()
 			}
 
 			// Set cursor
-			if (pKeyboard->KeyLeft.IsHit()) {
+			if (pKeyboard->Left.IsHit()) {
 				// Check selection start
-				if (pKeyboard->KeyShift.IsPressed() && m_nSelStart < 0)
+				if (pKeyboard->Shift.IsPressed() && m_nSelStart < 0)
 					m_nSelStart = m_nCursor; // Selection start
 
 				// Update current cursor position
@@ -285,7 +285,7 @@ void SNConsoleBase::ProcessKeyMessage()
 					m_nCursor--;
 
 				// Check selection end
-				if (pKeyboard->KeyShift.IsPressed())
+				if (pKeyboard->Shift.IsPressed())
 					m_nSelEnd   = m_nCursor;
 				else
 					m_nSelStart = m_nSelEnd = -1;
@@ -293,9 +293,9 @@ void SNConsoleBase::ProcessKeyMessage()
 				// Done
 				return;
 			}
-			if (pKeyboard->KeyRight.IsHit()) {
+			if (pKeyboard->Right.IsHit()) {
 				// Check selection start
-				if (pKeyboard->KeyShift.IsPressed() && m_nSelStart < 0)
+				if (pKeyboard->Shift.IsPressed() && m_nSelStart < 0)
 					m_nSelStart = m_nCursor; // Selection start
 
 				// Update current cursor position
@@ -304,7 +304,7 @@ void SNConsoleBase::ProcessKeyMessage()
 					m_nCursor = m_sCommand.GetLength();
 
 				// Check selection end
-				if (pKeyboard->KeyShift.IsPressed())
+				if (pKeyboard->Shift.IsPressed())
 					m_nSelEnd   = m_nCursor;
 				else
 					m_nSelStart = m_nSelEnd = -1;
@@ -312,16 +312,16 @@ void SNConsoleBase::ProcessKeyMessage()
 				// Done
 				return;
 			}
-			if (pKeyboard->KeyHome.IsHit()) {
+			if (pKeyboard->Home.IsHit()) {
 				// Check selection start
-				if (pKeyboard->KeyShift.IsPressed() && m_nSelStart < 0)
+				if (pKeyboard->Shift.IsPressed() && m_nSelStart < 0)
 					m_nSelStart = m_nCursor; // Selection start
 
 				// Update current cursor position
 				m_nCursor = 0;
 
 				// Check selection end
-				if (pKeyboard->KeyShift.IsPressed())
+				if (pKeyboard->Shift.IsPressed())
 					m_nSelEnd   = m_nCursor;
 				else
 					m_nSelStart = m_nSelEnd = -1;
@@ -329,16 +329,16 @@ void SNConsoleBase::ProcessKeyMessage()
 				// Done
 				return;
 			}
-			if (pKeyboard->KeyEnd.IsHit()) {
+			if (pKeyboard->End.IsHit()) {
 				// Check selection start
-				if (pKeyboard->KeyShift.IsPressed() && m_nSelStart < 0)
+				if (pKeyboard->Shift.IsPressed() && m_nSelStart < 0)
 					m_nSelStart = m_nCursor; // Selection start
 
 				// Update current cursor position
 				m_nCursor = m_sCommand.GetLength();
 
 				// Check selection end
-				if (pKeyboard->KeyShift.IsPressed())
+				if (pKeyboard->Shift.IsPressed())
 					m_nSelEnd   = m_nCursor;
 				else
 					m_nSelStart = m_nSelEnd = -1;
@@ -348,7 +348,7 @@ void SNConsoleBase::ProcessKeyMessage()
 			}
 
 			// Remove the selected text
-			if (pKeyboard->KeyBack.IsHit()) {
+			if (pKeyboard->Backspace.IsHit()) {
 				if (m_nSelStart < 0 || m_nSelEnd < 0) {
 					if (m_nCursor > 0) {
 						m_sCommand.Delete(m_nCursor-1, 1);
@@ -376,7 +376,7 @@ void SNConsoleBase::ProcessKeyMessage()
 			}
 
 			// Complete command
-			if (pKeyboard->KeyTab.IsHit()) {
+			if (pKeyboard->Tab.IsHit()) {
 				if (m_sFoundCommand.GetLength()) {
 					m_sCommand = m_sFoundCommand;
 					m_nCursor  = m_sCommand.GetLength();
@@ -388,8 +388,8 @@ void SNConsoleBase::ProcessKeyMessage()
 			}
 
 			// Get text from clipboard
-			if ( (pKeyboard->KeyControl.IsPressed() && pKeyboard->KeyV.IsHit()) ||
-				 (pKeyboard->KeyShift  .IsPressed() && pKeyboard->KeyInsert.IsHit()) )
+			if ( (pKeyboard->Control.IsPressed() && pKeyboard->V.IsHit()) ||
+				 (pKeyboard->Shift  .IsPressed() && pKeyboard->Insert.IsHit()) )
 			{
 				// Remove the selected text
 				if (m_nSelStart > -1 && m_nSelEnd > -1) {
@@ -418,9 +418,9 @@ void SNConsoleBase::ProcessKeyMessage()
 			}
 
 			// Copy text to clipboard
-			if ( (pKeyboard->KeyControl.IsPressed() && pKeyboard->KeyC.IsHit()) ||
-				 (pKeyboard->KeyControl.IsPressed() && pKeyboard->KeyX.IsHit()) ||
-				 (pKeyboard->KeyShift  .IsPressed() && pKeyboard->KeyDelete.IsHit()) )
+			if ( (pKeyboard->Control.IsPressed() && pKeyboard->C.IsHit()) ||
+				 (pKeyboard->Control.IsPressed() && pKeyboard->X.IsHit()) ||
+				 (pKeyboard->Shift  .IsPressed() && pKeyboard->Delete.IsHit()) )
 			{
 				/*
 				// [TODO] Frontend update: PLEngine is no longer allowed to directly access a GUI system
@@ -432,8 +432,8 @@ void SNConsoleBase::ProcessKeyMessage()
 					*/
 
 				// Remove selected text?
-				if ( ( (pKeyboard->KeyControl.IsPressed() && pKeyboard->KeyX.IsHit()) ||
-					   (pKeyboard->KeyShift  .IsPressed() && pKeyboard->KeyDelete.IsHit()) ) &&
+				if ( ( (pKeyboard->Control.IsPressed() && pKeyboard->X.IsHit()) ||
+					   (pKeyboard->Shift  .IsPressed() && pKeyboard->Delete.IsHit()) ) &&
 						m_nSelStart > -1 && m_nSelEnd > -1 )
 				{
 					if (m_nSelStart > m_nSelEnd) {
@@ -453,7 +453,7 @@ void SNConsoleBase::ProcessKeyMessage()
 			// Select a command from the command history
 			if (!m_lstCommandHistory.IsEmpty()) {
 				// Go upwards
-				if (pKeyboard->KeyUp.IsHit()) {
+				if (pKeyboard->Up.IsHit()) {
 					if (m_nCurrentCommand > 0)
 						m_nCurrentCommand--;
 					m_sCommand = m_lstCommandHistory[m_nCurrentCommand];
@@ -468,7 +468,7 @@ void SNConsoleBase::ProcessKeyMessage()
 				}
 
 				// Go downstairs
-				if (pKeyboard->KeyDown.IsHit() && m_nCurrentCommand < m_lstCommandHistory.GetNumOfElements()) {
+				if (pKeyboard->Down.IsHit() && m_nCurrentCommand < m_lstCommandHistory.GetNumOfElements()) {
 					m_nCurrentCommand++;
 					m_sCommand = m_lstCommandHistory[m_nCurrentCommand];
 					m_nCursor = 0;
@@ -482,7 +482,7 @@ void SNConsoleBase::ProcessKeyMessage()
 				}
 
 				// Remove a command history entry
-				if (pKeyboard->KeyDelete.IsHit()) {
+				if (pKeyboard->Delete.IsHit()) {
 					m_sCommand      = "";
 					m_sFoundCommand = "";
 					if (m_nCurrentCommand < m_lstCommandHistory.GetNumOfElements()) {
@@ -499,7 +499,7 @@ void SNConsoleBase::ProcessKeyMessage()
 					return;
 				}
 			} else {
-				if (pKeyboard->KeyDelete.IsHit()) {
+				if (pKeyboard->Delete.IsHit()) {
 					// Clear command line
 					m_sCommand      = "";
 					m_sFoundCommand = "";
@@ -512,7 +512,7 @@ void SNConsoleBase::ProcessKeyMessage()
 			}
 
 			// Execute command
-			if (pKeyboard->KeyReturn.IsHit()) {
+			if (pKeyboard->Return.IsHit()) {
 				// Add command line to the history
 				m_lstCommandHistory.Add(m_sCommand);
 				m_nCurrentCommand = m_lstCommandHistory.GetNumOfElements();
@@ -543,7 +543,7 @@ void SNConsoleBase::ProcessKeyMessage()
 					// The character must have at least a length of 1
 					if (sButtonName.GetLength() == 1) {
 						// Ensure the button name is lower or upper case depending on whether or not the shift key is currently pressed
-						if (pKeyboard->KeyShift.IsPressed())
+						if (pKeyboard->Shift.IsPressed())
 							sButtonName.ToUpper();
 						else
 							sButtonName.ToLower();

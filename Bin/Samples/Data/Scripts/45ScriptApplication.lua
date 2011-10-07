@@ -115,7 +115,7 @@ end
 --  Occured control
 function OnControl(control)
 	-- Check whether the escape key was pressed
-	if control:GetName() == "Escape" then
+	if control:GetName() == "KeyboardEscape" then
 		-- Shut down the application
 		this:Exit(0)
 	end

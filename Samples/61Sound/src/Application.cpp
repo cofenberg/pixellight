@@ -178,7 +178,7 @@ void Application::OnControl(Control &cControl)
 	// Is it a button?
 	if (cControl.GetType() == ControlButton) {
 		// Check whether the escape key was pressed
-		if (cControl.GetName() == "Escape") {
+		if (cControl.GetName() == "KeyboardEscape") {
 			// Shut down the application
 			Exit(0);
 		} else {
@@ -188,17 +188,17 @@ void Application::OnControl(Control &cControl)
 			float fTimeScaleFactor = pTimer->GetTimeScaleFactor();
 
 			// Check button
-			if (cControl.GetName() == "1") {
+			if (cControl.GetName() == "Keyboard1") {
 				// Decrease timescale
 				pTimer->SetTimeScaleFactor(fTimeScaleFactor-fTimeDiff);
 				if (pTimer->GetTimeScaleFactor() < 0.1f)
 					pTimer->SetTimeScaleFactor(0.1f);
-			} else if (cControl.GetName() == "2") {
+			} else if (cControl.GetName() == "Keyboard2") {
 				// Increase timescale
 				pTimer->SetTimeScaleFactor(fTimeScaleFactor+fTimeDiff);
 				if (pTimer->GetTimeScaleFactor() > 4.0f)
 					pTimer->SetTimeScaleFactor(4.0f);
-			} else if (cControl.GetName() == "3") {
+			} else if (cControl.GetName() == "Keyboard3") {
 				// Reset timescale
 				pTimer->SetTimeScaleFactor();
 			}

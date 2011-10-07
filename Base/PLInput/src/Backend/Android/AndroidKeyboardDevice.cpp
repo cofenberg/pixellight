@@ -141,8 +141,8 @@ Button *AndroidKeyboardDevice::GetKeyboardKey(Keyboard &cKeyboard, int32_t nKeyC
 	switch (nKeyCode) {
 		// AKEYCODE_SOFT_LEFT			-> ignored
 		// AKEYCODE_SOFT_RIGHT			-> ignored
-		case AKEYCODE_HOME:				return &cKeyboard.KeyHome;
-		case AKEYCODE_BACK:				return &cKeyboard.KeyBack;
+		case AKEYCODE_HOME:				return &cKeyboard.Home;
+		case AKEYCODE_BACK:				return &cKeyboard.Backspace;
 		// AKEYCODE_CALL				-> ignored
 		// AKEYCODE_ENDCAL				-> ignored
 		case AKEYCODE_0:				return &cKeyboard.Key0;
@@ -157,57 +157,57 @@ Button *AndroidKeyboardDevice::GetKeyboardKey(Keyboard &cKeyboard, int32_t nKeyC
 		case AKEYCODE_9:				return &cKeyboard.Key9;
 		// AKEYCODE_STAR				-> ignored
 		// AKEYCODE_POUND				-> ignored
-		case AKEYCODE_DPAD_UP:			return &cKeyboard.KeyUp;
-		case AKEYCODE_DPAD_DOWN:		return &cKeyboard.KeyDown;
-		case AKEYCODE_DPAD_LEFT:		return &cKeyboard.KeyLeft;
-		case AKEYCODE_DPAD_RIGHT:		return &cKeyboard.KeyRight;
+		case AKEYCODE_DPAD_UP:			return &cKeyboard.Up;
+		case AKEYCODE_DPAD_DOWN:		return &cKeyboard.Down;
+		case AKEYCODE_DPAD_LEFT:		return &cKeyboard.Left;
+		case AKEYCODE_DPAD_RIGHT:		return &cKeyboard.Right;
 		// AKEYCODE_DPAD_CENTER			-> ignored
 		// AKEYCODE_VOLUME_UP			-> ignored
 		// AKEYCODE_VOLUME_DOWN			-> ignored
 		// AKEYCODE_POWER				-> ignored
 		// AKEYCODE_CAMERA				-> ignored
-		case AKEYCODE_CLEAR:			return &cKeyboard.KeyClear;
-		case AKEYCODE_A:				return &cKeyboard.KeyA;
-		case AKEYCODE_B:				return &cKeyboard.KeyB;
-		case AKEYCODE_C:				return &cKeyboard.KeyC;
-		case AKEYCODE_D:				return &cKeyboard.KeyD;
-		case AKEYCODE_E:				return &cKeyboard.KeyE;
-		case AKEYCODE_F:				return &cKeyboard.KeyF;
-		case AKEYCODE_G:				return &cKeyboard.KeyG;
-		case AKEYCODE_H:				return &cKeyboard.KeyH;
-		case AKEYCODE_I:				return &cKeyboard.KeyI;
-		case AKEYCODE_J:				return &cKeyboard.KeyJ;
-		case AKEYCODE_K:				return &cKeyboard.KeyK;
-		case AKEYCODE_L:				return &cKeyboard.KeyL;
-		case AKEYCODE_M:				return &cKeyboard.KeyM;
-		case AKEYCODE_N:				return &cKeyboard.KeyN;
-		case AKEYCODE_O:				return &cKeyboard.KeyO;
-		case AKEYCODE_P:				return &cKeyboard.KeyP;
-		case AKEYCODE_Q:				return &cKeyboard.KeyQ;
-		case AKEYCODE_R:				return &cKeyboard.KeyR;
-		case AKEYCODE_S:				return &cKeyboard.KeyS;
-		case AKEYCODE_T:				return &cKeyboard.KeyT;
-		case AKEYCODE_U:				return &cKeyboard.KeyU;
-		case AKEYCODE_V:				return &cKeyboard.KeyV;
-		case AKEYCODE_W:				return &cKeyboard.KeyW;
-		case AKEYCODE_X:				return &cKeyboard.KeyX;
-		case AKEYCODE_Y:				return &cKeyboard.KeyY;
-		case AKEYCODE_Z:				return &cKeyboard.KeyZ;
+		case AKEYCODE_CLEAR:			return &cKeyboard.Clear;
+		case AKEYCODE_A:				return &cKeyboard.A;
+		case AKEYCODE_B:				return &cKeyboard.B;
+		case AKEYCODE_C:				return &cKeyboard.C;
+		case AKEYCODE_D:				return &cKeyboard.D;
+		case AKEYCODE_E:				return &cKeyboard.E;
+		case AKEYCODE_F:				return &cKeyboard.F;
+		case AKEYCODE_G:				return &cKeyboard.G;
+		case AKEYCODE_H:				return &cKeyboard.H;
+		case AKEYCODE_I:				return &cKeyboard.I;
+		case AKEYCODE_J:				return &cKeyboard.J;
+		case AKEYCODE_K:				return &cKeyboard.K;
+		case AKEYCODE_L:				return &cKeyboard.L;
+		case AKEYCODE_M:				return &cKeyboard.M;
+		case AKEYCODE_N:				return &cKeyboard.N;
+		case AKEYCODE_O:				return &cKeyboard.O;
+		case AKEYCODE_P:				return &cKeyboard.P;
+		case AKEYCODE_Q:				return &cKeyboard.Q;
+		case AKEYCODE_R:				return &cKeyboard.R;
+		case AKEYCODE_S:				return &cKeyboard.S;
+		case AKEYCODE_T:				return &cKeyboard.T;
+		case AKEYCODE_U:				return &cKeyboard.U;
+		case AKEYCODE_V:				return &cKeyboard.V;
+		case AKEYCODE_W:				return &cKeyboard.W;
+		case AKEYCODE_X:				return &cKeyboard.X;
+		case AKEYCODE_Y:				return &cKeyboard.Y;
+		case AKEYCODE_Z:				return &cKeyboard.Z;
 		// AKEYCODE_COMMA				-> ignored
 		// AKEYCODE_PERIOD				-> ignored
-		case AKEYCODE_ALT_LEFT:			return &cKeyboard.KeyAlt;
-		case AKEYCODE_ALT_RIGHT:		return &cKeyboard.KeyControl;
-		case AKEYCODE_SHIFT_LEFT:		return &cKeyboard.KeyShift;
+		case AKEYCODE_ALT_LEFT:			return &cKeyboard.Alt;
+		case AKEYCODE_ALT_RIGHT:		return &cKeyboard.Control;
+		case AKEYCODE_SHIFT_LEFT:		return &cKeyboard.Shift;
 		// AKEYCODE_SHIFT_RIGHT			-> ignored
-		case AKEYCODE_TAB:				return &cKeyboard.KeyTab;
-		case AKEYCODE_SPACE:			return &cKeyboard.KeySpace;
+		case AKEYCODE_TAB:				return &cKeyboard.Tab;
+		case AKEYCODE_SPACE:			return &cKeyboard.Space;
 		// AKEYCODE_SYM					-> ignored
 		// AKEYCODE_EXPLORER			-> ignored
 		// AKEYCODE_ENVELOPE			-> ignored
-		case AKEYCODE_ENTER:			return &cKeyboard.KeyReturn;
-		case AKEYCODE_DEL:				return &cKeyboard.KeyDelete;
+		case AKEYCODE_ENTER:			return &cKeyboard.Return;
+		case AKEYCODE_DEL:				return &cKeyboard.Delete;
 		// AKEYCODE_GRAVE				-> ignored
-		case AKEYCODE_MINUS:			return &cKeyboard.KeyNumpadSubtract;
+		case AKEYCODE_MINUS:			return &cKeyboard.NumpadSubtract;
 		// AKEYCODE_EQUALS				-> ignored
 		// AKEYCODE_LEFT_BRACKET		-> ignored
 		// AKEYCODE_RIGHT_BRACKET		-> ignored
@@ -219,27 +219,27 @@ Button *AndroidKeyboardDevice::GetKeyboardKey(Keyboard &cKeyboard, int32_t nKeyC
 		// AKEYCODE_NUM					-> ignored
 		// AKEYCODE_HEADSETHOOK			-> ignored
 		// AKEYCODE_FOCUS				-> ignored
-		case AKEYCODE_PLUS:				return &cKeyboard.KeyNumpadAdd;
+		case AKEYCODE_PLUS:				return &cKeyboard.NumpadAdd;
 		// AKEYCODE_MENU				-> ignored
 		// AKEYCODE_NOTIFICATION		-> ignored
 		// AKEYCODE_SEARCH				-> ignored
-		case AKEYCODE_MEDIA_PLAY_PAUSE:	return &cKeyboard.KeyPause;
+		case AKEYCODE_MEDIA_PLAY_PAUSE:	return &cKeyboard.Pause;
 		// AKEYCODE_MEDIA_STOP			-> ignored
 		// AKEYCODE_MEDIA_NEXT			-> ignored
 		// AKEYCODE_MEDIA_PREVIOUS		-> ignored
 		// AKEYCODE_MEDIA_REWIND		-> ignored
 		// AKEYCODE_MEDIA_FAST_FORWARD	-> ignored
 		// AKEYCODE_MUTE				-> ignored
-		case AKEYCODE_PAGE_UP:			return &cKeyboard.KeyPageUp;
-		case AKEYCODE_PAGE_DOWN:		return &cKeyboard.KeyPageDown;
+		case AKEYCODE_PAGE_UP:			return &cKeyboard.PageUp;
+		case AKEYCODE_PAGE_DOWN:		return &cKeyboard.PageDown;
 		// AKEYCODE_PICTSYMBOLS			-> ignored
 		// AKEYCODE_SWITCH_CHARSET		-> ignored
-		case AKEYCODE_BUTTON_A:			return &cKeyboard.KeyA;
-		case AKEYCODE_BUTTON_B:			return &cKeyboard.KeyB;
-		case AKEYCODE_BUTTON_C:			return &cKeyboard.KeyC;
-		case AKEYCODE_BUTTON_X:			return &cKeyboard.KeyX;
-		case AKEYCODE_BUTTON_Y:			return &cKeyboard.KeyY;
-		case AKEYCODE_BUTTON_Z:			return &cKeyboard.KeyZ;
+		case AKEYCODE_BUTTON_A:			return &cKeyboard.A;
+		case AKEYCODE_BUTTON_B:			return &cKeyboard.B;
+		case AKEYCODE_BUTTON_C:			return &cKeyboard.C;
+		case AKEYCODE_BUTTON_X:			return &cKeyboard.X;
+		case AKEYCODE_BUTTON_Y:			return &cKeyboard.Y;
+		case AKEYCODE_BUTTON_Z:			return &cKeyboard.Z;
 		// AKEYCODE_BUTTON_L1			-> ignored
 		// AKEYCODE_BUTTON_R1			-> ignored
 		// AKEYCODE_BUTTON_L2			-> ignored
@@ -247,7 +247,7 @@ Button *AndroidKeyboardDevice::GetKeyboardKey(Keyboard &cKeyboard, int32_t nKeyC
 		// AKEYCODE_BUTTON_THUMBL		-> ignored
 		// AKEYCODE_BUTTON_THUMBR		-> ignored
 		// AKEYCODE_BUTTON_START		-> ignored
-		case AKEYCODE_BUTTON_SELECT:	return &cKeyboard.KeySelect;
+		case AKEYCODE_BUTTON_SELECT:	return &cKeyboard.Select;
 		// AKEYCODE_BUTTON_MODE			-> ignored
 		default:						return nullptr;
 	}

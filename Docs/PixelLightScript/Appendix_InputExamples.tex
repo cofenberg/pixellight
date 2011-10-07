@@ -27,11 +27,11 @@ end
 
 function OnControl(control)
 	if control:IsInstanceOf("PLInput::Button") and control:IsPressed() then
-		if control:GetName() == "Escape" then
+		if control:GetName() == "KeyboardEscape" then
 			this:Exit(0)
-		elseif control:GetName() == "Space" then
+		elseif control:GetName() == "KeyboardSpace" then
 			AddBox()
-		elseif control:GetName() == "Backspace" then
+		elseif control:GetName() == "KeyboardBackspace" then
 			RemoveBox()
 		end
 	end

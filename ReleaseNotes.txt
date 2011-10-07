@@ -9,6 +9,7 @@ Changes in PixelLight 0.9.9-R1 (not yet released)
 - Change (Linux): Tweaked the compiler and linker settings to reduce the binary size
 - Change (Windows): "PLFrontendQt" includes simplification: "Include\Qt" instead of "Include\Qt\Qt"
 - Change: Layout changes within the LaTex documents
+- Change: "PLInput": Changed the names of some controls for a more uniform naming schema to make it easier to guess e.g. the control name of a keyboard key
 - Change: Updated the free open source particle engine "SPARK" (http://spark.developpez.com) to version 1.5.5
 - Change: Added enhanced "PixelLightBuild"-document as replacement for the "BUILD" text file (got confusing as it grew)
 - Change: Updated FMOD Ex from version "4.32.08" to "4.36.04" (has Android support)
@@ -19,7 +20,6 @@ Changes in PixelLight 0.9.9-R1 (not yet released)
 - Bugfix (Windows): "PLFrontendOS::OSWindowWindows::SetPositionSize()" was not setting the window size correctly (the window border must be ignored)
 - Bugfix (Linux): "PLFrontendOS::OSWindowLinux::GetX()" & "PLFrontendOS::OSWindowLinux::GetY()" were not returning the window position correctly (window decoration issue)
 - Bugfix: "PLFrontendPLGui" was not returning and setting the window size correctly (the window border must be ignored)
-- Bugfix: "PLInput::Keyboard" & "PLInput::VirtualStandardController": Fixed naming mix up between "Return" and "Enter", it's now always "Return" (in PixelLight, there's no difference between those two keys)
 - Bugfix: Uncompressed dds images with mipmaps and "DDS_LINEARSIZE" set were not loaded correctly
 - Bugfix: The properties of RTTI classes were not registered as expected: Only the properties of the direct base class were registered, but not the properties the base class received from it's base classes
 

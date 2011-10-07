@@ -1,3 +1,52 @@
+>> 07.10.2011
+[CO]
+- "Keyboard" & "VirtualStandardController": C++ variable "VirtualStandardController::KeyBack", key name "Backspace"... at first I thought I had
+  an error within my Lua script until I figured this one out. Ok, it's the second time that there's a confusing naming mix up. When looking at
+  the C++ variable name "VirtualStandardController::MouseLeft", the corresponding key name is "MouseLeft" - ok, this one I was able to guess
+  correctly when playing around with a script and looking at the C++ headers to figure out what's available.
+  Hm, on the other hand when looking into the "Mouse"-class, the left mouse button is named "Mouse::Left" while the variable name within
+  "VirtualStandardController" is "MouseLeft". "VirtualStandardController::KeySpace" and "Keyboard::KeySpace" are identical, as expected, and
+  it's name used e.g. through the RTTI is "Space". To be honest, in my opinion, the current naming is really error prone. At least I make errors
+  quite frequently. :/
+  I don't like to do changes as the following one because it means that it's required to update some codes using the key names... but constantly
+  bumping into such naming issues isn't fine either.
+  On the physical device side, names like "Mouse::Left" are quite handy, something like "Mouse::MouseLeft" would be to complicated. Renamed
+  "Keyboard::KeyTab" etc. into "Keyboard::Tab" to follow the naming schema used in the other devices. The only exceptions are the number keys like
+  "Keyboard::Key0" because something like "Keyboard::0" can't be written with the C++ syntax. Those exceptions are commented within the headers
+  so that one can see at once that here's an naming exception. The control names are now also always identical to the C++ variable names
+  (except the mentioned documented exceptions) - something like "Keyboard::KeyNumpad0" as C++ variable, but as control name "Num0" was confusing. :/
+  Within "VirtualStandardController", renamed the keyboard control wrappers from "VirtualStandardController::KeyA" etc. into
+  "VirtualStandardController::KeyboardA" to follow the naming schema the mouse was already using ("VirtualStandardController::MouseLeft" etc.).
+  This means of course that e.g. when using the virtual standard controller within scripts, instead of
+	function OnControl(control)
+		if control:IsInstanceOf("PLInput::Button") and control:IsPressed() then
+			if control:GetName() == "Escape" then
+				this:Exit(0)
+			elseif control:GetName() == "Space" then
+				AddBox()
+			elseif control:GetName() == "Backspace" then
+				RemoveBox()
+			end
+		end
+	end
+  one has now to write
+	function OnControl(control)
+		if control:IsInstanceOf("PLInput::Button") and control:IsPressed() then
+			if control:GetName() == "KeyboardEscape" then
+				this:Exit(0)
+			elseif control:GetName() == "KeyboardSpace" then
+				AddBox()
+			elseif control:GetName() == "KeyboardBackspace" then
+				RemoveBox()
+			end
+		end
+	end
+  It's longer, but I really think that an uniform naming schema is more useful as short names as possible, but without an uniform schema
+  so that it's really hard to guess the right name. This also reduces name collisions within the virtual standard controller, e.g. "Left"
+  was used multiple times for different controls.
+
+
+
 >> 03.10.2011
 [SW]
 - fixed abort when trying to enumerate bluetooth devices.

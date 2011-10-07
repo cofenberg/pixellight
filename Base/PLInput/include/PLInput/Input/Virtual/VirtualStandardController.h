@@ -72,153 +72,153 @@ class VirtualStandardController : public VirtualController {
 	//[-------------------------------------------------------]
 	public:
 		// Mouse
-		Axis		MouseX;				/**< X axis */
-		Axis		MouseY;				/**< Y axis */
-		Axis		MouseWheel;			/**< Mouse wheel */
-		Button		MouseLeft;			/**< Left mouse button (mouse button #0) */
-		Button		MouseRight;			/**< Right mouse button (mouse button #1) */
-		Button		MouseMiddle;		/**< Middle mouse button (mouse button #2) */
-		Button		MouseButton4;		/**< Mouse button #4 */
-		Button		MouseButton5;		/**< Mouse button #5 */
-		Button		MouseButton6;		/**< Mouse button #6 */
-		Button		MouseButton7;		/**< Mouse button #7 */
-		Button		MouseButton8;		/**< Mouse button #8 */
-		Button		MouseButton9;		/**< Mouse button #9 */
-		Button		MouseButton10;		/**< Mouse button #10 */
-		Button		MouseButton11;		/**< Mouse button #11 */
-		Button		MouseButton12;		/**< Mouse button #12 */
+		Axis		MouseX;						/**< X axis */
+		Axis		MouseY;						/**< Y axis */
+		Axis		MouseWheel;					/**< Mouse wheel */
+		Button		MouseLeft;					/**< Left mouse button (mouse button #0) */
+		Button		MouseRight;					/**< Right mouse button (mouse button #1) */
+		Button		MouseMiddle;				/**< Middle mouse button (mouse button #2) */
+		Button		MouseButton4;				/**< Mouse button #4 */
+		Button		MouseButton5;				/**< Mouse button #5 */
+		Button		MouseButton6;				/**< Mouse button #6 */
+		Button		MouseButton7;				/**< Mouse button #7 */
+		Button		MouseButton8;				/**< Mouse button #8 */
+		Button		MouseButton9;				/**< Mouse button #9 */
+		Button		MouseButton10;				/**< Mouse button #10 */
+		Button		MouseButton11;				/**< Mouse button #11 */
+		Button		MouseButton12;				/**< Mouse button #12 */
 
 		// Keyboard
-		Button		KeyBack;			/**< Backspace */
-		Button		KeyTab;				/**< Tab */
-		Button		KeyClear;			/**< Clear (not available everywhere) */
-		Button		KeyReturn;			/**< Return (often the same as "Enter") */
-		Button		KeyShift;			/**< Shift */
-		Button		KeyControl;			/**< Ctrl */
-		Button		KeyAlt;				/**< Alt */
-		Button		KeyPause;			/**< Pause */
-		Button		KeyCapsLock;		/**< Caps lock */
-		Button		KeyEscape;			/**< Escape */
-		Button		KeySpace;			/**< Space */
-		Button		KeyPageUp;			/**< Page up */
-		Button		KeyPageDown;		/**< Page down */
-		Button		KeyEnd;				/**< End */
-		Button		KeyHome;			/**< Home */
-		Button		KeyLeft;			/**< Left arrow */
-		Button		KeyUp;				/**< Up arrow */
-		Button		KeyRight;			/**< Right arrow */
-		Button		KeyDown;			/**< Down arrow */
-		Button		KeySelect;			/**< Select (not available everywhere) */
-		Button		KeyExecute;			/**< Execute (not available everywhere) */
-		Button		KeyPrintScreen;		/**< Print screen */
-		Button		KeyInsert;			/**< Insert */
-		Button		KeyDelete;			/**< Delete */
-		Button		KeyHelp;			/**< Help (not available everywhere) */
-		Button		Key0;				/**< 0 */
-		Button		Key1;				/**< 1 */
-		Button		Key2;				/**< 2 */
-		Button		Key3;				/**< 3 */
-		Button		Key4;				/**< 4 */
-		Button		Key5;				/**< 5 */
-		Button		Key6;				/**< 6 */
-		Button		Key7;				/**< 7 */
-		Button		Key8;				/**< 8 */
-		Button		Key9;				/**< 9 */
-		Button		KeyA;				/**< A */
-		Button		KeyB;				/**< B */
-		Button		KeyC;				/**< C */
-		Button		KeyD;				/**< D */
-		Button		KeyE;				/**< E */
-		Button		KeyF;				/**< F */
-		Button		KeyG;				/**< G */
-		Button		KeyH;				/**< H */
-		Button		KeyI;				/**< I */
-		Button		KeyJ;				/**< J */
-		Button		KeyK;				/**< K */
-		Button		KeyL;				/**< L */
-		Button		KeyM;				/**< M */
-		Button		KeyN;				/**< N */
-		Button		KeyO;				/**< O */
-		Button		KeyP;				/**< P */
-		Button		KeyQ;				/**< Q */
-		Button		KeyR;				/**< R */
-		Button		KeyS;				/**< S */
-		Button		KeyT;				/**< T */
-		Button		KeyU;				/**< U */
-		Button		KeyV;				/**< V */
-		Button		KeyW;				/**< W */
-		Button		KeyX;				/**< X */
-		Button		KeyY;				/**< Y */
-		Button		KeyZ;				/**< Z */
-		Button		KeyNumpad0;			/**< Numeric keypad 0 */
-		Button		KeyNumpad1;			/**< Numeric keypad 1 */
-		Button		KeyNumpad2;			/**< Numeric keypad 2 */
-		Button		KeyNumpad3;			/**< Numeric keypad 3 */
-		Button		KeyNumpad4;			/**< Numeric keypad 4 */
-		Button		KeyNumpad5;			/**< Numeric keypad 5 */
-		Button		KeyNumpad6;			/**< Numeric keypad 6 */
-		Button		KeyNumpad7;			/**< Numeric keypad 7 */
-		Button		KeyNumpad8;			/**< Numeric keypad 8 */
-		Button		KeyNumpad9;			/**< Numeric keypad 9 */
-		Button		KeyNumpadMultiply;	/**< Numeric keypad "Multiply" */
-		Button		KeyNumpadAdd;		/**< Numeric keypad "Add" */
-		Button		KeyNumpadSeparator;	/**< Numeric keypad "Separator" */
-		Button		KeyNumpadSubtract;	/**< Numeric keypad "Subtract" */
-		Button		KeyNumpadDecimal;	/**< Numeric keypad "Decimal" */
-		Button		KeyNumpadDivide;	/**< Numeric keypad "Divide" */
-		Button		KeyF1;				/**< F1 */
-		Button		KeyF2;				/**< F2 */
-		Button		KeyF3;				/**< F3 */
-		Button		KeyF4;				/**< F4 */
-		Button		KeyF5;				/**< F5 */
-		Button		KeyF6;				/**< F6 */
-		Button		KeyF7;				/**< F7 */
-		Button		KeyF8;				/**< F8 */
-		Button		KeyF9;				/**< F9 */
-		Button		KeyF10;				/**< F10 */
-		Button		KeyF11;				/**< F11 */
-		Button		KeyF12;				/**< F12 */
-		Button		KeyNumLock;			/**< Num lock */
-		Button		KeyScrollLock;		/**< Scroll lock */
-		Button		KeyCircumflex;		/**< Circumflex (^) */
+		Button		KeyboardBackspace;			/**< Backspace */
+		Button		KeyboardTab;				/**< Tab */
+		Button		KeyboardClear;				/**< Clear (not available everywhere) */
+		Button		KeyboardReturn;				/**< Return (often the same as "Enter") */
+		Button		KeyboardShift;				/**< Shift */
+		Button		KeyboardControl;			/**< Control ("Ctrl") */
+		Button		KeyboardAlt;				/**< Alt */
+		Button		KeyboardPause;				/**< Pause */
+		Button		KeyboardCapsLock;			/**< Caps lock */
+		Button		KeyboardEscape;				/**< Escape */
+		Button		KeyboardSpace;				/**< Space */
+		Button		KeyboardPageUp;				/**< Page up */
+		Button		KeyboardPageDown;			/**< Page down */
+		Button		KeyboardEnd;				/**< End */
+		Button		KeyboardHome;				/**< Home */
+		Button		KeyboardLeft;				/**< Left arrow */
+		Button		KeyboardUp;					/**< Up arrow */
+		Button		KeyboardRight;				/**< Right arrow */
+		Button		KeyboardDown;				/**< Down arrow */
+		Button		KeyboardSelect;				/**< Select (not available everywhere) */
+		Button		KeyboardExecute;			/**< Execute (not available everywhere) */
+		Button		KeyboardPrint;				/**< Print screen */
+		Button		KeyboardInsert;				/**< Insert */
+		Button		KeyboardDelete;				/**< Delete */
+		Button		KeyboardHelp;				/**< Help (not available everywhere) */
+		Button		Keyboard0;					/**< 0 */
+		Button		Keyboard1;					/**< 1 */
+		Button		Keyboard2;					/**< 2 */
+		Button		Keyboard3;					/**< 3 */
+		Button		Keyboard4;					/**< 4 */
+		Button		Keyboard5;					/**< 5 */
+		Button		Keyboard6;					/**< 6 */
+		Button		Keyboard7;					/**< 7 */
+		Button		Keyboard8;					/**< 8 */
+		Button		Keyboard9;					/**< 9 */
+		Button		KeyboardA;					/**< A */
+		Button		KeyboardB;					/**< B */
+		Button		KeyboardC;					/**< C */
+		Button		KeyboardD;					/**< D */
+		Button		KeyboardE;					/**< E */
+		Button		KeyboardF;					/**< F */
+		Button		KeyboardG;					/**< G */
+		Button		KeyboardH;					/**< H */
+		Button		KeyboardI;					/**< I */
+		Button		KeyboardJ;					/**< J */
+		Button		KeyboardK;					/**< K */
+		Button		KeyboardL;					/**< L */
+		Button		KeyboardM;					/**< M */
+		Button		KeyboardN;					/**< N */
+		Button		KeyboardO;					/**< O */
+		Button		KeyboardP;					/**< P */
+		Button		KeyboardQ;					/**< Q */
+		Button		KeyboardR;					/**< R */
+		Button		KeyboardS;					/**< S */
+		Button		KeyboardT;					/**< T */
+		Button		KeyboardU;					/**< U */
+		Button		KeyboardV;					/**< V */
+		Button		KeyboardW;					/**< W */
+		Button		KeyboardX;					/**< X */
+		Button		KeyboardY;					/**< Y */
+		Button		KeyboardZ;					/**< Z */
+		Button		KeyboardNumpad0;			/**< Numeric keypad 0 */
+		Button		KeyboardNumpad1;			/**< Numeric keypad 1 */
+		Button		KeyboardNumpad2;			/**< Numeric keypad 2 */
+		Button		KeyboardNumpad3;			/**< Numeric keypad 3 */
+		Button		KeyboardNumpad4;			/**< Numeric keypad 4 */
+		Button		KeyboardNumpad5;			/**< Numeric keypad 5 */
+		Button		KeyboardNumpad6;			/**< Numeric keypad 6 */
+		Button		KeyboardNumpad7;			/**< Numeric keypad 7 */
+		Button		KeyboardNumpad8;			/**< Numeric keypad 8 */
+		Button		KeyboardNumpad9;			/**< Numeric keypad 9 */
+		Button		KeyboardNumpadMultiply;		/**< Numeric keypad "Multiply" */
+		Button		KeyboardNumpadAdd;			/**< Numeric keypad "Add" */
+		Button		KeyboardNumpadSeparator;	/**< Numeric keypad "Separator" */
+		Button		KeyboardNumpadSubtract;		/**< Numeric keypad "Subtract" */
+		Button		KeyboardNumpadDecimal;		/**< Numeric keypad "Decimal" */
+		Button		KeyboardNumpadDivide;		/**< Numeric keypad "Divide" */
+		Button		KeyboardF1;					/**< F1 */
+		Button		KeyboardF2;					/**< F2 */
+		Button		KeyboardF3;					/**< F3 */
+		Button		KeyboardF4;					/**< F4 */
+		Button		KeyboardF5;					/**< F5 */
+		Button		KeyboardF6;					/**< F6 */
+		Button		KeyboardF7;					/**< F7 */
+		Button		KeyboardF8;					/**< F8 */
+		Button		KeyboardF9;					/**< F9 */
+		Button		KeyboardF10;				/**< F10 */
+		Button		KeyboardF11;				/**< F11 */
+		Button		KeyboardF12;				/**< F12 */
+		Button		KeyboardNumLock;			/**< Num lock */
+		Button		KeyboardScrollLock;			/**< Scroll lock */
+		Button		KeyboardCircumflex;			/**< Circumflex (^) */
 
 		// Main character controls
-		Axis		TransX;				/**< X translation axis: Strafe left/right (+/-) */
-		Axis		TransY;				/**< Y translation axis: Move up/down (+/-) */
-		Axis		TransZ;				/**< Z translation axis: Move forwards/backwards (+/-) */
-		Button		Pan;				/**< Keep pressed to pan */
-		Axis		PanX;				/**< X pan translation axis: Strafe left/right (+/-) */
-		Axis		PanY;				/**< Y pan translation axis: Move up/down (+/-) */
-		Axis		PanZ;				/**< Z pan translation axis: Move forwards/backwards (+/-) */
-		Axis		RotX;				/**< X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa) */
-		Axis		RotY;				/**< Y rotation axis: Yaw (also called 'heading') change is turning to the left or right */
-		Axis		RotZ;				/**< Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down */
-		Button		Rotate;				/**< Keep pressed to rotate */
-		Button		Forward;			/**< Move forwards */
-		Button		Backward;			/**< Move backwards */
-		Button		Left;				/**< Move (rotate) left */
-		Button		Right;				/**< Move (rotate) right */
-		Button		StrafeLeft;			/**< Strafe left */
-		Button		StrafeRight;		/**< Strafe right */
-		Button		Up;					/**< Move up */
-		Button		Down;				/**< Move down */
-		Button		Run;				/**< Keep pressed to run */
-		Button		Crouch;				/**< Keep pressed to crouch */
-		Button		Jump;				/**< Jump */
-		Button		Zoom;				/**< Keep pressed to zoom */
-		Axis		ZoomAxis;			/**< Zoom axis to zoom in or out (+/-) */
-		Button		Button1;			/**< Button for action #1 */
-		Button		Button2;			/**< Button for action #2 */
-		Button		Button3;			/**< Button for action #3 */
-		Button		Button4;			/**< Button for action #4 */
-		Button		Button5;			/**< Button for action #5 */
+		Axis		TransX;						/**< X translation axis: Strafe left/right (+/-) */
+		Axis		TransY;						/**< Y translation axis: Move up/down (+/-) */
+		Axis		TransZ;						/**< Z translation axis: Move forwards/backwards (+/-) */
+		Button		Pan;						/**< Keep pressed to pan */
+		Axis		PanX;						/**< X pan translation axis: Strafe left/right (+/-) */
+		Axis		PanY;						/**< Y pan translation axis: Move up/down (+/-) */
+		Axis		PanZ;						/**< Z pan translation axis: Move forwards/backwards (+/-) */
+		Axis		RotX;						/**< X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa) */
+		Axis		RotY;						/**< Y rotation axis: Yaw (also called 'heading') change is turning to the left or right */
+		Axis		RotZ;						/**< Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down */
+		Button		Rotate;						/**< Keep pressed to rotate */
+		Button		Forward;					/**< Move forwards */
+		Button		Backward;					/**< Move backwards */
+		Button		Left;						/**< Move (rotate) left */
+		Button		Right;						/**< Move (rotate) right */
+		Button		StrafeLeft;					/**< Strafe left */
+		Button		StrafeRight;				/**< Strafe right */
+		Button		Up;							/**< Move up */
+		Button		Down;						/**< Move down */
+		Button		Run;						/**< Keep pressed to run */
+		Button		Crouch;						/**< Keep pressed to crouch */
+		Button		Jump;						/**< Jump */
+		Button		Zoom;						/**< Keep pressed to zoom */
+		Axis		ZoomAxis;					/**< Zoom axis to zoom in or out (+/-) */
+		Button		Button1;					/**< Button for action #1 */
+		Button		Button2;					/**< Button for action #2 */
+		Button		Button3;					/**< Button for action #3 */
+		Button		Button4;					/**< Button for action #4 */
+		Button		Button5;					/**< Button for action #5 */
 
 		// Interaction
-		Button		Pickup;				/**< Keep pressed to pickup */
-		Button		Throw;				/**< Throw the picked object */
-		Button		IncreaseForce;		/**< Keep pressed to increase the force applied to the picked object */
-		Button		DecreaseForce;		/**< Keep pressed to decrease the force applied to the picked object */
-		Axis		PushPull;			/**< Used to push/pull the picked object */
+		Button		Pickup;						/**< Keep pressed to pickup */
+		Button		Throw;						/**< Throw the picked object */
+		Button		IncreaseForce;				/**< Keep pressed to increase the force applied to the picked object */
+		Button		DecreaseForce;				/**< Keep pressed to decrease the force applied to the picked object */
+		Axis		PushPull;					/**< Used to push/pull the picked object */
 
 
 	//[-------------------------------------------------------]

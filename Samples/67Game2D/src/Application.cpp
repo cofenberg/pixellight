@@ -111,16 +111,16 @@ void Application::OnControl(Control &cControl)
 	// Is it a button and was it just hit?
 	if (cControl.GetType() == ControlButton && reinterpret_cast<Button&>(cControl).IsHit()) {
 		// Check whether the escape key was pressed
-		if (cControl.GetName() == "Escape") {
+		if (cControl.GetName() == "KeyboardEscape") {
 			// Shut down the application
 			Exit(0);
 
 		// Restart the game
-		} else if (cControl.GetName() == "R") {
+		} else if (cControl.GetName() == "KeyboardR") {
 			Restart();
 
 		// Toggle post processing
-		} else if (cControl.GetName() == "P") {
+		} else if (cControl.GetName() == "KeyboardP") {
 			// Get the camera
 			const SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {

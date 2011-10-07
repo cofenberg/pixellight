@@ -83,12 +83,12 @@ void Application::OnControl(Control &cControl)
 	// Is it a button and was it just hit?
 	if (cControl.GetType() == ControlButton && reinterpret_cast<Button&>(cControl).IsHit()) {
 		// Check whether the escape key was pressed
-		if (cControl.GetName() == "Escape") {
+		if (cControl.GetName() == "KeyboardEscape") {
 			// Shut down the application
 			Exit(0);
 
 		// Show/hide the help text
-		} else if (cControl.GetName() == "F1") {
+		} else if (cControl.GetName() == "KeyboardF1") {
 			// Get the info text scene node
 			SceneNode *pSceneNode = GetRootScene() ? GetRootScene()->GetByName("InfoText") : nullptr;
 			if (pSceneNode) {
@@ -97,7 +97,7 @@ void Application::OnControl(Control &cControl)
 			}
 
 		// Toggle post processing
-		} else if (cControl.GetName() == "Space") {
+		} else if (cControl.GetName() == "KeyboardSpace") {
 			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
@@ -114,7 +114,7 @@ void Application::OnControl(Control &cControl)
 			}
 
 		// Next post process effect
-		} else if (cControl.GetName() == "PageUp") {
+		} else if (cControl.GetName() == "KeyboardPageUp") {
 			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
@@ -129,7 +129,7 @@ void Application::OnControl(Control &cControl)
 			}
 
 		// Previous post process effect
-		} else if (cControl.GetName() == "PageDown") {
+		} else if (cControl.GetName() == "KeyboardPageDown") {
 			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
@@ -145,7 +145,7 @@ void Application::OnControl(Control &cControl)
 			}
 
 		// Custom post process effect: "Rainbow"
-		} else if (cControl.GetName() == "1") {
+		} else if (cControl.GetName() == "Keyboard1") {
 			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
@@ -155,7 +155,7 @@ void Application::OnControl(Control &cControl)
 			}
 
 		// Custom post process effect: "Cartoon"
-		} else if (cControl.GetName() == "2") {
+		} else if (cControl.GetName() == "Keyboard2") {
 			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
@@ -166,7 +166,7 @@ void Application::OnControl(Control &cControl)
 			}
 
 		// Custom post process effect: "Animated cartoon"
-		} else if (cControl.GetName() == "3") {
+		} else if (cControl.GetName() == "Keyboard3") {
 			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
@@ -178,7 +178,7 @@ void Application::OnControl(Control &cControl)
 			}
 
 		// Custom post process effect: "Animated old cartoon"
-		} else if (cControl.GetName() == "4") {
+		} else if (cControl.GetName() == "Keyboard4") {
 			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
@@ -190,7 +190,7 @@ void Application::OnControl(Control &cControl)
 			}
 
 		// Custom post process effect: "Scratch"
-		} else if (cControl.GetName() == "5") {
+		} else if (cControl.GetName() == "Keyboard5") {
 			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
@@ -200,7 +200,7 @@ void Application::OnControl(Control &cControl)
 			}
 
 		// Custom post process effect: "Animated old scratch"
-		} else if (cControl.GetName() == "6") {
+		} else if (cControl.GetName() == "Keyboard6") {
 			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {
@@ -211,7 +211,7 @@ void Application::OnControl(Control &cControl)
 			}
 
 		// Custom post process effect: "Edge glow"
-		} else if (cControl.GetName() == "7") {
+		} else if (cControl.GetName() == "Keyboard7") {
 			// Get the currently used camera
 			SceneNode *pCamera = reinterpret_cast<SceneNode*>(GetCamera());
 			if (pCamera) {

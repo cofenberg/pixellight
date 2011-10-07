@@ -168,32 +168,32 @@ void QPLInputHandler::HandleKeyboardEvents(QKeyEvent* ev, bool pressed)
 		virtController.StrafeLeft.SetPressed(pressed);
 	} else if (ev->key() == Qt::Key_Space && !ev->isAutoRepeat()) {
 		handled = true;
-		virtController.KeySpace.SetPressed(pressed);
+		virtController.KeyboardSpace.SetPressed(pressed);
 		virtController.Jump.SetPressed(pressed);
 	}
 
 	if (ev->modifiers() & Qt::ControlModifier && !ev->isAutoRepeat()) {
 		handled = true;
-		virtController.KeyControl.SetPressed(pressed);
+		virtController.KeyboardControl.SetPressed(pressed);
 	}
 	if (!ev->isAutoRepeat()) {
 		bool pres = (ev->modifiers() & Qt::ControlModifier);
-		if (virtController.KeyControl.IsPressed() != pres) {
-			virtController.KeyControl.SetPressed(pres);
+		if (virtController.KeyboardControl.IsPressed() != pres) {
+			virtController.KeyboardControl.SetPressed(pres);
 			handled = true;
 		}
 
 		pres = (ev->modifiers() & Qt::ShiftModifier);
-		if (virtController.KeyShift.IsPressed() != pres
+		if (virtController.KeyboardShift.IsPressed() != pres
 		        || virtController.Run.IsPressed() != pres) {
-			virtController.KeyShift.SetPressed(pres);
+			virtController.KeyboardShift.SetPressed(pres);
 			virtController.Run.SetPressed(pres);
 			handled = true;
 		}
 
 		pres = (ev->modifiers() & Qt::AltModifier);
-		if (virtController.KeyAlt.IsPressed() != pres) {
-			virtController.KeyAlt.SetPressed(pres);
+		if (virtController.KeyboardAlt.IsPressed() != pres) {
+			virtController.KeyboardAlt.SetPressed(pres);
 			handled = true;
 		}
 	}

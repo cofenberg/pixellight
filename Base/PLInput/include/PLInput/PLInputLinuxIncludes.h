@@ -82,7 +82,7 @@
 *    XEMBED modifier keys for XEMBED_FOCUS_IN
 */
 #define XEMBED_MODIFIER_SHIFT			  (1 << 0)	/**< Shift key */
-#define XEMBED_MODIFIER_CONTROL			  (1 << 1)	/**< Ctrl key */
+#define XEMBED_MODIFIER_CONTROL			  (1 << 1)	/**< Control key ("Ctrl") */
 #define XEMBED_MODIFIER_ALT				  (1 << 2)	/**< ALT key */
 #define XEMBED_MODIFIER_SUPER			  (1 << 3)	/**< Super key */
 #define XEMBED_MODIFIER_HYPER			  (1 << 4)	/**< Hyper key */

@@ -235,9 +235,9 @@ void SNEngineInformation::OnUpdate()
 				// Get keyboard input device
 				Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
 				if (pKeyboard) {
-					if (pKeyboard->KeyPageUp.IsHit())
+					if (pKeyboard->PageUp.IsHit())
 						Profiling::GetInstance()->SelectPreviousGroup();
-					if (pKeyboard->KeyPageDown.IsHit())
+					if (pKeyboard->PageDown.IsHit())
 						Profiling::GetInstance()->SelectNextGroup();
 				}
 			}

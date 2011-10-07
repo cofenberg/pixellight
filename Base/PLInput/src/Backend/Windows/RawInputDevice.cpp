@@ -39,12 +39,12 @@
 *    Virtual keys
 */
 enum EKey {
-	KeyBack				= 0x08,		/**< Backspace */
+	KeyBackspace		= 0x08,		/**< Backspace */
 	KeyTab				= 0x09,		/**< Tab */
 	KeyClear			= 0x0C,		/**< Clear (not available everywhere) */
 	KeyReturn			= 0x0D,		/**< Return (often the same as "Enter") */
 	KeyShift			= 0x10,		/**< Shift */
-	KeyControl			= 0x11,		/**< Ctrl */
+	KeyControl			= 0x11,		/**< Control ("Ctrl") */
 	KeyAlt				= 0x12,		/**< Alt */
 	KeyPause			= 0x13,		/**< Pause */
 	KeyCapsLock			= 0x14,		/**< Caps lock */
@@ -60,7 +60,7 @@ enum EKey {
 	KeyDown				= 0x28,		/**< Down arrow */
 	KeySelect			= 0x29,		/**< Select (not available everywhere) */
 	KeyExecute			= 0x2B,		/**< Execute (not available everywhere) */
-	KeyPrintScreen		= 0x2C,		/**< Print screen */
+	KeyPrint			= 0x2C,		/**< Print screen */
 	KeyInsert			= 0x2D,		/**< Insert */
 	KeyDelete			= 0x2E,		/**< Delete */
 	KeyHelp				= 0x2F,		/**< Help (not available everywhere) */
@@ -398,31 +398,31 @@ Button *RawInputDevice::GetKeyboardKey(Keyboard *pKeyboard, unsigned short nKey)
 {
 	// Return key that corresponds to the given key code
 	switch (nKey) {
-		case KeyBack:			return &pKeyboard->KeyBack;
-		case KeyTab:			return &pKeyboard->KeyTab;
-		case KeyClear:			return &pKeyboard->KeyClear;
-		case KeyReturn:			return &pKeyboard->KeyReturn;
-		case KeyShift:			return &pKeyboard->KeyShift;
-		case KeyControl:		return &pKeyboard->KeyControl;
-		case KeyAlt:			return &pKeyboard->KeyAlt;
-		case KeyPause:			return &pKeyboard->KeyPause;
-		case KeyCapsLock:		return &pKeyboard->KeyCapsLock;
-		case KeyEscape:			return &pKeyboard->KeyEscape;
-		case KeySpace:			return &pKeyboard->KeySpace;
-		case KeyPageUp:			return &pKeyboard->KeyPageUp;
-		case KeyPageDown:		return &pKeyboard->KeyPageDown;
-		case KeyEnd:			return &pKeyboard->KeyEnd;
-		case KeyHome:			return &pKeyboard->KeyHome;
-		case KeyLeft:			return &pKeyboard->KeyLeft;
-		case KeyUp:				return &pKeyboard->KeyUp;
-		case KeyRight:			return &pKeyboard->KeyRight;
-		case KeyDown:			return &pKeyboard->KeyDown;
-		case KeySelect:			return &pKeyboard->KeySelect;
-		case KeyExecute:		return &pKeyboard->KeyExecute;
-		case KeyPrintScreen:	return &pKeyboard->KeyPrintScreen;
-		case KeyInsert:			return &pKeyboard->KeyInsert;
-		case KeyDelete:			return &pKeyboard->KeyDelete;
-		case KeyHelp:			return &pKeyboard->KeyHelp;
+		case KeyBackspace:		return &pKeyboard->Backspace;
+		case KeyTab:			return &pKeyboard->Tab;
+		case KeyClear:			return &pKeyboard->Clear;
+		case KeyReturn:			return &pKeyboard->Return;
+		case KeyShift:			return &pKeyboard->Shift;
+		case KeyControl:		return &pKeyboard->Control;
+		case KeyAlt:			return &pKeyboard->Alt;
+		case KeyPause:			return &pKeyboard->Pause;
+		case KeyCapsLock:		return &pKeyboard->CapsLock;
+		case KeyEscape:			return &pKeyboard->Escape;
+		case KeySpace:			return &pKeyboard->Space;
+		case KeyPageUp:			return &pKeyboard->PageUp;
+		case KeyPageDown:		return &pKeyboard->PageDown;
+		case KeyEnd:			return &pKeyboard->End;
+		case KeyHome:			return &pKeyboard->Home;
+		case KeyLeft:			return &pKeyboard->Left;
+		case KeyUp:				return &pKeyboard->Up;
+		case KeyRight:			return &pKeyboard->Right;
+		case KeyDown:			return &pKeyboard->Down;
+		case KeySelect:			return &pKeyboard->Select;
+		case KeyExecute:		return &pKeyboard->Execute;
+		case KeyPrint:			return &pKeyboard->Print;
+		case KeyInsert:			return &pKeyboard->Insert;
+		case KeyDelete:			return &pKeyboard->Delete;
+		case KeyHelp:			return &pKeyboard->Help;
 		case Key0:				return &pKeyboard->Key0;
 		case Key1:				return &pKeyboard->Key1;
 		case Key2:				return &pKeyboard->Key2;
@@ -433,63 +433,63 @@ Button *RawInputDevice::GetKeyboardKey(Keyboard *pKeyboard, unsigned short nKey)
 		case Key7:				return &pKeyboard->Key7;
 		case Key8:				return &pKeyboard->Key8;
 		case Key9:				return &pKeyboard->Key9;
-		case KeyA:				return &pKeyboard->KeyA;
-		case KeyB:				return &pKeyboard->KeyB;
-		case KeyC:				return &pKeyboard->KeyC;
-		case KeyD:				return &pKeyboard->KeyD;
-		case KeyE:				return &pKeyboard->KeyE;
-		case KeyF:				return &pKeyboard->KeyF;
-		case KeyG:				return &pKeyboard->KeyG;
-		case KeyH:				return &pKeyboard->KeyH;
-		case KeyI:				return &pKeyboard->KeyI;
-		case KeyJ:				return &pKeyboard->KeyJ;
-		case KeyK:				return &pKeyboard->KeyK;
-		case KeyL:				return &pKeyboard->KeyL;
-		case KeyM:				return &pKeyboard->KeyM;
-		case KeyN:				return &pKeyboard->KeyN;
-		case KeyO:				return &pKeyboard->KeyO;
-		case KeyP:				return &pKeyboard->KeyP;
-		case KeyQ:				return &pKeyboard->KeyQ;
-		case KeyR:				return &pKeyboard->KeyR;
-		case KeyS:				return &pKeyboard->KeyS;
-		case KeyT:				return &pKeyboard->KeyT;
-		case KeyU:				return &pKeyboard->KeyU;
-		case KeyV:				return &pKeyboard->KeyV;
-		case KeyW:				return &pKeyboard->KeyW;
-		case KeyX:				return &pKeyboard->KeyX;
-		case KeyY:				return &pKeyboard->KeyY;
-		case KeyZ:				return &pKeyboard->KeyZ;
-		case KeyNumpad0:		return &pKeyboard->KeyNumpad0;
-		case KeyNumpad1:		return &pKeyboard->KeyNumpad1;
-		case KeyNumpad2:		return &pKeyboard->KeyNumpad2;
-		case KeyNumpad3:		return &pKeyboard->KeyNumpad3;
-		case KeyNumpad4:		return &pKeyboard->KeyNumpad4;
-		case KeyNumpad5:		return &pKeyboard->KeyNumpad5;
-		case KeyNumpad6:		return &pKeyboard->KeyNumpad6;
-		case KeyNumpad7:		return &pKeyboard->KeyNumpad7;
-		case KeyNumpad8:		return &pKeyboard->KeyNumpad8;
-		case KeyNumpad9:		return &pKeyboard->KeyNumpad9;
-		case KeyNumpadMultiply:	return &pKeyboard->KeyNumpadMultiply;
-		case KeyNumpadAdd:		return &pKeyboard->KeyNumpadAdd;
-		case KeyNumpadSeparator:return &pKeyboard->KeyNumpadSeparator;
-		case KeyNumpadSubtract:	return &pKeyboard->KeyNumpadSubtract;
-		case KeyNumpadDecimal:	return &pKeyboard->KeyNumpadDecimal;
-		case KeyNumpadDivide:	return &pKeyboard->KeyNumpadDivide;
-		case KeyF1:				return &pKeyboard->KeyF1;
-		case KeyF2:				return &pKeyboard->KeyF2;
-		case KeyF3:				return &pKeyboard->KeyF3;
-		case KeyF4:				return &pKeyboard->KeyF4;
-		case KeyF5:				return &pKeyboard->KeyF5;
-		case KeyF6:				return &pKeyboard->KeyF6;
-		case KeyF7:				return &pKeyboard->KeyF7;
-		case KeyF8:				return &pKeyboard->KeyF8;
-		case KeyF9:				return &pKeyboard->KeyF9;
-		case KeyF10:			return &pKeyboard->KeyF10;
-		case KeyF11:			return &pKeyboard->KeyF11;
-		case KeyF12:			return &pKeyboard->KeyF12;
-		case KeyNumLock:		return &pKeyboard->KeyNumLock;
-		case KeyScrollLock:		return &pKeyboard->KeyScrollLock;
-		case KeyCircumflex:		return &pKeyboard->KeyCircumflex;
+		case KeyA:				return &pKeyboard->A;
+		case KeyB:				return &pKeyboard->B;
+		case KeyC:				return &pKeyboard->C;
+		case KeyD:				return &pKeyboard->D;
+		case KeyE:				return &pKeyboard->E;
+		case KeyF:				return &pKeyboard->F;
+		case KeyG:				return &pKeyboard->G;
+		case KeyH:				return &pKeyboard->H;
+		case KeyI:				return &pKeyboard->I;
+		case KeyJ:				return &pKeyboard->J;
+		case KeyK:				return &pKeyboard->K;
+		case KeyL:				return &pKeyboard->L;
+		case KeyM:				return &pKeyboard->M;
+		case KeyN:				return &pKeyboard->N;
+		case KeyO:				return &pKeyboard->O;
+		case KeyP:				return &pKeyboard->P;
+		case KeyQ:				return &pKeyboard->Q;
+		case KeyR:				return &pKeyboard->R;
+		case KeyS:				return &pKeyboard->S;
+		case KeyT:				return &pKeyboard->T;
+		case KeyU:				return &pKeyboard->U;
+		case KeyV:				return &pKeyboard->V;
+		case KeyW:				return &pKeyboard->W;
+		case KeyX:				return &pKeyboard->X;
+		case KeyY:				return &pKeyboard->Y;
+		case KeyZ:				return &pKeyboard->Z;
+		case KeyNumpad0:		return &pKeyboard->Numpad0;
+		case KeyNumpad1:		return &pKeyboard->Numpad1;
+		case KeyNumpad2:		return &pKeyboard->Numpad2;
+		case KeyNumpad3:		return &pKeyboard->Numpad3;
+		case KeyNumpad4:		return &pKeyboard->Numpad4;
+		case KeyNumpad5:		return &pKeyboard->Numpad5;
+		case KeyNumpad6:		return &pKeyboard->Numpad6;
+		case KeyNumpad7:		return &pKeyboard->Numpad7;
+		case KeyNumpad8:		return &pKeyboard->Numpad8;
+		case KeyNumpad9:		return &pKeyboard->Numpad9;
+		case KeyNumpadMultiply:	return &pKeyboard->NumpadMultiply;
+		case KeyNumpadAdd:		return &pKeyboard->NumpadAdd;
+		case KeyNumpadSeparator:return &pKeyboard->NumpadSeparator;
+		case KeyNumpadSubtract:	return &pKeyboard->NumpadSubtract;
+		case KeyNumpadDecimal:	return &pKeyboard->NumpadDecimal;
+		case KeyNumpadDivide:	return &pKeyboard->NumpadDivide;
+		case KeyF1:				return &pKeyboard->F1;
+		case KeyF2:				return &pKeyboard->F2;
+		case KeyF3:				return &pKeyboard->F3;
+		case KeyF4:				return &pKeyboard->F4;
+		case KeyF5:				return &pKeyboard->F5;
+		case KeyF6:				return &pKeyboard->F6;
+		case KeyF7:				return &pKeyboard->F7;
+		case KeyF8:				return &pKeyboard->F8;
+		case KeyF9:				return &pKeyboard->F9;
+		case KeyF10:			return &pKeyboard->F10;
+		case KeyF11:			return &pKeyboard->F11;
+		case KeyF12:			return &pKeyboard->F12;
+		case KeyNumLock:		return &pKeyboard->NumLock;
+		case KeyScrollLock:		return &pKeyboard->ScrollLock;
+		case KeyCircumflex:		return &pKeyboard->Circumflex;
 		default:				return  nullptr;
 	}
 }

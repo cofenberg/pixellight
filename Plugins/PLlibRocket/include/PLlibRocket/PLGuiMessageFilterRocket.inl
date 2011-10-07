@@ -280,17 +280,17 @@ int PLGuiMessageFilterRocket::GetRocketKeyModifierState() const
 	// Get keyboard input device
 	PLInput::Keyboard *pKeyboard = PLInput::InputManager::GetInstance()->GetKeyboard();
 	if (pKeyboard) {
-		if (pKeyboard->KeyControl.IsPressed())
+		if (pKeyboard->Control.IsPressed())
 			nRocketModifierState |= Rocket::Core::Input::KM_CTRL;
-		if (pKeyboard->KeyShift.IsPressed())
+		if (pKeyboard->Shift.IsPressed())
 			nRocketModifierState |= Rocket::Core::Input::KM_SHIFT;
-		if (pKeyboard->KeyAlt.IsPressed())
+		if (pKeyboard->Alt.IsPressed())
 			nRocketModifierState |= Rocket::Core::Input::KM_ALT;
-		if (pKeyboard->KeyCapsLock.IsPressed())
+		if (pKeyboard->CapsLock.IsPressed())
 			nRocketModifierState |= Rocket::Core::Input::KM_CAPSLOCK;
-		if (pKeyboard->KeyNumLock.IsPressed())
+		if (pKeyboard->NumLock.IsPressed())
 			nRocketModifierState |= Rocket::Core::Input::KM_NUMLOCK;
-		if (pKeyboard->KeyScrollLock.IsPressed())
+		if (pKeyboard->ScrollLock.IsPressed())
 			nRocketModifierState |= Rocket::Core::Input::KM_SCROLLLOCK;
 	}
 
