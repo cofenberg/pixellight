@@ -54,7 +54,6 @@ set_target_properties(Docs-install PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
 ##################################################
 ## Projects
 ##################################################
-add_subdirectory(Doc-Sample)
 add_subdirectory(PixelLightFeatures)
 add_subdirectory(PixelLightBase)
 add_subdirectory(PixelLightAPI)

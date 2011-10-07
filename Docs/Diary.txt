@@ -1,3 +1,9 @@
+>> 07.10.2011
+[CO]
+- Cleanup: Removed "Doc-Sample", we moved to standard LaTex packages like "listings" for source codes within documents years ago, there's no longer a need for this custom minimal framework
+
+
+
 >> 06.10.2011
 [CO]
 - LaTex documents: Updated "Common"-content, e.g. the document class "scrbook" (Komascript-Book, http://ftp.uni-erlangen.de/mirrors/CTAN/macros/latex/contrib/koma-script/scrguien.pdf)
