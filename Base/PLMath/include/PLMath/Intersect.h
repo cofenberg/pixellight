@@ -322,7 +322,7 @@ class Intersect {
 		*  @param[in]  vEnd
 		*    Line end point
 		*  @param[out] pfIntersection
-		*    Receives the intersection distance if not null
+		*    Receives the intersection distance if not null, <0 if there's no intersection or when the start point is inside the axis aligned box
 		*
 		*  @return
 		*    'true' if there's a axis aligned box/line intersection, else 'false'
@@ -340,7 +340,7 @@ class Intersect {
 		*  @param[in]  cLine
 		*    Line to check
 		*  @param[out] pfIntersection
-		*    Receives the intersection distance if not null
+		*    Receives the intersection distance if not null, <0 if there's no intersection or when the start point is inside the axis aligned box
 		*
 		*  @return
 		*    'true' if there's a axis aligned box/line intersection, else 'false'
