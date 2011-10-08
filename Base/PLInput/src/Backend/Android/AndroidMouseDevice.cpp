@@ -147,7 +147,7 @@ void AndroidMouseDevice::Update()
 			// Was the mouse already moved? (if so, we're in "mouse move"-mode, not in "left mouse button click"-mode)
 			if (!m_bMouseMoved) {
 				// Check whether or not the mouse was moved - with a little bit of tollerance
-				if (fDeltaX > 3 || fDeltaY > 3)
+				if (fDeltaX > 6 || fDeltaY > 6)
 					m_bMouseMoved = true;
 				else
 					fDeltaX = fDeltaY = 0.0f;
