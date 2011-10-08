@@ -105,8 +105,10 @@ class AndroidMouseDevice : public UpdateDevice {
 		bool  m_bMouseMoved;				/**< Mouse moved during the current touch? */
 		float m_fPreviousMousePositionX;	/**< Previous mouse x position */
 		float m_fPreviousMousePositionY;	/**< Previous mouse y position */
+		float m_fPreviousMousePressure;		/**< Previous mouse pressure */
 		float m_fMousePositionX;			/**< Current mouse x position */
 		float m_fMousePositionY;			/**< Current mouse y position */
+		float m_fMousePressure;				/**< Current mouse pressure */
 		bool  m_bLeftMouseButton;			/**< Is the left mouse button currently down? */
 
 

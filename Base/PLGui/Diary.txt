@@ -2,6 +2,7 @@
 [CO]
 - "GuiAndroid" bugfix: D'OH! The mouse movement test should be "Math::Abs(fDeltaX) > 3" instead of "fDeltaX > 3" to also take a
   negative sign into account.
+- "GuiAndroid": More fine tuning
 
 
 

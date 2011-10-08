@@ -2,6 +2,7 @@
 [CO]
 - "AndroidMouseDevice" bugfix: D'OH! The movement test should be "Math::Abs(fDeltaX) > 3" instead of "fDeltaX > 3" to also take a negative sign
    into account.
+- "AndroidMouseDevice": More fine tuning
 
 
 

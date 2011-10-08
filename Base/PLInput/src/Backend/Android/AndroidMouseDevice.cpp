@@ -47,8 +47,10 @@ AndroidMouseDevice::AndroidMouseDevice() :
 	m_bMouseMoved(false),
 	m_fPreviousMousePositionX(0.0f),
 	m_fPreviousMousePositionY(0.0f),
+	m_fPreviousMousePressure(0.0f),
 	m_fMousePositionX(0.0f),
 	m_fMousePositionY(0.0f),
+	m_fMousePressure(0.0f),
 	m_bLeftMouseButton(false)
 {
 	// Destroy device implementation automatically
@@ -75,6 +77,7 @@ void AndroidMouseDevice::OnMotionInputEvent(const struct AInputEvent &cAMotionIn
 		// Get the current X and Y coordinate of this event for the given pointer index
 		m_fMousePositionX = AMotionEvent_getX(&cAMotionInputEvent, 0);
 		m_fMousePositionY = AMotionEvent_getY(&cAMotionInputEvent, 0);
+		m_fMousePressure = AMotionEvent_getPressure(&cAMotionInputEvent, 0);
 
 		// Get the combined motion event action code and the action code
 		const int32_t nAndroidCombinedAction = AMotionEvent_getAction(&cAMotionInputEvent);
@@ -85,6 +88,7 @@ void AndroidMouseDevice::OnMotionInputEvent(const struct AInputEvent &cAMotionIn
 			// Jap, touch end, previous mouse position = current mouse position
 			m_fPreviousMousePositionX = m_fMousePositionX;
 			m_fPreviousMousePositionY = m_fMousePositionY;
+			m_fPreviousMousePressure = m_fMousePressure;
 
 			// Mouse moved during the current touch? If no, this is handled as a left mouse button click as well.
 			if (!m_bMouseMoved && !m_bLeftMouseButton) {
@@ -107,6 +111,7 @@ void AndroidMouseDevice::OnMotionInputEvent(const struct AInputEvent &cAMotionIn
 				// Jap, touch start, previous mouse position = current mouse position
 				m_fPreviousMousePositionX = m_fMousePositionX;
 				m_fPreviousMousePositionY = m_fMousePositionY;
+				m_fPreviousMousePressure = m_fMousePressure;
 
 				// The mouse was not yet moved
 				m_bMouseMoved = false;
@@ -145,14 +150,18 @@ void AndroidMouseDevice::Update()
 			// Get the mouse movement
 			float fDeltaX = m_fMousePositionX - m_fPreviousMousePositionX;
 			float fDeltaY = m_fMousePositionY - m_fPreviousMousePositionY;
+			float fDeltaPressure = m_fMousePressure - m_fPreviousMousePressure;
 
 			// Was the mouse already moved? (if so, we're in "mouse move"-mode, not in "left mouse button click"-mode)
 			if (!m_bMouseMoved) {
 				// Check whether or not the mouse was moved - with a little bit of tollerance
-				if (Math::Abs(fDeltaX) > 3 || Math::Abs(fDeltaY) > 3)
+				if ((Math::Abs(fDeltaX) > 6 || Math::Abs(fDeltaY) > 6) && Math::Abs(fDeltaPressure) < 0.4f) {
 					m_bMouseMoved = true;
-				else
+				} else {
 					fDeltaX = fDeltaY = 0.0f;
+					m_fPreviousMousePositionX = m_fMousePositionX;
+					m_fPreviousMousePositionY = m_fMousePositionY;
+				}
 			}
 
 			// Update axes
