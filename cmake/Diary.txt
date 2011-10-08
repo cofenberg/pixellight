@@ -1,3 +1,15 @@
+>> 08.10.2011
+[CO]
+- When using CMake to copy a file by writing 
+	execute_process(COMMAND ${CMAKE_COMMAND} -E copy ${src} ${dest})
+  one should really add "VERBATIM" by writing
+	execute_process(COMMAND ${CMAKE_COMMAND} -E copy ${src} ${dest} VERBATIM)
+  ... this takes care of adding " in case there are spaces within filenames (should be avoided, but still possible). First I tried writing
+	execute_process(COMMAND ${CMAKE_COMMAND} -E copy "\"${src}\"" "\"${dest}\"")
+  but then, there was a \ in front of each space. Took me some time to figure out the "VERBATIM" solution...
+
+
+
 >> 15.09.2011
 [CO]
 - Added "cmake/Android" containing an Android apk CMake macro which is able to create an apk file automatically, including all files like "AndroidManifest.xml.in" and even an automatically generated

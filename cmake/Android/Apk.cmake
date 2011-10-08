@@ -235,7 +235,7 @@ macro(android_copy_files src dest)
 			# Copy file
 			add_custom_command(TARGET ${ANDROID_NAME}
 				PRE_BUILD
-				COMMAND ${CMAKE_COMMAND} -E copy ${src_file} ${dst_file}
+				COMMAND ${CMAKE_COMMAND} -E copy ${src_file} ${dst_file} VERBATIM
 			)
 		endif()
 	endforeach(file ${files})

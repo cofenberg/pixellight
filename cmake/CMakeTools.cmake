@@ -122,7 +122,7 @@ endmacro(make_windows_path)
 ##################################################
 macro(copy_file src dest)
 	# Copy file
-	execute_process(COMMAND ${CMAKE_COMMAND} -E copy ${src} ${dest})
+	execute_process(COMMAND ${CMAKE_COMMAND} -E copy ${src} ${dest} VERBATIM)
 endmacro(copy_file src dest)
 
 ##################################################
@@ -164,7 +164,7 @@ macro(copy_files src dest)
 			file(MAKE_DIRECTORY ${dst_path})
 
 			# Copy file
-			execute_process(COMMAND ${CMAKE_COMMAND} -E copy ${src_file} ${dst_file})
+			execute_process(COMMAND ${CMAKE_COMMAND} -E copy ${src_file} ${dst_file} VERBATIM)
 		endif()
 	endforeach(file ${files})
 endmacro(copy_files src dest)
