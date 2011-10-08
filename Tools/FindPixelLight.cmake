@@ -33,9 +33,22 @@
 # suffix (allowing for debug builds using a release version of the PixelLight libraries)
 
 
-# Includes
-INCLUDE(FindPackageHandleStandardArgs)
+# General variables
+# Name						Description								Example
+# PL_ARCHBITSIZE			Target architecture & bitsize			"armeabi-v7a" (or "x86", "x64", "armeabi" etc.)
+# PL_ROOT					PixelLight root directory				"/home/username/pixellight"
+# PL_RUNTIME_DIR			PixelLight runtime directory			"/home/username/pixellight/Bin-Linux-ndk/Runtime"
+# PL_RUNTIME_BIN_DIR		PixelLight runtime binary directory		"/home/username/pixellight/Bin-Linux-ndk/Runtime/armeabi-v7a"
+# PL_RUNTIME_DATA_DIR		PixelLight runtime data directory		"/home/username/pixellight/Bin-Linux-ndk/Runtime/Data"
+# PL_LIB_DIR				PixelLight library directory			"/home/username/pixellight/Bin-Linux-ndk/Lib/armeabi-v7a"
+# PL_INCLUDE_DIR			PixelLight include directory			"/home/username/pixellight/Bin-Linux-ndk/Include"
+# PL_SAMPLES_DIR			PixelLight samples directory			"/home/username/pixellight/Bin-Linux-ndk/Samples"
+# PL_SAMPLES_BIN_DIR		PixelLight samples binary directory		"/home/username/pixellight/Bin-Linux-ndk/Samples/armeabi-v7a"
+# PL_SAMPLES_DATA_DIR		PixelLight samples data directory		"/home/username/pixellight/Bin-Linux-ndk/Samples/Data"
 
+
+# Includes
+include(FindPackageHandleStandardArgs)
 
 # Determine debug suffix
 set(suffix "")
@@ -44,49 +57,61 @@ if(CMAKE_BUILD_TYPE STREQUAL Debug)
 endif()
 
 # Read environment variable PL_RUNTIME
-set(pl_runtime_env $ENV{PL_RUNTIME})
-if(pl_runtime_env)
-	set(pl_runtime_env_bin  "${pl_runtime_env}")
-	set(pl_runtime_env_lib  "${pl_runtime_env}/../../Lib")
-	set(pl_runtime_env_inc  "${pl_runtime_env}/../../Include")
-	set(pl_runtime_env_base "${pl_runtime_env}/../../..")
+set(PL_RUNTIME_BIN_DIR $ENV{PL_RUNTIME})
+if(NOT PL_RUNTIME_BIN_DIR OR PL_RUNTIME_BIN_DIR STREQUAL "")
+	# Read registry key
+	get_filename_component(PL_RUNTIME_BIN_DIR "[HKEY_LOCAL_MACHINE\\SOFTWARE\\PixelLight\\PixelLight-SDK;Runtime]" ABSOLUTE)
 endif()
 
-# Read registry key
-get_filename_component(pl_runtime_reg [HKEY_LOCAL_MACHINE\\SOFTWARE\\PixelLight\\PixelLight-SDK;Runtime] ABSOLUTE)
-if(pl_runtime_reg)
-	set(pl_runtime_reg_bin  "${pl_runtime_reg}")
-	set(pl_runtime_reg_lib  "${pl_runtime_reg}/../../Lib")
-	set(pl_runtime_reg_inc  "${pl_runtime_reg}/../../Include")
-	set(pl_runtime_reg_base "${pl_runtime_reg}/../../..")
+# Get general variables
+get_filename_component(PL_ARCHBITSIZE		"${PL_RUNTIME_BIN_DIR}"							NAME_WE)
+get_filename_component(PL_ROOT				"${PL_RUNTIME_BIN_DIR}/../../.."				ABSOLUTE)
+get_filename_component(PL_RUNTIME_BIN_DIR	"${PL_RUNTIME_BIN_DIR}"							ABSOLUTE)
+get_filename_component(PL_RUNTIME_DIR		"${PL_RUNTIME_BIN_DIR}/.."						ABSOLUTE)
+get_filename_component(PL_RUNTIME_DATA_DIR	"${PL_RUNTIME_DIR}/Data"						ABSOLUTE)
+get_filename_component(PL_LIB_DIR			"${PL_RUNTIME_DIR}/../Lib/${PL_ARCHBITSIZE}"	ABSOLUTE)
+get_filename_component(PL_INCLUDE_DIR		"${PL_RUNTIME_DIR}/../Include"					ABSOLUTE)
+get_filename_component(PL_SAMPLES_DIR		"${PL_RUNTIME_DIR}/../Samples"					ABSOLUTE)
+get_filename_component(PL_SAMPLES_BIN_DIR	"${PL_SAMPLES_DIR}/${PL_ARCHBITSIZE}"			ABSOLUTE)
+get_filename_component(PL_SAMPLES_DATA_DIR	"${PL_SAMPLES_DIR}/Data"						ABSOLUTE)
+if(PL_ROOT)
+	message(STATUS "Target architecture & bitsize: ${PL_ARCHBITSIZE}")
+	message(STATUS "PixelLight root directory: ${PL_ROOT}")
+	message(STATUS "PixelLight runtime directory: ${PL_RUNTIME_DIR}")
+	message(STATUS "PixelLight runtime binary directory: ${PL_RUNTIME_BIN_DIR}")
+	message(STATUS "PixelLight runtime data directory: ${PL_RUNTIME_DATA_DIR}")
+	message(STATUS "PixelLight library directory: ${PL_LIB_DIR}")
+	message(STATUS "PixelLight include directory: ${PL_INCLUDE_DIR}")
+	message(STATUS "PixelLight samples directory: ${PL_SAMPLES_DIR}")
+	message(STATUS "PixelLight samples binary directory: ${PL_SAMPLES_BIN_DIR}")
+	message(STATUS "PixelLight samples data directory: ${PL_SAMPLES_DATA_DIR}")
+else()
+	if(WIN32)
+		message(STATUS "PixelLight not found - Possible solution: Set registry key \"[HKEY_LOCAL_MACHINE\\SOFTWARE\\PixelLight\\PixelLight-SDK;Runtime]\" (or \"[HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\PixelLight\\PixelLight-SDK;Runtime]\" if you are using a 32 bit PixelLight on a 64 bit MS Windows) to e.g. \"C:\\PixelLight\\Bin\\Runtime\\x86"\")
+	else()
+		message(STATUS "PixelLight not found - Possible solution: Set environment variable \"PL_RUNTIME\" to e.g. \"/home/username/pixellight/Bin-Linux/Runtime/x86\"")
+	endif()
 endif()
-
 
 # Macro to determine if a specific PixelLight library is there
 macro(_pixellight_find_lib varname header library basepath)
 	# Include
 	FIND_PATH(${varname}_INCLUDE_DIR 		${header}
-				"${pl_runtime_env_inc}"
-				"${pl_runtime_env_base}/${basepath}"
-				"${pl_runtime_reg_inc}"
-				"${pl_runtime_reg_base}/${basepath}"
+				"${PL_INCLUDE_DIR}"
+				"${PL_ROOT}/${basepath}"
 	)
 
 	# Library
 	FIND_LIBRARY(${varname}_LIBRARY			${library}${suffix}
-				"${pl_runtime_env_lib}"
-				"${pl_runtime_env_bin}"
-				"${pl_runtime_reg_lib}"
-				"${pl_runtime_reg_bin}"
+				"${PL_RUNTIME_BIN_DIR}"
+				"${PL_LIB_DIR}"
 	)
 
 	# Try without suffix
 	if(NOT ${varname}_LIBRARY)
 		FIND_LIBRARY(${varname}_LIBRARY		${library}
-					"${pl_runtime_env_lib}"
-					"${pl_runtime_env_bin}"
-					"${pl_runtime_reg_lib}"
-					"${pl_runtime_reg_bin}"
+				"${PL_RUNTIME_BIN_DIR}"
+				"${PL_LIB_DIR}"
 		)
 	endif()
 
@@ -167,30 +192,25 @@ _pixellight_find_lib(PL_PLSPARK_PL				SPARK_PL/SPARK_PL.h							SPARK_PL				Plug
 
 
 # Newton
-_pixellight_find_lib(PL_NEWTON				Newton/Newton.h								Newton				"")
+_pixellight_find_lib(PL_NEWTON					Newton/Newton.h								Newton					"")
 
 
 # libRocket
-_pixellight_find_lib(PL_LIBROCKETCORE		Rocket/Core.h								RocketCore			"")
-_pixellight_find_lib(PL_LIBROCKETCONTROLS	Rocket/Controls.h							RocketControls		"")
-_pixellight_find_lib(PL_LIBROCKETDEBUGGER	Rocket/Debugger.h							RocketDebugger		"")
+_pixellight_find_lib(PL_LIBROCKETCORE			Rocket/Core.h								RocketCore				"")
+_pixellight_find_lib(PL_LIBROCKETCONTROLS		Rocket/Controls.h							RocketControls			"")
+_pixellight_find_lib(PL_LIBROCKETDEBUGGER		Rocket/Debugger.h							RocketDebugger			"")
 
 
 # FMOD Ex
-_pixellight_find_lib(PL_FMODEX				FMODEx/FMODEx.h								fmodex				"")
-
-
-# Directories
-FIND_PATH(PL_PLRUNTIME_DIR 	"Data"
-			"${pl_runtime_env}/.."
-			"${pl_runtime_reg}/.."
-)
-FIND_PATH(PL_PLSAMPLES_DIR 	"Data"
-			"${pl_runtime_env}/../../Samples"
-			"${pl_runtime_reg}/../../Samples"
-)
+_pixellight_find_lib(PL_FMODEX					FMODEx/FMODEx.h								fmodex					"")
 
 
 # Set PixelLight_FOUND variable based on PLCore (we need at least that lib)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(PixelLight DEFAULT_MSG 
                                   PL_PLCORE_LIBRARY PL_PLCORE_INCLUDE_DIR) 
+
+
+# Android APK tool
+if(ANDROID)
+	include("${PL_ROOT}/cmake/Android/Apk.cmake")
+endif()
