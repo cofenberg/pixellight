@@ -22,6 +22,7 @@ Changes in PixelLight 0.9.9-R1 (not yet released)
 - Bugfix: "PLFrontendPLGui" was not returning and setting the window size correctly (the window border must be ignored)
 - Bugfix: Uncompressed dds images with mipmaps and "DDS_LINEARSIZE" set were not loaded correctly
 - Bugfix: The properties of RTTI classes were not registered as expected: Only the properties of the direct base class were registered, but not the properties the base class received from it's base classes
+- Bugfix: There were situations were "PLEngine::Picking::MeshIntersection()" failed when the intersection line start position was inside the scene node to test against
 
 
 Changes in PixelLight 0.9.8-R1 (released on August 23, 2011 - one year after the first public PixelLight release and nearly 9 years after development start on September 16, 2002)

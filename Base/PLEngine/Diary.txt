@@ -1,3 +1,10 @@
+>> 08.10.2011
+[CO]
+- Bugfix: "Picking::MeshIntersection()": In case the start position of the intersection line is inside the scene node, we have to check whether or not the
+  found collision point is in the correct direction
+
+
+
 >> 13.09.2011
 [CO]
 - "EngineApplication": The clear color hint within scenes is working again

@@ -161,55 +161,80 @@ void Picking::MeshIntersection(SceneNode &cSceneNode, const Vector3 &vLineStartP
 	// First of all, check the intersection distance against the axis aligned bounding box of the scene node
 	float fIntersection;
 	const AABoundingBox &cAABoundngBox = cSceneNode.GetAABoundingBox();
-	if (Intersect::AABoxLine(cAABoundngBox.vMin, cAABoundngBox.vMax, vLineStartPos, vLineEndPos, &fIntersection) &&
-		fIntersection >= 0.0f) {
-		// Before we perform the expensive triangle intersection test we check the found axis aligned bounding box
-		// intersection distance against the current nearest intersection distance... maybe we're in luck and can
-		// skip further tests if we detect that no triangle inside the box can be nearer than the current nearest
-		// distance...
+	if (Intersect::AABoxLine(cAABoundngBox.vMin, cAABoundngBox.vMax, vLineStartPos, vLineEndPos, &fIntersection)) {
+		// Get the mesh handler of the scene node
+		MeshHandler *pMeshHandler = cSceneNode.GetMeshHandler();
+		if (pMeshHandler) {
+			// Transform matrix to bring something into the same container space the original line start position is in
+			Matrix3x4 matTransform;
+			if (cSceneNode.GetContainer() && m_pPickingResult->m_pSceneContainer)
+				cSceneNode.GetContainer()->GetTransformMatrixTo(*m_pPickingResult->m_pSceneContainer, matTransform);
 
-		// Get intersection point in node space
-		Vector3 vIntersectionPos = vLineStartPos + (vLineEndPos-vLineStartPos).Normalize()*fIntersection;
+			// Before we perform the expensive triangle intersection test we check the found axis aligned bounding box
+			// intersection distance against the current nearest intersection distance... maybe we're in luck and can
+			// skip further tests if we detect that no triangle inside the box can be nearer than the current nearest
+			// distance...
+			if (fIntersection >= 0.0f && m_pPickingResult->m_fNearestSquaredDistance >= 0.0f) {
+				// Our start point is outside the axis aligned bounding box of the scene node and there's already a previous picking result available
 
-		// Transform intersection point into container space
-		vIntersectionPos *= cSceneNode.GetTransform().GetMatrix();
+				// Get intersection point in node space
+				Vector3 vIntersectionPos = vLineStartPos + (vLineEndPos-vLineStartPos).Normalize()*fIntersection;
 
-		// Bring the intersection point into the same container space the original line start position is in
-		Matrix3x4 matTransform;
-		if (cSceneNode.GetContainer() && m_pPickingResult->m_pSceneContainer)
-			cSceneNode.GetContainer()->GetTransformMatrixTo(*m_pPickingResult->m_pSceneContainer, matTransform);
-		vIntersectionPos *= matTransform;
+				// Transform intersection point into container space
+				vIntersectionPos *= cSceneNode.GetTransform().GetMatrix();
 
-		// Now, test!
-		if (m_pPickingResult->m_fNearestSquaredDistance < 0.0f ||
-			(m_pPickingResult->m_vLineStartPos-vIntersectionPos).GetSquaredLength() < m_pPickingResult->m_fNearestSquaredDistance) {
-			// Get the mesh handler of the scene node
-			MeshHandler *pMeshHandler = cSceneNode.GetMeshHandler();
-			if (pMeshHandler) {
-				// We ran out of possible early escape tests... now find intersection triangle - this may be quite slow...
-				Vector3 vCollisionPoint;
-				uint32 nTriangle, nGeometry;
-				if (pMeshHandler->FindTriangle(vLineStartPos, vLineEndPos, nTriangle, &nGeometry, &vCollisionPoint, plstGeometries)) {
-					// Backup the node space collision point
-					const Vector3 vNodeSpaceCollisionPoint = vCollisionPoint;
+				// Bring the intersection point into the same container space the original line start position is in
+				vIntersectionPos *= matTransform;
 
-					// Transform collision point into container space
-					vCollisionPoint *= cSceneNode.GetTransform().GetMatrix();
+				// Do the early escape test
+				if ((m_pPickingResult->m_vLineStartPos-vIntersectionPos).GetSquaredLength() > m_pPickingResult->m_fNearestSquaredDistance)
+					return; // Get us out of this method right now, there's no change that any triangle intersection point is closer as the previous picking result
+			} else {
+				// Our start point is inside the axis aligned bounding box of the scene node or we have nothing to early escape test against
+			}
 
-					// Bring the collision point into the same container space the original line start position is in
-					vCollisionPoint *= matTransform;
+			// We ran out of possible early escape tests... now find intersection triangle - this may be quite slow...
+			Vector3 vCollisionPoint;
+			uint32 nTriangle, nGeometry;
+			if (pMeshHandler->FindTriangle(vLineStartPos, vLineEndPos, nTriangle, &nGeometry, &vCollisionPoint, plstGeometries)) {
+				// Lookout! If our start point is inside the axis aligned bounding box of the scene node, we need to take care of "backfiring"
+				if (fIntersection < 0) {
+					// Our start point is inside the axis aligned bounding box of the scene node
 
-					// Calculate the squared distance between the two positions (that are now within the same vector space)
-					const float fSquaredDistance = (m_pPickingResult->m_vLineStartPos-vCollisionPoint).GetSquaredLength();
+					// Get the normalized line direction in scene node space
+					Vector3 vLineDirection = vLineEndPos;
+					vLineDirection -= vLineStartPos;
+					vLineDirection.Normalize();
 
-					// Is this collision point nearer?
-					if (m_pPickingResult->m_fNearestSquaredDistance < 0.0f || m_pPickingResult->m_fNearestSquaredDistance > fSquaredDistance) {
-						m_pPickingResult->m_pSceneNode				= &cSceneNode;
-						m_pPickingResult->m_nGeometry				= nGeometry;
-						m_pPickingResult->m_nTriangle				= nTriangle;
-						m_pPickingResult->m_vPoint					= vNodeSpaceCollisionPoint;
-						m_pPickingResult->m_fNearestSquaredDistance = fSquaredDistance;
-					}
+					// Get the normalized collision point to line start point direction in scene node space
+					Vector3 vCollisionPointDirection = vCollisionPoint;
+					vCollisionPointDirection -= vLineStartPos;
+					vCollisionPointDirection.Normalize();
+
+					// Is the collision point within the correct direction?
+					if (vLineDirection.DotProduct(vCollisionPointDirection) < 0)
+						return;	// Get us out of this method right now, the found collision point is behind us and so we are not interested in it
+				}
+
+				// Backup the node space collision point
+				const Vector3 vNodeSpaceCollisionPoint = vCollisionPoint;
+
+				// Transform collision point into container space
+				vCollisionPoint *= cSceneNode.GetTransform().GetMatrix();
+
+				// Bring the collision point into the same container space the original line start position is in
+				vCollisionPoint *= matTransform;
+
+				// Calculate the squared distance between the two positions (that are now within the same vector space)
+				const float fSquaredDistance = (m_pPickingResult->m_vLineStartPos-vCollisionPoint).GetSquaredLength();
+
+				// Is this collision point nearer?
+				if (m_pPickingResult->m_fNearestSquaredDistance < 0.0f || m_pPickingResult->m_fNearestSquaredDistance > fSquaredDistance) {
+					m_pPickingResult->m_pSceneNode				= &cSceneNode;
+					m_pPickingResult->m_nGeometry				= nGeometry;
+					m_pPickingResult->m_nTriangle				= nTriangle;
+					m_pPickingResult->m_vPoint					= vNodeSpaceCollisionPoint;
+					m_pPickingResult->m_fNearestSquaredDistance = fSquaredDistance;
 				}
 			}
 		}
