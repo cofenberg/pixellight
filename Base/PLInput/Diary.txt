@@ -1,3 +1,10 @@
+>> 08.10.2011
+[CO]
+- "AndroidMouseDevice" bugfix: D'OH! The movement test should be "Math::Abs(fDeltaX) > 3" instead of "fDeltaX > 3" to also take a negative sign
+   into account.
+
+
+
 >> 07.10.2011
 [CO]
 - "Keyboard" & "VirtualStandardController": C++ variable "VirtualStandardController::KeyBack", key name "Backspace"... at first I thought I had

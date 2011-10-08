@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <android/input.h>
 #include <PLCore/System/SystemAndroid.h>
+#include <PLMath/Math.h>
 #include "PLGui/Gui/Gui.h"
 #include "PLGui/Gui/Base/Keys.h"
 #include "PLGui/Gui/Base/GuiMessage.h"
@@ -318,7 +319,7 @@ void GuiAndroid::OnMotionInputEvent(const struct AInputEvent &cAMotionInputEvent
 				// Was the mouse already moved? (if so, we're in "mouse move"-mode, not in "left mouse button click"-mode)
 				if (!m_bMouseMoved) {
 					// Check whether or not the mouse was moved - with a little bit of tollerance
-					if (fDeltaX > 3 || fDeltaY > 3)
+					if (Math::Abs(fDeltaX) > 3 || Math::Abs(fDeltaY) > 3)
 						m_bMouseMoved = true;
 					else
 						fDeltaX = fDeltaY = 0.0f;

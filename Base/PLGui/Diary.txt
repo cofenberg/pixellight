@@ -1,3 +1,10 @@
+>> 08.10.2011
+[CO]
+- "GuiAndroid" bugfix: D'OH! The mouse movement test should be "Math::Abs(fDeltaX) > 3" instead of "fDeltaX > 3" to also take a
+  negative sign into account.
+
+
+
 >> 21.09.2011
 [CO]
 - Android port: Improved mouse emulation by using the touchscreen
