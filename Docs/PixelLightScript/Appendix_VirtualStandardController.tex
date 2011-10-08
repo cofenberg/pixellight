@@ -8,24 +8,24 @@ In this appendix, the global variable \emph{this} points to the C++ \ac{RTTI} ap
 \paragraph{Mapped Mouse}
 \begin{center}
 	\centering
-	\begin{longtable}{ | l | p{10cm} |}
+	\begin{longtable}{ | l | l | p{9cm} |}
 	\hline
-	Name	& Description\\ \hline
-	MouseX			&	X axis\\
-	MouseY			&	Y axis\\
-	MouseWheel		&	Mouse wheel\\
-	MouseLeft		&	Left mouse button (mouse button 0)\\
-	MouseRight		&	Right mouse button (mouse button 1)\\
-	MouseMiddle		&	Middle mouse button (mouse button 2)\\
-	MouseButton4	&	Mouse button 4\\
-	MouseButton5	&	Mouse button 5\\
-	MouseButton6	&	Mouse button 6\\
-	MouseButton7	&	Mouse button 7\\
-	MouseButton8	&	Mouse button 8\\
-	MouseButton9	&	Mouse button 9\\
-	MouseButton10	&	Mouse button 10\\
-	MouseButton11	&	Mouse button 11\\
-	MouseButton12	& 	Mouse button 12\\
+	Name			&	Type	&	Description\\ \hline
+	MouseX			&	Axis	&	X axis\\
+	MouseY			&	Axis	&	Y axis\\
+	MouseWheel		&	Axis	&	Mouse wheel\\
+	MouseLeft		&	Button	&	Left mouse button (mouse button 0)\\
+	MouseRight		&	Button	&	Right mouse button (mouse button 1)\\
+	MouseMiddle		&	Button	&	Middle mouse button (mouse button 2)\\
+	MouseButton4	&	Button	&	Mouse button 4\\
+	MouseButton5	&	Button	&	Mouse button 5\\
+	MouseButton6	&	Button	&	Mouse button 6\\
+	MouseButton7	&	Button	&	Mouse button 7\\
+	MouseButton8	&	Button	&	Mouse button 8\\
+	MouseButton9	&	Button	&	Mouse button 9\\
+	MouseButton10	&	Button	&	Mouse button 10\\
+	MouseButton11	&	Button	&	Mouse button 11\\
+	MouseButton12	&	Button	&	Mouse button 12\\
 	\hline
 	\end{longtable}
 \end{center}
@@ -34,101 +34,101 @@ In this appendix, the global variable \emph{this} points to the C++ \ac{RTTI} ap
 \paragraph{Mapped Keyboard}
 \begin{center}
 	\centering
-	\begin{longtable}{ | l | p{10cm} |}
+	\begin{longtable}{ | l | l | p{9cm} |}
 	\hline
-	Name	& Description \\ \hline
-	KeyboardBackspace		&	Backspace\\
-	KeyboardTab				&	Tabulator\\
-	KeyboardClear			&	Clear (not available everywhere)\\
-	KeyboardReturn			&	Return (often the same as "Enter")\\
-	KeyboardShift			&	Shift\\
-	KeyboardControl			&	Control ("Ctrl")\\
-	KeyboardAlt				&	Alt\\
-	KeyboardPause			&	Pause\\
-	KeyboardCapsLock		&	Caps lock\\
-	KeyboardEscape			&	Escape\\
-	KeyboardSpace			&	Space\\
-	KeyboardPageUp			&	Page up\\
-	KeyboardPageDown		&	Page down\\
-	KeyboardEnd				&	End\\
-	KeyboardHome			&	Home\\
-	KeyboardLeft			&	Left arrow\\
-	KeyboardUp				&	Up arrow\\
-	KeyboardRight			&	Right arrow\\
-	KeyboardDown			&	Down arrow\\
-	KeyboardSelect			&	Select (not available everywhere)\\
-	KeyboardExecute			&	Execute (not available everywhere)\\
-	KeyboardPrint			&	Print screen\\
-	KeyboardInsert			&	Insert\\
-	KeyboardDelete			&	Delete\\
-	KeyboardHelp			&	Help (not available everywhere)\\
-	Keyboard0				&	0\\
-	Keyboard1				&	1\\
-	Keyboard2				&	2\\
-	Keyboard3				&	3\\
-	Keyboard4				&	4\\
-	Keyboard5				&	5\\
-	Keyboard6				&	6\\
-	Keyboard7				&	7\\
-	Keyboard8				&	8\\
-	Keyboard9				&	9\\
-	KeyboardA				&	A\\
-	KeyboardB				&	B\\
-	KeyboardC				&	C\\
-	KeyboardD				&	D\\
-	KeyboardE				&	E\\
-	KeyboardF				&	F\\
-	KeyboardG				&	G\\
-	KeyboardH				&	H\\
-	KeyboardI				&	I\\
-	KeyboardJ				&	J\\
-	KeyboardK				&	K\\
-	KeyboardL				&	L\\
-	KeyboardM				&	M\\
-	KeyboardN				&	N\\
-	KeyboardO				&	O\\
-	KeyboardP				&	P\\
-	KeyboardQ				&	Q\\
-	KeyboardR				&	R\\
-	KeyboardS				&	S\\
-	KeyboardT				&	T\\
-	KeyboardU				&	U\\
-	KeyboardV				&	V\\
-	KeyboardW				&	W\\
-	KeyboardX				&	X\\
-	KeyboardY				&	Y\\
-	KeyboardZ				&	Z\\
-	KeyboardNumpad0			&	Numpad 0\\
-	KeyboardNumpad1			&	Numpad 1\\
-	KeyboardNumpad2			&	Numpad 2\\
-	KeyboardNumpad3			&	Numpad 3\\
-	KeyboardNumpad4			&	Numpad 4\\
-	KeyboardNumpad5			&	Numpad 5\\
-	KeyboardNumpad6			&	Numpad 6\\
-	KeyboardNumpad7			&	Numpad 7\\
-	KeyboardNumpad8			&	Numpad 8\\
-	KeyboardNumpad9			&	Numpad 9\\
-	KeyboardNumpadMultiply	&	Numpad Multiply\\
-	KeyboardNumpadAdd		&	Numpad Add\\
-	KeyboardNumpadSeparator	&	Numpad Separator\\
-	KeyboardNumpadSubtract	&	Numpad Subtract\\
-	KeyboardNumpadDecimal	&	Numpad Decimal\\
-	KeyboardNumpadDivide	&	Numpad Divide\\
-	KeyboardF1				&	F1\\
-	KeyboardF2				&	F2\\
-	KeyboardF3				&	F3\\
-	KeyboardF4				&	F4\\
-	KeyboardF5				&	F5\\
-	KeyboardF6				&	F6\\
-	KeyboardF7				&	F7\\
-	KeyboardF8				&	F8\\
-	KeyboardF9				&	F9\\
-	KeyboardF10				&	F10\\
-	KeyboardF11				&	F11\\
-	KeyboardF12				&	F12\\
-	KeyboardNumLock			&	NumLock\\
-	KeyboardScrollLock		&	ScrollLock\\
-	KeyboardCircumflex		&	Circumflex\\
+	Name					&	Type	&	Description \\ \hline
+	KeyboardBackspace		&	Button	&	Backspace\\
+	KeyboardTab				&	Button	&	Tabulator\\
+	KeyboardClear			&	Button	&	Clear (not available everywhere)\\
+	KeyboardReturn			&	Button	&	Return (often the same as "Enter")\\
+	KeyboardShift			&	Button	&	Shift\\
+	KeyboardControl			&	Button	&	Control ("Ctrl")\\
+	KeyboardAlt				&	Button	&	Alt\\
+	KeyboardPause			&	Button	&	Pause\\
+	KeyboardCapsLock		&	Button	&	Caps lock\\
+	KeyboardEscape			&	Button	&	Escape\\
+	KeyboardSpace			&	Button	&	Space\\
+	KeyboardPageUp			&	Button	&	Page up\\
+	KeyboardPageDown		&	Button	&	Page down\\
+	KeyboardEnd				&	Button	&	End\\
+	KeyboardHome			&	Button	&	Home\\
+	KeyboardLeft			&	Button	&	Left arrow\\
+	KeyboardUp				&	Button	&	Up arrow\\
+	KeyboardRight			&	Button	&	Right arrow\\
+	KeyboardDown			&	Button	&	Down arrow\\
+	KeyboardSelect			&	Button	&	Select (not available everywhere)\\
+	KeyboardExecute			&	Button	&	Execute (not available everywhere)\\
+	KeyboardPrint			&	Button	&	Print screen\\
+	KeyboardInsert			&	Button	&	Insert\\
+	KeyboardDelete			&	Button	&	Delete\\
+	KeyboardHelp			&	Button	&	Help (not available everywhere)\\
+	Keyboard0				&	Button	&	0\\
+	Keyboard1				&	Button	&	1\\
+	Keyboard2				&	Button	&	2\\
+	Keyboard3				&	Button	&	3\\
+	Keyboard4				&	Button	&	4\\
+	Keyboard5				&	Button	&	5\\
+	Keyboard6				&	Button	&	6\\
+	Keyboard7				&	Button	&	7\\
+	Keyboard8				&	Button	&	8\\
+	Keyboard9				&	Button	&	9\\
+	KeyboardA				&	Button	&	A\\
+	KeyboardB				&	Button	&	B\\
+	KeyboardC				&	Button	&	C\\
+	KeyboardD				&	Button	&	D\\
+	KeyboardE				&	Button	&	E\\
+	KeyboardF				&	Button	&	F\\
+	KeyboardG				&	Button	&	G\\
+	KeyboardH				&	Button	&	H\\
+	KeyboardI				&	Button	&	I\\
+	KeyboardJ				&	Button	&	J\\
+	KeyboardK				&	Button	&	K\\
+	KeyboardL				&	Button	&	L\\
+	KeyboardM				&	Button	&	M\\
+	KeyboardN				&	Button	&	N\\
+	KeyboardO				&	Button	&	O\\
+	KeyboardP				&	Button	&	P\\
+	KeyboardQ				&	Button	&	Q\\
+	KeyboardR				&	Button	&	R\\
+	KeyboardS				&	Button	&	S\\
+	KeyboardT				&	Button	&	T\\
+	KeyboardU				&	Button	&	U\\
+	KeyboardV				&	Button	&	V\\
+	KeyboardW				&	Button	&	W\\
+	KeyboardX				&	Button	&	X\\
+	KeyboardY				&	Button	&	Y\\
+	KeyboardZ				&	Button	&	Z\\
+	KeyboardNumpad0			&	Button	&	Numpad 0\\
+	KeyboardNumpad1			&	Button	&	Numpad 1\\
+	KeyboardNumpad2			&	Button	&	Numpad 2\\
+	KeyboardNumpad3			&	Button	&	Numpad 3\\
+	KeyboardNumpad4			&	Button	&	Numpad 4\\
+	KeyboardNumpad5			&	Button	&	Numpad 5\\
+	KeyboardNumpad6			&	Button	&	Numpad 6\\
+	KeyboardNumpad7			&	Button	&	Numpad 7\\
+	KeyboardNumpad8			&	Button	&	Numpad 8\\
+	KeyboardNumpad9			&	Button	&	Numpad 9\\
+	KeyboardNumpadMultiply	&	Button	&	Numpad Multiply\\
+	KeyboardNumpadAdd		&	Button	&	Numpad Add\\
+	KeyboardNumpadSeparator	&	Button	&	Numpad Separator\\
+	KeyboardNumpadSubtract	&	Button	&	Numpad Subtract\\
+	KeyboardNumpadDecimal	&	Button	&	Numpad Decimal\\
+	KeyboardNumpadDivide	&	Button	&	Numpad Divide\\
+	KeyboardF1				&	Button	&	F1\\
+	KeyboardF2				&	Button	&	F2\\
+	KeyboardF3				&	Button	&	F3\\
+	KeyboardF4				&	Button	&	F4\\
+	KeyboardF5				&	Button	&	F5\\
+	KeyboardF6				&	Button	&	F6\\
+	KeyboardF7				&	Button	&	F7\\
+	KeyboardF8				&	Button	&	F8\\
+	KeyboardF9				&	Button	&	F9\\
+	KeyboardF10				&	Button	&	F10\\
+	KeyboardF11				&	Button	&	F11\\
+	KeyboardF12				&	Button	&	F12\\
+	KeyboardNumLock			&	Button	&	NumLock\\
+	KeyboardScrollLock		&	Button	&	ScrollLock\\
+	KeyboardCircumflex		&	Button	&	Circumflex\\
 	\hline
 	\end{longtable}
 \end{center}
@@ -137,38 +137,38 @@ In this appendix, the global variable \emph{this} points to the C++ \ac{RTTI} ap
 \paragraph{Main Character Controls}
 \begin{center}
 	\centering
-	\begin{longtable}{ | l | p{10cm} |}
+	\begin{longtable}{ | l | l | p{9cm} |}
 	\hline
-	Name	& Description \\ \hline
-	TransX		&	X translation axis: Strafe left/right (+/-)\\
-	TransY		&	Y translation axis: Move up/down (+/-)\\
-	TransZ		&	Z translation axis: Move forwards/backwards (+/-)\\
-	Pan			&	Keep pressed to pan\\
-	PanX		&	X pan translation axis: Strafe left/right (+/-)\\
-	PanY		&	Y pan translation axis: Move up/down (+/-)\\
-	PanZ		&	Z pan translation axis: Move forwards/backwards (+/-)\\
-	RotX		&	X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)\\
-	RotY		&	Y rotation axis: Yaw (also called 'heading') change is turning to the left or right\\
-	RotZ		&	Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down\\
-	Rotate		&	Keep pressed to rotate\\
-	Forward		&	Move forwards\\
-	Backward	&	Move backwards\\
-	Left		&	Move (rotate) left\\
-	Right		&	Move (rotate) right\\
-	StrafeLeft	&	Strafe left\\
-	StrafeRight	&	Strafe right\\
-	Up			&	Move up\\
-	Down		&	Move down\\
-	Run			&	Keep pressed to run\\
-	Crouch		&	Keep pressed to crouch\\
-	Jump		&	Jump\\
-	Zoom		&	Keep pressed to zoom\\
-	ZoomAxis	&	Zoom axis to zoom in or out (+/-)\\
-	Button1		&	Button for action 1\\
-	Button2		&	Button for action 2\\
-	Button3		&	Button for action 3\\
-	Button4		&	Button for action 4\\
-	Button5		&	Button for action 5\\
+	Name		&	Type	&	Description \\ \hline
+	TransX		&	Axis	&	X translation axis: Strafe left/right (+/-)\\
+	TransY		&	Axis	&	Y translation axis: Move up/down (+/-)\\
+	TransZ		&	Axis	&	Z translation axis: Move forwards/backwards (+/-)\\
+	Pan			&	Button	&	Keep pressed to pan\\
+	PanX		&	Axis	&	X pan translation axis: Strafe left/right (+/-)\\
+	PanY		&	Axis	&	Y pan translation axis: Move up/down (+/-)\\
+	PanZ		&	Axis	&	Z pan translation axis: Move forwards/backwards (+/-)\\
+	RotX		&	Axis	&	X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)\\
+	RotY		&	Axis	&	Y rotation axis: Yaw (also called 'heading') change is turning to the left or right\\
+	RotZ		&	Axis	&	Z rotation axis: Roll (also called 'attitude') change is moving one wingtip up and the other down\\
+	Rotate		&	Button	&	Keep pressed to rotate\\
+	Forward		&	Button	&	Move forwards\\
+	Backward	&	Button	&	Move backwards\\
+	Left		&	Button	&	Move (rotate) left\\
+	Right		&	Button	&	Move (rotate) right\\
+	StrafeLeft	&	Button	&	Strafe left\\
+	StrafeRight	&	Button	&	Strafe right\\
+	Up			&	Button	&	Move up\\
+	Down		&	Button	&	Move down\\
+	Run			&	Button	&	Keep pressed to run\\
+	Crouch		&	Button	&	Keep pressed to crouch\\
+	Jump		&	Button	&	Jump\\
+	Zoom		&	Button	&	Keep pressed to zoom\\
+	ZoomAxis	&	Axis	&	Zoom axis to zoom in or out (+/-)\\
+	Button1		&	Button	&	Button for action 1\\
+	Button2		&	Button	&	Button for action 2\\
+	Button3		&	Button	&	Button for action 3\\
+	Button4		&	Button	&	Button for action 4\\
+	Button5		&	Button	&	Button for action 5\\
 	\hline
 	\end{longtable}
 \end{center}
@@ -177,14 +177,14 @@ In this appendix, the global variable \emph{this} points to the C++ \ac{RTTI} ap
 \paragraph{Interaction}
 \begin{center}
 	\centering
-	\begin{longtable}{ | l | p{10cm} |}
+	\begin{longtable}{ | l | l | p{9cm} |}
 	\hline
-	Name	& Description \\ \hline
-	Pickup			&	Keep pressed to pickup\\
-	Throw			&	Throw the picked object\\
-	IncreaseForce	&	Keep pressed to increase the force applied to the picked object\\
-	DecreaseForce	&	Keep pressed to decrease the force applied to the picked object\\
-	PushPull		&	Used to push/pull the picked object\\
+	Name			&	Type	&	Description \\ \hline
+	Pickup			&	Button	&	Keep pressed to pickup\\
+	Throw			&	Button	&	Throw the picked object\\
+	IncreaseForce	&	Button	&	Keep pressed to increase the force applied to the picked object\\
+	DecreaseForce	&	Button	&	Keep pressed to decrease the force applied to the picked object\\
+	PushPull		&	Axis	&	Used to push/pull the picked object\\
 	\hline
 	\end{longtable}
 \end{center}
