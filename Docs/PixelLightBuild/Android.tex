@@ -16,7 +16,7 @@ Warning: We noticed several issues when using the \ac{NDK} under MS Windows (tes
 \item{In case you want to use OpenGL ES 2.0, you'll need a physical device because currently the Android Emulator has no support for OpenGL ES 2.0}
 \end{itemize}
 
-Install the usual Android development tools (the following versions are those used when writing this, other versions may work as well)
+Install the usual Android development tools (the following versions are those used when writing this documentation, other versions may work as well)
 
 
 \paragraph{\ac{JDK} and \ac{JRE}}
@@ -31,7 +31,7 @@ Required for the Android build, not for PixelLight itself.
 \end{itemize}
 
 
-\paragraph{\ac{NDK} (\emph{ndk r6b}) - Linux}
+\paragraph{Android \ac{NDK} (\emph{ndk r6b}) - Linux}
 This example assumes that the data has been extracted directly within the home (\emph{\textasciitilde}) directory: Open hidden \emph{\textasciitilde /.bashrc} and add:
 \begin{lstlisting}[language=sh]
 # Important Android SDK and NDK paths
@@ -41,7 +41,7 @@ export PATH=${PATH}:${ANDROID_SDK}/tools:${ANDROID_SDK}/platform-tools:~/${ANDRO
 \end{lstlisting}
 
 
-\paragraph{\ac{NDK} (\emph{ndk r6b}) - MS Windows}
+\paragraph{Android \ac{NDK} (\emph{ndk r6b}) - MS Windows}
 \begin{itemize}
 \item{Extract it and set the MS Windows PATH environment variable \emph{ANDROID\_NDK} to the \ac{NDK} root directory}
 \item{Set the MS Windows \emph{PATH} environment variable \emph{ANDROID\_NDK\_TOOLCHAIN\_ROOT} to the \ac{NDK} toolchain root directory (e.g. "C:/android-ndk-r6b/toolchains/arm-linux-androideabi-4.4.3/prebuilt/windows/arm-linux-androideabi")}
@@ -49,7 +49,7 @@ export PATH=${PATH}:${ANDROID_SDK}/tools:${ANDROID_SDK}/platform-tools:~/${ANDRO
 \end{itemize}
 
 
-\paragraph{make (Windows)}
+\paragraph{make (for Windows)}
 \begin{itemize}
 \item{\emph{Make for Windows}: Make: GNU make utility to maintain groups of programs}
 \item{Directly used by the CMake scripts under MS Windows when using the \ac{NDK} toolchain}
@@ -59,10 +59,11 @@ This tool can't be set within a CMake file automatically, there are several opti
 \begin{itemize}
 \item{Add \emph{\textless PixelLight root path\textgreater /cmake/UsedTools/make} to the MS Windows \emph{PATH} environment variable *recommended*}
 \item{Use a MinGW installer from e.g. \url{http://www.tdragon.net/recentgcc/} which can set the \emph{PATH} environment variable *overkill because only the 171 KiB \emph{make} is required*}
-\item{Use CMake from inside a command prompt by typing for example (\emph{DCMAKE\_TOOLCHAIN\_FILE} is only required when using a toolchain) *not really comfortable when working with it on a regular basis*
-\begin{quotation}
+\item{Use CMake from inside a command prompt by typing for example (\emph{DCMAKE\_TOOLCHAIN\_FILE} is only required when using a toolchain) \\ *not really comfortable when working with it on a regular basis*
+\begin{lstlisting}[language=sh]
 cmake.exe -G"Unix Makefiles" -DCMAKE\_MAKE\_PROGRAM="<PixelLight root path>/cmake/UsedTools/make/make.exe" -DCMAKE\_TOOLCHAIN\_FILE="<PixelLight root path>/cmake/Toolchains7Toolchain-ndk.cmake"
-\end{quotation}}
+\end{lstlisting}
+}
 \end{itemize}
 
 

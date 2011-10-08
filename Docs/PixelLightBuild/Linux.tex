@@ -5,7 +5,7 @@ To build PixelLight on Linux, use the CMake based (\url{http://www.cmake.org/}) 
 
 
 \section{Prerequisites}
-You need to install certain dependencies on your system that are needed build PixelLight, including build tools and used development libraries.
+You need to install certain dependencies on your system that are needed to build PixelLight, including build tools and used development libraries.
 
 The following package list applies to the Linux distribution "Ubuntu 10.04 - Lucid Lynx". If you use another distribution, please have a look at their package repository to find out which packages you need (in most cases, the package names will not be that different).
 
@@ -112,13 +112,13 @@ $pl_external_pass = "";
 
 
 \subsection{External Packages}
-Just as with the Windows build, it is necessary to obtain all the external packages used by the engine and install them in the right place for the build. Have a look at the \emph{External} directory, there you find a readme file for every library that describes what files are needed.
+Just like the Windows build, it is necessary to obtain all the external packages used by the engine and install them in the right place for the build. Have a look at the \emph{External} directory, there you find a readme file for every library that describes what files are needed.
 
 You can find the libraries pre-packed in our files-section on our homepage: \url{http://pixellight.sourceforge.net/externals/}. Unfortunately, we can't provide some of those libraries due to their licensing terms. Have a look at the according \emph{Readme.txt} to determine where to obtain those libraries and where to put the resulting files into your source tree.
 
-The library packages need to be unpacked and at the right position for your specific build type, e.g. on Linux and 32 Bit, put everything in the directory \emph{External/\_Linux\_x86\_32}.
+The library packages need to be unpacked and put at the right position for your specific build type, e.g. on Linux and 32 Bit, put everything in the directory \emph{External/\_Linux\_x86\_32}.
 
-The CMake based build will try to download the needed packages automatically from our homepage when you build a project that depends on an external. This will download and unpack all public externals for you in the right directory. The non-public externals must still be installed manually. You should also use the maketool flag \verb+--syslibs+ to use the libraries installed on your system rather than our own external packages whenever that is possible (however, not all externals can be used that way).
+The CMake based build will try to download the needed packages automatically from our homepage when you build a project that depends on an external. It will download and unpack all public externals for you in the right directory. The non-public externals must still be installed manually. You should also use the maketool flag \verb+--syslibs+ to use the libraries installed on your system rather than our own external packages whenever that is possible (however, not all externals can be used that way).
 
 For more information about the external dependencies, please have a look at chapter~\ref{Chapter:ExternalDependencies}.
 
@@ -155,7 +155,7 @@ cd build-Release
 make
 \end{lstlisting}
 
-The latter option has the advantage that you can also build individual projects rather than only the whole \ac{SDK}. To build projects individually, change into the \emph{build-Debug} or \emph{build-Release} directory and type
+The latter option has the advantage that you can also build individual projects rather than the whole \ac{SDK}. To build projects individually, change into the \emph{build-Debug} or \emph{build-Release} directory and type
 \begin{lstlisting}[language=sh]
 make <project name>
 \end{lstlisting}
@@ -258,7 +258,7 @@ ldconfig /usr/local/lib
 \end{lstlisting}
 (if this is not done, new dynamic libs may not be found correctly)
 
-If you used this way, you will find the PixelLight runtime in \emph{/usr/local/share/pixellight/Runtime}, and the samples e.g. in \emph{/usr/local/share/pixellight/Samples}.
+If you have installed Pixellight, you will find the runtime in \emph{/usr/local/share/pixellight/Runtime}, and the samples e.g. in \emph{/usr/local/share/pixellight/Samples}.
 
 Now you should be able to run the applications built by the PixelLight project, e.g. run one of the samples:
 \begin{lstlisting}[language=sh]

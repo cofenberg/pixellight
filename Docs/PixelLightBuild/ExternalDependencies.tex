@@ -6,9 +6,9 @@ In order to build the PixelLight engine for instance with \ac{MSVC}, all the ext
 
 
 \section{Dependencies}
-When writing this documentation in September 2011, there are 37 external dependencies. Please note that this doesn't mean that you have to take care of 37 external libraries before you can start building and using PixelLight. In the most minimal build, PixelLight only depends on PCRE used within PLCore for regular expressions. zlib for zip support within PLCore is highly recommended, but can be deactivated. The same is true for jpg and png support within PLGraphics. Nice to have, but no must have, especially when you just want to do your first steps in building PixelLight. As you can see, the 12 base projects of PixelLight don't have a lot of external dependencies.
+When writing this documentation in September 2011, there are 37 external dependencies. Please note that this doesn't mean that you have to take care of 37 external libraries before you can start building and using PixelLight. In the minimal build, PixelLight only depends on PCRE used within PLCore for regular expressions. zlib for zip support within PLCore is highly recommended, but can be deactivated. The same is for jpg and png support within PLGraphics. Nice to have but no must have, especially when you just want to do your first steps with building PixelLight. As you can see, the 12 base projects of PixelLight don't have a lot of external dependencies.
 
-Everything else is completely optional, most of them are just dynamically loaded plugins. If you need no Cg shaders, don't use Cg, if you need no Newton physics, don't use it. For scripting, you only need to compile PLCore and e.g. the Lua scripting plugin, that's it. For developing new plugins, you even don't need to compile PixelLight itself, just start a new plugin project and PixelLight will be able to use the new dynamic library providing e.g. \ac{RTTI} classes for new script languages.
+Everything else is completely optional, most of them are just dynamically loaded plugins. If you need no Cg shaders, don't use Cg. If you need no Newton physics, don't use it. For scripting, you only need to compile PLCore and e.g. the Lua scripting plugin, that's it. For developing new plugins, you even don't need to compile PixelLight itself, just start a new plugin project and PixelLight will be able to use the new dynamic library providing e.g. \ac{RTTI} classes for new script languages.
 
 This means that the base of PixelLight is really slim when it comes to external dependencies. Those 37 external libraries only mean that there are a lot of optional plugins available for you so that you don't have to write them by yourself if you need them.
 
@@ -28,7 +28,7 @@ There are also downloads available containing all public external packages. Exam
 \item{All public packages for Linux \SI{32}{\bit}: \url{http://sourceforge.net/projects/pixellight/files/PixelLight%20v0.9/0.9.8-R1/PixelLight-0.9.8-R1-Externals-Linux_x86_32.tar.gz/download}}
 \end{itemize}
 
-Unfortunately, we can't provide some of those libraries due to their licensing terms. Have a look at the according \emph{Readme.txt} to determine where to obtain those libraries and where to put the resulting files into your source tree.
+Unfortunately, we can't provide some of those libraries due to their licensing terms. Have a look at the according \emph{Readme.txt} to determine where to obtain those libraries and where to put the resulting files in your source tree.
 
 The library packages must be unpacked and need to be at the right position for your specific build type, e.g. on Windows and \SI{32}{\bit}, put everything into the directory \emph{\textless PixelLight root directory\textgreater /External/\_Windows\_x86\_32}. Examples:
 \begin{itemize}
