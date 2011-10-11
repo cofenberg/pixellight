@@ -284,13 +284,13 @@ Glossary (only terms I wasn't really familiar with)
 	\centering
 	\begin{tabular}{ | l | l | p{8cm} |}
 	\hline
-	Short	& Long & Information \\ \hline
-	ndk		& Native Development Kit		& \url{http://developer.android.com/sdk/ndk/index.html} \\ \hline
-	adb		& Android Debug Bridge			& \url{http://developer.android.com/guide/developing/tools/adb.html}	!important! \\ \hline
-	avd		& Android Virtual Device 		& \url{http://developer.android.com/guide/developing/devices/emulator.html} \\ \hline
+	Short	& Long & Information\\ \hline
+	ndk		& Native Development Kit		& \url{http://developer.android.com/sdk/ndk/index.html}\\ \hline
+	adb		& Android Debug Bridge			& \url{http://developer.android.com/guide/developing/tools/adb.html}	!important!\\ \hline
+	avd		& Android Virtual Device 		& \url{http://developer.android.com/guide/developing/devices/emulator.html}\\ \hline
 	aapt	& Android Asset Packaging Tool	& \\ \hline
 	JNI		& Java Native Interface			& \\ \hline
-	logcat	& 								& Android system central log buffer \\ \hline
+	logcat	& 								& Android system central log buffer\\ \hline
 	\end{tabular}
 \end{center}
 
@@ -303,17 +303,18 @@ Command glossary (only terms I wasn't really familiar with)
 	\centering
 	\begin{tabular}{ | l | p{10cm} |}
 	\hline
-	Command							& Result \\ \hline
-	android							& Start "Android SDK and AVD Manager" (e.g. to start the emulator) \\ \hline
-	adb devices						& See all available emulators/devices \\ \hline
-	adb logcat						& Show Android log (called "logcat"), this is realtime, so the command prompt will block and show new upcoming log entries at once, more information: \url{http://developer.android.com/guide/developing/tools/adb.html#logcat} \\ \hline
-	adb push <local> <remote>		& Copy <local> (file or directory recursively) to the emulator/device to destination <remote>, example: "adb push foo.txt /sdcard/foo.txt" \\ \hline
-	adb pull <remote> <local>		& Copy <remove> (file or directory recursively) from the emulator/device to destination <local>, example: "adb pull /sdcard/foo.txt foo.txt" \\ \hline
-	adb install <\ac{APK} file>		& Install \ac{APK} file on emulator/device (but doesn't start it automatically) \\ \hline
-	adb -d install <\ac{APK} file>	& Install \ac{APK} file on device (but doesn't start it automatically) \\ \hline
-	adb -e install <\ac{APK} file>	& Install \ac{APK} file on emulator (but doesn't start it automatically) \\ \hline
-	adb uninstall <package>			& Uninstall an \ac{APK}, example: "adb uninstall com.example.native\_activity" \\ \hline
-	adb shell am start <app>		& Start an app, example: "adb shell am start -n com.android.gl2jni/.GL2JNIActivity" \\ \hline
+	Command							& Result\\ \hline
+	android							& Start "Android SDK and AVD Manager" (e.g. to start the emulator)\\ \hline
+	adb devices						& See all available emulators/devices\\ \hline
+	adb logcat						& Show Android log (called "logcat"), this is realtime, so the command prompt will block and show new upcoming log entries at once, more information: \url{http://developer.android.com/guide/developing/tools/adb.html#logcat}\\ \hline
+	adb logcat -s <tag>				& Show only messages with the given tag within the Android log, example: "adb logcat -s PixelLight"\\ \hline
+	adb push <local> <remote>		& Copy <local> (file or directory recursively) to the emulator/device to destination <remote>, example: "adb push foo.txt /sdcard/foo.txt"\\ \hline
+	adb pull <remote> <local>		& Copy <remove> (file or directory recursively) from the emulator/device to destination <local>, example: "adb pull /sdcard/foo.txt foo.txt"\\ \hline
+	adb install <\ac{APK} file>		& Install \ac{APK} file on emulator/device (but doesn't start it automatically)\\ \hline
+	adb -d install <\ac{APK} file>	& Install \ac{APK} file on device (but doesn't start it automatically)\\ \hline
+	adb -e install <\ac{APK} file>	& Install \ac{APK} file on emulator (but doesn't start it automatically)\\ \hline
+	adb uninstall <package>			& Uninstall an \ac{APK}, example: "adb uninstall com.example.native\_activity"\\ \hline
+	adb shell am start <app>		& Start an app, example: "adb shell am start -n com.android.gl2jni/.GL2JNIActivity"\\ \hline
 	\end{tabular}
 \end{center}
 
@@ -322,11 +323,11 @@ Command glossary (only terms I wasn't really familiar with)
 	\centering
 	\begin{tabular}{ | l | p{8cm} |}
 	\hline
-	Command										& Result \\ \hline
-	android update project -t android-9 -p .	& Create/update "build.xml" (required for Ant) \\ \hline
-	ndk-build									& Compile native code \\ \hline
-	ant debug									& Create debug \ac{APK} \\ \hline
-	ant release									& Create release \ac{APK} \\ \hline
+	Command										& Result\\ \hline
+	android update project -t android-9 -p .	& Create/update "build.xml" (required for Ant)\\ \hline
+	ndk-build									& Compile native code\\ \hline
+	ant debug									& Create debug \ac{APK}\\ \hline
+	ant release									& Create release \ac{APK}\\ \hline
 	\end{tabular}
 \end{center}
 
