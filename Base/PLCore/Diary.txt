@@ -1,3 +1,16 @@
+>> 11.10.2011
+[CO]
+- Yesterday, a fellow student had isses to get PixelLight up and running - as it turns out, there were PixelLight runtime configuration issues, again.
+  Just like within the forum post http://dev.pixellight.org/forum/viewtopic.php?f=6&t=68 the MS Windows PATH environment variable was set correctly... but
+  the registry key was missing. So, while the MS Windows PATH environment variable is usually no big deal and there's not really a way around it, this
+  mandatory registry key on the other hand is a constant source of errors and frustration. So, I had a look into it.
+  As it turned out, I already had a solution at "18.08.2011" but didn't see at this time that this also could be used to make the mandatory registry key
+  only optional. The "Runtime::GetSystemDirectory()"-method is now also using the PLCore shared library in order to find the PixelLight runtime directory.
+  Only when using a static version of PLCore, we have to use the registry key as last available option. Usually the dynamic shared library of PLCore is used,
+  and so there's usually no need for this registry key and no problem in case it's not there.
+
+
+
 >> 07.10.2011
 [CO]
 - "Runtime::ScanDirectoryPluginsAndData()" & "Frontend::Run()": In case of a total failure, there's now also the hint

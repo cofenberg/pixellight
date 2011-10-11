@@ -126,33 +126,8 @@ String Runtime::GetSuffix()
 */
 String Runtime::GetLocalDirectory()
 {
-	#ifdef PLCORE_STATIC
-		// No doubt, the executable is using the static linked version of PLCore... We don't know any so called "runtime"...
-	#else
-		// Get the name of the PLCore shared library
-		const String sPLCoreSharedLibrary = GetPLCoreSharedLibraryName();
-
-		// Load the shared library (should never ever fail because this executable is already using this shared library...)
-		DynLib cPLCoreDynLib;
-		if (cPLCoreDynLib.Load(sPLCoreSharedLibrary)) {
-			// Get the absolute path the PLCore shared library is in
-			const String sAbsPLCorePath = Url(cPLCoreDynLib.GetAbsPath()).CutFilename();
-
-			// Get the absolute filename of the running process
-			const String sAbsProcessPath = Url(System::GetInstance()->GetExecutableFilename()).CutFilename();
-
-			// Is the PLCore shared library within the same directory as the running process?
-			if (sAbsPLCorePath == sAbsProcessPath) {
-				// The PixelLight runtime is in the same directory as the running process, making this to a local installation
-				return sAbsPLCorePath;	// Done
-			} else {
-				// The PixelLight runtime is registered within the system, making this to a system installation
-			}
-		}
-	#endif
-
-	// Error!
-	return "";
+	// Try to find the PL-runtime directory by using the PLCore shared library
+	return GetDirectory(LocalInstallation);
 }
 
 /**
@@ -162,7 +137,7 @@ String Runtime::GetLocalDirectory()
 String Runtime::GetLocalDataDirectory()
 {
 	// Get PixelLight local runtime directory
-	const String sPLDirectory = GetLocalDirectory();
+	const String sPLDirectory = GetDirectory(LocalInstallation);
 	if (sPLDirectory.GetLength()) {
 		// Return the local runtime data directory
 		return Url(sPLDirectory + "/../Data/").Collapse().GetUrl();
@@ -174,9 +149,43 @@ String Runtime::GetLocalDataDirectory()
 
 /**
 *  @brief
-*    Try to find the system PL-runtime directory by reading the registry
+*    Try to find the system PL-runtime directory
 */
 String Runtime::GetSystemDirectory()
+{
+	// First: Try to find the PL-runtime directory by using the PLCore shared library
+	String sPLDirectory = GetDirectory(SystemInstallation);
+	if (!sPLDirectory.GetLength()) {
+		// Second: Try to find the system PL-runtime directory by reading the registry
+		sPLDirectory = GetRegistryDirectory();
+	}
+
+	// Done
+	return sPLDirectory;
+}
+
+/**
+*  @brief
+*    Try to find the system PL-runtime data directory
+*/
+String Runtime::GetSystemDataDirectory()
+{
+	// Get PixelLight system runtime directory
+	const String sPLDirectory = GetSystemDirectory();
+	if (sPLDirectory.GetLength()) {
+		// Return the system runtime data directory
+		return Url(sPLDirectory + "/../Data/").Collapse().GetUrl();
+	} else {
+		// Error!
+		return "";
+	}
+}
+
+/**
+*  @brief
+*    Try to find the system PL-runtime directory by reading the registry
+*/
+String Runtime::GetRegistryDirectory()
 {
 	// Windows
 	#ifdef WIN32
@@ -239,12 +248,12 @@ String Runtime::GetSystemDirectory()
 *  @brief
 *    Try to find the system PL-runtime data directory by reading the registry
 */
-String Runtime::GetSystemDataDirectory()
+String Runtime::GetRegistryDataDirectory()
 {
-	// Get PixelLight system runtime directory
-	const String sPLDirectory = GetSystemDirectory();
+	// Get PixelLight registry runtime directory
+	const String sPLDirectory = GetRegistryDirectory();
 	if (sPLDirectory.GetLength()) {
-		// Return the system runtime data directory
+		// Return the registry runtime data directory
 		return Url(sPLDirectory + "/../Data/").Collapse().GetUrl();
 	} else {
 		// Error!
@@ -263,7 +272,7 @@ String Runtime::GetDirectory()
 	if (!sPLDirectory.GetLength()) {
 		// No local PL-runtime directory found
 
-		// Second: Try to find the system PL-runtime directory by reading the registry
+		// Second: Try to find the system PL-runtime directory
 		sPLDirectory = GetSystemDirectory();
 	}
 
@@ -373,6 +382,45 @@ String Runtime::GetPLCoreSharedLibraryName()
 			return "PLCore.dll";
 		#endif
 	#endif
+}
+
+/**
+*  @brief
+*    Try to find the PL-runtime directory by using the PLCore shared library
+*/
+String Runtime::GetDirectory(EType nType)
+{
+	// Runtime installation type must be "LocalInstallation" or "SystemInstallation"
+	if (nType == LocalInstallation || nType == SystemInstallation) {
+		#ifdef PLCORE_STATIC
+			// No doubt, the executable is using the static linked version of PLCore... We don't know any so called "runtime"...
+		#else
+			// Get the name of the PLCore shared library
+			const String sPLCoreSharedLibrary = GetPLCoreSharedLibraryName();
+
+			// Load the shared library (should never ever fail because this executable is already using this shared library...)
+			DynLib cPLCoreDynLib;
+			if (cPLCoreDynLib.Load(sPLCoreSharedLibrary)) {
+				// Get the absolute path the PLCore shared library is in
+				const String sAbsPLCorePath = Url(cPLCoreDynLib.GetAbsPath()).CutFilename();
+
+				// Get the absolute filename of the running process
+				const String sAbsProcessPath = Url(System::GetInstance()->GetExecutableFilename()).CutFilename();
+
+				// Is the PLCore shared library within the same directory as the running process?
+				if (sAbsPLCorePath == sAbsProcessPath) {
+					// The PixelLight runtime is in the same directory as the running process, making this to a local installation
+					return (nType == LocalInstallation) ? sAbsPLCorePath : "";	// Done
+				} else {
+					// The PixelLight runtime is registered within the system, making this to a system installation
+					return (nType == SystemInstallation) ? sAbsPLCorePath : "";	// Done
+				}
+			}
+		#endif
+	}
+
+	// Error!
+	return false;
 }
 
 

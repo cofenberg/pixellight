@@ -129,15 +129,48 @@ class Runtime {
 
 		/**
 		*  @brief
+		*    Try to find the system PL-runtime directory
+		*
+		*  @return
+		*    Path to the system PL-runtime directory (e.g. "C:\PixelLight\Runtime\x86"), or ""
+		*/
+		static PLCORE_API String GetSystemDirectory();
+
+		/**
+		*  @brief
+		*    Try to find the system PL-runtime data directory
+		*
+		*  @return
+		*    Path to the system PL-runtime data directory (e.g. "C:\PixelLight\Runtime\Data"), or ""
+		*/
+		static PLCORE_API String GetSystemDataDirectory();
+
+		/**
+		*  @brief
 		*    Try to find the system PL-runtime directory by reading the registry
 		*
 		*  @return
 		*    Path to the system PL-runtime directory (e.g. "C:\PixelLight\Runtime\x86"), or ""
 		*
+		*  @remarks
+		*    For this method, you also need to add a key to the registry (or environment, depending on the used OS, in here
+		*    the MS Windows terminology is used), so that the path to the build PixelLight runtime can be found during runtime.
+		*    This means that there's a high probability that this registry key does not exist or it's configuration is invalid.
+		*    So, if you don't really need this method, try to avoid using it to reduce possible errors. When e.g. using a static
+		*    build of PLCore, this registry method has to be used in order to be able to find the system PL-runtime directory.
+		*
+		*    On MS Windows, this key has to be at "HKEY_LOCAL_MACHINE/SOFTWARE/PixelLight/PixelLight-SDK/Runtime" (or at
+		*    "HKEY_LOCAL_MACHINE/SOFTWARE/Wow6432Node/PixelLight/PixelLight-SDK/Runtime" if you are using a 32 bit PixelLight
+		*    SDK on a 64 bit MS Windows). This "Runtime"-key has e.g. the string value "C:/PixelLight/Bin/Runtime/x86/" (same
+		*    as the PATH environment variable entry pointing to the PixelLight runtime directory).
+		*
+		*    On Linux, the "PL_RUNTIME" environment variable is used. If this variable does not exist,
+		*    "/usr/local/share/pixellight/Runtime" will be used, if it exists.
+		*
 		*  @see
 		*    - 'Registry' class documentation
 		*/
-		static PLCORE_API String GetSystemDirectory();
+		static PLCORE_API String GetRegistryDirectory();
 
 		/**
 		*  @brief
@@ -147,9 +180,9 @@ class Runtime {
 		*    Path to the system PL-runtime data directory (e.g. "C:\PixelLight\Runtime\Data"), or ""
 		*
 		*  @see
-		*    - 'Registry' class documentation
+		*    - "GetRegistryDirectory()"
 		*/
-		static PLCORE_API String GetSystemDataDirectory();
+		static PLCORE_API String GetRegistryDataDirectory();
 
 		/**
 		*  @brief
@@ -259,6 +292,18 @@ class Runtime {
 		*    The name of the PLCore shared library (e.g. "libPLCore.so" or "PLCoreD.dll")
 		*/
 		static String GetPLCoreSharedLibraryName();
+
+		/**
+		*  @brief
+		*    Try to find the PL-runtime directory by using the PLCore shared library
+		*
+		*  @param[in] nType
+		*    Runtime installation type, must be "LocalInstallation" or "SystemInstallation"
+		*
+		*  @return
+		*    Path to the PL-runtime directory (e.g. "C:\MyApplication\x86"), or ""
+		*/
+		static PLCORE_API String GetDirectory(EType nType);
 
 
 };
