@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#define PLINPUT_RAWINPUT_CPP
 #include "PLInput/Backend/Windows/RawInputDevice.h"
 #include "PLInput/Backend/Windows/RawInput.h"
 
@@ -32,6 +33,12 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 namespace PLInput {
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+template class Singleton<RawInput>;
 
 
 //[-------------------------------------------------------]

@@ -266,9 +266,11 @@ class Localization : public Singleton<Localization> {
 
 
 //[-------------------------------------------------------]
-//[ Template instance                                     ]
+//[ Template extern instance                              ]
 //[-------------------------------------------------------]
-PLCORE_TEMPLATE_INSTANCE Singleton<Localization>;
+#ifndef PLCORE_LOCALIZATION_CPP
+	PLCORE_EXTERN_TEMPLATE Singleton<Localization>;
+#endif
 
 
 //[-------------------------------------------------------]

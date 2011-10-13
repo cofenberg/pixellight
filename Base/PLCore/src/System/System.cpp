@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#define PLCORE_SYSTEM_CPP
 #include "PLCore/System/Thread.h"
 #if defined(WIN32)
 	#include "PLCore/System/SystemWindows.h"
@@ -32,6 +33,7 @@
 	#include "PLCore/System/SystemLinux.h"
 #endif
 #include "PLCore/File/File.h"
+#include "PLCore/Tools/Profiling.h"
 #include "PLCore/System/System.h"
 
 
@@ -39,6 +41,12 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+template class Singleton<System>;
 
 
 //[-------------------------------------------------------]
@@ -426,6 +434,9 @@ System::System() :
 
 	// Create main thread object
 	m_pMainThread = new Thread(true);
+
+	// [HACK] Force the linker to keep the "Profiling"-class (don't strip it away)
+	Profiling::GetInstance()->IsActive();
 }
 
 /**

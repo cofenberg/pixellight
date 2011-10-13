@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#define PLINPUT_INPUTMANAGER_CPP
 #include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
 #include <PLCore/System/MutexGuard.h>
@@ -38,6 +39,12 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 namespace PLInput {
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+template class Singleton<InputManager>;
 
 
 //[-------------------------------------------------------]

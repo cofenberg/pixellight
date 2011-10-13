@@ -388,9 +388,11 @@ class Log : public Singleton<Log> {
 
 
 //[-------------------------------------------------------]
-//[ Template instance                                     ]
+//[ Template extern instance                              ]
 //[-------------------------------------------------------]
-PLCORE_TEMPLATE_INSTANCE Singleton<Log>;
+#ifndef PLCORE_LOG_CPP
+	PLCORE_EXTERN_TEMPLATE Singleton<Log>;
+#endif
 
 
 //[-------------------------------------------------------]

@@ -476,9 +476,11 @@ class LoadableManager : public Singleton<LoadableManager> {
 
 
 //[-------------------------------------------------------]
-//[ Template instance                                     ]
+//[ Template extern instance                              ]
 //[-------------------------------------------------------]
-PLCORE_TEMPLATE_INSTANCE Singleton<LoadableManager>;
+#ifndef PLCORE_LOADABLEMANAGER_CPP
+	PLCORE_EXTERN_TEMPLATE Singleton<LoadableManager>;
+#endif
 
 
 //[-------------------------------------------------------]

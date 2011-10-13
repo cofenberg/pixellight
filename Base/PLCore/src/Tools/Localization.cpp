@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#define PLCORE_LOCALIZATION_CPP
 #include "PLCore/Tools/LocalizationText.h"
 #include "PLCore/Tools/LocalizationGroup.h"
 #include "PLCore/Tools/Localization.h"
@@ -32,6 +33,12 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+template class Singleton<Localization>;
 
 
 //[-------------------------------------------------------]

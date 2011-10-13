@@ -1,3 +1,18 @@
+>> 13.10.2011
+[CO]
+- When linking PLCore on Mac OS X, the linker complains about multiple symbols for "Singleton<Log>" and fails to link.
+  After a day of stumbling around on the unfamiliar Mac OS X, I had no real glue what's going on... because the Apple GCC 4.2 is heavily
+  out-of-date I compiled GCC 4.6.1 for the used system, and supected that the out-of-date Apple ld linker caused this problem (so I played
+  around with GNU binutils etc). After talking with Stephan Wezel about the observed issues, he gave me the tip to check whether the "extern"
+  in front of "template class" is really there when compling the source code under Mac OS X. So, I first read some more stuff about C++11
+  extern template, looked how it's currently used... and the usage looked wrong. Under Linux (the Mac OS X port is just reusing the
+  Linux port :), when compiling PLCore, there was no "extern" in front of "template class", and I guess that this means that everywhere this
+  header was included, a new singleton template instance was created (just inside PLCore!) - this would at least explain why the Apple linker
+  complained about multiple instances. Changed it. At this time, the changes are only tested on MS Windows. Tomorrow I'll do more tests and
+  really hope that this solves the issue.
+
+
+
 >> 11.10.2011
 [CO]
 - Yesterday, a fellow student had isses to get PixelLight up and running - as it turns out, there were PixelLight runtime configuration issues, again.

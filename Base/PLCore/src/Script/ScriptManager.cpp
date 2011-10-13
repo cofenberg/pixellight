@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#define PLCORE_SCRIPTMANAGER_CPP
 #include "PLCore/File/Url.h"
 #include "PLCore/Base/Class.h"
 #include "PLCore/Base/ClassManager.h"
@@ -36,6 +37,12 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+template class Singleton<ScriptManager>;
 
 
 //[-------------------------------------------------------]

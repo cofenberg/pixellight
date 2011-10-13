@@ -191,11 +191,13 @@ class RawInput : public PLCore::Singleton<RawInput> {
 
 
 //[-------------------------------------------------------]
-//[ Template instance                                     ]
+//[ Template extern instance                              ]
 //[-------------------------------------------------------]
-namespace PLCore {
-	PLINPUT_TEMPLATE_INSTANCE Singleton<PLInput::RawInput>;
-}
+#ifndef PLINPUT_RAWINPUT_CPP
+	namespace PLCore {
+		PLINPUT_EXTERN_TEMPLATE Singleton<PLInput::RawInput>;
+	}
+#endif
 
 
 #endif // __PLINPUT_RAWINPUT_H__

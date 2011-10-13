@@ -64,7 +64,7 @@ namespace PLCore {
 *      namespace PLCore {
 *        class System;
 *      }
-*      PLCORE_TEMPLATE_INSTANCE Singleton<System>;
+*      PLCORE_EXTERN_TEMPLATE Singleton<System>;
 *
 *  @note
 *    - As the class same indicates, this is an implementation of the singleton design pattern

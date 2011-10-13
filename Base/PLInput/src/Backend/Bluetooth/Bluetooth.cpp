@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#define PLINPUT_BLUETOOTH_CPP
 #include "PLInput/Backend/Bluetooth/Bluetooth.h"
 #include "PLInput/Backend/Bluetooth/BTImpl.h"
 #if defined(LINUX) && !defined(ANDROID)
@@ -35,6 +36,12 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 namespace PLInput {
+
+
+//[-------------------------------------------------------]
+//[ Template instance                                     ]
+//[-------------------------------------------------------]
+template class Singleton<Bluetooth>;
 
 
 //[-------------------------------------------------------]

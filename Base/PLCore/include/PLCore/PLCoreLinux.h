@@ -111,26 +111,17 @@
 		// To export classes, methods and variables
 		#define PLCORE_API
 
-		// To export explicit template instantiations
-		#define PLCORE_TEMPLATE
-
 		// To export RTTI elements
 		#define PLCORE_RTTI_EXPORT 1
 	#elif defined(HAVE_VISIBILITY_ATTR)
 		// To export classes, methods and variables
 		#define PLCORE_API __attribute__ ((visibility("default")))
 
-		// To export explicit template instantiations
-		#define PLCORE_TEMPLATE
-
 		// To export RTTI elements
 		#define PLCORE_RTTI_EXPORT 1
 	#else
 		// To export classes, methods and variables
 		#define PLCORE_API
-
-		// To export explicit template instantiations
-		#define PLCORE_TEMPLATE
 
 		// To export RTTI elements
 		#define PLCORE_RTTI_EXPORT 1
@@ -139,15 +130,12 @@
 	// To import classes, methods and variables
 	#define PLCORE_API
 
-	// To import explicit template instantiations (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-	#define PLCORE_TEMPLATE extern
-
 	// To import RTTI elements
 	#define PLCORE_RTTI_EXPORT 0
 #endif
 
-// To create template instance
-#define PLCORE_TEMPLATE_INSTANCE PLCORE_TEMPLATE template class
+// To export/import template instance (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
+#define PLCORE_EXTERN_TEMPLATE extern template class
 
 #if defined(HAVE_VISIBILITY_ATTR) && !defined(PLCORE_STATIC)
 		// To import/export class templates

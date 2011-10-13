@@ -223,9 +223,11 @@ class ScriptManager : public Singleton<ScriptManager> {
 
 
 //[-------------------------------------------------------]
-//[ Template instance                                     ]
+//[ Template extern instance                              ]
 //[-------------------------------------------------------]
-PLCORE_TEMPLATE_INSTANCE Singleton<ScriptManager>;
+#ifndef PLCORE_SCRIPTMANAGER_CPP
+	PLCORE_EXTERN_TEMPLATE Singleton<ScriptManager>;
+#endif
 
 
 //[-------------------------------------------------------]

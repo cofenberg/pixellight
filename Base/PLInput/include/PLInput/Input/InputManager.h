@@ -305,11 +305,13 @@ class InputManager : public PLCore::Singleton<InputManager> {
 
 
 //[-------------------------------------------------------]
-//[ Template instance                                     ]
+//[ Template extern instance                              ]
 //[-------------------------------------------------------]
-namespace PLCore {
-	PLINPUT_TEMPLATE_INSTANCE Singleton<PLInput::InputManager>;
-}
+#ifndef PLINPUT_INPUTMANAGER_CPP
+	namespace PLCore {
+		PLINPUT_EXTERN_TEMPLATE Singleton<PLInput::InputManager>;
+	}
+#endif
 
 
 #endif // __PLINPUT_INPUTMANAGER_H__

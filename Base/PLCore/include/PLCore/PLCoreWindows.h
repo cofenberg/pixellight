@@ -129,33 +129,32 @@ PL_WARNING_DISABLE(4481) // "nonstandard extension used: override specifier 'ove
 #ifdef PLCORE_STATIC
 	// Static library
 	#define PLCORE_API
-	#define PLCORE_TEMPLATE
 	#define PLCORE_RTTI_EXPORT 1
+
+	// To export/import template instance (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
+	#define PLCORE_EXTERN_TEMPLATE extern template class
 #elif defined(PLCORE_EXPORTS)
 	// To export classes, methods and variables
 	#define PLCORE_API __declspec(dllexport)
 
-	// To export explicit template instantiations
-	#define PLCORE_TEMPLATE
-
 	// To export RTTI elements
 	#define PLCORE_RTTI_EXPORT 1
+
+	// To export/import template instance (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
+	#define PLCORE_EXTERN_TEMPLATE template class __declspec(dllexport)
 #else
 	// To import classes, methods and variables
 	#define PLCORE_API __declspec(dllimport)
 
-	// To import explicit template instantiations (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-	#define PLCORE_TEMPLATE extern
-
 	// To import RTTI elements
 	#define PLCORE_RTTI_EXPORT 0
+
+	// To export/import template instance (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
+	#define PLCORE_EXTERN_TEMPLATE template class __declspec(dllimport)
 #endif
 
 // To export/import class templates
 #define PLCORE_TMPL
-
-// To create template instance
-#define PLCORE_TEMPLATE_INSTANCE PLCORE_TEMPLATE template class PLCORE_API
 
 // To export plugin functions
 #ifdef PLCORE_STATIC

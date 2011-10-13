@@ -489,9 +489,11 @@ class Timing : public Singleton<Timing> {
 
 
 //[-------------------------------------------------------]
-//[ Template instance                                     ]
+//[ Template extern instance                              ]
 //[-------------------------------------------------------]
-PLCORE_TEMPLATE_INSTANCE Singleton<Timing>;
+#ifndef PLCORE_TIMING_CPP
+	PLCORE_EXTERN_TEMPLATE Singleton<Timing>;
+#endif
 
 
 //[-------------------------------------------------------]

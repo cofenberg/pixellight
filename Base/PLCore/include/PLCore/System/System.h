@@ -513,9 +513,11 @@ class System : public Singleton<System> {
 
 
 //[-------------------------------------------------------]
-//[ Template instance                                     ]
+//[ Template extern instance                              ]
 //[-------------------------------------------------------]
-PLCORE_TEMPLATE_INSTANCE Singleton<System>;
+#ifndef PLCORE_SYSTEM_CPP
+	PLCORE_EXTERN_TEMPLATE Singleton<System>;
+#endif
 
 
 //[-------------------------------------------------------]

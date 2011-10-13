@@ -429,9 +429,11 @@ class Profiling : public ElementManager<ProfileGroup>, public Singleton<Profilin
 
 
 //[-------------------------------------------------------]
-//[ Template instance                                     ]
+//[ Template extern instance                              ]
 //[-------------------------------------------------------]
-PLCORE_TEMPLATE_INSTANCE Singleton<Profiling>;
+#ifndef PLCORE_PROFILING_CPP
+	PLCORE_EXTERN_TEMPLATE Singleton<Profiling>;
+#endif
 
 
 //[-------------------------------------------------------]

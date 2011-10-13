@@ -33,24 +33,21 @@
 	// To export classes, methods and variables
 	#define PLINPUT_API __declspec(dllexport)
 
-	// To export explicit template instantiations
-	#define PLINPUT_TEMPLATE
-
 	// To export RTTI elements
 	#define PLINPUT_RTTI_EXPORT 1
+
+	// To export/import template instance (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
+	#define PLINPUT_EXTERN_TEMPLATE template class __declspec(dllexport)
 #else
 	// To import classes, methods and variables
 	#define PLINPUT_API __declspec(dllimport)
 
-	// To import explicit template instantiations (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-	#define PLINPUT_TEMPLATE extern
-
 	// To import RTTI elements
 	#define PLINPUT_RTTI_EXPORT 0
-#endif
 
-// To create template instance
-#define PLINPUT_TEMPLATE_INSTANCE PLINPUT_TEMPLATE template class PLINPUT_API
+	// To export/import template instance (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
+	#define PLINPUT_EXTERN_TEMPLATE template class __declspec(dllimport)
+#endif
 
 
 #endif // __PLINPUT_WINDOWS_H__

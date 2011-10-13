@@ -125,11 +125,13 @@ class HID : public PLCore::Singleton<HID> {
 
 
 //[-------------------------------------------------------]
-//[ Template instance                                     ]
+//[ Template extern instance                              ]
 //[-------------------------------------------------------]
-namespace PLCore {
-	PLINPUT_TEMPLATE_INSTANCE Singleton<PLInput::HID>;
-}
+#ifndef PLINPUT_HID_CPP
+	namespace PLCore {
+		PLINPUT_EXTERN_TEMPLATE Singleton<PLInput::HID>;
+	}
+#endif
 
 
 #endif // __PLINPUT_HID_H__

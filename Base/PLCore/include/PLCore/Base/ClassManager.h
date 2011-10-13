@@ -391,7 +391,9 @@ class ClassManager : public Singleton<ClassManager> {
 //[-------------------------------------------------------]
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
-PLCORE_TEMPLATE_INSTANCE Singleton<ClassManager>;
+#ifndef PLCORE_CLASSMANAGER_CPP
+	PLCORE_EXTERN_TEMPLATE Singleton<ClassManager>;
+#endif
 
 
 //[-------------------------------------------------------]
