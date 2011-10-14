@@ -30,7 +30,7 @@ include(${CMAKETOOLS_DIR}/External/Check.cmake)
 ##################################################
 
 # Check if built file exists
-if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
+if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE} AND NOT APPLE)
 	# Download prebuilt package from the repository
 	set(md5sum "")
 	if(WIN32)

@@ -1136,7 +1136,7 @@ wchar_t *_wcslwr(wchar_t *s)
 /*********************************************************/
 
 // wchar functions definitions
-#ifdef ANDROID
+#if (ANDROID || APPLE)
 	// Even if there's a "wchar.h"-header, wchar_t is officially not supported by Android
 	// (no problem, wchar_t is for Windows, UTF-8 for Linux and the string class handles both as well as ASCII)
 	int wcscasecmp(const wchar_t *s1, const wchar_t *s2)

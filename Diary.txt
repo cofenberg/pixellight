@@ -3,6 +3,32 @@
 \*********************************************************/
 
 
+>> 14.10.2011
+[CO]
+- PixelLight can now be compiled for Mac OS X, next stop: Making the plugins ready
+
+
+
+>> 12.10.2011
+[CO]
+- Another Apple day. Luckily there are build instructions available explaining how to compile GCC 4.6 on Mac OS X. Took ages to compile on the "Mac Mini".
+  Used the time to get more familiar with the Mac OS X system. Did some Xcode configuration so that it's usable, found a reasonable Git GUI client called
+  "GitX"... and started to no longer click on the not existing right mouse button. *g*
+  As mentioned, when using the terminal, one can reuse the Linux knowledge. Compiling libz and libpcre was therefore quite simle, "configure" & "make" and
+  it's done.
+
+
+
+>> 10.10.2011
+[CO]
+- Started Mac OS X port... I'am sure the first Git commits from me will be full of errors, I don't have any previous experience with Apple hard- and software.
+  Installed Git and CMake and did a first test at once... and it really started compiling PixelLight. When using the terminal, Mac OS X is quite similar to
+  Linux. The build process by using CMake is also the same... use cmake-gui, click around, and then type "make". After the first few compiled files the expected
+  errors appeared. The usual minor POXIS header differences. Also, Mac OS X 10.6.8 I have available at my university only comes with GCC 4.2.1... I actually did
+  manage it to compile PLCore by removing some compiler switches. When it came to linking, there were the usual template instanciation issues known when using
+  out-of-date compilers. So, to continue, I have to get GCC 4.6 on this Mac OS X system...
+
+
 
 >> 14.09.2011
 [CO]

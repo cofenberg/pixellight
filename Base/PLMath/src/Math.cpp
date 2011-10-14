@@ -32,8 +32,11 @@
 //[-------------------------------------------------------]
 //[ OS definitions                                        ]
 //[-------------------------------------------------------]
-// Linux platform
-#ifdef LINUX
+#ifdef APPLE
+	// The 'standard libraries' are not really 'standardized' over all platforms :(
+	#define _isnan isnan
+	#define _finite isfinite
+#elif LINUX
 	// The 'standard libraries' are not really 'standardized' over all platforms :(
 	#define _isnan isnan
 	#define _finite finite

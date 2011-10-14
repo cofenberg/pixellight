@@ -30,7 +30,6 @@
 //[-------------------------------------------------------]
 #include <X11/Xutil.h>
 #include <X11/extensions/Xrandr.h>
-#include <GL/glx.h>
 #include "PLRendererOpenGL/Context.h"
 
 

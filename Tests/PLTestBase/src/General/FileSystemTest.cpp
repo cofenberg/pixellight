@@ -27,10 +27,14 @@
 #ifdef WIN32
 	#include <PLCore/PLCoreWindowsIncludes.h>
 #endif
+#ifdef APPLE
+	#include <stdlib.h>
+#else
+	#include <malloc.h>
+#endif
 #ifdef LINUX
 	#include <errno.h>
 	#include <string.h>
-	#include <malloc.h>
 	#include <dirent.h>
 	#include <unistd.h>
 	#include <sys/stat.h>

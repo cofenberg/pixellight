@@ -25,7 +25,11 @@
 //[-------------------------------------------------------]
 #include <locale.h>
 #include <string.h>
-#include <malloc.h>
+#ifdef APPLE
+	#include <stdlib.h>
+#else
+	#include <malloc.h>
+#endif
 #ifdef LINUX
 	#include <wchar.h>
 	#include <PLCore/PLCoreLinuxWrapper.h>

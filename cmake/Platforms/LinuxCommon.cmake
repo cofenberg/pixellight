@@ -126,19 +126,21 @@ if((CMAKETOOLS_TARGET_BITSIZE MATCHES 32) AND (CMAKE_SIZEOF_VOID_P MATCHES 8))
 	)
 endif()
 
-# Linker flags
-set(LINUX_LINKER_FLAGS
-	${LINUX_LINKER_FLAGS}
-	-Wl,--as-needed						# Quote from http://www.gentoo.org/proj/en/qa/asneeded.xml : "The flag tells the linker to link in the produced binary only the libraries containing symbols actually used by the binary itself"
-	-Wl,--gc-sections					# For slightly reduced binary size
-	-Wl,--no-undefined					# Show undefined symbols as linker errors, else we only notice undefined symbols when using the shared library at runtime
-)
-if(NOT CMAKE_BUILD_TYPE MATCHES Debug)
-	##################################################
-	## Release
-	##################################################
+# Linker flags - the Apple standard linker doesn't know them
+if(NOT APPLE)
 	set(LINUX_LINKER_FLAGS
 		${LINUX_LINKER_FLAGS}
-		-Wl,--strip-all					# For reduced binary size: Throw away as much as possible
+		-Wl,--as-needed						# Quote from http://www.gentoo.org/proj/en/qa/asneeded.xml : "The flag tells the linker to link in the produced binary only the libraries containing symbols actually used by the binary itself"
+		-Wl,--gc-sections					# For slightly reduced binary size
+		-Wl,--no-undefined					# Show undefined symbols as linker errors, else we only notice undefined symbols when using the shared library at runtime
 	)
+	if(NOT CMAKE_BUILD_TYPE MATCHES Debug)
+		##################################################
+		## Release
+		##################################################
+		set(LINUX_LINKER_FLAGS
+			${LINUX_LINKER_FLAGS}
+			-Wl,--strip-all					# For reduced binary size: Throw away as much as possible
+		)
+	endif()
 endif()

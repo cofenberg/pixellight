@@ -82,7 +82,8 @@ ThreadLinux::~ThreadLinux()
 uint32 ThreadLinux::GetID() const
 {
 	// Return thread ID
-	return m_nThreadID;
+	// [TODO] APPLE: "error: invalid conversion from Ô_opaque_pthread_t* constÕ to ÔPLCore::uint32Õ" -> Rethink uint32 as return type
+	return reinterpret_cast<uint32>(m_nThreadID);
 }
 
 bool ThreadLinux::IsActive() const

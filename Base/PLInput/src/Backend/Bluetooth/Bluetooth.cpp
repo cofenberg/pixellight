@@ -26,7 +26,7 @@
 #define PLINPUT_BLUETOOTH_CPP
 #include "PLInput/Backend/Bluetooth/Bluetooth.h"
 #include "PLInput/Backend/Bluetooth/BTImpl.h"
-#if defined(LINUX) && !defined(ANDROID)
+#if defined(LINUX) && !defined(ANDROID) && !defined(APPLE)
 	#include "PLInput/Backend/Bluetooth/BTLinux.h"
 #endif
 
@@ -85,7 +85,7 @@ const List<BTDevice*> &Bluetooth::GetDevices() const
 */
 Bluetooth::Bluetooth() :
 	// Create Bluetooth implementation
-	#if defined(LINUX) && !defined(ANDROID)
+	#if defined(LINUX) && !defined(ANDROID) && !defined(APPLE)
 		m_pBTImpl(new BTLinux())
 	#else
 		m_pBTImpl(nullptr)

@@ -92,6 +92,13 @@ set(LINUX_COMPILE_DEFS
 	${LINUX_COMPILE_DEFS}
 	GCC									# We are using the gcc/g++ compiler
 )
+if(APPLE)
+	# Add a handy APPLE definition (just like WIN32, LINUX and so on) 
+	set(LINUX_COMPILE_DEFS
+		${LINUX_COMPILE_DEFS}
+		APPLE								# We are using the gcc/g++ compiler
+	)
+endif()
 
 
 ##################################################
@@ -118,5 +125,18 @@ if(NOT CMAKE_BUILD_TYPE MATCHES Debug)
 		--param max-unroll-times=4
 		# The following flag usage is basing on information from http://developer.amd.com/documentation/articles/pages/Compiler-FlagDrivenPerformanceGains.aspx
 		-fomit-frame-pointer			# Don't keep the frame pointer in a register for functions that don't need one
+	)
+endif()
+
+
+##################################################
+## Linker flags
+##################################################
+
+if(APPLE)
+	# X11 libraries not found on Mac OS X 10.6 - add the X11 library directory manually
+	set(LINUX_LINKER_FLAGS
+		${LINUX_LINKER_FLAGS}
+		-L/usr/X11/lib
 	)
 endif()

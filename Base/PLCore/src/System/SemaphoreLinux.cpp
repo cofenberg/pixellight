@@ -77,13 +77,20 @@ bool SemaphoreLinux::Lock()
 
 bool SemaphoreLinux::TryLock(uint64 nTimeout)
 {
-	// Setup control structure
-	struct timespec timeout;
-	timeout.tv_sec  = nTimeout/1000;
-	timeout.tv_nsec = (nTimeout-timeout.tv_sec)*1000;
+    #ifdef APPLE
+        // There's no "sem_timedwait()"
 
-	// Lock semaphore
-	return (m_bCreated && sem_timedwait(&m_hSemaphore, &timeout) == 0);
+        // Lock semaphore
+        return (m_bCreated && sem_wait(&m_hSemaphore) == 0);
+    #else
+        // Setup control structure
+        struct timespec timeout;
+        timeout.tv_sec  = nTimeout/1000;
+        timeout.tv_nsec = (nTimeout-timeout.tv_sec)*1000;
+    
+        // Lock semaphore
+        return (m_bCreated && sem_timedwait(&m_hSemaphore, &timeout) == 0);
+    #endif
 }
 
 bool SemaphoreLinux::Unlock()

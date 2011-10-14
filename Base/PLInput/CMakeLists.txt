@@ -85,6 +85,14 @@ elseif(ANDROID)
 		src/Backend/Android/AndroidSensorManagerDevice.cpp
 		src/Backend/HID/HIDLinux.cpp
 	)
+elseif(APPLE)
+	# [TODO] Apple input implementation
+	##################################################
+	## Apple
+	##################################################
+	add_sources(
+		src/Backend/HID/HIDLinux.cpp
+	)
 elseif(LINUX)
 	##################################################
 	## Linux
@@ -117,6 +125,8 @@ if(ANDROID)
 	add_include_directories(
 		${ANDROID_NDK}/sources/android/native_app_glue
 	)
+elseif(APPLE)
+	# [TODO] Apple input implementation
 elseif(LINUX)
 	##################################################
 	## Linux
@@ -157,6 +167,8 @@ elseif(ANDROID)
 	add_libs(
 		android
 	)
+elseif(APPLE)
+	# [TODO] Apple input implementation
 elseif(LINUX)
 	##################################################
 	## Linux

@@ -34,6 +34,8 @@
 # Execute this script:
 #   source ./profile     (OR:)
 #   . ./profile
-export PL_RUNTIME="$PWD/Bin-Linux/Runtime/x86"
+
+# [TODO] How to detect the used OS in here?
+export PL_RUNTIME="$PWD/Bin-MacOSX/Runtime/x86"
 echo "Setting PixelLight runtime variable:"
 echo "  PL_RUNTIME = '$PL_RUNTIME'"

@@ -59,6 +59,9 @@ if ( ($^O eq "MSWin32") || ($^O eq "cygwin") ) {
 } elsif ($^O eq "linux") {
 	# Linux
 	$buildSystem = "Linux";
+} elsif ($^O eq "darwin") {
+	# Apple
+	$buildSystem = "Apple";
 } else {
 	# Unsupported OS
 	print("Unsupported OS detected: '$^O'. Sorry.");

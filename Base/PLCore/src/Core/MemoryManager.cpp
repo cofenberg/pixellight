@@ -32,7 +32,11 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <string.h>
-#include <malloc.h>
+#ifdef APPLE
+    #include <stdlib.h>
+#else
+    #include <malloc.h>
+#endif
 #include "PLCore/Core/MemoryManager.h"
 
 
