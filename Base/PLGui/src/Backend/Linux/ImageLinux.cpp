@@ -130,7 +130,7 @@ bool ImageLinux::LoadPixmap(const String &sFilename, const PLGraphics::Color4 &c
 	if (sFilename.GetLength()) {
 		// Load image
 		m_pImage = new PLGraphics::Image();
-		if (m_pImage->Load(sFilename)) {
+		if (m_pImage->LoadByFilename(sFilename)) {
 			// Convert to pixmap
 			if (ToolsLinux::CreatePixmapFromImage(m_pDisplay, *m_pImage, m_pPixmap, m_pMaskPixmap, cColorKey)) {
 				// Image loaded

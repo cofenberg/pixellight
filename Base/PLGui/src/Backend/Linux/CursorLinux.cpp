@@ -143,7 +143,7 @@ void CursorLinux::Load(const String &sFilename, const Vector2i &vHotspot)
 	if (sFilename.GetLength()) {
 		// Load image
 		PLGraphics::Image cImage;
-		cImage.Load(sFilename);
+		cImage.LoadByFilename(sFilename);
 
 		// Create cursor from image
 		ToolsLinux::CreateCursorFromImage(m_pDisplay, cImage, vHotspot, m_pXCursor);
