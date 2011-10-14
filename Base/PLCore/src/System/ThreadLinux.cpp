@@ -82,7 +82,7 @@ ThreadLinux::~ThreadLinux()
 handle ThreadLinux::GetID() const
 {
 	// Return thread ID
-	return reinterpret_cast<handle>(m_nThreadID);
+	return static_cast<handle>(m_nThreadID);
 }
 
 bool ThreadLinux::IsActive() const
