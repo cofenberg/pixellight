@@ -50,12 +50,12 @@ apt-get install build-essential libncurses5-dev libxext-dev libxcursor-dev libdb
 \end{lstlisting}
 
 
-\paragraph{"Could NOT find Qt4 (missing: QT\_QMAKE\_EXECUTABLE")
-In case you get the error message \begin{quote}Could NOT find Qt4 (missing: QT_QMAKE_EXECUTABLE\end{quote}, ensure that the files within the \emph{External/Optional/Qt/Linux_x86/} directory are executable (file permissions).
+\paragraph{"Could NOT find Qt4 (missing: QT\_QMAKE\_EXECUTABLE")}
+In case you get the error message \begin{quote}Could NOT find Qt4 (missing: QT\_QMAKE\_EXECUTABLE)\end{quote}, ensure that the files within the \emph{External/Optional/Qt/Linux\_x86/} directory are executable (file permissions).
 
 
 \paragraph{"fatal error: dbus/dbus-arch-deps.h: No such file or directory"}
-In case you get the error message \begin{quote}fatal error: dbus/dbus-arch-deps.h: No such file or directory\end{quote} and you're using a x86 version of Ubuntu, use the following command in order to copy the missing \emph{dbus-arch-deps.h} file into the correct directory: (This has to be done as root! Use e.g. \emph{sudo} or \emph{su} for this task)
+In case you get the error message \begin{quote}fatal error: dbus/dbus-arch-deps.h: No such file or directory\end{quote} and you're using a x86 version of Ubuntu, use the following command in order to copy the missing \emph{dbus-arch-deps.h} file into the correct directory: (This has to be done as root. Use e.g. \emph{sudo} or \emph{su} for this task.)
 \begin{lstlisting}[language=sh]
 cp /usr/lib/i386-linux-gnu/dbus-1.0/include/dbus/dbus-arch-deps.h /usr/include/dbus-1.0/dbus
 \end{lstlisting}
@@ -64,7 +64,7 @@ cp /usr/lib/i386-linux-gnu/dbus-1.0/include/dbus/dbus-arch-deps.h /usr/include/d
 \paragraph{Compile Documentation}
 To compile the documentation, the following packages are required:
 \begin{itemize}
-\item{\emph{doxygen} (required to compile the automatic code documentation, warning: Also downloads LaTex packages which may take a while)}
+\item{\emph{doxygen} (required to compile the automatic code documentation, warning: Also downloads \LaTeX{} packages which may take a while)}
 \item{\emph{graphviz} (required to create the diagrams of the automatic code documentation)}
 \item{\emph{texlive-science} (\LaTeX{} package for compiling the documentation)}
 \end{itemize}
