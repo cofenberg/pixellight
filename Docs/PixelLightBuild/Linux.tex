@@ -7,14 +7,42 @@ To build PixelLight on Linux, use the CMake based (\url{http://www.cmake.org/}) 
 \section{Prerequisites}
 You need to install certain dependencies on your system that are needed to build PixelLight, including build tools and used development libraries.
 
-The following package list applies to the Linux distribution "Ubuntu 10.04 - Lucid Lynx". If you use another distribution, please have a look at their package repository to find out which packages you need (in most cases, the package names will not be that different).
+The following package list applies to the Linux distribution "Ubuntu 11.10 - Oneiric Ocelot". If you use another distribution, please have a look at their package repository to find out which packages you need. In most cases, the package names will not be that different, but we can't cover all Linux distributations, so we focus just on one.
 
-The following packages are required in order to be able to compile everything (Ubuntu):
+
+\paragraph{Compile Binaries}
+The following packages are required in order to be able to compile the binaries:
 \begin{itemize}
 \item{\emph{build-essential} (GNU C++ compiler and other important build tools)}
-\item{\emph{git-core} (version control)}
+\item{\emph{git} (version control)}
 \item{\emph{cmake} (build tool)}
-\item{\emph{doxygen} (required to compile the automatic code documentation)}
+\item{\emph{cmake-gui} (comfortable GUI for CMake)}
+\item{\emph{libncurses5-dev} (required by PLCore inside the \emph{PLCore::ConsoleLinux}-class)}
+\item{\emph{libxext-dev} (required by e.g. PLFrontendOS or PLGui)}
+\item{\emph{libxcursor-dev} (required by e.g. PLFrontendOS or PLGui)}
+\item{\emph{libdbus-1-dev} (required by PLInput)}
+\item{\emph{libxxf86vm-dev} (required by PLRendererOpenGL)}
+\item{\emph{libxrandr-dev} (required by PLRendererOpenGL)}
+\item{\emph{libglu1-mesa-dev} (required by PLRendererOpenGL)}
+\end{itemize}
+
+To install all required packages at once, just use: (This has to be done as root! Use e.g. \emph{sudo} or \emph{su} for this task)
+\begin{lstlisting}[language=sh]
+apt-get install build-essential git cmake cmake-gui libncurses5-dev libxext-dev libxcursor-dev libdbus-1-dev libxxf86vm-dev libxrandr-dev libglu1-mesa-dev
+\end{lstlisting}
+
+
+\paragraph{"fatal error: dbus/dbus-arch-deps.h: No such file or directory"}
+In case you get the error message \begin{quote}fatal error: dbus/dbus-arch-deps.h: No such file or directory\end{quote} and you're using a x86 version of Ubuntu, use the following command in order to copy the missing \emph{dbus-arch-deps.h} file into the correct directory: (This has to be done as root! Use e.g. \emph{sudo} or \emph{su} for this task)
+\begin{lstlisting}[language=sh]
+cp /usr/lib/i386-linux-gnu/dbus-1.0/include/dbus/dbus-arch-deps.h /usr/include/dbus-1.0/dbus
+\end{lstlisting}
+
+
+\paragraph{Compile Documentation}
+To compile the documentation, the following packages are required:
+\begin{itemize}
+\item{\emph{doxygen} (required to compile the automatic code documentation, warning: Also downloads LaTex packages which may take a while)}
 \item{\emph{graphviz} (required to create the diagrams of the automatic code documentation)}
 \item{\emph{texlive} (\LaTeX{} system for compiling the documentation)}
 \item{\emph{texlive-science} (\LaTeX{} package for compiling the documentation)}
@@ -22,22 +50,15 @@ The following packages are required in order to be able to compile everything (U
 \item{\emph{texlive-latex3} (\LaTeX{} package for compiling the documentation)}
 \item{\emph{dvipdfm} (\LaTeX{} package for compiling the documentation)}
 \item{\emph{dvipdfmx} (\LaTeX{} package for compiling the documentation)}
-\item{\emph{libncurses5-dev} (required by PLCore)}
-\item{\emph{libzip-dev} (required by libpng used by PLGraphics)}
-\item{\emph{libxcursor-dev} (required by PLGui)}
-\item{\emph{libxext-dev} (required by PLGui)}
-\item{\emph{libdbus-1-dev} (required by PLInput)}
-\item{\emph{libxxf86vm-dev} (required by PLRendererOpenGL)}
-\item{\emph{libglu1-mesa-dev} (required by PLRendererOpenGL)}
-\item{\emph{libxrandr-dev} (required by PLRendererOpenGL)}
 \end{itemize}
 
 To install all required packages at once, just use: (This has to be done as root! Use e.g. \emph{sudo} or \emph{su} for this task)
 \begin{lstlisting}[language=sh]
-apt-get install build-essential git-core cmake doxygen graphviz texlive texlive-science texlive-latex-extra texlive-latexextra texlive-latex3 dvipdfm dvipdfmx libncurses5-dev libzip-dev libxcursor-dev libxext-dev libdbus-1-dev libxxf86vm-dev libglu1-mesa-dev libxrandr-dev
+apt-get install doxygen graphviz texlive texlive-science texlive-latex-extra texlive-latexextra texlive-latex3 dvipdfm dvipdfmx
 \end{lstlisting}
-When using this single line, please ignore error messages like \begin{quote}E: Unable to locate package texlive-latexextra\end{quote}. This single line should work on as many distributations as possible, so certain packages may not be available within your distributation.
 
+
+\paragraph{Compile Using System Libraries}
 When using the \emph{maketool} flag \verb+--syslibs+, you also need the following packages:
 \begin{itemize}
 \item{\emph{libpcre3-dev} (required by PLCore)}
