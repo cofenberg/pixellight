@@ -85,7 +85,7 @@ ThreadWindows::~ThreadWindows()
 //[-------------------------------------------------------]
 //[ Private virtual ThreadImpl functions                  ]
 //[-------------------------------------------------------]
-uint32 ThreadWindows::GetID() const
+handle ThreadWindows::GetID() const
 {
 	// Return thread ID
 	return m_nThreadID;

@@ -24,13 +24,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <stdio.h>
+#include <stdlib.h>
 #ifdef WIN32
 	#include <PLCore/PLCoreWindowsIncludes.h>
-#endif
-#ifdef APPLE
-	#include <stdlib.h>
-#else
-	#include <malloc.h>
 #endif
 #ifdef LINUX
 	#include <errno.h>

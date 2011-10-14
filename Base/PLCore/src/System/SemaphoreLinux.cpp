@@ -47,11 +47,6 @@ SemaphoreLinux::SemaphoreLinux(uint32 nValue, uint32 nMaxValue) :
 	m_nMaxValue(nMaxValue),
 	m_bCreated(sem_init(&m_hSemaphore, 0, nValue) == 0)
 {
-	// [DEBUG]
-#ifdef DEBUG
-	if (!m_bCreated)
-		fprintf(stderr, "Could not create semaphore\n error code: %d(%s)", errno, strerror(errno));
-#endif
 }
 
 /**
@@ -77,20 +72,20 @@ bool SemaphoreLinux::Lock()
 
 bool SemaphoreLinux::TryLock(uint64 nTimeout)
 {
-    #ifdef APPLE
-        // There's no "sem_timedwait()"
+	#ifdef APPLE
+		// Apple doesn't provide "sem_timedwait()"
 
-        // Lock semaphore
-        return (m_bCreated && sem_wait(&m_hSemaphore) == 0);
-    #else
-        // Setup control structure
-        struct timespec timeout;
-        timeout.tv_sec  = nTimeout/1000;
-        timeout.tv_nsec = (nTimeout-timeout.tv_sec)*1000;
-    
-        // Lock semaphore
-        return (m_bCreated && sem_timedwait(&m_hSemaphore, &timeout) == 0);
-    #endif
+		// Lock semaphore
+		return (m_bCreated && sem_wait(&m_hSemaphore) == 0);
+	#else
+		// Setup control structure
+		struct timespec timeout;
+		timeout.tv_sec  = nTimeout/1000;
+		timeout.tv_nsec = (nTimeout-timeout.tv_sec)*1000;
+
+		// Lock semaphore
+		return (m_bCreated && sem_timedwait(&m_hSemaphore, &timeout) == 0);
+	#endif
 }
 
 bool SemaphoreLinux::Unlock()

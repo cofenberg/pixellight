@@ -96,7 +96,7 @@ if(APPLE)
 	# Add a handy APPLE definition (just like WIN32, LINUX and so on) 
 	set(LINUX_COMPILE_DEFS
 		${LINUX_COMPILE_DEFS}
-		APPLE								# We are using the gcc/g++ compiler
+		APPLE							# We are using the gcc/g++ compiler
 	)
 endif()
 

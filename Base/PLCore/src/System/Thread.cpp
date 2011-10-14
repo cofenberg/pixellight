@@ -165,7 +165,7 @@ void Thread::SetName(const String &sName)
 *  @brief
 *    Returns the unique system ID of the thread
 */
-uint32 Thread::GetID() const
+handle Thread::GetID() const
 {
 	// Call system implementation
 	return m_pThreadImpl->GetID();

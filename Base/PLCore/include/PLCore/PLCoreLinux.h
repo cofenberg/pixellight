@@ -159,26 +159,25 @@
 namespace PLCore {
 
 
-	typedef char				int8;
-	typedef unsigned char		uint8;
+	typedef char					int8;
+	typedef unsigned char			uint8;
 
-	typedef short				int16;
-	typedef unsigned short		uint16;
+	typedef short					int16;
+	typedef unsigned short			uint16;
 
-	typedef int					int32;
-	typedef unsigned int		uint32;
+	typedef int						int32;
+	typedef unsigned int			uint32;
 
-	typedef int64_t 			int64;
-	typedef uint64_t			uint64;
+	typedef int64_t 				int64;
+	typedef uint64_t				uint64;
 
-	// [TODO] Check this
-	#ifdef APPLE
-		typedef uint64_t		uint_ptr;
+	#if X64_ARCHITECTURE
+		typedef unsigned __int64	uint_ptr;
+		typedef unsigned __int64	handle;
 	#else
-		typedef size_t			uint_ptr;
+		typedef unsigned __int32	uint_ptr;
+		typedef unsigned __int32	handle;
 	#endif
-
-	typedef unsigned long		handle;
 
 
 }

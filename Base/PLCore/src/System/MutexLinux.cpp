@@ -67,11 +67,13 @@ bool MutexLinux::Lock()
 
 bool MutexLinux::TryLock(uint64 nTimeout)
 {
-    #if (ANDROID || APPLE)
+	#if (ANDROID || APPLE)
 		// There's no implementation of "pthread_mutex_timedlock()" within the Android NDK, even
 		// if the function is listed within the headers. Depending on the API level, it's defined
 		// out, meaning no compiler error when using API level 8, but a compiler error when using API
 		// level 9 (some sources stating this is an error within the shipped "pthread.h"-header).
+
+		// Apple has no "pthread_mutex_lock()", too
 
 		// Lock mutex - just use the version without timeout :/
 		return !pthread_mutex_lock(&m_sMutex);

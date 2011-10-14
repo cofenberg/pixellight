@@ -31,12 +31,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <string.h>
-#ifdef APPLE
-    #include <stdlib.h>
-#else
-    #include <malloc.h>
-#endif
+#include <stdlib.h>	// For "realloc()", "malloc()" and "free()"
+#include <string.h>	// For "memcpy()", "memset()" and "memcmp()"
 #include "PLCore/Core/MemoryManager.h"
 
 

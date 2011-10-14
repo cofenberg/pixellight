@@ -100,7 +100,7 @@ class ThreadImpl {
 		*  @return
 		*    Thread ID
 		*/
-		virtual uint32 GetID() const = 0;
+		virtual handle GetID() const = 0;
 
 		/**
 		*  @brief

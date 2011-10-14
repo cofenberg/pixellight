@@ -1,3 +1,15 @@
+>> 14.10.2011
+[CO]
+- The extern template related changes I did yesterday solved my linker issue on Mac OS X. It turns out that on the Linux port, the extern
+  template usage was not correct and caused multiple template instances all over PLCore. Tested it on Linux and Mac OS X as well as Windows, no
+  more issues. :D
+- New platform, new data type issues: "handle" was defined by using "unsigned long" on Linux and "unsigned int" on MS Windows. Now it's
+  "unsigned __int32" on 32 bit, "unsigned __int64" on 64 bit, on all platforms. I hope this is causing less issues across multiple platforms and
+  bit sizes.
+- "Thread::GetID()" now returns "handle" instead of "uint32" (e.g. on MS Windows, "HANDLE" is a pointer... so 32 bit might not do the job)
+
+
+
 >> 13.10.2011
 [CO]
 - When linking PLCore on Mac OS X, the linker complains about multiple symbols for "Singleton<Log>" and fails to link.

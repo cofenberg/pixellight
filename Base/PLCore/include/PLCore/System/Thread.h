@@ -180,7 +180,7 @@ class Thread : public ThreadFunction {
 		*  @return
 		*    Thread ID
 		*/
-		PLCORE_API uint32 GetID() const;
+		PLCORE_API handle GetID() const;
 
 		/**
 		*  @brief

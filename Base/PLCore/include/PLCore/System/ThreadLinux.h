@@ -93,7 +93,7 @@ class ThreadLinux : public ThreadImpl {
 	//[ Private virtual ThreadImpl functions                  ]
 	//[-------------------------------------------------------]
 	private:
-		virtual uint32 GetID() const override;
+		virtual handle GetID() const override;
 		virtual bool IsActive() const override;
 		virtual bool Start() override;
 		virtual bool Terminate() override;

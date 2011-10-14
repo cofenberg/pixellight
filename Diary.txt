@@ -14,7 +14,7 @@
 - Another Apple day. Luckily there are build instructions available explaining how to compile GCC 4.6 on Mac OS X. Took ages to compile on the "Mac Mini".
   Used the time to get more familiar with the Mac OS X system. Did some Xcode configuration so that it's usable, found a reasonable Git GUI client called
   "GitX"... and started to no longer click on the not existing right mouse button. *g*
-  As mentioned, when using the terminal, one can reuse the Linux knowledge. Compiling libz and libpcre was therefore quite simle, "configure" & "make" and
+  As mentioned, when using the terminal, one can reuse the Linux knowledge. Compiling libz and libpcre was therefore quite simple, "configure" & "make" and
   it's done.
 
 

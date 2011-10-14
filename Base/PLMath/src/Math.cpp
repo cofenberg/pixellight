@@ -32,14 +32,13 @@
 //[-------------------------------------------------------]
 //[ OS definitions                                        ]
 //[-------------------------------------------------------]
+// The 'standard libraries' are not really 'standardized' over all platforms :(
 #ifdef APPLE
-	// The 'standard libraries' are not really 'standardized' over all platforms :(
-	#define _isnan isnan
-	#define _finite isfinite
+	#define _isnan	isnan
+	#define _finite	isfinite
 #elif LINUX
-	// The 'standard libraries' are not really 'standardized' over all platforms :(
-	#define _isnan isnan
-	#define _finite finite
+	#define _isnan	isnan
+	#define _finite	finite
 #endif
 
 

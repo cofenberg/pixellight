@@ -54,7 +54,6 @@
 #undef PSize
 #undef Success
 
-
 // Missing OpenGL definitions
 #ifndef GL_ATI_texture_compression_3dc
 	#define GL_ATI_texture_compression_3dc			1
