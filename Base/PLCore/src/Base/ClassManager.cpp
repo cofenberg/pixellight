@@ -410,7 +410,7 @@ ClassManager::~ClassManager()
 		const Module *pModule = cModuleIterator.Next();
 
 		// At this point, all real class instances may already have been destroyed automatically by the RTTI system (see "pl_class" -> "__pl_guard")
-		// ... so, technically only the dummy classes should be left...  but due to the random static de-initialization order we can't be sure...
+		// ... so, one might think that only the dummy classes should be left in here... but due to the random static de-initialization order we can't be sure...
 
 		{ // Remove all classes from that module
 			// Get list of classes (make a copy!)

@@ -66,10 +66,10 @@ class Type<PLGui::SizeHint> {
 		}
 
 		// Convert var to PLGui::SizeHint
-		static PLGui::SizeHint ConvertFromVar(const DynVar *pVar)
+		static PLGui::SizeHint ConvertFromVar(const DynVar &cVar)
 		{
 			PLGui::SizeHint cSize;
-			cSize.FromString(pVar->GetString());
+			cSize.FromString(cVar.GetString());
 			return cSize;
 		}
 
