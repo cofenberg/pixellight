@@ -409,8 +409,8 @@ ClassManager::~ClassManager()
 		// Get module
 		const Module *pModule = cModuleIterator.Next();
 
-		// At this point, all real class instances should already have been destroyed automatically by the RTTI system (see "pl_class" -> "__pl_guard")
-		// ... so, technically only the dummy classes should be left...
+		// At this point, all real class instances may already have been destroyed automatically by the RTTI system (see "pl_class" -> "__pl_guard")
+		// ... so, technically only the dummy classes should be left...  but due to the random static de-initialization order we can't be sure...
 
 		{ // Remove all classes from that module
 			// Get list of classes (make a copy!)
@@ -421,12 +421,6 @@ ClassManager::~ClassManager()
 			while (cClassIterator.HasNext()) {
 				// Get the class implementation
 				ClassImpl *pClassImpl = const_cast<Class*>(cClassIterator.Next())->m_pClassImpl;
-
-				// Is it a real class implementation?
-				if (!pClassImpl->IsDummy()) {
-					// Write an error into the log (if it still exists...) because there shouldn't be any classes left in here
-					PL_LOG(Error, "Class '" + pClassImpl->GetName() + "' [module '" + pModule->GetName() + "']: Failed to unregister the class automatically, maybe there's no \"pl_implement_class\" within the class implementation?")
-				}
 
 				// Unregister the class
 				UnregisterClass(pModule->GetModuleID(), pClassImpl);
