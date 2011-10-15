@@ -93,7 +93,7 @@ class ObjectBase {
 		*    Get class
 		*
 		*  @return
-		*    Class of the object (should never be a null pointer, unless something is *terribly* wrong ;-) )
+		*    Class of the object (do not destroy the returned instance, should never be a null pointer, unless something is *terribly* wrong ;-) )
 		*/
 		PLCORE_API virtual Class *GetClass() const;
 
@@ -114,14 +114,14 @@ class Object : public ObjectBase {
 	pl_class_internal(PLCORE_RTTI_EXPORT, Object, "PLCore", /* No base class */, "Object base class")
 		#ifdef PLCORE_EXPORTS	// The following is only required when compiling PLCore
 			// Methods
-			pl_method_1(IsInstanceOf,			pl_ret_type(bool),				const String&,					"Check if object is instance of a given class. Class name (with namespace) as first parameter. Returns 'true' if the object is an instance of the class or one of it's derived classes, else 'false'.",	"")
-			pl_method_2(SetAttribute,			pl_ret_type(void),				const String&,	const String&,	"Set attribute value. Attribute name as first parameter, attribute value as second parameter.",																											"")
-			pl_method_1(SetAttributeDefault,	pl_ret_type(void),				const String&,					"Set attribute to it's default value. Attribute name as first parameter.",																																"")
-			pl_method_2(CallMethod,				pl_ret_type(void),				const String&,	const String&,	"Call method. Method name as first parameter, parameters as string (e.g. \"Param0='x' Param1='y'\") as second parameter.",																				"")
-			pl_method_1(SetValues,				pl_ret_type(void),				const String&,					"Set multiple attribute values as a string at once. String containing attributes and values as first parameter (e.g. \"Name='Bob' Position='1 2 3'\").",												"")
-			pl_method_0(SetDefaultValues,		pl_ret_type(void),												"Set all attributes to default.",																																										"")
-			pl_method_0(ToString,				pl_ret_type(String),											"Get the object as string. Returns string representation of object.",																																	"")
-			pl_method_1(FromString,				pl_ret_type(void),				const String&,					"Set the object from string. String representation of object as first parameter.",																														"")
+			pl_method_1(IsInstanceOf,			pl_ret_type(bool),		const String&,					"Check if object is instance of a given class. Class name (with namespace) as first parameter. Returns 'true' if the object is an instance of the class or one of it's derived classes, else 'false'.",	"")
+			pl_method_2(SetAttribute,			pl_ret_type(void),		const String&,	const String&,	"Set attribute value. Attribute name as first parameter, attribute value as second parameter.",																											"")
+			pl_method_1(SetAttributeDefault,	pl_ret_type(void),		const String&,					"Set attribute to it's default value. Attribute name as first parameter.",																																"")
+			pl_method_2(CallMethod,				pl_ret_type(void),		const String&,	const String&,	"Call method. Method name as first parameter, parameters as string (e.g. \"Param0='x' Param1='y'\") as second parameter.",																				"")
+			pl_method_1(SetValues,				pl_ret_type(void),		const String&,					"Set multiple attribute values as a string at once. String containing attributes and values as first parameter (e.g. \"Name='Bob' Position='1 2 3'\").",												"")
+			pl_method_0(SetDefaultValues,		pl_ret_type(void),										"Set all attributes to default.",																																										"")
+			pl_method_0(ToString,				pl_ret_type(String),									"Get the object as string. Returns string representation of object.",																																	"")
+			pl_method_1(FromString,				pl_ret_type(void),		const String&,					"Set the object from string. String representation of object as first parameter.",																														"")
 		#endif
 	pl_class_end
 
@@ -174,7 +174,7 @@ class Object : public ObjectBase {
 		*    Get attributes
 		*
 		*  @return
-		*    List of attributes
+		*    List of attributes (do not destroy the returned attribute instances)
 		*
 		*  @remarks
 		*    Use this function with caution, as the list is assembled and copied each time the function is called!
@@ -191,7 +191,7 @@ class Object : public ObjectBase {
 		*    Attribute name
 		*
 		*  @return
-		*    Attribute (can be a null pointer, if no attribute with that name could be found)
+		*    Attribute (do not destroy the returned instance, can be a null pointer, if no attribute with that name could be found)
 		*/
 		PLCORE_API DynVar *GetAttribute(const String &sName) const;
 
@@ -200,7 +200,7 @@ class Object : public ObjectBase {
 		*    Get callable methods
 		*
 		*  @param[out] lstMethods
-		*    Receives the list of callable methods, the given list is not cleared before new entries are added
+		*    Receives the list of callable methods, the given list is not cleared before new entries are added (do not destroy the returned instances)
 		*
 		*  @remarks
 		*    Performance warning: Use this function with caution, as the list is assembled and callable method
@@ -217,7 +217,7 @@ class Object : public ObjectBase {
 		*    Method name
 		*
 		*  @return
-		*    Callable method (can be a null pointer, if no method with that name could be found)
+		*    Callable method (do not destroy the returned instance, can be a null pointer, if no method with that name could be found)
 		*
 		*  @remarks
 		*    Performance warning: Use this function with caution, as the callable method instance is
@@ -231,7 +231,7 @@ class Object : public ObjectBase {
 		*    Get signals
 		*
 		*  @return
-		*    List of signals
+		*    List of signals (do not destroy the returned instances)
 		*
 		*  @remarks
 		*    Use this function with caution, as the list is assembled and copied each time the function is called!
@@ -248,7 +248,7 @@ class Object : public ObjectBase {
 		*    Signal name
 		*
 		*  @return
-		*    Signal (can be a null pointer, if no signal with that name could be found)
+		*    Signal (do not destroy the returned instance, can be a null pointer, if no signal with that name could be found)
 		*/
 		PLCORE_API DynEvent *GetSignal(const String &sName) const;
 
@@ -257,7 +257,7 @@ class Object : public ObjectBase {
 		*    Get slots
 		*
 		*  @return
-		*    List of slots
+		*    List of slots (do not destroy the returned instances)
 		*
 		*  @remarks
 		*    Use this function with caution, as the list is assembled and copied each time the function is called!
@@ -274,7 +274,7 @@ class Object : public ObjectBase {
 		*    Slot name
 		*
 		*  @return
-		*    Slot (can be a null pointer, if no slot with that name could be found)
+		*    Slot (do not destroy the returned instance, can be a null pointer, if no slot with that name could be found)
 		*/
 		PLCORE_API DynEventHandler *GetSlot(const String &sName) const;
 
@@ -298,10 +298,10 @@ class Object : public ObjectBase {
 		*
 		*  @param[in] sName
 		*    Attribute name
-		*  @param[in] pVar
+		*  @param[in] cVar
 		*    Attribute value
 		*/
-		PLCORE_API void SetAttribute(const String &sName, const DynVar *pVar);
+		PLCORE_API void SetAttribute(const String &sName, const DynVar &cVar);
 
 		/**
 		*  @brief

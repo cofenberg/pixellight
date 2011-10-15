@@ -66,9 +66,9 @@ class Type<PLGraphics::Color3> {
 		}
 
 		// Convert var to PLGraphics::Color3
-		static PLGraphics::Color3 ConvertFromVar(const DynVar *pVar)
+		static PLGraphics::Color3 ConvertFromVar(const DynVar &cVar)
 		{
-			const float fValue = pVar->GetFloat();
+			const float fValue = cVar.GetFloat();
 			return PLGraphics::Color3(fValue, fValue, fValue);
 		}
 

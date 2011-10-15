@@ -130,7 +130,7 @@ String DynVar::GetDefault() const
 *  @brief
 *    Set value
 */
-void DynVar::SetVar(const DynVar *pValue)
+void DynVar::SetVar(const DynVar &cValue)
 {
 	// No data
 }

@@ -60,9 +60,9 @@ class Type<Object*> {
 		}
 
 		// Convert var to pointer
-		static Object *ConvertFromVar(const DynVar *pValue)
+		static Object *ConvertFromVar(const DynVar &cValue)
 		{
-			return reinterpret_cast<Object*>(pValue->GetUIntPtr());
+			return reinterpret_cast<Object*>(cValue.GetUIntPtr());
 		}
 
 		// Convert pointer to bool

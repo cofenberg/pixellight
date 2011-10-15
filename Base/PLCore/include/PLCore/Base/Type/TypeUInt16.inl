@@ -54,9 +54,9 @@ class Type<uint16> {
 		}
 
 		// Convert var to uint16
-		static uint16 ConvertFromVar(const DynVar *pValue)
+		static uint16 ConvertFromVar(const DynVar &cValue)
 		{
-			return pValue->GetUInt16();
+			return cValue.GetUInt16();
 		}
 
 		// Convert uint16 to bool

@@ -54,9 +54,9 @@ class Type<int> {
 		}
 
 		// Convert var to int
-		static int ConvertFromVar(const DynVar *pValue)
+		static int ConvertFromVar(const DynVar &cValue)
 		{
-			return pValue->GetInt();
+			return cValue.GetInt();
 		}
 
 		// Convert int to bool

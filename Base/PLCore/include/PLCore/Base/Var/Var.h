@@ -220,9 +220,9 @@ class Var : public DynVar {
 			return Type<T>::ConvertToString(m_Value.GetDefault());
 		}
 
-		virtual void SetVar(const DynVar *pValue) override
+		virtual void SetVar(const DynVar &cValue) override
 		{
-			m_Value.Set(Type<T>::ConvertFromVar(pValue));
+			m_Value.Set(Type<T>::ConvertFromVar(cValue));
 		}
 
 		virtual bool GetBool() const override

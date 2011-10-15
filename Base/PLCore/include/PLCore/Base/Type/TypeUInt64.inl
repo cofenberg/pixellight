@@ -54,9 +54,9 @@ class Type<uint64> {
 		}
 
 		// Convert var to uint64
-		static uint64 ConvertFromVar(const DynVar *pValue)
+		static uint64 ConvertFromVar(const DynVar &cValue)
 		{
-			return pValue->GetUInt64();
+			return cValue.GetUInt64();
 		}
 
 		// Convert uint64 to bool

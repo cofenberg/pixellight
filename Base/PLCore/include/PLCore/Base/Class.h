@@ -84,7 +84,7 @@ class Class {
 		*    Get module the class belongs to
 		*
 		*  @return
-		*    Module (always valid, do NOT destroy the returned instance!)
+		*    Module (always valid, do not destroy the returned instance!)
 		*/
 		PLCORE_API const Module *GetModule() const;
 
@@ -138,7 +138,7 @@ class Class {
 		*    Get base class
 		*
 		*  @return
-		*    Pointer to base class (can be a null pointer, do NOT destroy the returned instance!)
+		*    Pointer to base class (can be a null pointer, do not destroy the returned instance!)
 		*/
 		PLCORE_API const Class *GetBaseClass() const;
 
@@ -171,7 +171,7 @@ class Class {
 		*    Get derived classes
 		*
 		*  @return
-		*    List of derived classes, do NOT destroy the returned instances!
+		*    List of derived classes, do not destroy the returned instances!
 		*
 		*  @remarks
 		*    This method always returns all sub-classes of a class.
@@ -200,7 +200,7 @@ class Class {
 		*    Get attributes
 		*
 		*  @return
-		*    List of attribute descriptors, do NOT destroy the returned instances!
+		*    List of attribute descriptors, do not destroy the returned instances!
 		*/
 		PLCORE_API const List<VarDesc*> &GetAttributes() const;
 
@@ -212,7 +212,7 @@ class Class {
 		*    Attribute name
 		*
 		*  @return
-		*    Attribute descriptor (can be a null pointer, if no member with that name could be found, do NOT destroy the returned instance!)
+		*    Attribute descriptor (can be a null pointer, if no member with that name could be found, do not destroy the returned instance!)
 		*/
 		PLCORE_API const VarDesc *GetAttribute(const String &sName) const;
 
@@ -221,7 +221,7 @@ class Class {
 		*    Get methods
 		*
 		*  @return
-		*    List of method descriptors, do NOT destroy the returned instances!
+		*    List of method descriptors, do not destroy the returned instances!
 		*/
 		PLCORE_API const List<FuncDesc*> &GetMethods() const;
 
@@ -233,7 +233,7 @@ class Class {
 		*    Method name
 		*
 		*  @return
-		*    Method descriptor (can be a null pointer, if no member with that name could be found, do NOT destroy the returned instance!)
+		*    Method descriptor (can be a null pointer, if no member with that name could be found, do not destroy the returned instance!)
 		*/
 		PLCORE_API const FuncDesc *GetMethod(const String &sName) const;
 
@@ -242,7 +242,7 @@ class Class {
 		*    Get signals
 		*
 		*  @return
-		*    List of signal descriptors, do NOT destroy the returned instances!
+		*    List of signal descriptors, do not destroy the returned instances!
 		*/
 		PLCORE_API const List<EventDesc*> &GetSignals() const;
 
@@ -254,7 +254,7 @@ class Class {
 		*    Signal name
 		*
 		*  @return
-		*    Signal descriptor (can be a null pointer, if no member with that name could be found, do NOT destroy the returned instance!)
+		*    Signal descriptor (can be a null pointer, if no member with that name could be found, do not destroy the returned instance!)
 		*/
 		PLCORE_API const EventDesc *GetSignal(const String &sName) const;
 
@@ -263,7 +263,7 @@ class Class {
 		*    Get slot
 		*
 		*  @return
-		*    List of slot descriptors, do NOT destroy the returned instances!
+		*    List of slot descriptors, do not destroy the returned instances!
 		*/
 		PLCORE_API const List<EventHandlerDesc*> &GetSlots() const;
 
@@ -275,7 +275,7 @@ class Class {
 		*    Slot name
 		*
 		*  @return
-		*    Slot descriptor (can be a null pointer, if no member with that name could be found, do NOT destroy the returned instance!)
+		*    Slot descriptor (can be a null pointer, if no member with that name could be found, do not destroy the returned instance!)
 		*/
 		PLCORE_API const EventHandlerDesc *GetSlot(const String &sName) const;
 
@@ -302,7 +302,7 @@ class Class {
 		*    Get constructors
 		*
 		*  @return
-		*    List of constructor descriptors, do NOT destroy the returned instances!
+		*    List of constructor descriptors, do not destroy the returned instances!
 		*/
 		PLCORE_API const List<ConstructorDesc*> &GetConstructors() const;
 
@@ -314,7 +314,7 @@ class Class {
 		*    Constructor name
 		*
 		*  @return
-		*    Constructor descriptor (can be a null pointer, if no member with that name could be found, do NOT destroy the returned instance!)
+		*    Constructor descriptor (can be a null pointer, if no member with that name could be found, do not destroy the returned instance!)
 		*/
 		PLCORE_API const ConstructorDesc *GetConstructor(const String &sName) const;
 

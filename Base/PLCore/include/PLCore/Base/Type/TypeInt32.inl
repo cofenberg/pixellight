@@ -54,9 +54,9 @@ class Type<int32> {
 		}
 
 		// Convert var to int32
-		static int32 ConvertFromVar(const DynVar *pValue)
+		static int32 ConvertFromVar(const DynVar &cValue)
 		{
-			return pValue->GetInt32();
+			return cValue.GetInt32();
 		}
 
 		// Convert int32 to bool

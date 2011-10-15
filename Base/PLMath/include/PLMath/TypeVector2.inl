@@ -66,9 +66,9 @@ class Type<PLMath::Vector2> {
 		}
 
 		// Convert var to PLMath::Vector2
-		static PLMath::Vector2 ConvertFromVar(const DynVar *pVar)
+		static PLMath::Vector2 ConvertFromVar(const DynVar &cVar)
 		{
-			const float fValue = pVar->GetFloat();
+			const float fValue = cVar.GetFloat();
 			return PLMath::Vector2(fValue, fValue);
 		}
 
