@@ -240,10 +240,6 @@ bool Script::SetSourceCode(const String &sSourceCode)
 		// Create the Lua state
 		m_pLuaState = lua_open();
 		if (m_pLuaState) {
-			// [TODO] Check this
-			// Setup Lua memory allocation
-	//		lua_setallocf(m_pLuaState, Script::LuaMemoryAllocation, nullptr);
-
 			// Open all standard Lua libraries into the given state
 			luaL_openlibs(m_pLuaState);
 
@@ -1027,20 +1023,6 @@ Object &Script::GetReturn(Object &nValue)
 //[-------------------------------------------------------]
 //[ Private static Lua callback functions                 ]
 //[-------------------------------------------------------]
-/*
-*  @brief
-*    Lua memory allocation
-*/
-void *Script::LuaMemoryAllocation(void *pUserData, void *pPointer, size_t nOriginalBlockSize, size_t nNewBlockSize)
-{
-	if (nNewBlockSize) {
-		return MemoryManager::Reallocator(pPointer, nNewBlockSize);
-	} else {
-		delete [] pPointer;
-		return nullptr;
-	}
-}
-
 /*
 *  @brief
 *    Lua function callback

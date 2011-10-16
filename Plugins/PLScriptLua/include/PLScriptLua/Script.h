@@ -180,24 +180,6 @@ class Script : public PLCore::Script {
 	private:
 		/*
 		*  @brief
-		*    Lua memory allocation
-		*
-		*  @param[in] pUserData
-		*    User data
-		*  @param[in] pPointer
-		*    A pointer to the block being allocated/reallocated/freed
-		*  @param[in] nOriginalBlockSize
-		*    The original size of the block
-		*  @param[in] nNewBlockSize
-		*    The new size of the block
-		*
-		*  @return
-		*    Pointer to the allocated memory, can be a null pointer
-		*/
-		static void *LuaMemoryAllocation(void *pUserData, void *pPointer, size_t nOriginalBlockSize, size_t nNewBlockSize);
-
-		/*
-		*  @brief
 		*    Lua function callback
 		*
 		*  @param[in] pLuaState
