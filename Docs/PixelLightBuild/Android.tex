@@ -7,6 +7,8 @@ Warning: We noticed several issues when using the \ac{NDK} under MS Windows (tes
 \item{Performance issues, the build process is slow, really slow}
 \end{itemize}
 
+In case you never ever did native Android development before, you may have a look at the appendix~\ref{Appendix:AndroidNativeBuildTutorial}, first.
+
 
 
 
@@ -17,10 +19,6 @@ Warning: We noticed several issues when using the \ac{NDK} under MS Windows (tes
 \end{itemize}
 
 Install the usual Android development tools (the following versions are those used when writing this documentation, other versions may work as well)
-
-
-\paragraph{\ac{JDK} and \ac{JRE}}
-Required for the Android build, not for PixelLight itself.
 
 
 \paragraph{Android \ac{SDK} (\emph{r12})}
@@ -70,6 +68,7 @@ cmake.exe -G"Unix Makefiles" -DCMAKE\_MAKE\_PROGRAM="<PixelLight root path>/cmak
 
 
 \section{Create Makefiles and Build}
+\label{Android:CreateMakefilesAndBuild}
 Here's how to compile PixelLight by using the CMake-\ac{GUI}:
 \begin{itemize}
 \item{Ensure "make" (GNU make utility to maintain groups of programs) can be found by CMake (add for instance "\textless PixelLight root path\textgreater /cmake/UsedTools/make" to the MS Windows \emph{PATH} environment variable)}
@@ -88,3 +87,157 @@ Here's how to compile PixelLight by using the CMake-\ac{GUI}:
 \item{Type "make" (example: "make -j 4 -k" will use four \ac{CPU} cores and will keep on going when there are errors)}
 \item{(You now should have the ready to be used Android shared library files)}
 \end{itemize}
+
+
+
+
+\section{Using the Android Port}
+The content within this section was tested using "Ubuntu 11.10 - Oneiric Ocelot". Just mentioned the used versions for saftly, other, newer versions may probably work as well. Usually, the build PixelLight version for Android can't be used in the same way as a version build for the host system like Linux. That's the reason this section, showing how to get a PixelLight sample onto your Android device, exists.
+
+
+\paragraph{\ac{JDK} and \ac{JRE}}
+The following is required for building Android \ac{APK}-files.
+\begin{itemize}
+\item{Install \ac{JDK} ("\textbf{sudo apt-get install default-jdk}") and \ac{JRE} ("\textbf{sudo apt-get install default-jre}")}
+\item{Install "ant" ("\textbf{sudo apt-get install ant}"), required to create the \ac{APK} files}
+\end{itemize}
+To install all packages at once, just use: 
+\begin{lstlisting}[language=sh]
+apt-get install default-jdk default-jre ant
+\end{lstlisting}
+
+
+\paragraph{Files Overview}
+Content of the \emph{project}-directory (name it e.g. \emph{PixelLightAndroid}):
+\begin{itemize}
+\item{FindPixelLight.cmake}
+\item{CMakeLists.txt}
+\item{\emph{src}-directory}
+\end{itemize}
+Content of the \emph{src}-directory:
+\begin{itemize}
+\item{AndroidMain.cpp}
+\item{CMakeLists.txt}
+\end{itemize}
+
+
+\paragraph{FindPixelLight.cmake}
+Wthin the \emph{<PixelLight root path>/Tools} directory is a CMake file named \emph{FindPixelLight.cmake}. This section is using this script file and assumes that it just has been copied into your project directory. It's kind of a link to PixelLight. Have a look at the appendix~\ref{Appendix:FindPixelLight} for more information about this script.
+
+
+\paragraph{CMakeLists.txt within Project Directory}
+Here's an example for a simple \emph{CMakeLists.txt} file within your project directory:
+\begin{lstlisting}[language=sh]
+cmake_minimum_required(VERSION 2.8.3)
+
+# Add the directory this "CMakeLists.txt" file is in as CMake module path in order to make it possible to find "FindPixelLight.cmake"
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR})
+
+# Define the project, use the current directory name as project name
+get_filename_component(CURRENT_TARGET_NAME ${CMAKE_CURRENT_LIST_DIR} NAME_WE)
+project(${CURRENT_TARGET_NAME})
+
+# Add the source code directory
+add_subdirectory(src)
+\end{lstlisting}
+
+
+\paragraph{AndroidMain.cpp}
+Here's an example for a simple \emph{AndroidMain.cpp} file within your project source code directory:
+\begin{lstlisting}[]
+#include <PLFrontendOS/FrontendAndroid.h>
+
+/**
+*  @brief
+*    Program entry point
+*
+*  @remarks
+*    This is the main entry point of a native application that is using
+*    android_native_app_glue. It runs in its own thread, with its own
+*    event loop for receiving input events and doing other things.
+*/
+void android_main(struct android_app* state)
+{
+	// Make sure glue isn't stripped
+	app_dummy();
+
+	// Create a frontend instance on the C runtime stack
+	PLFrontendOS::FrontendAndroid cFrontendAndroid(*state);
+
+	// Finish the given activity
+	ANativeActivity_finish(state->activity);
+}
+\end{lstlisting}
+
+
+\paragraph{CMakeLists.txt within Project Source Code Directory}
+Here's an example for a simple \emph{CMakeLists.txt} file within your project source code directory:
+\begin{lstlisting}[language=sh]
+cmake_minimum_required(VERSION 2.8.3)
+
+# Find packages
+find_host_package(PixelLight)	# "find_package"-variant provided by "android.toolchain.cmake", required for PixelLight CMake variables like "PL_PLCORE_INCLUDE_DIR"
+
+# Includes
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})					# The current source directory
+include_directories(${ANDROID_NDK}/sources/android/native_app_glue)	# For the "android_native_app_glue.h"-header include
+include_directories(${PL_PLCORE_INCLUDE_DIR})						# PLCore headers
+include_directories(${PL_PLFRONTENDOS_INCLUDE_DIR})					# PLFrontendOS headers
+
+# Source codes
+set(CURRENT_SRC
+	${ANDROID_NDK}/sources/android/native_app_glue/android_native_app_glue.c
+	AndroidMain.cpp
+)
+
+# Shared libraries
+set(CURRENT_SHARED_LIBRARIES
+	# Base
+	${PL_PLCORE_LIBRARY}
+	${PL_PLMATH_LIBRARY}
+	${PL_PLGRAPHICS_LIBRARY}
+	${PL_PLINPUT_LIBRARY}
+	${PL_PLRENDERER_LIBRARY}
+	${PL_PLMESH_LIBRARY}
+	${PL_PLSCENE_LIBRARY}
+	${PL_PLPHYSICS_LIBRARY}
+	${PL_PLENGINE_LIBRARY}
+	# Plugins
+	${PL_PLFRONTENDOS_LIBRARY}			# The PixelLight Android frontend
+	${PL_PLRENDEREROPENGLES2_LIBRARY}
+	${PL_PLCOMPOSITING_LIBRARY}
+	# Application
+	"${PL_SAMPLES_BIN_DIR}/lib60Scene.so"
+)
+
+# Assets
+set(CURRENT_ASSETS
+	"${PL_RUNTIME_DATA_DIR}/Standard.zip"
+	"${PL_SAMPLES_DATA_DIR}/*.*"		# Copy all sample data
+)
+
+# Build
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -ffor-scope -fno-rtti -fno-exceptions -pipe -ffunction-sections -fdata-sections -ffast-math -Wnon-virtual-dtor -Wreorder -Wsign-promo -fvisibility=hidden -fvisibility-inlines-hidden -Wstrict-null-sentinel -Os -funroll-all-loops -fpeel-loops -ftree-vectorize")
+set(LINKER_FLAGS "${LINKER_FLAGS} -Wl,--as-needed -Wl,--gc-sections -Wl,--no-undefined -Wl,--strip-all -Wl,-rpath-link=${ANDROID_NDK_SYSROOT}/usr/lib/ -L${ANDROID_NDK_SYSROOT}/usr/lib/")
+add_library(${CURRENT_TARGET_NAME} SHARED ${CURRENT_SRC})
+target_link_libraries(${CURRENT_TARGET_NAME} log android ${CURRENT_SHARED_LIBRARIES})
+set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES COMPILE_DEFINITIONS "__STDC_INT64__;LINUX;ANDROID")	# PLCore needs the preprocessor definitions "LINUX" and "ANDROID"
+
+# Post build
+
+# Copy the build shared library as well
+set(CURRENT_SHARED_LIBRARIES
+	${CURRENT_SHARED_LIBRARIES}
+	"${CMAKE_BINARY_DIR}/libs/${ARM_TARGET}/lib${CURRENT_TARGET_NAME}.so"
+)
+
+# Create Android apk file (macro from "<PixelLight>/cmake/Android/Apk.cmake")
+android_create_apk("${CURRENT_TARGET_NAME}" "${CMAKE_BINARY_DIR}/apk" "${CURRENT_SHARED_LIBRARIES}" "${CURRENT_ASSETS}" "Data")
+\end{lstlisting}
+
+
+\paragraph{Build}
+The build process for this project is the same as descriped within section~\ref{Android:CreateMakefilesAndBuild}, except that the standalone toolchain \emph{<PixelLight root path>/cmake/Android/android.toolchain.cmake} instead of \emph{<PixelLight root path>/cmake/Toolchains/Toolchain-ndk.cmake} is used. By using the provided macro \emph{android_create_apk()}, the project is automatically packed into an \ac{APK}-file, installed on our device and started at once.
+
+At first, this may look a lot - but you usually need to do write this only once per project. During the development you just have to type \emph{make} in order to let your project run on the Android device, without doing everything manually as descriped within appendix~\ref{Appendix:AndroidNativeBuildTutorial} over and over again.
+

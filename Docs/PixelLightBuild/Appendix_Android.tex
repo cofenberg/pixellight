@@ -1,4 +1,5 @@
 \chapter{Android Native Build Tutorial}
+\label{Appendix:AndroidNativeBuildTutorial}
 During the implementation of the Android port, a lot of notices were written down. Although there's couple of information about how to do native Android development available, it's often out-of-date, confusing or just not working. A lot of trivial looking information had also be figured out in many frustrating hours of work. So, because there were already a lot of notices written down and the possibility is high that someone using PixelLight for native Android development is requiring the same or quite similar information, those notices were put into this appendix in a revised form.
 
 The good news is, when you build PixelLight for Android, you don't really need to know everything written down in here. The process is heavily automated by using CMake scripts. In case you just find this appendix, unnecessary or you hate spoilers and want to figure out all by yourself, ignore this appendix. For all others, this information in here is hopefully useful for you for the first steps in native Android development without the automated CMake build system PixelLight is using.
@@ -14,11 +15,14 @@ The tutorial is written in brief sentences to keep it compact. But this doesn't 
 
 \section{Prerequisites}
 \begin{itemize}
-\item{Used \ac{OS}: "Ubuntu 11.04" (just mentioned the used versions for saftly, other, newer versions may probably work as well)}
+\item{Used \ac{OS}: "Ubuntu 11.10 - Oneiric Ocelot" (just mentioned the used versions for saftly, other, newer versions may probably work as well)}
 \item{Install \ac{JDK} ("\textbf{sudo apt-get install default-jdk}") and \ac{JRE} ("\textbf{sudo apt-get install default-jre}")}
 \item{Install "ant" ("\textbf{sudo apt-get install ant}"), required to create the \ac{APK} files}
 \end{itemize}
-
+To install all packages at once, just use: 
+\begin{lstlisting}[language=sh]
+apt-get install default-jdk default-jre ant
+\end{lstlisting}
 
 
 \paragraph{Install \ac{NDK}}
@@ -26,7 +30,6 @@ The tutorial is written in brief sentences to keep it compact. But this doesn't 
 \item{\textbf{Download} from \url{http://developer.android.com/sdk/ndk/index.html} \textrightarrow{} "android-ndk-r6b-linux-x86.tar.bz2"}
 \item{\textbf{Extract} to for example "\textasciitilde /android-ndk-r6b" ("\textasciitilde /" is your home directory)}
 \end{itemize}
-
 
 
 \paragraph{Install Android \ac{SDK}}
