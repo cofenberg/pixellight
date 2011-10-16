@@ -56,12 +56,12 @@ class Type< FlagType<ENUM> > {
 		}
 
 		// Convert var to type
-		static _BaseType ConvertFromVar(const DynVar *pValue)
+		static _BaseType ConvertFromVar(const DynVar &cValue)
 		{
-			if (pValue->GetTypeID() == TypeString)
-				return ConvertFromString(pValue->GetString());
+			if (cValue.GetTypeID() == TypeString)
+				return ConvertFromString(cValue.GetString());
 			else
-				return Type<_BaseType>::ConvertFromVar(pValue);
+				return Type<_BaseType>::ConvertFromVar(cValue);
 		}
 
 		// Convert type to bool

@@ -58,8 +58,9 @@ ClassReal::ClassReal(uint32 nModuleID, const String &sName, const String &sDescr
 */
 ClassReal::~ClassReal()
 {
-	// Unregister at class manager
-	ClassManager::GetInstance()->UnregisterClass(m_nModuleID, this);
+	// Unregister at class manager, please note that the class manager may have already been destroyed (random static de-initialization order)
+	if (ClassManager::HasInstance())
+		ClassManager::GetInstance()->UnregisterClass(m_nModuleID, this);
 
 	// De-initialize class
 	if (m_bInitialized)
@@ -229,11 +230,13 @@ void ClassReal::DeInitClass() const
 	// Class de-initialized
 	m_bInitialized = false;
 
-	// De-initialize derived classes
-	List<const Class*> lstClasses;
-	ClassManager::GetInstance()->GetClasses(lstClasses, m_sClassName, NonRecursive, NoBase, IncludeAbstract);
-	for (uint32 i=0; i<lstClasses.GetNumOfElements(); i++)
-		lstClasses[i]->m_pClassImpl->DeInitClass();
+	// De-initialize derived classes, please note that the class manager may have already been destroyed (random static de-initialization order)
+	if (ClassManager::HasInstance()) {
+		List<const Class*> lstClasses;
+		ClassManager::GetInstance()->GetClasses(lstClasses, m_sClassName, NonRecursive, NoBase, IncludeAbstract);
+		for (uint32 i=0; i<lstClasses.GetNumOfElements(); i++)
+			lstClasses[i]->m_pClassImpl->DeInitClass();
+	}
 }
 
 const List<VarDesc*> &ClassReal::GetAttributes() const

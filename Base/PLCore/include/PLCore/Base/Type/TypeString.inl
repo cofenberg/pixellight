@@ -54,9 +54,9 @@ class Type<String> {
 		}
 
 		// Convert var to string
-		static String ConvertFromVar(const DynVar *pValue)
+		static String ConvertFromVar(const DynVar &cValue)
 		{
-			return pValue->GetString();
+			return cValue.GetString();
 		}
 
 		// Convert string to bool

@@ -54,9 +54,9 @@ class Type<float> {
 		}
 
 		// Convert var to float
-		static float ConvertFromVar(const DynVar *pValue)
+		static float ConvertFromVar(const DynVar &cValue)
 		{
-			return pValue->GetFloat();
+			return cValue.GetFloat();
 		}
 
 		// Convert float to bool

@@ -104,9 +104,9 @@ class Type<TrollType> {
 		static String GetTypeName() {
 			return "troll";
 		}
-		static TrollType ConvertFromVar(const DynVar *pVar) {
+		static TrollType ConvertFromVar(const DynVar &cVar) {
 			TrollType cTroll;
-			cTroll.SetValue(pVar->GetInt());
+			cTroll.SetValue(cVar.GetInt());
 			return cTroll;
 		}
 		static bool ConvertToBool(const TrollType &cTroll) {

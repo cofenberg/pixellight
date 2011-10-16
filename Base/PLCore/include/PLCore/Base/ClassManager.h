@@ -74,10 +74,10 @@ class ClassManager : public Singleton<ClassManager> {
 	//[ Public events                                         ]
 	//[-------------------------------------------------------]
 	public:
-		Event<const Module*> EventModuleLoaded;		/**< A module has been registered */
-		Event<const Module*> EventModuleUnloaded;	/**< A module has been removed */
-		Event<const Class*>	 EventClassLoaded;		/**< A class has been registered. Please note: At the time you receive this event, the class may not yet be fully initialized, this means that even "IsDerivedFrom" may not work, yet. */
-		Event<const Class*>  EventClassUnloaded;	/**< A class has been removed */
+		Event<const Module*> EventModuleLoaded;		/**< A module has been registered (do not destroy the given instance) */
+		Event<const Module*> EventModuleUnloaded;	/**< A module has been removed (do not destroy the given instance) */
+		Event<const Class*>	 EventClassLoaded;		/**< A class has been registered. Please note: At the time you receive this event, the class may not yet be fully initialized, this means that even "IsDerivedFrom" may not work, yet. (do not destroy the given instance) */
+		Event<const Class*>  EventClassUnloaded;	/**< A class has been removed (do not destroy the given instance) */
 
 
 	//[-------------------------------------------------------]
@@ -89,7 +89,7 @@ class ClassManager : public Singleton<ClassManager> {
 		*    Get all registered modules
 		*
 		*  @return
-		*    List of modules
+		*    List of modules (do not destroy the returned instances)
 		*/
 		PLCORE_API const List<const Module*> &GetModules() const;
 
@@ -101,7 +101,7 @@ class ClassManager : public Singleton<ClassManager> {
 		*    Module ID
 		*
 		*  @return
-		*    Pointer to module (can be a null pointer)
+		*    Pointer to module (do not destroy the returned instance, can be a null pointer)
 		*/
 		PLCORE_API const Module *GetModule(uint32 nModuleID) const;
 
@@ -115,7 +115,7 @@ class ClassManager : public Singleton<ClassManager> {
 		*    'true' to force a build type match, else 'false'
 		*
 		*  @return
-		*    The loaded module, null pointer on error
+		*    The loaded module, null pointer on error (do not destroy the returned instance)
 		*
 		*  @note
 		*    - If the module was already loaded, this module instance is returned instead
@@ -184,7 +184,7 @@ class ClassManager : public Singleton<ClassManager> {
 		*    Get all registered classes
 		*
 		*  @return
-		*    List of classes
+		*    List of classes (do not destroy the returned instances)
 		*/
 		PLCORE_API const List<const Class*> &GetClasses() const;
 
@@ -193,7 +193,7 @@ class ClassManager : public Singleton<ClassManager> {
 		*    Get classes based on their base class and/or module (search for classes)
 		*
 		*  @param[out] lstClasses
-		*    List that receives the found classes
+		*    List that receives the found classes (do not destroy the returned instances)
 		*  @param[in] sClass
 		*    Name of base class (with namespace)
 		*  @param[in] nRecursive
@@ -219,7 +219,7 @@ class ClassManager : public Singleton<ClassManager> {
 		*    Class name
 		*
 		*  @return
-		*    Pointer to the class, or a null pointer on error
+		*    Pointer to the class, or a null pointer on error (do not destroy the returned instance)
 		*/
 		PLCORE_API const Class *GetClass(const String &sClass) const;
 

@@ -60,10 +60,10 @@ class Type<TrollType> {
 		}
 
 		// Convert var to troll
-		static TrollType ConvertFromVar(const PLCore::DynVar *pVar)
+		static TrollType ConvertFromVar(const PLCore::DynVar &cVar)
 		{
 			TrollType cTroll;
-			cTroll.SetValue(pVar->GetInt());
+			cTroll.SetValue(cVar.GetInt());
 			return cTroll;
 		}
 

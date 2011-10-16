@@ -144,10 +144,10 @@ class DynVar {
 		*  @brief
 		*    Set value
 		*
-		*  @param[in] pValue
+		*  @param[in] cValue
 		*    Value as dynamic var
 		*/
-		PLCORE_API virtual void SetVar(const DynVar *pValue);
+		PLCORE_API virtual void SetVar(const DynVar &cValue);
 
 		/**
 		*  @brief

@@ -54,9 +54,9 @@ class Type< EnumTypePlain<ENUM> > {
 		}
 
 		// Convert var to type
-		static ENUM ConvertFromVar(const DynVar *pValue)
+		static ENUM ConvertFromVar(const DynVar &cValue)
 		{
-			return static_cast<ENUM>(Type<int>::ConvertFromVar(pValue));
+			return static_cast<ENUM>(Type<int>::ConvertFromVar(cValue));
 		}
 
 		// Convert type to bool

@@ -1,3 +1,13 @@
+>> 15.10.2011
+[CO]
+- "Object::SetAttribute(const String &sName, const DynVar *pVar)" & "DynVar::SetVar(const DynVar *pValue)" & "Type<T>::ConvertFromVar(const DynVar *pValue)":
+  It was not documented whether or not "pValue" can be a null pointer, in case one passed into a null pointer it just crashed. This is not obvious to
+  the API user. Changed it into a reference to make clear that it must be valid.
+- "ClassReal::~ClassReal()" & "ClassReal::DeInitClass()" & "ClassManager::~ClassManager()": The class manager may have already been destroyed (random static
+  de-initialization order), we need to take this situation into account
+
+
+
 >> 14.10.2011
 [CO]
 - The extern template related changes I did yesterday solved my linker issue on Mac OS X. It turns out that on the Linux port, the extern

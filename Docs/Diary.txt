@@ -1,3 +1,9 @@
+>> 16.10.2011
+[CO]
+- "PixelLightBuild": Added a few lines about source code versions
+
+
+
 >> 14.10.2011
 [CO]
 - "PixelLightBuild": Updated to "Ubuntu 11.10 - Oneiric Ocelot"

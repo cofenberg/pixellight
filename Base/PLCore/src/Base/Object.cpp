@@ -329,13 +329,13 @@ void Object::SetAttribute(const String &sName, const String &sValue)
 *  @brief
 *    Set attribute value
 */
-void Object::SetAttribute(const String &sName, const DynVar *pVar)
+void Object::SetAttribute(const String &sName, const DynVar &cVar)
 {
 	// Get attribute
 	DynVar *pAttribute = GetAttribute(sName);
 	if (pAttribute) {
 		// Set value
-		pAttribute->SetVar(pVar);
+		pAttribute->SetVar(cVar);
 	}
 }
 

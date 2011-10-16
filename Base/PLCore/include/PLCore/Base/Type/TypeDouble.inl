@@ -54,9 +54,9 @@ class Type<double> {
 		}
 
 		// Convert var to double
-		static double ConvertFromVar(const DynVar *pValue)
+		static double ConvertFromVar(const DynVar &cValue)
 		{
-			return pValue->GetDouble();
+			return cValue.GetDouble();
 		}
 
 		// Convert double to bool

@@ -54,9 +54,9 @@ class Type<int8> {
 		}
 
 		// Convert var to int8
-		static int8 ConvertFromVar(const DynVar *pValue)
+		static int8 ConvertFromVar(const DynVar &cValue)
 		{
-			return pValue->GetInt8();
+			return cValue.GetInt8();
 		}
 
 		// Convert int8 to bool
