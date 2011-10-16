@@ -92,7 +92,7 @@ Here's how to compile PixelLight by using the CMake-\ac{GUI}:
 
 
 \section{Using the Android Port}
-The content within this section was tested using "Ubuntu 11.10 - Oneiric Ocelot". Just mentioned the used versions for saftly, other, newer versions may probably work as well. Usually, the build PixelLight version for Android can't be used in the same way as a version build for the host system like Linux. That's the reason this section, showing how to get a PixelLight sample onto your Android device, exists.
+The content within this section was tested using "Ubuntu 11.10 - Oneiric Ocelot". Just mentioned the used version to be on the safe side, other, newer versions may probably work as well. Usually, the build PixelLight version for Android can't be used in the same way as a version build for the host system like Linux. That's the reason this section, showing how to get a PixelLight sample onto your Android device, exists.
 
 
 \paragraph{\ac{JDK} and \ac{JRE}}
@@ -122,7 +122,7 @@ Content of the \emph{src}-directory:
 
 
 \paragraph{FindPixelLight.cmake}
-Wthin the \emph{<PixelLight root path>/Tools} directory is a CMake file named \emph{FindPixelLight.cmake}. This section is using this script file and assumes that it just has been copied into your project directory. It's kind of a link to PixelLight. Have a look at the appendix~\ref{Appendix:FindPixelLight} for more information about this script.
+Within the \emph{<PixelLight root path>/Tools} directory is a CMake file named \emph{FindPixelLight.cmake}. This section is using this script file and assumes that it just has been copied into your project directory. It's kind of a link to PixelLight. Have a look at the appendix~\ref{Appendix:FindPixelLight} for more information about this script.
 
 
 \paragraph{CMakeLists.txt within Project Directory}
@@ -237,7 +237,7 @@ android_create_apk("${CURRENT_TARGET_NAME}" "${CMAKE_BINARY_DIR}/apk" "${CURRENT
 
 
 \paragraph{Build}
-The build process for this project is the same as descriped within section~\ref{Android:CreateMakefilesAndBuild}, except that the standalone toolchain \emph{<PixelLight root path>/cmake/Android/android.toolchain.cmake} instead of \emph{<PixelLight root path>/cmake/Toolchains/Toolchain-ndk.cmake} is used. By using the provided macro \emph{android_create_apk()}, the project is automatically packed into an \ac{APK}-file, installed on our device and started at once.
+The build process for this project is the same as described within section~\ref{Android:CreateMakefilesAndBuild}, except that the standalone toolchain \emph{<PixelLight root path>/cmake/Android/android.toolchain.cmake} instead of \emph{<PixelLight root path>/cmake/Toolchains/Toolchain-ndk.cmake} is used. By using the provided macro \emph{android\_create\_apk()}, the project is automatically packed into an \ac{APK}-file, installed on our device and started at once.
 
-At first, this may look a lot - but you usually need to do write this only once per project. During the development you just have to type \emph{make} in order to let your project run on the Android device, without doing everything manually as descriped within appendix~\ref{Appendix:AndroidNativeBuildTutorial} over and over again.
+At first, this may look a lot - but you usually need to do write this only once per project. During the development you just have to type \emph{make} in order to let your project run on the Android device, without doing everything manually as described within appendix~\ref{Appendix:AndroidNativeBuildTutorial} over and over again.
 
