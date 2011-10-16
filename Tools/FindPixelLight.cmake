@@ -22,9 +22,10 @@
 
 
 # This script searches for the PixelLight includes and libraries in the following order:
-# 1. Search in the directory pointed to by the environment variable 'PL_RUNTIME'
-# 2. Search in the directory pointed to by the registry key [HKEY_LOCAL_MACHINE\\SOFTWARE\\PixelLight\\PixelLight-SDK;Runtime]
-# 3. Search in standard directories (e.g. /usr/lib, /usr/local/lib, /usr/include, /usr/local/include)
+# 1. If PL_RUNTIME_BIN_DIR is set then this path is used
+# 2. Search in the directory pointed to by the environment variable 'PL_RUNTIME'
+# 3. Search in the directory pointed to by the registry key [HKEY_LOCAL_MACHINE\\SOFTWARE\\PixelLight\\PixelLight-SDK;Runtime]
+# 4. Search in standard directories (e.g. /usr/lib, /usr/local/lib, /usr/include, /usr/local/include)
 #
 # Includes are searched in subdirectory Include/ first (for installed SDKs on Windows), then using the PixelLight source
 # layout, e.g. Base/PLCore/include.
@@ -56,11 +57,13 @@ if(CMAKE_BUILD_TYPE STREQUAL Debug)
   set(suffix "D")
 endif()
 
-# Read environment variable PL_RUNTIME
-set(PL_RUNTIME_BIN_DIR $ENV{PL_RUNTIME})
+# Read environment variable PL_RUNTIME, but only if PL_RUNTIME_BIN_DIR has not been provided by the outside world
 if(NOT PL_RUNTIME_BIN_DIR OR PL_RUNTIME_BIN_DIR STREQUAL "")
-	# Read registry key
-	get_filename_component(PL_RUNTIME_BIN_DIR "[HKEY_LOCAL_MACHINE\\SOFTWARE\\PixelLight\\PixelLight-SDK;Runtime]" ABSOLUTE)
+	set(PL_RUNTIME_BIN_DIR $ENV{PL_RUNTIME})
+	if(NOT PL_RUNTIME_BIN_DIR OR PL_RUNTIME_BIN_DIR STREQUAL "")
+		# Read registry key
+		get_filename_component(PL_RUNTIME_BIN_DIR "[HKEY_LOCAL_MACHINE\\SOFTWARE\\PixelLight\\PixelLight-SDK;Runtime]" ABSOLUTE)
+	endif()
 endif()
 
 # Get general variables
