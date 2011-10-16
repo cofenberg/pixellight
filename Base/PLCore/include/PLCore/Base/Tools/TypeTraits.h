@@ -362,7 +362,7 @@ struct IsEnum< InvalidType<T> >
 */
 template <typename T>
 struct TypeClassification {
-	static const bool IsEnum = IsEnum<T>::Value;	/**< 'true' if T is an enum */
+	static const bool Value = IsEnum<T>::Value;	/**< 'true' if T is an enum */
 };
 
 /**
@@ -379,7 +379,7 @@ struct TypeClassification {
 */
 template <typename T>
 struct CheckType {
-	typedef typename ChooseType< TypeClassification<T>::IsEnum, PLCore::EnumTypePlain<T>,
+	typedef typename ChooseType< TypeClassification<T>::Value, PLCore::EnumTypePlain<T>,
 						ChooseType< true, InvalidType<T>, InvalidType<T> >
 					 >::Type Type;
 };
