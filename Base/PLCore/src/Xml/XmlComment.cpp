@@ -129,9 +129,9 @@ const char *XmlComment::Parse(const char *pszData, XmlParsingData *pData, EEncod
 {
 	// Constants
 	static const char   *pszStartTag     = "<!--";
-	static const uint32  nStartTagLength = strlen(pszStartTag);
+	static const uint32  nStartTagLength = static_cast<uint32>(strlen(pszStartTag));
 	static const char   *pszEndTag       = "-->";
-	static const uint32  nEndTagLength   = strlen(pszEndTag);
+	static const uint32  nEndTagLength   = static_cast<uint32>(strlen(pszEndTag));
 
 	m_sValue = "";
 

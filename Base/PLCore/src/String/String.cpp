@@ -417,7 +417,7 @@ String::String(int nValue)
 			_itoa(nValue, static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString, 10);
 
 			// Hm, _itoa doesn't tell us how many characters were actually written...
-			m_pStringBuffer->m_nLength = strlen(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString);
+			m_pStringBuffer->m_nLength = static_cast<uint32>(strlen(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString));
 		}
 	#else
 		// [TODO] Check itoa under Linux
@@ -2617,7 +2617,7 @@ String &String::operator =(int nValue)
 			_itoa(nValue, static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString, 10);
 
 			// Hm, _itoa doesn't tell us how many characters were actually written...
-			m_pStringBuffer->m_nLength = strlen(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString);
+			m_pStringBuffer->m_nLength = static_cast<uint32>(strlen(static_cast<StringBufferASCII*>(m_pStringBuffer)->m_pszString));
 		}
 	#else
 		// [TODO] Check itoa under Linux

@@ -133,7 +133,7 @@ const char *XmlText::Parse(const char *pszData, XmlParsingData *pData, EEncoding
 {
 	// Constants
 	static const char   *pszStartTag     = "<![CDATA[";
-	static const uint32  nStartTagLength = strlen(pszStartTag);
+	static const uint32  nStartTagLength = static_cast<uint32>(strlen(pszStartTag));
 	static const char   *pszEndTag       = "]]>";
 	static const char   *pszEnd          = "<";
 

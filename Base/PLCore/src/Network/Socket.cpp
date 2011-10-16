@@ -78,7 +78,7 @@ Socket::Socket(const Socket &cSocket) :
 *  @brief
 *    Constructor
 */
-Socket::Socket(int nSocket) :
+Socket::Socket(handle nSocket) :
 	m_nSocket(nSocket)
 {
 }

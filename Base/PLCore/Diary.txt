@@ -1,3 +1,9 @@
+>> 16.10.2011
+[CO]
+- "Socket": Fixed "warning C4244: 'initializing' : conversion from 'SOCKET' to 'int', possible loss of data" when compiling for 64 bit
+
+
+
 >> 15.10.2011
 [CO]
 - "Object::SetAttribute(const String &sName, const DynVar *pVar)" & "DynVar::SetVar(const DynVar *pValue)" & "Type<T>::ConvertFromVar(const DynVar *pValue)":

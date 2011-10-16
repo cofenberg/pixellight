@@ -82,7 +82,7 @@ class Socket {
 		*  @note
 		*    - Should be used mainly to create an invalid socket ('INVALID_SOCKET')
 		*/
-		PLCORE_API Socket(int nSocket);
+		PLCORE_API Socket(handle nSocket);
 
 		/**
 		*  @brief
@@ -253,7 +253,7 @@ class Socket {
 	//[-------------------------------------------------------]
 	private:
 		SocketAddress m_cSocketAddress;	/**< Socket address */
-		int			  m_nSocket;		/**< Socket handle */
+		handle		  m_nSocket;		/**< Socket handle */
 
 
 };
