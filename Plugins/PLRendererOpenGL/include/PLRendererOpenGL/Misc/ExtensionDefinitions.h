@@ -71,7 +71,6 @@ namespace PLRendererOpenGL {
 
 
 // GLX (Linux only)
-/*
 #if defined(LINUX) && !defined(APPLE)
 	extern PFNGLXCREATEPBUFFERPROC	glXCreatePbuffer;
 	extern PFNGLXDESTROYPBUFFERPROC	glXDestroyPbuffer;
@@ -79,7 +78,6 @@ namespace PLRendererOpenGL {
 	// GLX_SGI_swap_control
 	extern PFNGLXSWAPINTERVALSGIPROC	glXSwapIntervalSGI;
 #endif
-*/
 
 // GL_EXT_compiled_vertex_array
 extern PFNGLLOCKARRAYSEXTPROC	glLockArraysEXT;
