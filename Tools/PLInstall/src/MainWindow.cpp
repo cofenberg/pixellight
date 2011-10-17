@@ -70,17 +70,17 @@ void MainWindow::initButtons()
 void MainWindow::initTextAndLabels() 
 {
 	//setup checkbox "install" text
-	wnd_main_ui.chk_checkInstallation->setText("Install PixelLight Runtime Pathes");
+	wnd_main_ui.chk_checkInstallation->setText("Install PixelLight Runtime Path");
 	//setup checkbox "install" description
 	wnd_main_ui.lbl_install->setText("This is the installation checkbox description");;
 
 	//setup checkbox "check installation"
-	wnd_main_ui.chk_install->setText("Check PixelLight Runtime Pathes");
+	wnd_main_ui.chk_install->setText("Check PixelLight Runtime Path");
 	//setup checkbox "check installation" description
-	wnd_main_ui.lbl_checkInstallation->setText("This is the path check ckeckbox description");
+	wnd_main_ui.lbl_checkInstallation->setText("This is the pathcheck ckeckbox description");
 
 	//setup installer description
-	wnd_main_ui.lbl_description->setText("This is the general pixellight installer description .. bla bla bla and more bla bla bla bla lorem ipsum est bla and some more blindtext");
+	wnd_main_ui.lbl_description->setText("This is the general pixellight installer description ... ");
 
 
 }
