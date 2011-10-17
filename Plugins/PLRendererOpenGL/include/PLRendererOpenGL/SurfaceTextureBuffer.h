@@ -41,7 +41,6 @@ namespace PLRendererOpenGL {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class PBuffer;
 class FrameBufferObject;
 
 
@@ -79,15 +78,6 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 		*    'true' if a FBO is used, else 'false'
 		*/
 		bool IsFBOUsed() const;
-
-		/**
-		*  @brief
-		*    Returns whether a PBuffer is used or not
-		*
-		*  @return
-		*    'true' if a PBuffer is used, else 'false'
-		*/
-		bool IsPBufferUsed() const;
 
 		/**
 		*  @brief
@@ -136,22 +126,12 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 		*/
 		bool CreateFBO();
 
-		/*
-		*  @brief
-		*    Create PBuffer
-		*
-		*  @return
-		*    'true' if all went fine, else 'false'
-		*/
-		bool CreatePBuffer();
-
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
 		FrameBufferObject			*m_pFrameBufferObject;		/**< Nice frame buffer object, can be a null pointer */
-		PBuffer						*m_pPBuffer;				/**< The PBuffer, can be a null pointer */
 		PLRenderer::ResourceHandler	 m_cTextureBufferHandler;	/**< Texture buffer to render in */
 		PLCore::uint8			 	 m_nFace;					/**< Texture buffer face currently rendered in (cube map) */
 

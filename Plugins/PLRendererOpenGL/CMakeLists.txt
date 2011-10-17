@@ -59,7 +59,6 @@ add_sources(
 	src/Misc/Extensions.cpp
 	src/Misc/FrameBufferObject.cpp
 	src/Misc/ExtensionConfig.cpp
-	src/Misc/pbuffer.cpp
 )
 if(PL_PLUGIN_RENDERER_OPENGL_FONT)
 	add_sources(

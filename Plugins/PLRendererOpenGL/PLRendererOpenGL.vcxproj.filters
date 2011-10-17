@@ -127,9 +127,6 @@
     <ClCompile Include="src\Misc\FrameBufferObject.cpp">
       <Filter>Misc</Filter>
     </ClCompile>
-    <ClCompile Include="src\Misc\pbuffer.cpp">
-      <Filter>Misc</Filter>
-    </ClCompile>
     <ClCompile Include="src\ProgramUniformBlockGLSL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -256,9 +253,6 @@
       <Filter>Misc</Filter>
     </ClInclude>
     <ClInclude Include="include\PLRendererOpenGL\Misc\FrameBufferObject.h">
-      <Filter>Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLRendererOpenGL\Misc\pbuffer.h">
       <Filter>Misc</Filter>
     </ClInclude>
     <ClInclude Include="include\PLRendererOpenGL\ProgramUniformBlockGLSL.h">

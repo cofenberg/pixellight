@@ -324,7 +324,6 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
     </ClCompile>
     <ClCompile Include="src\Misc\ExtensionsWindows.cpp" />
     <ClCompile Include="src\Misc\FrameBufferObject.cpp" />
-    <ClCompile Include="src\Misc\pbuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRendererOpenGL\Context.h" />
@@ -369,7 +368,6 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLRendererOpenGL\Misc\ExtensionDefinitions.h" />
     <ClInclude Include="include\PLRendererOpenGL\Misc\Extensions.h" />
     <ClInclude Include="include\PLRendererOpenGL\Misc\FrameBufferObject.h" />
-    <ClInclude Include="include\PLRendererOpenGL\Misc\pbuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Base\PLRenderer\Diary.txt" />

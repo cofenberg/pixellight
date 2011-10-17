@@ -2368,24 +2368,12 @@ bool Renderer::SetRenderTarget(PLRenderer::Surface *pSurface, uint8 nFace)
 					return false; // Error!
 			}
 
-			PLRenderer::Surface *pPrevSurface = m_cCurrentSurface.GetSurface();
 			if (m_cCurrentSurface.GetSurface())
 				UnmakeSurfaceCurrent(*m_cCurrentSurface.GetSurface());
 			m_cCurrentSurface.SetSurface(pSurface);
 
 			// Make the surface to the current render target
 			bResult = MakeSurfaceCurrent(*pSurface, nFace);
-
-			// [HACK] Because PBuffer have it's own states we have to ensure that the states
-			// are always correct (can buffer share states in any way??)
-			// (Clip planes, color mask etc. are also per context...)
-			if ((pSurface->GetType() == PLRenderer::Surface::TextureBuffer &&
-				static_cast<SurfaceTextureBuffer*>(pSurface)->IsPBufferUsed()) ||
-				(pPrevSurface && pPrevSurface->GetType() == PLRenderer::Surface::TextureBuffer &&
-				static_cast<SurfaceTextureBuffer*>(pPrevSurface)->IsPBufferUsed())) {
-				// Restore device states
-				RestoreDeviceStates();
-			}
 		} else {
 			if (m_pContext)
 				m_pContext->MakeDummyCurrent();
