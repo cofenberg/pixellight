@@ -164,7 +164,7 @@ bool VertexBuffer::CreateVertexDeclaration()
 					nUsageAPI = D3DDECLUSAGE_FOG;
 					break;
 
-				case PSize:
+				case PointSize:
 					nUsageAPI = D3DDECLUSAGE_PSIZE;
 					break;
 

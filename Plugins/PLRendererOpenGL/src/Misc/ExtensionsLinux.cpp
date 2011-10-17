@@ -83,18 +83,20 @@ bool OpenGLExtensions::Init(bool bUseExtensions)
 
 // WGL / GLX
 	// WGL_ARB_pbuffer
-	if (IsSupported("GLX_SGIX_pbuffer")) {
-		glXCreatePbuffer  = reinterpret_cast<PFNGLXCREATEPBUFFERPROC> (glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glXCreatePbuffer")));
-		glXDestroyPbuffer = reinterpret_cast<PFNGLXDESTROYPBUFFERPROC>(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glXDestroyPbuffer")));
-		if (!glXCreatePbuffer || !glXDestroyPbuffer) {
-			PL_LOG(Info, "Couldn't use extension 'GLX_SGIX_pbuffer'!")
-			m_bWGL_ARB_pbuffer = false;
+	#ifndef APPLE
+		if (IsSupported("GLX_SGIX_pbuffer")) {
+			glXCreatePbuffer  = reinterpret_cast<PFNGLXCREATEPBUFFERPROC> (glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glXCreatePbuffer")));
+			glXDestroyPbuffer = reinterpret_cast<PFNGLXDESTROYPBUFFERPROC>(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glXDestroyPbuffer")));
+			if (!glXCreatePbuffer || !glXDestroyPbuffer) {
+				PL_LOG(Info, "Couldn't use extension 'GLX_SGIX_pbuffer'!")
+				m_bWGL_ARB_pbuffer = false;
+			} else {
+				m_bWGL_ARB_pbuffer = true;
+			}
 		} else {
-			m_bWGL_ARB_pbuffer = true;
+			m_bWGL_ARB_pbuffer = false;
 		}
-	} else {
-		m_bWGL_ARB_pbuffer = false;
-	}
+	#endif
 
 	// WGL_ARB_multisample
 	m_bWGL_ARB_multisample = IsSupported("GLX_ARB_multisample");
@@ -125,17 +127,19 @@ bool OpenGLExtensions::Init(bool bUseExtensions)
 
 // GLX (Linux only)
 	// GLX_SGI_swap_control
-	if (IsSupported("GLX_SGI_swap_control")) {
-		glXSwapIntervalSGI = reinterpret_cast<PFNGLXSWAPINTERVALSGIPROC>(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glXSwapIntervalSGI")));
-		if (!glXSwapIntervalSGI) {
-			PL_LOG(Info, "Couldn't use extension 'GLX_SGI_swap_control'!")
-			m_bGLX_SGI_swap_control = false;
+	#ifndef APPLE
+		if (IsSupported("GLX_SGI_swap_control")) {
+			glXSwapIntervalSGI = reinterpret_cast<PFNGLXSWAPINTERVALSGIPROC>(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glXSwapIntervalSGI")));
+			if (!glXSwapIntervalSGI) {
+				PL_LOG(Info, "Couldn't use extension 'GLX_SGI_swap_control'!")
+				m_bGLX_SGI_swap_control = false;
+			} else {
+				m_bGLX_SGI_swap_control = true;
+			}
 		} else {
-			m_bGLX_SGI_swap_control = true;
+			m_bGLX_SGI_swap_control = false;
 		}
-	} else {
-		m_bGLX_SGI_swap_control = false;
-	}
+	#endif
 
 // EXT
 	// GL_EXT_compiled_vertex_array

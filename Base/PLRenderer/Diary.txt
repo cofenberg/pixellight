@@ -1,3 +1,12 @@
+>> 17.10.2011
+[CO]
+- Renamed "VertexBuffer::PSize" into "VertexBuffer::PointSize". There's a Linux definition named "PSize" causing nasty naming conflicts, but here it was
+  possible to just "undefine" this namespace wasting definition. On Mac OS X this doesn't seem to work... I didn't research how it's defined because it's
+  getting time consuming and stupied with this namespace wasting OS stuff. So, I now just renamed it within PixelLight (but such an action should not be
+  enforced by OS headers...).
+
+
+
 >> 28.09.2011
 [CO]
 PLRendererOpenGLES2:

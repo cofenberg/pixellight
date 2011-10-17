@@ -75,7 +75,7 @@ namespace PLRendererOpenGL {
 
 
 // GLX (Linux only)
-#ifdef LINUX
+#if defined(LINUX) && !defined(APPLE)
 	PFNGLXCREATEPBUFFERPROC		glXCreatePbuffer	= nullptr;
 	PFNGLXDESTROYPBUFFERPROC	glXDestroyPbuffer	= nullptr;
 
