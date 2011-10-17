@@ -98,6 +98,35 @@ bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 
 
 //[-------------------------------------------------------]
+//[ Public virtual PLRenderer::Surface functions          ]
+//[-------------------------------------------------------]
+Vector2i SurfaceWindow::GetSize() const
+{
+	if (GetNativeWindowHandle()) {
+		::Window nRootWindow = 0;
+		int nPositionX = 0, nPositionY = 0;
+		unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
+
+		// Get the Linux context implementation
+		ContextLinux *pContextLinux = static_cast<ContextLinux*>(static_cast<Renderer&>(GetRenderer()).GetContext());
+		if (pContextLinux) {
+			// Get the X server display connection
+			Display *pDisplay = pContextLinux->GetDisplay();
+			if (pDisplay) {
+				// Get X window geometry information
+				XGetGeometry(pDisplay, GetNativeWindowHandle(), &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
+			}
+		}
+
+		// Return the window size
+		return Vector2i(nWidth, nHeight);
+	} else {
+		return Vector2i::Zero;
+	}
+}
+
+
+//[-------------------------------------------------------]
 //[ Private virtual PLRenderer::Surface functions         ]
 //[-------------------------------------------------------]
 bool SurfaceWindow::Init()

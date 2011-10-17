@@ -28,7 +28,9 @@
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLRenderer/Renderer/TextureBufferCube.h>
 #include "PLRendererOpenGL/Renderer.h"
-#include "PLRendererOpenGL/Misc/pbuffer.h"
+#ifndef APPLE
+	#include "PLRendererOpenGL/Misc/pbuffer.h"
+#endif
 #include "PLRendererOpenGL/Misc/FrameBufferObject.h"
 #include "PLRendererOpenGL/SurfaceTextureBuffer.h"
 
@@ -216,6 +218,7 @@ bool SurfaceTextureBuffer::CreateFBO()
 */
 bool SurfaceTextureBuffer::CreatePBuffer()
 {
+#ifndef APPLE
 	// Get renderer and check whether PBuffer is support
 	Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 	if (cRenderer.IsWGL_ARB_pbuffer()) {
@@ -349,6 +352,7 @@ bool SurfaceTextureBuffer::CreatePBuffer()
 			}
 		}
 	}
+#endif
 
 	// Error!
 	return false;
@@ -460,7 +464,9 @@ void SurfaceTextureBuffer::DeInit()
 	#endif
 
 		// Destroy
-		delete m_pPBuffer;
+		#ifndef APPLE
+			delete m_pPBuffer;
+		#endif
 		m_pPBuffer = nullptr;
 	}
 
@@ -514,6 +520,7 @@ bool SurfaceTextureBuffer::MakeCurrent(uint8 nFace)
 
 		// PBuffer used?
 		} else if (m_pPBuffer) {
+	#ifndef APPLE
 			// Draw buffers
 			GLenum nDrawBuffers[5] = { GL_FRONT_LEFT, GL_AUX0, GL_AUX1, GL_AUX2, GL_AUX3 };
 		#ifdef WIN32
@@ -537,6 +544,7 @@ bool SurfaceTextureBuffer::MakeCurrent(uint8 nFace)
 				glDrawBuffersARB(m_nMaxColorTargets, nDrawBuffers);
 			else if (static_cast<Renderer&>(GetRenderer()).IsGL_ATI_draw_buffers())
 				glDrawBuffersATI(m_nMaxColorTargets, nDrawBuffers);
+	#endif
 
 		// Else...
 		} // ... If there's no PBuffer, we can still 'render to texture' by only using glCopyTexSubImage2D() to
@@ -593,6 +601,7 @@ bool SurfaceTextureBuffer::UnmakeCurrent()
 
 	// PBuffer used?
 	} else if (m_pPBuffer) {
+	#ifndef APPLE
 		// Draw buffers
 		GLenum nDrawBuffers[5] = { GL_FRONT_LEFT, GL_AUX0, GL_AUX1, GL_AUX2, GL_AUX3 };
 
@@ -645,6 +654,7 @@ bool SurfaceTextureBuffer::UnmakeCurrent()
 
 		// Reset draw buffer
 		glDrawBuffer(GL_BACK);
+	#endif
 
 	// Do only use glCopyTexSubImage2D()
 	} else if (m_lstTextureBufferHandler.GetNumOfElements()) {

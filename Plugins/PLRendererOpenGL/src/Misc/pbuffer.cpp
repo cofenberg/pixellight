@@ -7,7 +7,7 @@
 #include <assert.h>
 #include "PLRendererOpenGL/Misc/pbuffer.h"
 
-#if defined(MACOS)
+#if defined(APPLE)
 #include <OpenGL/gl.h>
 //#include <GLUT/glut.h>
 #else
@@ -20,7 +20,6 @@
 // so i'm undef the define
 #undef Always
 #endif
-#include "PLRendererOpenGL/Misc/Extensions.h"
 
 #include <string>
 #include <vector>
@@ -637,7 +636,7 @@ void PBuffer::Deactivate()
     m_bIsActive = false;
 }
 
-#elif defined(LINUX)
+#elif (defined(LINUX) && !defined(APPLE))
 
 PBuffer::PBuffer(const char *strMode, bool managed) 
   : m_pDisplay(0), m_glxPbuffer(0), m_glxContext(0), m_pOldDisplay(0), m_glxOldDrawable(0), 
@@ -902,12 +901,13 @@ void PBuffer::Deactivate()
     m_glxOldContext = 0;
 }
 
-#elif defined(MACOS)
+#elif defined(APPLE)
 
-PBuffer::PBuffer(const char *strMode) 
+PBuffer::PBuffer(const char *strMode, bool managed) 
   : 
     m_iWidth(0), m_iHeight(0), m_strMode(strMode), 
     m_bSharedContext(false), m_bShareObjects(false)
+
 {
     PL_LOG(Error, "PBuffer not implemented under Mac OS X yet")
 }
@@ -924,7 +924,7 @@ bool PBuffer::Initialize(int iWidth, int iHeight, bool bShareContexts, bool bSha
     return false;
 }
 
-void PBuffer::Activate()
+void PBuffer::Activate(PBuffer *current /* = nullptr */)
 {
     PL_LOG(Error, "PBuffer not implemented under Mac OS X yet")
 }

@@ -79,6 +79,16 @@ if(WIN32)
 		src/SurfaceWindowWindows.cpp
 		src/ContextWindows.cpp
 	)
+elseif(APPLE)
+	# [TODO] Implement Mac OS X
+	##################################################
+	## Apple
+	##################################################
+	add_sources(
+#		src/Misc/ExtensionsMacOSX.cpp
+#		src/SurfaceWindowMacOSX.cpp
+#		src/ContextMacOSX.cpp
+	)
 elseif(LINUX)
 	##################################################
 	## Linux

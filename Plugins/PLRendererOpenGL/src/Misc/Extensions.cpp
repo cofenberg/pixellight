@@ -26,7 +26,10 @@
 #include <PLCore/Log/Log.h>
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/Misc/Extensions.h"
-#ifdef LINUX
+#ifdef APPLE
+	#include <string.h>	// For strstr
+	// [TODO] Implement Mac OS X implementation
+#elif defined(LINUX)
 	#include <string.h>	// For strstr
 	#include "PLRendererOpenGL/ContextLinux.h"
 #endif
@@ -501,7 +504,9 @@ bool OpenGLExtensions::CheckExtension(const char *pszExtension) const
 						return false; // Extension not found
 					pszExtensions = static_cast<const char*>(wglGetExtensionsStringARB(wglGetCurrentDC()));
 				#endif
-				#ifdef LINUX
+				#ifdef APPLE
+					// [TODO] Implement Mac OS X implementation
+				#elif defined(LINUX)
 					// Get the Linux context implementation
 					ContextLinux *pContextLinux = static_cast<ContextLinux*>(m_pRenderer->GetContext());
 					if (pContextLinux) {

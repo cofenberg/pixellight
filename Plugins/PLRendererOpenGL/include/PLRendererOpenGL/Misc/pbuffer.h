@@ -8,12 +8,12 @@
 #  include <GL/gl.h>
 #  include "../../../../../External/Recommended/OpenGL/wglext.h"
 #  pragma warning (disable : 4786)
+#elif defined(APPLE)
+#  include <AGL/agl.h>
 #elif defined(LINUX)
 #  define GL_GLEXT_LEGACY	// Ehm, if this is not defined, my OS "GL/gl.h" includes "GL/glext.h" automatically (!) which is definitely NOT ok (one reason is that "glext.h" is frequently extended)
 #  include <GL/glx.h>
 #  include "../../../../../External/Recommended/OpenGL/glxext.h"
-#elif defined(MACOS)
-#  include <AGL/agl.h>
 #endif
 
 #include <PLCore/PLCore.h>
@@ -111,21 +111,21 @@ class PBuffer
         std::vector<int> m_pbAttribList;
 
         bool m_bIsTexture;
+#elif defined(APPLE)
+		AGLContext  m_context;
+		WindowPtr   m_window;
+		std::vector<int> m_pfAttribList;
 #elif defined(LINUX)
-        Display    *m_pDisplay;
-        GLXPbuffer  m_glxPbuffer;
-        GLXContext  m_glxContext;
-
-        Display    *m_pOldDisplay;
-        GLXPbuffer  m_glxOldDrawable;
-        GLXContext  m_glxOldContext;
-
-        std::vector<int> m_pfAttribList;
-        std::vector<int> m_pbAttribList;
-#elif defined(MACOS)
-        AGLContext  m_context;
-        WindowPtr   m_window;
-        std::vector<int> m_pfAttribList;
+		Display    *m_pDisplay;
+		GLXPbuffer  m_glxPbuffer;
+		GLXContext  m_glxContext;
+	
+		Display    *m_pOldDisplay;
+		GLXPbuffer  m_glxOldDrawable;
+		GLXContext  m_glxOldContext;
+	
+		std::vector<int> m_pfAttribList;
+		std::vector<int> m_pbAttribList;
 #endif
 
         int m_iWidth;
@@ -140,7 +140,7 @@ class PBuffer
     private:
         std::string getStringValue(std::string token);
         int getIntegerValue(std::string token);
-#if defined(LINUX) || defined(WIN32)
+#if (defined(LINUX) && !defined(APPLE)) || defined(WIN32)
         void parseModeString(const char *modeString, std::vector<int> *pfAttribList, std::vector<int> *pbAttribList);
 
         bool m_bIsBound;
