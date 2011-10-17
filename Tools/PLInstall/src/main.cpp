@@ -20,16 +20,30 @@
 \*********************************************************/
 
 
-#include <windows.h>
-#include <stdio.h>
+//#include <windows.h>
+//#include <stdio.h>
 #include <PixelLight.h>
+#include "MainWindow.h"
+#include "ui_MainWindow.h"
 
 
+int main(int argc, char *argv[]) 
+{
+	//create qt application
+	QApplication app(argc, argv);
+	//create host dialog
+	MainWindow *wnd_main_test = new MainWindow();
+	
+	return app.exec();
+}
+/*
 void Message(const wchar_t szMessage[])
 {
 	MessageBox(nullptr, szMessage, L"PixelLight Installation", MB_OK);
 }
+*/
 
+/*
 bool CheckWindowsVersion()
 {
 	OSVERSIONINFOEX ver;
@@ -50,6 +64,9 @@ bool CheckWindowsVersion()
 	return ver.dwPlatformId == VER_PLATFORM_WIN32_NT;
 }
 
+*/
+
+/***
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR pszCmdLine, int nShow)
 {
 	// Check Windows version
@@ -158,7 +175,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR pszCmdL
 	} else {
 		Message(L"The installer requires Windows 2000/NT/XP");
 	}
-
 	// Done
 	return 0;
 }
+
+	**/
