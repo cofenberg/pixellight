@@ -49,25 +49,4 @@
 #endif
 
 
-//[-------------------------------------------------------]
-//[ OpenGL extensions                                     ]
-//[-------------------------------------------------------]
-#ifndef GL_AMD_vertex_shader_tessellator
-	#define GL_AMD_vertex_shader_tessellator 1
-	#define GL_SAMPLER_BUFFER_AMD				0x9001
-	#define GL_INT_SAMPLER_BUFFER_AMD			0x9002
-	#define GL_UNSIGNED_INT_SAMPLER_BUFFER_AMD	0x9003
-	#define GL_DISCRETE_AMD						0x9006
-	#define GL_CONTINUOUS_AMD					0x9007
-	#define GL_TESSELLATION_MODE_AMD			0x9004
-	#define GL_TESSELLATION_FACTOR_AMD			0x9005
-	#ifdef GL_GLEXT_PROTOTYPES
-		GLAPI void APIENTRY glTessellationFactorAMD (GLfloat);
-		GLAPI void APIENTRY glTessellationModeAMD   (GLenum);
-	#endif /* GL_GLEXT_PROTOTYPES */
-	typedef void (APIENTRYP PFNGLTESSELLATIONFACTORAMDPROC) (GLfloat param);
-	typedef void (APIENTRYP PFNGLTESSELLATIONMODEAMDPROC)   (GLenum pname);
-#endif
-
-
 #endif // __PLRENDEREROPENGL_PLRENDEREROPENGL_H__

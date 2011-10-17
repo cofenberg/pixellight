@@ -331,6 +331,8 @@ extern PFNGLSTENCILFUNCSEPARATEATIPROC	glStencilFuncSeparateATI;
 extern PFNGLDRAWBUFFERSATIPROC	glDrawBuffersATI;
 
 // GL_AMD_vertex_shader_tessellator
+// -> The extension is listed as "GL_AMD_vertex_shader_tessellator" (see http://www.opengl.org/registry/specs/AMD/vertex_shader_tessellator.txt)
+// -> In "http://www.opengl.org/registry/api/glext.h" it's listed as "GL_AMD_vertex_shader_tesselator" (typo?)
 extern PFNGLTESSELLATIONFACTORAMDPROC	glTessellationFactorAMD;
 extern PFNGLTESSELLATIONMODEAMDPROC		glTessellationModeAMD;
 
