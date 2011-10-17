@@ -22,7 +22,7 @@
 
 # This script can be used to set the path to the local (not installed)
 # PixelLight runtime, which is stored in the environment variable
-# PL_RUNTIME. If that variable is set, it will be preffered by the
+# PL_RUNTIME. If that variable is set, it will be prefered by the
 # PixelLight runtime and used instead of searching for an installed
 # runtime in /usr/ or /usr/local/.
 # 
