@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 //#include <PixelLight.h>
-#include <PLCore\PLCore.h>
+//#include <PLCore\PLCore.h>
 //#include <PLCore\Runtime.h>
 #include "InstallerFunctionsImpl.h"
 

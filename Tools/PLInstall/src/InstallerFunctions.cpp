@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/File/Url.h"
 #if defined(WIN32)
 	#include "InstallerFunctionsWindows.h"
 //[TODO] implement linux functions
@@ -62,6 +61,7 @@ InstallerFunctions::InstallerFunctions() :
 		// Unknown system
 		#error "Unsupported platform"
 	#endif
+
 }
 
 /**
@@ -75,6 +75,10 @@ InstallerFunctions::~InstallerFunctions()
 		delete m_pInstallerFunctionsImpl;
 }
 
+void InstallerFunctions::connectProgressEventHandler(PLCore::EventHandler<int> *pProgressEventHandler)
+{
+	m_pInstallerFunctionsImpl->getProgressUpdateEvent()->Connect(*pProgressEventHandler);
+}
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]

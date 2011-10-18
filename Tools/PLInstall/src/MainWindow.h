@@ -23,6 +23,7 @@
 #define MAINWINDOW_H
 
 #include <QtGui/QDialog.h>
+#include <PLCore/Base/Event/EventHandler.h>
 #include "ui_MainWindow.h"
 
 //[-------------------------------------------------------]
@@ -58,7 +59,8 @@ class MainWindow : QDialog
 		MainWindow(QWidget *parent = 0);
 		~MainWindow();
 		
-		void updateProgress(int value);
+		void onUpdateProgress(int value);
+
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]	
@@ -74,10 +76,11 @@ class MainWindow : QDialog
 	private:
 		Ui::MainWindow wnd_main_ui;
 		InstallerFunctions *m_pInstallerFunctions;
+		PLCore::EventHandler<int> *m_pProgressEventHandler;
 		bool m_bIsRunning;
 		
 	//[-------------------------------------------------------]
-	//[ public qt slots                                      ]
+	//[ public qt slots                                       ]
 	//[-------------------------------------------------------]
 	public slots:
 	

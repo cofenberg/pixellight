@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include "InstallerFunctionsWindows.h"
 
-
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
@@ -45,6 +44,10 @@ InstallerFunctionsWindows::~InstallerFunctionsWindows()
 {
 }
 
+PLCore::Event<int>* InstallerFunctionsWindows::getProgressUpdateEvent()
+{
+	return &EventProgressUpdate;
+}
 
 //[-------------------------------------------------------]
 //[ Private virtual InstallerFunctionsImpl functions      ]

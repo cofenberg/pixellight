@@ -28,6 +28,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	m_pInstallerFunctions(new InstallerFunctions()),
 	m_bIsRunning(false)
 {
+	//connect event for progress updates
+	m_pProgressEventHandler = new PLCore::EventHandler<int> (&MainWindow::onUpdateProgress, this);
+	m_pInstallerFunctions->connectProgressEventHandler(m_pProgressEventHandler);
+
 	wnd_main_ui.setupUi(this);
 	
 	//init text and labels
@@ -47,7 +51,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-	
+	if(m_pInstallerFunctions)
+		delete m_pInstallerFunctions;
 }
 
 void MainWindow::initButtons()
@@ -95,14 +100,16 @@ void MainWindow::setDefaultCheckboxValues()
 	wnd_main_ui.chk_checkInstallation->setChecked(true);
 }
 
-void MainWindow::updateProgress(int value)
+void MainWindow::onUpdateProgress(int value)
 {
+	value = wnd_main_ui.progB_progress->value() + value;
 	wnd_main_ui.progB_progress->setValue(value);
 }
 	
 void MainWindow::runEvent()
 {
 	if(!m_bIsRunning) {
+
 
 		//toggle isRunning flag
 		m_bIsRunning = true;
@@ -118,7 +125,6 @@ void MainWindow::runEvent()
 		bool check = wnd_main_ui.chk_checkInstallation->isChecked();
 
 		//calculate overall progress steps
-	
 	
 		//[TODO] invoce installation and/or check
 	}

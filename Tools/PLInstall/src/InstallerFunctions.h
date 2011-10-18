@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-
+#include <PLCore/Base/Event/EventHandler.h>
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
@@ -64,6 +64,9 @@ class InstallerFunctions {
 		*    Destructor
 		*/
 		~InstallerFunctions();
+
+		
+		void connectProgressEventHandler(PLCore::EventHandler<int> *pProgressEventHandler);
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]

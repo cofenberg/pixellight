@@ -28,6 +28,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Event/Event.h>
+
+
+class InstallerFunctions;
 
 //[-------------------------------------------------------]
 //[ Classes                                               ]
@@ -63,8 +67,8 @@ class InstallerFunctionsImpl {
 		*    Destructor
 		*/
 		virtual ~InstallerFunctionsImpl();
-
-
+		
+		
 	//[-------------------------------------------------------]
 	//[ Protected virtual InstallerFunctionsImpl functions    ]
 	//[-------------------------------------------------------]
@@ -72,6 +76,7 @@ class InstallerFunctionsImpl {
 /*		
 		virtual bool IsLoaded() const = 0;
 */
+		virtual PLCore::Event<int>* getProgressUpdateEvent() = 0;
 };
 
 

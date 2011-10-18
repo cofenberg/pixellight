@@ -63,12 +63,21 @@ class InstallerFunctionsWindows : public InstallerFunctionsImpl {
 		*/
 		virtual ~InstallerFunctionsWindows();
 
+		
+	//[-------------------------------------------------------]
+	//[ Public events                                         ]
+	//[-------------------------------------------------------]
+	public:
+		PLCore::Event<int> EventProgressUpdate;
 
 	//[-------------------------------------------------------]
 	//[ Private virtual InstallerFunctionsImpl functions      ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 //		virtual bool IsLoaded() const override;
+
+
+		virtual PLCore::Event<int>* getProgressUpdateEvent() override;
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
