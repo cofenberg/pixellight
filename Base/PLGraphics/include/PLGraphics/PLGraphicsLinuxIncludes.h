@@ -82,7 +82,6 @@
 
 	#undef None
 	#undef Always
-	//#undef PSize
 
 	namespace XLib {
 		enum {

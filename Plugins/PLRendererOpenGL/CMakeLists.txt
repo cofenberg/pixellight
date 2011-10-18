@@ -59,7 +59,6 @@ add_sources(
 	src/Misc/Extensions.cpp
 	src/Misc/FrameBufferObject.cpp
 	src/Misc/ExtensionConfig.cpp
-	src/Misc/pbuffer.cpp
 )
 if(PL_PLUGIN_RENDERER_OPENGL_FONT)
 	add_sources(
@@ -78,6 +77,16 @@ if(WIN32)
 		src/Misc/ExtensionsWindows.cpp
 		src/SurfaceWindowWindows.cpp
 		src/ContextWindows.cpp
+	)
+elseif(APPLE)
+	# [TODO] Implement Mac OS X
+	##################################################
+	## Apple
+	##################################################
+	add_sources(
+#		src/Misc/ExtensionsMacOSX.cpp
+#		src/SurfaceWindowMacOSX.cpp
+#		src/ContextMacOSX.cpp
 	)
 elseif(LINUX)
 	##################################################

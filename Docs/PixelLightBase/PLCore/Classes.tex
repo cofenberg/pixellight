@@ -168,12 +168,12 @@ The shared library of each plugin comes with a \emph{plugin}-file, a \ac{XML} fi
 
 This \ac{XML} plugin files can, and should be created automatically by using the \emph{PLProject} tool which is a part of the PixelLight \ac{SDK}. This tool will look through the source codes of your projects and search for, for example \emph{pl\_module} \ac{RTTI} macros. Usually this tool should be launched automatically when you compile your program, by using this approach it's ensured that the \emph{plugin}-file is always up-to-date. When using \emph{Microsoft Visual Studio 2010}, \emph{PLProject} can be launched within a so called \emph{Post-Build-Event} by using for instance the command line option
 \begin{verbatim}
-..\Tools\PLProject.exe . --output-path Bin\Plugins --write-plugin
+..\Tools\x86\PLProject.exe . --output-path Bin\Plugins --write-plugin
 \end{verbatim}
 The resulting \ac{XML} file may look like
 \begin{verbatim}
 <?xml version="1.0" ?>
-<Plugin Version="1" PixelLightVersion="PixelLight 0.9.8-R1">
+<Plugin Version="1" PixelLightVersion="PixelLight 0.9.9-R1">
   <Active>1</Active>
   <Delayed>1</Delayed>
   <Name>MyPlugin</Name>
@@ -196,7 +196,7 @@ PLCore::ClassManager::GetInstance()->ScanPlugins(sDirectory);
 
 By default, \emph{PLProject} will inform you only about errors. Add the \emph{--verbose} command line option like
 \begin{verbatim}
-..\Tools\PLProject.exe . --output-path Bin\Plugins --write-plugin --verbose
+..\Tools\x86\PLProject.exe . --output-path Bin\Plugins --write-plugin --verbose
 \end{verbatim}
 and \emph{PLProject} tells you in detail what's currently going on.
 

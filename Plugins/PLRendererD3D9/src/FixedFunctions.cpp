@@ -343,7 +343,7 @@ bool FixedFunctions::SetVertexDeclaration()
 									nUsageAPI = D3DDECLUSAGE_FOG;
 									break;
 
-								case PLRenderer::VertexBuffer::PSize:
+								case PLRenderer::VertexBuffer::PointSize:
 									nUsageAPI = D3DDECLUSAGE_PSIZE;
 									break;
 

@@ -28,7 +28,10 @@
 #endif
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/SurfaceWindow.h"
-#ifdef LINUX
+#ifdef APPLE
+	// [TODO] Implement Mac OS X part
+	//#include "PLRendererOpenGL/ContextMacOSX.h"
+#elif LINUX
 	#include "PLRendererOpenGL/ContextLinux.h"
 #endif
 
@@ -67,7 +70,9 @@ SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle 
 	#ifdef WIN32
 		m_hDC(nullptr),
 	#endif
-	#ifdef LINUX
+	#ifdef APPLE
+		// [TODO] Implement Mac OS X part
+	#elif LINUX
 		m_nNativeWindowHandle(NULL_HANDLE),
 		m_nOldSizeID(-1),
 		m_nOldRotation(-1),
@@ -83,42 +88,6 @@ SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle 
 
 	// Initialize the OpenGL surface window
 	Init();
-}
-
-
-//[-------------------------------------------------------]
-//[ Public virtual PLRenderer::Surface functions          ]
-//[-------------------------------------------------------]
-Vector2i SurfaceWindow::GetSize() const
-{
-	if (GetNativeWindowHandle()) {
-		#ifdef WIN32
-			RECT sRect;
-			GetClientRect(reinterpret_cast<HWND>(GetNativeWindowHandle()), &sRect);
-			return Vector2i(sRect.right, sRect.bottom);
-		#endif
-		#ifdef LINUX
-			::Window nRootWindow = 0;
-			int nPositionX = 0, nPositionY = 0;
-			unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
-
-			// Get the Linux context implementation
-			ContextLinux *pContextLinux = static_cast<ContextLinux*>(static_cast<Renderer&>(GetRenderer()).GetContext());
-			if (pContextLinux) {
-				// Get the X server display connection
-				Display *pDisplay = pContextLinux->GetDisplay();
-				if (pDisplay) {
-					// Get X window geometry information
-					XGetGeometry(pDisplay, GetNativeWindowHandle(), &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
-				}
-			}
-
-			// Return the window size
-			return Vector2i(nWidth, nHeight);
-		#endif
-	} else {
-		return Vector2i::Zero;
-	}
 }
 
 

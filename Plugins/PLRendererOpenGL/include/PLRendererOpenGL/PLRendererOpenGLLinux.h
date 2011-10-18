@@ -32,6 +32,7 @@
 #include <PLCore/PLCoreLinuxIncludes.h>
 #include <stddef.h>
 #ifdef APPLE
+	#define GL_GLEXT_LEGACY	// Ehm, if this is not defined, my OS "GL/gl.h" includes "GL/glext.h" automatically (!) which is definitely NOT ok (one reason is that "glext.h" is frequently extended)
 	#include <OpenGL/gl.h>
 	#include <OpenGL/glu.h>
 #else
@@ -51,7 +52,6 @@
 // We need to undefine some OS defines to avoid name conflicts... :(
 #undef None
 #undef Always
-#undef PSize
 #undef Success
 
 // Missing OpenGL definitions

@@ -81,7 +81,7 @@ class VertexBuffer : public Buffer {
 			Normal       =  2,	/**< Normal data (1 channel, only Float3 allowed!) */
 			Color        =  3,	/**< Color data (2 channels, only RGBA allowed, second channel requires Capabilities::bVertexBufferSecondaryColor) */
 			FogCoord     =  4,	/**< Fog coordinate data (1 channel, only Float1 allowed, requires FixedFunctions::Capabilities::bVertexBufferFogCoord) */
-			PSize        =  5,	/**< Point sprite size data (1 channel, only Float1 allowed!) */
+			PointSize    =  5,	/**< Point sprite size data (1 channel, only Float1 allowed! Known as "PSize", but this name may conflict with OS definitions) */
 			BlendIndices =  6,	/**< Blend indices data (1 channel) */
 			TexCoord     =  7,	/**< Texture coordinate data (n channels) */
 			Tangent      =  8,	/**< Tangent data (1 channel, only Float3 allowed!) */

@@ -36,7 +36,6 @@
 #undef Success		// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
 #undef None			// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
 #undef Always		// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
-#undef PSize		// We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
 #undef GetClassName // We undef this to avoid name conflicts with OS macros, why do they need to use macros?!
 #include <GLES2/gl2.h>
 #include <GLES2/gl2ext.h>

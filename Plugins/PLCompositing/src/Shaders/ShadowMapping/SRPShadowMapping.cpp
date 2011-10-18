@@ -26,6 +26,7 @@
 #include <PLCore/Tools/Tools.h>
 #include <PLMath/EulerAngles.h>
 #include <PLRenderer/RendererContext.h>
+#include <PLRenderer/Renderer/Shader.h>
 #include <PLRenderer/Renderer/Program.h>
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
@@ -239,7 +240,13 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 						// Choose the shader source codes depending on the requested shader language
 						if (sShaderLanguage == "GLSL") {
 							#include "SRPShadowMapping_GLSL.h"
-							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sSRPShadowMapping_GLSL_VS, "110", sSRPShadowMapping_GLSL_FS, "110");	// OpenGL 2.0 ("#version 110")
+							if (cRenderer.GetAPI() == "OpenGL ES 2.0") {
+								// Get shader source codes
+								m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sSRPShadowMapping_GLSL_VS, "110", sSRPShadowMapping_GLSL_FS, "110");	// OpenGL 2.0 ("#version 110")
+							} else {
+								// Remove precision qualifiers because they usually create some nasty driver issues!
+								m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, Shader::RemovePrecisionQualifiersFromGLSL(sSRPShadowMapping_GLSL_VS), "110", Shader::RemovePrecisionQualifiersFromGLSL(sSRPShadowMapping_GLSL_FS), "110");	// OpenGL 2.0 ("#version 110")
+							}
 						} else if (sShaderLanguage == "Cg") {
 							#include "SRPShadowMapping_Cg.h"
 							m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sSRPShadowMapping_Cg_VS, "arbvp1", sSRPShadowMapping_Cg_FS, "arbfp1");

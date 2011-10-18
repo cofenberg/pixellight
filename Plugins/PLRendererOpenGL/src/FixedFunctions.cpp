@@ -1343,7 +1343,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 		if (m_pRendererOpenGL->IsGL_ARB_vertex_program()) {
 			glDisableVertexAttribArrayARB(1);	// PLRenderer::VertexBuffer::BlendWeight
 			glDisableVertexAttribArrayARB(5);	// PLRenderer::VertexBuffer::FogCoord
-			glDisableVertexAttribArrayARB(6);	// PLRenderer::VertexBuffer::PSize
+			glDisableVertexAttribArrayARB(6);	// PLRenderer::VertexBuffer::PointSize
 			glDisableVertexAttribArrayARB(7);	// PLRenderer::VertexBuffer::BlendIndices
 			glDisableVertexAttribArrayARB(14);	// PLRenderer::VertexBuffer::Tangent
 			glDisableVertexAttribArrayARB(15);	// PLRenderer::VertexBuffer::Binormal
@@ -1427,7 +1427,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 					}
 					break;
 
-				case VertexBuffer::PSize: // Point sprite sizes
+				case VertexBuffer::PointSize: // Point sprite sizes
 					if (m_pRendererOpenGL->IsGL_ARB_vertex_program()) {
 						glVertexAttribPointerARB(
 							6,								// Point sprite size are vertex attribute 6

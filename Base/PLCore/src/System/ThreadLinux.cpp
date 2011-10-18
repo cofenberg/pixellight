@@ -82,7 +82,10 @@ ThreadLinux::~ThreadLinux()
 handle ThreadLinux::GetID() const
 {
 	// Return thread ID
-	return static_cast<handle>(m_nThreadID);
+	// Please note that we can't use C++ style casts in here across all supported platforms
+	// -> E.g. "static_cast<handle>(m_nThreadID)" will be "const pthread_t {aka _opaque_pthread_t* const}" on Mac OS X and result in an compiler error
+	// -> So, we stick with the classic C style cast
+	return (handle)m_nThreadID;
 }
 
 bool ThreadLinux::IsActive() const

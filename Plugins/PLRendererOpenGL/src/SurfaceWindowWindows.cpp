@@ -128,6 +128,21 @@ bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 
 
 //[-------------------------------------------------------]
+//[ Public virtual PLRenderer::Surface functions          ]
+//[-------------------------------------------------------]
+Vector2i SurfaceWindow::GetSize() const
+{
+	if (GetNativeWindowHandle()) {
+		RECT sRect;
+		GetClientRect(reinterpret_cast<HWND>(GetNativeWindowHandle()), &sRect);
+		return Vector2i(sRect.right, sRect.bottom);
+	} else {
+		return Vector2i::Zero;
+	}
+}
+
+
+//[-------------------------------------------------------]
 //[ Private virtual PLRenderer::Surface functions         ]
 //[-------------------------------------------------------]
 bool SurfaceWindow::Init()

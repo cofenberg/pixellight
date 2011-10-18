@@ -624,8 +624,8 @@ bool MeshLoaderPLXml::ReadVertexAttribute(VertexBuffer &cVertexBuffer, const Xml
 		nSemantic = VertexBuffer::Color;
 	else if (sSemantic == "FogCoord")
 		nSemantic = VertexBuffer::FogCoord;
-	else if (sSemantic == "PSize")
-		nSemantic = VertexBuffer::PSize;
+	else if (sSemantic == "PointSize")
+		nSemantic = VertexBuffer::PointSize;
 	else if (sSemantic == "BlendIndices")
 		nSemantic = VertexBuffer::BlendIndices;
 	else if (sSemantic == "TexCoord")
@@ -1566,7 +1566,7 @@ bool MeshLoaderPLXml::WriteVertexAttribute(const VertexBuffer::Attribute &cVerte
 		case VertexBuffer::Normal:			pVertexAttributeElement->SetAttribute("Semantic", "Normal");		break;
 		case VertexBuffer::Color:			pVertexAttributeElement->SetAttribute("Semantic", "Color");			break;
 		case VertexBuffer::FogCoord:		pVertexAttributeElement->SetAttribute("Semantic", "FogCoord");		break;
-		case VertexBuffer::PSize:			pVertexAttributeElement->SetAttribute("Semantic", "PSize");			break;
+		case VertexBuffer::PointSize:		pVertexAttributeElement->SetAttribute("Semantic", "PointSize");		break;
 		case VertexBuffer::BlendIndices:	pVertexAttributeElement->SetAttribute("Semantic", "BlendIndices");	break;
 		case VertexBuffer::TexCoord:		pVertexAttributeElement->SetAttribute("Semantic", "TexCoord");		break;
 		case VertexBuffer::Tangent:			pVertexAttributeElement->SetAttribute("Semantic", "Tangent");		break;
