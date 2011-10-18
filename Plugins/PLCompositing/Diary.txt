@@ -1,3 +1,9 @@
+>> 18.10.2011
+[CO]
+- "SRPShadowMapping": GLSL was broken on NVIDIA Systems, removed the precision qualifiers
+
+
+
 >> 14.09.2011
 [CO]
 - GLSL shaders: Changed within some first shaders "highp" into "mediump", still looks ok and we really have to get the most out of the limited
