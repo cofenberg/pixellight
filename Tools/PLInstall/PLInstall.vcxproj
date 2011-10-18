@@ -114,8 +114,9 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalDependencies>QtCore4.lib;QtGui4.lib;qtmain.lib;</AdditionalDependencies>
+      <AdditionalDependencies>QtCore4.lib;QtGui4.lib;qtmain.lib;PLCore.lib;</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../Bin/Lib/x86/;../../External/_Windows_x86_32/Qt/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>msvcrt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug_x86\PLInstallD.exe ..\..\Bin\Runtime\x86\</Command>
@@ -151,7 +152,7 @@
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
       <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
-      <AdditionalDependencies>QtCore4.lib;QtGui4.lib;qtmain.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>QtCore4.lib;QtGui4.lib;qtmain.lib;PLCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../Bin/Lib/x64/;../../External/_Windows_x86_64/Qt/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -196,7 +197,7 @@
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <SupportUnloadOfDelayLoadedDLL>true</SupportUnloadOfDelayLoadedDLL>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalDependencies>QtCore4.lib;QtGui4.lib;qtmain.lib;</AdditionalDependencies>
+      <AdditionalDependencies>QtCore4.lib;QtGui4.lib;qtmain.lib;PLCore.lib;</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../Bin/Lib/x86/;../../External/_Windows_x86_32/Qt/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>
@@ -238,7 +239,7 @@
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
       <UACExecutionLevel>HighestAvailable</UACExecutionLevel>
-      <AdditionalDependencies>QtCore4.lib;QtGui4.lib;qtmain.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>QtCore4.lib;QtGui4.lib;qtmain.lib;PLCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../Bin/Lib/x64/;../../External/_Windows_x86_64/Qt/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>

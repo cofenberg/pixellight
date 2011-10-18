@@ -20,15 +20,13 @@
 \*********************************************************/
 
 
-//#include <windows.h>
-//#include <stdio.h>
-#include <PixelLight.h>
 #include "InstallerFunctions.h"
 #include "MainWindow.h"
 
 
 MainWindow::MainWindow(QWidget *parent) :
-	m_pInstallerFunctions(new InstallerFunctions())
+	m_pInstallerFunctions(new InstallerFunctions()),
+	m_bIsRunning(false)
 {
 	wnd_main_ui.setupUi(this);
 	
@@ -36,13 +34,6 @@ MainWindow::MainWindow(QWidget *parent) :
 	initTextAndLabels();
 	//init buttons
 	initButtons();
-
-	//set default checkbox values
-	
-
-	//reset progressbar
-	setProgressBar(0);
-
 
 	//pack gui
 	adjustSize();
@@ -64,10 +55,19 @@ void MainWindow::initButtons()
 	//setup button text "run"
 	wnd_main_ui.btn_run->setText("Run");
 
+	//setup button text "cancel"
+	wnd_main_ui.btn_cancel->setText("Cancel");
+	wnd_main_ui.btn_cancel->setEnabled(false);
+
 	//setup button text "close"
 	wnd_main_ui.btn_close->setText("Close");
 
-	//QObject::connect(wnd_main->btn_run,SIGNAL(clicked()),this,SLOT(runEvent()));
+	//set default checkbox values 
+	setDefaultCheckboxValues();
+	
+	//connect button slots
+	QObject::connect(wnd_main_ui.btn_run,SIGNAL(clicked()),this,SLOT(runEvent()));
+	QObject::connect(wnd_main_ui.btn_cancel,SIGNAL(clicked()),this,SLOT(cancelEvent()));
 }
 
 void MainWindow::initTextAndLabels() 
@@ -89,10 +89,57 @@ void MainWindow::initTextAndLabels()
 }
 
 void MainWindow::setDefaultCheckboxValues()
-{
+{	
+	//Enable checkboxes on startup. The default process will install PL and check the installation.
+	wnd_main_ui.chk_install->setChecked(true);
+	wnd_main_ui.chk_checkInstallation->setChecked(true);
 }
 
-void MainWindow::setProgressBar(int value)
+void MainWindow::updateProgress(int value)
 {
 	wnd_main_ui.progB_progress->setValue(value);
+}
+	
+void MainWindow::runEvent()
+{
+	if(!m_bIsRunning) {
+
+		//toggle isRunning flag
+		m_bIsRunning = true;
+
+		//lock the checkboxes and change buttons
+		wnd_main_ui.btn_run->setEnabled(false);
+		wnd_main_ui.btn_cancel->setEnabled(true);
+		
+		wnd_main_ui.chk_install->setEnabled(false);
+		wnd_main_ui.chk_checkInstallation->setEnabled(false);
+
+		bool install = wnd_main_ui.chk_install->isChecked();
+		bool check = wnd_main_ui.chk_checkInstallation->isChecked();
+
+		//calculate overall progress steps
+	
+	
+		//[TODO] invoce installation and/or check
+	}
+}
+
+
+void MainWindow::cancelEvent()
+{
+	if(m_bIsRunning) {
+		//[TODO] cancel progress
+
+
+
+		m_bIsRunning = false;
+		//enable checkboxes
+		wnd_main_ui.chk_install->setEnabled(true);
+		wnd_main_ui.chk_checkInstallation->setEnabled(true);
+
+		//reset change button text
+		wnd_main_ui.btn_run->setEnabled(true);
+		wnd_main_ui.btn_cancel->setEnabled(false);
+
+	}
 }

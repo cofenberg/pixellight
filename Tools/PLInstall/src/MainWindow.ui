@@ -5,6 +5,14 @@
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>621</width>
+    <height>421</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>PixelLigh Installer</string>
   </property>
@@ -154,7 +162,7 @@
       <item>
        <widget class="QProgressBar" name="progB_progress">
         <property name="value">
-         <number>24</number>
+         <number>0</number>
         </property>
        </widget>
       </item>
@@ -181,6 +189,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="btn_cancel">
+          <property name="text">
+           <string>PushButton</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="btn_close">
           <property name="text">
            <string>PushButton</string>
@@ -198,6 +213,8 @@
   </widget>
  </widget>
  <resources>
+  <include location="../res/qtresources.qrc"/>
+  <include location="../res/qtresources.qrc"/>
   <include location="../res/qtresources.qrc"/>
  </resources>
  <connections>

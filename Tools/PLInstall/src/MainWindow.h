@@ -57,7 +57,8 @@ class MainWindow : QDialog
 
 		MainWindow(QWidget *parent = 0);
 		~MainWindow();
-
+		
+		void updateProgress(int value);
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]	
@@ -66,7 +67,6 @@ class MainWindow : QDialog
 		void initTextAndLabels();
 
 		void setDefaultCheckboxValues();
-		void setProgressBar(int value);
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
@@ -74,11 +74,19 @@ class MainWindow : QDialog
 	private:
 		Ui::MainWindow wnd_main_ui;
 		InstallerFunctions *m_pInstallerFunctions;
+		bool m_bIsRunning;
+		
+	//[-------------------------------------------------------]
+	//[ public qt slots                                      ]
+	//[-------------------------------------------------------]
+	public slots:
 	
 	//[-------------------------------------------------------]
 	//[ Private qt slots                                      ]
 	//[-------------------------------------------------------]
 	private slots:
+		void runEvent();
+		void cancelEvent();
 
 
 };

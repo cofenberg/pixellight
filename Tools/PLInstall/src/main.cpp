@@ -19,11 +19,6 @@
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
 \*********************************************************/
 
-
-//#include <windows.h>
-//#include <stdio.h>
-#include <PixelLight.h>
-#include <PLCore\PLCore.h>
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
@@ -36,35 +31,6 @@ int main(int argc, char *argv[])
 	
 	return app.exec();
 }
-/*
-void Message(const wchar_t szMessage[])
-{
-	MessageBox(nullptr, szMessage, L"PixelLight Installation", MB_OK);
-}
-*/
-
-/*
-bool CheckWindowsVersion()
-{
-	OSVERSIONINFOEX ver;
-
-	// Initialize structure
-	ZeroMemory(&ver, sizeof(OSVERSIONINFOEX));
-	ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
-
-	// Get version info
-	if (!GetVersionEx((OSVERSIONINFO*)&ver)) {
-		// Error with OSVERSIONINFOEX, try OSVERSIONINFO
-		ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-		if (!GetVersionEx((OSVERSIONINFO*)&ver))
-			return false;
-	}
-
-	// Check Windows version
-	return ver.dwPlatformId == VER_PLATFORM_WIN32_NT;
-}
-
-*/
 
 /***
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR pszCmdLine, int nShow)
