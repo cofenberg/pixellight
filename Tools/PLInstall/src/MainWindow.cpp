@@ -23,9 +23,12 @@
 //#include <windows.h>
 //#include <stdio.h>
 #include <PixelLight.h>
+#include "InstallerFunctions.h"
 #include "MainWindow.h"
 
-MainWindow::MainWindow(QWidget *parent) 
+
+MainWindow::MainWindow(QWidget *parent) :
+	m_pInstallerFunctions(new InstallerFunctions())
 {
 	wnd_main_ui.setupUi(this);
 	

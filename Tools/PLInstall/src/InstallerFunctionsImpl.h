@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: MainWindow.h                                       *
+ *  File: InstallerFunctionsImpl.h                                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -19,68 +19,60 @@
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
 \*********************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
 
-#include <QtGui/QDialog.h>
-#include "ui_MainWindow.h"
+#ifndef INSTALLERFUNCTIONS_IMPL_H
+#define INSTALLERFUNCTIONS_IMPL_H
+#pragma once
+
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
+//[ Includes                                              ]
 //[-------------------------------------------------------]
-class InstallerFunctions;
-
 
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    [TODO] write a description
+*    Abstract base class for platform specific 'InstallerFunctions' implementations
 *
 *  @note
-*    [TODO] write node
+*    - Implementation of the bridge design pattern, this class is the implementor of the 'InstallerFunctions' abstraction
 */
-class MainWindow : QDialog
-{	
-	
-	//[-------------------------------------------------------]
-	//[ Qt definitions (MOC)                                  ]
-	//[-------------------------------------------------------]
-	Q_OBJECT	// All files using the Q_OBJECT macro need to be compiled using the Meta-Object Compiler (MOC) of Qt, else slots won't work!
-				// (VisualStudio: Header file -> Right click -> Properties -> "Custom Build Tool")
-	
-	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
-	//[-------------------------------------------------------]
-	public:
-
-		MainWindow(QWidget *parent = 0);
-		~MainWindow();
-
-	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]	
-	private:
-		void initButtons();
-		void initTextAndLabels();
-
-		void setDefaultCheckboxValues();
-		void setProgressBar(int value);
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
-		Ui::MainWindow wnd_main_ui;
-		InstallerFunctions *m_pInstallerFunctions;
-	
-	//[-------------------------------------------------------]
-	//[ Private qt slots                                      ]
-	//[-------------------------------------------------------]
-	private slots:
+class InstallerFunctionsImpl {
 
 
+	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class InstallerFunctions;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected functions                                   ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Constructor
+		*/
+		InstallerFunctionsImpl();
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		virtual ~InstallerFunctionsImpl();
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual InstallerFunctionsImpl functions    ]
+	//[-------------------------------------------------------]
+	protected:
+/*		
+		virtual bool IsLoaded() const = 0;
+*/
 };
 
-#endif // MAINWINDOW_H
+
+#endif // INSTALLERFUNCTIONS_IMPL_H

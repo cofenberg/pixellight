@@ -23,9 +23,9 @@
 //#include <windows.h>
 //#include <stdio.h>
 #include <PixelLight.h>
+#include <PLCore\PLCore.h>
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
-
 
 int main(int argc, char *argv[]) 
 {

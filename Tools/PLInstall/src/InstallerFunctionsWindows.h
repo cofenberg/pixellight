@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: MainWindow.h                                       *
+ *  File: InstallerFunctionsWindows.h                                *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -19,16 +19,16 @@
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
 \*********************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
 
-#include <QtGui/QDialog.h>
-#include "ui_MainWindow.h"
+#ifndef INSTALLERFUNCTIONS_WINDOWS_H
+#define INSTALLERFUNCTIONS_WINDOWS_H
+#pragma once
+
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
+//[ Includes                                              ]
 //[-------------------------------------------------------]
-class InstallerFunctions;
+#include "InstallerFunctionsImpl.h"
 
 
 //[-------------------------------------------------------]
@@ -36,51 +36,47 @@ class InstallerFunctions;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    [TODO] write a description
-*
-*  @note
-*    [TODO] write node
+*    Windows 'DynLib' implementation
 */
-class MainWindow : QDialog
-{	
-	
-	//[-------------------------------------------------------]
-	//[ Qt definitions (MOC)                                  ]
-	//[-------------------------------------------------------]
-	Q_OBJECT	// All files using the Q_OBJECT macro need to be compiled using the Meta-Object Compiler (MOC) of Qt, else slots won't work!
-				// (VisualStudio: Header file -> Right click -> Properties -> "Custom Build Tool")
-	
-	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
-	//[-------------------------------------------------------]
-	public:
+class InstallerFunctionsWindows : public InstallerFunctionsImpl {
 
-		MainWindow(QWidget *parent = 0);
-		~MainWindow();
+
+	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class InstallerFunctions;
+
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
-	//[-------------------------------------------------------]	
+	//[-------------------------------------------------------]
 	private:
-		void initButtons();
-		void initTextAndLabels();
+		/**
+		*  @brief
+		*    Constructor
+		*/
+		InstallerFunctionsWindows();
 
-		void setDefaultCheckboxValues();
-		void setProgressBar(int value);
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		virtual ~InstallerFunctionsWindows();
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual InstallerFunctionsImpl functions      ]
+	//[-------------------------------------------------------]
+	private:
+//		virtual bool IsLoaded() const override;
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Ui::MainWindow wnd_main_ui;
-		InstallerFunctions *m_pInstallerFunctions;
-	
-	//[-------------------------------------------------------]
-	//[ Private qt slots                                      ]
-	//[-------------------------------------------------------]
-	private slots:
 
 
 };
 
-#endif // MAINWINDOW_H
+
+#endif // INSTALLERFUNCTIONS_WINDOWS_H
