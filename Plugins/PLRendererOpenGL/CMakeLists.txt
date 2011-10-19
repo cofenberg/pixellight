@@ -84,9 +84,9 @@ elseif(APPLE)
 	## Apple
 	##################################################
 	add_sources(
-#		src/MacOSX/ContextMacOSX.cpp
+		src/MacOSX/ContextMacOSX.cpp
 #		src/MacOSX/ExtensionsMacOSX.cpp
-#		src/MacOSX/SurfaceWindowMacOSX.cpp
+		src/MacOSX/SurfaceWindowMacOSX.cpp
 	)
 elseif(LINUX)
 	##################################################

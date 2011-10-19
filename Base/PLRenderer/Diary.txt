@@ -1,6 +1,8 @@
 >> 19.10.2011
 [CO]
-- PLRendererOpenGL: All OS dependent implementations are now in subdirectories ("Windows", "Linux" and so on)
+PLRendererOpenGL:
+- All OS dependent implementations are now in subdirectories ("Windows", "Linux" and so on)
+- Added empty Mac OS X classes to have something to start with (intentionally no extensions file right now)
 
 
 

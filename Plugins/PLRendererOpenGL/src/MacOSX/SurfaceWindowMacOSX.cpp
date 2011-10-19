@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SurfaceWindow.cpp                              *
+ *  File: SurfaceWindowMacOSX.cpp                        *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -30,53 +30,63 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
+using namespace PLMath;
 namespace PLRendererOpenGL {
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
+//[ Public virtual PLRenderer::SurfaceWindow functions    ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Destructor
-*/
-SurfaceWindow::~SurfaceWindow()
+bool SurfaceWindow::GetGamma(float &fRed, float &fGreen, float &fBlue) const
 {
-	// De-initialize the OpenGL surface window
-	DeInit();
+	// [TODO] Implement me
+	return false;
+}
+
+bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
+{
+	// [TODO] Implement me
+	return false;
 }
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Public virtual PLRenderer::Surface functions          ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Constructor
-*/
-SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen) :
-	PLRenderer::SurfaceWindow(cHandler, nNativeWindowHandle, bFullscreen),
-	#ifdef WIN32
-		m_hDC(nullptr),
-	#endif
-	#ifdef APPLE
-		// [TODO] Implement Mac OS X part
-	#elif LINUX
-		m_nNativeWindowHandle(NULL_HANDLE),
-		m_nOldSizeID(-1),
-		m_nOldRotation(-1),
-	#endif
-		m_nSwapInterval(-1),
-		m_bGammaChanged(false)
+Vector2i SurfaceWindow::GetSize() const
 {
-	// Initialize gamma backup
-	m_fGammaBackup[0] = m_fGammaBackup[1] = m_fGammaBackup[2] = 0.0f;
+	if (GetNativeWindowHandle()) {
+		// [TODO] Implement me
+		return Vector2i::Zero;
+	} else {
+		return Vector2i::Zero;
+	}
+}
 
-	// Just copy over the given information
-	m_sDisplayMode = sDisplayMode;
 
-	// Initialize the OpenGL surface window
-	Init();
+//[-------------------------------------------------------]
+//[ Private virtual PLRenderer::Surface functions         ]
+//[-------------------------------------------------------]
+bool SurfaceWindow::Init()
+{
+	// [TODO] Implement me
+	return false;
+}
+
+void SurfaceWindow::DeInit()
+{
+	// [TODO] Implement me
+}
+
+bool SurfaceWindow::MakeCurrent(uint8 nFace)
+{
+	// [TODO] Implement me
+}
+
+bool SurfaceWindow::Present()
+{
+	// [TODO] Implement me
+	return false;
 }
 
 

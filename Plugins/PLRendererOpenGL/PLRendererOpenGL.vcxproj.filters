@@ -11,6 +11,9 @@
     <Filter Include="Linux">
       <UniqueIdentifier>{8acd7008-32f9-445b-9b59-8aa2743d64c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MacOSX">
+      <UniqueIdentifier>{5550c414-7ba1-4303-a82d-efd114c6124c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Context.cpp">
@@ -135,6 +138,12 @@
     </ClCompile>
     <ClCompile Include="src\Extensions.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MacOSX\ContextMacOSX.cpp">
+      <Filter>MacOSX</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MacOSX\SurfaceWindowMacOSX.cpp">
+      <Filter>MacOSX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -263,6 +272,9 @@
     </ClInclude>
     <ClInclude Include="include\PLRendererOpenGL\Extensions.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\MacOSX\ContextMacOSX.h">
+      <Filter>MacOSX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -299,6 +299,18 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="src\MacOSX\ContextMacOSX.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\MacOSX\SurfaceWindowMacOSX.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="src\OcclusionQuery.cpp" />
     <ClCompile Include="src\PLRendererOpenGL.cpp" />
     <ClCompile Include="src\Program.cpp" />
@@ -336,6 +348,7 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLRendererOpenGL\FrameBufferObject.h" />
     <ClInclude Include="include\PLRendererOpenGL\Linux\ContextLinux.h" />
     <ClInclude Include="include\PLRendererOpenGL\Linux\PLRendererOpenGLLinux.h" />
+    <ClInclude Include="include\PLRendererOpenGL\MacOSX\ContextMacOSX.h" />
     <ClInclude Include="include\PLRendererOpenGL\ProgramUniformBlockGLSL.h" />
     <ClInclude Include="include\PLRendererOpenGL\UniformBuffer.h" />
     <ClInclude Include="include\PLRendererOpenGL\Windows\ContextWindows.h" />
