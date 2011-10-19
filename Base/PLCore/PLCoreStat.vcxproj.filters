@@ -247,19 +247,19 @@
     <ClCompile Include="src\File\FileImpl.cpp">
       <Filter>File</Filter>
     </ClCompile>
-    <ClCompile Include="src\Log\LogFormaterHtml.cpp">
+    <ClCompile Include="src\Log\LogFormatterHtml.cpp">
       <Filter>Log</Filter>
     </ClCompile>
-    <ClCompile Include="src\Log\LogFormaterText.cpp">
+    <ClCompile Include="src\Log\LogFormatterText.cpp">
       <Filter>Log</Filter>
     </ClCompile>
-    <ClCompile Include="src\Log\LogFormaterXml.cpp">
+    <ClCompile Include="src\Log\LogFormatterXml.cpp">
       <Filter>Log</Filter>
     </ClCompile>
     <ClCompile Include="src\Log\Log.cpp">
       <Filter>Log</Filter>
     </ClCompile>
-    <ClCompile Include="src\Log\LogFormater.cpp">
+    <ClCompile Include="src\Log\LogFormatter.cpp">
       <Filter>Log</Filter>
     </ClCompile>
     <ClCompile Include="src\Network\Network.cpp">
@@ -978,19 +978,19 @@
     <ClInclude Include="include\PLCore\File\FileLinux.h">
       <Filter>File</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLCore\Log\LogFormaterHtml.h">
+    <ClInclude Include="include\PLCore\Log\LogFormatterHtml.h">
       <Filter>Log</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLCore\Log\LogFormaterText.h">
+    <ClInclude Include="include\PLCore\Log\LogFormatterText.h">
       <Filter>Log</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLCore\Log\LogFormaterXml.h">
+    <ClInclude Include="include\PLCore\Log\LogFormatterXml.h">
       <Filter>Log</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Log\Log.h">
       <Filter>Log</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLCore\Log\LogFormater.h">
+    <ClInclude Include="include\PLCore\Log\LogFormatter.h">
       <Filter>Log</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\Network\Connection.h">

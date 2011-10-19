@@ -65,7 +65,7 @@ namespace PLCore {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class LogFormater;
+class LogFormatter;
 
 
 //[-------------------------------------------------------]
@@ -129,7 +129,7 @@ class Log : public Singleton<Log> {
 		*    'true' if the log is writing into the console, else 'false'
 		*
 		*  @note
-		*    - In addition to using an optional log formater, the log also writes into the console in verbose mode
+		*    - In addition to using an optional log formatter, the log also writes into the console in verbose mode
 		*    - The log does not need be to be opened to write into the console
 		*    - Android: Messages are not written into the console, instead the Android in-kernel log buffer is used
 		*              (use Androids "logcat" utility to access this system log)
@@ -156,30 +156,30 @@ class Log : public Singleton<Log> {
 		*    Open the log file by using a filename
 		*
 		*  @param[in] sFilename
-		*    The log's filename, the log formater is automatically created by using the filename extension
+		*    The log's filename, the log formatter is automatically created by using the filename extension
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe the log is already opened or the filename extension is not supported?)
 		*
 		*  @note
-		*    - Supported log filename extensions: "txt" (LogFormaterText), "log" (LogFormaterText), "xml" (LogFormaterXml), "html" (LogFormaterHtml)
+		*    - Supported log filename extensions: "txt" (LogFormatterText), "log" (LogFormatterText), "xml" (LogFormatterXml), "html" (LogFormatterHtml)
 		*/
 		PLCORE_API bool Open(const String &sFilename);
 
 		/**
 		*  @brief
-		*    Open the log file by using a filename and an explicit log formater instance
+		*    Open the log file by using a filename and an explicit log formatter instance
 		*
 		*  @param[in] sFilename
 		*    The log's filename
-		*  @param[in] cLogFormater
-		*    Log formater instance to be used, if this method returns successfully, the log takes over
+		*  @param[in] cLogFormatter
+		*    Log formatter instance to be used, if this method returns successfully, the log takes over
 		*    the control and is responsible for the destruction of the given instance
 		*
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe the log is already opened?)
 		*/
-		PLCORE_API bool Open(const String &sFilename, LogFormater &cLogFormater);
+		PLCORE_API bool Open(const String &sFilename, LogFormatter &cLogFormatter);
 
 		/**
 		*  @brief
@@ -309,12 +309,12 @@ class Log : public Singleton<Log> {
 
 		/**
 		*  @brief
-		*    Get log formater
+		*    Get log formatter
 		*
 		*  @return
-		*    The current log formater object, can be a null pointer, do NOT delete the returned instance!
+		*    The current log formatter object, can be a null pointer, do NOT delete the returned instance!
 		*/
-		PLCORE_API LogFormater *GetLogFormater() const;
+		PLCORE_API LogFormatter *GetLogFormatter() const;
 
 
 	//[-------------------------------------------------------]
@@ -381,7 +381,7 @@ class Log : public Singleton<Log> {
 		uint32		   m_nFlushMessages;			/**< Holds the number of messages since the last flush */
 		Queue<String>  m_qLastMessages;				/**< Holds the last log messages */
 		uint32		   m_nBufferedMessages;			/**< How much messages should be buffered */
-		LogFormater	  *m_pLogFormater;				/**< Holds an instance of a log formater class, can be a null pointer */
+		LogFormatter  *m_pLogFormatter;				/**< Holds an instance of a log formatter class, can be a null pointer */
 
 
 };

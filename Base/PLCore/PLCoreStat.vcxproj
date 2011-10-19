@@ -282,10 +282,10 @@
     </ClCompile>
     <ClCompile Include="src\Frontend\FrontendPixelLight.cpp" />
     <ClCompile Include="src\Log\Log.cpp" />
-    <ClCompile Include="src\Log\LogFormater.cpp" />
-    <ClCompile Include="src\Log\LogFormaterHtml.cpp" />
-    <ClCompile Include="src\Log\LogFormaterText.cpp" />
-    <ClCompile Include="src\Log\LogFormaterXml.cpp" />
+    <ClCompile Include="src\Log\LogFormatter.cpp" />
+    <ClCompile Include="src\Log\LogFormatterHtml.cpp" />
+    <ClCompile Include="src\Log\LogFormatterText.cpp" />
+    <ClCompile Include="src\Log\LogFormatterXml.cpp" />
     <ClCompile Include="src\Network\Buffer.cpp" />
     <ClCompile Include="src\Network\Client.cpp" />
     <ClCompile Include="src\Network\Connection.cpp" />
@@ -550,10 +550,10 @@
     <ClInclude Include="include\PLCore\Frontend\FrontendOpenGL.h" />
     <ClInclude Include="include\PLCore\Frontend\FrontendPixelLight.h" />
     <ClInclude Include="include\PLCore\Log\Log.h" />
-    <ClInclude Include="include\PLCore\Log\LogFormater.h" />
-    <ClInclude Include="include\PLCore\Log\LogFormaterHtml.h" />
-    <ClInclude Include="include\PLCore\Log\LogFormaterText.h" />
-    <ClInclude Include="include\PLCore\Log\LogFormaterXml.h" />
+    <ClInclude Include="include\PLCore\Log\LogFormatter.h" />
+    <ClInclude Include="include\PLCore\Log\LogFormatterHtml.h" />
+    <ClInclude Include="include\PLCore\Log\LogFormatterText.h" />
+    <ClInclude Include="include\PLCore\Log\LogFormatterXml.h" />
     <ClInclude Include="include\PLCore\Main.h" />
     <ClInclude Include="include\PLCore\ModuleMain.h" />
     <ClInclude Include="include\PLCore\Network\Buffer.h" />

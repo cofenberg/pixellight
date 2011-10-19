@@ -7,6 +7,7 @@
 - "File::GetContentAsString()": Added UTF8 support
 - "LoadableManager::OpenFile()": Added string encoding format parameter
 - "ScriptManager::CreateFromFile()": Added string encoding format parameter
+- Fixed spelling error: "LogFormater" -> "LogFormatter"
 
 
 

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: LogFormaterXml.cpp                             *
+ *  File: LogFormatterXml.cpp                            *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -25,7 +25,7 @@
 //[-------------------------------------------------------]
 #include "PLCore/File/File.h"
 #include "PLCore/Log/Log.h"
-#include "PLCore/Log/LogFormaterXml.h"
+#include "PLCore/Log/LogFormatterXml.h"
 
 
 //[-------------------------------------------------------]
@@ -41,7 +41,7 @@ namespace PLCore {
 *  @brief
 *    Default constructor
 */
-LogFormaterXml::LogFormaterXml()
+LogFormatterXml::LogFormatterXml()
 {
 }
 
@@ -49,7 +49,7 @@ LogFormaterXml::LogFormaterXml()
 *  @brief
 *    Destructor
 */
-LogFormaterXml::~LogFormaterXml()
+LogFormatterXml::~LogFormatterXml()
 {
 }
 
@@ -61,7 +61,7 @@ LogFormaterXml::~LogFormaterXml()
 *  @brief
 *    Copy constructor
 */
-LogFormaterXml::LogFormaterXml(const LogFormaterXml &cSource)
+LogFormatterXml::LogFormatterXml(const LogFormatterXml &cSource)
 {
 	// No implementation because the copy constructor is never used
 }
@@ -70,7 +70,7 @@ LogFormaterXml::LogFormaterXml(const LogFormaterXml &cSource)
 *  @brief
 *    Copy operator
 */
-LogFormaterXml &LogFormaterXml::operator =(const LogFormaterXml &cSource)
+LogFormatterXml &LogFormatterXml::operator =(const LogFormatterXml &cSource)
 {
 	// No implementation because the copy operator is never used
 	return *this;
@@ -80,7 +80,7 @@ LogFormaterXml &LogFormaterXml::operator =(const LogFormaterXml &cSource)
 *  @brief
 *    Returns the XML formated text the given log level
 */
-String LogFormaterXml::GetXmlFormatedText(uint8 nLogLevel, const String &sText) const
+String LogFormatterXml::GetXmlFormatedText(uint8 nLogLevel, const String &sText) const
 {
 	String sTags     = "\t<a>|</a>";
 	String sLogLevel = Log::GetInstance()->LogLevelToString(nLogLevel);
@@ -101,9 +101,9 @@ String LogFormaterXml::GetXmlFormatedText(uint8 nLogLevel, const String &sText) 
 
 
 //[-------------------------------------------------------]
-//[ Private virtual LogFormater functions                 ]
+//[ Private virtual LogFormatter functions                ]
 //[-------------------------------------------------------]
-bool LogFormaterXml::Open(const String &sFilename)
+bool LogFormatterXml::Open(const String &sFilename)
 {
 	// Open the log file via the helper function of the base class, use UTF8 string encoding format so one can also put cryptic none English characters into the log
 	m_pFile = OpenFile(sFilename, String::UTF8);
@@ -119,7 +119,7 @@ bool LogFormaterXml::Open(const String &sFilename)
 	return false;
 }
 
-bool LogFormaterXml::Close()
+bool LogFormatterXml::Close()
 {
 	// Is the file open?
 	if (m_pFile) {
@@ -142,7 +142,7 @@ bool LogFormaterXml::Close()
 	return false;
 }
 
-bool LogFormaterXml::Output(uint8 nLogLevel, const String &sText)
+bool LogFormatterXml::Output(uint8 nLogLevel, const String &sText)
 {
 	if (m_pFile) {
 		// Write the text and a newline
@@ -154,7 +154,7 @@ bool LogFormaterXml::Output(uint8 nLogLevel, const String &sText)
 	return false;
 }
 
-bool LogFormaterXml::Flush()
+bool LogFormatterXml::Flush()
 {
 	return m_pFile && m_pFile->Flush();
 }

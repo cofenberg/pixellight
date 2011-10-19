@@ -106,10 +106,10 @@ add_sources(
 	src/Xml/XmlDeclaration.cpp
 	src/Xml/XmlParsingData.cpp
 	src/Log/Log.cpp
-	src/Log/LogFormater.cpp
-	src/Log/LogFormaterXml.cpp
-	src/Log/LogFormaterHtml.cpp
-	src/Log/LogFormaterText.cpp
+	src/Log/LogFormatter.cpp
+	src/Log/LogFormatterXml.cpp
+	src/Log/LogFormatterHtml.cpp
+	src/Log/LogFormatterText.cpp
 	src/Base/Class.cpp
 	src/Base/ClassImpl.cpp
 	src/Base/ClassReal.cpp

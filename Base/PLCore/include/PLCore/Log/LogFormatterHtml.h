@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: LogFormaterHtml.h                              *
+ *  File: LogFormatterHtml.h                             *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLCORE_LOGFORMATER_HTML_H__
-#define __PLCORE_LOGFORMATER_HTML_H__
+#ifndef __PLCORE_LOGFORMATTER_HTML_H__
+#define __PLCORE_LOGFORMATTER_HTML_H__
 #pragma once
 
 
@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLCore/Container/HashMap.h"
-#include "PLCore/Log/LogFormater.h"
+#include "PLCore/Log/LogFormatter.h"
 
 
 //[-------------------------------------------------------]
@@ -43,16 +43,16 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    HTML log formater
+*    HTML log formatter
 *
 *  @note
 *    - Header: This text/HTML codes are written after the <body> tags
 *    - Background: The background is set in the <body> tag
 *    - Background: You must also give the option name (e.g. bgcolor=<color in HTML notation>)
 *    - DefaultTextColor: The color must be in HTML notation. Either the color name(e.g. red) or the RGB values in hexadecimal. (e.g. #FF0000)
-*    - Implementation of the strategy design pattern, this class a concrete strategy of the strategy "LogFormater" of the context "Log"
+*    - Implementation of the strategy design pattern, this class a concrete strategy of the strategy "LogFormatter" of the context "Log"
 */
-class LogFormaterHtml : public LogFormater {
+class LogFormatterHtml : public LogFormatter {
 
 
 	//[-------------------------------------------------------]
@@ -63,13 +63,13 @@ class LogFormaterHtml : public LogFormater {
 		*  @brief
 		*    Default constructor
 		*/
-		PLCORE_API LogFormaterHtml();
+		PLCORE_API LogFormatterHtml();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API virtual ~LogFormaterHtml();
+		PLCORE_API virtual ~LogFormatterHtml();
 
 		/**
 		*  @brief
@@ -167,7 +167,7 @@ class LogFormaterHtml : public LogFormater {
 		*  @param[in] cSource
 		*    Source to copy from
 		*/
-		LogFormaterHtml(const LogFormaterHtml &cSource);
+		LogFormatterHtml(const LogFormatterHtml &cSource);
 
 		/**
 		*  @brief
@@ -179,7 +179,7 @@ class LogFormaterHtml : public LogFormater {
 		*  @return
 		*    Reference to this instance
 		*/
-		LogFormaterHtml &operator =(const LogFormaterHtml &cSource);
+		LogFormatterHtml &operator =(const LogFormatterHtml &cSource);
 
 		/**
 		*  @brief
@@ -198,7 +198,7 @@ class LogFormaterHtml : public LogFormater {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual LogFormater functions                 ]
+	//[ Private virtual LogFormatter functions                ]
 	//[-------------------------------------------------------]
 	private:
 		virtual bool Open(const String &sFilename) override;
@@ -229,4 +229,4 @@ class LogFormaterHtml : public LogFormater {
 } // PLCore
 
 
-#endif // __PLCORE_LOGFORMATER_HTML_H__
+#endif // __PLCORE_LOGFORMATTER_HTML_H__

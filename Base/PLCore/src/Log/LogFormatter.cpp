@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: LogFormaterText.cpp                            *
+ *  File: LogFormatter.cpp                               *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -24,8 +24,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLCore/File/File.h"
-#include "PLCore/Log/Log.h"
-#include "PLCore/Log/LogFormaterText.h"
+#include "PLCore/File/Directory.h"
+#include "PLCore/Log/LogFormatter.h"
 
 
 //[-------------------------------------------------------]
@@ -39,9 +39,25 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
+*    To activate/deactivate that the [LogLevel] prefix should be shown
+*    in the log before each log message e.g. [Info] info log level message
+*/
+void LogFormatter::ShowLogLevelPrefix(bool bShow)
+{
+	m_bShowLogLevelPrefix = bShow;
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected functions                                   ]
+//[-------------------------------------------------------]
+/**
+*  @brief
 *    Default constructor
 */
-LogFormaterText::LogFormaterText()
+LogFormatter::LogFormatter() :
+	m_pFile(nullptr),
+	m_bShowLogLevelPrefix(true)
 {
 }
 
@@ -49,8 +65,31 @@ LogFormaterText::LogFormaterText()
 *  @brief
 *    Destructor
 */
-LogFormaterText::~LogFormaterText()
+LogFormatter::~LogFormatter()
 {
+}
+
+/**
+*  @brief
+*    Helper function to open the log as a file
+*/
+File *LogFormatter::OpenFile(const String &sFilename, String::EFormat nStringFormat)
+{
+	// Check filename
+	if (sFilename.GetLength()) {
+		// Open the file
+		File *pFile = new File(sFilename);
+		if (!pFile->Open(File::FileWrite | File::FileCreate, nStringFormat)) {
+			delete pFile;
+			pFile = nullptr;
+		}
+
+		// Done
+		return pFile;
+	}
+
+	// Error!
+	return nullptr;
 }
 
 
@@ -61,7 +100,9 @@ LogFormaterText::~LogFormaterText()
 *  @brief
 *    Copy constructor
 */
-LogFormaterText::LogFormaterText(const LogFormaterText &cSource)
+LogFormatter::LogFormatter(const LogFormatter &cSource) :
+	m_pFile(nullptr),
+	m_bShowLogLevelPrefix(true)
 {
 	// No implementation because the copy constructor is never used
 }
@@ -70,68 +111,10 @@ LogFormaterText::LogFormaterText(const LogFormaterText &cSource)
 *  @brief
 *    Copy operator
 */
-LogFormaterText &LogFormaterText::operator =(const LogFormaterText &cSource)
+LogFormatter &LogFormatter::operator =(const LogFormatter &cSource)
 {
 	// No implementation because the copy operator is never used
 	return *this;
-}
-
-
-//[-------------------------------------------------------]
-//[ Private virtual LogFormater functions                 ]
-//[-------------------------------------------------------]
-bool LogFormaterText::Open(const String &sFilename)
-{
-	// Open the log file via the helper function of the base-class, use UTF8 string encoding format so one can also put cryptic none English characters into the log
-	m_pFile = OpenFile(sFilename, String::UTF8);
-
-	// Error?
-	return (m_pFile != nullptr);
-}
-
-bool LogFormaterText::Close()
-{
-	// Is the file open?
-	if (m_pFile) {
-		// Close file
-		m_pFile->Close();
-
-		// Reset data
-		delete m_pFile;
-		m_pFile = nullptr;
-
-		// Done
-		return true;
-	}
-
-	// Log was not even open
-	return false; // Error!
-}
-
-bool LogFormaterText::Output(uint8 nLogLevel, const String &sText)
-{
-	if (m_pFile) {
-		// Prepare log message
-		String sLogMessage;
-		if (nLogLevel >= Log::Quiet && m_bShowLogLevelPrefix) {
-			sLogMessage  = "[";
-			sLogMessage += Log::GetInstance()->LogLevelToString(nLogLevel);
-			sLogMessage += "]: ";
-		}
-		sLogMessage += sText;
-
-		// Write the text and a newline
-		if (m_pFile->PrintLn(sLogMessage))
-			return true; // Done
-	}
-
-	// Error!
-	return false;
-}
-
-bool LogFormaterText::Flush()
-{
-	return m_pFile && m_pFile->Flush();
 }
 
 
