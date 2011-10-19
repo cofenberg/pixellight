@@ -74,16 +74,22 @@ class InstallerFunctionsWindows : public InstallerFunctionsImpl {
 	//[ Private virtual InstallerFunctionsImpl functions      ]
 	//[-------------------------------------------------------]
 	protected:
-//		virtual bool IsLoaded() const override;
-
-
 		virtual PLCore::Event<int>* getProgressUpdateEvent() override;
+		
+		virtual bool installRuntime() override;
+
+		virtual int getInstallRuntimeProgressSteps() override;
+
+		virtual bool checkRuntimeInstallation() override;
+
+		virtual int getCheckRuntimeProgressSteps() override;
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-
+		static const int INSTALL_RUNTIME_PROGRESS_STEPS = 10;
+		static const int CHECK_RUNTIME_PROGRESS_STEPS = 3;
 
 };
 

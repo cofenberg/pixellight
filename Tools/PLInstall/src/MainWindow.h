@@ -70,6 +70,8 @@ class MainWindow : QDialog
 
 		void setDefaultCheckboxValues();
 
+		void runComplete();
+
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
@@ -78,6 +80,8 @@ class MainWindow : QDialog
 		InstallerFunctions *m_pInstallerFunctions;
 		PLCore::EventHandler<int> *m_pProgressEventHandler;
 		bool m_bIsRunning;
+		double m_installationProgressStepPercentage;
+		double m_installationProgressPrecentage;
 		
 	//[-------------------------------------------------------]
 	//[ public qt slots                                       ]

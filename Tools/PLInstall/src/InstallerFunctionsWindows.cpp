@@ -49,6 +49,48 @@ PLCore::Event<int>* InstallerFunctionsWindows::getProgressUpdateEvent()
 	return &EventProgressUpdate;
 }
 
+
+//[-------------------------------------------------------]
+//[ Protected virtual InstallerFunctionsImpl functions    ]
+//[-------------------------------------------------------]
+
+bool InstallerFunctionsWindows::installRuntime() 
+{
+	EventProgressUpdate(1);
+	EventProgressUpdate(1);
+	EventProgressUpdate(1);
+	EventProgressUpdate(1);
+	EventProgressUpdate(1);
+	EventProgressUpdate(1);
+	EventProgressUpdate(1);
+	EventProgressUpdate(1);
+	EventProgressUpdate(1);
+	EventProgressUpdate(1);
+
+	return false;
+}
+
+bool InstallerFunctionsWindows::checkRuntimeInstallation()
+{
+	EventProgressUpdate(1);
+	EventProgressUpdate(1);
+	EventProgressUpdate(1);
+	return false;
+}
+
+int InstallerFunctionsWindows::getInstallRuntimeProgressSteps()
+{
+
+	return INSTALL_RUNTIME_PROGRESS_STEPS;
+}
+
+
+int InstallerFunctionsWindows::getCheckRuntimeProgressSteps()
+{
+
+	return CHECK_RUNTIME_PROGRESS_STEPS;
+}
+
 //[-------------------------------------------------------]
 //[ Private virtual InstallerFunctionsImpl functions      ]
 //[-------------------------------------------------------]

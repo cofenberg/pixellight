@@ -67,6 +67,14 @@ class InstallerFunctions {
 
 		
 		void connectProgressEventHandler(PLCore::EventHandler<int> *pProgressEventHandler);
+		
+		bool installRuntime();
+
+		int getInstallRuntimeProgressSteps();
+
+		bool checkRuntimeInstallation();
+
+		int getCheckRuntimeProgressSteps();
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]

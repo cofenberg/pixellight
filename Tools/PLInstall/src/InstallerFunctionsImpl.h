@@ -73,10 +73,16 @@ class InstallerFunctionsImpl {
 	//[ Protected virtual InstallerFunctionsImpl functions    ]
 	//[-------------------------------------------------------]
 	protected:
-/*		
-		virtual bool IsLoaded() const = 0;
-*/
 		virtual PLCore::Event<int>* getProgressUpdateEvent() = 0;
+		
+		virtual bool installRuntime() = 0;
+
+		virtual int getInstallRuntimeProgressSteps() = 0;
+
+		virtual bool checkRuntimeInstallation() = 0;
+
+		virtual int getCheckRuntimeProgressSteps() = 0;
+
 };
 
 

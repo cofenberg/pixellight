@@ -80,6 +80,26 @@ void InstallerFunctions::connectProgressEventHandler(PLCore::EventHandler<int> *
 	m_pInstallerFunctionsImpl->getProgressUpdateEvent()->Connect(*pProgressEventHandler);
 }
 
+bool InstallerFunctions::installRuntime()
+{
+	return m_pInstallerFunctionsImpl->installRuntime();
+}
+
+int InstallerFunctions::getInstallRuntimeProgressSteps()
+{
+	return m_pInstallerFunctionsImpl->getInstallRuntimeProgressSteps();
+}
+
+bool InstallerFunctions::checkRuntimeInstallation()
+{
+	return m_pInstallerFunctionsImpl->checkRuntimeInstallation();
+}
+
+int InstallerFunctions::getCheckRuntimeProgressSteps()
+{
+	return m_pInstallerFunctionsImpl->getCheckRuntimeProgressSteps();
+}
+
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
