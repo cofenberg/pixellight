@@ -1,3 +1,9 @@
+﻿>> 19.10.2011
+[CO]
+- "FileWindows::PutS()" didn't take Unicode into account
+
+
+
 >> 16.10.2011
 [CO]
 - "Socket": Fixed "warning C4244: 'initializing' : conversion from 'SOCKET' to 'int', possible loss of data" when compiling for 64 bit

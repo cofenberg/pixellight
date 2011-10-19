@@ -355,6 +355,7 @@ String FileWindows::GetS()
 {
 	// Read string
 	if (IsReadable()) {
+		// ASCII... using "GetS()" is not recommended...
 		char szTemp[2048] = "";
 		if (fgets(szTemp, 2048, m_pFile))
 			return szTemp;
@@ -368,7 +369,7 @@ int FileWindows::PutS(const String &sString)
 {
 	// Write string
 	if (IsWritable()) {
-		const int nSize = fputs(sString, m_pFile);
+		const int nSize = (m_sFilename.GetFormat() == String::ASCII) ? fputs(sString.GetASCII(), m_pFile) : fputws(sString.GetUnicode(), m_pFile);
 		if (nSize >= 0)
 			return sString.GetLength();
 	}
