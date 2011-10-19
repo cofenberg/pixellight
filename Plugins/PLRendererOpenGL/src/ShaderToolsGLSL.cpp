@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
-#include "PLRendererOpenGL/Misc/ExtensionDefinitions.h"
+#include "PLRendererOpenGL/ExtensionDefinitions.h"
 #include "PLRendererOpenGL/ShaderToolsGLSL.h"
 
 

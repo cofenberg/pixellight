@@ -269,13 +269,8 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Context.cpp" />
-    <ClCompile Include="src\ContextLinux.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\ContextWindows.cpp" />
+    <ClCompile Include="src\ExtensionConfig.cpp" />
+    <ClCompile Include="src\Extensions.cpp" />
     <ClCompile Include="src\FixedFunctions.cpp" />
     <ClCompile Include="src\FontGlyphTexture.cpp" />
     <ClCompile Include="src\FontManager.cpp" />
@@ -283,8 +278,27 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\FontTextureFixedFunctions.cpp" />
     <ClCompile Include="src\FontTextureShaders.cpp" />
     <ClCompile Include="src\FragmentShaderGLSL.cpp" />
+    <ClCompile Include="src\FrameBufferObject.cpp" />
     <ClCompile Include="src\GeometryShaderGLSL.cpp" />
     <ClCompile Include="src\IndexBuffer.cpp" />
+    <ClCompile Include="src\Linux\ContextLinux.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Linux\ExtensionsLinux.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Linux\SurfaceWindowLinux.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="src\OcclusionQuery.cpp" />
     <ClCompile Include="src\PLRendererOpenGL.cpp" />
     <ClCompile Include="src\Program.cpp" />
@@ -299,13 +313,6 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\ShaderToolsGLSL.cpp" />
     <ClCompile Include="src\SurfaceTextureBuffer.cpp" />
     <ClCompile Include="src\SurfaceWindow.cpp" />
-    <ClCompile Include="src\SurfaceWindowLinux.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\SurfaceWindowWindows.cpp" />
     <ClCompile Include="src\TextureBuffer1D.cpp" />
     <ClCompile Include="src\TextureBuffer2D.cpp" />
     <ClCompile Include="src\TextureBuffer3D.cpp" />
@@ -314,26 +321,25 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\UniformBuffer.cpp" />
     <ClCompile Include="src\VertexBuffer.cpp" />
     <ClCompile Include="src\VertexShaderGLSL.cpp" />
-    <ClCompile Include="src\Misc\ExtensionConfig.cpp" />
-    <ClCompile Include="src\Misc\Extensions.cpp" />
-    <ClCompile Include="src\Misc\ExtensionsLinux.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\Misc\ExtensionsWindows.cpp" />
-    <ClCompile Include="src\Misc\FrameBufferObject.cpp" />
+    <ClCompile Include="src\Windows\ContextWindows.cpp" />
+    <ClCompile Include="src\Windows\ExtensionsWindows.cpp" />
+    <ClCompile Include="src\Windows\SurfaceWindowWindows.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRendererOpenGL\Context.h" />
-    <ClInclude Include="include\PLRendererOpenGL\ContextLinux.h" />
-    <ClInclude Include="include\PLRendererOpenGL\ContextWindows.h" />
+    <ClInclude Include="include\PLRendererOpenGL\ExtensionConfig.h" />
+    <ClInclude Include="include\PLRendererOpenGL\ExtensionDefinitions.h" />
+    <ClInclude Include="include\PLRendererOpenGL\Extensions.h" />
     <ClInclude Include="include\PLRendererOpenGL\FixedFunctions.h" />
     <ClInclude Include="include\PLRendererOpenGL\FontGlyphTexture.h" />
     <ClInclude Include="include\PLRendererOpenGL\FontManager.h" />
+    <ClInclude Include="include\PLRendererOpenGL\FrameBufferObject.h" />
+    <ClInclude Include="include\PLRendererOpenGL\Linux\ContextLinux.h" />
+    <ClInclude Include="include\PLRendererOpenGL\Linux\PLRendererOpenGLLinux.h" />
     <ClInclude Include="include\PLRendererOpenGL\ProgramUniformBlockGLSL.h" />
     <ClInclude Include="include\PLRendererOpenGL\UniformBuffer.h" />
+    <ClInclude Include="include\PLRendererOpenGL\Windows\ContextWindows.h" />
+    <ClInclude Include="include\PLRendererOpenGL\Windows\PLRendererOpenGLWindows.h" />
     <ClInclude Include="src\FontManager_Cg.h" />
     <ClInclude Include="src\FontManager_GLSL.h" />
     <ClInclude Include="include\PLRendererOpenGL\FontTexture.h" />
@@ -344,8 +350,6 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLRendererOpenGL\IndexBuffer.h" />
     <ClInclude Include="include\PLRendererOpenGL\OcclusionQuery.h" />
     <ClInclude Include="include\PLRendererOpenGL\PLRendererOpenGL.h" />
-    <ClInclude Include="include\PLRendererOpenGL\PLRendererOpenGLLinux.h" />
-    <ClInclude Include="include\PLRendererOpenGL\PLRendererOpenGLWindows.h" />
     <ClInclude Include="include\PLRendererOpenGL\Program.h" />
     <ClInclude Include="include\PLRendererOpenGL\ProgramAttributeGLSL.h" />
     <ClInclude Include="include\PLRendererOpenGL\ProgramGLSL.h" />
@@ -364,10 +368,6 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLRendererOpenGL\TextureBufferRectangle.h" />
     <ClInclude Include="include\PLRendererOpenGL\VertexBuffer.h" />
     <ClInclude Include="include\PLRendererOpenGL\VertexShaderGLSL.h" />
-    <ClInclude Include="include\PLRendererOpenGL\Misc\ExtensionConfig.h" />
-    <ClInclude Include="include\PLRendererOpenGL\Misc\ExtensionDefinitions.h" />
-    <ClInclude Include="include\PLRendererOpenGL\Misc\Extensions.h" />
-    <ClInclude Include="include\PLRendererOpenGL\Misc\FrameBufferObject.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Base\PLRenderer\Diary.txt" />

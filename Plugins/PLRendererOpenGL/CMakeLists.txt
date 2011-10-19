@@ -56,9 +56,9 @@ add_sources(
 	src/ProgramUniformGLSL.cpp
 	src/ProgramUniformBlockGLSL.cpp
 	src/ShaderToolsGLSL.cpp
-	src/Misc/Extensions.cpp
-	src/Misc/FrameBufferObject.cpp
-	src/Misc/ExtensionConfig.cpp
+	src/Extensions.cpp
+	src/ExtensionConfig.cpp
+	src/FrameBufferObject.cpp
 )
 if(PL_PLUGIN_RENDERER_OPENGL_FONT)
 	add_sources(
@@ -74,9 +74,9 @@ if(WIN32)
 	## Win32
 	##################################################
 	add_sources(
-		src/Misc/ExtensionsWindows.cpp
-		src/SurfaceWindowWindows.cpp
-		src/ContextWindows.cpp
+		src/Windows/ContextWindows.cpp
+		src/Windows/ExtensionsWindows.cpp
+		src/Windows/SurfaceWindowWindows.cpp
 	)
 elseif(APPLE)
 	# [TODO] Implement Mac OS X
@@ -84,18 +84,18 @@ elseif(APPLE)
 	## Apple
 	##################################################
 	add_sources(
-#		src/Misc/ExtensionsMacOSX.cpp
-#		src/SurfaceWindowMacOSX.cpp
-#		src/ContextMacOSX.cpp
+#		src/MacOSX/ContextMacOSX.cpp
+#		src/MacOSX/ExtensionsMacOSX.cpp
+#		src/MacOSX/SurfaceWindowMacOSX.cpp
 	)
 elseif(LINUX)
 	##################################################
 	## Linux
 	##################################################
 	add_sources(
-		src/Misc/ExtensionsLinux.cpp
-		src/SurfaceWindowLinux.cpp
-		src/ContextLinux.cpp
+		src/Linux/ContextLinux.cpp
+		src/Linux/ExtensionsLinux.cpp
+		src/Linux/SurfaceWindowLinux.cpp
 	)
 endif()
 

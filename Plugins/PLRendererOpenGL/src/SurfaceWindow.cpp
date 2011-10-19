@@ -30,9 +30,9 @@
 #include "PLRendererOpenGL/SurfaceWindow.h"
 #ifdef APPLE
 	// [TODO] Implement Mac OS X part
-	//#include "PLRendererOpenGL/ContextMacOSX.h"
+	//#include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
 #elif LINUX
-	#include "PLRendererOpenGL/ContextLinux.h"
+	#include "PLRendererOpenGL/Linux/ContextLinux.h"
 #endif
 
 

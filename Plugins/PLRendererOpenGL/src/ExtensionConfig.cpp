@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGL/Misc/ExtensionConfig.h"
+#include "PLRendererOpenGL/ExtensionConfig.h"
 
 
 //[-------------------------------------------------------]

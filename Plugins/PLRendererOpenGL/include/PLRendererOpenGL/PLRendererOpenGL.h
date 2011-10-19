@@ -40,12 +40,12 @@
 //[-------------------------------------------------------]
 // Windows platform
 #ifdef WIN32
-	#include "PLRendererOpenGL/PLRendererOpenGLWindows.h"
+	#include "PLRendererOpenGL/Windows/PLRendererOpenGLWindows.h"
 #endif
 
 // Linux platform
 #ifdef LINUX
-	#include "PLRendererOpenGL/PLRendererOpenGLLinux.h"
+	#include "PLRendererOpenGL/Linux/PLRendererOpenGLLinux.h"
 #endif
 
 

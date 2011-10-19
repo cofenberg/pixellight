@@ -50,14 +50,14 @@
 #include "PLRendererOpenGL/VertexBuffer.h"
 #include "PLRendererOpenGL/OcclusionQuery.h"
 #ifdef WIN32
-	#include "PLRendererOpenGL/ContextWindows.h"
+	#include "PLRendererOpenGL/Windows/ContextWindows.h"
 #endif
 #ifdef APPLE
 	// [TODO] Implement Mac OS X renderer context
 	#include "PLRendererOpenGL/Context.h"
-	// #include "PLRendererOpenGL/ContextMacOSX.h"
+	// #include "PLRendererOpenGL/MaxOSX/ContextMacOSX.h"
 #elif defined(LINUX)
-	#include "PLRendererOpenGL/ContextLinux.h"
+	#include "PLRendererOpenGL/Linux/ContextLinux.h"
 #endif
 #include "PLRendererOpenGL/FixedFunctions.h"
 #include "PLRendererOpenGL/Renderer.h"

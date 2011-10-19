@@ -25,8 +25,8 @@
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
 #include "PLRendererOpenGL/Renderer.h"
-#include "PLRendererOpenGL/ContextLinux.h"
-#include "PLRendererOpenGL/Misc/Extensions.h"
+#include "PLRendererOpenGL/Linux/ContextLinux.h"
+#include "PLRendererOpenGL/Extensions.h"
 
 
 //[-------------------------------------------------------]

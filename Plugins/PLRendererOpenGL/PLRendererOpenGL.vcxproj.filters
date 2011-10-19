@@ -5,18 +5,15 @@
       <UniqueIdentifier>{7c61b742-7927-40be-9b04-21bf69688a94}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
     </Filter>
-    <Filter Include="Misc">
-      <UniqueIdentifier>{903e8db3-cfc5-4abf-ae8d-4815f510d6e0}</UniqueIdentifier>
+    <Filter Include="Windows">
+      <UniqueIdentifier>{285f63a3-259c-4985-8465-a64703bff42c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Linux">
+      <UniqueIdentifier>{8acd7008-32f9-445b-9b59-8aa2743d64c8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Context.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ContextLinux.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ContextWindows.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\FixedFunctions.cpp">
@@ -85,12 +82,6 @@
     <ClCompile Include="src\SurfaceWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SurfaceWindowLinux.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SurfaceWindowWindows.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\TextureBuffer1D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -112,36 +103,42 @@
     <ClCompile Include="src\VertexShaderGLSL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Misc\ExtensionConfig.cpp">
-      <Filter>Misc</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Misc\Extensions.cpp">
-      <Filter>Misc</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Misc\ExtensionsLinux.cpp">
-      <Filter>Misc</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Misc\ExtensionsWindows.cpp">
-      <Filter>Misc</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Misc\FrameBufferObject.cpp">
-      <Filter>Misc</Filter>
-    </ClCompile>
     <ClCompile Include="src\ProgramUniformBlockGLSL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\UniformBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Linux\ContextLinux.cpp">
+      <Filter>Linux</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Linux\SurfaceWindowLinux.cpp">
+      <Filter>Linux</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Windows\SurfaceWindowWindows.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Windows\ContextWindows.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Windows\ExtensionsWindows.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Linux\ExtensionsLinux.cpp">
+      <Filter>Linux</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FrameBufferObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ExtensionConfig.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Extensions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRendererOpenGL\Context.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLRendererOpenGL\ContextLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLRendererOpenGL\ContextWindows.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLRendererOpenGL\FixedFunctions.h">
@@ -181,12 +178,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLRendererOpenGL\PLRendererOpenGL.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLRendererOpenGL\PLRendererOpenGLLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLRendererOpenGL\PLRendererOpenGLWindows.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLRendererOpenGL\Program.h">
@@ -243,22 +234,34 @@
     <ClInclude Include="include\PLRendererOpenGL\VertexShaderGLSL.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLRendererOpenGL\Misc\ExtensionConfig.h">
-      <Filter>Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLRendererOpenGL\Misc\ExtensionDefinitions.h">
-      <Filter>Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLRendererOpenGL\Misc\Extensions.h">
-      <Filter>Misc</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLRendererOpenGL\Misc\FrameBufferObject.h">
-      <Filter>Misc</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLRendererOpenGL\ProgramUniformBlockGLSL.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLRendererOpenGL\UniformBuffer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\Linux\ContextLinux.h">
+      <Filter>Linux</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\Linux\PLRendererOpenGLLinux.h">
+      <Filter>Linux</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\Windows\PLRendererOpenGLWindows.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\Windows\ContextWindows.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\FrameBufferObject.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\ExtensionConfig.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\ExtensionDefinitions.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\Extensions.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

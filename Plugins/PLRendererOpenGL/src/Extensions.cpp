@@ -25,13 +25,13 @@
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
 #include "PLRendererOpenGL/Renderer.h"
-#include "PLRendererOpenGL/Misc/Extensions.h"
+#include "PLRendererOpenGL/Extensions.h"
 #ifdef APPLE
 	#include <string.h>	// For strstr
 	// [TODO] Implement Mac OS X implementation
 #elif defined(LINUX)
 	#include <string.h>	// For strstr
-	#include "PLRendererOpenGL/ContextLinux.h"
+	#include "PLRendererOpenGL/Linux/ContextLinux.h"
 #endif
 
 

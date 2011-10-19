@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGL/Misc/ExtensionDefinitions.h"
+#include "PLRendererOpenGL/ExtensionDefinitions.h"
 
 
 //[-------------------------------------------------------]
