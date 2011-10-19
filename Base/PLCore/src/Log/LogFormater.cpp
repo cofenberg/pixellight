@@ -73,13 +73,13 @@ LogFormater::~LogFormater()
 *  @brief
 *    Helper function to open the log as a file
 */
-File *LogFormater::OpenFile(const String &sFilename)
+File *LogFormater::OpenFile(const String &sFilename, String::EFormat nStringFormat)
 {
 	// Check filename
 	if (sFilename.GetLength()) {
 		// Open the file
 		File *pFile = new File(sFilename);
-		if (!pFile->Open(File::FileWrite | File::FileCreate)) {
+		if (!pFile->Open(File::FileWrite | File::FileCreate, nStringFormat)) {
 			delete pFile;
 			pFile = nullptr;
 		}

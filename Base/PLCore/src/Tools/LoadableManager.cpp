@@ -418,7 +418,7 @@ bool LoadableManager::ScanPackages(const String &sPath, const String &sExtension
 *  @brief
 *    Opens a file by using base directories
 */
-bool LoadableManager::OpenFile(File &cFile, const String &sFilename, bool bCreate) const
+bool LoadableManager::OpenFile(File &cFile, const String &sFilename, bool bCreate, String::EFormat nStringFormat) const
 {
 	// Because absolute filenames can be accessed fastest by the file system, we first give
 	// the file system an absolute filename which is hopefully the correct one... if
@@ -464,18 +464,18 @@ bool LoadableManager::OpenFile(File &cFile, const String &sFilename, bool bCreat
 	}
 
 	// Check if the file has been found
-	return cFile.Open(bCreate ? (File::FileWrite | File::FileCreate) : File::FileRead);
+	return cFile.Open(bCreate ? (File::FileWrite | File::FileCreate) : File::FileRead, nStringFormat);
 }
 
 /**
 *  @brief
 *    Loads in a string by using a file
 */
-String LoadableManager::LoadStringFromFile(const String &sFilename, String::EFormat nFormat) const
+String LoadableManager::LoadStringFromFile(const String &sFilename, String::EFormat nStringFormat) const
 {
 	// Open the file
 	File cFile;
-	if (OpenFile(cFile, sFilename, false))
+	if (OpenFile(cFile, sFilename, false, nStringFormat))
 		return cFile.GetContentAsString();
 
 	// Error!

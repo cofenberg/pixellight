@@ -229,7 +229,7 @@ bool File::Delete()
 *  @brief
 *    Open the file for reading and/or writing
 */
-bool File::Open(uint32 nAccess)
+bool File::Open(uint32 nAccess, String::EFormat nStringFormat)
 {
 	// Memory buffered file?
 	if (m_pMemBuf)
@@ -237,9 +237,9 @@ bool File::Open(uint32 nAccess)
 
 	// Open file
 	if (nAccess & File::FileMemBuf)
-		return MemBufOpen(nAccess);
+		return MemBufOpen(nAccess, nStringFormat);
 	else if (m_pFileImpl)
-		return m_pFileImpl->Open(nAccess);
+		return m_pFileImpl->Open(nAccess, nStringFormat);
 	else
 		return false; // Error!
 }
@@ -315,13 +315,28 @@ bool File::IsWritable() const
 
 /**
 *  @brief
+*    Returns the string encoding format to use when dealing with string functions
+*/
+String::EFormat File::GetStringFormat() const
+{
+	// Check string encoding format
+	if (m_pMemBuf)
+		return String::ASCII;
+	else if (m_pFileImpl)
+		return m_pFileImpl->GetStringFormat();
+	else
+		return String::ASCII;
+}
+
+/**
+*  @brief
 *    Returns whether end of file has been reached
 */
 bool File::IsEof() const
 {
 	// Check EOF
 	if (m_pMemBuf)
-		return m_nMemBufPos >= m_nMemBufSize;
+		return (m_nMemBufPos >= m_nMemBufSize);
 	else if (m_pFileImpl)
 		return m_pFileImpl->IsEof();
 	else
@@ -512,30 +527,59 @@ const uint8 *File::GetMemoryBuffer() const
 *  @brief
 *    Returns the complete content of the file as string
 */
-String File::GetContentAsString(String::EFormat nFormat)
+String File::GetContentAsString()
 {
 	// Get the file size
 	const uint32 nFileSize = GetSize();
+	if (nFileSize) {
+		// Check string encoding format
+		switch (GetStringFormat()) {
+			case String::ASCII:
+			{
+				// Load in the data -> We also take care of the terminating zero (\0)
+				char *pData = new char[nFileSize + 1];
+				Read(pData, nFileSize, 1);
+				pData[nFileSize] = '\0';
 
-	// ASCII or Unicode?
-	if (nFormat == String::ASCII) {
-		// We also take care of the terminating zero (\0)
-		char *pData = new char[nFileSize + 1];
-		Read(pData, nFileSize, 1);
-		pData[nFileSize] = '\0';
+				// The string class takes over the control of the memory
+				return String(pData, false, nFileSize);
+			}
 
-		// The string class takes over the control of the memory
-		return String(pData, false, nFileSize);
-	} else {
-		// We also take care of the terminating zero (\0)
-		const uint32 nNumOfCharacters = nFileSize/sizeof(wchar_t);
-		wchar_t *pData = new wchar_t[nNumOfCharacters + 1];
-		Read(pData, nFileSize, 1);
-		pData[nFileSize] = L'\0';
+			case String::Unicode:
+			{
+				// It's not recommended to use Unicode by because internally wchar_t is used and this data type has not
+				// the same size on every platform (use ASCII or UTF8 instead)... but this decision is up to the user...
 
-		// The string class takes over the control of the memory
-		return String(pData, false, nFileSize);
+				// Load in the data -> We also take care of the terminating zero (\0)
+				const uint32 nNumOfCharacters = nFileSize/sizeof(wchar_t);
+				wchar_t *pData = new wchar_t[nNumOfCharacters + 1];
+				Read(pData, nFileSize, 1);
+				pData[nFileSize] = L'\0';
+
+				// The string class takes over the control of the memory
+				return String(pData, false, nFileSize);
+			}
+
+			case String::UTF8:
+			{
+				// Load in the data
+				char *pData = new char[nFileSize];
+				Read(pData, nFileSize, 1);
+
+				// Sets the character string as UTF8
+				const String sString = String::FromUTF8(pData, -1, nFileSize);
+
+				// Cleanup
+				delete [] pData;
+
+				// Done
+				return sString;
+			}
+		}
 	}
+
+	// Error!
+	return "";
 }
 
 
@@ -565,8 +609,10 @@ File &File::operator =(const File &cSource)
 *  @brief
 *    Open the file (for memory buffered files)
 */
-bool File::MemBufOpen(uint32 nAccess)
+bool File::MemBufOpen(uint32 nAccess, String::EFormat nStringFormat)
 {
+	// [TODO] Support for "nStringFormat"-parameter
+
 	// Check flags
 	if ((nAccess & FileRead) && !(nAccess & FileWrite) && !(nAccess & FileAppend) && !(nAccess & FileCreate)) {
 		// Just to be sure ...

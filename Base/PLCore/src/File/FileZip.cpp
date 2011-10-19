@@ -168,7 +168,7 @@ void FileZip::Close()
 	m_cZipFile.CloseFile();
 }
 
-bool FileZip::Open(uint32 nAccess)
+bool FileZip::Open(uint32 nAccess, String::EFormat nStringFormat)
 {
 	// Check selected file
 	if (IsFile()) {
@@ -176,6 +176,8 @@ bool FileZip::Open(uint32 nAccess)
 		if ((nAccess & File::FileRead) && !(nAccess & File::FileWrite) && !(nAccess & File::FileAppend) && !(nAccess & File::FileCreate)) {
 			// Save access modes
 			m_nAccess = nAccess;
+
+			// Ignore the "nStringFormat"-parameter, it's not supported
 
 			// Close file first
 			Close();
@@ -205,6 +207,12 @@ bool FileZip::IsWritable() const
 {
 	// Not implemented
 	return false;
+}
+
+String::EFormat FileZip::GetStringFormat() const
+{
+	// Default is ASCII
+	return String::ASCII;
 }
 
 bool FileZip::IsEof() const

@@ -145,13 +145,13 @@ Script *ScriptManager::Create(const String &sScriptLanguage, bool bAddBindings)
 *  @brief
 *    Creates a script instance by using a given filename
 */
-Script *ScriptManager::CreateFromFile(const String &sFilename, bool bAddBindings)
+Script *ScriptManager::CreateFromFile(const String &sFilename, bool bAddBindings, String::EFormat nStringFormat)
 {
 	// Create the script instance by using the extension of the given filename to detect the script language
 	Script *pScript = Create(GetScriptLanguageByExtension(Url(sFilename).GetExtension()), bAddBindings);
 	if (pScript) {
 		// Get the script source code
-		const String sSourceCode = LoadableManager::GetInstance()->LoadStringFromFile(sFilename);
+		const String sSourceCode = LoadableManager::GetInstance()->LoadStringFromFile(sFilename, nStringFormat);
 
 		// Set the script source code
 		if (!sSourceCode.GetLength() || !pScript->SetSourceCode(sSourceCode)) {

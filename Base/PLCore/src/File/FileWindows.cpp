@@ -46,6 +46,7 @@ namespace PLCore {
 FileWindows::FileWindows(const Url &cUrl, const FileAccess *pAccess) : FileImpl(cUrl, pAccess),
 	m_sFilename(cUrl.GetWindowsPath()),
 	m_nAccess(0),
+	m_nStringFormat(String::ASCII),
 	m_pFile(nullptr)
 {
 }
@@ -253,7 +254,7 @@ void FileWindows::Close()
 	}
 }
 
-bool FileWindows::Open(uint32 nAccess)
+bool FileWindows::Open(uint32 nAccess, String::EFormat nStringFormat)
 {
 	// Close file first
 	Close();
@@ -263,19 +264,19 @@ bool FileWindows::Open(uint32 nAccess)
 	if ((nAccess & File::FileWrite) && !(nAccess & File::FileCreate) && (nAccess & File::FileAppend)) {
 		// Append at the end of the file
 		if (nAccess & File::FileRead)
-			strcpy(szMode, "a+");	// Append, read and write
+			strcpy(szMode, "a+");		// Append, read and write
 		else
-			strcpy(szMode, "a");	// Append, write only
+			strcpy(szMode, "a");		// Append, write only
 	} else if ((nAccess & File::FileWrite) && (nAccess & File::FileCreate) && !(nAccess & File::FileAppend)) {
 		// Create and open writable
 		if (nAccess & File::FileRead)
-			strcpy(szMode, "w+");	// Create, read and write
+			strcpy(szMode, "w+");		// Create, read and write
 		else
-			strcpy(szMode, "w");	// Create, write only
+			strcpy(szMode, "w");		// Create, write only
 	} else if ((nAccess & File::FileWrite) && !(nAccess & File::FileCreate) && !(nAccess & File::FileAppend)) {
 		// Open writable
 		if (nAccess & File::FileRead)
-			strcpy(szMode, "r+");	// Open, read and write
+			strcpy(szMode, "r+");		// Open, read and write
 
 		// We need to check whether the file already exist, if so, we can go on...
 		else {
@@ -287,9 +288,9 @@ bool FileWindows::Open(uint32 nAccess)
 	} else if (!(nAccess & File::FileWrite) && !(nAccess & File::FileCreate) && !(nAccess & File::FileAppend)) {
 		// Open not writable
 		if (nAccess & File::FileRead)
-			strcpy(szMode, "r");	// Open, read only
+			strcpy(szMode, "r");		// Open, read only
 		else
-			return false;			// Invalid
+			return false;				// Invalid
 	} else {
 		// Invalid combination
 		return false;
@@ -298,17 +299,28 @@ bool FileWindows::Open(uint32 nAccess)
 	// Set text or binary mode
 	strcat(szMode, (nAccess & File::FileText) ? "t" : "b");
 
-	// Save access modes
-	m_nAccess = nAccess;
+	// Save access modes and string encoding format
+	m_nAccess       = nAccess;
+	m_nStringFormat = nStringFormat;
 
 	// Open file using ASCII/unicode filename
 	if (m_sFilename.GetFormat() == String::ASCII) {
 		// ASCII filename
-		m_pFile = fopen(m_sFilename.GetASCII(), szMode);
+
+		// ASCII is the default string encoding format
+		if (nStringFormat == String::ASCII)
+			m_pFile = fopen(m_sFilename.GetASCII(), szMode);
+		else
+			m_pFile = fopen(m_sFilename.GetASCII(), szMode + ((nStringFormat == String::Unicode) ? String(", ccs=UNICODE") : String(", ccs=UTF-8")));
 	} else {
 		// Unicode filename
 		const wchar_t szModeUnicode[4] = {szMode[0], szMode[1], szMode[2], szMode[3]};
-		m_pFile = _wfopen(m_sFilename.GetUnicode(), szModeUnicode);
+
+		// ASCII is the default string encoding format
+		if (nStringFormat == String::ASCII)
+			m_pFile = _wfopen(m_sFilename.GetUnicode(), szModeUnicode);
+		else
+			m_pFile = _wfopen(m_sFilename.GetUnicode(), szModeUnicode + ((nStringFormat == String::Unicode) ? String(", ccs=UNICODE") : String(", ccs=UTF-8")));
 	}
 
 	// Done
@@ -333,6 +345,12 @@ bool FileWindows::IsWritable() const
 	return (m_pFile && (m_nAccess & File::FileWrite));
 }
 
+String::EFormat FileWindows::GetStringFormat() const
+{
+	// Return the saved string encoding format
+	return m_nStringFormat;
+}
+
 bool FileWindows::IsEof() const
 {
 	// Check end of file
@@ -342,23 +360,37 @@ bool FileWindows::IsEof() const
 int FileWindows::GetC()
 {
 	// Read character
-	return IsReadable() ? getc(m_pFile) : -1;
+	if (IsReadable())
+		return ((m_nStringFormat == String::ASCII) ? getc(m_pFile) : getwc(m_pFile));
+
+	// Error!
+	return -1;
 }
 
 bool FileWindows::PutC(int nChar)
 {
 	// Write character
-	return (IsWritable() && putc(nChar, m_pFile) != EOF);
+	if (IsWritable())
+		return ((m_nStringFormat == String::ASCII) ? putc(nChar, m_pFile) : putwc(static_cast<wchar_t>(nChar), m_pFile)) != 0;
+
+	// Error!
+	return false;
 }
 
 String FileWindows::GetS()
 {
 	// Read string
 	if (IsReadable()) {
-		// ASCII... using "GetS()" is not recommended...
-		char szTemp[2048] = "";
-		if (fgets(szTemp, 2048, m_pFile))
-			return szTemp;
+		// ASCII or Unicode?
+		if (m_nStringFormat == String::ASCII) {
+			char szTemp[2048] = "";
+			if (fgets(szTemp, 2048, m_pFile))
+				return szTemp;
+		} else {
+			wchar_t szTemp[2048] = L"";
+			if (fgetws(szTemp, 2048, m_pFile))
+				return szTemp;
+		}
 	}
 
 	// Error!
@@ -369,9 +401,16 @@ int FileWindows::PutS(const String &sString)
 {
 	// Write string
 	if (IsWritable()) {
-		const int nSize = (m_sFilename.GetFormat() == String::ASCII) ? fputs(sString.GetASCII(), m_pFile) : fputws(sString.GetUnicode(), m_pFile);
-		if (nSize >= 0)
-			return sString.GetLength();
+		// ASCII or Unicode?
+		if (m_nStringFormat == String::ASCII) {
+			const int nSize = fputs(sString.GetASCII(), m_pFile);
+			if (nSize >= 0)
+				return sString.GetLength();
+		} else {
+			const int nSize = fputws(sString.GetUnicode(), m_pFile);
+			if (nSize >= 0)
+				return sString.GetLength();
+		}
 	}
 
 	// Error!

@@ -208,11 +208,13 @@ class FileImpl {
 		*
 		*  @param[in] nAccess
 		*    Access mode (see EAccess)
+		*  @param[in] nStringFormat
+		*    String encoding format to use when dealing with string functions
 		*
 		*  @return
 		*    'false' on error, else 'true'
 		*/
-		virtual bool Open(uint32 nAccess) = 0;
+		virtual bool Open(uint32 nAccess, String::EFormat nStringFormat = String::ASCII) = 0;
 
 		/**
 		*  @brief
@@ -240,6 +242,15 @@ class FileImpl {
 		*    'true', if the file can be written, else 'false'
 		*/
 		virtual bool IsWritable() const = 0;
+
+		/**
+		*  @brief
+		*    Returns the string encoding format to use when dealing with string functions
+		*
+		*  @return
+		*    String encoding format to use when dealing with string functions
+		*/
+		virtual String::EFormat GetStringFormat() const = 0;
 
 		/**
 		*  @brief

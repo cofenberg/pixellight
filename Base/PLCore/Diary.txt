@@ -1,6 +1,12 @@
 ﻿>> 19.10.2011
 [CO]
-- "FileWindows::PutS()" didn't take Unicode into account
+- "FileWindows::PutS()" didn't take Unicode into account (... as well as some other functions in this class...)
+- "File::Open()": Added string encoding format parameter
+- Text based log formatter implementations are now using UTF-8 instead of ASCII
+- "File::GetContentAsString()": Removed string encoding format parameter because it's now defined by "File::Open()"
+- "File::GetContentAsString()": Added UTF8 support
+- "LoadableManager::OpenFile()": Added string encoding format parameter
+- "ScriptManager::CreateFromFile()": Added string encoding format parameter
 
 
 

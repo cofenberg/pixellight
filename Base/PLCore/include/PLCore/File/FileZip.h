@@ -98,10 +98,11 @@ class FileZip : public FileImpl {
 		virtual bool Delete() override;
 		virtual bool DeleteDirectory() override;
 		virtual void Close() override;
-		virtual bool Open(uint32 nAccess) override;
+		virtual bool Open(uint32 nAccess, String::EFormat nStringFormat = String::ASCII) override;
 		virtual bool IsOpen() const override;
 		virtual bool IsReadable() const override;
 		virtual bool IsWritable() const override;
+		virtual String::EFormat GetStringFormat() const override;
 		virtual bool IsEof() const override;
 		virtual int GetC() override;
 		virtual bool PutC(int nChar) override;

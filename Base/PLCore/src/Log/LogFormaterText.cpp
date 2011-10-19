@@ -82,11 +82,11 @@ LogFormaterText &LogFormaterText::operator =(const LogFormaterText &cSource)
 //[-------------------------------------------------------]
 bool LogFormaterText::Open(const String &sFilename)
 {
-	// Open the log file via the helper function of the base-class
-	m_pFile = OpenFile(sFilename);
+	// Open the log file via the helper function of the base-class, use UTF8 string encoding format so one can also put cryptic none English characters into the log
+	m_pFile = OpenFile(sFilename, String::UTF8);
 
 	// Error?
-	return m_pFile != nullptr;
+	return (m_pFile != nullptr);
 }
 
 bool LogFormaterText::Close()

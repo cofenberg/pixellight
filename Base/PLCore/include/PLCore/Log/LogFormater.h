@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/PLCore.h"
+#include "PLCore/String/String.h"
 
 
 //[-------------------------------------------------------]
@@ -107,11 +107,13 @@ class LogFormater {
 		*
 		*  @param[in] sFilename
 		*    The log's filename
+		*  @param[in] nStringFormat
+		*    String encoding format to use when dealing with string functions (not supported by all file implementations)
 		*
 		*  @return
 		*    A pointer to the file object if all went fine, a null pointer on error
 		*/
-		PLCORE_API File *OpenFile(const String &sFilename);
+		PLCORE_API File *OpenFile(const String &sFilename, String::EFormat nStringFormat);
 
 
 	//[-------------------------------------------------------]

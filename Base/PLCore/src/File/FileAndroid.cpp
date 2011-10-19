@@ -185,8 +185,10 @@ void FileAndroid::Close()
 	}
 }
 
-bool FileAndroid::Open(uint32 nAccess)
+bool FileAndroid::Open(uint32 nAccess, String::EFormat nStringFormat)
 {
+	// Ignore the "nStringFormat"-parameter, strings are not supported
+
 	// Close file first
 	Close();
 
@@ -224,6 +226,12 @@ bool FileAndroid::IsWritable() const
 {
 	// Check whether the file is writable
 	return (m_pAAsset && (m_nAccess & File::FileWrite));
+}
+
+String::EFormat FileAndroid::GetStringFormat() const
+{
+	// Default is ASCII
+	return String::ASCII;
 }
 
 bool FileAndroid::IsEof() const

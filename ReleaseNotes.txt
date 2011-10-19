@@ -6,6 +6,7 @@ Changes in PixelLight 0.9.9-R1 (not yet released)
            GL_ARB_draw_buffers, GL_NV_fbo_color_attachments, GL_NV_read_buffer, GL_ANGLE_framebuffer_blit, GL_ANGLE_framebuffer_multisample, GL_OES_packed_depth_stencil,
            GL_OES_depth24 and GL_OES_depth32
 - Feature: The plugin "PLAssimp" using "ASSIMP - Open Asset Import Library" is now also able to load in complete scenes (without merging everything into one huge mesh)
+- Feature: Added string encoding format option to "PLCore::File::Open()" in order to support read and write of Unicode text files
 - Change (Linux): Tweaked the compiler and linker settings to reduce the binary size
 - Change (Windows): "PLFrontendQt" includes simplification: "Include\Qt" instead of "Include\Qt\Qt"
 - Change: When developing with PixelLight, the registry key (or environment variable) is now only used as fallback in case PLCore is used statically, so, usually you no longer need this registry key
@@ -13,6 +14,7 @@ Changes in PixelLight 0.9.9-R1 (not yet released)
 - Change: "PLInput": Changed the names of some controls for a more uniform naming schema to make it easier to guess e.g. the control name of a keyboard key
 - Change: Updated the free open source particle engine "SPARK" (http://spark.developpez.com) to version 1.5.5
 - Change: Added enhanced "PixelLightBuild"-document as replacement for the "BUILD" text file (got confusing as it grew)
+- Change: Text based log formatter implementations are now using UTF-8 instead of ASCII
 - Change: Updated FMOD Ex from version "4.32.08" to "4.36.04" (has Android support)
 - Change: Updated sample sound files to make them work with FMOD Ex as well
 - Bugfix: Loop and 2D are now working within the FMOD Ex sound backend
