@@ -35,6 +35,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
+using namespace PLMath;
 namespace PLRendererOpenGL {
 
 
