@@ -1,3 +1,30 @@
+﻿>> 20.10.2011
+[CO]
+- Exposed "ApplicationContext" to the RTTI
+- "System::GetCurrentDir()" & "ApplicationContext::GetAppDirectory()": On Android, those are empty strings and just writing e.g.
+    cApplicationContext.GetAppDirectory() + "/Data"
+  resulted within "/Data", which was not correct. When working on the Android port, I catched this case and used e.g. "Data" in
+  case the application directory was empty. Now that the Android port is working, I'am cleaning up and removing situations resulting
+  in to many stuff to take into account when using the PixelLigth API. In case "System::GetCurrentDir()" & "ApplicationContext::GetAppDirectory()"
+  have internally an emtpy string, '.' is returned meaning that
+    cApplicationContext.GetAppDirectory() + "/Data"
+  will result in "./Data" which is fine.
+
+
+
+>> 19.10.2011
+[CO]
+- "FileWindows::PutS()" didn't take Unicode into account (... as well as some other functions in this class...)
+- "File::Open()": Added string encoding format parameter
+- Text based log formatter implementations are now using UTF-8 instead of ASCII
+- "File::GetContentAsString()": Removed string encoding format parameter because it's now defined by "File::Open()"
+- "File::GetContentAsString()": Added UTF8 support
+- "LoadableManager::OpenFile()": Added string encoding format parameter
+- "ScriptManager::CreateFromFile()": Added string encoding format parameter
+- Fixed spelling error: "LogFormater" -> "LogFormatter"
+
+
+
 >> 16.10.2011
 [CO]
 - "Socket": Fixed "warning C4244: 'initializing' : conversion from 'SOCKET' to 'int', possible loss of data" when compiling for 64 bit

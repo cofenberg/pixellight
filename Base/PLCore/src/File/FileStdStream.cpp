@@ -51,7 +51,8 @@ FileStdStream::FileStdStream(FILE *pFile, uint32 nAccess) : FileImpl(Url(), null
 	m_bStream(true),
 	m_pFile(pFile),
 	m_hFile(0),
-	m_nAccess(nAccess)
+	m_nAccess(nAccess),
+	m_nStringFormat(String::ASCII)
 {
 }
 
@@ -63,7 +64,8 @@ FileStdStream::FileStdStream(handle hFile) : FileImpl(Url(), nullptr),
 	m_bStream(false),
 	m_pFile(nullptr),
 	m_hFile(hFile),
-	m_nAccess(0)
+	m_nAccess(0),
+	m_nStringFormat(String::ASCII)
 {
 }
 
@@ -146,7 +148,7 @@ void FileStdStream::Close()
 	}
 }
 
-bool FileStdStream::Open(uint32 nAccess)
+bool FileStdStream::Open(uint32 nAccess, String::EFormat nStringFormat)
 {
 	// If a standard stream has been used, we cannot open/reopen it
 	if (m_bStream)
@@ -195,19 +197,29 @@ bool FileStdStream::Open(uint32 nAccess)
 	// Set text or binary mode
 	strcat(szMode, (nAccess & File::FileText) ? "t" : "b");
 
-	// Save access modes
-	m_nAccess = nAccess;
+	// Save access modes and string encoding format
+	m_nAccess       = nAccess;
+	m_nStringFormat = nStringFormat;
 
-	// Get OS file handle
+	// Get OS file handle and open file
 	#if defined(WIN32)
 		const int nFile = _open_osfhandle(m_hFile, 0);
+		if (nFile > -1) {
+			// ASCII or Unicode?
+			if (nStringFormat == String::ASCII) {
+				// ASCII
+				m_pFile = _fdopen(nFile, szMode);
+			} else {
+				// Unicode
+				const wchar_t szModeUnicode[4] = {szMode[0], szMode[1], szMode[2], szMode[3]};
+				m_pFile = _wfdopen(nFile, szModeUnicode);
+			}
+		}
 	#elif defined(LINUX)
-		const int nFile = m_hFile;
+		// [TODO] Support for "nStringFormat"-parameter?
+		if (m_hFile > -1)
+			m_pFile = _fdopen(m_hFile, szMode);
 	#endif
-
-	// Open file
-	if (nFile > -1)
-		m_pFile = _fdopen(nFile, szMode);
 
 	// Done
 	return (m_pFile != nullptr);
@@ -231,6 +243,12 @@ bool FileStdStream::IsWritable() const
 	return (m_pFile && (m_nAccess & File::FileWrite));
 }
 
+String::EFormat FileStdStream::GetStringFormat() const
+{
+	// Return the saved string encoding format
+	return m_nStringFormat;
+}
+
 bool FileStdStream::IsEof() const
 {
 	// Check end of file
@@ -239,23 +257,54 @@ bool FileStdStream::IsEof() const
 
 int FileStdStream::GetC()
 {
-	// Read character
-	return m_pFile ? getc(m_pFile) : -1;
+	#ifdef WIN32
+		// Read character
+		if (IsReadable())
+			return ((m_nStringFormat == String::ASCII) ? getc(m_pFile) : getwc(m_pFile));
+
+		// Error!
+		return -1;
+	#else
+		// Read character
+		return m_pFile ? getc(m_pFile) : -1;
+	#endif
 }
 
 bool FileStdStream::PutC(int nChar)
 {
-	// Write character
-	return (m_pFile && IsWritable() && putc(nChar, m_pFile) != EOF);
+	#ifdef WIN32
+		// Write character
+		if (IsWritable())
+			return ((m_nStringFormat == String::ASCII) ? putc(nChar, m_pFile) : putwc(static_cast<wchar_t>(nChar), m_pFile)) != 0;
+
+		// Error!
+		return false;
+	#else
+		// Write character
+		return (m_pFile && IsWritable() && putc(nChar, m_pFile) != EOF);
+	#endif
 }
 
 String FileStdStream::GetS()
 {
 	// Read string
 	if (m_pFile) {
-		char szTemp[2048] = "";
-		if (fgets(szTemp, 2048, m_pFile))
-			return szTemp;
+		#ifdef WIN32
+			// ASCII or Unicode?
+			if (m_nStringFormat == String::ASCII) {
+				char szTemp[2048] = "";
+				if (fgets(szTemp, 2048, m_pFile))
+					return szTemp;
+			} else {
+				wchar_t szTemp[2048] = L"";
+				if (fgetws(szTemp, 2048, m_pFile))
+					return szTemp;
+			}
+		#else
+			char szTemp[2048] = "";
+			if (fgets(szTemp, 2048, m_pFile))
+				return szTemp;
+		#endif
 	}
 
 	// Error!
@@ -267,12 +316,21 @@ int FileStdStream::PutS(const String &sString)
 	// Write string
 	if (m_pFile && IsWritable()) {
 		#ifdef WIN32
-			const int nSize = (sString.GetFormat() == String::ASCII) ? fputs(sString.GetASCII(), m_pFile) : fputws(sString.GetUnicode(), m_pFile);
+			// ASCII or Unicode?
+			if (m_nStringFormat == String::ASCII) {
+				const int nSize = fputs(sString.GetASCII(), m_pFile);
+				if (nSize >= 0)
+					return sString.GetLength();
+			} else {
+				const int nSize = fputws(sString.GetUnicode(), m_pFile);
+				if (nSize >= 0)
+					return sString.GetLength();
+			}
 		#else
 			const int nSize = fputs((sString.GetFormat() == String::ASCII) ? sString.GetASCII() : sString.GetUTF8(), m_pFile);
+			if (nSize >= 0)
+				return sString.GetLength();
 		#endif
-		if (nSize >= 0)
-			return sString.GetLength();
 	}
 
 	// Error!

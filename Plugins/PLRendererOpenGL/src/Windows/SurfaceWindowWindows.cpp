@@ -26,7 +26,7 @@
 #include <PLCore/PLCoreWindowsIncludes.h>
 #include <PLCore/Log/Log.h>
 #include "PLRendererOpenGL/Renderer.h"
-#include "PLRendererOpenGL/ContextWindows.h"
+#include "PLRendererOpenGL/Windows/ContextWindows.h"
 #include "PLRendererOpenGL/SurfaceWindow.h"
 
 

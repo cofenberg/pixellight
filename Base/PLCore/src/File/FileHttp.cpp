@@ -126,12 +126,14 @@ void FileHttp::Close()
 	m_cHttp.Close();
 }
 
-bool FileHttp::Open(uint32 nAccess)
+bool FileHttp::Open(uint32 nAccess, String::EFormat nStringFormat)
 {
 	// Check flags: FileRead must be set, while FileWrite, FileAppend and FileCreate are not allowed!
 	if ((nAccess & File::FileRead) && !(nAccess & File::FileWrite) && !(nAccess & File::FileAppend) && !(nAccess & File::FileCreate)) {
 		// Save access modes
 		m_nAccess = nAccess;
+
+		// Ignore the "nStringFormat"-parameter, it's not supported
 
 		// Close first
 		if (m_cHttp.IsOpen())
@@ -168,6 +170,12 @@ bool FileHttp::IsWritable() const
 {
 	// Not implemented
 	return false;
+}
+
+String::EFormat FileHttp::GetStringFormat() const
+{
+	// Default is ASCII
+	return String::ASCII;
 }
 
 bool FileHttp::IsEof() const

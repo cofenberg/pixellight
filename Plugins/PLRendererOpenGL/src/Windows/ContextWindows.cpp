@@ -26,9 +26,9 @@
 #include <PLCore/Log/Log.h>
 #include <PLCore/Container/Array.h>
 #include <PLRenderer/Renderer/Types.h>
-#include "PLRendererOpenGL/PLRendererOpenGLWindows.h"
 #include "PLRendererOpenGL/Renderer.h"
-#include "PLRendererOpenGL/ContextWindows.h"
+#include "PLRendererOpenGL/Windows/PLRendererOpenGLWindows.h"
+#include "PLRendererOpenGL/Windows/ContextWindows.h"
 
 
 //[-------------------------------------------------------]

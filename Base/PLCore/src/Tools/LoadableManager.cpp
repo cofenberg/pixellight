@@ -418,7 +418,7 @@ bool LoadableManager::ScanPackages(const String &sPath, const String &sExtension
 *  @brief
 *    Opens a file by using base directories
 */
-bool LoadableManager::OpenFile(File &cFile, const String &sFilename, bool bCreate) const
+bool LoadableManager::OpenFile(File &cFile, const String &sFilename, bool bCreate, String::EFormat nStringFormat) const
 {
 	// Because absolute filenames can be accessed fastest by the file system, we first give
 	// the file system an absolute filename which is hopefully the correct one... if
@@ -443,8 +443,7 @@ bool LoadableManager::OpenFile(File &cFile, const String &sFilename, bool bCreat
 				// Try to open the file directly (resolve "./" because we always want to work with absolute paths so the user can figure out the absolute path later on)
 				if (sBaseDir == "./") {
 					// Use current directory
-					const String sCurrentDir = System::GetInstance()->GetCurrentDir();
-					cFile.Assign(sCurrentDir.GetLength() ? (sCurrentDir + '/' + sFilename) : sFilename);
+					cFile.Assign(System::GetInstance()->GetCurrentDir() + '/' + sFilename);
 				} else {
 					// Use given gase directory
 					cFile.Assign(sBaseDir + sFilename);
@@ -464,18 +463,18 @@ bool LoadableManager::OpenFile(File &cFile, const String &sFilename, bool bCreat
 	}
 
 	// Check if the file has been found
-	return cFile.Open(bCreate ? (File::FileWrite | File::FileCreate) : File::FileRead);
+	return cFile.Open(bCreate ? (File::FileWrite | File::FileCreate) : File::FileRead, nStringFormat);
 }
 
 /**
 *  @brief
 *    Loads in a string by using a file
 */
-String LoadableManager::LoadStringFromFile(const String &sFilename, String::EFormat nFormat) const
+String LoadableManager::LoadStringFromFile(const String &sFilename, String::EFormat nStringFormat) const
 {
 	// Open the file
 	File cFile;
-	if (OpenFile(cFile, sFilename, false))
+	if (OpenFile(cFile, sFilename, false, nStringFormat))
 		return cFile.GetContentAsString();
 
 	// Error!

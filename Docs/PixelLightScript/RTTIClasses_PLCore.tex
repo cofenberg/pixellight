@@ -40,6 +40,9 @@ Write \emph{<RTTI object>:FromString(<string>)} in order to set the object from 
 
 \subsection{Methods}
 
+\paragraph{<RTTI object> GetApplicationContext()}
+Write \emph{<RTTI object>:GetApplicationContext()} in order to receive the application context.
+
 \paragraph{Exit(<integer>)}
 Write \emph{<RTTI object>:Exit(<integer>)} in order to exit the application. Return code for application as first parameter (usually 0 means no error).
 
@@ -127,3 +130,26 @@ Write \emph{<RTTI object>:SetMouseVisible(<bool>)} in order to set the mouse cur
 
 \paragraph{SetTrapMouse(<bool>)}
 Write \emph{<RTTI object>:SetTrapMouse(<bool>)} in order to trap the mouse inside the frontend. \emph{true} as first parameter if the mouse should be trapped inside the frontend, else \emph{false}.
+
+
+
+
+\section{PLCore::ApplicationContext Class}
+
+
+\subsection{Methods}
+
+\paragraph{<string> GetExecutableFilename()}
+Write \emph{<RTTI object>:GetExecutableFilename()} in order to receive the absolute path of application executable (e.g. on Windows: "C:/MyApplication/Test.exe").
+
+\paragraph{<string> GetAppDirectory()}
+Write \emph{<RTTI object>:GetAppDirectory()} in order to receive the directory of application executable (e.g. on Windows: "C:/MyApplication").
+
+\paragraph{<string> GetStartupDirectory()}
+Write \emph{<RTTI object>:GetStartupDirectory()} in order to receive the current directory when the application constructor was called (e.g. on Windows: "C:/MyApplication").
+
+\paragraph{<string> GetLogFilename()}
+Write \emph{<RTTI object>:GetLogFilename()} in order to receive the absolute path to log file, empty if log has not been opened.
+
+\paragraph{<string> GetConfigFilename()}
+Write \emph{<RTTI object>:GetConfigFilename()} in order to receive the absolute path to config file, empty if no config is used.

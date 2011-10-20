@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGL/Misc/ExtensionDefinitions.h"
+#include "PLRendererOpenGL/ExtensionDefinitions.h"
 
 
 //[-------------------------------------------------------]
@@ -54,7 +54,6 @@ class Renderer;
 *    - You must check if the extension is supported by the current hardware before
 *      you use it. If the extension isn't available you should offer an alternative
 *      technique
-*    - If you add a new extension, don't forget to add it to RendererOpenGLExtensionConfig, too
 *
 *  @see
 *    - OpenGL extension registry at http://oss.sgi.com/projects/ogl-sample/registry/ for more information about
@@ -97,7 +96,6 @@ class OpenGLExtensions {
 		// WGL (Windows only)
 		bool IsWGL_EXT_swap_control() const;
 		bool IsWGL_ARB_extensions_string() const;
-		bool IsWGL_ARB_pbuffer() const;
 		bool IsWGL_ARB_pixel_format() const;
 		bool IsWGL_ARB_render_texture() const;
 		bool IsWGL_ARB_make_current_read() const;
@@ -258,7 +256,6 @@ class OpenGLExtensions {
 		// WGL (Windows only)
 		bool m_bWGL_EXT_swap_control;
 		bool m_bWGL_ARB_extensions_string;
-		bool m_bWGL_ARB_pbuffer;
 		bool m_bWGL_ARB_pixel_format;
 		bool m_bWGL_ARB_render_texture;
 		bool m_bWGL_ARB_make_current_read;

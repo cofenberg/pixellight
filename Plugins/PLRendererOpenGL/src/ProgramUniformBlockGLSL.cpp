@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/String/String.h>
-#include "PLRendererOpenGL/Misc/ExtensionDefinitions.h"
+#include "PLRendererOpenGL/ExtensionDefinitions.h"
 #include "PLRendererOpenGL/UniformBuffer.h"
 #include "PLRendererOpenGL/ProgramUniformBlockGLSL.h"
 

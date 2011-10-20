@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLRenderer/Renderer/Backend/RendererBackend.h>
 #include "PLRendererOpenGL/PLRendererOpenGL.h"
-#include "PLRendererOpenGL/Misc/Extensions.h"
+#include "PLRendererOpenGL/Extensions.h"
 
 
 //[-------------------------------------------------------]

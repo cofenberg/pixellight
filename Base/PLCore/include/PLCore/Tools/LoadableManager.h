@@ -369,11 +369,17 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*    Filename of the file to open
 		*  @param[in] bCreate
 		*    Create the file if it doesn't exist?
+		*  @param[in] nStringFormat
+		*    String encoding format to use when dealing with string functions (not supported by all file implementations)
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - It's not recommended to use Unicode by because internally wchar_t is used and this data type has not
+		*      the same size on every platform (use ASCII or UTF8 instead)
 		*/
-		PLCORE_API bool OpenFile(File &cFile, const String &sFilename, bool bCreate = false) const;
+		PLCORE_API bool OpenFile(File &cFile, const String &sFilename, bool bCreate = false, String::EFormat nStringFormat = String::ASCII) const;
 
 		/**
 		*  @brief
@@ -381,18 +387,18 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*
 		*  @param[in] sFilename
 		*    Name of the file to read the string from
-		*  @param[in] nFormat
-		*    String format, "String::ASCII" or "String::Unicode" (not recommended!)
+		*  @param[in] nStringFormat
+		*    String encoding format to use when dealing with string functions (not supported by all file implementations)
 		*
 		*  @return
 		*    The read string, empty string on error or if the file is just empty
 		*
 		*  @note
 		*    - The file is opened by using base directories
-		*    - It's not recommended to read in Unicode by using this method because internally
-		*      wchar_t is used and this data type has not the same size on every platform
+		*    - It's not recommended to use Unicode by because internally wchar_t is used and this data type has not
+		*      the same size on every platform (use ASCII or UTF8 instead)
 		*/
-		PLCORE_API String LoadStringFromFile(const String &sFilename, String::EFormat nFormat = String::ASCII) const;
+		PLCORE_API String LoadStringFromFile(const String &sFilename, String::EFormat nStringFormat = String::ASCII) const;
 
 
 	//[-------------------------------------------------------]

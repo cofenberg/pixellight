@@ -147,14 +147,18 @@ class ScriptManager : public Singleton<ScriptManager> {
 		*    Script filename
 		*  @param[in] bAddBindings
 		*    If 'true', add all available script bindings automatically (see "Script::AddBindings()")
+		*  @param[in] nStringFormat
+		*    String encoding format to use when dealing with string functions (not supported by all file implementations)
 		*
 		*  @return
 		*    The created script instance, null pointer on error (Unknown filename extension? File not found? Error within the script?)
 		*
 		*  @note
 		*    - Convenience method
+		*    - It's not recommended to use Unicode by because internally wchar_t is used and this data type has not
+		*      the same size on every platform (use ASCII or UTF8 instead)
 		*/
-		PLCORE_API Script *CreateFromFile(const String &sFilename, bool bAddBindings = true);
+		PLCORE_API Script *CreateFromFile(const String &sFilename, bool bAddBindings = true, String::EFormat nStringFormat = String::ASCII);
 
 
 	//[-------------------------------------------------------]

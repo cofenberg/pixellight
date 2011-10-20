@@ -25,7 +25,7 @@
 //[-------------------------------------------------------]
 #include "PLRendererOpenGL/PLRendererOpenGL.h"
 #include "PLRendererOpenGL/VertexBuffer.h"
-#include "PLRendererOpenGL/Misc/ExtensionDefinitions.h"
+#include "PLRendererOpenGL/ExtensionDefinitions.h"
 #include "PLRendererOpenGL/ProgramAttributeGLSL.h"
 
 

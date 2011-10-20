@@ -112,10 +112,11 @@ class FileStdStream : public FileImpl {
 		virtual bool Delete() override;
 		virtual bool DeleteDirectory() override;
 		virtual void Close() override;
-		virtual bool Open(uint32 nAccess) override;
+		virtual bool Open(uint32 nAccess, String::EFormat nStringFormat = String::ASCII) override;
 		virtual bool IsOpen() const override;
 		virtual bool IsReadable() const override;
 		virtual bool IsWritable() const override;
+		virtual String::EFormat GetStringFormat() const override;
 		virtual bool IsEof() const override;
 		virtual int GetC() override;
 		virtual bool PutC(int nChar) override;
@@ -134,10 +135,11 @@ class FileStdStream : public FileImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		bool	m_bStream;	/**< If 'true', m_pFile is used, otherwise m_hFile */
-		FILE   *m_pFile;	/**< Pointer to file stream, can be a null pointer */
-		handle	m_hFile;	/**< System file handle */
-		uint32  m_nAccess;	/**< File access modes (see EAccess) */
+		bool			 m_bStream;			/**< If 'true', m_pFile is used, otherwise m_hFile */
+		FILE			*m_pFile;			/**< Pointer to file stream, can be a null pointer */
+		handle			 m_hFile;			/**< System file handle */
+		uint32			 m_nAccess;			/**< File access modes (see EAccess) */
+		String::EFormat  m_nStringFormat;	/**< String encoding format to use when dealing with string functions */
 
 
 };

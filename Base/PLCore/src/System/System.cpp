@@ -241,7 +241,14 @@ String System::GetLocaleLanguage() const
 String System::GetCurrentDir() const
 {
 	// Call system function
-	return m_pSystemImpl->GetCurrentDir();
+	String sCurrentDir = m_pSystemImpl->GetCurrentDir();
+
+	// No empty string, please (it should always be possible to add e.g. '/Data' without problems)
+	if (!sCurrentDir.GetLength())
+		sCurrentDir = '.';
+
+	// Done
+	return sCurrentDir;
 }
 
 /**

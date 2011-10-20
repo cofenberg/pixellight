@@ -30,9 +30,9 @@
 	#include <stdio.h>	// For "fputs" and "stdout" inside "Log::Write()"
 #endif
 #include "PLCore/File/Url.h"
-#include "PLCore/Log/LogFormaterText.h"
-#include "PLCore/Log/LogFormaterXml.h"
-#include "PLCore/Log/LogFormaterHtml.h"
+#include "PLCore/Log/LogFormatterText.h"
+#include "PLCore/Log/LogFormatterXml.h"
+#include "PLCore/Log/LogFormatterHtml.h"
 #include "PLCore/Log/Log.h"
 
 
@@ -97,21 +97,21 @@ bool Log::Open(const String &sFilename)
 	// Get the filename extension
 	const String sExtension = Url(sFilename).GetExtension();
 
-	// Create log formater instance by using the filename extension
-	LogFormater *pLogFormater = nullptr;
+	// Create log formatter instance by using the filename extension
+	LogFormatter *pLogFormatter = nullptr;
 	if (sExtension == "txt" || sExtension == "log")
-		pLogFormater = new LogFormaterText();
+		pLogFormatter = new LogFormatterText();
 	else if (sExtension == "xml")
-		pLogFormater = new LogFormaterXml();
+		pLogFormatter = new LogFormatterXml();
 	else if (sExtension == "html")
-		pLogFormater = new LogFormaterHtml();
+		pLogFormatter = new LogFormatterHtml();
 
-	// Open the log if a log formater instance was successfully created
-	if (pLogFormater) {
-		if (Open(sFilename, *pLogFormater))
+	// Open the log if a log formatter instance was successfully created
+	if (pLogFormatter) {
+		if (Open(sFilename, *pLogFormatter))
 			return true; // Done
 		else
-			delete pLogFormater; // Cleanup
+			delete pLogFormatter; // Cleanup
 	}
 
 	// Error!
@@ -120,17 +120,17 @@ bool Log::Open(const String &sFilename)
 
 /**
 *  @brief
-*    Open the log file by using a filename and an explicit log formater instance
+*    Open the log file by using a filename and an explicit log formatter instance
 */
-bool Log::Open(const String &sFilename, LogFormater &cLogFormater)
+bool Log::Open(const String &sFilename, LogFormatter &cLogFormatter)
 {
 	// Ensure that the log is currently closed
 	Close();
 
-	// Inform the log formater that the log should be opened
-	if (cLogFormater.Open(sFilename)) {
-		m_sFilename    = sFilename;
-		m_pLogFormater = &cLogFormater;
+	// Inform the log formatter that the log should be opened
+	if (cLogFormatter.Open(sFilename)) {
+		m_sFilename     = sFilename;
+		m_pLogFormatter = &cLogFormatter;
 
 		// Done
 		return true;
@@ -147,20 +147,20 @@ bool Log::Open(const String &sFilename, LogFormater &cLogFormater)
 bool Log::Close()
 {
 	// Is the file open?
-	if (m_pLogFormater) {
-		// Close the log formater
+	if (m_pLogFormatter) {
+		// Close the log formatter
 		bool bResult = true; // By default, all went fine
 		if (m_sFilename.GetLength()) {
 			// Write log message
 			Write(0, "Close log");
 
-			// Inform the log formater that the log should be closed
-			bResult = m_pLogFormater->Close();
+			// Inform the log formatter that the log should be closed
+			bResult = m_pLogFormatter->Close();
 		}
 
-		// Destroy the log formater
-		delete m_pLogFormater;
-		m_pLogFormater = nullptr;
+		// Destroy the log formatter
+		delete m_pLogFormatter;
+		m_pLogFormatter = nullptr;
 
 		// Reset data
 		m_sFilename = "";
@@ -251,10 +251,10 @@ void Log::SetFlushLogLevel(uint8 nFlushLogLevel)
 bool Log::Flush()
 {
 	// Is there anything to flush?
-	if (m_nFlushMessages && m_pLogFormater) {
+	if (m_nFlushMessages && m_pLogFormatter) {
 		// Flush on disc
 		m_nFlushMessages = 0;
-		return m_pLogFormater->Flush();
+		return m_pLogFormatter->Flush();
 	} else {
 		// No need to flush anything
 		return false;
@@ -315,11 +315,11 @@ String Log::LogLevelToString(uint8 nLogLevel) const
 
 /**
 *  @brief
-*    Get current log formater
+*    Get current log formatter
 */
-LogFormater *Log::GetLogFormater() const
+LogFormatter *Log::GetLogFormatter() const
 {
-	return m_pLogFormater;
+	return m_pLogFormatter;
 }
 
 
@@ -337,7 +337,7 @@ Log::Log() :
 	m_nFlushLogLevel(Error),
 	m_nFlushMessages(0),
 	m_nBufferedMessages(10),
-	m_pLogFormater(nullptr)
+	m_pLogFormatter(nullptr)
 {
 }
 
@@ -352,7 +352,7 @@ Log::Log(const Log &cSource) :
 	m_nFlushLogLevel(Error),
 	m_nFlushMessages(0),
 	m_nBufferedMessages(10),
-	m_pLogFormater(nullptr)
+	m_pLogFormatter(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }
@@ -449,11 +449,11 @@ bool Log::Write(uint8 nLogLevel, const String &sText)
 			#endif
 		}
 
-		// Is there a log formater?
+		// Is there a log formatter?
 		bool bResult = true; // By default, all went fine
-		if (m_pLogFormater) {
+		if (m_pLogFormatter) {
 			// Write the text
-			bResult = m_pLogFormater->Output(nLogLevel, sText);
+			bResult = m_pLogFormatter->Output(nLogLevel, sText);
 			if (bResult) {
 				// Remove the latest message from the list if the limit is reached
 				if (m_qLastMessages.GetNumOfElements() == m_nBufferedMessages) {
@@ -472,7 +472,7 @@ bool Log::Write(uint8 nLogLevel, const String &sText)
 				m_nFlushMessages++;
 				if (nLogLevel >= m_nFlushLogLevel || m_nFlushMessages >= m_nBufferedMessages) {
 					m_nFlushMessages = 0;
-					if (!m_pLogFormater->Flush())
+					if (!m_pLogFormatter->Flush())
 						bResult = false; // Error!
 				}
 			}

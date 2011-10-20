@@ -27,7 +27,7 @@
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/SurfaceWindowHandler.h>
 #include "PLRendererOpenGL/Renderer.h"
-#include "PLRendererOpenGL/ContextLinux.h"
+#include "PLRendererOpenGL/Linux/ContextLinux.h"
 #include "PLRendererOpenGL/SurfaceWindow.h"
 
 
@@ -35,6 +35,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
+using namespace PLMath;
 namespace PLRendererOpenGL {
 
 

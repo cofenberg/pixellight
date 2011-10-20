@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: LogFormaterHtml.cpp                            *
+ *  File: LogFormatterHtml.cpp                           *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -25,7 +25,7 @@
 //[-------------------------------------------------------]
 #include "PLCore/File/File.h"
 #include "PLCore/Log/Log.h"
-#include "PLCore/Log/LogFormaterHtml.h"
+#include "PLCore/Log/LogFormatterHtml.h"
 
 
 //[-------------------------------------------------------]
@@ -41,7 +41,7 @@ namespace PLCore {
 *  @brief
 *    Default constructor
 */
-LogFormaterHtml::LogFormaterHtml() :
+LogFormatterHtml::LogFormatterHtml() :
 	m_sTitle("PL-Log"),
 	m_sDefaultTextColor("black"),
 	m_sDefaultTextFormat("|<br>"),
@@ -53,7 +53,7 @@ LogFormaterHtml::LogFormaterHtml() :
 *  @brief
 *    Destructor
 */
-LogFormaterHtml::~LogFormaterHtml()
+LogFormatterHtml::~LogFormatterHtml()
 {
 	if (m_mapTextFormats)
 		delete m_mapTextFormats;
@@ -63,7 +63,7 @@ LogFormaterHtml::~LogFormaterHtml()
 *  @brief
 *    Sets the text format string for the specified log level
 */
-void LogFormaterHtml::SetTextFormat(uint8 nLogLevel, const String &sFormat)
+void LogFormatterHtml::SetTextFormat(uint8 nLogLevel, const String &sFormat)
 {
 	if (sFormat.GetLength() > 0) {
 		if (&m_mapTextFormats->Get(nLogLevel) != &HashMap<uint8, String>::Null)
@@ -77,7 +77,7 @@ void LogFormaterHtml::SetTextFormat(uint8 nLogLevel, const String &sFormat)
 *  @brief
 *    This text gets printed to the log when the log is opened
 */
-void LogFormaterHtml::SetHeader(const String &sHeader)
+void LogFormatterHtml::SetHeader(const String &sHeader)
 {
 	m_sHeader = sHeader;
 }
@@ -86,7 +86,7 @@ void LogFormaterHtml::SetHeader(const String &sHeader)
 *  @brief
 *    Sets the title of the log
 */
-void LogFormaterHtml::SetTitle(const String &sTitle)
+void LogFormatterHtml::SetTitle(const String &sTitle)
 {
 	m_sTitle = sTitle;
 }
@@ -95,7 +95,7 @@ void LogFormaterHtml::SetTitle(const String &sTitle)
 *  @brief
 *    Sets the Background for the HTML document either a color or a image
 */
-void LogFormaterHtml::SetBackground(const String &sBackground)
+void LogFormatterHtml::SetBackground(const String &sBackground)
 {
 	m_sBackground = sBackground;
 }
@@ -104,7 +104,7 @@ void LogFormaterHtml::SetBackground(const String &sBackground)
 *  @brief
 *    Sets the default text color
 */
-void LogFormaterHtml::SetDefaultTextColor(const String &sColor)
+void LogFormatterHtml::SetDefaultTextColor(const String &sColor)
 {
 	if (sColor.GetLength() > 0)
 		m_sDefaultTextColor = sColor;
@@ -114,7 +114,7 @@ void LogFormaterHtml::SetDefaultTextColor(const String &sColor)
 *  @brief
 *    Sets the default text format string
 */
-void LogFormaterHtml::SetDefaultTextFormat(const String &sFormat)
+void LogFormatterHtml::SetDefaultTextFormat(const String &sFormat)
 {
 	if (sFormat.GetLength() > 0)
 		m_sDefaultTextFormat = sFormat;
@@ -124,7 +124,7 @@ void LogFormaterHtml::SetDefaultTextFormat(const String &sFormat)
 *  @brief
 *    This text gets printed to the log before the log gets closed
 */
-void LogFormaterHtml::SetFooter(const String &sFooter)
+void LogFormatterHtml::SetFooter(const String &sFooter)
 {
 	m_sFooter = sFooter;
 }
@@ -137,7 +137,7 @@ void LogFormaterHtml::SetFooter(const String &sFooter)
 *  @brief
 *    Copy constructor
 */
-LogFormaterHtml::LogFormaterHtml(const LogFormaterHtml &cSource) :
+LogFormatterHtml::LogFormatterHtml(const LogFormatterHtml &cSource) :
 	m_sTitle("PL-Log"),
 	m_sDefaultTextColor("black"),
 	m_sDefaultTextFormat("|<br>"),
@@ -150,7 +150,7 @@ LogFormaterHtml::LogFormaterHtml(const LogFormaterHtml &cSource) :
 *  @brief
 *    Copy operator
 */
-LogFormaterHtml &LogFormaterHtml::operator =(const LogFormaterHtml &cSource)
+LogFormatterHtml &LogFormatterHtml::operator =(const LogFormatterHtml &cSource)
 {
 	// No implementation because the copy operator is never used
 	return *this;
@@ -160,7 +160,7 @@ LogFormaterHtml &LogFormaterHtml::operator =(const LogFormaterHtml &cSource)
 *  @brief
 *    Returns the HTML formated text the given log level
 */
-String LogFormaterHtml::GetHtmlFormatedText(uint8 nLogLevel, const String &sText) const
+String LogFormatterHtml::GetHtmlFormatedText(uint8 nLogLevel, const String &sText) const
 {
 	String sLogMessage;
 	if (nLogLevel >= Log::Quiet && m_bShowLogLevelPrefix) {
@@ -178,12 +178,12 @@ String LogFormaterHtml::GetHtmlFormatedText(uint8 nLogLevel, const String &sText
 
 
 //[-------------------------------------------------------]
-//[ Private virtual LogFormater functions                 ]
+//[ Private virtual LogFormatter functions                ]
 //[-------------------------------------------------------]
-bool LogFormaterHtml::Open(const String &sFilename)
+bool LogFormatterHtml::Open(const String &sFilename)
 {
-	// Open the log file via the helper function of the base class
-	m_pFile = OpenFile(sFilename);
+	// Open the log file via the helper function of the base class, use UTF8 string encoding format so one can also put cryptic none English characters into the log
+	m_pFile = OpenFile(sFilename, String::UTF8);
 
 	// Error?
 	if (m_pFile) {
@@ -228,7 +228,7 @@ bool LogFormaterHtml::Open(const String &sFilename)
 	return false;
 }
 
-bool LogFormaterHtml::Close()
+bool LogFormatterHtml::Close()
 {
 	// Is the file open?
 	if (m_pFile) {
@@ -254,7 +254,7 @@ bool LogFormaterHtml::Close()
 	return false;
 }
 
-bool LogFormaterHtml::Output(uint8 nLogLevel, const String &sText)
+bool LogFormatterHtml::Output(uint8 nLogLevel, const String &sText)
 {
 	if (m_pFile) {
 		// Write the text and a newline
@@ -266,7 +266,7 @@ bool LogFormaterHtml::Output(uint8 nLogLevel, const String &sText)
 	return false;
 }
 
-bool LogFormaterHtml::Flush()
+bool LogFormatterHtml::Flush()
 {
 	return m_pFile && m_pFile->Flush();
 }

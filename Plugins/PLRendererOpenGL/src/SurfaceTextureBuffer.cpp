@@ -28,7 +28,7 @@
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLRenderer/Renderer/TextureBufferCube.h>
 #include "PLRendererOpenGL/Renderer.h"
-#include "PLRendererOpenGL/Misc/FrameBufferObject.h"
+#include "PLRendererOpenGL/FrameBufferObject.h"
 #include "PLRendererOpenGL/SurfaceTextureBuffer.h"
 
 

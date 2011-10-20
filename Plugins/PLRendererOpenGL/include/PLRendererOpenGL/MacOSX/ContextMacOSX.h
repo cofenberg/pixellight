@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SurfaceWindow.cpp                              *
+ *  File: ContextMacOSX.h                                *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,67 +20,82 @@
 \*********************************************************/
 
 
+#ifndef __PLRENDEREROPENGL_CONTEXTMACOSX_H__
+#define __PLRENDEREROPENGL_CONTEXTMACOSX_H__
+#pragma once
+
+
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGL/SurfaceWindow.h"
+#include "PLRendererOpenGL/Context.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLCore;
 namespace PLRendererOpenGL {
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Renderer;
+
+
+//[-------------------------------------------------------]
+//[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Destructor
+*    Mac OS X OpenGL context
 */
-SurfaceWindow::~SurfaceWindow()
-{
-	// De-initialize the OpenGL surface window
-	DeInit();
-}
+class ContextMacOSX : public Context {
 
 
-//[-------------------------------------------------------]
-//[ Private functions                                     ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Constructor
-*/
-SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen) :
-	PLRenderer::SurfaceWindow(cHandler, nNativeWindowHandle, bFullscreen),
-	#ifdef WIN32
-		m_hDC(nullptr),
-	#endif
-	#ifdef APPLE
-		// [TODO] Implement Mac OS X part
-	#elif LINUX
-		m_nNativeWindowHandle(NULL_HANDLE),
-		m_nOldSizeID(-1),
-		m_nOldRotation(-1),
-	#endif
-		m_nSwapInterval(-1),
-		m_bGammaChanged(false)
-{
-	// Initialize gamma backup
-	m_fGammaBackup[0] = m_fGammaBackup[1] = m_fGammaBackup[2] = 0.0f;
+	//[-------------------------------------------------------]
+	//[ Public methods                                        ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Constructor
+		*
+		*  @param[in] cRenderer
+		*    The owner renderer
+		*/
+		ContextMacOSX(Renderer &cRenderer);
 
-	// Just copy over the given information
-	m_sDisplayMode = sDisplayMode;
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		virtual ~ContextMacOSX();
 
-	// Initialize the OpenGL surface window
-	Init();
-}
+
+	//[-------------------------------------------------------]
+	//[ Public virtual Context methods                        ]
+	//[-------------------------------------------------------]
+	public:
+		virtual bool IsValid() const override;
+		virtual void MakeDummyCurrent() const override;
+		virtual bool QueryDisplayModes(PLCore::Array<const PLRenderer::DisplayMode*> &lstDisplayModeList) override;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		Renderer *m_pRenderer;	/**< The owner renderer, always valid! */
+
+
+};
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRendererOpenGL
+
+
+#endif // __PLRENDEREROPENGL_CONTEXTMACOSX_H__

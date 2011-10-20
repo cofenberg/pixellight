@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: LogFormater.h                                  *
+ *  File: LogFormatter.h                                 *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,15 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLCORE_LOGFORMATER_H__
-#define __PLCORE_LOGFORMATER_H__
+#ifndef __PLCORE_LOGFORMATTER_H__
+#define __PLCORE_LOGFORMATTER_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/PLCore.h"
+#include "PLCore/String/String.h"
 
 
 //[-------------------------------------------------------]
@@ -48,16 +48,16 @@ class File;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract log formater class
+*    Abstract log formatter class
 *
 *  @remarks
-*    Defines the interface for a formater of the log. With this interface you can
-*    implement a formater which will format the output of the log.
+*    Defines the interface for a formatter of the log. With this interface you can
+*    implement a formatter which will format the output of the log.
 *
 *  @note
 *    - Implementation of the strategy design pattern, this class is the strategy of the context "Log"
 */
-class LogFormater {
+class LogFormatter {
 
 
 	//[-------------------------------------------------------]
@@ -79,7 +79,7 @@ class LogFormater {
 		*    Should the prefix be shown?
 		*
 		*  @remarks
-		*    This option can be ignored in an log formater implementation if the log formater
+		*    This option can be ignored in an log formatter implementation if the log formatter
 		*    wants that the prefix is always shown.
 		*/
 		PLCORE_API void ShowLogLevelPrefix(bool bShow = true);
@@ -93,13 +93,13 @@ class LogFormater {
 		*  @brief
 		*    Default constructor
 		*/
-		PLCORE_API LogFormater();
+		PLCORE_API LogFormatter();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API virtual ~LogFormater();
+		PLCORE_API virtual ~LogFormatter();
 
 		/**
 		*  @brief
@@ -107,15 +107,17 @@ class LogFormater {
 		*
 		*  @param[in] sFilename
 		*    The log's filename
+		*  @param[in] nStringFormat
+		*    String encoding format to use when dealing with string functions (not supported by all file implementations)
 		*
 		*  @return
 		*    A pointer to the file object if all went fine, a null pointer on error
 		*/
-		PLCORE_API File *OpenFile(const String &sFilename);
+		PLCORE_API File *OpenFile(const String &sFilename, String::EFormat nStringFormat);
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual LogFormater functions               ]
+	//[ Protected virtual LogFormatter functions              ]
 	//[-------------------------------------------------------]
 	protected:
 		/**
@@ -182,7 +184,7 @@ class LogFormater {
 		*  @param[in] cSource
 		*    Source to copy from
 		*/
-		LogFormater(const LogFormater &cSource);
+		LogFormatter(const LogFormatter &cSource);
 
 		/**
 		*  @brief
@@ -194,7 +196,7 @@ class LogFormater {
 		*  @return
 		*    Reference to this instance
 		*/
-		LogFormater &operator =(const LogFormater &cSource);
+		LogFormatter &operator =(const LogFormatter &cSource);
 
 
 };
@@ -206,4 +208,4 @@ class LogFormater {
 } // PLCore
 
 
-#endif // __PLCORE_LOGFORMATER_H__
+#endif // __PLCORE_LOGFORMATTER_H__

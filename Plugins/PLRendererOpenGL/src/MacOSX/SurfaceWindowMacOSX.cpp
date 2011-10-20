@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: LogFormater.cpp                                *
+ *  File: SurfaceWindowMacOSX.cpp                        *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,102 +23,74 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/File/File.h"
-#include "PLCore/File/Directory.h"
-#include "PLCore/Log/LogFormater.h"
+#include "PLRendererOpenGL/SurfaceWindow.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLCore {
+using namespace PLCore;
+using namespace PLMath;
+namespace PLRendererOpenGL {
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
+//[ Public virtual PLRenderer::SurfaceWindow functions    ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    To activate/deactivate that the [LogLevel] prefix should be shown
-*    in the log before each log message e.g. [Info] info log level message
-*/
-void LogFormater::ShowLogLevelPrefix(bool bShow)
+bool SurfaceWindow::GetGamma(float &fRed, float &fGreen, float &fBlue) const
 {
-	m_bShowLogLevelPrefix = bShow;
+	// [TODO] Implement me
+	return false;
+}
+
+bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
+{
+	// [TODO] Implement me
+	return false;
 }
 
 
 //[-------------------------------------------------------]
-//[ Protected functions                                   ]
+//[ Public virtual PLRenderer::Surface functions          ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Default constructor
-*/
-LogFormater::LogFormater() :
-	m_pFile(nullptr),
-	m_bShowLogLevelPrefix(true)
+Vector2i SurfaceWindow::GetSize() const
 {
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-LogFormater::~LogFormater()
-{
-}
-
-/**
-*  @brief
-*    Helper function to open the log as a file
-*/
-File *LogFormater::OpenFile(const String &sFilename)
-{
-	// Check filename
-	if (sFilename.GetLength()) {
-		// Open the file
-		File *pFile = new File(sFilename);
-		if (!pFile->Open(File::FileWrite | File::FileCreate)) {
-			delete pFile;
-			pFile = nullptr;
-		}
-
-		// Done
-		return pFile;
+	if (GetNativeWindowHandle()) {
+		// [TODO] Implement me
+		return Vector2i::Zero;
+	} else {
+		return Vector2i::Zero;
 	}
-
-	// Error!
-	return nullptr;
 }
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Private virtual PLRenderer::Surface functions         ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Copy constructor
-*/
-LogFormater::LogFormater(const LogFormater &cSource) :
-	m_pFile(nullptr),
-	m_bShowLogLevelPrefix(true)
+bool SurfaceWindow::Init()
 {
-	// No implementation because the copy constructor is never used
+	// [TODO] Implement me
+	return false;
 }
 
-/**
-*  @brief
-*    Copy operator
-*/
-LogFormater &LogFormater::operator =(const LogFormater &cSource)
+void SurfaceWindow::DeInit()
 {
-	// No implementation because the copy operator is never used
-	return *this;
+	// [TODO] Implement me
+}
+
+bool SurfaceWindow::MakeCurrent(uint8 nFace)
+{
+	// [TODO] Implement me
+}
+
+bool SurfaceWindow::Present()
+{
+	// [TODO] Implement me
+	return false;
 }
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLCore
+} // PLRendererOpenGL

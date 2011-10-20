@@ -25,8 +25,8 @@
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
 #include "PLRendererOpenGL/Renderer.h"
-#include "PLRendererOpenGL/ContextLinux.h"
-#include "PLRendererOpenGL/Misc/Extensions.h"
+#include "PLRendererOpenGL/Linux/ContextLinux.h"
+#include "PLRendererOpenGL/Extensions.h"
 
 
 //[-------------------------------------------------------]
@@ -82,22 +82,6 @@ bool OpenGLExtensions::Init(bool bUseExtensions)
 
 
 // WGL / GLX
-	// WGL_ARB_pbuffer
-	#ifndef APPLE
-		if (IsSupported("GLX_SGIX_pbuffer")) {
-			glXCreatePbuffer  = reinterpret_cast<PFNGLXCREATEPBUFFERPROC> (glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glXCreatePbuffer")));
-			glXDestroyPbuffer = reinterpret_cast<PFNGLXDESTROYPBUFFERPROC>(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glXDestroyPbuffer")));
-			if (!glXCreatePbuffer || !glXDestroyPbuffer) {
-				PL_LOG(Info, "Couldn't use extension 'GLX_SGIX_pbuffer'!")
-				m_bWGL_ARB_pbuffer = false;
-			} else {
-				m_bWGL_ARB_pbuffer = true;
-			}
-		} else {
-			m_bWGL_ARB_pbuffer = false;
-		}
-	#endif
-
 	// WGL_ARB_multisample
 	m_bWGL_ARB_multisample = IsSupported("GLX_ARB_multisample");
 

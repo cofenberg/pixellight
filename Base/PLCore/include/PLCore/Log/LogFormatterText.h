@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: LogFormaterXml.h                               *
+ *  File: LogFormatterText.h                             *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,15 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLCORE_LOGFORMATER_XML_H__
-#define __PLCORE_LOGFORMATER_XML_H__
+#ifndef __PLCORE_LOGFORMATTER_TEXT_H__
+#define __PLCORE_LOGFORMATTER_TEXT_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Log/LogFormater.h"
+#include "PLCore/Log/LogFormatter.h"
 
 
 //[-------------------------------------------------------]
@@ -42,12 +42,15 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    XML log formater
+*    Text log formatter
+*
+*  @remarks
+*    The log is written in pure text to the file.
 *
 *  @note
-*    - Implementation of the strategy design pattern, this class a concrete strategy of the strategy "LogFormater" of the context "Log"
+*    - Implementation of the strategy design pattern, this class a concrete strategy of the strategy "LogFormatter" of the context "Log"
 */
-class LogFormaterXml : public LogFormater {
+class LogFormatterText : public LogFormatter {
 
 
 	//[-------------------------------------------------------]
@@ -58,13 +61,13 @@ class LogFormaterXml : public LogFormater {
 		*  @brief
 		*    Default constructor
 		*/
-		PLCORE_API LogFormaterXml();
+		PLCORE_API LogFormatterText();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API virtual ~LogFormaterXml();
+		PLCORE_API virtual ~LogFormatterText();
 
 
 	//[-------------------------------------------------------]
@@ -78,7 +81,7 @@ class LogFormaterXml : public LogFormater {
 		*  @param[in] cSource
 		*    Source to copy from
 		*/
-		LogFormaterXml(const LogFormaterXml &cSource);
+		LogFormatterText(const LogFormatterText &cSource);
 
 		/**
 		*  @brief
@@ -90,26 +93,11 @@ class LogFormaterXml : public LogFormater {
 		*  @return
 		*    Reference to this instance
 		*/
-		LogFormaterXml &operator =(const LogFormaterXml &cSource);
-
-		/**
-		*  @brief
-		*    Returns the XML formated text the given log level
-		*
-		*  @param[in] nLogLevel
-		*    Log level for which formated text should be returned
-		*
-		*  @param[in] sText
-		*    The log text which should be surrounded with the XML format-tags
-		*
-		*  @return
-		*    XML formated text
-		*/
-		String GetXmlFormatedText(uint8 nLogLevel, const String &sText) const;
+		LogFormatterText &operator =(const LogFormatterText &cSource);
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual LogFormater functions                 ]
+	//[ Private virtual LogFormatter functions                ]
 	//[-------------------------------------------------------]
 	private:
 		virtual bool Open(const String &sFilename) override;
@@ -127,4 +115,4 @@ class LogFormaterXml : public LogFormater {
 } // PLCore
 
 
-#endif // __PLCORE_LOGFORMATER_XML_H__
+#endif // __PLCORE_LOGFORMATTER_TEXT_H__

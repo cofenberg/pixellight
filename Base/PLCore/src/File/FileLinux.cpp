@@ -237,7 +237,7 @@ void FileLinux::Close()
 	}
 }
 
-bool FileLinux::Open(uint32 nAccess)
+bool FileLinux::Open(uint32 nAccess, String::EFormat nStringFormat)
 {
 	// Close file first
 	Close();
@@ -285,6 +285,8 @@ bool FileLinux::Open(uint32 nAccess)
 	// Save access modes
 	m_nAccess = nAccess;
 
+	// [TODO] Support of the "nStringFormat"-parameter?
+
 	// Open file
 	m_pFile = fopen((m_sFilename.GetFormat() == String::ASCII) ? m_sFilename.GetASCII() : m_sFilename.GetUTF8(), szMode);
 
@@ -308,6 +310,12 @@ bool FileLinux::IsWritable() const
 {
 	// Check whether the file is writable
 	return (m_pFile && (m_nAccess & File::FileWrite));
+}
+
+String::EFormat FileLinux::GetStringFormat() const
+{
+	// Default is ASCII
+	return String::ASCII;
 }
 
 bool FileLinux::IsEof() const

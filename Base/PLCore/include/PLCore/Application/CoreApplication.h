@@ -77,7 +77,8 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 			// Methods
-			pl_method_1(Exit,	pl_ret_type(void),	int,	"Exit application. Return code for application as first parameter (usually 0 means no error).",	"")
+			pl_method_0(GetApplicationContext,	pl_ret_type(const ApplicationContext&),			"Get application context.",																		"")
+			pl_method_1(Exit,					pl_ret_type(void),						int,	"Exit application. Return code for application as first parameter (usually 0 means no error).",	"")
 		#endif
 	pl_class_end
 

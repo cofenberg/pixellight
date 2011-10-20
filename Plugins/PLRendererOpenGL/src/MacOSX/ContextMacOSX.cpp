@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SurfaceWindow.cpp                              *
+ *  File: ContextMacOSX.h                                *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGL/SurfaceWindow.h"
+#include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
 
 
 //[-------------------------------------------------------]
@@ -34,49 +34,46 @@ namespace PLRendererOpenGL {
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Destructor
-*/
-SurfaceWindow::~SurfaceWindow()
-{
-	// De-initialize the OpenGL surface window
-	DeInit();
-}
-
-
-//[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Public methods                                        ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Constructor
 */
-SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen) :
-	PLRenderer::SurfaceWindow(cHandler, nNativeWindowHandle, bFullscreen),
-	#ifdef WIN32
-		m_hDC(nullptr),
-	#endif
-	#ifdef APPLE
-		// [TODO] Implement Mac OS X part
-	#elif LINUX
-		m_nNativeWindowHandle(NULL_HANDLE),
-		m_nOldSizeID(-1),
-		m_nOldRotation(-1),
-	#endif
-		m_nSwapInterval(-1),
-		m_bGammaChanged(false)
+ContextMacOSX::ContextMacOSX(Renderer &cRenderer) :
+	m_pRenderer(&cRenderer)
 {
-	// Initialize gamma backup
-	m_fGammaBackup[0] = m_fGammaBackup[1] = m_fGammaBackup[2] = 0.0f;
+	// [TODO] Implement me
+}
 
-	// Just copy over the given information
-	m_sDisplayMode = sDisplayMode;
+/**
+*  @brief
+*    Destructor
+*/
+ContextMacOSX::~ContextMacOSX()
+{
+	// [TODO] Implement me
+}
 
-	// Initialize the OpenGL surface window
-	Init();
+
+//[-------------------------------------------------------]
+//[ Public virtual Context methods                        ]
+//[-------------------------------------------------------]
+bool ContextMacOSX::IsValid() const
+{
+	// [TODO] Implement me
+	return false;
+}
+
+void ContextMacOSX::MakeDummyCurrent() const
+{
+	// [TODO] Implement me
+}
+
+bool ContextMacOSX::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &lstDisplayModeList)
+{
+	// [TODO] Implement me
+	return false;
 }
 
 

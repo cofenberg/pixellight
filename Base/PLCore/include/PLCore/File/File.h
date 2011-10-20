@@ -212,6 +212,8 @@ class File : public FileObject {
 		*
 		*  @param[in] nAccess
 		*    Access mode, combination of 'EAccess' flags
+		*  @param[in] nStringFormat
+		*    String encoding format to use when dealing with string functions (not supported by all file implementations)
 		*
 		*  @return
 		*    'false' on error, else 'true'
@@ -219,8 +221,10 @@ class File : public FileObject {
 		*  @note
 		*    - 'FileStandardInput', 'FileStandardOutput' and 'FileStandardError' are special access flags that can't
 		*      be combined with other flags and the filename must be empty
+		*    - It's not recommended to use Unicode by because internally wchar_t is used and this data type has not
+		*      the same size on every platform (use ASCII or UTF8 instead)
 		*/
-		PLCORE_API bool Open(uint32 nAccess);
+		PLCORE_API bool Open(uint32 nAccess, String::EFormat nStringFormat = String::ASCII);
 
 		/**
 		*  @brief
@@ -266,6 +270,15 @@ class File : public FileObject {
 		*    'true', if the file can be written, else 'false'
 		*/
 		PLCORE_API bool IsWritable() const;
+
+		/**
+		*  @brief
+		*    Returns the string encoding format to use when dealing with string functions
+		*
+		*  @return
+		*    String encoding format to use when dealing with string functions
+		*/
+		PLCORE_API String::EFormat GetStringFormat() const;
 
 		/**
 		*  @brief
@@ -434,17 +447,10 @@ class File : public FileObject {
 		*  @brief
 		*    Returns the complete content of the file as string
 		*
-		*  @param[in] nFormat
-		*    String format, "String::ASCII" or "String::Unicode" (not recommended!)
-		*
 		*  @return
 		*    The complete file content as string, empty string on error or if the file is just empty
-		*
-		*  @note
-		*    - It's not recommended to read in Unicode by using this method because internally
-		*      wchar_t is used and this data type has not the same size on every platform
 		*/
-		PLCORE_API String GetContentAsString(String::EFormat nFormat = String::ASCII);
+		PLCORE_API String GetContentAsString();
 
 
 	//[-------------------------------------------------------]
@@ -478,11 +484,13 @@ class File : public FileObject {
 		*
 		*  @param[in] nAccess
 		*    Access mode (see EAccess)
+		*  @param[in] nStringFormat
+		*    String encoding format to use when dealing with string functions
 		*
 		*  @return
 		*    'false' on error, else 'true'
 		*/
-		bool MemBufOpen(uint32 nAccess);
+		bool MemBufOpen(uint32 nAccess, String::EFormat nStringFormat = String::ASCII);
 
 		/**
 		*  @brief

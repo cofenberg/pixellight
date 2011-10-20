@@ -30,7 +30,7 @@
 #include "PLRendererOpenGL/TextureBufferRectangle.h"
 #include "PLRendererOpenGL/TextureBuffer3D.h"
 #include "PLRendererOpenGL/TextureBufferCube.h"
-#include "PLRendererOpenGL/Misc/FrameBufferObject.h"
+#include "PLRendererOpenGL/FrameBufferObject.h"
 
 
 //[-------------------------------------------------------]
