@@ -87,6 +87,10 @@ void ApplicationContext::SetExecutableFilename(const String &sExecutableFilename
 
 	// Remove the '/' at the end (due usage of the Url-class, we know there's a '/' at the end!)
 	m_sAppDirectory.Delete(m_sAppDirectory.GetLength() - 1);
+
+	// No empty string, please (it should always be possible to add e.g. '/Data' without problems)
+	if (!m_sAppDirectory.GetLength())
+		m_sAppDirectory = '.';
 }
 
 /**

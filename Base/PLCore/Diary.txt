@@ -1,6 +1,14 @@
 ﻿>> 20.10.2011
 [CO]
 - Exposed "ApplicationContext" to the RTTI
+- "System::GetCurrentDir()" & "ApplicationContext::GetAppDirectory()": On Android, those are empty strings and just writing e.g.
+    cApplicationContext.GetAppDirectory() + "/Data"
+  resulted within "/Data", which was not correct. When working on the Android port, I catched this case and used e.g. "Data" in
+  case the application directory was empty. Now that the Android port is working, I'am cleaning up and removing situations resulting
+  in to many stuff to take into account when using the PixelLigth API. In case "System::GetCurrentDir()" & "ApplicationContext::GetAppDirectory()"
+  have internally an emtpy string, '.' is returned meaning that
+    cApplicationContext.GetAppDirectory() + "/Data"
+  will result in "./Data" which is fine.
 
 
 

@@ -443,8 +443,7 @@ bool LoadableManager::OpenFile(File &cFile, const String &sFilename, bool bCreat
 				// Try to open the file directly (resolve "./" because we always want to work with absolute paths so the user can figure out the absolute path later on)
 				if (sBaseDir == "./") {
 					// Use current directory
-					const String sCurrentDir = System::GetInstance()->GetCurrentDir();
-					cFile.Assign(sCurrentDir.GetLength() ? (sCurrentDir + '/' + sFilename) : sFilename);
+					cFile.Assign(System::GetInstance()->GetCurrentDir() + '/' + sFilename);
 				} else {
 					// Use given gase directory
 					cFile.Assign(sBaseDir + sFilename);

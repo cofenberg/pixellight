@@ -211,11 +211,11 @@ void FrontendApplication::OnInitData()
 
 	// Scan for packages in current "Data" directory
 	const String sCurrentDir = System::GetInstance()->GetCurrentDir();
-	pLoadableManager->ScanPackages(sCurrentDir.GetLength() ? (sCurrentDir + "/Data") : "Data");
+	pLoadableManager->ScanPackages(sCurrentDir + "/Data");
 
 	// Scan for packages in application's "Data" directory
 	if (sCurrentDir != m_cApplicationContext.GetAppDirectory())
-		pLoadableManager->ScanPackages(m_cApplicationContext.GetAppDirectory().GetLength() ? (m_cApplicationContext.GetAppDirectory() + "/Data") : "Data");
+		pLoadableManager->ScanPackages(m_cApplicationContext.GetAppDirectory() + "/Data");
 
 	// Get localization language (from config or from default)
 	String sLanguage = m_cConfig.GetVar("PLCore::CoreConfig", "Language");
