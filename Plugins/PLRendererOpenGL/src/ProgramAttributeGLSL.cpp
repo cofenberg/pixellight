@@ -23,9 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGL/PLRendererOpenGL.h"
 #include "PLRendererOpenGL/VertexBuffer.h"
-#include "PLRendererOpenGL/ExtensionDefinitions.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/ProgramAttributeGLSL.h"
 
 

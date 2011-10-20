@@ -35,7 +35,7 @@
 #include "PLRendererOpenGL/TextureBufferRectangle.h"
 #include "PLRendererOpenGL/TextureBuffer3D.h"
 #include "PLRendererOpenGL/TextureBufferCube.h"
-#include "PLRendererOpenGL/ExtensionDefinitions.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/ProgramUniformGLSL.h"
 
 

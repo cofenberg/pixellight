@@ -29,7 +29,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/Renderer/Backend/RendererBackend.h>
-#include "PLRendererOpenGL/PLRendererOpenGL.h"
 #include "PLRendererOpenGL/Extensions.h"
 
 

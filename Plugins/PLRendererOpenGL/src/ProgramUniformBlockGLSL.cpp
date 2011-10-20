@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/String/String.h>
-#include "PLRendererOpenGL/ExtensionDefinitions.h"
+#include <PLCore/PLCore.h>
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/UniformBuffer.h"
 #include "PLRendererOpenGL/ProgramUniformBlockGLSL.h"
 

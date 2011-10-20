@@ -146,7 +146,7 @@ class ExtensionsRuntimeLinking : public Extensions {
 //[ Define helper macro                                   ]
 //[-------------------------------------------------------]
 #ifdef EXTENSIONS_DEFINERUNTIMELINKING
-	#define FNDEF_EX(retType, funcName, args) retType (GL_APIENTRY *funcPtr_##funcName) args
+	#define FNDEF_EX(retType, funcName, args) retType (GL_APIENTRY *funcPtr_##funcName) args = nullptr
 #else
 	#define FNDEF_EX(retType, funcName, args) extern retType (GL_APIENTRY *funcPtr_##funcName) args
 #endif

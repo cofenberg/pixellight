@@ -338,7 +338,6 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRendererOpenGL\Context.h" />
-    <ClInclude Include="include\PLRendererOpenGL\ExtensionDefinitions.h" />
     <ClInclude Include="include\PLRendererOpenGL\Extensions.h" />
     <ClInclude Include="include\PLRendererOpenGL\FixedFunctions.h" />
     <ClInclude Include="include\PLRendererOpenGL\FontGlyphTexture.h" />
