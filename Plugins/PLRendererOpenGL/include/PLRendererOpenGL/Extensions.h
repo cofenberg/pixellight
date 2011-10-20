@@ -97,7 +97,6 @@ class OpenGLExtensions {
 		// WGL (Windows only)
 		bool IsWGL_EXT_swap_control() const;
 		bool IsWGL_ARB_extensions_string() const;
-		bool IsWGL_ARB_pbuffer() const;
 		bool IsWGL_ARB_pixel_format() const;
 		bool IsWGL_ARB_render_texture() const;
 		bool IsWGL_ARB_make_current_read() const;
@@ -258,7 +257,6 @@ class OpenGLExtensions {
 		// WGL (Windows only)
 		bool m_bWGL_EXT_swap_control;
 		bool m_bWGL_ARB_extensions_string;
-		bool m_bWGL_ARB_pbuffer;
 		bool m_bWGL_ARB_pixel_format;
 		bool m_bWGL_ARB_render_texture;
 		bool m_bWGL_ARB_make_current_read;

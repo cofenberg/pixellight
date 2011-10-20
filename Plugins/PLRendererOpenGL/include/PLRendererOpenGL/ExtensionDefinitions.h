@@ -43,13 +43,6 @@ namespace PLRendererOpenGL {
 	// WGL_ARB_extensions_string
 	extern PFNWGLGETEXTENSIONSSTRINGARBPROC	wglGetExtensionsStringARB;
 
-	// WGL_ARB_pbuffer
-	extern PFNWGLCREATEPBUFFERARBPROC		wglCreatePbufferARB;
-	extern PFNWGLGETPBUFFERDCARBPROC		wglGetPbufferDCARB;
-	extern PFNWGLRELEASEPBUFFERDCARBPROC	wglReleasePbufferDCARB;
-	extern PFNWGLDESTROYPBUFFERARBPROC		wglDestroyPbufferARB;
-	extern PFNWGLQUERYPBUFFERARBPROC		wglQueryPbufferARB;
-
 	// WGL_ARB_pixel_format
 	extern PFNWGLGETPIXELFORMATATTRIBIVARBPROC	wglGetPixelFormatAttribivARB;
 	extern PFNWGLGETPIXELFORMATATTRIBFVARBPROC	wglGetPixelFormatAttribfvARB;
@@ -58,7 +51,6 @@ namespace PLRendererOpenGL {
 	// WGL_ARB_render_texture
 	extern PFNWGLBINDTEXIMAGEARBPROC		wglBindTexImageARB;
 	extern PFNWGLRELEASETEXIMAGEARBPROC		wglReleaseTexImageARB;
-	extern PFNWGLSETPBUFFERATTRIBARBPROC	wglSetPbufferAttribARB;
 
 	// WGL_ARB_make_current_read
 	extern PFNWGLMAKECONTEXTCURRENTARBPROC	wglMakeContextCurrentARB;
@@ -72,9 +64,6 @@ namespace PLRendererOpenGL {
 
 // GLX (Linux only)
 #if defined(LINUX) && !defined(APPLE)
-	extern PFNGLXCREATEPBUFFERPROC	glXCreatePbuffer;
-	extern PFNGLXDESTROYPBUFFERPROC	glXDestroyPbuffer;
-
 	// GLX_SGI_swap_control
 	extern PFNGLXSWAPINTERVALSGIPROC	glXSwapIntervalSGI;
 #endif

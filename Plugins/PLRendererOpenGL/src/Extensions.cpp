@@ -54,13 +54,6 @@ namespace PLRendererOpenGL {
 	PFNWGLSWAPINTERVALEXTPROC		wglSwapIntervalEXT		= nullptr;
 	PFNWGLGETSWAPINTERVALEXTPROC	wglGetSwapIntervalEXT	= nullptr;
 
-	// WGL_ARB_pbuffer
-	PFNWGLCREATEPBUFFERARBPROC		wglCreatePbufferARB		= nullptr;
-	PFNWGLGETPBUFFERDCARBPROC		wglGetPbufferDCARB		= nullptr;
-	PFNWGLRELEASEPBUFFERDCARBPROC	wglReleasePbufferDCARB	= nullptr;
-	PFNWGLDESTROYPBUFFERARBPROC		wglDestroyPbufferARB	= nullptr;
-	PFNWGLQUERYPBUFFERARBPROC		wglQueryPbufferARB		= nullptr;
-
 	// WGL_ARB_pixel_format
 	PFNWGLGETPIXELFORMATATTRIBIVARBPROC	wglGetPixelFormatAttribivARB	= nullptr;
 	PFNWGLGETPIXELFORMATATTRIBFVARBPROC	wglGetPixelFormatAttribfvARB	= nullptr;
@@ -69,7 +62,6 @@ namespace PLRendererOpenGL {
 	// WGL_ARB_render_texture
 	PFNWGLBINDTEXIMAGEARBPROC		wglBindTexImageARB		= nullptr;
 	PFNWGLRELEASETEXIMAGEARBPROC	wglReleaseTexImageARB	= nullptr;
-	PFNWGLSETPBUFFERATTRIBARBPROC	wglSetPbufferAttribARB	= nullptr;
 
 	// WGL_ARB_make_current_read
 	PFNWGLMAKECONTEXTCURRENTARBPROC	wglMakeContextCurrentARB	= nullptr;
@@ -79,9 +71,6 @@ namespace PLRendererOpenGL {
 
 // GLX (Linux only)
 #if defined(LINUX) && !defined(APPLE)
-	PFNGLXCREATEPBUFFERPROC		glXCreatePbuffer	= nullptr;
-	PFNGLXDESTROYPBUFFERPROC	glXDestroyPbuffer	= nullptr;
-
 	// GLX_SGI_swap_control
 	PFNGLXSWAPINTERVALSGIPROC	glXSwapIntervalSGI	= nullptr;
 #endif
@@ -364,7 +353,6 @@ bool OpenGLExtensions::IsInitialized() const
 // WGL (Windows only)
 bool OpenGLExtensions::IsWGL_EXT_swap_control()					const { return m_bWGL_EXT_swap_control;				 }
 bool OpenGLExtensions::IsWGL_ARB_extensions_string()			const { return m_bWGL_ARB_extensions_string;		 }
-bool OpenGLExtensions::IsWGL_ARB_pbuffer()						const { return m_bWGL_ARB_pbuffer;					 }
 bool OpenGLExtensions::IsWGL_ARB_pixel_format()					const { return m_bWGL_ARB_pixel_format;				 }
 bool OpenGLExtensions::IsWGL_ARB_render_texture()				const { return m_bWGL_ARB_render_texture;			 }
 bool OpenGLExtensions::IsWGL_ARB_make_current_read()			const { return m_bWGL_ARB_make_current_read;		 }
@@ -559,7 +547,6 @@ void OpenGLExtensions::ResetExtensions()
 	// WGL (Windows only)
 	m_bWGL_EXT_swap_control					= false;
 	m_bWGL_ARB_extensions_string			= false;
-	m_bWGL_ARB_pbuffer						= false;
 	m_bWGL_ARB_pixel_format					= false;
 	m_bWGL_ARB_render_texture				= false;
 	m_bWGL_ARB_make_current_read			= false;

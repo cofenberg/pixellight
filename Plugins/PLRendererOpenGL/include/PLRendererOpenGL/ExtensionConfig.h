@@ -55,7 +55,6 @@ class RendererOpenGLExtensionConfig : public PLCore::ConfigGroup {
 			// WGL (Windows only)
 		pl_attribute(WGL_EXT_swap_control,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(WGL_ARB_extensions_string,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
-		pl_attribute(WGL_ARB_pbuffer,					bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(WGL_ARB_pixel_format,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(WGL_ARB_render_texture,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(WGL_ARB_make_current_read,			bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
@@ -123,7 +122,6 @@ class RendererOpenGLExtensionConfig : public PLCore::ConfigGroup {
 			// HP
 		pl_attribute(GL_HP_occlusion_test,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 			// GLX (Linux only)
-		pl_attribute(GLX_SGIX_pbuffer,					bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GLX_ARB_multisample,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GLX_ATI_pixel_format_float,		bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")
 		pl_attribute(GLX_NV_float_buffer,				bool,	true,	ReadWrite,	DirectValue,	"Use extension?",	"")

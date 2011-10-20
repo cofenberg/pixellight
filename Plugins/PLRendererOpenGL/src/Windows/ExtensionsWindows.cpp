@@ -84,24 +84,6 @@ bool OpenGLExtensions::Init(bool bUseExtensions)
 		m_bWGL_EXT_swap_control = false;
 	}
 
-	// WGL_ARB_pbuffer
-	if (IsSupported("WGL_ARB_pbuffer")) {
-		wglCreatePbufferARB	     = reinterpret_cast<PFNWGLCREATEPBUFFERARBPROC>		(wglGetProcAddress("wglCreatePbufferARB"));
-		wglGetPbufferDCARB	     = reinterpret_cast<PFNWGLGETPBUFFERDCARBPROC>		(wglGetProcAddress("wglGetPbufferDCARB"));
-		wglReleasePbufferDCARB   = reinterpret_cast<PFNWGLRELEASEPBUFFERDCARBPROC>	(wglGetProcAddress("wglReleasePbufferDCARB"));
-		wglDestroyPbufferARB     = reinterpret_cast<PFNWGLDESTROYPBUFFERARBPROC>	(wglGetProcAddress("wglDestroyPbufferARB"));
-		wglQueryPbufferARB	     = reinterpret_cast<PFNWGLQUERYPBUFFERARBPROC>		(wglGetProcAddress("wglQueryPbufferARB"));
-		if (!wglCreatePbufferARB || !wglGetPbufferDCARB || !wglReleasePbufferDCARB || !wglDestroyPbufferARB ||
-			!wglQueryPbufferARB) {
-			PL_LOG(Info, "Couldn't use extension 'WGL_ARB_pbuffer'!")
-			m_bWGL_ARB_pbuffer = false;
-		} else {
-			m_bWGL_ARB_pbuffer = true;
-		}
-	} else {
-		m_bWGL_ARB_pbuffer = false;
-	}
-
 	// WGL_ARB_pixel_format
 	if (IsSupported("WGL_ARB_pixel_format")) {
 		wglGetPixelFormatAttribivARB = reinterpret_cast<PFNWGLGETPIXELFORMATATTRIBIVARBPROC>(wglGetProcAddress("wglGetPixelFormatAttribivARB"));
@@ -121,8 +103,7 @@ bool OpenGLExtensions::Init(bool bUseExtensions)
 	if (IsSupported("WGL_ARB_render_texture")) {
 		wglBindTexImageARB	   = reinterpret_cast<PFNWGLBINDTEXIMAGEARBPROC>	(wglGetProcAddress("wglBindTexImageARB"));
 		wglReleaseTexImageARB  = reinterpret_cast<PFNWGLRELEASETEXIMAGEARBPROC> (wglGetProcAddress("wglReleaseTexImageARB"));
-		wglSetPbufferAttribARB = reinterpret_cast<PFNWGLSETPBUFFERATTRIBARBPROC>(wglGetProcAddress("wglSetPbufferAttribARB"));
-		if (!wglBindTexImageARB || !wglReleaseTexImageARB || !wglSetPbufferAttribARB) {
+		if (!wglBindTexImageARB || !wglReleaseTexImageARB) {
 			PL_LOG(Info, "Couldn't use extension 'WGL_ARB_render_texture'!")
 			m_bWGL_ARB_render_texture = false;
 		} else {

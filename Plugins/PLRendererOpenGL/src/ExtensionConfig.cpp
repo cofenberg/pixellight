@@ -49,7 +49,6 @@ RendererOpenGLExtensionConfig::RendererOpenGLExtensionConfig() :
 	// WGL (Windows only)
 	WGL_EXT_swap_control(this),
 	WGL_ARB_extensions_string(this),
-	WGL_ARB_pbuffer(this),
 	WGL_ARB_pixel_format(this),
 	WGL_ARB_render_texture(this),
 	WGL_ARB_make_current_read(this),
@@ -117,7 +116,6 @@ RendererOpenGLExtensionConfig::RendererOpenGLExtensionConfig() :
 	// HP
 	GL_HP_occlusion_test(this),
 	// GLX (Linux only)
-	GLX_SGIX_pbuffer(this),
 	GLX_ARB_multisample(this),
 	GLX_ATI_pixel_format_float(this),
 	GLX_NV_float_buffer(this)
