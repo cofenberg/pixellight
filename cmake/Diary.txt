@@ -1,3 +1,10 @@
+>> 20.10.2011
+[CO]
+- Mac OS X 10.6 is shipped with GCC 4.2. It's possible to compile and use GCC 4.6 (worked for me without any issues), but PixelLight should also be able to compile by using the
+  given system infrastructure. Added a C++0x test within "CheckGCC.cmake" ("-std=c++0x"). I hope this test works (not yet tested).
+
+
+
 >> 08.10.2011
 [CO]
 - When using CMake to copy a file by writing 
