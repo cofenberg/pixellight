@@ -94,8 +94,8 @@ class OpenGLExtensions {
 		// Returns whether an extension is supported or not
 		///////////////////////////////////////////////////////////
 		// WGL (Windows only)
-		bool IsWGL_EXT_swap_control() const;
 		bool IsWGL_ARB_extensions_string() const;
+		bool IsWGL_EXT_swap_control() const;
 		bool IsWGL_ARB_pixel_format() const;
 		bool IsWGL_ARB_render_texture() const;
 		bool IsWGL_ARB_make_current_read() const;
@@ -180,18 +180,6 @@ class OpenGLExtensions {
 	public:
 		/**
 		*  @brief
-		*    Initialize the supported extensions
-		*
-		*  @param[in] bUseExtensions
-		*    Use extensions?
-		*
-		*  @return
-		*    'true' if all went fine, else 'false'
-		*/
-		bool Init(bool bUseExtensions = true);
-
-		/**
-		*  @brief
 		*    Checks whether an extension is supported by the given hardware or not
 		*
 		*  @param[in] pszExtension
@@ -219,6 +207,33 @@ class OpenGLExtensions {
 		*    Resets the extensions
 		*/
 		void ResetExtensions();
+
+		/**
+		*  @brief
+		*    Initialize the supported extensions
+		*
+		*  @param[in] bUseExtensions
+		*    Use extensions?
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - Platform dependent implementation
+		*/
+		bool Init(bool bUseExtensions = true);
+
+		/**
+		*  @brief
+		*    Initialize the supported universal extensions
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - Platform independent implementation
+		*/
+		bool InitUniversal();
 
 		/**
 		*  @brief
@@ -254,8 +269,8 @@ class OpenGLExtensions {
 
 		// Supported extensions
 		// WGL (Windows only)
-		bool m_bWGL_EXT_swap_control;
 		bool m_bWGL_ARB_extensions_string;
+		bool m_bWGL_EXT_swap_control;
 		bool m_bWGL_ARB_pixel_format;
 		bool m_bWGL_ARB_render_texture;
 		bool m_bWGL_ARB_make_current_read;

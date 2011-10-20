@@ -70,8 +70,8 @@ bool OpenGLExtensions::IsInitialized() const
 // Returns whether an extension is supported or not
 ///////////////////////////////////////////////////////////
 // WGL (Windows only)
-bool OpenGLExtensions::IsWGL_EXT_swap_control()					const { return m_bWGL_EXT_swap_control;				 }
 bool OpenGLExtensions::IsWGL_ARB_extensions_string()			const { return m_bWGL_ARB_extensions_string;		 }
+bool OpenGLExtensions::IsWGL_EXT_swap_control()					const { return m_bWGL_EXT_swap_control;				 }
 bool OpenGLExtensions::IsWGL_ARB_pixel_format()					const { return m_bWGL_ARB_pixel_format;				 }
 bool OpenGLExtensions::IsWGL_ARB_render_texture()				const { return m_bWGL_ARB_render_texture;			 }
 bool OpenGLExtensions::IsWGL_ARB_make_current_read()			const { return m_bWGL_ARB_make_current_read;		 }
@@ -258,8 +258,8 @@ void OpenGLExtensions::ResetExtensions()
 
 	// Extensions
 	// WGL (Windows only)
-	m_bWGL_EXT_swap_control					= false;
 	m_bWGL_ARB_extensions_string			= false;
+	m_bWGL_EXT_swap_control					= false;
 	m_bWGL_ARB_pixel_format					= false;
 	m_bWGL_ARB_render_texture				= false;
 	m_bWGL_ARB_make_current_read			= false;
@@ -332,6 +332,578 @@ void OpenGLExtensions::ResetExtensions()
 	m_bGL_HP_occlusion_test					= false;
 	// Misc
 	m_nGL_MAX_ELEMENTS_VERTICES_EXT = m_nGL_MAX_ELEMENTS_INDICES_EXT = 0;
+}
+
+/**
+*  @brief
+*    Initialize the supported universal extensions
+*/
+bool OpenGLExtensions::InitUniversal()
+{
+	// Define a platform dependent helper macro
+	#ifdef WIN32
+		#define IMPORT_FUNC(funcName)																								\
+			if (bResult) {																											\
+				void *pSymbol = wglGetProcAddress(#funcName);																		\
+				if (pSymbol) {																										\
+					*(reinterpret_cast<void**>(&(funcName))) = pSymbol;																\
+				} else {																											\
+					PL_LOG(Error, String("Failed to find the entry point \"") + #funcName + "\" within the OpenGL dynamic library")	\
+					bResult = false;																								\
+				}																													\
+			}
+	#elif defined(APPLE)
+		// [TODO] Implement me
+	#elif defined(LINUX)
+		#define IMPORT_FUNC(funcName)																								\
+			if (bResult) {																											\
+				void *pSymbol = glXGetProcAddressARB(reinterpret_cast<const GLubyte*>(#funcName));									\
+				if (pSymbol) {																										\
+					*(reinterpret_cast<void**>(&(funcName))) = pSymbol;																\
+				} else {																											\
+					PL_LOG(Error, String("Failed to find the entry point \"") + #funcName + "\" within the OpenGL dynamic library")	\
+					bResult = false;																								\
+				}																													\
+			}
+	#endif
+
+
+	//[-------------------------------------------------------]
+	//[ EXT                                                   ]
+	//[-------------------------------------------------------]
+	// GL_EXT_compiled_vertex_array
+	m_bGL_EXT_compiled_vertex_array = IsSupported("GL_EXT_compiled_vertex_array");
+	if (m_bGL_EXT_compiled_vertex_array) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glLockArraysEXT)
+		IMPORT_FUNC(glUnlockArraysEXT)
+		m_bGL_EXT_compiled_vertex_array = bResult;
+	}
+
+	// GL_EXT_draw_range_elements
+	m_bGL_EXT_draw_range_elements = IsSupported("GL_EXT_draw_range_elements");
+	if (m_bGL_EXT_draw_range_elements) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glDrawRangeElementsEXT)
+		m_bGL_EXT_draw_range_elements = bResult;
+	}
+	if (m_bGL_EXT_draw_range_elements) {	
+		glGetIntegerv(GL_MAX_ELEMENTS_VERTICES_EXT, &m_nGL_MAX_ELEMENTS_VERTICES_EXT);
+		glGetIntegerv(GL_MAX_ELEMENTS_INDICES_EXT,	&m_nGL_MAX_ELEMENTS_INDICES_EXT);
+	} else {
+		m_nGL_MAX_ELEMENTS_VERTICES_EXT = m_nGL_MAX_ELEMENTS_INDICES_EXT = 0;
+	}
+
+	// GL_EXT_fog_coord
+	m_bGL_EXT_fog_coord = IsSupported("GL_EXT_fog_coord");
+	if (m_bGL_EXT_fog_coord) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glFogCoordfEXT)
+		IMPORT_FUNC(glFogCoordfvEXT)
+		IMPORT_FUNC(glFogCoorddEXT)
+		IMPORT_FUNC(glFogCoorddvEXT)
+		IMPORT_FUNC(glFogCoordPointerEXT)
+		m_bGL_EXT_fog_coord = bResult;
+	}
+
+	// GL_EXT_secondary_color
+	m_bGL_EXT_secondary_color = IsSupported("GL_EXT_secondary_color");
+	if (m_bGL_EXT_secondary_color) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glSecondaryColor3bEXT)
+		IMPORT_FUNC(glSecondaryColor3bvEXT)
+		IMPORT_FUNC(glSecondaryColor3dEXT)
+		IMPORT_FUNC(glSecondaryColor3dvEXT)
+		IMPORT_FUNC(glSecondaryColor3fEXT)
+		IMPORT_FUNC(glSecondaryColor3fvEXT)
+		IMPORT_FUNC(glSecondaryColor3iEXT)
+		IMPORT_FUNC(glSecondaryColor3ivEXT)
+		IMPORT_FUNC(glSecondaryColor3sEXT)
+		IMPORT_FUNC(glSecondaryColor3svEXT)
+		IMPORT_FUNC(glSecondaryColor3ubEXT)
+		IMPORT_FUNC(glSecondaryColor3ubvEXT)
+		IMPORT_FUNC(glSecondaryColor3uiEXT)
+		IMPORT_FUNC(glSecondaryColor3uivEXT)
+		IMPORT_FUNC(glSecondaryColor3usEXT)
+		IMPORT_FUNC(glSecondaryColor3usvEXT)
+		IMPORT_FUNC(glSecondaryColorPointerEXT)
+		m_bGL_EXT_secondary_color = bResult;
+	}
+
+	// GL_EXT_texture_compression_s3tc
+	m_bGL_EXT_texture_compression_s3tc = IsSupported("GL_EXT_texture_compression_s3tc");
+
+	// GL_EXT_texture_compression_latc
+	if (IsSupported("GL_EXT_texture_compression_latc"))
+		m_bGL_EXT_texture_compression_latc = true;
+	else
+		m_bGL_EXT_texture_compression_latc = false;
+
+	// GL_EXT_texture_lod_bias
+	m_bGL_EXT_texture_lod_bias = IsSupported("GL_EXT_texture_lod_bias");
+
+	// GL_EXT_texture_filter_anisotropic
+	m_bGL_EXT_texture_filter_anisotropic = IsSupported("GL_EXT_texture_filter_anisotropic");
+
+	// GL_EXT_separate_specular_color
+	m_bGL_EXT_separate_specular_color = IsSupported("GL_EXT_separate_specular_color");
+
+	// GL_EXT_texture_edge_clamp
+	m_bGL_EXT_texture_edge_clamp = IsSupported("GL_EXT_texture_edge_clamp");
+
+	// GL_EXT_texture_rectangle
+	m_bGL_EXT_texture_rectangle = IsSupported("GL_EXT_texture_rectangle");
+
+	// GL_EXT_texture3D
+	m_bGL_EXT_texture3D = IsSupported("GL_EXT_texture3D");
+	if (m_bGL_EXT_texture3D) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glTexImage3DEXT)
+		IMPORT_FUNC(glTexSubImage3DEXT)
+		m_bGL_EXT_texture3D = bResult;
+	}
+
+	// GL_EXT_texture_cube_map
+	m_bGL_EXT_texture_cube_map = IsSupported("GL_EXT_texture_cube_map");
+
+	// GL_EXT_stencil_wrap
+	m_bGL_EXT_stencil_wrap = IsSupported("GL_EXT_stencil_wrap");
+
+	// GL_EXT_stencil_two_side
+	m_bGL_EXT_stencil_two_side = IsSupported("GL_EXT_stencil_two_side");
+	if (m_bGL_EXT_stencil_two_side) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glActiveStencilFaceEXT)
+		m_bGL_EXT_stencil_two_side = bResult;
+	}
+
+	// GL_EXT_packed_depth_stencil
+	m_bGL_EXT_packed_depth_stencil = IsSupported("GL_EXT_packed_depth_stencil");
+
+	// GL_EXT_depth_bounds_test
+	m_bGL_EXT_depth_bounds_test = IsSupported("GL_EXT_depth_bounds_test");
+	if (m_bGL_EXT_depth_bounds_test) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glDepthBoundsEXT)
+		m_bGL_EXT_depth_bounds_test = bResult;
+	}
+
+	// GL_EXT_framebuffer_object
+	m_bGL_EXT_framebuffer_object = IsSupported("GL_EXT_framebuffer_object");
+	if (m_bGL_EXT_framebuffer_object) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glIsRenderbufferEXT)
+		IMPORT_FUNC(glBindRenderbufferEXT)
+		IMPORT_FUNC(glDeleteRenderbuffersEXT)
+		IMPORT_FUNC(glGenRenderbuffersEXT)
+		IMPORT_FUNC(glRenderbufferStorageEXT)
+		IMPORT_FUNC(glGetRenderbufferParameterivEXT)
+		IMPORT_FUNC(glIsFramebufferEXT)
+		IMPORT_FUNC(glBindFramebufferEXT)
+		IMPORT_FUNC(glDeleteFramebuffersEXT)
+		IMPORT_FUNC(glGenFramebuffersEXT)
+		IMPORT_FUNC(glCheckFramebufferStatusEXT)
+		IMPORT_FUNC(glFramebufferTexture1DEXT)
+		IMPORT_FUNC(glFramebufferTexture2DEXT)
+		IMPORT_FUNC(glFramebufferTexture3DEXT)
+		IMPORT_FUNC(glFramebufferRenderbufferEXT)
+		IMPORT_FUNC(glGetFramebufferAttachmentParameterivEXT)
+		IMPORT_FUNC(glGenerateMipmapEXT)
+		m_bGL_EXT_framebuffer_object = bResult;
+	}
+
+	// GL_EXT_framebuffer_multisample
+	m_bGL_EXT_framebuffer_multisample = IsSupported("GL_EXT_framebuffer_multisample");
+	if (m_bGL_EXT_framebuffer_multisample) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glRenderbufferStorageMultisampleEXT)
+		m_bGL_EXT_framebuffer_multisample = bResult;
+	}
+
+	// GL_EXT_framebuffer_blit
+	m_bGL_EXT_framebuffer_blit = IsSupported("GL_EXT_framebuffer_blit");
+	if (m_bGL_EXT_framebuffer_blit) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glBlitFramebufferEXT)
+		m_bGL_EXT_framebuffer_blit = bResult;
+	}
+
+	// GL_EXT_geometry_shader4
+	m_bGL_EXT_geometry_shader4 = IsSupported("GL_EXT_geometry_shader4");
+	if (m_bGL_EXT_geometry_shader4) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glProgramParameteriEXT)
+		m_bGL_EXT_geometry_shader4 = bResult;
+	}
+
+	// GL_EXT_transform_feedback
+	m_bGL_EXT_transform_feedback = IsSupported("GL_EXT_transform_feedback");
+	if (m_bGL_EXT_transform_feedback) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glBeginTransformFeedbackEXT)
+		IMPORT_FUNC(glEndTransformFeedbackEXT)
+		IMPORT_FUNC(glBindBufferRangeEXT)
+		IMPORT_FUNC(glBindBufferOffsetEXT)
+		IMPORT_FUNC(glBindBufferBaseEXT)
+		IMPORT_FUNC(glTransformFeedbackVaryingsEXT)
+		IMPORT_FUNC(glGetTransformFeedbackVaryingEXT)
+		m_bGL_EXT_transform_feedback = bResult;
+	}
+
+
+	//[-------------------------------------------------------]
+	//[ ARB                                                   ]
+	//[-------------------------------------------------------]
+	// GL_ARB_texture_float
+	m_bGL_ARB_texture_float = IsSupported("GL_ARB_texture_float");
+
+	// GL_ARB_color_buffer_float
+	m_bGL_ARB_color_buffer_float = IsSupported("GL_ARB_color_buffer_float");
+	if (m_bGL_ARB_color_buffer_float) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glClampColorARB)
+		m_bGL_ARB_color_buffer_float = bResult;
+	}
+
+	// GL_ARB_multitexture
+	m_bGL_ARB_multitexture = IsSupported("GL_ARB_multitexture");
+	if (m_bGL_ARB_multitexture) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glActiveTextureARB)
+		IMPORT_FUNC(glClientActiveTextureARB)
+		IMPORT_FUNC(glMultiTexCoord1dARB)
+		IMPORT_FUNC(glMultiTexCoord1dvARB)
+		IMPORT_FUNC(glMultiTexCoord1fARB)
+		IMPORT_FUNC(glMultiTexCoord1fvARB)
+		IMPORT_FUNC(glMultiTexCoord1iARB)
+		IMPORT_FUNC(glMultiTexCoord1ivARB)
+		IMPORT_FUNC(glMultiTexCoord1sARB)
+		IMPORT_FUNC(glMultiTexCoord1svARB)
+		IMPORT_FUNC(glMultiTexCoord2dARB)
+		IMPORT_FUNC(glMultiTexCoord2dvARB)
+		IMPORT_FUNC(glMultiTexCoord2fARB)
+		IMPORT_FUNC(glMultiTexCoord2fvARB)
+		IMPORT_FUNC(glMultiTexCoord2iARB)
+		IMPORT_FUNC(glMultiTexCoord2ivARB)
+		IMPORT_FUNC(glMultiTexCoord2sARB)
+		IMPORT_FUNC(glMultiTexCoord2svARB)
+		IMPORT_FUNC(glMultiTexCoord3dARB)
+		IMPORT_FUNC(glMultiTexCoord3dvARB)
+		IMPORT_FUNC(glMultiTexCoord3fARB)
+		IMPORT_FUNC(glMultiTexCoord3fvARB)
+		IMPORT_FUNC(glMultiTexCoord3iARB)
+		IMPORT_FUNC(glMultiTexCoord3ivARB)
+		IMPORT_FUNC(glMultiTexCoord3sARB)
+		IMPORT_FUNC(glMultiTexCoord3svARB)
+		IMPORT_FUNC(glMultiTexCoord4dARB)
+		IMPORT_FUNC(glMultiTexCoord4dvARB)
+		IMPORT_FUNC(glMultiTexCoord4fARB)
+		IMPORT_FUNC(glMultiTexCoord4fvARB)
+		IMPORT_FUNC(glMultiTexCoord4iARB)
+		IMPORT_FUNC(glMultiTexCoord4ivARB)
+		IMPORT_FUNC(glMultiTexCoord4sARB)
+		IMPORT_FUNC(glMultiTexCoord4svARB)
+		m_bGL_ARB_multitexture = bResult;
+	}
+
+	// GL_ARB_vertex_buffer_object
+	m_bGL_ARB_vertex_buffer_object = IsSupported("GL_ARB_vertex_buffer_object");
+	if (m_bGL_ARB_vertex_buffer_object) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glBindBufferARB)
+		IMPORT_FUNC(glDeleteBuffersARB)
+		IMPORT_FUNC(glGenBuffersARB)
+		IMPORT_FUNC(glBufferDataARB)
+		IMPORT_FUNC(glBufferSubDataARB)
+		IMPORT_FUNC(glGetBufferSubDataARB)
+		IMPORT_FUNC(glMapBufferARB)
+		IMPORT_FUNC(glUnmapBufferARB)
+		IMPORT_FUNC(glGetBufferParameterivARB)
+		IMPORT_FUNC(glGetBufferPointervARB)
+		m_bGL_ARB_vertex_buffer_object = bResult;
+	}
+
+	// GL_ARB_texture_border_clamp
+	m_bGL_ARB_texture_border_clamp = IsSupported("GL_ARB_texture_border_clamp");
+
+	// GL_ARB_texture_mirrored_repeat 
+	m_bGL_ARB_texture_mirrored_repeat = IsSupported("GL_ARB_texture_mirrored_repeat");
+
+	// GL_ARB_texture_cube_map
+	m_bGL_ARB_texture_cube_map = IsSupported("GL_ARB_texture_cube_map");
+
+	// GL_ARB_texture_env_combine
+	m_bGL_ARB_texture_env_combine = IsSupported("GL_ARB_texture_env_combine");
+
+	// GL_ARB_texture_env_dot3
+	m_bGL_ARB_texture_env_dot3 = IsSupported("GL_ARB_texture_env_dot3");
+
+	// GL_ARB_occlusion_query
+	m_bGL_ARB_occlusion_query = IsSupported("GL_ARB_occlusion_query");
+	if (m_bGL_ARB_occlusion_query) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glGenQueriesARB)
+		IMPORT_FUNC(glDeleteQueriesARB)
+		IMPORT_FUNC(glIsQueryARB)
+		IMPORT_FUNC(glBeginQueryARB)
+		IMPORT_FUNC(glEndQueryARB)
+		IMPORT_FUNC(glGetQueryivARB)
+		IMPORT_FUNC(glGetQueryObjectivARB)
+		IMPORT_FUNC(glGetQueryObjectuivARB)
+		m_bGL_ARB_occlusion_query = bResult;
+	}
+
+	// GL_ARB_texture_compression
+	m_bGL_ARB_texture_compression = IsSupported("GL_ARB_texture_compression");
+	if (m_bGL_ARB_texture_compression) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glCompressedTexImage3DARB)
+		IMPORT_FUNC(glCompressedTexImage2DARB)
+		IMPORT_FUNC(glCompressedTexImage1DARB)
+		IMPORT_FUNC(glCompressedTexSubImage3DARB)
+		IMPORT_FUNC(glCompressedTexSubImage2DARB)
+		IMPORT_FUNC(glCompressedTexSubImage1DARB)
+		IMPORT_FUNC(glGetCompressedTexImageARB)
+		m_bGL_ARB_texture_compression = bResult;
+	}
+
+	// GL_ARB_depth_texture
+	m_bGL_ARB_depth_texture = IsSupported("GL_ARB_depth_texture");
+
+	// GL_ARB_point_sprite
+	m_bGL_ARB_point_sprite = IsSupported("GL_ARB_point_sprite");
+
+	// GL_ARB_point_parameters
+	m_bGL_ARB_point_parameters = IsSupported("GL_ARB_point_parameters");
+	if (m_bGL_ARB_point_parameters) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glPointParameterfARB)
+		IMPORT_FUNC(glPointParameterfvARB)
+		m_bGL_ARB_point_parameters = bResult;
+	}
+
+	// GL_ARB_shading_language_100
+	m_bGL_ARB_shading_language_100 = IsSupported("GL_ARB_shading_language_100");
+
+	// GL_ARB_vertex_program
+	m_bGL_ARB_vertex_program = IsSupported("GL_ARB_vertex_program");
+	if (m_bGL_ARB_vertex_program) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glVertexAttribPointerARB)
+		IMPORT_FUNC(glEnableVertexAttribArrayARB)
+		IMPORT_FUNC(glDisableVertexAttribArrayARB)
+		IMPORT_FUNC(glGetProgramivARB)
+		m_bGL_ARB_vertex_program = bResult;
+	}
+
+	// GL_ARB_fragment_program (we do not need any of the functions this extension provides)
+	m_bGL_ARB_fragment_program = IsSupported("GL_ARB_fragment_program");
+
+	// GL_ARB_draw_buffers
+	m_bGL_ARB_draw_buffers = IsSupported("GL_ARB_draw_buffers");
+	if (m_bGL_ARB_draw_buffers) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glDrawBuffersARB)
+		m_bGL_ARB_draw_buffers = bResult;
+	}
+
+	// GL_ARB_shader_objects
+	m_bGL_ARB_shader_objects = IsSupported("GL_ARB_shader_objects");
+	if (m_bGL_ARB_shader_objects) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glDeleteObjectARB)
+		IMPORT_FUNC(glGetHandleARB)
+		IMPORT_FUNC(glDetachObjectARB)
+		IMPORT_FUNC(glCreateShaderObjectARB)
+		IMPORT_FUNC(glShaderSourceARB)
+		IMPORT_FUNC(glCompileShaderARB)
+		IMPORT_FUNC(glCreateProgramObjectARB)
+		IMPORT_FUNC(glAttachObjectARB)
+		IMPORT_FUNC(glLinkProgramARB)
+		IMPORT_FUNC(glUseProgramObjectARB)
+		IMPORT_FUNC(glValidateProgramARB)
+		IMPORT_FUNC(glUniform1fARB)
+		IMPORT_FUNC(glUniform2fARB)
+		IMPORT_FUNC(glUniform3fARB)
+		IMPORT_FUNC(glUniform4fARB)
+		IMPORT_FUNC(glUniform1iARB)
+		IMPORT_FUNC(glUniform2iARB)
+		IMPORT_FUNC(glUniform3iARB)
+		IMPORT_FUNC(glUniform4iARB)
+		IMPORT_FUNC(glUniform1fvARB)
+		IMPORT_FUNC(glUniform2fvARB)
+		IMPORT_FUNC(glUniform3fvARB)
+		IMPORT_FUNC(glUniform4fvARB)
+		IMPORT_FUNC(glUniform1ivARB)
+		IMPORT_FUNC(glUniform2ivARB)
+		IMPORT_FUNC(glUniform3ivARB)
+		IMPORT_FUNC(glUniform4ivARB)
+		IMPORT_FUNC(glUniformMatrix2fvARB)
+		IMPORT_FUNC(glUniformMatrix3fvARB)
+		IMPORT_FUNC(glUniformMatrix4fvARB)
+		IMPORT_FUNC(glGetObjectParameterfvARB)
+		IMPORT_FUNC(glGetObjectParameterivARB)
+		IMPORT_FUNC(glGetInfoLogARB)
+		IMPORT_FUNC(glGetAttachedObjectsARB)
+		IMPORT_FUNC(glGetUniformLocationARB)
+		IMPORT_FUNC(glGetActiveUniformARB)
+		IMPORT_FUNC(glGetUniformfvARB)
+		IMPORT_FUNC(glGetUniformivARB)
+		IMPORT_FUNC(glGetShaderSourceARB)
+		m_bGL_ARB_shader_objects = bResult;
+	}
+
+	// GL_ARB_vertex_shader
+	m_bGL_ARB_vertex_shader = IsSupported("GL_ARB_vertex_shader");
+	if (m_bGL_ARB_vertex_shader) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glBindAttribLocationARB)
+		IMPORT_FUNC(glGetActiveAttribARB)
+		IMPORT_FUNC(glGetAttribLocationARB)
+		m_bGL_ARB_vertex_shader = bResult;
+	}
+
+	// GL_ARB_get_program_binary
+	m_bGL_ARB_get_program_binary = IsSupported("GL_ARB_get_program_binary");
+	if (m_bGL_ARB_get_program_binary) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glGetProgramBinary)
+		IMPORT_FUNC(glProgramBinary)
+		IMPORT_FUNC(glProgramParameteri)
+		m_bGL_ARB_get_program_binary = bResult;
+	}
+
+	// GL_ARB_texture_non_power_of_two
+	m_bGL_ARB_texture_non_power_of_two = IsSupported("GL_ARB_texture_non_power_of_two");
+
+	// GL_ARB_texture_rectangle
+	m_bGL_ARB_texture_rectangle = IsSupported("GL_ARB_texture_rectangle");
+
+	// GL_ARB_multisample
+	m_bGL_ARB_multisample = IsSupported("GL_ARB_multisample");
+
+	// GL_ARB_uniform_buffer_object
+	m_bGL_ARB_uniform_buffer_object = IsSupported("GL_ARB_uniform_buffer_object");
+	if (m_bGL_ARB_uniform_buffer_object) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glGetUniformIndices)
+		IMPORT_FUNC(glGetActiveUniformsiv)
+		IMPORT_FUNC(glGetActiveUniformName)
+		IMPORT_FUNC(glGetUniformBlockIndex)
+		IMPORT_FUNC(glGetActiveUniformBlockiv)
+		IMPORT_FUNC(glGetActiveUniformBlockName)
+		IMPORT_FUNC(glUniformBlockBinding)
+		m_bGL_ARB_uniform_buffer_object = bResult;
+	}
+
+
+	//[-------------------------------------------------------]
+	//[ ATI                                                   ]
+	//[-------------------------------------------------------]
+	// GL_ATI_separate_stencil
+	m_bGL_ATI_separate_stencil = IsSupported("GL_ATI_separate_stencil");
+	if (m_bGL_ATI_separate_stencil) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glStencilOpSeparateATI)
+		IMPORT_FUNC(glStencilFuncSeparateATI)
+		m_bGL_ATI_separate_stencil = bResult;
+	}
+
+	// GL_ATI_draw_buffers
+	m_bGL_ATI_draw_buffers = IsSupported("GL_ATI_draw_buffers");
+	if (m_bGL_ATI_draw_buffers) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glDrawBuffersATI)
+		m_bGL_ATI_draw_buffers = bResult;
+	}
+
+	// GL_ATI_texture_compression_3dc
+	m_bGL_ATI_texture_compression_3dc = IsSupported("GL_ATI_texture_compression_3dc");
+
+
+	//[-------------------------------------------------------]
+	//[ AMD                                                   ]
+	//[-------------------------------------------------------]
+	// GL_AMD_vertex_shader_tessellator
+	// -> The extension is listed as "GL_AMD_vertex_shader_tessellator" (see http://www.opengl.org/registry/specs/AMD/vertex_shader_tessellator.txt)
+	// -> In "http://www.opengl.org/registry/api/glext.h" it's listed as "GL_AMD_vertex_shader_tesselator" (typo?)
+	m_bGL_AMD_vertex_shader_tessellator = IsSupported("GL_AMD_vertex_shader_tessellator");
+	if (m_bGL_AMD_vertex_shader_tessellator) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glTessellationFactorAMD)
+		IMPORT_FUNC(glTessellationModeAMD)
+		m_bGL_AMD_vertex_shader_tessellator = bResult;
+	}
+
+
+	//[-------------------------------------------------------]
+	//[ NV                                                    ]
+	//[-------------------------------------------------------]
+	// GL_NV_texture_rectangle
+	m_bGL_NV_texture_rectangle = IsSupported("GL_NV_texture_rectangle");
+
+	// GL_NV_occlusion_query
+	m_bGL_NV_occlusion_query = IsSupported("GL_NV_occlusion_query");
+	if (m_bGL_NV_occlusion_query) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glGenOcclusionQueriesNV)
+		IMPORT_FUNC(glDeleteOcclusionQueriesNV)
+		IMPORT_FUNC(glIsOcclusionQueryNV)
+		IMPORT_FUNC(glBeginOcclusionQueryNV)
+		IMPORT_FUNC(glEndOcclusionQueryNV)
+		IMPORT_FUNC(glGetOcclusionQueryivNV)
+		IMPORT_FUNC(glGetOcclusionQueryuivNV)
+		m_bGL_NV_occlusion_query = bResult;
+	}
+
+
+	//[-------------------------------------------------------]
+	//[ SGIS                                                  ]
+	//[-------------------------------------------------------]
+	// GL_SGIS_generate_mipmap
+	m_bGL_SGIS_generate_mipmap = IsSupported("GL_SGIS_generate_mipmap");
+
+
+	//[-------------------------------------------------------]
+	//[ HP                                                    ]
+	//[-------------------------------------------------------]
+	// GL_HP_occlusion_test
+	m_bGL_HP_occlusion_test = IsSupported("GL_HP_occlusion_test");
+
+
+	// Undefine the helper macro
+	#undef IMPORT_FUNC
+
+	// Done
+	return true;
 }
 
 /**

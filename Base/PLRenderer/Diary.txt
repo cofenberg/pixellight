@@ -1,12 +1,17 @@
 >> 20.10.2011
 [CO]
 PLRendererOpenGL:
-- Removed "ExtensionConfig" -> To complicated, to error prone, long winded to maintain, not really usefull -> goodby
+- Removed "ExtensionConfig" -> To complicated, to error prone, long winded to maintain, not really useful -> goodbye
   (had been deactivated for several month)
-- Extension cleanup: "GL_POINT_SPRITE_ARB" & "GL_COORD_REPLACE_ARB" are within the official "glext.h" from Khronos (years ago, this was not the case, there wasn't even such a cool common header :)
-- Extension cleanup: Removed "GL_TEXTURE_RECTANGLE_EXT" definition. "GL_TEXTURE_RECTANGLE_EXT" & "GL_TEXTURE_RECTANGLE_NV" and the resulting "GL_TEXTURE_RECTANGLE_ARB"
-  have the same value. When I implemented it many years ago, there was no "GL_ARB_texture_rectangle".
+- Extension cleanup: "GL_POINT_SPRITE_ARB" & "GL_COORD_REPLACE_ARB" are within the official "glext.h" from Khronos (years ago, this was not the case,
+  there wasn't even such a cool common header :)
+- Extension cleanup: Removed "GL_TEXTURE_RECTANGLE_EXT" definition. "GL_TEXTURE_RECTANGLE_EXT" & "GL_TEXTURE_RECTANGLE_NV" and the resulting
+  "GL_TEXTURE_RECTANGLE_ARB" have the same value. When I implemented it many years ago, there was no "GL_ARB_texture_rectangle".
 - Extension cleanup: Removed "ExtensionDefinitions.h" and added an extension helper macro to make the extension handling easier to maintain
+- Added "OpenGLExtensions::InitUniversal()" which is called after "OpenGLExtensions::Init()" has done it's job. While "Init()" has a platform
+  dependent implementation, "InitUniversal()" has a platform independent implementation. This reduces code which is nearly identical across
+  multiple platforms and should make it easier to add support for new platforms. Within "InitUniversal()", I used macros similar to the one
+  I used within PLRendererOpenGLES2, this makes the implementation more compact and reusable across multiple platforms.
 
 
 
