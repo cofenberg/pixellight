@@ -355,11 +355,12 @@ bool OpenGLExtensions::InitUniversal()
 	#elif defined(APPLE)
 		// [TODO] Implement me
 	#elif defined(LINUX)
+		typedef void (*GLfunction)();
 		#define IMPORT_FUNC(funcName)																								\
 			if (bResult) {																											\
-				void *pSymbol = glXGetProcAddressARB(reinterpret_cast<const GLubyte*>(#funcName));									\
+				GLfunction pSymbol = glXGetProcAddressARB(reinterpret_cast<const GLubyte*>(#funcName));									\
 				if (pSymbol) {																										\
-					*(reinterpret_cast<void**>(&(funcName))) = pSymbol;																\
+					*(reinterpret_cast<GLfunction*>(&(funcName))) = pSymbol;																\
 				} else {																											\
 					PL_LOG(Error, String("Failed to find the entry point \"") + #funcName + "\" within the OpenGL dynamic library")	\
 					bResult = false;																								\
