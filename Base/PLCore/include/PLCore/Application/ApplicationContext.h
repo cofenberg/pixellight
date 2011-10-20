@@ -28,8 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/String/String.h"
-#include "PLCore/Container/Array.h"
+#include "PLCore/Base/Object.h"
 #include "PLCore/Core/AbstractContext.h"
 
 
@@ -51,7 +50,22 @@ namespace PLCore {
 *    such as startup information (what was the current directory when the
 *    application started) or paths to needed resources.
 */
-class ApplicationContext : public AbstractContext {
+class ApplicationContext : public Object, public AbstractContext {
+
+
+	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(PLCORE_RTTI_EXPORT, ApplicationContext, "PLCore", PLCore::Object, "Application context")
+		#ifdef PLCORE_EXPORTS	// The following is only required when compiling PLCore
+			// Methods
+			pl_method_0(GetExecutableFilename,	pl_ret_type(String),	"Get absolute path of application executable (e.g. on Windows: 'C:\MyApplication\Test.exe').",				"")
+			pl_method_0(GetAppDirectory,		pl_ret_type(String),	"Get directory of application executable (e.g. on Windows: 'C:\MyApplication', can be an empty string).",	"")
+			pl_method_0(GetStartupDirectory,	pl_ret_type(String),	"Get current directory when the application constructor was called (e.g. on Windows: 'C:\MyApplication').",	"")
+			pl_method_0(GetLogFilename,			pl_ret_type(String),	"Get absolute path to log file, empty if log has not been opened.",											"")
+			pl_method_0(GetConfigFilename,		pl_ret_type(String),	"Get absolute path to config file, empty if no config is used.",											"")
+		#endif
+	pl_class_end
 
 
 	//[-------------------------------------------------------]

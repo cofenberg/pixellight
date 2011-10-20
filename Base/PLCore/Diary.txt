@@ -1,4 +1,10 @@
-﻿>> 19.10.2011
+﻿>> 20.10.2011
+[CO]
+- Exposed "ApplicationContext" to the RTTI
+
+
+
+>> 19.10.2011
 [CO]
 - "FileWindows::PutS()" didn't take Unicode into account (... as well as some other functions in this class...)
 - "File::Open()": Added string encoding format parameter
