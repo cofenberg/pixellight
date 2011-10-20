@@ -208,7 +208,7 @@ void FrameBufferObject::SwitchTarget(PLRenderer::TextureBuffer &cTextureBuffer, 
 				break;
 
 			case PLRenderer::Resource::TypeTextureBufferRectangle:
-				nTarget = GL_TEXTURE_RECTANGLE_EXT;
+				nTarget = GL_TEXTURE_RECTANGLE_ARB;
 				nOpenGLID = static_cast<TextureBufferRectangle&>(cTextureBuffer).GetOpenGLTexture();
 				break;
 

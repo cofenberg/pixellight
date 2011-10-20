@@ -462,7 +462,7 @@ int ProgramUniformGLSL::Set(PLRenderer::TextureBuffer *pTextureBuffer)
 
 				case PLRenderer::Resource::TypeTextureBufferRectangle:
 					nOpenGLTexture = static_cast<TextureBufferRectangle*>(pTextureBuffer)->GetOpenGLTexture();
-					nOpenGLTextureTarget = GL_TEXTURE_RECTANGLE_EXT;
+					nOpenGLTextureTarget = GL_TEXTURE_RECTANGLE_ARB;
 					break;
 
 				case PLRenderer::Resource::TypeTextureBuffer3D:

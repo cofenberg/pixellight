@@ -219,11 +219,6 @@ extern PFNGLCOMPRESSEDTEXSUBIMAGE1DARBPROC	glCompressedTexSubImage1DARB;
 extern PFNGLGETCOMPRESSEDTEXIMAGEARBPROC	glGetCompressedTexImageARB;
 
 
-// GL_NV_texture_rectangle & GL_EXT_texture_rectangle
-#ifdef GL_NV_texture_rectangle
-#define GL_TEXTURE_RECTANGLE_EXT GL_TEXTURE_RECTANGLE_NV
-#endif
-
 // GL_NV_occlusion_query
 extern PFNGLGENOCCLUSIONQUERIESNVPROC		glGenOcclusionQueriesNV;
 extern PFNGLDELETEOCCLUSIONQUERIESNVPROC	glDeleteOcclusionQueriesNV;
