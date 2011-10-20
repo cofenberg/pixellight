@@ -142,6 +142,9 @@
     <ClCompile Include="src\MacOSX\SurfaceWindowMacOSX.cpp">
       <Filter>MacOSX</Filter>
     </ClCompile>
+    <ClCompile Include="src\MacOSX\ExtensionsMacOSX.cpp">
+      <Filter>MacOSX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRendererOpenGL\Context.h">

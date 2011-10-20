@@ -51,10 +51,9 @@
 #include "PLRendererOpenGL/OcclusionQuery.h"
 #ifdef WIN32
 	#include "PLRendererOpenGL/Windows/ContextWindows.h"
-#endif
-#ifdef APPLE
+#elif APPLE
 	#include "PLRendererOpenGL/MaxOSX/ContextMacOSX.h"
-#elif defined(LINUX)
+#elif LINUX
 	#include "PLRendererOpenGL/Linux/ContextLinux.h"
 #endif
 #include "PLRendererOpenGL/FixedFunctions.h"
@@ -542,10 +541,9 @@ Context *Renderer::CreateContext()
 {
 	#ifdef WIN32
 		return new ContextWindows(*this, m_nMultisampleAntialiasingSamples);
-	#endif
-	#ifdef APPLE
+	#elif APPLE
 		return new ContextMacOSX(*this);
-	#elif defined(LINUX)
+	#elif LINUX
 		return new ContextLinux(*this);
 	#endif
 }

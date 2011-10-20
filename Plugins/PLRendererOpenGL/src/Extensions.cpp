@@ -30,7 +30,7 @@
 #ifdef APPLE
 	#include <string.h>	// For strstr
 	// [TODO] Implement Mac OS X implementation
-#elif defined(LINUX)
+#elif LINUX
 	#include <string.h>	// For strstr
 	#include "PLRendererOpenGL/Linux/ContextLinux.h"
 #endif
@@ -204,10 +204,9 @@ bool Extensions::CheckExtension(const char *pszExtension) const
 					if (!m_bWGL_ARB_extensions_string)
 						return false; // Extension not found
 					pszExtensions = static_cast<const char*>(wglGetExtensionsStringARB(wglGetCurrentDC()));
-				#endif
-				#ifdef APPLE
+				#elif APPLE
 					// [TODO] Implement Mac OS X implementation
-				#elif defined(LINUX)
+				#elif LINUX
 					// Get the Linux context implementation
 					ContextLinux *pContextLinux = static_cast<ContextLinux*>(m_pRenderer->GetContext());
 					if (pContextLinux) {
@@ -352,9 +351,19 @@ bool Extensions::InitUniversal()
 					bResult = false;																								\
 				}																													\
 			}
-	#elif defined(APPLE)
+	#elif APPLE
 		// [TODO] Implement me
-	#elif defined(LINUX)
+		#define IMPORT_FUNC(funcName)																								\
+			if (bResult) {																											\
+				void *pSymbol = nullptr;																							\
+				if (pSymbol) {																										\
+					*(reinterpret_cast<void**>(&(funcName))) = pSymbol;																\
+				} else {																											\
+					PL_LOG(Error, String("Failed to find the entry point \"") + #funcName + "\" within the OpenGL dynamic library")	\
+					bResult = false;																								\
+				}																													\
+			}
+	#elif LINUX
 		typedef void (*GLfunction)();
 		#define IMPORT_FUNC(funcName)																								\
 			if (bResult) {																											\

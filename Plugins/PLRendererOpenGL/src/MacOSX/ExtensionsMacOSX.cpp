@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SurfaceWindow.cpp                              *
+ *  File: ExtensionsMacOSX.cpp                           *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,7 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGL/SurfaceWindow.h"
+#include <PLCore/Log/Log.h>
+#include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/Extensions.h"
 
 
 //[-------------------------------------------------------]
@@ -34,48 +36,28 @@ namespace PLRendererOpenGL {
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Destructor
-*/
-SurfaceWindow::~SurfaceWindow()
-{
-	// De-initialize the OpenGL surface window
-	DeInit();
-}
-
-
-//[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
+*    Initialize the supported extensions
 */
-SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen) :
-	PLRenderer::SurfaceWindow(cHandler, nNativeWindowHandle, bFullscreen),
-	#ifdef WIN32
-		m_hDC(nullptr),
-	#elif APPLE
-		// [TODO] Implement Mac OS X part
-	#elif LINUX
-		m_nNativeWindowHandle(NULL_HANDLE),
-		m_nOldSizeID(-1),
-		m_nOldRotation(-1),
-	#endif
-		m_nSwapInterval(-1),
-		m_bGammaChanged(false)
+bool Extensions::Init(bool bUseExtensions)
 {
-	// Initialize gamma backup
-	m_fGammaBackup[0] = m_fGammaBackup[1] = m_fGammaBackup[2] = 0.0f;
+	// Should the extensions be used?
+	if (bUseExtensions) {
+		m_bInitialized = true;
+	} else {
+		ResetExtensions();
+		m_bInitialized = true;
+		PL_LOG(Info, "Use no hardware supported extensions")
 
-	// Just copy over the given information
-	m_sDisplayMode = sDisplayMode;
+		// Done
+		return true;
+	}
 
-	// Initialize the OpenGL surface window
-	Init();
+	// Initialize the supported universal extensions
+	return InitUniversal();
 }
 
 
