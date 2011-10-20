@@ -238,10 +238,6 @@ extern PFNGLGETOCCLUSIONQUERYUIVNVPROC		glGetOcclusionQueryuivNV;
 extern PFNGLPOINTPARAMETERFARBPROC	glPointParameterfARB;
 extern PFNGLPOINTPARAMETERFVARBPROC	glPointParameterfvARB;
 
-// GL_ARB_point_sprite [TODO] Find correct OpenGL header!
-#define GL_POINT_SPRITE_ARB		0x8861
-#define GL_COORD_REPLACE_ARB	0x8862
-
 // GL_ARB_vertex_program
 extern PFNGLVERTEXATTRIBPOINTERARBPROC		glVertexAttribPointerARB;
 extern PFNGLENABLEVERTEXATTRIBARRAYARBPROC	glEnableVertexAttribArrayARB;

@@ -3,6 +3,7 @@
 PLRendererOpenGL:
 - Removed "ExtensionConfig" -> To complicated, to error prone, long winded to maintain, not really usefull -> goodby
   (had been deactivated for several month)
+- Extension cleanup: "GL_POINT_SPRITE_ARB" & "GL_COORD_REPLACE_ARB" are within the official "glext.h" from Khronos (years ago, this was not the case :)
 
 
 
