@@ -53,7 +53,7 @@ class ShaderLanguage;
 *  @brief
 *    OpenGL 1.1 + extensions renderer backend
 */
-class Renderer : public PLRenderer::RendererBackend, public OpenGLExtensions {
+class Renderer : public PLRenderer::RendererBackend, public Extensions {
 
 
 	//[-------------------------------------------------------]

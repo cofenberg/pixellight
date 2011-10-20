@@ -42,7 +42,7 @@ namespace PLRendererOpenGL {
 *  @brief
 *    Initialize the supported extensions
 */
-bool OpenGLExtensions::Init(bool bUseExtensions)
+bool Extensions::Init(bool bUseExtensions)
 {
 	// Should the extensions be used?
 	if (bUseExtensions) {

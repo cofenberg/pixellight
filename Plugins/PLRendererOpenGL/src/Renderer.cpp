@@ -83,7 +83,7 @@ pl_implement_class(Renderer)
 *  @brief
 *    Default constructor
 */
-Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(nMode), OpenGLExtensions(*this),
+Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(nMode), Extensions(*this),
 	m_pContext(nullptr),
 	m_pFixedFunctions(nullptr),
 	#ifdef DISABLE_FONT_SUPPORT

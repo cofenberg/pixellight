@@ -50,7 +50,7 @@ namespace PLRendererOpenGL {
 *  @brief
 *    Constructor
 */
-OpenGLExtensions::OpenGLExtensions(Renderer &cRenderer) :
+Extensions::Extensions(Renderer &cRenderer) :
 	m_pRenderer(&cRenderer)
 {
 	// Reset extensions
@@ -61,7 +61,7 @@ OpenGLExtensions::OpenGLExtensions(Renderer &cRenderer) :
 *  @brief
 *    Returns whether the extensions are initialized or not
 */
-bool OpenGLExtensions::IsInitialized() const
+bool Extensions::IsInitialized() const
 {
 	return m_bInitialized;
 }
@@ -70,85 +70,85 @@ bool OpenGLExtensions::IsInitialized() const
 // Returns whether an extension is supported or not
 ///////////////////////////////////////////////////////////
 // WGL (Windows only)
-bool OpenGLExtensions::IsWGL_ARB_extensions_string()			const { return m_bWGL_ARB_extensions_string;		 }
-bool OpenGLExtensions::IsWGL_EXT_swap_control()					const { return m_bWGL_EXT_swap_control;				 }
-bool OpenGLExtensions::IsWGL_ARB_pixel_format()					const { return m_bWGL_ARB_pixel_format;				 }
-bool OpenGLExtensions::IsWGL_ARB_render_texture()				const { return m_bWGL_ARB_render_texture;			 }
-bool OpenGLExtensions::IsWGL_ARB_make_current_read()			const { return m_bWGL_ARB_make_current_read;		 }
-bool OpenGLExtensions::IsWGL_ARB_multisample()					const { return m_bWGL_ARB_multisample;				 }
-bool OpenGLExtensions::IsWGL_ATI_pixel_format_float()			const { return m_bWGL_ATI_pixel_format_float;		 }
-bool OpenGLExtensions::IsWGL_NV_float_buffer()					const { return m_bWGL_NV_float_buffer;				 }
+bool Extensions::IsWGL_ARB_extensions_string()			const { return m_bWGL_ARB_extensions_string;		 }
+bool Extensions::IsWGL_EXT_swap_control()				const { return m_bWGL_EXT_swap_control;				 }
+bool Extensions::IsWGL_ARB_pixel_format()				const { return m_bWGL_ARB_pixel_format;				 }
+bool Extensions::IsWGL_ARB_render_texture()				const { return m_bWGL_ARB_render_texture;			 }
+bool Extensions::IsWGL_ARB_make_current_read()			const { return m_bWGL_ARB_make_current_read;		 }
+bool Extensions::IsWGL_ARB_multisample()				const { return m_bWGL_ARB_multisample;				 }
+bool Extensions::IsWGL_ATI_pixel_format_float()			const { return m_bWGL_ATI_pixel_format_float;		 }
+bool Extensions::IsWGL_NV_float_buffer()				const { return m_bWGL_NV_float_buffer;				 }
 // GLX (Linux only)
-bool OpenGLExtensions::IsGLX_SGI_swap_control()					const { return m_bGLX_SGI_swap_control;				 }
+bool Extensions::IsGLX_SGI_swap_control()				const { return m_bGLX_SGI_swap_control;				 }
 // EXT
-bool OpenGLExtensions::IsGL_EXT_compiled_vertex_array()			const { return m_bGL_EXT_compiled_vertex_array;		 }
-bool OpenGLExtensions::IsGL_EXT_draw_range_elements()			const { return m_bGL_EXT_draw_range_elements;		 }
-bool OpenGLExtensions::IsGL_EXT_fog_coord()						const { return m_bGL_EXT_fog_coord;					 }
-bool OpenGLExtensions::IsGL_EXT_secondary_color()				const { return m_bGL_EXT_secondary_color;			 }
-bool OpenGLExtensions::IsGL_EXT_texture_compression_s3tc()		const { return m_bGL_EXT_texture_compression_s3tc;	 }
-bool OpenGLExtensions::IsGL_EXT_texture_compression_latc()		const { return m_bGL_EXT_texture_compression_latc;	 }
-bool OpenGLExtensions::IsGL_EXT_texture_lod_bias()				const { return m_bGL_EXT_texture_lod_bias;			 }
-bool OpenGLExtensions::IsGL_EXT_texture_filter_anisotropic()	const { return m_bGL_EXT_texture_filter_anisotropic; }
-bool OpenGLExtensions::IsGL_EXT_separate_specular_color()		const { return m_bGL_EXT_separate_specular_color;	 }
-bool OpenGLExtensions::IsGL_EXT_texture_edge_clamp()			const { return m_bGL_EXT_texture_edge_clamp;		 }
-bool OpenGLExtensions::IsGL_EXT_texture_rectangle()				const { return m_bGL_EXT_texture_rectangle;			 }
-bool OpenGLExtensions::IsGL_EXT_texture3D()						const { return m_bGL_EXT_texture3D;					 }
-bool OpenGLExtensions::IsGL_EXT_texture_cube_map()				const { return m_bGL_EXT_texture_cube_map;			 }
-bool OpenGLExtensions::IsGL_EXT_stencil_wrap()					const { return m_bGL_EXT_stencil_wrap;				 }
-bool OpenGLExtensions::IsGL_EXT_stencil_two_side()				const { return m_bGL_EXT_stencil_two_side;			 }
-bool OpenGLExtensions::IsGL_EXT_packed_depth_stencil()			const { return m_bGL_EXT_packed_depth_stencil;		 }
-bool OpenGLExtensions::IsGL_EXT_depth_bounds_test()				const { return m_bGL_EXT_depth_bounds_test;			 }
-bool OpenGLExtensions::IsGL_EXT_framebuffer_object()			const { return m_bGL_EXT_framebuffer_object;		 }
-bool OpenGLExtensions::IsGL_EXT_framebuffer_multisample()		const { return m_bGL_EXT_framebuffer_multisample;	 }
-bool OpenGLExtensions::IsGL_EXT_framebuffer_blit()				const { return m_bGL_EXT_framebuffer_blit;			 }
-bool OpenGLExtensions::IsGL_EXT_geometry_shader4()				const { return m_bGL_EXT_geometry_shader4;			 }
-bool OpenGLExtensions::IsGL_EXT_transform_feedback()			const { return m_bGL_EXT_transform_feedback;		 }
+bool Extensions::IsGL_EXT_compiled_vertex_array()		const { return m_bGL_EXT_compiled_vertex_array;		 }
+bool Extensions::IsGL_EXT_draw_range_elements()			const { return m_bGL_EXT_draw_range_elements;		 }
+bool Extensions::IsGL_EXT_fog_coord()					const { return m_bGL_EXT_fog_coord;					 }
+bool Extensions::IsGL_EXT_secondary_color()				const { return m_bGL_EXT_secondary_color;			 }
+bool Extensions::IsGL_EXT_texture_compression_s3tc()	const { return m_bGL_EXT_texture_compression_s3tc;	 }
+bool Extensions::IsGL_EXT_texture_compression_latc()	const { return m_bGL_EXT_texture_compression_latc;	 }
+bool Extensions::IsGL_EXT_texture_lod_bias()			const { return m_bGL_EXT_texture_lod_bias;			 }
+bool Extensions::IsGL_EXT_texture_filter_anisotropic()	const { return m_bGL_EXT_texture_filter_anisotropic; }
+bool Extensions::IsGL_EXT_separate_specular_color()		const { return m_bGL_EXT_separate_specular_color;	 }
+bool Extensions::IsGL_EXT_texture_edge_clamp()			const { return m_bGL_EXT_texture_edge_clamp;		 }
+bool Extensions::IsGL_EXT_texture_rectangle()			const { return m_bGL_EXT_texture_rectangle;			 }
+bool Extensions::IsGL_EXT_texture3D()					const { return m_bGL_EXT_texture3D;					 }
+bool Extensions::IsGL_EXT_texture_cube_map()			const { return m_bGL_EXT_texture_cube_map;			 }
+bool Extensions::IsGL_EXT_stencil_wrap()				const { return m_bGL_EXT_stencil_wrap;				 }
+bool Extensions::IsGL_EXT_stencil_two_side()			const { return m_bGL_EXT_stencil_two_side;			 }
+bool Extensions::IsGL_EXT_packed_depth_stencil()		const { return m_bGL_EXT_packed_depth_stencil;		 }
+bool Extensions::IsGL_EXT_depth_bounds_test()			const { return m_bGL_EXT_depth_bounds_test;			 }
+bool Extensions::IsGL_EXT_framebuffer_object()			const { return m_bGL_EXT_framebuffer_object;		 }
+bool Extensions::IsGL_EXT_framebuffer_multisample()		const { return m_bGL_EXT_framebuffer_multisample;	 }
+bool Extensions::IsGL_EXT_framebuffer_blit()			const { return m_bGL_EXT_framebuffer_blit;			 }
+bool Extensions::IsGL_EXT_geometry_shader4()			const { return m_bGL_EXT_geometry_shader4;			 }
+bool Extensions::IsGL_EXT_transform_feedback()			const { return m_bGL_EXT_transform_feedback;		 }
 // ARB
-bool OpenGLExtensions::IsGL_ARB_texture_float()					const { return m_bGL_ARB_texture_float;				 }
-bool OpenGLExtensions::IsGL_ARB_color_buffer_float()			const { return m_bGL_ARB_color_buffer_float;		 }
-bool OpenGLExtensions::IsGL_ARB_multitexture()					const { return m_bGL_ARB_multitexture;				 }
-bool OpenGLExtensions::IsGL_ARB_vertex_buffer_object()			const { return m_bGL_ARB_vertex_buffer_object;		 }
-bool OpenGLExtensions::IsGL_ARB_texture_border_clamp()			const { return m_bGL_ARB_texture_border_clamp;		 }
-bool OpenGLExtensions::IsGL_ARB_texture_mirrored_repeat()		const { return m_bGL_ARB_texture_mirrored_repeat;	 }
-bool OpenGLExtensions::IsGL_ARB_texture_cube_map()				const { return m_bGL_ARB_texture_cube_map;			 }
-bool OpenGLExtensions::IsGL_ARB_texture_env_combine()			const { return m_bGL_ARB_texture_env_combine;		 }
-bool OpenGLExtensions::IsGL_ARB_texture_env_dot3()				const { return m_bGL_ARB_texture_env_dot3;			 }
-bool OpenGLExtensions::IsGL_ARB_occlusion_query()				const { return m_bGL_ARB_occlusion_query;			 }
-bool OpenGLExtensions::IsGL_ARB_texture_compression()			const { return m_bGL_ARB_texture_compression;		 }
-bool OpenGLExtensions::IsGL_ARB_depth_texture()					const { return m_bGL_ARB_depth_texture;				 }
-bool OpenGLExtensions::IsGL_ARB_point_sprite()					const { return m_bGL_ARB_point_sprite;				 }
-bool OpenGLExtensions::IsGL_ARB_point_parameters()				const { return m_bGL_ARB_point_parameters;			 }
-bool OpenGLExtensions::IsGL_ARB_shading_language_100()			const { return m_bGL_ARB_shading_language_100;		 }
-bool OpenGLExtensions::IsGL_ARB_vertex_program()				const { return m_bGL_ARB_vertex_program;			 }
-bool OpenGLExtensions::IsGL_ARB_fragment_program()				const { return m_bGL_ARB_fragment_program;			 }
-bool OpenGLExtensions::IsGL_ARB_draw_buffers()					const { return m_bGL_ARB_draw_buffers;				 }
-bool OpenGLExtensions::IsGL_ARB_shader_objects()				const { return m_bGL_ARB_shader_objects;			 }
-bool OpenGLExtensions::IsGL_ARB_vertex_shader()					const { return m_bGL_ARB_vertex_shader;				 }
-bool OpenGLExtensions::IsGL_ARB_get_program_binary()			const { return m_bGL_ARB_get_program_binary;		 }
-bool OpenGLExtensions::IsGL_ARB_texture_non_power_of_two()		const { return m_bGL_ARB_texture_non_power_of_two;	 }
-bool OpenGLExtensions::IsGL_ARB_texture_rectangle()				const { return m_bGL_ARB_texture_rectangle;			 }
-bool OpenGLExtensions::IsGL_ARB_multisample()					const { return m_bGL_ARB_multisample;				 }
-bool OpenGLExtensions::IsGL_ARB_uniform_buffer_object()			const { return m_bGL_ARB_uniform_buffer_object;		 }
+bool Extensions::IsGL_ARB_texture_float()				const { return m_bGL_ARB_texture_float;				 }
+bool Extensions::IsGL_ARB_color_buffer_float()			const { return m_bGL_ARB_color_buffer_float;		 }
+bool Extensions::IsGL_ARB_multitexture()				const { return m_bGL_ARB_multitexture;				 }
+bool Extensions::IsGL_ARB_vertex_buffer_object()		const { return m_bGL_ARB_vertex_buffer_object;		 }
+bool Extensions::IsGL_ARB_texture_border_clamp()		const { return m_bGL_ARB_texture_border_clamp;		 }
+bool Extensions::IsGL_ARB_texture_mirrored_repeat()		const { return m_bGL_ARB_texture_mirrored_repeat;	 }
+bool Extensions::IsGL_ARB_texture_cube_map()			const { return m_bGL_ARB_texture_cube_map;			 }
+bool Extensions::IsGL_ARB_texture_env_combine()			const { return m_bGL_ARB_texture_env_combine;		 }
+bool Extensions::IsGL_ARB_texture_env_dot3()			const { return m_bGL_ARB_texture_env_dot3;			 }
+bool Extensions::IsGL_ARB_occlusion_query()				const { return m_bGL_ARB_occlusion_query;			 }
+bool Extensions::IsGL_ARB_texture_compression()			const { return m_bGL_ARB_texture_compression;		 }
+bool Extensions::IsGL_ARB_depth_texture()				const { return m_bGL_ARB_depth_texture;				 }
+bool Extensions::IsGL_ARB_point_sprite()				const { return m_bGL_ARB_point_sprite;				 }
+bool Extensions::IsGL_ARB_point_parameters()			const { return m_bGL_ARB_point_parameters;			 }
+bool Extensions::IsGL_ARB_shading_language_100()		const { return m_bGL_ARB_shading_language_100;		 }
+bool Extensions::IsGL_ARB_vertex_program()				const { return m_bGL_ARB_vertex_program;			 }
+bool Extensions::IsGL_ARB_fragment_program()			const { return m_bGL_ARB_fragment_program;			 }
+bool Extensions::IsGL_ARB_draw_buffers()				const { return m_bGL_ARB_draw_buffers;				 }
+bool Extensions::IsGL_ARB_shader_objects()				const { return m_bGL_ARB_shader_objects;			 }
+bool Extensions::IsGL_ARB_vertex_shader()				const { return m_bGL_ARB_vertex_shader;				 }
+bool Extensions::IsGL_ARB_get_program_binary()			const { return m_bGL_ARB_get_program_binary;		 }
+bool Extensions::IsGL_ARB_texture_non_power_of_two()	const { return m_bGL_ARB_texture_non_power_of_two;	 }
+bool Extensions::IsGL_ARB_texture_rectangle()			const { return m_bGL_ARB_texture_rectangle;			 }
+bool Extensions::IsGL_ARB_multisample()					const { return m_bGL_ARB_multisample;				 }
+bool Extensions::IsGL_ARB_uniform_buffer_object()		const { return m_bGL_ARB_uniform_buffer_object;		 }
 // ATI
-bool OpenGLExtensions::IsGL_ATI_separate_stencil()				const { return m_bGL_ATI_separate_stencil;			 }
-bool OpenGLExtensions::IsGL_ATI_draw_buffers()					const { return m_bGL_ATI_draw_buffers;				 }
-bool OpenGLExtensions::IsGL_ATI_texture_compression_3dc()		const { return m_bGL_ATI_texture_compression_3dc;	 }
+bool Extensions::IsGL_ATI_separate_stencil()			const { return m_bGL_ATI_separate_stencil;			 }
+bool Extensions::IsGL_ATI_draw_buffers()				const { return m_bGL_ATI_draw_buffers;				 }
+bool Extensions::IsGL_ATI_texture_compression_3dc()		const { return m_bGL_ATI_texture_compression_3dc;	 }
 // AMD
-bool OpenGLExtensions::IsGL_AMD_vertex_shader_tessellator()		const { return m_bGL_AMD_vertex_shader_tessellator;	 }
+bool Extensions::IsGL_AMD_vertex_shader_tessellator()	const { return m_bGL_AMD_vertex_shader_tessellator;	 }
 // NV
-bool OpenGLExtensions::IsGL_NV_texture_rectangle()				const { return m_bGL_NV_texture_rectangle;			 }
-bool OpenGLExtensions::IsGL_NV_occlusion_query()				const { return m_bGL_NV_occlusion_query;			 }
+bool Extensions::IsGL_NV_texture_rectangle()			const { return m_bGL_NV_texture_rectangle;			 }
+bool Extensions::IsGL_NV_occlusion_query()				const { return m_bGL_NV_occlusion_query;			 }
 // SGIS
-bool OpenGLExtensions::IsGL_SGIS_generate_mipmap()				const { return m_bGL_SGIS_generate_mipmap;			 }
+bool Extensions::IsGL_SGIS_generate_mipmap()			const { return m_bGL_SGIS_generate_mipmap;			 }
 // HP
-bool OpenGLExtensions::IsGL_HP_occlusion_test()					const { return m_bGL_HP_occlusion_test;				 }
+bool Extensions::IsGL_HP_occlusion_test()				const { return m_bGL_HP_occlusion_test;				 }
 
 
 ///////////////////////////////////////////////////////////
 // Misc
 ///////////////////////////////////////////////////////////
-GLint OpenGLExtensions::GetGL_MAX_ELEMENTS_VERTICES_EXT() const	{ return m_nGL_MAX_ELEMENTS_VERTICES_EXT; }
-GLint OpenGLExtensions::GetGL_MAX_ELEMENTS_INDICES_EXT() const	{ return m_nGL_MAX_ELEMENTS_INDICES_EXT; }
+GLint Extensions::GetGL_MAX_ELEMENTS_VERTICES_EXT() const	{ return m_nGL_MAX_ELEMENTS_VERTICES_EXT; }
+GLint Extensions::GetGL_MAX_ELEMENTS_INDICES_EXT() const	{ return m_nGL_MAX_ELEMENTS_INDICES_EXT; }
 
 
 //[-------------------------------------------------------]
@@ -158,7 +158,7 @@ GLint OpenGLExtensions::GetGL_MAX_ELEMENTS_INDICES_EXT() const	{ return m_nGL_MA
 *  @brief
 *    Checks whether an extension is supported by the given hardware or not
 */
-bool OpenGLExtensions::IsSupported(const char *pszExtension) const
+bool Extensions::IsSupported(const char *pszExtension) const
 {
 	// Check whether or not the given extension string pointer is valid
 	if (pszExtension) {
@@ -180,7 +180,7 @@ bool OpenGLExtensions::IsSupported(const char *pszExtension) const
 *  @brief
 *    Checks whether an extension is supported by the given hardware or not
 */
-bool OpenGLExtensions::CheckExtension(const char *pszExtension) const
+bool Extensions::CheckExtension(const char *pszExtension) const
 {
 	// Check whether or not the given extension string pointer is valid
 	if (pszExtension) {
@@ -252,7 +252,7 @@ bool OpenGLExtensions::CheckExtension(const char *pszExtension) const
 *  @brief
 *    Resets the extensions
 */
-void OpenGLExtensions::ResetExtensions()
+void Extensions::ResetExtensions()
 {
 	m_bInitialized = false;
 
@@ -338,7 +338,7 @@ void OpenGLExtensions::ResetExtensions()
 *  @brief
 *    Initialize the supported universal extensions
 */
-bool OpenGLExtensions::InitUniversal()
+bool Extensions::InitUniversal()
 {
 	// Define a platform dependent helper macro
 	#ifdef WIN32
@@ -358,9 +358,9 @@ bool OpenGLExtensions::InitUniversal()
 		typedef void (*GLfunction)();
 		#define IMPORT_FUNC(funcName)																								\
 			if (bResult) {																											\
-				GLfunction pSymbol = glXGetProcAddressARB(reinterpret_cast<const GLubyte*>(#funcName));									\
+				GLfunction pSymbol = glXGetProcAddressARB(reinterpret_cast<const GLubyte*>(#funcName));								\
 				if (pSymbol) {																										\
-					*(reinterpret_cast<GLfunction*>(&(funcName))) = pSymbol;																\
+					*(reinterpret_cast<GLfunction*>(&(funcName))) = pSymbol;														\
 				} else {																											\
 					PL_LOG(Error, String("Failed to find the entry point \"") + #funcName + "\" within the OpenGL dynamic library")	\
 					bResult = false;																								\
@@ -911,7 +911,7 @@ bool OpenGLExtensions::InitUniversal()
 *  @brief
 *    Shows general OpenGL information
 */
-void OpenGLExtensions::ShowGeneralOpenGLInformation() const
+void Extensions::ShowGeneralOpenGLInformation() const
 {
 	GLint nTemp;
 
@@ -1057,7 +1057,7 @@ void OpenGLExtensions::ShowGeneralOpenGLInformation() const
 *  @brief
 *    Shows OpenGL shader program information
 */
-void OpenGLExtensions::ShowOpenGLShaderProgramInformation(uint32 nTarget) const
+void Extensions::ShowOpenGLShaderProgramInformation(uint32 nTarget) const
 {
 	GLint i;
 
@@ -1124,7 +1124,7 @@ void OpenGLExtensions::ShowOpenGLShaderProgramInformation(uint32 nTarget) const
 *  @brief
 *    Writes the extensions within a given extension string into the log
 */
-void OpenGLExtensions::WriteExtensionStringIntoLog(const char *pszExtensions) const
+void Extensions::WriteExtensionStringIntoLog(const char *pszExtensions) const
 {
 	// Check whether or not the given extensions string pointer is valid
 	if (pszExtensions) {

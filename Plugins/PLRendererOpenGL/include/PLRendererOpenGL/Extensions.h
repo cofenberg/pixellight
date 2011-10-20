@@ -50,16 +50,16 @@ class Renderer;
 *  @brief
 *    Supported OpenGL graphic card extensions
 *
-*  @note
-*    - You must check if the extension is supported by the current hardware before
-*      you use it. If the extension isn't available you should offer an alternative
-*      technique
+*  @remarks
+*    You must check if the extension is supported by the current hardware before
+*    you use it. If the extension isn't available you should offer an alternative
+*    technique aka fallback.
 *
 *  @see
 *    - OpenGL extension registry at http://oss.sgi.com/projects/ogl-sample/registry/ for more information about
 *      the different extensions
 */
-class OpenGLExtensions {
+class Extensions {
 
 
 	//[-------------------------------------------------------]
@@ -79,7 +79,7 @@ class OpenGLExtensions {
 		*  @param[in] cRenderer
 		*    Owner renderer
 		*/
-		OpenGLExtensions(Renderer &cRenderer);
+		Extensions(Renderer &cRenderer);
 
 		/**
 		*  @brief
