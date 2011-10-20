@@ -57,7 +57,6 @@ add_sources(
 	src/ProgramUniformBlockGLSL.cpp
 	src/ShaderToolsGLSL.cpp
 	src/Extensions.cpp
-	src/ExtensionConfig.cpp
 	src/FrameBufferObject.cpp
 )
 if(PL_PLUGIN_RENDERER_OPENGL_FONT)

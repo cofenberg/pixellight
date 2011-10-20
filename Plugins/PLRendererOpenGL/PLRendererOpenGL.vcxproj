@@ -269,7 +269,6 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Context.cpp" />
-    <ClCompile Include="src\ExtensionConfig.cpp" />
     <ClCompile Include="src\Extensions.cpp" />
     <ClCompile Include="src\FixedFunctions.cpp" />
     <ClCompile Include="src\FontGlyphTexture.cpp" />
@@ -339,7 +338,6 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRendererOpenGL\Context.h" />
-    <ClInclude Include="include\PLRendererOpenGL\ExtensionConfig.h" />
     <ClInclude Include="include\PLRendererOpenGL\ExtensionDefinitions.h" />
     <ClInclude Include="include\PLRendererOpenGL\Extensions.h" />
     <ClInclude Include="include\PLRendererOpenGL\FixedFunctions.h" />

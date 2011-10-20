@@ -330,10 +330,6 @@ PFNGLTESSELLATIONMODEAMDPROC	glTessellationModeAMD	= nullptr;
 OpenGLExtensions::OpenGLExtensions(Renderer &cRenderer) :
 	m_pRenderer(&cRenderer)
 {
-	// [TODO] Update this configuration related stuff?
-	// Create 'RendererOpenGLExtensionConfig'
-	// Config::GetInstance()->GetClass("PLRendererOpenGL::RendererOpenGLExtensionConfig");
-
 	// Reset extensions
 	ResetExtensions();
 }
@@ -445,15 +441,9 @@ bool OpenGLExtensions::IsSupported(const char *pszExtension) const
 	if (pszExtension) {
 		// Is the extension supported by the hardware?
 		if (CheckExtension(pszExtension)) {
-			// Is the support active?
-			// [TODO] Update this configuration related stuff?
-			// String sConfig = Config::GetInstance()->GetVar("PLRendererOpenGL::RendererOpenGLExtensionConfig", pszExtension);
-			String sConfig = "true";
-			if (!sConfig.GetLength() || sConfig.GetBool()) {
-				// Extension is supported!
-				PL_LOG(Info, String("Use extension: ") + pszExtension)
-				return true;
-			}
+			// Extension is supported!
+			PL_LOG(Info, String("Use extension: ") + pszExtension)
+			return true;
 		} else {
 			PL_LOG(Info, String("Extension '") + pszExtension + "' not found (nothing critical)")
 		}

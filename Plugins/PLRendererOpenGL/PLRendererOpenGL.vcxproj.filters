@@ -133,9 +133,6 @@
     <ClCompile Include="src\FrameBufferObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ExtensionConfig.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Extensions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -262,9 +259,6 @@
       <Filter>Windows</Filter>
     </ClInclude>
     <ClInclude Include="include\PLRendererOpenGL\FrameBufferObject.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLRendererOpenGL\ExtensionConfig.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLRendererOpenGL\ExtensionDefinitions.h">
