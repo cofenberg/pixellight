@@ -83,6 +83,12 @@ class Extensions {
 
 		/**
 		*  @brief
+		*    Destructor
+		*/
+		~Extensions();
+
+		/**
+		*  @brief
 		*    Returns whether the extensions are initialized or not
 		*
 		*  @return
@@ -264,8 +270,11 @@ class Extensions {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Renderer *m_pRenderer;		/**< Owner renderer, always valid! */
-		bool 	  m_bInitialized;	/**< Are the extensions initialized? */
+		Renderer *m_pRenderer;				/**< Owner renderer, always valid! */
+		bool 	  m_bInitialized;			/**< Are the extensions initialized? */
+		#ifdef APPLE
+			void *m_pOpenGLSharedLibrary;	/**< OpenGL shared library, can be a null pointer */
+		#endif
 
 		// Supported extensions
 		// WGL (Windows only)

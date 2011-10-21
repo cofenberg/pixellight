@@ -3,6 +3,7 @@
 PLRendererOpenGL:
 - "ContextMacOSX": Implemented CGL context creation. Not yet tested, don't know whether or not this will work at all, but I have to start somewhere
  (never developed on or used Apple stuff before).
+- "Extensions": Implemented Mac OS X part (not yet tested)
 
 
 
