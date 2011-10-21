@@ -197,7 +197,7 @@ ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialias
 									m_hDummyWindowRenderContext = wglCreateContext(m_hDummyWindowDeviceContext);
 									if (m_hDummyWindowRenderContext != nullptr) {
 										// Make the OpenGL render context to the current one
-										wglMakeCurrent(m_hDummyWindowDeviceContext, m_hDummyWindowRenderContext);
+										MakeDummyCurrent();
 									}
 								}
 							}
@@ -281,16 +281,14 @@ void ContextWindows::MakeDummyCurrent() const
 
 bool ContextWindows::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &lstDisplayModeList)
 {
-	uint32 nDisplayMode = 0;
-	DEVMODE DevMode;
-	String sTemp;
-
 	// Clear old list of display modes
 	for (uint32 i=0; i<lstDisplayModeList.GetNumOfElements(); i++)
 		delete lstDisplayModeList[i];
 	lstDisplayModeList.Clear();
 
 	// Get list of display modes
+	DEVMODE DevMode;
+	uint32 nDisplayMode = 0;
 	PL_LOG(Info, "Query available display modes")
 	while (EnumDisplaySettings(nullptr, nDisplayMode++, &DevMode)) {
 		// First at all, we're only interested in some of the settings - as a result, we really should check if there's
@@ -316,6 +314,7 @@ bool ContextWindows::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &ls
 			pDisplayMode->nFrequency = DevMode.dmDisplayFrequency;
 
 			// Give out log message
+			String sTemp;
 			if (pDisplayMode->nFrequency) {
 				sTemp = String::Format("Found: %dx%dx%d %d Hz", pDisplayMode->vSize.x, pDisplayMode->vSize.y,
 																pDisplayMode->nColorBits, pDisplayMode->nFrequency);

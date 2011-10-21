@@ -28,6 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <OpenGL/CGLTypes.h>
+#include <CoreGraphics/CGDirectDisplay.h>
 #include "PLRendererOpenGL/Context.h"
 
 
@@ -49,6 +51,13 @@ class Renderer;
 /**
 *  @brief
 *    Mac OS X OpenGL context
+*
+*  @remarks
+*    According to http://www.opengl.org/wiki/Programming_OpenGL_on_Mac_OS_X there are several relevant API's on Mac OS X:
+*    - AGL/Carbon: "AGL is the old Carbon-based API with C bindings" (see http://developer.apple.com/library/mac/#documentation/GraphicsImaging/Reference/AGL_OpenGL/Reference/reference.html)
+*    - Cocoa/NSOpenGL (aka NSGL): "Cocoa is the modern API with Objective-C bindings"
+*    -> Both building on top of the low level CGL (Core OpenGL) (see http://developer.apple.com/library/mac/#documentation/GraphicsImaging/Reference/CGL_OpenGL/Reference/reference.html)
+*    -> To keep things maintainable, we're only supporting the modern CGL/Cocoa/NSOpenGL way.
 */
 class ContextMacOSX : public Context {
 
@@ -83,10 +92,28 @@ class ContextMacOSX : public Context {
 
 
 	//[-------------------------------------------------------]
+	//[ Private methods                                       ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Returns the number of color bits from a given display mode
+		*
+		*  @param[in] pCGDisplayMode
+		*    Display mode to return the number of color bits from
+		*
+		*  @return
+		*    The number of color bits from the given display mode, 0 on error
+		*/
+		PLCore::uint32 GetColorBitsFromDisplayMode(CGDisplayModeRef pCGDisplayMode) const;
+
+
+	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Renderer *m_pRenderer;	/**< The owner renderer, always valid! */
+		Renderer	  *m_pRenderer;			/**< The owner renderer, always valid! */
+		CGLContextObj  m_pCGLContextObj;	/**< Pointer to an opaque CGL context object, can be a null pointer */
 
 
 };
