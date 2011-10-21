@@ -71,10 +71,15 @@ bool BufferedReaderString::IsEof() const
 	return (m_nCurrent >= m_sBuffer.GetLength());
 }
 
-char BufferedReaderString::GetChar()
+String::EFormat BufferedReaderString::GetStringFormat() const
+{
+	return m_sBuffer.GetFormat();
+}
+
+int BufferedReaderString::GetChar()
 {
 	// Return the current character, the string class performs the range check for us :)
-	return m_sBuffer[m_nCurrent];
+	return (m_sBuffer.GetFormat() == String::ASCII) ? m_sBuffer.GetASCII()[m_nCurrent] : m_sBuffer.GetUnicode()[m_nCurrent];
 }
 
 String BufferedReaderString::GetString(uint32 nSize)
@@ -83,22 +88,22 @@ String BufferedReaderString::GetString(uint32 nSize)
 	if (m_nCurrent+nSize <= m_sBuffer.GetLength()) {
 		// Get the requested substring
 		return m_sBuffer.GetSubstring(m_nCurrent, nSize);
-	} else {
-		// Error!
-		return "";
 	}
+
+	// Error!
+	return "";
 }
 
-char BufferedReaderString::ReadChar()
+int BufferedReaderString::ReadChar()
 {
 	// Check whether we can read a character
 	if (m_nCurrent+1 <= m_sBuffer.GetLength()) {
 		// Get the requested character and update the current character index
-		return m_sBuffer[m_nCurrent++];
-	} else {
-		// Error!
-		return '\0';
+		return (m_sBuffer.GetFormat() == String::ASCII) ? m_sBuffer.GetASCII()[m_nCurrent++] : m_sBuffer.GetUnicode()[m_nCurrent++];
 	}
+
+	// Error!
+	return '\0';
 }
 
 String BufferedReaderString::ReadString(uint32 nSize)
@@ -110,10 +115,10 @@ String BufferedReaderString::ReadString(uint32 nSize)
 
 		// Get the requested substring
 		return m_sBuffer.GetSubstring(m_nCurrent - nSize, nSize);
-	} else {
-		// Error!
-		return "";
 	}
+
+	// Error!
+	return "";
 }
 
 bool BufferedReaderString::IsString(const String &sString)
@@ -140,10 +145,10 @@ bool BufferedReaderString::Seek(uint32 nPos)
 
 		// Done
 		return true;
-	} else {
-		// Error!
-		return false;
 	}
+
+	// Error!
+	return false;
 }
 
 
