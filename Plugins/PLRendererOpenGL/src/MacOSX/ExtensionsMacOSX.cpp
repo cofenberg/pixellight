@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ExtensionsLinux.cpp                            *
+ *  File: ExtensionsMacOSX.cpp                           *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
 #include "PLRendererOpenGL/Renderer.h"
-#include "PLRendererOpenGL/Linux/ContextLinux.h"
 #include "PLRendererOpenGL/Extensions.h"
 
 
@@ -56,60 +55,6 @@ bool Extensions::Init(bool bUseExtensions)
 		// Done
 		return true;
 	}
-
-	{ // Print a list of all available extensions into the log
-		PL_LOG(Info, "Extensions info:")
-		PL_LOG(Info, reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS)))
-
-		WriteExtensionStringIntoLog(reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS)));
-
-		// Get the Linux context implementation
-		ContextLinux *pContextLinux = static_cast<ContextLinux*>(m_pRenderer->GetContext());
-		if (pContextLinux) {
-			// Get the X server display connection
-			Display *pDisplay = pContextLinux->GetDisplay();
-			if (pDisplay) {
-				// glXQueryExtensionsString
-				PL_LOG(Info, "glx Extensions info:")
-				WriteExtensionStringIntoLog(static_cast<const char*>(glXQueryExtensionsString(pDisplay, XDefaultScreen(pDisplay))));
-
-				// glXGetClientString
-				PL_LOG(Info, "glx client extensions info:")
-				WriteExtensionStringIntoLog(static_cast<const char*>(glXGetClientString(pDisplay, GLX_EXTENSIONS)));
-			}
-		}
-	}
-
-
-	//[-------------------------------------------------------]
-	//[ WGL & ATI & NV                                        ]
-	//[-------------------------------------------------------]
-	// WGL_ARB_multisample
-	m_bWGL_ARB_multisample = IsSupported("GLX_ARB_multisample");
-
-	// WGL_ATI_pixel_format_float
-	m_bWGL_ATI_pixel_format_float = IsSupported("GLX_ATI_pixel_format_float");
-
-	// WGL_NV_float_buffer
-	m_bWGL_NV_float_buffer = IsSupported("GLX_NV_float_buffer");
-
-
-	//[-------------------------------------------------------]
-	//[ GLX (Linux only)                                      ]
-	//[-------------------------------------------------------]
-	// GLX_SGI_swap_control
-	if (IsSupported("GLX_SGI_swap_control")) {
-		glXSwapIntervalSGI = reinterpret_cast<PFNGLXSWAPINTERVALSGIPROC>(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glXSwapIntervalSGI")));
-		if (!glXSwapIntervalSGI) {
-			PL_LOG(Info, "Couldn't use extension 'GLX_SGI_swap_control'!")
-			m_bGLX_SGI_swap_control = false;
-		} else {
-			m_bGLX_SGI_swap_control = true;
-		}
-	} else {
-		m_bGLX_SGI_swap_control = false;
-	}
-
 
 	// Initialize the supported universal extensions
 	return InitUniversal();

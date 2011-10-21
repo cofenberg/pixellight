@@ -58,8 +58,7 @@ SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle 
 	PLRenderer::SurfaceWindow(cHandler, nNativeWindowHandle, bFullscreen),
 	#ifdef WIN32
 		m_hDC(nullptr),
-	#endif
-	#ifdef APPLE
+	#elif APPLE
 		// [TODO] Implement Mac OS X part
 	#elif LINUX
 		m_nNativeWindowHandle(NULL_HANDLE),

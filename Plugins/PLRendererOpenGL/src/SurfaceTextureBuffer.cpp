@@ -362,7 +362,7 @@ bool SurfaceTextureBuffer::UnmakeCurrent()
 					break;
 
 //				case PLRenderer::Resource::TypeTextureBufferRectangle:
-//					glGenerateMipmapEXT(GL_TEXTURE_RECTANGLE_EXT);
+//					glGenerateMipmapEXT(GL_TEXTURE_RECTANGLE_ARB);
 //					break; // Not supported...
 
 				case PLRenderer::Resource::TypeTextureBufferCube:
@@ -389,7 +389,7 @@ bool SurfaceTextureBuffer::UnmakeCurrent()
 					break;
 
 				case PLRenderer::Resource::TypeTextureBufferRectangle:
-					glCopyTexSubImage2D(GL_TEXTURE_RECTANGLE_EXT, 0, 0, 0, 0, 0, GetSize().x, GetSize().y);
+					glCopyTexSubImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, 0, 0, 0, 0, GetSize().x, GetSize().y);
 					break;
 
 				case PLRenderer::Resource::TypeTextureBufferCube:

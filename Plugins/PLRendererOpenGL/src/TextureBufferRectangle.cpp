@@ -115,15 +115,15 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 
 				// Create OpenGL texture buffer
 				glGenTextures(1, &m_nOpenGLTexture);
-				glBindTexture(GL_TEXTURE_RECTANGLE_EXT, m_nOpenGLTexture);
+				glBindTexture(GL_TEXTURE_RECTANGLE_ARB, m_nOpenGLTexture);
 
 				// Setup depth format stuff
 				if (m_nFormat == D16 || m_nFormat == D24 || m_nFormat == D32) {
 					// Enable shadow comparison
-					glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE);
+					glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE);
 
 					// Shadow comparison should be true (e.g. not in shadow) if r<=texture buffer
-					glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_COMPARE_FUNC_ARB, GL_LEQUAL);
+					glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_COMPARE_FUNC_ARB, GL_LEQUAL);
 
 					// THIS is really important, if we choose other filtering there may be a crash...
 					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -145,18 +145,18 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 					m_nNumOfMipmaps = static_cast<uint32>(Math::Log2(static_cast<float>(Math::Max(m_vSize.x, m_vSize.y))));
 
 					// Build mipmaps automatically, no pre compressed image data can be used
-					gluBuild2DMipmaps(GL_TEXTURE_RECTANGLE_EXT, *pAPIPixelFormat, m_vSize.x, m_vSize.y, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasAnyData() ? pImageBuffer->GetData() : nullptr);
+					gluBuild2DMipmaps(GL_TEXTURE_RECTANGLE_ARB, *pAPIPixelFormat, m_vSize.x, m_vSize.y, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasAnyData() ? pImageBuffer->GetData() : nullptr);
 
 					// If compressed internal format, check whether all went fine
 					if (bCompressedFormat) {
 						GLint nCompressed;
-						glGetTexLevelParameteriv(GL_TEXTURE_RECTANGLE_EXT, 0, GL_TEXTURE_COMPRESSED_ARB, &nCompressed);
+						glGetTexLevelParameteriv(GL_TEXTURE_RECTANGLE_ARB, 0, GL_TEXTURE_COMPRESSED_ARB, &nCompressed);
 						if (!nCompressed) {
 							// There was an error, use no compression
 							m_nFormat = nImageFormat;
 							const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
 							if (pAPIPixelFormatFallback)
-								gluBuild2DMipmaps(GL_TEXTURE_RECTANGLE_EXT, *pAPIPixelFormatFallback, m_vSize.x, m_vSize.y, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasAnyData() ? pImageBuffer->GetData() : nullptr);
+								gluBuild2DMipmaps(GL_TEXTURE_RECTANGLE_ARB, *pAPIPixelFormatFallback, m_vSize.x, m_vSize.y, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasAnyData() ? pImageBuffer->GetData() : nullptr);
 						}
 					}
 
@@ -181,20 +181,20 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 
 							// Upload the texture buffer
 							if (bUsePreCompressedData && pMipmapImageBuffer->HasCompressedData())
-								glCompressedTexImage2DARB(GL_TEXTURE_RECTANGLE_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, 0, pMipmapImageBuffer->GetCompressedDataSize(), pMipmapImageBuffer->GetCompressedData());
+								glCompressedTexImage2DARB(GL_TEXTURE_RECTANGLE_ARB, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, 0, pMipmapImageBuffer->GetCompressedDataSize(), pMipmapImageBuffer->GetCompressedData());
 							else
-								glTexImage2D(GL_TEXTURE_RECTANGLE_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasAnyData() ? pMipmapImageBuffer->GetData() : nullptr);
+								glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasAnyData() ? pMipmapImageBuffer->GetData() : nullptr);
 
 							// If compressed internal format, check whether all went fine
 							if (bCompressedFormat) {
 								GLint nCompressed;
-								glGetTexLevelParameteriv(GL_TEXTURE_RECTANGLE_EXT, nLevel, GL_TEXTURE_COMPRESSED_ARB, &nCompressed);
+								glGetTexLevelParameteriv(GL_TEXTURE_RECTANGLE_ARB, nLevel, GL_TEXTURE_COMPRESSED_ARB, &nCompressed);
 								if (!nCompressed) {
 									// There was an error, use no compression as fallback
 									m_nFormat = nImageFormat;
 									const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
 									if (pAPIPixelFormatFallback)
-										glTexImage2D(GL_TEXTURE_RECTANGLE_EXT, nLevel, *pAPIPixelFormatFallback, vSize.x, vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasAnyData() ? pMipmapImageBuffer->GetData() : nullptr);
+										glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, nLevel, *pAPIPixelFormatFallback, vSize.x, vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasAnyData() ? pMipmapImageBuffer->GetData() : nullptr);
 								}
 							}
 						}
@@ -235,7 +235,7 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 							}
 
 							// Upload the texture buffer
-							glTexImage2D(GL_TEXTURE_RECTANGLE_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pszBuffer);
+							glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pszBuffer);
 
 							// Update the mipmap level counter
 							nLevel++;
@@ -286,15 +286,15 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 
 		// Create OpenGL texture buffer
 		glGenTextures(1, &m_nOpenGLTexture);
-		glBindTexture(GL_TEXTURE_RECTANGLE_EXT, m_nOpenGLTexture);
+		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, m_nOpenGLTexture);
 
 		// Setup depth format stuff
 		if (m_nFormat == D16 || m_nFormat == D24 || m_nFormat == D32) {
 			// Enable shadow comparison
-			glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE);
+			glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_COMPARE_MODE_ARB, GL_COMPARE_R_TO_TEXTURE);
 
 			// Shadow comparison should be true (e.g. not in shadow) if r<=texture buffer
-			glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_TEXTURE_COMPARE_FUNC_ARB, GL_LEQUAL);
+			glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_TEXTURE_COMPARE_FUNC_ARB, GL_LEQUAL);
 
 			// THIS is really important, if we choose other filtering there may be a crash...
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -307,22 +307,22 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 	//		m_nNumOfMipmaps = static_cast<uint32>(Math::Log2(static_cast<float>(Math::Max(m_vSize.x, m_vSize.y))));
 
 			// Enable automatic mipmap generation
-			glTexParameteri(GL_TEXTURE_RECTANGLE_EXT, GL_GENERATE_MIPMAP_SGIS, true);
+			glTexParameteri(GL_TEXTURE_RECTANGLE_ARB, GL_GENERATE_MIPMAP_SGIS, true);
 		}*/
 
 		// Create texture buffer
-		glTexImage2D(GL_TEXTURE_RECTANGLE_EXT, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, 0, nPixelFormat, nDataFormat, nullptr);
+		glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, 0, nPixelFormat, nDataFormat, nullptr);
 
 		// If compressed internal format, check whether all went fine
 		if (IsCompressedFormat()) {
 			GLint nCompressed;
-			glGetTexLevelParameteriv(GL_TEXTURE_RECTANGLE_EXT, 0, GL_TEXTURE_COMPRESSED_ARB, &nCompressed);
+			glGetTexLevelParameteriv(GL_TEXTURE_RECTANGLE_ARB, 0, GL_TEXTURE_COMPRESSED_ARB, &nCompressed);
 			if (!nCompressed) {
 				// There was an error, use no compression
 				m_nFormat = R8G8B8A8;
 				const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
 				if (pAPIPixelFormatFallback)
-					glTexImage2D(GL_TEXTURE_RECTANGLE_EXT, 0, *pAPIPixelFormatFallback,	m_vSize.x, m_vSize.y, 0, nPixelFormat, nDataFormat, nullptr);
+					glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, 0, *pAPIPixelFormatFallback,	m_vSize.x, m_vSize.y, 0, nPixelFormat, nDataFormat, nullptr);
 			}
 		}
 
@@ -365,7 +365,7 @@ bool TextureBufferRectangle::Upload(uint32 nMipmap, EPixelFormat nFormat, const 
 				const uint32 nNumOfBytes = GetNumOfBytes(nMipmap);
 
 				// Upload
-				glCompressedTexImage2DARB(GL_TEXTURE_RECTANGLE_EXT, nMipmap, *pAPIPixelFormat, vSize.x, vSize.y, 0, nNumOfBytes, pData);
+				glCompressedTexImage2DARB(GL_TEXTURE_RECTANGLE_ARB, nMipmap, *pAPIPixelFormat, vSize.x, vSize.y, 0, nNumOfBytes, pData);
 			} else {
 				// Bind this texture buffer
 				glBindTexture(GL_TEXTURE_BINDING_RECTANGLE_ARB, m_nOpenGLTexture);
@@ -373,7 +373,7 @@ bool TextureBufferRectangle::Upload(uint32 nMipmap, EPixelFormat nFormat, const 
 				// Upload
 				const uint32 nPixelFormat = cRendererOpenGL.GetOpenGLPixelFormat(nFormat);
 				const uint32 nDataFormat  = cRendererOpenGL.GetOpenGLDataFormat(nFormat);
-				glTexImage2D(GL_TEXTURE_RECTANGLE_EXT, nMipmap, *pAPIPixelFormat, vSize.x, vSize.y, 0, nPixelFormat, nDataFormat, pData);
+				glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, nMipmap, *pAPIPixelFormat, vSize.x, vSize.y, 0, nPixelFormat, nDataFormat, pData);
 			}
 
 			// Done
@@ -401,7 +401,7 @@ bool TextureBufferRectangle::Download(uint32 nMipmap, EPixelFormat nFormat, void
 		glBindTexture(GL_TEXTURE_BINDING_RECTANGLE_ARB, m_nOpenGLTexture);
 
 		// Download
-		glGetCompressedTexImageARB(GL_TEXTURE_RECTANGLE_EXT, nMipmap, pData);
+		glGetCompressedTexImageARB(GL_TEXTURE_RECTANGLE_ARB, nMipmap, pData);
 	} else {
 		// Bind this texture buffer
 		glBindTexture(GL_TEXTURE_BINDING_RECTANGLE_ARB, m_nOpenGLTexture);
@@ -412,7 +412,7 @@ bool TextureBufferRectangle::Download(uint32 nMipmap, EPixelFormat nFormat, void
 		// Download
 		const uint32 nPixelFormat = cRendererOpenGL.GetOpenGLPixelFormat(nFormat);
 		const uint32 nDataFormat  = cRendererOpenGL.GetOpenGLDataFormat(nFormat);
-		glGetTexImage(GL_TEXTURE_RECTANGLE_EXT, nMipmap, nPixelFormat, nDataFormat, pData);
+		glGetTexImage(GL_TEXTURE_RECTANGLE_ARB, nMipmap, nPixelFormat, nDataFormat, pData);
 	}
 
 	// Done
@@ -432,8 +432,8 @@ bool TextureBufferRectangle::MakeCurrent(uint32 nStage)
 	}
 
 	// Make this texture buffer to the renderers current one
-	glEnable(GL_TEXTURE_RECTANGLE_EXT);
-	glBindTexture(GL_TEXTURE_RECTANGLE_EXT, m_nOpenGLTexture);
+	glEnable(GL_TEXTURE_RECTANGLE_ARB);
+	glBindTexture(GL_TEXTURE_RECTANGLE_ARB, m_nOpenGLTexture);
 
 	// Done
 	return true;
@@ -447,7 +447,7 @@ void TextureBufferRectangle::BackupDeviceData(uint8 **ppBackup)
 {
 
 
-	// [HACK] ?It looks like 'glGetTexImage(GL_TEXTURE_RECTANGLE_EXT' is not working with RGB, I tested it
+	// [HACK] ?It looks like 'glGetTexImage(GL_TEXTURE_RECTANGLE_ARB' is not working with RGB, I tested it
 	// on a NVIDIA and ATI card and both times we get the data slightly 'shifted'?
 	if (m_nFormat == R8G8B8) {
 		m_nFormat = R8G8B8A8;
@@ -461,8 +461,8 @@ void TextureBufferRectangle::BackupDeviceData(uint8 **ppBackup)
 		*ppBackup = new uint8[nTotalNumOfBytes];
 		if (*ppBackup) {
 			// Prepare for backup
-			glEnable(GL_TEXTURE_RECTANGLE_EXT);
-			glBindTexture(GL_TEXTURE_RECTANGLE_EXT, m_nOpenGLTexture);
+			glEnable(GL_TEXTURE_RECTANGLE_ARB);
+			glBindTexture(GL_TEXTURE_RECTANGLE_ARB, m_nOpenGLTexture);
 
 			// Backup
 			uint8 *pData = *ppBackup;
@@ -470,7 +470,7 @@ void TextureBufferRectangle::BackupDeviceData(uint8 **ppBackup)
 				// Loop through all mipmaps
 				for (uint32 nLevel=0; nLevel<=m_nNumOfMipmaps; nLevel++) {
 					// Get the data from the GPU
-					glGetCompressedTexImageARB(GL_TEXTURE_RECTANGLE_EXT, nLevel, pData);
+					glGetCompressedTexImageARB(GL_TEXTURE_RECTANGLE_ARB, nLevel, pData);
 
 					// Next level, please
 					pData += GetNumOfBytes(nLevel);
@@ -486,7 +486,7 @@ void TextureBufferRectangle::BackupDeviceData(uint8 **ppBackup)
 				// Loop through all mipmaps
 				for (uint32 nLevel=0; nLevel<=m_nNumOfMipmaps; nLevel++) {
 					// Get the data from the GPU
-					glGetTexImage(GL_TEXTURE_RECTANGLE_EXT, nLevel, nPixelFormat, nDataFormat, pData);
+					glGetTexImage(GL_TEXTURE_RECTANGLE_ARB, nLevel, nPixelFormat, nDataFormat, pData);
 
 					// Next level, please
 					pData += GetNumOfBytes(nLevel);
@@ -509,7 +509,7 @@ void TextureBufferRectangle::RestoreDeviceData(uint8 **ppBackup)
 	// Restore data
 	if (*ppBackup) {
 		glGenTextures(1, &m_nOpenGLTexture);
-		glBindTexture(GL_TEXTURE_RECTANGLE_EXT, m_nOpenGLTexture);
+		glBindTexture(GL_TEXTURE_RECTANGLE_ARB, m_nOpenGLTexture);
 
 		// Get the OpenGL renderer instance
 		const Renderer &cRendererOpenGL = static_cast<Renderer&>(GetRenderer());
@@ -537,9 +537,9 @@ void TextureBufferRectangle::RestoreDeviceData(uint8 **ppBackup)
 
 				// Upload the texture buffer
 				if (bCompressedFormat)
-					glCompressedTexImage2DARB(GL_TEXTURE_RECTANGLE_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, 0, nNumOfBytes, pData);
+					glCompressedTexImage2DARB(GL_TEXTURE_RECTANGLE_ARB, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, 0, nNumOfBytes, pData);
 				else
-					glTexImage2D(GL_TEXTURE_RECTANGLE_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, 0, nPixelFormat, nDataFormat, pData);
+					glTexImage2D(GL_TEXTURE_RECTANGLE_ARB, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, 0, nPixelFormat, nDataFormat, pData);
 
 				// Next level, please
 				pData += nNumOfBytes;

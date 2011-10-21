@@ -100,7 +100,9 @@ void ExtensionsRuntimeLinking::Init()
 	// Get the extensions string
 	const String sExtensions = reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS));
 
-	// ARB
+	//[-------------------------------------------------------]
+	//[ ARB                                                   ]
+	//[-------------------------------------------------------]
 	m_bGL_ARB_draw_buffers = sExtensions.IsSubstring("GL_ARB_draw_buffers");
 	if (m_bGL_ARB_draw_buffers) {
 		// Load the entry points
@@ -109,17 +111,23 @@ void ExtensionsRuntimeLinking::Init()
 		m_bGL_ARB_draw_buffers = bResult;
 	}
 
-	// EXT
+	//[-------------------------------------------------------]
+	//[ EXT                                                   ]
+	//[-------------------------------------------------------]
 	m_bGL_EXT_texture_compression_s3tc   = sExtensions.IsSubstring("GL_EXT_texture_compression_s3tc");
 	m_bGL_EXT_texture_compression_dxt1   = sExtensions.IsSubstring("GL_EXT_texture_compression_dxt1");
 	m_bGL_EXT_texture_compression_latc   = sExtensions.IsSubstring("GL_EXT_texture_compression_latc");
 	m_bGL_EXT_texture_filter_anisotropic = sExtensions.IsSubstring("GL_EXT_texture_filter_anisotropic");
 	m_bGL_EXT_Cg_shader					 = sExtensions.IsSubstring("GL_EXT_Cg_shader");
 
-	// AMD
+	//[-------------------------------------------------------]
+	//[ AMD                                                   ]
+	//[-------------------------------------------------------]
 	m_bGL_AMD_compressed_3DC_texture = sExtensions.IsSubstring("GL_AMD_compressed_3DC_texture");
 
-	// NV
+	//[-------------------------------------------------------]
+	//[ NV                                                    ]
+	//[-------------------------------------------------------]
 	m_bGL_NV_get_tex_image = sExtensions.IsSubstring("GL_NV_get_tex_image");
 	if (m_bGL_NV_get_tex_image) {
 		// Load the entry points
@@ -139,7 +147,9 @@ void ExtensionsRuntimeLinking::Init()
 		m_bGL_NV_read_buffer = bResult;
 	}
 
-	// OES
+	//[-------------------------------------------------------]
+	//[ OES                                                   ]
+	//[-------------------------------------------------------]
 	m_bGL_OES_mapbuffer = sExtensions.IsSubstring("GL_OES_mapbuffer");
 	if (m_bGL_OES_mapbuffer) {
 		// Load the entry points
@@ -166,7 +176,9 @@ void ExtensionsRuntimeLinking::Init()
 	m_bGL_OES_depth24			   = sExtensions.IsSubstring("GL_OES_depth24");
 	m_bGL_OES_depth32			   = sExtensions.IsSubstring("GL_OES_depth32");
 
-	// ANGLE
+	//[-------------------------------------------------------]
+	//[ ANGLE                                                 ]
+	//[-------------------------------------------------------]
 	m_bGL_ANGLE_framebuffer_blit = sExtensions.IsSubstring("GL_ANGLE_framebuffer_blit");
 	if (m_bGL_ANGLE_framebuffer_blit) {
 		// Load the entry points
