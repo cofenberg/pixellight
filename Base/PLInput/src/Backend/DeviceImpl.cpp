@@ -54,9 +54,8 @@ DeviceImpl::DeviceImpl() :
 DeviceImpl::~DeviceImpl()
 {
 	// Remove from device
-	if (m_pDevice) {
+	if (m_pDevice)
 		m_pDevice->m_pImpl = nullptr;
-	}
 }
 
 /**

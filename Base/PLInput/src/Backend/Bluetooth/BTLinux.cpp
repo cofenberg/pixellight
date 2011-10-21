@@ -107,9 +107,8 @@ void BTLinux::EnumerateBluetoothDevices(List<BTDevice*> &lstDevices, DBusConnect
 							// Device address
 							char *pszAddress = nullptr;
 							dbus_message_iter_get_basic(&sIter, &pszAddress);
-							if (pszAddress) {
+							if (pszAddress)
 								sDeviceAddress = pszAddress;
-							}
 						} else if (nType == DBUS_TYPE_ARRAY) {
 							// Get device infos
 							DBusMessageIter sArrayIter;
@@ -149,15 +148,13 @@ void BTLinux::EnumerateBluetoothDevices(List<BTDevice*> &lstDevices, DBusConnect
 												dbus_message_iter_get_basic(&sVariantIter, &nValue);
 
 												// Save value
-												if (sName == "Class") {
+												if (sName == "Class")
 													nDeviceClass = nValue;
-												}
 											}
 										}
 									}
 								}
 							}
-
 						}
 						dbus_message_iter_next(&sIter);
 					}

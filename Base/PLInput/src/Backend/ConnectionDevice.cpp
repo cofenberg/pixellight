@@ -212,19 +212,16 @@ bool ConnectionDevice::Write(const uint8 *pBuffer, uint32 nSize)
 void ConnectionDevice::InitThread()
 {
 	// Create input buffer
-	if (!m_pInputBuffer && m_nInputReportSize > 0) {
+	if (!m_pInputBuffer && m_nInputReportSize > 0)
 		m_pInputBuffer  = new uint8[m_nInputReportSize];
-	}
 
 	// Create output buffer
-	if (!m_pOutputBuffer && m_nOutputReportSize > 0) {
+	if (!m_pOutputBuffer && m_nOutputReportSize > 0)
 		m_pOutputBuffer = new uint8[m_nOutputReportSize];
-	}
 
 	// Create mutex
-	if (!m_pMutex) {
+	if (!m_pMutex)
 		m_pMutex = new Mutex();
-	}
 
 	// Start thread
 	if (!m_pThread) {

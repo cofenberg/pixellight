@@ -210,9 +210,8 @@ RawInput::~RawInput()
 
 	// Delete window class
 	HMODULE hModuleHandle = GetModuleHandle(nullptr);
-	if (hModuleHandle) {
+	if (hModuleHandle)
 		UnregisterClass(L"PLInputWindows", hModuleHandle);
-	}
 }
 
 /**
@@ -258,10 +257,9 @@ LRESULT RawInput::ProcessRawInput(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lP
 						pRawInput->data.keyboard.ExtraInformation
 					);
 				}
-			}
 
 			// Mouse input
-			else if (pRawInput->header.dwType == RIM_TYPEMOUSE) {
+			} else if (pRawInput->header.dwType == RIM_TYPEMOUSE) {
 				// Send to device
 				if (pDevice) {
 					pDevice->ProcessMouseData(

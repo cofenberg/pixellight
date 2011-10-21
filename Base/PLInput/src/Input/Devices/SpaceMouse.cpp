@@ -88,9 +88,10 @@ SpaceMouse::~SpaceMouse()
 	if (m_pHIDDevice) {
 		// We use m_pImpl here to check, because if the device backend has been deleted before, m_pImpl has
 		// been reset to a null pointer, but not m_pHIDDevice as this is unknown in the base class
-		if (m_pImpl)
+		if (m_pImpl) {
 			// Disconnect
 			m_pHIDDevice->Close();
+		}
 	}
 }
 
@@ -115,9 +116,12 @@ void SpaceMouse::OnDeviceRead()
 				float fTransX = static_cast<float>(static_cast<int16>((pInputBuffer[1] & 0x000000ff) | (static_cast<int>(pInputBuffer[2])<<8 & 0xffffff00)));
 				float fTransY = static_cast<float>(static_cast<int16>((pInputBuffer[3] & 0x000000ff) | (static_cast<int>(pInputBuffer[4])<<8 & 0xffffff00)));
 				float fTransZ = static_cast<float>(static_cast<int16>((pInputBuffer[5] & 0x000000ff) | (static_cast<int>(pInputBuffer[6])<<8 & 0xffffff00)));
-				if (TransX.GetValue() != fTransX) TransX.SetValue(fTransX, false);
-				if (TransY.GetValue() != fTransY) TransY.SetValue(fTransY, false);
-				if (TransZ.GetValue() != fTransZ) TransZ.SetValue(fTransZ, false);
+				if (TransX.GetValue() != fTransX)
+					TransX.SetValue(fTransX, false);
+				if (TransY.GetValue() != fTransY)
+					TransY.SetValue(fTransY, false);
+				if (TransZ.GetValue() != fTransZ)
+					TransZ.SetValue(fTransZ, false);
 				break;
 			}
 
@@ -127,9 +131,12 @@ void SpaceMouse::OnDeviceRead()
 				float fRotX = static_cast<float>(static_cast<int16>((pInputBuffer[1] & 0x000000ff) | (static_cast<int>(pInputBuffer[2])<<8 & 0xffffff00)));
 				float fRotY = static_cast<float>(static_cast<int16>((pInputBuffer[3] & 0x000000ff) | (static_cast<int>(pInputBuffer[4])<<8 & 0xffffff00)));
 				float fRotZ = static_cast<float>(static_cast<int16>((pInputBuffer[5] & 0x000000ff) | (static_cast<int>(pInputBuffer[6])<<8 & 0xffffff00)));
-				if (RotX.GetValue() != fRotX) RotX.SetValue(fRotX, false);
-				if (RotY.GetValue() != fRotY) RotY.SetValue(fRotY, false);
-				if (RotZ.GetValue() != fRotZ) RotZ.SetValue(fRotZ, false);
+				if (RotX.GetValue() != fRotX)
+					RotX.SetValue(fRotX, false);
+				if (RotY.GetValue() != fRotY)
+					RotY.SetValue(fRotY, false);
+				if (RotZ.GetValue() != fRotZ)
+					RotZ.SetValue(fRotZ, false);
 				break;
 			}
 
@@ -137,21 +144,29 @@ void SpaceMouse::OnDeviceRead()
 			case 0x03:
 			{
 				bool bPressed = ((pInputBuffer[1] & 0x0001) != 0);
-				if (Button0.IsPressed() != bPressed) Button0.SetPressed(bPressed);
+				if (Button0.IsPressed() != bPressed)
+					Button0.SetPressed(bPressed);
 				bPressed = ((pInputBuffer[1] & 0x0002) != 0);
-				if (Button1.IsPressed() != bPressed) Button1.SetPressed(bPressed);
+				if (Button1.IsPressed() != bPressed)
+					Button1.SetPressed(bPressed);
 				bPressed = ((pInputBuffer[1] & 0x0004) != 0);
-				if (Button2.IsPressed() != bPressed) Button2.SetPressed(bPressed);
+				if (Button2.IsPressed() != bPressed)
+					Button2.SetPressed(bPressed);
 				bPressed = ((pInputBuffer[1] & 0x0008) != 0);
-				if (Button3.IsPressed() != bPressed) Button3.SetPressed(bPressed);
+				if (Button3.IsPressed() != bPressed)
+					Button3.SetPressed(bPressed);
 				bPressed = ((pInputBuffer[1] & 0x0010) != 0);
-				if (Button4.IsPressed() != bPressed) Button4.SetPressed(bPressed);
+				if (Button4.IsPressed() != bPressed)
+					Button4.SetPressed(bPressed);
 				bPressed = ((pInputBuffer[1] & 0x0020) != 0);
-				if (Button5.IsPressed() != bPressed) Button5.SetPressed(bPressed);
+				if (Button5.IsPressed() != bPressed)
+					Button5.SetPressed(bPressed);
 				bPressed = ((pInputBuffer[1] & 0x0040) != 0);
-				if (Button6.IsPressed() != bPressed) Button6.SetPressed(bPressed);
+				if (Button6.IsPressed() != bPressed)
+					Button6.SetPressed(bPressed);
 				bPressed = ((pInputBuffer[1] & 0x0080) != 0);
-				if (Button7.IsPressed() != bPressed) Button7.SetPressed(bPressed);
+				if (Button7.IsPressed() != bPressed)
+					Button7.SetPressed(bPressed);
 				break;
 			}
 		}

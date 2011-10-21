@@ -128,8 +128,7 @@ bool Button::IsPressed() const
 void Button::SetPressed(bool bPressed)
 {
 	// If the button was previously pressed but now isn't, we received a hit
-	if (m_bPressed && !bPressed) m_bHit = true;
-	else						 m_bHit = false;
+	m_bHit = (m_bPressed && !bPressed);
 
 	// Set state
 	m_bPressed = bPressed;
@@ -145,7 +144,7 @@ void Button::SetPressed(bool bPressed)
 bool Button::IsHit()
 {
 	// Return hit-state
-	bool bHit = m_bHit;
+	const bool bHit = m_bHit;
 	m_bHit = false;
 	return bHit;
 }
