@@ -28,8 +28,8 @@
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/Extensions.h"
 #ifdef APPLE
+	#include <dlfcn.h>	// For dlopen, dlclose, dlsym
 	#include <string.h>	// For strstr
-	// [TODO] Implement Mac OS X implementation
 #elif LINUX
 	#include <string.h>	// For strstr
 	#include "PLRendererOpenGL/Linux/ContextLinux.h"
@@ -51,10 +51,31 @@ namespace PLRendererOpenGL {
 *    Constructor
 */
 Extensions::Extensions(Renderer &cRenderer) :
-	m_pRenderer(&cRenderer)
+	m_pRenderer(&cRenderer),
+	m_bInitialized(false)
 {
+	#ifdef APPLE
+		// Open the OpenGL shared library
+		m_pOpenGLSharedLibrary = dlopen("/System/Library/Frameworks/OpenGL.framework/Versions/Current/OpenGL", RTLD_LAZY);
+		if (!m_pOpenGLSharedLibrary)
+			PL_LOG(Error, "Failed to open the OpenGL shared library \"/System/Library/Frameworks/OpenGL.framework/Versions/Current/OpenGL\" in order to load in the extensions entry points")
+	#endif
+
 	// Reset extensions
 	ResetExtensions();
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+Extensions::~Extensions()
+{
+	#ifdef APPLE
+		// Close the OpenGL shared library
+		if (m_pOpenGLSharedLibrary)
+			dlclose(m_pOpenGLSharedLibrary);
+	#endif
 }
 
 /**
@@ -186,9 +207,15 @@ bool Extensions::CheckExtension(const char *pszExtension) const
 	if (pszExtension) {
 		// Under Windows all available extensions can be received via one additional function
 		// but under Linux there are two additional functions for this
-		int nLoopMax = 2;
-		#ifdef LINUX
-			nLoopMax = 3;
+		#ifdef WIN32
+			// "glGetString()" & "wglGetExtensionsStringARB()"
+			const int nLoopMax = 2;
+		#elif APPLE
+			// On Mac OS X, only "glGetString(GL_EXTENSIONS)" is required
+			const int nLoopMax = 1;
+		#elif LINUX
+			// "glGetString()" & "glXQueryExtensionsString()" & "glXGetClientString()"
+			const int nLoopMax = 3;
 		#endif
 		const char *pszExtensions = nullptr;
 		for (int i=0; i<nLoopMax; i++) {
@@ -205,7 +232,7 @@ bool Extensions::CheckExtension(const char *pszExtension) const
 						return false; // Extension not found
 					pszExtensions = static_cast<const char*>(wglGetExtensionsStringARB(wglGetCurrentDC()));
 				#elif APPLE
-					// [TODO] Implement Mac OS X implementation
+					// On Mac OS X, only "glGetString(GL_EXTENSIONS)" is required
 				#elif LINUX
 					// Get the Linux context implementation
 					ContextLinux *pContextLinux = static_cast<ContextLinux*>(m_pRenderer->GetContext());
@@ -352,10 +379,15 @@ bool Extensions::InitUniversal()
 				}																													\
 			}
 	#elif APPLE
-		// [TODO] Implement me
+		// For OpenGL extension handling, Apple provides several documents like
+		// - "Technical Note TN2080 Understanding and Detecting OpenGL Functionality" (http://developer.apple.com/library/mac/#technotes/tn2080/_index.html)
+		// - "Cross-Development Programming Guide" (http://www.filibeto.org/unix/macos/lib/dev/documentation/DeveloperTools/Conceptual/cross_development/cross_development.pdf)
+		// -> All referencing to "QA1188: GetProcAdress and OpenGL Entry Points" (http://developer.apple.com/qa/qa2001/qa1188.html).
+		//    Sadly, it appears that this site no longer exists.
+		// -> It appears that for Mac OS X v10.6 >, the "dlopen"-way is recommended.
 		#define IMPORT_FUNC(funcName)																								\
 			if (bResult) {																											\
-				void *pSymbol = nullptr;																							\
+				void *pSymbol = m_pOpenGLSharedLibrary ? dlsym(m_pOpenGLSharedLibrary, #funcName) : nullptr;						\
 				if (pSymbol) {																										\
 					*(reinterpret_cast<void**>(&(funcName))) = pSymbol;																\
 				} else {																											\
