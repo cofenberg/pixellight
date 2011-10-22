@@ -101,18 +101,6 @@ class Application : public PLEngine::EngineApplication {
 
 		/**
 		*  @brief
-		*    Function where the user has to choose the desired sound API
-		*
-		*  @return
-		*    'true' if all went fine and the user has chosen a sound API, else 'false'
-		*
-		*  @note
-		*    - If only one sound API is available no dialog will appear
-		*/
-		bool ChooseSoundAPI();
-
-		/**
-		*  @brief
 		*    Called when a control event has occurred
 		*
 		*  @param[in] cControl
