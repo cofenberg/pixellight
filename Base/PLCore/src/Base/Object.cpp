@@ -154,7 +154,7 @@ const List<DynVar*> Object::GetAttributes() const
 
 		// Get all attributes for this instance and add them to the list
 		for (uint32 i=0; i<lstDescriptors.GetNumOfElements(); i++)
-			lstAttributes.Add(lstDescriptors[i]->GetAttribute(this));
+			lstAttributes.Add(lstDescriptors[i]->GetAttribute(*this));
 	}
 
 	// Return attribute list
@@ -174,7 +174,7 @@ DynVar *Object::GetAttribute(const String &sName) const
 		const VarDesc *pDescriptor = pClass->GetAttribute(sName);
 		if (pDescriptor) {
 			// Return attribute
-			return pDescriptor->GetAttribute(this);
+			return pDescriptor->GetAttribute(*this);
 		}
 	}
 
@@ -238,7 +238,7 @@ const List<DynEvent*> Object::GetSignals() const
 
 		// Get all signals for this instance and add them to the list
 		for (uint32 i=0; i<lstDescriptors.GetNumOfElements(); i++)
-			lstSignals.Add(lstDescriptors[i]->GetSignal(this));
+			lstSignals.Add(lstDescriptors[i]->GetSignal(*this));
 	}
 
 	// Return signal list
@@ -258,7 +258,7 @@ DynEvent *Object::GetSignal(const String &sName) const
 		const EventDesc *pDescriptor = pClass->GetSignal(sName);
 		if (pDescriptor) {
 			// Return signal
-			return pDescriptor->GetSignal(this);
+			return pDescriptor->GetSignal(*this);
 		}
 	}
 
@@ -283,7 +283,7 @@ const List<DynEventHandler*> Object::GetSlots() const
 
 		// Get all slots for this instance and add them to the list
 		for (uint32 i=0; i<lstDescriptors.GetNumOfElements(); i++)
-			lstSlots.Add(lstDescriptors[i]->GetSlot(this));
+			lstSlots.Add(lstDescriptors[i]->GetSlot(*this));
 	}
 
 	// Return slot list
@@ -303,7 +303,7 @@ DynEventHandler *Object::GetSlot(const String &sName) const
 		const EventHandlerDesc *pDescriptor = pClass->GetSlot(sName);
 		if (pDescriptor) {
 			// Return slot
-			return pDescriptor->GetSlot(this);
+			return pDescriptor->GetSlot(*this);
 		}
 	}
 
@@ -429,7 +429,7 @@ String Object::GetValues(EDefaultValue nDefaultValue) const
 			VarDesc *pVarDesc = cIterator.Next();
 			if (pVarDesc) {
 				// Get attribute
-				DynVar *pVar = pVarDesc->GetAttribute(this);
+				DynVar *pVar = pVarDesc->GetAttribute(*this);
 
 				// Ignore variables with default values?
 				if (nDefaultValue == WithDefault || !pVar->IsDefault()) {
@@ -484,7 +484,7 @@ void Object::GetValuesXml(XmlElement &cElement, EDefaultValue nDefaultValue) con
 			VarDesc *pVarDesc = cIterator.Next();
 			if (pVarDesc) {
 				// Get attribute
-				DynVar *pVar = pVarDesc->GetAttribute(this);
+				DynVar *pVar = pVarDesc->GetAttribute(*this);
 
 				// Ignore variables with default values?
 				if (nDefaultValue == WithDefault || !pVar->IsDefault()) {
@@ -531,7 +531,7 @@ void Object::SetDefaultValues()
 			VarDesc *pVarDesc = cIterator.Next();
 			if (pVarDesc) {
 				// Get attribute
-				DynVar *pVar = pVarDesc->GetAttribute(this);
+				DynVar *pVar = pVarDesc->GetAttribute(*this);
 
 				// Set default value
 				pVar->SetDefault();

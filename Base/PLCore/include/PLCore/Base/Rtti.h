@@ -433,8 +433,8 @@ template <typename T> uint32	ModuleID<T>::m_nModuleID = 0;
 				~NAME##_Desc() { \
 				} \
 			private: \
-				virtual PLCore::DynVar *GetAttribute(const Object *pObject) const override { \
-					return &reinterpret_cast<_Self*>(const_cast<Object*>(pObject))->NAME; \
+				virtual PLCore::DynVar *GetAttribute(const Object &cObject) const override { \
+					return &reinterpret_cast<_Self&>(const_cast<Object&>(cObject)).NAME; \
 				} \
 		}; \
 
@@ -565,8 +565,8 @@ template <typename T> uint32	ModuleID<T>::m_nModuleID = 0;
 				~NAME##_Desc() { \
 				} \
 			private: \
-				virtual PLCore::DynEvent *GetSignal(const Object *pObject) const override { \
-					return &reinterpret_cast<_Self*>(const_cast<Object*>(pObject))->NAME; \
+				virtual PLCore::DynEvent *GetSignal(const Object &cObject) const override { \
+					return &reinterpret_cast<_Self&>(const_cast<Object&>(cObject)).NAME; \
 				} \
 		}; \
 
@@ -623,8 +623,8 @@ template <typename T> uint32	ModuleID<T>::m_nModuleID = 0;
 				~NAME##_Desc() { \
 				} \
 			private: \
-				virtual PLCore::DynEventHandler *GetSlot(const Object *pObject) const override { \
-					return &reinterpret_cast<_Self*>(const_cast<Object*>(pObject))->Slot##NAME; \
+				virtual PLCore::DynEventHandler *GetSlot(const Object &cObject) const override { \
+					return &reinterpret_cast<_Self&>(const_cast<Object&>(cObject)).Slot##NAME; \
 				} \
 		}; \
 

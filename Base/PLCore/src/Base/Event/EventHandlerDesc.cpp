@@ -81,7 +81,7 @@ String EventHandlerDesc::GetSignature() const
 *  @brief
 *    Get slot
 */
-DynEventHandler *EventHandlerDesc::GetSlot(const Object *pObject) const
+DynEventHandler *EventHandlerDesc::GetSlot(const Object &cObject) const
 {
 	// To be implemented in derived classes
 	return nullptr;

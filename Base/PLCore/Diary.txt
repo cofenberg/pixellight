@@ -1,4 +1,11 @@
-﻿>> 21.10.2011
+﻿>> 22.10.2011
+[CO]
+- "EventDesc::GetSignal()" & "EventHandlerDesc::GetSlot()" & "VarDesc::GetAttribute()": Gave in a null pointer into the not documented
+  pointer parameter and got a crash. This should never happen. Changed the pointer parameter into a reference parameter.
+
+
+
+>> 21.10.2011
 [CO]
 - More Unicode related issues within the PixelLight forum: http://dev.pixellight.org/forum/viewtopic.php?f=6&t=91
   -> The next scheduled PixelLight release is in two days, so no big complete refactoring of for example the tokenizer.

@@ -93,7 +93,7 @@ String VarDesc::GetTypeName() const
 *  @brief
 *    Get attribute
 */
-DynVar *VarDesc::GetAttribute(const Object *pObject) const
+DynVar *VarDesc::GetAttribute(const Object &cObject) const
 {
 	// To be implemented in derived classes
 	return nullptr;

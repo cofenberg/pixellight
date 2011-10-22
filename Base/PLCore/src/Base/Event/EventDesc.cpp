@@ -81,7 +81,7 @@ String EventDesc::GetSignature() const
 *  @brief
 *    Get signal
 */
-DynEvent *EventDesc::GetSignal(const Object *pObject) const
+DynEvent *EventDesc::GetSignal(const Object &cObject) const
 {
 	// To be implemented in derived classes
 	return nullptr;

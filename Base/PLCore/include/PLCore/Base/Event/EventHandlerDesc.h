@@ -110,10 +110,13 @@ class EventHandlerDesc : public MemberDesc {
 		*  @brief
 		*    Get slot
 		*
+		*  @param[in] cObject
+		*    Object to return the slot pointer from
+		*
 		*  @return
-		*    Pointer to slot (can be a null pointer)
+		*    Pointer to slot (can be a null pointer, do not destroy the returned instance)
 		*/
-		PLCORE_API virtual DynEventHandler *GetSlot(const Object *pObject) const;
+		PLCORE_API virtual DynEventHandler *GetSlot(const Object &cObject) const;
 
 
 	//[-------------------------------------------------------]
