@@ -81,9 +81,8 @@ void InputManager::Update()
 	}
 
 	// Update devices
-	for (uint32 i=0; i<m_lstDevices.GetNumOfElements(); i++) {
+	for (uint32 i=0; i<m_lstDevices.GetNumOfElements(); i++)
 		m_lstDevices[i]->Update();
-	}
 }
 
 /**
@@ -96,7 +95,8 @@ void InputManager::DetectDevices(bool bReset)
 	const MutexGuard cMutexGuard(*m_pMutex);
 
 	// Delete all existing providers and devices?
-	if (bReset) Clear();
+	if (bReset)
+		Clear();
 
 	// Send event that device detection has started
 	EventOnDetectDevices(true);
@@ -119,7 +119,8 @@ void InputManager::DetectDevices(bool bReset)
 		else
 			DetectProvider(sName, bReset);
 	}
-	if (bWindowsJoystick) DetectProvider("PLInput::LegacyJoystickProvider", bReset);
+	if (bWindowsJoystick)
+		DetectProvider("PLInput::LegacyJoystickProvider", bReset);
 
 	// Send event that device detection has stopped
 	EventOnDetectDevices(false);
@@ -195,10 +196,8 @@ Mouse *InputManager::GetMouse() const
 *    Constructor
 */
 InputManager::InputManager() :
-	m_pMutex(nullptr)
+	m_pMutex(new Mutex())
 {
-	// Create thread
-	m_pMutex = new Mutex();
 }
 
 /**
@@ -231,16 +230,14 @@ InputManager::~InputManager()
 void InputManager::Clear()
 {
 	// Destroy all input providers
-	for (uint32 i=0; i<m_lstProviders.GetNumOfElements(); i++) {
+	for (uint32 i=0; i<m_lstProviders.GetNumOfElements(); i++)
 		delete m_lstProviders[i];
-	}
 	m_lstProviders.Clear();
 	m_mapProviders.Clear();
 
 	// Destroy all left-over input devices (usually, all devices should have been destroyed by their providers)
-	for (uint32 i=0; i<m_lstDevices.GetNumOfElements(); i++) {
+	for (uint32 i=0; i<m_lstDevices.GetNumOfElements(); i++)
 		delete m_lstDevices[i];
-	}
 	m_lstDevices.Clear();
 	m_mapDevices.Clear();
 }
@@ -256,9 +253,8 @@ void InputManager::DetectProvider(const String &sProvider, bool bReset)
 	if (!pProvider) {
 		// Create provider
 		const Class *pClass = ClassManager::GetInstance()->GetClass(sProvider);
-		if (pClass) {
+		if (pClass)
 			pProvider = static_cast<Provider*>(pClass->Create());
-		}
 
 		// Add provider
 		if (pProvider) {
@@ -344,4 +340,3 @@ void InputManager::UpdateControl(Control *pControl)
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLInput
-

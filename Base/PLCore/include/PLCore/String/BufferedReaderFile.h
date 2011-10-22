@@ -79,9 +79,10 @@ class BufferedReaderFile : public BufferedReader {
 	public:
 		virtual void Close() override;
 		virtual bool IsEof() const override;
-		virtual char GetChar() override;
+		virtual String::EFormat GetStringFormat() const override;
+		virtual int GetChar() override;
 		virtual String GetString(uint32 nSize) override;
-		virtual char ReadChar() override;
+		virtual int ReadChar() override;
 		virtual String ReadString(uint32 nSize) override;
 		virtual bool IsString(const String &sString) override;
 		virtual bool IsStringNoCase(const String &sString) override;

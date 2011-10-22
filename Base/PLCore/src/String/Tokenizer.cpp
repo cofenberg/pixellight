@@ -273,121 +273,246 @@ Array<String> Tokenizer::GetTokens()
 */
 String Tokenizer::GetNextToken()
 {
-	// Read input
+	// Clear the current token
 	m_sToken = "";
-	while (m_pStream && !m_pStream->IsEof()) {
-		// Get character
-		const char cChar = m_pStream->GetChar();
 
-		// Do the work
-		switch (m_nParseMode) {
-			// Eat garbage until the first character of a word has been found
-			case eEatGarbage:
-				if (m_sCommentStartTag.GetLength() && StreamIsString(m_sCommentStartTag)) {
-					// The beginning of a comment has been found
-					StreamRead(m_sCommentStartTag.GetLength());
-					m_sEndTag	 = m_sCommentEndTag;
-					m_nParseMode = eSkipComment;
-				} else if (m_sSingleLineComment.GetLength() && StreamIsString(m_sSingleLineComment)) {
-					// The beginning of a comment has been found
-					StreamRead(m_sSingleLineComment.GetLength());
-					m_sEndTag	 = EndOfLine;
-					m_nParseMode = eSkipComment;
-				} else if (StreamIsChar(m_sQuotes)) {
-					// The beginning of a quote has been found
-					StreamRead(1);
-					m_sEndTag	 = cChar;
-					m_nParseMode = eReadQuote;
-				} else if (StreamIsChar(m_sDelimiters)) {
-					// Only more garbage found
-					StreamRead(1);
-				} else if (StreamIsChar(m_sSingleChars)) {
-					// A single character word has been found
-					m_nParseMode = eSingleChar;
-				} else {
-					// The beginning of a word has been found
-					m_nParseMode = eReadWord;
+	// Valid stram?
+	if (m_pStream) {
+		// ASCII or Unicode?
+		if (m_pStream->GetStringFormat() == String::ASCII) {
+			// Read ASCII input
+			while (!m_pStream->IsEof()) {
+				// Get character
+				const char nChar = static_cast<char>(m_pStream->GetChar());
+
+				// Do the work
+				switch (m_nParseMode) {
+					// Eat garbage until the first character of a word has been found
+					case eEatGarbage:
+						if (m_sCommentStartTag.GetLength() && StreamIsString(m_sCommentStartTag)) {
+							// The beginning of a comment has been found
+							StreamRead(m_sCommentStartTag.GetLength());
+							m_sEndTag	 = m_sCommentEndTag;
+							m_nParseMode = eSkipComment;
+						} else if (m_sSingleLineComment.GetLength() && StreamIsString(m_sSingleLineComment)) {
+							// The beginning of a comment has been found
+							StreamRead(m_sSingleLineComment.GetLength());
+							m_sEndTag	 = EndOfLine;
+							m_nParseMode = eSkipComment;
+						} else if (m_sQuotes.IndexOf(nChar) >= 0) {
+							// The beginning of a quote has been found
+							StreamRead(1);
+							m_sEndTag	 = nChar;
+							m_nParseMode = eReadQuote;
+						} else if (m_sDelimiters.IndexOf(nChar) >= 0) {
+							// Only more garbage found
+							StreamRead(1);
+						} else if (m_sSingleChars.IndexOf(nChar) >= 0) {
+							// A single character word has been found
+							m_nParseMode = eSingleChar;
+						} else {
+							// The beginning of a word has been found
+							m_nParseMode = eReadWord;
+						}
+						break;
+
+					// Read a word until a delimiter has been found
+					case eReadWord:
+						if (m_sCommentStartTag.GetLength() && StreamIsString(m_sCommentStartTag)) {
+							// The beginning of a comment has been found
+							StreamRead(m_sCommentStartTag.GetLength());
+							m_sEndTag	 = m_sCommentEndTag;
+							m_nParseMode = eSkipComment;
+						} else if (m_sSingleLineComment.GetLength() && StreamIsString(m_sSingleLineComment)) {
+							// The beginning of a comment has been found
+							StreamRead(m_sSingleLineComment.GetLength());
+							m_sEndTag	 = EndOfLine;
+							m_nParseMode = eSkipComment;
+						} else if (m_sQuotes.IndexOf(nChar) >= 0) {
+							// The beginning of a quote has been found
+							StreamRead(1);
+							m_sEndTag	 = nChar;
+							m_nParseMode = eReadQuote;
+						} else if (m_sDelimiters.IndexOf(nChar) >= 0) {
+							// A delimiter has been found
+							StreamRead(1);
+							m_nParseMode = eEatGarbage;
+						} else if (m_sSingleChars.IndexOf(nChar) >= 0) {
+							// A single character word has been found
+							m_nParseMode = eSingleChar;
+						} else {
+							// Read word
+							m_sToken += nChar;
+							StreamRead(1);
+						}
+
+						// Return word if one has been found
+						if (m_nParseMode != eReadWord && m_sToken.GetLength())
+							return m_sToken;
+						break;
+
+					// Read a single character word
+					case eSingleChar:
+						// Return the single character word
+						StreamRead(1);
+						m_nParseMode = eEatGarbage;
+						m_sToken	 = nChar;
+						return m_sToken;
+
+					// Read the beginning of a quote
+					case eReadQuote:
+						m_nParseMode = eReadQuoteInside;
+						m_sToken	 = m_sEndTag;
+						return m_sEndTag;
+
+					// Read until the end quote has been found
+					case eReadQuoteInside:
+						if (StreamIsString(m_sEndTag)) {
+							// Return string inside the quote
+							m_nParseMode = eReadQuoteEnd;
+							if (m_sToken.GetLength())
+								return m_sToken;
+						} else {
+							m_sToken += nChar;
+							StreamRead(1);
+						}
+						break;
+
+					// Read the end of a quote
+					case eReadQuoteEnd:
+						StreamRead(m_sEndTag.GetLength());
+						m_nParseMode = eEatGarbage;
+						m_sToken	 = m_sEndTag;
+						return m_sEndTag;
+
+					// Skip a comment until the comment end-tag has been found
+					case eSkipComment:
+						if (StreamIsString(m_sEndTag)) {
+							StreamRead(m_sEndTag.GetLength());
+							m_nParseMode = eEatGarbage;
+						} else {
+							StreamRead(1);
+						}
+						break;
 				}
-				break;
+			}
+		} else {
+			// Read Unicode input
+			while (!m_pStream->IsEof()) {
+				// Get character
+				const wchar_t nChar = static_cast<wchar_t>(m_pStream->GetChar());
 
-			// Read a word until a delimiter has been found
-			case eReadWord:
-				if (m_sCommentStartTag.GetLength() && StreamIsString(m_sCommentStartTag)) {
-					// The beginning of a comment has been found
-					StreamRead(m_sCommentStartTag.GetLength());
-					m_sEndTag	 = m_sCommentEndTag;
-					m_nParseMode = eSkipComment;
-				} else if (m_sSingleLineComment.GetLength() && StreamIsString(m_sSingleLineComment)) {
-					// The beginning of a comment has been found
-					StreamRead(m_sSingleLineComment.GetLength());
-					m_sEndTag	 = EndOfLine;
-					m_nParseMode = eSkipComment;
-				} else if (StreamIsChar(m_sQuotes)) {
-					// The beginning of a quote has been found
-					StreamRead(1);
-					m_sEndTag	 = cChar;
-					m_nParseMode = eReadQuote;
-				} else if (StreamIsChar(m_sDelimiters)) {
-					// A delimiter has been found
-					StreamRead(1);
-					m_nParseMode = eEatGarbage;
-				} else if (StreamIsChar(m_sSingleChars)) {
-					// A single character word has been found
-					m_nParseMode = eSingleChar;
-				} else {
-					// Read word
-					m_sToken += cChar;
-					StreamRead(1);
+				// Do the work
+				switch (m_nParseMode) {
+					// Eat garbage until the first character of a word has been found
+					case eEatGarbage:
+						if (m_sCommentStartTag.GetLength() && StreamIsString(m_sCommentStartTag)) {
+							// The beginning of a comment has been found
+							StreamRead(m_sCommentStartTag.GetLength());
+							m_sEndTag	 = m_sCommentEndTag;
+							m_nParseMode = eSkipComment;
+						} else if (m_sSingleLineComment.GetLength() && StreamIsString(m_sSingleLineComment)) {
+							// The beginning of a comment has been found
+							StreamRead(m_sSingleLineComment.GetLength());
+							m_sEndTag	 = EndOfLine;
+							m_nParseMode = eSkipComment;
+						} else if (m_sQuotes.IndexOf(nChar) >= 0) {
+							// The beginning of a quote has been found
+							StreamRead(1);
+							m_sEndTag	 = nChar;
+							m_nParseMode = eReadQuote;
+						} else if (m_sDelimiters.IndexOf(nChar) >= 0) {
+							// Only more garbage found
+							StreamRead(1);
+						} else if (m_sSingleChars.IndexOf(nChar) >= 0) {
+							// A single character word has been found
+							m_nParseMode = eSingleChar;
+						} else {
+							// The beginning of a word has been found
+							m_nParseMode = eReadWord;
+						}
+						break;
+
+					// Read a word until a delimiter has been found
+					case eReadWord:
+						if (m_sCommentStartTag.GetLength() && StreamIsString(m_sCommentStartTag)) {
+							// The beginning of a comment has been found
+							StreamRead(m_sCommentStartTag.GetLength());
+							m_sEndTag	 = m_sCommentEndTag;
+							m_nParseMode = eSkipComment;
+						} else if (m_sSingleLineComment.GetLength() && StreamIsString(m_sSingleLineComment)) {
+							// The beginning of a comment has been found
+							StreamRead(m_sSingleLineComment.GetLength());
+							m_sEndTag	 = EndOfLine;
+							m_nParseMode = eSkipComment;
+						} else if (m_sQuotes.IndexOf(nChar) >= 0) {
+							// The beginning of a quote has been found
+							StreamRead(1);
+							m_sEndTag	 = nChar;
+							m_nParseMode = eReadQuote;
+						} else if (m_sDelimiters.IndexOf(nChar) >= 0) {
+							// A delimiter has been found
+							StreamRead(1);
+							m_nParseMode = eEatGarbage;
+						} else if (m_sSingleChars.IndexOf(nChar) >= 0) {
+							// A single character word has been found
+							m_nParseMode = eSingleChar;
+						} else {
+							// Read word
+							m_sToken += nChar;
+							StreamRead(1);
+						}
+
+						// Return word if one has been found
+						if (m_nParseMode != eReadWord && m_sToken.GetLength())
+							return m_sToken;
+						break;
+
+					// Read a single character word
+					case eSingleChar:
+						// Return the single character word
+						StreamRead(1);
+						m_nParseMode = eEatGarbage;
+						m_sToken	 = nChar;
+						return m_sToken;
+
+					// Read the beginning of a quote
+					case eReadQuote:
+						m_nParseMode = eReadQuoteInside;
+						m_sToken	 = m_sEndTag;
+						return m_sEndTag;
+
+					// Read until the end quote has been found
+					case eReadQuoteInside:
+						if (StreamIsString(m_sEndTag)) {
+							// Return string inside the quote
+							m_nParseMode = eReadQuoteEnd;
+							if (m_sToken.GetLength())
+								return m_sToken;
+						} else {
+							m_sToken += nChar;
+							StreamRead(1);
+						}
+						break;
+
+					// Read the end of a quote
+					case eReadQuoteEnd:
+						StreamRead(m_sEndTag.GetLength());
+						m_nParseMode = eEatGarbage;
+						m_sToken	 = m_sEndTag;
+						return m_sEndTag;
+
+					// Skip a comment until the comment end-tag has been found
+					case eSkipComment:
+						if (StreamIsString(m_sEndTag)) {
+							StreamRead(m_sEndTag.GetLength());
+							m_nParseMode = eEatGarbage;
+						} else {
+							StreamRead(1);
+						}
+						break;
 				}
-
-				// Return word if one has been found
-				if (m_nParseMode != eReadWord && m_sToken.GetLength()) {
-					return m_sToken;
-				}
-				break;
-
-			// Read a single character word
-			case eSingleChar:
-				// Return the single character word
-				StreamRead(1);
-				m_nParseMode = eEatGarbage;
-				m_sToken	 = cChar;
-				return m_sToken;
-
-			// Read the beginning of a quote
-			case eReadQuote:
-				m_nParseMode = eReadQuoteInside;
-				m_sToken	 = m_sEndTag;
-				return m_sEndTag;
-
-			// Read until the end quote has been found
-			case eReadQuoteInside:
-				if (StreamIsString(m_sEndTag)) {
-					// Return string inside the quote
-					m_nParseMode = eReadQuoteEnd;
-					if (m_sToken.GetLength()) return m_sToken;
-				} else {
-					m_sToken += cChar;
-					StreamRead(1);
-				}
-				break;
-
-			// Read the end of a quote
-			case eReadQuoteEnd:
-				StreamRead(m_sEndTag.GetLength());
-				m_nParseMode = eEatGarbage;
-				m_sToken	 = m_sEndTag;
-				return m_sEndTag;
-
-			// Skip a comment until the comment end-tag has been found
-			case eSkipComment:
-				if (StreamIsString(m_sEndTag)) {
-					StreamRead(m_sEndTag.GetLength());
-					m_nParseMode = eEatGarbage;
-				} else {
-					StreamRead(1);
-				}
-				break;
+			}
 		}
 	}
 
@@ -402,7 +527,7 @@ String Tokenizer::GetNextToken()
 bool Tokenizer::ExpectToken(const String &sExpected)
 {
 	PushState();
-	String sToken = GetNextToken();
+	const String sToken = GetNextToken();
 	if (!sToken.GetLength() || !CompareToken(sExpected)) {
 		PopState();
 
@@ -464,7 +589,7 @@ String Tokenizer::GetToken() const
 */
 bool Tokenizer::CompareToken(const String &sExpected)
 {
-	return m_bCaseSensitive ? m_sToken.Compare(sExpected) : m_sToken.CompareNoCase(sExpected);
+	return (m_bCaseSensitive ? m_sToken.Compare(sExpected) : m_sToken.CompareNoCase(sExpected));
 }
 
 /**
@@ -519,7 +644,8 @@ void Tokenizer::PopState()
 		m_nLine		 = sState.m_nLine;
 		m_nParseMode = sState.m_nParseMode;
 		m_sEndTag	 = sState.m_sEndTag;
-		if (m_pStream) m_pStream->Seek(m_nPosition);
+		if (m_pStream)
+			m_pStream->Seek(m_nPosition);
 	}
 }
 
@@ -542,13 +668,16 @@ void Tokenizer::DropState()
 */
 bool Tokenizer::ParseNumber(int &nNumber)
 {
-	String sToken = GetNextToken();
+	const String sToken = GetNextToken();
 	if (sToken.GetLength()) {
 		nNumber = sToken.GetInt();
 
 		// Done
 		return true;
-	} else return false; // Error!
+	}
+
+	// Error!
+	return false;
 }
 
 /**
@@ -557,13 +686,16 @@ bool Tokenizer::ParseNumber(int &nNumber)
 */
 bool Tokenizer::ParseNumber(float &fNumber)
 {
-	String sToken = GetNextToken();
+	const String sToken = GetNextToken();
 	if (sToken.GetLength()) {
 		fNumber = sToken.GetFloat();
 
 		// Done
 		return true;
-	} else return false; // Error!
+	}
+
+	// Error!
+	return false;
 }
 
 /**
@@ -572,13 +704,16 @@ bool Tokenizer::ParseNumber(float &fNumber)
 */
 bool Tokenizer::ParseNumber(double &dNumber)
 {
-	String sToken = GetNextToken();
+	const String sToken = GetNextToken();
 	if (sToken.GetLength()) {
 		dNumber = sToken.GetDouble();
 
 		// Done
 		return true;
-	} else return false; // Error!
+	}
+
+	// Error!
+	return false;
 }
 
 /**
@@ -596,8 +731,9 @@ bool Tokenizer::ParseVector(Array<String> &cVector, const String &sStart, const 
 		bool bFirst = true;
 		while (!ExpectToken(sEnd)) {
 			// Expect separator
-			if (bFirst) bFirst = false;
-			else if (sSeparator.GetLength() && !ExpectToken(sSeparator)) {
+			if (bFirst) {
+				bFirst = false;
+			} else if (sSeparator.GetLength() && !ExpectToken(sSeparator)) {
 				PopState();
 
 				// Error!
@@ -633,7 +769,8 @@ bool Tokenizer::ParseVector(Array<int> &cVector, const String &sStart, const Str
 {
 	// Parse string vector
 	Array<String> cStringVector;
-	if (!ParseVector(cStringVector, sStart, sEnd, sSeparator)) return false; // Error!
+	if (!ParseVector(cStringVector, sStart, sEnd, sSeparator))
+		return false; // Error!
 
 	// Create int vector
 	for (uint32 i=0; i<cStringVector.GetNumOfElements(); i++)
@@ -651,7 +788,8 @@ bool Tokenizer::ParseVector(Array<float> &cVector, const String &sStart, const S
 {
 	// Parse string vector
 	Array<String> cStringVector;
-	if (!ParseVector(cStringVector, sStart, sEnd, sSeparator)) return false; // Error!
+	if (!ParseVector(cStringVector, sStart, sEnd, sSeparator))
+		return false; // Error!
 
 	// Create int vector
 	for (uint32 i=0; i<cStringVector.GetNumOfElements(); i++)
@@ -730,7 +868,10 @@ bool Tokenizer::ParseEquation(String &sName, int &nValue, const String &sEquatio
 
 		// Done
 		return true;
-	} else return false; // Error!
+	}
+
+	// Error!
+	return false;
 }
 
 /**
@@ -745,7 +886,10 @@ bool Tokenizer::ParseEquation(String &sName, float &fValue, const String &sEquat
 
 		// Done
 		return true;
-	} else return false; // Error!
+	}
+
+	// Error!
+	return false;
 }
 
 /**
@@ -760,7 +904,10 @@ bool Tokenizer::ParseEquation(String &sName, double &dValue, const String &sEqua
 
 		// Done
 		return true;
-	} else return false; // Error!
+	}
+
+	// Error!
+	return false;
 }
 
 
@@ -799,29 +946,19 @@ Tokenizer &Tokenizer::operator =(const Tokenizer &cSource)
 
 /**
 *  @brief
-*    Checks if the next character in the stream is one of the given characters
-*/
-bool Tokenizer::StreamIsChar(const String &sCharacters)
-{
-	// Check next character
-	return !m_pStream->IsEof() && sCharacters.IndexOf(m_pStream->GetChar()) >= 0;
-}
-
-/**
-*  @brief
 *    Checks if the next string in the stream equals the given one
 */
 bool Tokenizer::StreamIsString(const String &sString)
 {
 	if (!m_pStream->IsEof())
-		return m_bCaseSensitive ? m_pStream->IsString(sString) : m_pStream->IsStringNoCase(sString);
+		return (m_bCaseSensitive ? m_pStream->IsString(sString) : m_pStream->IsStringNoCase(sString));
 	else
 		return false;
 }
 
 /**
 *  @brief
-*    Reads the next bytes of the stream
+*    Reads the next characters of the stream
 */
 void Tokenizer::StreamRead(uint32 nCount)
 {

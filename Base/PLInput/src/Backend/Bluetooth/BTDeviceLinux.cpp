@@ -257,8 +257,10 @@ bool BTDeviceLinux::Write(const uint8 *pBuffer, uint32 nSize)
 	int nRes = write(m_nCtrlSocket, nTemp, nSize+1);
 	ReadHandshake();
 	UnlockMutex();
-	if (nRes > 0) return (static_cast<uint32>(nRes) - 1 == nSize);
-	else		  return false;
+	if (nRes > 0)
+		return (static_cast<uint32>(nRes) - 1 == nSize);
+	else
+		return false;
 }
 
 

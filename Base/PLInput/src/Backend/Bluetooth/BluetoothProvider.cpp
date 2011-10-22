@@ -80,14 +80,12 @@ void BluetoothProvider::QueryDevices()
 		if ( pDevice->GetName() == "Nintendo RVL-CNT-01" ||
 			(pDevice->GetClass(0) == WiiMote::DeviceClass0 &&
 			 pDevice->GetClass(1) == WiiMote::DeviceClass1 &&
-			 pDevice->GetClass(2) == WiiMote::DeviceClass2) )
-		{
+			 pDevice->GetClass(2) == WiiMote::DeviceClass2) ) {
 			// WiiMote
 			String sName = String("WiiMote") + nWiiMote;
 			nWiiMote++;
-			if (!CheckDevice(sName)) {
+			if (!CheckDevice(sName))
 				AddDevice(sName, new WiiMote(sName, pDevice));
-			}
 		}
 	}
 }

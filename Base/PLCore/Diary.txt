@@ -1,4 +1,18 @@
-﻿>> 20.10.2011
+﻿>> 21.10.2011
+[CO]
+- More Unicode related issues within the PixelLight forum: http://dev.pixellight.org/forum/viewtopic.php?f=6&t=91
+  -> The next scheduled PixelLight release is in two days, so no big complete refactoring of for example the tokenizer.
+     Only implementation completion and minor required updates.
+  -> "BufferedReader": Added "GetStringFormat()"
+  -> "BufferedReaderFile::ReadFromStream()": Implemented Unicode support
+  -> "BufferedReader": "GetChar()" & "ReadChar()" now return "int" instead of "char" (identical to "File::GetC()")
+  -> "Tokenizer::GetNextToken()": Implemented Unicode support
+  -> Optimization: "Tokenizer::StreamIsChar()" read again from the string, although the current character was already available.
+     Removed this function.
+
+
+
+>> 20.10.2011
 [CO]
 - Exposed "ApplicationContext" to the RTTI
 - "System::GetCurrentDir()" & "ApplicationContext::GetAppDirectory()": On Android, those are empty strings and just writing e.g.

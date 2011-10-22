@@ -201,7 +201,7 @@ Control *Controller::GetControl(const String &sName) const
 char Controller::GetChar()
 {
 	// Get character
-	char nChar = m_nChar;
+	const char nChar = m_nChar;
 	m_nChar = 0;
 
 	// Return character
@@ -279,7 +279,8 @@ void Controller::Disconnect(Connection *pConnection)
 	if (pConnection && m_lstConnections.IsElement(pConnection)) {
 		// Get other controller
 		Controller *pController = pConnection->GetInputControl()->GetController();
-		if (pController == this) pController = pConnection->GetOutputControl()->GetController();
+		if (pController == this)
+			pController = pConnection->GetOutputControl()->GetController();
 
 		// Remove connection from both controllers
 		pController->RemoveConnection(pConnection);
@@ -382,8 +383,10 @@ void Controller::InformControl(Control *pControl)
 void Controller::InitControlList(EControlType nType) const
 {
 	// Clear list
-		 if (nType == ControlButton)	m_lstButtons.Clear();
-	else if (nType == ControlAxis)		m_lstAxes.Clear();
+	if (nType == ControlButton)
+		m_lstButtons.Clear();
+	else if (nType == ControlAxis)
+		m_lstAxes.Clear();
 
 	// Loop over all controls
 	for (uint32 i=0; i<m_lstControls.GetNumOfElements(); i++) {
@@ -392,8 +395,10 @@ void Controller::InitControlList(EControlType nType) const
 
 		// Add control to appropriate list
 		if (pControl->GetType() == nType) {
-				 if (nType == ControlButton)	m_lstButtons.Add(static_cast<Button*>(pControl));
-			else if (nType == ControlAxis)		m_lstAxes   .Add(reinterpret_cast<Axis*>(pControl));
+			if (nType == ControlButton)
+				m_lstButtons.Add(static_cast<Button*>(pControl));
+			else if (nType == ControlAxis)
+				m_lstAxes   .Add(reinterpret_cast<Axis*>(pControl));
 		}
 	}
 }

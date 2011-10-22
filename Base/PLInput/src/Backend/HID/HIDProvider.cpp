@@ -89,27 +89,27 @@ void HIDProvider::QueryDevices()
 		uint32 nUsagePage = pDevice->GetUsagePage();
 
 		// Check device type
+
+		// SpaceMouse
 		if (nVendor == SpaceMouse::VendorID && nUsagePage == UsagePageGeneric && nUsage == UsageMultiAxisController) {
-			// SpaceMouse
 			String sName = String("SpaceMouse") + nSpaceMouse;
 			nSpaceMouse++;
-			if (!CheckDevice(sName)) {
+			if (!CheckDevice(sName))
 				AddDevice(sName, new SpaceMouse(sName, pDevice));
-			}
+
+		// WiiMote
 		} else if (nVendor == WiiMote::VendorID && nProduct == WiiMote::ProductID) {
-			// WiiMote
 			String sName = String("WiiMote") + nWiiMote;
 			nWiiMote++;
-			if (!CheckDevice(sName)) {
+			if (!CheckDevice(sName))
 				AddDevice(sName, new WiiMote(sName, pDevice));
-			}
+
+		// Joystick or Joypad
 		} else if (nUsagePage == UsagePageGeneric && (nUsage == UsageJoystick || nUsage == UsageGamepad)) {
-			// Joystick or Joypad
 			String sName = String("Joystick") + nJoystick;
 			nJoystick++;
-			if (!CheckDevice(sName)) {
+			if (!CheckDevice(sName))
 				AddDevice(sName, new Joystick(sName, pDevice));
-			}
 		}
 	}
 }

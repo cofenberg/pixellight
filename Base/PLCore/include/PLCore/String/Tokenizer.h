@@ -663,21 +663,6 @@ class Tokenizer {
 
 		/**
 		*  @brief
-		*    Checks if the next character in the stream is one of the given characters
-		*
-		*  @param[in] sCharacters
-		*    List of characters
-		*
-		*  @return
-		*    'true' if the next character in the stream is one of the given characters, else 'false'
-		*
-		*  @note
-		*    - 'm_pStream' must be valid!
-		*/
-		bool StreamIsChar(const String &sCharacters);
-
-		/**
-		*  @brief
 		*    Checks if the next string in the stream equals the given one
 		*
 		*  @param[in] sString
@@ -693,10 +678,10 @@ class Tokenizer {
 
 		/**
 		*  @brief
-		*    Reads the next bytes of the stream
+		*    Reads the next characters of the stream
 		*
 		*  @param[in] nSize
-		*    Number of bytes to read from the stream
+		*    Number of characters to read from the stream
 		*
 		*  @note
 		*    - 'm_pStream' must be valid!

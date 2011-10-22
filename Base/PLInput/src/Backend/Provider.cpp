@@ -79,7 +79,8 @@ const List<Device*> &Provider::GetDevices() const
 void Provider::DetectDevices(bool bReset)
 {
 	// Delete all devices?
-	if (bReset) Clear();
+	if (bReset)
+		Clear();
 
 	// Flag all current devices as 'not confirmed'
 	for (uint32 i=0; i<m_lstDevices.GetNumOfElements(); i++)

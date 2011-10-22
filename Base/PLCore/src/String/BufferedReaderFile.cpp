@@ -78,22 +78,27 @@ bool BufferedReaderFile::IsEof() const
 		return true;
 }
 
-char BufferedReaderFile::GetChar()
+String::EFormat BufferedReaderFile::GetStringFormat() const
 {
-	// Does the buffer contain at least one char?
+	return m_sBuffer.GetFormat();
+}
+
+int BufferedReaderFile::GetChar()
+{
+	// Does the buffer contain at least one character?
 	if (!m_sBuffer.GetLength()) {
 		// No, try to read it from the stream
 		if (!ReadFromStream(1))
 			return 0;
 	}
 
-	// Return the current char
-	return m_sBuffer[static_cast<uint32>(0)];
+	// Return the current character
+	return (m_sBuffer.GetFormat() == String::ASCII) ? m_sBuffer.GetASCII()[0] : m_sBuffer.GetUnicode()[0];
 }
 
 String BufferedReaderFile::GetString(uint32 nSize)
 {
-	// Does the buffer contain enough chars?
+	// Does the buffer contain enough characters?
 	if (m_sBuffer.GetLength() < nSize) {
 		// No, try to read it from the stream
 		if (!ReadFromStream(nSize - m_sBuffer.GetLength()))
@@ -101,15 +106,15 @@ String BufferedReaderFile::GetString(uint32 nSize)
 	}
 
 	// Return the buffered string
-	return m_sBuffer.GetLength() > nSize ? m_sBuffer.GetSubstring(0, nSize) : m_sBuffer;
+	return (m_sBuffer.GetLength() > nSize) ? m_sBuffer.GetSubstring(0, nSize) : m_sBuffer;
 }
 
-char BufferedReaderFile::ReadChar()
+int BufferedReaderFile::ReadChar()
 {
 	if (m_sBuffer.GetLength()) {
-		const char c = m_sBuffer[static_cast<uint32>(0)];
+		const int nChar = (m_sBuffer.GetFormat() == String::ASCII) ? m_sBuffer.GetASCII()[0] : m_sBuffer.GetUnicode()[0];
 		m_sBuffer = m_sBuffer.GetSubstring(1);
-		return c;
+		return nChar;
 	} else if (m_pFile) {
 		const int nChar = m_pFile->GetC();
 		if (nChar >= 0)
@@ -136,7 +141,7 @@ bool BufferedReaderFile::IsString(const String &sString)
 	// Get the string length
 	const uint32 nStringLength = sString.GetLength();
 
-	// Does the buffer contain enough chars?
+	// Does the buffer contain enough characters?
 	if (m_sBuffer.GetLength() < nStringLength) {
 		// No, try to read it from the stream
 		if (!ReadFromStream(nStringLength - m_sBuffer.GetLength()))
@@ -152,7 +157,7 @@ bool BufferedReaderFile::IsStringNoCase(const String &sString)
 	// Get the string length
 	const uint32 nStringLength = sString.GetLength();
 
-	// Does the buffer contain enough chars?
+	// Does the buffer contain enough characters?
 	if (m_sBuffer.GetLength() < nStringLength) {
 		// No, try to read it from the stream
 		if (!ReadFromStream(nStringLength - m_sBuffer.GetLength()))
@@ -209,30 +214,43 @@ BufferedReaderFile &BufferedReaderFile::operator =(const BufferedReaderFile &cSo
 */
 bool BufferedReaderFile::ReadFromStream(uint32 nSize)
 {
-	// [TODO] Take Unicode into account...
 	// Check file
 	if (nSize > 0 && m_pFile && !m_pFile->IsEof()) {
 		if (nSize == 1) {
-			// Read one char
+			// Read one character
 			const int nChar = m_pFile->GetC();
 			if (nChar > -1) {
-				m_sBuffer += static_cast<char>(nChar);
+				// ASCII or Unicode?
+				m_sBuffer += (m_pFile->GetStringFormat() == String::ASCII) ? static_cast<char>(nChar) : static_cast<wchar_t>(nChar);
 
 				// Done
 				return true;
 			}
 		} else {
-			// Read more than one char
-			char *pszString = new char[nSize+1];
-			if (m_pFile->Read(pszString, 1, nSize) == nSize) {
-				pszString[nSize] = '\0';
-				m_sBuffer += pszString;
-				delete [] pszString;
+			// Read more than one character
 
-				// Done
-				return true;
+			// ASCII or Unicode?
+			if (m_pFile->GetStringFormat() == String::ASCII) {
+				// ASCII
+				char *pszString = new char[nSize+1];
+				if (m_pFile->Read(pszString, 1, nSize) == nSize) {
+					pszString[nSize] = '\0';
+					m_sBuffer += pszString;
+					delete [] pszString;
+
+					// Done
+					return true;
+				}
+				delete [] pszString;
+			} else {
+				// Unicode - Read one character after another
+				for (uint32 i=0; i<nSize; i++) {
+					// Read one character
+					const int nChar = m_pFile->GetC();
+					if (nChar > -1)
+						m_sBuffer += static_cast<wchar_t>(nChar);
+				}
 			}
-			delete [] pszString;
 		}
 	}
 

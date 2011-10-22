@@ -50,8 +50,8 @@ pl_implement_class(WiiMote)
 *    WiiMote ports
 */
 enum EPort {
-	ControlPort		= 17,					// Control port (output)
-	InterruptPort	= 19					// Interrupt port (input)
+	ControlPort				= 17,			/**< Control port (output) */
+	InterruptPort			= 19			/**< Interrupt port (input) */
 };
 
 /**
@@ -214,9 +214,10 @@ WiiMote::~WiiMote()
 {
 	// We use m_pImpl here to check, because if the device backend has been deleted before, m_pImpl has
 	// been reset to a null pointer, but not m_pConnectionDevice as this is unknown in the base class
-	if (m_pImpl)
+	if (m_pImpl) {
 		// Disconnect
 		m_pConnectionDevice->Close();
+	}
 }
 
 /**
@@ -239,8 +240,7 @@ void WiiMote::SetReportMode(EReport nReportMode, bool bContinuous)
 	m_nReportMode = nReportMode;
 
 	// Enable/Disable infrared sensor
-	switch (m_nReportMode)
-	{
+	switch (m_nReportMode) {
 		case ReportButtonsAccelIR:
 			SetIRMode(IRExtended);
 			break;
@@ -352,10 +352,9 @@ void WiiMote::UpdateOutputControl(Control *pControl)
 		m_pOutputBuffer[0] = CmdLEDs;
 		m_pOutputBuffer[1] = (m_nLEDs << 4) | m_nRumble;
 		Send(m_pOutputBuffer, 2);
-	}
 
 	// Update rumble
-	else if (pControl == &Rumble1) {
+	} else if (pControl == &Rumble1) {
 		// Switch rumble on or off?
 		if (Rumble1.GetValue() > 0) {
 			// Enable rumble
@@ -489,23 +488,27 @@ void WiiMote::OnReadMemory()
 	//          contains the lower two bytes of the address that was queried.
 	//			as these don't collide between any of the addresses/registers
 	//			we currently read, it's OK to match just those two bytes
-	switch(nAddress)
-	{
+	switch (nAddress) {
 		case (RegCalibration & 0xffff):
-			if (nSize != 6) break;	// Error! Wrong size ...
+			if (nSize != 6)
+				break;	// Error! Wrong size ...
 			OnReadCalibration();
 			break;
 
 		case (RegExtensionType & 0xffff):
-			if (nSize != 1) break;	// Error! Wrong size ...
+			if (nSize != 1)
+				break;	// Error! Wrong size ...
 			OnReadExtensionType();
 			break;
 
 		case (RegExtensionCalibration & 0xffff):
-			if (nSize != 15) break;	// Error! Wrong size ...
+			if (nSize != 15)
+				break;	// Error! Wrong size ...
 			DecryptBuffer(6, 16);
-				 if (m_nExtension == ExtNunchuk) OnReadNunchukCalibration();
-			else if (m_nExtension == ExtClassic) OnReadClassicCalibration();
+			if (m_nExtension == ExtNunchuk)
+				OnReadNunchukCalibration();
+			else if (m_nExtension == ExtClassic)
+				OnReadClassicCalibration();
 			break;
 	}
 }
@@ -616,7 +619,7 @@ void WiiMote::OnReadStatus()
 {
 	// Read button state
 	OnReadButtons();
-			
+
 	// Get battery
 	m_nBattery = m_pInputBuffer[6] / 2;
 
@@ -644,9 +647,8 @@ void WiiMote::OnReadButtons()
 	// Button '1'
 	bool bPressed;
 	bPressed = ((m_nButtons & Btn1) != 0);
-	if (Button1.IsPressed() != bPressed) {
+	if (Button1.IsPressed() != bPressed)
 		Button1.SetPressed(bPressed);
-	}
 
 	// Button '2'
 	bPressed = ((m_nButtons & Btn2) != 0);
@@ -827,8 +829,7 @@ void WiiMote::OnReadIR()
 void WiiMote::OnReadExtension(uint32 nOffset)
 {
 	// Check extension type
-	switch (m_nExtension)
-	{
+	switch (m_nExtension) {
 		// Nunchuk
 		case ExtNunchuk:
 			OnReadNunchuk(nOffset);
@@ -849,21 +850,21 @@ void WiiMote::OnReadNunchuk(uint32 nOffset)
 {
 	// Get buttons
 	m_nNunchukButtons = 0;
-	if ((m_pInputBuffer[nOffset+5] & 0x02) == 0) m_nNunchukButtons |= BtnNunchukC;
-	if ((m_pInputBuffer[nOffset+5] & 0x01) == 0) m_nNunchukButtons |= BtnNunchukZ;
+	if ((m_pInputBuffer[nOffset+5] & 0x02) == 0)
+		m_nNunchukButtons |= BtnNunchukC;
+	if ((m_pInputBuffer[nOffset+5] & 0x01) == 0)
+		m_nNunchukButtons |= BtnNunchukZ;
 
 		// Button 'C'
 		bool bPressed;
 		bPressed = ((m_nButtons & BtnNunchukC) != 0);
-		if (NunchukButtonC.IsPressed() != bPressed) {
+		if (NunchukButtonC.IsPressed() != bPressed)
 			NunchukButtonC.SetPressed(bPressed);
-		}
 
 		// Button 'Z'
 		bPressed = ((m_nButtons & BtnNunchukZ) != 0);
-		if (NunchukButtonZ.IsPressed() != bPressed) {
+		if (NunchukButtonZ.IsPressed() != bPressed)
 			NunchukButtonZ.SetPressed(bPressed);
-		}
 
 	// Get raw acceleration data
 	uint8 nRawX = m_pInputBuffer[nOffset+2];
@@ -1081,9 +1082,8 @@ void WiiMote::WriteMemory(int nAddress, uint8 nData)
 void WiiMote::DecryptBuffer(uint32 nOffset, uint32 nSize)
 {
 	// Decrypt buffer
-	for (unsigned i=0; i<nSize; i++) {
+	for (unsigned i=0; i<nSize; i++)
 		m_pInputBuffer[nOffset+i] = ((m_pInputBuffer[nOffset+i] ^ 0x17) + 0x17) & 0xff;
-	}
 }
 
 /**
@@ -1141,8 +1141,7 @@ void WiiMote::SAcceleration::CalculateOrientation()
 	// Calculate orientation from acceleration data
 	static const float fEpsilon = 0.2f;
 	float fSquareLen =  fAccX*fAccX + fAccY*fAccY + fAccZ*fAccZ;
-	if ((fSquareLen >= (1.0f - fEpsilon)) && (fSquareLen <= (1.0f + fEpsilon)))
-	{
+	if ((fSquareLen >= (1.0f - fEpsilon)) && (fSquareLen <= (1.0f + fEpsilon))) {
 		// Is the acceleration near 1G for at least 2 update cycles?
 		if (++nUpdateNearG >= 2) {
 			// Normalize vector

@@ -166,8 +166,10 @@ void LinuxEventDevice::Update()
 			if (!ioctl(m_nFile, EVIOCGABS(0), &sAbsInfo)) {
 				// Get value in a range of -1.0 - +1.0
 				float fValue = (static_cast<float>(pEvents[i].value - sAbsInfo.minimum) / static_cast<float>(sAbsInfo.maximum - sAbsInfo.minimum)) * 2.0f - 1.0f;
-				if (fValue >  1.0f) fValue =  1.0f;
-				if (fValue < -1.0f) fValue = -1.0f;
+				if (fValue >  1.0f)
+					fValue =  1.0f;
+				if (fValue < -1.0f)
+					fValue = -1.0f;
 				pAxis->SetValue(fValue, false);
 			}
 		}

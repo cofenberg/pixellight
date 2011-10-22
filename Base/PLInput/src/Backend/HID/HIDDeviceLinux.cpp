@@ -63,7 +63,8 @@ HIDDeviceLinux::~HIDDeviceLinux()
 bool HIDDeviceLinux::Open(uint16 nOutputPort, uint16 nInputPort)
 {
 	// Close first
-	if (IsOpen()) Close();
+	if (IsOpen())
+		Close();
 
 	// [TODO]
 	/*

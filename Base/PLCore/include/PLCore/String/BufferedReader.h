@@ -78,12 +78,21 @@ class BufferedReader {
 
 		/**
 		*  @brief
+		*    Returns the string encoding format to use when dealing with string functions
+		*
+		*  @return
+		*    String encoding format to use when dealing with string functions
+		*/
+		virtual String::EFormat GetStringFormat() const = 0;
+
+		/**
+		*  @brief
 		*    Returns a character read at the current position
 		*
 		*  @return
 		*    Character that has been read, '\0' on error
 		*/
-		virtual char GetChar() = 0;
+		virtual int GetChar() = 0;
 
 		/**
 		*  @brief
@@ -104,7 +113,7 @@ class BufferedReader {
 		*  @return
 		*    Character that has been read, '\0' on error
 		*/
-		virtual char ReadChar() = 0;
+		virtual int ReadChar() = 0;
 
 		/**
 		*  @brief

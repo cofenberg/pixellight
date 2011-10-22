@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/Tools/Localization.h>
@@ -112,65 +111,6 @@ void Application::UpdateTimeScaleTextNode()
 
 /**
 *  @brief
-*    Function where the user has to choose the desired sound API
-*/
-bool Application::ChooseSoundAPI()
-{
-	// Because I'am pessimistic I expect by default that the user has canceled the choice *sigh*
-	bool bResult = false; // Error by default
-
-	// Are there multiple sound API's available?
-	List<const Class*> lstClasses;
-	ClassManager::GetInstance()->GetClasses(lstClasses, "PLSound::SoundManager", Recursive, NoBase, NoAbstract);
-	if (lstClasses.GetNumOfElements()) {
-		if (lstClasses.GetNumOfElements() == 1) {
-			// Get the class name of the sound API
-			m_sSoundAPI = lstClasses[0]->GetClassName();
-
-			// An API was 'chosen'...
-			bResult = true; // Done
-		} else {
-			// Use the default sound API
-			#ifdef ANDROID
-				m_sSoundAPI = "PLSoundOpenSLES::SoundManager";
-			#else
-				m_sSoundAPI = "PLSoundOpenAL::SoundManager";
-			#endif
-			bResult = true; // Done
-		}
-
-		// Was an API chosen?
-		if (bResult) {
-			// Destroy the old root scene
-			SceneContainer *pRootScene = GetRootScene();
-			if (pRootScene) {
-				// Setup scene surface painter
-				SurfacePainter *pPainter = GetPainter();
-				if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
-					SPScene *pSPScene = static_cast<SPScene*>(pPainter);
-					pSPScene->SetRootContainer(nullptr);
-					pSPScene->SetSceneContainer(nullptr);
-					pSPScene->SetCamera(nullptr);
-				}
-
-				// Destroy old root scene
-				SetRootScene(nullptr);
-				delete pRootScene;
-			}
-
-			// Create new root scene
-			OnCreateRootScene();
-		}
-	} else {
-		PL_LOG(Error, "No sound API available")
-	}
-
-	// Done
-	return bResult;
-}
-
-/**
-*  @brief
 *    Called when a control event has occurred
 */
 void Application::OnControl(Control &cControl)
@@ -237,9 +177,7 @@ void Application::OnInit()
 			OnCreateRootScene();
 		}
 	}
-
-	// Choose sound API
-	if (!m_sSoundAPI.GetLength() && !ChooseSoundAPI()) {
+	if (!m_sSoundAPI.GetLength()) {
 		// Error!
 		Exit(1);
 	}

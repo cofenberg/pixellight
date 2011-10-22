@@ -86,15 +86,13 @@ const List<HIDDevice*> &HID::GetDevices() const
 *    Constructor
 */
 HID::HID() :
-	m_pHIDImpl(nullptr)
-{
 	// Create HID implementation
 	#if defined(WIN32)
-		m_pHIDImpl = new HIDWindows();
+		m_pHIDImpl(new HIDWindows())
 	#elif defined(LINUX)
-		m_pHIDImpl = new HIDLinux();
+		m_pHIDImpl(new HIDLinux())
 	#endif
-
+{
 	// Detect devices
 	DetectDevices();
 }
@@ -109,7 +107,8 @@ HID::~HID()
 	Clear();
 
 	// Delete HID implementation
-	if (m_pHIDImpl) delete m_pHIDImpl;
+	if (m_pHIDImpl)
+		delete m_pHIDImpl;
 }
 
 /**

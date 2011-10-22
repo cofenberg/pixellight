@@ -120,9 +120,10 @@ Joystick::~Joystick()
 	if (m_pHIDDevice) {
 		// We use m_pImpl here to check, because if the device backend has been deleted before, m_pImpl has
 		// been reset to a null pointer, but not m_pHIDDevice as this is unknown in the base class
-		if (m_pImpl)
+		if (m_pImpl) {
 			// Disconnect
 			m_pHIDDevice->Close();
+		}
 	}
 }
 
@@ -184,8 +185,10 @@ void Joystick::UpdateOutputControl(Control *pControl)
 				if (pEffect) {
 					// Get value (must be between 0..1)
 					float fValue = pEffect->GetValue();
-					if (fValue < 0.0f) fValue = 0.0f;
-					if (fValue > 1.0f) fValue = 1.0f;
+					if (fValue < 0.0f)
+						fValue = 0.0f;
+					if (fValue > 1.0f)
+						fValue = 1.0f;
 
 					// Scale from 0..1 to logical range and set value
 					pCapability->m_nValue = static_cast<uint32>(pCapability->m_nLogicalMin + fValue*(pCapability->m_nLogicalMax-pCapability->m_nLogicalMin));
@@ -283,13 +286,11 @@ void Joystick::ParseInputReport()
 				Button *pButton = GetButtons()[nButton];
 				if (pButton) {
 					// Update only if state has changed
-					if (pButton->IsPressed() != bPressed) {
+					if (pButton->IsPressed() != bPressed)
 						pButton->SetPressed(bPressed);
-					}
 				}
 			}
 		}
-
 	}
 }
 

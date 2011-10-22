@@ -58,9 +58,8 @@ HIDDeviceWindows::~HIDDeviceWindows()
 	Close();
 
 	// Release preparsed data
-	if (m_pPreparsedData) {
+	if (m_pPreparsedData)
 		HidD_FreePreparsedData(m_pPreparsedData);
-	}
 }
 
 
@@ -70,9 +69,8 @@ HIDDeviceWindows::~HIDDeviceWindows()
 void HIDDeviceWindows::ParseInputReportData(const uint8 *pInputReport, uint32 nSize)
 {
 	// Reset buttons to 0 (not pressed)
-	for (uint32 i=0; i<m_lstInputButtons.GetNumOfElements(); i++) {
+	for (uint32 i=0; i<m_lstInputButtons.GetNumOfElements(); i++)
 		m_lstInputButtons[i].m_nValue = 0;
-	}
 
 	// Create buffer
 	unsigned long nItems = m_nNumberInputDataIndices;
