@@ -120,6 +120,12 @@ bool Source::Load(PLSound::Buffer *pBuffer)
 				return false;
 			}
 		}
+
+		// Set 2D-state, this method also warns in case a multi channel buffer should be used for 3D spatialization (OpenAL doesn't support this)
+		if (!m_b2D) {
+			m_b2D = true; // Force a state update
+			Set2D(false);
+		}
 	}
 
 	// Done
@@ -260,16 +266,38 @@ bool Source::Is2D() const
 
 void Source::Set2D(bool b2D)
 {
-	// Backup the setting...
-	m_b2D = b2D;
+	// State change?
+	if (m_b2D != b2D) {
+		// Backup the setting...
+		m_b2D = b2D;
 
-	// Set relative to listener state (because we place 2D sounds at the center of the listener)
-	alSourcei(m_nSource, AL_SOURCE_RELATIVE, m_b2D ? AL_TRUE : AL_FALSE);
+		// Set relative to listener state, default is false (because we place 2D sounds at the center of the listener)
+		alSourcei(m_nSource, AL_SOURCE_RELATIVE, m_b2D ? AL_TRUE : AL_FALSE);
 
-	// ... and refresh the roll off factor, position and velocity!
-	SetRolloffFactor(GetRolloffFactor());
-	SetAttribute(Position, GetAttribute(Position));
-	SetAttribute(Velocity, GetAttribute(Velocity));
+		// ... and refresh the roll off factor, position and velocity!
+		SetRolloffFactor(GetRolloffFactor());
+		SetAttribute(Position, GetAttribute(Position));
+		SetAttribute(Velocity, GetAttribute(Velocity));
+
+		// "OpenAL Programmer's Guide - OpenAL Versions 1.0 and 1.1" (http://connect.creativelabs.com/openal/Documentation/OpenAL_Programmers_Guide.pdf)
+		// states for the "alBufferData"-documentation on page 21: "Buffers containing more than one channel of data will be played without 3D spatialization."
+		// -> Check for this and write a warning into the log in case a multi channel buffer should be used for 3D spatialization (so the developer has a hint what's going on)
+		if (!m_b2D) {
+			// Get the buffer the source is using
+			const Buffer *pBuffer = static_cast<Buffer*>(GetBuffer());
+			if (pBuffer) {
+				// Get the used OpenAL buffer
+				const ALint nOpenALBuffer = pBuffer->GetOpenALBuffer();
+				if (nOpenALBuffer) {
+					// Get and check the number of channels the buffer is using
+					ALint nNumOfChannels = 0;
+					alGetBufferi(nOpenALBuffer, AL_CHANNELS, &nNumOfChannels);
+					if (nNumOfChannels > 1)
+						PL_LOG(Warning, String("Sound buffer \"") + pBuffer->GetFilename() + "\" has multiple channels and should be used for 3D spatialization, this is not supported by OpenAL (3D spatialization is disabled)")
+				}
+			}
+		}
+	}
 }
 
 bool Source::IsLooping() const

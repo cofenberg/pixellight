@@ -1,4 +1,13 @@
-﻿>> 21.09.2011
+﻿>> 22.10.2011
+[CO]
+PLSoundOpenAL:
+- "OpenAL Programmer's Guide - OpenAL Versions 1.0 and 1.1" (http://connect.creativelabs.com/openal/Documentation/OpenAL_Programmers_Guide.pdf)
+  states for the "alBufferData"-documentation on page 21: "Buffers containing more than one channel of data will be played without 3D spatialization."
+  -> Check for this and write a warning into the log in case a multi channel buffer should be used for 3D spatialization (so the developer has a hint what's going on)
+
+
+
+>> 21.09.2011
 [CO]
 - PLSoundFMODEx: Some years past since real changes within this project. Loop and 2D are now working.
 

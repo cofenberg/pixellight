@@ -170,8 +170,11 @@ class TestObject : public PLCore::Object {
 				~BoolValue_Desc() {
 				}
 			private:
-				virtual PLCore::DynVar *GetAttribute(const Object *pObject) const override {
-					return &((TestObject*)pObject)->BoolValue;
+				virtual PLCore::String GetDefault() const override {
+					return PLCore::Type<bool>::ConvertToString(false);
+				}
+				virtual PLCore::DynVar *GetAttribute(const Object &cObject) const override {
+					return &((TestObject&)cObject).BoolValue;
 				}
 		};
 
@@ -200,8 +203,11 @@ class TestObject : public PLCore::Object {
 				~IntValue_Desc() {
 				}
 			private:
-				virtual PLCore::DynVar *GetAttribute(const Object *pObject) const override {
-					return &((TestObject*)pObject)->IntValue;
+				virtual PLCore::String GetDefault() const override {
+					return PLCore::Type<int>::ConvertToString(0);
+				}
+				virtual PLCore::DynVar *GetAttribute(const Object &cObject) const override {
+					return &((TestObject&)cObject).IntValue;
 				}
 		};
 
@@ -230,8 +236,11 @@ class TestObject : public PLCore::Object {
 				~IntValue2_Desc() {
 				}
 			private:
-				virtual PLCore::DynVar *GetAttribute(const Object *pObject) const override {
-					return &((TestObject*)pObject)->IntValue2;
+				virtual PLCore::String GetDefault() const override {
+					return PLCore::Type<int>::ConvertToString(0);
+				}
+				virtual PLCore::DynVar *GetAttribute(const Object &cObject) const override {
+					return &((TestObject&)cObject).IntValue2;
 				}
 		};
 
@@ -302,8 +311,8 @@ class TestObject : public PLCore::Object {
 				~Event0_Desc() {
 				}
 			private:
-				virtual PLCore::DynEvent *GetSignal(const Object *pObject) const override {
-					return &((TestObject*)pObject)->Event0;
+				virtual PLCore::DynEvent *GetSignal(const Object &cObject) const override {
+					return &((TestObject&)cObject).Event0;
 				}
 		};
 
@@ -338,8 +347,8 @@ class TestObject : public PLCore::Object {
 				~EventHandler0_Desc() {
 				}
 			private:
-				virtual PLCore::DynEventHandler *GetSlot(const Object *pObject) const override {
-					return &((TestObject*)pObject)->EventHandler0;
+				virtual PLCore::DynEventHandler *GetSlot(const Object &cObject) const override {
+					return &((TestObject&)cObject).EventHandler0;
 				}
 		};
 

@@ -154,7 +154,7 @@ const List<DynVar*> Object::GetAttributes() const
 
 		// Get all attributes for this instance and add them to the list
 		for (uint32 i=0; i<lstDescriptors.GetNumOfElements(); i++)
-			lstAttributes.Add(lstDescriptors[i]->GetAttribute(this));
+			lstAttributes.Add(lstDescriptors[i]->GetAttribute(*this));
 	}
 
 	// Return attribute list
@@ -174,7 +174,7 @@ DynVar *Object::GetAttribute(const String &sName) const
 		const VarDesc *pDescriptor = pClass->GetAttribute(sName);
 		if (pDescriptor) {
 			// Return attribute
-			return pDescriptor->GetAttribute(this);
+			return pDescriptor->GetAttribute(*this);
 		}
 	}
 
@@ -184,7 +184,7 @@ DynVar *Object::GetAttribute(const String &sName) const
 
 /**
 *  @brief
-*    Get callable methods
+*    Get all callable methods
 */
 void Object::GetMethods(List<DynFuncPtr> &lstMethods)
 {
@@ -202,7 +202,7 @@ void Object::GetMethods(List<DynFuncPtr> &lstMethods)
 
 /**
 *  @brief
-*    Get callable method
+*    Get callable method by using a given method name
 */
 DynFuncPtr Object::GetMethod(const String &sName)
 {
@@ -223,7 +223,7 @@ DynFuncPtr Object::GetMethod(const String &sName)
 
 /**
 *  @brief
-*    Get signals
+*    Get a list of all signals
 */
 const List<DynEvent*> Object::GetSignals() const
 {
@@ -238,7 +238,7 @@ const List<DynEvent*> Object::GetSignals() const
 
 		// Get all signals for this instance and add them to the list
 		for (uint32 i=0; i<lstDescriptors.GetNumOfElements(); i++)
-			lstSignals.Add(lstDescriptors[i]->GetSignal(this));
+			lstSignals.Add(lstDescriptors[i]->GetSignal(*this));
 	}
 
 	// Return signal list
@@ -247,7 +247,7 @@ const List<DynEvent*> Object::GetSignals() const
 
 /**
 *  @brief
-*    Get signal
+*    Get signal by using a given signal name
 */
 DynEvent *Object::GetSignal(const String &sName) const
 {
@@ -258,7 +258,7 @@ DynEvent *Object::GetSignal(const String &sName) const
 		const EventDesc *pDescriptor = pClass->GetSignal(sName);
 		if (pDescriptor) {
 			// Return signal
-			return pDescriptor->GetSignal(this);
+			return pDescriptor->GetSignal(*this);
 		}
 	}
 
@@ -268,7 +268,7 @@ DynEvent *Object::GetSignal(const String &sName) const
 
 /**
 *  @brief
-*    Get slots
+*    Get a list of all slots
 */
 const List<DynEventHandler*> Object::GetSlots() const
 {
@@ -283,7 +283,7 @@ const List<DynEventHandler*> Object::GetSlots() const
 
 		// Get all slots for this instance and add them to the list
 		for (uint32 i=0; i<lstDescriptors.GetNumOfElements(); i++)
-			lstSlots.Add(lstDescriptors[i]->GetSlot(this));
+			lstSlots.Add(lstDescriptors[i]->GetSlot(*this));
 	}
 
 	// Return slot list
@@ -292,7 +292,7 @@ const List<DynEventHandler*> Object::GetSlots() const
 
 /**
 *  @brief
-*    Get slot
+*    Get slot by using a given slot name
 */
 DynEventHandler *Object::GetSlot(const String &sName) const
 {
@@ -303,7 +303,7 @@ DynEventHandler *Object::GetSlot(const String &sName) const
 		const EventHandlerDesc *pDescriptor = pClass->GetSlot(sName);
 		if (pDescriptor) {
 			// Return slot
-			return pDescriptor->GetSlot(this);
+			return pDescriptor->GetSlot(*this);
 		}
 	}
 
@@ -313,7 +313,7 @@ DynEventHandler *Object::GetSlot(const String &sName) const
 
 /**
 *  @brief
-*    Set attribute value
+*    Set attribute value by using a given string value
 */
 void Object::SetAttribute(const String &sName, const String &sValue)
 {
@@ -327,7 +327,7 @@ void Object::SetAttribute(const String &sName, const String &sValue)
 
 /**
 *  @brief
-*    Set attribute value
+*    Set attribute value by using a given dynamic variable reference
 */
 void Object::SetAttribute(const String &sName, const DynVar &cVar)
 {
@@ -336,6 +336,23 @@ void Object::SetAttribute(const String &sName, const DynVar &cVar)
 	if (pAttribute) {
 		// Set value
 		pAttribute->SetVar(cVar);
+	}
+}
+
+/**
+*  @brief
+*    Set attribute value by using a given dynamic variable pointer
+*/
+void Object::SetAttribute(const String &sName, const DynVar *pVar)
+{
+	// Is the given dynamic variable pointer valid?
+	if (pVar) {
+		// Get attribute
+		DynVar *pAttribute = GetAttribute(sName);
+		if (pAttribute) {
+			// Set value
+			pAttribute->SetVar(*pVar);
+		}
 	}
 }
 
@@ -355,7 +372,7 @@ void Object::SetAttributeDefault(const String &sName)
 
 /**
 *  @brief
-*    Call method
+*    Call method with given dynamic parameters
 */
 void Object::CallMethod(const String &sName, DynParams &cParams)
 {
@@ -369,7 +386,7 @@ void Object::CallMethod(const String &sName, DynParams &cParams)
 
 /**
 *  @brief
-*    Call method
+*    Call method with given constant dynamic parameters
 */
 void Object::CallMethod(const String &sName, const DynParams &cParams)
 {
@@ -383,7 +400,7 @@ void Object::CallMethod(const String &sName, const DynParams &cParams)
 
 /**
 *  @brief
-*    Call method
+*    Call method with parameters given as string
 */
 void Object::CallMethod(const String &sName, const String &sParams)
 {
@@ -397,7 +414,7 @@ void Object::CallMethod(const String &sName, const String &sParams)
 
 /**
 *  @brief
-*    Call method
+*    Call method with parameters given as XML element
 */
 void Object::CallMethod(const String &sName, const XmlElement &cElement)
 {
@@ -429,7 +446,7 @@ String Object::GetValues(EDefaultValue nDefaultValue) const
 			VarDesc *pVarDesc = cIterator.Next();
 			if (pVarDesc) {
 				// Get attribute
-				DynVar *pVar = pVarDesc->GetAttribute(this);
+				DynVar *pVar = pVarDesc->GetAttribute(*this);
 
 				// Ignore variables with default values?
 				if (nDefaultValue == WithDefault || !pVar->IsDefault()) {
@@ -484,7 +501,7 @@ void Object::GetValuesXml(XmlElement &cElement, EDefaultValue nDefaultValue) con
 			VarDesc *pVarDesc = cIterator.Next();
 			if (pVarDesc) {
 				// Get attribute
-				DynVar *pVar = pVarDesc->GetAttribute(this);
+				DynVar *pVar = pVarDesc->GetAttribute(*this);
 
 				// Ignore variables with default values?
 				if (nDefaultValue == WithDefault || !pVar->IsDefault()) {
@@ -531,7 +548,7 @@ void Object::SetDefaultValues()
 			VarDesc *pVarDesc = cIterator.Next();
 			if (pVarDesc) {
 				// Get attribute
-				DynVar *pVar = pVarDesc->GetAttribute(this);
+				DynVar *pVar = pVarDesc->GetAttribute(*this);
 
 				// Set default value
 				pVar->SetDefault();

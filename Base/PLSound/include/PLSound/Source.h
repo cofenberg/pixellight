@@ -51,6 +51,9 @@ class Buffer;
 /**
 *  @brief
 *    Abstract sound source resource
+*
+*  @note
+*    - For sources with 3D spatialization, do only use one channel buffers because not each sound backend may be capable to use 3D spatialization for buffers with multiple channels
 */
 class Source : public Resource {
 

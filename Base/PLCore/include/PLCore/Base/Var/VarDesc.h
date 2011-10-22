@@ -119,12 +119,24 @@ class VarDesc : public MemberDesc {
 	public:
 		/**
 		*  @brief
-		*    Get attribute
+		*    Get default value as string
 		*
 		*  @return
-		*    Pointer to var (can be a null pointer)
+		*    Default value as string
 		*/
-		PLCORE_API virtual DynVar *GetAttribute(const Object *pObject) const;
+		PLCORE_API virtual String GetDefault() const;
+
+		/**
+		*  @brief
+		*    Get attribute
+		*
+		*  @param[in] cObject
+		*    Object to return the attribute pointer from
+		*
+		*  @return
+		*    Pointer to var (can be a null pointer, do not destroy the returned instance)
+		*/
+		PLCORE_API virtual DynVar *GetAttribute(const Object &cObject) const;
 
 
 	//[-------------------------------------------------------]

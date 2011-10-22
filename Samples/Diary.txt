@@ -1,6 +1,7 @@
 >> 22.10.2011
 [CO]
 - "61Sound": Removed unused "Application::ChooseSoundAPI()"
+- "61Sound": Removed "#ifdef ANDROID" by using the "SoundAPI"-attribute default value of the class "PLSound::SCSound" as default sound API within this sample
 
 
 

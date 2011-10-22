@@ -197,7 +197,7 @@ class Object : public ObjectBase {
 
 		/**
 		*  @brief
-		*    Get callable methods
+		*    Get all callable methods
 		*
 		*  @param[out] lstMethods
 		*    Receives the list of callable methods, the given list is not cleared before new entries are added (do not destroy the returned instances)
@@ -211,7 +211,7 @@ class Object : public ObjectBase {
 
 		/**
 		*  @brief
-		*    Get callable method
+		*    Get callable method by using a given method name
 		*
 		*  @param[in] sName
 		*    Method name
@@ -228,7 +228,7 @@ class Object : public ObjectBase {
 
 		/**
 		*  @brief
-		*    Get signals
+		*    Get a list of all signals
 		*
 		*  @return
 		*    List of signals (do not destroy the returned instances)
@@ -242,7 +242,7 @@ class Object : public ObjectBase {
 
 		/**
 		*  @brief
-		*    Get signal
+		*    Get signal by using a given signal name
 		*
 		*  @param[in] sName
 		*    Signal name
@@ -254,7 +254,7 @@ class Object : public ObjectBase {
 
 		/**
 		*  @brief
-		*    Get slots
+		*    Get a list of all slots
 		*
 		*  @return
 		*    List of slots (do not destroy the returned instances)
@@ -268,7 +268,7 @@ class Object : public ObjectBase {
 
 		/**
 		*  @brief
-		*    Get slot
+		*    Get slot by using a given slot name
 		*
 		*  @param[in] sName
 		*    Slot name
@@ -283,25 +283,45 @@ class Object : public ObjectBase {
 		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    Set attribute value
+		*    Set attribute value by using a given string value
 		*
 		*  @param[in] sName
 		*    Attribute name
 		*  @param[in] sValue
-		*    Attribute value
+		*    Attribute value as string
 		*/
 		PLCORE_API void SetAttribute(const String &sName, const String &sValue);
 
 		/**
 		*  @brief
-		*    Set attribute value
+		*    Set attribute value by using a given dynamic variable reference
 		*
 		*  @param[in] sName
 		*    Attribute name
 		*  @param[in] cVar
-		*    Attribute value
+		*    Attribute value as dynamic variable reference
 		*/
 		PLCORE_API void SetAttribute(const String &sName, const DynVar &cVar);
+
+		/**
+		*  @brief
+		*    Set attribute value by using a given dynamic variable pointer
+		*
+		*  @param[in] sName
+		*    Attribute name
+		*  @param[in] pVar
+		*    Attribute value as dynamic variable pointer, in case of a null pointer, nothing happens at all
+		*
+		*  @remarks
+		*    This is a comfort method allowing to write e.g.
+		*      pFirstObject->SetAttribute("MyAttribute", pSecondObject->GetAttribute("MyAttribute"));
+		*    instead of
+		*      DynVar *pDynVar = pSecondObject->GetAttribute();
+		*      if (pDynVar)
+		*        pFirstObject->SetAttribute("MyAttribute", *pDynVar);
+		*    In case there's no such attribute in "pSecondObject", nothing appens at all.
+		*/
+		PLCORE_API void SetAttribute(const String &sName, const DynVar *pVar);
 
 		/**
 		*  @brief
@@ -314,29 +334,29 @@ class Object : public ObjectBase {
 
 		/**
 		*  @brief
-		*    Call method
+		*    Call method with given dynamic parameters
 		*
 		*  @param[in] sName
 		*    Method name
 		*  @param[in] cParams
-		*    Parameters
+		*    Dynamic parameters
 		*/
 		PLCORE_API void CallMethod(const String &sName, DynParams &cParams);
 
 		/**
 		*  @brief
-		*    Call method
+		*    Call method with given constant dynamic parameters
 		*
 		*  @param[in] sName
 		*    Method name
 		*  @param[in] cParams
-		*    Parameters
+		*    Constant dynamic parameters
 		*/
 		PLCORE_API void CallMethod(const String &sName, const DynParams &cParams);
 
 		/**
 		*  @brief
-		*    Call method
+		*    Call method with parameters given as string
 		*
 		*  @param[in] sName
 		*    Method name
@@ -347,12 +367,12 @@ class Object : public ObjectBase {
 
 		/**
 		*  @brief
-		*    Call method
+		*    Call method with parameters given as XML element
 		*
 		*  @param[in] sName
 		*    Method name
 		*  @param[in] cElement
-		*    Parameters as XML
+		*    Parameters as XML element
 		*/
 		PLCORE_API void CallMethod(const String &sName, const XmlElement &cElement);
 

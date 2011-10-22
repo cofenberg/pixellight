@@ -110,10 +110,13 @@ class EventDesc : public MemberDesc {
 		*  @brief
 		*    Get signal
 		*
+		*  @param[in] cObject
+		*    Object to return the signal pointer from
+		*
 		*  @return
-		*    Pointer to signal (can be a null pointer)
+		*    Pointer to signal (can be a null pointer, do not destroy the returned instance)
 		*/
-		PLCORE_API virtual DynEvent *GetSignal(const Object *pObject) const;
+		PLCORE_API virtual DynEvent *GetSignal(const Object &cObject) const;
 
 
 	//[-------------------------------------------------------]

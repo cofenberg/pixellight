@@ -113,6 +113,7 @@ class Application : public PLEngine::EngineApplication {
 	//[ Private virtual PLCore::CoreApplication functions     ]
 	//[-------------------------------------------------------]
 	private:
+		virtual void OnInitCmdLine() override;
 		virtual void OnInit() override;
 
 
