@@ -58,12 +58,19 @@ pl_implement_class(Application)
 Application::Application(Frontend &cFrontend) : EngineApplication(cFrontend),
 	SlotOnControl(this)
 {
+	// Get the "PLSound::SCSound"-class
+	const Class *pClass = ClassManager::GetInstance()->GetClass("PLSound::SCSound");
+	if (pClass) {
+		// Get the "SoundAPI"-attribute
+		const VarDesc *pVarDesc = pClass->GetAttribute("SoundAPI");
+		if (pVarDesc) {
+			// Use the default value of the "SoundAPI"-attribute as the default sound API within this sample
+			m_sSoundAPI = pVarDesc->GetDefault();
+		}
+	}
+
 	// Add command line argument for choosing the sound API
-	#ifdef ANDROID
-		m_cCommandLine.AddArgument("SoundAPI", "Sound API", "PLSoundOpenSLES::SoundManager", false);
-	#else
-		m_cCommandLine.AddArgument("SoundAPI", "Sound API", "PLSoundOpenAL::SoundManager", false);
-	#endif
+	m_cCommandLine.AddArgument("SoundAPI", "Sound API", m_sSoundAPI, false);
 }
 
 /**
