@@ -168,29 +168,33 @@ void Application::OnControl(Control &cControl)
 //[-------------------------------------------------------]
 //[ Private virtual PLCore::CoreApplication functions     ]
 //[-------------------------------------------------------]
-void Application::OnInit()
+void Application::OnInitCmdLine()
 {
-	// Call base implementation
-	EngineApplication::OnInit();
+	// Call the base implementation
+	EngineApplication::OnInitCmdLine();
 
 	// Valid default sound API given?
-	String sClassName = m_cCommandLine.GetValue("SoundAPI");
+	const String sClassName = m_cCommandLine.GetValue("SoundAPI");
 	if (sClassName.GetLength()) {
 		const Class *pClass = ClassManager::GetInstance()->GetClass(sClassName);
-		if (pClass && pClass->IsDerivedFrom("PLSound::SoundManager")) {
+		if (pClass && pClass->IsDerivedFrom("PLSound::SoundManager"))
 			m_sSoundAPI = sClassName;
-
-			// Create new root scene
-			OnCreateRootScene();
-		}
 	}
-	if (!m_sSoundAPI.GetLength()) {
+}
+
+void Application::OnInit()
+{
+	// Is a sound API selected?
+	if (m_sSoundAPI.GetLength()) {
+		// Call base implementation
+		EngineApplication::OnInit();
+
+		// Clear the content of the current used render target by using gray (this way, in case on an graphics error we might still see at least something)
+		GetSceneRendererTool().SetPassAttribute("Begin", "ColorClear", "0.5 0.5 0.5 0");
+	} else {
 		// Error!
 		Exit(1);
 	}
-
-	// Clear the content of the current used render target by using gray (this way, in case on an graphics error we might still see at least something)
-	GetSceneRendererTool().SetPassAttribute("Begin", "ColorClear", "0.5 0.5 0.5 0");
 }
 
 
@@ -245,9 +249,6 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 			pSceneContainer->Create("PLParticleGroups::PGRain", "Rain", "Position=\"0.0 15.0 -5.0\" Flags=\"ForceUpdate\" MediumSize=\"3\"");
 			pSceneContainer->Create("PLSound::SNSound", "RainSound", "Sound=\"Data/Sounds/Rain.ogg\" Volume=\"0.2\"");
 
-			// Footsteps sound
-			pSceneContainer->Create("PLSound::SNSound", "Sound", "Sound=\"Data/Sounds/Walking.ogg\"");
-
 			// Create the soldier walking in the rain :)
 			SceneNode *pSoldier = pSceneContainer->Create("PLScene::SNMesh", "Soldier", "Position=\"0.0 -1.5 -5.0\" Scale=\"0.007 0.007 0.007\" Mesh=\"Data/Meshes/Soldier.mesh\"");
 			if (pSoldier) {
@@ -260,8 +261,8 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 				// ... and we should look into the direction he's moving
 				pSoldier->AddModifier("PLScene::SNMRotationMoveDirection");
 
-				// Link the footsteps sound with the soldier
-				pSoldier->AddModifier("PLScene::SNMAnchor", "AttachedNode=\"Sound\"");
+				// Link a footsteps sound to the soldier
+				pSoldier->AddModifier("PLSound::SNMSound","Sound=\"Data/Sounds/Walking.ogg\"");
 			}
 
 			// Setup scene surface painter
