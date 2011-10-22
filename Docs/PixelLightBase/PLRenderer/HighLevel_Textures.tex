@@ -39,7 +39,7 @@ in a plt-file with the same texture filename but with the filename ending 'plt' 
 would have a 'MyTexture.plt' plt-file which is in the same directory as the owner texture. In this
 additional texture file you are able to setup different fixed properties for this texture like if
 the texture can be scaled, if \ac{GPU} texture compression is allowed, the color key for alpha transparency
-etc. (such a color key can also be defined in a tga RGBA texture)\\
+etc. (such a color key can also be defined in a tga RGBA texture).\\
 In the \hyperlink{tani}{tani-format} format you can define texture animations like sliding/rolling
 texturs, texture animations through different texture frames etc. Such tani-files can be loaded by
 texture handlers and materials as all other texturs, too.
@@ -135,7 +135,7 @@ MinDepth  & 1 & The minimum allow texture depth (should normally be a power of 2
 \end{tabular}
 
 
-Forces a special static texture size if not -1. (texture resizing will be disabled!)\\
+Forces a special static texture size if not -1 (texture resizing will be disabled!).\\
 Use this only in special situations because the \ac{GPU} may not be able to handle certain
 sizes...
 
@@ -176,7 +176,7 @@ Tolerance & 0 & Alpha color tolerance value (0-128)\\
 
 %----- Section: Texture handler ------------------
 \section{Texture handler}
-When working with textures you will use texture handler in your code. (PLTTextureHandler)\\
+When working with textures you will use texture handler in your code (PLTTextureHandler).\\
 They will manage the basic texture stuff for you like loading them or set the correct texture states
 like the wrapping functions. The texture handler will offer you an interface to work with the used texture.
 The texture handlers are also responsible for texture animations like changing textures or rotation, move etc.
@@ -401,7 +401,7 @@ stencil testing, depth testing, texturing, and blending, alpha testing do not in
 fetching data from memories external to the \ac{GPU}. Alpha test is only available in RGBA
 mode for instance when using tga textures with an alpha channel. You can setup the alpha
 test withing the render state section, either directly by hand in the renderer (for programmers)
-or in the render state section of a material technique pass. (see the material format in another chapter)
+or in the render state section of a material technique pass (see the material format in another chapter).
 
 Alpha test provides a great way to save fill rate. When used to draw alpha blended
 textures, or to do additive blending in multi-pass, it provides a means to reject the

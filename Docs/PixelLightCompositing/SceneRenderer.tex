@@ -30,7 +30,7 @@ The deferred scene renderer of PixelLight is, like other PixelLight scene render
 
 
 \paragraph{Terminology}
-Often, there are many names describing the same thing. Therefore here's a list of names PixelLight is using. (the first one)
+Often, there are many names describing the same thing. Therefore here's a list of names PixelLight is using (the first one).
 \begin{itemize}
 \item{\emph{view space} = \emph{camera space} = \emph{eye space}}
 \item{\emph{clip space} = \emph{projection space}}
@@ -159,7 +159,7 @@ The \textbf{rgb}-components of \emph{RT2} contain the specular color. The specul
 
 
 \subsubsection{\ac{GBuffer} RT3}
-The \textbf{rgb}-components of \emph{RT3} contains the composition of emissive maps and light maps. Alpha is for glow. (outshine effect) 
+The \textbf{rgb}-components of \emph{RT3} contains the composition of emissive maps and light maps. Alpha is for glow (outshine effect).
 Lighting, wich is not connected to a particular realtime light, is also rendered during the \ac{GBuffer} fill. 
 
 
@@ -264,7 +264,7 @@ float3 sRGBColor = pow(linearRGBColor, 1/gamma);
 The post processing that is performed after the scene rendering is finished, is completely based on script like \ac{XML} files defining how a post process is created. Multiple post processes can be performed one after another.
 
 \begin{itemize}
-\item Each post process material can have annotation for additional information. (Material parameters fScaleX \& fScaleY, default value for both 1.0f)
+\item Each post process material can have annotation for additional information (Material parameters fScaleX \& fScaleY, default value for both 1.0f).
 \item Each post process material can have different kernels which are converted from pixel space to texel space automatically.\\
       TexelKernel[n].x = PixelKernel[n].x/width\\
       TexelKernel[n].y = PixelKernel[n].y/height\\
@@ -303,7 +303,7 @@ Here's a list of some provided post processing effects defined within PLPostProc
 \item Cartoon: Looks like a cartoon because there are black silhouettes\\
       -> ColorEdgeDetect.mat + ColorInverse.mat + (ColorOldFilm.mat for animated edges) + ColorCombineMul.mat\\
         (+ ColorOldFilm.mat if it should look like an old cartoon :)
-\item ASCII: Image is visualized using ASCII characters\\
+\item \ac{ASCII}: Image is visualized using \ac{ASCII} characters\\
       -> ColorDownFilter16.mat + PostProcess/ColorASCIIUp16.mat
 \item Pull: The image is deformed at a given position\\
       -> ColorPull.mat

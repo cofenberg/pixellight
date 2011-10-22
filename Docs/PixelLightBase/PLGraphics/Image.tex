@@ -32,7 +32,7 @@ if (cImage.LoadByFilename("MyImage.png")) {
 Mipmaps are the same image - but in multiple resolutions.\footnote{Although it's also possible to put a totally different image into each of the mipmaps}
 
 Mipmaps are usually used for textures to improve the performance and the visual quality.
-Within PLRenderer: If a texture is allowed to use mipmapping, mipmaps are created automatically if the loaded texture doesn't provide such information. Image formats like dds can provide predefined mipmap information. In this case, you have to define all mipmap levels down to 1x1 otherwise the texture is invalid when you try to use any min filter that uses mipmaps. OpenGL normally uses white color when invalid/incomplete texture is enabled.
+Within PLRenderer: If a texture is allowed to use mipmapping, mipmaps are created automatically if the loaded texture doesn't provide such information. Image formats like dds can provide predefined mipmap information. In this case, you have to define all mipmap levels down to 1x1 otherwise the texture is invalid when you try to use any min filter that uses mipmaps. \ac{OpenGL} normally uses white color when invalid/incomplete texture is enabled.
 
 
 

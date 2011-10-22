@@ -144,11 +144,11 @@ MyMovie(MyCallbackFunction)
 
 
 
-\section{Object-Oriented Programming (OOP)}
+\section{\ac{OOP}}
 First at all, please note that this section has nothing to do with PixelLight \ac{RTTI} objects which are explained in section~\ref{Script_RTTIObjects}.
 
-Let's directly jump into the topic. The OOP Lua skeleton shown in source~code~\ref{Code:OOPSkeleton} has proven to be useful.
-\begin{lstlisting}[language=lua,label=Code:OOPSkeleton,caption={Object-oriented programming (OOP) Lua skeleton}]
+Let's directly jump into the topic. The \ac{OOP} Lua skeleton shown in source~code~\ref{Code:OOPSkeleton} has proven to be useful.
+\begin{lstlisting}[language=lua,label=Code:OOPSkeleton,caption={\ac{OOP} Lua skeleton}]
 --[-------------------------------------------------------]
 --[ Includes                                              ]
 --[-------------------------------------------------------]
@@ -224,11 +224,11 @@ MyClass = {
 \end{lstlisting}
 A new instance of this class can be created by writing \emph{myClassInstance = MyClass.new()} and methods can be called by writing \emph{myClassInstance.MyPublicMethod()}\footnote{Don't get confused by ''.'' and '':''. '':'' is a special Lua shortcut. For instance, instead of writing \emph{myClassInstance.MyPublicMethod(myClassInstance)} one can also write \emph{myClassInstance:MyPublicMethod()} to pass \emph{myClassInstance} as parameter into the method \emph{MyPublicMethod}.}.
 
-Wait a moment, the class definition within source~code~\ref{Code:OOPSkeleton} just looks like a namespace as described within section~\ref{Script_Namespaces}... and hey, Lua doesn't have OOP support at all!
+Wait a moment, the class definition within source~code~\ref{Code:OOPSkeleton} just looks like a namespace as described within section~\ref{Script_Namespaces}... and hey, Lua doesn't have \ac{OOP} support at all!
 
-That's true, Lua has no build in OOP support, but that's no reason to don't use OOP. It's possible to realize OOP by using, yes your guess was right, tables. Even information hiding is possible.
+That's true, Lua has no build in \ac{OOP} support, but that's no reason to don't use \ac{OOP}. It's possible to realize \ac{OOP} by using, yes your guess was right, tables. Even information hiding is possible.
 
-At this point you may possibly ask yourself: \begin{quote}''Why use OOP at all within a script? Shouldn't make a script language the life of a programmer much easier? Why can't we just use variables and functions and be happy?''\end{quote} The answer is short: No one is forcing you to use OOP. If you're uncomfortable or unfamiliar with OOP and don't want to get into the topic, then don't. If your scripted application gets bigger and you want a powerful tool to write well structured, reusable script code without a totally flooded global namespace due to thousands of global variables and functions, use the mentioned OOP approach. Personally, I wouldn't want to work without OOP because I'am a lazy person.
+At this point you may possibly ask yourself: \begin{quote}''Why use \ac{OOP} at all within a script? Shouldn't make a script language the life of a programmer much easier? Why can't we just use variables and functions and be happy?''\end{quote} The answer is short: No one is forcing you to use \ac{OOP}. If you're uncomfortable or unfamiliar with \ac{OOP} and don't want to get into the topic, then don't. If your scripted application gets bigger and you want a powerful tool to write well structured, reusable script code without a totally flooded global namespace due to thousands of global variables and functions, use the mentioned \ac{OOP} approach. Personally, I wouldn't want to work without \ac{OOP} because I'am a lazy person.
 
 
 

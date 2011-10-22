@@ -108,10 +108,8 @@ void Application::UpdateTimeScaleTextNode()
 		if (pInfoTextContainer) {
 			// Get the time scale text scene node
 			SceneNode *pInfoTextNode = pInfoTextContainer->GetByName("TimeScale");
-			if (pInfoTextNode) {
-				pInfoTextNode->SetAttribute("Text", PLT("1/2/0=Decrease/increase/reset timescale (current: ") +
-					String::Format("%g)", Timing::GetInstance()->GetTimeScaleFactor()));
-			}
+			if (pInfoTextNode)
+				pInfoTextNode->SetAttribute("Text", PLT("1/2/0=Decrease/increase/reset timescale (current: ") + Timing::GetInstance()->GetTimeScaleFactor() + ')');
 		}
 	}
 }
@@ -158,7 +156,7 @@ void Application::OnControl(Control &cControl)
 				// Update the pitch variable of the sound container using the time scale factor
 				SceneContainer *pSceneContainer = GetScene();
 				if (pSceneContainer)
-					pSceneContainer->SetAttribute("Pitch", String::Format("%g", pTimer->GetTimeScaleFactor()));
+					pSceneContainer->SetAttribute("Pitch", pTimer->GetTimeScaleFactor());
 			}
 		}
 	}
@@ -209,7 +207,7 @@ void Application::OnCreateScene(SceneContainer &cContainer)
 	// Sound API given?
 	if (m_sSoundAPI.GetLength()) {
 		// Create a scene container with our 'concrete sound scene' using the chosen sound API
-		SceneNode *pSceneContainerNode = cContainer.Create("PLSound::SCSound", "SoundScene", "SoundAPI=\"" + m_sSoundAPI + "\" Pitch=\"" + String::Format("%g", Timing::GetInstance()->GetTimeScaleFactor()) + '\"');
+		SceneNode *pSceneContainerNode = cContainer.Create("PLSound::SCSound", "SoundScene", "SoundAPI=\"" + m_sSoundAPI + "\" Pitch=\"" + Timing::GetInstance()->GetTimeScaleFactor() + '\"');
 		if (pSceneContainerNode && pSceneContainerNode->IsInstanceOf("PLScene::SceneContainer")) {
 			SceneContainer *pSceneContainer = static_cast<SceneContainer*>(pSceneContainerNode);
 
