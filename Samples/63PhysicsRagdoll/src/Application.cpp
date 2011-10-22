@@ -220,7 +220,7 @@ void Application::OnControl(Control &cControl)
 			// Check your pointer to the ragdoll
 			if (reinterpret_cast<Button&>(cControl).IsHit() && m_pRagdoll) {
 				// Toggle state
-				m_pRagdoll->SetAttribute("UseGravity", String::Format("%d", !m_pRagdoll->GetAttribute("UseGravity")->GetBool()));
+				m_pRagdoll->SetAttribute("UseGravity", !m_pRagdoll->GetAttribute("UseGravity")->GetBool());
 			}
 		}
 	}

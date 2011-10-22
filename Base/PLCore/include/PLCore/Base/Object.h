@@ -319,7 +319,7 @@ class Object : public ObjectBase {
 		*      DynVar *pDynVar = pSecondObject->GetAttribute();
 		*      if (pDynVar)
 		*        pFirstObject->SetAttribute("MyAttribute", *pDynVar);
-		*    In case there's no such attribute in "pSecondObject", nothing appens at all.
+		*    In case there's no such attribute in "pSecondObject", nothing happens at all.
 		*/
 		PLCORE_API void SetAttribute(const String &sName, const DynVar *pVar);
 
