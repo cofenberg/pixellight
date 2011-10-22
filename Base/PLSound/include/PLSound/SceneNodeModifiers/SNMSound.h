@@ -52,6 +52,9 @@ class ResourceHandler;
 /**
 *  @brief
 *    Scene node modifier which is able to playback a sound
+*
+*  @note
+*    - For sources with 3D spatialization, do only use one channel buffers because not each sound backend may be capable to use 3D spatialization for buffers with multiple channels
 */
 class SNMSound : public PLScene::SceneNodeModifier {
 
@@ -84,14 +87,14 @@ class SNMSound : public PLScene::SceneNodeModifier {
 	//[-------------------------------------------------------]
 	pl_class(PLSOUND_RTTI_EXPORT, SNMSound, "PLSound", PLScene::SceneNodeModifier, "Scene node modifier which is able to playback a sound")
 		// Attributes
-		pl_attribute(Sound,				PLCore::String,			"",			ReadWrite,	GetSet,	"Name of the sound which should be played (full path, supported file formats are API dependent)",				"Ext='mp3 ogg wav mid midi it mod s3m xm'")
-		pl_attribute(Volume,			float,					1.0f,		ReadWrite,	GetSet,	"Volume (value from 0.0-1.0 -> 0.0 = silence, 1.0 = full volume)",												"Min='0.0' Max='1.0'")
-		pl_attribute(Pitch,				float,					1.0f,		ReadWrite,	GetSet,	"Pitch multiplier (pitch<1.0=slower/pitch=1.0=normal/pitch>1.0=faster)",										"Min='0.0'")
-		pl_attribute(ReferenceDistance,	float,					1.0f,		ReadWrite,	GetSet,	"Used to increase or decrease the range of a source by decreasing or increasing the attenuation, respectively",	"Min='0.0'")
-		pl_attribute(MaxDistance,		float,					10000.0f,	ReadWrite,	GetSet,	"Defines a distance beyond which the source will not be further attenuated by distance",						"Min='0.0'")
-		pl_attribute(RolloffFactor,		float,					1.0f,		ReadWrite,	GetSet,	"This will scale the distance attenuation over the applicable range",											"Min='0.0'")
+		pl_attribute(Sound,				PLCore::String,			"",			ReadWrite,	GetSet,	"Name of the sound which should be played (full path, supported file formats are API dependent). For 3D spatialization, do only use one channel buffers for best compatibility.",	"Ext='mp3 ogg wav mid midi it mod s3m xm'")
+		pl_attribute(Volume,			float,					1.0f,		ReadWrite,	GetSet,	"Volume (value from 0.0-1.0 -> 0.0 = silence, 1.0 = full volume)",																													"Min='0.0' Max='1.0'")
+		pl_attribute(Pitch,				float,					1.0f,		ReadWrite,	GetSet,	"Pitch multiplier (pitch<1.0=slower/pitch=1.0=normal/pitch>1.0=faster)",																											"Min='0.0'")
+		pl_attribute(ReferenceDistance,	float,					1.0f,		ReadWrite,	GetSet,	"Used to increase or decrease the range of a source by decreasing or increasing the attenuation, respectively",																		"Min='0.0'")
+		pl_attribute(MaxDistance,		float,					10000.0f,	ReadWrite,	GetSet,	"Defines a distance beyond which the source will not be further attenuated by distance",																							"Min='0.0'")
+		pl_attribute(RolloffFactor,		float,					1.0f,		ReadWrite,	GetSet,	"This will scale the distance attenuation over the applicable range",																												"Min='0.0'")
 			// Overwritten PLScene::SceneNodeModifier attributes
-		pl_attribute(Flags,				pl_flag_type(EFlags),	0,			ReadWrite,	GetSet,	"Flags",																										"")
+		pl_attribute(Flags,				pl_flag_type(EFlags),	0,			ReadWrite,	GetSet,	"Flags",																																											"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 		// Slots
