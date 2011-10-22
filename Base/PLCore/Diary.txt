@@ -4,6 +4,13 @@
   pointer parameter and got a crash. This should never happen. Changed the pointer parameter into a reference parameter.
 - "VarDesc": Added "GetDefault()"-method to make it possible to request the default value of an attribute without the need to have an attribute
   instance in order to get this information
+- "Object": Added "SetAttribute(const String &sName, const DynVar *pVar)". This is a comfort method allowing to write e.g.
+    pFirstObject->SetAttribute("MyAttribute", pSecondObject->GetAttribute("MyAttribute"));
+  instead of
+    DynVar *pDynVar = pSecondObject->GetAttribute();
+    if (pDynVar)
+      pFirstObject->SetAttribute("MyAttribute", *pDynVar);
+    In case there's no such attribute in "pSecondObject", nothing appens at all.
 
 
 
