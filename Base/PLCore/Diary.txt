@@ -2,6 +2,8 @@
 [CO]
 - "EventDesc::GetSignal()" & "EventHandlerDesc::GetSlot()" & "VarDesc::GetAttribute()": Gave in a null pointer into the not documented
   pointer parameter and got a crash. This should never happen. Changed the pointer parameter into a reference parameter.
+- "VarDesc": Added "GetDefault()"-method to make it possible to request the default value of an attribute without the need to have an attribute
+  instance in order to get this information
 
 
 

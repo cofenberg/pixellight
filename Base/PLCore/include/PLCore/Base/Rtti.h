@@ -417,12 +417,14 @@ template <typename T> uint32	ModuleID<T>::m_nModuleID = 0;
 *    Attribute name
 *  @param[in] TYPE
 *    Attribute type
+*  @param[in] DEFAULT
+*    Attribute default value
 *  @param[in] DESCRIPTION
 *    Attribute description
 *  @param[in] ANNOTATION
 *    Attribute annotation
 */
-#define __pl_attr_desc(NAME, TYPE, DESCRIPTION, ANNOTATION) \
+#define __pl_attr_desc(NAME, TYPE, DEFAULT, DESCRIPTION, ANNOTATION) \
 		class NAME##_Desc : public PLCore::VarDesc { \
 			public: \
 				NAME##_Desc() : PLCore::VarDesc(PLCore::Type<TYPE>::TypeID, PLCore::Type<TYPE>::GetTypeName(), #NAME, DESCRIPTION, ANNOTATION) { \
@@ -433,6 +435,9 @@ template <typename T> uint32	ModuleID<T>::m_nModuleID = 0;
 				~NAME##_Desc() { \
 				} \
 			private: \
+				virtual PLCore::String GetDefault() const override { \
+					return PLCore::Type<TYPE>::ConvertToString(DEFAULT); \
+				} \
 				virtual PLCore::DynVar *GetAttribute(const Object &cObject) const override { \
 					return &reinterpret_cast<_Self&>(const_cast<Object&>(cObject)).NAME; \
 				} \
@@ -904,7 +909,7 @@ template <typename T> uint32	ModuleID<T>::m_nModuleID = 0;
 */
 #define pl_attribute(NAME, TYPE, DEFAULT, ACCESS, STORAGE, DESCRIPTION, ANNOTATION) \
 	__pl_attr_stor(NAME, TYPE, STORAGE) \
-	__pl_attr_desc(NAME, TYPE, DESCRIPTION, ANNOTATION) \
+	__pl_attr_desc(NAME, TYPE, DEFAULT, DESCRIPTION, ANNOTATION) \
 	__pl_attr_attr(NAME, TYPE, DEFAULT, ACCESS, STORAGE) \
 	__pl_attr_decl(NAME, TYPE) \
 

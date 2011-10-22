@@ -119,6 +119,15 @@ class VarDesc : public MemberDesc {
 	public:
 		/**
 		*  @brief
+		*    Get default value as string
+		*
+		*  @return
+		*    Default value as string
+		*/
+		PLCORE_API virtual String GetDefault() const;
+
+		/**
+		*  @brief
 		*    Get attribute
 		*
 		*  @param[in] cObject

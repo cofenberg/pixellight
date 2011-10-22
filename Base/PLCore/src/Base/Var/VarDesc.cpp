@@ -91,6 +91,16 @@ String VarDesc::GetTypeName() const
 //[-------------------------------------------------------]
 /**
 *  @brief
+*    Get default value as string
+*/
+String VarDesc::GetDefault() const
+{
+	// To be implemented in derived classes
+	return "";
+}
+
+/**
+*  @brief
 *    Get attribute
 */
 DynVar *VarDesc::GetAttribute(const Object &cObject) const
