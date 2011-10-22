@@ -83,14 +83,14 @@ Here's a list of required programs that you need to fully build the \ac{SDK} on 
 \paragraph{Swiss File Knife}
 \begin{itemize}
 \item{\emph{Swiss File Knife}: file management, search, text processing}
-\item{Directly used by the CMake scripts under MS Windows}
+\item{Directly used by the CMake scripts under \ac{MS} Windows}
 \item{\emph{cmake/UsedTools/sfk/sfk.exe} is already within the Git repository and was downloaded from \url{http://sourceforge.net/projects/swissfileknife/}}
 \end{itemize}
 
 
 \paragraph{Diff tools}
 \begin{itemize}
-\item{Some diff binaries directly used by the CMake scripts under MS Windows}
+\item{Some diff binaries directly used by the CMake scripts under \ac{MS} Windows}
 \item{The \emph{cmake/UsedTools/diff} directory is already within the Git repository}
 \end{itemize}
 
@@ -123,7 +123,7 @@ Once you have built PixelLight, you may want to run e.g. the sample applications
 
 
 \paragraph{PATH Environment Variable}
-MS Windows must be able to find the PixelLight \ac{DLL}s, meaning you have to add the directory of your PixelLight runtime build (for example "C:/PixelLight/Bin/Runtime/x86/") to the MS Windows PATH environment variable.
+\ac{MS} Windows must be able to find the PixelLight \ac{DLL}s, meaning you have to add the directory of your PixelLight runtime build (for example "C:/PixelLight/Bin/Runtime/x86/") to the \ac{MS} Windows PATH environment variable.
 \begin{itemize}
 \item{1. Right click on the "My Computer"-icon on the desktop}
 \item{2. Click on the "Advanced"-tab}
@@ -131,9 +131,9 @@ MS Windows must be able to find the PixelLight \ac{DLL}s, meaning you have to ad
 \item{4. Under the "User Variables"-header, select the PATH entry and click "Edit"}
 \item{5. Scroll to the end of the text, add a new semi-colon and enter the location of your PixelLight runtime directory (for example "C:/PixelLight/Bin/Runtime/x86/")}
 \item{6. Click "Ok" on all the panels to exit this dialog}
-\item{(7. You may have to restart your system, just try whether or not MS Windows is now able to find the PixelLight \ac{DLL}s, if not, restart your system)}
+\item{(7. You may have to restart your system, just try whether or not \ac{MS} Windows is now able to find the PixelLight \ac{DLL}s, if not, restart your system)}
 \end{itemize}
 
 
 \paragraph{Registry Key}
-You may also want to add a key to the registry, so that the path to the build PixelLight runtime can be found in case you're using the static version of \emph{PLCore}. This key has to be at "HKEY\_LOCAL\_MACHINE/SOFTWARE/PixelLight/PixelLight-SDK/Runtime" (or at "HKEY\_LOCAL\_MACHINE/SOFTWARE/Wow6432Node/PixelLight/PixelLight-SDK/Runtime" if you are using a \SI{32}{\bit} PixelLight SDK on a \SI{64}{\bit} MS Windows). This "Runtime"-key has e.g. the string value "C:/PixelLight/Bin/Runtime/x86/" (same as the PATH environment variable entry mentioned above).
+You may also want to add a key to the registry, so that the path to the build PixelLight runtime can be found in case you're using the static version of \emph{PLCore}. This key has to be at "HKEY\_LOCAL\_MACHINE/SOFTWARE/PixelLight/PixelLight-SDK/Runtime" (or at "HKEY\_LOCAL\_MACHINE/SOFTWARE/Wow6432Node/PixelLight/PixelLight-SDK/Runtime" if you are using a \SI{32}{\bit} PixelLight SDK on a \SI{64}{\bit} \ac{MS} Windows). This "Runtime"-key has e.g. the string value "C:/PixelLight/Bin/Runtime/x86/" (same as the PATH environment variable entry mentioned above).

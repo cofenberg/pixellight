@@ -17,7 +17,7 @@
 
 \subsection{Text Processing}
 \begin{itemize}
-\item{An advanced dynamic string class with ASCII, Unicode and UTF-8 support + extensive UTF-8 tool class}
+\item{An advanced dynamic string class with \ac{ASCII}, Unicode and UTF-8 support + extensive UTF-8 tool class}
 \item{An advanced tokenizer which allows you to parse texts without any effort}
 \item{\ac{XML} classes (\ac{DOM}) making it comfortable to load, edit and save \ac{XML} files}
 \item{Regular expression class\footnote{Internally PCRE (\url{http://www.pcre.org/}) is used}}
@@ -68,11 +68,11 @@
 \subsection{A huge set of Additional Tools}
 \begin{itemize}
 \item{Log with flexible implementation so we can output into a file (unformatted text, \ac{XML}, \ac{HTML}) or into the console}
-\item{Unified abstract checksum interface. (the \ac{SDK} comes with a MD5, CRC32 and SHA-1 plugin) Supports checksum from string, memory or files.}
+\item{Unified abstract checksum interface (the \ac{SDK} comes with a MD5, CRC32 and SHA-1 plugin). Supports checksum from string, memory or files.}
 \item{General list interface with concrete implementations for linked list, array, bitset and so on}
 \item{Many basic tool classes like stack, queue, hash map, heap, quick sort, singleton, iterator etc.}
 \item{PixelLight comes with an efficient resource manager template system which is used by several managers, e.g. textures, meshes, sounds, paths, shaders etc. }
-\item{PixelLight provides an advanced timing class which offers a lot of timing relevant functions. Time difference since the last frame with clamp functionality, past time since start, slow motion, pause, freeze, FPS limiter, stopwatch}
+\item{PixelLight provides an advanced timing class which offers a lot of timing relevant functions. Time difference since the last frame with clamp functionality, past time since start, slow motion, pause, freeze, \ac{FPS} limiter, stopwatch}
 \item{Basic memory manager so you can mix release and debug builds as good as possible}
 \end{itemize}
 
@@ -138,7 +138,7 @@
 
 \section{PLRenderer}
 \begin{itemize}
-\item{Dynamic \ac{API} design\footnote{The PixelLight \ac{SDK} comes with Null and OpenGL (using FreeType (\url{http://www.freetype.org/}) for font support) backends, within the repository there's also a OpenGL ES 2.0 backend and an experimental Direct3D 9 backend}}
+\item{Dynamic \ac{API} design\footnote{The PixelLight \ac{SDK} comes with Null and \ac{OpenGL} (using FreeType (\url{http://www.freetype.org/}) for font support) backends, within the repository there's also a OpenGL ES 2.0 backend and an experimental Direct3D 9 backend}}
 \item{Multiple output windows}
 \item{\ac{RTT} (also rendering to floating-point for \ac{HDR} buffer is possible)}
 \item{\ac{MRT} for rendering into different textures at the same time}
@@ -147,8 +147,8 @@
 \item{1D, 2D, rectangle\footnote{Predecessor of the modern and universal \ac{NPOT} textures \ac{GPU} feature}, 3D and cube textures}
 \item{Mipmaps and texture compression support\footnote{DXT1 (= BC1), DXT3 (= BC2), DXT5 (= BC3), LATC1 (= 3DC+/ATI1N/BC4) and LATC2 (= 3DC/ATI2N/BC5)}. These can be created automatically on the fly or used from given dds data, for instance, for maximum control and best loading times.}
 \item{Abstract \ac{GPU} program interface with support for vertex, geometry and fragment shaders}
-\item{The OpenGL renderer backend has a build in \ac{GPU} program interface implementation for \ac{GLSL}}
-\item{The OpenGL renderer backend has an optional \ac{GPU} program interface implementation for Cg (\url{http://developer.nvidia.com/object/cg_toolkit.html}) via plugin}
+\item{The \ac{OpenGL} renderer backend has a build in \ac{GPU} program interface implementation for \ac{GLSL}}
+\item{The \ac{OpenGL} renderer backend has an optional \ac{GPU} program interface implementation for Cg (\url{http://developer.nvidia.com/object/cg_toolkit.html}) via plugin}
 \item{\ac{UBO} support}
 \item{Fonts and draw helpers so it's easy to draw lines, images and so on}
 \item{Interface for fixed functions to support legacy graphics cards without, or just limited shader support}
@@ -208,14 +208,14 @@
 
 
 \subsection{Scene System}
-The dynamic and universal hierarchical scene system consists of scene nodes and scene containers. (composite design pattern) A scene node is the most basic scene element, and a scene container manages such scene nodes. A scene container can also manage child scene containers for a hierarchical scene. Within a scene container, a scene hierarchy like a KD-tree can be used to manage/access the scene nodes in a more effective way. Scene queries operate on this scene description. For instance, there is a query which returns all scene nodes intersecting a line or plane set. To make the system more efficient, scene nodes can have different modifiers. For instance, you can use a physics scene node modifier to give your scene node a physical behaviour. Physics are not fixed build in the scene graph itself - it comes through such plugins to make the framework more universal.
+The dynamic and universal hierarchical scene system consists of scene nodes and scene containers (composite design pattern). A scene node is the most basic scene element, and a scene container manages such scene nodes. A scene container can also manage child scene containers for a hierarchical scene. Within a scene container, a scene hierarchy like a KD-tree can be used to manage/access the scene nodes in a more effective way. Scene queries operate on this scene description. For instance, there is a query which returns all scene nodes intersecting a line or plane set. To make the system more efficient, scene nodes can have different modifiers. For instance, you can use a physics scene node modifier to give your scene node a physical behaviour. Physics are not fixed build in the scene graph itself - it comes through such plugins to make the framework more universal.
 \begin{itemize}
 \item{Powerfull 'scene node modifier' concept allowing to add as many modifiers to scene nodes you want taking for instance control over the position of the node, controlling morph targets of meshes and so on - the possibilities are nearly unlimited!}
 \item{Because the \ac{RTTI} is used nearly everywhere in PixelLight, the scene system can be extended without any effort and components can be reused in other projects}
 \item{KD-tree and list scene hierarchy plugins provided}
 \item{Line/plane set intersection and culling queries provided as well as multiple other queries}
 \item{Scenes can be rendered using no culling at all, frustum culling or coherent hierarchical occlusion culling for more complex scenes}
-\item{A comfortable post process manager class and a lot of prepared post processing effects are provided. Adding bloom, grey scale or even visualizing the scene using ASCII characters is no problem at all. You can combine existing effects to create a new one.}
+\item{A comfortable post process manager class and a lot of prepared post processing effects are provided. Adding bloom, grey scale or even visualizing the scene using \ac{ASCII} characters is no problem at all. You can combine existing effects to create a new one.}
 \item{Various useful scene nodes like camera, light, sky, terrain, ingame \ac{GUI}, mirror and so on are built in}
 \item{The sky scene node comes with multiple sky layers and creates impressive animated and atmospheric backgrounds like hills, where slowly moving clouds appear behind them}
 \item{The terrain scene node is using GeoMipMapping to create easily usable, impressive and large landscapes}

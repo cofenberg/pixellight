@@ -10,9 +10,9 @@ This section deals with the different renderer backends shipping with the PixelL
 \end{itemize}
 
 
-\paragraph{OpenGL}
+\paragraph{\ac{OpenGL}}
 \begin{itemize}
-\item This is the preferred renderer backend of the PixelLight team because OpenGL\footnote{More information about OpenGL can be found at \url{http://www.opengl.org/}} provides some nice features like line width and it's also supported by other operation systems like Linux.
+\item This is the preferred renderer backend of the PixelLight team because \ac{OpenGL}\footnote{More information about \ac{OpenGL} can be found at \url{http://www.opengl.org/}} provides some nice features like line width and it's also supported by other operation systems like Linux.
 \item PixelLight component name: PLRendererOpenGL
 \item Used \ac{DLL}s: \emph{PLRendererOpenGL.dll}
 \item FreeType\footnote{FreeType can be downloaded from \url{http://www.freetype.org/}} is used for font support.
@@ -20,7 +20,7 @@ This section deals with the different renderer backends shipping with the PixelL
 
 Here's a list of some general notes:
 \begin{itemize}
-\item Normally when using rectangle textures (none power of 2) under OpenGL, you have to work with none normalized texture coordinates - but because we don't want to deal with texture coordinates for rectangle textures in a special way, within the backend the texture matrix is scaled. So, you always work with normalized texture coordinates. But if you use rectangle textures within a shader, you should take the texture matrix within your vertex shader into account!
+\item Normally when using rectangle textures (none power of 2) under \ac{OpenGL}, you have to work with none normalized texture coordinates - but because we don't want to deal with texture coordinates for rectangle textures in a special way, within the backend the texture matrix is scaled. So, you always work with normalized texture coordinates. But if you use rectangle textures within a shader, you should take the texture matrix within your vertex shader into account!
 \end{itemize}
 
 There's a plugin for PLRendererOpenGL adding support for the Cg\footnote{(\url{http://developer.nvidia.com/object/cg_toolkit.html})} shader language:

@@ -6,13 +6,13 @@
 \subsection{String Class}
 Sequences of characters, also called \emph{strings}, are often used and frequently come with some nasty features like memory leaks, buffer overruns (security risk!) or even crash's if you are not careful. Also dealing with Unicode is normally not that much fun\ldots so we wrote a comfortable string class making our and especially your life much easier!
 
-Because strings are quite fundamental, there are several optimizations in place to make dealing with strings as fast as possible. The \emph{String}-class uses a \emph{copy on change}-technique - therefore copying one string into another one is quite fast because the internal string buffer is shared as long as a string doesn't change. As result comparing strings can also be very fast and the internal string buffer can be ASCII or Unicode in a quite flexible way. To enhance the string performance, the internal string buffers are managed by a string buffer manager to avoid to many memory allocations/deallocations. For an additional performance improvement, memory is traded for speed, meaning that additional characters are allocated within the internal string buffer manager for future use. This way, appending new characters to a string is usually quite fast.
+Because strings are quite fundamental, there are several optimizations in place to make dealing with strings as fast as possible. The \emph{String}-class uses a \emph{copy on change}-technique - therefore copying one string into another one is quite fast because the internal string buffer is shared as long as a string doesn't change. As result comparing strings can also be very fast and the internal string buffer can be \ac{ASCII} or Unicode in a quite flexible way. To enhance the string performance, the internal string buffers are managed by a string buffer manager to avoid to many memory allocations/deallocations. For an additional performance improvement, memory is traded for speed, meaning that additional characters are allocated within the internal string buffer manager for future use. This way, appending new characters to a string is usually quite fast.
 
-As long as you don't save your source codes in an UTF8 format you can also use the ASCII extension Ansi, meaning characters between 128-256. But with an UTF8 format, this may cause serious problems and you should use Unicode instead ASCII for characters above 128\footnote{Using codepage based ASCII is not recommended} to avoid encoding troubles!
+As long as you don't save your source codes in an UTF8 format you can also use the \ac{ASCII} extension Ansi, meaning characters between 128-256. But with an UTF8 format, this may cause serious problems and you should use Unicode instead \ac{ASCII} for characters above 128\footnote{Using codepage based \ac{ASCII} is not recommended} to avoid encoding troubles!
 
-Here's a short usage example how to use the \emph{String}-class and how do deal with ASCII/Unicode/UTF8:
+Here's a short usage example how to use the \emph{String}-class and how do deal with \ac{ASCII}/Unicode/UTF8:
 
-\begin{lstlisting}[caption=ASCII/Unicode/UTF8 string example]
+\begin{lstlisting}[caption=\ac{ASCII}/Unicode/UTF8 string example]
 // Test string instance
 PLCore::String sS;
 
@@ -40,7 +40,7 @@ sS = L"\u65e5\u672c\u8a9e";
 sS = PLCore::String::FromUTF8("Mini");
 \end{lstlisting}
 
-As you can see the well known \emph{char*} and \emph{wchar\_t*} are used for ASCII and Unicode strings. We strongly recommend that you don't brother yourself with this stuff as long as not necessary. So, just use \emph{String sS = "Mini";} instead of \emph{String sS = L"Mini";}. It's more readable and ASCII is more performant and requires less memory. The \emph{String}-class takes automatically care of ASCII/Unicode for you, so you can even mix strings with different internal formats!
+As you can see the well known \emph{char*} and \emph{wchar\_t*} are used for \ac{ASCII} and Unicode strings. We strongly recommend that you don't brother yourself with this stuff as long as not necessary. So, just use \emph{String sS = "Mini";} instead of \emph{String sS = L"Mini";}. It's more readable and \ac{ASCII} is more performant and requires less memory. The \emph{String}-class takes automatically care of \ac{ASCII}/Unicode for you, so you can even mix strings with different internal formats!
 
 We strongly recommend to use only this class when working with strings and not using for instance \emph{c}-functions like \emph{strcmp()}. Do also avoid to use the string data you can get from the \emph{String::GetASCII()} directly to search for substrings and so on - use the provided string functions instead. By doing so, the string class will automatically take care of tricky stuff mentioned above.
 
@@ -48,7 +48,7 @@ In general, it's a good idea to use functions like \emph{String::GetASCII()} to 
 
 
 \paragraph{UTF8}
-Originally, the string class had native UTF8 support build in. For each \emph{char} and \emph{wchar\_t} method, there was also an equivalent UTF8 method. Because the compiler can distinguish \emph{char*} and \emph{wchar\_t} by using \emph{L} in front of strings, but not ASCII from UTF8, we introduced the \emph{utf8} data type. If the compiler should interpret a given string as UTF8, we casted it to \emph{utf8} like \emph{String sS = (const utf8*)"Mini";}.
+Originally, the string class had native UTF8 support build in. For each \emph{char} and \emph{wchar\_t} method, there was also an equivalent UTF8 method. Because the compiler can distinguish \emph{char*} and \emph{wchar\_t} by using \emph{L} in front of strings, but not \ac{ASCII} from UTF8, we introduced the \emph{utf8} data type. If the compiler should interpret a given string as UTF8, we casted it to \emph{utf8} like \emph{String sS = (const utf8*)"Mini";}.
 
 Due to the complexity of the UTF8 implementation and the possible combinations with \emph{char} and \emph{wchar\_t} and a constant lack of time, the UTF8 implementation was not fully implemented and there were a lot of TODO-points. At the end of the year 2010 the decision was made to give up the internal native UTF8 implementation - the alternatives were to keep the unfinished string codes for some more years, or to spend some weeks in completing and testing the native UTF8 implementation... with the possibility that the resulting implementation would have a poor performance and tons of hidden bugs (waiting quietly in the dark to attack) due to it's complexity. Both options were not that attractive.
 

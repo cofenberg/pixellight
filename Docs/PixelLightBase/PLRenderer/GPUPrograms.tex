@@ -1,7 +1,7 @@
 \chapter{\ac{GPU} Programs}
 There's a broad range of shader languages and \ac{API}s like \ac{GLSL}, \ac{HLSL} and Cg. Therefore, when designing the \ac{GPU} program interfaces for PLRenderer, one design goal was to be able to implement as many \ac{GPU} program backends as possible - and this without producing to much internal overhead.
 
-In PixelLight, we're using OpenGL and \ac{GLSL} terminology if not otherwise mentioned. The reason for this is simple: OpenGL and \ac{GLSL} are popular open, multi-platform standard.
+In PixelLight, we're using \ac{OpenGL} and \ac{GLSL} terminology if not otherwise mentioned. The reason for this is simple: \ac{OpenGL} and \ac{GLSL} are popular open, multi-platform standard.
 
 
 
@@ -69,7 +69,7 @@ In the first years of programmable shaders, there was a need to connect the lega
 		\end{tabular}
 		\begin{tablenotes}
 			\item[1] Cg Users Manual (2.2, Release 1.4 September 2005), \url{http://developer.download.nvidia.com/cg/Cg\_2.2/CgUsersManual.pdf}, Page 299, Table 30. vp20 Varying Input Binding Semantics
-			\item[2] OpenGL Shading Language 3.30.6 Specification (updated March 11, 2010), \url{http://www.opengl.org/registry/doc/GLSLangSpec.3.30.6.clean.pdf} Page 73, 7.3 Compatibility Profile Vertex Shader Built-In Inputs
+			\item[2] \ac{OpenGL} Shading Language 3.30.6 Specification (updated March 11, 2010), \url{http://www.opengl.org/registry/doc/GLSLangSpec.3.30.6.clean.pdf} Page 73, 7.3 Compatibility Profile Vertex Shader Built-In Inputs
 		\end{tablenotes}
 		\caption{Binding semantic names for varying vertex shader input in \ac{GLSL} and Cg}
 		\label{Table:VaryingVertexShaderInput}

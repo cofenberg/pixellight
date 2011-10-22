@@ -66,9 +66,9 @@ move etc the texture by changing it's texture matrix or using all this texture a
 to create amazing materials full of life! :)\\
 
 An advanced material rendering control is supplied through the vertex and fragment shader you can apply
-to each pass. A shader is a program running on the \ac{GPU}. It will 'overwrite' the \ac{API} (e.g. OpenGL)
-fixpass functions which normally process vertices (transformations etc.) and fragments. (get the color
-of each fragment etc.) Therefore when using a vertex shader you have to transform the vertices by self
+to each pass. A shader is a program running on the \ac{GPU}. It will 'overwrite' the \ac{API} (e.g. \ac{OpenGL})
+fixpass functions which normally process vertices (transformations etc.) and fragments (get the color
+of each fragment etc.). Therefore when using a vertex shader you have to transform the vertices by self
 or when using a fragment shader calculating the single fragment colors by hand. In this case the
 different pass layers will only feed the active shaders with e.g. the desired textures but not combining
 different texture layers automatically. Further you have to consider things like texture matrix animations
@@ -128,7 +128,7 @@ the settings during runtime!
 When loading a material using the LoadByFilename() function there are different types of possible useable
 material data.\\
 - A simple texture like a jpg texture, all other material settings will be set to default.\\
-- An PixelLight texture animation file. (tani) This is handled in the same way as a simple texture
+- An PixelLight texture animation file (tani). This is handled in the same way as a simple texture
   but with additonal features like texture rotation.\\
 - A PixelLight material which is the default file type with the filename extension 'mat' which is
   added automatically. Within this material file format you are able to create a material with your
