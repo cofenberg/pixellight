@@ -115,7 +115,7 @@ class SystemAndroid : public SystemLinux {
 		*  @brief
 		*    Sets whether or not console messages are also written into the Android in-kernel log buffer (use Androids "logcat" utility to access this system log)
 		*
-		*  @param[in] bKernelLog
+		*  @param[in] bConsoleToKernelLog
 		*    'true' if console messages are also written into the Android in-kernel log buffer, else 'false', default is 'false'
 		*/
 		static PLCORE_API void SetConsoleToKernelLog(bool bConsoleToKernelLog);

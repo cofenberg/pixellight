@@ -355,16 +355,7 @@ if(WIN32)
 	##################################################
 	add_linker_flags(
 		${WIN32_LINKER_FLAGS}
-		/NODEFAULTLIB:LIBCMT		# Ignore libraries
 	)
-	if(CMAKE_BUILD_TYPE MATCHES Debug)
-		##################################################
-		## Debug
-		##################################################
-		add_linker_flags(
-			/NODEFAULTLIB:MSVCRT	# Ignore libraries
-		)
-	endif()
 elseif(LINUX)
 	##################################################
 	## GCC Compiler
