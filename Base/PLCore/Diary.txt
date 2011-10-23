@@ -5,6 +5,7 @@
   settings, but they look the same, meaning the one created by CMake and the one within the Git repository I'll use during the development. Interesting,
   same compiler, same settings, but different results (maybe it's the order in which the files are compiled? :). Added the "usual hack" within "PLCore.cpp"
   to force the compiler to keep the required symbols.
+- Implemented "DynLibLinux::GetAbsPath()"
 
 
 
