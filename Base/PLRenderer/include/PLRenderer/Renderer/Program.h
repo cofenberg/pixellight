@@ -119,7 +119,7 @@ class Program : public Resource {
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe shader language mismatch?)
 		*
-		*  @notes
+		*  @note
 		*    - The given vertex shader instance is just shared and will not be destroyed automatically by this program
 		*    - The given vertex shader instance must stay valid as long as it's used within this program
 		*/
@@ -144,7 +144,7 @@ class Program : public Resource {
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe shader language mismatch?)
 		*
-		*  @notes
+		*  @note
 		*    - The given geometry shader instance is just shared and will not be destroyed automatically by this program
 		*    - The given geometry shader instance must stay valid as long as it's used within this program
 		*/
@@ -169,7 +169,7 @@ class Program : public Resource {
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe shader language mismatch?)
 		*
-		*  @notes
+		*  @note
 		*    - The given fragment shader instance is just shared and will not be destroyed automatically by this program
 		*    - The given fragment shader instance must stay valid as long as it's used within this program
 		*/

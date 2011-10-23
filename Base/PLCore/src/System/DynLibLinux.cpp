@@ -23,6 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#ifndef ANDROID
+	#include <link.h>	// For "dlinfo", not available on Android
+#endif
 #include <dlfcn.h>
 #include <stdio.h>
 #include "PLCore/File/Url.h"
@@ -92,7 +95,16 @@ bool DynLibLinux::Load(const Url &cUrl)
 
 String DynLibLinux::GetAbsPath() const
 {
-	// [TODO] Implement me
+	#ifndef ANDROID
+		// "dlinfo" is not available on Android
+		link_map *pLinkMap = nullptr;
+		if (m_pLib && !dlinfo(m_pLib, RTLD_DI_LINKMAP, &pLinkMap)) {
+			// Success
+			return pLinkMap->l_name;
+		}
+	#endif
+
+	// Error!
 	return "";
 }
 

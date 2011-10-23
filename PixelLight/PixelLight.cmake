@@ -101,10 +101,10 @@ endif()
 set(PL_EXTERNAL_REPOSITORY "pixellight.sourceforge.net/externals" CACHE STRING "External repository")
 
 # User name for access to the repository
-set(PL_EXTERNAL_USER "" CACHE STRING "External repository user name")
+set(PL_EXTERNAL_USER "" CACHE STRING "External repository user name. Required in order to automatically download protected, non public external packages. Do also set PL_EXTERNAL_PASS (test your accout by e.g. opening \"pixellight.sourceforge.net/externals/Windows_x86_32/nonpublic\" within your webbrowser).")
 
 # User password for access to the repository
-set(PL_EXTERNAL_PASS "" CACHE STRING "External repository user password")
+set(PL_EXTERNAL_PASS "" CACHE STRING "External repository user password. Required in order to automatically download protected, non public external packages. Do also set PL_EXTERNAL_USER (test your accout by e.g. opening \"pixellight.sourceforge.net/externals/Windows_x86_32/nonpublic\" within your webbrowser).")
 
 # Use native plproject?
 if(PL_NATIVE_PLPROJECT)

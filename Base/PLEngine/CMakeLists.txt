@@ -50,9 +50,11 @@ add_sources(
 	src/Controller/CameraZoomController.cpp
 	src/Tools/Screenshot.cpp
 	src/Tools/SceneRendererTool.cpp
-    src/Tools/Camcorder.cpp
-    src/Tools/SNMPositionKeyframeRecord.cpp
-    src/Tools/SNMRotationKeyframeRecord.cpp
+	src/Tools/Camcorder.cpp
+	src/Tools/CamcorderLoader.cpp
+	src/Tools/CamcorderLoaderPL.cpp
+	src/Tools/SNMPositionKeyframeRecord.cpp
+	src/Tools/SNMRotationKeyframeRecord.cpp
 	src/Compositing/SNEngineInformation.cpp
 	src/Compositing/LoadScreen/SNLoadScreenBase.cpp
 	src/Compositing/LoadScreen/SNLoadScreenPL.cpp
