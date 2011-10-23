@@ -126,6 +126,12 @@
     <ClCompile Include="src\Application\Config.cpp">
       <Filter>Application</Filter>
     </ClCompile>
+    <ClCompile Include="src\Tools\CamcorderLoaderPL.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tools\CamcorderLoader.cpp">
+      <Filter>Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLEngine\Application\EngineApplication.h">
@@ -232,6 +238,12 @@
     </ClInclude>
     <ClInclude Include="include\PLEngine\Application\Config.h">
       <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Tools\CamcorderLoaderPL.h">
+      <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Tools\CamcorderLoader.h">
+      <Filter>Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

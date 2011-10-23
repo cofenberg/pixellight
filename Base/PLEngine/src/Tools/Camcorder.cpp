@@ -25,9 +25,10 @@
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
 #include <PLCore/Xml/Xml.h>
+#include <PLCore/Tools/Loader.h>
+#include <PLCore/Tools/LoaderImpl.h>
 #include <PLRenderer/Animation/Animation.h>
 #include <PLScene/Scene/SceneContainer.h>
-#include <PLScene/Scene/SceneNodeModifier.h>
 #include <PLScene/Scene/SceneNodeModifiers/SNMPositionKeyframeAnimation.h>
 #include <PLScene/Scene/SceneNodeModifiers/SNMRotationKeyframeAnimation.h>
 #include "PLEngine/Application/EngineApplication.h"
@@ -148,68 +149,11 @@ void Camcorder::StopRecord()
 		// Get the recorded camera
 		SceneNode *pCameraSceneNode = m_cCameraSceneNodeHandler.GetElement();
 		if (pCameraSceneNode) {
-			// Create XML document
-			XmlDocument cDocument;
-
-			// Add declaration
-			XmlDeclaration *pDeclaration = new XmlDeclaration("1.0", "", "");
-			cDocument.LinkEndChild(*pDeclaration);
-
-			// Add camcorder
-			XmlElement *pCamcorderElement = new XmlElement("Camcorder");
-			pCamcorderElement->SetAttribute("Version", "1");
-
-			// Write camera scene container name attribute
-			pCamcorderElement->SetAttribute("SceneContainer", m_sCameraStartSceneContainer);
-
-			// Write camera scene node name attribute
-			pCamcorderElement->SetAttribute("SceneNode", m_sCameraStartName);
-
-			// Get the position keyframe record modifier from the camera scene node
-			SceneNodeModifier *pSceneNodeModifier = pCameraSceneNode->GetModifier("PLEngine::SNMPositionKeyframeRecord");
-			if (pSceneNodeModifier) {
-				// Create the position keys element
-				XmlElement *pElement = new XmlElement("PositionKeys");
-
-				// Set coordinate system attribute
-				pElement->SetAttribute("CoordinateSystem", pSceneNodeModifier->GetAttribute("CoordinateSystem")->GetString());
-
-				// Set frames per second attribute
-				pElement->SetAttribute("FramesPerSecond", pSceneNodeModifier->GetAttribute("FramesPerSecond")->GetString());
-
-				// Add value
-				XmlText *pValue = new XmlText(pSceneNodeModifier->GetAttribute("Keys")->GetString());
-				pElement->LinkEndChild(*pValue);
-
-				// Link position keys element to parent
-				pCamcorderElement->LinkEndChild(*pElement);
-			}
-
-			// Get the rotation keyframe record modifier from the camera scene node
-			pSceneNodeModifier = pCameraSceneNode->GetModifier("PLEngine::SNMRotationKeyframeRecord");
-			if (pSceneNodeModifier) {
-				// Create the rotation keys element
-				XmlElement *pElement = new XmlElement("RotationKeys");
-
-				// Set frames per second attribute
-				pElement->SetAttribute("FramesPerSecond", pSceneNodeModifier->GetAttribute("FramesPerSecond")->GetString());
-
-				// Add value
-				XmlText *pValue = new XmlText(pSceneNodeModifier->GetAttribute("Keys")->GetString());
-				pElement->LinkEndChild(*pValue);
-
-				// Link rotation keys element to parent
-				pCamcorderElement->LinkEndChild(*pElement);
-			}
-
-			// Link camcorder element to parent
-			cDocument.LinkEndChild(*pCamcorderElement);
-
 			// Get the filename
 			const String sFilename = CamcorderDirectory.Get() + m_sRecordName + ".cam";
 
-			// Save config
-			cDocument.Save(sFilename);
+			// Save the camcorder loadable
+			SaveByFilename(sFilename);
 
 			// Remove position and rotation keyframe record modifiers from the camera scene node
 			pCameraSceneNode->RemoveModifier("PLEngine::SNMPositionKeyframeRecord");
@@ -238,93 +182,21 @@ void Camcorder::StartPlayback(const String &sName)
 			// Get the filename
 			const String sFilename = CamcorderDirectory.Get() + sName + ".cam";
 
-			// Load XML document
-			XmlDocument cDocument;
-			if (cDocument.Load(sFilename)) {
-				// Get camcorder element
-				const XmlElement *pCamcorderElement = cDocument.GetFirstChildElement("Camcorder");
-				if (pCamcorderElement) {
-					// Get the format version - must be 1
-					const int nVersion = pCamcorderElement->GetAttribute("Version").GetInt();
-					if (nVersion == 1) {
-						// Keep a reference to this camera scene node
-						m_cCameraSceneNodeHandler.SetElement(pCameraSceneNode);
+			// Keep a reference to this camera scene node
+			m_cCameraSceneNodeHandler.SetElement(pCameraSceneNode);
 
-						// Disable certain scene node modifiers of the given scene node
-						SetupSceneNodeModifiers(*pCameraSceneNode, false);
+			// Disable certain scene node modifiers of the given scene node
+			SetupSceneNodeModifiers(*pCameraSceneNode, false);
 
-						// Backup the record name
-						m_sRecordName = sName;
+			// Backup the record name
+			m_sRecordName = sName;
 
-						// Playback is now enabled
-						m_bPlaying			= true;
-						m_bPlaybackFinished = false;
+			// Playback is now enabled
+			m_bPlaying			= true;
+			m_bPlaybackFinished = false;
 
-						// Get the scene container the camera is in
-						const String sSceneContainer = pCamcorderElement->GetAttribute("SceneContainer");
-
-						// Set the camera into this scene container
-						SceneNode *pSceneNode = pCameraSceneNode->GetContainer()->GetByName(sSceneContainer);
-						if (pSceneNode && pSceneNode->IsContainer())
-							pCameraSceneNode->SetContainer(*static_cast<SceneContainer*>(pSceneNode));
-
-						// Get and set the camera start name - not really required, the scene node name is just there to be complete
-						//const String sSceneNode = pCamcorderElement->GetAttribute("SceneNode");
-						//pCameraSceneNode->SetName(sSceneNode);
-
-						// Get position keys
-						const XmlElement *pXmlPositionKeysElement = pCamcorderElement->GetFirstChildElement("PositionKeys");
-						if (pXmlPositionKeysElement) {
-							// Get the coordinate system
-							const String sCoordinateSystem = pXmlPositionKeysElement->GetAttribute("CoordinateSystem");
-
-							// Get frames per second attribute
-							const String sFramesPerSecond = pXmlPositionKeysElement->GetAttribute("FramesPerSecond");
-
-							// Get value
-							const XmlNode *pNode = pXmlPositionKeysElement->GetFirstChild();
-							if (pNode && pNode->GetType() == XmlNode::Text) {
-								const String sValue = pNode->GetValue();
-								if (sValue.GetLength()) {
-									// Add position keyframe animation modifiers to the camera scene node
-									SNMPositionKeyframeAnimation *pSNMPositionKeyframeAnimation = static_cast<SNMPositionKeyframeAnimation*>(pCameraSceneNode->AddModifier("PLScene::SNMPositionKeyframeAnimation", "Flags=\"PlaybackNoLoop\" Keys=\"" + sValue + "\" CoordinateSystem=\"" + sCoordinateSystem + "\" FramesPerSecond=\"" + sFramesPerSecond + '\"'));
-
-									// Connect the event handler
-									if (pSNMPositionKeyframeAnimation)
-										pSNMPositionKeyframeAnimation->GetAnimation().EventStop.Connect(SlotOnAnimationStop);
-								}
-							}
-						}
-
-						// Get rotation keys
-						const XmlElement *pXmlRotationKeysElement = pCamcorderElement->GetFirstChildElement("RotationKeys");
-						if (pXmlRotationKeysElement) {
-							// Get frames per second attribute
-							const String sFramesPerSecond = pXmlRotationKeysElement->GetAttribute("FramesPerSecond");
-
-							// Get value
-							const XmlNode *pNode = pXmlRotationKeysElement->GetFirstChild();
-							if (pNode && pNode->GetType() == XmlNode::Text) {
-								const String sValue = pNode->GetValue();
-								if (sValue.GetLength()) {
-									// Add rotation keyframe animation modifiers to the camera scene node
-									SNMRotationKeyframeAnimation *pSNMRotationKeyframeAnimation = static_cast<SNMRotationKeyframeAnimation*>(pCameraSceneNode->AddModifier("PLScene::SNMRotationKeyframeAnimation", "Flags=\"PlaybackNoLoop\" Keys=\"" + sValue +  + "\" FramesPerSecond=\"" + sFramesPerSecond + '\"'));
-
-									// Connect the event handler
-									if (pSNMRotationKeyframeAnimation)
-										pSNMRotationKeyframeAnimation->GetAnimation().EventStop.Connect(SlotOnAnimationStop);
-								}
-							}
-						}
-					} else {
-						PL_LOG(Error, "Invalid format version")
-					}
-				} else {
-					PL_LOG(Error, "Can't find 'Camcorder' element")
-				}
-			} else {
-				PL_LOG(Error, cDocument.GetValue() + ": " + cDocument.GetErrorDesc())
-			}
+			// Load the camcorder loadable
+			LoadByFilename(sFilename);
 		}
 	}
 }
@@ -377,6 +249,48 @@ void Camcorder::Update()
 		// Emit the playback finished event
 		SignalPlaybackFinished();
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual PLCore::Loadable functions             ]
+//[-------------------------------------------------------]
+bool Camcorder::Unload()
+{
+	// Stop the record
+	StopRecord();
+
+	// Call base implementation
+	return Loadable::Unload();
+}
+
+String Camcorder::GetLoadableTypeName() const
+{
+	return "Camcorder";
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual PLCore::Loadable functions          ]
+//[-------------------------------------------------------]
+bool Camcorder::CallLoadable(File &cFile, Loader &cLoader, const String &sMethod, const String &sParams)
+{
+	// Get the loader implementation
+	LoaderImpl *pLoaderImpl = cLoader.GetImpl();
+	if (pLoaderImpl) {
+		// Load
+		if (sParams.GetLength()) {
+			pLoaderImpl->CallMethod(sMethod, "Param0=\"" + Type<Camcorder&>::ConvertToString(*this) + "\" Param1=\"" + Type<File&>::ConvertToString(cFile) + "\" " + sParams);
+			return true;
+		} else {
+			Params<bool, Camcorder&, File&> cParams(*this, cFile);
+			pLoaderImpl->CallMethod(sMethod, cParams);
+			return cParams.Return;
+		}
+	}
+
+	// Error!
+	return false;
 }
 
 

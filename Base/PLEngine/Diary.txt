@@ -1,3 +1,9 @@
+>> 23.10.2011
+[CO]
+- The camcorder is now also using the loadable system
+
+
+
 >> 08.10.2011
 [CO]
 - Bugfix: "Picking::MeshIntersection()": In case the start position of the intersection line is inside the scene node, we have to check whether or not the
