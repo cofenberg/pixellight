@@ -27,7 +27,7 @@
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/Tools/Localization.h>
 #include <PLInput/Input/Controller.h>
-#include <PLInput/Input/Controls/Control.h>
+#include <PLInput/Input/Controls/Button.h>
 #include <PLScene/Scene/SPScene.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include "Application.h"
@@ -121,7 +121,7 @@ void Application::UpdateTimeScaleTextNode()
 void Application::OnControl(Control &cControl)
 {
 	// Is it a button?
-	if (cControl.GetType() == ControlButton) {
+	if (cControl.GetType() == ControlButton && static_cast<Button&>(cControl).IsPressed()) {
 		// Check whether the escape key was pressed
 		if (cControl.GetName() == "KeyboardEscape") {
 			// Shut down the application
@@ -129,18 +129,17 @@ void Application::OnControl(Control &cControl)
 		} else {
 			// Get current time difference
 			Timing *pTimer = Timing::GetInstance();
-			float fTimeDiff        = pTimer->GetTimeDifference();
-			float fTimeScaleFactor = pTimer->GetTimeScaleFactor();
+			const float fTimeScaleFactor = pTimer->GetTimeScaleFactor();
 
 			// Check button
 			if (cControl.GetName() == "Keyboard1") {
 				// Decrease timescale
-				pTimer->SetTimeScaleFactor(fTimeScaleFactor-fTimeDiff);
+				pTimer->SetTimeScaleFactor(fTimeScaleFactor - 0.1f);
 				if (pTimer->GetTimeScaleFactor() < 0.1f)
 					pTimer->SetTimeScaleFactor(0.1f);
 			} else if (cControl.GetName() == "Keyboard2") {
 				// Increase timescale
-				pTimer->SetTimeScaleFactor(fTimeScaleFactor+fTimeDiff);
+				pTimer->SetTimeScaleFactor(fTimeScaleFactor +  0.1f);
 				if (pTimer->GetTimeScaleFactor() > 4.0f)
 					pTimer->SetTimeScaleFactor(4.0f);
 			} else if (cControl.GetName() == "Keyboard3") {
