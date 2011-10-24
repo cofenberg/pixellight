@@ -134,6 +134,10 @@ elseif(LINUX)
 	add_include_directories(
 		/usr/include/dbus-1.0
 		/usr/lib/dbus-1.0/include
+		# [TODO] check the dbus include dirs. This are the dirs 'pkg-config --cflags --libs dbus-1' returns on Ubuntu 11.10
+		# Added this for Ubuntu includes and hopefully it will be the right location for most of ubuntu installations.
+		/usr/include/dbus-1.0 
+		/usr/lib/i386-linux-gnu/dbus-1.0/include
 	)
 endif()
 
