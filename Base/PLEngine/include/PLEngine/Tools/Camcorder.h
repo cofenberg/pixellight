@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLCore/Tools/Loadable.h"
 #include <PLScene/Scene/SceneNodeHandler.h>
 #include "PLEngine/PLEngine.h"
 
@@ -54,7 +55,13 @@ class EngineApplication;
 *  @note
 *    - Do not perform playback if the current camera is using physics...
 */
-class Camcorder : public PLCore::Object {
+class Camcorder : public PLCore::Object, public PLCore::Loadable {
+
+
+	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class CamcorderLoaderPL;
 
 
 	//[-------------------------------------------------------]
@@ -62,7 +69,7 @@ class Camcorder : public PLCore::Object {
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, Camcorder, "PLEngine", PLCore::Object, "Camcorder interaction component")
 		// Attributes
-		pl_attribute(CamcorderDirectory,	PLCore::String,	"../Data/Camcorder/",	ReadWrite,	DirectValue,	"Default directory for the camcorder files",	"")
+		pl_attribute(CamcorderDirectory,	PLCore::String,	"Data/Camcorder/",	ReadWrite,	DirectValue,	"Default directory for the camcorder files",	"")
 		#ifdef PLENGINE_EXPORTS	// The following is only required when compiling PLEngine
 			// Methods
 			pl_method_1(StartRecord,	pl_ret_type(void),	const PLCore::String&,	"Starts the record, record name as first parameter (if empty string, no recording can be started). The currently used application camera will be recorded. If playback is currently enabled, the playback will be stopped at once.",	"")
@@ -169,6 +176,21 @@ class Camcorder : public PLCore::Object {
 		*    Updates the camcorder component
 		*/
 		PL_API void Update();
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLCore::Loadable functions             ]
+	//[-------------------------------------------------------]
+	public:
+		PL_API virtual bool Unload() override;
+		PL_API virtual PLCore::String GetLoadableTypeName() const override;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual PLCore::Loadable functions          ]
+	//[-------------------------------------------------------]
+	protected:
+		PL_API virtual bool CallLoadable(PLCore::File &cFile, PLCore::Loader &cLoader, const PLCore::String &sMethod, const PLCore::String &sParams) override;
 
 
 	//[-------------------------------------------------------]

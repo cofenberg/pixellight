@@ -1,4 +1,15 @@
-﻿>> 22.10.2011
+﻿>> 23.10.2011
+[CO]
+- Interesting, just tried to build PixelLight on MS Windows by using CMake to create the Visual Studio projects files and then, as usually build PL with VC...
+  but within PLMath the linker told me that a few "PLCore::Log" singleton symbols were missing. They were stripped way... I double checked the compiler
+  settings, but they look the same, meaning the one created by CMake and the one within the Git repository I'll use during the development. Interesting,
+  same compiler, same settings, but different results (maybe it's the order in which the files are compiled? :). Added the "usual hack" within "PLCore.cpp"
+  to force the compiler to keep the required symbols.
+- Implemented "DynLibLinux::GetAbsPath()"
+
+
+
+>> 22.10.2011
 [CO]
 - "EventDesc::GetSignal()" & "EventHandlerDesc::GetSlot()" & "VarDesc::GetAttribute()": Gave in a null pointer into the not documented
   pointer parameter and got a crash. This should never happen. Changed the pointer parameter into a reference parameter.

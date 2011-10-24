@@ -288,6 +288,8 @@ copy build\release_x64\PLEngine.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\Picking\Picking.cpp" />
     <ClCompile Include="src\Picking\PickingResult.cpp" />
     <ClCompile Include="src\Tools\Camcorder.cpp" />
+    <ClCompile Include="src\Tools\CamcorderLoader.cpp" />
+    <ClCompile Include="src\Tools\CamcorderLoaderPL.cpp" />
     <ClCompile Include="src\Tools\SceneRendererTool.cpp" />
     <ClCompile Include="src\Tools\Screenshot.cpp" />
     <ClCompile Include="src\Tools\SNMPositionKeyframeRecord.cpp" />
@@ -325,6 +327,8 @@ copy build\release_x64\PLEngine.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLEngine\Picking\Picking.h" />
     <ClInclude Include="include\PLEngine\Picking\PickingResult.h" />
     <ClInclude Include="include\PLEngine\Tools\Camcorder.h" />
+    <ClInclude Include="include\PLEngine\Tools\CamcorderLoader.h" />
+    <ClInclude Include="include\PLEngine\Tools\CamcorderLoaderPL.h" />
     <ClInclude Include="include\PLEngine\Tools\SceneRendererTool.h" />
     <ClInclude Include="include\PLEngine\Tools\Screenshot.h" />
     <ClInclude Include="include\PLEngine\Tools\SNMPositionKeyframeRecord.h" />

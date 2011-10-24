@@ -119,6 +119,12 @@ set(WIN32_COMPILE_FLAGS
 	/Zi									# Debug information Format: Program Database
 	/MP									# Multi-processor Compilation
 	/fp:precise							# Floating Point Model: Precise
+	/EHs-c-								# Disable exception handling
+	/Gm-								# Disable minimal rebuild
+	/Gy-								# Disable function-level linking
+	/fp:fast							# Fast floating point model
+	/fp:except-							# Disable floating point expections
+	/Gd									# Calling convention: Default setting
 )
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
