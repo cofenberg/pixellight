@@ -1,3 +1,8 @@
+>> 24.10.2011
+[TM]
+- Added extra include dirs for dbus in CMakeList.txt. We should implement a dbus_find.cmake by time. The added ones are for Ubuntu 11.10. Hopefully for all x86 Ubuntu plattform.
+
+
 >> 08.10.2011
 [CO]
 - "AndroidMouseDevice" bugfix: D'OH! The movement test should be "Math::Abs(fDeltaX) > 3" instead of "fDeltaX > 3" to also take a negative sign

@@ -48,7 +48,7 @@ add_dependencies(Docs Docs-SDKBrowser)
 
 # CHM
 add_custom_command(TARGET Docs-${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_TARGET_CHM} ${PL_DOCS_DIR}
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_TARGET_CHM} ${PL_BIN_DIR}
 )
 
 ##################################################

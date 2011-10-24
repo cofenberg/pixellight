@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#ifndef ANDROID
-	#include <link.h>	// For "dlinfo", not available on Android
+#if !defined(ANDROID) && !defined(APPLE)
+	#include <link.h>	// For "dlinfo", not available on Android and Mac OS X
 #endif
 #include <dlfcn.h>
 #include <stdio.h>
@@ -95,8 +95,8 @@ bool DynLibLinux::Load(const Url &cUrl)
 
 String DynLibLinux::GetAbsPath() const
 {
-	#ifndef ANDROID
-		// "dlinfo" is not available on Android
+	#if !defined(ANDROID) && !defined(APPLE)
+		// "dlinfo" is not available on Android and Mac OS X
 		link_map *pLinkMap = nullptr;
 		if (m_pLib && !dlinfo(m_pLib, RTLD_DI_LINKMAP, &pLinkMap)) {
 			// Success

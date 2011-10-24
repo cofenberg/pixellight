@@ -94,7 +94,7 @@ if(LINUX)
 	endif()
 
 	# Detailed version information?
-	set(CMAKETOOLS_DETAILED_VERSION_INFORMATION "0" CACHE BOOL "Create detailed version information? If active, symlinks like \"libPLCore.so.0.9.9\" and \"libPLCore.so.0\" are created and also used directly within the created libraries and executables.")
+	set(CMAKETOOLS_DETAILED_VERSION_INFORMATION "0" CACHE BOOL "Create detailed version information? If active, symlinks like \"libPLCore.so.0.9.10\" and \"libPLCore.so.0\" are created and also used directly within the created libraries and executables.")
 endif()
 
 # Repository URL (where to download the external pre-built packages from)
