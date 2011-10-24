@@ -52,7 +52,7 @@
 #ifdef WIN32
 	#include "PLRendererOpenGL/Windows/ContextWindows.h"
 #elif APPLE
-	#include "PLRendererOpenGL/MaxOSX/ContextMacOSX.h"
+	#include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
 #elif LINUX
 	#include "PLRendererOpenGL/Linux/ContextLinux.h"
 #endif
