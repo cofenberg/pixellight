@@ -138,6 +138,8 @@ elseif(LINUX)
 		# Added this for Ubuntu includes and hopefully it will be the right location for most of ubuntu installations.
 		/usr/include/dbus-1.0 
 		/usr/lib/i386-linux-gnu/dbus-1.0/include
+		# Ubuntu 11.10 64bit dbus include
+		/usr/lib/x86_64-linux-gnu/dbus-1.0/include
 	)
 endif()
 
