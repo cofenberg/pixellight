@@ -1,3 +1,14 @@
+>> 25.10.2011
+[CO]
+- Android port releated: "CMAKETOOLS_MINIMAL" CMake variable is no longer set to 1 by default and disabled plugins which are not yet supported
+  on this platform (create prebuild external packages and test it)
+- CMake options: Added "(due to legal issues, we can't provide a public downloadable package)"-information so one can see within CMake-GUI which external
+  prebuild packages can be downloaded automatically by the system without a user & passwort set
+- CMake options: By default, disable plugins using stuff were we can't provide a public downloadable package in order to avoid compiler errors due to not
+  found includes (at least when using the default settings)
+
+
+
 >> 20.10.2011
 [CO]
 - Mac OS X 10.6 is shipped with GCC 4.2. It's possible to compile and use GCC 4.6 (worked for me without any issues), but PixelLight should also be able to compile by using the
