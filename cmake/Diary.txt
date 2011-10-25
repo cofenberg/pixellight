@@ -4,6 +4,8 @@
   on this platform (create prebuild external packages and test it)
 - CMake options: Added "(due to legal issues, we can't provide a public downloadable package)"-information so one can see within CMake-GUI which external
   prebuild packages can be downloaded automatically by the system without a user & passwort set
+- CMake options: By default, disable plugins using stuff were we can't provide a public downloadable package in order to avoid compiler errors due to not
+  found includes (at least when using the default settings)
 
 
 
