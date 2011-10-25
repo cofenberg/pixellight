@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Log/Log.h>
 #include <PLCore/File/Url.h>
 #include <PLCore/String/ParseTools.h>
 #include <PLCore/Xml/XmlDocument.h>
@@ -90,6 +91,9 @@ void XmlTextElement::Load(const String &sFilename)
 
 		// Parse this node
 		Parse(*pRootNode);
+	} else {
+		// Error!
+		PL_LOG(Error, "Failed to load in the XML file \"" + sFilename + '\"')
 	}
 }
 
