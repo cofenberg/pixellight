@@ -6,6 +6,9 @@ PLRendererOpenGL:
     - License: MIT License (http://mesa3d.org/license.html)
     - Downloaded from: ftp://ftp.freedesktop.org/pub/mesa/7.10/MesaLib-7.10.zip
 -> PLRendererOpenGL can now be used without the need to worry about proprietary stuff
+PLRendererOpenGLES2:
+- Added a CMake option in order to make the non public "OpenGLES2.tar.gz" package only optional... it's only required in case you want to use
+  the emulator instead of the native OpenGL ES 2.0 support of your graphics driver
 
 
 

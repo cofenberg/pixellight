@@ -200,8 +200,7 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_RUNTIME_BIN_DIR})
 ## Dependencies
 ##################################################
 add_dependencies(${CMAKETOOLS_CURRENT_TARGET}		PLCore PLMath PLGraphics PLRenderer)
-if(NOT PL_MOBILE)
-	# No need for OpenGL ES 2.0 emulator external dependencies when building for a mobile device
+if(PL_PLUGIN_RENDERER_OPENGLES2_EMULATOR)
 	add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-OpenGLES2)
 endif()
 if(PL_PLUGIN_RENDERER_OPENGLES2_FONT)
@@ -227,16 +226,18 @@ if(LINUX AND CMAKETOOLS_DETAILED_VERSION_INFORMATION)
 endif()
 
 # No need for system libraries because we dynamically linking at runtime against the EGL and OpenGL ES 2.0 dynamic libraries, this in here is optional emulator only
-if(WIN32)
-	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E copy ${PL_RUNTIME_BIN_GITDIR}/libEGL.dll	${PL_RUNTIME_BIN_DIR}
-		COMMAND ${CMAKE_COMMAND} -E copy ${PL_RUNTIME_BIN_GITDIR}/libGLESv2.dll	${PL_RUNTIME_BIN_DIR}
-	)
-elseif(LINUX AND NOT ANDROID)
-	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenGLES2/lib/libEGL.so		${PL_RUNTIME_BIN_DIR}
-		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenGLES2/lib/libGLESv2.so	${PL_RUNTIME_BIN_DIR}
-	)
+if(PL_PLUGIN_RENDERER_OPENGLES2_EMULATOR)
+	if(WIN32)
+		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+			COMMAND ${CMAKE_COMMAND} -E copy ${PL_RUNTIME_BIN_GITDIR}/libEGL.dll	${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${PL_RUNTIME_BIN_GITDIR}/libGLESv2.dll	${PL_RUNTIME_BIN_DIR}
+		)
+	elseif(LINUX AND NOT ANDROID)
+		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenGLES2/lib/libEGL.so		${PL_RUNTIME_BIN_DIR}
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/OpenGLES2/lib/libGLESv2.so	${PL_RUNTIME_BIN_DIR}
+		)
+	endif()
 endif()
 
 ##################################################
