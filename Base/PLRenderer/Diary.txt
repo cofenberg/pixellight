@@ -1,3 +1,14 @@
+>> 25.10.2011
+[CO]
+PLRendererOpenGL:
+- Removed non public "OpenGL.tar.gz" package within "Windows_x86_32" and "Linux_x86_32" (other targets had no such package).
+- "gl.h", "glu.h" and "glx.h" are from MesaLib 7.10
+    - License: MIT License (http://mesa3d.org/license.html)
+    - Downloaded from: ftp://ftp.freedesktop.org/pub/mesa/7.10/MesaLib-7.10.zip
+-> PLRendererOpenGL can now be used without the need to worry about proprietary stuff
+
+
+
 >> 21.10.2011
 [CO]
 PLRendererOpenGL:
