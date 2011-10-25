@@ -2,6 +2,8 @@
 [CO]
 - Android port releated: "CMAKETOOLS_MINIMAL" CMake variable is no longer set to 1 by default and disabled plugins which are not yet supported
   on this platform (create prebuild external packages and test it)
+- CMake options: Added "(due to legal issues, we can't provide a public downloadable package)"-information so one can see within CMake-GUI which external
+  prebuild packages can be downloaded automatically by the system without a user & passwort set
 
 
 
