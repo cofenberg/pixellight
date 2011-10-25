@@ -316,6 +316,7 @@ if(ANDROID)
 	# [TODO] The following plugins are not yet supported (create prebuild external packages and test it)
 	unset (PL_PLUGIN_SCRIPT_V8						CACHE)
 	unset (PL_PLUGIN_SCRIPT_PYTHON					CACHE)
+	unset (PL_PLUGIN_SCRIPT_ANGELSCRIPT				CACHE)	# Experimental package is already there, but there are still linker issues to be solved
 	unset (PL_PLUGIN_DATABASE_MYSQL					CACHE)
 	unset (PL_PLUGIN_DATABASE_POSTGRESQL			CACHE)
 	unset (PL_PLUGIN_DATABASE_SQLITE				CACHE)
