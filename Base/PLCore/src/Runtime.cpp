@@ -153,11 +153,16 @@ String Runtime::GetLocalDataDirectory()
 */
 String Runtime::GetSystemDirectory()
 {
-	// First: Try to find the PL-runtime directory by using the PLCore shared library
-	String sPLDirectory = GetDirectory(SystemInstallation);
+	// First: Try to find the system PL-runtime directory by reading the registry
+	// -> We really need to check for the registry, first: When building for Linux, there
+	//    are fixed build in locations like "/home/bob/pixellight/cmakeout/Base/PLCore/" and
+	//    build executables will link against those shared libraries -> You'll receive
+	//    "/home/bob/pixellight/cmakeout/Base/PLCore/" as PL system directory, not e.g.
+	//    "/home/bob/pixellight/Bin-Linux/Runtime/x86" as expected.
+	String sPLDirectory = GetRegistryDirectory();
 	if (!sPLDirectory.GetLength()) {
-		// Second: Try to find the system PL-runtime directory by reading the registry
-		sPLDirectory = GetRegistryDirectory();
+		// Second: Try to find the PL-runtime directory by using the PLCore shared library
+		sPLDirectory = GetDirectory(SystemInstallation);
 	}
 
 	// Done
