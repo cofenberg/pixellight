@@ -304,6 +304,15 @@ if(ANDROID)
 	unset (PL_TOOL_PLPROJECT				CACHE)	# No plugin files required because for Android, we need to load in all shared libraries right at the beginning
 	unset (PL_TOOL_PLUPGRADE				CACHE)
 	unset (PL_NATIVE_PLPROJECT				CACHE)	# No plugin files required because for Android, we need to load in all shared libraries right at the beginning
+
+	# [TODO] The following plugins are not yet supported (create prebuild external packages and test it)
+	unset (PL_PLUGIN_SCRIPT_V8				CACHE)
+	unset (PL_PLUGIN_SCRIPT_PYTHON			CACHE)
+	unset (PL_PLUGIN_DATABASE_MYSQL			CACHE)
+	unset (PL_PLUGIN_DATABASE_POSTGRESQL	CACHE)
+	unset (PL_PLUGIN_DATABASE_SQLITE		CACHE)
+	unset (PL_PLUGIN_PHYSICS_ODE			CACHE)
+	unset (PL_PLUGIN_ENGINE_IMAGEEXR		CACHE)
 else()
 	# Remove Android only features
 	unset (PL_PLUGIN_SOUND_OPENSLES			CACHE)
