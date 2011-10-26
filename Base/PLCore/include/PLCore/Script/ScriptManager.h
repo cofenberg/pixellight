@@ -153,6 +153,15 @@ class ScriptManager : public Singleton<ScriptManager> {
 		*  @return
 		*    The created script instance, null pointer on error (Unknown filename extension? File not found? Error within the script?)
 		*
+		*  @remarks
+		*    While the "Create()"-method only creates an empty script instance, the "CreateFromFile()"-method will
+		*    - Create an empty script instance by using the filename extension as indication of the script language to use
+		*    - Load in the script source code by using the given script filename
+		*    - Assign the loaded script source code to the created, previously empty, script
+		*    The result is a ready to be used script by just using this one method. The drawback is, that you can't use
+		*    custom global functions when using this method because the custom global functions have to be defined before
+		*    the script source code is assigned to the script (resulting in script compilation).
+		*
 		*  @note
 		*    - Convenience method
 		*    - It's not recommended to use Unicode by because internally wchar_t is used and this data type has not

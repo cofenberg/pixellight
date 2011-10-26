@@ -1,6 +1,8 @@
 >> 26.10.2011
 [CO]
 - "SystemLinux::GetPlatform()" & "SystemLinux::GetOS()": Added Mac OS X handling (it's not worth to derive an own class, yet)
+- "ScriptManager::CreateFromFile()": Enhanced the method documentation in order to avoid problems like the one at
+  http://dev.pixellight.org/forum/viewtopic.php?f=6&t=103
 
 
 
