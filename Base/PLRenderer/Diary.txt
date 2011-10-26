@@ -1,3 +1,11 @@
+>> 26.10.2011
+[CO]
+PLRendererOpenGL:
+- "SurfaceWindow": Added Mac OS X implementation of the methods "GetGamma()", "SetGamma()" and "GetSize()"É except for some names, they are identical
+  to the Linux implementation
+
+
+
 >> 25.10.2011
 [CO]
 PLRendererOpenGL:

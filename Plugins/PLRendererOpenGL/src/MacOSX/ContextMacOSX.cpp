@@ -48,6 +48,7 @@ namespace PLRendererOpenGL {
 */
 ContextMacOSX::ContextMacOSX(Renderer &cRenderer) :
 	m_pRenderer(&cRenderer),
+	m_pDisplay(XOpenDisplay(nullptr)),
 	m_pCGLContextObj(nullptr)
 {
 	CGLError nCGLError = kCGLNoError;
@@ -93,6 +94,30 @@ ContextMacOSX::~ContextMacOSX()
 		if (nCGLError != kCGLNoError)
 			PL_LOG(Error, String("Failed to destroy the CGL context object (\"") + CGLErrorString(nCGLError) + "\")")
 	}
+
+	// Is there a valid X server display connection?
+	if (m_pDisplay) {
+		// Close the X server display connection
+		XCloseDisplay(m_pDisplay);
+	}
+}
+
+/**
+*  @brief
+*    Returns the X server display connection
+*/
+Display *ContextMacOSX::GetDisplay() const
+{
+	return m_pDisplay;
+}
+	
+/**
+*  @brief
+*    Returns the primary render context
+*/
+CGLContextObj ContextMacOSX::GetRenderContext() const
+{
+	return m_pCGLContextObj;
 }
 
 
