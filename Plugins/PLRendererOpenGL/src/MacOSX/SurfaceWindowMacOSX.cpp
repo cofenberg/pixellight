@@ -46,7 +46,7 @@ bool SurfaceWindow::GetGamma(float &fRed, float &fGreen, float &fBlue) const
 	if (pContextMacOSX) {
 		// Get the X server display connection
 		Display *pDisplay = pContextMacOSX->GetDisplay();
-		
+
 		// Get gamma information
 		XF86VidModeGamma sXF86VidModeGamma;
 		if (XF86VidModeGetGamma(pDisplay, XDefaultScreen(pDisplay), &sXF86VidModeGamma)) {
@@ -58,12 +58,12 @@ bool SurfaceWindow::GetGamma(float &fRed, float &fGreen, float &fBlue) const
 			return true;
 		}
 	}
-	
+
 	// Set fallback settings so that the reference parameters are never within an undefined state
 	fRed   = 0.0f;
 	fGreen = 0.0f;
 	fBlue  = 0.0f;
-	
+
 	// Error!
 	return false;
 }
@@ -76,10 +76,10 @@ bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 		if (pContextMacOSX) {
 			// Get the X server display connection
 			Display *pDisplay = pContextMacOSX->GetDisplay();
-			
+
 			// Gamma was changed...
 			m_bGammaChanged = true;
-			
+
 			// Call the OS gamma ramp function
 			XF86VidModeGamma sXF86VidModeGamma;
 			sXF86VidModeGamma.red   = fRed;
@@ -89,7 +89,7 @@ bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 				return true; // Done
 		}
 	}
-	
+
 	// Error!
 	return false;
 }

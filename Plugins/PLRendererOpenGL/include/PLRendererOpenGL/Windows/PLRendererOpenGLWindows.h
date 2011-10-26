@@ -30,10 +30,10 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/PLCoreWindowsIncludes.h>
-#include "../../../../External/Recommended/OpenGL/gl.h"
-#include "../../../../External/Recommended/OpenGL/glu.h"
-#include "../../../../External/Recommended/OpenGL/glext.h"
-#include "../../../../External/Recommended/OpenGL/wglext.h"
+#include "../../../../../External/Recommended/OpenGL/gl.h"
+#include "../../../../../External/Recommended/OpenGL/glu.h"
+#include "../../../../../External/Recommended/OpenGL/glext.h"
+#include "../../../../../External/Recommended/OpenGL/wglext.h"
 
 
 //[-------------------------------------------------------]

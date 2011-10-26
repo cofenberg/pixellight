@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <X11/Xutil.h>
 #include <OpenGL/CGLTypes.h>
-#include <CGDirectDisplay.h>	// [TODO] Should be <CoreGraphics/CGDirectDisplay.h> -> See CMakeLists.txt of this project 
+#include <CGDirectDisplay.h>	// [TODO] Should be <CoreGraphics/CGDirectDisplay.h> -> See CMakeLists.txt of this project
 #include "PLRendererOpenGL/Context.h"
 
 
