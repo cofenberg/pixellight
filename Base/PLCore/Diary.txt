@@ -1,3 +1,9 @@
+>> 26.10.2011
+[CO]
+- "SystemLinux::GetPlatform()" & "SystemLinux::GetOS()": Added Mac OS X handling (it's not worth to derive an own class, yet)
+
+
+
 >> 25.10.2011
 [CO]
 - "Runtime::GetSystemDirectory()": We really need to check for the registry, first: When building for Linux, there are fixed build in locations like
