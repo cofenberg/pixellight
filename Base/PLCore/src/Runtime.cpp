@@ -425,7 +425,7 @@ String Runtime::GetDirectory(EType nType)
 	}
 
 	// Error!
-	return false;
+	return "";
 }
 
 
