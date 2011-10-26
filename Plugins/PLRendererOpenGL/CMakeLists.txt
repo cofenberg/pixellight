@@ -223,6 +223,15 @@ if(WIN32)
 	add_linker_flags(
 		${WIN32_LINKER_FLAGS}
 	)
+elseif(APPLE)
+	##################################################
+	## GCC Compiler
+	##################################################
+	add_linker_flags(
+		${LINUX_LINKER_FLAGS}
+		-framework OpenGL
+		-framework Cocoa
+	)
 elseif(LINUX)
 	##################################################
 	## GCC Compiler
