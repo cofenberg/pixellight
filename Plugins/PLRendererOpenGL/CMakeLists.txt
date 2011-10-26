@@ -112,6 +112,15 @@ if(PL_PLUGIN_RENDERER_OPENGL_FONT)
 		${FREETYPE_INCLUDE_DIRS}
 	)
 endif()
+if(APPLE)
+	##################################################
+	## Apple
+	##################################################
+	add_include_directories(
+		# [TODO] We need to include <CoreGraphics/CGDirectDisplay.h> ... currently the following include path is hard coded to have anything to start with, maybe we need a CMake find script for this?
+		/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/CoreGraphics.framework/Versions/A/Headers/
+	)
+endif()
 
 ##################################################
 ## Library directories

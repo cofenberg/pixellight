@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <OpenGL/CGLTypes.h>
-#include <CoreGraphics/CGDirectDisplay.h>
+#include <CGDirectDisplay.h>	// [TODO] Should be <CoreGraphics/CGDirectDisplay.h> -> See CMakeLists.txt of this project 
 #include "PLRendererOpenGL/Context.h"
 
 
