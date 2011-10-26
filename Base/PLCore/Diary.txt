@@ -1,3 +1,11 @@
+>> 25.10.2011
+[CO]
+- "Runtime::GetSystemDirectory()": We really need to check for the registry, first: When building for Linux, there are fixed build in locations like
+  "/home/bob/pixellight/cmakeout/Base/PLCore/" and build executables will link against those shared libraries -> You'll receive
+  "/home/bob/pixellight/cmakeout/Base/PLCore/" as PL system directory, not e.g. "/home/bob/pixellight/Bin-Linux/Runtime/x86" as expected.
+
+
+
 ﻿>> 23.10.2011
 [CO]
 - Interesting, just tried to build PixelLight on MS Windows by using CMake to create the Visual Studio projects files and then, as usually build PL with VC...

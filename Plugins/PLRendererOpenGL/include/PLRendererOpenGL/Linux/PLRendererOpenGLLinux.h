@@ -31,16 +31,9 @@
 //[-------------------------------------------------------]
 #include <PLCore/PLCoreLinuxIncludes.h>
 #include <stddef.h>
-#ifdef APPLE
-	#define GL_GLEXT_LEGACY	// Ehm, if this is not defined, my OS "GL/gl.h" includes "GL/glext.h" automatically (!) which is definitely NOT ok (one reason is that "glext.h" is frequently extended)
-	#include <OpenGL/gl.h>
-	#include <OpenGL/glu.h>
-#else
-	#define GL_GLEXT_LEGACY	// Ehm, if this is not defined, my OS "GL/gl.h" includes "GL/glext.h" automatically (!) which is definitely NOT ok (one reason is that "glext.h" is frequently extended)
-	#include <GL/gl.h>
-	#include <GL/glx.h>
-	#include <GL/glu.h>
-#endif
+#include "../../../../External/Recommended/OpenGL/gl.h"
+#include "../../../../External/Recommended/OpenGL/glx.h"
+#include "../../../../External/Recommended/OpenGL/glu.h"
 #include "../../../../External/Recommended/OpenGL/glext.h"
 #include <X11/Xlib.h>
 #include <X11/extensions/xf86vmode.h>

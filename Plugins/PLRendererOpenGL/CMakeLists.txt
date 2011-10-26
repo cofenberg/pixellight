@@ -106,7 +106,6 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
-	${OPENGL_INCLUDE_DIRS}
 )
 if(PL_PLUGIN_RENDERER_OPENGL_FONT)
 	add_include_directories(

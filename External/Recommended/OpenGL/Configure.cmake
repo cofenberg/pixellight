@@ -29,7 +29,7 @@ include(${CMAKETOOLS_DIR}/External/Configure.cmake)
 ## Configure
 ##################################################
 
-# There are no public OpenGL sources...
+# Nothing to do in here
 
 # Done
 external_configure_done()

@@ -29,7 +29,7 @@ include(${CMAKETOOLS_DIR}/External/Build.cmake)
 ## Build
 ##################################################
 
-# There are no public OpenGL sources...
+# Nothing to do in here
 
 # Done
 external_build_done()

@@ -29,7 +29,7 @@ include(${CMAKETOOLS_DIR}/External/Fetch.cmake)
 ## Fetch
 ##################################################
 
-# There are no public OpenGL sources...
+# Nothing to do in here
 
 # Done
 external_fetch_done()

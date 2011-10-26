@@ -28,50 +28,42 @@ define_external_project(OpenGL)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-if(CMAKETOOLS_USE_SYSTEM_LIBS)
-	##################################################
-	## Use system libraries
-	##################################################
-	find_package(OpenGL)
-	set(OPENGL_INCLUDE_DIRS ${OPENGL_INCLUDE_DIR} ${CMAKETOOLS_CURRENT_INCLUDE_DIR} CACHE INTERNAL "")
-else()
-	# Build external
-	message(STATUS "Using build script for external '${CMAKETOOLS_CURRENT_NAME}'")
 
-	##################################################
-	## Build external
-	##################################################
-	add_dependencies(External-Recommended ${CMAKETOOLS_CURRENT_TARGET})
-	add_dependencies(External-Clean ${CMAKETOOLS_CURRENT_TARGET}-Clean)
-	set(OPENGL_INCLUDE_DIRS ${CMAKETOOLS_CURRENT_INCLUDE_DIR} CACHE INTERNAL "")
+# Build external
+message(STATUS "Using build script for external '${CMAKETOOLS_CURRENT_NAME}'")
 
-	##################################################
-	## Check
-	##################################################
-	external_check()
+##################################################
+## Build external
+##################################################
+add_dependencies(External-Recommended ${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(External-Clean ${CMAKETOOLS_CURRENT_TARGET}-Clean)
 
-	##################################################
-	## Fetch
-	##################################################
-	external_fetch()
+##################################################
+## Check
+##################################################
+external_check()
 
-	##################################################
-	## Configure
-	##################################################
-	external_configure()
+##################################################
+## Fetch
+##################################################
+external_fetch()
 
-	##################################################
-	## Build
-	##################################################
-	external_build()
+##################################################
+## Configure
+##################################################
+external_configure()
 
-	##################################################
-	## Install
-	##################################################
-	external_install()
+##################################################
+## Build
+##################################################
+external_build()
 
-	##################################################
-	## Clean
-	##################################################
-	external_clean()
-endif()
+##################################################
+## Install
+##################################################
+external_install()
+
+##################################################
+## Clean
+##################################################
+external_clean()
