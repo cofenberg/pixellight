@@ -47,19 +47,23 @@ PLPluginPlatformInfo::PLPluginPlatformInfo()
 	m_lstPlatformNames.Add("Win32");
 	m_lstPlatformNames.Add("Win64");
 	m_lstPlatformNames.Add("Linux");
-	
+	m_lstPlatformNames.Add("MacOSX");
+
 	m_lstBuildTypes.Add("Release");
 	m_lstBuildTypes.Add("Debug");
-	
-	m_mapLibraryPostfix.Add("LinuxRelease", ".so");
+
 	m_mapLibraryPostfix.Add("Win32Release", ".dll");
 	m_mapLibraryPostfix.Add("Win64Release", ".dll");
-	
-	m_mapLibraryPostfix.Add("LinuxDebug", "D.so");
+	m_mapLibraryPostfix.Add("LinuxRelease", ".so");
+	m_mapLibraryPostfix.Add("MacOSXRelease", ".dylib");
+
 	m_mapLibraryPostfix.Add("Win32Debug", "D.dll");
 	m_mapLibraryPostfix.Add("Win64Debug", "D.dll");
-	
+	m_mapLibraryPostfix.Add("LinuxDebug", "D.so");
+	m_mapLibraryPostfix.Add("MacOSXDebug", "D.dylib");
+
 	m_mapLibraryPrefix.Add("Linux", "lib");
+	m_mapLibraryPrefix.Add("MacOSX", "lib");
 }
 
 /**
