@@ -128,6 +128,24 @@ class System : public Singleton<System> {
 
 		/**
 		*  @brief
+		*    Returns the shared library filename prefix used by the operation system
+		*
+		*  @return
+		*    The shared library filename prefix used by the operation system (e.g. 'lib' as in 'libPLCore.so' on Linux, no prefix as in 'PLCore.dll' on Windows)
+		*/
+		PLCORE_API String GetSharedLibraryPrefix() const;
+
+		/**
+		*  @brief
+		*    Returns the shared library file extension used by the operation system
+		*
+		*  @return
+		*    The shared library file extension used by the operation system (e.g. 'so' on Linux, 'dll' on Windows)
+		*/
+		PLCORE_API String GetSharedLibraryExtension() const;
+
+		/**
+		*  @brief
 		*    Get the CPU MHz
 		*
 		*  @return

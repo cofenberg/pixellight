@@ -113,6 +113,24 @@ class SystemImpl {
 
 		/**
 		*  @brief
+		*    Returns the shared library filename prefix used by the operation system
+		*
+		*  @return
+		*    The shared library filename prefix used by the operation system (e.g. 'lib' as in 'libPLCore.so' on Linux, no prefix as in 'PLCore.dll' on Windows)
+		*/
+		virtual String GetSharedLibraryPrefix() const = 0;
+
+		/**
+		*  @brief
+		*    Returns the shared library file extension used by the operation system
+		*
+		*  @return
+		*    The shared library file extension used by the operation system (e.g. 'so' on Linux, 'dll' on Windows)
+		*/
+		virtual String GetSharedLibraryExtension() const = 0;
+
+		/**
+		*  @brief
 		*    Get the CPU MHz
 		*
 		*  @return

@@ -116,6 +116,26 @@ char System::GetSeparator() const
 
 /**
 *  @brief
+*    Returns the shared library filename prefix used by the operation system
+*/
+String System::GetSharedLibraryPrefix() const
+{
+	// Call system function
+	return m_pSystemImpl->GetSharedLibraryPrefix();
+}
+
+/**
+*  @brief
+*    Returns the shared library file extension used by the operation system
+*/
+String System::GetSharedLibraryExtension() const
+{
+	// Call system function
+	return m_pSystemImpl->GetSharedLibraryExtension();
+}
+
+/**
+*  @brief
 *    Get the CPU MHz
 */
 uint32 System::GetCPUMhz() const

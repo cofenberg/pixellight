@@ -374,18 +374,12 @@ String Runtime::GetPLCoreSharedLibraryName()
 {
 	#ifdef _DEBUG
 		// The executable is using a debug version of PixelLight
-		#ifdef LINUX
-			return "libPLCoreD.so";
-		#elif defined(WIN32)
-			return "PLCoreD.dll";
-		#endif
+		static const String sString = System::GetInstance()->GetSharedLibraryPrefix() + "PLCoreD." + System::GetInstance()->GetSharedLibraryExtension();
+		return sString;
 	#else
 		// The executable is using a release version of PixelLight
-		#ifdef LINUX
-			return "libPLCore.so";
-		#elif defined(WIN32)
-			return "PLCore.dll";
-		#endif
+		static const String sString = System::GetInstance()->GetSharedLibraryPrefix() + "PLCore." + System::GetInstance()->GetSharedLibraryExtension();
+		return sString;
 	#endif
 }
 

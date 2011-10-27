@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/Xml/Xml.h>
 #include <PLCore/String/RegEx.h>
+#include <PLCore/System/System.h>
 #include "PLPluginPlatformInfo.h"
 
 
@@ -56,14 +57,12 @@ PLPluginPlatformInfo::PLPluginPlatformInfo()
 		m_lstPlatformNames.Add("MacOSX");
 		m_mapLibraryPostfix.Add("MacOSXRelease", ".dylib");
 		m_mapLibraryPostfix.Add("MacOSXDebug", "D.dylib");
-		m_mapLibraryPrefix.Add("MacOSX", "lib");
 	#elif ANDROID
 		// Nothing to do in here: On Android, we're not allowed to load in shared libraries by using native code
 	#elif LINUX
 		m_lstPlatformNames.Add("Linux");
 		m_mapLibraryPostfix.Add("LinuxRelease", ".so");
 		m_mapLibraryPostfix.Add("LinuxDebug", "D.so");
-		m_mapLibraryPrefix.Add("Linux", "lib");
 	#endif
 	m_lstBuildTypes.Add("Release");
 	m_lstBuildTypes.Add("Debug");
@@ -131,9 +130,7 @@ void PLPluginPlatformInfo::Save(XmlElement &pParent) const
 			if (sDependecies != m_mapLibraryDependencies.NullKey)
 				pLibrary->SetAttribute("Dependency", sDependecies);
 
-			const String &sLibPrefix = m_mapLibraryPrefix.Get(sPlatformName);
-
-			String sLibraryName = sLibPrefix;
+			String sLibraryName = System::GetInstance()->GetSharedLibraryPrefix();
 			sLibraryName += m_sLibraryName;
 			sLibraryName += m_sSuffix;
 			sLibraryName += m_mapLibraryPostfix.Get(sPlatformName + sBuildType);

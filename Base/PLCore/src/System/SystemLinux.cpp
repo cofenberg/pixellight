@@ -137,6 +137,22 @@ char SystemLinux::GetSeparator() const
 	return '/';
 }
 
+String SystemLinux::GetSharedLibraryPrefix() const
+{
+	static const String sString = "lib";
+	return sString;
+}
+
+String SystemLinux::GetSharedLibraryExtension() const
+{
+	#ifdef APPLE
+		static const String sString = "dylib";
+	#else
+		static const String sString = "so";
+	#endif
+	return sString;
+}
+
 uint32 SystemLinux::GetCPUMhz() const
 {
 	// Initialize

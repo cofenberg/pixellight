@@ -346,6 +346,18 @@ char SystemWindows::GetSeparator() const
 	return '\\';
 }
 
+String SystemWindows::GetSharedLibraryPrefix() const
+{
+	static const String sString = "";
+	return sString;
+}
+
+String SystemWindows::GetSharedLibraryExtension() const
+{
+	static const String sString = "dll";
+	return sString;
+}
+
 uint32 SystemWindows::GetCPUMhz() const
 {
 #if !defined(WIN64) && !defined(NO_INLINE_ASM)

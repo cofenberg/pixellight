@@ -1,3 +1,9 @@
+>> 27.10.2011
+[CO]
+- "System": Added "GetSharedLibraryPrefix()" and "GetSharedLibraryExtension()"
+
+
+
 >> 26.10.2011
 [CO]
 - "SystemLinux::GetPlatform()" & "SystemLinux::GetOS()": Added Mac OS X handling (it's not worth to derive an own class, yet)

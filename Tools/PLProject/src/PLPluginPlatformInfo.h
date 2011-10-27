@@ -139,7 +139,6 @@ class PLPluginPlatformInfo {
 		PLCore::Array<PLCore::String>					m_lstPlatformNames;			/**< List of supported platforms (e.g. Win32, Linux) */
 		PLCore::Array<PLCore::String>					m_lstBuildTypes;			/**< List of supported build types (release, debug) */
 		PLCore::HashMap<PLCore::String, PLCore::String> m_mapLibraryDependencies;	/**< Library dependency list for a specific platform and build type */
-		PLCore::HashMap<PLCore::String, PLCore::String> m_mapLibraryPrefix;			/**< Library prefix list for a specific platform and build type */
 		PLCore::HashMap<PLCore::String, PLCore::String> m_mapLibraryPostfix;		/**< Library postfix list for a specific platform and build type */
 
 

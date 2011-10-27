@@ -107,6 +107,8 @@ class SystemLinux : public SystemImpl {
 		virtual String GetPlatform() const override;
 		virtual String GetOS() const override;
 		virtual char GetSeparator() const override;
+		virtual String GetSharedLibraryPrefix() const override;
+		virtual String GetSharedLibraryExtension() const override;
 		virtual uint32 GetCPUMhz() const override;
 		virtual String GetComputerName() const override;
 		virtual String GetUserName() const override;
