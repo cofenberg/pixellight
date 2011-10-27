@@ -1,5 +1,6 @@
 Changes in PixelLight 0.9.10-R1 (not yet released)
--
+- Feature: Added Mac OS X support (>=10.6)
+
 
 
 Changes in PixelLight 0.9.9-R1 (released on October 23, 2011)

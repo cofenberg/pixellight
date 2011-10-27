@@ -127,11 +127,69 @@ else()
 	set(PL_MOBILE "0" CACHE BOOL "Build for mobile platforms?")
 endif()
 
+# Project suffix
+#   The suffix is appended to every library (e.g. [lib]MyLibrary-<suffix>.dll/lib/so/a)
+#   and can be used to install several versions of PixelLight at the same time
+set(CMAKETOOLS_CONFIG_SUFFIX "" CACHE STRING "Library suffix")
+
+# Version
+set(CMAKETOOLS_PROJECT_VERSION_MAJOR    0)
+set(CMAKETOOLS_PROJECT_VERSION_MINOR    9)
+set(CMAKETOOLS_PROJECT_VERSION_PATCH    10)
+set(CMAKETOOLS_PROJECT_VERSION_RELEASE "R1")
+if(CMAKETOOLS_CONFIG_NIGHTLY)
+	# [TODO] Add date to string (e.g. "nightly-20100101")
+	set(CMAKETOOLS_PROJECT_VERSION_RELEASE "nightly")
+endif()
+
+# Upload destination
+if(CMAKETOOLS_CONFIG_NIGHTLY)
+	set(CMAKETOOLS_UPLOAD_LOCATION "pixellight.org:/srv/www/pl-dev/files/nightly")
+else()
+	set(CMAKETOOLS_UPLOAD_LOCATION "pixellight.org:/srv/www/pl-dev/files/v${CMAKETOOLS_PROJECT_VERSION_MAJOR}.${CMAKETOOLS_PROJECT_VERSION_MINOR}")
+endif()
+message(STATUS "Upload destination is '${CMAKETOOLS_UPLOAD_LOCATION}'")
+
+# Install locations
+if(WIN32)
+	set(PL_INSTALL_ROOT				".")															# C:\Programme\PixelLight
+	set(PL_INSTALL_BIN				".")															# C:\Programme\PixelLight
+	set(PL_INSTALL_LIB				"Lib/${CMAKETOOLS_TARGET_ARCHBITSIZE}")							# C:\Programme\PixelLight\Lib\x86
+	set(PL_INSTALL_INCLUDE			"Include")														# C:\Programme\PixelLight\Include
+	set(PL_INSTALL_DOCS				"Docs")															# C:\Programme\PixelLight\Docs
+	set(PL_INSTALL_RUNTIME			"Runtime")														# C:\Programme\PixelLight\Runtime
+	set(PL_INSTALL_RUNTIME_BIN		"Runtime/${CMAKETOOLS_TARGET_ARCHBITSIZE}")						# C:\Programme\PixelLight\Runtime\x86
+	set(PL_INSTALL_SAMPLES			"Samples")														# C:\Programme\PixelLight\Samples
+	set(PL_INSTALL_SAMPLES_BIN		"Samples/Bin/${CMAKETOOLS_TARGET_ARCHBITSIZE}")					# C:\Programme\PixelLight\Samples\Bin\x86
+	set(PL_INSTALL_SAMPLES_DATA		"Samples/Bin")													# C:\Programme\PixelLight\Samples\Bin
+	set(PL_INSTALL_TOOLS			"Tools")														# C:\Programme\PixelLight\Tools
+	set(PL_INSTALL_TOOLS_BIN		"Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}")						# C:\Programme\PixelLight\Tools\x86
+	set(PL_INSTALL_BROWSER			"BrowserPlugins")												# C:\Programme\PixelLight\BrowserPlugins
+elseif(LINUX)
+	set(PL_INSTALL_ROOT				"share/pixellight")												# /usr/share/pixellight
+	set(PL_INSTALL_BIN				"bin")															# /usr/bin
+	set(PL_INSTALL_LIB				"lib")															# /usr/lib
+	set(PL_INSTALL_INCLUDE			"include/pixellight")											# /usr/include/pixellight
+	set(PL_INSTALL_DOCS				"share/docs/pixellight")										# /usr/share/docs/pixellight
+	set(PL_INSTALL_RUNTIME			"share/pixellight/Runtime")										# /usr/share/pixellight/Runtime
+	set(PL_INSTALL_RUNTIME_BIN		"${PL_INSTALL_RUNTIME}/${CMAKETOOLS_TARGET_ARCHBITSIZE}")		# /usr/share/pixellight/Runtime/x86
+	set(PL_INSTALL_SAMPLES			"share/pixellight/Samples")										# /usr/share/pixellight/Samples
+	set(PL_INSTALL_SAMPLES_BIN		"${PL_INSTALL_SAMPLES}/Bin/${CMAKETOOLS_TARGET_ARCHBITSIZE}")	# /usr/share/pixellight/Samples/Bin/x86
+	set(PL_INSTALL_SAMPLES_DATA		"share/pixellight/Samples/Bin")									# /usr/share/pixellight/Samples/Bin
+	set(PL_INSTALL_TOOLS			"share/pixellight/Tools")										# /usr/share/pixellight/Tools
+	set(PL_INSTALL_TOOLS_BIN		"${PL_INSTALL_TOOLS}/${CMAKETOOLS_TARGET_ARCHBITSIZE}")			# /usr/share/pixellight/Tools/x86
+	set(PL_INSTALL_BROWSER			"share/pixellight/BrowserPlugins")								# /usr/share/pixellight/BrowserPlugins
+endif()
+
+
+##################################################
+## All optional projects
+##################################################
 # By default, disable plugins using stuff were we can't provide a public downloadable package
 # in order to avoid compiler errors due to not found includes (at least when using the default settings)
 set(PL_USE_NONPUBLIC 0)
 
-# Build or exclude plugins (options may be removed if not available for a target)
+# Build or exclude plugins. For the best overview, all optional projects are listed in here. Options may be removed if not available for a target.
 if(NOT CMAKETOOLS_MINIMAL)
 	# Include everything
 	set (PL_CORE_ZIP								"1"					CACHE BOOL "Build in ZIP support within 'PLCore'? (it's highly recommended to enable ZIP support, requires 'zlib' external dependency)")
@@ -200,87 +258,91 @@ if(NOT CMAKETOOLS_MINIMAL)
 	set (PL_TOOL_PLUPGRADE							"1"					CACHE BOOL "Build plugin 'PLUpgrade'?")
 else()
 	# Minimal build (no scripting, no database, no own or external GUI system library, no sound, no physics etc., just renderer to be able to see anything)
-	set (PL_CORE_ZIP								"0" CACHE BOOL "Build in ZIP support within 'PLCore'? (it's highly recommended to enable ZIP support, requires 'zlib' external dependency)")	# Some stuff may not work, but this is a minimal build, really minimal to have something to start with
-	set (PL_PLUGIN_SCRIPT_NULL						"0" CACHE BOOL "Build plugin 'PLScriptNull'?")
-	set (PL_PLUGIN_SCRIPT_LUA						"0" CACHE BOOL "Build plugin 'PLScriptLua'? (you may also want to use 'PLScriptBindings')")
-	set (PL_PLUGIN_SCRIPT_V8						"0" CACHE BOOL "Build plugin 'PLScriptV8'? (you may also want to use 'PLScriptBindings')")
-	set (PL_PLUGIN_SCRIPT_PYTHON					"0" CACHE BOOL "Build plugin 'PLScriptPython'? (you may also want to use 'PLScriptBindings')")
-	set (PL_PLUGIN_SCRIPT_ANGELSCRIPT				"0" CACHE BOOL "Build plugin 'PLScriptAngelScript'? (you may also want to use 'PLScriptBindings')")
-	set (PL_PLUGIN_DATABASE_NULL					"0" CACHE BOOL "Build plugin 'PLDatabaseNull'?")
-	set (PL_PLUGIN_DATABASE_MYSQL					"0" CACHE BOOL "Build plugin 'PLDatabaseMySQL'?")
-	set (PL_PLUGIN_DATABASE_POSTGRESQL				"0" CACHE BOOL "Build plugin 'PLDatabasePostgreSQL'?")
-	set (PL_PLUGIN_DATABASE_SQLITE					"0" CACHE BOOL "Build plugin 'PLDatabaseSQLite'?")
-	set (PL_PLUGIN_PHYSICS_NULL						"0" CACHE BOOL "Build plugin 'PLPhysicsNull'?")
-	set (PL_PLUGIN_PHYSICS_NEWTON					"0" CACHE BOOL "Build plugin 'PLPhysicsNewton'?")
-	set (PL_PLUGIN_PHYSICS_ODE						"0" CACHE BOOL "Build plugin 'PLPhysicsODE'?")
-	set (PL_PLUGIN_PHYSICS_PHYSX					"0" CACHE BOOL "Build plugin 'PLPhysicsPhysX'?" (due to legal issues, we can't provide a public downloadable package))
-	set (PL_PLUGIN_PHYSICS_BULLET					"0" CACHE BOOL "Build plugin 'PLPhysicsBullet'? (heavily under construction)")
-	set (PL_PLUGIN_RENDERER_NULL					"0" CACHE BOOL "Build plugin 'PLRendererNull'?")
+	set (PL_CORE_ZIP								"0"					CACHE BOOL "Build in ZIP support within 'PLCore'? (it's highly recommended to enable ZIP support, requires 'zlib' external dependency)")	# Some stuff may not work, but this is a minimal build, really minimal to have something to start with
+	set (PL_PLUGIN_SCRIPT_NULL						"0"					CACHE BOOL "Build plugin 'PLScriptNull'?")
+	set (PL_PLUGIN_SCRIPT_LUA						"0"					CACHE BOOL "Build plugin 'PLScriptLua'? (you may also want to use 'PLScriptBindings')")
+	set (PL_PLUGIN_SCRIPT_V8						"0"					CACHE BOOL "Build plugin 'PLScriptV8'? (you may also want to use 'PLScriptBindings')")
+	set (PL_PLUGIN_SCRIPT_PYTHON					"0"					CACHE BOOL "Build plugin 'PLScriptPython'? (you may also want to use 'PLScriptBindings')")
+	set (PL_PLUGIN_SCRIPT_ANGELSCRIPT				"0"					CACHE BOOL "Build plugin 'PLScriptAngelScript'? (you may also want to use 'PLScriptBindings')")
+	set (PL_PLUGIN_DATABASE_NULL					"0"					CACHE BOOL "Build plugin 'PLDatabaseNull'?")
+	set (PL_PLUGIN_DATABASE_MYSQL					"0"					CACHE BOOL "Build plugin 'PLDatabaseMySQL'?")
+	set (PL_PLUGIN_DATABASE_POSTGRESQL				"0"					CACHE BOOL "Build plugin 'PLDatabasePostgreSQL'?")
+	set (PL_PLUGIN_DATABASE_SQLITE					"0"					CACHE BOOL "Build plugin 'PLDatabaseSQLite'?")
+	set (PL_PLUGIN_PHYSICS_NULL						"0"					CACHE BOOL "Build plugin 'PLPhysicsNull'?")
+	set (PL_PLUGIN_PHYSICS_NEWTON					"0"					CACHE BOOL "Build plugin 'PLPhysicsNewton'?")
+	set (PL_PLUGIN_PHYSICS_ODE						"0"					CACHE BOOL "Build plugin 'PLPhysicsODE'?")
+	set (PL_PLUGIN_PHYSICS_PHYSX					"0"					CACHE BOOL "Build plugin 'PLPhysicsPhysX'?" (due to legal issues, we can't provide a public downloadable package))
+	set (PL_PLUGIN_PHYSICS_BULLET					"0"					CACHE BOOL "Build plugin 'PLPhysicsBullet'? (heavily under construction)")
+	set (PL_PLUGIN_RENDERER_NULL					"0"					CACHE BOOL "Build plugin 'PLRendererNull'?")
 	if (PL_MOBILE)
-		set (PL_PLUGIN_FRONTEND_OS					"1" CACHE BOOL "Build plugin 'PLFrontendOS'?")
-		set (PL_PLUGIN_RENDERER_OPENGL				"0" CACHE BOOL "Build plugin 'PLRendererOpenGL'? (for font support, do also enable 'PL_PLUGIN_RENDERER_OPENGL_FONT')")
-		set (PL_PLUGIN_RENDERER_OPENGL_FONT			"0" CACHE BOOL "Build plugin 'PLRendererOpenGL' with font support? (requires 'freetype' external dependency)")
-		set (PL_PLUGIN_RENDERER_OPENGLCG			"0" CACHE BOOL "Build plugin 'PLRendererOpenGLCg'? (requires 'PLRendererOpenGL') (due to legal issues, we can't provide a public downloadable package)")
-		set (PL_PLUGIN_RENDERER_OPENGLES2			"1" CACHE BOOL "Build plugin 'PLRendererOpenGLES2'? (for font support, do also enable 'PL_PLUGIN_RENDERER_OPENGLES2_FONT')")
-		set (PL_PLUGIN_RENDERER_OPENGLES2_EMULATOR	"0" CACHE BOOL "Build plugin 'PLRendererOpenGLES2' and add proprietary emulator? (do also enable 'PL_PLUGIN_RENDERER_OPENGLES2_FONT') (due to legal issues, we can't provide a public downloadable package)")
-		set (PL_PLUGIN_RENDERER_OPENGLES2_FONT		"0" CACHE BOOL "Build plugin 'PLRendererOpenGLES2' with font support? (requires 'freetype' external dependency)?")
+		set (PL_PLUGIN_FRONTEND_OS					"1"					CACHE BOOL "Build plugin 'PLFrontendOS'?")
+		set (PL_PLUGIN_RENDERER_OPENGL				"0"					CACHE BOOL "Build plugin 'PLRendererOpenGL'? (for font support, do also enable 'PL_PLUGIN_RENDERER_OPENGL_FONT')")
+		set (PL_PLUGIN_RENDERER_OPENGL_FONT			"0"					CACHE BOOL "Build plugin 'PLRendererOpenGL' with font support? (requires 'freetype' external dependency)")
+		set (PL_PLUGIN_RENDERER_OPENGLCG			"0"					CACHE BOOL "Build plugin 'PLRendererOpenGLCg'? (requires 'PLRendererOpenGL') (due to legal issues, we can't provide a public downloadable package)")
+		set (PL_PLUGIN_RENDERER_OPENGLES2			"1"					CACHE BOOL "Build plugin 'PLRendererOpenGLES2'? (for font support, do also enable 'PL_PLUGIN_RENDERER_OPENGLES2_FONT')")
+		set (PL_PLUGIN_RENDERER_OPENGLES2_EMULATOR	"0"					CACHE BOOL "Build plugin 'PLRendererOpenGLES2' and add proprietary emulator? (do also enable 'PL_PLUGIN_RENDERER_OPENGLES2_FONT') (due to legal issues, we can't provide a public downloadable package)")
+		set (PL_PLUGIN_RENDERER_OPENGLES2_FONT		"0"					CACHE BOOL "Build plugin 'PLRendererOpenGLES2' with font support? (requires 'freetype' external dependency)?")
 		# Tools
-		set (PL_TOOL_PLPROJECT						"0" CACHE BOOL "Build plugin 'PLProject'?")
-		set (PL_TOOL_PLUPGRADE						"0" CACHE BOOL "Build plugin 'PLUpgrade'?")
-		set (PL_TOOL_PLINSTALL						"0" CACHE BOOL "Build plugin 'PLInstall'?")
+		set (PL_TOOL_PLPROJECT						"0"					CACHE BOOL "Build plugin 'PLProject'?")
+		set (PL_TOOL_PLUPGRADE						"0"					CACHE BOOL "Build plugin 'PLUpgrade'?")
+		set (PL_TOOL_PLINSTALL						"0"					CACHE BOOL "Build plugin 'PLInstall'?")
 	else()
-		set (PL_PLUGIN_FRONTEND_OS					"1" CACHE BOOL "Build plugin 'PLFrontendOS'?")
-		set (PL_PLUGIN_RENDERER_OPENGL				"1" CACHE BOOL "Build plugin 'PLRendererOpenGL'? (for font support, do also enable 'PL_PLUGIN_RENDERER_OPENGL_FONT')")
-		set (PL_PLUGIN_RENDERER_OPENGL_FONT			"0" CACHE BOOL "Build plugin 'PLRendererOpenGL' with font support? (requires 'freetype' external dependency)")
-		set (PL_PLUGIN_RENDERER_OPENGLCG			"0" CACHE BOOL "Build plugin 'PLRendererOpenGLCg'? (requires 'PLRendererOpenGL') (due to legal issues, we can't provide a public downloadable package)")
-		set (PL_PLUGIN_RENDERER_OPENGLES2			"0" CACHE BOOL "Build plugin 'PLRendererOpenGLES2'? (for font support, do also enable 'PL_PLUGIN_RENDERER_OPENGLES2_FONT')")
-		set (PL_PLUGIN_RENDERER_OPENGLES2_EMULATOR	"0" CACHE BOOL "Build plugin 'PLRendererOpenGLES2' and add proprietary emulator? (do also enable 'PL_PLUGIN_RENDERER_OPENGLES2_FONT') (due to legal issues, we can't provide a public downloadable package)")
-		set (PL_PLUGIN_RENDERER_OPENGLES2_FONT		"0" CACHE BOOL "Build plugin 'PLRendererOpenGLES2' with font support? (requires 'freetype' external dependency)?")
+		set (PL_PLUGIN_FRONTEND_OS					"1"					CACHE BOOL "Build plugin 'PLFrontendOS'?")
+		set (PL_PLUGIN_RENDERER_OPENGL				"1"					CACHE BOOL "Build plugin 'PLRendererOpenGL'? (for font support, do also enable 'PL_PLUGIN_RENDERER_OPENGL_FONT')")
+		set (PL_PLUGIN_RENDERER_OPENGL_FONT			"0"					CACHE BOOL "Build plugin 'PLRendererOpenGL' with font support? (requires 'freetype' external dependency)")
+		set (PL_PLUGIN_RENDERER_OPENGLCG			"0"					CACHE BOOL "Build plugin 'PLRendererOpenGLCg'? (requires 'PLRendererOpenGL') (due to legal issues, we can't provide a public downloadable package)")
+		set (PL_PLUGIN_RENDERER_OPENGLES2			"0"					CACHE BOOL "Build plugin 'PLRendererOpenGLES2'? (for font support, do also enable 'PL_PLUGIN_RENDERER_OPENGLES2_FONT')")
+		set (PL_PLUGIN_RENDERER_OPENGLES2_EMULATOR	"0"					CACHE BOOL "Build plugin 'PLRendererOpenGLES2' and add proprietary emulator? (do also enable 'PL_PLUGIN_RENDERER_OPENGLES2_FONT') (due to legal issues, we can't provide a public downloadable package)")
+		set (PL_PLUGIN_RENDERER_OPENGLES2_FONT		"0"					CACHE BOOL "Build plugin 'PLRendererOpenGLES2' with font support? (requires 'freetype' external dependency)?")
 		# Tools
-		set (PL_TOOL_PLPROJECT						"1" CACHE BOOL "Build plugin 'PLProject'?")
-		set (PL_TOOL_PLUPGRADE						"1" CACHE BOOL "Build plugin 'PLUpgrade'?")
-		set (PL_TOOL_PLINSTALL						"1" CACHE BOOL "Build plugin 'PLInstall'?")
+		set (PL_TOOL_PLPROJECT						"1"					CACHE BOOL "Build plugin 'PLProject'?")
+		set (PL_TOOL_PLUPGRADE						"1"					CACHE BOOL "Build plugin 'PLUpgrade'?")
+		set (PL_TOOL_PLINSTALL						"1"					CACHE BOOL "Build plugin 'PLInstall'?")
 	endif()
-	set (PL_PLUGIN_RENDERER_D3D9					"0" CACHE BOOL "Build plugin 'PLRendererD3D9'? (due to legal issues, we can't provide a public downloadable package)")
-	set (PL_PLUGIN_RENDERER_D3D11					"0" CACHE BOOL "Build plugin 'PLRendererD3D11'? (due to legal issues, we can't provide a public downloadable package)")
-	set (PL_PLUGIN_SOUND_NULL						"0" CACHE BOOL "Build plugin 'PLSoundNull'?")
-	set (PL_PLUGIN_SOUND_OPENAL						"0" CACHE BOOL "Build plugin 'PLSoundOpenAL'?")
-	set (PL_PLUGIN_SOUND_OPENSLES					"0" CACHE BOOL "Build plugin 'PLSoundOpenSLES'?")
-	set (PL_PLUGIN_SOUND_FMOD						"0" CACHE BOOL "Build plugin 'PLSoundFMOD'? (due to legal issues, we can't provide a public downloadable package)")
-	set (PL_PLUGIN_SOUND_FMODEX						"0" CACHE BOOL "Build plugin 'PLSoundFMODEx'? (due to legal issues, we can't provide a public downloadable package)")
-	set (PL_PLUGIN_ENGINE_COMPOSITING				"0" CACHE BOOL "Build plugin 'PLCompositing'?")
-	set (PL_PLUGIN_ENGINE_POSTPROCESS				"0" CACHE BOOL "Build plugin 'PLPostProcessEffects'? (requires 'PLCompositing')")
-	set (PL_PLUGIN_ENGINE_SCRIPTBINDINGS			"0" CACHE BOOL "Build plugin 'PLScriptBindings'?")
-	set (PL_PLUGIN_ENGINE_ASSIMP					"0" CACHE BOOL "Build plugin 'PLAssimp'?")
-	set (PL_PLUGIN_ENGINE_IMAGEEXR					"0" CACHE BOOL "Build plugin 'PLImageLoaderEXR'?")
-	set (PL_PLUGIN_ENGINE_PARTICLEGROUPS			"0" CACHE BOOL "Build plugin 'PLParticleGroups'?")
-	set (PL_PLUGIN_ENGINE_SPARK						"0" CACHE BOOL "Build plugin 'SPARK_PL'?")
-	set (PL_PLUGIN_ENGINE_LIBROCKET					"0" CACHE BOOL "Build plugin 'PLlibRocket'?")
+	set (PL_PLUGIN_RENDERER_D3D9					"0"					CACHE BOOL "Build plugin 'PLRendererD3D9'? (due to legal issues, we can't provide a public downloadable package)")
+	set (PL_PLUGIN_RENDERER_D3D11					"0"					CACHE BOOL "Build plugin 'PLRendererD3D11'? (due to legal issues, we can't provide a public downloadable package)")
+	set (PL_PLUGIN_SOUND_NULL						"0"					CACHE BOOL "Build plugin 'PLSoundNull'?")
+	set (PL_PLUGIN_SOUND_OPENAL						"0"					CACHE BOOL "Build plugin 'PLSoundOpenAL'?")
+	set (PL_PLUGIN_SOUND_OPENSLES					"0"					CACHE BOOL "Build plugin 'PLSoundOpenSLES'?")
+	set (PL_PLUGIN_SOUND_FMOD						"0"					CACHE BOOL "Build plugin 'PLSoundFMOD'? (due to legal issues, we can't provide a public downloadable package)")
+	set (PL_PLUGIN_SOUND_FMODEX						"0"					CACHE BOOL "Build plugin 'PLSoundFMODEx'? (due to legal issues, we can't provide a public downloadable package)")
+	set (PL_PLUGIN_ENGINE_COMPOSITING				"0"					CACHE BOOL "Build plugin 'PLCompositing'?")
+	set (PL_PLUGIN_ENGINE_POSTPROCESS				"0"					CACHE BOOL "Build plugin 'PLPostProcessEffects'? (requires 'PLCompositing')")
+	set (PL_PLUGIN_ENGINE_SCRIPTBINDINGS			"0"					CACHE BOOL "Build plugin 'PLScriptBindings'?")
+	set (PL_PLUGIN_ENGINE_ASSIMP					"0"					CACHE BOOL "Build plugin 'PLAssimp'?")
+	set (PL_PLUGIN_ENGINE_IMAGEEXR					"0"					CACHE BOOL "Build plugin 'PLImageLoaderEXR'?")
+	set (PL_PLUGIN_ENGINE_PARTICLEGROUPS			"0"					CACHE BOOL "Build plugin 'PLParticleGroups'?")
+	set (PL_PLUGIN_ENGINE_SPARK						"0"					CACHE BOOL "Build plugin 'SPARK_PL'?")
+	set (PL_PLUGIN_ENGINE_LIBROCKET					"0"					CACHE BOOL "Build plugin 'PLlibRocket'?")
 	# Tools
-	set (PL_EXPORTER_3DSMAX_2008					"0" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2008'? (due to legal issues, we can't provide a public downloadable package)")
-	set (PL_EXPORTER_3DSMAX_2009					"0" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2009'? (due to legal issues, we can't provide a public downloadable package)")
-	set (PL_EXPORTER_3DSMAX_2010					"0" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2010'? (due to legal issues, we can't provide a public downloadable package)")
-	set (PL_EXPORTER_3DSMAX_2011					"0" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2011'? (due to legal issues, we can't provide a public downloadable package)")
-	set (PL_EXPORTER_3DSMAX_2012					"0" CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2012'? (due to legal issues, we can't provide a public downloadable package)")
+	set (PL_EXPORTER_3DSMAX_2008					"0"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2008'? (due to legal issues, we can't provide a public downloadable package)")
+	set (PL_EXPORTER_3DSMAX_2009					"0"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2009'? (due to legal issues, we can't provide a public downloadable package)")
+	set (PL_EXPORTER_3DSMAX_2010					"0"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2010'? (due to legal issues, we can't provide a public downloadable package)")
+	set (PL_EXPORTER_3DSMAX_2011					"0"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2011'? (due to legal issues, we can't provide a public downloadable package)")
+	set (PL_EXPORTER_3DSMAX_2012					"0"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2012'? (due to legal issues, we can't provide a public downloadable package)")
 	# PLGraphics image loaders
-	set (PL_PLUGIN_GRAPHICS_PNG						"0" CACHE BOOL "Build in 'png' support within 'PLGraphics'?")
-	set (PL_PLUGIN_GRAPHICS_JPG						"0" CACHE BOOL "Build in 'jpg' support within 'PLGraphics'?")
+	set (PL_PLUGIN_GRAPHICS_PNG						"0"					CACHE BOOL "Build in 'png' support within 'PLGraphics'?")
+	set (PL_PLUGIN_GRAPHICS_JPG						"0"					CACHE BOOL "Build in 'jpg' support within 'PLGraphics'?")
 	# Network
-	set (PL_PLUGIN_NETWORK_IRC						"0" CACHE BOOL "Build plugin 'PLIRC'?")
-	set (PL_PLUGIN_NETWORK_JABBER					"0" CACHE BOOL "Build plugin 'PLJabber'?")
+	set (PL_PLUGIN_NETWORK_IRC						"0"					CACHE BOOL "Build plugin 'PLIRC'?")
+	set (PL_PLUGIN_NETWORK_JABBER					"0"					CACHE BOOL "Build plugin 'PLJabber'?")
 	# Frontend
-	set (PL_PLUGIN_FRONTEND_NULL					"0" CACHE BOOL "Build plugin 'PLFrontendNull'?")
-	set (PL_PLUGIN_FRONTEND_ACTIVEX					"0" CACHE BOOL "Build plugin 'PLFrontendActiveX'?")
-	set (PL_PLUGIN_FRONTEND_MOZILLA					"0" CACHE BOOL "Build plugin 'PLFrontendMozilla'?")
+	set (PL_PLUGIN_FRONTEND_NULL					"0"					CACHE BOOL "Build plugin 'PLFrontendNull'?")
+	set (PL_PLUGIN_FRONTEND_ACTIVEX					"0"					CACHE BOOL "Build plugin 'PLFrontendActiveX'?")
+	set (PL_PLUGIN_FRONTEND_MOZILLA					"0"					CACHE BOOL "Build plugin 'PLFrontendMozilla'?")
 	# PLGui
-	set (PL_PLGUI									"0" CACHE BOOL "Build 'PLGui'?")
-	set (PL_PLUGIN_GUI_XMLTEXT						"0" CACHE BOOL "Build plugin 'PLGuiXmlText'? (requires 'PLGui')")
-	set (PL_PLUGIN_FRONTEND_PLGUI					"0" CACHE BOOL "Build plugin 'PLFrontendPLGui'? (requires 'PLGui')")
+	set (PL_PLGUI									"0"					CACHE BOOL "Build 'PLGui'?")
+	set (PL_PLUGIN_GUI_XMLTEXT						"0"					CACHE BOOL "Build plugin 'PLGuiXmlText'? (requires 'PLGui')")
+	set (PL_PLUGIN_FRONTEND_PLGUI					"0"					CACHE BOOL "Build plugin 'PLFrontendPLGui'? (requires 'PLGui')")
 	# Qt
-	set (PL_PLUGIN_FRONTEND_QT						"0" CACHE BOOL "Build plugin 'PLFrontendQt'?")
-	set (PL_EDITOR									"0" CACHE BOOL "Build 'PLEditor'? (requires 'PLFrontendQt') (heavily under construction)")
+	set (PL_PLUGIN_FRONTEND_QT						"0"					CACHE BOOL "Build plugin 'PLFrontendQt'?")
+	set (PL_EDITOR									"0"					CACHE BOOL "Build 'PLEditor'? (requires 'PLFrontendQt') (heavily under construction)")
 endif()
 
+
+##################################################
+## Remove optional projects not available on a certain platform
+##################################################
 # Windows
 if(NOT WIN32)
 	# Windows only features, for other targets, don't show this options
@@ -296,6 +358,39 @@ if(NOT WIN32)
 	unset (PL_EXPORTER_3DSMAX_2012					CACHE)
 	unset (PL_PLUGIN_ENGINE_IMAGEEXR				CACHE)
 	unset (PL_TOOL_PLINSTALL						CACHE)
+endif()
+
+# Mac OS X
+if(APPLE)
+	# Remove features not supported or required for Mac OS X
+
+	# [TODO] The following plugins are not yet supported (create prebuild external packages and test it)
+	unset (PL_PLUGIN_SCRIPT_LUA						CACHE)
+	unset (PL_PLUGIN_SCRIPT_V8						CACHE)
+	unset (PL_PLUGIN_SCRIPT_PYTHON					CACHE)
+	unset (PL_PLUGIN_SCRIPT_ANGELSCRIPT				CACHE)
+	unset (PL_PLUGIN_DATABASE_MYSQL					CACHE)
+	unset (PL_PLUGIN_DATABASE_POSTGRESQL			CACHE)
+	unset (PL_PLUGIN_DATABASE_SQLITE				CACHE)
+	unset (PL_PLUGIN_PHYSICS_NEWTON					CACHE)
+	unset (PL_PLUGIN_PHYSICS_ODE					CACHE)
+	unset (PL_PLUGIN_PHYSICS_BULLET					CACHE)
+	unset (PL_PLUGIN_PHYSICS_ODE					CACHE)
+	unset (PL_PLUGIN_ENGINE_IMAGEEXR				CACHE)
+	unset (PL_PLUGIN_RENDERER_OPENGL_FONT			CACHE)
+	unset (PL_PLUGIN_RENDERER_OPENGLCG				CACHE)
+	unset (PL_PLUGIN_RENDERER_OPENGLES2				CACHE)
+	unset (PL_PLUGIN_RENDERER_OPENGLES2_EMULATOR	CACHE)
+	unset (PL_PLUGIN_RENDERER_OPENGLES2_FONT		CACHE)
+	unset (PL_PLUGIN_SOUND_OPENAL					CACHE)
+	unset (PL_PLUGIN_SOUND_FMOD						CACHE)
+	unset (PL_PLUGIN_SOUND_FMODEX					CACHE)
+	unset (PL_PLUGIN_ENGINE_ASSIMP					CACHE)
+	unset (PL_PLUGIN_ENGINE_LIBROCKET				CACHE)
+	unset (PL_PLUGIN_GRAPHICS_PNG					CACHE)
+	unset (PL_PLUGIN_GRAPHICS_JPG					CACHE)
+	unset (PL_PLUGIN_FRONTEND_QT					CACHE)
+	unset (PL_EDITOR								CACHE)
 endif()
 
 # Android
@@ -327,61 +422,10 @@ else()
 	unset (PL_PLUGIN_SOUND_OPENSLES					CACHE)
 endif()
 
-# Project suffix
-#   The suffix is appended to every library (e.g. [lib]MyLibrary-<suffix>.dll/lib/so/a)
-#   and can be used to install several versions of PixelLight at the same time
-set(CMAKETOOLS_CONFIG_SUFFIX "" CACHE STRING "Library suffix")
 
-# Version
-set(CMAKETOOLS_PROJECT_VERSION_MAJOR    0)
-set(CMAKETOOLS_PROJECT_VERSION_MINOR    9)
-set(CMAKETOOLS_PROJECT_VERSION_PATCH    10)
-set(CMAKETOOLS_PROJECT_VERSION_RELEASE "R1")
-if(CMAKETOOLS_CONFIG_NIGHTLY)
-	# [TODO] Add date to string (e.g. "nightly-20100101")
-	set(CMAKETOOLS_PROJECT_VERSION_RELEASE "nightly")
-endif()
-
-# Upload destination
-if(CMAKETOOLS_CONFIG_NIGHTLY)
-	set(CMAKETOOLS_UPLOAD_LOCATION "pixellight.org:/srv/www/pl-dev/files/nightly")
-else()
-	set(CMAKETOOLS_UPLOAD_LOCATION "pixellight.org:/srv/www/pl-dev/files/v${CMAKETOOLS_PROJECT_VERSION_MAJOR}.${CMAKETOOLS_PROJECT_VERSION_MINOR}")
-endif()
-message(STATUS "Upload destination is '${CMAKETOOLS_UPLOAD_LOCATION}'")
-
-# Install locations
-if(WIN32)
-	set(PL_INSTALL_ROOT				".")															# C:\Programme\PixelLight
-	set(PL_INSTALL_BIN				".")															# C:\Programme\PixelLight
-	set(PL_INSTALL_LIB				"Lib/${CMAKETOOLS_TARGET_ARCHBITSIZE}")							# C:\Programme\PixelLight\Lib\x86
-	set(PL_INSTALL_INCLUDE			"Include")														# C:\Programme\PixelLight\Include
-	set(PL_INSTALL_DOCS				"Docs")															# C:\Programme\PixelLight\Docs
-	set(PL_INSTALL_RUNTIME			"Runtime")														# C:\Programme\PixelLight\Runtime
-	set(PL_INSTALL_RUNTIME_BIN		"Runtime/${CMAKETOOLS_TARGET_ARCHBITSIZE}")						# C:\Programme\PixelLight\Runtime\x86
-	set(PL_INSTALL_SAMPLES			"Samples")														# C:\Programme\PixelLight\Samples
-	set(PL_INSTALL_SAMPLES_BIN		"Samples/Bin/${CMAKETOOLS_TARGET_ARCHBITSIZE}")					# C:\Programme\PixelLight\Samples\Bin\x86
-	set(PL_INSTALL_SAMPLES_DATA		"Samples/Bin")													# C:\Programme\PixelLight\Samples\Bin
-	set(PL_INSTALL_TOOLS			"Tools")														# C:\Programme\PixelLight\Tools
-	set(PL_INSTALL_TOOLS_BIN		"Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}")						# C:\Programme\PixelLight\Tools\x86
-	set(PL_INSTALL_BROWSER			"BrowserPlugins")												# C:\Programme\PixelLight\BrowserPlugins
-elseif(LINUX)
-	set(PL_INSTALL_ROOT				"share/pixellight")												# /usr/share/pixellight
-	set(PL_INSTALL_BIN				"bin")															# /usr/bin
-	set(PL_INSTALL_LIB				"lib")															# /usr/lib
-	set(PL_INSTALL_INCLUDE			"include/pixellight")											# /usr/include/pixellight
-	set(PL_INSTALL_DOCS				"share/docs/pixellight")										# /usr/share/docs/pixellight
-	set(PL_INSTALL_RUNTIME			"share/pixellight/Runtime")										# /usr/share/pixellight/Runtime
-	set(PL_INSTALL_RUNTIME_BIN		"${PL_INSTALL_RUNTIME}/${CMAKETOOLS_TARGET_ARCHBITSIZE}")		# /usr/share/pixellight/Runtime/x86
-	set(PL_INSTALL_SAMPLES			"share/pixellight/Samples")										# /usr/share/pixellight/Samples
-	set(PL_INSTALL_SAMPLES_BIN		"${PL_INSTALL_SAMPLES}/Bin/${CMAKETOOLS_TARGET_ARCHBITSIZE}")	# /usr/share/pixellight/Samples/Bin/x86
-	set(PL_INSTALL_SAMPLES_DATA		"share/pixellight/Samples/Bin")									# /usr/share/pixellight/Samples/Bin
-	set(PL_INSTALL_TOOLS			"share/pixellight/Tools")										# /usr/share/pixellight/Tools
-	set(PL_INSTALL_TOOLS_BIN		"${PL_INSTALL_TOOLS}/${CMAKETOOLS_TARGET_ARCHBITSIZE}")			# /usr/share/pixellight/Tools/x86
-	set(PL_INSTALL_BROWSER			"share/pixellight/BrowserPlugins")								# /usr/share/pixellight/BrowserPlugins
-endif()
-
-# Extensions of files to exclude when e.g. copying a directory
+##################################################
+## Extensions of files to exclude when e.g. copying a directory
+##################################################
 # sdf	= VisualStudio 2010 file
 # ncb	= VisualStudio 2010 file
 # suo	= VisualStudio 2010 file
