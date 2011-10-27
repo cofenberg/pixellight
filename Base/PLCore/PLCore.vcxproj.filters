@@ -583,6 +583,9 @@
     <ClCompile Include="src\File\FileSearchAndroid.cpp">
       <Filter>File</Filter>
     </ClCompile>
+    <ClCompile Include="src\System\SystemMacOSX.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLCore\ModuleMain.h">
@@ -1340,6 +1343,9 @@
     </ClInclude>
     <ClInclude Include="include\PLCore\File\FileSearchAndroid.h">
       <Filter>File</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\System\SystemMacOSX.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

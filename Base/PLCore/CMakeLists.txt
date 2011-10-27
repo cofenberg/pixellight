@@ -227,6 +227,15 @@ elseif(LINUX)
 			src/System/SystemAndroid.cpp
 			src/System/ConsoleAndroid.cpp
 		)
+
+	# The Mac OS X port is reusing the Linux port whenever possible
+	elseif(APPLE)
+		##################################################
+		## Mac OS X
+		##################################################
+		add_sources(
+			src/System/SystemMacOSX.cpp
+		)
 	endif()
 endif()
 

@@ -29,6 +29,8 @@
 	#include "PLCore/System/SystemWindows.h"
 #elif defined(ANDROID)
 	#include "PLCore/System/SystemAndroid.h"
+#elif defined(APPLE)
+	#include "PLCore/System/SystemMacOSX.h"
 #elif defined(LINUX)
 	#include "PLCore/System/SystemLinux.h"
 #endif
@@ -451,6 +453,9 @@ System::System() :
 	#elif defined(ANDROID)
 		// Create Android implementation
 		m_pSystemImpl = new SystemAndroid();
+	#elif defined(APPLE)
+		// Create Mac OS X implementation
+		m_pSystemImpl = new SystemMacOSX();
 	#elif defined(LINUX)
 		// Create Linux implementation
 		m_pSystemImpl = new SystemLinux();

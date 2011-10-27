@@ -109,11 +109,7 @@ bool SystemLinux::GetMemoryInformation(MemoryInformation &sMemoryInformation) co
 //[-------------------------------------------------------]
 String SystemLinux::GetPlatform() const
 {
-	#ifdef APPLE
-		static const String sString = "MacOSX";
-	#else
-		static const String sString = "Linux";
-	#endif
+	static const String sString = "Linux";
 	return sString;
 }
 
@@ -145,11 +141,7 @@ String SystemLinux::GetSharedLibraryPrefix() const
 
 String SystemLinux::GetSharedLibraryExtension() const
 {
-	#ifdef APPLE
-		static const String sString = "dylib";
-	#else
-		static const String sString = "so";
-	#endif
+	static const String sString = "so";
 	return sString;
 }
 

@@ -1,6 +1,7 @@
 >> 27.10.2011
 [CO]
 - "System": Added "GetSharedLibraryPrefix()" and "GetSharedLibraryExtension()"
+- Added "SystemMacOSX" which is derived from "SystemLinux"
 
 
 
