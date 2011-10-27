@@ -815,11 +815,12 @@ bool ClassManager::LoadPluginV1(const Url &cUrl, const XmlElement &cPluginElemen
 
 		// Platform
 		if (sNodeName == "Platform") {
-			// Get platform name
-			const String sPlatformName = pElement->GetAttribute("Name");
+			// Get platform name and bit architecture
+			const String sPlatformName    = pElement->GetAttribute("Name");
+			const uint32 nBitArchitecture = pElement->GetAttribute("BitArchitecture").GetUInt32();
 
 			// Platform match?
-			if (sPlatformName.GetLength() && sPlatformName == System::GetInstance()->GetPlatform()) {
+			if (sPlatformName.GetLength() && sPlatformName == System::GetInstance()->GetPlatform() && nBitArchitecture == System::GetInstance()->GetPlatformBitArchitecture()) {
 				const XmlElement *pPlatformElement = pElement->GetFirstChildElement();
 				while (pPlatformElement) {
 					// Get platform node name

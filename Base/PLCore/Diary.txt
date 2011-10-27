@@ -2,6 +2,10 @@
 [CO]
 - "System": Added "GetSharedLibraryPrefix()" and "GetSharedLibraryExtension()"
 - Added "SystemMacOSX" which is derived from "SystemLinux"
+- "SystemWindows::GetPlatform()" now returns "Windows" instead of "Win32"/"Win64" to make it similar to "Linux", "Android" and "MacOSX". I try to avoid
+  such breaking changes, but this one was necessary do deal with all the supported platforms in an uniform way.
+- "System": Added "GetPlatformBitArchitecture()"
+-> It's hightly recommended to make a clean build of PixelLight in order to avoid issues when using plugin files from before this change
 
 
 

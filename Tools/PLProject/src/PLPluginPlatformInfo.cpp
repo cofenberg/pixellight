@@ -45,25 +45,10 @@ using namespace PLCore;
 PLPluginPlatformInfo::PLPluginPlatformInfo()
 {
 	// Setup defaults, only adding the information of the current platform is sufficient
-	#ifdef WIN64
-		m_lstPlatformNames.Add("Win64");
-		m_mapLibraryPostfix.Add("Win64Release", ".dll");
-		m_mapLibraryPostfix.Add("Win64Debug", "D.dll");
-	#elif WIN32
-		m_lstPlatformNames.Add("Win32");
-		m_mapLibraryPostfix.Add("Win32Release", ".dll");
-		m_mapLibraryPostfix.Add("Win32Debug", "D.dll");
-	#elif APPLE
-		m_lstPlatformNames.Add("MacOSX");
-		m_mapLibraryPostfix.Add("MacOSXRelease", ".dylib");
-		m_mapLibraryPostfix.Add("MacOSXDebug", "D.dylib");
-	#elif ANDROID
-		// Nothing to do in here: On Android, we're not allowed to load in shared libraries by using native code
-	#elif LINUX
-		m_lstPlatformNames.Add("Linux");
-		m_mapLibraryPostfix.Add("LinuxRelease", ".so");
-		m_mapLibraryPostfix.Add("LinuxDebug", "D.so");
-	#endif
+	const String sPlatform = System::GetInstance()->GetPlatform();
+	m_lstPlatformNames.Add(sPlatform);
+	m_mapLibraryPostfix.Add(sPlatform + "Release", '.' + System::GetInstance()->GetSharedLibraryExtension());
+	m_mapLibraryPostfix.Add(sPlatform + "Debug", "D." + System::GetInstance()->GetSharedLibraryExtension());
 	m_lstBuildTypes.Add("Release");
 	m_lstBuildTypes.Add("Debug");
 }
@@ -105,7 +90,7 @@ void PLPluginPlatformInfo::ParseLine(const String &sLine)
 		String sPlatformName = m_lstPlatformNames[i];
 		for (uint32 j=0; j<m_lstBuildTypes.GetNumOfElements(); j++) {
 			String sBuildType = m_lstBuildTypes[j];
-			RegEx cDependencies("^\\s*pl_module_dependencies_" + sPlatformName.ToLower() + '_' + sBuildType.ToLower() + "\\s*\\(\\s*\\\"(?<text>.*)\\\"\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
+			RegEx cDependencies("^\\s*pl_module_dependencies_" + sPlatformName.ToLower() + '_' + System::GetInstance()->GetPlatformBitArchitecture() + '_' + sBuildType.ToLower() + "\\s*\\(\\s*\\\"(?<text>.*)\\\"\\s*\\)\\s*$", RegEx::MatchCaseSensitive);
 			if (cDependencies.Match(sLine))
 				m_mapLibraryDependencies.Add(m_lstPlatformNames[i] + m_lstBuildTypes[j], cDependencies.GetNameResult("text"));
 		}
@@ -122,6 +107,7 @@ void PLPluginPlatformInfo::Save(XmlElement &pParent) const
 		String sPlatformName = m_lstPlatformNames[i];
 		XmlElement *pPlatformElement = new XmlElement("Platform");
 		pPlatformElement->SetAttribute("Name", sPlatformName);
+		pPlatformElement->SetAttribute("BitArchitecture", System::GetInstance()->GetPlatformBitArchitecture());
 		for (uint32 j=0; j<m_lstBuildTypes.GetNumOfElements(); j++) {
 			String sBuildType = m_lstBuildTypes[j];
 			XmlElement *pLibrary = new XmlElement("Library");

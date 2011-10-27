@@ -89,7 +89,7 @@ class SystemImpl {
 		*    Returns the name of the platform
 		*
 		*  @return
-		*    Platform string (for instance 'Win32' for Windows 32 bit, 'Linux' for Linux and so on)
+		*    Platform string (for instance 'Windows' for Windows, 'Linux' for Linux and so on)
 		*/
 		virtual String GetPlatform() const = 0;
 

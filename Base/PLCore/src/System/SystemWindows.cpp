@@ -127,11 +127,7 @@ SystemWindows::~SystemWindows()
 //[-------------------------------------------------------]
 String SystemWindows::GetPlatform() const
 {
-#ifdef WIN64
-	static const String sString = "Win64";
-#else
-	static const String sString = "Win32";
-#endif
+	static const String sString = "Windows";
 	return sString;
 }
 

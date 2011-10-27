@@ -104,9 +104,18 @@ class System : public Singleton<System> {
 		*    Returns the name of the platform
 		*
 		*  @return
-		*    Platform string (for instance 'Win32' for Windows 32 bit, 'Linux' for Linux and so on)
+		*    Platform string (for instance 'Windows' for Windows, 'Linux' for Linux and so on)
 		*/
 		PLCORE_API String GetPlatform() const;
+
+		/**
+		*  @brief
+		*    Returns the platform bit architecture
+		*
+		*  @return
+		*    Platform bit architecture (for instance '32' for x86, '64' for x64)
+		*/
+		PLCORE_API uint32 GetPlatformBitArchitecture() const;
 
 		/**
 		*  @brief

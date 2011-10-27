@@ -16,45 +16,73 @@ import re
 import glob
 
 # Setup regular expressions
-reModule			= re.compile(r"^\s*pl_module\(\s*\"(?P<name>\w*)\"\s*\)\s*$")
-reModulePlugin		= re.compile(r"^\s*pl_module_plugin\(\s*\"(?P<name>\w*)\"\s*\)\s*$")
-reVendor			= re.compile(r"^\s*pl_module_vendor\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
-reLicense			= re.compile(r"^\s*pl_module_license\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
-reDescription		= re.compile(r"^\s*pl_module_description\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
-reVersion			= re.compile(r"^\s*pl_module_version\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
-reDepsWin32Release	= re.compile(r"^\s*pl_module_dependencies_win32_release\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
-reDepsWin32Debug	= re.compile(r"^\s*pl_module_dependencies_win32_debug\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
-reDepsWin64Release	= re.compile(r"^\s*pl_module_dependencies_win64_release\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
-reDepsWin64Debug	= re.compile(r"^\s*pl_module_dependencies_win64_debug\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
-reDepsLinuxRelease	= re.compile(r"^\s*pl_module_dependencies_linux_release\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
-reDepsLinuxDebug	= re.compile(r"^\s*pl_module_dependencies_linux_debug\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
-reActive			= re.compile(r"^\s*pl_module_active\s*\((?P<num>\d)\)\s*$")
+reModule				= re.compile(r"^\s*pl_module\(\s*\"(?P<name>\w*)\"\s*\)\s*$")
+reModulePlugin			= re.compile(r"^\s*pl_module_plugin\(\s*\"(?P<name>\w*)\"\s*\)\s*$")
+reVendor				= re.compile(r"^\s*pl_module_vendor\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
+reLicense				= re.compile(r"^\s*pl_module_license\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
+reDescription			= re.compile(r"^\s*pl_module_description\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
+reVersion				= re.compile(r"^\s*pl_module_version\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
+reActive				= re.compile(r"^\s*pl_module_active\s*\((?P<num>\d)\)\s*$")
+# Windows
+reDepsWindows32Release	= re.compile(r"^\s*pl_module_dependencies_windows_32_release\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
+reDepsWindows32Debug	= re.compile(r"^\s*pl_module_dependencies_windows_32_debug\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
+reDepsWindows64Release	= re.compile(r"^\s*pl_module_dependencies_windows_64_release\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
+reDepsWindows64Debug	= re.compile(r"^\s*pl_module_dependencies_windows_64_debug\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
+# Linux
+reDepsLinux32Release	= re.compile(r"^\s*pl_module_dependencies_linux_32_release\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
+reDepsLinux32Debug		= re.compile(r"^\s*pl_module_dependencies_linux_32_debug\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
+reDepsLinux64Release	= re.compile(r"^\s*pl_module_dependencies_linux_64_release\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
+reDepsLinux64Debug		= re.compile(r"^\s*pl_module_dependencies_linux_64_debug\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
+# Android
+reDepsAndroid32Release	= re.compile(r"^\s*pl_module_dependencies_android_32_release\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
+reDepsAndroid32Debug	= re.compile(r"^\s*pl_module_dependencies_android_32_debug\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
+reDepsAndroid64Release	= re.compile(r"^\s*pl_module_dependencies_android_64_release\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
+reDepsAndroid64Debug	= re.compile(r"^\s*pl_module_dependencies_android_64_debug\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
+# Mac OS X
+reDepsMacOSX32Release	= re.compile(r"^\s*pl_module_dependencies_macosx_32_release\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
+reDepsMacOSX32Debug		= re.compile(r"^\s*pl_module_dependencies_macosx_32_debug\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
+reDepsMacOSX64Release	= re.compile(r"^\s*pl_module_dependencies_macosx_64_release\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
+reDepsMacOSX64Debug		= re.compile(r"^\s*pl_module_dependencies_macosx_64_debug\s*\(\s*(?P<text>\".*\")\s*\)\s*$", re.IGNORECASE)
 
 # Project data type
 class Project(object):
 	def __init__(self):
-		self.path				= ""
-		self.name				= ""
-		self.suffix				= ""
-		self.moduleName			= ""
-		self.moduleVersion		= ""
-		self.moduleVendor		= ""
-		self.moduleLicense		= ""
-		self.moduleDescription	= ""
-		self.modulePlugin		= False
-		self.moduleActive		= False
-		self.libWin32Release	= ""
-		self.libWin32Debug		= ""
-		self.libWin64Release	= ""
-		self.libWin64Debug		= ""
-		self.libLinuxRelease	= ""
-		self.libLinuxDebug		= ""
-		self.dependWin32Release = ""
-		self.dependWin32Debug	= ""
-		self.dependWin64Release = ""
-		self.dependWin64Debug	= ""
-		self.dependLinuxRelease = ""
-		self.dependLinuxDebug	= ""
+		self.path					= ""
+		self.name					= ""
+		self.suffix					= ""
+		self.moduleName				= ""
+		self.moduleVersion			= ""
+		self.moduleVendor			= ""
+		self.moduleLicense			= ""
+		self.moduleDescription		= ""
+		self.modulePlugin			= False
+		self.moduleActive			= False
+		self.libWindowsRelease		= ""
+		self.libWindowsDebug		= ""
+		self.libLinuxRelease		= ""
+		self.libLinuxDebug			= ""
+
+		# Windows
+		self.dependWindows32Release = ""
+		self.dependWindows32Debug	= ""
+		self.dependWindows64Release = ""
+		self.dependWindows64Debug	= ""
+		# Linux
+		self.dependLinux32Release	= ""
+		self.dependLinux32Debug		= ""
+		self.dependLinux64Release	= ""
+		self.dependLinux64Debug		= ""
+		# Android
+		self.dependAndroid32Release = ""
+		self.dependAndroid32Debug	= ""
+		self.dependAndroid64Release = ""
+		self.dependAndroid64Debug	= ""
+		# Mac OS X
+		self.dependMacOSX32Release	= ""
+		self.dependMacOSX32Debug	= ""
+		self.dependMacOSX64Release	= ""
+		self.dependMacOSX64Debug	= ""
+
 		self.mainSrc			= ""
 		self.sourcePath			= ""
 		self.includePath		= ""
@@ -162,42 +190,6 @@ def ParseModule(project):
 			project.moduleVersion = GetQuotedString(match.group("text"))
 			print("Version = '" + project.moduleVersion + "'")
 
-		# Check for pl_module_dependencies_win32_release
-		match = reDepsWin32Release.match(line)
-		if match:
-			project.dependWin32Release = GetQuotedString(match.group("text"))
-			print("Win32 release dependencies = '" + project.dependWin32Release + "'")
-
-		# Check for pl_module_dependencies_win32_debug
-		match = reDepsWin32Debug.match(line)
-		if match:
-			project.dependWin32Debug = GetQuotedString(match.group("text"))
-			print("Win32 debug dependencies = '" + project.dependWin32Debug + "'")
-
-		# Check for pl_module_dependencies_win64_release
-		match = reDepsWin64Release.match(line)
-		if match:
-			project.dependWin64Release = GetQuotedString(match.group("text"))
-			print("Win64 release dependencies = '" + project.dependWin64Release + "'")
-
-		# Check for pl_module_dependencies_win64_debug
-		match = reDepsWin64Debug.match(line)
-		if match:
-			project.dependWin64Debug = GetQuotedString(match.group("text"))
-			print("Win64 debug dependencies = '" + project.dependWin64Debug + "'")
-
-		# Check for pl_module_dependencies_linux_release
-		match = reDepsLinuxRelease.match(line)
-		if match:
-			project.dependLinuxRelease = GetQuotedString(match.group("text"))
-			print("Linux release dependencies = '" + project.dependLinuxRelease + "'")
-
-		# Check for pl_module_dependencies_linux_debug
-		match = reDepsLinuxDebug.match(line)
-		if match:
-			project.dependLinuxDebug = GetQuotedString(match.group("text"))
-			print("Linux debug dependencies = '" + project.dependLinuxDebug + "'")
-
 		# Check for pl_module_active
 		match = reActive.match(line)
 		if match:
@@ -208,26 +200,135 @@ def ParseModule(project):
 			else:
 				print("Active = 'no'")
 
+
+		# Windows
+		# Check for pl_module_dependencies_windows_32_release
+		match = reDepsWindows32Release.match(line)
+		if match:
+			project.dependWindows32Release = GetQuotedString(match.group("text"))
+			print("Windows 32 bit release dependencies = '" + project.dependWindows32Release + "'")
+
+		# Check for pl_module_dependencies_windows_32_debug
+		match = reDepsWindows32Debug.match(line)
+		if match:
+			project.dependWindows32Debug = GetQuotedString(match.group("text"))
+			print("Windows 32 debug dependencies = '" + project.dependWindows32Debug + "'")
+
+		# Check for pl_module_dependencies_windows_64_release
+		match = reDepsWindows64Release.match(line)
+		if match:
+			project.dependWindows64Release = GetQuotedString(match.group("text"))
+			print("Windows 64 bit release dependencies = '" + project.dependWindows64Release + "'")
+
+		# Check for pl_module_dependencies_windows_64_debug
+		match = reDepsWindows64Debug.match(line)
+		if match:
+			project.dependWindows64Debug = GetQuotedString(match.group("text"))
+			print("Windows 64 bit debug dependencies = '" + project.dependWindows64Debug + "'")
+
+
+		# Linux
+		# Check for pl_module_dependencies_linux_32_release
+		match = reDepsLinux32Release.match(line)
+		if match:
+			project.dependLinux32Release = GetQuotedString(match.group("text"))
+			print("Linux 32 bit release dependencies = '" + project.dependLinux32Release + "'")
+
+		# Check for pl_module_dependencies_linux_32_debug
+		match = reDepsLinux32Debug.match(line)
+		if match:
+			project.dependLinux32Debug = GetQuotedString(match.group("text"))
+			print("Linux 32 debug dependencies = '" + project.dependLinux32Debug + "'")
+
+		# Check for pl_module_dependencies_linux_64_release
+		match = reDepsLinux64Release.match(line)
+		if match:
+			project.dependLinux64Release = GetQuotedString(match.group("text"))
+			print("Linux 64 bit release dependencies = '" + project.dependLinux64Release + "'")
+
+		# Check for pl_module_dependencies_linux_64_debug
+		match = reDepsLinux64Debug.match(line)
+		if match:
+			project.dependLinux64Debug = GetQuotedString(match.group("text"))
+			print("Linux 64 bit debug dependencies = '" + project.dependLinux64Debug + "'")
+
+
+		# Android
+		# Check for pl_module_dependencies_android_32_release
+		match = reDepsAndroid32Release.match(line)
+		if match:
+			project.dependAndroid32Release = GetQuotedString(match.group("text"))
+			print("Android 32 bit release dependencies = '" + project.dependAndroid32Release + "'")
+
+		# Check for pl_module_dependencies_android_32_debug
+		match = reDepsAndroid32Debug.match(line)
+		if match:
+			project.dependAndroid32Debug = GetQuotedString(match.group("text"))
+			print("Android 32 debug dependencies = '" + project.dependAndroid32Debug + "'")
+
+		# Check for pl_module_dependencies_android_64_release
+		match = reDepsAndroid64Release.match(line)
+		if match:
+			project.dependAndroid64Release = GetQuotedString(match.group("text"))
+			print("Android 64 bit release dependencies = '" + project.dependAndroid64Release + "'")
+
+		# Check for pl_module_dependencies_android_64_debug
+		match = reDepsWindows64Debug.match(line)
+		if match:
+			project.dependWindows64Debug = GetQuotedString(match.group("text"))
+			print("Windows 64 bit debug dependencies = '" + project.dependWindows64Debug + "'")
+
+
+		# Mac OS X
+		# Check for pl_module_dependencies_macosx_32_release
+		match = reDepsMacOSX32Release.match(line)
+		if match:
+			project.dependMacOSX32Release = GetQuotedString(match.group("text"))
+			print("MacOSX 32 bit release dependencies = '" + project.dependMacOSX32Release + "'")
+
+		# Check for pl_module_dependencies_macosx_32_debug
+		match = reDepsMacOSX32Debug.match(line)
+		if match:
+			project.dependMacOSX32Debug = GetQuotedString(match.group("text"))
+			print("MacOSX 32 debug dependencies = '" + project.dependMacOSX32Debug + "'")
+
+		# Check for pl_module_dependencies_macosx_64_release
+		match = reDepsMacOSX64Release.match(line)
+		if match:
+			project.dependMacOSX64Release = GetQuotedString(match.group("text"))
+			print("MacOSX 64 bit release dependencies = '" + project.dependMacOSX64Release + "'")
+
+		# Check for pl_module_dependencies_macosx_64_debug
+		match = reDepsMacOSX64Debug.match(line)
+		if match:
+			project.dependMacOSX64Debug = GetQuotedString(match.group("text"))
+			print("MacOSX 64 bit debug dependencies = '" + project.dependMacOSX64Debug + "'")
+
+
 	# Close file
 	file.close()
 
 	# Compose library names
 	if project.modulePlugin:
 		# Compose file names
-		project.libWin32Release	= project.name + project.suffix + ".dll"
-		project.libWin32Debug	= project.name + project.suffix + "D.dll"
-		project.libWin64Release	= project.name + project.suffix + "64.dll"
-		project.libWin64Debug	= project.name + project.suffix + "D64.dll"
-		project.libLinuxRelease	= "lib" + project.name + project.suffix + ".so"
-		project.libLinuxDebug	= "lib" + project.name + project.suffix + "D.so"
+		project.libWindowsRelease	= project.name + project.suffix + ".dll"
+		project.libWindowsDebug		= project.name + project.suffix + "D.dll"
+		project.libLinuxRelease		= "lib" + project.name + project.suffix + ".so"
+		project.libLinuxDebug		= "lib" + project.name + project.suffix + "D.so"
+		project.libAndroidRelease	= "lib" + project.name + project.suffix + ".so"
+		project.libAndroidDebug		= "lib" + project.name + project.suffix + "D.so"
+		project.libMacOSXRelease	= "lib" + project.name + project.suffix + ".dylib"
+		project.libMacOSXDebug		= "lib" + project.name + project.suffix + "D.dylib"
 
 		# Output file names
-		print("Win32 release library = '" + project.libWin32Release)
-		print("Win32 debug   library = '" + project.libWin32Debug)
-		print("Win64 release library = '" + project.libWin64Release)
-		print("Win64 debug   library = '" + project.libWin64Debug)
-		print("Linux release library = '" + project.libLinuxRelease)
-		print("Linux debug   library = '" + project.libLinuxDebug)
+		print("Windows release  library = '" + project.libWindowsRelease)
+		print("Windows debug    library = '" + project.libWindowsDebug)
+		print("Linux release    library = '" + project.libLinuxRelease)
+		print("Linux debug      library = '" + project.libLinuxDebug)
+		print("Android release  library = '" + project.libAndroidRelease)
+		print("Android debug    library = '" + project.libAndroidDebug)
+		print("Mac OS X release library = '" + project.libMacOSXRelease)
+		print("Mac OS X debug   library = '" + project.libMacOSXDebug)
 
 	# Done
 	return True
@@ -358,56 +459,146 @@ def CreatePluginFile(project):
 	if project.moduleDescription != "":
 		file.write(u"\t<Description>" + project.moduleDescription + "</Description>\n")
 
-	# Platform: Win32
-	file.write(u"\t<Platform Name=\"Win32\">\n")
 
-	# Library: Release
-	if project.dependWin32Release != "":
-		file.write(u"\t\t<Library Type=\"Release\" Dependency=\"" + project.dependWin32Release + "\">" + project.libWin32Release + "</Library>\n")
-	else:
-		file.write(u"\t\t<Library Type=\"Release\">" + project.libWin32Release + "</Library>\n")
+	# Windows
+	# Platform: Windows 32 bit
+	file.write(u"\t<Platform Name=\"Windows32\">\n")
 
-	# Library: Debug
-	if project.dependWin32Debug != "":
-		file.write(u"\t\t<Library Type=\"Debug\" Dependency=\"" + project.dependWin32Debug + "\">" + project.libWin32Debug + "</Library>\n")
+	# Library: Release 32 bit
+	if project.dependWindows32Release != "":
+		file.write(u"\t\t<Library Type=\"Release\" Dependency=\"" + project.dependWindows32Release + "\">" + project.libWindows32Release + "</Library>\n")
 	else:
-		file.write(u"\t\t<Library Type=\"Debug\">" + project.libWin32Debug + "</Library>\n")
+		file.write(u"\t\t<Library Type=\"Release\">" + project.libWindows32Release + "</Library>\n")
+
+	# Library: Debug 32 bit
+	if project.dependWindows32Debug != "":
+		file.write(u"\t\t<Library Type=\"Debug\" Dependency=\"" + project.dependWindows32Debug + "\">" + project.libWindows32Debug + "</Library>\n")
+	else:
+		file.write(u"\t\t<Library Type=\"Debug\">" + project.libWindows32Debug + "</Library>\n")
 
 	# Platform end tag
 	file.write(u"\t</Platform>\n")
 
-	# Platform: Win64
-	file.write(u"\t<Platform Name=\"Win64\">\n")
-
-	# Library: Release
-	if project.dependWin64Release != "":
-		file.write(u"\t\t<Library Type=\"Release\" Dependency=\"" + project.dependWin64Release + "\">" + project.libWin64Release + "</Library>\n")
+	# Library: Release 64 bit
+	if project.dependWindows64Release != "":
+		file.write(u"\t\t<Library Type=\"Release\" Dependency=\"" + project.dependWindows64Release + "\">" + project.libWindows64Release + "</Library>\n")
 	else:
-		file.write(u"\t\t<Library Type=\"Release\">" + project.libWin64Release + "</Library>\n")
+		file.write(u"\t\t<Library Type=\"Release\">" + project.libWindows64Release + "</Library>\n")
 
-	# Library: Debug
-	if project.dependWin64Debug != "":
-		file.write(u"\t\t<Library Type=\"Debug\" Dependency=\"" + project.dependWin64Debug + "\">" + project.libWin64Debug + "</Library>\n")
+	# Library: Debug 64 bit
+	if project.dependWindows64Debug != "":
+		file.write(u"\t\t<Library Type=\"Debug\" Dependency=\"" + project.dependWindows64Debug + "\">" + project.libWindows64Debug + "</Library>\n")
 	else:
-		file.write(u"\t\t<Library Type=\"Debug\">" + project.libWin64Debug + "</Library>\n")
+		file.write(u"\t\t<Library Type=\"Debug\">" + project.libWindows64Debug + "</Library>\n")
 
 	# Platform end tag
 	file.write(u"\t</Platform>\n")
 
-	# Platform: Linux
-	file.write(u"\t<Platform Name=\"Linux\">\n")
 
-	# Library: Release
-	if project.dependLinuxRelease != "":
-		file.write(u"\t\t<Library Type=\"Release\" Dependency=\"" + project.dependLinuxRelease + "\">" + project.libLinuxRelease + "</Library>\n")
-	else:
-		file.write(u"\t\t<Library Type=\"Release\">" + project.libLinuxRelease + "</Library>\n")
+	# Linux
+	# Platform: Linux 32 bit
+	file.write(u"\t<Platform Name=\"Linux32\">\n")
 
-	# Library: Debug
-	if project.dependLinuxDebug != "":
-		file.write(u"\t\t<Library Type=\"Debug\" Dependency=\"" + project.dependLinuxDebug + "\">" + project.libLinuxDebug + "</Library>\n")
+	# Library: Release 32 bit
+	if project.dependLinux32Release != "":
+		file.write(u"\t\t<Library Type=\"Release\" Dependency=\"" + project.dependLinux32Release + "\">" + project.libLinux32Release + "</Library>\n")
 	else:
-		file.write(u"\t\t<Library Type=\"Debug\">" + project.libLinuxDebug + "</Library>\n")
+		file.write(u"\t\t<Library Type=\"Release\">" + project.libLinux32Release + "</Library>\n")
+
+	# Library: Debug 32 bit
+	if project.dependLinux32Debug != "":
+		file.write(u"\t\t<Library Type=\"Debug\" Dependency=\"" + project.dependLinux32Debug + "\">" + project.libLinux32Debug + "</Library>\n")
+	else:
+		file.write(u"\t\t<Library Type=\"Debug\">" + project.libLinux32Debug + "</Library>\n")
+
+	# Platform end tag
+	file.write(u"\t</Platform>\n")
+
+	# Library: Release 64 bit
+	if project.dependLinux64Release != "":
+		file.write(u"\t\t<Library Type=\"Release\" Dependency=\"" + project.dependLinux64Release + "\">" + project.libLinux64Release + "</Library>\n")
+	else:
+		file.write(u"\t\t<Library Type=\"Release\">" + project.libLinux64Release + "</Library>\n")
+
+	# Library: Debug 64 bit
+	if project.dependLinux64Debug != "":
+		file.write(u"\t\t<Library Type=\"Debug\" Dependency=\"" + project.dependLinux64Debug + "\">" + project.libLinux64Debug + "</Library>\n")
+	else:
+		file.write(u"\t\t<Library Type=\"Debug\">" + project.libLinux64Debug + "</Library>\n")
+
+	# Platform end tag
+	file.write(u"\t</Platform>\n")
+
+
+	# Android
+	# Platform: Android 32 bit
+	file.write(u"\t<Platform Name=\"Android32\">\n")
+
+	# Library: Release 32 bit
+	if project.dependAndroid32Release != "":
+		file.write(u"\t\t<Library Type=\"Release\" Dependency=\"" + project.dependAndroid32Release + "\">" + project.libAndroid32Release + "</Library>\n")
+	else:
+		file.write(u"\t\t<Library Type=\"Release\">" + project.libAndroid32Release + "</Library>\n")
+
+	# Library: Debug 32 bit
+	if project.dependAndroid32Debug != "":
+		file.write(u"\t\t<Library Type=\"Debug\" Dependency=\"" + project.dependAndroid32Debug + "\">" + project.libAndroid32Debug + "</Library>\n")
+	else:
+		file.write(u"\t\t<Library Type=\"Debug\">" + project.libAndroid32Debug + "</Library>\n")
+
+	# Platform end tag
+	file.write(u"\t</Platform>\n")
+
+	# Library: Release 64 bit
+	if project.dependAndroid64Release != "":
+		file.write(u"\t\t<Library Type=\"Release\" Dependency=\"" + project.dependAndroid64Release + "\">" + project.libAndroid64Release + "</Library>\n")
+	else:
+		file.write(u"\t\t<Library Type=\"Release\">" + project.libAndroid64Release + "</Library>\n")
+
+	# Library: Debug 64 bit
+	if project.dependAndroid64Debug != "":
+		file.write(u"\t\t<Library Type=\"Debug\" Dependency=\"" + project.dependAndroid64Debug + "\">" + project.libAndroid64Debug + "</Library>\n")
+	else:
+		file.write(u"\t\t<Library Type=\"Debug\">" + project.libAndroid64Debug + "</Library>\n")
+
+	# Platform end tag
+	file.write(u"\t</Platform>\n")
+
+
+	# Mac OS X
+	# Platform: Mac OS X 32 bit
+	file.write(u"\t<Platform Name=\"MacOSX32\">\n")
+
+	# Library: Release 32 bit
+	if project.dependMacOSX32Release != "":
+		file.write(u"\t\t<Library Type=\"Release\" Dependency=\"" + project.dependMacOSX32Release + "\">" + project.libMacOSX32Release + "</Library>\n")
+	else:
+		file.write(u"\t\t<Library Type=\"Release\">" + project.libMacOSX32Release + "</Library>\n")
+
+	# Library: Debug 32 bit
+	if project.dependMacOSX32Debug != "":
+		file.write(u"\t\t<Library Type=\"Debug\" Dependency=\"" + project.dependMacOSX32Debug + "\">" + project.libMacOSX32Debug + "</Library>\n")
+	else:
+		file.write(u"\t\t<Library Type=\"Debug\">" + project.libMacOSX32Debug + "</Library>\n")
+
+	# Platform end tag
+	file.write(u"\t</Platform>\n")
+
+	# Library: Release 64 bit
+	if project.dependMacOSX64Release != "":
+		file.write(u"\t\t<Library Type=\"Release\" Dependency=\"" + project.dependMacOSX64Release + "\">" + project.libMacOSX64Release + "</Library>\n")
+	else:
+		file.write(u"\t\t<Library Type=\"Release\">" + project.libMacOSX64Release + "</Library>\n")
+
+	# Library: Debug 64 bit
+	if project.dependMacOSX64Debug != "":
+		file.write(u"\t\t<Library Type=\"Debug\" Dependency=\"" + project.dependMacOSX64Debug + "\">" + project.libMacOSX64Debug + "</Library>\n")
+	else:
+		file.write(u"\t\t<Library Type=\"Debug\">" + project.libMacOSX64Debug + "</Library>\n")
+
+	# Platform end tag
+	file.write(u"\t</Platform>\n")
+
 
 	# Platform end tag
 	file.write(u"\t</Platform>\n")
@@ -441,7 +632,7 @@ def main(argv):
 	output_path	 = "."
 	suffix		 = ""
 	write_plugin = False
-	try:                                
+	try:
 		opts, args = getopt.getopt(argv[1:], "hds:o:w", ["help", "debug", "suffix=", "output-path=", "write-plugin"])
 		for opt, arg in opts:
 			if opt in ("-h", "--help"):
@@ -461,7 +652,7 @@ def main(argv):
 
 	except getopt.GetoptError:
 		help()
-		sys.exit(2)                     
+		sys.exit(2)
 
 	# Parse project
 	project = Project()

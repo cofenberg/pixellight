@@ -33,8 +33,8 @@ pl_module_plugin("PLPhysicsODE")
 	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
 	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
 	pl_module_description("ODE 0.8.1 rc1 (http://www.ode.org/) physics implementation")
-	pl_module_dependencies_win32_release("ode.dll")
-	pl_module_dependencies_win32_debug("ode.dll")
-	pl_module_dependencies_win64_release("ode.dll")	// [TODO] 64 bit support
-	pl_module_dependencies_win64_debug("ode.dll")	// [TODO] 64 bit support
+	pl_module_dependencies_windows_32_release("ode.dll")
+	pl_module_dependencies_windows_32_debug("ode.dll")
+	pl_module_dependencies_windows_64_release("ode.dll")	// [TODO] 64 bit support
+	pl_module_dependencies_windows_64_debug("ode.dll")	// [TODO] 64 bit support
 pl_module_end
