@@ -35,9 +35,18 @@
 #   source ./profile     (OR:)
 #   . ./profile
 
-# [TODO] How to detect the used OS in here?
-export PL_RUNTIME="$PWD/Bin-Linux/Runtime/x86"
-# export PL_RUNTIME="$PWD/Bin-MacOSX/Runtime/x86"
+# Detect the used OS
+if [ $OSTYPE == "linux-gnu" ] ; then
+	PLATFORM="Linux"
+elif [ $OSTYPE == "darwin" ] ; then
+	PLATFORM="MacOSX"
+else
+	PLATFORM="Unknown"
+fi
 
-echo "Setting PixelLight runtime variable:"
+# Export the environment variable pointing to the PixelLight runtime directory
+export PL_RUNTIME="$PWD/Bin-$PLATFORM/Runtime/x86"
+
+# Print the value of the environment variable
+echo "PixelLight runtime variable set to:"
 echo "  PL_RUNTIME = '$PL_RUNTIME'"
