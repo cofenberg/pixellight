@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SurfaceWindow.h                                *
+ *  File: SurfaceWindowLinux.h                           *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,16 +20,18 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGL_SURFACE_WINDOW_H__
-#define __PLRENDEREROPENGL_SURFACE_WINDOW_H__
+#ifndef __PLRENDEREROPENGL_SURFACE_WINDOWLINUX_H__
+#define __PLRENDEREROPENGL_SURFACE_WINDOWLINUX_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLRenderer/Renderer/Types.h>
-#include <PLRenderer/Renderer/SurfaceWindow.h>
+#include <X11/Xutil.h>
+#include <X11/extensions/Xrandr.h>
+#include <X11/extensions/xf86vmode.h>
+#include "PLRendererOpenGL/SurfaceWindow.h"
 
 
 //[-------------------------------------------------------]
@@ -43,9 +45,15 @@ namespace PLRendererOpenGL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OpenGL window renderer surface base class where we can render in
+*    Linux OpenGL window renderer surface where we can render in
 */
-class SurfaceWindow : public PLRenderer::SurfaceWindow {
+class SurfaceWindowLinux : public SurfaceWindow {
+
+
+	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class ContextLinux;
 
 
 	//[-------------------------------------------------------]
@@ -56,13 +64,13 @@ class SurfaceWindow : public PLRenderer::SurfaceWindow {
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~SurfaceWindow();
+		virtual ~SurfaceWindowLinux();
 
 
 	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
+	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
-	protected:
+	private:
 		/**
 		*  @brief
 		*    Constructor
@@ -76,17 +84,41 @@ class SurfaceWindow : public PLRenderer::SurfaceWindow {
 		*  @param[in] bFullscreen
 		*    Fullscreen mode?
 		*/
-		SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false);
+		SurfaceWindowLinux(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false);
 
 
 	//[-------------------------------------------------------]
-	//[ Protected data                                        ]
+	//[ Private data                                          ]
 	//[-------------------------------------------------------]
-	protected:
-		PLRenderer::DisplayMode	m_sDisplayMode;		/**< Display mode information */
-		int						m_nSwapInterval;	/**< The swap interval (vertical synchronization), <0 means not yet set */
-		float					m_fGammaBackup[3];	/**< Gamma settings at the time the render window was initialized */
-		bool					m_bGammaChanged;	/**< Was the gamma changed by using "SetGamma"? */
+	private:
+		::Window   m_nNativeWindowHandle;	/**< Native window handle, can be a null handle */
+		::SizeID   m_nOldSizeID;
+		::Rotation m_nOldRotation;
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLRenderer::SurfaceWindow functions    ]
+	//[-------------------------------------------------------]
+	public:
+		virtual bool GetGamma(float &fRed, float &fGreen, float &fBlue) const override;
+		virtual bool SetGamma(float fRed = 1.0f, float fGreen = 1.0f, float fBlue = 1.0f) override;
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLRenderer::Surface functions          ]
+	//[-------------------------------------------------------]
+	public:
+		virtual PLMath::Vector2i GetSize() const override;
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLRenderer::Surface functions         ]
+	//[-------------------------------------------------------]
+	private:
+		virtual bool Init() override;
+		virtual void DeInit() override;
+		virtual bool MakeCurrent(PLCore::uint8 nFace = 0) override;
+		virtual bool Present() override;
 
 
 };
@@ -98,4 +130,4 @@ class SurfaceWindow : public PLRenderer::SurfaceWindow {
 } // PLRendererOpenGL
 
 
-#endif // __PLRENDEREROPENGL_SURFACE_WINDOW_H__
+#endif // __PLRENDEREROPENGL_SURFACE_WINDOWLINUX_H__

@@ -24,10 +24,10 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
-#include <PLCore/Container/Array.h>
 #include <PLRenderer/Renderer/Types.h>
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/Windows/PLRendererOpenGLWindows.h"
+#include "PLRendererOpenGL/Windows/SurfaceWindowWindows.h"
 #include "PLRendererOpenGL/Windows/ContextWindows.h"
 
 
@@ -338,6 +338,11 @@ bool ContextWindows::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &ls
 
 	// Done
 	return true;
+}
+
+PLRenderer::SurfaceWindow *ContextWindows::CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen)
+{
+	return new SurfaceWindowWindows(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen);
 }
 
 

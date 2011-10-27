@@ -27,6 +27,7 @@
 #include <PLCore/Container/Array.h>
 #include <PLRenderer/Renderer/Types.h>
 #include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/Linux/SurfaceWindowLinux.h"
 #include "PLRendererOpenGL/Linux/ContextLinux.h"
 
 
@@ -229,6 +230,11 @@ bool ContextLinux::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &lstD
 
 	// Done
 	return bResult;
+}
+
+PLRenderer::SurfaceWindow *ContextLinux::CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen)
+{
+	return new SurfaceWindowLinux(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen);
 }
 
 

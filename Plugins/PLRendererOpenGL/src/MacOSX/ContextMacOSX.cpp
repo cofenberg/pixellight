@@ -27,6 +27,7 @@
 #include <PLCore/Log/Log.h>
 #include <PLMath/Vector2i.h>
 #include <PLRenderer/Renderer/Types.h>
+#include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSX.h"
 #include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
 #include <IOKit/graphics/IOGraphicsTypes.h>	// Include this after the rest, else we get OS definition issues, again (required for "IO8BitIndexedPixels", "IO16BitIndexedPixels" and "IO32BitIndexedPixels")
 
@@ -197,6 +198,11 @@ bool ContextMacOSX::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &lst
 
 	// Done
 	return true;
+}
+
+PLRenderer::SurfaceWindow *ContextMacOSX::CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen)
+{
+	return new SurfaceWindowMacOSX(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen);
 }
 
 

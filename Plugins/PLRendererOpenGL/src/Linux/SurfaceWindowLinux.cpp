@@ -24,11 +24,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
-#include <PLRenderer/Renderer/Renderer.h>
-#include <PLRenderer/Renderer/SurfaceWindowHandler.h>
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/Linux/ContextLinux.h"
-#include "PLRendererOpenGL/SurfaceWindow.h"
+#include "PLRendererOpenGL/Linux/SurfaceWindowLinux.h"
 
 
 //[-------------------------------------------------------]
@@ -40,9 +38,41 @@ namespace PLRendererOpenGL {
 
 
 //[-------------------------------------------------------]
+//[ Public functions                                      ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Destructor
+*/
+SurfaceWindowLinux::~SurfaceWindowLinux()
+{
+	// De-initialize the OpenGL surface window
+	DeInit();
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Constructor
+*/
+SurfaceWindowLinux::SurfaceWindowLinux(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen) :
+	SurfaceWindow(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen),
+	m_nNativeWindowHandle(NULL_HANDLE),
+	m_nOldSizeID(-1),
+	m_nOldRotation(-1)
+{
+	// Initialize the OpenGL surface window
+	Init();
+}
+
+
+//[-------------------------------------------------------]
 //[ Public virtual PLRenderer::SurfaceWindow functions    ]
 //[-------------------------------------------------------]
-bool SurfaceWindow::GetGamma(float &fRed, float &fGreen, float &fBlue) const
+bool SurfaceWindowLinux::GetGamma(float &fRed, float &fGreen, float &fBlue) const
 {
 	// Get the Linux OpenGL render context
 	ContextLinux *pContextLinux = static_cast<ContextLinux*>(static_cast<Renderer&>(GetRenderer()).GetContext());
@@ -71,7 +101,7 @@ bool SurfaceWindow::GetGamma(float &fRed, float &fGreen, float &fBlue) const
 	return false;
 }
 
-bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
+bool SurfaceWindowLinux::SetGamma(float fRed, float fGreen, float fBlue)
 {
 	if (static_cast<int>(fRed*10) <= 10 && static_cast<int>(fGreen*10) <= 10 && static_cast<int>(fBlue*10) <= 10) {
 		// Get the Linux OpenGL render context
@@ -101,7 +131,7 @@ bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 //[-------------------------------------------------------]
 //[ Public virtual PLRenderer::Surface functions          ]
 //[-------------------------------------------------------]
-Vector2i SurfaceWindow::GetSize() const
+Vector2i SurfaceWindowLinux::GetSize() const
 {
 	if (GetNativeWindowHandle()) {
 		::Window nRootWindow = 0;
@@ -130,7 +160,7 @@ Vector2i SurfaceWindow::GetSize() const
 //[-------------------------------------------------------]
 //[ Private virtual PLRenderer::Surface functions         ]
 //[-------------------------------------------------------]
-bool SurfaceWindow::Init()
+bool SurfaceWindowLinux::Init()
 {
 	bool bResult = true;	// No error by default
 
@@ -215,7 +245,7 @@ bool SurfaceWindow::Init()
 	return bResult;
 }
 
-void SurfaceWindow::DeInit()
+void SurfaceWindowLinux::DeInit()
 {
 	// First check if there's a native window handle
 	if (m_nNativeWindowHandle) {
@@ -271,7 +301,7 @@ void SurfaceWindow::DeInit()
 	}
 }
 
-bool SurfaceWindow::MakeCurrent(uint8 nFace)
+bool SurfaceWindowLinux::MakeCurrent(uint8 nFace)
 {
 	// First check if there's a native window handle
 	if (m_nNativeWindowHandle) {
@@ -287,7 +317,7 @@ bool SurfaceWindow::MakeCurrent(uint8 nFace)
 	return false;
 }
 
-bool SurfaceWindow::Present()
+bool SurfaceWindowLinux::Present()
 {
 	// First check if there's a native window handle
 	if (m_nNativeWindowHandle) {

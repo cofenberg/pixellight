@@ -42,13 +42,11 @@ namespace PLRendererOpenGL {
 */
 SurfaceWindow::~SurfaceWindow()
 {
-	// De-initialize the OpenGL surface window
-	DeInit();
 }
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -56,26 +54,14 @@ SurfaceWindow::~SurfaceWindow()
 */
 SurfaceWindow::SurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen) :
 	PLRenderer::SurfaceWindow(cHandler, nNativeWindowHandle, bFullscreen),
-	#ifdef WIN32
-		m_hDC(nullptr),
-	#elif APPLE
-		// [TODO] Implement Mac OS X part
-	#elif LINUX
-		m_nNativeWindowHandle(NULL_HANDLE),
-		m_nOldSizeID(-1),
-		m_nOldRotation(-1),
-	#endif
-		m_nSwapInterval(-1),
-		m_bGammaChanged(false)
+	m_nSwapInterval(-1),
+	m_bGammaChanged(false)
 {
-	// Initialize gamma backup
-	m_fGammaBackup[0] = m_fGammaBackup[1] = m_fGammaBackup[2] = 0.0f;
-
 	// Just copy over the given information
 	m_sDisplayMode = sDisplayMode;
 
-	// Initialize the OpenGL surface window
-	Init();
+	// Initialize gamma backup
+	m_fGammaBackup[0] = m_fGammaBackup[1] = m_fGammaBackup[2] = 0.0f;
 }
 
 

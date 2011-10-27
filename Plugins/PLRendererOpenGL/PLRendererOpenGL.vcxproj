@@ -351,11 +351,14 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLRendererOpenGL\FrameBufferObject.h" />
     <ClInclude Include="include\PLRendererOpenGL\Linux\ContextLinux.h" />
     <ClInclude Include="include\PLRendererOpenGL\Linux\PLRendererOpenGLLinux.h" />
+    <ClInclude Include="include\PLRendererOpenGL\Linux\SurfaceWindowLinux.h" />
     <ClInclude Include="include\PLRendererOpenGL\MacOSX\ContextMacOSX.h" />
+    <ClInclude Include="include\PLRendererOpenGL\MacOSX\SurfaceWindowMacOSX.h" />
     <ClInclude Include="include\PLRendererOpenGL\ProgramUniformBlockGLSL.h" />
     <ClInclude Include="include\PLRendererOpenGL\UniformBuffer.h" />
     <ClInclude Include="include\PLRendererOpenGL\Windows\ContextWindows.h" />
     <ClInclude Include="include\PLRendererOpenGL\Windows\PLRendererOpenGLWindows.h" />
+    <ClInclude Include="include\PLRendererOpenGL\Windows\SurfaceWindowWindows.h" />
     <ClInclude Include="src\FontManager_Cg.h" />
     <ClInclude Include="src\FontManager_GLSL.h" />
     <ClInclude Include="include\PLRendererOpenGL\FontTexture.h" />

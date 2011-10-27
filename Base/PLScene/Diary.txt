@@ -1,4 +1,4 @@
->> 05.08.2011
+>> 05.10.2011
 [CO]
 - "SceneContainer": Exposed "LoadByFilename()"-method to the RTTI. With this method, one can now also write within a Lua script e.g.
 	local serenaelContainer = sceneContainer:Create("PLScene::SceneContainer", "Serenael", "Scale='0.05 0.05 0.05'")

@@ -23,11 +23,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/PLCoreWindowsIncludes.h>
 #include <PLCore/Log/Log.h>
+#include <PLMath/Math.h>
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/Windows/ContextWindows.h"
-#include "PLRendererOpenGL/SurfaceWindow.h"
+#include "PLRendererOpenGL/Windows/SurfaceWindowWindows.h"
 
 
 //[-------------------------------------------------------]
@@ -43,9 +43,19 @@ namespace PLRendererOpenGL {
 //[-------------------------------------------------------]
 /**
 *  @brief
+*    Destructor
+*/
+SurfaceWindowWindows::~SurfaceWindowWindows()
+{
+	// De-initialize the OpenGL surface window
+	DeInit();
+}
+
+/**
+*  @brief
 *    Returns the private GDI device context
 */
-HDC SurfaceWindow::GetDevice() const
+HDC SurfaceWindowWindows::GetDevice() const
 {
 	return m_hDC;
 }
@@ -54,16 +64,32 @@ HDC SurfaceWindow::GetDevice() const
 *  @brief
 *    Returns the visual
 */
-HDC SurfaceWindow::GetVisual() const
+HDC SurfaceWindowWindows::GetVisual() const
 {
 	return m_hDC;
 }
 
 
 //[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Constructor
+*/
+SurfaceWindowWindows::SurfaceWindowWindows(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen) :
+	SurfaceWindow(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen),
+	m_hDC(nullptr)
+{
+	// Initialize the OpenGL surface window
+	Init();
+}
+
+
+//[-------------------------------------------------------]
 //[ Public virtual PLRenderer::SurfaceWindow functions    ]
 //[-------------------------------------------------------]
-bool SurfaceWindow::GetGamma(float &fRed, float &fGreen, float &fBlue) const
+bool SurfaceWindowWindows::GetGamma(float &fRed, float &fGreen, float &fBlue) const
 {
 	WORD nRamp[256*3];
 
@@ -94,7 +120,7 @@ bool SurfaceWindow::GetGamma(float &fRed, float &fGreen, float &fBlue) const
 	return true;
 }
 
-bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
+bool SurfaceWindowWindows::SetGamma(float fRed, float fGreen, float fBlue)
 {
 	// Clamp color components
 	if (fRed   < 0.01f)
@@ -111,10 +137,10 @@ bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 		fBlue  = 4.0f;
 
 	WORD nRamp[256*3];
-	float fRGB[3] = {fRed, fGreen, fBlue};
+	const float fRGB[3] = {fRed, fGreen, fBlue};
 	for (int i=0; i<3; i++) {
-		int nMin = 256*i;
-		int nMax = nMin+256;
+		const int nMin = 256*i;
+		const int nMax = nMin+256;
 		for (int j=nMin; j<nMax; j++)
 			nRamp[j] = static_cast<WORD>(Math::Pow(static_cast<float>((j % 256)/256.0), static_cast<float>(fRGB[i]))*65536);
 	}
@@ -130,7 +156,7 @@ bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 //[-------------------------------------------------------]
 //[ Public virtual PLRenderer::Surface functions          ]
 //[-------------------------------------------------------]
-Vector2i SurfaceWindow::GetSize() const
+Vector2i SurfaceWindowWindows::GetSize() const
 {
 	if (GetNativeWindowHandle()) {
 		RECT sRect;
@@ -145,7 +171,7 @@ Vector2i SurfaceWindow::GetSize() const
 //[-------------------------------------------------------]
 //[ Private virtual PLRenderer::Surface functions         ]
 //[-------------------------------------------------------]
-bool SurfaceWindow::Init()
+bool SurfaceWindowWindows::Init()
 {
 	// First check if there is a native window handle
 	const handle nNativeWindowHandle = GetNativeWindowHandle();
@@ -325,7 +351,7 @@ bool SurfaceWindow::Init()
 	return false;
 }
 
-void SurfaceWindow::DeInit()
+void SurfaceWindowWindows::DeInit()
 {
 	// First check if there is a native window handle
 	const handle nNativeWindowHandle = GetNativeWindowHandle();
@@ -361,7 +387,7 @@ void SurfaceWindow::DeInit()
 	}
 }
 
-bool SurfaceWindow::MakeCurrent(uint8 nFace)
+bool SurfaceWindowWindows::MakeCurrent(uint8 nFace)
 {
 	if (m_hDC) {
 		// Get the OpenGL render context
@@ -383,7 +409,7 @@ bool SurfaceWindow::MakeCurrent(uint8 nFace)
 	return false;
 }
 
-bool SurfaceWindow::Present()
+bool SurfaceWindowWindows::Present()
 {
 	// Swap interval (vertical synchronization) setting changed? (this setting is connected with the window, therefore we must do this update for every window)
 	Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());

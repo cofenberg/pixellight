@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ContextLinux.h                                 *
+ *  File: SurfaceWindowMacOSX.h                          *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,17 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGL_CONTEXTLINUX_H__
-#define __PLRENDEREROPENGL_CONTEXTLINUX_H__
+#ifndef __PLRENDEREROPENGL_SURFACE_WINDOWMACOSX_H__
+#define __PLRENDEREROPENGL_SURFACE_WINDOWMACOSX_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <X11/Xutil.h>
-#include <X11/extensions/Xrandr.h>
-#include "PLRendererOpenGL/Context.h"
+#include "PLRendererOpenGL/SurfaceWindow.h"
 
 
 //[-------------------------------------------------------]
@@ -40,78 +38,75 @@ namespace PLRendererOpenGL {
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class Renderer;
-
-
-//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Linux OpenGL context
+*    Mac OS X OpenGL window renderer surface where we can render in
 */
-class ContextLinux : public Context {
+class SurfaceWindowMacOSX : public SurfaceWindow {
 
 
 	//[-------------------------------------------------------]
-	//[ Public methods                                        ]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class ContextMacOSX;
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		/**
-		*  @brief
-		*    Constructor
-		*
-		*  @param[in] cRenderer
-		*    The owner renderer
-		*/
-		ContextLinux(Renderer &cRenderer);
-
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~ContextLinux();
-
-		/**
-		*  @brief
-		*    Returns the X server display connection
-		*
-		*  @return
-		*    The X server display connection, a null pointer on error
-		*/
-		Display *GetDisplay() const;
-
-		/**
-		*  @brief
-		*    Returns the primary render context
-		*
-		*  @return
-		*    The primary render context, a null pointer on error
-		*/
-		GLXContext GetRenderContext() const;
+		virtual ~SurfaceWindowMacOSX();
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual Context methods                        ]
-	//[-------------------------------------------------------]
-	public:
-		virtual bool IsValid() const override;
-		virtual void MakeDummyCurrent() const override;
-		virtual bool QueryDisplayModes(PLCore::Array<const PLRenderer::DisplayMode*> &lstDisplayModeList) override;
-		virtual PLRenderer::SurfaceWindow *CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false) override;
-
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
+	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
-		Renderer 	*m_pRenderer;					/**< The owner renderer, always valid! */
-		Display     *m_pDisplay;					/**< X server display connection, a null pointer on error */
-		Window       m_hDummyNativeWindow;			/**< Native dummy window, always valid */
-		XVisualInfo *m_pDummyVisualInfo;
-		GLXContext	 m_hDummyWindowRenderContext;	/**< The render context of the OpenGL dummy window, can be a null pointer */
+		/**
+		*  @brief
+		*    Constructor
+		*
+		*  @param[in] cHandler
+		*    Renderer surface handler this surface is assigned with (MUST be valid!)
+		*  @param[in] nNativeWindowHandle
+		*    Handle to the native window the renderer surface is assigned with
+		*  @param[in] sDisplayMode
+		*    Display mode information
+		*  @param[in] bFullscreen
+		*    Fullscreen mode?
+		*/
+		SurfaceWindowMacOSX(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false);
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLRenderer::SurfaceWindow functions    ]
+	//[-------------------------------------------------------]
+	public:
+		virtual bool GetGamma(float &fRed, float &fGreen, float &fBlue) const override;
+		virtual bool SetGamma(float fRed = 1.0f, float fGreen = 1.0f, float fBlue = 1.0f) override;
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLRenderer::Surface functions          ]
+	//[-------------------------------------------------------]
+	public:
+		virtual PLMath::Vector2i GetSize() const override;
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLRenderer::Surface functions         ]
+	//[-------------------------------------------------------]
+	private:
+		virtual bool Init() override;
+		virtual void DeInit() override;
+		virtual bool MakeCurrent(PLCore::uint8 nFace = 0) override;
+		virtual bool Present() override;
 
 
 };
@@ -123,4 +118,4 @@ class ContextLinux : public Context {
 } // PLRendererOpenGL
 
 
-#endif // __PLRENDEREROPENGL_CONTEXTLINUX_H__
+#endif // __PLRENDEREROPENGL_SURFACE_WINDOWMACOSX_H__
