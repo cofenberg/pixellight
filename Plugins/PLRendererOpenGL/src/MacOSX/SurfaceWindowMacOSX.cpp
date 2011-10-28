@@ -26,6 +26,9 @@
 #include <X11/Xutil.h>
 #include <X11/extensions/Xrandr.h>
 #include <X11/extensions/xf86vmode.h>
+#undef None		// We undef this to avoid name conflicts (else we can't use it as e.g. class method name!)
+#undef Always	// We undef this to avoid name conflicts (else we can't use it as e.g. class method name!)
+#undef Success	// We undef this to avoid name conflicts (else we can't use it as e.g. class method name!)
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
 #include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSX.h"
