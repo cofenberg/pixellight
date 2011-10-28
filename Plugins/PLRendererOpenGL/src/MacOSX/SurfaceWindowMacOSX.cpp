@@ -51,13 +51,11 @@ namespace PLRendererOpenGL {
 */
 SurfaceWindowMacOSX::~SurfaceWindowMacOSX()
 {
-	// De-initialize the OpenGL surface window
-	DeInit();
 }
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -66,8 +64,6 @@ SurfaceWindowMacOSX::~SurfaceWindowMacOSX()
 SurfaceWindowMacOSX::SurfaceWindowMacOSX(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen) :
 	SurfaceWindow(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen)
 {
-	// Initialize the OpenGL surface window
-	Init();
 }
 
 
@@ -162,24 +158,24 @@ Vector2i SurfaceWindowMacOSX::GetSize() const
 //[-------------------------------------------------------]
 //[ Private virtual PLRenderer::Surface functions         ]
 //[-------------------------------------------------------]
-bool SurfaceWindow::Init()
+bool SurfaceWindowMacOSX::Init()
 {
 	// [TODO] Implement me
 	return false;
 }
 
-void SurfaceWindow::DeInit()
+void SurfaceWindowMacOSX::DeInit()
 {
 	// [TODO] Implement me
 }
 
-bool SurfaceWindow::MakeCurrent(uint8 nFace)
+bool SurfaceWindowMacOSX::MakeCurrent(uint8 nFace)
 {
 	// [TODO] Implement me
 	return false;
 }
 
-bool SurfaceWindow::Present()
+bool SurfaceWindowMacOSX::Present()
 {
 	// [TODO] Implement me
 	return false;

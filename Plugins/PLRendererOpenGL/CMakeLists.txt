@@ -85,6 +85,7 @@ elseif(APPLE)
 		src/MacOSX/ContextMacOSX.cpp
 		src/MacOSX/ExtensionsMacOSX.cpp
 		src/MacOSX/SurfaceWindowMacOSX.cpp
+		src/MacOSX/SurfaceWindowMacOSXCocoa.mm	# Cocoa & NSOpenGL can only be accessed when using Objective-C :/
 	)
 elseif(LINUX)
 	##################################################
