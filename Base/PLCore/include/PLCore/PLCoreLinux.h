@@ -58,17 +58,6 @@
 
 
 //[-------------------------------------------------------]
-//[ Definitions                                           ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Invalid handle value (for data type PLCore::handle)
-*/
-#define NULL_HANDLE     0
-#define INVALID_HANDLE -1
-
-
-//[-------------------------------------------------------]
 //[ C++11 definitions                                     ]
 //[-------------------------------------------------------]
 // GCC: Have a look at http://gcc.gnu.org/projects/cxx0x.html see which C++11 features are supported
@@ -181,6 +170,13 @@ namespace PLCore {
 
 
 }
+
+/**
+*  @brief
+*    Invalid handle value (for data type PLCore::handle)
+*/
+static const PLCore::handle NULL_HANDLE    = 0;
+static const PLCore::handle INVALID_HANDLE = -1;
 
 
 #endif // __PLCORE_LINUX_H__
