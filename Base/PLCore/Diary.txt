@@ -2,6 +2,8 @@
 [CO]
 - "NULL_HANDLE" and "INVALID_HANDLE" are no longer classic definitions, instead they are now constants of the type "PLCore::handle" to give the compiler
   the chance to perform a type check
+- Fixed bug 3431174 (http://sourceforge.net/tracker/index.php?func=detail&aid=3431174&group_id=507544&atid=2063682): Within the "System()"-constructor,
+  the main thread was created incorrectly
 
 
 
