@@ -479,9 +479,6 @@ System::System() :
 
 	// Create main thread object (NULL_HANDLE for current thread)
 	m_pMainThread = new Thread(NULL_HANDLE);
-
-	// [HACK] Force the linker to keep the "Profiling"-class (don't strip it away)
-	Profiling::GetInstance()->IsActive();
 }
 
 /**
