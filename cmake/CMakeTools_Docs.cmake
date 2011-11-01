@@ -218,23 +218,23 @@ endmacro(cmaketools_add_chm_document target htmlfile)
 ## CMakeTools documentations initialization 
 ##################################################
 
-# Search for latex compiler
+# Search for LaTeX compiler
 find_package(LATEX)
 
-# Check if latex has been found
-message(STATUS "Looking for latex...")
+# Check if LaTeX has been found
+message(STATUS "Looking for LaTeX...")
 if(LATEX_COMPILER)
-	message(STATUS "Looking for latex... - found ${LATEX_COMPILER}")
-else()
-	message(STATUS "Looking for latex... - NOT found")
-endif()
+	message(STATUS "Looking for LaTeX... - found ${LATEX_COMPILER}")
 
-# Check if dvipdf has been found
-message(STATUS "Looking for dvipdf...")
-if(DVIPDF_CONVERTER)
-	message(STATUS "Looking for dvipdf... - found ${DVIPDF_CONVERTER}")
+	# Check if dvipdf has been found, but only if LaTeX has been found (avoid errors overkill within the log)
+	message(STATUS "Looking for dvipdf...")
+	if(DVIPDF_CONVERTER)
+		message(STATUS "Looking for dvipdf... - found ${DVIPDF_CONVERTER}")
+	else()
+		message(STATUS "Looking for dvipdf... - NOT found")
+	endif()
 else()
-	message(STATUS "Looking for dvipdf... - NOT found")
+	message(STATUS "Looking for LaTeX... - NOT found")
 endif()
 
 # Search for doxygen
@@ -243,10 +243,10 @@ find_package(Doxygen)
 # Search for Html Help Compiler
 find_package(HTMLHelp)
 
-# Check if Html Help Compiler has been found
-message(STATUS "Looking for hhc...")
+# Check if Microsoft Html Help Compiler (http://msdn.microsoft.com/en-us/library/ms669985) has been found
+message(STATUS "Looking for Microsoft Html Help Compiler...")
 if(HTML_HELP_COMPILER)
-	message(STATUS "Looking for hhc... - found ${HTML_HELP_COMPILER}")
+	message(STATUS "Looking for Microsoft Html Help Compiler... - found ${HTML_HELP_COMPILER}")
 else()
-	message(STATUS "Looking for hhc... - NOT found")
+	message(STATUS "Looking for Microsoft Html Help Compiler (http://msdn.microsoft.com/en-us/library/ms669985)... - NOT found")
 endif()
