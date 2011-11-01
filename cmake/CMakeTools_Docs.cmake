@@ -45,7 +45,6 @@ macro(cmaketools_doc_project name)
 
 	# Declare a target for the project
 	add_custom_target(Docs-${CMAKETOOLS_CURRENT_TARGET})
-#	set_target_properties(Docs-${CMAKETOOLS_CURRENT_TARGET} PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
 endmacro(cmaketools_doc_project name)
 
 ##################################################
@@ -64,23 +63,22 @@ macro(cmaketools_add_dvi_document target texfile)
 	if(LATEX_COMPILER)
 		# Invoke LaTeX compiler (three times needed actually to get everything right)
 		add_custom_command(
-			OUTPUT    ${CMAKETOOLS_CURRENT_TARGET_DVI}
-			DEPENDS   ${CMAKETOOLS_CURRENT_TARGET_TEX}
-			WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-			COMMAND   ${LATEX_COMPILER}
-			ARGS      -halt-on-error -quiet -output-directory=${CMAKETOOLS_CURRENT_OUTPUT_DIR} ${CMAKETOOLS_CURRENT_TARGET_TEX}
-			COMMAND   ${LATEX_COMPILER}
-			ARGS      -halt-on-error -quiet -output-directory=${CMAKETOOLS_CURRENT_OUTPUT_DIR} ${CMAKETOOLS_CURRENT_TARGET_TEX}
-			COMMAND   ${LATEX_COMPILER}
-			ARGS      -halt-on-error -quiet -output-directory=${CMAKETOOLS_CURRENT_OUTPUT_DIR} ${CMAKETOOLS_CURRENT_TARGET_TEX}
-			COMMENT   "Compiling LaTeX: ${target}.dvi"
+			OUTPUT				${CMAKETOOLS_CURRENT_TARGET_DVI}
+			DEPENDS				${CMAKETOOLS_CURRENT_TARGET_TEX}
+			WORKING_DIRECTORY	${CMAKE_CURRENT_SOURCE_DIR}
+			COMMAND				${LATEX_COMPILER}
+			ARGS				-halt-on-error -quiet -output-directory=${CMAKETOOLS_CURRENT_OUTPUT_DIR} ${CMAKETOOLS_CURRENT_TARGET_TEX}
+			COMMAND				${LATEX_COMPILER}
+			ARGS				-halt-on-error -quiet -output-directory=${CMAKETOOLS_CURRENT_OUTPUT_DIR} ${CMAKETOOLS_CURRENT_TARGET_TEX}
+			COMMAND				${LATEX_COMPILER}
+			ARGS				-halt-on-error -quiet -output-directory=${CMAKETOOLS_CURRENT_OUTPUT_DIR} ${CMAKETOOLS_CURRENT_TARGET_TEX}
+			COMMENT				"Compiling LaTeX: ${target}.dvi"
 		)
 
 		# Declare a target
 		add_custom_target(Docs-${target}-DVI
-			DEPENDS   ${CMAKETOOLS_CURRENT_TARGET_DVI}
+			DEPENDS ${CMAKETOOLS_CURRENT_TARGET_DVI}
 		)
-#		set_target_properties(Docs-${target}-DVI PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
 
 		# Depend Docs-target on DVI-target
 		add_dependencies(Docs-${CMAKETOOLS_CURRENT_TARGET} Docs-${target}-DVI)
@@ -103,21 +101,21 @@ macro(cmaketools_add_pdf_document target dvifile)
 	if(LATEX_COMPILER AND DVIPDF_CONVERTER)
 		# Invoke PDF converter
 		add_custom_command( 
-			OUTPUT    ${CMAKETOOLS_CURRENT_TARGET_PDF}
-			DEPENDS   ${CMAKETOOLS_CURRENT_TARGET_DVI}
-			WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-			COMMAND   ${DVIPDF_CONVERTER}
-			ARGS      -o ${CMAKETOOLS_CURRENT_TARGET_PDF} ${CMAKETOOLS_CURRENT_TARGET_DVI}
-			COMMENT   "Converting to pdf: ${target}.pdf"
+			OUTPUT				${CMAKETOOLS_CURRENT_TARGET_PDF}
+			DEPENDS				${CMAKETOOLS_CURRENT_TARGET_DVI}
+			WORKING_DIRECTORY	${CMAKE_CURRENT_SOURCE_DIR}
+			COMMAND				${DVIPDF_CONVERTER}
+			ARGS				-o ${CMAKETOOLS_CURRENT_TARGET_PDF} ${CMAKETOOLS_CURRENT_TARGET_DVI}
+			COMMENT				"Converting to pdf: ${target}.pdf"
 		)
 
 		# Declare a target
 		add_custom_target(Docs-${target}-PDF
-			DEPENDS   ${CMAKETOOLS_CURRENT_TARGET_PDF}
+			DEPENDS ${CMAKETOOLS_CURRENT_TARGET_PDF}
 		)
-#		set_target_properties(Docs-${target}-PDF PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
 
-		# Depend Docs-target on PDF-target
+		# Depend Docs-target on PDF-target (which itself depends on the DVI-target)
+		add_dependencies(Docs-${target}-PDF                Docs-${target}-DVI)
 		add_dependencies(Docs-${CMAKETOOLS_CURRENT_TARGET} Docs-${target}-PDF)
 	endif()
 endmacro(cmaketools_add_pdf_document target name)
@@ -150,19 +148,18 @@ macro(cmaketools_add_doxygen_docs target doxyfile)
 
 		# Invoke doxygen
 		add_custom_command(
-			OUTPUT    ${CMAKETOOLS_CURRENT_TARGET_HHP}
-			DEPENDS   ${CMAKETOOLS_CURRENT_TARGET_DOXYFILE_CONF}
-			WORKING_DIRECTORY ${path}
-			COMMAND   ${CMAKE_COMMAND} -E copy_directory ${path} ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/html
-			COMMAND   ${DOXYGEN} \"${CMAKETOOLS_CURRENT_TARGET_DOXYFILE_CONF}\"
-			COMMENT   "Creating doxygen documentation for ${target}"
+			OUTPUT				${CMAKETOOLS_CURRENT_TARGET_HHP}
+			DEPENDS				${CMAKETOOLS_CURRENT_TARGET_DOXYFILE_CONF}
+			WORKING_DIRECTORY	${path}
+			COMMAND				${CMAKE_COMMAND} -E copy_directory ${path} ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/html
+			COMMAND				${DOXYGEN} \"${CMAKETOOLS_CURRENT_TARGET_DOXYFILE_CONF}\"
+			COMMENT				"Creating doxygen documentation for ${target}"
 		)
 
 		# Declare a target
 		add_custom_target(Docs-${target}-Doxygen
-			DEPENDS   ${CMAKETOOLS_CURRENT_TARGET_HHP}
+			DEPENDS ${CMAKETOOLS_CURRENT_TARGET_HHP}
 		)
-#		set_target_properties(Docs-${target}-Doxygen PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
 
 		# Depend Docs-target on Doxygen-target
 		add_dependencies(Docs-${CMAKETOOLS_CURRENT_TARGET} Docs-${target}-Doxygen)
@@ -192,21 +189,20 @@ macro(cmaketools_add_chm_document target hhpfile)
 
 		# Invoke hhc
 		add_custom_command(
-			OUTPUT    ${CMAKETOOLS_CURRENT_TARGET_CHM}
-			DEPENDS   ${CMAKETOOLS_CURRENT_TARGET_HHP}
-			WORKING_DIRECTORY ${CMAKETOOLS_CURRENT_OUTPUT_DIR}
-			COMMAND   ${CMAKE_COMMAND} -E copy_directory ${path} ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/tempchm
-			COMMAND   ${CMAKE_COMMAND} -DHTML_HELP_COMPILER:STRING=${HTML_HELP_COMPILER} -DSRC="${name}" -DDIR=${CMAKETOOLS_CURRENT_OUTPUT_DIR}/tempchm -P ${CMAKETOOLS_DIR}/Scripts/hhc.cmake
-			COMMAND   ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/tempchm/${target}.chm ${CMAKETOOLS_CURRENT_OUTPUT_DIR}
-			COMMAND   ${CMAKE_COMMAND} -E remove_directory ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/tempchm
-			COMMENT   "Creating chm file for ${target}"
+			OUTPUT				${CMAKETOOLS_CURRENT_TARGET_CHM}
+			DEPENDS				${CMAKETOOLS_CURRENT_TARGET_HHP}
+			WORKING_DIRECTORY	${CMAKETOOLS_CURRENT_OUTPUT_DIR}
+			COMMAND				${CMAKE_COMMAND} -E copy_directory ${path} ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/tempchm
+			COMMAND				${CMAKE_COMMAND} -DHTML_HELP_COMPILER:STRING=${HTML_HELP_COMPILER} -DSRC="${name}" -DDIR=${CMAKETOOLS_CURRENT_OUTPUT_DIR}/tempchm -P ${CMAKETOOLS_DIR}/Scripts/hhc.cmake
+			COMMAND				${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/tempchm/${target}.chm ${CMAKETOOLS_CURRENT_OUTPUT_DIR}
+			COMMAND				${CMAKE_COMMAND} -E remove_directory ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/tempchm
+			COMMENT				"Creating chm file for ${target}"
 		)
 
 		# Declare a target
 		add_custom_target(Docs-${target}-CHM
-			DEPENDS   ${CMAKETOOLS_CURRENT_TARGET_CHM}
+			DEPENDS ${CMAKETOOLS_CURRENT_TARGET_CHM}
 		)
-#		set_target_properties(Docs-${target}-CHM PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
 
 		# Depend Docs-target on CHM-target
 		add_dependencies(Docs-${CMAKETOOLS_CURRENT_TARGET} Docs-${target}-CHM)

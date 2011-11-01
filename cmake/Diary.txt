@@ -1,3 +1,10 @@
+>> 01.11.2011
+[CO]
+- Bugfix within the "cmaketools_add_pdf_document"-macro inside the "CMakeTools_Docs.cmake"-file: Before it's possible to build a PDF, the DVI file must already
+  exist, but the PDF target did not depend on the DVI target. This explains why building the installable SDK failed from time to time due to a missing pdf.
+
+
+
 >> 25.10.2011
 [CO]
 - Android port releated: "CMAKETOOLS_MINIMAL" CMake variable is no longer set to 1 by default and disabled plugins which are not yet supported
