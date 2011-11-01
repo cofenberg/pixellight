@@ -32,14 +32,18 @@
 ## Project information
 ##################################################
 
+# Project name
+set(CMAKETOOLS_PROJECT_NAME "PixelLight")
+
 # Check which architecture has the host system
+# X86_64 aka X64
 if(${CMAKE_SYSTEM_PROCESSOR} MATCHES amd64*)
 	set(X86_64 1)
 endif()
 if(${CMAKE_SYSTEM_PROCESSOR} MATCHES x86_64*)
 	set(X86_64 1)
 endif()
-
+# X86
 if(${CMAKE_SYSTEM_PROCESSOR} MATCHES i686*)
 	set(X86 1)
 endif()
@@ -50,8 +54,15 @@ if(${CMAKE_SYSTEM_PROCESSOR} MATCHES x86*)
 	set(X86 1)
 endif()
 
-# Project name
-set(CMAKETOOLS_PROJECT_NAME "PixelLight")
+# Use native PLProject? (internal option set by toolchains)
+if(NOT PL_NATIVE_PLPROJECT)
+	set(PL_NATIVE_PLPROJECT 1)
+endif()
+
+# Build for mobile platforms? (internal option set by toolchains)
+if(NOT PL_MOBILE)
+	set(PL_MOBILE 0)
+endif()
 
 # Nightly build
 set(CMAKETOOLS_CONFIG_NIGHTLY "0" CACHE BOOL "Create a nightly build?")
@@ -106,25 +117,11 @@ set(PL_EXTERNAL_USER "" CACHE STRING "External repository user name. Required in
 # User password for access to the repository
 set(PL_EXTERNAL_PASS "" CACHE STRING "External repository user password. Required in order to automatically download protected, non public external packages. Do also set PL_EXTERNAL_USER (test your accout by e.g. opening \"pixellight.sourceforge.net/externals/Windows_x86_32/nonpublic\" within your webbrowser).")
 
-# Use native plproject?
-if(PL_NATIVE_PLPROJECT)
-	set(PL_NATIVE_PLPROJECT ${PL_NATIVE_PLPROJECT} CACHE BOOL "Use native plproject?")
-else()
-	set(PL_NATIVE_PLPROJECT "1" CACHE BOOL "Use native plproject?")
-endif()
-
 # Build minimal projects?
 if(CMAKETOOLS_MINIMAL)
 	set(CMAKETOOLS_MINIMAL ${CMAKETOOLS_MINIMAL} CACHE BOOL "Build minimal projects (or all)?")
 else()
 	set(CMAKETOOLS_MINIMAL "0" CACHE BOOL "Build minimal projects (or all)?")
-endif()
-
-# Build for mobile platforms?
-if(PL_MOBILE)
-	set(PL_MOBILE ${PL_MOBILE} CACHE BOOL "Build for mobile platforms?")
-else()
-	set(PL_MOBILE "0" CACHE BOOL "Build for mobile platforms?")
 endif()
 
 # Project suffix

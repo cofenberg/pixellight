@@ -9,6 +9,8 @@
 - Fixed CMake warning "CPack.cmake has already been included!!" which came up in newer CMake versions by testing whether or not the variable
   "CPack_CMake_INCLUDED" has already been defined (we include CPack in "Pack-Docs.cmake", "Pack-Runtime.cmake" and "Pack-SDK.cmake", do also see entry
   28.07.2011 within this diary)
+- CMake based build system: There were questions about the options "PL_NATIVE_PLPROJECT" and "PL_MOBILE" and I was just able to say "ignore those two
+  options". In order to avoid such questions in the future, those variables are no longer visible within the CMake-GUI. They are set by toolchains.
 
 
 
