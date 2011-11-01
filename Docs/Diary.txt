@@ -9,6 +9,7 @@
   - In case LaTeX or dvipdf was not found by CMake, the PixelLightFeatures, PixelLightBase, PixelLightCompositing, PixelLightCodingConventions, PixelLightBuild,
     PixelLightScript and PixelLight3dsMaxSceneExport documents are ignored and a message is written into the log in order to avoid possibly confusing errors during the build
 - "PixelLightAPI"-document build bugfix: The CHM-target did not depend on the Doxygen-target, this explains why building the "PixelLightAPI"-document failed from time to time
+- "SDKBrowser.chm" build bugfix: The file was not copied into the resulting installable SDK
 
 
 
