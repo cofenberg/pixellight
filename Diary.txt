@@ -11,6 +11,8 @@
   28.07.2011 within this diary)
 - CMake based build system: There were questions about the options "PL_NATIVE_PLPROJECT" and "PL_MOBILE" and I was just able to say "ignore those two
   options". In order to avoid such questions in the future, those variables are no longer visible within the CMake-GUI. They are set by toolchains.
+- CMake based build system: Removed the error prone "PL_TOOL_PLPROJECT"-option which was also visible in the CMake-GUI meaning a user was able to
+  disable it... which usually results in a lot of errors when building and/or using PixelLight...
 
 
 

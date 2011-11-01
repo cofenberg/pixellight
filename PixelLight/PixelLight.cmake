@@ -251,7 +251,6 @@ if(NOT CMAKETOOLS_MINIMAL)
 	set (PL_PLUGIN_FRONTEND_QT						"1"					CACHE BOOL "Build plugin 'PLFrontendQt'?")
 	set (PL_EDITOR									"0"					CACHE BOOL "Build 'PLEditor'? (requires 'PLFrontendQt') (heavily under construction)")	# The editor is heavily work in progress
 	# Tools
-	set (PL_TOOL_PLPROJECT							"1"					CACHE BOOL "Build plugin 'PLProject'?")
 	set (PL_TOOL_PLUPGRADE							"1"					CACHE BOOL "Build plugin 'PLUpgrade'?")
 else()
 	# Minimal build (no scripting, no database, no own or external GUI system library, no sound, no physics etc., just renderer to be able to see anything)
@@ -280,7 +279,6 @@ else()
 		set (PL_PLUGIN_RENDERER_OPENGLES2_EMULATOR	"0"					CACHE BOOL "Build plugin 'PLRendererOpenGLES2' and add proprietary emulator? (do also enable 'PL_PLUGIN_RENDERER_OPENGLES2_FONT') (due to legal issues, we can't provide a public downloadable package)")
 		set (PL_PLUGIN_RENDERER_OPENGLES2_FONT		"0"					CACHE BOOL "Build plugin 'PLRendererOpenGLES2' with font support? (requires 'freetype' external dependency)?")
 		# Tools
-		set (PL_TOOL_PLPROJECT						"0"					CACHE BOOL "Build plugin 'PLProject'?")
 		set (PL_TOOL_PLUPGRADE						"0"					CACHE BOOL "Build plugin 'PLUpgrade'?")
 		set (PL_TOOL_PLINSTALL						"0"					CACHE BOOL "Build plugin 'PLInstall'?")
 	else()
@@ -292,7 +290,6 @@ else()
 		set (PL_PLUGIN_RENDERER_OPENGLES2_EMULATOR	"0"					CACHE BOOL "Build plugin 'PLRendererOpenGLES2' and add proprietary emulator? (do also enable 'PL_PLUGIN_RENDERER_OPENGLES2_FONT') (due to legal issues, we can't provide a public downloadable package)")
 		set (PL_PLUGIN_RENDERER_OPENGLES2_FONT		"0"					CACHE BOOL "Build plugin 'PLRendererOpenGLES2' with font support? (requires 'freetype' external dependency)?")
 		# Tools
-		set (PL_TOOL_PLPROJECT						"1"					CACHE BOOL "Build plugin 'PLProject'?")
 		set (PL_TOOL_PLUPGRADE						"1"					CACHE BOOL "Build plugin 'PLUpgrade'?")
 		set (PL_TOOL_PLINSTALL						"1"					CACHE BOOL "Build plugin 'PLInstall'?")
 	endif()
@@ -401,9 +398,7 @@ if(ANDROID)
 	unset (PL_PLUGIN_SOUND_FMOD						CACHE)
 	unset (PL_PLUGIN_FRONTEND_QT					CACHE)
 	unset (PL_EDITOR								CACHE)
-	unset (PL_TOOL_PLPROJECT						CACHE)	# No plugin files required because for Android, we need to load in all shared libraries right at the beginning
 	unset (PL_TOOL_PLUPGRADE						CACHE)
-	unset (PL_NATIVE_PLPROJECT						CACHE)	# No plugin files required because for Android, we need to load in all shared libraries right at the beginning
 
 	# [TODO] The following plugins are not yet supported (create prebuild external packages and test it)
 	unset (PL_PLUGIN_SCRIPT_V8						CACHE)
