@@ -58,7 +58,6 @@ set_target_properties(Docs-install PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
 # The following documents require LaTex and dvipdf,
 # if CMake was unable to find it, ignore the following documents in order to avoid confusing confusing errors when building the project
 if(LATEX_COMPILER)
-	message(STATUS "PEEEEPP!!")
 	if(DVIPDF_CONVERTER)
 		add_subdirectory(PixelLightFeatures)
 		add_subdirectory(PixelLightBase)

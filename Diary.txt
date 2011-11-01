@@ -4,6 +4,14 @@
 
 
 
+>> 01.11.2011
+[CO]
+- Fixed CMake warning "CPack.cmake has already been included!!" which came up in newer CMake versions by testing whether or not the variable
+  "CPack_CMake_INCLUDED" has already been defined (we include CPack in "Pack-Docs.cmake", "Pack-Runtime.cmake" and "Pack-SDK.cmake", do also see entry
+  28.07.2011 within this diary)
+
+
+
 >> 27.10.2011
 [CO]
 - "profile" shell script: Added OS detection of Linux and Mac OS X
