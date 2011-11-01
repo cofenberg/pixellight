@@ -61,8 +61,7 @@ class Runtime {
 		enum EType {
 			StaticInstallation,	/**< The running process is using the static linked version of PLCore */
 			LocalInstallation,	/**< The PixelLight runtime is in the same directory as the running process, making this to a local installation */
-			SystemInstallation,	/**< The PixelLight runtime is registered within the system, making this to a system installation */
-			UnknownInstallation	/**< Unknown PixelLight runtime installation type */
+			SystemInstallation	/**< The PixelLight runtime is registered within the system, making this to a system installation */
 		};
 
 
@@ -216,10 +215,46 @@ class Runtime {
 		*/
 		static PLCORE_API String GetDataDirectory();
 
+		/**
+		*  @brief
+		*    Returns the name of the PLCore shared library
+		*
+		*  @return
+		*    The name of the PLCore shared library (e.g. "libPLCore.so" or "PLCoreD.dll")
+		*/
+		static PLCORE_API String GetPLCoreSharedLibraryName();
+
+		/**
+		*  @brief
+		*    Returns the absolute path to the directory the PLCore shared library is in
+		*
+		*  @return
+		*    The absolute path to the directory the PLCore shared library is in, empty string on error
+		*/
+		static PLCORE_API String GetPLCoreSharedLibraryDirectory();
+
 
 		//[-------------------------------------------------------]
 		//[ Active actions                                        ]
 		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Sets the given PL-runtime directory
+		*
+		*  @param[in]  sDirectory
+		*    Path to the PL-runtime directory (e.g. "C:\PixelLight\Runtime\x86"), or ""
+		*  @param[out] pszErrorMessage
+		*    If this parameter is no null pointer and there was an error, this string will receive a human readable error description,
+		*    if there was no error this string is not touched
+		*
+		*  @return
+		*    Returns 'true' if all went fine, else 'false'
+		*
+		*  @see
+		*    - "GetDirectory()"
+		*/
+		static PLCORE_API bool SetDirectory(const String &sDirectory, String *pszErrorMessage = nullptr);
+
 		/**
 		*  @brief
 		*    Scan system PL-runtime directory for compatible plugins and load them in
@@ -284,15 +319,6 @@ class Runtime {
 	//[ Private static functions                              ]
 	//[-------------------------------------------------------]
 	private:
-		/**
-		*  @brief
-		*    Returns the name of the PLCore shared library
-		*
-		*  @return
-		*    The name of the PLCore shared library (e.g. "libPLCore.so" or "PLCoreD.dll")
-		*/
-		static String GetPLCoreSharedLibraryName();
-
 		/**
 		*  @brief
 		*    Try to find the PL-runtime directory by using the PLCore shared library
