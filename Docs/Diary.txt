@@ -10,6 +10,8 @@
     PixelLightScript and PixelLight3dsMaxSceneExport documents are ignored and a message is written into the log in order to avoid possibly confusing errors during the build
 - "PixelLightAPI"-document build bugfix: The CHM-target did not depend on the Doxygen-target, this explains why building the "PixelLightAPI"-document failed from time to time
 - "SDKBrowser.chm" build bugfix: The file was not copied into the resulting installable SDK
+- Fixed the error "CUSTOMBUILD : error : failed to run html help compiler on index.hhp" when compiling "Docs-PixelLightAPI-Doxygen" or "PixelLightAPI-CHM" by using the
+  CMake based build system. I just had to remove the "HHC_LOCATION=../hhc.exe"-entry within "Docs\PixelLightAPI\doxyfile.in".
 
 
 
