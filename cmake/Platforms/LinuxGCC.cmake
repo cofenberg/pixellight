@@ -85,7 +85,7 @@ set(LINUX_XCURSOR_LIB	Xcursor)		# X cursor library
 ##################################################
 
 # Check gcc compiler
-include(${CMAKETOOLS_DIR}/Modules/CheckGCC.cmake)	# Adds e.g. visibility attribute (http://gcc.gnu.org/wiki/Visibility)
+include(${CMAKETOOLS_DIR}/Modules/CheckLinuxCompiler.cmake)	# Adds e.g. visibility attribute (http://gcc.gnu.org/wiki/Visibility)
 
 # Preprocessor definitions
 set(LINUX_COMPILE_DEFS
