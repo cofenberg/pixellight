@@ -37,9 +37,7 @@ TreeItemBase::TreeItemBase(QObject *parent) : QObject(parent)
 {
 }
 
-TreeItemBase::TreeItemBase(int columnCount, QObject *parent) : m_columnCount(columnCount)
-	// [TODO]
-	//, QObject(parent)
+TreeItemBase::TreeItemBase(int columnCount, QObject *parent) : QObject(parent), m_columnCount(columnCount)
 {
 	setParent(parent);
 	for (int i=0; i<columnCount; i++)
