@@ -21,59 +21,11 @@
 
 
 ##################################################
-## Linux/GCC platform definitions
+## Linux/clang platform definitions
 ##
-## This file contains compiler and linker settings which are specific to the GCC compiler suit under linux
+## This file contains compiler and linker settings which are specific to the clang compiler suit under linux
 ##################################################
 
-
-# [TODO] Currently no visibility attribute (http://gcc.gnu.org/wiki/Visibility) because when using it, PixelLight failes to build with Clang
-##################################################
-## Includes
-##################################################
-INCLUDE (CheckCXXSourceCompiles)
-
-
-##################################################
-## Macro: Check if GCC visibility flag is available
-##################################################
-macro(cmaketools_check_cxx_visibility_flag var)
-   set(SAFE_CMAKE_REQUIRED_DEFINITIONS "${CMAKE_REQUIRED_DEFINITIONS}")
-   set(CMAKE_REQUIRED_DEFINITIONS "-fvisibility=hidden -fvisibility-inlines-hidden")
-   set(CODE "__attribute__ ((visibility(\"default\"))) void testfunc(){} int main() {return 0;}")
-   check_cxx_source_compiles("${CODE}" ${var})
-   set(CMAKE_REQUIRED_DEFINITIONS "${SAFE_CMAKE_REQUIRED_DEFINITIONS}")
-endmacro(cmaketools_check_cxx_visibility_flag)
-
-##################################################
-## Macro: Check if GCC C++0x flag is available
-##################################################
-macro(cmaketools_check_cxx_cpp0x_flag var)
-	set(SAFE_CMAKE_REQUIRED_DEFINITIONS "${CMAKE_REQUIRED_DEFINITIONS}")
-	set(CMAKE_REQUIRED_DEFINITIONS "-std=c++0x")
-	set(CODE "void testfunc(void *pointer){} int main() {testfunc(nullptr);return 0;}")
-	check_cxx_source_compiles("${CODE}" ${var})
-	set(CMAKE_REQUIRED_DEFINITIONS "${SAFE_CMAKE_REQUIRED_DEFINITIONS}")
-endmacro(cmaketools_check_cxx_cpp0x_flag)
-
-
-##################################################
-## Check GCC compatibilities
-##################################################
-
-# Check C++0x flag
-# Check GCC C++0x flag
-cmaketools_check_cxx_cpp0x_flag(CMAKETOOLS_GCC_CPP0X_FLAG)
-if(CMAKETOOLS_GCC_CPP0X_FLAG)
-	ADD_DEFINITIONS(-std=c++0x)
-	message(STATUS "GCC has C++0x flag")
-endif()
-
-# Check GCC visibility flag
-#   cmaketools_check_cxx_visibility_flag(CMAKETOOLS_GCC_VISIBILITY_FLAG)
-#   if(CMAKETOOLS_GCC_VISIBILITY_FLAG)
-#     ADD_DEFINITIONS(-fvisibility=hidden -fvisibility-inlines-hidden -DHAVE_VISIBILITY_ATTR)
-#   endif()
 
 ##################################################
 ## Libraries
@@ -130,10 +82,16 @@ IF(CMAKE_GENERATOR MATCHES "Makefiles")
 	endif()
 ENDIF(CMAKE_GENERATOR MATCHES "Makefiles")
 
+# Check compiler features
+# currently clang has problems with visibility and template instances which gets exported in a library (see http://llvm.org/bugs/show_bug.cgi?id=10113)
+set(NO_VISIBILITY_CHECK 1)
+include(${CMAKETOOLS_DIR}/Modules/CheckLinuxCompiler.cmake)	# Adds e.g. visibility attribute (http://gcc.gnu.org/wiki/Visibility)
+
 
 ##################################################
 ## Compiler flags
 ##################################################
+
 
 set(LINUX_COMPILE_FLAGS
 	${LINUX_COMPILE_FLAGS}
