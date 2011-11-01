@@ -24,11 +24,12 @@ Open the solution \emph{PixelLight.sln} with Microsoft Visual Studio, which incl
 
 
 \section{CMake}
+Here's a list of required programs that you need to fully build the \ac{SDK} on Windows. In case you only want to build, for example the binaries, this is possible as well.
 
 
 
-\subsection{Prerequisites}
-Here's a list of required programs that you need to fully build the \ac{SDK} on Windows.
+\subsection{Prerequisites for Binaries}
+In order to compile the binaries you need the prerequisites listed below.
 
 
 \paragraph{CMake}
@@ -39,13 +40,24 @@ Here's a list of required programs that you need to fully build the \ac{SDK} on 
 \end{itemize}
 
 
-\paragraph{\ac{NSIS}}
+\paragraph{Swiss File Knife}
+\emph{cmake/UsedTools/sfk/sfk.exe} is already within the Git repository and was downloaded from \url{http://sourceforge.net/projects/swissfileknife/}. It's only mentioned in here for completeness.
 \begin{itemize}
-\item{Used to create the Windows installer}
-\item{Download \ac{NSIS} at \url{http://nsis.sourceforge.net/}}
-\item{Tested with \emph{nsis-2.46-setup.exe}}
+\item{\emph{Swiss File Knife}: file management, search, text processing}
+\item{Directly used by the CMake scripts under \ac{MS} Windows}
 \end{itemize}
 
+
+\paragraph{Diff tools}
+The \emph{cmake/UsedTools/diff} directory is already within the Git repository. It's only mentioned in here for completeness.
+\begin{itemize}
+\item{Some diff binaries directly used by the CMake scripts under \ac{MS} Windows}
+\end{itemize}
+
+
+
+\subsection{Prerequisites for Documentation}
+In order to compile the documentation you need the prerequisites listed below.
 
 \paragraph{Doxygen}
 \begin{itemize}
@@ -80,18 +92,16 @@ Here's a list of required programs that you need to fully build the \ac{SDK} on 
 \end{itemize}
 
 
-\paragraph{Swiss File Knife}
-\begin{itemize}
-\item{\emph{Swiss File Knife}: file management, search, text processing}
-\item{Directly used by the CMake scripts under \ac{MS} Windows}
-\item{\emph{cmake/UsedTools/sfk/sfk.exe} is already within the Git repository and was downloaded from \url{http://sourceforge.net/projects/swissfileknife/}}
-\end{itemize}
+
+\subsection{Prerequisites for Installable \ac{SDK}}
+In order to compile the installable \ac{SDK} you need the prerequisites listed below.
 
 
-\paragraph{Diff tools}
+\paragraph{\ac{NSIS}}
 \begin{itemize}
-\item{Some diff binaries directly used by the CMake scripts under \ac{MS} Windows}
-\item{The \emph{cmake/UsedTools/diff} directory is already within the Git repository}
+\item{Used to create the Windows installer}
+\item{Download \ac{NSIS} at \url{http://nsis.sourceforge.net/}}
+\item{Tested with \emph{nsis-2.46-setup.exe}}
 \end{itemize}
 
 

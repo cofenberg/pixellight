@@ -137,9 +137,9 @@ class Thread : public ThreadFunction {
 		*    Constructor
 		*
 		*  @param[in] nThreadID
-		*    A system specific thread ID, 0 for current thread
+		*    A system specific thread ID, NULL_HANDLE for current thread
 		*/
-		PLCORE_API Thread(uint32 nThreadID);
+		PLCORE_API Thread(handle nThreadID);
 
 		/**
 		*  @brief

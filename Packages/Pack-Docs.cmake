@@ -75,7 +75,11 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	##################################################
 	## CPack
 	##################################################
-	include(CPack)
+	# We have to check whether or not CPack was already included, if this is not done CMake will give us warnings about multiple inclusion
+	# (we include CPack in "Pack-Docs.cmake", "Pack-Runtime.cmake" and "Pack-SDK.cmake")
+	if(NOT CPack_CMake_INCLUDED)
+		include(CPack)
+	endif()
 endif()
 
 ##################################################

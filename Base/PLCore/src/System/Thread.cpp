@@ -53,10 +53,10 @@ Thread::Thread() :
 	// Create system implementation for the right platform
 	#if defined(WIN32)
 		// Create Windows implementation
-		m_pThreadImpl = new ThreadWindows(*this, false, 0);
+		m_pThreadImpl = new ThreadWindows(*this, false, NULL_HANDLE);
 	#elif defined(LINUX)
 		// Create Linux implementation
-		m_pThreadImpl = new ThreadLinux(*this, false, 0);
+		m_pThreadImpl = new ThreadLinux(*this, false, NULL_HANDLE);
 	#else
 		// Unknown system
 		#error "Unsupported platform"
@@ -76,10 +76,10 @@ Thread::Thread(ThreadFunction *pThreadFunction) :
 	// Create system implementation for the right platform
 	#if defined(WIN32)
 		// Create Windows implementation
-		m_pThreadImpl = new ThreadWindows(*this, false, 0);
+		m_pThreadImpl = new ThreadWindows(*this, false, NULL_HANDLE);
 	#elif defined(LINUX)
 		// Create Linux implementation
-		m_pThreadImpl = new ThreadLinux(*this, false, 0);
+		m_pThreadImpl = new ThreadLinux(*this, false, NULL_HANDLE);
 	#else
 		// Unknown system
 		#error "Unsupported platform"
@@ -99,10 +99,10 @@ Thread::Thread(THREADFUNCTION pStaticFunction, void *pData) :
 	// Create system implementation for the right platform
 	#if defined(WIN32)
 		// Create Windows implementation
-		m_pThreadImpl = new ThreadWindows(*this, false, 0);
+		m_pThreadImpl = new ThreadWindows(*this, false, NULL_HANDLE);
 	#elif defined(LINUX)
 		// Create Linux implementation
-		m_pThreadImpl = new ThreadLinux(*this, false, 0);
+		m_pThreadImpl = new ThreadLinux(*this, false, NULL_HANDLE);
 	#else
 		// Unknown system
 		#error "Unsupported platform"
@@ -113,7 +113,7 @@ Thread::Thread(THREADFUNCTION pStaticFunction, void *pData) :
 *  @brief
 *    Constructor
 */
-Thread::Thread(uint32 nThreadID) :
+Thread::Thread(handle nThreadID) :
 	m_pThreadImpl(nullptr),
 	m_pThreadFunction(nullptr),
 	m_pStaticFunction(nullptr),

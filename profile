@@ -38,7 +38,7 @@
 # Detect the used OS
 if [ $OSTYPE == "linux-gnu" ] ; then
 	PLATFORM="Linux"
-elif [ $OSTYPE == "darwin" ] ; then
+elif [ $OSTYPE == "darwin10.0" ] ; then
 	PLATFORM="MacOSX"
 else
 	PLATFORM="Unknown"

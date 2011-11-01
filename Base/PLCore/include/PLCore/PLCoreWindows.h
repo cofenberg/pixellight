@@ -77,18 +77,6 @@
 	#endif
 #endif
 
-/**
-*  @brief
-*    Invalid handle value (for data type PLCore::handle)
-*/
-#ifdef WIN64
-	#define NULL_HANDLE    0x0000000000000000
-	#define INVALID_HANDLE 0xffffffffffffffff
-#else
-	#define NULL_HANDLE    0x00000000
-	#define INVALID_HANDLE 0xffffffff
-#endif
-
 
 //[-------------------------------------------------------]
 //[ C++11 definitions                                     ]
@@ -193,6 +181,18 @@ namespace PLCore {
 
 
 }
+
+/**
+*  @brief
+*    Invalid handle value (for data type PLCore::handle)
+*/
+#ifdef WIN64
+	static const PLCore::handle NULL_HANDLE    = 0x0000000000000000;
+	static const PLCore::handle INVALID_HANDLE = 0xffffffffffffffff;
+#else
+	static const PLCore::handle NULL_HANDLE    = 0x00000000;
+	static const PLCore::handle INVALID_HANDLE = 0xffffffff;
+#endif
 
 
 //[-------------------------------------------------------]
