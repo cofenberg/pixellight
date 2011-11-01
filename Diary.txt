@@ -13,6 +13,12 @@
   options". In order to avoid such questions in the future, those variables are no longer visible within the CMake-GUI. They are set by toolchains.
 - CMake based build system: Removed the error prone "PL_TOOL_PLPROJECT"-option which was also visible in the CMake-GUI meaning a user was able to
   disable it... which usually results in a lot of errors when building and/or using PixelLight...
+- CMake based build system: When building the target "Pack-SDK" within the Visual Studio IDE, PLProject didn't work from time to time for a certain,
+  varying project. Visual Studio just hang for a few seconds and then aborted the post-build step with a lot of errors. I finally took the time to have
+  a look into this... I noticed that CMake had changed the absolute path to PLProject to a relative one.
+  For example "E:\PixelLight\pixellight_build\Bin-Windows\Runtime\x86\PLProject.exe" was automatically changed into "..\..\..\Bin-Windows\Tools\x86\PLProject.exe".
+  After changing it manually back to an absolute path, the error within Visual Studio was gone. To solve this issue, I set a working directory within the
+  "pl_plproject"-macro inside the "PixelLight.cmake"-file. It looks like that this PLProject/CMake/VisualStudio related error is now finally gone.
 
 
 

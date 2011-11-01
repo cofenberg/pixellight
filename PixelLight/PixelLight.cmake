@@ -455,7 +455,8 @@ message(STATUS "Extensions of files to exclude when e.g. copying a directory: ${
 macro(pl_plproject dir outputpath writeplugin)
 	add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLProject)
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${PL_PLPROJECT_COMMAND} ${dir} --output-path ${outputpath} --write-plugin ${writeplugin} ${ARGN}
+		COMMAND ${PL_PLPROJECT_COMMAND} . --output-path ${outputpath} --write-plugin ${writeplugin} ${ARGN}
+		WORKING_DIRECTORY ${dir}
 	)
 endmacro(pl_plproject dir outputpath writeplugin)
 
