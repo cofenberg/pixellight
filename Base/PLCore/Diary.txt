@@ -1,6 +1,8 @@
 >> 02.11.2011
 [CO]
 - "System"-class: Added "GetPlatformArchitecture()"
+- String implementation: "ResetLocaleToC()": In case the current set locale is already "C" (the default if no one has messed around with the current set
+  locale), we don't have to do anything
 
 
 

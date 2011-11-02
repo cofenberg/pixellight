@@ -75,9 +75,9 @@ namespace PLCore {
 */
 inline char *ResetLocaleToC()
 {
-	// Get the currently set locale, if it's a null pointer just do nothing
+	// Get the currently set locale, if it's a null pointer or already "C" just do nothing
 	const char *pszCurrentLocale = setlocale(LC_ALL, nullptr);
-	if (pszCurrentLocale) {
+	if (pszCurrentLocale && pszCurrentLocale[0] != 'C') {
 		// Do never ever pass a null pointer into "strdup" because the behavior isn't specified in POSIX (http://pubs.opengroup.org/onlinepubs/9699919799/functions/strdup.html)
 		// -> On MS Windows and Linux a null pointer will be returned, on Android it just crashes...
 
