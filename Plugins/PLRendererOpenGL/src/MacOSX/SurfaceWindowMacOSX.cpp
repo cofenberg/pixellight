@@ -23,7 +23,15 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGL/SurfaceWindow.h"
+#include <X11/Xutil.h>
+#include <X11/extensions/Xrandr.h>
+#include <X11/extensions/xf86vmode.h>
+#undef None		// We undef this to avoid name conflicts (else we can't use it as e.g. class method name!)
+#undef Always	// We undef this to avoid name conflicts (else we can't use it as e.g. class method name!)
+#undef Success	// We undef this to avoid name conflicts (else we can't use it as e.g. class method name!)
+#include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
+#include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSX.h"
 
 
 //[-------------------------------------------------------]
@@ -35,17 +43,89 @@ namespace PLRendererOpenGL {
 
 
 //[-------------------------------------------------------]
+//[ Public functions                                      ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Destructor
+*/
+SurfaceWindowMacOSX::~SurfaceWindowMacOSX()
+{
+	// De-initialize the OpenGL surface window
+	DeInit();
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Constructor
+*/
+SurfaceWindowMacOSX::SurfaceWindowMacOSX(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen) :
+	SurfaceWindow(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen)
+{
+	// Initialize the OpenGL surface window
+	Init();
+}
+
+
+//[-------------------------------------------------------]
 //[ Public virtual PLRenderer::SurfaceWindow functions    ]
 //[-------------------------------------------------------]
-bool SurfaceWindow::GetGamma(float &fRed, float &fGreen, float &fBlue) const
+bool SurfaceWindowMacOSX::GetGamma(float &fRed, float &fGreen, float &fBlue) const
 {
-	// [TODO] Implement me
+	// Get the MacOS X OpenGL render context
+	ContextMacOSX *pContextMacOSX = static_cast<ContextMacOSX*>(static_cast<Renderer&>(GetRenderer()).GetContext());
+	if (pContextMacOSX) {
+		// Get the X server display connection
+		Display *pDisplay = pContextMacOSX->GetDisplay();
+
+		// Get gamma information
+		XF86VidModeGamma sXF86VidModeGamma;
+		if (XF86VidModeGetGamma(pDisplay, XDefaultScreen(pDisplay), &sXF86VidModeGamma)) {
+			fRed   = sXF86VidModeGamma.red;
+			fGreen = sXF86VidModeGamma.green;
+			fBlue  = sXF86VidModeGamma.blue;
+			
+			// Done
+			return true;
+		}
+	}
+
+	// Set fallback settings so that the reference parameters are never within an undefined state
+	fRed   = 0.0f;
+	fGreen = 0.0f;
+	fBlue  = 0.0f;
+
+	// Error!
 	return false;
 }
 
-bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
+bool SurfaceWindowMacOSX::SetGamma(float fRed, float fGreen, float fBlue)
 {
-	// [TODO] Implement me
+	if (static_cast<int>(fRed*10) <= 10 && static_cast<int>(fGreen*10) <= 10 && static_cast<int>(fBlue*10) <= 10) {
+		// Get the MacOS X OpenGL render context
+		ContextMacOSX *pContextMacOSX = static_cast<ContextMacOSX*>(static_cast<Renderer&>(GetRenderer()).GetContext());
+		if (pContextMacOSX) {
+			// Get the X server display connection
+			Display *pDisplay = pContextMacOSX->GetDisplay();
+
+			// Gamma was changed...
+			m_bGammaChanged = true;
+
+			// Call the OS gamma ramp function
+			XF86VidModeGamma sXF86VidModeGamma;
+			sXF86VidModeGamma.red   = fRed;
+			sXF86VidModeGamma.green = fGreen;
+			sXF86VidModeGamma.blue  = fBlue;
+			if (XF86VidModeSetGamma(pDisplay, XDefaultScreen(pDisplay), &sXF86VidModeGamma))
+				return true; // Done
+		}
+	}
+
+	// Error!
 	return false;
 }
 
@@ -53,11 +133,26 @@ bool SurfaceWindow::SetGamma(float fRed, float fGreen, float fBlue)
 //[-------------------------------------------------------]
 //[ Public virtual PLRenderer::Surface functions          ]
 //[-------------------------------------------------------]
-Vector2i SurfaceWindow::GetSize() const
+Vector2i SurfaceWindowMacOSX::GetSize() const
 {
 	if (GetNativeWindowHandle()) {
-		// [TODO] Implement me
-		return Vector2i::Zero;
+		::Window nRootWindow = 0;
+		int nPositionX = 0, nPositionY = 0;
+		unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
+
+		// Get the MacOS X context implementation
+		ContextMacOSX *pContextMacOSX = static_cast<ContextMacOSX*>(static_cast<Renderer&>(GetRenderer()).GetContext());
+		if (pContextMacOSX) {
+			// Get the X server display connection
+			Display *pDisplay = pContextMacOSX->GetDisplay();
+			if (pDisplay) {
+				// Get X window geometry information
+				XGetGeometry(pDisplay, GetNativeWindowHandle(), &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
+			}
+		}
+
+		// Return the window size
+		return Vector2i(nWidth, nHeight);
 	} else {
 		return Vector2i::Zero;
 	}
@@ -81,6 +176,7 @@ void SurfaceWindow::DeInit()
 bool SurfaceWindow::MakeCurrent(uint8 nFace)
 {
 	// [TODO] Implement me
+	return false;
 }
 
 bool SurfaceWindow::Present()

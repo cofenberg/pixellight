@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Container/Array.h>
 #include <PLMath/Frustum.h>
 #include <PLMath/Rectangle.h>
 #include "PLRenderer/Renderer/Renderer.h"

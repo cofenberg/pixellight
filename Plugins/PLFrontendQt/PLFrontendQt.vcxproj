@@ -120,7 +120,7 @@
 copy build\debug\PLFrontendQtD.lib ..\..\Bin\Lib\x86\
 copy ..\..\External\_Windows_x86_32\Qt\bin\QtCore4.dll ..\..\Bin\Runtime\x86\
 copy ..\..\External\_Windows_x86_32\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x86\
-..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
+..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

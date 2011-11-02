@@ -28,8 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <X11/Xutil.h>
 #include <OpenGL/CGLTypes.h>
-#include <CoreGraphics/CGDirectDisplay.h>
+#include <CGDirectDisplay.h>	// [TODO] Should be <CoreGraphics/CGDirectDisplay.h> -> See CMakeLists.txt of this project
 #include "PLRendererOpenGL/Context.h"
 
 
@@ -81,6 +82,24 @@ class ContextMacOSX : public Context {
 		*/
 		virtual ~ContextMacOSX();
 
+		/**
+		*  @brief
+		*    Returns the X server display connection
+		*
+		*  @return
+		*    The X server display connection, a null pointer on error
+		*/
+		Display *GetDisplay() const;
+
+		/**
+		*  @brief
+		*    Returns the primary render context
+		*
+		*  @return
+		*    The primary render context, a null pointer on error
+		*/
+		CGLContextObj GetRenderContext() const;
+
 
 	//[-------------------------------------------------------]
 	//[ Public virtual Context methods                        ]
@@ -89,6 +108,7 @@ class ContextMacOSX : public Context {
 		virtual bool IsValid() const override;
 		virtual void MakeDummyCurrent() const override;
 		virtual bool QueryDisplayModes(PLCore::Array<const PLRenderer::DisplayMode*> &lstDisplayModeList) override;
+		virtual PLRenderer::SurfaceWindow *CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false) override;
 
 
 	//[-------------------------------------------------------]
@@ -113,6 +133,7 @@ class ContextMacOSX : public Context {
 	//[-------------------------------------------------------]
 	private:
 		Renderer	  *m_pRenderer;			/**< The owner renderer, always valid! */
+		Display		  *m_pDisplay;			/**< X server display connection, a null pointer on error */
 		CGLContextObj  m_pCGLContextObj;	/**< Pointer to an opaque CGL context object, can be a null pointer */
 
 

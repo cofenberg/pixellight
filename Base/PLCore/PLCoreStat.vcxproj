@@ -396,6 +396,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="src\System\SystemMacOSX.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="src\System\SystemWindows.cpp" />
     <ClCompile Include="src\System\Thread.cpp" />
     <ClCompile Include="src\System\ThreadFunction.cpp" />
@@ -651,6 +657,7 @@
     <ClInclude Include="include\PLCore\System\SystemAndroid.h" />
     <ClInclude Include="include\PLCore\System\SystemImpl.h" />
     <ClInclude Include="include\PLCore\System\SystemLinux.h" />
+    <ClInclude Include="include\PLCore\System\SystemMacOSX.h" />
     <ClInclude Include="include\PLCore\System\SystemWindows.h" />
     <ClInclude Include="include\PLCore\System\Thread.h" />
     <ClInclude Include="include\PLCore\System\ThreadFunction.h" />

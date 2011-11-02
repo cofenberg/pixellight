@@ -1,5 +1,6 @@
 Changes in PixelLight 0.9.10-R1 (not yet released)
--
+- Feature: Added Mac OS X support (>=10.6)
+- Change: Various minor bugfixes and usability improvements within the CMake based build system to make building PixelLight across multiple platforms as painless as possible
 
 
 Changes in PixelLight 0.9.9-R1 (released on October 23, 2011)

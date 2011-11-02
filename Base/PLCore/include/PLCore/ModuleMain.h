@@ -125,57 +125,51 @@
 
 /**
 *  @brief
-*    Sets the module dependencies for Win32 release mode
+*    Sets the module dependencies for Windows 32/64 bit release/debug mode
 *
 *  @param[in] Dependencies
 *    Module dependencies
 */
-#define pl_module_dependencies_win32_release(Dependencies)
+#define pl_module_dependencies_windows_64_release(Dependencies)
+#define pl_module_dependencies_windows_32_release(Dependencies)
+#define pl_module_dependencies_windows_64_debug(Dependencies)
+#define pl_module_dependencies_windows_32_debug(Dependencies)
 
 /**
 *  @brief
-*    Sets the module dependencies for Win32 debug mode
+*    Sets the module dependencies for Linux 32/64 bit release/debug mode
 *
 *  @param[in] Dependencies
 *    Module dependencies
 */
-#define pl_module_dependencies_win32_debug(Dependencies)
+#define pl_module_dependencies_linux_64_release(Dependencies)
+#define pl_module_dependencies_linux_32_release(Dependencies)
+#define pl_module_dependencies_linux_64_debug(Dependencies)
+#define pl_module_dependencies_linux_32_debug(Dependencies)
 
 /**
 *  @brief
-*    Sets the module dependencies for Win64 release mode
+*    Sets the module dependencies for Android 32/64 bit release/debug mode
 *
 *  @param[in] Dependencies
 *    Module dependencies
 */
-#define pl_module_dependencies_win64_release(Dependencies)
+#define pl_module_dependencies_android_64_release(Dependencies)
+#define pl_module_dependencies_android_32_release(Dependencies)
+#define pl_module_dependencies_android_64_debug(Dependencies)
+#define pl_module_dependencies_android_32_debug(Dependencies)
 
 /**
 *  @brief
-*    Sets the module dependencies for Win64 debug mode
+*    Sets the module dependencies for Mac OS X 32/64 bit release/debug mode
 *
 *  @param[in] Dependencies
 *    Module dependencies
 */
-#define pl_module_dependencies_win64_debug(Dependencies)
-
-/**
-*  @brief
-*    Sets the module dependencies for Linux release mode
-*
-*  @param[in] Dependencies
-*    Module dependencies
-*/
-#define pl_module_dependencies_linux_release(Dependencies)
-
-/**
-*  @brief
-*    Sets the module dependencies for Linux debug mode
-*
-*  @param[in] Dependencies
-*    Module dependencies
-*/
-#define pl_module_dependencies_linux_debug(Dependencies)
+#define pl_module_dependencies_macosx_64_release(Dependencies)
+#define pl_module_dependencies_macosx_32_release(Dependencies)
+#define pl_module_dependencies_macosx_64_debug(Dependencies)
+#define pl_module_dependencies_macosx_32_debug(Dependencies)
 
 /**
 *  @brief

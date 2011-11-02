@@ -1,3 +1,26 @@
+>> 01.11.2011
+[CO]
+- Split the MS Windows prerequisites section into "Binaries", "Installable SDK" and "Documentation" to enhance the overview over what is required for which task
+- Further enhanced the usability of the CMake based build system (thank's to Prof. Dr. Frank Deinzer for providing feedback related to this enhancement :)
+  - In case Doxygen was not found by CMake, the "PixelLightAPI"-document is ignored and a message is written into the log in order to avoid possibly confusing errors
+    during the build
+  - In case Microsoft Html Help Compiler was not found by CMake, the "SDKBrowser"-document is ignored and a message is written into the log in order to avoid possibly
+    confusing errors during the build
+  - In case LaTeX or dvipdf was not found by CMake, the PixelLightFeatures, PixelLightBase, PixelLightCompositing, PixelLightCodingConventions, PixelLightBuild,
+    PixelLightScript and PixelLight3dsMaxSceneExport documents are ignored and a message is written into the log in order to avoid possibly confusing errors during the build
+- "PixelLightAPI"-document build bugfix: The CHM-target did not depend on the Doxygen-target, this explains why building the "PixelLightAPI"-document failed from time to time
+- "SDKBrowser.chm" build bugfix: The file was not copied into the resulting installable SDK
+- Fixed the error "CUSTOMBUILD : error : failed to run html help compiler on index.hhp" when compiling "Docs-PixelLightAPI-Doxygen" or "PixelLightAPI-CHM" by using the
+  CMake based build system. I just had to remove the "HHC_LOCATION=../hhc.exe"-entry within "Docs\PixelLightAPI\doxyfile.in".
+
+
+
+>> 28.10.2011
+[CO]
+- "PixelLightBuild": Added Mac OS X chapter, work in progress
+
+
+
 >> 16.10.2011
 [CO]
 - "PixelLightBuild": Added a few lines about source code versions

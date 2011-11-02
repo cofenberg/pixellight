@@ -143,7 +143,6 @@ class SystemAndroid : public SystemLinux {
 	//[-------------------------------------------------------]
 	private:
 		virtual String GetPlatform() const override;
-		virtual String GetOS() const override;
 		virtual const Console &GetConsole() const override;
 		virtual void UrgentMessage(const String &sMessage) const override;
 

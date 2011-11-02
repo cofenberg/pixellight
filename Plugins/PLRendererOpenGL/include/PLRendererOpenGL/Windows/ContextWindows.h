@@ -102,6 +102,7 @@ class ContextWindows : public Context {
 		virtual bool IsValid() const override;
 		virtual void MakeDummyCurrent() const override;
 		virtual bool QueryDisplayModes(PLCore::Array<const PLRenderer::DisplayMode*> &lstDisplayModeList) override;
+		virtual PLRenderer::SurfaceWindow *CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false) override;
 
 
 	//[-------------------------------------------------------]

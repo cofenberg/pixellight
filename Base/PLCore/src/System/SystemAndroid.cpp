@@ -124,21 +124,6 @@ String SystemAndroid::GetPlatform() const
 	return sString;
 }
 
-String SystemAndroid::GetOS() const
-{
-	// Get system info
-	if (m_bSysInfoInit) {
-		String sVersion = m_sName.sysname;
-		sVersion += ' ';
-		sVersion += m_sName.machine;
-		sVersion += ' ';
-		sVersion += m_sName.release;
-		return sVersion;
-	} else {
-		return "Android unknown";
-	}
-}
-
 const Console &SystemAndroid::GetConsole() const
 {
 	return g_bConsoleToKernelLog ? m_cConsole : SystemLinux::m_cConsole;

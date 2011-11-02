@@ -38,7 +38,6 @@
 	#include "PLRendererOpenGL/FontManager.h"
 #endif
 #include "PLRendererOpenGL/Program.h"
-#include "PLRendererOpenGL/SurfaceWindow.h"
 #include "PLRendererOpenGL/SurfaceTextureBuffer.h"
 #include "PLRendererOpenGL/TextureBuffer1D.h"
 #include "PLRendererOpenGL/TextureBuffer2D.h"
@@ -52,7 +51,7 @@
 #ifdef WIN32
 	#include "PLRendererOpenGL/Windows/ContextWindows.h"
 #elif APPLE
-	#include "PLRendererOpenGL/MaxOSX/ContextMacOSX.h"
+	#include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
 #elif LINUX
 	#include "PLRendererOpenGL/Linux/ContextLinux.h"
 #endif
@@ -1119,16 +1118,18 @@ void Renderer::RestoreDeviceObjects()
 //[-------------------------------------------------------]
 PLRenderer::SurfaceWindow *Renderer::CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen)
 {
-	// Is the surface window handler valid?
-	if (cHandler.GetRenderer() != this)
-		return nullptr; // Error!
+	// Is the renderer initialized and is the surface window handler valid?
+	if (m_pContext && cHandler.GetRenderer() == this) {
+		// Create and register renderer surface
+		PLRenderer::SurfaceWindow *pRendererSurface = m_pContext->CreateSurfaceWindow(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen);
+		m_lstSurfaces.Add(reinterpret_cast<PLRenderer::Surface*>(pRendererSurface));
 
-	// Create and register renderer surface
-	PLRenderer::SurfaceWindow *pRendererSurface = new SurfaceWindow(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen);
-	m_lstSurfaces.Add(pRendererSurface);
+		// Return created renderer surface
+		return pRendererSurface;
+	}
 
-	// Return created renderer surface
-	return pRendererSurface;
+	// Error!
+	return nullptr;
 }
 
 PLRenderer::SurfaceTextureBuffer *Renderer::CreateSurfaceTextureBuffer2D(const Vector2i &vSize, PLRenderer::TextureBuffer::EPixelFormat nFormat, uint32 nFlags, uint8 nMaxColorTargets)

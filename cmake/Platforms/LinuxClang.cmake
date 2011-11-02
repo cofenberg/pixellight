@@ -21,13 +21,10 @@
 
 
 ##################################################
-## Linux/GCC platform definitions
+## Linux/clang platform definitions
 ##
-## This file contains compiler and linker settings which are specific to the GCC compiler suit under linux
+## This file contains compiler and linker settings which are specific to the clang compiler suit under linux
 ##################################################
-
-
-# [TODO] Currently no visibility attribute (http://gcc.gnu.org/wiki/Visibility) because when using it, PixelLight failes to build with Clang
 
 
 ##################################################
@@ -85,10 +82,16 @@ IF(CMAKE_GENERATOR MATCHES "Makefiles")
 	endif()
 ENDIF(CMAKE_GENERATOR MATCHES "Makefiles")
 
+# Check compiler features
+# currently clang has problems with visibility and template instances which gets exported in a library (see http://llvm.org/bugs/show_bug.cgi?id=10113)
+set(NO_VISIBILITY_CHECK 1)
+include(${CMAKETOOLS_DIR}/Modules/CheckLinuxCompiler.cmake)	# Adds e.g. visibility attribute (http://gcc.gnu.org/wiki/Visibility)
+
 
 ##################################################
 ## Compiler flags
 ##################################################
+
 
 set(LINUX_COMPILE_FLAGS
 	${LINUX_COMPILE_FLAGS}

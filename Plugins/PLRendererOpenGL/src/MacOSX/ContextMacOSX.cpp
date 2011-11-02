@@ -25,7 +25,11 @@
 //[-------------------------------------------------------]
 #include <OpenGL/OpenGL.h>
 #include <PLCore/Log/Log.h>
+#include <PLMath/Vector2i.h>
+#include <PLRenderer/Renderer/Types.h>
+#include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSX.h"
 #include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
+#include <IOKit/graphics/IOGraphicsTypes.h>	// Include this after the rest, else we get OS definition issues, again (required for "IO8BitIndexedPixels", "IO16BitIndexedPixels" and "IO32BitIndexedPixels")
 
 
 //[-------------------------------------------------------]
@@ -45,13 +49,14 @@ namespace PLRendererOpenGL {
 */
 ContextMacOSX::ContextMacOSX(Renderer &cRenderer) :
 	m_pRenderer(&cRenderer),
+	m_pDisplay(XOpenDisplay(nullptr)),
 	m_pCGLContextObj(nullptr)
 {
 	CGLError nCGLError = kCGLNoError;
 
 	// Search for a suitable pixel format
 	CGLPixelFormatAttribute nCGLPixelFormatAttribute[] = {
-		0
+		static_cast<CGLPixelFormatAttribute>(0)
 	};
 	GLint nNumOfVirtualScreens = 0;
 	CGLPixelFormatObj pCGLPixelFormatObj = nullptr;
@@ -90,6 +95,30 @@ ContextMacOSX::~ContextMacOSX()
 		if (nCGLError != kCGLNoError)
 			PL_LOG(Error, String("Failed to destroy the CGL context object (\"") + CGLErrorString(nCGLError) + "\")")
 	}
+
+	// Is there a valid X server display connection?
+	if (m_pDisplay) {
+		// Close the X server display connection
+		XCloseDisplay(m_pDisplay);
+	}
+}
+
+/**
+*  @brief
+*    Returns the X server display connection
+*/
+Display *ContextMacOSX::GetDisplay() const
+{
+	return m_pDisplay;
+}
+	
+/**
+*  @brief
+*    Returns the primary render context
+*/
+CGLContextObj ContextMacOSX::GetRenderContext() const
+{
+	return m_pCGLContextObj;
 }
 
 
@@ -119,10 +148,10 @@ bool ContextMacOSX::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &lst
 	const CFArrayRef lstDisplayModes = CGDisplayCopyAllDisplayModes(kCGDirectMainDisplay, nullptr);
 	for (CFIndex nMode=0; nMode<CFArrayGetCount(lstDisplayModes); nMode++) {
 		// Get the current display mode
-		const CGDisplayModeRef pCGDisplayMode = static_cast<CGDisplayModeRef>(CFArrayGetValueAtIndex(lstDisplayModes, nMode));
-		const Vector2i vSize(CGDisplayModeGetWidth(pCGDisplayMode), CGDisplayModeGetHeight(pCGDisplayMode));	// Screen resolution
-		const uint32   nColorBits = GetColorBitsFromDisplayMode(pCGDisplayMode);								// Number of bits for the color (for example 32)
-		const uint32   nFrequency = static_cast<uint32>(CGDisplayModeGetRefreshRate(pCGDisplayMode));			// Refresh rate (for example 60)
+		const CGDisplayModeRef pCGDisplayMode = (CGDisplayModeRef)CFArrayGetValueAtIndex(lstDisplayModes, nMode);	// No C++ style cast because it's tricky in here
+		const Vector2i vSize(CGDisplayModeGetWidth(pCGDisplayMode), CGDisplayModeGetHeight(pCGDisplayMode));		// Screen resolution
+		const uint32   nColorBits = GetColorBitsFromDisplayMode(pCGDisplayMode);									// Number of bits for the color (for example 32)
+		const uint32   nFrequency = static_cast<uint32>(CGDisplayModeGetRefreshRate(pCGDisplayMode));				// Refresh rate (for example 60)
 
 		// First at all, we're only interested in some of the settings - as a result, we really should check if there's
 		// already a display mode within our list with the interesting settings of the current found display mode
@@ -169,6 +198,11 @@ bool ContextMacOSX::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &lst
 
 	// Done
 	return true;
+}
+
+PLRenderer::SurfaceWindow *ContextMacOSX::CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen)
+{
+	return new SurfaceWindowMacOSX(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen);
 }
 
 

@@ -104,9 +104,18 @@ class System : public Singleton<System> {
 		*    Returns the name of the platform
 		*
 		*  @return
-		*    Platform string (for instance 'Win32' for Windows 32 bit, 'Linux' for Linux and so on)
+		*    Platform string (for instance 'Windows' for Windows, 'Linux' for Linux and so on)
 		*/
 		PLCORE_API String GetPlatform() const;
+
+		/**
+		*  @brief
+		*    Returns the platform bit architecture
+		*
+		*  @return
+		*    Platform bit architecture (for instance '32' for x86, '64' for x64)
+		*/
+		PLCORE_API uint32 GetPlatformBitArchitecture() const;
 
 		/**
 		*  @brief
@@ -125,6 +134,24 @@ class System : public Singleton<System> {
 		*    The directory separator used by the operation system (e.g. '/' on Linux, '\' on Windows)
 		*/
 		PLCORE_API char GetSeparator() const;
+
+		/**
+		*  @brief
+		*    Returns the shared library filename prefix used by the operation system
+		*
+		*  @return
+		*    The shared library filename prefix used by the operation system (e.g. 'lib' as in 'libPLCore.so' on Linux, no prefix as in 'PLCore.dll' on Windows)
+		*/
+		PLCORE_API String GetSharedLibraryPrefix() const;
+
+		/**
+		*  @brief
+		*    Returns the shared library file extension used by the operation system
+		*
+		*  @return
+		*    The shared library file extension used by the operation system (e.g. 'so' on Linux, 'dll' on Windows)
+		*/
+		PLCORE_API String GetSharedLibraryExtension() const;
 
 		/**
 		*  @brief

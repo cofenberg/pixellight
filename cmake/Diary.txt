@@ -1,3 +1,26 @@
+>> 01.11.2011
+[CO]
+- Bugfix within the "cmaketools_add_pdf_document"-macro inside the "CMakeTools_Docs.cmake"-file: Before it's possible to build a PDF, the DVI file must already
+  exist, but the PDF target did not depend on the DVI target. This explains why building the installable SDK failed from time to time due to a missing pdf.
+
+[SW]
+- Renamed CheckGCC.cmake to CheckLinuxCompiler.cmake because the checks in this file are also useable when using the clang compiler under linux.
+- The visibility check is only called, when the var NO_VISIBILITY_CHECK is not set. This var is needed because pixellight doesn't compile with clang
+   and visibility enabled due an bug in clang itself (see http://llvm.org/bugs/show_bug.cgi?id=10113)
+
+
+
+>> 25.10.2011
+[CO]
+- Android port releated: "CMAKETOOLS_MINIMAL" CMake variable is no longer set to 1 by default and disabled plugins which are not yet supported
+  on this platform (create prebuild external packages and test it)
+- CMake options: Added "(due to legal issues, we can't provide a public downloadable package)"-information so one can see within CMake-GUI which external
+  prebuild packages can be downloaded automatically by the system without a user & passwort set
+- CMake options: By default, disable plugins using stuff were we can't provide a public downloadable package in order to avoid compiler errors due to not
+  found includes (at least when using the default settings)
+
+
+
 >> 20.10.2011
 [CO]
 - Mac OS X 10.6 is shipped with GCC 4.2. It's possible to compile and use GCC 4.6 (worked for me without any issues), but PixelLight should also be able to compile by using the

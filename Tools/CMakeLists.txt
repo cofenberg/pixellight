@@ -42,7 +42,7 @@ file(MAKE_DIRECTORY ${PL_TOOLS_BIN_DIR})
 ##################################################
 ## Projects
 ##################################################
-if(PL_TOOL_PLPROJECT)
+if(PL_NATIVE_PLPROJECT)
 	add_subdirectory(PLProject)
 endif()
 if(PL_TOOL_PLUPGRADE)

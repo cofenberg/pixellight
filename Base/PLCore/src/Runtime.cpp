@@ -24,6 +24,12 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PixelLight.h>
+#ifdef WIN32
+	// [TODO] Use the registry class within "Runtime::SetDirectory()"
+	#include <windows.h>
+	#include <stdio.h>
+	#undef Yield
+#endif
 #include "PLCore/System/DynLib.h"
 #include "PLCore/System/System.h"
 #include "PLCore/File/Url.h"
@@ -53,30 +59,21 @@ Runtime::EType Runtime::GetType()
 		// No doubt, the executable is using the static linked version of PLCore
 		return StaticInstallation;
 	#else
-		// Get the name of the PLCore shared library
-		const String sPLCoreSharedLibrary = GetPLCoreSharedLibraryName();
+		// Get the absolute path the PLCore shared library is in
+		// (should never ever fail because this executable is already using this shared library...)
+		const String sAbsPLCorePath = GetPLCoreSharedLibraryDirectory();
 
-		// Load the shared library (should never ever fail because this executable is already using this shared library...)
-		DynLib cPLCoreDynLib;
-		if (cPLCoreDynLib.Load(sPLCoreSharedLibrary)) {
-			// Get the absolute path the PLCore shared library is in
-			const String sAbsPLCorePath = Url(cPLCoreDynLib.GetAbsPath()).CutFilename();
+		// Get the absolute filename of the running process
+		const String sAbsProcessPath = Url(System::GetInstance()->GetExecutableFilename()).CutFilename();
 
-			// Get the absolute filename of the running process
-			const String sAbsProcessPath = Url(System::GetInstance()->GetExecutableFilename()).CutFilename();
-
-			// Is the PLCore shared library within the same directory as the running process?
-			if (sAbsPLCorePath == sAbsProcessPath) {
-				// The PixelLight runtime is in the same directory as the running process, making this to a local installation
-				return LocalInstallation;
-			} else {
-				// The PixelLight runtime is registered within the system, making this to a system installation
-				return SystemInstallation;
-			}
+		// Is the PLCore shared library within the same directory as the running process?
+		if (sAbsPLCorePath == sAbsProcessPath) {
+			// The PixelLight runtime is in the same directory as the running process, making this to a local installation
+			return LocalInstallation;
+		} else {
+			// The PixelLight runtime is registered within the system, making this to a system installation
+			return SystemInstallation;
 		}
-
-		// Error!
-		return UnknownInstallation;
 	#endif
 }
 
@@ -153,11 +150,16 @@ String Runtime::GetLocalDataDirectory()
 */
 String Runtime::GetSystemDirectory()
 {
-	// First: Try to find the PL-runtime directory by using the PLCore shared library
-	String sPLDirectory = GetDirectory(SystemInstallation);
+	// First: Try to find the system PL-runtime directory by reading the registry
+	// -> We really need to check for the registry, first: When building for Linux, there
+	//    are fixed build in locations like "/home/bob/pixellight/cmakeout/Base/PLCore/" and
+	//    build executables will link against those shared libraries -> You'll receive
+	//    "/home/bob/pixellight/cmakeout/Base/PLCore/" as PL system directory, not e.g.
+	//    "/home/bob/pixellight/Bin-Linux/Runtime/x86" as expected.
+	String sPLDirectory = GetRegistryDirectory();
 	if (!sPLDirectory.GetLength()) {
-		// Second: Try to find the system PL-runtime directory by reading the registry
-		sPLDirectory = GetRegistryDirectory();
+		// Second: Try to find the PL-runtime directory by using the PLCore shared library
+		sPLDirectory = GetDirectory(SystemInstallation);
 	}
 
 	// Done
@@ -299,6 +301,149 @@ String Runtime::GetDataDirectory()
 
 /**
 *  @brief
+*    Returns the name of the PLCore shared library
+*/
+String Runtime::GetPLCoreSharedLibraryName()
+{
+	#ifdef _DEBUG
+		// The executable is using a debug version of PixelLight
+		static const String sString = System::GetInstance()->GetSharedLibraryPrefix() + "PLCoreD." + System::GetInstance()->GetSharedLibraryExtension();
+		return sString;
+	#else
+		// The executable is using a release version of PixelLight
+		static const String sString = System::GetInstance()->GetSharedLibraryPrefix() + "PLCore." + System::GetInstance()->GetSharedLibraryExtension();
+		return sString;
+	#endif
+}
+
+/**
+*  @brief
+*    Returns the absolute path to the directory the PLCore shared library is in
+*/
+String Runtime::GetPLCoreSharedLibraryDirectory()
+{
+	// Load the shared library
+	DynLib cPLCoreDynLib;
+	if (cPLCoreDynLib.Load(GetPLCoreSharedLibraryName())) {
+		// Return the absolute path the PLCore shared library is in
+		return Url(cPLCoreDynLib.GetAbsPath()).CutFilename();
+	}
+
+	// Error!
+	return "";
+}
+
+/**
+*  @brief
+*    Sets the given PL-runtime directory
+*/
+bool Runtime::SetDirectory(const String &sDirectory, String *pszErrorMessage)
+{
+	// Windows
+	#ifdef WIN32
+		// [TODO] Use the registry class
+
+		// Add directory to PATH variable
+		HKEY hKey;
+		if (RegOpenKeyEx(HKEY_CURRENT_USER, L"Environment", 0, KEY_READ | KEY_WRITE, &hKey) == ERROR_SUCCESS) {
+			// Query size of PATH variable
+			DWORD nPathSize = 0;
+			RegQueryValueEx(hKey, L"PATH", 0, nullptr, nullptr, &nPathSize);
+			nPathSize += 256 + 8;
+			wchar_t *pszPath = new wchar_t[nPathSize];
+
+			// Query value of PATH variable
+			DWORD nType;
+			DWORD nSize = nPathSize;
+			LSTATUS nResult = RegQueryValueEx(hKey, L"PATH", 0, &nType, (BYTE*)pszPath, &nSize);
+			if (nResult == ERROR_FILE_NOT_FOUND) {
+				// Write to registry
+				RegSetValueEx(hKey, L"PATH", 0, REG_SZ, (BYTE*)sDirectory.GetUnicode(), (DWORD)sizeof(wchar_t)*wcslen(sDirectory.GetUnicode()));
+				RegFlushKey(hKey);
+			} else if (nResult == ERROR_SUCCESS) {
+				// Get upper case version
+				wchar_t *pszPathUpcase = new wchar_t[nSize];
+				wcscpy(pszPathUpcase, pszPath);
+				_wcsupr(pszPathUpcase);
+
+				// Check if path is already set to this directory
+				String sDirectorUpcase = sDirectory;
+				sDirectorUpcase.ToUpper();
+				if (!wcsstr(pszPathUpcase, sDirectorUpcase.GetUnicode())) {
+					// Add directory to path
+					if (wcslen(pszPath) && pszPath[wcslen(pszPath) - 1] != L';')
+						wcscat(pszPath, L";");
+					wcscat(pszPath, sDirectory.GetUnicode());
+					wcscat(pszPath, L";");
+
+					// Write back to registry
+					pszPath[wcslen(pszPath) + 1] = L'\0';
+					RegSetValueEx(hKey, L"PATH", 0, nType, (BYTE*)pszPath, (DWORD)sizeof(wchar_t)*wcslen(pszPath));
+					RegFlushKey(hKey);
+				}
+
+				// Release data
+				if (pszPathUpcase)
+					delete [] pszPathUpcase;
+			}
+
+			// Clean up
+			if (pszPath)
+				delete [] pszPath;
+			RegCloseKey(hKey);
+		} else {
+			if (pszErrorMessage)
+				*pszErrorMessage = "Failed to open \"HKEY_CURRENT_USER\\Environment\"";
+		}
+
+		// Get PixelLight suffix and compose registry key from it
+		wchar_t szSuffix[256];
+		mbstowcs(szSuffix, PIXELLIGHT_SUFFIX, strlen(PIXELLIGHT_SUFFIX)+1);
+		wchar_t szSubkey[256];
+		wcscpy(szSubkey, L"SOFTWARE\\PixelLight\\PixelLight-SDK");
+		if (wcslen(szSuffix) > 0) {
+			wcscat(szSubkey, L"-");
+			wcscat(szSubkey, szSuffix);
+		}
+
+		// Add directory to registry key "SOFTWARE\\PixelLight\\PixelLight-SDK"
+		const LONG nErrorCode = RegCreateKeyEx(HKEY_LOCAL_MACHINE, szSubkey, 0, nullptr, 0, KEY_READ | KEY_WRITE, nullptr, &hKey, nullptr);
+		if (nErrorCode == ERROR_SUCCESS) {
+			// Set value
+			RegSetValueEx(hKey, L"Runtime", 0, REG_SZ, (BYTE*)sDirectory.GetUnicode(), (DWORD)sizeof(wchar_t)*wcslen(sDirectory.GetUnicode()));
+			RegFlushKey(hKey);
+
+			// Clean up
+			RegCloseKey(hKey);
+		} else {
+			if (pszErrorMessage) {
+				// Converts a given Windows error code received by 'GetLastError()' into a human readable string
+				LPTSTR pszError;
+				if (FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, nullptr, nErrorCode, 0, reinterpret_cast<LPTSTR>(&pszError), 0, nullptr)) {
+					wchar_t szMessage[256];
+					swprintf(szMessage, 256, L"Failed to open or create \"HKEY_LOCAL_MACHINE\\SOFTWARE\\PixelLight\\PixelLight-SDK\" (%s)", pszError);
+					*pszErrorMessage = szMessage;
+					LocalFree(pszError);
+				} else {
+					*pszErrorMessage = "Failed to open or create \"HKEY_LOCAL_MACHINE\\SOFTWARE\\PixelLight\\PixelLight-SDK\"";
+				}
+			}
+		}
+
+		// We need to send a broadcast so other processes will be informed about the change. If this is not done,
+		// 'dlls' still will not be found although the "PATH" environment variable was updated!
+		ULONG_PTR nResult;
+		SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, (LPARAM)L"Environment", SMTO_NORMAL, 4000, &nResult);
+	#endif
+
+	// [TODO] Implement Linux equivalent (see "GetRegistryDirectory()", I know that there's no MS Windows like registry under Linux)
+
+	// Done
+	return true;
+}
+
+/**
+*  @brief
 *    Scan PL-runtime directory for compatible plugins and load them in
 */
 void Runtime::ScanDirectoryPlugins(const String &sDirectory, bool bDelayedPluginLoading)
@@ -363,29 +508,6 @@ bool Runtime::ScanDirectoryPluginsAndData(bool bUrgentMessageAllowed)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the name of the PLCore shared library
-*/
-String Runtime::GetPLCoreSharedLibraryName()
-{
-	#ifdef _DEBUG
-		// The executable is using a debug version of PixelLight
-		#ifdef LINUX
-			return "libPLCoreD.so";
-		#elif defined(WIN32)
-			return "PLCoreD.dll";
-		#endif
-	#else
-		// The executable is using a release version of PixelLight
-		#ifdef LINUX
-			return "libPLCore.so";
-		#elif defined(WIN32)
-			return "PLCore.dll";
-		#endif
-	#endif
-}
-
-/**
-*  @brief
 *    Try to find the PL-runtime directory by using the PLCore shared library
 */
 String Runtime::GetDirectory(EType nType)
@@ -395,32 +517,26 @@ String Runtime::GetDirectory(EType nType)
 		#ifdef PLCORE_STATIC
 			// No doubt, the executable is using the static linked version of PLCore... We don't know any so called "runtime"...
 		#else
-			// Get the name of the PLCore shared library
-			const String sPLCoreSharedLibrary = GetPLCoreSharedLibraryName();
+			// Get the absolute path the PLCore shared library is in
+			// (should never ever fail because this executable is already using this shared library...)
+			const String sAbsPLCorePath = GetPLCoreSharedLibraryDirectory();
 
-			// Load the shared library (should never ever fail because this executable is already using this shared library...)
-			DynLib cPLCoreDynLib;
-			if (cPLCoreDynLib.Load(sPLCoreSharedLibrary)) {
-				// Get the absolute path the PLCore shared library is in
-				const String sAbsPLCorePath = Url(cPLCoreDynLib.GetAbsPath()).CutFilename();
+			// Get the absolute filename of the running process
+			const String sAbsProcessPath = Url(System::GetInstance()->GetExecutableFilename()).CutFilename();
 
-				// Get the absolute filename of the running process
-				const String sAbsProcessPath = Url(System::GetInstance()->GetExecutableFilename()).CutFilename();
-
-				// Is the PLCore shared library within the same directory as the running process?
-				if (sAbsPLCorePath == sAbsProcessPath) {
-					// The PixelLight runtime is in the same directory as the running process, making this to a local installation
-					return (nType == LocalInstallation) ? sAbsPLCorePath : "";	// Done
-				} else {
-					// The PixelLight runtime is registered within the system, making this to a system installation
-					return (nType == SystemInstallation) ? sAbsPLCorePath : "";	// Done
-				}
+			// Is the PLCore shared library within the same directory as the running process?
+			if (sAbsPLCorePath == sAbsProcessPath) {
+				// The PixelLight runtime is in the same directory as the running process, making this to a local installation
+				return (nType == LocalInstallation) ? sAbsPLCorePath : "";	// Done
+			} else {
+				// The PixelLight runtime is registered within the system, making this to a system installation
+				return (nType == SystemInstallation) ? sAbsPLCorePath : "";	// Done
 			}
 		#endif
 	}
 
 	// Error!
-	return false;
+	return "";
 }
 
 

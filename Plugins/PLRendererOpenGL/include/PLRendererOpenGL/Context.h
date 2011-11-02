@@ -39,6 +39,8 @@ namespace PLCore {
 }
 namespace PLRenderer {
 	struct DisplayMode;
+	class SurfaceWindow;
+	class SurfaceWindowHandler;
 }
 
 
@@ -94,6 +96,29 @@ class Context : public PLCore::AbstractContext {
 		*    'true' if all went fine and at least one display mode was found, else 'false'
 		*/
 		virtual bool QueryDisplayModes(PLCore::Array<const PLRenderer::DisplayMode*> &lstDisplayModeList) = 0;
+
+		/**
+		*  @brief
+		*    Creates renderer surface window
+		*
+		*  @param[in] cHandler
+		*    Renderer surface handler the new renderer surface is assigned with
+		*  @param[in] nNativeWindowHandle
+		*    Handle to the native window the renderer surface is assigned with
+		*  @param[in] sDisplayMode
+		*    Display mode information
+		*  @param[in] bFullscreen
+		*    Fullscreen mode?
+		*
+		*  @return
+		*    The created renderer surface, a null pointer on error
+		*
+		*  @note
+		*    - The new created renderer surface is added to this renderer automatically
+		*    - The renderer surface handler is required because this kind of surface is assigned
+		*      with a window and if the surface or window is lost they have to be informed
+		*/
+		virtual PLRenderer::SurfaceWindow *CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false) = 0;
 
 
 	//[-------------------------------------------------------]

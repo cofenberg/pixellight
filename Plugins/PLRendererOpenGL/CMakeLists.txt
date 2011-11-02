@@ -106,11 +106,19 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
-	${OPENGL_INCLUDE_DIRS}
 )
 if(PL_PLUGIN_RENDERER_OPENGL_FONT)
 	add_include_directories(
 		${FREETYPE_INCLUDE_DIRS}
+	)
+endif()
+if(APPLE)
+	##################################################
+	## Apple
+	##################################################
+	add_include_directories(
+		# [TODO] We need to include <CoreGraphics/CGDirectDisplay.h> ... currently the following include path is hard coded to have anything to start with, maybe we need a CMake find script for this?
+		/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/CoreGraphics.framework/Versions/A/Headers/
 	)
 endif()
 
@@ -214,6 +222,15 @@ if(WIN32)
 	##################################################
 	add_linker_flags(
 		${WIN32_LINKER_FLAGS}
+	)
+elseif(APPLE)
+	##################################################
+	## GCC Compiler
+	##################################################
+	add_linker_flags(
+		${LINUX_LINKER_FLAGS}
+		-framework OpenGL
+		-framework Cocoa
 	)
 elseif(LINUX)
 	##################################################

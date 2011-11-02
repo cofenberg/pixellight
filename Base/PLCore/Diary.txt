@@ -1,3 +1,47 @@
+>> 01.11.2011
+[CO]
+- "Runtime"-class: Added "SetDirectory()" and "GetPLCoreSharedLibraryDirectory()", made "GetPLCoreSharedLibraryName()" public
+
+
+
+>> 31.10.2011
+[CO]
+- "NULL_HANDLE" and "INVALID_HANDLE" are no longer classic definitions, instead they are now constants of the type "PLCore::handle" to give the compiler
+  the chance to perform a type check
+- Fixed bug 3431174 (http://sourceforge.net/tracker/index.php?func=detail&aid=3431174&group_id=507544&atid=2063682): Within the "PLCore::System"-constructor,
+  the main thread was created incorrectly. Also reviewed the thread constructors.
+- "System"-constructor cleanup: Removed "[HACK] Force the linker to keep the "Profiling"-class (don't strip it away)" because it's now within "PLCore.cpp"
+  together with the rest of the same issues (see PLCore diary entry 23.10.2011)
+
+
+
+>> 27.10.2011
+[CO]
+- "System": Added "GetSharedLibraryPrefix()" and "GetSharedLibraryExtension()"
+- Added "SystemMacOSX" which is derived from "SystemLinux"
+- "SystemWindows::GetPlatform()" now returns "Windows" instead of "Win32"/"Win64" to make it similar to "Linux", "Android" and "MacOSX". I try to avoid
+  such breaking changes, but this one was necessary do deal with all the supported platforms in an uniform way.
+- "System": Added "GetPlatformBitArchitecture()"
+-> It's hightly recommended to make a clean build of PixelLight in order to avoid issues when using plugin files from before this change
+
+
+
+>> 26.10.2011
+[CO]
+- "SystemLinux::GetPlatform()" & "SystemLinux::GetOS()": Added Mac OS X handling (it's not worth to derive an own class, yet)
+- "ScriptManager::CreateFromFile()": Enhanced the method documentation in order to avoid problems like the one at
+  http://dev.pixellight.org/forum/viewtopic.php?f=6&t=103
+
+
+
+>> 25.10.2011
+[CO]
+- "Runtime::GetSystemDirectory()": We really need to check for the registry, first: When building for Linux, there are fixed build in locations like
+  "/home/bob/pixellight/cmakeout/Base/PLCore/" and build executables will link against those shared libraries -> You'll receive
+  "/home/bob/pixellight/cmakeout/Base/PLCore/" as PL system directory, not e.g. "/home/bob/pixellight/Bin-Linux/Runtime/x86" as expected.
+
+
+
 ﻿>> 23.10.2011
 [CO]
 - Interesting, just tried to build PixelLight on MS Windows by using CMake to create the Visual Studio projects files and then, as usually build PL with VC...

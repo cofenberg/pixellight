@@ -6,17 +6,9 @@
     <Vendor>Copyright (C) 2002-2011 by The PixelLight Team</Vendor>
     <License>GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version</License>
     <Description>OpenGL 1.1 + extensions (http://www.opengl.org/) renderer implementation using FreeType for font support</Description>
-    <Platform Name="Win32">
+    <Platform Name="Windows" BitArchitecture="32">
         <Library Type="Release">PLRendererOpenGL.dll</Library>
         <Library Type="Debug">PLRendererOpenGLD.dll</Library>
-    </Platform>
-    <Platform Name="Win64">
-        <Library Type="Release">PLRendererOpenGL64.dll</Library>
-        <Library Type="Debug">PLRendererOpenGLD64.dll</Library>
-    </Platform>
-    <Platform Name="Linux">
-        <Library Type="Release">libPLRendererOpenGL.so</Library>
-        <Library Type="Debug">libPLRendererOpenGLD.so</Library>
     </Platform>
     <Classes>
         <Class Name="Renderer" Namespace="PLRendererOpenGL" BaseClassName="PLRenderer::RendererBackend" Description="OpenGL 1.1 + extensions renderer backend" HasConstructor="1" HasDefaultConstructor="0" />

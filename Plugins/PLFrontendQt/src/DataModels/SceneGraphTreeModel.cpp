@@ -93,11 +93,6 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 			if (column == 0) {
 				if (role == Qt::DisplayRole || role == Qt::ToolTipRole)
 					return m_nodeName;
-				// [TODO]
-				//            else if (role == Qt::ForegroundRole)
-				//                return m_textColor;
-				//            else if (role == Qt::BackgroundRole)
-				//                return QBrush(Qt::magenta);
 			}
 
 			return QVariant();
@@ -221,9 +216,6 @@ void SceneGraphTreeModel::SetStartNode(PLScene::SceneNode *nodeObj)
 	beginResetModel();
 	const QObjectList &childs = GetRootItem()->children();
 	qDeleteAll(childs.begin(), childs.end());
-
-	// [TODO]
-	//m_MeshObj = meshObj;
 
 	if (nodeObj)
 		new SceneGraphNodeTreeItem(nodeObj, GetRootItem());

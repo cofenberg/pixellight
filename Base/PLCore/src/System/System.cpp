@@ -29,6 +29,8 @@
 	#include "PLCore/System/SystemWindows.h"
 #elif defined(ANDROID)
 	#include "PLCore/System/SystemAndroid.h"
+#elif defined(APPLE)
+	#include "PLCore/System/SystemMacOSX.h"
 #elif defined(LINUX)
 	#include "PLCore/System/SystemLinux.h"
 #endif
@@ -60,7 +62,7 @@ String System::GetInfo() const
 {
 	static const String sString = String("PLCore library") +
 								  "\nEndian: "			+ (IsLittleEndian() ? "'Little Endian First'" : "'Big Endian First'") +
-								  "\nPlatform: "		+ GetPlatform() +
+								  "\nPlatform: "		+ GetPlatform() + ' ' + GetPlatformBitArchitecture() + " bit" +
 								  "\nOS: "				+ GetOS() +
 								  '\n';
 	return sString;
@@ -96,6 +98,19 @@ String System::GetPlatform() const
 
 /**
 *  @brief
+*    Returns the platform bit architecture
+*/
+uint32 System::GetPlatformBitArchitecture() const
+{
+	#if defined(WIN64) || defined(X64_ARCHITECTURE)
+		return 64;
+	#else
+		return 32;
+	#endif
+}
+
+/**
+*  @brief
 *    Returns the name and version of the operating system
 */
 String System::GetOS() const
@@ -112,6 +127,26 @@ char System::GetSeparator() const
 {
 	// Call system function
 	return m_pSystemImpl->GetSeparator();
+}
+
+/**
+*  @brief
+*    Returns the shared library filename prefix used by the operation system
+*/
+String System::GetSharedLibraryPrefix() const
+{
+	// Call system function
+	return m_pSystemImpl->GetSharedLibraryPrefix();
+}
+
+/**
+*  @brief
+*    Returns the shared library file extension used by the operation system
+*/
+String System::GetSharedLibraryExtension() const
+{
+	// Call system function
+	return m_pSystemImpl->GetSharedLibraryExtension();
 }
 
 /**
@@ -431,6 +466,9 @@ System::System() :
 	#elif defined(ANDROID)
 		// Create Android implementation
 		m_pSystemImpl = new SystemAndroid();
+	#elif defined(APPLE)
+		// Create Mac OS X implementation
+		m_pSystemImpl = new SystemMacOSX();
 	#elif defined(LINUX)
 		// Create Linux implementation
 		m_pSystemImpl = new SystemLinux();
@@ -439,11 +477,8 @@ System::System() :
 		#error "Unsupported platform"
 	#endif
 
-	// Create main thread object
-	m_pMainThread = new Thread(true);
-
-	// [HACK] Force the linker to keep the "Profiling"-class (don't strip it away)
-	Profiling::GetInstance()->IsActive();
+	// Create main thread object (NULL_HANDLE for current thread)
+	m_pMainThread = new Thread(NULL_HANDLE);
 }
 
 /**

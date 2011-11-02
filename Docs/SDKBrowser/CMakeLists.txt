@@ -55,9 +55,7 @@ add_custom_command(TARGET Docs-${CMAKETOOLS_CURRENT_TARGET}
 ## Install
 ##################################################
 
-if(WIN32)
-	# CHM
-	install(FILES ${CMAKETOOLS_CURRENT_TARGET_CHM}
-		DESTINATION ${PL_INSTALL_ROOT}		COMPONENT SDK
-	)
-endif()
+# CHM
+install(FILES ${CMAKETOOLS_CURRENT_TARGET_CHM}
+	DESTINATION ${PL_INSTALL_ROOT}		COMPONENT Docs
+)

@@ -33,8 +33,8 @@
 #include "PLRendererOpenGLCg/ProgramUniformCg.h"
 #include "PLRendererOpenGLCg/ProgramUniformBlockCg.h"
 #include "PLRendererOpenGLCg/ProgramCg.h"
-#include <GL/gl.h>
-#include "../../../External/Recommended/OpenGL/glext.h"
+#include "../../../../External/Recommended/OpenGL/gl.h"
+#include "../../../../External/Recommended/OpenGL/glext.h"
 
 
 //[-------------------------------------------------------]

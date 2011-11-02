@@ -270,6 +270,15 @@
     <ClInclude Include="include\PLRendererOpenGL\MacOSX\ContextMacOSX.h">
       <Filter>MacOSX</Filter>
     </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\Linux\SurfaceWindowLinux.h">
+      <Filter>Linux</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\MacOSX\SurfaceWindowMacOSX.h">
+      <Filter>MacOSX</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\Windows\SurfaceWindowWindows.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
