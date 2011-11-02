@@ -63,6 +63,7 @@ String System::GetInfo() const
 	static const String sString = String("PLCore library") +
 								  "\nEndian: "			+ (IsLittleEndian() ? "'Little Endian First'" : "'Big Endian First'") +
 								  "\nPlatform: "		+ GetPlatform() + ' ' + GetPlatformBitArchitecture() + " bit" +
+								  "\nArchitecture: "	+ GetPlatformArchitecture() +
 								  "\nOS: "				+ GetOS() +
 								  '\n';
 	return sString;
@@ -94,6 +95,26 @@ String System::GetPlatform() const
 {
 	// Call system function
 	return m_pSystemImpl->GetPlatform();
+}
+
+/**
+*  @brief
+*    Returns the platform architecture
+*/
+String System::GetPlatformArchitecture() const
+{
+	#ifdef ARCHITECTURE_STRING
+		// The exact architecture PLCore has been compiled for is provided as preprocessor definition
+		static const String sString = ARCHITECTURE_STRING;
+	#else
+		// Use a fallback in case ARCHITECTURE_STRING is not given
+		#if defined(WIN64) || defined(X64_ARCHITECTURE)
+			static const String sString = "x64";
+		#else
+			static const String sString = "x86";
+		#endif
+	#endif
+	return sString;
 }
 
 /**

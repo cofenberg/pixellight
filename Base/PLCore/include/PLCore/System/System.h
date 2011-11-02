@@ -110,6 +110,15 @@ class System : public Singleton<System> {
 
 		/**
 		*  @brief
+		*    Returns the platform architecture
+		*
+		*  @return
+		*    Platform architecture (for instance 'x86', 'x64', 'armeabi', 'armeabi-v7a' and so on)
+		*/
+		PLCORE_API String GetPlatformArchitecture() const;
+
+		/**
+		*  @brief
 		*    Returns the platform bit architecture
 		*
 		*  @return
@@ -122,7 +131,7 @@ class System : public Singleton<System> {
 		*    Returns the name and version of the operating system
 		*
 		*  @return
-		*    OS information string
+		*    OS information string (for instance 'Windows 7 Service Pack 1 (Build 7601)')
 		*/
 		PLCORE_API String GetOS() const;
 
