@@ -36,8 +36,6 @@ namespace DataModels {
 
 PLDynVarFloatTreeItem::PLDynVarFloatTreeItem(PLCore::DynVar *dynVar, QObject *parent) : PLDynVarStringTreeItem(dynVar, parent)
 {
-	// [TODO]
-	//RemoveFlags(1,  Qt::ItemIsEditable);
 }
 
 QVariant PLDynVarFloatTreeItem::data(const int column, const int role)

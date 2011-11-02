@@ -45,7 +45,9 @@ cmaketools_add_chm_document(${CMAKETOOLS_CURRENT_TARGET} ${CMAKETOOLS_CURRENT_TA
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(Docs-PixelLightAPI-CHM	Docs-PixelLightAPI-Doxygen)
+if(WIN32)
+	add_dependencies(Docs-PixelLightAPI-CHM	Docs-PixelLightAPI-Doxygen)
+endif()
 add_dependencies(Docs					Docs-PixelLightAPI)
 
 ##################################################
