@@ -36,6 +36,7 @@
 	#undef CreateDirectory
 	#undef SetCurrentDirectory
 	#undef GetCurrentDirectory
+	#undef GetSystemDirectory
 	#undef GetEnvironmentVariable
 	#undef SetEnvironmentVariable
 	#undef GetComputerName
