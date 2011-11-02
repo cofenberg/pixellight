@@ -382,13 +382,19 @@ uint64 SystemLinux::GetMicroseconds() const
 
 void SystemLinux::Sleep(uint64 nMilliseconds) const
 {
-	struct timespec sleeptime;
-    time_t sec=(int)(nMilliseconds/1000);
-    nMilliseconds=nMilliseconds-(sec*1000);
-    sleeptime.tv_sec=sec;
-    sleeptime.tv_nsec=nMilliseconds*1000000L;
+	// We have to split up the given number of milliseconds to sleep into seconds and milliseconds
 
-	nanosleep(&sleeptime, 0);
+	// Calculate the number of seconds to sleep
+	const time_t nSeconds = static_cast<time_t>(nMilliseconds/1000);
+
+	// Overwrite the given number of milliseconds with the remaining calculated number of milliseconds to sleep
+	nMilliseconds = nMilliseconds - (nSeconds*1000);
+
+	// Now sleep well my friend...
+	struct timespec sTimespec;
+	sTimespec.tv_sec  = nSeconds;
+	sTimespec.tv_nsec = nMilliseconds*1000000L;
+	nanosleep(&sTimespec, 0);
 }
 
 void SystemLinux::Yield() const
