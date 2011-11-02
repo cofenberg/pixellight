@@ -28,7 +28,22 @@
 	// [TODO] Use the registry class within "Runtime::SetDirectory()"
 	#include <windows.h>
 	#include <stdio.h>
+	// We undef these to avoid name conflicts
+	#undef DrawText
+	#undef LoadImage
+	#undef MessageBox
+	#undef GetClassName
+	#undef CreateDirectory
+	#undef SetCurrentDirectory
+	#undef GetCurrentDirectory
+	#undef GetEnvironmentVariable
+	#undef SetEnvironmentVariable
+	#undef GetComputerName
+	#undef GetUserName
+	#undef CreateFont
 	#undef Yield
+	#undef SendMessage
+	#undef PostMessage
 #endif
 #include "PLCore/System/DynLib.h"
 #include "PLCore/System/System.h"
