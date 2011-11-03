@@ -48,9 +48,9 @@ pl_implement_class(Mouse)
 *    Constructor
 */
 Mouse::Mouse(const String &sName, DeviceImpl *pImpl) : Device(sName, "Mouse input controller", pImpl),
-	X		(this, "X",			"X axis"),
-	Y		(this, "Y",			"Y axis"),
-	Wheel	(this, "Wheel",		"Mouse wheel"),
+	X		(this, "X",			"X axis (movement data, no absolute data)"),
+	Y		(this, "Y",			"Y axis (movement data, no absolute data)"),
+	Wheel	(this, "Wheel",		"Mouse wheel (movement data, no absolute data)"),
 	Left	(this, "Left",		"Left mouse button (mouse button #0)"),
 	Right	(this, "Right",		"Right mouse button (mouse button #1)"),
 	Middle	(this, "Middle",	"Middle mouse button (mouse button #2)"),
