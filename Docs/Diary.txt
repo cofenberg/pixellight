@@ -2,6 +2,8 @@
 [CO]
 - "PixelLightBuild"-document: "Create Solutions and Build" MS Windows section: Beside Visual Studio IDE, also added a description how to build by using the
   Visual Studio command prompt
+- "PixelLightBuild"-document: I received massive feedback for this document. Did some restructuring, added missing information, mentioned common errors and issues
+  (even the suggested "DON'T PANIC"-dictum is now there *g*).
 
 
 

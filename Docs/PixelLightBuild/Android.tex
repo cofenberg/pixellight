@@ -7,7 +7,7 @@ Warning: We noticed several issues when using the \ac{NDK} under \ac{MS} Windows
 \item{Performance issues, the build process is slow, really slow}
 \end{itemize}
 
-In case you never ever did native Android development before, you may have a look at the appendix~\ref{Appendix:AndroidNativeBuildTutorial}, first.
+In case you never ever did native Android development before, you may have a look at the appendix~\ref{Appendix:AndroidNativeBuildTutorial}, first. Under Linux, in case you're using environment variables as described within the appendix, don't forget that you have to start CMake-GUI out of a terminal. If you don't, the CMake-GUI doesn't know anything about your environment variables.
 
 
 
@@ -18,33 +18,12 @@ In case you never ever did native Android development before, you may have a loo
 \item{In case you want to use OpenGL ES 2.0, you'll need a physical device because currently the Android Emulator has no support for OpenGL ES 2.0}
 \end{itemize}
 
-Install the usual Android development tools (the following versions are those used when writing this documentation, other versions may work as well)
-
-
-\paragraph{Android \ac{SDK} (\emph{r12})}
+Install the usual Android development tools. The following versions are those used when writing this documentation, other versions may work as well:
 \begin{itemize}
-\item{Android \ac{SDK} Tools, revision 12}
-\item{Android \ac{SDK} Platform-tools, revision 6}
-\item{\ac{SDK} Platform Android 2.2, \ac{API} 9, revision 3}
+\item{Android \ac{SDK} Platform Android 2.3, \ac{API} 9\footnote{See \url{http://developer.android.com/guide/appendix/api-levels.html}}}
+\item{Android \ac{NDK} (\emph{ndk r6b})}
 \end{itemize}
-
-
-\paragraph{Android \ac{NDK} (\emph{ndk r6b}) - Linux}
-This example assumes that the data has been extracted directly within the home (\emph{\textasciitilde}) directory: Open hidden \emph{\textasciitilde /.bashrc} and add:
-\begin{lstlisting}[language=sh]
-# Important Android SDK and NDK paths
-export ANDROID_SDK=~/android-sdk-linux_x86
-export ANDROID_NDK=~/android-ndk-r6b
-export PATH=${PATH}:${ANDROID_SDK}/tools:${ANDROID_SDK}/platform-tools:~/${ANDROID_NDK}
-\end{lstlisting}
-
-
-\paragraph{Android \ac{NDK} (\emph{ndk r6b}) - \ac{MS} Windows}
-\begin{itemize}
-\item{Extract it and set the \ac{MS} Windows PATH environment variable \emph{ANDROID\_NDK} to the \ac{NDK} root directory}
-\item{Set the \ac{MS} Windows \emph{PATH} environment variable \emph{ANDROID\_NDK\_TOOLCHAIN\_ROOT} to the \ac{NDK} toolchain root directory (e.g. "C:/android-ndk-r6b/toolchains/arm-linux-androideabi-4.4.3/prebuilt/windows/arm-linux-androideabi")}
-\item{(Those variables can also be added/set within the CMake-\ac{GUI})}
-\end{itemize}
+Have a look at appendix~\ref{Appendix:AndroidNativeBuildTutorial} for details about setting up the Android development tools.
 
 
 \paragraph{make (for Windows)}
@@ -81,8 +60,10 @@ Here's how to compile PixelLight by using the CMake-\ac{GUI}:
 \item{Press the "Next"-button}
 \item{"Specify the Toolchain file": e.g. "C:/PixelLight/cmake/Toolchains/Toolchain-ndk.cmake"}
 \item{Press the "Generate"-button}
-\item{(The CMake part is done, you can close "CMake (cmake-gui)" now)}
-\item{(Ensure you have all required external packages, see chapter~\ref{Chapter:ExternalDependencies})}
+\end{itemize}
+
+The CMake part is done, you can close "CMake (cmake-gui)" now. Ensure you have all required external packages, see chapter~\ref{Chapter:ExternalDependencies}.
+\begin{itemize}
 \item{Open a command prompt and change into e.g. "C:/PixelLight/CMakeOutput" (\ac{MS} Windows: by typing "cd /D C:/PixelLight/CMakeOutput" -> "/D" is only required when changing into another partition)}
 \item{Type "make" (example: "make -j 4 -k" will use four \ac{CPU} cores and will keep on going when there are errors)}
 \item{(You now should have the ready to be used Android shared library files)}
