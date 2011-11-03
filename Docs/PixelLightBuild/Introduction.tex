@@ -9,7 +9,7 @@ This document is meant for programmers. Please note that also trivial stuff will
 \paragraph{Motivation}
 This document describes how to build PixelLight from the sources. Don't be shocked when looking at the size of this document, this doesn't imply that it's highly complicated or near impossible to build the project. Right from the beginning, one of our goals was, that it should be as easy as possible to build the technology. A lot of efforts were and are put into this goal as one may see when looking at this document or the fact that such a document exists.
 
-Sadly, across all the supported platforms and external dependencies there may be some pitfalls - especially for users without much experience within a certain target platform or toolset. The purpose of this document is to provide as many information as possible to minimize the frustration of building PixelLight. Please note that this document can't avoid frustration completely, especially if you plan to compile PixelLight with a not officially supported compiler or for a new, untested platform.
+Sadly, across all the supported platforms and external dependencies there may be some pitfalls - especially for users without much experience within a certain target platform or tool set. The goal of this document is to provide as much information as possible to minimize the frustration of building PixelLight. Please note that this document can't avoid frustration completely, especially if you plan to compile PixelLight with a not officially supported compiler or for a new, untested platform.
 
 Due to the really small development team compared to the dimension of the project, we can't support every compiler or \ac{IDE} existing out there (meaning adding support and especially maintaining it). We have to focus on the mainstream, or what we consider as mainstream. Currently we're using the following compilers and compiler versions:
 \begin{itemize}
@@ -19,9 +19,9 @@ Due to the really small development team compared to the dimension of the projec
 \item{Mac OS X: \ac{GCC} 4.2.1}
 \item{Android \ac{NDK} Toolchain}
 \end{itemize}
-If you stick to those, you should be on the safe side. Other compilers and compiler versions may work as well, but are untested. Although \SI{64}{\bit} may work for \ac{MS} Windows and Linux and there are some pre-packed external \SI{64}{\bit} packages available but \SI{64}{\bit} is not officially supported. So if you encounter issues when using \SI{64}{\bit} please provide us with feedback so we can fix it.
+If you stick to those, you should be on the safe side. Other compilers and compiler versions may work as well, but are untested. \SI{64}{\bit} may work e.g. for \ac{MS} Windows and Linux, there are some pre-packed external \SI{64}{\bit} packages available as well. But please note that, at the moment, \SI{64}{\bit} is not officially supported. So if you encounter issues when using \SI{64}{\bit} please provide us with feedback so we can fix it.
 
-In general, if you encounter time consuming pitfalls not yet described in this document, please tell us by using e.g. the official forum. If there's no feedback, we can't improve things to make it even easier to use PixelLight in the future.
+In general, if you encounter time consuming pitfalls not yet described in this document, please tell us by using e.g. the official forum at \url{http://dev.pixellight.org/forum/} or the bugtracker at \url{http://sourceforge.net/tracker/?group_id=507544&atid=2063682}. If there's no feedback, we can't improve things to make it even easier to use PixelLight in the future.
 
 
 \paragraph{Linux}
@@ -44,18 +44,18 @@ To checkout the current source code, use the following Git command line:
 git clone git://pixellight.git.sourceforge.net/gitroot/pixellight/pixellight
 \end{lstlisting}
 
-Or use this \ac{URL} to checkout the source code with your favorite Git client:
+Or use this \ac{URL} to checkout the source code with your favourite Git client:
 \begin{lstlisting}[language=sh]
 git://pixellight.git.sourceforge.net/gitroot/pixellight/pixellight
-\end{lstlisting}
-
-You can use the following RSS feed to get informed automatically about changes within the public Git repository:
-\begin{lstlisting}[language=sh]
-http://pixellight.git.sourceforge.net/git/gitweb.cgi?p=pixellight/pixellight;a=rss
 \end{lstlisting}
 
 In case you get for instance the following error message during cloning the Git repository
 \begin{quotation}
 fatal: Unable to look up pixellight.git.sourceforge.net (port 9418) (No such host is known. )
 \end{quotation}
-you might want to check your firewall settings. Additionally you can browser the Git repository within your web browser by opening  \url{pixellight.git.sourceforge.net/git/gitweb.cgi?p=pixellight/pixellight;a=summary} to ensure that the server is not down (doesn't happen that often).
+you might want to check your firewall settings. Additionally you can browse the Git repository within your web browser by opening  \url{pixellight.git.sourceforge.net/git/gitweb.cgi?p=pixellight/pixellight;a=summary} to ensure that the server is not down (doesn't happen that often).
+
+You can use the following \ac{RSS} feed to get informed automatically about changes within the public Git repository:
+\begin{lstlisting}[language=sh]
+http://pixellight.git.sourceforge.net/git/gitweb.cgi?p=pixellight/pixellight;a=rss
+\end{lstlisting}
