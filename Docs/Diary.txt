@@ -1,3 +1,10 @@
+>> 03.11.2011
+[CO]
+- "PixelLightBuild"-document: "Create Solutions and Build" MS Windows section: Beside Visual Studio IDE, also added a description how to build by using the
+  Visual Studio command prompt
+
+
+
 >> 01.11.2011
 [CO]
 - Split the MS Windows prerequisites section into "Binaries", "Installable SDK" and "Documentation" to enhance the overview over what is required for which task

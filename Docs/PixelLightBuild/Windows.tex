@@ -116,11 +116,25 @@ Here's how to compile PixelLight by using the CMake-\ac{GUI}:
 \item{Press the "Configure"-button}
 \item{Choose the generator, for instance "Visual Studio 10"}
 \item{Press the "Generate"-button}
-\item{(The CMake part is done, you can close "CMake (cmake-gui)" now)}
-\item{(Ensure you have all required external packages, see chapter~\ref{Chapter:ExternalDependencies})}
+\end{itemize}
+The CMake part is done, you can close "CMake (cmake-gui)" now. The required external packages described within chapter~\ref{Chapter:ExternalDependencies} are automatically downloaded and extracted by the CMake based build system.
+
+
+\paragraph{Visual Studio \ac{IDE}}
+Here's how to compile PixelLight by using the Visual Studio \ac{IDE}:
+\begin{itemize}
 \item{Open "CMakeOutput/PixelLight.sln" with Microsoft Visual Studio}
-\item{To create a PixelLight \ac{SDK}, choose "Pack-SDK", please note that you are free to compile projects individually as well}
+\item{You may want to select \emph{Release} as the configuration to build}
+\item{To create an installable PixelLight \ac{SDK}, choose "Pack-SDK", please note that you are free to compile projects individually as well}
 \item{To build the documentation, choose "Docs"}
+\end{itemize}
+
+
+\paragraph{Visual Studio Command Prompt}
+Here's how to compile PixelLight by using the Visual Studio command prompt:
+\begin{itemize}
+\item{Open the Visual Studio command prompt ("Visual Studio Command Prompt (2010)" or "Visual Studio x64 Win64 Command Prompt (2010)")}
+\item{To build type "devenv <CMake output path>/PixelLight.sln /Build Release", example: "devenv C:/PixelLight/CMakeOutput/PixelLight.sln /Build Release"}
 \end{itemize}
 
 
