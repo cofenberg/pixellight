@@ -45,7 +45,7 @@ namespace PLRendererOpenGL {
 *    Mac OS X OpenGL window renderer surface where we can render in
 */
 class SurfaceWindowMacOSX : public SurfaceWindow {
-	
+
 
 	// [TODO] Remove this when the Cocoa part is ready
 	//[-------------------------------------------------------]
@@ -53,7 +53,7 @@ class SurfaceWindowMacOSX : public SurfaceWindow {
 	//[-------------------------------------------------------]
 	friend class ContextMacOSX;
 
-	
+
 	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
