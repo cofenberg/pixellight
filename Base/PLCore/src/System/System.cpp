@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#define PLCORE_SYSTEM_CPP
 #include "PLCore/System/Thread.h"
 #if defined(WIN32)
 	#include "PLCore/System/SystemWindows.h"
@@ -49,6 +48,22 @@ namespace PLCore {
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
 template class Singleton<System>;
+
+
+//[-------------------------------------------------------]
+//[ Public static PLCore::Singleton functions             ]
+//[-------------------------------------------------------]
+System *System::GetInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<System>::GetInstance();
+}
+
+bool System::HasInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<System>::HasInstance();
+}
 
 
 //[-------------------------------------------------------]

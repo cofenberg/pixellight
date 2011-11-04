@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#define PLCORE_TIMING_CPP
 #include "PLCore/System/System.h"
 #include "PLCore/Tools/Timing.h"
 
@@ -38,6 +37,22 @@ namespace PLCore {
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
 template class Singleton<Timing>;
+
+
+//[-------------------------------------------------------]
+//[ Public static PLCore::Singleton functions             ]
+//[-------------------------------------------------------]
+Timing *Timing::GetInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<Timing>::GetInstance();
+}
+
+bool Timing::HasInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<Timing>::HasInstance();
+}
 
 
 //[-------------------------------------------------------]

@@ -89,6 +89,18 @@ class InputManager : public PLCore::Singleton<InputManager> {
 
 
 	//[-------------------------------------------------------]
+	//[ Public static PLCore::Singleton functions             ]
+	//[-------------------------------------------------------]
+	// This solution enhances the compability with legacy compilers like GCC 4.2.1 used on Mac OS X 10.6
+	// -> The C++11 feature "extern template" (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates) can only be used on modern compilers like GCC 4.6
+	// -> We can't break legacy compiler support, especially when only the singletons are responsible for the break
+	// -> See PLCore::Singleton for more details about singletons
+	public:
+		PLINPUT_API static InputManager *GetInstance();
+		PLINPUT_API static bool HasInstance();
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -302,16 +314,6 @@ class InputManager : public PLCore::Singleton<InputManager> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLInput
-
-
-//[-------------------------------------------------------]
-//[ Template extern instance                              ]
-//[-------------------------------------------------------]
-#ifndef PLINPUT_INPUTMANAGER_CPP
-	namespace PLCore {
-		PLINPUT_EXTERN_TEMPLATE Singleton<PLInput::InputManager>;
-	}
-#endif
 
 
 #endif // __PLINPUT_INPUTMANAGER_H__

@@ -42,19 +42,3 @@ pl_module_plugin("PLCore")
 	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
 	pl_module_description("PLCore library")
 pl_module_end
-
-
-// [HACK] Force the linker to keep the singleton classes (don't strip it away)
-namespace PLCore {
-	PLCORE_API void Dummy()
-	{
-		Log::GetInstance()->IsVerbose();
-		System::GetInstance()->GetSeparator();
-		ClassManager::GetInstance()->GetClass("");
-		ScriptManager::GetInstance()->IsSupported("");
-		Timing::GetInstance()->IsActive();
-		Profiling::GetInstance()->IsActive();
-		Localization::GetInstance()->GetLanguage();
-		LoadableManager::GetInstance()->GetNumOfTypes();
-	}
-}

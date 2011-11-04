@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#define PLCORE_SCRIPTMANAGER_CPP
 #include "PLCore/File/Url.h"
 #include "PLCore/Base/Class.h"
 #include "PLCore/Base/ClassManager.h"
@@ -43,6 +42,22 @@ namespace PLCore {
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
 template class Singleton<ScriptManager>;
+
+
+//[-------------------------------------------------------]
+//[ Public static PLCore::Singleton functions             ]
+//[-------------------------------------------------------]
+ScriptManager *ScriptManager::GetInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<ScriptManager>::GetInstance();
+}
+
+bool ScriptManager::HasInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<ScriptManager>::HasInstance();
+}
 
 
 //[-------------------------------------------------------]

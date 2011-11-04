@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#define PLINPUT_BLUETOOTH_CPP
 #include "PLInput/Backend/Bluetooth/Bluetooth.h"
 #include "PLInput/Backend/Bluetooth/BTImpl.h"
 #if defined(LINUX) && !defined(ANDROID) && !defined(APPLE)
@@ -44,6 +43,22 @@ namespace PLCore {
 //[-------------------------------------------------------]
 using namespace PLCore;
 namespace PLInput {
+
+
+//[-------------------------------------------------------]
+//[ Public static PLCore::Singleton functions             ]
+//[-------------------------------------------------------]
+Bluetooth *Bluetooth::GetInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<Bluetooth>::GetInstance();
+}
+
+bool Bluetooth::HasInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<Bluetooth>::HasInstance();
+}
 
 
 //[-------------------------------------------------------]

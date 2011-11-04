@@ -6,61 +6,11 @@ This chapter explains how to compile PixelLight for \emph{Mac OS X 10.6}.
 The Mac OS X port is currently under construction.
 
 
+\paragraph{Compiler Version}
+When porting PixelLight to Mac OS X in 2011, there were several issues with the \ac{GCC} 4.2.1 used on the available system. During the port process, Xcode 4.2 was released introducing C++11 support. At the time of writing this document this new version was not yet successfully installed on the used \emph{Mac OS X 10.6} system. PixelLight also compiles without C++11 features, but you might want to use a more up-to-date compiler like \ac{GCC} 4.6. Have a look at appendix~\ref{Appendix:MacOSX_GCC} for more details about this topic.
 
 
-\section{\ac{GCC} 4.6}
-Within a terminal, type
-\begin{lstlisting}[language=sh]
-gcc -v
-\end{lstlisting}
-in order to see the currently used \ac{GCC} version. In case you see e.g.
-\begin{lstlisting}[language=sh]
-gcc version 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2335.15.00)
-\end{lstlisting}
-you're using an out-of-date \ac{GCC} version not capably of any C++11 features. You will be able to compile \emph{PLCore}, but the singletons are using \emph{extern templates} in order to avoid template instantiation in other modules. \emph{Extern templates} is a feature which has been supported by \ac{GCC} even before C++11, if it's missing you will get linker error messages like the following:
-\begin{lstlisting}[language=sh]
-Linking CXX shared library libPLMath.dylib
-Undefined symbols for architecture i386:
-  "PLCore::Singleton<PLCore::ClassManager>::GetInstance()", referenced from:
-      _PLGetPluginInfo in PLMath.cpp.o
-      ModuleInfo::Register()      in PLMath.cpp.o
-      PLMath::GraphPathLoaderPL::_Class::_Class()in GraphPathLoaderPL.cpp.o
-      PLMath::GraphLoaderPL::_Class::_Class()in GraphLoaderPL.cpp.o
-      PLMath::GraphPathLoader::_Class::_Class()in GraphPathLoader.cpp.o
-      PLMath::GraphLoader::_Class::_Class()in GraphLoader.cpp.o
-\end{lstlisting}
-
-One way to get a new \ac{GCC} version like \ac{GCC} 4.6 is to just compile it yourself. Please note that explaining how to compile \ac{GCC} for Mac OS X is out of the scope of this document. There are many good instructions like \url{http://solarianprogrammer.com/2011/05/28/compiling-gcc-4-6-0-on-mac-osx/} explaining in detail how to compile \ac{GCC} for Mac OS X. The process isn't that complicated. When compiling a new \ac{GCC}, the \ac{GCC} of the system will not be touched. In order to use the build \ac{GCC} 4.6 type
-\begin{lstlisting}[language=sh]
-export CXX=$HOME/my_gcc/bin/g++-4.6.1
-export CC=$HOME/my_gcc/bin/gcc-4.6.1
-export CPP=$HOME/my_gcc/bin/cpp-4.6.1
-\end{lstlisting}
-in case you put your build \ac{GCC} into the \emph{\$HOME/my\_gcc/} directory.
-
-In case you don't want to do this over and over again, put this overwritten environment variables into your profile file. To put this into the profile file, type
-\begin{lstlisting}[language=sh]
-pico $HOME/.profile
-\end{lstlisting}
-and copy'n'past the export lines above.
-
-When typing
-\begin{lstlisting}[language=sh]
-gcc -v
-\end{lstlisting}
-you will still get \emph{4.2.1} as \ac{GCC} because you just set the \ac{GCC} environment variables CMake is using in order to figure out which compiler to use. Type
-\begin{lstlisting}[language=sh]
-$CXX -v
-\end{lstlisting}
-and the output will be
-\begin{lstlisting}[language=sh]
-gcc-Version 4.6.1 (GCC)
-\end{lstlisting}
-, you're now ready to continue.
-
-
-
-\section{Build and Run}
+\paragraph{Linux}
 On the terminal level, Mac OS X is nearly identical to Linux. So, there's no point in copy'n'past the Linux part. Instead, this section will refer to the relevant Linux sections.
 
 

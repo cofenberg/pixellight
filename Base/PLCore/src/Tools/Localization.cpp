@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#define PLCORE_LOCALIZATION_CPP
 #include "PLCore/Tools/LocalizationText.h"
 #include "PLCore/Tools/LocalizationGroup.h"
 #include "PLCore/Tools/Localization.h"
@@ -45,6 +44,22 @@ template class Singleton<Localization>;
 //[ Public static data                                    ]
 //[-------------------------------------------------------]
 const String Localization::PixelLight = "PixelLight";
+
+
+//[-------------------------------------------------------]
+//[ Public static PLCore::Singleton functions             ]
+//[-------------------------------------------------------]
+Localization *Localization::GetInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<Localization>::GetInstance();
+}
+
+bool Localization::HasInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<Localization>::HasInstance();
+}
 
 
 //[-------------------------------------------------------]

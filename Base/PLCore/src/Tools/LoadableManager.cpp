@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#define PLCORE_LOADABLEMANAGER_CPP
 #include "PLCore/Log/Log.h"
 #include "PLCore/File/Url.h"
 #include "PLCore/File/File.h"
@@ -47,6 +46,22 @@ namespace PLCore {
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
 template class Singleton<LoadableManager>;
+
+
+//[-------------------------------------------------------]
+//[ Public static PLCore::Singleton functions             ]
+//[-------------------------------------------------------]
+LoadableManager *LoadableManager::GetInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<LoadableManager>::GetInstance();
+}
+
+bool LoadableManager::HasInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<LoadableManager>::HasInstance();
+}
 
 
 //[-------------------------------------------------------]

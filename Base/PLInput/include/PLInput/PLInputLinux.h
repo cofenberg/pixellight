@@ -42,9 +42,6 @@
 	#define PLINPUT_API
 #endif
 
-// To export/import template instance (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-#define PLINPUT_EXTERN_TEMPLATE extern template class
-
 // To export RTTI elements - unlike in MSVC for Microsoft Windows, this in here must always be 1 or the RTTI may not work correctly
 #define PLINPUT_RTTI_EXPORT 1
 
