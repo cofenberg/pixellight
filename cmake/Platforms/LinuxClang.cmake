@@ -84,6 +84,7 @@ ENDIF(CMAKE_GENERATOR MATCHES "Makefiles")
 
 # Check compiler features
 # currently clang has problems with visibility and template instances which gets exported in a library (see http://llvm.org/bugs/show_bug.cgi?id=10113)
+# and it adds references to methods to the export table which shouldn't be there (e.g. PLMesh: PLCore::ElementManager<PLRenderer::Animation>::GetByIndex(unsigned int) const)
 set(NO_VISIBILITY_CHECK 1)
 include(${CMAKETOOLS_DIR}/Modules/CheckLinuxCompiler.cmake)	# Adds e.g. visibility attribute (http://gcc.gnu.org/wiki/Visibility)
 
