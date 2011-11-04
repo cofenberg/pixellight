@@ -93,7 +93,7 @@ if(APPLE)
 	# Add a handy APPLE definition (just like WIN32, LINUX and so on)
 	set(LINUX_COMPILE_DEFS
 		${LINUX_COMPILE_DEFS}
-		APPLE							# We are using the GCC/g++ compiler
+		APPLE							# We are building for an APPLE OS
 	)
 
 	# No visibility compiler flags for now or we get issues with several vtables
