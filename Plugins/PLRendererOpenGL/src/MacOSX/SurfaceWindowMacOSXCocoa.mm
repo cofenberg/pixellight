@@ -40,7 +40,7 @@ namespace PLRendererOpenGL {
 *  @brief
 *    Destructor
 */
-SurfaceWindowMacOSXCocoa::~SurfaceWindowMacOSX()
+SurfaceWindowMacOSXCocoa::~SurfaceWindowMacOSXCocoa()
 {
 	// [TODO] De-initialize the OpenGL surface window
 //	DeInit();
