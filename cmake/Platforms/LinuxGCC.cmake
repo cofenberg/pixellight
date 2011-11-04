@@ -95,10 +95,12 @@ if(APPLE)
 		${LINUX_COMPILE_DEFS}
 		APPLE							# We are using the gcc/g++ compiler
 	)
-else()
-	# Check gcc compiler
-	include(${CMAKETOOLS_DIR}/Modules/CheckLinuxCompiler.cmake)	# Adds e.g. visibility attribute (http://gcc.gnu.org/wiki/Visibility)
+	set(NO_VISIBILITY_CHECK 1)
 endif()
+
+# Check gcc compiler
+include(${CMAKETOOLS_DIR}/Modules/CheckLinuxCompiler.cmake)	# Adds e.g. visibility attribute (http://gcc.gnu.org/wiki/Visibility) and checks for c++0x support
+
 
 
 ##################################################
