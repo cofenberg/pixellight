@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/ModuleMain.h>
-#include "PLInput/Input/InputManager.h"
 
 
 //[-------------------------------------------------------]

@@ -23,14 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Log/Log.h"
-#include "PLCore/System/System.h"
-#include "PLCore/Base/ClassManager.h"
-#include "PLCore/Script/ScriptManager.h"
-#include "PLCore/Tools/Timing.h"
-#include "PLCore/Tools/Profiling.h"
-#include "PLCore/Tools/Localization.h"
-#include "PLCore/Tools/LoadableManager.h"
 #include "PLCore/ModuleMain.h"
 
 
