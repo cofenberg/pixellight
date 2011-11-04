@@ -1,6 +1,8 @@
 Changes in PixelLight 0.9.10-R1 (not yet released)
 - Feature: Added Mac OS X support (>=10.6)
 - Change: Various minor bugfixes and usability improvements within the CMake based build system to make building PixelLight across multiple platforms as painless as possible
+- Bugfix (ID: 3431174): Within the "PLCore::System"-constructor, the main thread was created incorrectly
+- Bugfix (ID: 3433006): The return value of "PLCore::FileObject::GenericMove()" and "FileObject::PLCore::GenericCopy()" was always "false"
 
 
 Changes in PixelLight 0.9.9-R1 (released on October 23, 2011)

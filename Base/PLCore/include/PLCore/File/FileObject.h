@@ -202,7 +202,7 @@ class FileObject {
 		*  @brief
 		*    Copy the file or directory to a new location
 		*
-		*  @param[in] sDest
+		*  @param[in] sDestination
 		*    URL of the destination
 		*  @param[in] bOverwrite
 		*    Shall the file be overwritten if it already exists?
@@ -210,19 +210,19 @@ class FileObject {
 		*  @return
 		*    'true', if all went fine, else 'false'
 		*/
-		PLCORE_API bool Copy(const String &sDest, bool bOverwrite = false) const;
+		PLCORE_API bool Copy(const String &sDestination, bool bOverwrite = false) const;
 
 		/**
 		*  @brief
 		*    Move the file or directory to a new location
 		*
-		*  @param[in] sDest
+		*  @param[in] sDestination
 		*    URL of the destination
 		*
 		*  @return
 		*    'true', if all went fine, else 'false'
 		*/
-		PLCORE_API bool Move(const String &sDest);
+		PLCORE_API bool Move(const String &sDestination);
 
 		/**
 		*  @brief
@@ -271,7 +271,7 @@ class FileObject {
 		*  @brief
 		*    Generic implementation of 'Copy()' (if system-implementation does not work)
 		*
-		*  @param[in] sDest
+		*  @param[in] sDestination
 		*    URL of the destination
 		*  @param[in] bOverwrite
 		*    Shall the file be overwritten if it already exists?
@@ -279,19 +279,19 @@ class FileObject {
 		*  @return
 		*    'true', if all went fine, else 'false'
 		*/
-		PLCORE_API bool GenericCopy(const String &sDest, bool bOverwrite = false) const;
+		PLCORE_API bool GenericCopy(const String &sDestination, bool bOverwrite = false) const;
 
 		/**
 		*  @brief
 		*    Generic implementation of 'Move()' (if system-implementation does not work)
 		*
-		*  @param[in] sDest
+		*  @param[in] sDestination
 		*    URL of the destination
 		*
 		*  @return
 		*    'true', if all went fine, else 'false'
 		*/
-		PLCORE_API bool GenericMove(const String &sDest);
+		PLCORE_API bool GenericMove(const String &sDestination);
 
 
 	//[-------------------------------------------------------]

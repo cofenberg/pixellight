@@ -1,3 +1,10 @@
+>> 04.11.2011
+[CO]
+- Fixed bug 3433006 (http://sourceforge.net/tracker/?func=detail&aid=3433006&group_id=507544&atid=2063682): The return value of "FileObject::GenericMove()"
+  and "FileObject::GenericCopy()" was always "false"
+
+
+
 >> 02.11.2011
 [CO]
 - "System"-class: Added "GetPlatformArchitecture()"
