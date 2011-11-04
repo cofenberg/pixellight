@@ -66,12 +66,8 @@ class ThreadImpl {
 		*
 		*  @param[in] cThread
 		*    Reference to the owning thread
-		*  @param[in] bThreadID
-		*    If true, use the given thread ID
-		*  @param[in] nThreadID
-		*    System specific thread ID
 		*/
-		ThreadImpl(Thread &cThread, bool bThreadID, uint32 nThreadID);
+		ThreadImpl(Thread &cThread);
 
 		/**
 		*  @brief

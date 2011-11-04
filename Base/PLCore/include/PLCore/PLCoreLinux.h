@@ -58,17 +58,6 @@
 
 
 //[-------------------------------------------------------]
-//[ Definitions                                           ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Invalid handle value (for data type PLCore::handle)
-*/
-#define NULL_HANDLE     0
-#define INVALID_HANDLE -1
-
-
-//[-------------------------------------------------------]
 //[ C++11 definitions                                     ]
 //[-------------------------------------------------------]
 // GCC: Have a look at http://gcc.gnu.org/projects/cxx0x.html see which C++11 features are supported
@@ -134,9 +123,6 @@
 	#define PLCORE_RTTI_EXPORT 0
 #endif
 
-// To export/import template instance (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-#define PLCORE_EXTERN_TEMPLATE extern template class
-
 #if defined(HAVE_VISIBILITY_ATTR) && !defined(PLCORE_STATIC)
 		// To import/export class templates
 		#define PLCORE_TMPL __attribute__ ((visibility("default")))
@@ -181,6 +167,13 @@ namespace PLCore {
 
 
 }
+
+/**
+*  @brief
+*    Invalid handle value (for data type PLCore::handle)
+*/
+static const PLCore::handle NULL_HANDLE    = 0;
+static const PLCore::handle INVALID_HANDLE = -1;
 
 
 #endif // __PLCORE_LINUX_H__

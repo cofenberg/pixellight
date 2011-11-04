@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Vector3.h>
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarVector3TreeItem.h"
 
 
@@ -36,7 +37,7 @@ namespace DataModels {
 PLDynVarVector3TreeItem::PLDynVarVector3TreeItem(PLCore::DynVar *dynVar, QObject *parent) : PLDynVarStringTreeItem(dynVar, parent)
 {
 	RemoveFlags(1,  Qt::ItemIsEditable);
-	if (m_dynVar && m_dynVar->GetTypeID() == 1001) {
+	if (m_dynVar && m_dynVar->GetTypeID() == PLCore::Type<PLMath::Vector3>::TypeID) {
 		new Vector3XValueTreeItem(this, this);
 		new Vector3YValueTreeItem(this, this);
 		new Vector3ZValueTreeItem(this, this);

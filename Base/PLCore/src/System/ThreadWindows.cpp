@@ -45,15 +45,15 @@ extern DWORD g_nTlsIndex; // 'Thread Local Storage' (TLS), TLS_OUT_OF_INDEXES on
 *  @brief
 *    Constructor
 */
-ThreadWindows::ThreadWindows(Thread &cThread, bool bThreadID, uint32 nThreadID) :
-	ThreadImpl(cThread, bThreadID, nThreadID),
+ThreadWindows::ThreadWindows(Thread &cThread, bool bThreadID, handle nThreadID) :
+	ThreadImpl(cThread),
 	m_hThread(nullptr),
 	m_nThreadID(0)
 {
 	// Open existing thread?
 	if (bThreadID) {
 		// Given thread ID or current thread?
-		if (nThreadID == 0) {
+		if (nThreadID == NULL_HANDLE) {
 			// Duplicate current thread handle
 			HANDLE hThread = GetCurrentThread();
 			if (DuplicateHandle(GetCurrentProcess(), hThread,

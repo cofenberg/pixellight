@@ -39,7 +39,7 @@ namespace PLCore {
 *  @brief
 *    Constructor
 */
-ThreadImpl::ThreadImpl(Thread &cThread, bool bThreadID, uint32 nThreadID) :
+ThreadImpl::ThreadImpl(Thread &cThread) :
 	m_pThread(&cThread)
 {
 }

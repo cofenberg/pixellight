@@ -28,6 +28,7 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sched.h>
 #include <locale.h>
 #include <sys/time.h>
 #include "PLCore/String/RegEx.h"
@@ -381,14 +382,24 @@ uint64 SystemLinux::GetMicroseconds() const
 
 void SystemLinux::Sleep(uint64 nMilliseconds) const
 {
-	// [TODO] Obsolete function 'usleep'. POSIX.1-2001 declares usleep() function obsolete and POSIX.1-2008 removes it. Use the 'nanosleep' or 'setitimer' function.
-	usleep(nMilliseconds*1000);
+	// We have to split up the given number of milliseconds to sleep into seconds and milliseconds
+
+	// Calculate the number of seconds to sleep
+	const time_t nSeconds = static_cast<time_t>(nMilliseconds/1000);
+
+	// Overwrite the given number of milliseconds with the remaining calculated number of milliseconds to sleep
+	nMilliseconds = nMilliseconds - (nSeconds*1000);
+
+	// Now sleep well my friend...
+	struct timespec sTimespec;
+	sTimespec.tv_sec  = nSeconds;
+	sTimespec.tv_nsec = nMilliseconds*1000000L;
+	nanosleep(&sTimespec, 0);
 }
 
 void SystemLinux::Yield() const
 {
-	// [TODO] Test this
-	// sched_yield();
+	sched_yield();
 }
 
 float SystemLinux::GetPercentageOfUsedPhysicalMemory() const

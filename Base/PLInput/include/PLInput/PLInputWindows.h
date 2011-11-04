@@ -35,18 +35,12 @@
 
 	// To export RTTI elements
 	#define PLINPUT_RTTI_EXPORT 1
-
-	// To export/import template instance (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-	#define PLINPUT_EXTERN_TEMPLATE template class __declspec(dllexport)
 #else
 	// To import classes, methods and variables
 	#define PLINPUT_API __declspec(dllimport)
 
 	// To import RTTI elements
 	#define PLINPUT_RTTI_EXPORT 0
-
-	// To export/import template instance (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-	#define PLINPUT_EXTERN_TEMPLATE template class __declspec(dllimport)
 #endif
 
 

@@ -1,3 +1,41 @@
+>> 04.11.2011
+[CO]
+- Fixed bug 3433006 (http://sourceforge.net/tracker/?func=detail&aid=3433006&group_id=507544&atid=2063682): The return value of "FileObject::GenericMove()"
+  and "FileObject::GenericCopy()" was always "false"
+- I had to add "GetInstance()" and "HasInstance()" to the interfaces of singleton implementations. This solution enhances the compability with legacy compilers
+  like GCC 4.2.1 used on Mac OS X 10.6.
+  -> The C++11 feature "extern template" (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates) can only be used on modern compilers like GCC 4.6
+  -> We can't break legacy compiler support, especially when only the singletons are responsible for the break
+  -> See PLCore::Singleton for more details about singletons
+- Removed the "compiler, please keep my symbols"-hacks (see e.g. PLCore diary entry 23.10.2011), after the change from above, they are no longer required
+
+
+
+>> 02.11.2011
+[CO]
+- "System"-class: Added "GetPlatformArchitecture()"
+- String implementation: "ResetLocaleToC()": In case the current set locale is already "C" (the default if no one has messed around with the current set
+  locale), we don't have to do anything
+
+
+
+>> 01.11.2011
+[CO]
+- "Runtime"-class: Added "SetDirectory()" and "GetPLCoreSharedLibraryDirectory()", made "GetPLCoreSharedLibraryName()" public
+
+
+
+>> 31.10.2011
+[CO]
+- "NULL_HANDLE" and "INVALID_HANDLE" are no longer classic definitions, instead they are now constants of the type "PLCore::handle" to give the compiler
+  the chance to perform a type check
+- Fixed bug 3431174 (http://sourceforge.net/tracker/index.php?func=detail&aid=3431174&group_id=507544&atid=2063682): Within the "PLCore::System"-constructor,
+  the main thread was created incorrectly. Also reviewed the thread constructors.
+- "System"-constructor cleanup: Removed "[HACK] Force the linker to keep the "Profiling"-class (don't strip it away)" because it's now within "PLCore.cpp"
+  together with the rest of the same issues (see PLCore diary entry 23.10.2011)
+
+
+
 >> 27.10.2011
 [CO]
 - "System": Added "GetSharedLibraryPrefix()" and "GetSharedLibraryExtension()"

@@ -2,7 +2,7 @@
 \label{Appendix:AndroidNativeBuildTutorial}
 During the implementation of the Android port, a lot of notices were written down. Although there's couple of information about how to do native Android development available, it's often out-of-date, confusing or just not working. A lot of trivial looking information had also be figured out in many frustrating hours of work. So, because there were already a lot of notices written down and the possibility is high that someone using PixelLight for native Android development is requiring the same or quite similar information, those notices were put into this appendix in a revised form.
 
-The good news is, when you build PixelLight for Android, you don't really need to know everything written down in here. The process is heavily automated by using CMake scripts. In case you just find this appendix, unnecessary or you hate spoilers and want to figure out all by yourself, ignore this appendix. For all others, this information in here is hopefully useful for you for the first steps in native Android development without the automated CMake build system PixelLight is using.
+The good news is, when you build PixelLight for Android, you don't really need to know everything written down in here. The process is heavily automated by using CMake scripts. In case you just find this appendix unnecessary or you hate spoilers and want to figure out all by yourself, ignore this appendix. For all others, this information in here is hopefully useful for you for the first steps in native Android development without the automated CMake build system PixelLight is using.
 
 Please note that this tutorial is using Linux because using \ac{MS} Windows for native Android development is really painful.
 
@@ -25,10 +25,18 @@ apt-get install default-jdk default-jre ant
 \end{lstlisting}
 
 
-\paragraph{Install \ac{NDK}}
+\paragraph{Install Android \ac{NDK}}
 \begin{itemize}
 \item{\textbf{Download} from \url{http://developer.android.com/sdk/ndk/index.html} \textrightarrow{} "android-ndk-r6b-linux-x86.tar.bz2"}
 \item{\textbf{Extract} to for example "\textasciitilde /android-ndk-r6b" ("\textasciitilde /" is your home directory)}
+\end{itemize}
+
+
+\paragraph{Android \ac{NDK} (\emph{ndk r6b}) - \ac{MS} Windows}
+\begin{itemize}
+\item{Extract it and set the \ac{MS} Windows PATH environment variable \emph{ANDROID\_NDK} to the \ac{NDK} root directory}
+\item{Set the \ac{MS} Windows \emph{PATH} environment variable \emph{ANDROID\_NDK\_TOOLCHAIN\_ROOT} to the \ac{NDK} toolchain root directory (e.g. "C:/android-ndk-r6b/toolchains/arm-linux-androideabi-4.4.3/prebuilt/windows/arm-linux-androideabi")}
+\item{(Those variables can also be added/set within the CMake-\ac{GUI})}
 \end{itemize}
 
 
@@ -36,11 +44,14 @@ apt-get install default-jdk default-jre ant
 \begin{itemize}
 \item{\textbf{Download} from \url{http://developer.android.com/sdk/index.html} \textrightarrow{} "android-sdk\_r12-linux\_x86.tgz"}
 \item{\textbf{Extract} to for example "\textasciitilde /android-sdk-linux\_x86" ("\textasciitilde /" is your home directory)}
+\item{Tested with Android \ac{SDK} Tools, revision 12}
+\item{Tested with Android \ac{SDK} Platform-tools, revision 6}
+\item{Tested with \ac{SDK} Platform Android 2.3, \ac{API} 9\footnote{See \url{http://developer.android.com/guide/appendix/api-levels.html}}}
 \end{itemize}
 
 
 \paragraph{Optional but Highly Recommended for a Decent Workflow}
-Open hidden "\textasciitilde /.bashrc"-file and add:
+This example assumes that the data has been extracted directly within the home (\emph{\textasciitilde}) directory. Open hidden "\textasciitilde /.bashrc"-file and add:
 \begin{lstlisting}[language=sh]
 # Important Android SDK and NDK paths
 export ANDROID_SDK=~/android-sdk-linux_x86
@@ -84,6 +95,13 @@ emulator-5554	device"
 \item{In this case "028842074300d157	device" is my connected smartphone}
 \item{In this case "emulator-5554	device" is the emulator I created and started}
 \end{itemize}
+
+In case you don't see your device, try:
+\begin{lstlisting}[language=sh]
+adb kill-server
+adb start-server
+adb devices 
+\end{lstlisting}
 
 
 
@@ -350,4 +368,3 @@ Command glossary (only terms I wasn't really familiar with)
 
 \paragraph{How to Start a Native Activity Automatically?}
 I wasn't able to figure this one out. When having a Java file as main program entry point, can can e.g. just type "adb shell am start -n com.android.gl2jni.GL2JNIActivity" and the application starts automatically. Well, a pure native activity without a single Java source file... I have no glue...
-

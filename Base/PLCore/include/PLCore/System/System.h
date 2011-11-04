@@ -66,6 +66,18 @@ class System : public Singleton<System> {
 
 
 	//[-------------------------------------------------------]
+	//[ Public static PLCore::Singleton functions             ]
+	//[-------------------------------------------------------]
+	// This solution enhances the compability with legacy compilers like GCC 4.2.1 used on Mac OS X 10.6
+	// -> The C++11 feature "extern template" (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates) can only be used on modern compilers like GCC 4.6
+	// -> We can't break legacy compiler support, especially when only the singletons are responsible for the break
+	// -> See PLCore::Singleton for more details about singletons
+	public:
+		PLCORE_API static System *GetInstance();
+		PLCORE_API static bool HasInstance();
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -110,6 +122,15 @@ class System : public Singleton<System> {
 
 		/**
 		*  @brief
+		*    Returns the platform architecture
+		*
+		*  @return
+		*    Platform architecture (for instance 'x86', 'x64', 'armeabi', 'armeabi-v7a' and so on)
+		*/
+		PLCORE_API String GetPlatformArchitecture() const;
+
+		/**
+		*  @brief
 		*    Returns the platform bit architecture
 		*
 		*  @return
@@ -122,7 +143,7 @@ class System : public Singleton<System> {
 		*    Returns the name and version of the operating system
 		*
 		*  @return
-		*    OS information string
+		*    OS information string (for instance 'Windows 7 Service Pack 1 (Build 7601)')
 		*/
 		PLCORE_API String GetOS() const;
 
@@ -534,14 +555,6 @@ class System : public Singleton<System> {
 
 
 };
-
-
-//[-------------------------------------------------------]
-//[ Template extern instance                              ]
-//[-------------------------------------------------------]
-#ifndef PLCORE_SYSTEM_CPP
-	PLCORE_EXTERN_TEMPLATE Singleton<System>;
-#endif
 
 
 //[-------------------------------------------------------]

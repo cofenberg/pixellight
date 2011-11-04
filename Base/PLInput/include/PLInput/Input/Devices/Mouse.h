@@ -64,9 +64,9 @@ class Mouse : public Device {
 	//[ Controller definition                                 ]
 	//[-------------------------------------------------------]
 	public:
-		PLInput::Axis	X;			/**< X axis */
-		PLInput::Axis	Y;			/**< Y axis */
-		PLInput::Axis	Wheel;		/**< Mouse wheel */
+		PLInput::Axis	X;			/**< X axis (movement data, no absolute data) */
+		PLInput::Axis	Y;			/**< Y axis (movement data, no absolute data) */
+		PLInput::Axis	Wheel;		/**< Mouse wheel (movement data, no absolute data) */
 		PLInput::Button	Left;		/**< Left mouse button (mouse button #0) */
 		PLInput::Button	Right;		/**< Right mouse button (mouse button #1) */
 		PLInput::Button	Middle;		/**< Middle mouse button (mouse button #2) */

@@ -6,14 +6,29 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLCore", "PLCore.vcxproj", "{E793F581-0152-4143-9809-6EEEF19360A6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScriptAngelScript", "..\..\Plugins\PLScriptAngelScript\PLScriptAngelScript.vcxproj", "{384D6889-29E9-4996-A142-0F1A8BE5513A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E793F581-0152-4143-9809-6EEEF19360A6} = {E793F581-0152-4143-9809-6EEEF19360A6}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScriptLua", "..\..\Plugins\PLScriptLua\PLScriptLua.vcxproj", "{E3C926F2-923B-465B-AF4F-65DF673134D1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E793F581-0152-4143-9809-6EEEF19360A6} = {E793F581-0152-4143-9809-6EEEF19360A6}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScriptNull", "..\..\Plugins\PLScriptNull\PLScriptNull.vcxproj", "{6B86A8F5-5FCA-4061-8A84-5BF5DF3AAAE1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E793F581-0152-4143-9809-6EEEF19360A6} = {E793F581-0152-4143-9809-6EEEF19360A6}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScriptPython", "..\..\Plugins\PLScriptPython\PLScriptPython.vcxproj", "{35A103AB-0EAD-41F5-B41D-CDA9C96AA05A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E793F581-0152-4143-9809-6EEEF19360A6} = {E793F581-0152-4143-9809-6EEEF19360A6}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLScriptV8", "..\..\Plugins\PLScriptV8\PLScriptV8.vcxproj", "{2FA707BB-2C35-409D-81A9-C00976786D0F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E793F581-0152-4143-9809-6EEEF19360A6} = {E793F581-0152-4143-9809-6EEEF19360A6}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLFrontendActiveX", "..\..\Plugins\PLFrontendActiveX\PLFrontendActiveX.vcxproj", "{97910136-4D78-4066-8EB9-17573FA73A12}"
 	ProjectSection(ProjectDependencies) = postProject

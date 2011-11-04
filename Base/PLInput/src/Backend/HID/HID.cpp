@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#define PLINPUT_HID_CPP
 #include "PLInput/Backend/HID/HID.h"
 #include "PLInput/Backend/HID/HIDImpl.h"
 #if defined(WIN32)
@@ -46,6 +45,22 @@ namespace PLCore {
 //[-------------------------------------------------------]
 using namespace PLCore;
 namespace PLInput {
+
+
+//[-------------------------------------------------------]
+//[ Public static PLCore::Singleton functions             ]
+//[-------------------------------------------------------]
+HID *HID::GetInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<HID>::GetInstance();
+}
+
+bool HID::HasInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<HID>::HasInstance();
+}
 
 
 //[-------------------------------------------------------]

@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#define PLCORE_LOG_CPP
 #ifdef ANDROID
 	#include <android/log.h>
 #else
@@ -61,6 +60,22 @@ const String g_sLogLevelToString[] = {
 	"Info",
 	"Debug"
 };
+
+
+//[-------------------------------------------------------]
+//[ Public static PLCore::Singleton functions             ]
+//[-------------------------------------------------------]
+Log *Log::GetInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<Log>::GetInstance();
+}
+
+bool Log::HasInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<Log>::HasInstance();
+}
 
 
 //[-------------------------------------------------------]

@@ -1,34 +1,22 @@
 \chapter{Windows}
 If you want to build PixelLight on Windows, you have two choices:
 \begin{itemize}
-\item{Use the provided \ac{MSVC} solutions to build the engine}
 \item{Use the CMake based build system}
+\item{Use the provided, manually created and tuned, \ac{MSVC} solutions to build the engine}
 \end{itemize}
 
-If you want to create \ac{SDK} packages or documentation or intend to e.g. use the mingw compiler or something like that, stick to the CMake path.
-
-If you want to build only a local version of PixelLight but do not intend to create documentations or \ac{SDK} packages, you can just use the \ac{MSVC} solution files which are much easier to use. Note however, that you need to unpack the needed external packages first (see chapter~\ref{Chapter:ExternalDependencies}).
-
-
-
-
-
-\section{\ac{MSVC} Solutions}
-
-
-
-\subsection{Build}
-Open the solution \emph{PixelLight.sln} with Microsoft Visual Studio, which includes all projects of the PixelLight framework. Then start \emph{Build}. Done.
+If you want to create \ac{SDK} packages, build the documentation, don't want to care about the external packages or intend to e.g. use MinGW or something like that, stick to the CMake path. This way, you also have the same build process as on other platforms. If you never used CMake before, don't use this as argument to avoid using it - it's really worth a look and easy to use via a \ac{GUI}. It's just a few clicks.
 
 
 
 
 \section{CMake}
+Here's a list of required programs that you need to fully build the \ac{SDK} on Windows. In case you only want to build, for example the binaries, this is possible as well. At bare minimum, you only need to install CMake and of course your compiler of choice.
 
 
 
-\subsection{Prerequisites}
-Here's a list of required programs that you need to fully build the \ac{SDK} on Windows.
+\subsection{Prerequisites for Binaries}
+In order to compile the binaries you need the prerequisites listed below.
 
 
 \paragraph{CMake}
@@ -39,13 +27,24 @@ Here's a list of required programs that you need to fully build the \ac{SDK} on 
 \end{itemize}
 
 
-\paragraph{\ac{NSIS}}
+\paragraph{Swiss File Knife}
+\emph{cmake/UsedTools/sfk/sfk.exe} is already within the Git repository and was downloaded from \url{http://sourceforge.net/projects/swissfileknife/}. It's only mentioned in here for completeness.
 \begin{itemize}
-\item{Used to create the Windows installer}
-\item{Download \ac{NSIS} at \url{http://nsis.sourceforge.net/}}
-\item{Tested with \emph{nsis-2.46-setup.exe}}
+\item{\emph{Swiss File Knife}: file management, search, text processing}
+\item{Directly used by the CMake scripts under \ac{MS} Windows}
 \end{itemize}
 
+
+\paragraph{Diff tools}
+The \emph{cmake/UsedTools/diff} directory is already within the Git repository. It's only mentioned in here for completeness.
+\begin{itemize}
+\item{Some diff binaries directly used by the CMake scripts under \ac{MS} Windows}
+\end{itemize}
+
+
+
+\subsection{Prerequisites for Documentation}
+In order to compile the documentation you need the prerequisites listed below.
 
 \paragraph{Doxygen}
 \begin{itemize}
@@ -80,18 +79,16 @@ Here's a list of required programs that you need to fully build the \ac{SDK} on 
 \end{itemize}
 
 
-\paragraph{Swiss File Knife}
-\begin{itemize}
-\item{\emph{Swiss File Knife}: file management, search, text processing}
-\item{Directly used by the CMake scripts under \ac{MS} Windows}
-\item{\emph{cmake/UsedTools/sfk/sfk.exe} is already within the Git repository and was downloaded from \url{http://sourceforge.net/projects/swissfileknife/}}
-\end{itemize}
+
+\subsection{Prerequisites for Installable \ac{SDK}}
+In order to compile the installable \ac{SDK} you need the prerequisites listed below.
 
 
-\paragraph{Diff tools}
+\paragraph{\ac{NSIS}}
 \begin{itemize}
-\item{Some diff binaries directly used by the CMake scripts under \ac{MS} Windows}
-\item{The \emph{cmake/UsedTools/diff} directory is already within the Git repository}
+\item{Used to create the Windows installer}
+\item{Download \ac{NSIS} at \url{http://nsis.sourceforge.net/}}
+\item{Tested with \emph{nsis-2.46-setup.exe}}
 \end{itemize}
 
 
@@ -106,10 +103,32 @@ Here's how to compile PixelLight by using the CMake-\ac{GUI}:
 \item{Press the "Configure"-button}
 \item{Choose the generator, for instance "Visual Studio 10"}
 \item{Press the "Generate"-button}
-\item{(The CMake part is done, you can close "CMake (cmake-gui)" now)}
-\item{(Ensure you have all required external packages, see chapter~\ref{Chapter:ExternalDependencies})}
+\end{itemize}
+
+The CMake part is done, you can close "CMake (cmake-gui)" now. The required external packages described within chapter~\ref{Chapter:ExternalDependencies} are automatically downloaded and extracted on-the-fly when building the projects created by the CMake based build system.
+
+
+\paragraph{Visual Studio Command Prompt}
+Here's how to compile PixelLight by using the Visual Studio command prompt:
+\begin{itemize}
+\item{Open the Visual Studio command prompt ("Visual Studio Command Prompt (2010)" or "Visual Studio x64 Win64 Command Prompt (2010)")}
+\item{To build type "devenv <CMake output path>/PixelLight.sln /Build Release", example: "devenv C:/PixelLight/CMakeOutput/PixelLight.sln /Build Release"}
+\end{itemize}
+
+An alternative is to change into the CMake output directory and typing
+\begin{lstlisting}[language=sh]
+msbuild PixelLight.sln /t:Clean /p:Configuration=Release /p:Platform=Win32
+msbuild PixelLight.sln /p:Configuration=Release /p:Platform=Win32
+\end{lstlisting}
+The first line removes everything from a previous build. The second line builds the solution in release mode for the defined platform.
+
+
+\paragraph{Visual Studio \ac{IDE}}
+Here's how to compile PixelLight by using the Visual Studio \ac{IDE} - be warned that the solution is comprehensive and the \ac{IDE} might groan with pain:
+\begin{itemize}
 \item{Open "CMakeOutput/PixelLight.sln" with Microsoft Visual Studio}
-\item{To create a PixelLight \ac{SDK}, choose "Pack-SDK", please note that you are free to compile projects individually as well}
+\item{You may want to select \emph{Release} as the configuration to build}
+\item{To create an installable PixelLight \ac{SDK}, choose "Pack-SDK", please note that you are free to compile projects individually as well}
 \item{To build the documentation, choose "Docs"}
 \end{itemize}
 
@@ -136,4 +155,18 @@ Once you have built PixelLight, you may want to run e.g. the sample applications
 
 
 \paragraph{Registry Key}
-You may also want to add a key to the registry, so that the path to the build PixelLight runtime can be found in case you're using the static version of \emph{PLCore}. This key has to be at "HKEY\_LOCAL\_MACHINE/SOFTWARE/PixelLight/PixelLight-SDK/Runtime" (or at "HKEY\_LOCAL\_MACHINE/SOFTWARE/Wow6432Node/PixelLight/PixelLight-SDK/Runtime" if you are using a \SI{32}{\bit} PixelLight SDK on a \SI{64}{\bit} \ac{MS} Windows). This "Runtime"-key has e.g. the string value "C:/PixelLight/Bin/Runtime/x86/" (same as the PATH environment variable entry mentioned above).
+You may also want to add a key to the registry, so that the path to the build PixelLight runtime can be found in case you're using the static version of \emph{PLCore}. This key has to be at "HKEY\_LOCAL\_MACHINE/SOFTWARE/PixelLight/PixelLight-SDK/Runtime" or at "HKEY\_LOCAL\_MACHINE/SOFTWARE/Wow6432Node/PixelLight/PixelLight-SDK/Runtime" if you are using a \SI{32}{\bit} PixelLight SDK on a \SI{64}{\bit} \ac{MS} Windows. This "Runtime"-key has e.g. the string value "C:/PixelLight/Bin/Runtime/x86/", the same as directory the PATH environment variable entry mentioned above.
+
+
+
+
+\section{\ac{MSVC} Solutions within the Git Repository}
+If you want to build only a local version of PixelLight but do not intend to create documentations or \ac{SDK} packages, you can just use the \ac{MSVC} solution files which can be found directly within the Git repository. Most PixelLight developers also use those solutions in order to work on the engine itself. Those project files are manually created and tuned in order to be more comfortable to use as the project files automatically generated by CMake.
+
+
+\paragraph{External Package}
+Please note that you need to unpack the required external packages first. The Visual Studio solutions and projects don't do this automatically for you. See chapter~\ref{Chapter:ExternalDependencies} for details. Unlike the automatic CMake build process, it's not possible to exclude projects automatically in case an external package is not there. In this case, you will get errors when building everything. In practice, this is no problem because the most important components do only use external prebuild packages which can be published in public. If you have problems with a solution containing projects that can't be build out-of-the box, just stick to the automatic CMake build process.
+
+
+\paragraph{Build}
+Open the solution \emph{PixelLight.sln} within the root directory of the cloned Git repository with Microsoft Visual Studio. This solution contains all projects of the PixelLight framework. \emph{Build}. Done.

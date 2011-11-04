@@ -23,6 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Vector3.h>
+#include <PLGraphics/Color/Color3.h>
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarStringTreeItem.h"
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarFlagsTreeItem.h"
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarVector3TreeItem.h"
@@ -40,14 +42,13 @@ namespace DataModels {
 
 TreeItemBase *PLDynVarTreeItemsFactory::CreateDynVarTreeItem(PLCore::DynVar *dynVar, QObject *parent)
 {
-	// [TODO] use here the typeid constant of the corresponding type instead the hardcoded number
 	if (dynVar->GetType().IsFlagType())
 		new PLDynVarFlagsTreeItem(dynVar, parent);
-	else if (dynVar->GetTypeID() == 1001)
+	else if (dynVar->GetTypeID() == PLCore::Type<PLMath::Vector3>::TypeID)
 		new PLDynVarVector3TreeItem(dynVar, parent);
 	else if (dynVar->GetTypeID() == PLCore::TypeFloat)
 		new PLDynVarFloatTreeItem(dynVar, parent);
-	else if (dynVar->GetTypeID() == 2001)
+	else if (dynVar->GetTypeID() == PLCore::Type<PLGraphics::Color3>::TypeID)
 		new PLDynVarColorTreeItem(dynVar, parent);
 	else
 		new PLDynVarStringTreeItem(dynVar, parent);

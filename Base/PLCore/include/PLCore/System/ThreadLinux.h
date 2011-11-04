@@ -76,11 +76,11 @@ class ThreadLinux : public ThreadImpl {
 		*    System specific thread ID
 		*
 		*  @remarks
-		*    If 'bThreadID == true' and 'nThreadID == 0', the current thread
+		*    If 'bThreadID == true' and 'nThreadID == NULL_HANDLE', the current thread
 		*    ID will be used. If called from the main thread, this is the
 		*    main thread ID.
 		*/
-		ThreadLinux(Thread &cThread, bool bThreadID, uint32 nThreadID);
+		ThreadLinux(Thread &cThread, bool bThreadID, handle nThreadID);
 
 		/**
 		*  @brief

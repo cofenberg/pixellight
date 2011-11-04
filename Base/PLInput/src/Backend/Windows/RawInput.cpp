@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#define PLINPUT_RAWINPUT_CPP
 #include "PLInput/Backend/Windows/RawInputDevice.h"
 #include "PLInput/Backend/Windows/RawInput.h"
 
@@ -41,6 +40,22 @@ namespace PLCore {
 //[-------------------------------------------------------]
 using namespace PLCore;
 namespace PLInput {
+
+
+//[-------------------------------------------------------]
+//[ Public static PLCore::Singleton functions             ]
+//[-------------------------------------------------------]
+RawInput *RawInput::GetInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<RawInput>::GetInstance();
+}
+
+bool RawInput::HasInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<RawInput>::HasInstance();
+}
 
 
 //[-------------------------------------------------------]

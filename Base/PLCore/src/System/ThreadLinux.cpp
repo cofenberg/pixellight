@@ -46,16 +46,16 @@ namespace PLCore {
 *  @brief
 *    Constructor
 */
-ThreadLinux::ThreadLinux(Thread &cThread, bool bThreadID, uint32 nThreadID) :
-	ThreadImpl(cThread, bThreadID, nThreadID),
+ThreadLinux::ThreadLinux(Thread &cThread, bool bThreadID, handle nThreadID) :
+	ThreadImpl(cThread),
 	m_nThreadID(0),
 	m_pMutex(nullptr),
 	m_nPriorityClass(Thread::NormalPriorityClass),
 	m_nPriority(Thread::NormalPriority)
 {
 	// Shall the current thread ID be obtained?
-	// [TODO] Implement nThreadID != 0 to open existing threads
-	if (bThreadID && nThreadID == 0) {
+	// [TODO] Implement nThreadID != NULL_HANDLE to open existing threads
+	if (bThreadID && nThreadID == NULL_HANDLE) {
 		// Get current thread
 		m_nThreadID = pthread_self();
 	} else {

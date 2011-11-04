@@ -32,14 +32,18 @@
 ## Project information
 ##################################################
 
+# Project name
+set(CMAKETOOLS_PROJECT_NAME "PixelLight")
+
 # Check which architecture has the host system
+# X86_64 aka X64
 if(${CMAKE_SYSTEM_PROCESSOR} MATCHES amd64*)
 	set(X86_64 1)
 endif()
 if(${CMAKE_SYSTEM_PROCESSOR} MATCHES x86_64*)
 	set(X86_64 1)
 endif()
-
+# X86
 if(${CMAKE_SYSTEM_PROCESSOR} MATCHES i686*)
 	set(X86 1)
 endif()
@@ -50,8 +54,15 @@ if(${CMAKE_SYSTEM_PROCESSOR} MATCHES x86*)
 	set(X86 1)
 endif()
 
-# Project name
-set(CMAKETOOLS_PROJECT_NAME "PixelLight")
+# Use native PLProject? (internal option set by toolchains)
+if(NOT PL_NATIVE_PLPROJECT)
+	set(PL_NATIVE_PLPROJECT 1)
+endif()
+
+# Build for mobile platforms? (internal option set by toolchains)
+if(NOT PL_MOBILE)
+	set(PL_MOBILE 0)
+endif()
 
 # Nightly build
 set(CMAKETOOLS_CONFIG_NIGHTLY "0" CACHE BOOL "Create a nightly build?")
@@ -106,25 +117,11 @@ set(PL_EXTERNAL_USER "" CACHE STRING "External repository user name. Required in
 # User password for access to the repository
 set(PL_EXTERNAL_PASS "" CACHE STRING "External repository user password. Required in order to automatically download protected, non public external packages. Do also set PL_EXTERNAL_USER (test your accout by e.g. opening \"pixellight.sourceforge.net/externals/Windows_x86_32/nonpublic\" within your webbrowser).")
 
-# Use native plproject?
-if(PL_NATIVE_PLPROJECT)
-	set(PL_NATIVE_PLPROJECT ${PL_NATIVE_PLPROJECT} CACHE BOOL "Use native plproject?")
-else()
-	set(PL_NATIVE_PLPROJECT "1" CACHE BOOL "Use native plproject?")
-endif()
-
 # Build minimal projects?
 if(CMAKETOOLS_MINIMAL)
 	set(CMAKETOOLS_MINIMAL ${CMAKETOOLS_MINIMAL} CACHE BOOL "Build minimal projects (or all)?")
 else()
 	set(CMAKETOOLS_MINIMAL "0" CACHE BOOL "Build minimal projects (or all)?")
-endif()
-
-# Build for mobile platforms?
-if(PL_MOBILE)
-	set(PL_MOBILE ${PL_MOBILE} CACHE BOOL "Build for mobile platforms?")
-else()
-	set(PL_MOBILE "0" CACHE BOOL "Build for mobile platforms?")
 endif()
 
 # Project suffix
@@ -254,7 +251,6 @@ if(NOT CMAKETOOLS_MINIMAL)
 	set (PL_PLUGIN_FRONTEND_QT						"1"					CACHE BOOL "Build plugin 'PLFrontendQt'?")
 	set (PL_EDITOR									"0"					CACHE BOOL "Build 'PLEditor'? (requires 'PLFrontendQt') (heavily under construction)")	# The editor is heavily work in progress
 	# Tools
-	set (PL_TOOL_PLPROJECT							"1"					CACHE BOOL "Build plugin 'PLProject'?")
 	set (PL_TOOL_PLUPGRADE							"1"					CACHE BOOL "Build plugin 'PLUpgrade'?")
 else()
 	# Minimal build (no scripting, no database, no own or external GUI system library, no sound, no physics etc., just renderer to be able to see anything)
@@ -283,7 +279,6 @@ else()
 		set (PL_PLUGIN_RENDERER_OPENGLES2_EMULATOR	"0"					CACHE BOOL "Build plugin 'PLRendererOpenGLES2' and add proprietary emulator? (do also enable 'PL_PLUGIN_RENDERER_OPENGLES2_FONT') (due to legal issues, we can't provide a public downloadable package)")
 		set (PL_PLUGIN_RENDERER_OPENGLES2_FONT		"0"					CACHE BOOL "Build plugin 'PLRendererOpenGLES2' with font support? (requires 'freetype' external dependency)?")
 		# Tools
-		set (PL_TOOL_PLPROJECT						"0"					CACHE BOOL "Build plugin 'PLProject'?")
 		set (PL_TOOL_PLUPGRADE						"0"					CACHE BOOL "Build plugin 'PLUpgrade'?")
 		set (PL_TOOL_PLINSTALL						"0"					CACHE BOOL "Build plugin 'PLInstall'?")
 	else()
@@ -295,7 +290,6 @@ else()
 		set (PL_PLUGIN_RENDERER_OPENGLES2_EMULATOR	"0"					CACHE BOOL "Build plugin 'PLRendererOpenGLES2' and add proprietary emulator? (do also enable 'PL_PLUGIN_RENDERER_OPENGLES2_FONT') (due to legal issues, we can't provide a public downloadable package)")
 		set (PL_PLUGIN_RENDERER_OPENGLES2_FONT		"0"					CACHE BOOL "Build plugin 'PLRendererOpenGLES2' with font support? (requires 'freetype' external dependency)?")
 		# Tools
-		set (PL_TOOL_PLPROJECT						"1"					CACHE BOOL "Build plugin 'PLProject'?")
 		set (PL_TOOL_PLUPGRADE						"1"					CACHE BOOL "Build plugin 'PLUpgrade'?")
 		set (PL_TOOL_PLINSTALL						"1"					CACHE BOOL "Build plugin 'PLInstall'?")
 	endif()
@@ -404,9 +398,7 @@ if(ANDROID)
 	unset (PL_PLUGIN_SOUND_FMOD						CACHE)
 	unset (PL_PLUGIN_FRONTEND_QT					CACHE)
 	unset (PL_EDITOR								CACHE)
-	unset (PL_TOOL_PLPROJECT						CACHE)	# No plugin files required because for Android, we need to load in all shared libraries right at the beginning
 	unset (PL_TOOL_PLUPGRADE						CACHE)
-	unset (PL_NATIVE_PLPROJECT						CACHE)	# No plugin files required because for Android, we need to load in all shared libraries right at the beginning
 
 	# [TODO] The following plugins are not yet supported (create prebuild external packages and test it)
 	unset (PL_PLUGIN_SCRIPT_V8						CACHE)
@@ -463,7 +455,8 @@ message(STATUS "Extensions of files to exclude when e.g. copying a directory: ${
 macro(pl_plproject dir outputpath writeplugin)
 	add_dependencies(${CMAKETOOLS_CURRENT_TARGET} PLProject)
 	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-		COMMAND ${PL_PLPROJECT_COMMAND} ${dir} --output-path ${outputpath} --write-plugin ${writeplugin} ${ARGN}
+		COMMAND ${PL_PLPROJECT_COMMAND} . --output-path ${outputpath} --write-plugin ${writeplugin} ${ARGN}
+		WORKING_DIRECTORY ${dir}
 	)
 endmacro(pl_plproject dir outputpath writeplugin)
 

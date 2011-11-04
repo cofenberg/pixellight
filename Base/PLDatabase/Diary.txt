@@ -1,4 +1,11 @@
-﻿>> 04.09.2011
+﻿>> 01.11.2011
+[CO]
+- Bugfix within the CMake file of "PLDatabaseMySQL": I don't know why there was a copy step for a file called "libmysql64.dll", there's no such file ->
+  removed this invalid copy step
+
+
+
+>> 04.09.2011
 [SW]
 PLDatabasePosgreSQL
 - updated 32bit linux external build to version 8.4.8. Now the PostgreSQL PL plugin builds for me.

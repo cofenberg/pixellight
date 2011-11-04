@@ -77,18 +77,6 @@
 	#endif
 #endif
 
-/**
-*  @brief
-*    Invalid handle value (for data type PLCore::handle)
-*/
-#ifdef WIN64
-	#define NULL_HANDLE    0x0000000000000000
-	#define INVALID_HANDLE 0xffffffffffffffff
-#else
-	#define NULL_HANDLE    0x00000000
-	#define INVALID_HANDLE 0xffffffff
-#endif
-
 
 //[-------------------------------------------------------]
 //[ C++11 definitions                                     ]
@@ -130,27 +118,18 @@ PL_WARNING_DISABLE(4481) // "nonstandard extension used: override specifier 'ove
 	// Static library
 	#define PLCORE_API
 	#define PLCORE_RTTI_EXPORT 1
-
-	// To export/import template instance (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-	#define PLCORE_EXTERN_TEMPLATE extern template class
 #elif defined(PLCORE_EXPORTS)
 	// To export classes, methods and variables
 	#define PLCORE_API __declspec(dllexport)
 
 	// To export RTTI elements
 	#define PLCORE_RTTI_EXPORT 1
-
-	// To export/import template instance (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-	#define PLCORE_EXTERN_TEMPLATE template class __declspec(dllexport)
 #else
 	// To import classes, methods and variables
 	#define PLCORE_API __declspec(dllimport)
 
 	// To import RTTI elements
 	#define PLCORE_RTTI_EXPORT 0
-
-	// To export/import template instance (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-	#define PLCORE_EXTERN_TEMPLATE template class __declspec(dllimport)
 #endif
 
 // To export/import class templates
@@ -193,6 +172,18 @@ namespace PLCore {
 
 
 }
+
+/**
+*  @brief
+*    Invalid handle value (for data type PLCore::handle)
+*/
+#ifdef WIN64
+	static const PLCore::handle NULL_HANDLE    = 0x0000000000000000;
+	static const PLCore::handle INVALID_HANDLE = 0xffffffffffffffff;
+#else
+	static const PLCore::handle NULL_HANDLE    = 0x00000000;
+	static const PLCore::handle INVALID_HANDLE = 0xffffffff;
+#endif
 
 
 //[-------------------------------------------------------]

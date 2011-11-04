@@ -51,19 +51,42 @@ set_target_properties(Docs PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
 
 add_custom_target(Docs-install)
 set_target_properties(Docs-install PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
+
 ##################################################
 ## Projects
 ##################################################
-add_subdirectory(PixelLightFeatures)
-add_subdirectory(PixelLightBase)
-add_subdirectory(PixelLightAPI)
-add_subdirectory(PixelLightCompositing)
-add_subdirectory(PixelLightCodingConventions)
-add_subdirectory(PixelLightBuild)
-add_subdirectory(PixelLightScript)
-add_subdirectory(PixelLight3dsMaxSceneExport)
-if(WIN32)
+# The following documents require LaTex and dvipdf,
+# if CMake was unable to find it, ignore the following documents in order to avoid confusing confusing errors when building the project
+if(LATEX_COMPILER)
+	if(DVIPDF_CONVERTER)
+		add_subdirectory(PixelLightFeatures)
+		add_subdirectory(PixelLightBase)
+		add_subdirectory(PixelLightCompositing)
+		add_subdirectory(PixelLightCodingConventions)
+		add_subdirectory(PixelLightBuild)
+		add_subdirectory(PixelLightScript)
+		add_subdirectory(PixelLight3dsMaxSceneExport)
+	else()
+		message(STATUS "Ignoring PixelLightFeatures, PixelLightBase, PixelLightCompositing, PixelLightCodingConventions, PixelLightBuild, PixelLightScript and PixelLight3dsMaxSceneExport documentation because dvipdf was not found")
+	endif()
+else()
+	message(STATUS "Ignoring PixelLightFeatures, PixelLightBase, PixelLightCompositing, PixelLightCodingConventions, PixelLightBuild, PixelLightScript and PixelLight3dsMaxSceneExport documentation because LaTeX was not found")
+endif()
+
+# The PixelLight API documentation requires Doxygen (http://www.doxygen.org),
+# if CMake was unable to find it, ignore the following document in order to avoid confusing confusing errors when building the project
+if(DOXYGEN_FOUND)
+	add_subdirectory(PixelLightAPI)
+else()
+	message(STATUS "Ignoring PixelLight API documentation because Doxygen (http://www.doxygen.org) was not found")
+endif()
+
+# The SDK browser can only be build when the Microsoft Html Help Compiler (http://msdn.microsoft.com/en-us/library/ms669985) has been found by CMake,
+# if CMake was unable to find it, ignore the following document in order to avoid confusing confusing errors when building the project
+if(HTML_HELP_COMPILER)
 	add_subdirectory(SDKBrowser)
+else()
+	message(STATUS "Ignoring PixelLight SDK browser because Microsoft Html Help Compiler (http://msdn.microsoft.com/en-us/library/ms669985) was not found")
 endif()
 
 ##################################################

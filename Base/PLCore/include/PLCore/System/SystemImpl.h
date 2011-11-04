@@ -98,7 +98,7 @@ class SystemImpl {
 		*    Returns the name and version of the operating system
 		*
 		*  @return
-		*    OS information string
+		*    OS information string (for instance 'Windows 7 Service Pack 1 (Build 7601)')
 		*/
 		virtual String GetOS() const = 0;
 

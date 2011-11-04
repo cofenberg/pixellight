@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#define PLCORE_SYSTEM_CPP
 #include "PLCore/System/Thread.h"
 #if defined(WIN32)
 	#include "PLCore/System/SystemWindows.h"
@@ -52,6 +51,22 @@ template class Singleton<System>;
 
 
 //[-------------------------------------------------------]
+//[ Public static PLCore::Singleton functions             ]
+//[-------------------------------------------------------]
+System *System::GetInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<System>::GetInstance();
+}
+
+bool System::HasInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<System>::HasInstance();
+}
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -63,6 +78,7 @@ String System::GetInfo() const
 	static const String sString = String("PLCore library") +
 								  "\nEndian: "			+ (IsLittleEndian() ? "'Little Endian First'" : "'Big Endian First'") +
 								  "\nPlatform: "		+ GetPlatform() + ' ' + GetPlatformBitArchitecture() + " bit" +
+								  "\nArchitecture: "	+ GetPlatformArchitecture() +
 								  "\nOS: "				+ GetOS() +
 								  '\n';
 	return sString;
@@ -94,6 +110,26 @@ String System::GetPlatform() const
 {
 	// Call system function
 	return m_pSystemImpl->GetPlatform();
+}
+
+/**
+*  @brief
+*    Returns the platform architecture
+*/
+String System::GetPlatformArchitecture() const
+{
+	#ifdef ARCHITECTURE_STRING
+		// The exact architecture PLCore has been compiled for is provided as preprocessor definition
+		static const String sString = ARCHITECTURE_STRING;
+	#else
+		// Use a fallback in case ARCHITECTURE_STRING is not given
+		#if defined(WIN64) || defined(X64_ARCHITECTURE)
+			static const String sString = "x64";
+		#else
+			static const String sString = "x86";
+		#endif
+	#endif
+	return sString;
 }
 
 /**
@@ -477,11 +513,8 @@ System::System() :
 		#error "Unsupported platform"
 	#endif
 
-	// Create main thread object
-	m_pMainThread = new Thread(true);
-
-	// [HACK] Force the linker to keep the "Profiling"-class (don't strip it away)
-	Profiling::GetInstance()->IsActive();
+	// Create main thread object (NULL_HANDLE for current thread)
+	m_pMainThread = new Thread(NULL_HANDLE);
 }
 
 /**

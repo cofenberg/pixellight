@@ -40,12 +40,18 @@ cmaketools_add_doxygen_docs(${CMAKETOOLS_CURRENT_TARGET} doxyfile.in)
 ##################################################
 ## Html help compiler
 ##################################################
+# The compressed PixelLight API document can only be build when the Microsoft Html Help Compiler (http://msdn.microsoft.com/en-us/library/ms669985) has been found by CMake,
+# if CMake was unable to find it, ignore the following document in order to avoid confusing confusing errors when building the project.
+# The following macro is internally checking for the "HTML_HELP_COMPILER"-variable and set's the "CMAKETOOLS_CURRENT_TARGET_CHM"-variable on success.
 cmaketools_add_chm_document(${CMAKETOOLS_CURRENT_TARGET} ${CMAKETOOLS_CURRENT_TARGET_HHP})
 
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(Docs Docs-PixelLightAPI)
+if(CMAKETOOLS_CURRENT_TARGET_CHM)
+	add_dependencies(Docs-PixelLightAPI-CHM	Docs-PixelLightAPI-Doxygen)
+endif()
+add_dependencies(Docs						Docs-PixelLightAPI)
 
 ##################################################
 ## Post-Build

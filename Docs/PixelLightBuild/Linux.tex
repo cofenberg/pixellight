@@ -1,5 +1,5 @@
 \chapter{Linux}
-To build PixelLight on Linux, use the CMake based (\url{http://www.cmake.org/}) cross-platform build system of PixelLight.
+To build PixelLight on Linux, use the CMake based cross-platform build system of PixelLight.
 
 
 
@@ -96,9 +96,46 @@ apt-get install libpcre3-dev libjpeg62-dev libpng12-dev libfreetype6-dev libopen
 
 
 
-\section{Maketool}
+
+\section{External Packages}
+\label{Chapter:Linux_ExternalPackages}
+Just like the Windows build, it is necessary to obtain all the external packages used by the engine and install them in the right place for the build. Have a look at the \emph{External} directory, there you find a readme file for every library that describes what files are needed.
+
+You can find the libraries pre-packed in our files-section on our homepage: \url{http://pixellight.sourceforge.net/externals/}. Unfortunately, we can't provide some of those libraries due to their licensing terms. Have a look at the according \emph{Readme.txt} to determine where to obtain those libraries and where to put the resulting files into your source tree.
+
+The library packages need to be unpacked and put at the right position for your specific build type, e.g. on Linux and \SI{32}{\bit}, put everything in the directory \emph{External/\_Linux\_x86\_32}.
+
+The CMake based build will try to download the needed packages automatically from our homepage when you build a project that depends on an external. It will download and unpack all public externals for you in the right directory. The non-public externals must still be installed manually. You should also use the maketool flag \verb+--syslibs+ to use the libraries installed on your system rather than our own external packages whenever that is possible (however, not all externals can be used that way).
+
+For more information about the external dependencies, please have a look at chapter~\ref{Chapter:ExternalDependencies}.
+
+
+
+
+\section{CMake}
+\label{Chapter:Linux_CMake}
+Here's how to compile PixelLight by using the CMake-\ac{GUI}:
+\begin{itemize}
+\item{Start "CMake (cmake-gui)"}
+\item{"Where is the source code"-field: e.g. "\textasciitilde /PixelLight"}
+\item{"Where to build the binaries"-field: e.g. "\textasciitilde /PixelLight/CMakeOutput"}
+\item{Press the "Configure"-button}
+\item{Choose the generator "Unix Makefiles"}
+\item{Press the "Generate"-button}
+\end{itemize}
+
+The CMake part is done, you can close "CMake (cmake-gui)" now. All required external packages are downloaded automatically, see chapter~\ref{Chapter:ExternalDependencies}.
+\begin{itemize}
+\item{Open a terminal and change into e.g. "\textasciitilde /PixelLight/CMakeOutput"}
+\item{Type "make" (example: "make -j 4 -k" will use four \ac{CPU} cores and will keep on going when there are errors)}
+\end{itemize}
+
+
+
+
+\section{Maketool Script}
 \label{Chapter:Linux_Maketool}
-The shell script \emph{maketool} performs the required build steps automatically.
+In case you don't want to use CMake directly, you can also use the shell script \emph{maketool}, The shell script \emph{maketool} performs the required build steps automatically.
 
 After cloning the Git repository, you first have to call
 \begin{lstlisting}[language=sh]
@@ -147,39 +184,6 @@ $pl_external_url = "";
 $pl_external_user = "";
 $pl_external_pass = "";
 \end{lstlisting}
-
-
-
-\subsection{External Packages}
-\label{Chapter:Linux_ExternalPackages}
-Just like the Windows build, it is necessary to obtain all the external packages used by the engine and install them in the right place for the build. Have a look at the \emph{External} directory, there you find a readme file for every library that describes what files are needed.
-
-You can find the libraries pre-packed in our files-section on our homepage: \url{http://pixellight.sourceforge.net/externals/}. Unfortunately, we can't provide some of those libraries due to their licensing terms. Have a look at the according \emph{Readme.txt} to determine where to obtain those libraries and where to put the resulting files into your source tree.
-
-The library packages need to be unpacked and put at the right position for your specific build type, e.g. on Linux and \SI{32}{\bit}, put everything in the directory \emph{External/\_Linux\_x86\_32}.
-
-The CMake based build will try to download the needed packages automatically from our homepage when you build a project that depends on an external. It will download and unpack all public externals for you in the right directory. The non-public externals must still be installed manually. You should also use the maketool flag \verb+--syslibs+ to use the libraries installed on your system rather than our own external packages whenever that is possible (however, not all externals can be used that way).
-
-For more information about the external dependencies, please have a look at chapter~\ref{Chapter:ExternalDependencies}.
-
-
-
-
-\section{CMake}
-\label{Chapter:Linux_CMake}
-In case you don't want to use the shell script \emph{maketool}, here's how to compile PixelLight by using the CMake-\ac{GUI}:
-\begin{itemize}
-\item{Start "CMake (cmake-gui)"}
-\item{"Where is the source code"-field: e.g. "\textasciitilde /PixelLight"}
-\item{"Where to build the binaries"-field: e.g. "\textasciitilde /PixelLight/CMakeOutput"}
-\item{Press the "Configure"-button}
-\item{Choose the generator "Unix Makefiles"}
-\item{Press the "Generate"-button}
-\item{(The CMake part is done, you can close "CMake (cmake-gui)" now)}
-\item{(Ensure you have all required external packages, see chapter~\ref{Chapter:ExternalDependencies})}
-\item{Open a terminal and change into e.g. "\textasciitilde /PixelLight/CMakeOutput"}
-\item{Type "make" (example: "make -j 4 -k" will use four \ac{CPU} cores and will keep on going when there are errors)}
-\end{itemize}
 
 
 

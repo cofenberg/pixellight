@@ -241,15 +241,15 @@ bool FileObject::IsDirectory() const
 *  @brief
 *    Copy the file or directory to a new location
 */
-bool FileObject::Copy(const String &sDest, bool bOverwrite) const
+bool FileObject::Copy(const String &sDestination, bool bOverwrite) const
 {
 	if (m_pFileImpl) {
 		// Try system-implementation
-		if (m_pFileImpl->CopyTo(sDest, bOverwrite))
+		if (m_pFileImpl->CopyTo(sDestination, bOverwrite))
 			return true; // Done
 
 		// Fallback: Use generic function (e.g. if the files exist in different file-systems)
-		return GenericCopy(sDest, bOverwrite);
+		return GenericCopy(sDestination, bOverwrite);
 	} else {
 		return false;
 	}
@@ -259,15 +259,15 @@ bool FileObject::Copy(const String &sDest, bool bOverwrite) const
 *  @brief
 *    Move the file or directory to a new location
 */
-bool FileObject::Move(const String &sDest)
+bool FileObject::Move(const String &sDestination)
 {
 	if (m_pFileImpl) {
 		// Try system-implementation
-		if (m_pFileImpl->MoveTo(sDest))
+		if (m_pFileImpl->MoveTo(sDestination))
 			return true; // Done
 
 		// Fallback: Use generic function (e.g. if the files exist in different file-systems)
-		return GenericMove(sDest);
+		return GenericMove(sDestination);
 	} else {
 		return false;
 	}
@@ -300,30 +300,36 @@ void FileObject::Close()
 *  @brief
 *    Generic implementation of Copy (if system-implementation does not work)
 */
-bool FileObject::GenericCopy(const String &sDest, bool bOverwrite) const
+bool FileObject::GenericCopy(const String &sDestination, bool bOverwrite) const
 {
-	// Check input file
+	// Check source file
 	File cInput(GetUrl());
 	if (cInput.Exists()) {
-		// Check output file
-		File cOutput(sDest);
+		// Check destination file
+		File cOutput(sDestination);
 		if (!cOutput.Exists() || bOverwrite) {
 			// Try to copy
 			bool bSuccess = false;
+
+			// Open the source file
 			if (cInput.Open(File::FileRead)) {
+				// Open the destination file, create it in case it doesn't exist
 				if (cOutput.Open(File::FileWrite | File::FileCreate)) {
-					// Copy file
+					// Copy the content from the source file into the destination file
 					char szBuffer[4096];
 					while (!cInput.IsEof()) {
 						const uint32 nSize = cInput.Read(szBuffer, 1, 4096);
 						cOutput.Write(szBuffer, 1, nSize);
 					}
 
-					// Close output
+					// Close destination file
 					cOutput.Close();
+
+					// The file copy step was done successfully
+					bSuccess = true;
 				}
 
-				// Close input
+				// Close source file
 				cInput.Close();
 			}
 
@@ -340,40 +346,43 @@ bool FileObject::GenericCopy(const String &sDest, bool bOverwrite) const
 *  @brief
 *    Generic implementation of Move (if system-implementation does not work)
 */
-bool FileObject::GenericMove(const String &sDest)
+bool FileObject::GenericMove(const String &sDestination)
 {
-	// Check input file
+	// The "GenericCopy()"-method is intentionally not reused in order to don't create an input file object, twice
+
+	// Check source file
 	File cInput(GetUrl());
 	if (cInput.Exists()) {
-		// Check output file
-		File cOutput(sDest);
+		// Check destination file
+		File cOutput(sDestination);
 		if (!cOutput.Exists()) {
 			// Try to copy
 			bool bSuccess = false;
+
+			// Open the source file
 			if (cInput.Open(File::FileRead)) {
+				// Open the destination file, create it in case it doesn't exist
 				if (cOutput.Open(File::FileWrite | File::FileCreate)) {
-					// Copy file
+					// Copy the content from the source file into the destination file
 					char szBuffer[4096];
 					while (!cInput.IsEof()) {
 						const uint32 nSize = cInput.Read(szBuffer, 1, 4096);
 						cOutput.Write(szBuffer, 1, nSize);
 					}
 
-					// Close output
+					// Close destination file
 					cOutput.Close();
+
+					// The file copy step was done successfully
+					bSuccess = true;
 				}
 
-				// Close input
+				// Close source file
 				cInput.Close();
 			}
 
-			// Delete input file
-			if (bSuccess) {
-				bSuccess = cInput.Delete();
-			}
-
-			// Return result
-			return bSuccess;
+			// Delete source file and return result
+			return bSuccess ? cInput.Delete() : false;
 		}
 	}
 
