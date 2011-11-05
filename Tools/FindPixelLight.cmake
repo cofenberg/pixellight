@@ -46,6 +46,9 @@
 # PL_SAMPLES_DIR			PixelLight samples directory			"/home/username/pixellight/Bin-Linux-ndk/Samples"
 # PL_SAMPLES_BIN_DIR		PixelLight samples binary directory		"/home/username/pixellight/Bin-Linux-ndk/Samples/armeabi-v7a"
 # PL_SAMPLES_DATA_DIR		PixelLight samples data directory		"/home/username/pixellight/Bin-Linux-ndk/Samples/Data"
+# PL_TESTS_DIR				PixelLight tests directory				"/home/username/pixellight/Bin-Linux-ndk/Tests"
+# PL_TESTS_BIN_DIR			PixelLight tests binary directory		"/home/username/pixellight/Bin-Linux-ndk/Tests/armeabi-v7a"
+# PL_TESTS_DATA_DIR			PixelLight tests data directory			"/home/username/pixellight/Bin-Linux-ndk/Tests/Data"
 
 
 # Includes
@@ -77,6 +80,9 @@ get_filename_component(PL_INCLUDE_DIR		"${PL_RUNTIME_DIR}/../Include"					ABSOLU
 get_filename_component(PL_SAMPLES_DIR		"${PL_RUNTIME_DIR}/../Samples"					ABSOLUTE)
 get_filename_component(PL_SAMPLES_BIN_DIR	"${PL_SAMPLES_DIR}/${PL_ARCHBITSIZE}"			ABSOLUTE)
 get_filename_component(PL_SAMPLES_DATA_DIR	"${PL_SAMPLES_DIR}/Data"						ABSOLUTE)
+get_filename_component(PL_TESTS_DIR			"${PL_RUNTIME_DIR}/../Tests"					ABSOLUTE)
+get_filename_component(PL_TESTS_BIN_DIR		"${PL_TESTS_DIR}/${PL_ARCHBITSIZE}"				ABSOLUTE)
+get_filename_component(PL_TESTS_DATA_DIR	"${PL_TESTS_DIR}/Data"							ABSOLUTE)
 if(PL_ROOT)
 	message(STATUS "Target architecture & bitsize: ${PL_ARCHBITSIZE}")
 	message(STATUS "PixelLight root directory: ${PL_ROOT}")
@@ -88,6 +94,9 @@ if(PL_ROOT)
 	message(STATUS "PixelLight samples directory: ${PL_SAMPLES_DIR}")
 	message(STATUS "PixelLight samples binary directory: ${PL_SAMPLES_BIN_DIR}")
 	message(STATUS "PixelLight samples data directory: ${PL_SAMPLES_DATA_DIR}")
+	message(STATUS "PixelLight tests directory: ${PL_TESTS_DIR}")
+	message(STATUS "PixelLight tests binary directory: ${PL_TESTS_BIN_DIR}")
+	message(STATUS "PixelLight tests data directory: ${PL_TESTS_DATA_DIR}")
 else()
 	if(WIN32)
 		message(STATUS "PixelLight not found - Possible solution: Set registry key \"[HKEY_LOCAL_MACHINE\\SOFTWARE\\PixelLight\\PixelLight-SDK;Runtime]\" (or \"[HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\PixelLight\\PixelLight-SDK;Runtime]\" if you are using a 32 bit PixelLight on a 64 bit MS Windows) to e.g. \"C:\\PixelLight\\Bin\\Runtime\\x86"\")

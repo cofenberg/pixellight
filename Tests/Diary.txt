@@ -4,6 +4,11 @@
   The own minimalistic test framework "PLTest" will be replaced by UnitTest++. "PLTestBase" will be replaced by "PLUnitTests" with better and more unit tests in
   order to enhance the overal quality of PixelLight. Currently, one unit tests project should be sufficient. In case we notice that multiple of such projects are
   useful we can add them on-the-fly.
+- Added "MainAndroid.cpp" for the Android program entry point in order to make it possible to run the tests on a not rooted device. Use e.g. "PixelLightAndroid"
+  to create a runnable APK file and then look into the Android logcat to check the console output (not perfect, but we have to start somewhere).
+- "Main.cpp" is the program entry point for MS Windows, Linux and Mac OS X
+- Both, "MainAndroid.cpp" and "Main.cpp" are calling an abstract unit test entry point within the "UnitTests.cpp" file. So, just use "UnitTests.cpp" as the program
+  entry point and ignore the OS stuff. :D
 
 
 

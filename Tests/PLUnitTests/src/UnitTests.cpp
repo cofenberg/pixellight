@@ -1,6 +1,5 @@
 /*********************************************************\
- *  File: Main.cpp                                       *
- *    Program entry point for MS Windows, Linux, Mac OS X
+ *  File: UnitTests.cpp                                  *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -24,7 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Main.h>
+#include <UnitTest++/UnitTest++.h>
+#include <PLCore/Container/Array.h>
+#include <PLCore/System/System.h>
+#include <PLCore/System/Console.h>
 
 
 //[-------------------------------------------------------]
@@ -33,19 +35,21 @@
 using namespace PLCore;
 
 
-//[-------------------------------------------------------]
-//[ Global functions                                      ]
-//[-------------------------------------------------------]
-extern int UnitTests(const String &sExecutableFilename, const Array<String> &lstArguments);
+// [TODO] Just a platform integration test
+TEST(TestMe) {
+	CHECK(false == true);
+}
 
 
 //[-------------------------------------------------------]
-//[ Program entry point                                   ]
+//[ Unit tests program entry point                        ]
 //[-------------------------------------------------------]
-// ... kind of first unit tests: Is our universal program entry point working?
-int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
+int UnitTests(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
-	// Execute the unit tests
-	return UnitTests(sExecutableFilename, lstArguments);
+	// [TODO] Some test so we can see across the platforms that we're able to run, remove this when the real unit tests are there
+	System::GetInstance()->GetConsole().Print("I'am a life, I'am a life.. oh no, please, no, not the return!! Noo.....");
+
+	// Done
+	return 0;
 }
 

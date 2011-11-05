@@ -29,8 +29,17 @@ define_project(PLUnitTests NOSUFFIX)
 ## Source files
 ##################################################
 add_sources(
-	src/Main.cpp
+	src/UnitTests.cpp
 )
+if(ANDROID)
+	add_sources(
+		src/MainAndroid.cpp
+	)
+else()
+	add_sources(
+		src/Main.cpp
+	)
+endif()
 
 ##################################################
 ## Include directories
@@ -111,6 +120,11 @@ elseif(LINUX)
 	##################################################
 	## GCC Compiler
 	##################################################
+	if(ANDROID)
+		add_linker_flags(
+			-L${STL_LIBRARIES_PATH}	# UnitTest++ is using stl, adding this line results in slightly bigger executables so we don't do this within "LinuxNDK.cmake"
+		)
+	endif()
 	add_linker_flags(
 		${LINUX_LINKER_FLAGS}
 	)
@@ -119,7 +133,11 @@ endif()
 ##################################################
 ## Build
 ##################################################
-build_executable(${CMAKETOOLS_CURRENT_TARGET} CONSOLE)
+if(ANDROID)
+	build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
+else()
+	build_executable(${CMAKETOOLS_CURRENT_TARGET} CONSOLE)
+endif()
 
 ##################################################
 ## Dependencies
@@ -131,7 +149,15 @@ add_dependencies(Tests							${CMAKETOOLS_CURRENT_TARGET})
 ## Post-Build
 ##################################################
 
-# Executable
-add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} ${PL_TESTS_BIN_DIR}
-)
+if(ANDROID)
+	# Dynamic library
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} ${PL_TESTS_BIN_DIR}
+	)
+else()
+	# Executable
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} ${PL_TESTS_BIN_DIR}
+	)
+endif()
+
