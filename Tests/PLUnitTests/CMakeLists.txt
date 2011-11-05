@@ -37,6 +37,7 @@ add_sources(
 ##################################################
 add_include_directories(
 	include
+	${UNITTESTPP_INCLUDE_DIRS}
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
 )
 
@@ -51,6 +52,7 @@ add_link_directories(
 ## Additional libraries
 ##################################################
 add_libs(
+	${UNITTESTPP_LIBRARIES}
 	PLCore
 )
 
@@ -83,6 +85,7 @@ if(WIN32)
 	##################################################
 	add_compile_flags(
 		${WIN32_COMPILE_FLAGS}
+		/EHsc			# Enable exception handling for this project
 	)
 elseif(LINUX)
 	##################################################
@@ -90,6 +93,7 @@ elseif(LINUX)
 	##################################################
 	add_compile_flags(
 		${LINUX_COMPILE_FLAGS}
+		-fexceptions	# Enable exception handling for this project
 	)
 endif()
 
@@ -120,7 +124,7 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} CONSOLE)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore External-UnitTest++)
 add_dependencies(Tests							${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
