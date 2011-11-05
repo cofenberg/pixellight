@@ -51,11 +51,11 @@ if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
 		endif()
 	elseif(APPLE)
 		if(CMAKETOOLS_TARGET_BITSIZE MATCHES "64")
-			# md5sum of the 64bit Apple package [TODO]
-			set(md5sum "")
+			# md5sum of the 64bit Apple package
+			set(md5sum "dd63f352e657f6c756bc535e34949cc6")
 		else()
-			# md5sum of the 32bit Apple package [TODO]
-			set(md5sum "")
+			# md5sum of the 32bit Apple package
+			set(md5sum "5f33aade0834421e3dce3313a3dc276c")
 		endif()
 	elseif(LINUX)
 		if(CMAKETOOLS_TARGET_BITSIZE MATCHES "64")

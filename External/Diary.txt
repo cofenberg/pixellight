@@ -1,7 +1,7 @@
 >> 05.11.2011
 [CO]
 - Integrated "UnitTest++" unit test framework into the build system (there's already someone writing concrete unit tests)
-  and uploaded pre-compiled external packages for "Windows_x86_32", "Windows_x86_64", "Linux_x86_32", "Linux-ndk_armeabi_32", "Linux-ndk_armeabi-v7a_32"
+  and uploaded pre-compiled external packages for "Windows_x86_32", "Windows_x86_64", "Linux_x86_32", "Linux-ndk_armeabi_32", "Linux-ndk_armeabi-v7a_32", "MacOSX_x86_32" and "MacOSX_x86_64"
 
 
 

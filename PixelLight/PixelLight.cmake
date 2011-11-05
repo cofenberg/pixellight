@@ -389,7 +389,6 @@ if(APPLE)
 	unset (PL_PLUGIN_GRAPHICS_JPG					CACHE)
 	unset (PL_PLUGIN_FRONTEND_QT					CACHE)
 	unset (PL_EDITOR								CACHE)
-	unset (PL_UNITTESTS								CACHE)
 endif()
 
 # Android

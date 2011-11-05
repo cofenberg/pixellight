@@ -37,10 +37,13 @@ set(CURRENT_SRC
 )
 if(WIN32)
 	set(CURRENT_SRC
+		${CURRENT_SRC}
 		src/Win32/TimeHelpers.cpp
 	)
-elseif(LINUX)
+else()
 	set(CURRENT_SRC
+		${CURRENT_SRC}
+		src/Posix/SignalTranslator.cpp
 		src/Posix/TimeHelpers.cpp
 	)
 endif()
@@ -57,7 +60,7 @@ set(CURRENT_SHARED_LIBRARIES
 ##################################################
 ## Build
 ##################################################
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -ffor-scope -fno-rtti -pipe -ffunction-sections -fdata-sections -ffast-math -Wnon-virtual-dtor -Wreorder -Wsign-promo -fvisibility=hidden -fvisibility-inlines-hidden -Wstrict-null-sentinel -Os -funroll-all-loops -fpeel-loops -ftree-vectorize")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ffor-scope -fno-rtti -pipe -ffunction-sections -fdata-sections -ffast-math -Wnon-virtual-dtor -Wreorder -Wsign-promo -fvisibility=hidden -fvisibility-inlines-hidden -Wstrict-null-sentinel -Os -funroll-all-loops -fpeel-loops -ftree-vectorize")
 set(LINKER_FLAGS "${LINKER_FLAGS} -Wl,--as-needed -Wl,--gc-sections -Wl,--no-undefined -Wl,--strip-all")
 if(ANDROID)
 	set(LINKER_FLAGS "${LINKER_FLAGS} -Wl,-rpath-link=${ANDROID_NDK_SYSROOT}/usr/lib/ -L${ANDROID_NDK_SYSROOT}/usr/lib/")
