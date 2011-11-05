@@ -1,3 +1,12 @@
+>> 05.11.2011
+[CO]
+- Started currently nearly empty "PLUnitTests"-project - there's already someone writing concrete unit tests and I just to the integration into the build system.
+  The own minimalistic test framework "PLTest" will be replaced by UnitTest++. "PLTestBase" will be replaced by "PLUnitTests" with better and more unit tests in
+  order to enhance the overal quality of PixelLight. Currently, one unit tests project should be sufficient. In case we notice that multiple of such projects are
+  useful we can add them on-the-fly.
+
+
+
 >> 16.10.2011
 [CO]
 - Added "PixelLightAndroid", the project I used to develop the Android port. Maybe we can extend it to a real sample later on.
