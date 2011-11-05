@@ -252,6 +252,8 @@ if(NOT CMAKETOOLS_MINIMAL)
 	set (PL_EDITOR									"0"					CACHE BOOL "Build 'PLEditor'? (requires 'PLFrontendQt') (heavily under construction)")	# The editor is heavily work in progress
 	# Tools
 	set (PL_TOOL_PLUPGRADE							"1"					CACHE BOOL "Build plugin 'PLUpgrade'?")
+	# Tests
+	set (PL_UNITTESTS								"1"					CACHE BOOL "Build the unit tests?")
 else()
 	# Minimal build (no scripting, no database, no own or external GUI system library, no sound, no physics etc., just renderer to be able to see anything)
 	set (PL_CORE_ZIP								"0"					CACHE BOOL "Build in ZIP support within 'PLCore'? (it's highly recommended to enable ZIP support, requires 'zlib' external dependency)")	# Some stuff may not work, but this is a minimal build, really minimal to have something to start with
@@ -331,6 +333,8 @@ else()
 	# Qt
 	set (PL_PLUGIN_FRONTEND_QT						"0"					CACHE BOOL "Build plugin 'PLFrontendQt'?")
 	set (PL_EDITOR									"0"					CACHE BOOL "Build 'PLEditor'? (requires 'PLFrontendQt') (heavily under construction)")
+	# Tests
+	set (PL_UNITTESTS								"0"					CACHE BOOL "Build the unit tests?")
 endif()
 
 
@@ -385,6 +389,7 @@ if(APPLE)
 	unset (PL_PLUGIN_GRAPHICS_JPG					CACHE)
 	unset (PL_PLUGIN_FRONTEND_QT					CACHE)
 	unset (PL_EDITOR								CACHE)
+	unset (PL_UNITTESTS								CACHE)
 endif()
 
 # Android

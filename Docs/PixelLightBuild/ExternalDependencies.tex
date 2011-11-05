@@ -6,11 +6,11 @@ In order to build the PixelLight engine for instance with \ac{MSVC}, all the ext
 
 
 \section{Dependencies}
-When writing this documentation in November 2011, there are 37 external dependencies. Please note that this doesn't mean that you have to take care of 37 external libraries before you can start building and using PixelLight. In the minimal build, PixelLight only depends on PCRE used within PLCore for regular expressions. zlib for zip support within PLCore is highly recommended, but can be deactivated. The same is for jpg and png support within PLGraphics. Nice to have but no must have, especially when you just want to do your first steps with building PixelLight. As you can see, the 12 base projects of PixelLight don't have a lot of external dependencies.
+When writing this documentation in November 2011, there are 38 external dependencies. Please note that this doesn't mean that you have to take care of 38 external libraries before you can start building and using PixelLight. In the minimal build, PixelLight only depends on PCRE used within PLCore for regular expressions. zlib for zip support within PLCore is highly recommended, but can be deactivated. The same is for jpg and png support within PLGraphics. Nice to have but no must have, especially when you just want to do your first steps with building PixelLight. As you can see, the 12 base projects of PixelLight don't have a lot of external dependencies.
 
 Everything else is completely optional. Most of the projects are just dynamically loaded plugins. If you need no Cg shaders, don't use Cg. If you need no Newton physics, don't use it. For scripting, you only need to compile PLCore and e.g. the Lua scripting plugin. That's it. For developing new plugins, you even don't need to compile PixelLight itself, just start a new plugin project and PixelLight will be able to use the new dynamic library providing e.g. \ac{RTTI} classes for new script languages.
 
-This means that the base of PixelLight is really slim when it comes to external dependencies. Those 37 external libraries only mean that there are a lot of optional plugins available for you so that you don't have to write them by yourself if you need them. It's a gift from us, to you.
+This means that the base of PixelLight is really slim when it comes to external dependencies. Those 38 external libraries only mean that there are a lot of optional plugins available for you so that you don't have to write them by yourself if you need them. It's a gift from us, to you.
 
 
 
