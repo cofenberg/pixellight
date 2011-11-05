@@ -77,8 +77,7 @@ String System::GetInfo() const
 {
 	static const String sString = String("PLCore library") +
 								  "\nEndian: "			+ (IsLittleEndian() ? "'Little Endian First'" : "'Big Endian First'") +
-								  "\nPlatform: "		+ GetPlatform() + ' ' + GetPlatformBitArchitecture() + " bit" +
-								  "\nArchitecture: "	+ GetPlatformArchitecture() +
+								  "\nPlatform: "		+ GetPlatform() + ' ' + GetPlatformBitArchitecture() + " bit (" + GetPlatformArchitecture() + ')' +
 								  "\nOS: "				+ GetOS() +
 								  '\n';
 	return sString;
