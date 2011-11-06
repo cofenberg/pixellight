@@ -60,7 +60,7 @@ class PLSceneExportOptions {
 		bool		bRemoveSpaces;					/**< Remove spaces/tabs within names? */
 		bool		bCorrectPortals;				/**< Correct portals if required? */
 		bool		bPLDirectories;					/**< PL directories? */
-		bool		bSubdirectories;				/**< Subdirectories? */
+		bool		bSubdirectories;				/**< Subdirectories? (do only use this option in case 'bPLDirectories' is 'true') */
 		bool		bOverwriteAmbientColor;			/**< Overwrite ambient color? */
 		float		fOverwrittenAmbientColor[3];	/**< Overwritten RGB (0-1) ambient color, only used if 'bOverwriteAmbientColor' is true */
 		bool		bAnimationPlayback;				/**< Automatic animation playback? */

@@ -1,6 +1,9 @@
 >> 06.11.2011
 [CO]
 - Options: Moved "PL directories" and "Subdirectories" from the material-section into the general-section because it's not limited to materials
+- Fixed bug 3433854 (https://sourceforge.net/tracker/index.php?func=detail&aid=3433854&group_id=507544&atid=2063682): The Autodesk 3ds Max scene
+  exporter options "PL directories" and "Subdirectories" did not work correctly. When looking at the implementation is was obvious that over the
+  years, this options had become highly chaotic. After a minor refactoring the issues were gone.
 
 
 

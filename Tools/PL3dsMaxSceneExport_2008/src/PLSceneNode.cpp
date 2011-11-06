@@ -34,7 +34,6 @@
 #include <iparamb2.h>
 #include <INodeGIProperties.h>
 #include "PL3dsMaxSceneExport/PLLog.h"
-#include "PL3dsMaxSceneExport/PLSceneExportOptions.h"
 #include "PL3dsMaxSceneExport/PLSceneContainer.h"
 #include "PL3dsMaxSceneExport/PLScene.h"
 #include "PL3dsMaxSceneExport/PLSceneNode.h"
@@ -388,14 +387,8 @@ void PLSceneNode::WriteModifiers(PLCore::XmlElement &cSceneElement, const std::s
 					if (pPathController && pPathController->GetNumTargets() > 0) {
 						INode *pTarget = pPathController->GetNode(0);
 						if (pTarget) {
-							// Get path
-							std::string sPathFilename("Data\\Misc\\");
-							if (g_SEOptions.bSubdirectories) {
-								sPathFilename.append(g_SEOptions.sFilenameOnly);
-								sPathFilename.append("\\");
-							}
-							sPathFilename.append(pTarget->GetName());
-							sPathFilename.append(".path");
+							// Get path filename
+							const std::string sPathFilename = PLTools::GetResourceFilename(PLTools::ResourcePath, std::string(pTarget->GetName()) + ".path");
 
 							// Get the percentage along the path
 							float fPercentageAlongPath = 0.0f;
@@ -584,11 +577,7 @@ void PLSceneNode::WriteModifiers(PLCore::XmlElement &cSceneElement, const std::s
 			if (bPositionKeyframes && bUsePosition) {
 				// [TODO] Better (and safer) filename
 				// Save chunk
-				PLCore::String sPositionKeys = "Data\\Misc\\";
-				if (g_SEOptions.bPLDirectories && g_SEOptions.bSubdirectories)
-					sPositionKeys += PLCore::String::Format("%s\\%s_PositionKeyframes.chunk", g_SEOptions.sFilenameOnly.c_str(), GetName().c_str());
-				else
-					sPositionKeys += PLCore::String::Format("%s_PositionKeyframes.chunk", GetName().c_str());
+				const PLCore::String sPositionKeys = PLTools::GetResourceFilename(PLTools::ResourceKeyframes, PLCore::String::Format("%s_PositionKeyframes.chunk", GetName().c_str()).GetASCII()).c_str();
 				if (SaveChunk(cPositionChunk, PLCore::String((sApplicationDrive + sApplicationDir).c_str()) + sPositionKeys)) {
 					// Add the modifier
 					PLCore::XmlElement *pModifierElement = new PLCore::XmlElement("Modifier");
@@ -614,11 +603,7 @@ void PLSceneNode::WriteModifiers(PLCore::XmlElement &cSceneElement, const std::s
 			if (bRotationKeyframes && bUseRotation) {
 				// [TODO] Better (and safer) filename
 				// Save chunk
-				PLCore::String sRotationKeys = "Data\\Misc\\";
-				if (g_SEOptions.bPLDirectories && g_SEOptions.bSubdirectories)
-					sRotationKeys += PLCore::String::Format("%s\\%s_RotationKeyframes.chunk", g_SEOptions.sFilenameOnly.c_str(), GetName().c_str());
-				else
-					sRotationKeys += PLCore::String::Format("%s_RotationKeyframes.chunk", GetName().c_str());
+				const PLCore::String sRotationKeys = PLTools::GetResourceFilename(PLTools::ResourceKeyframes, PLCore::String::Format("%s_RotationKeyframes.chunk", GetName().c_str()).GetASCII()).c_str();
 				if (SaveChunk(cRotationChunk, PLCore::String((sApplicationDrive + sApplicationDir).c_str()) + sRotationKeys)) {
 					// Add the modifier
 					PLCore::XmlElement *pModifierElement = new PLCore::XmlElement("Modifier");
@@ -643,11 +628,7 @@ void PLSceneNode::WriteModifiers(PLCore::XmlElement &cSceneElement, const std::s
 			if (bScaleKeyframes && bUseScale) {
 				// [TODO] Better (and safer) filename
 				// Save chunk
-				PLCore::String sScaleKeys = "Data\\Misc\\";
-				if (g_SEOptions.bPLDirectories && g_SEOptions.bSubdirectories)
-					sScaleKeys += PLCore::String::Format("%s\\%s_ScaleKeyframes.chunk", g_SEOptions.sFilenameOnly.c_str(), GetName().c_str());
-				else
-					sScaleKeys += PLCore::String::Format("%s_ScaleKeyframes.chunk", GetName().c_str());
+				const PLCore::String sScaleKeys = PLTools::GetResourceFilename(PLTools::ResourceKeyframes, PLCore::String::Format("%s_ScaleKeyframes.chunk", GetName().c_str()).GetASCII()).c_str();
 				if (SaveChunk(cScaleChunk, PLCore::String((sApplicationDrive + sApplicationDir).c_str()) + sScaleKeys)) {
 					// Add the modifier
 					PLCore::XmlElement *pModifierElement = new PLCore::XmlElement("Modifier");

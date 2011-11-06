@@ -36,7 +36,6 @@
 #include "PL3dsMaxSceneExport/PLScene.h"
 #include "PL3dsMaxSceneExport/PLSceneTexture.h"
 #include "PL3dsMaxSceneExport/PLSceneMaterialFX.h"
-#include "PL3dsMaxSceneExport/PLSceneExportOptions.h"
 #include "PL3dsMaxSceneExport/PLSceneMaterialStandard.h"
 #include "PL3dsMaxSceneExport/PLSceneMaterialBakeShell.h"
 #include "PL3dsMaxSceneExport/PLSceneMaterialSRShaderLighting.h"
@@ -103,11 +102,7 @@ bool PLSceneMaterial::Save(const std::string &sApplicationDrive, const std::stri
 	cDocument.LinkEndChild(*pMaterialElement);
 
 	// Get the absolute material filename
-	std::string sFilename;
-	if (g_SEOptions.bPLDirectories)
-		sFilename = sApplicationDrive + sApplicationDir + "Data\\Materials\\" + m_sName;
-	else
-		sFilename = sApplicationDrive + sApplicationDir + m_sName;
+	const std::string sFilename = sApplicationDrive + sApplicationDir + PLTools::GetResourceFilename(PLTools::ResourceMaterial, m_sName);
 
 	{ // Before we safe, we need to ensure that the target directory is there, else 'Save()' will fail!
 		Url cUrl = sFilename.c_str();
