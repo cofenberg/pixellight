@@ -1,3 +1,9 @@
+>> 06.11.2011
+[CO]
+- "PixelLight3dsMaxSceneExport"-document: "8 Options" -> "Subdirectories"-option documentation was buggy
+
+
+
 >> 03.11.2011
 [CO]
 - "PixelLightBuild"-document: "Create Solutions and Build" MS Windows section: Beside Visual Studio IDE, also added a description how to build by using the
