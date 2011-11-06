@@ -94,7 +94,7 @@ void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 
 	// Mesh filename
 	if (m_pMesh) {
-		if (g_SEOptions.bPLDirectories && g_SEOptions.bSubDirectories)
+		if (g_SEOptions.bPLDirectories && g_SEOptions.bSubdirectories)
 			pNodeElement->SetAttribute("Mesh", String::Format("Data\\Meshes\\%s\\%s.mesh", g_SEOptions.sFilenameOnly.c_str(), m_pMesh->GetName().c_str()));
 		else
 			pNodeElement->SetAttribute("Mesh", String::Format("Data\\Meshes\\%s.mesh", m_pMesh->GetName().c_str()));
@@ -192,7 +192,7 @@ void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 					if (g_SEOptions.bPLDirectories) {
 						// Misc
 						CreateDirectory(sAbsSkinFilename.c_str(), nullptr);
-						if (g_SEOptions.bSubDirectories) {
+						if (g_SEOptions.bSubdirectories) {
 							sAbsSkinFilename.append(g_SEOptions.sFilenameOnly);
 							sAbsSkinFilename.append("\\");
 							CreateDirectory(sAbsSkinFilename.c_str(), nullptr);
@@ -201,7 +201,7 @@ void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 					sAbsSkinFilename.append(sSkinFilename);
 
 					// Update the skin filename
-					if (g_SEOptions.bPLDirectories && g_SEOptions.bSubDirectories)
+					if (g_SEOptions.bPLDirectories && g_SEOptions.bSubdirectories)
 						sSkinFilename = std::string("Data\\Misc\\") + g_SEOptions.sFilenameOnly + "\\" + sSkinFilename;
 					else
 						sSkinFilename = std::string("Data\\Misc\\") + sSkinFilename;

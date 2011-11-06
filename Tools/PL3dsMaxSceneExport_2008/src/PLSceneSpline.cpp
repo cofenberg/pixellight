@@ -70,7 +70,7 @@ void PLSceneSpline::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 	if (g_SEOptions.bPLDirectories) {
 		// Misc
 		CreateDirectory(sFilename.c_str(), nullptr);
-		if (g_SEOptions.bSubDirectories) {
+		if (g_SEOptions.bSubdirectories) {
 			sFilename.append(g_SEOptions.sFilenameOnly);
 			sFilename.append("\\");
 			CreateDirectory(sFilename.c_str(), nullptr);

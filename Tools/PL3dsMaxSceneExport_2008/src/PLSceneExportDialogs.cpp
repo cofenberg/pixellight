@@ -71,6 +71,8 @@ void GetSettings(HWND hWnd)
 	// General
 	g_SEOptions.bRemoveSpaces	   = SendDlgItemMessage(hWnd, IDC_REMOVESPACES,		 BM_GETCHECK, 0, 0) != 0;
 	g_SEOptions.bCorrectPortals	   = SendDlgItemMessage(hWnd, IDC_CORRECTPORTALS,	 BM_GETCHECK, 0, 0) != 0;
+	g_SEOptions.bPLDirectories	   = SendDlgItemMessage(hWnd, IDC_PLDIRECTORIES,	 BM_GETCHECK, 0, 0) != 0;
+	g_SEOptions.bSubdirectories	   = SendDlgItemMessage(hWnd, IDC_SUBDIRECTORIES,	 BM_GETCHECK, 0, 0) != 0;
 	g_SEOptions.bAnimationPlayback = SendDlgItemMessage(hWnd, IDC_ANIMATIONPLAYBACK, BM_GETCHECK, 0, 0) != 0;
 	g_SEOptions.bShowExportedScene = SendDlgItemMessage(hWnd, IDC_SHOWEXPORTEDSCENE, BM_GETCHECK, 0, 0) != 0;
 	g_SEOptions.bPublish		   = SendDlgItemMessage(hWnd, IDC_PUBLISH,			 BM_GETCHECK, 0, 0) != 0;
@@ -122,8 +124,6 @@ void GetSettings(HWND hWnd)
 	g_SEOptions.bCreateMaterials		 = SendDlgItemMessage(hWnd, IDC_CREATEMATERIALS,		 BM_GETCHECK, 0, 0) != 0;
 	g_SEOptions.bSmartMaterialParameters = SendDlgItemMessage(hWnd, IDC_SMARTMATERIALPARAMETERS, BM_GETCHECK, 0, 0) != 0;
 	g_SEOptions.bCopyTextures			 = SendDlgItemMessage(hWnd, IDC_COPYTEXTURES,			 BM_GETCHECK, 0, 0) != 0;
-	g_SEOptions.bPLDirectories			 = SendDlgItemMessage(hWnd, IDC_PLDIRECTORIES,			 BM_GETCHECK, 0, 0) != 0;
-	g_SEOptions.bSubDirectories			 = SendDlgItemMessage(hWnd, IDC_SUBDIRECTORIES,			 BM_GETCHECK, 0, 0) != 0;
 
 	// Meshes
 	// Normals
@@ -142,7 +142,10 @@ void SetupDialog(HWND hWnd)
 	SendDlgItemMessage(hWnd, IDC_REMOVESPACES,			BM_SETCHECK, g_SEOptions.bRemoveSpaces,			 0);
 	SendDlgItemMessage(hWnd, IDC_CORRECTPORTALS,		BM_SETCHECK, g_SEOptions.bCorrectPortals,		 0);
 	SendDlgItemMessage(hWnd, IDC_OVERWRITEAMBIENTCOLOR,	BM_SETCHECK, g_SEOptions.bOverwriteAmbientColor, 0);
+	EnableWindow(GetDlgItem(hWnd, IDC_SUBDIRECTORIES),	 g_SEOptions.bPLDirectories);
 	EnableWindow(GetDlgItem(hWnd, IDC_PICKAMBIENTCOLOR), g_SEOptions.bOverwriteAmbientColor);
+	SendDlgItemMessage(hWnd, IDC_PLDIRECTORIES,		BM_SETCHECK, g_SEOptions.bPLDirectories,	 0);
+	SendDlgItemMessage(hWnd, IDC_SUBDIRECTORIES,	BM_SETCHECK, g_SEOptions.bSubdirectories,	 0);
 	SendDlgItemMessage(hWnd, IDC_ANIMATIONPLAYBACK,	BM_SETCHECK, g_SEOptions.bAnimationPlayback, 0);
 	SendDlgItemMessage(hWnd, IDC_SHOWEXPORTEDSCENE, BM_SETCHECK, g_SEOptions.bShowExportedScene, 0);
 
@@ -217,12 +220,9 @@ void SetupDialog(HWND hWnd)
 	EnableWindow(GetDlgItem(hWnd, IDC_CREATEMATERIALS),			g_SEOptions.bExportMaterials);
 	EnableWindow(GetDlgItem(hWnd, IDC_SMARTMATERIALPARAMETERS),	g_SEOptions.bExportMaterials);
 	EnableWindow(GetDlgItem(hWnd, IDC_COPYTEXTURES),			g_SEOptions.bExportMaterials);
-	EnableWindow(GetDlgItem(hWnd, IDC_SUBDIRECTORIES),			g_SEOptions.bPLDirectories);
 	SendDlgItemMessage(hWnd, IDC_CREATEMATERIALS,		  BM_SETCHECK, g_SEOptions.bCreateMaterials,		 0);
 	SendDlgItemMessage(hWnd, IDC_SMARTMATERIALPARAMETERS, BM_SETCHECK, g_SEOptions.bSmartMaterialParameters, 0);
 	SendDlgItemMessage(hWnd, IDC_COPYTEXTURES,			  BM_SETCHECK, g_SEOptions.bCopyTextures,			 0);
-	SendDlgItemMessage(hWnd, IDC_PLDIRECTORIES,			  BM_SETCHECK, g_SEOptions.bPLDirectories,			 0);
-	SendDlgItemMessage(hWnd, IDC_SUBDIRECTORIES,		  BM_SETCHECK, g_SEOptions.bSubDirectories,			 0);
 
 	// Meshes
 	SendDlgItemMessage(hWnd, IDC_EXPORTMESHES,     BM_SETCHECK,		g_SEOptions.bExportMeshes,	   0);
@@ -305,6 +305,11 @@ static INT_PTR CALLBACK ExportOptionsDlgProc(HWND hWnd, UINT msg, WPARAM wParam,
 
 		case WM_COMMAND:
 			switch (LOWORD(wParam)) {
+				case IDC_PLDIRECTORIES:
+					g_SEOptions.bPLDirectories = SendDlgItemMessage(hWnd, IDC_PLDIRECTORIES, BM_GETCHECK, 0, 0) != 0;
+					UpdateDialog(hWnd);
+					break;
+
 				case IDC_OVERWRITEAMBIENTCOLOR:
 					g_SEOptions.bOverwriteAmbientColor = SendDlgItemMessage(hWnd, IDC_OVERWRITEAMBIENTCOLOR, BM_GETCHECK, 0, 0) != 0;
 					UpdateDialog(hWnd);
@@ -334,11 +339,6 @@ static INT_PTR CALLBACK ExportOptionsDlgProc(HWND hWnd, UINT msg, WPARAM wParam,
 
 				case IDC_EXPORTMATERIALS:
 					g_SEOptions.bExportMaterials = SendDlgItemMessage(hWnd, IDC_EXPORTMATERIALS, BM_GETCHECK, 0, 0) != 0;
-					UpdateDialog(hWnd);
-					break;
-
-				case IDC_PLDIRECTORIES:
-					g_SEOptions.bPLDirectories = SendDlgItemMessage(hWnd, IDC_PLDIRECTORIES, BM_GETCHECK, 0, 0) != 0;
 					UpdateDialog(hWnd);
 					break;
 

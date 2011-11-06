@@ -59,6 +59,8 @@ class PLSceneExportOptions {
 		std::string sFilenameOnly;					/**< Scene filename only without the path */
 		bool		bRemoveSpaces;					/**< Remove spaces/tabs within names? */
 		bool		bCorrectPortals;				/**< Correct portals if required? */
+		bool		bPLDirectories;					/**< PL directories? */
+		bool		bSubdirectories;				/**< Subdirectories? */
 		bool		bOverwriteAmbientColor;			/**< Overwrite ambient color? */
 		float		fOverwrittenAmbientColor[3];	/**< Overwritten RGB (0-1) ambient color, only used if 'bOverwriteAmbientColor' is true */
 		bool		bAnimationPlayback;				/**< Automatic animation playback? */
@@ -82,8 +84,6 @@ class PLSceneExportOptions {
 		bool bCreateMaterials;			/**< Create materials? */
 		bool bSmartMaterialParameters;	/**< Smart material parameters? */
 		bool bCopyTextures;				/**< Copy textures? */
-		bool bPLDirectories;			/**< PL directories? */
-		bool bSubDirectories;			/**< Sub directories? */
 
 	// Meshes
 		bool bExportMeshes;						/**< Export meshes? */

@@ -390,7 +390,7 @@ void PLSceneNode::WriteModifiers(PLCore::XmlElement &cSceneElement, const std::s
 						if (pTarget) {
 							// Get path
 							std::string sPathFilename("Data\\Misc\\");
-							if (g_SEOptions.bSubDirectories) {
+							if (g_SEOptions.bSubdirectories) {
 								sPathFilename.append(g_SEOptions.sFilenameOnly);
 								sPathFilename.append("\\");
 							}
@@ -585,7 +585,7 @@ void PLSceneNode::WriteModifiers(PLCore::XmlElement &cSceneElement, const std::s
 				// [TODO] Better (and safer) filename
 				// Save chunk
 				PLCore::String sPositionKeys = "Data\\Misc\\";
-				if (g_SEOptions.bPLDirectories && g_SEOptions.bSubDirectories)
+				if (g_SEOptions.bPLDirectories && g_SEOptions.bSubdirectories)
 					sPositionKeys += PLCore::String::Format("%s\\%s_PositionKeyframes.chunk", g_SEOptions.sFilenameOnly.c_str(), GetName().c_str());
 				else
 					sPositionKeys += PLCore::String::Format("%s_PositionKeyframes.chunk", GetName().c_str());
@@ -615,7 +615,7 @@ void PLSceneNode::WriteModifiers(PLCore::XmlElement &cSceneElement, const std::s
 				// [TODO] Better (and safer) filename
 				// Save chunk
 				PLCore::String sRotationKeys = "Data\\Misc\\";
-				if (g_SEOptions.bPLDirectories && g_SEOptions.bSubDirectories)
+				if (g_SEOptions.bPLDirectories && g_SEOptions.bSubdirectories)
 					sRotationKeys += PLCore::String::Format("%s\\%s_RotationKeyframes.chunk", g_SEOptions.sFilenameOnly.c_str(), GetName().c_str());
 				else
 					sRotationKeys += PLCore::String::Format("%s_RotationKeyframes.chunk", GetName().c_str());
@@ -644,7 +644,7 @@ void PLSceneNode::WriteModifiers(PLCore::XmlElement &cSceneElement, const std::s
 				// [TODO] Better (and safer) filename
 				// Save chunk
 				PLCore::String sScaleKeys = "Data\\Misc\\";
-				if (g_SEOptions.bPLDirectories && g_SEOptions.bSubDirectories)
+				if (g_SEOptions.bPLDirectories && g_SEOptions.bSubdirectories)
 					sScaleKeys += PLCore::String::Format("%s\\%s_ScaleKeyframes.chunk", g_SEOptions.sFilenameOnly.c_str(), GetName().c_str());
 				else
 					sScaleKeys += PLCore::String::Format("%s_ScaleKeyframes.chunk", GetName().c_str());

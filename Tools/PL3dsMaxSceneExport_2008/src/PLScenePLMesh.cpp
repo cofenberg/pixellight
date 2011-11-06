@@ -68,7 +68,7 @@ bool PLScenePLMesh::Save(const std::string &sApplicationDrive, const std::string
 	// Open file
 	std::string sFilename;
 	if (g_SEOptions.bPLDirectories) {
-		if (g_SEOptions.bSubDirectories)
+		if (g_SEOptions.bSubdirectories)
 			sFilename = sApplicationDrive + sApplicationDir + "Data\\Meshes\\" + g_SEOptions.sFilenameOnly + "\\" + m_sName + ".mesh";
 		else
 			sFilename = sApplicationDrive + sApplicationDir + "Data\\Meshes\\" + m_sName + ".mesh";

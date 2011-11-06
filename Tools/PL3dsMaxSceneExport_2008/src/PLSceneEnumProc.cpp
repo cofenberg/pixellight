@@ -126,7 +126,7 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 			if (g_SEOptions.bExportMeshes) {
 				sFilename = sDataFilename + "\\Meshes\\";
 				CreateDirectory(sFilename.c_str(), nullptr);
-				if (g_SEOptions.bSubDirectories) {
+				if (g_SEOptions.bSubdirectories) {
 					sFilename.append(g_SEOptions.sFilenameOnly);
 					sFilename.append("\\");
 					CreateDirectory(sFilename.c_str(), nullptr);
@@ -139,7 +139,7 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 			if (g_SEOptions.bExportMaterials && g_SEOptions.bCreateMaterials) {
 				sFilename = sDataFilename + "\\Materials\\";
 				CreateDirectory(sFilename.c_str(), nullptr);
-				if (g_SEOptions.bSubDirectories) {
+				if (g_SEOptions.bSubdirectories) {
 					sFilename.append(g_SEOptions.sFilenameOnly);
 					sFilename.append("\\");
 					CreateDirectory(sFilename.c_str(), nullptr);

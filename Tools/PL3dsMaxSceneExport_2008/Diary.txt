@@ -1,3 +1,9 @@
+>> 06.11.2011
+[CO]
+- Options: Moved "PL directories" and "Subdirectories" from the material-section into the general-section because it's not limited to materials
+
+
+
 >> 17.04.2011
 [CO]
 - Autodesk 3ds Max 2012 scene exporter added

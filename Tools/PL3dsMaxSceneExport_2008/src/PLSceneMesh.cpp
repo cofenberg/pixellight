@@ -641,8 +641,8 @@ int PLSceneMesh::AddMaterial(IGameMaterial *pParentIGameMaterial, IGameMaterial 
 		sprintf(szTemp, "%d", cColor.toRGB());
 		std::string sName = std::string("NoMaterial_WireColorFallback_") + std::string(szTemp) + ".mat";
 
-		// ... and add 'sub-directory' if required
-		if (g_SEOptions.bSubDirectories)
+		// ... and add <subdirectory> if required
+		if (g_SEOptions.bSubdirectories)
 			sName = g_SEOptions.sFilenameOnly + "\\" + sName;
 
 		// Is this material already within the mesh material list?
