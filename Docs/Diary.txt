@@ -1,6 +1,7 @@
 >> 06.11.2011
 [CO]
 - "PixelLight3dsMaxSceneExport"-document: "8 Options" -> "Subdirectories"-option documentation was buggy
+- "PixelLightBase"-document: Minor update in "9.5. Scene Node Names" ("Get()" -> "GetByName()")
 
 
 
