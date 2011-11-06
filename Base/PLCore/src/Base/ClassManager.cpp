@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#define PLCORE_CLASSMANAGER_CPP
 #include "PLCore/Xml/Xml.h"
 #include "PLCore/Log/Log.h"
 #include "PLCore/File/File.h"
@@ -60,6 +59,22 @@ template class Singleton<ClassManager>;
 // Plugin API functions
 typedef bool (*PLIsPluginDebugBuildFunc) ();
 typedef int  (*PLGetPluginInfoFunc) ();
+
+
+//[-------------------------------------------------------]
+//[ Public static PLCore::Singleton functions             ]
+//[-------------------------------------------------------]
+ClassManager *ClassManager::GetInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<ClassManager>::GetInstance();
+}
+
+bool ClassManager::HasInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<ClassManager>::HasInstance();
+}
 
 
 //[-------------------------------------------------------]

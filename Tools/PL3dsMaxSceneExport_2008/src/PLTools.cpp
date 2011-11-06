@@ -27,6 +27,7 @@
 #include <IGame/IGame.h>
 #include <PixelLight.h>
 #include <PLCore/PLCoreWindows.h>	// Depending on the used compiler, nullptr has to be defined by this header
+#include "PL3dsMaxSceneExport/PLSceneExportOptions.h"
 #include "PL3dsMaxSceneExport/PLTools.h"
 
 
@@ -360,4 +361,40 @@ std::string PLTools::GetPLViewerFilename()
 
 	// Return the filename of 'PLViewer'
 	return sViewer;
+}
+
+/**
+*  @brief
+*    Constructs a resource filename by using the current options
+*/
+std::string PLTools::GetResourceFilename(EResourceType nResourceType, const std::string &sFilename)
+{
+	// Directory of the resource type
+	if (g_SEOptions.bPLDirectories) {
+		std::string sResourceDirectory;
+		switch (nResourceType) {
+			case ResourceMesh:
+				sResourceDirectory = "Data\\Meshes\\";
+				break;
+
+			case ResourceMaterial:
+				sResourceDirectory = "Data\\Materials\\";
+				break;
+
+			case ResourceSkin:
+			case ResourceKeyframes:
+			case ResourcePath:
+				sResourceDirectory = "Data\\Misc\\";
+				break;
+		}
+
+		// Scene subdirectory
+		if (g_SEOptions.bSubdirectories)
+			return sResourceDirectory + g_SEOptions.sFilenameOnly + "\\" + sFilename;
+		else
+			return sResourceDirectory + sFilename;
+	}
+
+	// Just return the given filename
+	return sFilename;
 }

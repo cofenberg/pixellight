@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#define PLCORE_PROFILING_CPP
 #include "PLCore/Tools/Profiling.h"
 
 
@@ -37,6 +36,22 @@ namespace PLCore {
 //[ Template instance                                     ]
 //[-------------------------------------------------------]
 template class Singleton<Profiling>;
+
+
+//[-------------------------------------------------------]
+//[ Public static PLCore::Singleton functions             ]
+//[-------------------------------------------------------]
+Profiling *Profiling::GetInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<Profiling>::GetInstance();
+}
+
+bool Profiling::HasInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<Profiling>::HasInstance();
+}
 
 
 //[-------------------------------------------------------]

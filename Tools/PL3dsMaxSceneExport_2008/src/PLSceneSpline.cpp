@@ -65,21 +65,8 @@ void PLSceneSpline::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 {
 	// Do NOT save it as scene node, it's just a 'resource'
 
-	// Create paths directory...
-	std::string sFilename = std::string("Data\\Misc\\") + sApplicationDrive + sApplicationDir;
-	if (g_SEOptions.bPLDirectories) {
-		// Misc
-		CreateDirectory(sFilename.c_str(), nullptr);
-		if (g_SEOptions.bSubDirectories) {
-			sFilename.append(g_SEOptions.sFilenameOnly);
-			sFilename.append("\\");
-			CreateDirectory(sFilename.c_str(), nullptr);
-		}
-	}
-
-	// Create path file
-	sFilename.append(GetName());
-	sFilename.append(".path");
+	// Get path filename
+	const std::string sFilename = sApplicationDrive + sApplicationDir + PLTools::GetResourceFilename(PLTools::ResourcePath, GetName() + ".path");
 
 	// Get the IGame spline object of the given IGame node
 	IGameObject *pIGameObject = GetIGameNode()->GetIGameObject();

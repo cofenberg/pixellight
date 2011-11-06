@@ -1,3 +1,9 @@
+>> 06.11.2011
+[CO]
+- "Application::LoadScene()": In case there's no "/Data/Scenes/" within the scene filename, the directory the scene is in is used as base directory instead
+
+
+
 >> 21.08.2011
 [CO]
 - PLViewer is no longer closing at once when not provided with the filename of the scene/script to load in, or the loading failed

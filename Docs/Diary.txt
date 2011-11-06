@@ -1,3 +1,19 @@
+>> 06.11.2011
+[CO]
+- "PixelLight3dsMaxSceneExport"-document: "8 Options" -> "Subdirectories"-option documentation was buggy
+- "PixelLightBase"-document: Minor update in "9.5. Scene Node Names" ("Get()" -> "GetByName()")
+
+
+
+>> 03.11.2011
+[CO]
+- "PixelLightBuild"-document: "Create Solutions and Build" MS Windows section: Beside Visual Studio IDE, also added a description how to build by using the
+  Visual Studio command prompt
+- "PixelLightBuild"-document: I received massive feedback for this document. Did some restructuring, added missing information, mentioned common errors and issues
+  (even the suggested "DON'T PANIC"-dictum is now there *g*).
+
+
+
 >> 01.11.2011
 [CO]
 - Split the MS Windows prerequisites section into "Binaries", "Installable SDK" and "Documentation" to enhance the overview over what is required for which task

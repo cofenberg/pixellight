@@ -84,21 +84,24 @@ set(LINUX_XCURSOR_LIB	Xcursor)		# X cursor library
 ## Preprocessor definitions
 ##################################################
 
-# Check gcc compiler
-include(${CMAKETOOLS_DIR}/Modules/CheckLinuxCompiler.cmake)	# Adds e.g. visibility attribute (http://gcc.gnu.org/wiki/Visibility)
-
 # Preprocessor definitions
 set(LINUX_COMPILE_DEFS
 	${LINUX_COMPILE_DEFS}
-	GCC									# We are using the gcc/g++ compiler
+	GCC									# We are using the GCC/g++ compiler
 )
 if(APPLE)
-	# Add a handy APPLE definition (just like WIN32, LINUX and so on) 
+	# Add a handy APPLE definition (just like WIN32, LINUX and so on)
 	set(LINUX_COMPILE_DEFS
 		${LINUX_COMPILE_DEFS}
-		APPLE							# We are using the gcc/g++ compiler
+		APPLE							# We are building for an APPLE OS
 	)
+
+	# No visibility compiler flags for now or we get issues with several vtables
+	set(NO_VISIBILITY_CHECK 1)			# Do not add the visibility related compiler flags within "CheckLinuxCompiler.cmake" below
 endif()
+
+# Check GCC compiler
+include(${CMAKETOOLS_DIR}/Modules/CheckLinuxCompiler.cmake)	# Adds e.g. visibility attribute (http://gcc.gnu.org/wiki/Visibility) and checks for c++0x support
 
 
 ##################################################

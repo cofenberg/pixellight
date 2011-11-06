@@ -27,7 +27,6 @@
 #include <PLCore/File/File.h>
 #include <PLCore/File/Directory.h>
 #include <IGame/IGame.h>
-#include "PL3dsMaxSceneExport/PLSceneExportOptions.h"
 #include "PL3dsMaxSceneExport/PLSceneExportDialogs.h"
 #include "PL3dsMaxSceneExport/PLLog.h"
 #include "PL3dsMaxSceneExport/PLTools.h"
@@ -126,11 +125,19 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 			if (g_SEOptions.bExportMeshes) {
 				sFilename = sDataFilename + "\\Meshes\\";
 				CreateDirectory(sFilename.c_str(), nullptr);
-				if (g_SEOptions.bSubDirectories) {
+				if (g_SEOptions.bSubdirectories) {
 					sFilename.append(g_SEOptions.sFilenameOnly);
 					sFilename.append("\\");
 					CreateDirectory(sFilename.c_str(), nullptr);
 				}
+			}
+			// Misc
+			sFilename = sDataFilename + "\\Misc\\";
+			CreateDirectory(sFilename.c_str(), nullptr);
+			if (g_SEOptions.bSubdirectories) {
+				sFilename.append(g_SEOptions.sFilenameOnly);
+				sFilename.append("\\");
+				CreateDirectory(sFilename.c_str(), nullptr);
 			}
 			// Scenes
 			sFilename = sDataFilename + "\\Scenes\\";
@@ -139,7 +146,7 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 			if (g_SEOptions.bExportMaterials && g_SEOptions.bCreateMaterials) {
 				sFilename = sDataFilename + "\\Materials\\";
 				CreateDirectory(sFilename.c_str(), nullptr);
-				if (g_SEOptions.bSubDirectories) {
+				if (g_SEOptions.bSubdirectories) {
 					sFilename.append(g_SEOptions.sFilenameOnly);
 					sFilename.append("\\");
 					CreateDirectory(sFilename.c_str(), nullptr);

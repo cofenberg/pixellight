@@ -123,9 +123,6 @@
 	#define PLCORE_RTTI_EXPORT 0
 #endif
 
-// To export/import template instance (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates)
-#define PLCORE_EXTERN_TEMPLATE extern template class
-
 #if defined(HAVE_VISIBILITY_ATTR) && !defined(PLCORE_STATIC)
 		// To import/export class templates
 		#define PLCORE_TMPL __attribute__ ((visibility("default")))

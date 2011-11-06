@@ -65,6 +65,7 @@ set(CURRENT_SHARED_LIBRARIES
 	${PL_PLSOUNDOPENSLES_LIBRARY}		# Required by "61Sound"
 	${PL_PLFRONTENDPLGUI_LIBRARY}		# Required by "66IngameGUI"
 	# Application
+#	"${PL_TESTS_BIN_DIR}/libPLUnitTests.so"
 #	"${PL_SAMPLES_BIN_DIR}/lib30Input.so"
 #	"${PL_SAMPLES_BIN_DIR}/lib40ScriptHelloWorld.so"
 #	"${PL_SAMPLES_BIN_DIR}/lib41ScriptGlobalVariables.so"

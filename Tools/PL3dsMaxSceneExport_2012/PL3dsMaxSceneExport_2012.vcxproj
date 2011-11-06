@@ -91,8 +91,8 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release_2012\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\build\release_2012_64\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\build\release_2012_64\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build\release_2012_64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build\release_2012_64\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Hybrid|Win32'">.\build\hybrid_2012\</OutDir>
@@ -206,7 +206,7 @@
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy "build\debug_2012_64\PL3dsMaxSceneExport_2012.dle"  "H:\Programme\Autodesk\3ds Max 2012\\plugins\"</Command>
+      <Command>copy "build\debug_2012_64\PL3dsMaxSceneExport_2012.dle"  "C:\Program Files\Autodesk\3ds Max 2012\plugins"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -312,7 +312,7 @@ copy "build\release_2012\PL3dsMaxSceneExport_2012.dle" ..\..\Bin\Tools\3dsMax\x8
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy "build\release_2012_64\PL3dsMaxSceneExport_2012.dle"  "C:\Program Files\Autodesk\3ds Max 2012\plugins\"
+      <Command>copy "build\release_2012_64\PL3dsMaxSceneExport_2012.dle"  "C:\Program Files\Autodesk\3ds Max 2012\plugins"
 copy "build\release_2012_64\PL3dsMaxSceneExport_2012.dle" ..\..\Bin\Tools\3dsMax\x64\
 </Command>
     </PostBuildEvent>

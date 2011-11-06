@@ -66,15 +66,7 @@ PLScenePLMesh::~PLScenePLMesh()
 bool PLScenePLMesh::Save(const std::string &sApplicationDrive, const std::string &sApplicationDir)
 {
 	// Open file
-	std::string sFilename;
-	if (g_SEOptions.bPLDirectories) {
-		if (g_SEOptions.bSubDirectories)
-			sFilename = sApplicationDrive + sApplicationDir + "Data\\Meshes\\" + g_SEOptions.sFilenameOnly + "\\" + m_sName + ".mesh";
-		else
-			sFilename = sApplicationDrive + sApplicationDir + "Data\\Meshes\\" + m_sName + ".mesh";
-	} else {
-		sFilename = sApplicationDrive + sApplicationDir + m_sName + ".mesh";
-	}
+	const std::string sFilename = sApplicationDrive + sApplicationDir + PLTools::GetResourceFilename(PLTools::ResourceMesh, m_sName + ".mesh");
 	FILE *pFile = fopen(sFilename.c_str(), "wb");
 	if (pFile) { // If all went fine...
 		// Save
@@ -168,14 +160,12 @@ bool PLScenePLMesh::WriteMaterials(FILE &cFile, ChunkStack &cChunkStack)
 		for (uint32 i=0; i<cMaterials.nMaterials; i++) {
 			PLSceneMaterial *pMaterial = m_lstMaterials[i];
 			if (pMaterial) {
-				std::string sMaterialFilaneme = pMaterial->GetName();
-				if (sMaterialFilaneme.find(".mat") != std::string::npos)
-					sMaterialFilaneme = "Data\\Materials\\" + sMaterialFilaneme;
-				uint32 nLength = (uint32)sMaterialFilaneme.length();
+				const std::string sMaterialFilename = PLTools::GetResourceFilename(PLTools::ResourceMaterial, pMaterial->GetName());
+				uint32 nLength = (uint32)sMaterialFilename.length();
 				if (nLength > 255)
 					nLength = 255;
 				char szMatName[256];
-				strncpy(szMatName, sMaterialFilaneme.c_str(), nLength);
+				strncpy(szMatName, sMaterialFilename.c_str(), nLength);
 				szMatName[nLength] = '\0';
 				if (!Write(cFile, szMatName, 256))
 					return false; // Error!

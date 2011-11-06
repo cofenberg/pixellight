@@ -78,6 +78,8 @@ void PLSceneExportOptions::SetDefaultSettings()
 	nLogFlags					= PLLog::Error | PLLog::Warning | PLLog::Hint;
 	bRemoveSpaces				= false;
 	bCorrectPortals				= false;
+	bPLDirectories				= true;
+	bSubdirectories				= true; // The experience showed, this is the most useful default setting
 	bOverwriteAmbientColor		= true;
 	fOverwrittenAmbientColor[0]	= 1.0f;
 	fOverwrittenAmbientColor[1]	= 1.0f;
@@ -100,8 +102,6 @@ void PLSceneExportOptions::SetDefaultSettings()
 	bCreateMaterials		 = true;
 	bSmartMaterialParameters = true;
 	bCopyTextures			 = true;
-	bPLDirectories			 = true;
-	bSubDirectories			 = true; // The experience showed, this is the most useful default setting
 
 	// Meshes
 	bExportMeshes		   = true;
@@ -134,6 +134,8 @@ void PLSceneExportOptions::WriteIntoLog()
 		g_pLog->PrintFLine("    - Scene");
 	g_pLog->PrintFLine("  Remove spaces/tabs within names: %d", bRemoveSpaces);
 	g_pLog->PrintFLine("  Correct portals: %d", bCorrectPortals);
+	g_pLog->PrintFLine("  PL directories:          %d", bPLDirectories);
+	g_pLog->PrintFLine("  Subdirectories:          %d", bSubdirectories);
 	g_pLog->PrintFLine("  Overwrite ambient color: %d", bOverwriteAmbientColor);
 	if (bOverwriteAmbientColor)
 		g_pLog->PrintFLine("  Overwritten ambient color:  %g %g %g", fOverwrittenAmbientColor[0], fOverwrittenAmbientColor[1], fOverwrittenAmbientColor[2]);
@@ -155,8 +157,6 @@ void PLSceneExportOptions::WriteIntoLog()
 	g_pLog->PrintFLine("  Create materials:          %d", bCreateMaterials);
 	g_pLog->PrintFLine("  Smart material parameters: %d", bSmartMaterialParameters);
 	g_pLog->PrintFLine("  Copy textures:             %d", bCopyTextures);
-	g_pLog->PrintFLine("  PL directories:            %d", bPLDirectories);
-	g_pLog->PrintFLine("  Sub-directories:           %d", bSubDirectories);
 
 	// Meshes
 	g_pLog->PrintLine("Mesh");
@@ -245,6 +245,10 @@ void PLSceneExportOptions::Save(const std::string &sFilename)
 	WritePrivateProfileString("General", "RemoveSpaces", szTemp, pszAbsFilename);
 	sprintf(szTemp, "%d", bCorrectPortals);
 	WritePrivateProfileString("General", "CorrectPortals", szTemp, pszAbsFilename);
+	sprintf(szTemp, "%d", bPLDirectories);
+	WritePrivateProfileString("Materials", "PLDirectories", szTemp, pszAbsFilename);
+	sprintf(szTemp, "%d", bSubdirectories);
+	WritePrivateProfileString("Materials", "SubDirectories", szTemp, pszAbsFilename);
 	sprintf(szTemp, "%d", bOverwriteAmbientColor);
 	WritePrivateProfileString("General", "OverwriteAmbientColor", szTemp, pszAbsFilename);
 	sprintf(szTemp, "%g", fOverwrittenAmbientColor[0]);
@@ -289,10 +293,6 @@ void PLSceneExportOptions::Save(const std::string &sFilename)
 	WritePrivateProfileString("Materials", "SmartMaterialParameters", szTemp, pszAbsFilename);
 	sprintf(szTemp, "%d", bCopyTextures);
 	WritePrivateProfileString("Materials", "CopyTextures", szTemp, pszAbsFilename);
-	sprintf(szTemp, "%d", bPLDirectories);
-	WritePrivateProfileString("Materials", "PLDirectories", szTemp, pszAbsFilename);
-	sprintf(szTemp, "%d", bSubDirectories);
-	WritePrivateProfileString("Materials", "SubDirectories", szTemp, pszAbsFilename);
 
 	// Meshes
 	sprintf(szTemp, "%d", bExportMeshes);
@@ -430,6 +430,10 @@ void PLSceneExportOptions::LoadV2(const std::string &sFilename)
 	}
 	if (GetPrivateProfileString("General", "CorrectPortals", nullptr, szTemp, 256, pszAbsFilename))
 		bCorrectPortals = atoi(szTemp) != 0;
+	if (GetPrivateProfileString("Materials", "PLDirectories", nullptr, szTemp, 256, pszAbsFilename))
+		bPLDirectories = atoi(szTemp) != 0;
+	if (GetPrivateProfileString("Materials", "SubDirectories", nullptr, szTemp, 256, pszAbsFilename))
+		bSubdirectories = atoi(szTemp) != 0;
 	if (GetPrivateProfileString("General", "AnimationPlayback", nullptr, szTemp, 256, pszAbsFilename))
 		bAnimationPlayback = atoi(szTemp) != 0;
 	if (GetPrivateProfileString("General", "ShowExportedScene", nullptr, szTemp, 256, pszAbsFilename))
@@ -474,10 +478,6 @@ void PLSceneExportOptions::LoadV2(const std::string &sFilename)
 		bSmartMaterialParameters = atoi(szTemp) != 0;
 	if (GetPrivateProfileString("Materials", "CopyTextures", nullptr, szTemp, 256, pszAbsFilename))
 		bCopyTextures = atoi(szTemp) != 0;
-	if (GetPrivateProfileString("Materials", "PLDirectories", nullptr, szTemp, 256, pszAbsFilename))
-		bPLDirectories = atoi(szTemp) != 0;
-	if (GetPrivateProfileString("Materials", "SubDirectories", nullptr, szTemp, 256, pszAbsFilename))
-		bSubDirectories = atoi(szTemp) != 0;
 
 	// Meshes
 	if (GetPrivateProfileString("Meshes", "ExportMeshes", nullptr, szTemp, 256, pszAbsFilename))

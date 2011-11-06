@@ -47,6 +47,7 @@ namespace PLRendererOpenGL {
 class SurfaceWindowMacOSX : public SurfaceWindow {
 
 
+	// [TODO] Remove this when the Cocoa part is ready
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
@@ -65,9 +66,9 @@ class SurfaceWindowMacOSX : public SurfaceWindow {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		/**
 		*  @brief
 		*    Constructor

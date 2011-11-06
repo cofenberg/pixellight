@@ -25,16 +25,18 @@ First of all, we use the old fashion \emph{.h}-file extension to mark header fil
 Using C++11 (previously known as C++0x) language features is fine as long as
 \begin{itemize}
 \item{It's possible to emulate, or at least deactivate the feature within compilers don't supporting it (yet)}
-\item{There's no comfortable/acceptable way to solve a task without using the feature, \emph{extern templates} is an example for such a situation - ugly hacks just to support out-of-date compilers often isn't worth the effort}
+\item{There's no comfortable/acceptable way to solve a task without using the feature, but those situations have to be discussed within the team and community}
 \end{itemize}
 \textsl{}
 Currently the following C++11 language features are used:
 \begin{itemize}
 \item{\emph{nullptr} - a null pointer literal}
-\item{\emph{extern templates} - avoid template instantiation in other modules}
 \item{\emph{override} - gives the compiler a chance to detect and blame errors related to overwriting methods}
 \end{itemize}
 
+
+\paragraph{Extern Templates}
+Don't use \emph{extern templates}\footnote{\url{http://www2.research.att.com/~bs/C++0xFAQ.html\#extern-templates}} in order to avoid template instantiation in other modules. This is a feature we can't emulate and there are still legacy compilers like \ac{GCC} 4.2.1 used on Mac OS X 10.6 actively used around the world. So, at least for now, don't use this useful feature.
 
 
 

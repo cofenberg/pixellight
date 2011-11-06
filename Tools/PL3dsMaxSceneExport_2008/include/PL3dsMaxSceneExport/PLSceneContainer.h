@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <map>
+#include <vector>
 #include "PL3dsMaxSceneExport/PLSceneNode.h"
 
 

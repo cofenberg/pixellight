@@ -51,6 +51,23 @@ class PLTools {
 
 
 	//[-------------------------------------------------------]
+	//[ Public definitions                                    ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Resource type
+		*/
+		enum EResourceType {
+			ResourceMesh,		/**< Mesh */
+			ResourceMaterial,	/**< Material */
+			ResourceSkin,		/**< Skin */
+			ResourceKeyframes,	/**< Keyframes */
+			ResourcePath		/**< Path */
+		};
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -157,6 +174,20 @@ class PLTools {
 		*    The absolute filename of 'PLViewer'
 		*/
 		static std::string GetPLViewerFilename();
+
+		/**
+		*  @brief
+		*    Constructs a resource filename by using the current options
+		*
+		*  @param[in] nResourceType
+		*    Resource type
+		*  @param[in] sFilename
+		*    Filename
+		*
+		*  @return
+		*    Resource filename
+		*/
+		static std::string GetResourceFilename(EResourceType nResourceType, const std::string &sFilename);
 
 
 };

@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#define PLINPUT_INPUTMANAGER_CPP
 #include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
 #include <PLCore/System/MutexGuard.h>
@@ -47,6 +46,22 @@ namespace PLCore {
 //[-------------------------------------------------------]
 using namespace PLCore;
 namespace PLInput {
+
+
+//[-------------------------------------------------------]
+//[ Public static PLCore::Singleton functions             ]
+//[-------------------------------------------------------]
+InputManager *InputManager::GetInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<InputManager>::GetInstance();
+}
+
+bool InputManager::HasInstance()
+{
+	// The compiler should be able to optimize this extra call (inlining)
+	return Singleton<InputManager>::HasInstance();
+}
 
 
 //[-------------------------------------------------------]

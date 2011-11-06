@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PL3dsMaxSceneExport/PLSceneExportOptions.h"
 #include "PL3dsMaxSceneExport/PLLog.h"
 #include "PL3dsMaxSceneExport/PLTools.h"
 #include "PL3dsMaxSceneExport/PLSceneCellPortal.h"

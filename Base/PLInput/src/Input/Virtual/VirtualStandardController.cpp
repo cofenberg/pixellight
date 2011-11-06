@@ -54,9 +54,9 @@ pl_implement_class(VirtualStandardController)
 */
 VirtualStandardController::VirtualStandardController() : VirtualController("VirtualStandardController", "Standard virtual input controller"),
 	// Mouse
-	MouseX					(this, "MouseX",					"X axis"),
-	MouseY					(this, "MouseY",					"Y axis"),
-	MouseWheel				(this, "MouseWheel",				"Mouse wheel"),
+	MouseX					(this, "MouseX",					"X axis (movement data, no absolute data)"),
+	MouseY					(this, "MouseY",					"Y axis (movement data, no absolute data)"),
+	MouseWheel				(this, "MouseWheel",				"Mouse wheel (movement data, no absolute data)"),
 	MouseLeft				(this, "MouseLeft",					"Left mouse button (mouse button #0)"),
 	MouseRight				(this, "MouseRight",				"Right mouse button (mouse button #1)"),
 	MouseMiddle				(this, "MouseMiddle",				"Middle mouse button (mouse button #2)"),

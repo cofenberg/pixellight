@@ -268,12 +268,9 @@ bool Application::LoadScene(const String &sFilename)
 		// Validate path
 		const String sDirectory = Url(sFilename).Collapse().CutFilename();
 
-		// Search for "/Data/Scenes/" and get the prefix of that
-		String sBaseDirectory;
-		int nIndex = sDirectory.IndexOf("/Data/Scenes/");
-		if (nIndex >= 0)
-			sBaseDirectory = sDirectory.GetSubstring(0, nIndex);
-		sBaseDirectory = "file://" + sBaseDirectory + '/';
+		// Search for "/Data/Scenes/" and get the prefix of that, in case it's not there just use directly the scene directory
+		const int nIndex = sDirectory.IndexOf("/Data/Scenes/");
+		const String sBaseDirectory = "file://" + ((nIndex >= 0) ? sDirectory.GetSubstring(0, nIndex) : sDirectory) + '/';
 
 		// Set the base directory of the application
 		SetBaseDirectory(sBaseDirectory);

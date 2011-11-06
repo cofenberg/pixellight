@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/ModuleMain.h>
-#include "PLInput/Input/InputManager.h"
 
 
 //[-------------------------------------------------------]
@@ -35,12 +34,3 @@ pl_module_plugin("PLInput")
 	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
 	pl_module_description("PixelLight input library")
 pl_module_end
-
-
-// [HACK] Force the linker to keep the "InputManager"-class (don't strip it away)
-namespace PLInput {
-	PLINPUT_API void Dummy()
-	{
-		InputManager::GetInstance()->GetDevices();
-	}
-}

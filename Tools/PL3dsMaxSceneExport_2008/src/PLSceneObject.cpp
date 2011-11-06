@@ -26,7 +26,6 @@
 #include <PLCore/Xml/Xml.h>
 #include <morpher/wm3.h>
 #include <IGame/IGame.h>
-#include "PL3dsMaxSceneExport/PLSceneExportOptions.h"
 #include "PL3dsMaxSceneExport/PLLog.h"
 #include "PL3dsMaxSceneExport/PLScene.h"
 #include "PL3dsMaxSceneExport/PLSceneMesh.h"
@@ -93,12 +92,8 @@ void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 	pNodeElement->SetAttribute("Name",  GetName().c_str());
 
 	// Mesh filename
-	if (m_pMesh) {
-		if (g_SEOptions.bPLDirectories && g_SEOptions.bSubDirectories)
-			pNodeElement->SetAttribute("Mesh", String::Format("Data\\Meshes\\%s\\%s.mesh", g_SEOptions.sFilenameOnly.c_str(), m_pMesh->GetName().c_str()));
-		else
-			pNodeElement->SetAttribute("Mesh", String::Format("Data\\Meshes\\%s.mesh", m_pMesh->GetName().c_str()));
-	}
+	if (m_pMesh)
+		pNodeElement->SetAttribute("Mesh", PLTools::GetResourceFilename(PLTools::ResourceMesh, m_pMesh->GetName() + ".mesh").c_str());
 
 	// Write position, rotation, scale, bounding box and flags
 	WriteToFilePosRotScaleBoxFlags(*pNodeElement);
@@ -157,13 +152,10 @@ void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 									if (pSubMaterial) {
 										// Add material
 										XmlElement *pSubMaterialElement = new XmlElement("Material");
-										pSubMaterialElement->SetAttribute("Name", (std::string("Data\\Materials\\") + pMeshSubMaterial->GetName()).c_str());
+										pSubMaterialElement->SetAttribute("Name", PLTools::GetResourceFilename(PLTools::ResourceMaterial, pMeshSubMaterial->GetName()).c_str());
 
 										// Add value
-										std::string sMaterialFilename(pSubMaterial->GetName());
-										if (sMaterialFilename.find(".mat") != std::string::npos)
-											sMaterialFilename = "Data\\Materials\\" + sMaterialFilename;
-										XmlText *pValue = new XmlText(sMaterialFilename.c_str());
+										XmlText *pValue = new XmlText(PLTools::GetResourceFilename(PLTools::ResourceMaterial, pSubMaterial->GetName()).c_str());
 										pSubMaterialElement->LinkEndChild(*pValue);
 
 										// Link general element
@@ -186,27 +178,9 @@ void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 					// Link material element
 					cDocument.LinkEndChild(*pSkinElement);
 
-					// Create paths directory...
-					std::string sSkinFilename = std::string(pMaterial->GetIGameMaterial()->GetMaterialName()) + std::string(".skin");
-					std::string sAbsSkinFilename = sApplicationDrive + sApplicationDir + std::string("Data\\Misc\\");
-					if (g_SEOptions.bPLDirectories) {
-						// Misc
-						CreateDirectory(sAbsSkinFilename.c_str(), nullptr);
-						if (g_SEOptions.bSubDirectories) {
-							sAbsSkinFilename.append(g_SEOptions.sFilenameOnly);
-							sAbsSkinFilename.append("\\");
-							CreateDirectory(sAbsSkinFilename.c_str(), nullptr);
-						}
-					}
-					sAbsSkinFilename.append(sSkinFilename);
-
-					// Update the skin filename
-					if (g_SEOptions.bPLDirectories && g_SEOptions.bSubDirectories)
-						sSkinFilename = std::string("Data\\Misc\\") + g_SEOptions.sFilenameOnly + "\\" + sSkinFilename;
-					else
-						sSkinFilename = std::string("Data\\Misc\\") + sSkinFilename;
-
 					// Save settings
+					const std::string sSkinFilename    = PLTools::GetResourceFilename(PLTools::ResourceSkin, std::string(pMaterial->GetIGameMaterial()->GetMaterialName()) + std::string(".skin"));
+					const std::string sAbsSkinFilename = sApplicationDrive + sApplicationDir + sSkinFilename;
 					if (cDocument.Save(sAbsSkinFilename.c_str()))
 						g_pLog->LogFLine(PLLog::Hint, "Created '%s'", sAbsSkinFilename.c_str());
 					else
@@ -224,10 +198,7 @@ void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 			PLSceneMaterial *pMaterial = GetScene().AddMaterial(nullptr, *pIGameMaterial);
 			if (pMaterial) {
 				// Add a 'skin'
-				std::string sMaterialFilename(pMaterial->GetName());
-				if (sMaterialFilename.find(".mat") != std::string::npos)
-					sMaterialFilename = "Data\\Materials\\" + sMaterialFilename;
-				pNodeElement->SetAttribute("Skin", sMaterialFilename.c_str());
+				pNodeElement->SetAttribute("Skin", PLTools::GetResourceFilename(PLTools::ResourceMaterial, pMaterial->GetName()).c_str());
 			}
 		}
 	}

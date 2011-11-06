@@ -518,10 +518,6 @@ PLSceneMaterial *PLScene::AddMaterial(IGameMaterial *pParentIGameMaterial, IGame
 				return nullptr;
 			}
 			sName = pszName;
-
-			// Get name
-			if (g_SEOptions.bSubDirectories)
-				sName = g_SEOptions.sFilenameOnly + "\\" + sName;
 		} else {
 			// Material with no name found - ignore it!
 

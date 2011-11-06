@@ -64,7 +64,12 @@ namespace PLCore {
 *      namespace PLCore {
 *        class System;
 *      }
-*      PLCORE_EXTERN_TEMPLATE Singleton<System>;
+*      extern template class Singleton<System>;
+*
+*    Please note that the example above may not be compatible with each legacy compiler like GCC 4.2.1 used on Mac OS X 10.6.
+*    -> The C++11 feature "extern template" (C++11, see e.g. http://www2.research.att.com/~bs/C++0xFAQ.html#extern-templates) can only be used on modern compilers like GCC 4.6
+*    -> In PixelLight itself, we can't break legacy compiler support, especially when only the singletons are responsible for the break
+*    -> As workaround, singleton implementations adding "GetInstance()" and "HasInstance()" within their interface
 *
 *  @note
 *    - As the class same indicates, this is an implementation of the singleton design pattern

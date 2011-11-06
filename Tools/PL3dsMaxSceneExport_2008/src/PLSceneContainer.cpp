@@ -28,7 +28,6 @@
 #include <modstack.h>
 #include "PL3dsMaxSceneExport/PLLog.h"
 #include "PL3dsMaxSceneExport/PLTools.h"
-#include "PL3dsMaxSceneExport/PLSceneExportOptions.h"
 #include "PL3dsMaxSceneExport/PLScene.h"
 #include "PL3dsMaxSceneExport/PLSceneCell.h"
 #include "PL3dsMaxSceneExport/PLSceneCamera.h"

@@ -23,14 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Log/Log.h"
-#include "PLCore/System/System.h"
-#include "PLCore/Base/ClassManager.h"
-#include "PLCore/Script/ScriptManager.h"
-#include "PLCore/Tools/Timing.h"
-#include "PLCore/Tools/Profiling.h"
-#include "PLCore/Tools/Localization.h"
-#include "PLCore/Tools/LoadableManager.h"
 #include "PLCore/ModuleMain.h"
 
 
@@ -42,19 +34,3 @@ pl_module_plugin("PLCore")
 	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
 	pl_module_description("PLCore library")
 pl_module_end
-
-
-// [HACK] Force the linker to keep the singleton classes (don't strip it away)
-namespace PLCore {
-	PLCORE_API void Dummy()
-	{
-		Log::GetInstance()->IsVerbose();
-		System::GetInstance()->GetSeparator();
-		ClassManager::GetInstance()->GetClass("");
-		ScriptManager::GetInstance()->IsSupported("");
-		Timing::GetInstance()->IsActive();
-		Profiling::GetInstance()->IsActive();
-		Localization::GetInstance()->GetLanguage();
-		LoadableManager::GetInstance()->GetNumOfTypes();
-	}
-}
