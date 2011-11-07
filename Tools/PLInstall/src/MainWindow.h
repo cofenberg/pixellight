@@ -59,7 +59,6 @@ class MainWindow : QDialog
 		MainWindow(QWidget *parent = 0);
 		~MainWindow();
 		
-		void onUpdateProgress(int value);
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
@@ -68,10 +67,14 @@ class MainWindow : QDialog
 		void initButtons();
 		void initTextAndLabels();
 
-		void setDefaultCheckboxValues();
-
+		bool runStart();
 		void runComplete();
 
+		void onUpdateProgress(int value);
+
+		void showDialog(PLCore::String msg);
+		
+		void toggleButtons();
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
@@ -92,8 +95,9 @@ class MainWindow : QDialog
 	//[ Private qt slots                                      ]
 	//[-------------------------------------------------------]
 	private slots:
-		void runEvent();
 		void cancelEvent();
+		void intallEvent();
+		void checkInstallationEvent();
 
 
 };

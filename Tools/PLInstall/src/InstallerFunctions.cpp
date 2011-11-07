@@ -23,17 +23,16 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#if defined(WIN32)
-	#include "InstallerFunctionsWindows.h"
-//[TODO] implement linux functions
-//#elif defined(LINUX)
-//	#include "InstallerFunctionsLinux.h"
-//[TODO] implement apple functions
-//#elif defined(APPLE)
-//	#include "InstallerFunctionsApple.h"
-#endif
 #include "InstallerFunctions.h"
 
+#include <PLCore/Runtime.h>
+#include <PLCore/File/Url.h>
+#include <PLCore/System/System.h>
+
+//[-------------------------------------------------------]
+//[ using namespace                                       ]
+//[-------------------------------------------------------]
+using namespace PLCore;
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
@@ -42,25 +41,8 @@
 *  @brief
 *    Constructor
 */
-InstallerFunctions::InstallerFunctions() :
-	m_pInstallerFunctionsImpl(nullptr)
+InstallerFunctions::InstallerFunctions()
 {
-	// Create system implementation for the right platform
-	#if defined(WIN32)
-		// Create Windows implementation
-		m_pInstallerFunctionsImpl = new InstallerFunctionsWindows();
-	//[TODO] implement linux functions
-	//#elif defined(LINUX)
-	//	// Create Linux implementation
-	//	m_pInstallerFunctionsImpl = new InstallerFunctionsLinux();
-	//[TODO] implement apple functions
-	//#elif defined(APPLE)
-	//	// Create Linux implementation
-	//	m_pInstallerFunctionsImpl = new InstallerFunctionsApple();
-	#else
-		// Unknown system
-		#error "Unsupported platform"
-	#endif
 
 }
 
@@ -70,34 +52,80 @@ InstallerFunctions::InstallerFunctions() :
 */
 InstallerFunctions::~InstallerFunctions()
 {
-	// Destroy system specific implementation
-	if (m_pInstallerFunctionsImpl)
-		delete m_pInstallerFunctionsImpl;
+
 }
 
 void InstallerFunctions::connectProgressEventHandler(PLCore::EventHandler<int> *pProgressEventHandler)
 {
-	m_pInstallerFunctionsImpl->getProgressUpdateEvent()->Connect(*pProgressEventHandler);
+	m_pEventProgressUpdate.Connect(*pProgressEventHandler);
 }
 
 bool InstallerFunctions::installRuntime()
-{
-	return m_pInstallerFunctionsImpl->installRuntime();
+{/**
+
+	// Install the PixelLight runtime
+
+	// Get the directory this executable is in and add the  platform architecture
+	const String sExecutableDirectory =  Url(sExecutableFilename).Collapse().CutFilename() +  System::GetInstance()->GetPlatformArchitecture() + '/';
+	// In case  PLInstall is not within the runtime directory, but I assume this will  never be the case because the new installer is using the Qt shared libraries
+	const String sExecutableDirectory =  Url(sExecutableFilename).Collapse().CutFilename();
+
+	// Write the PL-runtime directory into the registry
+	if (Runtime::SetDirectory(sExecutableDirectory, &sMessage))
+		sMessage = "PixelLight runtime installed at \"" +  sExecutableDirectory + "\"\n\nYou may need to restart your system";   
+	// Success
+	else
+		sMessage = "Failed to write the PL-runtime directory into  the registry: \"" + sMessage + '\"';                            // Error
+	**/
+	return false;
 }
 
 int InstallerFunctions::getInstallRuntimeProgressSteps()
 {
-	return m_pInstallerFunctionsImpl->getInstallRuntimeProgressSteps();
+	return INSTALL_RUNTIME_PROGRESS_STEPS;
 }
 
 bool InstallerFunctions::checkRuntimeInstallation()
-{
-	return m_pInstallerFunctionsImpl->checkRuntimeInstallation();
+{	 
+    // Get the current PL-runtime directory (e.g.  "C:\PixelLight\Runtime\x86")
+    // -> Do also ensure that the registry entry is pointing to the same directory the PLCore shared library is in
+    const String sDirectory = Runtime::GetDirectory();
+	m_pEventProgressUpdate(1);
+	const String sPLCoreSharedLibraryDirectory = Runtime::GetPLCoreSharedLibraryDirectory();
+	String tes = Url(sPLCoreSharedLibraryDirectory).GetNativePath();
+	m_pEventProgressUpdate(1);
+	const String sRegistryDirectory = Runtime::GetRegistryDirectory();
+	m_pEventProgressUpdate(1);
+
+	
+    if (sDirectory.GetLength() &&  sPLCoreSharedLibraryDirectory ==  sRegistryDirectory)
+    {
+		// The PixelLight runtime is already installed
+		//the PATH environment or the registry key is pointing to the current directory => PL is installed correctly
+		m_pEventProgressUpdate(1);
+		m_sLastSuccessMessage = "PixelLight runtime is already installed at \"" +  sDirectory + '\"';
+		return true;
+	}
+
+	m_pEventProgressUpdate(1);
+	// the pl runtime could not be found => the runtime isn't installed correctly 
+	m_sLastErrorMessage = L"The PLRuntime directory could not be found.";
+	return false;
 }
 
 int InstallerFunctions::getCheckRuntimeProgressSteps()
 {
-	return m_pInstallerFunctionsImpl->getCheckRuntimeProgressSteps();
+	return CHECK_RUNTIME_PROGRESS_STEPS;
+}
+
+String InstallerFunctions::getLastErrorDescription()
+{
+	return m_sLastErrorMessage;
+}
+
+String InstallerFunctions::getLastSuccessMessage()
+{
+	return m_sLastSuccessMessage;
 }
 
 //[-------------------------------------------------------]

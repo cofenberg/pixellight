@@ -28,6 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+// TODO: remove this includes when PLCore::Runtime can handle dynamic libs when linked static
+#include <PLCore/Runtime.h>
+//-----------------
 #include "InstallerFunctionsImpl.h"
 
 
@@ -84,12 +87,30 @@ class InstallerFunctionsWindows : public InstallerFunctionsImpl {
 
 		virtual int getCheckRuntimeProgressSteps() override;
 
+		virtual PLCore::String getErrorDescription() override;
+		
+	//[-------------------------------------------------------]
+	//[ Private InstallerFunctionsWindows methods			  ]
+	//[-------------------------------------------------------]
+	private:
+		bool CheckWindowsVersion ();
+		void broadcastNewPathEnvironment();
+
+		
+		// TODO: THIS METHODS SHOULD WORK WITH THE STATIC LINKED PLCORE TOO!!! 
+		// this is just a copy from Runtime.h ... should be corrected there and the functions from Runtime should be used!!
+		PLCore::String GetSystemDirectory();
+		PLCore::String GetDirectoryDynamic(PLCore::Runtime::EType nType);
+		PLCore::String GetPLCoreSharedLibraryName();
+
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		static const int INSTALL_RUNTIME_PROGRESS_STEPS = 10;
+		static const int INSTALL_RUNTIME_PROGRESS_STEPS = 7;
 		static const int CHECK_RUNTIME_PROGRESS_STEPS = 3;
+
+		PLCore::String lastErrorMessage;
 
 };
 
