@@ -29,6 +29,10 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLRendererOpenGL/PLRendererOpenGL.h"
+#ifdef LINUX
+	#include <X11/Xlib.h>
+	#include <X11/extensions/xf86vmode.h>
+#endif
 
 
 //[-------------------------------------------------------]

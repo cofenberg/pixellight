@@ -35,8 +35,6 @@
 #include "../../../../../External/Recommended/OpenGL/glx.h"
 #include "../../../../../External/Recommended/OpenGL/glu.h"
 #include "../../../../../External/Recommended/OpenGL/glext.h"
-#include <X11/Xlib.h>
-#include <X11/extensions/xf86vmode.h>
 
 
 //[-------------------------------------------------------]

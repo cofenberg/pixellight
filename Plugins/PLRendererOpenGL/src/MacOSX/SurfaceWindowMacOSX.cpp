@@ -32,6 +32,7 @@
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
 #include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSX.h"
+#include <OpenGL/OpenGL.h>	// Include this after the rest, else we get OS definition issues, again
 
 
 //[-------------------------------------------------------]
@@ -156,28 +157,68 @@ Vector2i SurfaceWindowMacOSX::GetSize() const
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLRenderer::Surface functions         ]
+//[ Protected virtual PLRenderer::Surface functions       ]
 //[-------------------------------------------------------]
 bool SurfaceWindowMacOSX::Init()
 {
-	// [TODO] Implement me
+	// Is it fullscreen?
+	if (m_bIsFullscreen) {
+		// Get the MacOS X context implementation
+		ContextMacOSX *pContextMacOSX = static_cast<ContextMacOSX*>(static_cast<Renderer&>(GetRenderer()).GetContext());
+		if (pContextMacOSX) {
+			// [TODO] Switch to the requested resolution
+
+			// Attach rendering context to a fullscreen drawable object
+			return (CGLSetFullScreenOnDisplay(pContextMacOSX->GetRenderContext(), CGDisplayIDToOpenGLDisplayMask(kCGDirectMainDisplay)) == kCGLNoError);
+		}
+	} else {
+		// CGL only supports fullscreen rendering
+	}
+
+	// Error!
 	return false;
 }
-
+	
 void SurfaceWindowMacOSX::DeInit()
 {
-	// [TODO] Implement me
+	// Is it fullscreen?
+	if (m_bIsFullscreen) {
+		// Get the MacOS X context implementation
+		ContextMacOSX *pContextMacOSX = static_cast<ContextMacOSX*>(static_cast<Renderer&>(GetRenderer()).GetContext());
+		if (pContextMacOSX) {
+			// Disassociat rendering context from any drawable objects attached to it
+			CGLClearDrawable(pContextMacOSX->GetRenderContext());
+
+			// [TODO] Restore the previous resolution
+		}
+	} else {
+		// CGL only supports fullscreen rendering
+	}
 }
 
 bool SurfaceWindowMacOSX::MakeCurrent(uint8 nFace)
 {
-	// [TODO] Implement me
+	// Get the MacOS X context implementation
+	ContextMacOSX *pContextMacOSX = static_cast<ContextMacOSX*>(static_cast<Renderer&>(GetRenderer()).GetContext());
+	if (pContextMacOSX) {
+		// Set the current rendering context
+		return (CGLSetCurrentContext(pContextMacOSX->GetRenderContext())== kCGLNoError);;
+	}
+
+	// Error!
 	return false;
 }
 
 bool SurfaceWindowMacOSX::Present()
 {
-	// [TODO] Implement me
+	// Get the MacOS X context implementation
+	ContextMacOSX *pContextMacOSX = static_cast<ContextMacOSX*>(static_cast<Renderer&>(GetRenderer()).GetContext());
+	if (pContextMacOSX) {
+		// Set the current rendering context
+		return (CGLFlushDrawable(pContextMacOSX->GetRenderContext())== kCGLNoError);;
+	}
+	
+	// Error!
 	return false;
 }
 
