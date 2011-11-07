@@ -26,10 +26,13 @@
 define_project(PLInstall NOSUFFIX)
 
 ##################################################
-## Source files
+## Include directories
 ##################################################
-add_sources(
-	src/main.cpp
+add_include_directories(
+	${QT_INCLUDE_DIRS}
+	# We need the following to be able to include headers produced by uic in our code
+	# (CMAKE_CURRENT_BINARY_DIR holds a path to the build directory of the current project, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)
+	${CMAKE_CURRENT_BINARY_DIR}
 )
 
 ##################################################
@@ -40,10 +43,36 @@ add_include_directories(
 )
 
 ##################################################
+## Special Qt stuff (see http://www.qtcentre.org/wiki/index.php?title=Compiling_Qt4_apps_with_CMake for more information)
+##################################################
+# Include files with Qt relevant information
+
+#SET(INC_FILES
+#)
+SET(UI_FILES
+	src/MainWindow.ui
+)
+
+# Run moc
+#QT4_WRAP_CPP(MOC_SRCS ${INC_FILES})
+
+# Run ui
+QT4_WRAP_UI(UI_SRCS ${UI_FILES})
+
+
+##################################################
+## Source files
+##################################################
+add_sources(
+	src/main.cpp
+)
+
+##################################################
 ## Additional libraries
 ##################################################
 add_libs(
 	${WIN32_STANDARD_LIBS}
+	${QT_LIBRARIES}
 )
 
 ##################################################
@@ -75,8 +104,8 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} WIN32)
 ##################################################
 ## Dependencies
 ##################################################
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET} External-Qt)
 add_dependencies(Tools ${CMAKETOOLS_CURRENT_TARGET})
-
 ##################################################
 ## Post-Build
 ##################################################

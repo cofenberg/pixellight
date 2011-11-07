@@ -3,16 +3,54 @@
   <ItemGroup>
     <Filter Include="Source Files">
       <UniqueIdentifier>{7dfbb188-3b26-4eba-82d0-6997a4baf10c}</UniqueIdentifier>
-      <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
+      <Extensions>h;cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
+    </Filter>
+    <Filter Include="Gui Elements">
+      <UniqueIdentifier>{2ffcd05b-d6c6-46dc-a7a1-0aa5e0e557d3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{d7744b71-10b8-4c06-96bb-2e60964c36b5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ui_MainWindow.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\res_qtresources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\moc_MainWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InstallerFunctions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
     <None Include="..\..\Diary.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="src\MainWindow.ui">
+      <Filter>Gui Elements</Filter>
+    </CustomBuild>
+    <CustomBuild Include="res\qtresources.qrc">
+      <Filter>Resources</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\MainWindow.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\InstallerFunctions.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
