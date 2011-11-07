@@ -94,6 +94,13 @@ class SurfaceWindowMacOSXCocoa : public SurfaceWindowMacOSX {
 		virtual bool Present() override;
 
 
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		void *m_pNSOpenGLContext;	/**< NSOpenGLContext (it's a CGL wrapper) instance, can be a null pointer */
+
+
 };
 
 

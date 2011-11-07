@@ -29,6 +29,7 @@
 #include <PLRenderer/Renderer/Types.h>
 #include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSXCocoa.h"
 #include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
+#include <X11/Xutil.h>						// Include this after the rest, else we get OS definition issues, again 
 #include <IOKit/graphics/IOGraphicsTypes.h>	// Include this after the rest, else we get OS definition issues, again (required for "IO8BitIndexedPixels", "IO16BitIndexedPixels" and "IO32BitIndexedPixels")
 
 
