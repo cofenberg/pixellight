@@ -28,6 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/String/String.h>
+#include <PLCore/Base/Event/Event.h>
 #include <PLCore/Base/Event/EventHandler.h>
 
 //[-------------------------------------------------------]
@@ -67,7 +69,7 @@ class InstallerFunctions {
 
 		
 		void connectProgressEventHandler(PLCore::EventHandler<int> *pProgressEventHandler);
-		
+
 		bool installRuntime();
 
 		int getInstallRuntimeProgressSteps();
@@ -75,6 +77,16 @@ class InstallerFunctions {
 		bool checkRuntimeInstallation();
 
 		int getCheckRuntimeProgressSteps();
+
+		PLCore::String getLastErrorDescription();
+
+		PLCore::String getLastSuccessMessage();
+				
+	//[-------------------------------------------------------]
+	//[ Public events                                         ]
+	//[-------------------------------------------------------]
+	public:
+		PLCore::Event<int> m_pEventProgressUpdate;
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
@@ -86,8 +98,11 @@ class InstallerFunctions {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		InstallerFunctionsImpl *m_pInstallerFunctionsImpl;	/**< Pointer to the system specific implementation (assumed to be never a null pointer!) */
+		static const int INSTALL_RUNTIME_PROGRESS_STEPS = 7;
+		static const int CHECK_RUNTIME_PROGRESS_STEPS = 4;
 
+		PLCore::String m_sLastErrorMessage;
+		PLCore::String m_sLastSuccessMessage;
 };
 
 

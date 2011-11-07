@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/String/String.h>
 #include <PLCore/Base/Event/Event.h>
 
 
@@ -82,6 +83,8 @@ class InstallerFunctionsImpl {
 		virtual bool checkRuntimeInstallation() = 0;
 
 		virtual int getCheckRuntimeProgressSteps() = 0;
+
+		virtual PLCore::String getErrorDescription() = 0;
 
 };
 
