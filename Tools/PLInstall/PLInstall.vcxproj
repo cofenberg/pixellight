@@ -253,8 +253,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\InstallerFunctions.cpp" />
-    <ClCompile Include="src\InstallerFunctionsImpl.cpp" />
-    <ClCompile Include="src\InstallerFunctionsWindows.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainWindow.cpp" />
     <ClCompile Include="src\moc_MainWindow.cpp" />
@@ -317,8 +315,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\InstallerFunctions.h" />
-    <ClInclude Include="src\InstallerFunctionsImpl.h" />
-    <ClInclude Include="src\InstallerFunctionsWindows.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

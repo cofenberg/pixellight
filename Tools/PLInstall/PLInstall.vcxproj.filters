@@ -29,13 +29,7 @@
     <ClCompile Include="src\moc_MainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\InstallerFunctionsWindows.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\InstallerFunctions.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\InstallerFunctionsImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -56,12 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\InstallerFunctions.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\InstallerFunctionsWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\InstallerFunctionsImpl.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
