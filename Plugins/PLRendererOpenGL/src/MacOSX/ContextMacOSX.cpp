@@ -202,9 +202,7 @@ bool ContextMacOSX::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &lst
 
 PLRenderer::SurfaceWindow *ContextMacOSX::CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen)
 {
-	return new SurfaceWindowMacOSX(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen);
-	// [TODO] Implement Cocoa part
-	//	return new SurfaceWindowMacOSXCocoa(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen);
+	return new SurfaceWindowMacOSXCocoa(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen);
 }
 
 

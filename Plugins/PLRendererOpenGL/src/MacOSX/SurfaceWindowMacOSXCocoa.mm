@@ -42,8 +42,8 @@ namespace PLRendererOpenGL {
 */
 SurfaceWindowMacOSXCocoa::~SurfaceWindowMacOSXCocoa()
 {
-	// [TODO] De-initialize the OpenGL surface window
-//	DeInit();
+	// De-initialize the OpenGL surface window
+	DeInit();
 }
 
 
@@ -57,8 +57,8 @@ SurfaceWindowMacOSXCocoa::~SurfaceWindowMacOSXCocoa()
 SurfaceWindowMacOSXCocoa::SurfaceWindowMacOSXCocoa(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen) :
 	SurfaceWindowMacOSX(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen)
 {
-	// [TODO] Initialize the OpenGL surface window
-//	Init();
+	// Initialize the OpenGL surface window
+	Init();
 }
 
 

@@ -100,16 +100,6 @@ class SurfaceWindowMacOSX : public SurfaceWindow {
 		virtual PLMath::Vector2i GetSize() const override;
 
 
-	//[-------------------------------------------------------]
-	//[ Private virtual PLRenderer::Surface functions         ]
-	//[-------------------------------------------------------]
-	private:
-		virtual bool Init() override;
-		virtual void DeInit() override;
-		virtual bool MakeCurrent(PLCore::uint8 nFace = 0) override;
-		virtual bool Present() override;
-
-
 };
 
 
