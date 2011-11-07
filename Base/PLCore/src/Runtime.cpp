@@ -222,7 +222,8 @@ String Runtime::GetRegistryDirectory()
 			if (cRegistry.Open(Registry::KeyLocalMachine, sSubkey, Registry::RegRead)) {
 				const String sRuntime = cRegistry.GetValueString("Runtime");
 				if (sRuntime.GetLength())
-					return sRuntime; // Done
+					//convert to valid url
+					return Url(sRuntime).GetUrl(); // Done
 			}
 
 			// Read registry key "PixelLight-Runtime" ("SOFTWARE\\Wow6432Node\\PixelLight\\PixelLight-Runtime" on a 64 bit version and 32 bit application)
@@ -230,7 +231,8 @@ String Runtime::GetRegistryDirectory()
 			if (cRegistry.Open(Registry::KeyLocalMachine, sSubkey, Registry::RegRead)) {
 				const String sRuntime = cRegistry.GetValueString("Runtime");
 				if (sRuntime.GetLength())
-					return sRuntime; // Done
+					//Convert the valid url
+					return Url(sRuntime).GetUrl(); // Done
 			}
 		}
 
@@ -342,7 +344,8 @@ String Runtime::GetPLCoreSharedLibraryDirectory()
 	DynLib cPLCoreDynLib;
 	if (cPLCoreDynLib.Load(GetPLCoreSharedLibraryName())) {
 		// Return the absolute path the PLCore shared library is in
-		return Url(cPLCoreDynLib.GetAbsPath()).CutFilename();
+		
+		return Url(Url(cPLCoreDynLib.GetAbsPath()).CutFilename()).GetUrl();
 	}
 
 	// Error!
