@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: UnitTests.cpp                                  *
+ *  File: wchar_template.h                                 *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -19,31 +19,33 @@
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
 \*********************************************************/
 
+#ifndef __PLUNITTESTS_UNITTESTADDINS_WCHAR_TEMPLATE_H_
+#define __PLUNITTESTS_UNITTESTADDINS_WCHAR_TEMPLATE_H_
+#pragma once
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <UnitTest++/UnitTest++.h>
-#include <PLCore/Container/Array.h>
-#include <PLCore/String/String.h>
-#include "UnitTest++AddIns/MyTestReporter.h"
-#include "UnitTest++AddIns/MyMobileTestReporter.h"
-#include "UnitTest++AddIns/RunAllTests.h"
+#include <UnitTest++\UnitTest++.h>
+#include <UnitTest++\TestDetails.h>
+#include <UnitTest++\TestResults.h>
 
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
-using namespace PLCore;
-
+// forward declarations needed
+class TestResults;
+class TestDetails;
 
 //[-------------------------------------------------------]
-//[ Unit tests program entry point                        ]
+//[ Declarations                                          ]
 //[-------------------------------------------------------]
-int UnitTests(const String &sExecutableFilename, const Array<String> &lstArguments)
-{
-	//MyMobileTestReporter rep;
-	MyTestReporter rep;
-	return UnitTest::RunAllTests(rep);
+
+// adds specialization functions to CheckEqual Template with wchar_t support 
+namespace UnitTest {
+	void CheckWcharEqual(TestResults& results, wchar_t const* expected, wchar_t const* actual, 
+		TestDetails const& details);
+	void CheckEqual(TestResults& results, wchar_t const* expected, wchar_t const* actual, TestDetails const& details);
+	void CheckEqual(TestResults& results, wchar_t* expected, wchar_t* actual, TestDetails const& details);
+	void CheckEqual(TestResults& results, wchar_t* expected, wchar_t const* actual, TestDetails const& details);
+	void CheckEqual(TestResults& results, wchar_t const* expected, wchar_t* actual, TestDetails const& details);
 }
 
+#endif __PLUNITTESTS_UNITTESTADDINS_WCHAR_TEMPLATE_H_

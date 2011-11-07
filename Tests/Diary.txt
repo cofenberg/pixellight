@@ -1,3 +1,11 @@
+>> 07.11.2011
+[JS]
+- Added file structure for unit tests.
+- Added UnitTest++AddIns with own TestReporters, a RunAllTests() overload to use our own Reporter and wchar_t functionality for PLCore::String unicode testing.
+- cleaned "UnitTests.cpp" and added an example test run.
+
+
+
 >> 05.11.2011
 [CO]
 - Started currently nearly empty "PLUnitTests"-project - there's already someone writing concrete unit tests and I just to the integration into the build system.

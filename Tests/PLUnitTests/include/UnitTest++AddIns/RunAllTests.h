@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: UnitTests.cpp                                  *
+ *  File: RunAllTests.h                                 *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -19,31 +19,27 @@
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
 \*********************************************************/
 
+#ifndef __PLUNITTESTS_UNITTESTADDINS_RUNALLTESTS_H_
+#define __PLUNITTESTS_UNITTESTADDINS_RUNALLTESTS_H_
+#pragma once
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <UnitTest++/UnitTest++.h>
-#include <PLCore/Container/Array.h>
-#include <PLCore/String/String.h>
-#include "UnitTest++AddIns/MyTestReporter.h"
-#include "UnitTest++AddIns/MyMobileTestReporter.h"
-#include "UnitTest++AddIns/RunAllTests.h"
+#include <UnitTest++/TestReporterStdOut.h>
+#include <UnitTest++/TestRunner.h>
 
+#include <UnitTest++AddIns/MyTestReporter.h>
 
 //[-------------------------------------------------------]
-//[ Namespace                                             ]
+//[ Declarations                                          ]
 //[-------------------------------------------------------]
-using namespace PLCore;
 
 
-//[-------------------------------------------------------]
-//[ Unit tests program entry point                        ]
-//[-------------------------------------------------------]
-int UnitTests(const String &sExecutableFilename, const Array<String> &lstArguments)
-{
-	//MyMobileTestReporter rep;
-	MyTestReporter rep;
-	return UnitTest::RunAllTests(rep);
+namespace UnitTest {
+	// overload to RunAllTests to use given SuiteName and TestReporter
+	int RunAllTests(TestReporter& rep, char* const SuiteName = NULL);
 }
 
+#endif __PLUNITTESTS_UNITTESTADDINS_RUNALLTESTS_H_

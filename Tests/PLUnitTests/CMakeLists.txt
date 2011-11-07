@@ -30,6 +30,13 @@ define_project(PLUnitTests NOSUFFIX)
 ##################################################
 add_sources(
 	src/UnitTests.cpp
+	src/PLCore/Application.cpp
+	src/PLCore/String.cpp
+	src/PLMath/Vector3.cpp
+	src/UnitTest++AddIns/MyTestReporter.cpp
+	src/UnitTest++AddIns/MyMobileTestReporter.cpp
+	src/UnitTest++AddIns/RunAllTests.cpp
+	src/UnitTest++AddIns/wchar_template.cpp
 )
 if(ANDROID)
 	add_sources(
