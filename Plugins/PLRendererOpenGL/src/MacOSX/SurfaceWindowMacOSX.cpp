@@ -156,33 +156,6 @@ Vector2i SurfaceWindowMacOSX::GetSize() const
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLRenderer::Surface functions         ]
-//[-------------------------------------------------------]
-bool SurfaceWindowMacOSX::Init()
-{
-	// [TODO] Implement me
-	return false;
-}
-
-void SurfaceWindowMacOSX::DeInit()
-{
-	// [TODO] Implement me
-}
-
-bool SurfaceWindowMacOSX::MakeCurrent(uint8 nFace)
-{
-	// [TODO] Implement me
-	return false;
-}
-
-bool SurfaceWindowMacOSX::Present()
-{
-	// [TODO] Implement me
-	return false;
-}
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRendererOpenGL
