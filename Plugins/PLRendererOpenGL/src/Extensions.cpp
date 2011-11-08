@@ -235,16 +235,15 @@ bool Extensions::CheckExtension(const char *pszExtension) const
 					// On Mac OS X, only "glGetString(GL_EXTENSIONS)" is required
 				#elif LINUX
 					// Get the Linux context implementation
-					ContextLinux *pContextLinux = static_cast<ContextLinux*>(m_pRenderer->GetContext());
-					if (pContextLinux) {
-						// Get the X server display connection
-						Display *pDisplay = pContextLinux->GetDisplay();
-						if (pDisplay) {
-							if (i == 2)
-								pszExtensions = static_cast<const char*>(glXQueryExtensionsString(pDisplay, XDefaultScreen(pDisplay)));
-							else
-								pszExtensions = static_cast<const char*>(glXGetClientString(pDisplay, GLX_EXTENSIONS));
-						}
+					ContextLinux &cContextLinux = static_cast<ContextLinux&>(m_pRenderer->GetContext());
+
+					// Get the X server display connection
+					Display *pDisplay = cContextLinux.GetDisplay();
+					if (pDisplay) {
+						if (i == 2)
+							pszExtensions = static_cast<const char*>(glXQueryExtensionsString(pDisplay, XDefaultScreen(pDisplay)));
+						else
+							pszExtensions = static_cast<const char*>(glXGetClientString(pDisplay, GLX_EXTENSIONS));
 					}
 				#endif
 
