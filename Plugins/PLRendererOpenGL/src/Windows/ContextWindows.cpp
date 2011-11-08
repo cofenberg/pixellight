@@ -26,6 +26,7 @@
 #include <PLCore/Log/Log.h>
 #include <PLRenderer/Renderer/Types.h>
 #include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/Windows/PLRendererOpenGLWindows.h"
 #include "PLRendererOpenGL/Windows/SurfaceWindowWindows.h"
 #include "PLRendererOpenGL/Windows/ContextWindows.h"
@@ -46,7 +47,7 @@ namespace PLRendererOpenGL {
 *  @brief
 *    Constructor
 */
-ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialiasingSamples) :
+ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialiasingSamples) : Context(cRenderer),
 	m_pRenderer(&cRenderer),
 	m_hDummyWindow(nullptr),
 	m_hDummyWindowDeviceContext(nullptr),

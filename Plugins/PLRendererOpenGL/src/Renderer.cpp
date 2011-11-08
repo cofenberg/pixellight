@@ -38,6 +38,7 @@
 	#include "PLRendererOpenGL/FontManager.h"
 #endif
 #include "PLRendererOpenGL/Program.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/SurfaceTextureBuffer.h"
 #include "PLRendererOpenGL/TextureBuffer1D.h"
 #include "PLRendererOpenGL/TextureBuffer2D.h"
@@ -81,7 +82,8 @@ pl_implement_class(Renderer)
 *  @brief
 *    Default constructor
 */
-Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(nMode), Extensions(*this),
+Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits, uint32 nStencilBits, uint32 nMultisampleAntialiasingSamples, String sDefaultShaderLanguage) : PLRenderer::RendererBackend(nMode),
+	m_bInitialized(false),
 	m_pContext(nullptr),
 	m_pFixedFunctions(nullptr),
 	#ifdef DISABLE_FONT_SUPPORT
@@ -148,11 +150,13 @@ Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits,
 
 	// Were we able to get a OpenGL render context?
 	if (m_pContext->IsValid()) {
+		Extensions &cExtensions = m_pContext->GetExtensions();
+
 		// Initialize the OpenGL extensions
-		Init();
+		cExtensions.Init();
 
 		// Check multisample antialiasing support
-		if (IsWGL_ARB_multisample() && IsGL_ARB_multisample()) {
+		if (cExtensions.IsWGL_ARB_multisample() && cExtensions.IsGL_ARB_multisample()) {
 			if (m_nMultisampleAntialiasingSamples == 1)
 				m_nMultisampleAntialiasingSamples = 0;	// Multisample antialiasing with just one sample per per pixel isn't real multisample, isn't it? :D
 		} else {
@@ -168,7 +172,7 @@ Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits,
 		PL_LOG(Info, String("Renderer info: ") + reinterpret_cast<const char*>(glGetString(GL_RENDERER)))
 
 		// Show general OpenGL information
-		ShowGeneralOpenGLInformation();
+		cExtensions.ShowGeneralOpenGLInformation();
 
 		// Create a list of all available display modes
 		if (m_pContext->QueryDisplayModes(m_lstDisplayModeList)) {
@@ -222,6 +226,9 @@ Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits,
 
 			// Reset render
 			Reset();
+
+			// Done
+			m_bInitialized = true;
 		} else {
 			PL_LOG(Error, "Can't create OpenGL render context")
 			delete m_pContext;
@@ -319,9 +326,9 @@ Renderer::~Renderer()
 *  @brief
 *    Returns the OpenGL render context
 */
-Context *Renderer::GetContext() const
+Context &Renderer::GetContext() const
 {
-	return m_pContext;
+	return *m_pContext;
 }
 
 /**
@@ -435,6 +442,7 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 																PLRenderer::TextureBuffer::EPixelFormat &nImageFormat, bool &bUsePreCompressedData) const
 {
 	PLRenderer::TextureBuffer::EPixelFormat nChosenInternalFormat = PLRenderer::TextureBuffer::Unknown;
+	const Extensions &cExtensions = m_pContext->GetExtensions();
 
 	// Get image pixel format
 	nImageFormat = PLRenderer::TextureBuffer::GetFormatFromImage(cImage, !(nFlags & PLRenderer::TextureBuffer::Compression));
@@ -442,10 +450,10 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 	if (PLRenderer::TextureBuffer::IsCompressedFormat(nImageFormat)) {
 		// If the given image is pre compressed, but the hardware does not support the used compression format
 		// we have to use the uncompressed image instead.
-		if (!IsGL_ARB_texture_compression() ||
-			(nImageFormat <= PLRenderer::TextureBuffer::DXT5  && !IsGL_EXT_texture_compression_s3tc()) ||
-			(nImageFormat == PLRenderer::TextureBuffer::LATC1 && !IsGL_EXT_texture_compression_latc()) ||
-			(nImageFormat == PLRenderer::TextureBuffer::LATC2 && !IsGL_EXT_texture_compression_latc() && !IsGL_ATI_texture_compression_3dc())) {
+		if (!cExtensions.IsGL_ARB_texture_compression() ||
+			(nImageFormat <= PLRenderer::TextureBuffer::DXT5  && !cExtensions.IsGL_EXT_texture_compression_s3tc()) ||
+			(nImageFormat == PLRenderer::TextureBuffer::LATC1 && !cExtensions.IsGL_EXT_texture_compression_latc()) ||
+			(nImageFormat == PLRenderer::TextureBuffer::LATC2 && !cExtensions.IsGL_EXT_texture_compression_latc() && !cExtensions.IsGL_ATI_texture_compression_3dc())) {
 			// Do not use texture buffer compression
 			nImageFormat = PLRenderer::TextureBuffer::GetFormatFromImage(cImage, true);
 		} else {
@@ -458,9 +466,9 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 	if (nInternalFormat != PLRenderer::TextureBuffer::Unknown) {
 		nChosenInternalFormat = nInternalFormat;
 		if (PLRenderer::TextureBuffer::IsCompressedFormat(nChosenInternalFormat) &&
-			((nChosenInternalFormat <= PLRenderer::TextureBuffer::DXT5  && !IsGL_EXT_texture_compression_s3tc()) ||
-			 (nChosenInternalFormat == PLRenderer::TextureBuffer::LATC1 && !IsGL_EXT_texture_compression_latc()) ||
-			 (nChosenInternalFormat == PLRenderer::TextureBuffer::LATC2 && !IsGL_EXT_texture_compression_latc() && !IsGL_ATI_texture_compression_3dc()))) {
+			((nChosenInternalFormat <= PLRenderer::TextureBuffer::DXT5  && !cExtensions.IsGL_EXT_texture_compression_s3tc()) ||
+			 (nChosenInternalFormat == PLRenderer::TextureBuffer::LATC1 && !cExtensions.IsGL_EXT_texture_compression_latc()) ||
+			 (nChosenInternalFormat == PLRenderer::TextureBuffer::LATC2 && !cExtensions.IsGL_EXT_texture_compression_latc() && !cExtensions.IsGL_ATI_texture_compression_3dc()))) {
 			// Hm, the user want's to use a certain compressed format, but the desired format is NOT available...
 			// we have to choose a fallback format.
 			switch (nChosenInternalFormat) {
@@ -501,22 +509,22 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 			if (pImageBuffer) {
 				switch (pImageBuffer->GetComponentsPerPixel()) {
 					case 1:
-						if (IsGL_EXT_texture_compression_latc())
+						if (cExtensions.IsGL_EXT_texture_compression_latc())
 							nChosenInternalFormat = PLRenderer::TextureBuffer::LATC1;
 						break;
 
 					case 2:
-						if (IsGL_EXT_texture_compression_latc() || IsGL_ATI_texture_compression_3dc())
+						if (cExtensions.IsGL_EXT_texture_compression_latc() || cExtensions.IsGL_ATI_texture_compression_3dc())
 							nChosenInternalFormat = PLRenderer::TextureBuffer::LATC2;
 						break;
 
 					case 3:
-						if (IsGL_EXT_texture_compression_s3tc())
+						if (cExtensions.IsGL_EXT_texture_compression_s3tc())
 							nChosenInternalFormat = PLRenderer::TextureBuffer::DXT1;
 						break;
 
 					case 4:
-						if (IsGL_EXT_texture_compression_s3tc())
+						if (cExtensions.IsGL_EXT_texture_compression_s3tc())
 							nChosenInternalFormat = PLRenderer::TextureBuffer::DXT5;
 						break;
 				}
@@ -553,6 +561,8 @@ Context *Renderer::CreateContext()
 */
 void Renderer::InitWrappers()
 {
+	const Extensions &cExtensions = m_pContext->GetExtensions();
+
 	// Fill modes
 	m_cPLE_FILLWrapper.Resize(PLRenderer::Fill::Number, false, false);
 	m_cPLE_FILLWrapper += GL_POINT;	//  0: PLRenderer::Fill::Point
@@ -638,33 +648,33 @@ void Renderer::InitWrappers()
 	m_cPLE_TPFWrapper += GL_COMPRESSED_RGB_S3TC_DXT1_EXT;				// 16: PLRenderer::TextureBuffer::DXT1
 	m_cPLE_TPFWrapper += GL_COMPRESSED_RGBA_S3TC_DXT3_EXT;				// 17: PLRenderer::TextureBuffer::DXT3
 	m_cPLE_TPFWrapper += GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;				// 18: PLRenderer::TextureBuffer::DXT5
-	if (IsGL_EXT_texture_compression_latc())
+	if (cExtensions.IsGL_EXT_texture_compression_latc())
 		m_cPLE_TPFWrapper += GL_COMPRESSED_LUMINANCE_LATC1_EXT;			// 19: PLRenderer::TextureBuffer::LATC1
 	else
 		m_cPLE_TPFWrapper += 0;											// 19: PLRenderer::TextureBuffer::LATC1
-	if (IsGL_EXT_texture_compression_latc())
+	if (cExtensions.IsGL_EXT_texture_compression_latc())
 		m_cPLE_TPFWrapper += GL_COMPRESSED_LUMINANCE_ALPHA_LATC2_EXT;	// 20: PLRenderer::TextureBuffer::LATC2
-	else if (IsGL_ATI_texture_compression_3dc())
+	else if (cExtensions.IsGL_ATI_texture_compression_3dc())
 		m_cPLE_TPFWrapper += GL_COMPRESSED_LUMINANCE_ALPHA_3DC_ATI;		// 20: PLRenderer::TextureBuffer::LATC2
 	else
 		m_cPLE_TPFWrapper += 0;											// 20: PLRenderer::TextureBuffer::LATC2
 
 	// ARB float pixel format
-	if (IsGL_ARB_texture_float()) {
+	if (cExtensions.IsGL_ARB_texture_float()) {
 		m_cPLE_TPFWrapper += GL_LUMINANCE16F_ARB;	// 21: PLRenderer::TextureBuffer::R16F
 		m_cPLE_TPFWrapper += GL_LUMINANCE32F_ARB;	// 22: PLRenderer::TextureBuffer::R32F
 		m_cPLE_TPFWrapper += GL_RGBA16F_ARB;		// 23: PLRenderer::TextureBuffer::R16G16B16A16F
 		m_cPLE_TPFWrapper += GL_RGBA32F_ARB;		// 24: PLRenderer::TextureBuffer::R32G32B32A32F
 	} else {
 		// ATI float pixel format
-		if (IsWGL_ATI_pixel_format_float()) {
+		if (cExtensions.IsWGL_ATI_pixel_format_float()) {
 			m_cPLE_TPFWrapper += GL_LUMINANCE_FLOAT16_ATI;	// 20: PLRenderer::TextureBuffer::R16F
 			m_cPLE_TPFWrapper += GL_LUMINANCE_FLOAT32_ATI;	// 21: PLRenderer::TextureBuffer::R32F
 			m_cPLE_TPFWrapper += GL_RGBA_FLOAT16_ATI;		// 22: PLRenderer::TextureBuffer::R16G16B16A16F
 			m_cPLE_TPFWrapper += GL_RGBA_FLOAT32_ATI;		// 23: PLRenderer::TextureBuffer::R32G32B32A32F
 		} else {
 			// NVIDIA float pixel format
-			if (IsWGL_NV_float_buffer()) {
+			if (cExtensions.IsWGL_NV_float_buffer()) {
 				m_cPLE_TPFWrapper += GL_FLOAT_R16_NV;		// 20: PLRenderer::TextureBuffer::R16F
 				m_cPLE_TPFWrapper += GL_FLOAT_R32_NV;		// 21: PLRenderer::TextureBuffer::R32F
 				m_cPLE_TPFWrapper += GL_FLOAT_RGBA16_NV;	// 22: PLRenderer::TextureBuffer::R16G16B16A16F
@@ -685,12 +695,13 @@ void Renderer::InitWrappers()
 */
 void Renderer::SetupCapabilities()
 {
+	const Extensions &cExtensions = m_pContext->GetExtensions();
 	GLint nGLTemp;
 
 	// Maximum number of color render targets
-	if (IsGL_ARB_draw_buffers())
+	if (cExtensions.IsGL_ARB_draw_buffers())
 		glGetIntegerv(GL_MAX_DRAW_BUFFERS_ARB, &nGLTemp);
-	else if (IsGL_ATI_draw_buffers())
+	else if (cExtensions.IsGL_ATI_draw_buffers())
 		glGetIntegerv(GL_MAX_DRAW_BUFFERS_ATI, &nGLTemp);
 	else
 		nGLTemp = 1;
@@ -698,7 +709,7 @@ void Renderer::SetupCapabilities()
 	m_sCapabilities.nMaxColorRenderTargets = (nGLTemp > 16) ? 16 : static_cast<uint8>(nGLTemp);
 
 	// Maximum number of texture units
-	if (IsGL_ARB_multitexture()) {
+	if (cExtensions.IsGL_ARB_multitexture()) {
 		// [TODO] 'Texture Units' out-of-date
 		// Do not use "GL_MAX_TEXTURE_UNITS_ARB", use GL_MAX_TEXTURE_IMAGE_UNITS_ARB! Texture units were
 		// decoupled into texture image units and texture coordinates. (with GL_MAX_TEXTURE_COORDS_ARB)
@@ -715,57 +726,57 @@ void Renderer::SetupCapabilities()
 	m_sCapabilities.nMaxAnisotropy = static_cast<uint16>(nGLTemp);
 
 	// Maximum tessellation factor
-	m_sCapabilities.nMaxTessellationFactor = IsGL_AMD_vertex_shader_tessellator() ? 15 : 1;
+	m_sCapabilities.nMaxTessellationFactor = cExtensions.IsGL_AMD_vertex_shader_tessellator() ? 15 : 1;
 
 	// Maximum texture buffer size
 	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &nGLTemp);
 	m_sCapabilities.nMaxTextureBufferSize = static_cast<uint16>(nGLTemp);
 
 	// Non power of two texture buffers supported?
-	m_sCapabilities.bTextureBufferNonPowerOfTwo = IsGL_ARB_texture_non_power_of_two();
+	m_sCapabilities.bTextureBufferNonPowerOfTwo = cExtensions.IsGL_ARB_texture_non_power_of_two();
 
 	// Rectangle texture buffers supported?
 	// GL_EXT_texture_rectangle, GL_NV_texture_rectangle and GL_ARB_texture_rectangle ONLY differ within their name :)
-	m_sCapabilities.bTextureBufferRectangle = (IsGL_EXT_texture_rectangle() || IsGL_NV_texture_rectangle() || IsGL_ARB_texture_rectangle());
+	m_sCapabilities.bTextureBufferRectangle = (cExtensions.IsGL_EXT_texture_rectangle() || cExtensions.IsGL_NV_texture_rectangle() || cExtensions.IsGL_ARB_texture_rectangle());
 
 	// Maximum rectangle texture buffer size
 	glGetIntegerv(GL_MAX_RECTANGLE_TEXTURE_SIZE_ARB, &nGLTemp);
 	m_sCapabilities.nMaxRectangleTextureBufferSize = static_cast<uint16>(nGLTemp);
 
 	// 3D texture buffers supported?
-	m_sCapabilities.bTextureBuffer3D = IsGL_EXT_texture3D();
+	m_sCapabilities.bTextureBuffer3D = cExtensions.IsGL_EXT_texture3D();
 
 	// Maximum 3D texture buffer size
 	glGetIntegerv(GL_MAX_3D_TEXTURE_SIZE_EXT, &nGLTemp);
 	m_sCapabilities.nMax3DTextureBufferSize = static_cast<uint16>(nGLTemp);
 
 	// Cube texture buffers supported?
-	m_sCapabilities.bTextureBufferCube = (IsGL_ARB_texture_cube_map() || IsGL_EXT_texture_cube_map());
+	m_sCapabilities.bTextureBufferCube = (cExtensions.IsGL_ARB_texture_cube_map() || cExtensions.IsGL_EXT_texture_cube_map());
 
 	// Maximum cube texture buffer size
 	glGetIntegerv(GL_MAX_CUBE_MAP_TEXTURE_SIZE_ARB, &nGLTemp);
 	m_sCapabilities.nMaxCubeTextureBufferSize = static_cast<uint16>(nGLTemp);
 
 	// Stencil wrap supported?
-	m_sCapabilities.bStencilWrap = IsGL_EXT_stencil_wrap();
+	m_sCapabilities.bStencilWrap = cExtensions.IsGL_EXT_stencil_wrap();
 
 	// Two sided stencils supported?
-	m_sCapabilities.bTwoSidedStencils = (IsGL_EXT_stencil_two_side() || IsGL_ATI_separate_stencil());
+	m_sCapabilities.bTwoSidedStencils = (cExtensions.IsGL_EXT_stencil_two_side() || cExtensions.IsGL_ATI_separate_stencil());
 
 	// Depth bounds test supported?
-	m_sCapabilities.bDepthBoundsTest = IsGL_EXT_depth_bounds_test();
+	m_sCapabilities.bDepthBoundsTest = cExtensions.IsGL_EXT_depth_bounds_test();
 
 	// Point sprite supported?
-	m_sCapabilities.bPointSprite = IsGL_ARB_point_sprite();
+	m_sCapabilities.bPointSprite = cExtensions.IsGL_ARB_point_sprite();
 
 	// Point parameters supported?
-	m_sCapabilities.bPointParameters = IsGL_ARB_point_parameters();
+	m_sCapabilities.bPointParameters = cExtensions.IsGL_ARB_point_parameters();
 
 	// Occlusion query supported
-	m_sCapabilities.bOcclusionQuery = (IsGL_ARB_occlusion_query() || (IsGL_NV_occlusion_query() && IsGL_HP_occlusion_test()));
+	m_sCapabilities.bOcclusionQuery = (cExtensions.IsGL_ARB_occlusion_query() || (cExtensions.IsGL_NV_occlusion_query() && cExtensions.IsGL_HP_occlusion_test()));
 
 	// Vertex buffer secondary color supported?
-	m_sCapabilities.bVertexBufferSecondaryColor = IsGL_EXT_secondary_color();
+	m_sCapabilities.bVertexBufferSecondaryColor = cExtensions.IsGL_EXT_secondary_color();
 
 	// Show renderer capabilities
 	ShowRendererCapabilities();
@@ -777,6 +788,8 @@ void Renderer::SetupCapabilities()
 */
 void Renderer::GeneralSettings()
 {
+	const Extensions &cExtensions = m_pContext->GetExtensions();
+
 	// The default value of '4' is NOT desired and would make tricky problems (memory leaks and so on)
 	glPixelStorei(GL_UNPACK_ALIGNMENT,   1);
 	glPixelStorei(GL_UNPACK_SKIP_ROWS,   0);
@@ -809,11 +822,11 @@ void Renderer::GeneralSettings()
 	//       if EXT_point_parameters is supported.  If enabled, the point size is the
 	//       point size result value, and is clamped to implementation-dependent
 	//       point size limits during point rasterization."
-	if (IsGL_ARB_vertex_program())
+	if (cExtensions.IsGL_ARB_vertex_program())
 		glEnable(GL_VERTEX_PROGRAM_POINT_SIZE_ARB);
 
 	// No value clamping when using shaders, PLEASE!
-	if (IsGL_ARB_color_buffer_float()) {
+	if (cExtensions.IsGL_ARB_color_buffer_float()) {
 		glClampColorARB(GL_CLAMP_VERTEX_COLOR_ARB,   GL_FIXED_ONLY_ARB);
 		glClampColorARB(GL_CLAMP_FRAGMENT_COLOR_ARB, GL_FIXED_ONLY_ARB);
 		glClampColorARB(GL_CLAMP_READ_COLOR_ARB,     GL_FIXED_ONLY_ARB);
@@ -997,7 +1010,7 @@ void Renderer::RestoreDeviceStates()
 //[-------------------------------------------------------]
 bool Renderer::IsInitialized() const
 {
-	return (m_pContext != nullptr);
+	return m_bInitialized;
 }
 
 String Renderer::GetAPI(uint32 *pnVersion) const
@@ -1088,28 +1101,24 @@ PLRenderer::FontManager &Renderer::GetFontManager() const
 
 void Renderer::BackupDeviceObjects()
 {
-	if (m_pContext) {
-		// Call base function
-		PLRenderer::RendererBackend::BackupDeviceObjects();
+	// Call base function
+	PLRenderer::RendererBackend::BackupDeviceObjects();
 
-		// Destroy the context
-		delete m_pContext;
-		m_pContext = nullptr;
-	}
+	// Destroy the context
+	delete m_pContext;
+	m_pContext = nullptr;
 }
 
 void Renderer::RestoreDeviceObjects()
 {
-	if (!m_pContext) {
-		// Create a new OpenGL render context
-		m_pContext = CreateContext();
+	// Create a new OpenGL render context
+	m_pContext = CreateContext();
 
-		// Call base function
-		PLRenderer::RendererBackend::RestoreDeviceObjects();
+	// Call base function
+	PLRenderer::RendererBackend::RestoreDeviceObjects();
 
-		// Restore device states
-		RestoreDeviceStates();
-	}
+	// Restore device states
+	RestoreDeviceStates();
 }
 
 
@@ -1119,7 +1128,7 @@ void Renderer::RestoreDeviceObjects()
 PLRenderer::SurfaceWindow *Renderer::CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen)
 {
 	// Is the renderer initialized and is the surface window handler valid?
-	if (m_pContext && cHandler.GetRenderer() == this) {
+	if (cHandler.GetRenderer() == this) {
 		// Create and register renderer surface
 		PLRenderer::SurfaceWindow *pRendererSurface = m_pContext->CreateSurfaceWindow(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen);
 		m_lstSurfaces.Add(reinterpret_cast<PLRenderer::Surface*>(pRendererSurface));
@@ -1270,6 +1279,8 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 
 	// Check if this render state is already set to this value
 	if (m_nRenderState[nState] != nValue) {
+		const Extensions &cExtensions = m_pContext->GetExtensions();
+
 		// Set the render state
 		m_nRenderState[nState] = nValue;
 		m_sStatistics.nRenderStateChanges++;
@@ -1421,7 +1432,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 
 					case PLRenderer::RenderState::StencilFunc:
 						// For ATI GPU's
-						if (IsGL_ATI_separate_stencil()) {
+						if (cExtensions.IsGL_ATI_separate_stencil()) {
 							if (GetRenderState(PLRenderer::RenderState::TwoSidedStencilMode)) {
 								// Two sided
 								const uint32 &nAPIValue1 = m_cPLE_CMPWrapper[nValue];
@@ -1455,7 +1466,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 
 					case PLRenderer::RenderState::StencilRef:
 						// For ATI GPU's
-						if (IsGL_ATI_separate_stencil()) {
+						if (cExtensions.IsGL_ATI_separate_stencil()) {
 							if (GetRenderState(PLRenderer::RenderState::TwoSidedStencilMode)) {
 								// Two sided
 								const uint32 &nAPIValue1 = m_cPLE_CMPWrapper[GetRenderState(PLRenderer::RenderState::StencilFunc)];
@@ -1486,7 +1497,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 
 					case PLRenderer::RenderState::StencilMask:
 						// For ATI GPU's
-						if (IsGL_ATI_separate_stencil()) {
+						if (cExtensions.IsGL_ATI_separate_stencil()) {
 							if (GetRenderState(PLRenderer::RenderState::TwoSidedStencilMode)) {
 								// Two sided
 								const uint32 &nAPIValue1 = m_cPLE_CMPWrapper[GetRenderState(PLRenderer::RenderState::StencilFunc)];
@@ -1517,7 +1528,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 
 					case PLRenderer::RenderState::StencilFail:
 						// For ATI GPU's
-						if (IsGL_ATI_separate_stencil()) {
+						if (cExtensions.IsGL_ATI_separate_stencil()) {
 							const uint32 &nAPIValue1 = m_cPLE_SOPWrapper[nValue];
 							const uint32 &nAPIValue2 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::StencilZFail)];
 							const uint32 &nAPIValue3 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::StencilPass)];
@@ -1549,7 +1560,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 
 					case PLRenderer::RenderState::StencilZFail:
 						// For ATI GPU's
-						if (IsGL_ATI_separate_stencil()) {
+						if (cExtensions.IsGL_ATI_separate_stencil()) {
 							const uint32 &nAPIValue1 = m_cPLE_SOPWrapper[nValue];
 							const uint32 &nAPIValue2 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::StencilFail)];
 							const uint32 &nAPIValue3 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::StencilPass)];
@@ -1581,7 +1592,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 
 					case PLRenderer::RenderState::StencilPass:
 						// For ATI GPU's
-						if (IsGL_ATI_separate_stencil()) {
+						if (cExtensions.IsGL_ATI_separate_stencil()) {
 							const uint32 &nAPIValue1 = m_cPLE_SOPWrapper[nValue];
 							const uint32 &nAPIValue2 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::StencilFail)];
 							const uint32 &nAPIValue3 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::StencilZFail)];
@@ -1616,7 +1627,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							return false; // Error, two sided stencils are not supported!
 
 						// For ATI GPU's
-						if (IsGL_ATI_separate_stencil()) {
+						if (cExtensions.IsGL_ATI_separate_stencil()) {
 							{ // No two sided stencil enable/disable required, but set the correct settings for sure
 								const uint32 &nAPIValue1 = m_cPLE_CMPWrapper[GetRenderState(PLRenderer::RenderState::StencilFunc)];
 								const uint32 &nAPIValue2 = m_cPLE_CMPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilFunc)];
@@ -1698,7 +1709,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							return false; // Error, two sided stencils are not supported!
 						if (GetRenderState(PLRenderer::RenderState::TwoSidedStencilMode)) {
 							// For ATI GPU's
-							if (IsGL_ATI_separate_stencil()) {
+							if (cExtensions.IsGL_ATI_separate_stencil()) {
 								const uint32 &nAPIValue1 = m_cPLE_CMPWrapper[nValue];
 								const uint32 &nAPIValue2 = m_cPLE_CMPWrapper[GetRenderState(PLRenderer::RenderState::StencilFunc)];
 								if ((&nAPIValue1 != &Array<uint32>::Null) && (&nAPIValue2 != &Array<uint32>::Null))
@@ -1728,7 +1739,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							return false; // Error, two sided stencils are not supported!
 						if (GetRenderState(PLRenderer::RenderState::TwoSidedStencilMode)) {
 							// For ATI GPU's
-							if (IsGL_ATI_separate_stencil()) {
+							if (cExtensions.IsGL_ATI_separate_stencil()) {
 								const uint32 &nAPIValue1 = m_cPLE_SOPWrapper[nValue];
 								const uint32 &nAPIValue2 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilZFail)];
 								const uint32 &nAPIValue3 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilPass)];
@@ -1758,7 +1769,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							return false; // Error, two sided stencils are not supported!
 						if (GetRenderState(PLRenderer::RenderState::TwoSidedStencilMode)) {
 							// For ATI GPU's
-							if (IsGL_ATI_separate_stencil()) {
+							if (cExtensions.IsGL_ATI_separate_stencil()) {
 								const uint32 &nAPIValue1 = m_cPLE_SOPWrapper[nValue];
 								const uint32 &nAPIValue2 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilFail)];
 								const uint32 &nAPIValue3 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilPass)];
@@ -1788,7 +1799,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							return false; // Error, two sided stencils are not supported!
 						if (GetRenderState(PLRenderer::RenderState::TwoSidedStencilMode)) {
 							// For ATI GPU's
-							if (IsGL_ATI_separate_stencil()) {
+							if (cExtensions.IsGL_ATI_separate_stencil()) {
 								const uint32 &nAPIValue1 = m_cPLE_SOPWrapper[nValue];
 								const uint32 &nAPIValue2 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilFail)];
 								const uint32 &nAPIValue3 = m_cPLE_SOPWrapper[GetRenderState(PLRenderer::RenderState::CCWStencilZFail)];
@@ -1906,7 +1917,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 
 			// Tessellation
 				case PLRenderer::RenderState::TessellationFactor:
-					if (!IsGL_AMD_vertex_shader_tessellator())
+					if (!cExtensions.IsGL_AMD_vertex_shader_tessellator())
 						return false; // Error, tessellation not supported!
 					if (nValue > m_sCapabilities.nMaxTessellationFactor)
 						return false; // Error, invalid value!
@@ -1914,7 +1925,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 					break;
 
 				case PLRenderer::RenderState::TessellationMode:
-					if (!IsGL_AMD_vertex_shader_tessellator())
+					if (!cExtensions.IsGL_AMD_vertex_shader_tessellator())
 						return false; // Error, tessellation not supported!
 					if (nValue == PLRenderer::TessellationMode::Discrete)
 						glTessellationModeAMD(GL_DISCRETE_AMD);
@@ -2370,10 +2381,7 @@ bool Renderer::SetRenderTarget(PLRenderer::Surface *pSurface, uint8 nFace)
 			// Make the surface to the current render target
 			bResult = MakeSurfaceCurrent(*pSurface, nFace);
 		} else {
-			if (m_pContext)
-				m_pContext->MakeDummyCurrent();
-			else
-				return false; // Error!
+			m_pContext->MakeDummyCurrent();
 		}
 	}
 
@@ -2804,7 +2812,7 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 		if (!static_cast<IndexBuffer*>(pIndexBuffer)->MakeCurrent()) {
 			// Now, no index buffer is set...
 			m_pCurrentIndexBuffer = nullptr;
-			if (IsGL_ARB_vertex_buffer_object())
+			if (m_pContext->GetExtensions().IsGL_ARB_vertex_buffer_object())
 				glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0);
 
 			// Error!
@@ -2812,7 +2820,7 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 		}
 	} else {
 		// No, deactivate index buffer
-		if (IsGL_ARB_vertex_buffer_object())
+		if (m_pContext->GetExtensions().IsGL_ARB_vertex_buffer_object())
 			glBindBufferARB(GL_ELEMENT_ARRAY_BUFFER_ARB, 0);
 	}
 
@@ -2882,7 +2890,7 @@ bool Renderer::DrawPrimitives(PLRenderer::Primitive::Enum nType, uint32 nStartIn
 	}
 
 	// If the vertex buffer is in software mode, try to use compiled vertex array (CVA) for better performance
-	if (m_pFixedFunctions && m_pFixedFunctions->m_ppCurrentVertexBuffer[0] && m_pFixedFunctions->m_ppCurrentVertexBuffer[0]->GetUsage() == PLRenderer::Usage::Software && IsGL_EXT_compiled_vertex_array()) {
+	if (m_pFixedFunctions && m_pFixedFunctions->m_ppCurrentVertexBuffer[0] && m_pFixedFunctions->m_ppCurrentVertexBuffer[0]->GetUsage() == PLRenderer::Usage::Software && m_pContext->GetExtensions().IsGL_EXT_compiled_vertex_array()) {
 		glLockArraysEXT(nStartIndex, nNumVertices);
 
 		// Get API primitive type
@@ -2963,7 +2971,8 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 	m_sStatistics.nTriangles += nPrimitiveCount;
 
 	// If the vertex buffer is in software mode, try to use compiled vertex array (CVA) for better performance
-	if (m_pFixedFunctions && m_pFixedFunctions->m_ppCurrentVertexBuffer[0] && m_pFixedFunctions->m_ppCurrentVertexBuffer[0]->GetUsage() == PLRenderer::Usage::Software && IsGL_EXT_compiled_vertex_array()) {
+	const Extensions &cExtensions = m_pContext->GetExtensions();
+	if (m_pFixedFunctions && m_pFixedFunctions->m_ppCurrentVertexBuffer[0] && m_pFixedFunctions->m_ppCurrentVertexBuffer[0]->GetUsage() == PLRenderer::Usage::Software && cExtensions.IsGL_EXT_compiled_vertex_array()) {
 		glLockArraysEXT(nMinIndex, nMaxIndex-nMinIndex+1);
 
 		// Get API primitive type
@@ -2973,8 +2982,8 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 			// On my old GeForce4 Ti 4200: max elements vertices = 4096 and max elements indices = 4096
 			// ... on my Radion 9600 Mobile the extension can handle much more vertices (2147483647) and indices (65535)
 			// ... we check for this to avoid problems...
-			if (IsGL_EXT_draw_range_elements() && nNumVertices < static_cast<uint32>(GetGL_MAX_ELEMENTS_INDICES_EXT()) &&
-				nMaxIndex < static_cast<uint32>(GetGL_MAX_ELEMENTS_VERTICES_EXT())) {
+			if (cExtensions.IsGL_EXT_draw_range_elements() && nNumVertices < static_cast<uint32>(cExtensions.GetGL_MAX_ELEMENTS_INDICES_EXT()) &&
+				nMaxIndex < static_cast<uint32>(cExtensions.GetGL_MAX_ELEMENTS_VERTICES_EXT())) {
 				// Draw primitive
 				glDrawRangeElementsEXT(nAPIValue, nMinIndex, nMaxIndex, nNumVertices, nTypeAPI, BUFFER_OFFSET(nStartIndex*nTypeSize));
 			} else {
@@ -2995,8 +3004,8 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 			// On my old GeForce4 Ti 4200: max elements vertices = 4096 and max elements indices = 4096
 			// ... on my Radion 9600 Mobile the extension can handle much more vertices (2147483647) and indices (65535)
 			// ... we check for this to avoid problems...
-			if (IsGL_EXT_draw_range_elements() && nNumVertices < static_cast<uint32>(GetGL_MAX_ELEMENTS_INDICES_EXT()) &&
-				nMaxIndex < static_cast<uint32>(GetGL_MAX_ELEMENTS_VERTICES_EXT())) {
+			if (cExtensions.IsGL_EXT_draw_range_elements() && nNumVertices < static_cast<uint32>(cExtensions.GetGL_MAX_ELEMENTS_INDICES_EXT()) &&
+				nMaxIndex < static_cast<uint32>(cExtensions.GetGL_MAX_ELEMENTS_VERTICES_EXT())) {
 				// Draw primitive
 				glDrawRangeElementsEXT(nAPIValue, nMinIndex, nMaxIndex, nNumVertices, nTypeAPI, BUFFER_OFFSET(nStartIndex*nTypeSize));
 			} else {

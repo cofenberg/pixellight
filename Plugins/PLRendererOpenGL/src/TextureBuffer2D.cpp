@@ -27,7 +27,9 @@
 #include <PLGraphics/Image/Image.h>
 #include <PLGraphics/Image/ImagePart.h>
 #include <PLGraphics/Image/ImageBuffer.h>
+#include "PLRendererOpenGL/Context.h"
 #include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/TextureBuffer2D.h"
 
 
@@ -124,7 +126,7 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, Image &cImage,
 					m_nNumOfMipmaps = static_cast<uint32>(Math::Log2(static_cast<float>(Math::Max(m_vSize.x, m_vSize.y))));
 
 					// Try to build mipmaps automatically on the GPU
-					if (cRendererOpenGL.IsGL_SGIS_generate_mipmap()) {
+					if (cRendererOpenGL.GetContext().GetExtensions().IsGL_SGIS_generate_mipmap()) {
 						glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP_SGIS, true);
 
 						// Upload the texture buffer
@@ -291,7 +293,7 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, const Vector2i
 		CreateOpenGLTextureBuffer();
 
 		// Build mipmaps automatically on the GPU?
-		if ((m_nFlags & Mipmaps) && cRendererOpenGL.IsGL_SGIS_generate_mipmap()) {
+		if ((m_nFlags & Mipmaps) && cRendererOpenGL.GetContext().GetExtensions().IsGL_SGIS_generate_mipmap()) {
 			// Calculate the number of mipmaps - it's not allowed to access this automatic mipmaps??
 	//		m_nNumOfMipmaps = static_cast<uint32>(Math::Log2(static_cast<float>(Math::Max(m_vSize.x, m_vSize.y))));
 

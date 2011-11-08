@@ -24,7 +24,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/System/System.h>
+#include "PLRendererOpenGL/Context.h"
 #include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/UniformBuffer.h"
 
 
@@ -142,8 +144,11 @@ bool UniformBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, b
 	if (m_nSize == nElements && nUsage == m_nUsage && m_bManaged == bManaged)
 		return true; // Done
 
+	// Get extensions instance
+	const Extensions &cExtensions = static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions();
+
 	// Vertex buffer extension available?
-	if (!static_cast<Renderer&>(GetRenderer()).IsGL_ARB_vertex_buffer_object()) {
+	if (!cExtensions.IsGL_ARB_vertex_buffer_object()) {
 		// Fallback to legacy software implementation
 		nUsage = PLRenderer::Usage::Software;
 		bManaged = false;
@@ -202,7 +207,7 @@ bool UniformBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, b
 
 	// Create the uniform buffer
 	bool bUBO = false;
-	if (nUsage != PLRenderer::Usage::Software && static_cast<Renderer&>(GetRenderer()).IsGL_ARB_vertex_buffer_object()) {
+	if (nUsage != PLRenderer::Usage::Software && cExtensions.IsGL_ARB_vertex_buffer_object()) {
 		// Use UBO
 		bUBO = true;
 		if (!m_nUniformBuffer)

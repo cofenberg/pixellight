@@ -26,6 +26,7 @@
 #include <PLCore/Log/Log.h>
 #include <PLMath/Math.h>
 #include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/Windows/ContextWindows.h"
 #include "PLRendererOpenGL/Windows/SurfaceWindowWindows.h"
 
@@ -391,17 +392,16 @@ bool SurfaceWindowWindows::MakeCurrent(uint8 nFace)
 {
 	if (m_hDC) {
 		// Get the OpenGL render context
-		ContextWindows *pContextWindows = static_cast<ContextWindows*>(static_cast<Renderer&>(GetRenderer()).GetContext());
-		if (pContextWindows) {
-			// Get the OpenGL render context
-			HGLRC pHGLRC = pContextWindows->GetRenderContext();
-			if (pHGLRC) {
-				// Enable/disable multisample
-				GetRenderer().SetRenderState(PLRenderer::RenderState::MultisampleEnable, (GetRenderer().GetCapabilities().nMultisampleAntialiasingSamples > 1));
+		ContextWindows &cContextWindows = static_cast<ContextWindows&>(static_cast<Renderer&>(GetRenderer()).GetContext());
 
-				// Make this surface current
-				return (wglMakeCurrent(m_hDC, pHGLRC) == TRUE);
-			}
+		// Get the OpenGL render context
+		HGLRC pHGLRC = cContextWindows.GetRenderContext();
+		if (pHGLRC) {
+			// Enable/disable multisample
+			GetRenderer().SetRenderState(PLRenderer::RenderState::MultisampleEnable, (GetRenderer().GetCapabilities().nMultisampleAntialiasingSamples > 1));
+
+			// Make this surface current
+			return (wglMakeCurrent(m_hDC, pHGLRC) == TRUE);
 		}
 	}
 
@@ -415,7 +415,7 @@ bool SurfaceWindowWindows::Present()
 	Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 	if (m_nSwapInterval != static_cast<int>(cRenderer.GetSwapInterval())) {
 		m_nSwapInterval = cRenderer.GetSwapInterval();
-		if (cRenderer.IsWGL_EXT_swap_control()) 
+		if (cRenderer.GetContext().GetExtensions().IsWGL_EXT_swap_control()) 
 			wglSwapIntervalEXT(m_nSwapInterval);
 	}
 

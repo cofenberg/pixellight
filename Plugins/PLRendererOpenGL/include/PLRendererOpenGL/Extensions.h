@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/PLCore.h>
 #include "PLRendererOpenGL/PLRendererOpenGL.h"
 #ifdef LINUX
 	#include <X11/Xlib.h>

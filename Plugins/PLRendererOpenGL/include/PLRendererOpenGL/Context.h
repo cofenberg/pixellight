@@ -42,6 +42,10 @@ namespace PLRenderer {
 	class SurfaceWindow;
 	class SurfaceWindowHandler;
 }
+namespace PLRendererOpenGL {
+	class Renderer;
+	class Extensions;
+}
 
 
 //[-------------------------------------------------------]
@@ -58,6 +62,29 @@ namespace PLRendererOpenGL {
 *    Abstract OpenGL context base class
 */
 class Context : public PLCore::AbstractContext {
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Returns the available extensions
+		*
+		*  @return
+		*    The available extensions
+		*/
+		const Extensions &GetExtensions() const;
+
+		/**
+		*  @brief
+		*    Returns the available extensions
+		*
+		*  @return
+		*    The available extensions
+		*/
+		Extensions &GetExtensions();
 
 
 	//[-------------------------------------------------------]
@@ -128,8 +155,11 @@ class Context : public PLCore::AbstractContext {
 		/**
 		*  @brief
 		*    Constructor
+		*
+		*  @param[in] cRenderer
+		*    Owner renderer
 		*/
-		Context();
+		Context(Renderer &cRenderer);
 
 
 	//[-------------------------------------------------------]
@@ -156,6 +186,13 @@ class Context : public PLCore::AbstractContext {
 		*    Reference to this instance
 		*/
 		Context &operator =(const Context &cSource);
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		Extensions *m_pExtensions;	/**< Extensions instance, always valid */
 
 
 };

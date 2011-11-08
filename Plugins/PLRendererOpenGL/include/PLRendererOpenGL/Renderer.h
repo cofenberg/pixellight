@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/Renderer/Backend/RendererBackend.h>
-#include "PLRendererOpenGL/Extensions.h"
+#include "PLRendererOpenGL/PLRendererOpenGL.h"
 
 
 //[-------------------------------------------------------]
@@ -53,7 +53,7 @@ class ShaderLanguage;
 *  @brief
 *    OpenGL 1.1 + extensions renderer backend
 */
-class Renderer : public PLRenderer::RendererBackend, public Extensions {
+class Renderer : public PLRenderer::RendererBackend {
 
 
 	//[-------------------------------------------------------]
@@ -107,9 +107,9 @@ class Renderer : public PLRenderer::RendererBackend, public Extensions {
 		*    Returns the OpenGL render context
 		*
 		*  @return
-		*    The OpenGL render context, a null pointer on error
+		*    The OpenGL render context
 		*/
-		Context *GetContext() const;
+		Context &GetContext() const;
 
 		/**
 		*  @brief
@@ -223,7 +223,8 @@ class Renderer : public PLRenderer::RendererBackend, public Extensions {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Context												  *m_pContext;							/**< OpenGL render context, can be a null pointer (= renderer not initialized) */
+		bool												   m_bInitialized;						/**< 'true' if the renderer instance was initialized successfully within it's constructor, else 'false' */
+		Context												  *m_pContext;							/**< OpenGL context, always valid! (except when initialization failed, but in this case the renderer instance has to be destroyed without using it) */
 		FixedFunctions										  *m_pFixedFunctions;					/**< Fixed functions interface implementation, can be a null pointer */
 		PLRenderer::FontManager								  *m_pFontManager;						/**< OpenGL renderer font manager, always valid! */
 		bool												   m_bSceneRendering;					/**< Is the scene rendering currently active? (see BeginScene/EndScene) */

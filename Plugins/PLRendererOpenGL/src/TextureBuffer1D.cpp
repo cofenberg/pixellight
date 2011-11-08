@@ -27,7 +27,9 @@
 #include <PLGraphics/Image/Image.h>
 #include <PLGraphics/Image/ImagePart.h>
 #include <PLGraphics/Image/ImageBuffer.h>
+#include "PLRendererOpenGL/Context.h"
 #include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/TextureBuffer1D.h"
 
 
@@ -136,7 +138,7 @@ TextureBuffer1D::TextureBuffer1D(PLRenderer::Renderer &cRenderer, Image &cImage,
 					m_nNumOfMipmaps = static_cast<uint32>(Math::Log2(static_cast<float>(m_nSize)));
 
 					// Try to build mipmaps automatically on the GPU
-					if (cRendererOpenGL.IsGL_SGIS_generate_mipmap()) {
+					if (cRendererOpenGL.GetContext().GetExtensions().IsGL_SGIS_generate_mipmap()) {
 						glTexParameteri(GL_TEXTURE_1D, GL_GENERATE_MIPMAP_SGIS, true);
 
 						// Upload the texture buffer

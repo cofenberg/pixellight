@@ -24,7 +24,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
+#include "PLRendererOpenGL/Context.h"
 #include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/TextureBuffer1D.h"
 #include "PLRendererOpenGL/TextureBuffer2D.h"
 #include "PLRendererOpenGL/TextureBufferRectangle.h"
@@ -83,15 +85,17 @@ FrameBufferObject::~FrameBufferObject()
 */
 bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, uint32 nFormat, PLRenderer::TextureBuffer::EPixelFormat nTextureFormat, bool bNoMultisampleAntialiasing)
 {
+	const Extensions &cExtensions = cRenderer.GetContext().GetExtensions();
+
 	// Is the extension EXT_framebuffer_object available?
-	if (cRenderer.IsGL_EXT_framebuffer_object()) {
+	if (cExtensions.IsGL_EXT_framebuffer_object()) {
 		// Check parameters
 		if (vSize.x != 0 && vSize.y != 0) {
 			// Save size
 			m_vSize = vSize;
 
 			// Get multisample antialiasing samples
-			const uint32 nMultisampleAntialiasingSamples = (!bNoMultisampleAntialiasing && cRenderer.IsGL_EXT_framebuffer_multisample() && cRenderer.IsGL_EXT_framebuffer_blit()) ? cRenderer.GetMultisampleAntialiasingSamples() : 0;
+			const uint32 nMultisampleAntialiasingSamples = (!bNoMultisampleAntialiasing && cExtensions.IsGL_EXT_framebuffer_multisample() && cExtensions.IsGL_EXT_framebuffer_blit()) ? cRenderer.GetMultisampleAntialiasingSamples() : 0;
 
 			// Get current bound FBO
 			GLint nFrameBufferT;
@@ -114,7 +118,7 @@ bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, u
 			// Create depth&stencil buffer
 			GLuint nDepth = 0;
 			bool bDepthStencil = false;
-			if ((nFormat & Depth24) && (nFormat & Stencil) && cRenderer.IsGL_EXT_packed_depth_stencil()) {
+			if ((nFormat & Depth24) && (nFormat & Stencil) && cExtensions.IsGL_EXT_packed_depth_stencil()) {
 				nDepth        = GL_DEPTH24_STENCIL8_EXT;
 				bDepthStencil = true;
 			} else {

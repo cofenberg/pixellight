@@ -23,7 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLRendererOpenGL/Context.h"
 #include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/OcclusionQuery.h"
 
 
@@ -45,7 +47,7 @@ OcclusionQuery::~OcclusionQuery()
 {
 	// Destroy OpenGL occlusion query
 	if (m_nQuery) {
-		if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_occlusion_query())
+		if (static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_ARB_occlusion_query())
 			glDeleteQueriesARB(1, &m_nQuery);
 		else
 			glDeleteOcclusionQueriesNV(1, &m_nQuery);
@@ -70,7 +72,7 @@ OcclusionQuery::OcclusionQuery(PLRenderer::Renderer &cRenderer) : PLRenderer::Oc
 	// Check whether occlusion query is supported
 	if (cRenderer.GetCapabilities().bOcclusionQuery) {
 		// Create OpenGL occlusion query
-		if (static_cast<Renderer&>(cRenderer).IsGL_ARB_occlusion_query())
+		if (static_cast<Renderer&>(cRenderer).GetContext().GetExtensions().IsGL_ARB_occlusion_query())
 			glGenQueriesARB(1, &m_nQuery);
 		else
 			glGenOcclusionQueriesNV(1, &m_nQuery);
@@ -92,7 +94,7 @@ bool OcclusionQuery::BeginOcclusionQuery()
 
 		// New or none visible objects must always be tested but visible objects can be skipped
 		if (!m_nSkipCounter || m_nPixelCount <= m_nMinFragments) {
-			if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_occlusion_query())
+			if (static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_ARB_occlusion_query())
 				glBeginQueryARB(GL_SAMPLES_PASSED_ARB, m_nQuery);
 			else
 				glBeginOcclusionQueryNV(m_nQuery);
@@ -112,7 +114,7 @@ void OcclusionQuery::EndOcclusionQuery()
 	if (GetRenderer().GetCapabilities().bOcclusionQuery) {
 		// New or none visible objects must always be tested but visible objects can be skipped
 		if (!m_nSkipCounter || m_nPixelCount <= m_nMinFragments) {
-			if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_occlusion_query())
+			if (static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_ARB_occlusion_query())
 				glEndQueryARB(GL_SAMPLES_PASSED_ARB);
 			else
 				glEndOcclusionQueryNV();
@@ -125,7 +127,7 @@ bool OcclusionQuery::PullOcclusionQuery(uint32 *pnNumOfFragments)
 	// Check whether occlusion query is supported
 	if (GetRenderer().GetCapabilities().bOcclusionQuery) {
 		// Check whether the queried data is already available
-		if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_occlusion_query()) {
+		if (static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_ARB_occlusion_query()) {
 			GLint nAvailable;
 			glGetQueryObjectivARB(m_nQuery, GL_QUERY_RESULT_AVAILABLE_ARB, &nAvailable);
 			if (!nAvailable)
@@ -191,7 +193,7 @@ void OcclusionQuery::BackupDeviceData(uint8 **ppBackup)
 
 	// Destroy OpenGL occlusion query
 	if (m_nQuery) {
-		if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_occlusion_query())
+		if (static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_ARB_occlusion_query())
 			glDeleteQueriesARB(1, &m_nQuery);
 		else
 			glDeleteOcclusionQueriesNV(1, &m_nQuery);
@@ -204,7 +206,7 @@ void OcclusionQuery::RestoreDeviceData(uint8 **ppBackup)
 	// Check whether occlusion query is supported
 	if (GetRenderer().GetCapabilities().bOcclusionQuery) {
 		// Create OpenGL occlusion query
-		if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_occlusion_query())
+		if (static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_ARB_occlusion_query())
 			glGenQueriesARB(1, &m_nQuery);
 		else
 			glGenOcclusionQueriesNV(1, &m_nQuery);

@@ -202,7 +202,7 @@ class Renderer : public PLRenderer::RendererBackend {
 	//[-------------------------------------------------------]
 	private:
 		bool					 m_bInitialized;					/**< 'true' if the renderer instance was initialized successfully within it's constructor, else 'false' */
-		Context					*m_pContext;						/**< OpenGL ES context, always valid! */
+		Context					*m_pContext;						/**< OpenGL ES context, always valid! (except when initialization failed, but in this case the renderer instance has to be destroyed without using it) */
 		PLRenderer::FontManager	*m_pFontManager;					/**< OpenGL ES renderer font manager, always valid! */
 		PLCore::uint32			 m_nMultisampleAntialiasingSamples;	/**< Multisample antialiasing samples per pixel */
 		ShaderLanguageGLSL		*m_pShaderLanguageGLSL;				/**< Build in GLSL shader language, always valid! */

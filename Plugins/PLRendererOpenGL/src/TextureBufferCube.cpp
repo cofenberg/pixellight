@@ -27,7 +27,9 @@
 #include <PLGraphics/Image/Image.h>
 #include <PLGraphics/Image/ImagePart.h>
 #include <PLGraphics/Image/ImageBuffer.h>
+#include "PLRendererOpenGL/Context.h"
 #include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/TextureBufferCube.h"
 
 
@@ -117,6 +119,9 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 				glGenTextures(1, &m_nOpenGLTexture);
 				glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, m_nOpenGLTexture);
 
+				// Get extensions instance
+				const Extensions &cExtensions = cRendererOpenGL.GetContext().GetExtensions();
+
 				// Ignore mipmaps?
 				const bool bMipmaps = nFlags & Mipmaps;
 				bool bAutomaticMipmaps = false;
@@ -129,7 +134,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 						bAutomaticMipmaps = true;
 
 						// Try to build mipmaps automatically on the GPU
-						if (cRendererOpenGL.IsGL_SGIS_generate_mipmap())
+						if (cExtensions.IsGL_SGIS_generate_mipmap())
 							glTexParameteri(GL_TEXTURE_CUBE_MAP_ARB, GL_GENERATE_MIPMAP_SGIS, true);
 					}
 				}
@@ -145,7 +150,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 							ImageBuffer *pFaceImageBuffer = pFaceImagePart->GetMipmap(0);
 							if (pFaceImageBuffer) {
 								// Try to build mipmaps automatically on the GPU
-								if (cRendererOpenGL.IsGL_SGIS_generate_mipmap()) {
+								if (cExtensions.IsGL_SGIS_generate_mipmap()) {
 									// Upload the texture buffer
 									if (bUsePreCompressedData && pFaceImageBuffer->HasCompressedData())
 										glCompressedTexImage2DARB(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace, 0, *pAPIPixelFormat, m_nSize, m_nSize, 0, pFaceImageBuffer->GetCompressedDataSize(), pFaceImageBuffer->GetCompressedData());
@@ -306,7 +311,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, uint32 nSi
 		glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, m_nOpenGLTexture);
 
 		// Build mipmaps automatically on the GPU?
-		if ((m_nFlags & Mipmaps) && cRendererOpenGL.IsGL_SGIS_generate_mipmap()) {
+		if ((m_nFlags & Mipmaps) && cRendererOpenGL.GetContext().GetExtensions().IsGL_SGIS_generate_mipmap()) {
 			// Calculate the number of mipmaps - it's not allowed to access this automatic mipmaps??
 	//		m_nNumOfMipmaps = static_cast<uint32>(Math::Log2(static_cast<float>(m_nSize)));
 

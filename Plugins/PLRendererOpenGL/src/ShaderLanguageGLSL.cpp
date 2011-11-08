@@ -23,7 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLRendererOpenGL/Context.h"
 #include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/ProgramGLSL.h"
 #include "PLRendererOpenGL/UniformBuffer.h"
 #include "PLRendererOpenGL/VertexShaderGLSL.h"
@@ -62,32 +64,34 @@ String ShaderLanguageGLSL::GetShaderLanguage() const
 PLRenderer::VertexShader *ShaderLanguageGLSL::CreateVertexShader()
 {
 	// Is the OpenGL extension GL_ARB_shader_objects available?
-	return static_cast<Renderer*>(m_pRenderer)->IsGL_ARB_shader_objects() ? new VertexShaderGLSL(*m_pRenderer) : nullptr;
+	return static_cast<Renderer*>(m_pRenderer)->GetContext().GetExtensions().IsGL_ARB_shader_objects() ? new VertexShaderGLSL(*m_pRenderer) : nullptr;
 }
 
 PLRenderer::GeometryShader *ShaderLanguageGLSL::CreateGeometryShader()
 {
 	// Are the OpenGL extensions GL_ARB_shader_objects and GL_EXT_geometry_shader4 available?
-	return (static_cast<Renderer*>(m_pRenderer)->IsGL_ARB_shader_objects() && static_cast<Renderer*>(m_pRenderer)->IsGL_EXT_geometry_shader4()) ? new GeometryShaderGLSL(*m_pRenderer) : nullptr;
+	const Extensions &cExtensions = static_cast<Renderer*>(m_pRenderer)->GetContext().GetExtensions();
+	return (cExtensions.IsGL_ARB_shader_objects() && cExtensions.IsGL_EXT_geometry_shader4()) ? new GeometryShaderGLSL(*m_pRenderer) : nullptr;
 }
 
 PLRenderer::FragmentShader *ShaderLanguageGLSL::CreateFragmentShader()
 {
 	// Is the OpenGL extension GL_ARB_shader_objects available?
-	return static_cast<Renderer*>(m_pRenderer)->IsGL_ARB_shader_objects() ? new FragmentShaderGLSL(*m_pRenderer) : nullptr;
+	return static_cast<Renderer*>(m_pRenderer)->GetContext().GetExtensions().IsGL_ARB_shader_objects() ? new FragmentShaderGLSL(*m_pRenderer) : nullptr;
 }
 
 PLRenderer::Program *ShaderLanguageGLSL::CreateProgram()
 {
 	// Is the OpenGL extension GL_ARB_shader_objects available?
-	return static_cast<Renderer*>(m_pRenderer)->IsGL_ARB_shader_objects() ? new ProgramGLSL(*m_pRenderer) : nullptr;
+	return static_cast<Renderer*>(m_pRenderer)->GetContext().GetExtensions().IsGL_ARB_shader_objects() ? new ProgramGLSL(*m_pRenderer) : nullptr;
 }
 
 PLRenderer::UniformBuffer *ShaderLanguageGLSL::CreateUniformBuffer()
 {
 	// Are the OpenGL extensions GL_ARB_uniform_buffer_object and GL_EXT_transform_feedback available?
 	Renderer *pRenderer = static_cast<Renderer*>(m_pRenderer);
-	return (pRenderer->IsGL_ARB_uniform_buffer_object() && pRenderer->IsGL_EXT_transform_feedback()) ? new UniformBuffer(*m_pRenderer, GLSL) : nullptr;
+	const Extensions &cExtensions = pRenderer->GetContext().GetExtensions();
+	return (cExtensions.IsGL_ARB_uniform_buffer_object() && cExtensions.IsGL_EXT_transform_feedback()) ? new UniformBuffer(*m_pRenderer, GLSL) : nullptr;
 }
 
 

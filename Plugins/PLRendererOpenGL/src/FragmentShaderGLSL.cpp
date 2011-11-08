@@ -26,6 +26,7 @@
 #include "PLRendererOpenGL/ShaderLanguageGLSL.h"
 #include "PLRendererOpenGL/ShaderToolsGLSL.h"
 #include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/FragmentShaderGLSL.h"
 
 

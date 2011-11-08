@@ -26,7 +26,9 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 #include <PLCore/File/File.h>
+#include "PLRendererOpenGL/Context.h"
 #include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/FontManager.h"
 #include "PLRendererOpenGL/FontGlyphTexture.h"
 #include "PLRendererOpenGL/FontTexture.h"
@@ -225,7 +227,7 @@ void FontTexture::CreateGlyphTextureAtlas()
 				glBindTexture(GL_TEXTURE_2D, m_nOpenGLGlyphTextureAtlas);
 
 				// Build mipmaps automatically on the GPU supported
-				if (static_cast<Renderer&>(GetRenderer()).IsGL_SGIS_generate_mipmap()) {
+				if (static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_SGIS_generate_mipmap()) {
 					// Enable automatic mipmap generation
 					glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP_SGIS, true);
 

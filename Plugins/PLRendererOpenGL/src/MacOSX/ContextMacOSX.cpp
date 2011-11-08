@@ -48,7 +48,7 @@ namespace PLRendererOpenGL {
 *  @brief
 *    Constructor
 */
-ContextMacOSX::ContextMacOSX(Renderer &cRenderer) :
+ContextMacOSX::ContextMacOSX(Renderer &cRenderer) : Context(cRenderer),
 	m_pRenderer(&cRenderer),
 	m_pDisplay(XOpenDisplay(nullptr)),
 	m_pCGLContextObj(nullptr)

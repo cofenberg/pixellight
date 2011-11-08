@@ -27,7 +27,9 @@
 #include <PLRenderer/Renderer/TextureBuffer2D.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include <PLRenderer/Renderer/TextureBufferCube.h>
+#include "PLRendererOpenGL/Context.h"
 #include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/FrameBufferObject.h"
 #include "PLRendererOpenGL/SurfaceTextureBuffer.h"
 
@@ -87,14 +89,17 @@ void SurfaceTextureBuffer::SetColorRenderTarget(uint8 nColorIndex, PLRenderer::T
 			m_pFrameBufferObject->Bind();
 			m_pFrameBufferObject->SwitchTarget(*pTextureBuffer, nColorIndex);
 
+			// Get extensions instance
+			const Extensions &cExtensions = static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions();
+
 			// Set draw buffers
 			static const GLuint db[16] = { GL_COLOR_ATTACHMENT0_EXT, GL_COLOR_ATTACHMENT1_EXT, GL_COLOR_ATTACHMENT2_EXT, GL_COLOR_ATTACHMENT3_EXT,
 										   GL_COLOR_ATTACHMENT4_EXT, GL_COLOR_ATTACHMENT5_EXT, GL_COLOR_ATTACHMENT6_EXT, GL_COLOR_ATTACHMENT7_EXT,
 										   GL_COLOR_ATTACHMENT8_EXT, GL_COLOR_ATTACHMENT9_EXT, GL_COLOR_ATTACHMENT10_EXT, GL_COLOR_ATTACHMENT11_EXT,
 										   GL_COLOR_ATTACHMENT12_EXT, GL_COLOR_ATTACHMENT13_EXT, GL_COLOR_ATTACHMENT14_EXT, GL_COLOR_ATTACHMENT15_EXT};
-			if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_draw_buffers())
+			if (cExtensions.IsGL_ARB_draw_buffers())
 				glDrawBuffersARB(m_nMaxColorTargets, db);
-			else if (static_cast<Renderer&>(GetRenderer()).IsGL_ATI_draw_buffers())
+			else if (cExtensions.IsGL_ATI_draw_buffers())
 				glDrawBuffersATI(m_nMaxColorTargets, db);
 		}
 	}
@@ -141,7 +146,7 @@ bool SurfaceTextureBuffer::CreateFBO()
 	Renderer &cRenderer = static_cast<Renderer&>(GetRenderer());
 
 	// FBO supported?
-	if (cRenderer.IsGL_EXT_framebuffer_object()) {
+	if (cRenderer.GetContext().GetExtensions().IsGL_EXT_framebuffer_object()) {
 		// Get the depending of the texture buffer type
 		PLRenderer::TextureBuffer *pTextureBuffer = static_cast<PLRenderer::TextureBuffer*>(m_cTextureBufferHandler.GetResource());
 		if (pTextureBuffer) {
@@ -314,14 +319,17 @@ bool SurfaceTextureBuffer::MakeCurrent(uint8 nFace)
 				glDrawBuffer(GL_NONE);
 				glReadBuffer(GL_NONE);
 			} else {
+				// Get extensions instance
+				const Extensions &cExtensions = static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions();
+
 				// Set draw buffers
 				static const GLuint db[16] = { GL_COLOR_ATTACHMENT0_EXT, GL_COLOR_ATTACHMENT1_EXT, GL_COLOR_ATTACHMENT2_EXT, GL_COLOR_ATTACHMENT3_EXT,
 											   GL_COLOR_ATTACHMENT4_EXT, GL_COLOR_ATTACHMENT5_EXT, GL_COLOR_ATTACHMENT6_EXT, GL_COLOR_ATTACHMENT7_EXT,
 											   GL_COLOR_ATTACHMENT8_EXT, GL_COLOR_ATTACHMENT9_EXT, GL_COLOR_ATTACHMENT10_EXT, GL_COLOR_ATTACHMENT11_EXT,
 											   GL_COLOR_ATTACHMENT12_EXT, GL_COLOR_ATTACHMENT13_EXT, GL_COLOR_ATTACHMENT14_EXT, GL_COLOR_ATTACHMENT15_EXT};
-				if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_draw_buffers())
+				if (cExtensions.IsGL_ARB_draw_buffers())
 					glDrawBuffersARB(m_nMaxColorTargets, db);
-				else if (static_cast<Renderer&>(GetRenderer()).IsGL_ATI_draw_buffers())
+				else if (cExtensions.IsGL_ATI_draw_buffers())
 					glDrawBuffersATI(m_nMaxColorTargets, db);
 			}
 

@@ -26,7 +26,9 @@
 #include <PLCore/Tools/Tools.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
 #include "PLRendererOpenGL/PLRendererOpenGL.h"
+#include "PLRendererOpenGL/Context.h"
 #include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/VertexBuffer.h"
 #include "PLRendererOpenGL/FixedFunctions.h"
 
@@ -71,7 +73,8 @@ FixedFunctions::FixedFunctions(Renderer &cRendererOpenGL) :
 		m_sCapabilities.nMaxClipPlanes = static_cast<uint8>(nGLTemp);
 
 		// Vertex buffer fog coordinates supported?
-		m_sCapabilities.bVertexBufferFogCoord = (m_pRendererOpenGL->IsGL_ARB_vertex_program() || m_pRendererOpenGL->IsGL_EXT_fog_coord());
+		const Extensions &cExtensions = m_pRendererOpenGL->GetContext().GetExtensions();
+		m_sCapabilities.bVertexBufferFogCoord = (cExtensions.IsGL_ARB_vertex_program() || cExtensions.IsGL_EXT_fog_coord());
 
 		// Maximum vertex buffer streams
 		m_sCapabilities.nMaxVertexBufferStreams = 8;
@@ -241,7 +244,7 @@ void FixedFunctions::GeneralSettings()
 	glEnable(GL_COLOR_MATERIAL);
 
 	// Specular highlighting (improves specular lighting)
-	if (m_pRendererOpenGL->IsGL_EXT_separate_specular_color())
+	if (m_pRendererOpenGL->GetContext().GetExtensions().IsGL_EXT_separate_specular_color())
 		glLightModeli(GL_LIGHT_MODEL_COLOR_CONTROL, GL_SEPARATE_SPECULAR_COLOR);
 }
 
@@ -1321,6 +1324,9 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 	m_nVertexBufferOffsets[nStreamNumber] = nOffset;
 	m_ppCurrentVertexBuffer[nStreamNumber] = pVertexBuffer;
 
+	// Get extensions instance
+	const Extensions &cExtensions = m_pRendererOpenGL->GetContext().GetExtensions();
+
 	// Disable all client states
 	if (!pVertexBuffer || !nStreamNumber) {
 		for (uint32 i=1; i<m_sCapabilities.nMaxVertexBufferStreams; i++) {
@@ -1330,9 +1336,9 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 		glDisableClientState(GL_VERTEX_ARRAY);	// PLRenderer::VertexBuffer::Position
 		glDisableClientState(GL_NORMAL_ARRAY);	// PLRenderer::VertexBuffer::Normal
 		glDisableClientState(GL_COLOR_ARRAY);	// PLRenderer::VertexBuffer::Color
-		if (m_pRendererOpenGL->IsGL_EXT_secondary_color())
+		if (cExtensions.IsGL_EXT_secondary_color())
 			glDisableClientState(GL_SECONDARY_COLOR_ARRAY);	// PLRenderer::VertexBuffer::Color
-		if (!m_pRendererOpenGL->IsGL_ARB_vertex_program() && m_pRendererOpenGL->IsGL_EXT_fog_coord()) // Hm, no vertex program extension - try to use the fog coordinate extension instead
+		if (!cExtensions.IsGL_ARB_vertex_program() && cExtensions.IsGL_EXT_fog_coord()) // Hm, no vertex program extension - try to use the fog coordinate extension instead
 			glDisableClientState(GL_FOG_COORDINATE_ARRAY_EXT);	// PLRenderer::VertexBuffer::FogCoord
 		uint32 nNumOfTextureUnits = m_pRendererOpenGL->GetCapabilities().nMaxTextureUnits;
 		for (uint32 j=0; j<nNumOfTextureUnits; j++) {
@@ -1340,7 +1346,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 				glClientActiveTextureARB(GL_TEXTURE0_ARB+j);
 			glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		}
-		if (m_pRendererOpenGL->IsGL_ARB_vertex_program()) {
+		if (cExtensions.IsGL_ARB_vertex_program()) {
 			glDisableVertexAttribArrayARB(1);	// PLRenderer::VertexBuffer::BlendWeight
 			glDisableVertexAttribArrayARB(5);	// PLRenderer::VertexBuffer::FogCoord
 			glDisableVertexAttribArrayARB(6);	// PLRenderer::VertexBuffer::PointSize
@@ -1348,7 +1354,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 			glDisableVertexAttribArrayARB(14);	// PLRenderer::VertexBuffer::Tangent
 			glDisableVertexAttribArrayARB(15);	// PLRenderer::VertexBuffer::Binormal
 		}
-		if (m_pRendererOpenGL->IsGL_ARB_vertex_buffer_object())
+		if (cExtensions.IsGL_ARB_vertex_buffer_object())
 			glBindBufferARB(GL_ARRAY_BUFFER_ARB, 0);
 	}
 
@@ -1380,7 +1386,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 					break;
 
 				case VertexBuffer::BlendWeight: // Blend weights
-					if (m_pRendererOpenGL->IsGL_ARB_vertex_program()) {
+					if (cExtensions.IsGL_ARB_vertex_program()) {
 						glVertexAttribPointerARB(
 							1,								// Weights are vertex attribute 1
 							cAttribute.nComponentsAPI,
@@ -1399,7 +1405,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 
 				case VertexBuffer::Color: // Colors
 					if (cAttribute.nChannel) {
-						if (m_pRendererOpenGL->IsGL_EXT_secondary_color()) {
+						if (cExtensions.IsGL_EXT_secondary_color()) {
 							glSecondaryColorPointerEXT(cAttribute.nComponentsAPI, cAttribute.nTypeAPI, nVertexSize, BUFFER_OFFSET(cAttribute.nOffset));
 							glEnableClientState(GL_SECONDARY_COLOR_ARRAY);
 						}
@@ -1410,7 +1416,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 					break;
 
 				case VertexBuffer::FogCoord: // Fog coordinates
-					if (m_pRendererOpenGL->IsGL_ARB_vertex_program()) {
+					if (cExtensions.IsGL_ARB_vertex_program()) {
 						glVertexAttribPointerARB(
 							5,								// Fog coordinates are vertex attribute 5
 							cAttribute.nComponentsAPI,
@@ -1421,14 +1427,14 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 						glEnableVertexAttribArrayARB(5);
 
 					// Hm, no vertex program extension - try to use the fog coordinate extension instead (type MUST be Float1!)
-					} else if (m_pRendererOpenGL->IsGL_EXT_fog_coord() && cAttribute.nTypeAPI == VertexBuffer::Float1) {
+					} else if (cExtensions.IsGL_EXT_fog_coord() && cAttribute.nTypeAPI == VertexBuffer::Float1) {
 						glFogCoordPointerEXT(cAttribute.nTypeAPI, nVertexSize, BUFFER_OFFSET(cAttribute.nOffset));
 						glEnableClientState(GL_FOG_COORDINATE_ARRAY_EXT);
 					}
 					break;
 
 				case VertexBuffer::PointSize: // Point sprite sizes
-					if (m_pRendererOpenGL->IsGL_ARB_vertex_program()) {
+					if (cExtensions.IsGL_ARB_vertex_program()) {
 						glVertexAttribPointerARB(
 							6,								// Point sprite size are vertex attribute 6
 							cAttribute.nComponentsAPI,
@@ -1441,7 +1447,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 					break;
 
 				case VertexBuffer::BlendIndices: // Blend indices
-					if (m_pRendererOpenGL->IsGL_ARB_vertex_program()) {
+					if (cExtensions.IsGL_ARB_vertex_program()) {
 						glVertexAttribPointerARB(
 							7,								// Matrix indices are vertex attribute 7
 							cAttribute.nComponentsAPI,
@@ -1477,7 +1483,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 				}
 
 				case VertexBuffer::Tangent: // Tangents
-					if (m_pRendererOpenGL->IsGL_ARB_vertex_program()) {
+					if (cExtensions.IsGL_ARB_vertex_program()) {
 						glVertexAttribPointerARB(
 							14,								// Tangent are vertex attribute 14
 							cAttribute.nComponentsAPI,
@@ -1490,7 +1496,7 @@ bool FixedFunctions::SetVertexBuffer(PLRenderer::VertexBuffer *pVertexBuffer, ui
 					break;
 
 				case VertexBuffer::Binormal: // Binormals
-					if (m_pRendererOpenGL->IsGL_ARB_vertex_program()) {
+					if (cExtensions.IsGL_ARB_vertex_program()) {
 						glVertexAttribPointerARB(
 							15,								// Binormal are vertex attribute 15
 							cAttribute.nComponentsAPI,

@@ -27,7 +27,9 @@
 #include "PLRendererOpenGL/ShaderLanguageGLSL.h"
 #include "PLRendererOpenGL/GeometryShaderGLSL.h"
 #include "PLRendererOpenGL/FragmentShaderGLSL.h"
+#include "PLRendererOpenGL/Context.h"
 #include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/ShaderToolsGLSL.h"
 #include "PLRendererOpenGL/ProgramAttributeGLSL.h"
 #include "PLRendererOpenGL/ProgramUniformGLSL.h"
@@ -96,7 +98,7 @@ GLuint ProgramGLSL::GetOpenGLProgram(bool bAutomaticLink)
 			}
 
 			// The user may request a copy of the compiled program...
-			if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_get_program_binary())
+			if (static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_ARB_get_program_binary())
 				glProgramParameteri(m_nOpenGLProgram, GL_PROGRAM_BINARY_RETRIEVABLE_HINT, GL_TRUE);
 
 			// Link the program
@@ -618,7 +620,7 @@ bool ProgramGLSL::IsValid()
 String ProgramGLSL::GetCompiledProgram()
 {
 	// GL_ARB_get_program_binary extension required
-	if (static_cast<Renderer&>(GetRenderer()).IsGL_ARB_get_program_binary()) {
+	if (static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_ARB_get_program_binary()) {
 		// Get the OpenGL program - this also ensures that the program is linked
 		const GLuint nOpenGLProgram = GetOpenGLProgram();
 

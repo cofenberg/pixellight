@@ -24,7 +24,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/System/System.h>
+#include "PLRendererOpenGL/Context.h"
 #include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/VertexBuffer.h"
 
 
@@ -252,8 +254,11 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 		if (m_nVertexSize*nElements <= 0)
 			return false; // Error!
 
+		// Get extensions instance
+		const Extensions &cExtensions = static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions();
+
 		// Vertex buffer extension available?
-		if (!static_cast<Renderer&>(GetRenderer()).IsGL_ARB_vertex_buffer_object()) {
+		if (!cExtensions.IsGL_ARB_vertex_buffer_object()) {
 			// Fallback to legacy software implementation
 			nUsage = PLRenderer::Usage::Software;
 			bManaged = false;
@@ -314,8 +319,7 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 
 		// Create the vertex buffer
 		bool bVBO = false;
-		if (nUsage != PLRenderer::Usage::Software &&
-			static_cast<Renderer&>(GetRenderer()).IsGL_ARB_vertex_buffer_object()) {
+		if (nUsage != PLRenderer::Usage::Software && cExtensions.IsGL_ARB_vertex_buffer_object()) {
 			// Use VBO
 			bVBO = true;
 			if (!m_nVertexBuffer)

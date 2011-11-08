@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/Context.h"
 
 
@@ -33,13 +34,36 @@ namespace PLRendererOpenGL {
 
 
 //[-------------------------------------------------------]
+//[ Public functions                                      ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Returns the available extensions
+*/
+const Extensions &Context::GetExtensions() const
+{
+	return *m_pExtensions;
+}
+
+/**
+*  @brief
+*    Returns the available extensions
+*/
+Extensions &Context::GetExtensions()
+{
+	return *m_pExtensions;
+}
+
+
+//[-------------------------------------------------------]
 //[ Protected methods                                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Constructor
 */
-Context::Context()
+Context::Context(Renderer &cRenderer) :
+	m_pExtensions(new Extensions(cRenderer))
 {
 }
 
@@ -49,6 +73,8 @@ Context::Context()
 */
 Context::~Context()
 {
+	// Destroy the extensions instance
+	delete m_pExtensions;
 }
 
 
@@ -59,7 +85,8 @@ Context::~Context()
 *  @brief
 *    Copy constructor
 */
-Context::Context(const Context &cSource)
+Context::Context(const Context &cSource) :
+	m_pExtensions(nullptr)
 {
 	// No implementation because the copy constructor is never used
 }
