@@ -1,3 +1,11 @@
+>> 08.11.2011
+[CO]
+- Minor updates to make the code cross-platform: (no problem, someone who never wrote cross-platform code can't know this minor pitfalls :)
+  -> Changed "#include <UnitTest++\TestRunner.h>" etc. into "#include <UnitTest++/TestRunner.h>" (GCC complains about \ but MSVC not about /)
+  -> Changed "#include <UnitTest++/TestReporterStdOut.h>" into "#include <UnitTest++/TestReporterStdout.h>" (unlike MS Windows, Linux and so on are case-sensitive)
+
+
+
 >> 07.11.2011
 [JS]
 - Added file structure for unit tests.

@@ -63,7 +63,7 @@ if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
 			set(md5sum "")
 		else()
 			# md5sum of the 32bit Linux package
-			set(md5sum "c10f0be0c0d14f9373d877851436b45c")
+			set(md5sum "f2fb04d440974fb02a916ca0a238f8c5")
 		endif()
 	endif()
 	external_check_download("" ${md5sum})
