@@ -703,7 +703,7 @@ void Renderer::SetupCapabilities()
 *  @brief
 *    Sampler state filter mode helper function
 */
-GLuint Renderer::GetCombinedMinMipFilter(uint32 nStage)
+PLCore::uint32 Renderer::GetCombinedMinMipFilter(uint32 nStage)
 {
 	// Has the current texture buffer any mipmaps?
 	if (m_ppCurrentTextureBuffer[nStage] && !m_ppCurrentTextureBuffer[nStage]->GetNumOfMipmaps()) {

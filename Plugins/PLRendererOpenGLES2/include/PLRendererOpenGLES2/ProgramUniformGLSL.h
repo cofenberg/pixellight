@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/Renderer/ProgramUniform.h>
+#include "PLRendererOpenGLES2/Context.h"
 
 
 //[-------------------------------------------------------]

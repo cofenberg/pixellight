@@ -114,12 +114,6 @@
     <ClInclude Include="include\PLRendererOpenGLES2\PLRendererOpenGLES2.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLRendererOpenGLES2\PLRendererOpenGLES2Linux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLRendererOpenGLES2\PLRendererOpenGLES2Windows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLRendererOpenGLES2\ProgramAttributeGLSL.h">
       <Filter>Source Files</Filter>
     </ClInclude>

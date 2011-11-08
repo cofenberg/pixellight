@@ -35,18 +35,4 @@
 */
 
 
-//[-------------------------------------------------------]
-//[ OS definitions                                        ]
-//[-------------------------------------------------------]
-// Windows platform
-#ifdef WIN32
-	#include "PLRendererOpenGLES2/PLRendererOpenGLES2Windows.h"
-#endif
-
-// Linux platform
-#ifdef LINUX
-	#include "PLRendererOpenGLES2/PLRendererOpenGLES2Linux.h"
-#endif
-
-
 #endif // __PLRENDEREROPENGLES2_PLRENDEREROPENGLES2_H__

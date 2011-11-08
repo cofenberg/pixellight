@@ -29,7 +29,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/Renderer/Backend/RendererBackend.h>
-#include "PLRendererOpenGLES2/Context.h"
 
 
 //[-------------------------------------------------------]
@@ -41,6 +40,7 @@ namespace PLRendererOpenGLES2 {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+class Context;
 class ShaderLanguageCg;
 class ShaderLanguageGLSL;
 
@@ -194,7 +194,7 @@ class Renderer : public PLRenderer::RendererBackend {
 		*  @return
 		*    OpenGL ES sampler filter mode
 		*/
-		GLuint GetCombinedMinMipFilter(PLCore::uint32 nStage);
+		PLCore::uint32 GetCombinedMinMipFilter(PLCore::uint32 nStage);
 
 
 	//[-------------------------------------------------------]

@@ -72,6 +72,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <IgnoreSpecificDefaultLibraries>MSVCRT</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug\PLRendererOpenGLES2D.dll ..\..\Bin\Runtime\x86\
@@ -173,8 +174,6 @@ copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libGLESv2.dll ..\..\Bin\Runtime
     <ClInclude Include="include\PLRendererOpenGLES2\FragmentShaderGLSL.h" />
     <ClInclude Include="include\PLRendererOpenGLES2\IndexBuffer.h" />
     <ClInclude Include="include\PLRendererOpenGLES2\PLRendererOpenGLES2.h" />
-    <ClInclude Include="include\PLRendererOpenGLES2\PLRendererOpenGLES2Linux.h" />
-    <ClInclude Include="include\PLRendererOpenGLES2\PLRendererOpenGLES2Windows.h" />
     <ClInclude Include="include\PLRendererOpenGLES2\ProgramAttributeGLSL.h" />
     <ClInclude Include="include\PLRendererOpenGLES2\ProgramGLSL.h" />
     <ClInclude Include="include\PLRendererOpenGLES2\ProgramUniformGLSL.h" />
