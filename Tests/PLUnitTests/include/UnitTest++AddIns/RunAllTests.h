@@ -27,7 +27,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <UnitTest++/UnitTest++.h>
-#include <UnitTest++/TestReporterStdOut.h>
+#include <UnitTest++/TestReporterStdout.h>
 #include <UnitTest++/TestRunner.h>
 
 #include <UnitTest++AddIns/MyTestReporter.h>
