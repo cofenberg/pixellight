@@ -22,7 +22,7 @@
 #include <PLCore/System/System.h>
 #include <PLCore/System/Console.h>
 #include <PLCore/String/String.h>
-#include "UnitTest++AddIns\MyMobileTestReporter.h"
+#include "UnitTest++AddIns/MyMobileTestReporter.h"
 
 using namespace PLCore;
 

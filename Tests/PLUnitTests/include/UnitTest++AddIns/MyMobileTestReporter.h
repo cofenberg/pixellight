@@ -24,8 +24,8 @@
 #define __PLUNITTESTS_UNITTESTADDINS_MYMOBILETESTREPORTER_H_
 #pragma once
 
-#include <UnitTest++\UnitTest++.h>
-#include <UnitTest++\TestReporter.h>
+#include <UnitTest++/UnitTest++.h>
+#include <UnitTest++/TestReporter.h>
 
 class MyMobileTestReporter : public UnitTest::TestReporter
 {

@@ -26,9 +26,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <UnitTest++\UnitTest++.h>
-#include <UnitTest++\TestDetails.h>
-#include <UnitTest++\TestResults.h>
+#include <UnitTest++/UnitTest++.h>
+#include <UnitTest++/TestDetails.h>
+#include <UnitTest++/TestResults.h>
 
 // forward declarations needed
 class TestResults;
