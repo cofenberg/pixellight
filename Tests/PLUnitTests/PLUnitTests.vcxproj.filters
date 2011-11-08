@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\MainAndroid.cpp" />
+    <ClCompile Include="src\UnitTests.cpp" />
+    <ClCompile Include="src\UnitTest++AddIns\MyMobileTestReporter.cpp">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UnitTest++AddIns\MyTestReporter.cpp">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UnitTest++AddIns\RunAllTests.cpp">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UnitTest++AddIns\wchar_template.cpp">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLMath\Vector3.cpp">
+      <Filter>PLMath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCore\String.cpp">
+      <Filter>PLCore</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCore\Application.cpp">
+      <Filter>PLCore</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\UnitTest++AddIns\RunAllTests.h">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UnitTest++AddIns\MyMobileTestReporter.h">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UnitTest++AddIns\MyTestReporter.h">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UnitTest++AddIns\wchar_template.h">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="PLCore">
+      <UniqueIdentifier>{81c262c8-3042-487f-8f82-9f30e6a161e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PLMath">
+      <UniqueIdentifier>{c7d138eb-e0bb-409c-97ee-3229459ddc43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UnitTest++AddIns">
+      <UniqueIdentifier>{de9cd269-363e-4f77-97b9-f2108fb2504f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
