@@ -64,19 +64,18 @@ bool Extensions::Init(bool bUseExtensions)
 		WriteExtensionStringIntoLog(reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS)));
 
 		// Get the Linux context implementation
-		ContextLinux *pContextLinux = static_cast<ContextLinux*>(m_pRenderer->GetContext());
-		if (pContextLinux) {
-			// Get the X server display connection
-			Display *pDisplay = pContextLinux->GetDisplay();
-			if (pDisplay) {
-				// glXQueryExtensionsString
-				PL_LOG(Info, "glx Extensions info:")
-				WriteExtensionStringIntoLog(static_cast<const char*>(glXQueryExtensionsString(pDisplay, XDefaultScreen(pDisplay))));
+		ContextLinux &cContextLinux = static_cast<ContextLinux&>(m_pRenderer->GetContext());
 
-				// glXGetClientString
-				PL_LOG(Info, "glx client extensions info:")
-				WriteExtensionStringIntoLog(static_cast<const char*>(glXGetClientString(pDisplay, GLX_EXTENSIONS)));
-			}
+		// Get the X server display connection
+		Display *pDisplay = cContextLinux.GetDisplay();
+		if (pDisplay) {
+			// glXQueryExtensionsString
+			PL_LOG(Info, "glx Extensions info:")
+			WriteExtensionStringIntoLog(static_cast<const char*>(glXQueryExtensionsString(pDisplay, XDefaultScreen(pDisplay))));
+
+			// glXGetClientString
+			PL_LOG(Info, "glx client extensions info:")
+			WriteExtensionStringIntoLog(static_cast<const char*>(glXGetClientString(pDisplay, GLX_EXTENSIONS)));
 		}
 	}
 
