@@ -1,4 +1,10 @@
-﻿>> 04.10.2011
+﻿>> 11.11.2011
+[CO]
+- Updated x64 Visual Studio project settings
+
+
+
+>> 04.10.2011
 [CO]
 - Added base classes "SceneLoader" and "MeshLoader", all other RTTI Assimp loader classes are derived from one of them
 - "SceneLoader" & "MeshLoader": Added a loader parameter for post processing quality (0=none ... 3=maximum quality but slowest processing)
