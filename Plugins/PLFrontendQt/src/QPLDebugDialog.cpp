@@ -32,7 +32,7 @@
 #include "PLFrontendQt/DataModels/SceneGraphNodeTreeItemBase.h"
 #include "PLFrontendQt/QPLSceneContext.h"
 #include "PLFrontendQt/QPLDebugDialog.h"
-#include "ui_QPLDebugDialog.h"	// Automatically created by Qt's uic
+#include "ui_QPLDebugDialog.h"	// Automatically created by Qt's uic -> Do not write "PLFrontendQt/ui_QPLDebugDialog.h" because the resulting location of the automatically created file is not always up to up
 
 
 //[-------------------------------------------------------]
