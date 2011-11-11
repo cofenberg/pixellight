@@ -1,3 +1,9 @@
+>> 11.11.2011
+[CO]
+- "PLPhysicsNull": Updated x64 Visual Studio project settings
+
+
+
 >> 20.08.2011
 [CO]
 - After Stephan Wezel started the "PLPhysicsBullet" project for a Bullet (http://bulletphysics.org/) physics plugin on 2011-08-12

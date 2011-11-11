@@ -1,4 +1,10 @@
-﻿>> 01.11.2011
+﻿>> 11.11.2011
+[CO]
+- "PLDatabaseNull": Updated x64 Visual Studio project settings
+
+
+
+>> 01.11.2011
 [CO]
 - Bugfix within the CMake file of "PLDatabaseMySQL": I don't know why there was a copy step for a file called "libmysql64.dll", there's no such file ->
   removed this invalid copy step

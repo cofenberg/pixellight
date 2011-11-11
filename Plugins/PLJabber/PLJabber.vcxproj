@@ -60,17 +60,17 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.31118.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug_x86\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug_x86\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release_x86\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release_x86\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug64\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug64\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug_x64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug_x64\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release64\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release64\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release_x64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release_x64\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
@@ -110,8 +110,8 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLJabberD.dll ..\..\Bin\Runtime\x86\
-copy build\debug\PLJabberD.lib ..\..\Bin\Lib\x86\
+      <Command>copy build\debug_x86\PLJabberD.dll ..\..\Bin\Runtime\x86\
+copy build\debug_x86\PLJabberD.lib ..\..\Bin\Lib\x86\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -154,8 +154,8 @@ copy build\debug\PLJabberD.lib ..\..\Bin\Lib\x86\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLJabber.dll ..\..\Bin\Runtime\x86\
-copy build\release\PLJabber.lib ..\..\Bin\Lib\x86\
+      <Command>copy build\release_x86\PLJabber.dll ..\..\Bin\Runtime\x86\
+copy build\release_x86\PLJabber.lib ..\..\Bin\Lib\x86\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -176,18 +176,18 @@ copy build\release\PLJabber.lib ..\..\Bin\Lib\x86\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLJabberD64.dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PLCoreD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLJabberD.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLJabberD64.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)PLJabberD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
-      <ImportLibrary>$(OutDir)PLJabberD64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLJabberD.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\PLJabberD64.dll ..\..\Bin\Runtime\x64\
-copy build\debug64\PLJabberD64.lib ..\..\Bin\Lib\x64\
+      <Command>copy build\debug_x64\PLJabberD.dll ..\..\Bin\Runtime\x64\
+copy build\debug_x64\PLJabberD.lib ..\..\Bin\Lib\x64\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -208,19 +208,19 @@ copy build\debug64\PLJabberD64.lib ..\..\Bin\Lib\x64\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLJabber64.dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PLCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLJabber.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <ImportLibrary>$(OutDir)PLJabber64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLJabber.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\PLJabber64.dll ..\..\Bin\Runtime\x64\
-copy build\release64\PLJabber64.lib ..\..\Bin\Lib\x64\
+      <Command>copy build\release_x64\PLJabber.dll ..\..\Bin\Runtime\x64\
+copy build\release_x64\PLJabber.lib ..\..\Bin\Lib\x64\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

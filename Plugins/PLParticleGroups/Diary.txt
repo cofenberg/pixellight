@@ -1,4 +1,10 @@
-﻿>> 31.07.2011
+﻿>> 11.11.2011
+[CO]
+- Updated x64 Visual Studio project settings
+
+
+
+>> 31.07.2011
 [CO]
 - "SNParticleGroup::UpdateAABoundingBox()": If there were no active particle, there was the possibility that the scene node bounding box calculation was wrong
 

@@ -1,3 +1,9 @@
+>> 11.11.2011
+[CO]
+- Updated x64 Visual Studio project settings
+
+
+
 >> 18.10.2011
 [CO]
 - "SRPShadowMapping": GLSL was broken on NVIDIA Systems, removed the precision qualifiers

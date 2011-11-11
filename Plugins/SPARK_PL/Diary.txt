@@ -1,4 +1,10 @@
-﻿>> 19.09.2011
+﻿>> 11.11.2011
+[CO]
+- Updated x64 Visual Studio project settings
+
+
+
+>> 19.09.2011
 [CO]
 - Updated to version 1.5.5
 

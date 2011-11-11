@@ -1,3 +1,9 @@
+>> 11.11.2011
+[CO]
+- Updated x64 Visual Studio project settings
+
+
+
 >> 02.08.2011
 [CO]
 - Renamed "PLXmlText" into "PLGuiXmlText" to make clear that this project is PLGui related and not for instance a generic XML parser library

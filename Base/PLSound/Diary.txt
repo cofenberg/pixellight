@@ -1,4 +1,10 @@
-﻿>> 22.10.2011
+﻿>> 11.11.2011
+[CO]
+- "PLSoundNull" & "PLSoundOpenSLES": Updated x64 Visual Studio project settings
+
+
+
+>> 22.10.2011
 [CO]
 PLSoundOpenAL:
 - "OpenAL Programmer's Guide - OpenAL Versions 1.0 and 1.1" (http://connect.creativelabs.com/openal/Documentation/OpenAL_Programmers_Guide.pdf)
