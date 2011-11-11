@@ -1,6 +1,6 @@
 >> 11.11.2011
 [CO]
-- "PLRendererNull" & PLRendererOpenGLES2: Updated x64 Visual Studio project settings
+- "PLRendererNull" & "PLRendererOpenGLES2" & "PLRendererOpenGLCg": Updated x64 Visual Studio project settings
 
 
 
