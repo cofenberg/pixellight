@@ -36,7 +36,7 @@
 set(CMAKETOOLS_PROJECT_NAME "PixelLight")
 
 # Check which architecture has the host system
-# X86_64 aka X64
+# X86_64 aka x64
 if(${CMAKE_SYSTEM_PROCESSOR} MATCHES amd64*)
 	set(X86_64 1)
 endif()
@@ -341,6 +341,12 @@ endif()
 ##################################################
 ## Remove optional projects not available on a certain platform
 ##################################################
+# X86_64 aka x64
+if(X86_64)
+	# We don't support the legacy FMOD for x64, use the new version FMODEx instead
+	unset (PL_PLUGIN_SOUND_FMOD						CACHE)
+endif()
+
 # Windows
 if(NOT WIN32)
 	# Windows only features, for other targets, don't show this options
