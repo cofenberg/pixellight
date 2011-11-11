@@ -345,6 +345,9 @@ endif()
 if(X86_64)
 	# We don't support the legacy FMOD for x64, use the new version FMODEx instead
 	unset (PL_PLUGIN_SOUND_FMOD						CACHE)
+
+	# We don't support the legacy 3ds Max 2008 for x64, use a newer version instead
+	unset (PL_EXPORTER_3DSMAX_2008					CACHE)
 endif()
 
 # Windows
