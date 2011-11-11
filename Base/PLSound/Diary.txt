@@ -1,6 +1,6 @@
 ﻿>> 11.11.2011
 [CO]
-- "PLSoundNull" & "PLSoundOpenSLES" & "PLSoundOpenAL": Updated x64 Visual Studio project settings
+- "PLSoundNull" & "PLSoundOpenSLES" & "PLSoundOpenAL" & "PLSoundFMODEx": Updated x64 Visual Studio project settings
 
 
 
