@@ -1,3 +1,9 @@
+>> 11.11.2011
+[CO]
+- "98GuiTest" & "99Test": Updated x64 Visual Studio project settings
+
+
+
 >> 08.11.2011
 [CO]
 - Minor updates to make the code cross-platform: (no problem, someone who never wrote cross-platform code can't know this minor pitfalls :)
