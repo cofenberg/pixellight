@@ -32,7 +32,7 @@
 #include "PLFrontendQt/DataModels/SceneGraphNodeTreeItemBase.h"
 #include "PLFrontendQt/QPLSceneContext.h"
 #include "PLFrontendQt/QPLDebugDialog.h"
-#include "ui_QPLDebugDialog.h"	// Automatically created by Qt's uic
+#include "PLFrontendQt/ui_QPLDebugDialog.h"	// Automatically created by Qt's uic
 
 
 //[-------------------------------------------------------]
