@@ -1,6 +1,6 @@
 >> 11.11.2011
 [CO]
-- "PLFrontendQt" & "PLFrontendPLGui" & "PLFrontendNull" & "PLScriptBindings" & "PLScriptNull": Updated x64 Visual Studio project settings
+- "PLFrontendQt" & "PLFrontendPLGui" & "PLFrontendNull" & "PLScriptBindings" & "PLScriptNull" & "PLScriptLua": Updated x64 Visual Studio project settings
 
 
 
