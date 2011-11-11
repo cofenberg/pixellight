@@ -1,3 +1,9 @@
+>> 11.11.2011
+[CO]
+- Internal Visual Studio projects: Updated x64 settings
+
+
+
 >> 22.10.2011
 [CO]
 - "61Sound": Removed unused "Application::ChooseSoundAPI()"
