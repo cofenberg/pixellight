@@ -1,3 +1,9 @@
+>> 12.11.2011
+[CO]
+- "PLPhysicsODE": Updated x64 Visual Studio project settings
+
+
+
 >> 11.11.2011
 [CO]
 - "PLPhysicsNull" & "PLPhysicsNewton": Updated x64 Visual Studio project settings
