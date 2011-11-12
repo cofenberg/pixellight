@@ -1,3 +1,9 @@
+>> 12.11.2011
+[CO]
+- "PLRendererD3D9" & "PLRendererD3D11": Updated x64 Visual Studio project settings
+
+
+
 >> 11.11.2011
 [CO]
 - "PLRendererNull" & "PLRendererOpenGLES2" & "PLRendererOpenGLCg": Updated x64 Visual Studio project settings
