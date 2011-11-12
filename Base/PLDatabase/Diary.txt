@@ -1,4 +1,10 @@
-﻿>> 11.11.2011
+﻿>> 12.11.2011
+[CO]
+- "PLDatabaseSQLite": Updated x64 Visual Studio project settings
+
+
+
+>> 11.11.2011
 [CO]
 - "PLDatabaseNull": Updated x64 Visual Studio project settings
 
