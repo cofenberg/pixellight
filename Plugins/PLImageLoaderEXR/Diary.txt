@@ -1,4 +1,10 @@
-﻿>> 27.12.2010
+﻿>> 12.11.2011
+[CO]
+- Updated x64 Visual Studio project settings
+
+
+
+>> 27.12.2010
 [CO]
 - The PLImageLoaderEXR plugin was broken, loading exr (high dynamic range image file format) images is working again
 
