@@ -1,6 +1,6 @@
 ﻿>> 12.11.2011
 [CO]
-- "PLDatabaseSQLite": Updated x64 Visual Studio project settings
+- "PLDatabaseSQLite" & "PLDatabaseMySQL": Updated x64 Visual Studio project settings
 
 
 

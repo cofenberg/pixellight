@@ -59,17 +59,17 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.31118.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug_x86\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug_x86\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug64\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug64\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug_x64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug_x64\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release_x86\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release_x86\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release64\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release64\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release_x64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release_x64\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
@@ -118,8 +118,8 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLDatabaseMySQLD.dll ..\..\Bin\Runtime\x86\
-copy build\debug\PLDatabaseMySQLD.lib ..\..\Bin\Lib\x86\
+      <Command>copy build\debug_x86\PLDatabaseMySQLD.dll ..\..\Bin\Runtime\x86\
+copy build\debug_x86\PLDatabaseMySQLD.lib ..\..\Bin\Lib\x86\
 copy ..\..\External\_Windows_x86_32\MySQL\bin\libmysql.dll ..\..\Bin\Runtime\x86\
 ..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
@@ -146,22 +146,23 @@ copy ..\..\External\_Windows_x86_32\MySQL\bin\libmysql.dll ..\..\Bin\Runtime\x86
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD64.lib;PLDatabaseD64.lib;libmysql64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLDatabaseMySQLD64.dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/MySQL/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PLCoreD.lib;PLDatabaseD.lib;libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLDatabaseMySQLD.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x64\;../../External/_Windows_x86_64/MySQL/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLDatabaseMySQLD64.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)PLDatabaseMySQLD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <FixedBaseAddress>
       </FixedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLDatabaseMySQLD64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLDatabaseMySQLD.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\PLDatabaseMySQLD64.dll ..\..\Bin\Runtime\x64\
-copy build\debug64\PLDatabaseMySQLD64.lib ..\..\Bin\Lib\x64\
+      <Command>copy build\debug_x64\PLDatabaseMySQLD.dll ..\..\Bin\Runtime\x64\
+copy build\debug_x64\PLDatabaseMySQLD.lib ..\..\Bin\Lib\x64\
+copy ..\..\External\_Windows_x86_64\MySQL\bin\libmysql.dll ..\..\Bin\Runtime\x64\
 ..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
@@ -209,8 +210,8 @@ copy build\debug64\PLDatabaseMySQLD64.lib ..\..\Bin\Lib\x64\
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLDatabaseMySQL.dll ..\..\Bin\Runtime\x86\
-copy build\release\PLDatabaseMySQL.lib ..\..\Bin\Lib\x86\
+      <Command>copy build\release_x86\PLDatabaseMySQL.dll ..\..\Bin\Runtime\x86\
+copy build\release_x86\PLDatabaseMySQL.lib ..\..\Bin\Lib\x86\
 copy ..\..\External\_Windows_x86_32\MySQL\bin\libmysql.dll ..\..\Bin\Runtime\x86\
 ..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
@@ -242,9 +243,9 @@ copy ..\..\External\_Windows_x86_32\MySQL\bin\libmysql.dll ..\..\Bin\Runtime\x86
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore64.lib;PLDatabase64.lib;libmysql64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLDatabaseMySQL64.dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/MySQL/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PLCore.lib;PLDatabase.lib;libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLDatabaseMySQL.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x64\;../../External/_Windows_x86_64/MySQL/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -252,12 +253,13 @@ copy ..\..\External\_Windows_x86_32\MySQL\bin\libmysql.dll ..\..\Bin\Runtime\x86
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLDatabaseMySQL64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLDatabaseMySQL.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\PLDatabaseMySQL64.dll ..\..\Bin\Runtime\x64\
-copy build\release64\PLDatabaseMySQL64.lib ..\..\Bin\Lib\x64\
+      <Command>copy build\release_x64\PLDatabaseMySQL.dll ..\..\Bin\Runtime\x64\
+copy build\release_x64\PLDatabaseMySQL.lib ..\..\Bin\Lib\x64\
+copy ..\..\External\_Windows_x86_64\MySQL\bin\libmysql.dll ..\..\Bin\Runtime\x64\
 ..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
