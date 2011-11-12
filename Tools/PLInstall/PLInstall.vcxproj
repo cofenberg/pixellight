@@ -276,9 +276,9 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(RootDir)%(Directory)..\src\ui_%(Filename).h</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(RootDir)%(Directory)..\src\ui_%(Filename).h</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"../../External/_Windows_x86_64/Qt/bin/uic.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\src\moc_%(Filename).h"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"../../External/_Windows_x86_64/Qt/bin/uic.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\src\ui_%(Filename).h"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../External/_Windows_x86_64/Qt/bin/uic.exe</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"../../External/_Windows_x86_64/Qt/bin/uic.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\src\moc_%(Filename).h"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"../../External/_Windows_x86_64/Qt/bin/uic.exe" "%(FullPath)" -o "%(RootDir)%(Directory)..\src\ui_%(Filename).h"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../External/_Windows_x86_64/Qt/bin/uic.exe</AdditionalInputs>
     </CustomBuild>
     <CustomBuild Include="res\qtresources.qrc">
