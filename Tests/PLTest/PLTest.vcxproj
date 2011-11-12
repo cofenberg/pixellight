@@ -250,7 +250,7 @@ copy build\release_x86\PLTest.lib ..\..\Bin\Lib\x86\
     </Link>
     <PostBuildEvent>
       <Command>copy build\release_x64\PLTest.dll ..\..\Bin\Runtime\x64\
-copy build\release_x64\PLTest64.lib ..\..\Bin\Lib\x64\
+copy build\release_x64\PLTest.lib ..\..\Bin\Lib\x64\
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
