@@ -59,17 +59,17 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.31118.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug_x86\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug_x86\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug64\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug64\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug_x64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug_x64\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release_x86\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release_x86\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release64\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release64\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release_x64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build/release_x64\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
@@ -119,8 +119,8 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug\PLScriptAngelScriptD.dll ..\..\Bin\Runtime\x86\
-copy build\debug\PLScriptAngelScriptD.lib ..\..\Bin\Lib\x86\
+      <Command>copy build\debug_x86\PLScriptAngelScriptD.dll ..\..\Bin\Runtime\x86\
+copy build\debug_x86\PLScriptAngelScriptD.lib ..\..\Bin\Lib\x86\
 copy ..\..\External\_Windows_x86_32\AngelScript\bin\angelscript.dll ..\..\Bin\Runtime\x86\
 ..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
@@ -147,23 +147,23 @@ copy ..\..\External\_Windows_x86_32\AngelScript\bin\angelscript.dll ..\..\Bin\Ru
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD64.lib;angelscript.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLScriptAngelScriptD64.dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_64/AngelScript/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PLCoreD.lib;angelscript.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLScriptAngelScriptD.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x64\;../../External/_Windows_x86_64/AngelScript/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLScriptAngelScriptD64.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>$(OutDir)PLScriptAngelScriptD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <FixedBaseAddress>
       </FixedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLScriptAngelScriptD64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLScriptAngelScriptD.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug64\PLScriptAngelScriptD64.dll ..\..\Bin\Runtime\x64\
-copy build\debug64\PLScriptAngelScriptD64.lib ..\..\Bin\Lib\x64\
+      <Command>copy build\debug_x64\PLScriptAngelScriptD.dll ..\..\Bin\Runtime\x64\
+copy build\debug_x64\PLScriptAngelScriptD.lib ..\..\Bin\Lib\x64\
 copy ..\..\External\_Windows_x86_64\AngelScript\bin\angelscript.dll ..\..\Bin\Runtime\x64\
 ..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
@@ -212,8 +212,8 @@ copy ..\..\External\_Windows_x86_64\AngelScript\bin\angelscript.dll ..\..\Bin\Ru
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release\PLScriptAngelScript.dll ..\..\Bin\Runtime\x86\
-copy build\release\PLScriptAngelScript.lib ..\..\Bin\Lib\x86\
+      <Command>copy build\release_x86\PLScriptAngelScript.dll ..\..\Bin\Runtime\x86\
+copy build\release_x86\PLScriptAngelScript.lib ..\..\Bin\Lib\x86\
 copy ..\..\External\_Windows_x86_32\AngelScript\bin\angelscript.dll ..\..\Bin\Runtime\x86\
 ..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
@@ -245,9 +245,9 @@ copy ..\..\External\_Windows_x86_32\AngelScript\bin\angelscript.dll ..\..\Bin\Ru
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore64.lib;angelscript.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLScriptAngelScript64.dll</OutputFile>
-      <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/AngelScript/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>PLCore.lib;angelscript.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)PLScriptAngelScript.dll</OutputFile>
+      <AdditionalLibraryDirectories>..\..\Bin\Lib\x64\;../../External/_Windows_x86_64/AngelScript/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -255,12 +255,12 @@ copy ..\..\External\_Windows_x86_32\AngelScript\bin\angelscript.dll ..\..\Bin\Ru
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLScriptAngelScript64.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)PLScriptAngelScript.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release64\PLScriptAngelScript64.dll ..\..\Bin\Runtime\x64\
-copy build\release64\PLScriptAngelScript64.lib ..\..\Bin\Lib\x64\
+      <Command>copy build\release_x64\PLScriptAngelScript.dll ..\..\Bin\Runtime\x64\
+copy build\release_x64\PLScriptAngelScript.lib ..\..\Bin\Lib\x64\
 copy ..\..\External\_Windows_x86_64\AngelScript\bin\angelscript.dll ..\..\Bin\Runtime\x64\
 ..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
