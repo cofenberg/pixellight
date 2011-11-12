@@ -1,3 +1,9 @@
+>> 12.11.2011
+[CO]
+- "PLScriptV8": Updated x64 Visual Studio project settings
+
+
+
 >> 11.11.2011
 [CO]
 - "PLFrontendQt" & "PLFrontendPLGui" & "PLFrontendNull" & "PLScriptBindings" & "PLScriptNull" & "PLScriptLua": Updated x64 Visual Studio project settings
