@@ -74,21 +74,20 @@ SurfaceWindowMacOSX::SurfaceWindowMacOSX(PLRenderer::SurfaceWindowHandler &cHand
 bool SurfaceWindowMacOSX::GetGamma(float &fRed, float &fGreen, float &fBlue) const
 {
 	// Get the MacOS X OpenGL render context
-	ContextMacOSX *pContextMacOSX = static_cast<ContextMacOSX*>(static_cast<Renderer&>(GetRenderer()).GetContext());
-	if (pContextMacOSX) {
-		// Get the X server display connection
-		Display *pDisplay = pContextMacOSX->GetDisplay();
+	ContextMacOSX &cContextMacOSX = static_cast<ContextMacOSX&>(static_cast<Renderer&>(GetRenderer()).GetContext());
 
-		// Get gamma information
-		XF86VidModeGamma sXF86VidModeGamma;
-		if (XF86VidModeGetGamma(pDisplay, XDefaultScreen(pDisplay), &sXF86VidModeGamma)) {
-			fRed   = sXF86VidModeGamma.red;
-			fGreen = sXF86VidModeGamma.green;
-			fBlue  = sXF86VidModeGamma.blue;
+	// Get the X server display connection
+	Display *pDisplay = cContextMacOSX.GetDisplay();
+
+	// Get gamma information
+	XF86VidModeGamma sXF86VidModeGamma;
+	if (XF86VidModeGetGamma(pDisplay, XDefaultScreen(pDisplay), &sXF86VidModeGamma)) {
+		fRed   = sXF86VidModeGamma.red;
+		fGreen = sXF86VidModeGamma.green;
+		fBlue  = sXF86VidModeGamma.blue;
 			
-			// Done
-			return true;
-		}
+		// Done
+		return true;
 	}
 
 	// Set fallback settings so that the reference parameters are never within an undefined state
@@ -104,22 +103,21 @@ bool SurfaceWindowMacOSX::SetGamma(float fRed, float fGreen, float fBlue)
 {
 	if (static_cast<int>(fRed*10) <= 10 && static_cast<int>(fGreen*10) <= 10 && static_cast<int>(fBlue*10) <= 10) {
 		// Get the MacOS X OpenGL render context
-		ContextMacOSX *pContextMacOSX = static_cast<ContextMacOSX*>(static_cast<Renderer&>(GetRenderer()).GetContext());
-		if (pContextMacOSX) {
-			// Get the X server display connection
-			Display *pDisplay = pContextMacOSX->GetDisplay();
+		ContextMacOSX &cContextMacOSX = static_cast<ContextMacOSX&>(static_cast<Renderer&>(GetRenderer()).GetContext());
 
-			// Gamma was changed...
-			m_bGammaChanged = true;
+		// Get the X server display connection
+		Display *pDisplay = cContextMacOSX.GetDisplay();
 
-			// Call the OS gamma ramp function
-			XF86VidModeGamma sXF86VidModeGamma;
-			sXF86VidModeGamma.red   = fRed;
-			sXF86VidModeGamma.green = fGreen;
-			sXF86VidModeGamma.blue  = fBlue;
-			if (XF86VidModeSetGamma(pDisplay, XDefaultScreen(pDisplay), &sXF86VidModeGamma))
-				return true; // Done
-		}
+		// Gamma was changed...
+		m_bGammaChanged = true;
+
+		// Call the OS gamma ramp function
+		XF86VidModeGamma sXF86VidModeGamma;
+		sXF86VidModeGamma.red   = fRed;
+		sXF86VidModeGamma.green = fGreen;
+		sXF86VidModeGamma.blue  = fBlue;
+		if (XF86VidModeSetGamma(pDisplay, XDefaultScreen(pDisplay), &sXF86VidModeGamma))
+			return true; // Done
 	}
 
 	// Error!
@@ -138,14 +136,13 @@ Vector2i SurfaceWindowMacOSX::GetSize() const
 		unsigned int nWidth = 0, nHeight = 0, nBorder = 0, nDepth = 0;
 
 		// Get the MacOS X context implementation
-		ContextMacOSX *pContextMacOSX = static_cast<ContextMacOSX*>(static_cast<Renderer&>(GetRenderer()).GetContext());
-		if (pContextMacOSX) {
-			// Get the X server display connection
-			Display *pDisplay = pContextMacOSX->GetDisplay();
-			if (pDisplay) {
-				// Get X window geometry information
-				XGetGeometry(pDisplay, GetNativeWindowHandle(), &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
-			}
+		ContextMacOSX &cContextMacOSX = static_cast<ContextMacOSX&>(static_cast<Renderer&>(GetRenderer()).GetContext());
+
+		// Get the X server display connection
+		Display *pDisplay = cContextMacOSX.GetDisplay();
+		if (pDisplay) {
+			// Get X window geometry information
+			XGetGeometry(pDisplay, GetNativeWindowHandle(), &nRootWindow, &nPositionX, &nPositionY, &nWidth, &nHeight, &nBorder, &nDepth);
 		}
 
 		// Return the window size
@@ -164,13 +161,12 @@ bool SurfaceWindowMacOSX::Init()
 	// Is it fullscreen?
 	if (m_bIsFullscreen) {
 		// Get the MacOS X context implementation
-		ContextMacOSX *pContextMacOSX = static_cast<ContextMacOSX*>(static_cast<Renderer&>(GetRenderer()).GetContext());
-		if (pContextMacOSX) {
-			// [TODO] Switch to the requested resolution
+		ContextMacOSX &cContextMacOSX = static_cast<ContextMacOSX&>(static_cast<Renderer&>(GetRenderer()).GetContext());
 
-			// Attach rendering context to a fullscreen drawable object
-			return (CGLSetFullScreenOnDisplay(pContextMacOSX->GetRenderContext(), CGDisplayIDToOpenGLDisplayMask(kCGDirectMainDisplay)) == kCGLNoError);
-		}
+		// [TODO] Switch to the requested resolution
+
+		// Attach rendering context to a fullscreen drawable object
+		return (CGLSetFullScreenOnDisplay(cContextMacOSX.GetRenderContext(), CGDisplayIDToOpenGLDisplayMask(kCGDirectMainDisplay)) == kCGLNoError);
 	} else {
 		// CGL only supports fullscreen rendering
 	}
@@ -184,13 +180,12 @@ void SurfaceWindowMacOSX::DeInit()
 	// Is it fullscreen?
 	if (m_bIsFullscreen) {
 		// Get the MacOS X context implementation
-		ContextMacOSX *pContextMacOSX = static_cast<ContextMacOSX*>(static_cast<Renderer&>(GetRenderer()).GetContext());
-		if (pContextMacOSX) {
-			// Disassociat rendering context from any drawable objects attached to it
-			CGLClearDrawable(pContextMacOSX->GetRenderContext());
+		ContextMacOSX &cContextMacOSX = static_cast<ContextMacOSX&>(static_cast<Renderer&>(GetRenderer()).GetContext());
 
-			// [TODO] Restore the previous resolution
-		}
+		// Disassociat rendering context from any drawable objects attached to it
+		CGLClearDrawable(cContextMacOSX.GetRenderContext());
+
+		// [TODO] Restore the previous resolution
 	} else {
 		// CGL only supports fullscreen rendering
 	}
@@ -199,27 +194,19 @@ void SurfaceWindowMacOSX::DeInit()
 bool SurfaceWindowMacOSX::MakeCurrent(uint8 nFace)
 {
 	// Get the MacOS X context implementation
-	ContextMacOSX *pContextMacOSX = static_cast<ContextMacOSX*>(static_cast<Renderer&>(GetRenderer()).GetContext());
-	if (pContextMacOSX) {
-		// Set the current rendering context
-		return (CGLSetCurrentContext(pContextMacOSX->GetRenderContext())== kCGLNoError);;
-	}
+	ContextMacOSX &cContextMacOSX = static_cast<ContextMacOSX&>(static_cast<Renderer&>(GetRenderer()).GetContext());
 
-	// Error!
-	return false;
+	// Set the current rendering context
+	return (CGLSetCurrentContext(cContextMacOSX.GetRenderContext())== kCGLNoError);;
 }
 
 bool SurfaceWindowMacOSX::Present()
 {
 	// Get the MacOS X context implementation
-	ContextMacOSX *pContextMacOSX = static_cast<ContextMacOSX*>(static_cast<Renderer&>(GetRenderer()).GetContext());
-	if (pContextMacOSX) {
-		// Set the current rendering context
-		return (CGLFlushDrawable(pContextMacOSX->GetRenderContext())== kCGLNoError);;
-	}
-	
-	// Error!
-	return false;
+	ContextMacOSX &cContextMacOSX = static_cast<ContextMacOSX&>(static_cast<Renderer&>(GetRenderer()).GetContext());
+
+	// Set the current rendering context
+	return (CGLFlushDrawable(cContextMacOSX.GetRenderContext())== kCGLNoError);;
 }
 
 
