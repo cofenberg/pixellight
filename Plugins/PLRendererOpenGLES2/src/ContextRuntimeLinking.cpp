@@ -216,7 +216,8 @@ bool ContextRuntimeLinking::LoadLibraries()
 			bResult = m_pGLESDynLib->Load(sRuntimeDirectory.GetLength() ? (sRuntimeDirectory + "/libGLESv2.dylib") : "libGLESv2.dylib");
 		} else {
 			// Second, try the system driver
-			const String sSharedLibrary = "/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib";
+		//	const String sSharedLibrary = "/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib";	// Direct
+			const String sSharedLibrary = "/System/Library/Frameworks/OpenGL.framework/Versions/Current/OpenGL";			// Let the system search it
 			bResult = m_pEGLDynLib->Load(sSharedLibrary);
 			if (bResult)
 				bResult = m_pGLESDynLib->Load(sSharedLibrary);
