@@ -61,6 +61,7 @@ ContextRuntimeLinking::ContextRuntimeLinking(Renderer &cRenderer, handle nNative
 			// Load the OpenGL ES 2.0 entry points
 			if (LoadGLESEntryPoints()) {
 				// Entry points successfully registered
+				PL_LOG(Info, "EGL and OpenGL ES 2.0 entry points successfully registered")
 				m_bEntryPointsRegistered = true;
 			}
 		}
@@ -205,8 +206,23 @@ bool ContextRuntimeLinking::LoadLibraries()
 		bResult = m_pEGLDynLib->Load("libEGL.so");
 		if (bResult)
 			bResult = m_pGLESDynLib->Load("libGLESv2.so");
+	#elif APPLE
+		// [TODO] It looks like the OpenGL ES 2.0 emulator from ARM is not available for Mac OS X, find another emulator?
+		// First, try the OpenGL ES 2.0 emulator from ARM (it's possible to move around this dylib without issues, so, this one first)
+		// Give Mac OS X an absolute path, if this is not done, I just rececive a polite "[PLCore] error while loading libEGL.dylib " -> "libEGL.dylib: cannot open shared object file: No such file or directory"
+		const String sRuntimeDirectory = Runtime::GetDirectory();
+		bResult = m_pEGLDynLib->Load(sRuntimeDirectory.GetLength() ? (sRuntimeDirectory + "/libEGL.dylib") : "libEGL.dylib");
+		if (bResult) {
+			bResult = m_pGLESDynLib->Load(sRuntimeDirectory.GetLength() ? (sRuntimeDirectory + "/libGLESv2.dylib") : "libGLESv2.dylib");
+		} else {
+			// Second, try the system driver
+			const String sSharedLibrary = "/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries/libGL.dylib";
+			bResult = m_pEGLDynLib->Load(sSharedLibrary);
+			if (bResult)
+				bResult = m_pGLESDynLib->Load(sSharedLibrary);
+	}
 	#elif LINUX
-		// First, try the OpenGL ES 2.0 emulator from ARM (it's possible to move around this dll without issues, so, this one first)
+		// First, try the OpenGL ES 2.0 emulator from ARM (it's possible to move around this so without issues, so, this one first)
 		// Give Linux an absolute path, if this is not done, I just rececive a polite "[PLCore] error while loading libEGL.so " -> "libEGL.so: cannot open shared object file: No such file or directory"
 		const String sRuntimeDirectory = Runtime::GetDirectory();
 		bResult = m_pEGLDynLib->Load(sRuntimeDirectory.GetLength() ? (sRuntimeDirectory + "/libEGL.so") : "libEGL.so");
@@ -247,7 +263,8 @@ bool ContextRuntimeLinking::LoadEGLEntryPoints()
 			if (!pSymbol) {																																			\
 				/* The specification states that "eglGetProcAddress" is only for extension functions, but when using OpenGL ES 2.0 on desktop PC by using a			\
 				   native OpenGL ES 2.0 capable graphics driver under Linux (tested with "AMD Catalyst 11.8"), only this way will work */							\
-				pSymbol = eglGetProcAddress(#funcName);																												\
+				if (eglGetProcAddress)																																\
+					pSymbol = eglGetProcAddress(#funcName);																											\
 			}																																						\
 			if (pSymbol) {																																			\
 				*(reinterpret_cast<void**>(&(funcName))) = pSymbol;																									\

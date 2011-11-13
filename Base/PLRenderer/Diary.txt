@@ -19,6 +19,7 @@
   headers used by a programmer using the PixelLight API.
 - "PLRendererOpenGLES2" is now also compiling under Mac OS X, just had to add the definition "__unix__". We could move this definition into "LinuxGCC.cmake", but
   I'am not sure about possible negative side effects across all projects - so, for now, I keep it local.
+- "PLRendererOpenGLES2" on Mac OS X now gives me the expected "Failed to find the entry point "eglGetProcAddress" within the EGL dynamic library"
 
 
 
