@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <OpenGL/OpenGL.h>
 #include <X11/Xutil.h>
 #include <X11/extensions/Xrandr.h>
 #include <X11/extensions/xf86vmode.h>
@@ -32,7 +33,6 @@
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
 #include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSX.h"
-#include <OpenGL/OpenGL.h>	// Include this after the rest, else we get OS definition issues, again
 
 
 //[-------------------------------------------------------]

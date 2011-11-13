@@ -23,10 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-//#include "PLRendererOpenGL/Renderer.h"
+#include <AppKit/NSOpenGL.h>
+#include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
 #include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSXCocoa.h"
-#include <AppKit/NSOpenGL.h>
 
 
 //[-------------------------------------------------------]
@@ -79,17 +79,15 @@ bool SurfaceWindowMacOSXCocoa::Init()
 		return SurfaceWindowMacOSX::Init();
 	} else {
 		// Get the MacOS X context implementation
-	//	ContextMacOSX *pContextMacOSX = static_cast<ContextMacOSX*>(static_cast<Renderer&>(GetRenderer()).GetContext());
-	//	if (pContextMacOSX) {
-			
-			NSOpenGLContext *pNSOpenGLContext = [[NSOpenGLContext alloc] initWithFormat:nullptr shareContext:nullptr];
-	
-			//		m_pNSOpenGLContext = new NSOpenGLContext();
-//			m_pNSOpenGLContext = [[NSOpenGLContext alloc] initWithFormat:pContextMacOSX->GetRenderContext() shareContext:shareContext]
-	//	}
+		ContextMacOSX &cContextMacOSX = static_cast<ContextMacOSX&>(static_cast<Renderer&>(GetRenderer()).GetContext());
 
 		// [TODO] Implement me
-		return false;
+		// Obj-C style object creation	
+		NSOpenGLContext *pNSOpenGLContext = [[NSOpenGLContext alloc] initWithFormat:nullptr shareContext:nullptr];
+//		m_pNSOpenGLContext = [[NSOpenGLContext alloc] initWithFormat:nullptr shareContext:cContextMacOSX.GetRenderContext()];
+
+		// [TODO] Implement me
+		return (m_pNSOpenGLContext != nullptr);
 	}
 }
 
