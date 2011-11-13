@@ -102,7 +102,7 @@ bool DynLib::IsLoaded() const
 String DynLib::GetPath() const
 {
 	// Return filename
-	return m_cUrl.GetNativePath();
+	return m_cUrl.GetUrl();
 }
 
 /**

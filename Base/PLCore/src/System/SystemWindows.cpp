@@ -608,10 +608,9 @@ String SystemWindows::GetCurrentDir() const
 		// Get current directory
 		wchar_t *pszTemp = new wchar_t[nTempLength];
 		GetCurrentDirectoryW(nTempLength, pszTemp);
-		const String sDir = String(pszTemp, false, nTempLength-1); // Do not copy, please
 
-		// Return the URL
-		return Url(sDir).GetNativePath();
+		// Return the URL (do not copy, please)
+		return String(pszTemp, false, nTempLength-1);
 	} else {
 		// Done
 		return "";

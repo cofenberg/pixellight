@@ -1,3 +1,23 @@
+>> 13.11.2011
+[CO]
+- Thomas Mühsam noticed that "System::GetCurrentDir()" returned, unlike many other methods, a native style instead path of an uniform style path and also sayed that
+  this makes directly comparing paths impossible (this resulted in a discussion about interfaces :). It's first required to check in which form the given path is,
+  and then converting them into an universal form so they can be compared. Searched the PLCore diary for the reason why this method is returning a native
+  style path... it turns out that over the years, this had been changed multiple times:
+  - "17.04.2008": I changed it from native to uniform with the argument now also Thomas Mühsam mentioned
+  - "03.08.2010": Stefan Buschmann changed it from uniform to native form, I wasn't able to find an explanation for the change, but I'am sure there's a good one
+    (no offence, I just try to understand changes in order to avoid a continues back and forth change and questions over the years)
+  -> Because there were now issues and discussions, again, about the representation of paths, I reviewed the topic. The change from "03.08.2010" was probably done
+     to keep everything as "close-to-metal" as possible, to avoid dozens back and forth conversion. While "it's always uniform across all platforms" would be nice
+     for the API user, it wouldn't be that good in respect of the overal performance and the user wouldn't have a chance to influence this. Were not already done,
+     documented the methods "passing thru" native style path.
+- "SystemWindows::GetCurrentDir()" & "SystemLinux::GetCurrentDir()" were using "Url(sDir).GetNativePath()" while other similar methods directly returnd the OS style
+  path wihouth touching it, changed it
+- Linux port: Added several "String::FromUTF8()" when passing an OS "char"-String through the interface to don't loose Unicode data. Would be nice if someone could
+  review this and similar places to ensure that we never convert an Linux UTF8 string into an ASCII string by accident...
+
+
+
 >> 12.11.2011
 [CO]
 - "PLScriptV8" & "PLScriptAngelScript" & "PLScriptPython" & "PLFrontendMozilla" & "PLFrontendActiveX": Updated x64 Visual Studio project settings
