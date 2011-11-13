@@ -171,21 +171,21 @@ uint32 SystemLinux::GetCPUMhz() const
 String SystemLinux::GetComputerName() const
 {
 	// Get computer name
-	return m_bSysInfoInit ? m_sName.nodename : "";
+	return m_bSysInfoInit ? String::FromUTF8(m_sName.nodename) : "";
 }
 
 String SystemLinux::GetUserName() const
 {
 	// Get user name
 	const struct passwd *pPass = getpwuid(getuid());
-	return pPass ? pPass->pw_name : "";
+	return pPass ? String::FromUTF8(pPass->pw_name) : "";
 }
 
 String SystemLinux::GetUserHomeDir() const
 {
 	// Get user home directory
 	const struct passwd *pPass = getpwuid(getuid());
-	return pPass ? pPass->pw_dir : "";
+	return pPass ? String::FromUTF8(pPass->pw_dir) : "";
 }
 
 String SystemLinux::GetUserDataDir() const
@@ -213,7 +213,7 @@ String SystemLinux::GetExecutableFilename() const
 		const int nRet = readlink(szLinkName, szProgram, 512);
 		if (nRet < 512) {
 			szProgram[nRet] = 0;
-			return szProgram;
+			return String::FromUTF8(szProgram);
 		}
 	}
 
@@ -223,7 +223,7 @@ String SystemLinux::GetExecutableFilename() const
 
 String SystemLinux::GetEnvironmentVariable(const String &sName) const
 {
-	return getenv(sName);
+	return String::FromUTF8(getenv(sName));
 }
 
 bool SystemLinux::SetEnvironmentVariable(const String &sName, const String &sValue) const
@@ -302,10 +302,15 @@ String SystemLinux::GetCurrentDir() const
 {
 	// Get current directory and allocates the buffer dynamically
 	char *pszTemp = getcwd(nullptr, 0);
-	const String sDir = String(pszTemp, false); // Do not copy, please
+
+	// Convert to PixelLight string
+	const String sDirectory = String::FromUTF8(pszTemp);
+
+	// Free the memory returned by "getcwd()"
+	free(pszTemp);
 
 	// Return the URL
-	return Url(sDir).GetNativePath();
+	return sDirectory;
 }
 
 bool SystemLinux::SetCurrentDir(const String &sPath)

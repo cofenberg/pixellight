@@ -109,7 +109,7 @@ class DynLibImpl {
 		*    Get the absolute path to the dynamic library
 		*
 		*  @return
-		*    The absolute path to the dynamic library
+		*    The absolute path to the dynamic library (native path style)
 		*/
 		virtual String GetAbsPath() const = 0;
 

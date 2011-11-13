@@ -1,3 +1,28 @@
+>> 13.11.2011
+[CO]
+- "PLRendererOpenGL": The header refactoring within this project a few days ago was really worth the effort, there are now fewer header-order issues. Still,
+  there are some places were I have to include Apple headers in the end, else there are tons of compiler issues introduced by those Apple headers. Header inclusion
+  order should never ever matter, but when it comes to OS headers it usually does. OS headers are usually written in C with a lot of definitions - and the names
+  used within the OS definitions then can't be used e.g. within classes, within totally different namespaces. C-definitions don't care about namespaces. This means
+  to analyze cryptic compiler errors in order to figure out that e.g. I have to define "Never" right after including OS headers. Each platform has it's own, other
+  definitions - when you got it working on one platform it doesn't mean that your free to use e.g. "GetCurrentDirectory" as method name on another platform. Would
+  be boring otherwise. Especially Apple is really port-hell, the language mixup required in order to access the Cocoa-API, which can only be accessed by using Obj-C,
+  isn't that much fun. I'am glad that using Objective-C++ is working now - wasn't working with my own build GCC 4.6 because support for this language has to be activated
+  manually. Which I of course hadn't. I wasn't able to compile GCC a second time, just got tons of errors during build and after a few hours I gave it up. That's the
+  reason why I spend time in making PixelLight compile by using GCC 4.2 shipped with Mac OS X. This compiler has build in Objective-C++ support. By using Objective-C++
+  it's possible to reuse and access existing C++ interfaces, while being able to include Cocoa Obj-C headers and e.g. using Obj-C style object construction while been
+  able to use C++ style method calls. Finally, after weeks of struggling with all those issues I was now able to mix C++ and Obj-C code which is required within the
+  OpenGL renderer in order to connect the OpenGL-context created by using C with the window, created in C, by using an Obj-C API just to be able to render into a window.
+  My brain hurts.
+  I hope the rest of the OpenGL renderer port isn't that painful as well. Why I wrote all that in here? It's a reminder why you really don't want to include OS
+  headers and using OS features directly. I'am really glad that we decided directly in the beginning of the development that OS headers shouldn't be included into
+  headers used by a programmer using the PixelLight API.
+- "PLRendererOpenGLES2" is now also compiling under Mac OS X, just had to add the definition "__unix__". We could move this definition into "LinuxGCC.cmake", but
+  I'am not sure about possible negative side effects across all projects - so, for now, I keep it local.
+- "PLRendererOpenGLES2" on Mac OS X now gives me the expected "Failed to find the entry point "eglGetProcAddress" within the EGL dynamic library"
+
+
+
 >> 12.11.2011
 [CO]
 - "PLRendererD3D9" & "PLRendererD3D11": Updated x64 Visual Studio project settings

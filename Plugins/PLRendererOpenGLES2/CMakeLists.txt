@@ -143,6 +143,14 @@ if(WIN32)
 	add_compile_defs(
 		${WIN32_COMPILE_DEFS}
 	)
+elseif(APPLE)
+	##################################################
+	## Apple
+	##################################################
+	add_compile_defs(
+		${LINUX_COMPILE_DEFS}
+		__unix__	# "eglplatform.h" from the Khronos Group is looking for "__unix__" when using X11
+	)
 elseif(LINUX)
 	##################################################
 	## Linux

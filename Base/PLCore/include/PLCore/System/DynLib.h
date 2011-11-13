@@ -114,7 +114,7 @@ class DynLib {
 		*    Get the absolute path to the dynamic library
 		*
 		*  @return
-		*    The absolute path to the dynamic library
+		*    The absolute path to the dynamic library (native path style)
 		*/
 		PLCORE_API String GetAbsPath() const;
 

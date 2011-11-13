@@ -206,7 +206,7 @@ class System : public Singleton<System> {
 		*    Get home directory of the current user
 		*
 		*  @return
-		*    The home directory of the current user
+		*    The home directory of the current user (native path style)
 		*
 		*  @remarks
 		*    Examples on different systems:
@@ -221,7 +221,7 @@ class System : public Singleton<System> {
 		*    Get data directory of the current user
 		*
 		*  @return
-		*    The data directory of the current user
+		*    The data directory of the current user (native path style)
 		*
 		*  @remarks
 		*    Examples on different systems:
@@ -253,7 +253,7 @@ class System : public Singleton<System> {
 		*    Get absolute path of application executable
 		*
 		*  @return
-		*    Path to executable (e.g. on Windows: 'C:\MyApplication\Test.exe')
+		*    Path to executable (native path style, e.g. on Windows: 'C:\MyApplication\Test.exe')
 		*
 		*  @note
 		*    - Application executable = currently running process
@@ -333,7 +333,7 @@ class System : public Singleton<System> {
 		*    Returns the current directory
 		*
 		*  @return
-		*    Path to the current directory as native path (never ends with "/"!)
+		*    Path to the current directory (native path style)
 		*/
 		PLCORE_API String GetCurrentDir() const;
 

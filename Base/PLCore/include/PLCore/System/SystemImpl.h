@@ -161,7 +161,7 @@ class SystemImpl {
 		*    Get home directory of the current user
 		*
 		*  @return
-		*    The home directory of the current user
+		*    The home directory of the current user (native path style)
 		*/
 		virtual String GetUserHomeDir() const = 0;
 
@@ -170,7 +170,7 @@ class SystemImpl {
 		*    Get data directory of the current user
 		*
 		*  @return
-		*    The data directory of the current user
+		*    The data directory of the current user (native path style)
 		*/
 		virtual String GetUserDataDir() const = 0;
 
@@ -191,7 +191,7 @@ class SystemImpl {
 		*    Get absolute path of application executable
 		*
 		*  @return
-		*    Path to executable (e.g. on Windows: 'C:\MyApplication\Test.exe')
+		*    Path to executable (native path style, e.g. on Windows: 'C:\MyApplication\Test.exe')
 		*/
 		virtual String GetExecutableFilename() const = 0;
 
@@ -260,7 +260,7 @@ class SystemImpl {
 		*    Returns the current directory
 		*
 		*  @return
-		*    Path to the current directory (never ends with "/"!)
+		*    Path to the current directory (native path style)
 		*/
 		virtual String GetCurrentDir() const = 0;
 

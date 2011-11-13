@@ -100,7 +100,7 @@ String DynLibLinux::GetAbsPath() const
 		link_map *pLinkMap = nullptr;
 		if (m_pLib && !dlinfo(m_pLib, RTLD_DI_LINKMAP, &pLinkMap)) {
 			// Success
-			return pLinkMap->l_name;
+			return String::FromUTF8(pLinkMap->l_name);
 		}
 	#endif
 
