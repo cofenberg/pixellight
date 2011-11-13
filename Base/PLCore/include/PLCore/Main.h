@@ -96,7 +96,7 @@ int PLMain(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore
 				PLCore::Array<PLCore::String> lstArguments;
 				for (int i=1; i<argc; i++)
 #if defined(LINUX)
-					lstArguments.Add(String::FromUTF8(argv[i]));
+					lstArguments.Add(PLCore::String::FromUTF8(argv[i]));
 #else
 					lstArguments.Add(argv[i]);
 #endif
