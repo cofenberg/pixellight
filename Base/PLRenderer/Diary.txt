@@ -17,6 +17,8 @@
   I hope the rest of the OpenGL renderer port isn't that painful as well. Why I wrote all that in here? It's a reminder why you really don't want to include OS
   headers and using OS features directly. I'am really glad that we decided directly in the beginning of the development that OS headers shouldn't be included into
   headers used by a programmer using the PixelLight API.
+- "PLRendererOpenGLES2" is now also compiling under Mac OS X, just had to add the definition "__unix__". We could move this definition into "LinuxGCC.cmake", but
+  I'am not sure about possible negative side effects across all projects - so, for now, I keep it local.
 
 
 
