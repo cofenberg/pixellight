@@ -21,6 +21,9 @@
   I'am not sure about possible negative side effects across all projects - so, for now, I keep it local.
 - "PLRendererOpenGLES2" on Mac OS X now gives me the expected "Failed to find the entry point "eglGetProcAddress" within the EGL dynamic library"
 
+[SW]
+- "PLRendererOpenGLES2" Extended under linux the check for the right lib to load for EGL/GLES. Because the opensource drivers provides the libEGL.so and libGLESv2.so libs for EGL/GLES. But the closed source drivers doesn't.
+  On the systen the opensource version might be present so first check libGL.so if it contains the eglGetProcAddress if not the try the separate EGL/GLES libs.
 
 
 >> 12.11.2011

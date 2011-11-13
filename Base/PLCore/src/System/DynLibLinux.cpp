@@ -112,7 +112,7 @@ bool DynLibLinux::Unload()
 {
 	if (m_pLib) {
 		// Unload library
-		if (dlclose(m_pLib)) {
+		if (!dlclose(m_pLib)) {
 			m_pLib = nullptr;
 
 			// Done
