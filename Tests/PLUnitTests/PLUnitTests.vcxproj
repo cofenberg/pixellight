@@ -26,7 +26,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="src\PLCore\Application.cpp" />
+    <ClCompile Include="src\PLCore\Application\ApplicationContext.cpp" />
+    <ClCompile Include="src\PLCore\Application\CoreApplication.cpp" />
     <ClCompile Include="src\PLCore\String.cpp" />
     <ClCompile Include="src\PLMath\Vector3.cpp" />
     <ClCompile Include="src\UnitTest++AddIns\MyMobileTestReporter.cpp" />
