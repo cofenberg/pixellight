@@ -3,6 +3,8 @@
 PLUnitTests:
 - changed file structure to reflect file structure in .\Base\PLCore\include\PLCore\
 - added tests for ApplicationContext
+- added tests for CoreApplication
+- changed internal test structure to define objects used for many testcases globally in testsuite
 - changed console output of testreporters
 
 
