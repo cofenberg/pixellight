@@ -96,7 +96,7 @@ class MainWindow : QDialog
 	//[-------------------------------------------------------]
 	private slots:
 		void cancelEvent();
-		void intallEvent();
+		void intallPLRuntimeEvent();
 		void checkInstallationEvent();
 
 
