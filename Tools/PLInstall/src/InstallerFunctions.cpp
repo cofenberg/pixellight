@@ -61,23 +61,42 @@ void InstallerFunctions::connectProgressEventHandler(PLCore::EventHandler<int> *
 }
 
 bool InstallerFunctions::installRuntime()
-{/**
-
+{
+	String sMessage;
 	// Install the PixelLight runtime
+	
+	//i know it's a bit redundand but we should check the current installation 
+	if(!checkRuntimeInstallation()) {
+		m_pEventProgressUpdate(1);
 
-	// Get the directory this executable is in and add the  platform architecture
-	const String sExecutableDirectory =  Url(sExecutableFilename).Collapse().CutFilename() +  System::GetInstance()->GetPlatformArchitecture() + '/';
-	// In case  PLInstall is not within the runtime directory, but I assume this will  never be the case because the new installer is using the Qt shared libraries
-	const String sExecutableDirectory =  Url(sExecutableFilename).Collapse().CutFilename();
+		// Get the directory this executable is in and add the  platform architecture
+		const String sCurrentDirectory = System::GetInstance()->GetCurrentDir();
+		m_pEventProgressUpdate(1);
+		const String sExecutableDirectory =  sCurrentDirectory; //+  System::GetInstance()->GetPlatformArchitecture() + '/';
+		m_pEventProgressUpdate(1);
 
-	// Write the PL-runtime directory into the registry
-	if (Runtime::SetDirectory(sExecutableDirectory, &sMessage))
-		sMessage = "PixelLight runtime installed at \"" +  sExecutableDirectory + "\"\n\nYou may need to restart your system";   
-	// Success
-	else
-		sMessage = "Failed to write the PL-runtime directory into  the registry: \"" + sMessage + '\"';                            // Error
-	**/
-	return false;
+		// In case  PLInstall is not within the runtime directory, but I assume this will  never be the case because the new installer is using the Qt shared libraries
+		//const String sExecutableDirectory =  Url(sCurrentDirectory);
+
+		// Write the PL-runtime directory into the registry and or path or whatever is needed on the specific plattform
+		if (Runtime::SetDirectory(sExecutableDirectory, &sMessage)) {
+			m_sLastSuccessMessage = "PixelLight runtime installed at \"" +  sExecutableDirectory + "\"\n\nYou may need to restart your system";   
+			m_pEventProgressUpdate(1);
+			// Success
+			return true;
+		}
+		else
+			m_sLastErrorMessage = "Failed to write the PL-runtime directory into  the registry: \"" + sMessage + '\"';                            // Error
+
+		m_pEventProgressUpdate(1);
+		//error ocurred 
+		return false;
+	}
+	
+
+	//the PL runtime is already installed
+	m_pEventProgressUpdate(4);
+	return true;
 }
 
 int InstallerFunctions::getInstallRuntimeProgressSteps()
@@ -87,19 +106,19 @@ int InstallerFunctions::getInstallRuntimeProgressSteps()
 
 bool InstallerFunctions::checkRuntimeInstallation()
 {	 
-    // Get the current PL-runtime directory (e.g.  "C:\PixelLight\Runtime\x86")
-    // -> Do also ensure that the registry entry is pointing to the same directory the PLCore shared library is in
-    const String sDirectory = Runtime::GetDirectory();
+	// Get the current PL-runtime directory (e.g.  "C:\PixelLight\Runtime\x86")
+	// -> Do also ensure that the registry entry is pointing to the same directory the PLCore shared library is in
+	String sDirectory = Runtime::GetDirectory();
 	m_pEventProgressUpdate(1);
-	const String sPLCoreSharedLibraryDirectory = Runtime::GetPLCoreSharedLibraryDirectory();
-	String tes = Url(sPLCoreSharedLibraryDirectory).GetNativePath();
-	m_pEventProgressUpdate(1);
-	const String sRegistryDirectory = Runtime::GetRegistryDirectory();
-	m_pEventProgressUpdate(1);
+	String sPLCoreSharedLibraryDirectory = Runtime::GetPLCoreSharedLibraryDirectory();
+	sPLCoreSharedLibraryDirectory.Delete(sPLCoreSharedLibraryDirectory.GetLength()-1);
 
+	m_pEventProgressUpdate(1);
+	String sRegistryDirectory = Runtime::GetRegistryDirectory();
+	m_pEventProgressUpdate(1);
 	
-    if (sDirectory.GetLength() &&  sPLCoreSharedLibraryDirectory ==  sRegistryDirectory)
-    {
+	if (sDirectory.GetLength() &&  sPLCoreSharedLibraryDirectory ==  sRegistryDirectory)
+	{
 		// The PixelLight runtime is already installed
 		//the PATH environment or the registry key is pointing to the current directory => PL is installed correctly
 		m_pEventProgressUpdate(1);
