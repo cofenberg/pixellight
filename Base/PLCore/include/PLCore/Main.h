@@ -72,36 +72,41 @@ int PLMain(const PLCore::String &sExecutableFilename, const PLCore::Array<PLCore
 // Do only include the program entry point if the current build target is no shared library
 // (On e.g. Linux those definitions are set by our build system -> we just use the MS Windows
 //  names so that we don't have to invent a new definition for this purpose)
-#if !defined(_WINDLL) && !defined(_USRDLL)												
-	// Windows implementation 
-	#if defined(WIN32) && !defined(_CONSOLE)
-		#ifdef UNICODE
-			int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPWSTR pszCmdLine, int nShow)
+#if !defined(_WINDLL) && !defined(_USRDLL)
+	// Windows implementation
+	#ifdef WIN32
+		#ifdef _CONSOLE
+			#ifdef UNICODE
+				int wmain(int argc, wchar_t **argv)
+			#else
+				int main(int argc, char **argv)
+			#endif
+				{
+					PLCore::Array<PLCore::String> lstArguments;
+					for (int i=1; i<argc; i++)
+						lstArguments.Add(argv[i]);
+					return PLMain(PLCore::System::GetInstance()->GetExecutableFilename(), lstArguments);
+				}
 		#else
-			int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR pszCmdLine, int nShow)
+			#ifdef UNICODE
+				int WINAPI wWinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPWSTR pszCmdLine, int nShow)
+			#else
+				int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR pszCmdLine, int nShow)
+			#endif
+				{
+					return PLMain(PLCore::System::GetInstance()->GetExecutableFilename(), PLCore::CommandLine::StringToArguments(pszCmdLine));
+				}
 		#endif
-			{
-				return PLMain(PLCore::System::GetInstance()->GetExecutableFilename(), PLCore::CommandLine::StringToArguments(pszCmdLine));
-			}
-	#endif
 
-	// Linux/Console implementation 
-	#if defined(LINUX) || (defined(WIN32) && defined(_CONSOLE))
-		#if defined(WIN32) && defined(UNICODE)
-			int wmain(int argc, wchar_t **argv)
-		#else
-			int main(int argc, char **argv)
-		#endif
-			{
-				PLCore::Array<PLCore::String> lstArguments;
-				for (int i=1; i<argc; i++)
-#if defined(LINUX)
-					lstArguments.Add(PLCore::String::FromUTF8(argv[i]));
-#else
-					lstArguments.Add(argv[i]);
-#endif
-				return PLMain(PLCore::System::GetInstance()->GetExecutableFilename(), lstArguments);
-			}
+	// Linux implementation
+	#elif LINUX
+		int main(int argc, char **argv)
+		{
+			PLCore::Array<PLCore::String> lstArguments;
+			for (int i=1; i<argc; i++)
+				lstArguments.Add(PLCore::String::FromUTF8(argv[i]));
+			return PLMain(PLCore::System::GetInstance()->GetExecutableFilename(), lstArguments);
+		}
 	#endif
 #endif
 
