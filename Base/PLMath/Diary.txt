@@ -20,6 +20,13 @@
      2. "1/PLMath::Math::Sqrt(42.0f)" took 1.536942 s (1536.942017 ms) while "1/sqrt(42.0f)" took 1.551504 s (1551.504028 ms)
      I assume this means that it's now safe to say that using "PLMath::Math" does not introduce a performance drawback - but the advantage of been cross-platform
      safe still remains. :D
+- Added "PLMath::Math::FastInvSqrt()". Performance test results (1.000.000.000 iterations, x64 release, MS Windows):
+  - "1/PLMath::Math::Sqrt(42.0f)":  1.526238 s (1526.238037 ms)
+  - "PLMath::Math::FastInvSqrt(42.0f)": 1.376321 s (1376.321045 ms
+  For testing purposes, I locally used this method were ever possible. When testing the existing projects/scenes, everything looked normal... except for one project
+  were the clipping was now failing for some objects. I assume that the reason for this are precision issues within "FastInvSqrt()" for larger floating point values.
+  So, to be on the safe side, I'am not using this method within PixelLight... but the method may still be usable for situations were it's known that for the given used
+  floating point range the results are acceptable.
 
 
 

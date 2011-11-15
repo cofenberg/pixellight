@@ -671,7 +671,7 @@ class Math {
 		*    Returns the square-root of a given value
 		*
 		*  @param[in] fValue
-		*    Nonnegative floating-point value, If negative, this function returns an indefinite
+		*    Nonnegative floating-point value, if negative, this function returns an indefinite
 		*    (same as a quiet NaN)
 		*
 		*  @return
@@ -684,13 +684,31 @@ class Math {
 		*    Returns the square-root of a given value
 		*
 		*  @param[in] dValue
-		*    Nonnegative floating-point value, If negative, this function returns an indefinite
+		*    Nonnegative floating-point value, if negative, this function returns an indefinite
 		*    (same as a quiet NaN)
 		*
 		*  @return
 		*    The square-root of the given value, indefinite on error
 		*/
 		inline static double Sqrt(double dValue);
+
+		/**
+		*  @brief
+		*    Returns the inverse square-root of a given value
+		*
+		*  @param[in] fValue
+		*    Nonnegative floating-point value, if negative, this function returns an indefinite
+		*    (same as a quiet NaN)
+		*
+		*  @return
+		*    The inverse square-root of the given value, indefinite on error
+		*
+		*  @remarks
+		*    This method is slightly faster then writing "1/Sqrt(<value>)", but may return invalid results.
+		*    So, be careful when using this method and only use it when you're sure that the results are
+		*    correct in your use case.
+		*/
+		inline static float FastInvSqrt(float fValue);
 
 		/**
 		*  @brief

@@ -689,6 +689,25 @@ double Math::Sqrt(double dValue)
 
 /**
 *  @brief
+*    Returns the inverse square-root of a given value
+*/
+float Math::FastInvSqrt(float fValue)
+{
+	// The orignal author of the following code is unknown, in the 3D graphics community there are rumours who could be the orignal author:
+	// - See Beyond3D article "Origin of Quake3's Fast InvSqrt()" at www.beyond3d.com/content/articles/8/ and http://www.beyond3d.com/content/articles/15
+	// - See "Fast inverse square root" at http://en.wikipedia.org/wiki/Fast_inverse_square_root
+	const float fThreeHalfs = 1.5f;
+	float x2 = fValue*0.5f;
+	float y  = fValue;
+	long i   = *reinterpret_cast<long*>(&y);
+	i        = 0x5f3759df - (i>>1);
+	y        = *reinterpret_cast<float*>(&i);
+	y        = y*(fThreeHalfs - (x2*y*y));
+	return y;
+}
+
+/**
+*  @brief
 *    Returns x raised to the power of y
 */
 float Math::Pow(float x, float y)
