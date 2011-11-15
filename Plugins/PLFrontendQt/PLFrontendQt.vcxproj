@@ -161,7 +161,7 @@ copy ..\..\External\_Windows_x86_32\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x86\
 copy build\debug_x64\PLFrontendQtD.lib ..\..\Bin\Lib\x64\
 copy ..\..\External\_Windows_x86_64\Qt\bin\QtCore4.dll ..\..\Bin\Runtime\x64\
 copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
-..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
+..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
