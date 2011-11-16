@@ -40,6 +40,7 @@ namespace PLGraphics {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+class Image;
 struct DDSHeader;
 
 
