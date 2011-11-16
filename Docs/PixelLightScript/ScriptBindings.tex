@@ -23,6 +23,9 @@ Write \emph{PL.System.IsWindows()} in order to figure out whether or not the app
 \paragraph{<bool> PL.System.IsLinux()}
 Write \emph{PL.System.IsLinux()} in order to figure out whether or not the application is currently running on Linux. Returns \emph{true} if we're currently running on a Linux platform, else \emph{false}.
 
+\paragraph{<string> PL.System.GetPlatformArchitecture()}
+Write \emph{PL.System.GetPlatformArchitecture()} in order to figure out the platform architecture (for instance \emph{x86}, \emph{x64}, \emph{armeabi}, \emph{armeabi-v7a} and so on).
+
 
 
 
@@ -67,3 +70,12 @@ Write \emph{PL.Timing.GetTimeDifference()} in order to get the past time since l
 
 \paragraph{<float> PL.Timing.GetFramesPerSecond()}
 Write \emph{PL.Timing.GetFramesPerSecond()} in order to get the current \ac{FPS}.
+
+
+
+
+\section{PL.System.ClassManager}
+Exposes \emph{PLCore::ClassManager}-features to scripts.
+
+\paragraph{PL.System.ClassManager.Print(<string>, <boolean>, <boolean>)}
+Write \emph{PL.System.ClassManager.Print(<string>, <boolean>, <boolean>)} in order to scan a directory for compatible plugins and load them in. Directory to search in as first parameter, boolean value deciding whether or not to take sub-directories into account as second parameter, boolean value deciding whether or not its allowed to perform delayed shared library loading to speed up the program start as third parameter. Returns \emph{true} if all went fine, else \emph{false}.

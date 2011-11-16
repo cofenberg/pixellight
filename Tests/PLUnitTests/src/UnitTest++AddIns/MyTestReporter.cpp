@@ -27,7 +27,7 @@ void MyTestReporter::ReportTestStart(UnitTest::TestDetails const& test)
 }
 void MyTestReporter::ReportFailure(UnitTest::TestDetails const& test, char const* failure)
 {
-	printf("*!Failed: %s\n\t*!Msg   : %s\n\n", test.testName, failure);
+	printf("*!Failed: %s/%s at line %d\n\t*!Msg   : %s\n\n", test.suiteName, test.testName, test.lineNumber, failure);
 }
 void MyTestReporter::ReportTestFinish(UnitTest::TestDetails const& test, float secondsElapsed)
 {
@@ -35,9 +35,9 @@ void MyTestReporter::ReportTestFinish(UnitTest::TestDetails const& test, float s
 void MyTestReporter::ReportSummary(int totalTestCount, int failedTestCount, int failureCount, float secondsElapsed)
 {
 	if (failureCount > 0)
-		printf("\tFAILURE: %d out of %d tests failed (%d failures).\n", failedTestCount, totalTestCount, failureCount);
+		printf("FAILURE: %d out of %d tests failed (%d failures).\n", failedTestCount, totalTestCount, failureCount);
 	else
-		printf("\tSuccess: %d tests passed.\n", totalTestCount);
+		printf("Success: %d tests passed.\n", totalTestCount);
 
-	printf("Test time: %.2f seconds.\n\n", secondsElapsed);
+	printf("Test time: %.4f seconds.\n\n", secondsElapsed);
 }

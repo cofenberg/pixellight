@@ -66,25 +66,26 @@ void MainWindow::initButtons()
 		
 	//connect button slots
 	QObject::connect(wnd_main_ui.btn_cancel,SIGNAL(clicked()),this,SLOT(cancelEvent()));
-	QObject::connect(wnd_main_ui.btn_install,SIGNAL(clicked()),this,SLOT(installEvent()));
+	QObject::connect(wnd_main_ui.btn_install,SIGNAL(clicked()),this,SLOT(intallPLRuntimeEvent()));
 	QObject::connect(wnd_main_ui.btn_checkInstallation,SIGNAL(clicked()),this,SLOT(checkInstallationEvent()));
 }
 
 void MainWindow::initTextAndLabels() 
 {
-	//setup checkbox "install" text
+	//setup button "install" text
 	wnd_main_ui.btn_install->setText(QString(" Install PixelLight Runtime Path "));
 	QFont font = wnd_main_ui.btn_install->font();
 	font.setBold(true);
 	wnd_main_ui.btn_install->setFont(font);
-	//setup checkbox "install" description
-	wnd_main_ui.lbl_install->setText("This is the installation checkbox description");;
+	//setup button "install" description
+	wnd_main_ui.lbl_install->setText("\n\nThis is the installation checkbox description");
 
-	//setup checkbox "check installation"
+	//setup button "check installation"
 	wnd_main_ui.btn_checkInstallation->setText(" Check PixelLight Runtime Path ");
 	wnd_main_ui.btn_checkInstallation->setFont(font);
-	//setup checkbox "check installation" description
-	wnd_main_ui.lbl_checkInstallation->setText("This is the pathcheck ckeckbox description");
+
+	//setup button "check installation" description
+	wnd_main_ui.lbl_checkInstallation->setText("\n\nThis is the pathcheck ckeckbox description");
 	
 	//setup installer description
 	wnd_main_ui.lbl_description->setText("<br>"\
@@ -114,7 +115,8 @@ bool MainWindow::runStart()
 		m_installationProgressPrecentage = 0;
 
 	} else {
-		//TODO Error -> allready a running task	
+		//Error -> allready a running task
+		//this can't happen
 	}
 
 	return m_bIsRunning;
@@ -131,7 +133,7 @@ void MainWindow::runComplete()
 
 void MainWindow::onUpdateProgress(int value)
 {
-	m_installationProgressPrecentage = m_installationProgressPrecentage + m_installationProgressStepPercentage;
+	m_installationProgressPrecentage = m_installationProgressPrecentage + (m_installationProgressStepPercentage * value);
 	wnd_main_ui.progB_progress->setValue(m_installationProgressPrecentage);
 
 	if(m_installationProgressPrecentage >= 100.0)
@@ -155,12 +157,6 @@ void MainWindow::toggleButtons()
 	wnd_main_ui.btn_checkInstallation->setEnabled(!m_bIsRunning);
 }
 
-//void MainWindow::onInstallationSucceed(PLCore::String msg)
-//{
-
-//}
-
-
 void MainWindow::cancelEvent()
 {
 	if(m_bIsRunning) {
@@ -171,7 +167,7 @@ void MainWindow::cancelEvent()
 }
 
 
-void MainWindow::intallEvent() 
+void MainWindow::intallPLRuntimeEvent() 
 {
 	if(runStart()) {
 		//get the installation steps 
@@ -184,7 +180,9 @@ void MainWindow::intallEvent()
 		retInstallation = m_pInstallerFunctions->installRuntime();
 		if(!retInstallation)
 			showDialog(m_pInstallerFunctions->getLastErrorDescription());
-	
+		else
+			showDialog(m_pInstallerFunctions->getLastSuccessMessage());
+
 		runComplete();
 	} else {
 		//this should not happen
@@ -204,7 +202,9 @@ void MainWindow::checkInstallationEvent()
 		bool retCheckInstallation = false;
 		retCheckInstallation = m_pInstallerFunctions->checkRuntimeInstallation();
 		if(!retCheckInstallation)
-					showDialog(m_pInstallerFunctions->getLastErrorDescription());
+			showDialog(m_pInstallerFunctions->getLastErrorDescription());
+		else
+			showDialog(m_pInstallerFunctions->getLastSuccessMessage());
 
 		runComplete();
 	} else {

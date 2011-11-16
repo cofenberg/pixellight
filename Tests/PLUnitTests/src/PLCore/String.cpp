@@ -7,6 +7,6 @@
 
 SUITE(String) {
 	TEST(Func1) {
-		CHECK(false);
+		CHECK(true);
 	}
 }

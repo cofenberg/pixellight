@@ -111,7 +111,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug_x86\PLFrontendMozillaD.dll ..\..\Bin\Runtime\x86\
-..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
+..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 copy build\debug_x86\PLFrontendMozillaD.dll "C:\Programme\Mozilla Firefox\plugins\nppl3d.dll"
 </Command>
     </PostBuildEvent>
@@ -144,7 +144,7 @@ copy build\debug_x86\PLFrontendMozillaD.dll "C:\Programme\Mozilla Firefox\plugin
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug_x64\PLFrontendMozillaD.dll ..\..\Bin\Runtime\x64\
-..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
+..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 copy build\debug_x64\PLFrontendMozillaD.dll "C:\Programme\Mozilla Firefox\plugins\nppl3d.dll"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

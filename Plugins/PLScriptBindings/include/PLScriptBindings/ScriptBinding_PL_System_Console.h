@@ -56,7 +56,7 @@ class ScriptBinding_PL_System_Console : public PLCore::ScriptBinding {
 			pl_property("Namespace",	"PL.System.Console")
 		pl_properties_end
 		// Constructors
-		pl_constructor_0(DefaultConstructor,	 "Default constructor",		"")
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
 		pl_method_1(Print,	pl_ret_type(void),	PLCore::String,	"Prints the given string into the system console",	"")
 	pl_class_end

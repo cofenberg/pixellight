@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBinding_PL_System.h                      *
+ *  File: ScriptBinding_PL_ClassManager.h                *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCRIPTBINDINGS_PL_SYSTEM_H__
-#define __PLSCRIPTBINDINGS_PL_SYSTEM_H__
+#ifndef __PLSCRIPTBINDINGS_PL_CLASSMANAGER_H__
+#define __PLSCRIPTBINDINGS_PL_CLASSMANAGER_H__
 #pragma once
 
 
@@ -42,25 +42,23 @@ namespace PLScriptBindings {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    System script binding class
+*    Class manager script binding class
 */
-class ScriptBinding_PL_System : public PLCore::ScriptBinding {
+class ScriptBinding_PL_ClassManager : public PLCore::ScriptBinding {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, ScriptBinding_PL_System, "PLScriptBindings", PLCore::ScriptBinding, "System script binding class")
+	pl_class(pl_rtti_export, ScriptBinding_PL_ClassManager, "PLScriptBindings", PLCore::ScriptBinding, "Class manager script binding class")
 		// Properties
 		pl_properties
-			pl_property("Namespace",	"PL.System")
+			pl_property("Namespace",	"PL.ClassManager")
 		pl_properties_end
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_0(IsWindows,					pl_ret_type(bool),				"Returns 'true' if we're currently running on a Windows platform, else 'false'",						"")
-		pl_method_0(IsLinux,					pl_ret_type(bool),				"Returns 'true' if we're currently running on a Linux platform, else 'false'",							"")
-		pl_method_0(GetPlatformArchitecture,	pl_ret_type(PLCore::String),	"Returns the platform architecture (for instance 'x86', 'x64', 'armeabi', 'armeabi-v7a' and so on)",	"")
+		pl_method_3(ScanPlugins,	pl_ret_type(bool),	PLCore::String, bool, bool, "Scan a directory for compatible plugins and load them in. Directory to search in as first parameter, boolean value deciding whether or not to take sub-directories into account as second parameter, boolean value deciding whether or not its allowed to perform delayed shared library loading to speed up the program start as third parameter. Returns 'true' if all went fine, else 'false'.", "")
 	pl_class_end
 
 
@@ -68,9 +66,7 @@ class ScriptBinding_PL_System : public PLCore::ScriptBinding {
 	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		bool IsWindows();
-		bool IsLinux();
-		PLCore::String GetPlatformArchitecture();
+		bool ScanPlugins(PLCore::String sPath, bool bRecursive, bool bDelayedPluginLoading);
 
 
 	//[-------------------------------------------------------]
@@ -81,13 +77,13 @@ class ScriptBinding_PL_System : public PLCore::ScriptBinding {
 		*  @brief
 		*    Constructor
 		*/
-		ScriptBinding_PL_System();
+		ScriptBinding_PL_ClassManager();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~ScriptBinding_PL_System();
+		virtual ~ScriptBinding_PL_ClassManager();
 
 
 };
@@ -99,4 +95,4 @@ class ScriptBinding_PL_System : public PLCore::ScriptBinding {
 } // PLScriptBindings
 
 
-#endif // __PLSCRIPTBINDINGS_PL_SYSTEM_H__
+#endif // __PLSCRIPTBINDINGS_PL_CLASSMANAGER_H__

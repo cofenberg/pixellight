@@ -98,7 +98,7 @@ class InstallerFunctions {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		static const int INSTALL_RUNTIME_PROGRESS_STEPS = 7;
+		static const int INSTALL_RUNTIME_PROGRESS_STEPS = 8;
 		static const int CHECK_RUNTIME_PROGRESS_STEPS = 4;
 
 		PLCore::String m_sLastErrorMessage;

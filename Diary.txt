@@ -2,7 +2,9 @@
  *  General diary for anything non directly per project related
 \*********************************************************/
 
-
+>> 14.11.2011
+[TM]
+- PLInstall: Updated the installer. This includes an new Qt Gui and some changes in the PLCore runtime backend.
 
 >> 01.11.2011
 [CO]

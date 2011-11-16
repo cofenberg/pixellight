@@ -371,12 +371,6 @@ copy build\release_x64\PLMath.lib ..\..\Bin\Lib\x64\
     <None Include="CMakeLists.txt" />
     <None Include="Diary.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PLCore\PLCore.vcxproj">
-      <Project>{e793f581-0152-4143-9809-6eeef19360a6}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

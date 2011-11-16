@@ -31,7 +31,7 @@ void MyMobileTestReporter::ReportTestStart(UnitTest::TestDetails const& test)
 }
 void MyMobileTestReporter::ReportFailure(UnitTest::TestDetails const& test, char const* failure)
 {
-	System::GetInstance()->GetConsole().Print(String("*!Failed: ") + test.testName + "\n\t*!Msg   : " + failure + "\n");
+	System::GetInstance()->GetConsole().Print(String("*!Failed: ") + test.suiteName + "/" + test.testName + "at line " + test.lineNumber + "\n\t*!Msg   : " + failure + "\n");
 }
 void MyMobileTestReporter::ReportTestFinish(UnitTest::TestDetails const& test, float secondsElapsed)
 {
@@ -39,7 +39,7 @@ void MyMobileTestReporter::ReportTestFinish(UnitTest::TestDetails const& test, f
 void MyMobileTestReporter::ReportSummary(int totalTestCount, int failedTestCount, int failureCount, float secondsElapsed)
 {
 	if (failureCount > 0)
-		System::GetInstance()->GetConsole().Print(String("\tFAILURE: ") + failedTestCount + " out of " + totalTestCount + " tests failed (" + failureCount + " failures).\n");
+		System::GetInstance()->GetConsole().Print(String("FAILURE: ") + failedTestCount + " out of " + totalTestCount + " tests failed (" + failureCount + " failures).\n");
 	else
 		System::GetInstance()->GetConsole().Print(String("Success: ") + totalTestCount + " tests passed.\n"); 
 

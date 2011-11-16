@@ -1,3 +1,14 @@
+>> 14.11.2011
+[JS]
+PLUnitTests:
+- changed file structure to reflect file structure in .\Base\PLCore\include\PLCore\
+- added tests for ApplicationContext
+- added tests for CoreApplication
+- changed internal test structure to define objects used for many testcases globally in testsuite
+- changed console output of testreporters
+
+
+
 >> 11.11.2011
 [CO]
 - "98GuiTest" & "99Test": Updated x64 Visual Studio project settings

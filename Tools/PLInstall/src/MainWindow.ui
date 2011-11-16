@@ -113,19 +113,6 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
        <widget class="QLabel" name="lbl_checkInstallation">
         <property name="text">
          <string>TextLabel</string>
@@ -149,20 +136,8 @@
         </item>
         <item>
          <widget class="QPushButton" name="btn_checkInstallation">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="sizeIncrement">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
           <property name="text">
-           <string>CheckBox</string>
+           <string>PushButton</string>
           </property>
          </widget>
         </item>
@@ -206,7 +181,7 @@
         <item>
          <widget class="QPushButton" name="btn_install">
           <property name="text">
-           <string>CheckBox</string>
+           <string>PushButton</string>
           </property>
          </widget>
         </item>
@@ -224,6 +199,19 @@
          </spacer>
         </item>
        </layout>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
       </item>
       <item>
        <widget class="QProgressBar" name="progB_progress">
@@ -272,6 +260,7 @@
   </widget>
  </widget>
  <resources>
+  <include location="../res/qtresources.qrc"/>
   <include location="../res/qtresources.qrc"/>
   <include location="../res/qtresources.qrc"/>
   <include location="../res/qtresources.qrc"/>

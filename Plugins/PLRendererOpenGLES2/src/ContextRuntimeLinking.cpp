@@ -231,30 +231,27 @@ bool ContextRuntimeLinking::LoadLibraries()
 			bResult = m_pGLESDynLib->Load(sRuntimeDirectory.GetLength() ? (sRuntimeDirectory + "/libGLESv2.so") : "libGLESv2.so");
 		} else {
 			// Second, try the system drivers
-			// First libGL.so the closed source drivers doesn't provide separate libs for GLES and EGL (at least the drivers from AMD)
+			// First "libGL.so": The closed source drivers doesn't provide separate libraries for GLES and EGL (at least the drivers from AMD)
 			bResult = m_pEGLDynLib->Load("libGL.so");
-			if (bResult)
-			{
-				// Try finding the eglGetProcAddress to determine if this lib contains EGL/GLES support
-				// This check is needed because only the closed source drivers have the EGL/GLES support in libGL.so
-				// The opensource drivers (mesa) have separate libs for this and they can be present on the system even the closed source drivers are used
+			if (bResult) {
+				// Try finding the eglGetProcAddress to determine if this library contains EGL/GLES support.
+				// This check is needed because only the closed source drivers have the EGL/GLES support in "libGL.so".
+				// The open source drivers (mesa) have separate libraries for this and they can be present on the system even the closed source drivers are used.
 				void *pSymbol = m_pEGLDynLib->GetSymbol("eglGetProcAddress");
 				if (pSymbol)
 					bResult = m_pGLESDynLib->Load("libGL.so");
 				else {
-					// Unload the lib
+					// Unload the library
 					m_pEGLDynLib->Unload();
 					bResult = false;
 				}
 			}
-			
-			if (!bResult)
-			{
-				// Second libEGL.so as the opensource driver have GLES and EGL in separate libs
+
+			if (!bResult) {
+				// Second: "libEGL.so" as the open source driver have GLES and EGL in separate libraries
 				bResult = m_pEGLDynLib->Load("libEGL.so");
-				if (bResult) {
+				if (bResult)
 					bResult = m_pGLESDynLib->Load("libGLESv2.so");
-				}
 			}
 		}
 	#endif

@@ -1,4 +1,36 @@
-﻿>> 31.07.2011
+﻿>> 15.11.2011
+[CO]
+- Yesterday, Prof. Dr. Frank Deinzer mentioned in the weekly meeting of a research project at my university that he noticed that we're wrapping
+  functions like "sin" and asked for the reason and whether or not this may introduce performance issues.
+  -> In general, in the PixelLight headers we try to avoid including system or so called "standard headers". The reason is simple: Those headers usually
+     introduce naming/definition conflicts across the platforms, not every function is available on every platforms, the names of the functions are
+     not equal across all platforms, those headers also add a certain overhead during compilation giving the compiler more files to process. So, one doesn't
+     really want do directly use those "standard features" when it comes to cross-platform development.
+  -> Performance: Of course, the additional function call is adding overhead. Until now it was more important to get PixelLight cross-platform and so
+     we encapsulated problematic stuff. Now that PixelLight is running on a growing number of platforms, it's decent to have a look at the performance. :D
+  -> I did a short performance test with 1.000.000.000 iterations (x64 release, MS Windows). One time using "1/PLMath::Math::Sqrt(42.0f)", and the other time
+     using "1/sqrt(42.0f)". "1/PLMath::Math::Sqrt(42.0f)" took 11.183546 s (11183.545898 ms) while "1/sqrt(42.0f)" took 1.572486 s (1572.485962 ms). So, we
+     now know the overhead introduced by the additional function call... and I think it's worth the effort to have a look how to improve it in a decent way.
+  -> Moved the "Math" implementation into the inlined part of the "Math"-header. This also means that this header now also includes "standard headers", meaning
+     introducing the risk of naming/definition conflicts in PixelLight and user projects. Usually the used math releated headers don't introduce definition
+     conflicts across the platforms, so, this should be fine... but it's still highly recommended to use this "PLMath::Math" helper class in case there are
+     issues on a new platform. Changing this one header is easier than changing all source codes of all projects.
+  -> Repeated the performance test from above two times.
+     1. "1/PLMath::Math::Sqrt(42.0f)" took 1.587663 s (1587.662964 ms) while "1/sqrt(42.0f)" took 1.505519 s (1505.519043 ms)
+     2. "1/PLMath::Math::Sqrt(42.0f)" took 1.536942 s (1536.942017 ms) while "1/sqrt(42.0f)" took 1.551504 s (1551.504028 ms)
+     I assume this means that it's now safe to say that using "PLMath::Math" does not introduce a performance drawback - but the advantage of been cross-platform
+     safe still remains. :D
+- Added "PLMath::Math::FastInvSqrt()". Performance test results (1.000.000.000 iterations, x64 release, MS Windows):
+  - "1/PLMath::Math::Sqrt(42.0f)":  1.526238 s (1526.238037 ms)
+  - "PLMath::Math::FastInvSqrt(42.0f)": 1.376321 s (1376.321045 ms
+  For testing purposes, I locally used this method were ever possible. When testing the existing projects/scenes, everything looked normal... except for one project
+  were the clipping was now failing for some objects. I assume that the reason for this are precision issues within "FastInvSqrt()" for larger floating point values.
+  So, to be on the safe side, I'am not using this method within PixelLight... but the method may still be usable for situations were it's known that for the given used
+  floating point range the results are acceptable.
+
+
+
+>> 31.07.2011
 [CO]
 - "GraphManager" is no longer a singleton
 - "GraphPathManager" is no longer a singleton

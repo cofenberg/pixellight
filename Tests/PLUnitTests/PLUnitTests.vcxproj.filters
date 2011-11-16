@@ -22,8 +22,11 @@
     <ClCompile Include="src\PLCore\String.cpp">
       <Filter>PLCore</Filter>
     </ClCompile>
-    <ClCompile Include="src\PLCore\Application.cpp">
-      <Filter>PLCore</Filter>
+    <ClCompile Include="src\PLCore\Application\ApplicationContext.cpp">
+      <Filter>PLCore\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCore\Application\CoreApplication.cpp">
+      <Filter>PLCore\Application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -52,6 +55,9 @@
     </Filter>
     <Filter Include="UnitTest++AddIns">
       <UniqueIdentifier>{de9cd269-363e-4f77-97b9-f2108fb2504f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PLCore\Application">
+      <UniqueIdentifier>{05cc65e3-5bf4-4597-ac8d-4810b1209365}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

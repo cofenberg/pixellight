@@ -30,9 +30,13 @@ define_project(PLUnitTests NOSUFFIX)
 ##################################################
 add_sources(
 	src/UnitTests.cpp
-	src/PLCore/Application.cpp
+	# PLCore
 	src/PLCore/String.cpp
+	src/PLCore/Application/ApplicationContext.cpp
+	src/PLCore/Application/CoreApplication.cpp
+	# PLMath
 	src/PLMath/Vector3.cpp
+	# UnitTest++ AddIns
 	src/UnitTest++AddIns/MyTestReporter.cpp
 	src/UnitTest++AddIns/MyMobileTestReporter.cpp
 	src/UnitTest++AddIns/RunAllTests.cpp

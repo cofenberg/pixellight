@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ScriptBinding_PL_System.cpp                    *
+ *  File: ScriptBinding_PL_ClassManager.cpp              *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,9 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/System/System.h>
-#include <PLCore/System/Console.h>
-#include "PLScriptBindings/ScriptBinding_PL_System.h"
+#include <PLCore/Base/ClassManager.h>
+#include "PLScriptBindings/ScriptBinding_PL_ClassManager.h"
 
 
 //[-------------------------------------------------------]
@@ -38,33 +37,15 @@ namespace PLScriptBindings {
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(ScriptBinding_PL_System)
+pl_implement_class(ScriptBinding_PL_ClassManager)
 
 
 //[-------------------------------------------------------]
 //[ Public RTTI methods                                   ]
 //[-------------------------------------------------------]
-bool ScriptBinding_PL_System::IsWindows()
+bool ScriptBinding_PL_ClassManager::ScanPlugins(String sPath, bool bRecursive, bool bDelayedPluginLoading)
 {
-	#ifdef WIN32
-		return true;
-	#else
-		return false;
-	#endif
-}
-
-bool ScriptBinding_PL_System::IsLinux()
-{
-	#ifdef LINUX
-		return true;
-	#else
-		return false;
-	#endif
-}
-
-String ScriptBinding_PL_System::GetPlatformArchitecture()
-{
-	return System::GetInstance()->GetPlatformArchitecture();
+	return ClassManager::GetInstance()->ScanPlugins(sPath, bRecursive ? Recursive : NonRecursive, bDelayedPluginLoading);
 }
 
 
@@ -75,7 +56,7 @@ String ScriptBinding_PL_System::GetPlatformArchitecture()
 *  @brief
 *    Constructor
 */
-ScriptBinding_PL_System::ScriptBinding_PL_System()
+ScriptBinding_PL_ClassManager::ScriptBinding_PL_ClassManager()
 {
 }
 
@@ -83,7 +64,7 @@ ScriptBinding_PL_System::ScriptBinding_PL_System()
 *  @brief
 *    Destructor
 */
-ScriptBinding_PL_System::~ScriptBinding_PL_System()
+ScriptBinding_PL_ClassManager::~ScriptBinding_PL_ClassManager()
 {
 }
 
