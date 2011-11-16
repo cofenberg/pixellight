@@ -62,6 +62,11 @@ bool ScriptBinding_PL_System::IsLinux()
 	#endif
 }
 
+String ScriptBinding_PL_System::GetPlatformArchitecture()
+{
+	return System::GetInstance()->GetPlatformArchitecture();
+}
+
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

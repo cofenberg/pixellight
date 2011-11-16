@@ -58,8 +58,9 @@ class ScriptBinding_PL_System : public PLCore::ScriptBinding {
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
-		pl_method_0(IsWindows,	pl_ret_type(bool),	"Returns 'true' if we're currently running on a Windows platform, else 'false'",	"")
-		pl_method_0(IsLinux,	pl_ret_type(bool),	"Returns 'true' if we're currently running on a Linux platform, else 'false'",		"")
+		pl_method_0(IsWindows,					pl_ret_type(bool),				"Returns 'true' if we're currently running on a Windows platform, else 'false'",						"")
+		pl_method_0(IsLinux,					pl_ret_type(bool),				"Returns 'true' if we're currently running on a Linux platform, else 'false'",							"")
+		pl_method_0(GetPlatformArchitecture,	pl_ret_type(PLCore::String),	"Returns the platform architecture (for instance 'x86', 'x64', 'armeabi', 'armeabi-v7a' and so on)",	"")
 	pl_class_end
 
 
@@ -69,6 +70,7 @@ class ScriptBinding_PL_System : public PLCore::ScriptBinding {
 	public:
 		bool IsWindows();
 		bool IsLinux();
+		PLCore::String GetPlatformArchitecture();
 
 
 	//[-------------------------------------------------------]
