@@ -2,6 +2,8 @@
 [CO]
 PLScriptBindings:
 - Exposed "PLCore::ClassManager::ScanPlugins"-feature to scripts
+PLScriptLua:
+- Bugfix: "RTTIObjectMethodPointer::GetLuaFunctionParametersAsString()": Boolean and string values were not handled correctly
 
 
 

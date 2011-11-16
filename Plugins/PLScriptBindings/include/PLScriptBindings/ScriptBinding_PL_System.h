@@ -56,7 +56,7 @@ class ScriptBinding_PL_System : public PLCore::ScriptBinding {
 			pl_property("Namespace",	"PL.System")
 		pl_properties_end
 		// Constructors
-		pl_constructor_0(DefaultConstructor,	 "Default constructor",		"")
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
 		pl_method_0(IsWindows,	pl_ret_type(bool),	"Returns 'true' if we're currently running on a Windows platform, else 'false'",	"")
 		pl_method_0(IsLinux,	pl_ret_type(bool),	"Returns 'true' if we're currently running on a Linux platform, else 'false'",		"")

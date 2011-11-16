@@ -81,12 +81,12 @@ String RTTIObjectMethodPointer::GetLuaFunctionParametersAsString(Script &cScript
 			sParams += sPrefix + "=0 ";
 
 		// Is it boolean?
-		} else if (lua_isboolean(pLuaState, -1)) {
+		} else if (lua_isboolean(pLuaState, i)) {
 			// Add the Lua argument to the parameter string
-			sParams += sPrefix + ((lua_toboolean(pLuaState, -1) != 0) ? "=1 " : "=0 ");
+			sParams += sPrefix + ((lua_toboolean(pLuaState, i) != 0) ? "=1 " : "=0 ");
 
 		// Is it string?
-		} else if (lua_isstring(pLuaState, -1)) {
+		} else if (lua_isstring(pLuaState, i)) {
 			// Strings are somewhat of a special case... see method documentation for details
 			const int nTypeID = cDynSignature.GetParameterTypeID(nParameterIndex);
 			switch (nTypeID) {

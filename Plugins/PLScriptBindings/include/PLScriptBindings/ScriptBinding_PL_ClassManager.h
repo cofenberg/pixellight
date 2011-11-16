@@ -56,7 +56,7 @@ class ScriptBinding_PL_ClassManager : public PLCore::ScriptBinding {
 			pl_property("Namespace",	"PL.ClassManager")
 		pl_properties_end
 		// Constructors
-		pl_constructor_0(DefaultConstructor,	 "Default constructor",		"")
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 		// Methods
 		pl_method_3(ScanPlugins,	pl_ret_type(bool),	PLCore::String, bool, bool, "Scan a directory for compatible plugins and load them in. Directory to search in as first parameter, boolean value deciding whether or not to take sub-directories into account as second parameter, boolean value deciding whether or not its allowed to perform delayed shared library loading to speed up the program start as third parameter. Returns 'true' if all went fine, else 'false'.", "")
 	pl_class_end
