@@ -54,7 +54,7 @@ namespace SceneRendererDataModel {
 *  @brief
 *    Scene renderer data model
 */
-class SceneRendererDataModel : public TreeModelBase {
+class PLFRONTENDQT_API SceneRendererDataModel : public TreeModelBase {
 
 
 	//[-------------------------------------------------------]
