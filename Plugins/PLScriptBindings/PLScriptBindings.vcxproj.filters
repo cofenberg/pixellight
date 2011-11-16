@@ -28,6 +28,9 @@
     <ClCompile Include="src\ScriptBinding_PL_System.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ScriptBinding_PL_ClassManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
@@ -50,6 +53,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScriptBindings\ScriptBinding_PL_System.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLScriptBindings\ScriptBinding_PL_ClassManager.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

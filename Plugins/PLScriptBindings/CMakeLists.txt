@@ -35,6 +35,7 @@ add_sources(
 	src/ScriptBinding_PL_Timing.cpp
 	src/ScriptBinding_PL_System.cpp
 	src/ScriptBinding_PL_System_Console.cpp
+	src/ScriptBinding_PL_ClassManager.cpp
 	src/SNMScript.cpp
 )
 

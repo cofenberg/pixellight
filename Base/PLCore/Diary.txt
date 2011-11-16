@@ -1,3 +1,10 @@
+>> 16.11.2011
+[CO]
+PLScriptBindings:
+- Exposed "PLCore::ClassManager::ScanPlugins"-feature to scripts
+
+
+
 >> 13.11.2011
 [CO]
 - Thomas Mühsam noticed that "System::GetCurrentDir()" returned, unlike many other methods, a native style instead path of an uniform style path and also sayed that

@@ -257,6 +257,7 @@ copy build\release_x64\PLScriptBindings.lib ..\..\Bin\Lib\x64\
   <ItemGroup>
     <ClCompile Include="src\PLScriptBindings.cpp" />
     <ClCompile Include="src\ScriptBinding_PL.cpp" />
+    <ClCompile Include="src\ScriptBinding_PL_ClassManager.cpp" />
     <ClCompile Include="src\ScriptBinding_PL_Log.cpp" />
     <ClCompile Include="src\ScriptBinding_PL_System.cpp" />
     <ClCompile Include="src\ScriptBinding_PL_System_Console.cpp" />
@@ -269,6 +270,7 @@ copy build\release_x64\PLScriptBindings.lib ..\..\Bin\Lib\x64\
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLScriptBindings\ScriptBinding_PL.h" />
+    <ClInclude Include="include\PLScriptBindings\ScriptBinding_PL_ClassManager.h" />
     <ClInclude Include="include\PLScriptBindings\ScriptBinding_PL_Log.h" />
     <ClInclude Include="include\PLScriptBindings\ScriptBinding_PL_System.h" />
     <ClInclude Include="include\PLScriptBindings\ScriptBinding_PL_System_Console.h" />
