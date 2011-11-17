@@ -105,7 +105,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLSoundD.lib;PLRendererD.lib;PLMeshD.lib;PLPhysicsD.lib;PLSceneD.lib;ode.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLRendererD.lib;PLMeshD.lib;PLPhysicsD.lib;PLSceneD.lib;ode.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsODED.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/ODE/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -147,7 +147,7 @@ copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\Runtime\x86\
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLSoundD.lib;PLRendererD.lib;PLMeshD.lib;PLPhysicsD.lib;PLSceneD.lib;ode.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLRendererD.lib;PLMeshD.lib;PLPhysicsD.lib;PLSceneD.lib;ode.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsODED.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x64\;../../External/_Windows_x86_64/ODE/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -195,7 +195,7 @@ copy ..\..\External\_Windows_x86_64\ODE\bin\ode.dll ..\..\Bin\Runtime\x64\
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLSound.lib;PLRenderer.lib;PLMesh.lib;PLPhysics.lib;PLScene.lib;ode.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLRenderer.lib;PLMesh.lib;PLPhysics.lib;PLScene.lib;ode.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsODE.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/ODE/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -244,7 +244,7 @@ copy ..\..\External\_Windows_x86_32\ODE\bin\ode.dll ..\..\Bin\Runtime\x86\
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLSound.lib;PLRenderer.lib;PLMesh.lib;PLPhysics.lib;PLScene.lib;ode.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLRenderer.lib;PLMesh.lib;PLPhysics.lib;PLScene.lib;ode.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsODE.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x64\;../../External/_Windows_x86_64/ODE/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>

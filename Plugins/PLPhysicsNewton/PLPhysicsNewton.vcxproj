@@ -104,7 +104,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLSoundD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;PLPhysicsD.lib;Newton.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;PLPhysicsD.lib;Newton.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsNewtonD.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/Newton/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -144,7 +144,7 @@ copy ..\..\External\_Windows_x86_32\Newton\bin\newton.dll ..\..\Bin\Runtime\x86\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLSoundD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;PLPhysicsD.lib;newton.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;PLPhysicsD.lib;newton.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsNewtonD.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x64\;../../External/_Windows_x86_64/Newton/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -191,7 +191,7 @@ copy ..\..\External\_Windows_x86_64\Newton\bin\newton.dll ..\..\Bin\Runtime\x64\
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLSound.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLPhysics.lib;Newton.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLPhysics.lib;Newton.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsNewton.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/Newton/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -238,7 +238,7 @@ copy ..\..\External\_Windows_x86_32\Newton\bin\newton.dll ..\..\Bin\Runtime\x86\
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLSound.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLPhysics.lib;newton.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>PLCore.lib;PLMath.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLPhysics.lib;newton.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)PLPhysicsNewton.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x64\;../../External/_Windows_x86_64/Newton/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
