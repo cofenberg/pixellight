@@ -27,12 +27,12 @@ SUITE(ApplicationContext) {
 	TEST(SetExecutableFilename_EmptyString) {
 		// initially: no Filename!
 		sExpect = App.GetExecutableFilename();
-		CHECK_EQUAL(sExpect.GetASCII(), sEmpty);
+		CHECK_EQUAL(sExpect.GetASCII(), sEmpty.GetASCII());
 
 		// set empty name
 		App.SetExecutableFilename(sEmpty);
 		sExpect = App.GetExecutableFilename();
-		CHECK_EQUAL(sExpect.GetASCII(), sEmpty);
+		CHECK_EQUAL(sExpect.GetASCII(), sEmpty.GetASCII());
 
 		// appDirectory defaults to "." if no name was given
 		CHECK_EQUAL(".", App.GetAppDirectory().GetASCII());		
