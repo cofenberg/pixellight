@@ -53,10 +53,11 @@ void main()
 
 
 // GLSL (OpenGL 2.0 ("#version 110")) vertex shader source code, "#version" is added by hand - uniform buffer version
-static const PLCore::String sVertexShaderSourceCodeGLSL_UniformBuffer = STRINGIFY(
+static const PLCore::String sVertexShaderSourceCodeGLSL_UniformBuffer =
 // GLSL extensions
-#extension GL_ARB_uniform_buffer_object : enable\n
+"#extension GL_ARB_uniform_buffer_object : enable\n"
 
+STRINGIFY(
 // Attributes
 attribute highp vec3 VertexPosition;	// Object space vertex position input
 attribute highp vec4 VertexColor;		// Vertex color input
@@ -85,13 +86,14 @@ void main()
 //[ Geometry shader source code                           ]
 //[-------------------------------------------------------]
 // GLSL (OpenGL 2.0 ("#version 110")) geometry shader source code
-static const PLCore::String sGeometryShaderSourceCodeGLSL = STRINGIFY(
+static const PLCore::String sGeometryShaderSourceCodeGLSL =
 // GLSL preprocessor directives
-#version 110\n	// OpenGL 2.0
+"#version 110\n"	// OpenGL 2.0
 
 // GLSL extensions
-#extension GL_EXT_geometry_shader4 : enable\n
+"#extension GL_EXT_geometry_shader4 : enable\n"
 
+STRINGIFY(
 // Attributes
 varying in  highp vec4 VertexColorVS[];	// Interpolated vertex color input from vertex shader
 varying out highp vec4 VertexColorGS;	// Interpolated vertex color output
@@ -135,10 +137,11 @@ void main()
 
 
 // GLSL (OpenGL 2.0 ("#version 110")) fragment shader source code, "#version" is added by hand
-static const PLCore::String sFragmentShaderSourceCodeGLSL_GS = STRINGIFY(
+static const PLCore::String sFragmentShaderSourceCodeGLSL_GS =
 // GLSL preprocessor directives
-#version 110\n	// OpenGL 2.0
+"#version 110\n"	// OpenGL 2.0
 
+STRINGIFY(
 // Attributes
 in highp vec4 VertexColorGS;	// Interpolated vertex color input from geometry shader
 
