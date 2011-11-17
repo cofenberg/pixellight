@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Math.h>	// On Mac OS X I'am getting the compiler error "error: ‘isfinite’ was not declared in this scope" when not including this header, first... I'am not sure what SPARK is changing in order to cause this error...
 #include <PLCore/PLCore.h>
 PL_WARNING_PUSH
 PL_WARNING_DISABLE(4530) // "warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc"
