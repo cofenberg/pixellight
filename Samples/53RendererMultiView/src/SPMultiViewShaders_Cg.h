@@ -20,55 +20,73 @@
 \*********************************************************/
 
 
-// Cg vertex shader source code
-static const PLCore::String sVertexShaderSourceCodeCg = "\
-// Vertex output\n\
-struct VS_OUTPUT {\n\
-	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float3 VertexNormal   : TEXCOORD0;	// World space vertex normal\n\
-};\n\
-\n\
-// Programs\n\
-VS_OUTPUT main(float4   VertexPosition : POSITION,		// Object space vertex position input\n\
-			   float3   VertexNormal   : COLOR,			// Object space vertex normal input\n\
-	   uniform float4x4 ObjectSpaceToClipSpaceMatrix,	// Object space to clip space matrix\n\
-	   uniform float4x4 ObjectSpaceToWorldSpaceMatrix)	// Object space to world space matrix\n\
-{\n\
-	VS_OUTPUT Out;\n\
-\n\
-	// Calculate the clip space vertex position\n\
-	Out.VertexPosition = mul(ObjectSpaceToClipSpaceMatrix, VertexPosition);\n\
-\n\
-	// Calculate the world space vertex normal\n\
-	Out.VertexNormal = mul((float3x3)ObjectSpaceToWorldSpaceMatrix, VertexNormal);\n\
-\n\
-	// Done\n\
-	return Out;\n\
-}";
+//[-------------------------------------------------------]
+//[ Define helper macro                                   ]
+//[-------------------------------------------------------]
+#define STRINGIFY(ME) #ME
 
 
-// Cg fragment shader source code
-static const PLCore::String sFragmentShaderSourceCodeCg = "\
-// Vertex output\n\
-struct VS_OUTPUT {\n\
-	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float3 VertexNormal   : TEXCOORD0;	// World space vertex normal\n\
-};\n\
-\n\
-// Fragment output\n\
-struct FS_OUTPUT {\n\
-	float4 Color0 : COLOR0;\n\
-};\n\
-\n\
-// Programs\n\
-FS_OUTPUT main(VS_OUTPUT In,				// Vertex shader output as fragment shader input\n\
-	   uniform float3    LightDirection)	// World space light direction\n\
-{\n\
-	FS_OUTPUT Out;\n\
-\n\
-	// Set fragment color by using primitive directional lighting\n\
-	Out.Color0 = clamp(dot(LightDirection, In.VertexNormal), 0, 1);\n\
-\n\
-	// Done\n\
-	return Out;\n\
-}";
+//[-------------------------------------------------------]
+//[ Vertex shader source code                             ]
+//[-------------------------------------------------------]
+static const PLCore::String sVertexShaderSourceCodeCg = STRINGIFY(
+// Vertex output
+struct VS_OUTPUT {
+	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+	float3 VertexNormal   : TEXCOORD0;	// World space vertex normal
+};
+
+// Programs
+VS_OUTPUT main(float4   VertexPosition : POSITION,		// Object space vertex position input
+			   float3   VertexNormal   : COLOR,			// Object space vertex normal input
+	   uniform float4x4 ObjectSpaceToClipSpaceMatrix,	// Object space to clip space matrix
+	   uniform float4x4 ObjectSpaceToWorldSpaceMatrix)	// Object space to world space matrix
+{
+	VS_OUTPUT Out;
+
+	// Calculate the clip space vertex position
+	Out.VertexPosition = mul(ObjectSpaceToClipSpaceMatrix, VertexPosition);
+
+	// Calculate the world space vertex normal
+	Out.VertexNormal = mul((float3x3)ObjectSpaceToWorldSpaceMatrix, VertexNormal);
+
+	// Done
+	return Out;
+}
+);	// STRINGIFY
+
+
+//[-------------------------------------------------------]
+//[ Fragment shader source code                           ]
+//[-------------------------------------------------------]
+static const PLCore::String sFragmentShaderSourceCodeCg = STRINGIFY(
+// Vertex output
+struct VS_OUTPUT {
+	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+	float3 VertexNormal   : TEXCOORD0;	// World space vertex normal
+};
+
+// Fragment output
+struct FS_OUTPUT {
+	float4 Color0 : COLOR0;
+};
+
+// Programs
+FS_OUTPUT main(VS_OUTPUT In,				// Vertex shader output as fragment shader input
+	   uniform float3    LightDirection)	// World space light direction
+{
+	FS_OUTPUT Out;
+
+	// Set fragment color by using primitive directional lighting
+	Out.Color0 = clamp(dot(LightDirection, In.VertexNormal), 0, 1);
+
+	// Done
+	return Out;
+}
+);	// STRINGIFY
+
+
+//[-------------------------------------------------------]
+//[ Undefine helper macro                                 ]
+//[-------------------------------------------------------]
+#undef STRINGIFY

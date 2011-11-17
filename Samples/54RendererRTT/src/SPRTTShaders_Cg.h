@@ -20,130 +20,151 @@
 \*********************************************************/
 
 
-// Cg vertex shader source code
-static const PLCore::String sVertexShaderSourceCodeCg = "\
-// Vertex output\n\
-struct VS_OUTPUT {\n\
-	float4 VertexPosition : POSITION;			// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float2 VertexTextureCoordinate : TEXCOORD0;	// Vertex texture coordinate\n\
-	float4 VertexColor : COLOR;					// Vertex color\n\
-};\n\
-\n\
-// Programs\n\
-VS_OUTPUT main(float3   VertexPosition : POSITION,				// Object space vertex position input\n\
-			   float2   VertexTextureCoordinate : TEXCOORD0,	// Vertex texture coordinate input\n\
-			   float4   VertexColor : COLOR,					// Vertex color input\n\
-	   uniform float4x4 ObjectSpaceToClipSpaceMatrix,			// Object space to clip space matrix\n\
-	   uniform float    ColorFactor)							// Color factor\n\
-{\n\
-	VS_OUTPUT Out;\n\
-\n\
-	// Calculate the clip space vertex position\n\
-	Out.VertexPosition = mul(ObjectSpaceToClipSpaceMatrix, float4(VertexPosition, 1));\n\
-\n\
-	// Pass through the texture coordinate\n\
-	Out.VertexTextureCoordinate = VertexTextureCoordinate;\n\
-\n\
-	// Write out the vertex color\n\
-	Out.VertexColor = lerp(float4(1, 1, 1, 1), VertexColor, ColorFactor);\n\
-\n\
-	// Done\n\
-	return Out;\n\
-}";
-
-
-// Cg fragment shader source code
-static const PLCore::String sFragmentShaderSourceCodeCg = "\
-// Vertex output\n\
-struct VS_OUTPUT {\n\
-	float4 VertexPosition : POSITION;			// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float2 VertexTextureCoordinate : TEXCOORD0;	// Vertex texture coordinate\n\
-	float4 VertexColor : COLOR;					// Vertex color\n\
-};\n\
-\n\
-// Fragment output\n\
-struct FS_OUTPUT {\n\
-	float4 Color0 : COLOR0;\n\
-};\n\
-\n\
-// Programs\n\
-FS_OUTPUT main(VS_OUTPUT In,			// Vertex shader output as fragment shader input\n\
-	   uniform sampler2D DiffuseMap)	// Diffuse map\n\
-{\n\
-	FS_OUTPUT Out;\n\
-\n\
-	// Set fragment color\n\
-	Out.Color0 = tex2D(DiffuseMap, In.VertexTextureCoordinate)*In.VertexColor;\n\
-\n\
-	// Done\n\
-	return Out;\n\
-}";
+//[-------------------------------------------------------]
+//[ Define helper macro                                   ]
+//[-------------------------------------------------------]
+#define STRINGIFY(ME) #ME
 
 
 //[-------------------------------------------------------]
-//[ Scene program                                         ]
+//[ Vertex shader source code                             ]
 //[-------------------------------------------------------]
-// Cg vertex shader source code
-static const PLCore::String sSceneVertexShaderSourceCodeCg = "\
-// Vertex output\n\
-struct VS_OUTPUT {\n\
-	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float3 VertexNormal   : TEXCOORD0;	// World space vertex normal\n\
-};\n\
-\n\
-// Programs\n\
-VS_OUTPUT main(float4   VertexPosition : POSITION,		// Object space vertex position input\n\
-			   float3   VertexNormal   : COLOR,			// Object space vertex normal input\n\
-	   uniform float4x4 ObjectSpaceToClipSpaceMatrix,	// Object space to clip space matrix\n\
-	   uniform float4x4 ObjectSpaceToWorldSpaceMatrix)	// Object space to world space matrix\n\
-{\n\
-	VS_OUTPUT Out;\n\
-\n\
-	// Calculate the clip space vertex position\n\
-	Out.VertexPosition = mul(ObjectSpaceToClipSpaceMatrix, VertexPosition);\n\
-\n\
-	// Calculate the world space vertex normal\n\
-	Out.VertexNormal = mul((float3x3)ObjectSpaceToWorldSpaceMatrix, VertexNormal);\n\
-\n\
-	// Done\n\
-	return Out;\n\
-}";
+static const PLCore::String sVertexShaderSourceCodeCg = STRINGIFY(
+// Vertex output
+struct VS_OUTPUT {
+	float4 VertexPosition : POSITION;			// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+	float2 VertexTextureCoordinate : TEXCOORD0;	// Vertex texture coordinate
+	float4 VertexColor : COLOR;					// Vertex color
+};
+
+// Programs
+VS_OUTPUT main(float3   VertexPosition : POSITION,				// Object space vertex position input
+			   float2   VertexTextureCoordinate : TEXCOORD0,	// Vertex texture coordinate input
+			   float4   VertexColor : COLOR,					// Vertex color input
+	   uniform float4x4 ObjectSpaceToClipSpaceMatrix,			// Object space to clip space matrix
+	   uniform float    ColorFactor)							// Color factor
+{
+	VS_OUTPUT Out;
+
+	// Calculate the clip space vertex position
+	Out.VertexPosition = mul(ObjectSpaceToClipSpaceMatrix, float4(VertexPosition, 1));
+
+	// Pass through the texture coordinate
+	Out.VertexTextureCoordinate = VertexTextureCoordinate;
+
+	// Write out the vertex color
+	Out.VertexColor = lerp(float4(1, 1, 1, 1), VertexColor, ColorFactor);
+
+	// Done
+	return Out;
+}
+);	// STRINGIFY
 
 
-// Cg fragment shader source code
-static const PLCore::String sSceneFragmentShaderSourceCodeCg = "\
-// Vertex output\n\
-struct VS_OUTPUT {\n\
-	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float3 VertexNormal   : TEXCOORD0;	// World space vertex normal\n\
-};\n\
-\n\
-// Fragment output\n\
-struct FS_OUTPUT {\n\
-	float4 Color0 : COLOR0;	// RGBA fragment color 0\n\
-	float4 Color1 : COLOR1;	// RGBA fragment color 1\n\
-	float4 Color2 : COLOR2;	// RGBA fragment color 2\n\
-	float4 Color3 : COLOR3;	// RGBA fragment color 3\n\
-};\n\
-\n\
-// Programs\n\
-FS_OUTPUT main(VS_OUTPUT In,				// Vertex shader output as fragment shader input\n\
-	   uniform float3    LightDirection)	// World space light direction\n\
-{\n\
-	FS_OUTPUT Out;\n\
-\n\
-	// Set fragment color by using primitive directional lighting\n\
-	Out.Color0 = clamp(dot(LightDirection, In.VertexNormal), 0, 1);\n\
-\n\
-	// Color 1 only red component\n\
-	Out.Color1 = float4(1, 0, 0, 0);\n\
-\n\
-	// Color 2 only green component\n\
-	Out.Color2 = float4(0, 1, 0, 0);\n\
-\n\
-	// Color 3 only blue component\n\
-	Out.Color3 = float4(0, 0, 1, 0);\n\
-\n\
-	// Done\n\
-	return Out;\n\
-}";
+//[-------------------------------------------------------]
+//[ Fragment shader source code                           ]
+//[-------------------------------------------------------]
+static const PLCore::String sFragmentShaderSourceCodeCg = STRINGIFY(
+// Vertex output
+struct VS_OUTPUT {
+	float4 VertexPosition : POSITION;			// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+	float2 VertexTextureCoordinate : TEXCOORD0;	// Vertex texture coordinate
+	float4 VertexColor : COLOR;					// Vertex color
+};
+
+// Fragment output
+struct FS_OUTPUT {
+	float4 Color0 : COLOR0;
+};
+
+// Programs
+FS_OUTPUT main(VS_OUTPUT In,			// Vertex shader output as fragment shader input
+	   uniform sampler2D DiffuseMap)	// Diffuse map
+{
+	FS_OUTPUT Out;
+
+	// Set fragment color
+	Out.Color0 = tex2D(DiffuseMap, In.VertexTextureCoordinate)*In.VertexColor;
+
+	// Done
+	return Out;
+}
+);	// STRINGIFY
+
+
+//[-------------------------------------------------------]
+//[ Scene program - Vertex shader source code             ]
+//[-------------------------------------------------------]
+static const PLCore::String sSceneVertexShaderSourceCodeCg = STRINGIFY(
+// Vertex output
+struct VS_OUTPUT {
+	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+	float3 VertexNormal   : TEXCOORD0;	// World space vertex normal
+};
+
+// Programs
+VS_OUTPUT main(float4   VertexPosition : POSITION,		// Object space vertex position input
+			   float3   VertexNormal   : COLOR,			// Object space vertex normal input
+	   uniform float4x4 ObjectSpaceToClipSpaceMatrix,	// Object space to clip space matrix
+	   uniform float4x4 ObjectSpaceToWorldSpaceMatrix)	// Object space to world space matrix
+{
+	VS_OUTPUT Out;
+
+	// Calculate the clip space vertex position
+	Out.VertexPosition = mul(ObjectSpaceToClipSpaceMatrix, VertexPosition);
+
+	// Calculate the world space vertex normal
+	Out.VertexNormal = mul((float3x3)ObjectSpaceToWorldSpaceMatrix, VertexNormal);
+
+	// Done
+	return Out;
+}
+);	// STRINGIFY
+
+
+//[-------------------------------------------------------]
+//[ Scene program - Fragment shader source code           ]
+//[-------------------------------------------------------]
+static const PLCore::String sSceneFragmentShaderSourceCodeCg = STRINGIFY(
+// Vertex output
+struct VS_OUTPUT {
+	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+	float3 VertexNormal   : TEXCOORD0;	// World space vertex normal
+};
+
+// Fragment output
+struct FS_OUTPUT {
+	float4 Color0 : COLOR0;	// RGBA fragment color 0
+	float4 Color1 : COLOR1;	// RGBA fragment color 1
+	float4 Color2 : COLOR2;	// RGBA fragment color 2
+	float4 Color3 : COLOR3;	// RGBA fragment color 3
+};
+
+// Programs
+FS_OUTPUT main(VS_OUTPUT In,				// Vertex shader output as fragment shader input
+	   uniform float3    LightDirection)	// World space light direction
+{
+	FS_OUTPUT Out;
+
+	// Set fragment color by using primitive directional lighting
+	Out.Color0 = clamp(dot(LightDirection, In.VertexNormal), 0, 1);
+
+	// Color 1 only red component
+	Out.Color1 = float4(1, 0, 0, 0);
+
+	// Color 2 only green component
+	Out.Color2 = float4(0, 1, 0, 0);
+
+	// Color 3 only blue component
+	Out.Color3 = float4(0, 0, 1, 0);
+
+	// Done
+	return Out;
+}
+);	// STRINGIFY
+
+
+//[-------------------------------------------------------]
+//[ Undefine helper macro                                 ]
+//[-------------------------------------------------------]
+#undef STRINGIFY

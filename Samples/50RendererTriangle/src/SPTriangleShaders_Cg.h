@@ -20,104 +20,127 @@
 \*********************************************************/
 
 
-// Cg vertex shader source code
-static const PLCore::String sVertexShaderSourceCodeCg = "\
-// Vertex output\n\
-struct VS_OUTPUT {\n\
-	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float4 VertexColor    : COLOR;		// Vertex color\n\
-};\n\
-\n\
-// Programs\n\
-VS_OUTPUT main(float3   VertexPosition : POSITION,		// Object space vertex position input\n\
-			   float4   VertexColor    : COLOR,			// Vertex color input\n\
-	   uniform float4x4 ObjectSpaceToClipSpaceMatrix,	// Object space to clip space matrix\n\
-	   uniform float4   Color)							// Object color\n\
-{\n\
-	VS_OUTPUT Out;\n\
-\n\
-	// Calculate the clip space vertex position\n\
-	Out.VertexPosition = mul(ObjectSpaceToClipSpaceMatrix, float4(VertexPosition, 1));\n\
-\n\
-	// Pass through the vertex color\n\
-	Out.VertexColor = VertexColor*Color;\n\
-\n\
-	// Done\n\
-	return Out;\n\
-}";
+//[-------------------------------------------------------]
+//[ Define helper macro                                   ]
+//[-------------------------------------------------------]
+#define STRINGIFY(ME) #ME
+
+
+//[-------------------------------------------------------]
+//[ Vertex shader source code                             ]
+//[-------------------------------------------------------]
+static const PLCore::String sVertexShaderSourceCodeCg = STRINGIFY(
+// Vertex output
+struct VS_OUTPUT {
+	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+	float4 VertexColor    : COLOR;		// Vertex color
+};
+
+// Programs
+VS_OUTPUT main(float3   VertexPosition : POSITION,		// Object space vertex position input
+			   float4   VertexColor    : COLOR,			// Vertex color input
+	   uniform float4x4 ObjectSpaceToClipSpaceMatrix,	// Object space to clip space matrix
+	   uniform float4   Color)							// Object color
+{
+	VS_OUTPUT Out;
+
+	// Calculate the clip space vertex position
+	Out.VertexPosition = mul(ObjectSpaceToClipSpaceMatrix, float4(VertexPosition, 1));
+
+	// Pass through the vertex color
+	Out.VertexColor = VertexColor*Color;
+
+	// Done
+	return Out;
+}
+);	// STRINGIFY
+
 
 // Cg vertex shader source code - uniform buffer version
-static const PLCore::String sVertexShaderSourceCodeCg_UniformBuffer = "\
-// Vertex output\n\
-struct VS_OUTPUT {\n\
-	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float4 VertexColor    : COLOR;		// Vertex color\n\
-};\n\
-\n\
-// Uniforms\n\
-typedef struct {\n\
-	float4x4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix\n\
-	float4   Color;							// Object color\n\
-} UniformBlockStruct;\n\
-\n\
-// Programs\n\
-VS_OUTPUT main(float3             VertexPosition : POSITION,	// Object space vertex position input\n\
-			   float4             VertexColor    : COLOR,		// Vertex color input\n\
-	   uniform UniformBlockStruct UniformBlock   : BUFFER[0])	// Uniform block\n\
-{\n\
-	VS_OUTPUT Out;\n\
-\n\
-	// Calculate the clip space vertex position... Lookout! We need to transpose the matrix for Cg, I just swap the parameters in here for this!\n\
-	Out.VertexPosition = mul(float4(VertexPosition, 1), UniformBlock.ObjectSpaceToClipSpaceMatrix);\n\
-\n\
-	// Pass through the vertex color\n\
-	Out.VertexColor = VertexColor*UniformBlock.Color;\n\
-\n\
-	// Done\n\
-	return Out;\n\
-}";
+static const PLCore::String sVertexShaderSourceCodeCg_UniformBuffer = STRINGIFY(
+// Vertex output
+struct VS_OUTPUT {
+	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+	float4 VertexColor    : COLOR;		// Vertex color
+};
+
+// Uniforms
+typedef struct {
+	float4x4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix
+	float4   Color;							// Object color
+} UniformBlockStruct;
+
+// Programs
+VS_OUTPUT main(float3             VertexPosition : POSITION,	// Object space vertex position input
+			   float4             VertexColor    : COLOR,		// Vertex color input
+	   uniform UniformBlockStruct UniformBlock   : BUFFER[0])	// Uniform block
+{
+	VS_OUTPUT Out;
+
+	// Calculate the clip space vertex position... Lookout! We need to transpose the matrix for Cg, I just swap the parameters in here for this!
+	Out.VertexPosition = mul(float4(VertexPosition, 1), UniformBlock.ObjectSpaceToClipSpaceMatrix);
+
+	// Pass through the vertex color
+	Out.VertexColor = VertexColor*UniformBlock.Color;
+
+	// Done
+	return Out;
+}
+);	// STRINGIFY
 
 
-// Cg geometry shader source code
-static const PLCore::String sGeometryShaderSourceCodeCg = "\
-TRIANGLE void main(AttribArray<float4> VertexPosition : POSITION,	// Clip space vertex positions from vertex shader, lower/left is (-1,-1) and upper/right is (1,1)\n\
-				   AttribArray<float4> VertexColor    : COLOR)		// Vertex colors from vertex shader\n\
-{\n\
-	// Pass-thru\n\
-	for (int i=0; i<VertexPosition.length; i++)\n\
-		emitVertex(VertexPosition[i] : POSITION, VertexColor[i] : COLOR);\n\
-	restartStrip();\n\
-\n\
-	// Create a clone of the triangle with a shifted position and evil inverted colors\n\
-	for (int i=0; i<VertexPosition.length; i++) {\n\
-		float4 position = VertexPosition[i] + float4(3, 2, 0, 0);\n\
-		float4 color    = 1 - VertexColor[i];\n\
-		emitVertex(position : POSITION, color : COLOR);\n\
-	}\n\
-}";
+//[-------------------------------------------------------]
+//[ Geometry shader source code                           ]
+//[-------------------------------------------------------]
+static const PLCore::String sGeometryShaderSourceCodeCg = STRINGIFY(
+TRIANGLE void main(AttribArray<float4> VertexPosition : POSITION,	// Clip space vertex positions from vertex shader, lower/left is (-1,-1) and upper/right is (1,1)
+				   AttribArray<float4> VertexColor    : COLOR)		// Vertex colors from vertex shader
+{
+	// Pass-thru
+	for (int i=0; i<VertexPosition.length; i++)
+		emitVertex(VertexPosition[i] : POSITION, VertexColor[i] : COLOR);
+	restartStrip();
+
+	// Create a clone of the triangle with a shifted position and evil inverted colors
+	for (int i=0; i<VertexPosition.length; i++) {
+		float4 position = VertexPosition[i] + float4(3, 2, 0, 0);
+		float4 color    = 1 - VertexColor[i];
+		emitVertex(position : POSITION, color : COLOR);
+	}
+}
+);	// STRINGIFY
 
 
-// Cg fragment shader source code
-static const PLCore::String sFragmentShaderSourceCodeCg = "\
-// Vertex output\n\
-struct VS_OUTPUT {\n\
-	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float4 VertexColor    : COLOR;		// Vertex color\n\
-};\n\
-\n\
-// Fragment output\n\
-struct FS_OUTPUT {\n\
-	float4 Color0 : COLOR0;\n\
-};\n\
-\n\
-// Programs\n\
-FS_OUTPUT main(VS_OUTPUT In)	// Vertex shader or geometry shader output as fragment shader input\n\
-{\n\
-	FS_OUTPUT Out;\n\
-\n\
-	// Fragment color = interpolated vertex color\n\
-	Out.Color0 = In.VertexColor;\n\
-\n\
-	// Done\n\
-	return Out;\n\
-}";
+//[-------------------------------------------------------]
+//[ Fragment shader source code                           ]
+//[-------------------------------------------------------]
+static const PLCore::String sFragmentShaderSourceCodeCg = STRINGIFY(
+// Vertex output
+struct VS_OUTPUT {
+	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+	float4 VertexColor    : COLOR;		// Vertex color
+};
+
+// Fragment output
+struct FS_OUTPUT {
+	float4 Color0 : COLOR0;
+};
+
+// Programs
+FS_OUTPUT main(VS_OUTPUT In)	// Vertex shader or geometry shader output as fragment shader input
+{
+	FS_OUTPUT Out;
+
+	// Fragment color = interpolated vertex color
+	Out.Color0 = In.VertexColor;
+
+	// Done
+	return Out;
+}
+);	// STRINGIFY
+
+
+//[-------------------------------------------------------]
+//[ Undefine helper macro                                 ]
+//[-------------------------------------------------------]
+#undef STRINGIFY

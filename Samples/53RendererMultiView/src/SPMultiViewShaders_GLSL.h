@@ -20,40 +20,60 @@
 \*********************************************************/
 
 
+//[-------------------------------------------------------]
+//[ Define helper macro                                   ]
+//[-------------------------------------------------------]
+#define STRINGIFY(ME) #ME
+
+
+//[-------------------------------------------------------]
+//[ Vertex shader source code                             ]
+//[-------------------------------------------------------]
 // GLSL (OpenGL 2.1 ("#version 120") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by hand
-static const PLCore::String sVertexShaderSourceCodeGLSL = "\
-// Attributes\n\
-attribute highp vec4 VertexPosition;	// Object space vertex position input\n\
-attribute highp vec3 VertexNormal;		// Object space vertex normal input\n\
-varying   highp vec3 VertexNormalVS;	// World space vertex normal output\n\
-\n\
-// Uniforms\n\
-uniform highp mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix\n\
-uniform highp mat4 ObjectSpaceToWorldSpaceMatrix;	// Object space to world space matrix\n\
-\n\
-// Programs\n\
-void main()\n\
-{\n\
-	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	gl_Position = ObjectSpaceToClipSpaceMatrix*VertexPosition;\n\
-\n\
-	// Calculate the world space vertex normal\n\
-	VertexNormalVS = mat3(ObjectSpaceToWorldSpaceMatrix)*VertexNormal;\n\
-}";
+static const PLCore::String sVertexShaderSourceCodeGLSL = STRINGIFY(
+// Attributes
+attribute highp vec4 VertexPosition;	// Object space vertex position input
+attribute highp vec3 VertexNormal;		// Object space vertex normal input
+varying   highp vec3 VertexNormalVS;	// World space vertex normal output
+
+// Uniforms
+uniform highp mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix
+uniform highp mat4 ObjectSpaceToWorldSpaceMatrix;	// Object space to world space matrix
+
+// Programs
+void main()
+{
+	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+	gl_Position = ObjectSpaceToClipSpaceMatrix*VertexPosition;
+
+	// Calculate the world space vertex normal
+	VertexNormalVS = mat3(ObjectSpaceToWorldSpaceMatrix)*VertexNormal;
+}
+);	// STRINGIFY
 
 
+//[-------------------------------------------------------]
+//[ Fragment shader source code                           ]
+//[-------------------------------------------------------]
 // GLSL (OpenGL 2.1 ("#version 120") and OpenGL ES 2.0 ("#version 100")) fragment shader source code, "#version" is added by hand
-static const PLCore::String sFragmentShaderSourceCodeGLSL = "\
-// Attributes\n\
-varying highp vec3 VertexNormalVS;	// World space vertex normal input from vertex shader\n\
-\n\
-// Uniforms\n\
-uniform highp vec3 LightDirection;	// World space light direction\n\
-\n\
-// Programs\n\
-void main()\n\
-{\n\
-	// Set fragment color by using primitive directional lighting\n\
-	lowp float intensity = clamp(dot(LightDirection, VertexNormalVS), 0.0, 1.0);\n\
-	gl_FragColor = vec4(intensity, intensity, intensity, intensity);\n\
-}";
+static const PLCore::String sFragmentShaderSourceCodeGLSL = STRINGIFY(
+// Attributes
+varying highp vec3 VertexNormalVS;	// World space vertex normal input from vertex shader
+
+// Uniforms
+uniform highp vec3 LightDirection;	// World space light direction
+
+// Programs
+void main()
+{
+	// Set fragment color by using primitive directional lighting
+	lowp float intensity = clamp(dot(LightDirection, VertexNormalVS), 0.0, 1.0);
+	gl_FragColor = vec4(intensity, intensity, intensity, intensity);
+}
+);	// STRINGIFY
+
+
+//[-------------------------------------------------------]
+//[ Undefine helper macro                                 ]
+//[-------------------------------------------------------]
+#undef STRINGIFY
