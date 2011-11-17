@@ -58,7 +58,7 @@ namespace PLFrontendQt {
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-class QPLInputHandler : public QObject, public InputHandler {
+class PLFRONTENDQT_API QPLInputHandler : public QObject, public InputHandler {
 
 
 	//[-------------------------------------------------------]
