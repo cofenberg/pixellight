@@ -67,6 +67,10 @@ ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialias
 	sWindowDummyClass.hbrBackground	= nullptr;
 	RegisterClass(&sWindowDummyClass);
 
+	// On MS Windows there's a chicken-and-the-egg problem: In order to be able to use wglGetProcAddress which we need
+	// in order to create our proper OpenGL context, we need to have an active OpenGL context so wglGetProcAddress is working...
+	// As a result, the following will look overcomplicated, because it is.
+
 	// Create the OpenGL dummy window
 	m_hDummyWindow = CreateWindow(TEXT("PLOpenGLDummyNativeWindow"), TEXT("PFormat"), WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, 0, 0, 8, 8, HWND_DESKTOP, nullptr, GetModuleHandle(nullptr), nullptr);
 	if (m_hDummyWindow != nullptr) {
