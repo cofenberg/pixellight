@@ -38,6 +38,7 @@ add_sources(
 	src/UniformBuffer.cpp
 	src/TextureBuffer1D.cpp
 	src/TextureBuffer2D.cpp
+	src/TextureBuffer2DArray.cpp
 	src/TextureBufferRectangle.cpp
 	src/TextureBuffer3D.cpp
 	src/TextureBufferCube.cpp

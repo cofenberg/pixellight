@@ -126,6 +126,7 @@ class Extensions {
 		bool IsGL_EXT_texture_filter_anisotropic() const;
 		bool IsGL_EXT_separate_specular_color() const;
 		bool IsGL_EXT_texture_edge_clamp() const;
+		bool IsGL_EXT_texture_array() const;
 		bool IsGL_EXT_texture_rectangle() const;
 		bool IsGL_EXT_texture3D() const;
 		bool IsGL_EXT_texture_cube_map() const;
@@ -304,6 +305,7 @@ class Extensions {
 		bool m_bGL_EXT_texture_filter_anisotropic;
 		bool m_bGL_EXT_separate_specular_color;
 		bool m_bGL_EXT_texture_edge_clamp;
+		bool m_bGL_EXT_texture_array;
 		bool m_bGL_EXT_texture_rectangle;
 		bool m_bGL_EXT_texture3D;
 		bool m_bGL_EXT_texture_cube_map;

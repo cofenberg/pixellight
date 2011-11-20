@@ -42,6 +42,7 @@
 #include "PLRendererOpenGL/SurfaceTextureBuffer.h"
 #include "PLRendererOpenGL/TextureBuffer1D.h"
 #include "PLRendererOpenGL/TextureBuffer2D.h"
+#include "PLRendererOpenGL/TextureBuffer2DArray.h"
 #include "PLRendererOpenGL/TextureBufferRectangle.h"
 #include "PLRendererOpenGL/TextureBuffer3D.h"
 #include "PLRendererOpenGL/TextureBufferCube.h"
@@ -735,6 +736,15 @@ void Renderer::SetupCapabilities()
 	// Non power of two texture buffers supported?
 	m_sCapabilities.bTextureBufferNonPowerOfTwo = cExtensions.IsGL_ARB_texture_non_power_of_two();
 
+	// 2D array texture buffers supported?
+	m_sCapabilities.bTextureBuffer2DArray = cExtensions.IsGL_EXT_texture_array();
+	if (m_sCapabilities.bTextureBuffer2DArray) {
+		glGetIntegerv(GL_MAX_ARRAY_TEXTURE_LAYERS_EXT, &nGLTemp);
+		m_sCapabilities.nMaxTextureBuffer2DArrayLayers = static_cast<uint16>(nGLTemp);
+	} else {
+		m_sCapabilities.nMaxTextureBuffer2DArrayLayers = 0;
+	}
+
 	// Rectangle texture buffers supported?
 	// GL_EXT_texture_rectangle, GL_NV_texture_rectangle and GL_ARB_texture_rectangle ONLY differ within their name :)
 	m_sCapabilities.bTextureBufferRectangle = (cExtensions.IsGL_EXT_texture_rectangle() || cExtensions.IsGL_NV_texture_rectangle() || cExtensions.IsGL_ARB_texture_rectangle());
@@ -961,6 +971,10 @@ void Renderer::RestoreDeviceStates()
 
 			case PLRenderer::Resource::TypeTextureBuffer2D:
 				MemoryManager::Set(&static_cast<TextureBuffer2D*>(pResource)->m_nSamplerState[0], PLRenderer::Sampler::Unknown, sizeof(uint32)*PLRenderer::Sampler::Number);
+				break;
+
+			case PLRenderer::Resource::TypeTextureBuffer2DArray:
+				MemoryManager::Set(&static_cast<TextureBuffer2DArray*>(pResource)->m_nSamplerState[0], PLRenderer::Sampler::Unknown, sizeof(uint32)*PLRenderer::Sampler::Number);
 				break;
 
 			case PLRenderer::Resource::TypeTextureBufferRectangle:
@@ -1217,6 +1231,17 @@ PLRenderer::TextureBuffer2D *Renderer::CreateTextureBuffer2D(PLGraphics::Image &
 
 	// Create the OpenGL 2D texture buffer
 	return new TextureBuffer2D(*this, cImage, nInternalFormat, nFlags);
+}
+
+PLRenderer::TextureBuffer2DArray *Renderer::CreateTextureBuffer2DArray(Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
+{
+	// Check texture buffer
+	// [TODO] The current "TextureBuffer2DArray"-implementation is using 3D functions, check this
+	if (!m_sCapabilities.bTextureBuffer2DArray || !m_sCapabilities.bTextureBuffer3D || !CheckTextureBuffer2DArray(cImage, nInternalFormat))
+		return nullptr; // Error!
+
+	// Create the OpenGL 2D array texture buffer
+	return new TextureBuffer2DArray(*this, cImage, nInternalFormat, nFlags);
 }
 
 PLRenderer::TextureBuffer *Renderer::CreateTextureBufferRectangle(PLGraphics::Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
@@ -2471,6 +2496,10 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 					pnSamplerState = &static_cast<TextureBuffer2D*>(pPreviousTextureBuffer)->m_nSamplerState[0];
 					break;
 
+				case PLRenderer::Resource::TypeTextureBuffer2DArray:
+					pnSamplerState = &static_cast<TextureBuffer2DArray*>(pPreviousTextureBuffer)->m_nSamplerState[0];
+					break;
+
 				case PLRenderer::Resource::TypeTextureBufferRectangle:
 					pnSamplerState = &static_cast<TextureBufferRectangle*>(pPreviousTextureBuffer)->m_nSamplerState[0];
 					break;
@@ -2514,6 +2543,11 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 						glEnable(GL_TEXTURE_2D);
 						break;
 
+					case PLRenderer::Resource::TypeTextureBuffer2DArray:
+						m_nTextureBufferTypes[nStage] = GL_TEXTURE_2D_ARRAY_EXT;
+						glEnable(GL_TEXTURE_2D_ARRAY_EXT);
+						break;
+
 					case PLRenderer::Resource::TypeTextureBufferRectangle:
 						m_nTextureBufferTypes[nStage] = GL_TEXTURE_RECTANGLE_ARB;
 						glEnable(GL_TEXTURE_RECTANGLE_ARB);
@@ -2546,6 +2580,7 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 					case PLRenderer::Resource::TypeTextureBuffer1D:
 						m_nTextureBufferTypes[nStage] = GL_TEXTURE_1D;
 						glDisable(GL_TEXTURE_2D);
+						glDisable(GL_TEXTURE_2D_ARRAY_EXT);
 						glDisable(GL_TEXTURE_RECTANGLE_ARB);
 						glDisable(GL_TEXTURE_3D_EXT);
 						glDisable(GL_TEXTURE_CUBE_MAP_ARB);
@@ -2555,16 +2590,28 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 					case PLRenderer::Resource::TypeTextureBuffer2D:
 						m_nTextureBufferTypes[nStage] = GL_TEXTURE_2D;
 						glDisable(GL_TEXTURE_1D);
+						glDisable(GL_TEXTURE_2D_ARRAY_EXT);
 						glDisable(GL_TEXTURE_RECTANGLE_ARB);
 						glDisable(GL_TEXTURE_3D_EXT);
 						glDisable(GL_TEXTURE_CUBE_MAP_ARB);
 						pnSamplerState = &static_cast<TextureBuffer2D*>(pTextureBuffer)->m_nSamplerState[0];
 						break;
 
+					case PLRenderer::Resource::TypeTextureBuffer2DArray:
+						m_nTextureBufferTypes[nStage] = GL_TEXTURE_2D_ARRAY_EXT;
+						glDisable(GL_TEXTURE_1D);
+						glDisable(GL_TEXTURE_2D);
+						glDisable(GL_TEXTURE_RECTANGLE_ARB);
+						glDisable(GL_TEXTURE_3D_EXT);
+						glDisable(GL_TEXTURE_CUBE_MAP_ARB);
+						pnSamplerState = &static_cast<TextureBuffer2DArray*>(pTextureBuffer)->m_nSamplerState[0];
+						break;
+
 					case PLRenderer::Resource::TypeTextureBufferRectangle:
 						m_nTextureBufferTypes[nStage] = GL_TEXTURE_RECTANGLE_ARB;
 						glDisable(GL_TEXTURE_1D);
 						glDisable(GL_TEXTURE_2D);
+						glDisable(GL_TEXTURE_2D_ARRAY_EXT);
 						glDisable(GL_TEXTURE_3D_EXT);
 						glDisable(GL_TEXTURE_CUBE_MAP_ARB);
 						pnSamplerState = &static_cast<TextureBufferRectangle*>(pTextureBuffer)->m_nSamplerState[0];
@@ -2574,6 +2621,7 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 						m_nTextureBufferTypes[nStage] = GL_TEXTURE_3D_EXT;
 						glDisable(GL_TEXTURE_1D);
 						glDisable(GL_TEXTURE_2D);
+						glDisable(GL_TEXTURE_2D_ARRAY_EXT);
 						glDisable(GL_TEXTURE_RECTANGLE_ARB);
 						glDisable(GL_TEXTURE_CUBE_MAP_ARB);
 						pnSamplerState = &static_cast<TextureBuffer3D*>(pTextureBuffer)->m_nSamplerState[0];
@@ -2583,6 +2631,7 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 						m_nTextureBufferTypes[nStage] = GL_TEXTURE_CUBE_MAP_ARB;
 						glDisable(GL_TEXTURE_1D);
 						glDisable(GL_TEXTURE_2D);
+						glDisable(GL_TEXTURE_2D_ARRAY_EXT);
 						glDisable(GL_TEXTURE_RECTANGLE_ARB);
 						glDisable(GL_TEXTURE_3D_EXT);
 						pnSamplerState = &static_cast<TextureBufferCube*>(pTextureBuffer)->m_nSamplerState[0];
@@ -2675,6 +2724,10 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 					pnSamplerState = &static_cast<TextureBuffer2D*>(pPreviousTextureBuffer)->m_nSamplerState[0];
 					break;
 
+				case PLRenderer::Resource::TypeTextureBuffer2DArray:
+					pnSamplerState = &static_cast<TextureBuffer2DArray*>(pPreviousTextureBuffer)->m_nSamplerState[0];
+					break;
+
 				case PLRenderer::Resource::TypeTextureBufferRectangle:
 					pnSamplerState = &static_cast<TextureBufferRectangle*>(pPreviousTextureBuffer)->m_nSamplerState[0];
 					break;
@@ -2711,6 +2764,7 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 				case PLRenderer::Resource::TypeTextureBuffer1D:
 					m_nTextureBufferTypes[nStage] = GL_TEXTURE_1D;
 					glDisable(GL_TEXTURE_2D);
+					glDisable(GL_TEXTURE_2D_ARRAY_EXT);
 					glDisable(GL_TEXTURE_RECTANGLE_ARB);
 					glDisable(GL_TEXTURE_3D_EXT);
 					glDisable(GL_TEXTURE_CUBE_MAP_ARB);
@@ -2720,16 +2774,28 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 				case PLRenderer::Resource::TypeTextureBuffer2D:
 					m_nTextureBufferTypes[nStage] = GL_TEXTURE_2D;
 					glDisable(GL_TEXTURE_1D);
+					glDisable(GL_TEXTURE_2D_ARRAY_EXT);
 					glDisable(GL_TEXTURE_RECTANGLE_ARB);
 					glDisable(GL_TEXTURE_3D_EXT);
 					glDisable(GL_TEXTURE_CUBE_MAP_ARB);
 					pnSamplerState = &static_cast<TextureBuffer2D*>(pTextureBuffer)->m_nSamplerState[0];
 					break;
 
+				case PLRenderer::Resource::TypeTextureBuffer2DArray:
+					m_nTextureBufferTypes[nStage] = GL_TEXTURE_2D_ARRAY_EXT;
+					glDisable(GL_TEXTURE_1D);
+					glDisable(GL_TEXTURE_2D);
+					glDisable(GL_TEXTURE_RECTANGLE_ARB);
+					glDisable(GL_TEXTURE_3D_EXT);
+					glDisable(GL_TEXTURE_CUBE_MAP_ARB);
+					pnSamplerState = &static_cast<TextureBuffer2DArray*>(pTextureBuffer)->m_nSamplerState[0];
+					break;
+
 				case PLRenderer::Resource::TypeTextureBufferRectangle:
 					m_nTextureBufferTypes[nStage] = GL_TEXTURE_RECTANGLE_ARB;
 					glDisable(GL_TEXTURE_1D);
 					glDisable(GL_TEXTURE_2D);
+					glDisable(GL_TEXTURE_2D_ARRAY_EXT);
 					glDisable(GL_TEXTURE_3D_EXT);
 					glDisable(GL_TEXTURE_CUBE_MAP_ARB);
 					pnSamplerState = &static_cast<TextureBufferRectangle*>(pTextureBuffer)->m_nSamplerState[0];
@@ -2739,6 +2805,7 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 					m_nTextureBufferTypes[nStage] = GL_TEXTURE_3D_EXT;
 					glDisable(GL_TEXTURE_1D);
 					glDisable(GL_TEXTURE_2D);
+					glDisable(GL_TEXTURE_2D_ARRAY_EXT);
 					glDisable(GL_TEXTURE_RECTANGLE_ARB);
 					glDisable(GL_TEXTURE_CUBE_MAP_ARB);
 					pnSamplerState = &static_cast<TextureBuffer3D*>(pTextureBuffer)->m_nSamplerState[0];
@@ -2748,6 +2815,7 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 					m_nTextureBufferTypes[nStage] = GL_TEXTURE_CUBE_MAP_ARB;
 					glDisable(GL_TEXTURE_1D);
 					glDisable(GL_TEXTURE_2D);
+					glDisable(GL_TEXTURE_2D_ARRAY_EXT);
 					glDisable(GL_TEXTURE_RECTANGLE_ARB);
 					glDisable(GL_TEXTURE_3D_EXT);
 					pnSamplerState = &static_cast<TextureBufferCube*>(pTextureBuffer)->m_nSamplerState[0];

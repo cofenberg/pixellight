@@ -257,6 +257,7 @@ copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libGLESv2.dll ..\..\Bin\Runtime
     <ClCompile Include="src\SurfaceTextureBuffer.cpp" />
     <ClCompile Include="src\SurfaceWindow.cpp" />
     <ClCompile Include="src\TextureBuffer2D.cpp" />
+    <ClCompile Include="src\TextureBuffer2DArray.cpp" />
     <ClCompile Include="src\TextureBuffer3D.cpp" />
     <ClCompile Include="src\TextureBufferCube.cpp" />
     <ClCompile Include="src\VertexBuffer.cpp" />
@@ -274,6 +275,7 @@ copy ..\..\External\_Windows_x86_32\OpenGLES\bin\libGLESv2.dll ..\..\Bin\Runtime
     <ClInclude Include="include\PLRendererOpenGLES2\FrameBufferObject.h" />
     <ClInclude Include="include\PLRendererOpenGLES2\ProgramCg.h" />
     <ClInclude Include="include\PLRendererOpenGLES2\ShaderLanguageCg.h" />
+    <ClInclude Include="include\PLRendererOpenGLES2\TextureBuffer2DArray.h" />
     <ClInclude Include="include\PLRendererOpenGLES2\VertexShaderCg.h" />
     <ClInclude Include="src\FontManager_GLSL.h" />
     <ClInclude Include="include\PLRendererOpenGLES2\FontTexture.h" />

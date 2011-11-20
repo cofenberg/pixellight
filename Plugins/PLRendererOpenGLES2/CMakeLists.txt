@@ -40,6 +40,7 @@ add_sources(
 	src/SurfaceTextureBuffer.cpp
 	src/SurfaceWindow.cpp
 	src/TextureBuffer2D.cpp
+	src/TextureBuffer2DArray.cpp
 	src/TextureBuffer3D.cpp
 	src/TextureBufferCube.cpp
 	src/VertexBuffer.cpp

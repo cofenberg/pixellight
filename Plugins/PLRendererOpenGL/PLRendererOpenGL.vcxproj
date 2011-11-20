@@ -332,6 +332,7 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\SurfaceWindow.cpp" />
     <ClCompile Include="src\TextureBuffer1D.cpp" />
     <ClCompile Include="src\TextureBuffer2D.cpp" />
+    <ClCompile Include="src\TextureBuffer2DArray.cpp" />
     <ClCompile Include="src\TextureBuffer3D.cpp" />
     <ClCompile Include="src\TextureBufferCube.cpp" />
     <ClCompile Include="src\TextureBufferRectangle.cpp" />
@@ -355,6 +356,7 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLRendererOpenGL\MacOSX\ContextMacOSX.h" />
     <ClInclude Include="include\PLRendererOpenGL\MacOSX\SurfaceWindowMacOSX.h" />
     <ClInclude Include="include\PLRendererOpenGL\ProgramUniformBlockGLSL.h" />
+    <ClInclude Include="include\PLRendererOpenGL\TextureBuffer2DArray.h" />
     <ClInclude Include="include\PLRendererOpenGL\UniformBuffer.h" />
     <ClInclude Include="include\PLRendererOpenGL\Windows\ContextWindows.h" />
     <ClInclude Include="include\PLRendererOpenGL\Windows\PLRendererOpenGLWindows.h" />

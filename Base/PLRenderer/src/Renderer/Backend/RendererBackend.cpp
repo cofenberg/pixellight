@@ -275,6 +275,8 @@ void RendererBackend::ShowRendererCapabilities() const
 	PL_LOG(Info, String("  MaxTessellationFactor: ")		 + m_sCapabilities.nMaxTessellationFactor)
 	PL_LOG(Info, String("  MaxTextureBufferSize: ")			 + static_cast<uint32>(m_sCapabilities.nMaxTextureBufferSize))
 	PL_LOG(Info, String("  TextureBufferNonPowerOfTwo: ")	 + GetBoolString(m_sCapabilities.bTextureBufferNonPowerOfTwo))
+	PL_LOG(Info, String("  TextureBuffer2DArray: ")			 + GetBoolString(m_sCapabilities.bTextureBuffer2DArray))
+	PL_LOG(Info, String("  MaxTextureBuffer2DArrayLayers: ") + static_cast<uint32>(m_sCapabilities.nMaxTextureBuffer2DArrayLayers))
 	PL_LOG(Info, String("  TextureBufferRectangle: ")		 + GetBoolString(m_sCapabilities.bTextureBufferRectangle))
 	PL_LOG(Info, String("  MaxRectangleTextureBufferSize: ") + static_cast<uint32>(m_sCapabilities.nMaxRectangleTextureBufferSize))
 	PL_LOG(Info, String("  TextureBuffer3D: ")				 + GetBoolString(m_sCapabilities.bTextureBuffer3D))
@@ -331,6 +333,16 @@ bool RendererBackend::CheckTextureBuffer2D(Image &cImage, TextureBuffer::EPixelF
 
 	// Check image buffer dimension
 	return (pImageBuffer && IsValidTextureBuffer2DSize(pImageBuffer->GetSize().x) && IsValidTextureBuffer2DSize(pImageBuffer->GetSize().y));
+}
+
+bool RendererBackend::CheckTextureBuffer2DArray(Image &cImage, TextureBuffer::EPixelFormat nInternalFormat) const
+{
+	// Get the first image buffer
+	const ImageBuffer *pImageBuffer = cImage.GetBuffer();
+
+	// Check image buffer dimension
+	return (pImageBuffer && IsValidTextureBuffer2DSize(pImageBuffer->GetSize().x) && IsValidTextureBuffer2DSize(pImageBuffer->GetSize().y) &&
+			pImageBuffer->GetSize().z <= m_sCapabilities.nMaxTextureBuffer2DArrayLayers && pImageBuffer->GetSize().z > 0);
 }
 
 bool RendererBackend::CheckTextureBufferRectangle(Image &cImage, TextureBuffer::EPixelFormat nInternalFormat) const

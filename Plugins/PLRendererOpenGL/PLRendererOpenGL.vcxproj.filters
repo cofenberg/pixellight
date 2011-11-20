@@ -145,6 +145,9 @@
     <ClCompile Include="src\MacOSX\ExtensionsMacOSX.cpp">
       <Filter>MacOSX</Filter>
     </ClCompile>
+    <ClCompile Include="src\TextureBuffer2DArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRendererOpenGL\Context.h">
@@ -278,6 +281,9 @@
     </ClInclude>
     <ClInclude Include="include\PLRendererOpenGL\Windows\SurfaceWindowWindows.h">
       <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\TextureBuffer2DArray.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

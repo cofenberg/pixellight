@@ -52,6 +52,7 @@ namespace PLRenderer {
 	class TextureBuffer;
 	class TextureBuffer1D;
 	class TextureBuffer2D;
+	class TextureBuffer2DArray;
 	class TextureBuffer3D;
 	class TextureBufferCube;
 	class IndexBuffer;
@@ -680,6 +681,28 @@ class Renderer : public PLCore::Object {
 		virtual TextureBuffer2D *CreateTextureBuffer2D(PLGraphics::Image &cImage,
 													   TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown,
 													   PLCore::uint32 nFlags = TextureBuffer::Mipmaps | TextureBuffer::Compression) = 0;
+
+		/**
+		*  @brief
+		*    Creates a 2D array texture buffer
+		*
+		*  @param[in] cImage
+		*    Texture buffer image
+		*  @param[in] nInternalFormat
+		*    Desired internal texture buffer pixel format, if TextureBuffer::Unknown use the format of the given image
+		*  @param[in] nFlags
+		*    Texture buffer flags (see TextureBuffer::EFlags)
+		*
+		*  @return
+		*    The created 2D array renderer texture buffer, a null pointer on error
+		*    (maybe the image size is no power of two?)
+		*
+		*  @see
+		*    - CreateTextureBuffer1D()
+		*/
+		virtual TextureBuffer2DArray *CreateTextureBuffer2DArray(PLGraphics::Image &cImage,
+																 TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown,
+																 PLCore::uint32 nFlags = TextureBuffer::Mipmaps | TextureBuffer::Compression) = 0;
 
 		/**
 		*  @brief

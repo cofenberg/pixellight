@@ -39,6 +39,7 @@
 #include "PLRendererOpenGLES2/SurfaceWindow.h"
 #include "PLRendererOpenGLES2/SurfaceTextureBuffer.h"
 #include "PLRendererOpenGLES2/TextureBuffer2D.h"
+#include "PLRendererOpenGLES2/TextureBuffer2DArray.h"
 #include "PLRendererOpenGLES2/TextureBuffer3D.h"
 #include "PLRendererOpenGLES2/TextureBufferCube.h"
 #include "PLRendererOpenGLES2/IndexBuffer.h"
@@ -656,6 +657,15 @@ void Renderer::SetupCapabilities()
 	// Non power of two textures are always supported by OpenGL ES 2.0
 	m_sCapabilities.bTextureBufferNonPowerOfTwo		= true;
 
+	// "GL_EXT_texture_array"-extension available?
+	m_sCapabilities.bTextureBuffer2DArray = cExtensions.IsGL_EXT_texture_array();
+	if (m_sCapabilities.bTextureBuffer2DArray) {
+		glGetIntegerv(GL_MAX_ARRAY_TEXTURE_LAYERS_EXT, &nGLTemp);
+		m_sCapabilities.nMaxTextureBuffer2DArrayLayers = static_cast<uint16>(nGLTemp);
+	} else {
+		m_sCapabilities.nMaxTextureBuffer2DArrayLayers = 0;
+	}
+
 	// Same as texture 2D - so it's supported by OpenGL ES 2.0 (altought it's not really the same, e.g. normalized texture coordinates are used)
 	m_sCapabilities.bTextureBufferRectangle			= true;
 	m_sCapabilities.nMaxRectangleTextureBufferSize	= m_sCapabilities.nMaxTextureBufferSize;
@@ -928,6 +938,17 @@ PLRenderer::TextureBuffer2D *Renderer::CreateTextureBuffer2D(Image &cImage, PLRe
 
 	// Create the OpenGL ES 2.0 2D texture buffer
 	return new TextureBuffer2D(*this, cImage, nInternalFormat, nFlags, false);
+}
+
+PLRenderer::TextureBuffer2DArray *Renderer::CreateTextureBuffer2DArray(Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
+{
+	// Check texture buffer
+	// [TODO] The current "TextureBuffer2DArray"-implementation is using 3D functions, check this (Tegra 2 has e.g. support for 2D array textures, but not for 3D textures...)
+	if (!m_sCapabilities.bTextureBuffer2DArray || !m_sCapabilities.bTextureBuffer3D || !CheckTextureBuffer2DArray(cImage, nInternalFormat))
+		return nullptr; // Error!
+
+	// Create the OpenGL ES 2.0 2D array texture buffer
+	return new TextureBuffer2DArray(*this, cImage, nInternalFormat, nFlags);
 }
 
 PLRenderer::TextureBuffer *Renderer::CreateTextureBufferRectangle(Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
@@ -1536,6 +1557,10 @@ bool Renderer::SetSamplerState(uint32 nStage, PLRenderer::Sampler::Enum nState, 
 
 				case PLRenderer::Resource::TypeTextureBuffer2D:
 					nOpenGLESTextureTarget = GL_TEXTURE_2D;
+					break;
+
+				case PLRenderer::Resource::TypeTextureBuffer2DArray:
+					nOpenGLESTextureTarget = GL_TEXTURE_2D_ARRAY_EXT;
 					break;
 
 				case PLRenderer::Resource::TypeTextureBuffer3D:

@@ -456,6 +456,8 @@ struct Capabilities {
 	PLCore::uint8  nMaxTessellationFactor;			/**< Maximum tessellation factor (inclusive) */
 	PLCore::uint16 nMaxTextureBufferSize;			/**< Maximum texture buffer size */
 	bool           bTextureBufferNonPowerOfTwo;		/**< Non power of two (NPOT) texture buffers supported? (no power of two restriction for all texture buffer types) */
+	bool           bTextureBuffer2DArray;			/**< 2D array texture buffers supported? */
+	PLCore::uint16 nMaxTextureBuffer2DArrayLayers;	/**< Maximum number of 2D array texture layers */
 	bool           bTextureBufferRectangle;			/**< Rectangle texture buffers supported? (special non power of two texture buffer type, comes with special limitations) */
 	PLCore::uint16 nMaxRectangleTextureBufferSize;	/**< Maximum rectangle texture buffer size */
 	bool           bTextureBuffer3D;				/**< 3D texture buffers supported? */

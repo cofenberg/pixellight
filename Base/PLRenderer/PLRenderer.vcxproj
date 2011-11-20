@@ -264,6 +264,7 @@ copy build\release_x64\PLRenderer.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\RendererContext.cpp" />
     <ClCompile Include="src\Renderer\Backend\FontManagerBackend.cpp" />
     <ClCompile Include="src\Renderer\ProgramUniformBlock.cpp" />
+    <ClCompile Include="src\Renderer\TextureBuffer2DArray.cpp" />
     <ClCompile Include="src\Renderer\UniformBuffer.cpp" />
     <ClCompile Include="src\SPDefault.cpp" />
     <ClCompile Include="src\SPPreview.cpp" />
@@ -364,6 +365,7 @@ copy build\release_x64\PLRenderer.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLRenderer\RendererContext.h" />
     <ClInclude Include="include\PLRenderer\Renderer\Backend\FontManagerBackend.h" />
     <ClInclude Include="include\PLRenderer\Renderer\ProgramUniformBlock.h" />
+    <ClInclude Include="include\PLRenderer\Renderer\TextureBuffer2DArray.h" />
     <ClInclude Include="include\PLRenderer\Renderer\UniformBuffer.h" />
     <ClInclude Include="include\PLRenderer\SPDefault.h" />
     <ClInclude Include="include\PLRenderer\SPPreview.h" />
