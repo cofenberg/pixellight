@@ -9,6 +9,12 @@ PLRendererOpenGL:
 - Added support for 2D array textures ("GL_EXT_texture_array"-extension)
 PLRendererOpenGLES2:
 - 3D textures using the "GL_OES_texture_3D"-extension are now working (at least using the desktop native OpenGL ES 2.0 support)
+- Added support for 2D array textures ("GL_EXT_texture_array"-extension)
+  -> A funny thing: Tegra 2 has support for the extension "GL_EXT_texture_array", but has no support
+     for the "GL_OES_texture_3D"-extension. At least it's not listed in the extension string.
+     "GL_EXT_texture_array" is reusing functions defined by "GL_OES_texture_3D"... and therefore we're
+     now getting the function pointers of "GL_OES_texture_3D" to be able to use "GL_EXT_texture_array".
+     Works even when "GL_OES_texture_3D" is not listed. Nice.
 
 
 

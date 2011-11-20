@@ -120,7 +120,24 @@ void ExtensionsRuntimeLinking::Init()
 	m_bGL_EXT_texture_compression_latc   = sExtensions.IsSubstring("GL_EXT_texture_compression_latc");
 	m_bGL_EXT_texture_filter_anisotropic = sExtensions.IsSubstring("GL_EXT_texture_filter_anisotropic");
 	m_bGL_EXT_texture_array				 = sExtensions.IsSubstring("GL_EXT_texture_array");
-	m_bGL_EXT_Cg_shader					 = sExtensions.IsSubstring("GL_EXT_Cg_shader");
+	if (m_bGL_EXT_texture_array) {
+		// A funny thing: Tegra 2 has support for the extension "GL_EXT_texture_array", but has no support
+		// for the "GL_OES_texture_3D"-extension. At least it's not listed in the extension string.
+		// "GL_EXT_texture_array" is reusing functions defined by "GL_OES_texture_3D"... and therefore we're
+		// now getting the function pointers of "GL_OES_texture_3D" to be able to use "GL_EXT_texture_array".
+		// Works even when "GL_OES_texture_3D" is not listed. Nice.
+
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glTexImage3DOES)
+		IMPORT_FUNC(glTexSubImage3DOES)
+		IMPORT_FUNC(glCopyTexSubImage3DOES)
+		IMPORT_FUNC(glCompressedTexImage3DOES)
+		IMPORT_FUNC(glCompressedTexSubImage3DOES)
+		IMPORT_FUNC(glFramebufferTexture3DOES)
+		m_bGL_EXT_texture_array = bResult;
+	}
+	m_bGL_EXT_Cg_shader = sExtensions.IsSubstring("GL_EXT_Cg_shader");
 
 	//[-------------------------------------------------------]
 	//[ AMD                                                   ]
@@ -163,7 +180,7 @@ void ExtensionsRuntimeLinking::Init()
 	}
 	m_bGL_OES_element_index_uint = sExtensions.IsSubstring("GL_OES_element_index_uint");
 	m_bGL_OES_texture_3D		 = sExtensions.IsSubstring("GL_OES_texture_3D");
-	if (m_bGL_OES_texture_3D) {
+	if (m_bGL_OES_texture_3D && !m_bGL_EXT_texture_array) {	// See "GL_EXT_texture_array"-comment above
 		// Load the entry points
 		bool bResult = true;	// Success by default
 		IMPORT_FUNC(glTexImage3DOES)

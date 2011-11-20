@@ -943,8 +943,7 @@ PLRenderer::TextureBuffer2D *Renderer::CreateTextureBuffer2D(Image &cImage, PLRe
 PLRenderer::TextureBuffer2DArray *Renderer::CreateTextureBuffer2DArray(Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
 {
 	// Check texture buffer
-	// [TODO] The current "TextureBuffer2DArray"-implementation is using 3D functions, check this (Tegra 2 has e.g. support for 2D array textures, but not for 3D textures...)
-	if (!m_sCapabilities.bTextureBuffer2DArray || !m_sCapabilities.bTextureBuffer3D || !CheckTextureBuffer2DArray(cImage, nInternalFormat))
+	if (!m_sCapabilities.bTextureBuffer2DArray || !CheckTextureBuffer2DArray(cImage, nInternalFormat))
 		return nullptr; // Error!
 
 	// Create the OpenGL ES 2.0 2D array texture buffer
