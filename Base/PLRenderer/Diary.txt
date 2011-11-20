@@ -4,6 +4,8 @@
   "#extension GL_ARB_texture_rectangle : enable" within a GLSL shader targeting OpenGL ES 2.0... the driver then just hangs. So, in order to make it easier
   for the driver, "#extension GL_ARB_texture_rectangle : enable" is now added to the shader string dynamically, but only when not targeting OpenGL ES 2.0.
   This is correct, but interesting that the graphics driver suddenly no longer ignores unknown extensions.
+PLRendererOpenGLES2:
+- 3D textures using the "GL_OES_texture_3D"-extension are now working (at least using the desktop native OpenGL ES 2.0 support)
 
 
 

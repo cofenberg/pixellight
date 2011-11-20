@@ -560,7 +560,7 @@ void Renderer::InitWrappers()
 	m_cPLE_TAWrapper += GL_CLAMP_TO_EDGE;		//  0: PLRenderer::TextureAddressing::Clamp
 
 	// [TODO]
-	m_cPLE_TAWrapper += 0;		//  1: PLRenderer::TextureAddressing::Border
+	m_cPLE_TAWrapper += GL_CLAMP_TO_EDGE;		//  1: PLRenderer::TextureAddressing::Border
 //	m_cPLE_TAWrapper += GL_CLAMP_TO_BORDER;		//  1: PLRenderer::TextureAddressing::Border
 
 	m_cPLE_TAWrapper += GL_REPEAT;			//  2: PLRenderer::TextureAddressing::Wrap
@@ -1510,11 +1510,8 @@ bool Renderer::SetSamplerState(uint32 nStage, PLRenderer::Sampler::Enum nState, 
 		}
 	}
 
-	// Check if this sampler state is already set to this value and whether currently a correct
-	// texture buffer is used
-	// [TODO]
+	// Check if this sampler state is already set to this value and whether currently a correct texture buffer is used
 	if (m_ppnInternalSamplerState[nStage][nState] != nValue) {
-//	if (m_ppnInternalSamplerState[nStage][nState] != nValue && m_nTextureBufferTypes[nStage]) {
 		// Check whether mipmapping is allowed, if not, set a proper internal texture filter mode
 		// for correct rendering...
 		if (nState == PLRenderer::Sampler::MipFilter) {
@@ -1528,105 +1525,126 @@ bool Renderer::SetSamplerState(uint32 nStage, PLRenderer::Sampler::Enum nState, 
 			}
 		}
 
-		// Set the sampler state
-		m_ppnInternalSamplerState[nStage][nState] = nValue;
-		// [TODO]
-		const uint32 nType = GL_TEXTURE_2D;
-		//const uint32 nType = m_nTextureBufferTypes[nStage];
-		m_sStatistics.nSamplerStateChanges++;
+		// Get the OpenGL ES texture target
+		uint32 nOpenGLESTextureTarget = 0;
+		PLRenderer::TextureBuffer *pTextureBuffer = m_ppCurrentTextureBuffer[nStage];
+		if (pTextureBuffer) {
+			switch (pTextureBuffer->GetType()) {
+				case PLRenderer::Resource::TypeTextureBuffer1D:
+					// OpenGL ES 2.0 doesn't support 1D textures - set no texture
+					break;
 
-		// Activate the correct OpenGL ES texture unit
-		glActiveTexture(GL_TEXTURE0 + nStage);
+				case PLRenderer::Resource::TypeTextureBuffer2D:
+					nOpenGLESTextureTarget = GL_TEXTURE_2D;
+					break;
 
-		// Set sampler state
-		switch (nState) {
-		// Address modes
-			case PLRenderer::Sampler::AddressU:
-			{
-				const uint32 &nAPIValue = m_cPLE_TAWrapper[nValue];
-				if (&nAPIValue != &Array<uint32>::Null) {
-					glTexParameteri(nType, GL_TEXTURE_WRAP_S, nAPIValue);
-				} else {
-					// Error, invalid value!
-					return false;
-				}
-				break;
+				case PLRenderer::Resource::TypeTextureBuffer3D:
+					nOpenGLESTextureTarget = GL_TEXTURE_3D_OES;
+					break;
+
+				case PLRenderer::Resource::TypeTextureBufferCube:
+					nOpenGLESTextureTarget = GL_TEXTURE_CUBE_MAP;
+					break;
 			}
+		}
+		if (nOpenGLESTextureTarget) {
+			// Set the sampler state
+			m_ppnInternalSamplerState[nStage][nState] = nValue;
+			m_sStatistics.nSamplerStateChanges++;
 
-			case PLRenderer::Sampler::AddressV:
-			{
-				const uint32 &nAPIValue = m_cPLE_TAWrapper[nValue];
-				if (&nAPIValue != &Array<uint32>::Null) {
-					glTexParameteri(nType, GL_TEXTURE_WRAP_T, nAPIValue);
-				} else {
-					// Error, invalid value!
-					return false;
-				}
-				break;
-			}
+			// Activate the correct OpenGL ES texture unit
+			glActiveTexture(GL_TEXTURE0 + nStage);
 
-			case PLRenderer::Sampler::AddressW:
-				// "GL_OES_texture_3D"-extension available?
-				if (GetContext().GetExtensions().IsGL_OES_texture_3D()) {
+			// Set sampler state
+			switch (nState) {
+			// Address modes
+				case PLRenderer::Sampler::AddressU:
+				{
 					const uint32 &nAPIValue = m_cPLE_TAWrapper[nValue];
 					if (&nAPIValue != &Array<uint32>::Null) {
-						glTexParameteri(nType, GL_TEXTURE_WRAP_R_OES, nAPIValue);
+						glTexParameteri(nOpenGLESTextureTarget, GL_TEXTURE_WRAP_S, nAPIValue);
 					} else {
 						// Error, invalid value!
 						return false;
 					}
-				} else {
-					// Error, invalid value!
-					return false;
-				}
-				break;
-
-		// Filter
-			case PLRenderer::Sampler::MinFilter:
-				// Combine with existing mip filter
-				glTexParameteri(nType, GL_TEXTURE_MIN_FILTER, GetCombinedMinMipFilter(nStage));
-				break;
-
-			case PLRenderer::Sampler::MagFilter:
-				switch (nValue) {
-					case PLRenderer::TextureFiltering::Anisotropic: // GL treats linear and aniso the same
-					case PLRenderer::TextureFiltering::Linear:
-						glTexParameteri(nType, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-					break;
-
-					case PLRenderer::TextureFiltering::Point:
-					case PLRenderer::TextureFiltering::None:
-						glTexParameteri(nType, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 					break;
 				}
-				break;
 
-			case PLRenderer::Sampler::MipFilter:
-				// Combine with existing min filter
-				glTexParameteri(nType, GL_TEXTURE_MIN_FILTER, GetCombinedMinMipFilter(nStage));
-				break;
-
-		// Misc
-			case PLRenderer::Sampler::MipmapLODBias:
-				// Not supported by OpenGL ES 2.0
-				break;
-
-			case PLRenderer::Sampler::MaxMapLevel:
-				// Not supported by OpenGL ES 2.0
-				break;
-
-			case PLRenderer::Sampler::MaxAnisotropy:
-				// "GL_EXT_texture_filter_anisotropic"-extension (no extension check required in here)
-				if (m_sCapabilities.nMaxAnisotropy) {
-					if (nValue > m_sCapabilities.nMaxAnisotropy)
-						nValue = m_sCapabilities.nMaxAnisotropy;
-					glTexParameteri(nType, GL_TEXTURE_MAX_ANISOTROPY_EXT, nValue);
+				case PLRenderer::Sampler::AddressV:
+				{
+					const uint32 &nAPIValue = m_cPLE_TAWrapper[nValue];
+					if (&nAPIValue != &Array<uint32>::Null) {
+						glTexParameteri(nOpenGLESTextureTarget, GL_TEXTURE_WRAP_T, nAPIValue);
+					} else {
+						// Error, invalid value!
+						return false;
+					}
 					break;
 				}
-				break;
 
-			default:
-				return false; // Invalid sampler state!
+				case PLRenderer::Sampler::AddressW:
+					// "GL_OES_texture_3D"-extension available?
+					if (GetContext().GetExtensions().IsGL_OES_texture_3D()) {
+						const uint32 &nAPIValue = m_cPLE_TAWrapper[nValue];
+						if (&nAPIValue != &Array<uint32>::Null) {
+							glTexParameteri(nOpenGLESTextureTarget, GL_TEXTURE_WRAP_R_OES, nAPIValue);
+						} else {
+							// Error, invalid value!
+							return false;
+						}
+					} else {
+						// Error, invalid value!
+						return false;
+					}
+					break;
+
+			// Filter
+				case PLRenderer::Sampler::MinFilter:
+					// Combine with existing mip filter
+					glTexParameteri(nOpenGLESTextureTarget, GL_TEXTURE_MIN_FILTER, GetCombinedMinMipFilter(nStage));
+					break;
+
+				case PLRenderer::Sampler::MagFilter:
+					switch (nValue) {
+						case PLRenderer::TextureFiltering::Anisotropic: // GL treats linear and aniso the same
+						case PLRenderer::TextureFiltering::Linear:
+							glTexParameteri(nOpenGLESTextureTarget, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+						break;
+
+						case PLRenderer::TextureFiltering::Point:
+						case PLRenderer::TextureFiltering::None:
+							glTexParameteri(nOpenGLESTextureTarget, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+						break;
+					}
+					break;
+
+				case PLRenderer::Sampler::MipFilter:
+					// Combine with existing min filter
+					glTexParameteri(nOpenGLESTextureTarget, GL_TEXTURE_MIN_FILTER, GetCombinedMinMipFilter(nStage));
+					break;
+
+			// Misc
+				case PLRenderer::Sampler::MipmapLODBias:
+					// Not supported by OpenGL ES 2.0
+					break;
+
+				case PLRenderer::Sampler::MaxMapLevel:
+					// Not supported by OpenGL ES 2.0
+					break;
+
+				case PLRenderer::Sampler::MaxAnisotropy:
+					// "GL_EXT_texture_filter_anisotropic"-extension (no extension check required in here)
+					if (m_sCapabilities.nMaxAnisotropy) {
+						if (nValue > m_sCapabilities.nMaxAnisotropy)
+							nValue = m_sCapabilities.nMaxAnisotropy;
+						glTexParameteri(nOpenGLESTextureTarget, GL_TEXTURE_MAX_ANISOTROPY_EXT, nValue);
+						break;
+					}
+					break;
+
+				default:
+					return false; // Invalid sampler state!
+			}
 		}
 	}
 
