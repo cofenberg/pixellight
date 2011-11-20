@@ -596,9 +596,12 @@ ProgramGenerator *DrawHelpersBackendShaders::GetProgramGenerator()
 				// Create the program generator
 				m_pProgramGenerator = new ProgramGenerator(*m_pRenderer, sShaderLanguage, sVertexShaderSourceCodeGLSL, "100", sFragmentShaderSourceCodeGLSL, "100");
 			} else {
+				// Add GLSL extension definition
+				const String sFragmentShaderSourceCodeGLSLModified = "#extension GL_ARB_texture_rectangle : enable\n" + sFragmentShaderSourceCodeGLSL;
+
 				// Remove precision qualifiers so that we're able to use 110 (OpenGL 2.0 shaders) instead of 130 (OpenGL 3.0 shaders,
 				// with this version we can keep the precision qualifiers) so that this shader requirements are as low as possible
-				m_pProgramGenerator = new ProgramGenerator(*m_pRenderer, sShaderLanguage, Shader::RemovePrecisionQualifiersFromGLSL(sVertexShaderSourceCodeGLSL), "110", Shader::RemovePrecisionQualifiersFromGLSL(sFragmentShaderSourceCodeGLSL), "110");
+				m_pProgramGenerator = new ProgramGenerator(*m_pRenderer, sShaderLanguage, Shader::RemovePrecisionQualifiersFromGLSL(sVertexShaderSourceCodeGLSL), "110", Shader::RemovePrecisionQualifiersFromGLSL(sFragmentShaderSourceCodeGLSLModified), "110");
 			}
 		} else if (sShaderLanguage == "Cg") {
 			#include "DrawHelpersBackendShaders_Cg.h"

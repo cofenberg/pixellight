@@ -1,3 +1,12 @@
+>> 20.11.2011
+[CO]
+- "PLRenderer::DrawHelpersBackendShaders::GetProgramGenerator()": When generating a GLSL shader for OpenGL ES 2.0, my graphics driver no longer accepts
+  "#extension GL_ARB_texture_rectangle : enable" within a GLSL shader targeting OpenGL ES 2.0... the driver then just hangs. So, in order to make it easier
+  for the driver, "#extension GL_ARB_texture_rectangle : enable" is now added to the shader string dynamically, but only when not targeting OpenGL ES 2.0.
+  This is correct, but interesting that the graphics driver suddenly no longer ignores unknown extensions.
+
+
+
 >> 13.11.2011
 [SW]
 - "PLRendererOpenGLES2" Extended under linux the check for the right lib to load for EGL/GLES. Because the opensource drivers provides the libEGL.so and libGLESv2.so libs for EGL/GLES. But the closed source drivers doesn't.
