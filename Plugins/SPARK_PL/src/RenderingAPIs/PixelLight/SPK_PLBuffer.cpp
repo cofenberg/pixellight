@@ -127,7 +127,7 @@ PLBufferCreator::PLBufferCreator(Renderer &cRenderer, uint32 nNumOfVerticesPerPa
 //[-------------------------------------------------------]
 SPK::Buffer *PLBufferCreator::createBuffer(size_t nbParticles, const SPK::Group &group) const
 {
-	return new SPK_PLBuffer(*m_pRenderer, m_nNumOfVerticesPerParticle, m_nNumOfIndicesPerParticle, m_nTexturingMode, nbParticles);
+	return new SPK_PLBuffer(*m_pRenderer, m_nNumOfVerticesPerParticle, m_nNumOfIndicesPerParticle, m_nTexturingMode, static_cast<uint32>(nbParticles));
 }
 
 

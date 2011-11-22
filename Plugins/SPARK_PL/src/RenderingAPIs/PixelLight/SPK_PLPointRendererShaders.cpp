@@ -245,7 +245,7 @@ void SPK_PLPointRendererShaders::render(const SPK::Group &group)
 				GetPLRenderer().SetIndexBuffer(pIndexBuffer);
 
 			// Draw
-			GetPLRenderer().DrawPrimitives(Primitive::PointList, 0, group.getNbParticles());
+			GetPLRenderer().DrawPrimitives(Primitive::PointList, 0, static_cast<uint32>(group.getNbParticles()));
 		}
 	}
 }

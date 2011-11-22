@@ -100,7 +100,7 @@ void SPK_PLLineRendererFixedFunctions::render(const SPK::Group &group)
 				pfPosition[2] = cParticle.position().z;
 				pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition) + nVertexSize);	// Next, please!
 				// Copy over the particle color into the vertex data
-				pVertexBuffer->SetColor(nCurrentVertex, Color4(cParticle.getR(), cParticle.getG(), cParticle.getB(), cParticle.getParamCurrentValue(SPK::PARAM_ALPHA)));
+				pVertexBuffer->SetColor(static_cast<uint32>(nCurrentVertex), Color4(cParticle.getR(), cParticle.getG(), cParticle.getB(), cParticle.getParamCurrentValue(SPK::PARAM_ALPHA)));
 				nCurrentVertex++;	// Next, please!
 
 				// Copy over the particle position into the vertex data
@@ -109,7 +109,7 @@ void SPK_PLLineRendererFixedFunctions::render(const SPK::Group &group)
 				pfPosition[2] = cParticle.position().z + cParticle.velocity().z*length;
 				pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition) + nVertexSize);	// Next, please!
 				// Copy over the particle color into the vertex data
-				pVertexBuffer->SetColor(nCurrentVertex, Color4(cParticle.getR(), cParticle.getG(), cParticle.getB(), cParticle.getParamCurrentValue(SPK::PARAM_ALPHA)));
+				pVertexBuffer->SetColor(static_cast<uint32>(nCurrentVertex), Color4(cParticle.getR(), cParticle.getG(), cParticle.getB(), cParticle.getParamCurrentValue(SPK::PARAM_ALPHA)));
 				nCurrentVertex++;	// Next, please!
 			}
 
@@ -130,7 +130,7 @@ void SPK_PLLineRendererFixedFunctions::render(const SPK::Group &group)
 			pFixedFunctions->SetVertexBuffer(pVertexBuffer);
 
 			// Draw
-			GetPLRenderer().DrawPrimitives(Primitive::LineList, 0, group.getNbParticles() << 1);
+			GetPLRenderer().DrawPrimitives(Primitive::LineList, 0, static_cast<uint32>(group.getNbParticles() << 1));
 		}
 	}
 }

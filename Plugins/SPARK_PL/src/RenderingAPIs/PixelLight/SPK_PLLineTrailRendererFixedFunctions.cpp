@@ -155,7 +155,7 @@ void SPK_PLLineTrailRendererFixedFunctions::render(const SPK::Group &group)
 				m_pfVertexIterator += 3;	// Next, please!
 
 				// Copy over the particle color into the vertex data
-				pVertexBuffer->SetColor(i, Color4(m_pfColorIterator[0], m_pfColorIterator[1], m_pfColorIterator[2], m_pfColorIterator[3]));
+				pVertexBuffer->SetColor(static_cast<uint32>(i), Color4(m_pfColorIterator[0], m_pfColorIterator[1], m_pfColorIterator[2], m_pfColorIterator[3]));
 				m_pfColorIterator += 4;	// Next, please!
 			}
 
@@ -178,7 +178,7 @@ void SPK_PLLineTrailRendererFixedFunctions::render(const SPK::Group &group)
 			pFixedFunctions->SetVertexBuffer(pVertexBuffer);
 
 			// Draw
-			GetPLRenderer().DrawPrimitives(Primitive::LineStrip, 0, group.getNbParticles()*(m_nNumOfSamples + 2));
+			GetPLRenderer().DrawPrimitives(Primitive::LineStrip, 0, static_cast<uint32>(group.getNbParticles()*(m_nNumOfSamples + 2)));
 		}
 	}
 }

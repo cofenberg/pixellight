@@ -234,7 +234,7 @@ void SPK_PLPointRenderer::SetupCommonRenderStates(const SPK::Group &group)
 			pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition) + nVertexSize);	// Next, please!
 
 			// Copy over the particle color into the vertex data
-			pVertexBuffer->SetColor(i, Color4(cParticle.getR(), cParticle.getG(), cParticle.getB(), group.getModel()->isEnabled(SPK::PARAM_ALPHA) ? cParticle.getParamCurrentValue(SPK::PARAM_ALPHA) : 1.0f));
+			pVertexBuffer->SetColor(static_cast<uint32>(i), Color4(cParticle.getR(), cParticle.getG(), cParticle.getB(), group.getModel()->isEnabled(SPK::PARAM_ALPHA) ? cParticle.getParamCurrentValue(SPK::PARAM_ALPHA) : 1.0f));
 		}
 
 		// Unlock the vertex buffer

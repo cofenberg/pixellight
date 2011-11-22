@@ -805,7 +805,7 @@ int32 Script::GetReturn(int32 nValue)
 		// Must be a number
 		if (lua_isnumber(m_pLuaState, -1)) {
 			// Get the value
-			nValue = lua_tointeger(m_pLuaState, -1);
+			nValue = static_cast<int32>(lua_tointeger(m_pLuaState, -1));
 		} else {
 			// Error!
 			nValue = 0;
@@ -910,7 +910,7 @@ uint32 Script::GetReturn(uint32 nValue)
 		// Must be a number
 		if (lua_isnumber(m_pLuaState, -1)) {
 			// Get the result
-			nValue = lua_tointeger(m_pLuaState, -1);
+			nValue = static_cast<uint32>(lua_tointeger(m_pLuaState, -1));
 		} else {
 			// Error!
 			nValue = 0;
