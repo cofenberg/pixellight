@@ -1221,9 +1221,8 @@ PLRenderer::TextureBuffer2D *Renderer::CreateTextureBuffer2D(PLGraphics::Image &
 
 PLRenderer::TextureBuffer2DArray *Renderer::CreateTextureBuffer2DArray(Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
 {
-	// Check texture buffer
-	// [TODO] The current "TextureBuffer2DArray"-implementation is using 3D functions, check this
-	if (!m_sCapabilities.bTextureBuffer2DArray || !m_sCapabilities.bTextureBuffer3D || !CheckTextureBuffer2DArray(cImage, nInternalFormat))
+	// Check texture buffer - The "TextureBuffer2DArray"-implementation is using 3D functions and compression as well
+	if (!m_sCapabilities.bTextureBuffer2DArray || !m_sCapabilities.bTextureBuffer3D || !m_pContext->GetExtensions().IsGL_ARB_texture_compression() || !CheckTextureBuffer2DArray(cImage, nInternalFormat))
 		return nullptr; // Error!
 
 	// Create the OpenGL 2D array texture buffer
