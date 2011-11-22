@@ -926,17 +926,6 @@ void Renderer::RestoreDeviceStates()
 	}
 
 	// Reset texture buffers
-	glMatrixMode(GL_TEXTURE);
-	for (uint32 nStage=0; nStage<m_sCapabilities.nMaxTextureUnits; nStage++) {
-		if (glActiveTextureARB)
-			glActiveTextureARB(GL_TEXTURE0_ARB+nStage);
-		glLoadIdentity();
-		glDisable(GL_TEXTURE_1D);
-		glDisable(GL_TEXTURE_2D);
-		glDisable(GL_TEXTURE_RECTANGLE_ARB);
-		glDisable(GL_TEXTURE_CUBE_MAP_ARB);
-		glDisable(GL_TEXTURE_3D_EXT);
-	}
 	for (uint32 nStage=0; nStage<m_sCapabilities.nMaxTextureUnits; nStage++) {
 		PLRenderer::TextureBuffer *pTextureBuffer = GetTextureBuffer(nStage);
 		SetTextureBuffer(nStage, nullptr);

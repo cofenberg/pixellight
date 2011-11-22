@@ -254,6 +254,20 @@ void FixedFunctions::GeneralSettings()
 */
 void FixedFunctions::RestoreDeviceStates()
 {
+	// Reset texture buffers
+	glMatrixMode(GL_TEXTURE);
+	for (uint32 nStage=0; nStage<m_pRendererOpenGL->GetCapabilities().nMaxTextureUnits; nStage++) {
+		if (glActiveTextureARB)
+			glActiveTextureARB(GL_TEXTURE0_ARB+nStage);
+		glLoadIdentity();
+		glDisable(GL_TEXTURE_1D);
+		glDisable(GL_TEXTURE_2D);
+		glDisable(GL_TEXTURE_2D_ARRAY_EXT);
+		glDisable(GL_TEXTURE_RECTANGLE_ARB);
+		glDisable(GL_TEXTURE_CUBE_MAP_ARB);
+		glDisable(GL_TEXTURE_3D_EXT);
+	}
+
 	// Setup current transform states
 	Matrix4x4 mTrans;
 	mTrans = GetTransformState(Transform::Projection);

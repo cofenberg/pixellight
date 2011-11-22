@@ -1,3 +1,10 @@
+>> 22.11.2011
+[CO]
+PLRendererOpenGL:
+- "Renderer::RestoreDeviceStates()": Moved fixed functions stuff like "glDisable(GL_TEXTURE_1D)" into the fixed functions class
+
+
+
 >> 20.11.2011
 [CO]
 - "PLRenderer::DrawHelpersBackendShaders::GetProgramGenerator()": When generating a GLSL shader for OpenGL ES 2.0, my graphics driver no longer accepts
