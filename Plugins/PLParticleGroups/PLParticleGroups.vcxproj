@@ -84,6 +84,7 @@
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)D</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectName)D</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -105,14 +106,11 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;PLPhysicsD.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLParticleGroupsD.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLParticleGroupsD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLParticleGroupsD.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
@@ -145,14 +143,11 @@ copy build\debug_x86\PLParticleGroupsD.lib ..\..\Bin\Lib\x86\
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;PLPhysicsD.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLParticleGroupsD.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLParticleGroupsD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLParticleGroupsD.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
@@ -191,7 +186,6 @@ copy build\debug_x64\PLParticleGroupsD.lib ..\..\Bin\Lib\x64\
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLPhysics.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLParticleGroups.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -200,7 +194,6 @@ copy build\debug_x64\PLParticleGroupsD.lib ..\..\Bin\Lib\x64\
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <SupportUnloadOfDelayLoadedDLL>true</SupportUnloadOfDelayLoadedDLL>
-      <ImportLibrary>$(OutDir)PLParticleGroups.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
@@ -238,7 +231,6 @@ copy build\release_x86\PLParticleGroups.lib ..\..\Bin\Lib\x86\
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLPhysics.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLParticleGroups.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -246,7 +238,6 @@ copy build\release_x86\PLParticleGroups.lib ..\..\Bin\Lib\x86\
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLParticleGroups.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>

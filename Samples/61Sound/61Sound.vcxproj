@@ -108,7 +108,6 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLInput.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)61Sound.exe</OutputFile>
       <AdditionalLibraryDirectories>../../Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -149,7 +148,6 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLInput64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;PLEngine64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)61Sound64.exe</OutputFile>
       <AdditionalLibraryDirectories>../../Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
@@ -182,10 +180,8 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLInput.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)61SoundD.exe</OutputFile>
       <AdditionalLibraryDirectories>../../Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)61SoundD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
@@ -217,10 +213,8 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore64.lib;PLMath64.lib;PLInput64.lib;PLRenderer64.lib;PLMesh64.lib;PLScene64.lib;PLEngine64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)61SoundD64.exe</OutputFile>
       <AdditionalLibraryDirectories>../../Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)61SoundD64.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>

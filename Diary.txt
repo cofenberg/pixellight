@@ -4,6 +4,13 @@
 
 
 
+>> 22.11.2011
+[CO]
+- Visual Studio project settings: Fixed "warning MSB8012: TargetName does not match the Linker's OutputFile property value" by
+  removing the "OutputFile" setting, removed also the "ImportLibrary" setting (the default values are just fine)
+
+
+
 >> 14.11.2011
 [TM]
 - PLInstall: Updated the installer. This includes an new Qt Gui and some changes in the PLCore runtime backend.

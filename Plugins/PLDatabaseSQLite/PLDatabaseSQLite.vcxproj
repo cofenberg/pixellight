@@ -84,6 +84,7 @@
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)D</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectName)D</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -105,17 +106,12 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLDatabaseD.lib;SQLite.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLDatabaseSQLiteD.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/SQLite/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>MSVCRTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLDatabaseSQLiteD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <FixedBaseAddress>
-      </FixedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLDatabaseSQLiteD.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
@@ -147,17 +143,12 @@ copy build\debug_x86\PLDatabaseSQLiteD.lib ..\..\Bin\Lib\x86\
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLDatabaseD.lib;SQLite.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLDatabaseSQLiteD.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x64\;../../External/_Windows_x86_64/SQLite/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>MSVCRTD;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)PLDatabaseSQLiteD.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <FixedBaseAddress>
-      </FixedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLDatabaseSQLiteD.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
@@ -196,7 +187,6 @@ copy build\debug_x64\PLDatabaseSQLiteD.lib ..\..\Bin\Lib\x64\
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore.lib;PLDatabase.lib;SQLite.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLDatabaseSQLite.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;../../External/_Windows_x86_32/SQLite/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -206,7 +196,6 @@ copy build\debug_x64\PLDatabaseSQLiteD.lib ..\..\Bin\Lib\x64\
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <SupportUnloadOfDelayLoadedDLL>true</SupportUnloadOfDelayLoadedDLL>
-      <ImportLibrary>$(OutDir)PLDatabaseSQLite.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
@@ -243,7 +232,6 @@ copy build\release_x86\PLDatabaseSQLite.lib ..\..\Bin\Lib\x86\
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore.lib;PLDatabase.lib;SQLite.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)PLDatabaseSQLite.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x64\;../../External/_Windows_x86_64/SQLite/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>MSVCRT;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>false</GenerateDebugInformation>
@@ -252,7 +240,6 @@ copy build\release_x86\PLDatabaseSQLite.lib ..\..\Bin\Lib\x86\
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)PLDatabaseSQLite.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>

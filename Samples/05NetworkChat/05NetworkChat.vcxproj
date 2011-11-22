@@ -109,7 +109,6 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)05NetworkChat.exe</OutputFile>
       <AdditionalLibraryDirectories>../../Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
@@ -151,7 +150,6 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)05NetworkChat64.exe</OutputFile>
       <AdditionalLibraryDirectories>../../Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
@@ -185,11 +183,9 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)05NetworkChatD.exe</OutputFile>
       <AdditionalLibraryDirectories>../../Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)05NetworkChatD.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
@@ -222,11 +218,9 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)05NetworkChatD64.exe</OutputFile>
       <AdditionalLibraryDirectories>../../Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>$(OutDir)05NetworkChatD64.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>

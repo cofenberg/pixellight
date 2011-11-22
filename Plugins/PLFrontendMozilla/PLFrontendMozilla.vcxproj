@@ -85,6 +85,7 @@
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)D</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectName)D</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -102,7 +103,6 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCoreD.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)D.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x86\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>PLFrontendMozilla.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -112,7 +112,6 @@
     <PostBuildEvent>
       <Command>copy build\debug_x86\PLFrontendMozillaD.dll ..\..\Bin\Runtime\x86\
 ..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
-copy build\debug_x86\PLFrontendMozillaD.dll "C:\Programme\Mozilla Firefox\plugins\nppl3d.dll"
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -134,18 +133,16 @@ copy build\debug_x86\PLFrontendMozillaD.dll "C:\Programme\Mozilla Firefox\plugin
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCoreD.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)D.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>PLFrontendMozilla.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug_x64\PLFrontendMozillaD.dll ..\..\Bin\Runtime\x64\
 ..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
-copy build\debug_x64\PLFrontendMozillaD.dll "C:\Programme\Mozilla Firefox\plugins\nppl3d.dll"</Command>
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -188,7 +185,7 @@ copy build\debug_x64\PLFrontendMozillaD.dll "C:\Programme\Mozilla Firefox\plugin
     <PostBuildEvent>
       <Command>copy build\release_x86\PLFrontendMozilla.dll ..\..\Bin\Runtime\x86\
 ..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
-copy build\release_x86\PLFrontendMozilla.dll "C:\Programme\Mozilla Firefox\plugins\nppl3d.dll"</Command>
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -209,20 +206,18 @@ copy build\release_x86\PLFrontendMozilla.dll "C:\Programme\Mozilla Firefox\plugi
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\Bin\Lib\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>PLFrontendMozilla.def</ModuleDefinitionFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
       <Command>copy build\release_x64\PLFrontendMozilla.dll ..\..\Bin\Runtime\x64\
 ..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
-copy build\release_x64\PLFrontendMozilla.dll "C:\Programme\Mozilla Firefox\plugins\nppl3d.dll"</Command>
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

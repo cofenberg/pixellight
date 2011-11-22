@@ -74,7 +74,6 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore.lib;PLInput.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)$(ProjectName)D.exe</OutputFile>
       <AdditionalLibraryDirectories>../../Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
