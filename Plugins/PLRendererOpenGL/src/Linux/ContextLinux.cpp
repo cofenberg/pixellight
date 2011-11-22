@@ -27,6 +27,7 @@
 #include <PLCore/Container/Array.h>
 #include <PLRenderer/Renderer/Types.h>
 #include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/Linux/SurfaceWindowLinux.h"
 #include "PLRendererOpenGL/Linux/ContextLinux.h"
 
