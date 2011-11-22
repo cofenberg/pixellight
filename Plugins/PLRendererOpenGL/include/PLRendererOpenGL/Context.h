@@ -43,7 +43,6 @@ namespace PLRenderer {
 	class SurfaceWindowHandler;
 }
 namespace PLRendererOpenGL {
-	class Renderer;
 	class Extensions;
 }
 
@@ -156,10 +155,8 @@ class Context : public PLCore::AbstractContext {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] cRenderer
-		*    Owner renderer
 		*/
-		Context(Renderer &cRenderer);
+		Context();
 
 
 	//[-------------------------------------------------------]

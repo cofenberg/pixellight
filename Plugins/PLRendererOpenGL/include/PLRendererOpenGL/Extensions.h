@@ -45,7 +45,7 @@ namespace PLRendererOpenGL {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class Renderer;
+class Context;
 
 
 //[-------------------------------------------------------]
@@ -81,10 +81,10 @@ class Extensions {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] cRenderer
-		*    Owner renderer
+		*  @param[in] cContext
+		*    Owner context
 		*/
-		Extensions(Renderer &cRenderer);
+		Extensions(Context &cContext);
 
 		/**
 		*  @brief
@@ -276,7 +276,7 @@ class Extensions {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Renderer *m_pRenderer;				/**< Owner renderer, always valid! */
+		Context  *m_pContext;				/**< Owner context, always valid! */
 		bool 	  m_bInitialized;			/**< Are the extensions initialized? */
 		#ifdef APPLE
 			void *m_pOpenGLSharedLibrary;	/**< OpenGL shared library, can be a null pointer */

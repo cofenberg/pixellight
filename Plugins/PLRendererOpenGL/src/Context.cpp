@@ -62,8 +62,8 @@ Extensions &Context::GetExtensions()
 *  @brief
 *    Constructor
 */
-Context::Context(Renderer &cRenderer) :
-	m_pExtensions(new Extensions(cRenderer))
+Context::Context() :
+	m_pExtensions(new Extensions(*this))
 {
 }
 

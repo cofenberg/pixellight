@@ -46,7 +46,7 @@ namespace PLRendererOpenGL {
 *  @brief
 *    Constructor
 */
-ContextLinux::ContextLinux(Renderer &cRenderer) : Context(cRenderer),
+ContextLinux::ContextLinux(Renderer &cRenderer) : Context(),
 	m_pRenderer(&cRenderer),
 	m_pDisplay(nullptr),
 	m_hDummyNativeWindow(NULL_HANDLE),

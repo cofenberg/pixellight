@@ -47,7 +47,7 @@ namespace PLRendererOpenGL {
 *  @brief
 *    Constructor
 */
-ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialiasingSamples) : Context(cRenderer),
+ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialiasingSamples) : Context(),
 	m_pRenderer(&cRenderer),
 	m_hDummyWindow(nullptr),
 	m_hDummyWindowDeviceContext(nullptr),

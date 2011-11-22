@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
-#include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/Linux/ContextLinux.h"
 #include "PLRendererOpenGL/Extensions.h"
 
@@ -63,11 +62,8 @@ bool Extensions::Init(bool bUseExtensions)
 
 		WriteExtensionStringIntoLog(reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS)));
 
-		// Get the Linux context implementation
-		ContextLinux &cContextLinux = static_cast<ContextLinux&>(m_pRenderer->GetContext());
-
 		// Get the X server display connection
-		Display *pDisplay = cContextLinux.GetDisplay();
+		Display *pDisplay = static_cast<ContextLinux&>(*m_pContext).GetDisplay();
 		if (pDisplay) {
 			// glXQueryExtensionsString
 			PL_LOG(Info, "glx Extensions info:")
