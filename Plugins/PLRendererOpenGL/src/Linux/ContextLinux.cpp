@@ -83,6 +83,9 @@ ContextLinux::ContextLinux(Renderer &cRenderer) : Context(cRenderer),
 				if (m_hDummyNativeWindow) {
 					// Make the internal dummy to the current render target
 					MakeDummyCurrent();
+
+					// Initialize the OpenGL extensions
+					GetExtensions().Init();
 				} else {
 					// Error, failed to create dummy window!
 				}

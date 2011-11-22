@@ -203,6 +203,9 @@ ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialias
 									if (m_hDummyWindowRenderContext != nullptr) {
 										// Make the OpenGL render context to the current one
 										MakeDummyCurrent();
+
+										// Initialize the OpenGL extensions
+										GetExtensions().Init();
 									}
 								}
 							}

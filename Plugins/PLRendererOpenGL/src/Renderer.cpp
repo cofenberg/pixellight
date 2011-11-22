@@ -153,9 +153,6 @@ Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits,
 	if (m_pContext->IsValid()) {
 		Extensions &cExtensions = m_pContext->GetExtensions();
 
-		// Initialize the OpenGL extensions
-		cExtensions.Init();
-
 		// Check multisample antialiasing support
 		if (cExtensions.IsWGL_ARB_multisample() && cExtensions.IsGL_ARB_multisample()) {
 			if (m_nMultisampleAntialiasingSamples == 1)

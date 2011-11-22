@@ -68,8 +68,13 @@ ContextMacOSX::ContextMacOSX(Renderer &cRenderer) : Context(cRenderer),
 		if (nCGLError == kCGLNoError) {
 			// Make our CGL context object to the current one (don't use "MakeDummyCurrent()" in here, we want to see if it's working in general)
 			nCGLError = CGLSetCurrentContext(m_pCGLContextObj);
-			if (nCGLError != kCGLNoError)
+			if (nCGLError == kCGLNoError) {
+				// Initialize the OpenGL extensions
+				GetExtensions().Init();
+			} else {
+				// Error!
 				PL_LOG(Error, String("Failed to make the CGL context object to the current one (\"") + CGLErrorString(nCGLError) + "\")")
+			}
 		} else {
 			// Error!
 			PL_LOG(Error, String("Failed to create the CGL context object (\"") + CGLErrorString(nCGLError) + "\")")
