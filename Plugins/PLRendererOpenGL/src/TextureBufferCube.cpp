@@ -461,7 +461,6 @@ void TextureBufferCube::BackupDeviceData(uint8 **ppBackup)
 		*ppBackup = new uint8[nTotalNumOfBytes];
 		if (*ppBackup) {
 			// Prepare for backup
-			glEnable(GL_TEXTURE_CUBE_MAP_ARB);
 			glBindTexture(GL_TEXTURE_CUBE_MAP_ARB, m_nOpenGLTexture);
 
 			// Backup

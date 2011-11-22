@@ -462,7 +462,6 @@ void TextureBufferRectangle::BackupDeviceData(uint8 **ppBackup)
 		*ppBackup = new uint8[nTotalNumOfBytes];
 		if (*ppBackup) {
 			// Prepare for backup
-			glEnable(GL_TEXTURE_RECTANGLE_ARB);
 			glBindTexture(GL_TEXTURE_RECTANGLE_ARB, m_nOpenGLTexture);
 
 			// Backup

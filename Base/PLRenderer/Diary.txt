@@ -2,6 +2,8 @@
 [CO]
 PLRendererOpenGL:
 - "Renderer::RestoreDeviceStates()": Moved fixed functions stuff like "glDisable(GL_TEXTURE_1D)" into the fixed functions class
+- "TextureBuffer1D::BackupDeviceData()" etc. : There's no need for "glEnable(GL_TEXTURE_1D)" (this just enables texture mapping for fixed
+  functions... we can also use "glGetTexImage()" with disabled fixed functions texture mapping *g*)
 
 
 
