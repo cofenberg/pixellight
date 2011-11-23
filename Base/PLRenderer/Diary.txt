@@ -1,3 +1,9 @@
+>> 23.11.2011
+[CO]
+- "TextureBuffer::GetFormatFromImage()": Added support for the "DataWord" (16 bit) data type of "PLGraphics::Image"
+
+
+
 >> 22.11.2011
 [CO]
 PLRendererOpenGL:
