@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: PerlinNoise.h                                  *
+ *  File: PerlinNoiseTileable.h                          *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,15 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLMATH_PERLINNOISE_H__
-#define __PLMATH_PERLINNOISE_H__
+#ifndef __PLMATH_PERLINNOISETILEABLE_H__
+#define __PLMATH_PERLINNOISETILEABLE_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLMath/PLMath.h"
+#include "PLMath/PerlinNoise.h"
 
 
 //[-------------------------------------------------------]
@@ -42,25 +42,20 @@ namespace PLMath {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Static class containing the original noise implementation from Ken Perlin
-*
-*  @remarks
-*    Coherent noise function over 1, 2 or 3 dimensions
-*    (copyright Ken Perlin)
-*
-*  @see
-*    - http://cs.nyu.edu/~perlin/doc/oscar.html#noise
+*    Static class containing tileable perlin noise functions
 */
-class PerlinNoise {
+class PerlinNoiseTileable : public PerlinNoise {
 
 
 	//[-------------------------------------------------------]
 	//[ Public static functions                               ]
 	//[-------------------------------------------------------]
 	public:
-		static PLMATH_API double Noise1(double arg);
-		static PLMATH_API double Noise2(const double vec[2]);
-		static PLMATH_API double Noise3(const double vec[3]);
+		static inline float Noise2(float fX, float fY);
+		static inline float Noise3(float fX, float fY, float fZ);
+		static PLMATH_API float TileableNoise1(float fX, float fW);
+		static PLMATH_API float TileableNoise2(float fX, float fY, float fW, float fH);
+		static PLMATH_API float TileableNoise3(float fX, float fY, float fZ, float fW, float fH, float fD);
 
 
 };
@@ -72,4 +67,10 @@ class PerlinNoise {
 } // PLMath
 
 
-#endif // __PLMATH_PERLINNOISE_H__
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLMath/PerlinNoiseTileable.inl"
+
+
+#endif // __PLMATH_PERLINNOISETILEABLE_H__

@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLMath/PerlinNoise.h>
+#include <PLMath/PerlinNoiseTurbulence.h>
 #include <PLGraphics/Image/Image.h>
 #include <PLGraphics/Image/ImageBuffer.h>
 #include "PLRenderer/RendererContext.h"
@@ -78,9 +78,6 @@ Texture *TextureCreatorTurbulence3D::Create(TextureManager &cTextureManager, Tex
 	// Create the texture
 	pTexture = CreateTexture(cTextureManager, pTexture);
 
-	// Initialize Perlin noise
-	PLInitPerlin();
-
 	// Get scale
 	const Vector3 &vScale = Scale.Get();
 
@@ -95,7 +92,7 @@ Texture *TextureCreatorTurbulence3D::Create(TextureManager &cTextureManager, Tex
 	for (uint32 nZ=0; nZ<ZSize; nZ++) {
 		for (uint32 nY=0; nY<YSize; nY++) {
 			for (uint32 nX=0; nX<XSize; nX++) {
-				const uint8 nT = static_cast<uint8>(127.5f*(1 + PLTileableTurbulence3(vScale.x*nX, vScale.y*nY, vScale.z*nZ, XSize*vScale.x, YSize*vScale.y, ZSize*vScale.z, 16)));
+				const uint8 nT = static_cast<uint8>(127.5f*(1 + PerlinNoiseTurbulence::TileableTurbulence3(vScale.x*nX, vScale.y*nY, vScale.z*nZ, XSize*vScale.x, YSize*vScale.y, ZSize*vScale.z, 16)));
 				if (nT > nMax)
 					nMax = nT;
 				if (nT < nMin)

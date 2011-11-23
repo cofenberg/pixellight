@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: PerlinNoise.h                                  *
+ *  File: PerlinNoiseTurbulence.cpp                      *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,15 +20,10 @@
 \*********************************************************/
 
 
-#ifndef __PLMATH_PERLINNOISE_H__
-#define __PLMATH_PERLINNOISE_H__
-#pragma once
-
-
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLMath/PLMath.h"
+#include "PLMath/PerlinNoiseTurbulence.h"
 
 
 //[-------------------------------------------------------]
@@ -38,38 +33,58 @@ namespace PLMath {
 
 
 //[-------------------------------------------------------]
-//[ Classes                                               ]
+//[ Public static functions                               ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Static class containing the original noise implementation from Ken Perlin
-*
-*  @remarks
-*    Coherent noise function over 1, 2 or 3 dimensions
-*    (copyright Ken Perlin)
-*
-*  @see
-*    - http://cs.nyu.edu/~perlin/doc/oscar.html#noise
-*/
-class PerlinNoise {
+float PerlinNoiseTurbulence::Turbulence2(float fX, float fY, float fFreq)
+{
+	float t = 0.0f;
 
+	do {
+		t += Noise2(fFreq*fX, fFreq*fY)/fFreq;
+		fFreq *= 0.5f;
+	} while (fFreq >= 1.0f);
+	
+	return t;
+}
 
-	//[-------------------------------------------------------]
-	//[ Public static functions                               ]
-	//[-------------------------------------------------------]
-	public:
-		static PLMATH_API double Noise1(double arg);
-		static PLMATH_API double Noise2(const double vec[2]);
-		static PLMATH_API double Noise3(const double vec[3]);
+float PerlinNoiseTurbulence::Turbulence3(float fX, float fY, float fZ, float fFreq)
+{
+	float t = 0.0f;
 
+	do {
+		t += Noise3(fFreq*fX, fFreq*fY, fFreq*fZ)/fFreq;
+		fFreq *= 0.5f;
+	} while (fFreq >= 1.0f);
+	
+	return t;
+}
 
-};
+float PerlinNoiseTurbulence::TileableTurbulence2(float fX, float fY, float fW, float fH, float fFreq)
+{
+	float t = 0.0f;
+
+	do {
+		t += TileableNoise2(fFreq*fX, fFreq*fY, fW*fFreq, fH*fFreq)/fFreq;
+		fFreq *= 0.5f;
+	} while (fFreq >= 1.0f);
+	
+	return t;
+}
+
+float PerlinNoiseTurbulence::TileableTurbulence3(float fX, float fY, float fZ, float fW, float fH, float fD, float fFreq)
+{
+	float t = 0.0f;
+
+	do {
+		t += TileableNoise3(fFreq*fX, fFreq*fY, fFreq*fZ, fW*fFreq, fH*fFreq, fD*fFreq)/fFreq;
+		fFreq *= 0.5f;
+	} while (fFreq >= 1.0f);
+	
+	return t;
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLMath
-
-
-#endif // __PLMATH_PERLINNOISE_H__

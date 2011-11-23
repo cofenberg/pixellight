@@ -1,5 +1,6 @@
 /*********************************************************\
- *  File: PerlinNoise.h                                  *
+ *  File: PerlinNoiseTileable.inl                        *
+ *      PerlinNoiseTileable inline implementation
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,17 +21,6 @@
 \*********************************************************/
 
 
-#ifndef __PLMATH_PERLINNOISE_H__
-#define __PLMATH_PERLINNOISE_H__
-#pragma once
-
-
-//[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include "PLMath/PLMath.h"
-
-
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
@@ -38,38 +28,24 @@ namespace PLMath {
 
 
 //[-------------------------------------------------------]
-//[ Classes                                               ]
+//[ Public static functions                               ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Static class containing the original noise implementation from Ken Perlin
-*
-*  @remarks
-*    Coherent noise function over 1, 2 or 3 dimensions
-*    (copyright Ken Perlin)
-*
-*  @see
-*    - http://cs.nyu.edu/~perlin/doc/oscar.html#noise
-*/
-class PerlinNoise {
+inline float PerlinNoiseTileable::Noise2(float fX, float fY)
+{
+	// This is just a wrapper - Call the original perlin noise function
+	const double vec[2] = { fX, fY };
+	return static_cast<float>(PerlinNoise::Noise2(vec));
+}
 
-
-	//[-------------------------------------------------------]
-	//[ Public static functions                               ]
-	//[-------------------------------------------------------]
-	public:
-		static PLMATH_API double Noise1(double arg);
-		static PLMATH_API double Noise2(const double vec[2]);
-		static PLMATH_API double Noise3(const double vec[3]);
-
-
-};
+inline float PerlinNoiseTileable::Noise3(float fX, float fY, float fZ)
+{
+	// This is just a wrapper - Call the original perlin noise function
+	const double vec[3] = { fX, fY, fZ };
+	return static_cast<float>(PerlinNoise::Noise3(vec));
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLMath
-
-
-#endif // __PLMATH_PERLINNOISE_H__

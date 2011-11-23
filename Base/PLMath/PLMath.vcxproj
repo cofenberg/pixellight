@@ -262,6 +262,8 @@ copy build\release_x64\PLMath.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\Matrix4x4.cpp" />
     <ClCompile Include="src\Octree.cpp" />
     <ClCompile Include="src\PerlinNoise.cpp" />
+    <ClCompile Include="src\PerlinNoiseTileable.cpp" />
+    <ClCompile Include="src\PerlinNoiseTurbulence.cpp" />
     <ClCompile Include="src\Plane.cpp" />
     <ClCompile Include="src\PlaneSet.cpp" />
     <ClCompile Include="src\PLMath.cpp" />
@@ -303,6 +305,8 @@ copy build\release_x64\PLMath.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLMath\Matrix4x4.h" />
     <ClInclude Include="include\PLMath\Octree.h" />
     <ClInclude Include="include\PLMath\PerlinNoise.h" />
+    <ClInclude Include="include\PLMath\PerlinNoiseTileable.h" />
+    <ClInclude Include="include\PLMath\PerlinNoiseTurbulence.h" />
     <ClInclude Include="include\PLMath\Plane.h" />
     <ClInclude Include="include\PLMath\PlaneSet.h" />
     <ClInclude Include="include\PLMath\PLMath.h" />
@@ -341,6 +345,7 @@ copy build\release_x64\PLMath.lib ..\..\Bin\Lib\x64\
     <None Include="include\PLMath\Matrix3x3.inl" />
     <None Include="include\PLMath\Matrix3x4.inl" />
     <None Include="include\PLMath\Matrix4x4.inl" />
+    <None Include="include\PLMath\PerlinNoiseTileable.inl" />
     <None Include="include\PLMath\Plane.inl" />
     <None Include="include\PLMath\Quaternion.inl" />
     <None Include="include\PLMath\Ray.inl" />
