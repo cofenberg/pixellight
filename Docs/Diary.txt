@@ -3,6 +3,8 @@
 PixelLightCodingConventions:
 - "2.9 Const Correctness": Added a const example
 - Review of the document
+- "Headers"-chapter: Added "Including Headers"-section with "Order"- and "Slash Vs. Backslash"-paragraphs
+-> That was stuff I noticed when working with the new PixelLight developers
 
 
 

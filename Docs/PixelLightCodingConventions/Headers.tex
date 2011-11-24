@@ -5,6 +5,31 @@ We have several rules for our header files. See below. At the first look some or
 
 
 
+\section{Including Headers}
+
+
+\paragraph{Order}
+When including files, the order should be
+\begin{itemize}
+\item{System headers like \emph{windows.h} on MS Windows}
+\item{External library headers}
+\item{Project headers}
+\end{itemize}
+In theory, the order of including headers shouldn't matter. In practice, especially when using system headers there might be situations were one has to play around with the header inclusion order to get it compiled. Those situations are really nasty and have to be avoided whenever possible, but hacking around in system headers is no option. That's the reason why system headers have to come first. If there's need for a certain, fixed header order it's required to document that it's required and why. If it's not documented, another person might change the order in the believe that the header inclusion order doesn't matter... and it might work for the used platform, but now breaks it for another one.
+
+
+\paragraph{Slash Vs. Backslash}
+When including files, use slashes (/), not backslashes (\textbackslash). Meaning
+\begin{lstlisting}[caption=Slash Vs. Backslash - Right]
+#include <PLCore/String/String.h>
+\end{lstlisting}
+and not
+\begin{lstlisting}[caption=Slash Vs. Backslash - Wrong]
+#include <PLCore\String\String.h>
+\end{lstlisting}
+While \ac{MSVC} is accepting both versions, other compilers like \ac{GCC} only accept slashes (/) and are creating an error for the backslash (\textbackslash) version.
+
+
 
 \section{\emph{Header Guard} and \emph{\#pragma once}}
 Each header has to use definitions and \emph{\#pragma once} to prevent multiple inclusion - the last one is enough and the preferred way to go, but not each compiler does support it\footnote{\emph{\#pragma once} is a widely supported preprocessor directive, but non-standard}.
