@@ -95,7 +95,7 @@ SPTriangleShaders::SPTriangleShaders(Renderer &cRenderer) : SPTriangle(cRenderer
 				// Remove precision qualifiers so that we're able to use 110 (OpenGL 2.0 shaders) instead of 130 (OpenGL 3.0 shaders,
 				// with this version we can keep the precision qualifiers) so that this shader requirements are as low as possible
 				sVertexShaderSourceCode   = "#version 110\n" + Shader::RemovePrecisionQualifiersFromGLSL(m_pUniformBuffer ? sVertexShaderSourceCodeGLSL_UniformBuffer : sVertexShaderSourceCodeGLSL);
-				sGeometryShaderSourceCode = sGeometryShaderSourceCodeGLSL;
+				sGeometryShaderSourceCode = Shader::RemovePrecisionQualifiersFromGLSL(sGeometryShaderSourceCodeGLSL);
 				sFragmentShaderSourceCode = m_pGeometryShader ? sFragmentShaderSourceCodeGLSL_GS : ("#version 110\n" + Shader::RemovePrecisionQualifiersFromGLSL(sFragmentShaderSourceCodeGLSL));
 			}
 		} else if (pShaderLanguage->GetShaderLanguage() == "Cg") {
