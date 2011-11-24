@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLRendererOpenGL/Extensions.h"	// Include this before including the funny Apple headers, if we don't, the result will be "error: ‘PFNGLBINDBUFFERRANGEEXTPROC’ does not name a type" and x-more of those...
 #include <OpenGL/OpenGL.h>
 #include <PLCore/Log/Log.h>
 #include <PLMath/Vector2i.h>
