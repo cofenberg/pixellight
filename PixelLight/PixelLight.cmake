@@ -37,20 +37,10 @@ set(CMAKETOOLS_PROJECT_NAME "PixelLight")
 
 # Check which architecture has the host system
 # X86_64 aka x64
-if(${CMAKE_SYSTEM_PROCESSOR} MATCHES amd64*)
+if(${CMAKE_SYSTEM_PROCESSOR} MATCHES amd64* OR ${CMAKE_SYSTEM_PROCESSOR} MATCHES x86_64* OR CMAKE_GENERATOR MATCHES "Visual Studio 10 Win64")
 	set(X86_64 1)
-endif()
-if(${CMAKE_SYSTEM_PROCESSOR} MATCHES x86_64*)
-	set(X86_64 1)
-endif()
 # X86
-if(${CMAKE_SYSTEM_PROCESSOR} MATCHES i686*)
-	set(X86 1)
-endif()
-if(${CMAKE_SYSTEM_PROCESSOR} MATCHES i386*)
-	set(X86 1)
-endif()
-if(${CMAKE_SYSTEM_PROCESSOR} MATCHES x86*)
+elseif(${CMAKE_SYSTEM_PROCESSOR} MATCHES i686* OR ${CMAKE_SYSTEM_PROCESSOR} MATCHES i386* OR ${CMAKE_SYSTEM_PROCESSOR} MATCHES x86*)
 	set(X86 1)
 endif()
 
@@ -368,6 +358,10 @@ if(NOT WIN32)
 	unset (PL_EXPORTER_3DSMAX_2012					CACHE)
 	unset (PL_PLUGIN_ENGINE_IMAGEEXR				CACHE)
 	unset (PL_TOOL_PLINSTALL						CACHE)
+elseif(X86_64)
+	# [TODO] The following plugins are not yet supported (create prebuild external packages and test it)
+	unset (PL_PLUGIN_DATABASE_POSTGRESQL			CACHE)
+	unset (PL_PLUGIN_PHYSICS_PHYSX					CACHE)
 endif()
 
 # Mac OS X

@@ -7,6 +7,7 @@
 >> 24.11.2011
 [CO]
 - PLInstall: Updated "CMakeLists.txt" in order to make it work
+- MS Windows 64 bit: It's now possible to build PixelLight also using CMake for this target (building an installable SDK is not tested, yet)
 
 
 

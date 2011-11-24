@@ -1,12 +1,22 @@
->> 01.11.2011
+>> 24.11.2011
 [CO]
-- Bugfix within the "cmaketools_add_pdf_document"-macro inside the "CMakeTools_Docs.cmake"-file: Before it's possible to build a PDF, the DVI file must already
-  exist, but the PDF target did not depend on the DVI target. This explains why building the installable SDK failed from time to time due to a missing pdf.
+- Added support for the CMake generator "Visual Studio 10 Win64" for building PixelLight using CMake for 64 bit. Other 64 bit generators may work
+  as well, but are not tested and I don't intent to test and support them on my own due to lack of time.
 
+
+
+>> 01.11.2011
 [SW]
 - Renamed CheckGCC.cmake to CheckLinuxCompiler.cmake because the checks in this file are also useable when using the clang compiler under linux.
 - The visibility check is only called, when the var NO_VISIBILITY_CHECK is not set. This var is needed because pixellight doesn't compile with clang
    and visibility enabled due an bug in clang itself (see http://llvm.org/bugs/show_bug.cgi?id=10113)
+
+
+
+>> 01.11.2011
+[CO]
+- Bugfix within the "cmaketools_add_pdf_document"-macro inside the "CMakeTools_Docs.cmake"-file: Before it's possible to build a PDF, the DVI file must already
+  exist, but the PDF target did not depend on the DVI target. This explains why building the installable SDK failed from time to time due to a missing pdf.
 
 
 
