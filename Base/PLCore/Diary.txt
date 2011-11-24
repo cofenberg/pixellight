@@ -1,3 +1,12 @@
+>> 24.11.2011
+[CO]
+- Bugfix: "PLCoreLinux.cpp": The implementation of "wcscasecmp" and "wcsncasecmp" was broken (Mac OS X or Android don't have such primitive "standard" functions)
+  -> "wcscasecmp": http://linux.die.net/man/3/wcscasecmp states
+     "The wcscasecmp() function returns zero if the wide-character strings at s1 and s2 are equal except for case distinctions. It returns a positive integer if s1
+      is greater than s2, ignoring case. It returns a negative integer if s1 is smaller than s2, ignoring case"
+
+
+
 >> 16.11.2011
 [CO]
 PLScriptBindings:
