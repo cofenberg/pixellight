@@ -4,6 +4,12 @@
 
 
 
+>> 24.11.2011
+[CO]
+- PLInstall: Updated "CMakeLists.txt" in order to make it work
+
+
+
 >> 22.11.2011
 [CO]
 - Visual Studio project settings: Fixed "warning MSB8012: TargetName does not match the Linker's OutputFile property value" by
