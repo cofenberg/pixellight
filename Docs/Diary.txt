@@ -5,6 +5,8 @@ PixelLightCodingConventions:
 - Review of the document
 - "Headers"-chapter: Added "Including Headers"-section with "Order"- and "Slash Vs. Backslash"-paragraphs
 -> That was stuff I noticed when working with the new PixelLight developers
+PixelLightBuild:
+- Described building PixelLight under MS Windows for 64 bit (I have no 64 bit Linux installed, so I can't describe it...)
 
 
 
