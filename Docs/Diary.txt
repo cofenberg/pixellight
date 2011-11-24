@@ -1,3 +1,10 @@
+>> 24.11.2011
+[CO]
+PixelLightCodingConventions:
+- "2.9 Const Correctness": Added a const example
+
+
+
 >> 06.11.2011
 [CO]
 - "PixelLight3dsMaxSceneExport"-document: "8 Options" -> "Subdirectories"-option documentation was buggy

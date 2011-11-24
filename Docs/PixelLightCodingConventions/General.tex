@@ -96,6 +96,32 @@ PixelLight is using \emph{C++ style casts} (\emph{int i = static\_cast<int>(42.2
 \section{Const Correctness}
 Define functions, variables etc. whenever possible to be constant. By giving the compiler this hint, it may be possible to use special optimizations or uncover bugs within the implementation.
 
+
+\paragraph{Const Example}
+Have a look at the following example function:
+\begin{lstlisting}[caption=Non-constant function parameter]
+void MyFunction(PLMath::Vector3 &vPosition)
+{
+	// ...
+}
+\end{lstlisting}
+In case the function is considered to manipulate \emph{vPosition}, all's fine. Let's continue with another usage example:
+\begin{lstlisting}[caption=Using a temporary variable instance as non-constant function parameter]
+MyFunction(PLMath::Vector3(0.0f, 1.0f, 2.0f));
+\end{lstlisting}
+The compiler creates a temporary \emph{PLMath::Vector3} instance on the runtime stack and is passing a reference into the function. Looks fine as well? In case the function manipulates the variable passed by reference, the temporary instance is changed. In principle that's no problem because it's thrown away after the function call anyway. In practice, this situation is considered to be evil. \ac{MSVC} 2010 will shy tell you via a warning
+\begin{quote}warning C4239: nonstandard extension used : 'argument' : conversion from 'PLMath::Vector3' to 'PLMath::Vector3 \&' A non-const reference may only be bound to an lvalue\end{quote}
+So, it's possible to just ignore or even deactivate this warning... isn't it? In fact, it isn't because other compilers might not be that tollerant and will throw an error message at you. To sum this up: In the example above, you really want to write
+\begin{lstlisting}[caption=Constant function parameter]
+void MyFunction(const PLMath::Vector3 &vPosition)
+{
+	// ...
+}
+\end{lstlisting}
+in order to be cross-platform safe.
+
+
+\paragraph{Const Exception}
 There's one situation were we do not use \emph{const} - when dealing with function parameters because
 
 \begin{lstlisting}[caption=Function parameters]
