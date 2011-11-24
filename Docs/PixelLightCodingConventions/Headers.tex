@@ -133,7 +133,7 @@ Someone can now just throw in an include like:
 
 But now, your header depends on another one and \emph{PLCore/String/String.h} is always processed if your header is used, even if the string class is never used. Even worse, if \emph{PLCore/String/String.h} is changed a lot of other codes need to be recompiled, if really required or not. Long compiler times are definitively not productive.
 
-Now someone may cry out \emph{Use cool precompiled headers!}, but this is no option for us to use additional stuff just to fix messy and not well profound headers. Keep it simple. We grab the problem on it's root by doing for example the following:
+Now someone may cry out \emph{"Use cool precompiled headers!"}, but this is no option for us to use additional stuff just to fix messy and not well profound headers. Keep it simple. We grab the problem on it's root by doing for example the following:
 
 \begin{lstlisting}[caption=Forward declaration]
 namespace PLCore {

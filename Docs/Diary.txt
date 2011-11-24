@@ -2,6 +2,7 @@
 [CO]
 PixelLightCodingConventions:
 - "2.9 Const Correctness": Added a const example
+- Review of the document
 
 
 

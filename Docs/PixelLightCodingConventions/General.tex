@@ -187,7 +187,7 @@ General rules:
 \begin{itemize}
 \item A single character as name for local (really, only local) control variables like \emph{i} within a for-loop is acceptable as long as there are not to much of those at once (else use reasonable names to avoid confusion)
 \item Short cuts should be avoided whenever possible because they may leads to confusion\footnote{True story: When using \emph{Rot} as short cut for \emph{Rotation}, we once had the situation that a German speaking programmer asked confused what the color \emph{Rot} should do inside the scene node... in German, \emph{Rot} is the word for \emph{red}...} (no stuff like \emph{stricmp()})
-\item If there's a \emph{commonly used} name for something, just this name instead of creating a totally new one
+\item If there's a \emph{commonly used} name for something, use this name instead of creating a totally new one. Example: Don't call an array class \emph{Bob} just because this name is cool - use the name \emph{Array} for an array class instead and the users might be able to find it.
 \item Avoid long names, if there's an expressive shorter name it's the preferred one... but keep the short cut rule in mind
 \end{itemize}
 
@@ -324,6 +324,6 @@ pl_class_end
 
 
 \section{Reuseability and adding new Stuff}
-Before you add new classes, functions an so on - check first whether there's already something similar within PixelLight. If there's something you can already use directly, use it instead of writing new stuff. If there's something quite similar, have a more detailed look at it and contact your team colleagues to discuss whether a refactoring is possible and reasonable to update and/or to enhance existing stuff.
+Before you add new classes, functions and so on - check first whether there's already something similar within PixelLight. If there's something you can already use directly, use it instead of writing new stuff. If there's something quite similar, have a more detailed look at it and contact your team colleagues to discuss whether a refactoring is possible and reasonable to update and/or to enhance existing stuff.
 
-Reuseability is one of the most important concepts when creating frameworks like PixelLight... and reuseability does not mean that it's possible to copy'n'past it and then hacking around for a certain project. Reuseability means that it's possible to directly reuse, to share, something between multiple projects in a quite universal way without the need to enhance and hack around constantly.
+Reuseability is one of the most important concepts when creating frameworks like PixelLight... and reuseability does not mean that it's possible to copy'n'past it and then hacking around for a certain project. Reuseability means that it's possible to directly reuse, to share something between multiple projects in a quite universal way without the need to enhance and hack around constantly.
