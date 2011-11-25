@@ -24,6 +24,14 @@ SUITE(CoreApplication) {
 	}
 
 	TEST(SetName_EmptyString) {
+		// initial GetName() == name of this projects target name
+		sExpect = coreApp.GetName();
+		#ifdef _DEBUG
+			CHECK_EQUAL("PLUnitTestsD", sExpect.GetASCII());
+		#else
+			CHECK_EQUAL("PLUnitTests", sExpect.GetASCII());
+		#endif
+
 		coreApp.SetName(sEmpty);
 		sExpect = coreApp.GetName();
 		CHECK_EQUAL(sExpect.GetASCII(), sEmpty.GetASCII());

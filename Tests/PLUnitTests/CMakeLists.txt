@@ -34,6 +34,7 @@ add_sources(
 	src/PLCore/String.cpp
 	src/PLCore/Application/ApplicationContext.cpp
 	src/PLCore/Application/CoreApplication.cpp
+	src/PLCore/Container/Array.cpp
 	# PLMath
 	src/PLMath/Vector3.cpp
 	# UnitTest++ AddIns

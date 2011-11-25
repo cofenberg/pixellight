@@ -28,6 +28,7 @@
     </ClCompile>
     <ClCompile Include="src\PLCore\Application\ApplicationContext.cpp" />
     <ClCompile Include="src\PLCore\Application\CoreApplication.cpp" />
+    <ClCompile Include="src\PLCore\Container\Array.cpp" />
     <ClCompile Include="src\PLCore\String.cpp" />
     <ClCompile Include="src\PLMath\Vector3.cpp" />
     <ClCompile Include="src\UnitTest++AddIns\MyMobileTestReporter.cpp" />
