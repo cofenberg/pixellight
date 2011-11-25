@@ -29,8 +29,8 @@ define_project(60Scene NOSUFFIX)
 ## Source files
 ##################################################
 add_sources(
-	src/Application.cpp
 	src/Main.cpp
+	src/Application60.cpp
 )
 
 ##################################################

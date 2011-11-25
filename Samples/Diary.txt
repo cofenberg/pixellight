@@ -1,3 +1,14 @@
+>> 25.11.2011
+[CO]
+- I had to rename the application classes of the samples so that the application class of every sample has an unique RTTI class name.
+  -> For instance the application class of the "50RendererTriangle"-sample is now called "Application50" instead of just "Application". In order to
+     keep the samples as compact as possible, I don't want to give them namespaces.
+  -> Background: When building an Android apk, it's possible that one is putting multiple shared libaries containing application classes into one and the
+     same package. This makes sense when for example proving an native Android GUI in order to make it possible that the user can select the application
+     to start... like for example within an PixelLight apk file containing all samples at once...
+
+
+
 >> 17.11.2011
 [CO]
 - In order to make shader source codes directly defined within the projects more readable, I'am now using a mini "STRINGIFY"-macro

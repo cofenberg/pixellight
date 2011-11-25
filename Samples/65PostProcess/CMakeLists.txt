@@ -29,8 +29,8 @@ define_project(65PostProcess NOSUFFIX)
 ## Source files
 ##################################################
 add_sources(
-	src/Application.cpp
 	src/Main.cpp
+	src/Application65.cpp
 )
 
 ##################################################

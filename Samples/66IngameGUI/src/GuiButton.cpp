@@ -28,7 +28,7 @@
 #include <PLGui/Gui/Gui.h>
 #include <PLGui/Gui/Resources/Graphics.h>
 #include <PLGui/Gui/Resources/Font.h>
-#include "Application.h"
+#include "Application66.h"
 #include "GuiButton.h"
 
 
@@ -55,7 +55,7 @@ pl_implement_class(GuiButton)
 *    Constructor
 */
 GuiButton::GuiButton(Widget *pParent) : GuiBase(pParent),
-	m_pFont(Application::GuiFont),
+	m_pFont(Application66::GuiFont),
 	m_cColor(Color4::White),
 	m_cMouseOverColor(Color4::White),
 	m_nAlign(AlignCenter),

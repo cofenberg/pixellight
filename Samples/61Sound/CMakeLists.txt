@@ -29,8 +29,8 @@ define_project(61Sound NOSUFFIX)
 ## Source files
 ##################################################
 add_sources(
-	src/Application.cpp
 	src/Main.cpp
+	src/Application61.cpp
 )
 
 ##################################################

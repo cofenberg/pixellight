@@ -217,11 +217,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Application.h" />
+    <ClCompile Include="src\Application42.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Bin\Samples\Data\Scripts\42ScriptFunctors.as" />
@@ -229,6 +226,9 @@
     <None Include="..\..\Bin\Samples\Data\Scripts\42ScriptFunctors.lua" />
     <None Include="..\..\Bin\Samples\Data\Scripts\42ScriptFunctors.py" />
     <None Include="CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Application42.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

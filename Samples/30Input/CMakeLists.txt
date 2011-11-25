@@ -30,7 +30,7 @@ define_project(30Input NOSUFFIX)
 ##################################################
 add_sources(
 	src/Main.cpp
-	src/Application.cpp
+	src/Application30.cpp
 	src/GameBoyController.cpp
 )
 

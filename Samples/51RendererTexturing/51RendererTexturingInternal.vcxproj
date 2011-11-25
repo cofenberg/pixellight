@@ -242,14 +242,14 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Application51.cpp" />
     <ClCompile Include="src\SPTexturing.cpp" />
     <ClCompile Include="src\SPTexturingFixedFunctions.cpp" />
     <ClCompile Include="src\SPTexturingShaders.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\Application51.h" />
     <ClInclude Include="src\SPTexturing.h" />
     <ClInclude Include="src\SPTexturingFixedFunctions.h" />
     <ClInclude Include="src\SPTexturingShaders.h" />

@@ -16,7 +16,7 @@
     <ClCompile Include="src\ScriptBindingSample.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Application.cpp">
+    <ClCompile Include="src\Application43.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -24,7 +24,7 @@
     <ClInclude Include="src\ScriptBindingSample.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Application.h">
+    <ClInclude Include="src\Application43.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

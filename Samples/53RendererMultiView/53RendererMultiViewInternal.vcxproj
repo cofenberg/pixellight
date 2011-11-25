@@ -248,8 +248,8 @@
     <ClCompile Include="..\51RendererTexturing\src\SPTexturing.cpp" />
     <ClCompile Include="..\51RendererTexturing\src\SPTexturingFixedFunctions.cpp" />
     <ClCompile Include="..\51RendererTexturing\src\SPTexturingShaders.cpp" />
-    <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Application53.cpp" />
     <ClCompile Include="src\SPMultiView.cpp" />
     <ClCompile Include="src\SPMultiViewFixedFunctions.cpp" />
     <ClCompile Include="src\SPMultiViewShaders.cpp" />
@@ -265,7 +265,7 @@
     <ClInclude Include="..\51RendererTexturing\src\SPTexturingShaders.h" />
     <ClInclude Include="..\51RendererTexturing\src\SPTexturingShaders_Cg.h" />
     <ClInclude Include="..\51RendererTexturing\src\SPTexturingShaders_GLSL.h" />
-    <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\Application53.h" />
     <ClInclude Include="src\SPMultiView.h" />
     <ClInclude Include="src\SPMultiViewFixedFunctions.h" />
     <ClInclude Include="src\SPMultiViewShaders.h" />

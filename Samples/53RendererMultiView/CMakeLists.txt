@@ -29,8 +29,8 @@ define_project(53RendererMultiView NOSUFFIX)
 ## Source files
 ##################################################
 add_sources(
-	src/Application.cpp
 	src/Main.cpp
+	src/Application53.cpp
 	src/SPMultiView.cpp
 	src/SPMultiViewFixedFunctions.cpp
 	src/SPMultiViewShaders.cpp

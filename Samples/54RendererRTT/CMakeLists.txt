@@ -29,11 +29,11 @@ define_project(54RendererRTT NOSUFFIX)
 ## Source files
 ##################################################
 add_sources(
+	src/Main.cpp
+	src/Application54.cpp
 	src/SPRTT.cpp
 	src/SPRTTFixedFunctions.cpp
 	src/SPRTTShaders.cpp
-	src/Application.cpp
-	src/Main.cpp
 )
 
 ##################################################

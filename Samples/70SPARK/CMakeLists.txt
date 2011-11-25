@@ -30,7 +30,7 @@ define_project(70SPARK NOSUFFIX)
 ##################################################
 add_sources(
 	src/Main.cpp
-	src/Application.cpp
+	src/Application70.cpp
 	src/SNBasicSample.cpp
 	src/SNFireSample.cpp
 	src/SNGalaxySample.cpp

@@ -29,8 +29,8 @@ define_project(62Physics NOSUFFIX)
 ## Source files
 ##################################################
 add_sources(
-	src/Application.cpp
 	src/Main.cpp
+	src/Application62.cpp
 )
 
 ##################################################

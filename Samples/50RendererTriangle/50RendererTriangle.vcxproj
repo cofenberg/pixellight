@@ -225,14 +225,14 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Application50.cpp" />
     <ClCompile Include="src\SPTriangle.cpp" />
     <ClCompile Include="src\SPTriangleFixedFunctions.cpp" />
     <ClCompile Include="src\SPTriangleShaders.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\Application50.h" />
     <ClInclude Include="src\SPTriangle.h" />
     <ClInclude Include="src\SPTriangleFixedFunctions.h" />
     <ClInclude Include="src\SPTriangleShaders.h" />

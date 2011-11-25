@@ -30,7 +30,7 @@ define_project(44ScriptOOP NOSUFFIX)
 ##################################################
 add_sources(
 	src/Main.cpp
-	src/Application.cpp
+	src/Application44.cpp
 	src/MyRTTIClass.cpp
 )
 

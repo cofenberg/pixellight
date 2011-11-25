@@ -30,7 +30,7 @@ define_project(42ScriptFunctors NOSUFFIX)
 ##################################################
 add_sources(
 	src/Main.cpp
-	src/Application.cpp
+	src/Application42.cpp
 )
 
 ##################################################

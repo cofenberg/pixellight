@@ -29,8 +29,8 @@ define_project(66IngameGUI NOSUFFIX)
 ## Source files
 ##################################################
 add_sources(
-	src/Application.cpp
 	src/Main.cpp
+	src/Application66.cpp
 	src/IngameGui.cpp
 	src/GuiBase.cpp
 	src/GuiLabel.cpp

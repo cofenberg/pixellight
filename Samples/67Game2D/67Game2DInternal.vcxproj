@@ -242,9 +242,9 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\GunController.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Application67.cpp" />
     <ClCompile Include="src\SNBomb.cpp" />
     <ClCompile Include="src\SNGun.cpp" />
     <ClCompile Include="src\SNProjectile.cpp" />
@@ -252,8 +252,8 @@
     <ClCompile Include="src\SRP2DGame.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\GunController.h" />
+    <ClInclude Include="src\Application67.h" />
     <ClInclude Include="src\SNBomb.h" />
     <ClInclude Include="src\SNGun.h" />
     <ClInclude Include="src\SNProjectile.h" />
