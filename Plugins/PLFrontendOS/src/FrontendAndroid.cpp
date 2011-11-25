@@ -29,6 +29,7 @@
 #include <PLCore/System/System.h>
 #include <PLCore/System/SystemAndroid.h>
 #include <PLCore/Frontend/Frontend.h>
+#include <PLCore/Frontend/FrontendContext.h>
 #include "PLFrontendOS/FrontendAndroid.h"
 
 
@@ -85,6 +86,14 @@ FrontendAndroid::FrontendAndroid(const FrontendContext &cFrontendContext, struct
 
 	// Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
 	Runtime::ScanDirectoryPluginsAndData();
+
+	// Set parameters for the frontend RTTI class
+	if (cFrontendContext.GetFrontendParameters().GetLength())
+		m_cFrontend.SetValues(cFrontendContext.GetFrontendParameters());
+
+	// Set parameters for the frontend implementation RTTI class
+	if (cFrontendContext.GetFrontendImplementationParameters().GetLength())
+		SetValues(cFrontendContext.GetFrontendImplementationParameters());
 
 	// Do the frontend life cycle thing - let the world know that we have been created
 	OnCreate();
