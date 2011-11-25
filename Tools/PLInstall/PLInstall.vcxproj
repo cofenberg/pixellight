@@ -196,7 +196,7 @@
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <SupportUnloadOfDelayLoadedDLL>true</SupportUnloadOfDelayLoadedDLL>
       <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalDependencies>QtCore4.lib;QtGui4.lib;qtmain.lib;PLCoreStat.lib;</AdditionalDependencies>
+      <AdditionalDependencies>QtCore4.lib;QtGui4.lib;qtmain.lib;PLCoreStat.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../Bin/Lib/x86/;../../External/_Windows_x86_32/Qt/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libcp.lib;libci.lib;msvcirt.lib;libcmt.lib;libcmtd.lib;msvcrtd.lib;LIBC.lib;</IgnoreSpecificDefaultLibraries>
     </Link>
