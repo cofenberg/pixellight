@@ -248,6 +248,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Frontend.cpp" />
+    <ClCompile Include="src\FrontendAndroid.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="src\OSWindow.cpp" />
     <ClCompile Include="src\OSWindowLinux.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -266,6 +272,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendOS\Frontend.h" />
+    <ClInclude Include="include\PLFrontendOS\FrontendAndroid.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="include\PLFrontendOS\OSWindow.h" />
     <ClInclude Include="include\PLFrontendOS\OSWindowLinux.h" />
     <ClInclude Include="include\PLFrontendOS\OSWindowWindows.h" />

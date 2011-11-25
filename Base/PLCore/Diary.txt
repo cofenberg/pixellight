@@ -5,6 +5,8 @@
      requests for several weeks...
   -> Added "Socket::GetNumOfWaitingBytes()" returning the number of bytes waiting to be received (non-blocking request)
   -> I have only a little bit of experience in network related topics, so, if I totally messed it up please tell me :D
+- "PLFrontendOS::FrontendAndroid()": It's now required to provide the constructor with a frontend context instance. This way, it's e.g. possible to tell
+  the frontend about the RTTI class name of the application to start.
 
 
 

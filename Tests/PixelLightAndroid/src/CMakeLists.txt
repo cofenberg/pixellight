@@ -53,8 +53,8 @@ set(CURRENT_SHARED_LIBRARIES
 	${PL_PLFRONTENDOS_LIBRARY}			# The PixelLight Android frontend
 	${PL_PLRENDEREROPENGLES2_LIBRARY}
 	${PL_PLCOMPOSITING_LIBRARY}
-#	${PL_PLSCRIPTBINDINGS_LIBRARY}		# Required by "40ScriptHelloWorld", "41ScriptGlobalVariables", "42ScriptFunctors", "43ScriptBindings", "44ScriptOOP"
-#	${PL_PLSCRIPTLUA_LIBRARY}			# *alternative* Required by "40ScriptHelloWorld", "41ScriptGlobalVariables", "42ScriptFunctors", "43ScriptBindings", "44ScriptOOP"
+	${PL_PLSCRIPTBINDINGS_LIBRARY}		# Required by "40ScriptHelloWorld", "41ScriptGlobalVariables", "42ScriptFunctors", "43ScriptBindings", "44ScriptOOP"
+	${PL_PLSCRIPTLUA_LIBRARY}			# *alternative* Required by "40ScriptHelloWorld", "41ScriptGlobalVariables", "42ScriptFunctors", "43ScriptBindings", "44ScriptOOP"
 #	${PL_PLSCRIPTANGELSCRIPT_LIBRARY}	# *alternative* Required by "40ScriptHelloWorld", "41ScriptGlobalVariables", "42ScriptFunctors", "43ScriptBindings", "44ScriptOOP"
 	${PL_PLSPARK_PL_LIBRARY}			# Required by "70SPARK"
 	${PL_PLLIBROCKET_LIBRARY}			# Required by "71libRocket"
@@ -65,26 +65,26 @@ set(CURRENT_SHARED_LIBRARIES
 	${PL_PLSOUNDOPENSLES_LIBRARY}		# Required by "61Sound"
 	${PL_PLFRONTENDPLGUI_LIBRARY}		# Required by "66IngameGUI"
 	# Application
-#	"${PL_TESTS_BIN_DIR}/libPLUnitTests.so"
-#	"${PL_SAMPLES_BIN_DIR}/lib30Input.so"
-#	"${PL_SAMPLES_BIN_DIR}/lib40ScriptHelloWorld.so"
-#	"${PL_SAMPLES_BIN_DIR}/lib41ScriptGlobalVariables.so"
-#	"${PL_SAMPLES_BIN_DIR}/lib42ScriptFunctors.so"
-#	"${PL_SAMPLES_BIN_DIR}/lib43ScriptBindings.so"
-#	"${PL_SAMPLES_BIN_DIR}/lib44ScriptOOP.so"
-#	"${PL_SAMPLES_BIN_DIR}/lib50RendererTriangle.so"
-#	"${PL_SAMPLES_BIN_DIR}/lib51RendererTexturing.so"
-#	"${PL_SAMPLES_BIN_DIR}/lib52RendererMesh.so"
-#	"${PL_SAMPLES_BIN_DIR}/lib54RendererRTT.so"
-#	"${PL_SAMPLES_BIN_DIR}/lib60Scene.so"
-#	"${PL_SAMPLES_BIN_DIR}/lib61Sound.so"	# [TODO] Implement OpenSL ES for sound
-#	"${PL_SAMPLES_BIN_DIR}/lib62Physics.so"
-#	"${PL_SAMPLES_BIN_DIR}/lib63PhysicsRagdoll.so"
-#	"${PL_SAMPLES_BIN_DIR}/lib64Picking.so"
-#	"${PL_SAMPLES_BIN_DIR}/lib66IngameGUI.so"
+	"${PL_TESTS_BIN_DIR}/libPLUnitTests.so"
+	"${PL_SAMPLES_BIN_DIR}/lib30Input.so"
+	"${PL_SAMPLES_BIN_DIR}/lib40ScriptHelloWorld.so"
+	"${PL_SAMPLES_BIN_DIR}/lib41ScriptGlobalVariables.so"
+	"${PL_SAMPLES_BIN_DIR}/lib42ScriptFunctors.so"
+	"${PL_SAMPLES_BIN_DIR}/lib43ScriptBindings.so"
+	"${PL_SAMPLES_BIN_DIR}/lib44ScriptOOP.so"
+	"${PL_SAMPLES_BIN_DIR}/lib50RendererTriangle.so"
+	"${PL_SAMPLES_BIN_DIR}/lib51RendererTexturing.so"
+	"${PL_SAMPLES_BIN_DIR}/lib52RendererMesh.so"
+	"${PL_SAMPLES_BIN_DIR}/lib54RendererRTT.so"
+	"${PL_SAMPLES_BIN_DIR}/lib60Scene.so"
+	"${PL_SAMPLES_BIN_DIR}/lib61Sound.so"	# [TODO] Implement OpenSL ES for sound
+	"${PL_SAMPLES_BIN_DIR}/lib62Physics.so"
+	"${PL_SAMPLES_BIN_DIR}/lib63PhysicsRagdoll.so"
+	"${PL_SAMPLES_BIN_DIR}/lib64Picking.so"
+	"${PL_SAMPLES_BIN_DIR}/lib66IngameGUI.so"
 	"${PL_SAMPLES_BIN_DIR}/lib67Game2D.so"
-#	"${PL_SAMPLES_BIN_DIR}/lib70SPARK.so"
-#	"${PL_SAMPLES_BIN_DIR}/lib71libRocket.so"
+	"${PL_SAMPLES_BIN_DIR}/lib70SPARK.so"
+	"${PL_SAMPLES_BIN_DIR}/lib71libRocket.so"
 )
 
 
