@@ -28,6 +28,7 @@
 #endif
 #ifdef LINUX
 	#include <netdb.h>
+	#include <fcntl.h>	// For "fcntl()"
 	#include <unistd.h>
 	#include <arpa/inet.h>
 #endif
@@ -234,7 +235,53 @@ int Socket::Send(const char *pBuffer, uint32 nSize) const
 
 /**
 *  @brief
-*    Receives data
+*    Returns the number of bytes waiting to be received (non-blocking request)
+*/
+int Socket::GetNumOfWaitingBytes() const
+{
+	// Valid socket?
+	if (m_nSocket != INVALID_SOCKET) {
+		#ifdef WIN32
+			// Bring the socket into a non-blocking mode
+			u_long nNonBlocking = 1;
+			ioctlsocket(m_nSocket, FIONBIO, &nNonBlocking);
+
+			// Get the number of waiting bytes (just look, don't touch)
+			char nBuffer = 0;
+			const int nNumOfBytes = recv(m_nSocket, &nBuffer, 1, MSG_PEEK);
+
+			// Bring the socket back into a blocking mode
+			nNonBlocking = 0;
+			ioctlsocket(m_nSocket, FIONBIO, &nNonBlocking);
+
+			// Return the number of bytes waiting to be received
+			return nNumOfBytes;
+		#else
+			// Get the currently set socket flags
+			const int nFlags = fcntl(m_nSocket, F_GETFL, 0);
+
+			// Bring the socket into a non-blocking mode
+			fcntl(m_nSocket, F_SETFL, nFlags | O_NONBLOCK);
+
+			// Get the number of waiting bytes (just look, don't touch)
+			char nBuffer = 0;
+			const int nNumOfBytes = recv(m_nSocket, &nBuffer, 1, MSG_PEEK);
+
+			// Bring the socket back into a blocking mode
+			fcntl(m_nSocket, F_SETFL, nFlags);
+
+			// Return the number of bytes waiting to be received
+			return nNumOfBytes;
+		#endif
+	}
+
+	// Error!
+	return -1;
+}
+
+/**
+*  @brief
+*    Receives data (blocking request)
 */
 int Socket::Receive(char *pBuffer, uint32 nSize) const
 {

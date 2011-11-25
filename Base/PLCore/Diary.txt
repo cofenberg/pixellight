@@ -1,3 +1,13 @@
+>> 25.11.2011
+[CO]
+- There's a first feature request at http://sourceforge.net/tracker/?group_id=507544&atid=2063685 "Socket::IsArrivalData() - ID: 3439371"
+  -> I waited several days to give other team members the option to handle the request, but I'am sure that it's no good idea to have such open minor feature
+     requests for several weeks...
+  -> Added "Socket::GetNumOfWaitingBytes()" returning the number of bytes waiting to be received (non-blocking request)
+  -> I have only a little bit of experience in network related topics, so, if I totally messed it up please tell me :D
+
+
+
 >> 24.11.2011
 [CO]
 - Bugfix: "PLCoreLinux.cpp": The implementation of "wcscasecmp" and "wcsncasecmp" was broken (Mac OS X or Android don't have such primitive "standard" functions)

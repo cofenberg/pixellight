@@ -231,7 +231,16 @@ class Socket {
 
 		/**
 		*  @brief
-		*    Receives data
+		*    Returns the number of bytes waiting to be received (non-blocking request)
+		*
+		*  @return
+		*    The number of bytes waiting to be received, negative value on error
+		*/
+		PLCORE_API int GetNumOfWaitingBytes() const;
+
+		/**
+		*  @brief
+		*    Receives data (blocking request)
 		*
 		*  @param[out] pBuffer
 		*    Buffer that receives the data, if a null pointer, nothing can be received
