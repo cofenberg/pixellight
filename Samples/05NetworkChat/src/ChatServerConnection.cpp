@@ -80,32 +80,26 @@ ChatServerConnection &ChatServerConnection::operator =(const ChatServerConnectio
 //[-------------------------------------------------------]
 void ChatServerConnection::OnConnect()
 {
-	System::GetInstance()->GetConsole().Print("Accepted connection from " +  GetSocket().GetSocketAddress().GetHost());
+	System::GetInstance()->GetConsole().Print("Accepted connection from " +  GetSocket().GetSocketAddress().GetHost() + '\n');
 }
 
 void ChatServerConnection::OnDisconnect()
 {
-	System::GetInstance()->GetConsole().Print("Client disconnected " +  GetSocket().GetSocketAddress().GetHost());
+	System::GetInstance()->GetConsole().Print("Client disconnected " +  GetSocket().GetSocketAddress().GetHost() + '\n');
 }
 
 void ChatServerConnection::OnReceive(const char *pBuffer, uint32 nSize)
 {
 	if (pBuffer) {
-		// We really need to check whether there's already terminating zero
-		for (uint32 i=0; i<nSize; i++) {
-			if (pBuffer[i] == '\0')
-				nSize = i; // 'Clamp' the size, the loop will now stop automatically
-		}
-
 		// Compose server message (we use the string copy constructor to ensure that there's a correct terminating zero)
-		String sMessage = GetSocket().GetSocketAddress().GetHost() + ": '" + String(pBuffer, true, nSize) + '\'';
+		const String sMessage = GetSocket().GetSocketAddress().GetHost() + ": '" + String(pBuffer, true, nSize-1) + '\''; // -1 = excluding the terminating zero
 
-		// Write the message into the log
-		System::GetInstance()->GetConsole().Print(sMessage);
+		// Write the message into the log and start a new line
+		System::GetInstance()->GetConsole().Print(sMessage + '\n');
 
-		// Send message to all clients (+1 so we also send the terminating zero)
+		// Send message to all clients
 		for (uint32 i=0; i<GetHost().GetConnections().GetNumOfElements(); i++)
-			GetHost().GetConnections().Get(i)->Send(sMessage.GetASCII(), sMessage.GetLength()+1);
+			GetHost().GetConnections().Get(i)->Send(sMessage.GetASCII(), sMessage.GetLength()+1);	// +1 so we also send the terminating zero
 	}
 }
 

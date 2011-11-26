@@ -1,3 +1,13 @@
+>> 26.11.2011
+[CO]
+- Reviewed "05NetworkChat": After the bugfix
+    -> Bugfix (ID: 3442054 - http://sourceforge.net/tracker/index.php?func=detail&aid=3442054&group_id=507544&atid=2063682 ): "PLCore::Connection::Receive()" called
+      "PLCore::Connection::OnReceive()" with the fixed buffer size, instead of with the number of received bytes
+  it's e.g. within "ChatServerConnection::OnReceive()" no longer required to look for the terminating zero, because the number of received bytes is already known
+  (and the fixed size of the provided buffer is not really that interesting because it's only allowed to read from it and not to write into it)
+
+
+
 >> 25.11.2011
 [CO]
 - I had to rename the application classes of the samples so that the application class of every sample has an unique RTTI class name.
