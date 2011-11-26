@@ -296,7 +296,7 @@ class FastPool : public Container<ValueType> {
 		virtual bool Add(const Container<ValueType> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) override;
 		virtual Container<ValueType> &operator +=(const Container<ValueType> &lstContainer) override;
 		virtual ValueType &AddAtIndex(int nIndex) override;
-		virtual bool AddAtIndex(const ValueType &Element, int nIndex) override;
+		virtual ValueType &AddAtIndex(const ValueType &Element, int nIndex) override;
 		virtual bool Remove(const ValueType &Element) override;
 		virtual bool RemoveAtIndex(uint32 nElement) override;
 		virtual Container<ValueType> &operator -=(const ValueType &Element) override;

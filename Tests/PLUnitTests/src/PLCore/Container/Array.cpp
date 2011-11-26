@@ -427,11 +427,15 @@ SUITE(Array_PrimitiveChar) {
 		Arr.Add('3');
 		Arr.Add('4');
 
-		// "copies" element that is at index
-		// TODO: AddAtIndex(index) returns inserted element while AddAtIndex(value, index) returns true/false... intended?
+		// "adds news" element that is at index
 		CHECK_EQUAL('3', Arr.AddAtIndex(2U));
 		CHECK_EQUAL('3', Arr.Get(2U));
 		CHECK_EQUAL(5U, Arr.GetNumOfElements());
+
+		// "copies" element that is at index
+		CHECK_EQUAL('8', Arr.AddAtIndex('8', 3U));
+		CHECK_EQUAL('8', Arr.Get(3U));
+		CHECK_EQUAL(6U, Arr.GetNumOfElements());
 	}
 
 	TEST(AddAtIndex_Outside_Bounds_Positive) {

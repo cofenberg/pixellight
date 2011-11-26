@@ -487,20 +487,20 @@ ValueType &Array<ValueType>::AddAtIndex(int nIndex)
 }
 
 template <class ValueType>
-bool Array<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
+ValueType &Array<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 {
 	// Add at end?
 	if (nIndex < 0)
-		return (&Add(Element) != &Array<ValueType>::Null);
+		return Add(Element);
 
 	// Check index
 	if (static_cast<uint32>(nIndex) > m_nNumOfElements)
-		return false; // Error!
+		return Array<ValueType>::Null; // Error!
 
 	// Check whether the array is full and we have to resize it
 	if (m_nNumOfElements >= m_nMaxNumOfElements) {
 		if (!m_nResizeCount || !Resize(m_nMaxNumOfElements+m_nResizeCount, false, false))
-			return false; // Error!
+			return Array<ValueType>::Null; // Error!
 	}
 
 	// Shift element behind index
@@ -512,7 +512,7 @@ bool Array<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 	m_nNumOfElements++;
 
 	// Done
-	return true;
+	return m_pData[nIndex];
 }
 
 template <class ValueType>

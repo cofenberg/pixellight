@@ -207,7 +207,7 @@ class SimpleList {
 		bool Add(const Container<ValueType> &lstContainer, uint32 nStart = 0, uint32 nCount = 0);
 		SimpleList<ValueType> &operator +=(const Container<ValueType> &lstContainer);
 		ValueType &AddAtIndex(int nIndex);
-		bool AddAtIndex(const ValueType &Element, int nIndex);
+		ValueType &AddAtIndex(const ValueType &Element, int nIndex);
 		bool Remove(const ValueType &Element);
 		bool RemoveAtIndex(uint32 nElement);
 		SimpleList<ValueType> &operator -=(const ValueType &Element);

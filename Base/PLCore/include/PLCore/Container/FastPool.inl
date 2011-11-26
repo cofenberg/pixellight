@@ -698,15 +698,15 @@ ValueType &FastPool<ValueType>::AddAtIndex(int nIndex)
 }
 
 template <class ValueType>
-bool FastPool<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
+ValueType &FastPool<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 {
 	// Add the new element at the end?
 	if (nIndex < 0 || static_cast<uint32>(nIndex) == m_nNumOfElements)
-		return (&Add(Element) != &FastPool<ValueType>::Null);
+		return Add(Element);
 
 	// Valid index?
 	if (static_cast<uint32>(nIndex) > m_nNumOfElements)
-		return false; // Error, there's no such index within the pool :(
+		return FastPool<ValueType>::Null; // Error, there's no such index within the pool :(
 
 	// Which search direction?
 	if (static_cast<uint32>(nIndex) < m_nNumOfElements/2) {
@@ -729,8 +729,8 @@ bool FastPool<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 				if (m_pFirstElement == pElement)
 					m_pFirstElement = &cNewElement;
 
-				// All went fine
-				return true;
+				// Return the new element
+				return cNewElement;
 			}
 
 			// Next, please
@@ -757,8 +757,8 @@ bool FastPool<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 				if (m_pFirstElement == pElement)
 					m_pFirstElement = &cNewElement;
 
-				// All went fine
-				return true;
+				// Return the new element
+				return cNewElement;
 			}
 
 			// Previous, please
@@ -768,7 +768,7 @@ bool FastPool<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 	}
 
 	// Error! (?!)
-	return false;
+	return FastPool<ValueType>::Null;
 }
 
 template <class ValueType>

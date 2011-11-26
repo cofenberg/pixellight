@@ -284,12 +284,12 @@ class Container : public Iterable<ValueType> {
 		*    Index were to add the new element, if < 0 add at end, must be <= 'GetNumOfElements()'
 		*
 		*  @return
-		*    'true' if all went fine, else 'false' (maybe invalid index?)
+		*    Reference to the new element, reference to the 'Null'-object on error (maybe invalid index?)
 		*
 		*  @see
 		*    - AddAtIndex() above
 		*/
-		virtual bool AddAtIndex(const ValueType &Element, int nIndex) = 0;
+		virtual ValueType &AddAtIndex(const ValueType &Element, int nIndex) = 0;
 
 		/**
 		*  @brief

@@ -489,15 +489,15 @@ ValueType &List<ValueType>::AddAtIndex(int nIndex)
 }
 
 template <class ValueType>
-bool List<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
+ValueType &List<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 {
 	// Add the new element at the end?
 	if (nIndex < 0 || static_cast<uint32>(nIndex) == m_nNumOfElements)
-		return (&Add(Element) != &List<ValueType>::Null);
+		return Add(Element);
 
 	// Valid index?
 	if (static_cast<uint32>(nIndex) > m_nNumOfElements)
-		return false; // Error, there's no such index within the list :(
+		return List<ValueType>::Null; // Error, there's no such index within the list :(
 
 	// Which search direction?
 	if (static_cast<uint32>(nIndex) < m_nNumOfElements/2) {
@@ -521,8 +521,8 @@ bool List<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 					m_pFirstElement = pNewElement;
 				m_nNumOfElements++;
 
-				// All went fine
-				return true;
+				// Return the new element
+				return pNewElement->Data;
 			}
 
 			// Next, please
@@ -550,8 +550,8 @@ bool List<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 					m_pFirstElement = pNewElement;
 				m_nNumOfElements++;
 
-				// All went fine
-				return true;
+				// Return the new element
+				return pNewElement->Data;
 			}
 
 			// Previous, please
@@ -561,7 +561,7 @@ bool List<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 	}
 
 	// Error! (?!)
-	return false;
+	return List<ValueType>::Null;
 }
 
 template <class ValueType>

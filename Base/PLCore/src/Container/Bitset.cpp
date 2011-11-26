@@ -367,20 +367,20 @@ bool &Bitset::AddAtIndex(int nIndex)
 	return Get(nIndex);
 }
 
-bool Bitset::AddAtIndex(const bool &Element, int nIndex)
+bool &Bitset::AddAtIndex(const bool &Element, int nIndex)
 {
 	// Add at end?
 	if (nIndex < 0)
-		return (&Add(Element) != &Bitset::Null);
+		return Add(Element);
 
 	// Check index
 	if (nIndex > static_cast<int>(m_nNumOfElements))
-		return false; // Error!
+		return Bitset::Null; // Error!
 
 	// Check whether the bit set is full and we have to resize it
 	if (m_nNumOfElements >= m_nMaxNumOfElements) {
 		if (!m_nResizeCount || !Resize(m_nMaxNumOfElements+m_nResizeCount, false, false))
-			return false; // Error!
+			return Bitset::Null; // Error!
 	}
 
 	// Add element
@@ -401,7 +401,7 @@ bool Bitset::AddAtIndex(const bool &Element, int nIndex)
 		Clear(nIndex);
 
 	// Done
-	return true;
+	return Get(nIndex);
 }
 
 bool Bitset::RemoveAtIndex(uint32 nIndex)

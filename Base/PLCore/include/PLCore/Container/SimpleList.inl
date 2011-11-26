@@ -448,11 +448,11 @@ ValueType &SimpleList<ValueType>::AddAtIndex(int nIndex)
 }
 
 template <class ValueType>
-bool SimpleList<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
+ValueType &SimpleList<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 {
 	// Add the new element at the end?
 	if (nIndex < 0)
-		return (&Add(Element) != &SimpleList<ValueType>::Null);
+		return Add(Element);
 
 	// Start with the first element
 	ListElement *pElement		  = pFirstElement;
@@ -472,8 +472,8 @@ bool SimpleList<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 			if (pFirstElement == pElement)
 				pFirstElement = pNewElement;
 
-			// All went fine
-			return true;
+			// Return the new element
+			return pNewElement->Data;
 		}
 
 		// Next, please
@@ -484,10 +484,10 @@ bool SimpleList<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 
 	// Add the new element at the end?
 	if (static_cast<uint32>(nIndex) == nCurIndex)
-		return (&Add(Element) != &SimpleList<ValueType>::Null);
+		return Add(Element);
 
 	// Error, there's no such index within the list :(
-	return false;
+	return SimpleList<ValueType>::Null;
 }
 
 template <class ValueType>
