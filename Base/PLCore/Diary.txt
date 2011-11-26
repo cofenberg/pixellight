@@ -4,6 +4,9 @@
   I don't have the time to get into it in detail because I already have to manage all other topics at once. Sadly, my day has only 24 hours - so, we have to rely on
   teamwork to get everything done. That's why I'am totally happy that within the bug tracker there's response (ID: 3442166) pointing me into the right direction. :D
   -> Renamed "Socket::GetNumOfWaitingBytes()" into "Socket::IsDataWaiting()"
+- Bugfix (ID: 3442054 - http://sourceforge.net/tracker/index.php?func=detail&aid=3442054&group_id=507544&atid=2063682 ): "PLCore::Connection::Receive()" called
+ "PLCore::Connection::OnReceive()" with the fixed buffer size, instead of with the number of received bytes
+    -> Also reviewed this class and checked whether or not the comments are detailed enough
 
 
 

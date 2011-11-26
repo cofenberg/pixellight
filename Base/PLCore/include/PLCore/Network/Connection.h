@@ -84,7 +84,7 @@ class Connection : protected Thread {
 		*    Receive mode
 		*/
 		enum EReceiveMode {
-			ReceiveAutomatic = 0,	/**< Date is received automatically (see OnReceive()) */
+			ReceiveAutomatic = 0,	/**< Data is received automatically (see OnReceive()) */
 			ReceiveManual			/**< Data is received manually (see Receive()) */
 		};
 
@@ -227,22 +227,27 @@ class Connection : protected Thread {
 
 		/**
 		*  @brief
-		*    Receive data
+		*    Receives data (blocking request)
 		*
-		*  @param[in] pBuffer
-		*    Data buffer
-		*  @param[in] nSize
-		*    Size in bytes
+		*  @param[out] pBuffer
+		*    Buffer that receives the data, if a null pointer, nothing can be received
+		*  @param[in]  nSize
+		*    Size in bytes of the buffer that receives the data, MUST be valid!
 		*
 		*  @return
-		*    Total number of bytes read. Can be less than the requested size
-		*    to be sent, negative value on error
+		*    Total number of received bytes, negative value on error
+		*
+		*  @note
+		*    - If there is currently not enough data available, this function will read as much
+		*      as possible, meaning that less data can be read than requested
+		*    - If more data is waiting to be received as the given buffer is able to store,
+		*      you have to call this method multiple times in order to gather all waiting data
 		*/
 		PLCORE_API int Receive(char *pBuffer, uint32 nSize);
 
 		/**
 		*  @brief
-		*    Read line of text
+		*    Read line of text (blocking request)
 		*
 		*  @return
 		*    Line read
@@ -310,7 +315,7 @@ class Connection : protected Thread {
 		*  @param[in] pBuffer
 		*    Buffer with the received data, a null pointer on terrible error
 		*  @param[in] nSize
-		*    Size in bytes of the buffer with the received data (always valid!)
+		*    Number of received bytes within the given buffer (always valid!)
 		*
 		*  @note
 		*    - Do NOT keep a pointer/reference to 'nBuffer' because this buffer is only valid

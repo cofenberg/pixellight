@@ -252,7 +252,9 @@ class Socket {
 		*
 		*  @note
 		*    - If there is currently not enough data available, this function will read as much
-		*      as possible, meaning that less data can be read than requested.
+		*      as possible, meaning that less data can be read than requested
+		*    - If more data is waiting to be received as the given buffer is able to store,
+		*      you have to call this method multiple times in order to gather all waiting data
 		*/
 		PLCORE_API int Receive(char *pBuffer, uint32 nSize) const;
 
