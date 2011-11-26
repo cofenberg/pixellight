@@ -631,17 +631,24 @@ template <class ValueType>
 bool Array<ValueType>::Compare(const Container<ValueType> &lstContainer, uint32 nStart, uint32 nCount) const
 {
 	// Check parameters
-	if (nStart >= lstContainer.GetNumOfElements() || nStart >= m_nNumOfElements)
-		return false; // Not equal!
-	if (!nCount)
-		nCount = lstContainer.GetNumOfElements()-nStart;
-	if (nStart+nCount > lstContainer.GetNumOfElements() || nStart+nCount > m_nNumOfElements)
-		return false; // Not equal!
+	if (nStart >= lstContainer.GetNumOfElements() || nStart >= m_nNumOfElements) {
+		// Empty containers?
+		if (m_nNumOfElements || lstContainer.GetNumOfElements()) {
+			// Error, invalid start index! Not equal!
+			return false;
+		}
+	} else {
+		// Get the number of elements to compare
+		if (!nCount)
+			nCount = lstContainer.GetNumOfElements()-nStart;
+		if (nStart+nCount > lstContainer.GetNumOfElements() || nStart+nCount > m_nNumOfElements)
+			return false; // Not equal!
 
-	// Compare
-	for (uint32 i=nStart; i<nStart+nCount; i++) {
-		if (!(m_pData[i] == lstContainer[i]))
-			return false; // The two containers are not equal!
+		// Compare
+		for (uint32 i=nStart; i<nStart+nCount; i++) {
+			if (!(m_pData[i] == lstContainer[i]))
+				return false; // The two containers are not equal!
+		}
 	}
 
 	// The two containers are equal!

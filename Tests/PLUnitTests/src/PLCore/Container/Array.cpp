@@ -843,26 +843,22 @@ SUITE(Array_PrimitiveChar) {
 
 		Arr.Clear();
 		CHECK(!Arr.Copy(CopyArr, 9, 0));
-		// TODO: Compare return false if both containers are empty!
-		//CHECK(Arr.Compare(EmptyArr));
+		CHECK(Arr.Compare(EmptyArr));
 		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 
 		CHECK(!Arr.Copy(CopyArr, 9, 1));
-		// TODO: Compare return false if both containers are empty!
-		//CHECK(Arr.Compare(EmptyArr));
+		CHECK(Arr.Compare(EmptyArr));
 		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 
 		CHECK(!Arr.Copy(CopyArr, 9, 99));
-		// TODO: Compare return false if both containers are empty!
-		//CHECK(Arr.Compare(EmptyArr));
+		CHECK(Arr.Compare(EmptyArr));
 		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 
 		// copy an empty array
 		Arr.Add('0');
 		CHECK(Arr.Copy(EmptyArr));
 
-		// TODO: Compare return false if both containers are empty!
-//		CHECK(Arr.Compare(EmptyArr));
+		CHECK(Arr.Compare(EmptyArr));
 		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 	}
 
@@ -882,8 +878,7 @@ SUITE(Array_PrimitiveChar) {
 		CopyArr.Clear();
 		Arr = CopyArr;
 
-		// TODO: Compare return false if both containers are empty!
-		//CHECK(Arr.Compare(CopyArr));
+		CHECK(Arr.Compare(CopyArr));
 		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 	}
 
@@ -896,8 +891,7 @@ SUITE(Array_PrimitiveChar) {
 		CompareArr.Add('1');
 		CompareArr.Add('0');
 
-		// TODO: Compare return false if both containers are empty!
-		//CHECK(Arr.Compare(EmptyArr));
+		CHECK(Arr.Compare(EmptyArr));
 
 		Arr = CompareArr;
 
@@ -925,8 +919,7 @@ SUITE(Array_PrimitiveChar) {
 		CompareArr.Add('1');
 		CompareArr.Add('0');
 
-		// TODO: Compare return false if both containers are empty!
-		//CHECK(Arr == EmptyArr);
+		CHECK(Arr == EmptyArr);
 
 		Arr = CompareArr;
 		CHECK(Arr == CompareArr);
@@ -944,8 +937,7 @@ SUITE(Array_PrimitiveChar) {
 		CompareArr.Add('1');
 		CompareArr.Add('0');
 
-		// TODO: Compare return false if both containers are empty!
-		//CHECK(!(Arr != EmptyArr));
+		CHECK(!(Arr != EmptyArr));
 
 		Arr = CompareArr;
 		CHECK(!(Arr != CompareArr));

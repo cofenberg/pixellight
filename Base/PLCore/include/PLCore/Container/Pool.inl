@@ -847,41 +847,48 @@ template <class ValueType>
 bool Pool<ValueType>::Compare(const Container<ValueType> &lstContainer, uint32 nStart, uint32 nCount) const
 {
 	// Check parameters
-	if (nStart >= lstContainer.GetNumOfElements() || nStart >= m_nNumOfElements)
-		return false; // Not equal!
-	if (!nCount)
-		nCount = lstContainer.GetNumOfElements()-nStart;
-	if (nStart+nCount > lstContainer.GetNumOfElements() || nStart+nCount > m_nNumOfElements)
-		return false; // Not equal!
-
-	// Get the start element from which search direction?
-	PoolElement *pElement;
-	if (nStart < m_nNumOfElements/2) {
-		// Start with the first element
-		pElement = m_pFirstElement;
-		uint32 nCurIndex = 0;
-		while (pElement && nCurIndex != nStart) {
-			pElement = pElement->pNextElement;
-			nCurIndex++;
+	if (nStart >= lstContainer.GetNumOfElements() || nStart >= m_nNumOfElements) {
+		// Empty containers?
+		if (m_nNumOfElements || lstContainer.GetNumOfElements()) {
+			// Error, invalid start index! Not equal!
+			return false;
 		}
 	} else {
-		// Start with the last element
-		pElement = m_pLastElement;
-		uint32 nCurIndex = m_nNumOfElements-1;
-		while (pElement && nCurIndex != nStart) {
-			pElement = pElement->pPreviousElement;
-			nCurIndex--;
-		}
-	}
+		// Get the number of elements to compare
+		if (!nCount)
+			nCount = lstContainer.GetNumOfElements()-nStart;
+		if (nStart+nCount > lstContainer.GetNumOfElements() || nStart+nCount > m_nNumOfElements)
+			return false; // Not equal!
 
-	// Compare
-	for (uint32 i=nStart; i<nStart+nCount; i++) {
-		if (!pElement)
-			return false; // Not equal! (? :)
-		if (pElement->Data == lstContainer[i])
-			pElement = pElement->pNextElement;
-		else
-			return false; // The two containers are not equal!
+		// Get the start element from which search direction?
+		PoolElement *pElement;
+		if (nStart < m_nNumOfElements/2) {
+			// Start with the first element
+			pElement = m_pFirstElement;
+			uint32 nCurIndex = 0;
+			while (pElement && nCurIndex != nStart) {
+				pElement = pElement->pNextElement;
+				nCurIndex++;
+			}
+		} else {
+			// Start with the last element
+			pElement = m_pLastElement;
+			uint32 nCurIndex = m_nNumOfElements-1;
+			while (pElement && nCurIndex != nStart) {
+				pElement = pElement->pPreviousElement;
+				nCurIndex--;
+			}
+		}
+
+		// Compare
+		for (uint32 i=nStart; i<nStart+nCount; i++) {
+			if (!pElement)
+				return false; // Not equal! (? :)
+			if (pElement->Data == lstContainer[i])
+				pElement = pElement->pNextElement;
+			else
+				return false; // The two containers are not equal!
+		}
 	}
 
 	// The two containers are equal!
