@@ -1,3 +1,12 @@
+>> 26.11.2011
+[CO]
+- As feared yesterday, my "Socket::GetNumOfWaitingBytes()"-method wasn't really correct. As mentioned, my network topic experience is near to zero and to be honest,
+  I don't have the time to get into it in detail because I already have to manage all other topics at once. Sadly, my day has only 24 hours - so, we have to rely on
+  teamwork to get everything done. That's why I'am totally happy that within the bug tracker there's response (ID: 3442166) pointing me into the right direction. :D
+  -> Renamed "Socket::GetNumOfWaitingBytes()" into "Socket::IsDataWaiting()"
+
+
+
 >> 25.11.2011
 [CO]
 - There's a first feature request at http://sourceforge.net/tracker/?group_id=507544&atid=2063685 "Socket::IsArrivalData() - ID: 3439371"

@@ -231,12 +231,12 @@ class Socket {
 
 		/**
 		*  @brief
-		*    Returns the number of bytes waiting to be received (non-blocking request)
+		*    Returns whether or not data is waiting to be received (non-blocking request)
 		*
 		*  @return
-		*    The number of bytes waiting to be received, negative value on error
+		*    'true' if data is waiting to be received, else 'false'
 		*/
-		PLCORE_API int GetNumOfWaitingBytes() const;
+		PLCORE_API bool IsDataWaiting() const;
 
 		/**
 		*  @brief

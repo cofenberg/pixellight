@@ -235,9 +235,9 @@ int Socket::Send(const char *pBuffer, uint32 nSize) const
 
 /**
 *  @brief
-*    Returns the number of bytes waiting to be received (non-blocking request)
+*    Returns whether or not data is waiting to be received (non-blocking request)
 */
-int Socket::GetNumOfWaitingBytes() const
+bool Socket::IsDataWaiting() const
 {
 	// Valid socket?
 	if (m_nSocket != INVALID_SOCKET) {
@@ -246,7 +246,8 @@ int Socket::GetNumOfWaitingBytes() const
 			u_long nNonBlocking = 1;
 			ioctlsocket(m_nSocket, FIONBIO, &nNonBlocking);
 
-			// Get the number of waiting bytes (just look, don't touch)
+			// Are any bytes waiting? (just look, don't touch)
+			// -> "recv" returns the number of bytes received and copied into the buffer (so, the upper limit is our buffer size)
 			char nBuffer = 0;
 			const int nNumOfBytes = recv(m_nSocket, &nBuffer, 1, MSG_PEEK);
 
@@ -255,12 +256,13 @@ int Socket::GetNumOfWaitingBytes() const
 			ioctlsocket(m_nSocket, FIONBIO, &nNonBlocking);
 
 			// Return the number of bytes waiting to be received
-			return nNumOfBytes;
+			return (nNumOfBytes > 0);
 		#else
 			// Get the currently set socket flags
 			const int nFlags = fcntl(m_nSocket, F_GETFL, 0);
 
-			// Bring the socket into a non-blocking mode
+			// Are any bytes waiting? (just look, don't touch)
+			// -> "recv" returns the number of bytes received and copied into the buffer (so, the upper limit is our buffer size)
 			fcntl(m_nSocket, F_SETFL, nFlags | O_NONBLOCK);
 
 			// Get the number of waiting bytes (just look, don't touch)
@@ -271,12 +273,12 @@ int Socket::GetNumOfWaitingBytes() const
 			fcntl(m_nSocket, F_SETFL, nFlags);
 
 			// Return the number of bytes waiting to be received
-			return nNumOfBytes;
+			return (nNumOfBytes > 0);
 		#endif
 	}
 
-	// Error!
-	return -1;
+	// Error! No data is waiting to be received...
+	return false;
 }
 
 /**
@@ -285,6 +287,7 @@ int Socket::GetNumOfWaitingBytes() const
 */
 int Socket::Receive(char *pBuffer, uint32 nSize) const
 {
+	// "recv" returns the number of bytes received and copied into the buffer (so, the upper limit is our buffer size)
 	return ((pBuffer && m_nSocket != INVALID_SOCKET) ? recv(m_nSocket, pBuffer, nSize, 0) : -1);
 }
 
