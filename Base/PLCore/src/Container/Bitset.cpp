@@ -453,24 +453,34 @@ bool Bitset::Remove(const Container<bool> &lstContainer, uint32 nStart, uint32 n
 bool Bitset::Copy(const Container<bool> &lstContainer, uint32 nStart, uint32 nCount)
 {
 	// Check start index and elements to copy
-	if (nStart >= lstContainer.GetNumOfElements())
-		return false; // Error, invalid start index!
-	if (!nCount)
-		nCount = lstContainer.GetNumOfElements()-nStart;
-	if (nStart+nCount > lstContainer.GetNumOfElements())
-		nCount = lstContainer.GetNumOfElements()-nStart;
+	if (nStart >= lstContainer.GetNumOfElements()) {
+		// Empty container?
+		if (lstContainer.IsEmpty()) {
+			// That's an easy situation: Just clear this container and it's a copy of the given empty container
+			Clear();
+		} else {
+			// Error, invalid start index!
+			return false;
+		}
+	} else {
+		// Get the number of elements to copy
+		if (!nCount)
+			nCount = lstContainer.GetNumOfElements()-nStart;
+		if (nStart+nCount > lstContainer.GetNumOfElements())
+			nCount = lstContainer.GetNumOfElements()-nStart;
 
-	// Setup bit set size
-	Resize(nCount);
+		// Setup bit set size
+		Resize(nCount);
 
-	// Copy
-	for (uint32 i=0; i<nCount; i++) {
-		if (lstContainer[i+nStart])
-			Set(i);
-		else
-			Clear(i);
+		// Copy
+		for (uint32 i=0; i<nCount; i++) {
+			if (lstContainer[i+nStart])
+				Set(i);
+			else
+				Clear(i);
+		}
+		m_nNumOfElements = nCount;
 	}
-	m_nNumOfElements = nCount;
 
 	// Done
 	return true;

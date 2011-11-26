@@ -48,4 +48,3 @@ int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 	// Execute the unit tests
 	return UnitTests(sExecutableFilename, lstArguments);
 }
-

@@ -17,6 +17,7 @@
     virtual bool AddAtIndex(const ValueType &Element, int nIndex) = 0;
     The last one has another return value as the other methods. That's definitly unexpected. Changed "virtual bool AddAtIndex(const ValueType &Element, int nIndex) = 0;"
     into "virtual bool AddAtIndex(const ValueType &Element, int nIndex) = 0;". As far as I can see, this method is never used, so, it should be safe to make this change.
+  -> "Container"-class: Making a container to a copy of an empty container didn't work, the result has to be a empty container
 
 
 

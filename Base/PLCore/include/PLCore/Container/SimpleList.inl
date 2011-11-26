@@ -594,20 +594,30 @@ SimpleList<ValueType> &SimpleList<ValueType>::operator -=(const Container<ValueT
 template <class ValueType>
 bool SimpleList<ValueType>::Copy(const Container<ValueType> &lstContainer, uint32 nStart, uint32 nCount)
 {
-	// Clear the old list
-	Clear();
-
 	// Check start index and elements to copy
-	if (nStart >= lstContainer.GetNumOfElements())
-		return false; // Error, invalid start index!
-	if (!nCount)
-		nCount = lstContainer.GetNumOfElements()-nStart;
-	if (nStart+nCount > lstContainer.GetNumOfElements())
-		nCount = lstContainer.GetNumOfElements()-nStart;
+	if (nStart >= lstContainer.GetNumOfElements()) {
+		// Empty container?
+		if (lstContainer.IsEmpty()) {
+			// That's an easy situation: Just clear this container and it's a copy of the given empty container
+			Clear();
+		} else {
+			// Error, invalid start index!
+			return false;
+		}
+	} else {
+		// Clear the old list
+		Clear();
 
-	// Copy
-	for (uint32 i=0; i<nCount; i++)
-		Add(lstContainer[i+nStart]);
+		// Get the number of elements to copy
+		if (!nCount)
+			nCount = lstContainer.GetNumOfElements()-nStart;
+		if (nStart+nCount > lstContainer.GetNumOfElements())
+			nCount = lstContainer.GetNumOfElements()-nStart;
+
+		// Copy
+		for (uint32 i=0; i<nCount; i++)
+			Add(lstContainer[i+nStart]);
+	}
 
 	// Done
 	return true;

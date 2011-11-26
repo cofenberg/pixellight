@@ -857,11 +857,13 @@ SUITE(Array_PrimitiveChar) {
 		//CHECK(Arr.Compare(EmptyArr));
 		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 
-		// TODO: this fails? i can't copy an empty array?
-		//CHECK(Arr.Copy(EmptyArr));
+		// copy an empty array
+		Arr.Add('0');
+		CHECK(Arr.Copy(EmptyArr));
+
 		// TODO: Compare return false if both containers are empty!
-		//CHECK(Arr.Compare(EmptyArr));
-		//CHECK_EQUAL(0U, Arr.GetNumOfElements());
+//		CHECK(Arr.Compare(EmptyArr));
+		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 	}
 
 	TEST(Operator_Copy) {
@@ -876,12 +878,13 @@ SUITE(Array_PrimitiveChar) {
 		Arr = CopyArr;
 		CHECK(Arr.Compare(CopyArr));
 
-		// TODO: we can't copy empty containers! look at TODO in TEST(Copy)
+		// copy empty container
 		CopyArr.Clear();
 		Arr = CopyArr;
+
 		// TODO: Compare return false if both containers are empty!
 		//CHECK(Arr.Compare(CopyArr));
-		//CHECK_EQUAL(0U, Arr.GetNumOfElements());
+		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 	}
 
 	TEST(Compare) {
