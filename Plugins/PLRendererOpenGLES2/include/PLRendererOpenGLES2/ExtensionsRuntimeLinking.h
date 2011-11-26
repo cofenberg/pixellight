@@ -90,6 +90,7 @@ class ExtensionsRuntimeLinking : public Extensions {
 		virtual bool IsGL_EXT_texture_compression_dxt1() const override;
 		virtual bool IsGL_EXT_texture_compression_latc() const override;
 		virtual bool IsGL_EXT_texture_filter_anisotropic() const override;
+		virtual bool IsGL_EXT_texture_array() const override;
 		virtual bool IsGL_EXT_Cg_shader() const override;
 		// AMD
 		virtual bool IsGL_AMD_compressed_3DC_texture() const override;
@@ -120,6 +121,7 @@ class ExtensionsRuntimeLinking : public Extensions {
 		bool m_bGL_EXT_texture_compression_dxt1;
 		bool m_bGL_EXT_texture_compression_latc;
 		bool m_bGL_EXT_texture_filter_anisotropic;
+		bool m_bGL_EXT_texture_array;
 		bool m_bGL_EXT_Cg_shader;
 		// AMD
 		bool m_bGL_AMD_compressed_3DC_texture;
@@ -201,6 +203,21 @@ FNDEF_EX(void,	glDrawBuffersARB,	(GLsizei n, const GLenum *bufs));
 // GL_EXT_texture_filter_anisotropic
 #define GL_TEXTURE_MAX_ANISOTROPY_EXT		0x84FE
 #define GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT	0x84FF
+
+// GL_EXT_texture_array
+#define GL_TEXTURE_1D_ARRAY_EXT						0x8C18
+#define GL_TEXTURE_2D_ARRAY_EXT						0x8C1A
+#define GL_PROXY_TEXTURE_2D_ARRAY_EXT				0x8C1B
+#define GL_PROXY_TEXTURE_1D_ARRAY_EXT				0x8C19
+#define GL_TEXTURE_BINDING_1D_ARRAY_EXT				0x8C1C
+#define GL_TEXTURE_BINDING_2D_ARRAY_EXT				0x8C1D
+#define GL_MAX_ARRAY_TEXTURE_LAYERS_EXT				0x88FF
+#define GL_COMPARE_REF_DEPTH_TO_TEXTURE_EXT			0x884E
+#define GL_FRAMEBUFFER_ATTACHMENT_TEXTURE_LAYER_EXT	0x8CD4
+#define GL_SAMPLER_1D_ARRAY_EXT						0x8DC0
+#define GL_SAMPLER_2D_ARRAY_EXT						0x8DC1
+#define GL_SAMPLER_1D_ARRAY_SHADOW_EXT				0x8DC3
+#define GL_SAMPLER_2D_ARRAY_SHADOW_EXT				0x8DC4
 
 // GL_EXT_Cg_shader
 #define GL_CG_VERTEX_SHADER_EXT		0x890E

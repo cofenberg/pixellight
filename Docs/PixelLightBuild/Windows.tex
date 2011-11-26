@@ -101,7 +101,7 @@ Here's how to compile PixelLight by using the CMake-\ac{GUI}:
 \item{"Where is the source code"-field: e.g. "C:/PixelLight"}
 \item{"Where to build the binaries"-field: e.g. "C:/PixelLight/CMakeOutput"}
 \item{Press the "Configure"-button}
-\item{Choose the generator, for instance "Visual Studio 10"}
+\item{Choose the generator, for instance "Visual Studio 10" for \SI{32}{\bit} or "Visual Studio 10 Win64" for \SI{64}{\bit}}
 \item{Press the "Generate"-button}
 \end{itemize}
 
@@ -120,7 +120,7 @@ An alternative is to change into the CMake output directory and typing
 msbuild PixelLight.sln /t:Clean /p:Configuration=Release /p:Platform=Win32
 msbuild PixelLight.sln /p:Configuration=Release /p:Platform=Win32
 \end{lstlisting}
-The first line removes everything from a previous build. The second line builds the solution in release mode for the defined platform.
+The first line removes everything from a previous build. The second line builds the solution in release mode for the defined platform. In case you want to compile for \SI{64}{\bit} instead of \SI{32}{\bit} as shown in the example above, replace \emph{/p:Platform=Win32} by \emph{/p:Platform=x64}.
 
 
 \paragraph{Visual Studio \ac{IDE}}

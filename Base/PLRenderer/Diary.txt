@@ -1,3 +1,39 @@
+>> 23.11.2011
+[CO]
+- "TextureBuffer::GetFormatFromImage()": Added support for the "DataWord" (16 bit) data type of "PLGraphics::Image"
+
+
+
+>> 22.11.2011
+[CO]
+PLRendererOpenGL:
+- "Renderer::RestoreDeviceStates()": Moved fixed functions stuff like "glDisable(GL_TEXTURE_1D)" into the fixed functions class
+- "TextureBuffer1D::BackupDeviceData()" etc. : There's no need for "glEnable(GL_TEXTURE_1D)" (this just enables texture mapping for fixed
+  functions... we can also use "glGetTexImage()" with disabled fixed functions texture mapping *g*)
+- The extensions are now directly initialized from within the context implementation
+
+
+
+>> 20.11.2011
+[CO]
+- "PLRenderer::DrawHelpersBackendShaders::GetProgramGenerator()": When generating a GLSL shader for OpenGL ES 2.0, my graphics driver no longer accepts
+  "#extension GL_ARB_texture_rectangle : enable" within a GLSL shader targeting OpenGL ES 2.0... the driver then just hangs. So, in order to make it easier
+  for the driver, "#extension GL_ARB_texture_rectangle : enable" is now added to the shader string dynamically, but only when not targeting OpenGL ES 2.0.
+  This is correct, but interesting that the graphics driver suddenly no longer ignores unknown extensions.
+- Added support for 2D array textures (kind of 3D texture, but without filtering between the depth layers)
+PLRendererOpenGL:
+- Added support for 2D array textures ("GL_EXT_texture_array"-extension)
+PLRendererOpenGLES2:
+- 3D textures using the "GL_OES_texture_3D"-extension are now working (at least using the desktop native OpenGL ES 2.0 support)
+- Added support for 2D array textures ("GL_EXT_texture_array"-extension)
+  -> A funny thing: Tegra 2 has support for the extension "GL_EXT_texture_array", but has no support
+     for the "GL_OES_texture_3D"-extension. At least it's not listed in the extension string.
+     "GL_EXT_texture_array" is reusing functions defined by "GL_OES_texture_3D"... and therefore we're
+     now getting the function pointers of "GL_OES_texture_3D" to be able to use "GL_EXT_texture_array".
+     Works even when "GL_OES_texture_3D" is not listed. Nice.
+
+
+
 >> 13.11.2011
 [SW]
 - "PLRendererOpenGLES2" Extended under linux the check for the right lib to load for EGL/GLES. Because the opensource drivers provides the libEGL.so and libGLESv2.so libs for EGL/GLES. But the closed source drivers doesn't.

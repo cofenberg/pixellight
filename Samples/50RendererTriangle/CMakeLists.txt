@@ -30,7 +30,7 @@ define_project(50RendererTriangle NOSUFFIX)
 ##################################################
 add_sources(
 	src/Main.cpp
-	src/Application.cpp
+	src/Application50.cpp
 	src/SPTriangle.cpp
 	src/SPTriangleShaders.cpp
 	src/SPTriangleFixedFunctions.cpp

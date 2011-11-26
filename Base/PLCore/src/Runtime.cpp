@@ -374,10 +374,10 @@ bool Runtime::SetDirectory(const String &sDirectory, String *pszErrorMessage)
 			// Query value of PATH variable
 			DWORD nType;
 			DWORD nSize = nPathSize;
-			LSTATUS nResult = RegQueryValueEx(hKey, L"PATH", 0, &nType, (BYTE*)pszPath, &nSize);
+			LSTATUS nResult = RegQueryValueEx(hKey, L"PATH", 0, &nType, reinterpret_cast<BYTE*>(pszPath), &nSize);
 			if (nResult == ERROR_FILE_NOT_FOUND) {
 				// Write to registry
-				RegSetValueEx(hKey, L"PATH", 0, REG_SZ, (BYTE*)sDirectory.GetUnicode(), (DWORD)sizeof(wchar_t)*wcslen(sDirectory.GetUnicode()));
+				RegSetValueEx(hKey, L"PATH", 0, REG_SZ, reinterpret_cast<const BYTE*>(sDirectory.GetUnicode()), static_cast<DWORD>(sizeof(wchar_t)*wcslen(sDirectory.GetUnicode())));
 				RegFlushKey(hKey);
 			} else if (nResult == ERROR_SUCCESS) {
 				// Get upper case version
@@ -397,7 +397,7 @@ bool Runtime::SetDirectory(const String &sDirectory, String *pszErrorMessage)
 
 					// Write back to registry
 					pszPath[wcslen(pszPath) + 1] = L'\0';
-					RegSetValueEx(hKey, L"PATH", 0, nType, (BYTE*)pszPath, (DWORD)sizeof(wchar_t)*wcslen(pszPath));
+					RegSetValueEx(hKey, L"PATH", 0, nType, reinterpret_cast<const BYTE*>(pszPath), static_cast<DWORD>(sizeof(wchar_t)*wcslen(pszPath)));
 					RegFlushKey(hKey);
 				}
 
@@ -429,7 +429,7 @@ bool Runtime::SetDirectory(const String &sDirectory, String *pszErrorMessage)
 		const LONG nErrorCode = RegCreateKeyEx(HKEY_LOCAL_MACHINE, szSubkey, 0, nullptr, 0, KEY_READ | KEY_WRITE, nullptr, &hKey, nullptr);
 		if (nErrorCode == ERROR_SUCCESS) {
 			// Set value
-			RegSetValueEx(hKey, L"Runtime", 0, REG_SZ, (BYTE*)sDirectory.GetUnicode(), (DWORD)sizeof(wchar_t)*wcslen(sDirectory.GetUnicode()));
+			RegSetValueEx(hKey, L"Runtime", 0, REG_SZ, reinterpret_cast<const BYTE*>(sDirectory.GetUnicode()), static_cast<DWORD>(sizeof(wchar_t)*wcslen(sDirectory.GetUnicode())));
 			RegFlushKey(hKey);
 
 			// Clean up
@@ -452,7 +452,7 @@ bool Runtime::SetDirectory(const String &sDirectory, String *pszErrorMessage)
 		// We need to send a broadcast so other processes will be informed about the change. If this is not done,
 		// 'dlls' still will not be found although the "PATH" environment variable was updated!
 		ULONG_PTR nResult;
-		SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, (LPARAM)L"Environment", SMTO_NORMAL, 4000, &nResult);
+		SendMessageTimeout(HWND_BROADCAST, WM_SETTINGCHANGE, 0, reinterpret_cast<LPARAM>(L"Environment"), SMTO_NORMAL, 4000, &nResult);
 	#endif
 
 	// [TODO] Implement Linux equivalent (see "GetRegistryDirectory()", I know that there's no MS Windows like registry under Linux)

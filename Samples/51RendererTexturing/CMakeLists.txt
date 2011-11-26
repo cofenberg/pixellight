@@ -30,7 +30,7 @@ define_project(51RendererTexturing NOSUFFIX)
 ##################################################
 add_sources(
 	src/Main.cpp
-	src/Application.cpp
+	src/Application51.cpp
 	src/SPTexturing.cpp
 	src/SPTexturingShaders.cpp
 	src/SPTexturingFixedFunctions.cpp

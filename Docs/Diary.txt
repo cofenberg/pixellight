@@ -1,3 +1,22 @@
+>> 26.11.2011
+[CO]
+- "PixelLightBuild"-document: Fixed documentation-tracker entry 3442193 ("In the PixelLightBuild.pdf documentation on page 19 it says that cmake-qui can be used.
+   However, there is only a cmake-qt-gui package in Ocelot (as of 26th of November \'11)")
+
+
+
+>> 24.11.2011
+[CO]
+PixelLightCodingConventions:
+- "2.9 Const Correctness": Added a const example
+- Review of the document
+- "Headers"-chapter: Added "Including Headers"-section with "Order"- and "Slash Vs. Backslash"-paragraphs
+-> That was stuff I noticed when working with the new PixelLight developers
+PixelLightBuild:
+- Described building PixelLight under MS Windows for 64 bit (I have no 64 bit Linux installed, so I can't describe it...)
+
+
+
 >> 06.11.2011
 [CO]
 - "PixelLight3dsMaxSceneExport"-document: "8 Options" -> "Subdirectories"-option documentation was buggy

@@ -27,7 +27,7 @@
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Button.h>
 #include <PLEngine/Picking/PickingResult.h>
-#include "Application.h"
+#include "Application64.h"
 #include "MyPicking.h"
 
 
@@ -47,7 +47,7 @@ using namespace PLEngine;
 *  @brief
 *    Constructor
 */
-MyPicking::MyPicking(Application &cApplication) : MousePicking(cApplication.GetFrontend()),
+MyPicking::MyPicking(Application64 &cApplication) : MousePicking(cApplication.GetFrontend()),
 	m_pApplication(&cApplication),
 	m_nLastPickingTime(Timing::GetInstance()->GetPastTime())
 {

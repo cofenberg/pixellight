@@ -42,8 +42,8 @@ using namespace PLCore;
 //[-------------------------------------------------------]
 int UnitTests(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
-	//MyMobileTestReporter rep;
-	MyTestReporter rep;
+	MyMobileTestReporter rep;
+	//MyTestReporter rep;
 	return UnitTest::RunAllTests(rep);
 }
 

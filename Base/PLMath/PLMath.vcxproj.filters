@@ -127,6 +127,12 @@
     <ClCompile Include="src\Graph\GraphPathManager.cpp">
       <Filter>Graph</Filter>
     </ClCompile>
+    <ClCompile Include="src\PerlinNoiseTileable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PerlinNoiseTurbulence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLMath\AABoundingBox.h">
@@ -255,6 +261,12 @@
     <ClInclude Include="include\PLMath\Graph\GraphPathManager.h">
       <Filter>Graph</Filter>
     </ClInclude>
+    <ClInclude Include="include\PLMath\PerlinNoiseTileable.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLMath\PerlinNoiseTurbulence.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\PLMath\AABoundingBox.inl">
@@ -325,5 +337,8 @@
     </None>
     <None Include="CMakeLists.txt" />
     <None Include="Diary.txt" />
+    <None Include="include\PLMath\PerlinNoiseTileable.inl">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

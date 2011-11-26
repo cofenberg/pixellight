@@ -577,6 +577,10 @@ void Renderer::SetupCapabilities()
 	// Non power of two texture buffers supported?
 	m_sCapabilities.bTextureBufferNonPowerOfTwo = ((pCaps.TextureCaps & D3DPTEXTURECAPS_NONPOW2CONDITIONAL) && (pCaps.TextureCaps & D3DPTEXTURECAPS_POW2));
 
+	// [TODO] 2D array texture buffer support
+	m_sCapabilities.bTextureBuffer2DArray = false;
+	m_sCapabilities.nMaxTextureBuffer2DArrayLayers = 0;
+
 	// [TODO] Perform a correct check...
 	// Rectangle texture buffers supported?
 	m_sCapabilities.bTextureBufferRectangle = true;
@@ -870,6 +874,12 @@ PLRenderer::TextureBuffer2D *Renderer::CreateTextureBuffer2D(Image &cImage, PLRe
 
 	// Create the Direct3D 9 2D texture buffer
 	return new TextureBuffer2D(*this, cImage, nInternalFormat, nFlags);
+}
+
+PLRenderer::TextureBuffer2DArray *Renderer::CreateTextureBuffer2DArray(Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
+{
+	// [TODO] Implement me
+	return nullptr;
 }
 
 PLRenderer::TextureBuffer *Renderer::CreateTextureBufferRectangle(Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)

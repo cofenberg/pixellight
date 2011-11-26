@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SPTexturingShaders_Cg.cpp                       *
+ *  File: SPTexturingShaders_Cg.cpp                      *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,54 +20,72 @@
 \*********************************************************/
 
 
-// Cg vertex shader source code
-static const PLCore::String sVertexShaderSourceCodeCg = "\
-// Vertex output\n\
-struct VS_OUTPUT {\n\
-	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float2 VertexTexCoord : TEXCOORD0;	// Vertex texture coordinate\n\
-};\n\
-\n\
-// Programs\n\
-VS_OUTPUT main(float3   VertexPosition : POSITION,		// Object space vertex position input\n\
-			   float2   VertexTexCoord : TEXCOORD0,		// Vertex texture coordinate input\n\
-	   uniform float4x4 ObjectSpaceToClipSpaceMatrix)	// Object space to clip space matrix\n\
-{\n\
-	VS_OUTPUT Out;\n\
-\n\
-	// Calculate the clip space vertex position\n\
-	Out.VertexPosition = mul(ObjectSpaceToClipSpaceMatrix, float4(VertexPosition, 1));\n\
-\n\
-	// Pass through the vertex texture coordinate\n\
-	Out.VertexTexCoord = VertexTexCoord;\n\
-\n\
-	// Done\n\
-	return Out;\n\
-}";
+//[-------------------------------------------------------]
+//[ Define helper macro                                   ]
+//[-------------------------------------------------------]
+#define STRINGIFY(ME) #ME
 
 
-// Cg fragment shader source code
-static const PLCore::String sFragmentShaderSourceCodeCg = "\
-// Vertex output\n\
-struct VS_OUTPUT {\n\
-	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float2 VertexTexCoord : TEXCOORD0;	// Vertex texture coordinate\n\
-};\n\
-\n\
-// Fragment output\n\
-struct FS_OUTPUT {\n\
-	float4 Color0 : COLOR0;\n\
-};\n\
-\n\
-// Programs\n\
-FS_OUTPUT main(VS_OUTPUT In,			// Vertex shader output as fragment shader input\n\
-	   uniform sampler2D TextureMap)	// Texture map\n\
-{\n\
-	FS_OUTPUT Out;\n\
-\n\
-	// Fragment color = fetched interpolated texel color\n\
-	Out.Color0 = tex2D(TextureMap, In.VertexTexCoord);\n\
-\n\
-	// Done\n\
-	return Out;\n\
-}";
+//[-------------------------------------------------------]
+//[ Vertex shader source code                             ]
+//[-------------------------------------------------------]
+static const PLCore::String sVertexShaderSourceCodeCg = STRINGIFY(
+// Vertex output
+struct VS_OUTPUT {
+	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+	float2 VertexTexCoord : TEXCOORD0;	// Vertex texture coordinate
+};
+
+// Programs
+VS_OUTPUT main(float3   VertexPosition : POSITION,		// Object space vertex position input
+			   float2   VertexTexCoord : TEXCOORD0,		// Vertex texture coordinate input
+	   uniform float4x4 ObjectSpaceToClipSpaceMatrix)	// Object space to clip space matrix
+{
+	VS_OUTPUT Out;
+
+	// Calculate the clip space vertex position
+	Out.VertexPosition = mul(ObjectSpaceToClipSpaceMatrix, float4(VertexPosition, 1));
+
+	// Pass through the vertex texture coordinate
+	Out.VertexTexCoord = VertexTexCoord;
+
+	// Done
+	return Out;
+}
+);	// STRINGIFY
+
+
+//[-------------------------------------------------------]
+//[ Fragment shader source code                           ]
+//[-------------------------------------------------------]
+static const PLCore::String sFragmentShaderSourceCodeCg = STRINGIFY(
+// Vertex output
+struct VS_OUTPUT {
+	float4 VertexPosition : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+	float2 VertexTexCoord : TEXCOORD0;	// Vertex texture coordinate
+};
+
+// Fragment output
+struct FS_OUTPUT {
+	float4 Color0 : COLOR0;
+};
+
+// Programs
+FS_OUTPUT main(VS_OUTPUT In,			// Vertex shader output as fragment shader input
+	   uniform sampler2D TextureMap)	// Texture map
+{
+	FS_OUTPUT Out;
+
+	// Fragment color = fetched interpolated texel color
+	Out.Color0 = tex2D(TextureMap, In.VertexTexCoord);
+
+	// Done
+	return Out;
+}
+);	// STRINGIFY
+
+
+//[-------------------------------------------------------]
+//[ Undefine helper macro                                 ]
+//[-------------------------------------------------------]
+#undef STRINGIFY

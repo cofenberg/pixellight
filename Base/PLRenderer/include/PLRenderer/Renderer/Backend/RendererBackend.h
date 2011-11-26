@@ -188,6 +188,20 @@ class RendererBackend : public Renderer {
 
 		/**
 		*  @brief
+		*    Checks a 2D array texture buffer
+		*
+		*  @param[in] cImage
+		*    Texture buffer image
+		*  @param[in] nInternalFormat
+		*    Desired internal texture buffer pixel format, if TextureBuffer::Unknown use the format of the given image
+		*
+		*  @return
+		*    'true' if the texture buffer is valid, else 'false'
+		*/
+		PLRENDERER_API bool CheckTextureBuffer2DArray(PLGraphics::Image &cImage, TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown) const;
+
+		/**
+		*  @brief
 		*    Checks a rectangle texture buffer
 		*
 		*  @param[in] cImage

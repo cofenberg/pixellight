@@ -79,25 +79,19 @@ ChatClientConnection &ChatClientConnection::operator =(const ChatClientConnectio
 //[-------------------------------------------------------]
 void ChatClientConnection::OnConnect()
 {
-	System::GetInstance()->GetConsole().Print("Client started");
+	System::GetInstance()->GetConsole().Print("Client started\n");
 }
 
 void ChatClientConnection::OnDisconnect()
 {
-	System::GetInstance()->GetConsole().Print("Client shutdown");
+	System::GetInstance()->GetConsole().Print("Client shutdown\n");
 }
 
 void ChatClientConnection::OnReceive(const char *pBuffer, uint32 nSize)
 {
 	if (pBuffer) {
-		// We really need to check whether there's already terminating zero
-		for (uint32 i=0; i<nSize; i++) {
-			if (pBuffer[i] == '\0')
-				nSize = i; // 'Clamp' the size, the loop will now stop automatically
-		}
-
 		// Print message (we use the string copy constructor to ensure that there's a correct terminating zero)
-		System::GetInstance()->GetConsole().Print(String(pBuffer, true, nSize));
+		System::GetInstance()->GetConsole().Print(String(pBuffer, true, nSize-1) + '\n');	// -1 = excluding the terminating zero
 	}
 }
 

@@ -27,6 +27,7 @@
 #include <PLCore/Container/Array.h>
 #include <PLRenderer/Renderer/Types.h>
 #include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/Extensions.h"
 #include "PLRendererOpenGL/Linux/SurfaceWindowLinux.h"
 #include "PLRendererOpenGL/Linux/ContextLinux.h"
 
@@ -45,7 +46,7 @@ namespace PLRendererOpenGL {
 *  @brief
 *    Constructor
 */
-ContextLinux::ContextLinux(Renderer &cRenderer) : Context(cRenderer),
+ContextLinux::ContextLinux(Renderer &cRenderer) : Context(),
 	m_pRenderer(&cRenderer),
 	m_pDisplay(nullptr),
 	m_hDummyNativeWindow(NULL_HANDLE),
@@ -83,6 +84,9 @@ ContextLinux::ContextLinux(Renderer &cRenderer) : Context(cRenderer),
 				if (m_hDummyNativeWindow) {
 					// Make the internal dummy to the current render target
 					MakeDummyCurrent();
+
+					// Initialize the OpenGL extensions
+					GetExtensions().Init();
 				} else {
 					// Error, failed to create dummy window!
 				}

@@ -30,7 +30,7 @@ define_project(71libRocket NOSUFFIX)
 ##################################################
 add_sources(
 	src/Main.cpp
-	src/Application.cpp
+	src/Application71.cpp
 )
 
 ##################################################

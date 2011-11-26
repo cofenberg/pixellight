@@ -30,7 +30,6 @@
 //[-------------------------------------------------------]
 #include <android_native_app_glue.h>
 #include <PLCore/Frontend/FrontendImpl.h>
-#include <PLCore/Frontend/FrontendContext.h>
 #include <PLCore/Frontend/FrontendPixelLight.h>
 #include "PLFrontendOS/PLFrontendOS.h"
 
@@ -69,10 +68,12 @@ class FrontendAndroid : public PLCore::FrontendImpl {
 		*  @brief
 		*    Constructor
 		*
+		*  @param[in] cFrontendContext
+		*    Frontend context to use (just shared, the given instance must stay valid as long as this frontend lives)
 		*  @param[in] cAndroidApp
 		*    Given reference to the native Android application instance
 		*/
-		PLFRONTENDOS_API FrontendAndroid(struct android_app &cAndroidApp);
+		PLFRONTENDOS_API FrontendAndroid(const PLCore::FrontendContext &cFrontendContext, struct android_app &cAndroidApp);
 
 		/**
 		*  @brief
@@ -149,7 +150,6 @@ class FrontendAndroid : public PLCore::FrontendImpl {
 	//[-------------------------------------------------------]
 	private:
 		struct android_app		   *m_pAndroidApp;		/**< Given pointer to the native Android application instance, always valid! (do NOT delete this pointer!) */
-		PLCore::FrontendContext		m_cFrontendContext;
 		PLCore::FrontendPixelLight	m_cFrontend;
 		bool						m_bQuit;
 		PLCore::uint64				m_nTimeToWait;		/**< Time to wait */

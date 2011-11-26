@@ -91,6 +91,9 @@
     <ClCompile Include="src\ProgramCg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\TextureBuffer2DArray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRendererOpenGLES2\FontGlyphTexture.h">
@@ -178,6 +181,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLRendererOpenGLES2\ProgramCg.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLES2\TextureBuffer2DArray.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

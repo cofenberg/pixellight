@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SPTexturingShaders_GLSL.cpp                     *
+ *  File: SPTexturingShaders_GLSL.cpp                    *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,38 +20,58 @@
 \*********************************************************/
 
 
+//[-------------------------------------------------------]
+//[ Define helper macro                                   ]
+//[-------------------------------------------------------]
+#define STRINGIFY(ME) #ME
+
+
+//[-------------------------------------------------------]
+//[ Vertex shader source code                             ]
+//[-------------------------------------------------------]
 // GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by hand
-static const PLCore::String sVertexShaderSourceCodeGLSL = "\
-// Attributes\n\
-attribute highp vec3 VertexPosition;	// Object space vertex position input\n\
-attribute lowp  vec2 VertexTexCoord;	// Vertex texture coordinate input\n\
-varying   lowp  vec2 VertexTexCoordVS;	// Vertex texture coordinate output\n\
-\n\
-// Uniforms\n\
-uniform highp mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix\n\
-\n\
-// Programs\n\
-void main()\n\
-{\n\
-	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	gl_Position = ObjectSpaceToClipSpaceMatrix*vec4(VertexPosition, 1);\n\
-\n\
-	// Pass through the vertex texture coordinate\n\
-	VertexTexCoordVS = VertexTexCoord;\n\
-}";
+static const PLCore::String sVertexShaderSourceCodeGLSL = STRINGIFY(
+// Attributes
+attribute highp vec3 VertexPosition;	// Object space vertex position input
+attribute lowp  vec2 VertexTexCoord;	// Vertex texture coordinate input
+varying   lowp  vec2 VertexTexCoordVS;	// Vertex texture coordinate output
+
+// Uniforms
+uniform highp mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix
+
+// Programs
+void main()
+{
+	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+	gl_Position = ObjectSpaceToClipSpaceMatrix*vec4(VertexPosition, 1);
+
+	// Pass through the vertex texture coordinate
+	VertexTexCoordVS = VertexTexCoord;
+}
+);	// STRINGIFY
 
 
+//[-------------------------------------------------------]
+//[ Fragment shader source code                           ]
+//[-------------------------------------------------------]
 // GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) fragment shader source code, "#version" is added by hand
-static const PLCore::String sFragmentShaderSourceCodeGLSL = "\
-// Attributes\n\
-varying lowp vec2 VertexTexCoordVS;	// Interpolated vertex texture coordinate input from vertex shader\n\
-\n\
-// Uniforms\n\
-uniform lowp sampler2D TextureMap;	// Texture map\n\
-\n\
-// Programs\n\
-void main()\n\
-{\n\
-	// Fragment color = fetched interpolated texel color\n\
-	gl_FragColor = texture2D(TextureMap, VertexTexCoordVS);\n\
-}";
+static const PLCore::String sFragmentShaderSourceCodeGLSL = STRINGIFY(
+// Attributes
+varying lowp vec2 VertexTexCoordVS;	// Interpolated vertex texture coordinate input from vertex shader
+
+// Uniforms
+uniform lowp sampler2D TextureMap;	// Texture map
+
+// Programs
+void main()
+{
+	// Fragment color = fetched interpolated texel color
+	gl_FragColor = texture2D(TextureMap, VertexTexCoordVS);
+}
+);	// STRINGIFY
+
+
+//[-------------------------------------------------------]
+//[ Undefine helper macro                                 ]
+//[-------------------------------------------------------]
+#undef STRINGIFY

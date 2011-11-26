@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
 #define EXTENSIONS_DEFINE
-#include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/Extensions.h"
 #ifdef APPLE
 	#include <dlfcn.h>	// For dlopen, dlclose, dlsym
@@ -50,8 +49,8 @@ namespace PLRendererOpenGL {
 *  @brief
 *    Constructor
 */
-Extensions::Extensions(Renderer &cRenderer) :
-	m_pRenderer(&cRenderer),
+Extensions::Extensions(Context &cContext) :
+	m_pContext(&cContext),
 	m_bInitialized(false)
 {
 	#ifdef APPLE
@@ -112,6 +111,7 @@ bool Extensions::IsGL_EXT_texture_lod_bias()			const { return m_bGL_EXT_texture_
 bool Extensions::IsGL_EXT_texture_filter_anisotropic()	const { return m_bGL_EXT_texture_filter_anisotropic; }
 bool Extensions::IsGL_EXT_separate_specular_color()		const { return m_bGL_EXT_separate_specular_color;	 }
 bool Extensions::IsGL_EXT_texture_edge_clamp()			const { return m_bGL_EXT_texture_edge_clamp;		 }
+bool Extensions::IsGL_EXT_texture_array()				const { return m_bGL_EXT_texture_array;				 }
 bool Extensions::IsGL_EXT_texture_rectangle()			const { return m_bGL_EXT_texture_rectangle;			 }
 bool Extensions::IsGL_EXT_texture3D()					const { return m_bGL_EXT_texture3D;					 }
 bool Extensions::IsGL_EXT_texture_cube_map()			const { return m_bGL_EXT_texture_cube_map;			 }
@@ -234,11 +234,8 @@ bool Extensions::CheckExtension(const char *pszExtension) const
 				#elif APPLE
 					// On Mac OS X, only "glGetString(GL_EXTENSIONS)" is required
 				#elif LINUX
-					// Get the Linux context implementation
-					ContextLinux &cContextLinux = static_cast<ContextLinux&>(m_pRenderer->GetContext());
-
 					// Get the X server display connection
-					Display *pDisplay = cContextLinux.GetDisplay();
+					Display *pDisplay = static_cast<ContextLinux&>(*m_pContext).GetDisplay();
 					if (pDisplay) {
 						if (i == 2)
 							pszExtensions = static_cast<const char*>(glXQueryExtensionsString(pDisplay, XDefaultScreen(pDisplay)));
@@ -304,6 +301,7 @@ void Extensions::ResetExtensions()
 	m_bGL_EXT_texture_filter_anisotropic	= false;
 	m_bGL_EXT_separate_specular_color		= false;
 	m_bGL_EXT_texture_edge_clamp			= false;
+	m_bGL_EXT_texture_array					= false;
 	m_bGL_EXT_texture_rectangle				= false;
 	m_bGL_EXT_texture3D						= false;
 	m_bGL_EXT_texture_cube_map				= false;
@@ -495,6 +493,9 @@ bool Extensions::InitUniversal()
 
 	// GL_EXT_texture_edge_clamp
 	m_bGL_EXT_texture_edge_clamp = IsSupported("GL_EXT_texture_edge_clamp");
+
+	// GL_EXT_texture_array
+	m_bGL_EXT_texture_array = IsSupported("GL_EXT_texture_array");
 
 	// GL_EXT_texture_rectangle
 	m_bGL_EXT_texture_rectangle = IsSupported("GL_EXT_texture_rectangle");

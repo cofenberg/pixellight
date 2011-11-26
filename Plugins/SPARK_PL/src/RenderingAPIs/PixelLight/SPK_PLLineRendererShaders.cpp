@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Math.h>	// On Mac OS X I'am getting the compiler error "error: ‘isfinite’ was not declared in this scope" when not including this header, first... I'am not sure what SPARK is changing in order to cause this error...
 #include <PLCore/Tools/Tools.h>
 #include <PLRenderer/Renderer/Program.h>
 #include <PLRenderer/Renderer/Renderer.h>
@@ -199,7 +200,7 @@ void SPK_PLLineRendererShaders::render(const SPK::Group &group)
 				pfPosition[2] = cParticle.position().z;
 				pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition) + nVertexSize);	// Next, please!
 				// Copy over the particle color into the vertex data
-				pVertexBuffer->SetColor(nCurrentVertex, Color4(cParticle.getR(), cParticle.getG(), cParticle.getB(), cParticle.getParamCurrentValue(SPK::PARAM_ALPHA)));
+				pVertexBuffer->SetColor(static_cast<uint32>(nCurrentVertex), Color4(cParticle.getR(), cParticle.getG(), cParticle.getB(), cParticle.getParamCurrentValue(SPK::PARAM_ALPHA)));
 				nCurrentVertex++;	// Next, please!
 
 				// Copy over the particle position into the vertex data
@@ -208,7 +209,7 @@ void SPK_PLLineRendererShaders::render(const SPK::Group &group)
 				pfPosition[2] = cParticle.position().z + cParticle.velocity().z*length;
 				pfPosition = reinterpret_cast<float*>(reinterpret_cast<char*>(pfPosition) + nVertexSize);	// Next, please!
 				// Copy over the particle color into the vertex data
-				pVertexBuffer->SetColor(nCurrentVertex, Color4(cParticle.getR(), cParticle.getG(), cParticle.getB(), cParticle.getParamCurrentValue(SPK::PARAM_ALPHA)));
+				pVertexBuffer->SetColor(static_cast<uint32>(nCurrentVertex), Color4(cParticle.getR(), cParticle.getG(), cParticle.getB(), cParticle.getParamCurrentValue(SPK::PARAM_ALPHA)));
 				nCurrentVertex++;	// Next, please!
 			}
 
@@ -235,7 +236,7 @@ void SPK_PLLineRendererShaders::render(const SPK::Group &group)
 				m_pColorProgramAttribute->Set(pVertexBuffer, PLRenderer::VertexBuffer::Color);
 
 			// Draw
-			GetPLRenderer().DrawPrimitives(Primitive::LineList, 0, group.getNbParticles() << 1);
+			GetPLRenderer().DrawPrimitives(Primitive::LineList, 0, static_cast<uint32>(group.getNbParticles() << 1));
 		}
 	}
 }

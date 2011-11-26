@@ -84,7 +84,7 @@ String AssimpLoader::GetDefaultTextureFileExtension() const
 */
 String AssimpLoader::AssimpStringToPL(const aiString &sAssimpString) const
 {
-	return String::FromUTF8(sAssimpString.data, -1, sAssimpString.length);
+	return String::FromUTF8(sAssimpString.data, -1, static_cast<uint32>(sAssimpString.length));
 }
 
 /**

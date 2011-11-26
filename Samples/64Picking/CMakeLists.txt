@@ -29,9 +29,9 @@ define_project(64Picking NOSUFFIX)
 ## Source files
 ##################################################
 add_sources(
-	src/Application.cpp
-	src/MyPicking.cpp
 	src/Main.cpp
+	src/Application64.cpp
+	src/MyPicking.cpp
 )
 
 ##################################################

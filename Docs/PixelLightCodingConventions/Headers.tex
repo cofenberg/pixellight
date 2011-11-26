@@ -5,6 +5,31 @@ We have several rules for our header files. See below. At the first look some or
 
 
 
+\section{Including Headers}
+
+
+\paragraph{Order}
+When including files, the order should be
+\begin{itemize}
+\item{System headers like \emph{windows.h} on MS Windows}
+\item{External library headers}
+\item{Project headers}
+\end{itemize}
+In theory, the order of including headers shouldn't matter. In practice, especially when using system headers there might be situations were one has to play around with the header inclusion order to get it compiled. Those situations are really nasty and have to be avoided whenever possible, but hacking around in system headers is no option. That's the reason why system headers have to come first. If there's need for a certain, fixed header order it's required to document that it's required and why. If it's not documented, another person might change the order in the believe that the header inclusion order doesn't matter... and it might work for the used platform, but now breaks it for another one.
+
+
+\paragraph{Slash Vs. Backslash}
+When including files, use slashes (/), not backslashes (\textbackslash). Meaning
+\begin{lstlisting}[caption=Slash Vs. Backslash - Right]
+#include <PLCore/String/String.h>
+\end{lstlisting}
+and not
+\begin{lstlisting}[caption=Slash Vs. Backslash - Wrong]
+#include <PLCore\String\String.h>
+\end{lstlisting}
+While \ac{MSVC} is accepting both versions, other compilers like \ac{GCC} only accept slashes (/) and are creating an error for the backslash (\textbackslash) version.
+
+
 
 \section{\emph{Header Guard} and \emph{\#pragma once}}
 Each header has to use definitions and \emph{\#pragma once} to prevent multiple inclusion - the last one is enough and the preferred way to go, but not each compiler does support it\footnote{\emph{\#pragma once} is a widely supported preprocessor directive, but non-standard}.
@@ -59,7 +84,7 @@ Below you can see the complete header layout. If a block is not required, do not
 //[-------------------------------------------------------]
 //[ Definitions                                           ]
 //[-------------------------------------------------------]
-<Definitions. Because they are namespace independent they are put in right here. You can also call them 'Macros', 'Macro definitions' and so on - but it has to be clear that this are '#define' things that are best avoided if possible!>
+<Definitions. Because they are namespace independent they are put in right here. You can also call them 'Macros', 'Macro definitions' and so on - but it has to be clear that this are '#define' things that are best avoided if possible.>
 
 
 //[-------------------------------------------------------]
@@ -83,7 +108,7 @@ namespace <Project name> {
 //[-------------------------------------------------------]
 //[ Global functions                                      ]
 //[-------------------------------------------------------]
-<Global functions - normally there's no reason to use those!>
+<Global functions - normally there's no reason to use those>
 
 
 //[-------------------------------------------------------]
@@ -111,7 +136,7 @@ namespace <Project name> {
 
 
 \section{\ac{OS} and \ac{API}}
-To be as platform and \ac{API} independent as possible, we keep the usage of \ac{OS} and \ac{API} headers - even so called \emph{standard headers} to a minimum. As a nice side effect, the compiler time becomes much shorter because this mentioned headers often come with an extreme overhead and we reduce unsolvable name conflicts - there are many headers out there using ton's of definitions that don't work with namespaces and introducing annoying name problems! A general rule for our PixelLight headers is to never ever include such headers in own public headers the application programmer will work with when it's possible to avoid this usage.
+To be as platform and \ac{API} independent as possible, we keep the usage of \ac{OS} and \ac{API} headers - even so called \emph{standard headers} to a minimum. As a nice side effect, the compiler time becomes much shorter because this mentioned headers often come with an extreme overhead and we reduce unsolvable name conflicts - there are many headers out there using ton's of definitions that don't work with namespaces and introducing annoying name problems. A general rule for our PixelLight headers is to never ever include such headers in own public headers the application programmer will work with when it's possible to avoid this usage.
 
 
 
@@ -131,9 +156,9 @@ Someone can now just throw in an include like:
 #include <PLCore/String/String.h>
 \end{lstlisting}
 
-But now, your header depends on another one and \emph{PLCore/String/String.h} is always processed if your header is used, even if the string class is never used! Even worse, if \emph{PLCore/String/String.h} is changed a lot of other codes need to be recompiled, if really required or not. Long compiler times are definitively not productive!
+But now, your header depends on another one and \emph{PLCore/String/String.h} is always processed if your header is used, even if the string class is never used. Even worse, if \emph{PLCore/String/String.h} is changed a lot of other codes need to be recompiled, if really required or not. Long compiler times are definitively not productive.
 
-Now someone may cry out \emph{Use cool precompiled headers!}, but this is no option for us to use additional stuff just to fix messy and not well profound headers. Keep it simple! We grab the problem on it's root by doing for example the following:
+Now someone may cry out \emph{"Use cool precompiled headers!"}, but this is no option for us to use additional stuff just to fix messy and not well profound headers. Keep it simple. We grab the problem on it's root by doing for example the following:
 
 \begin{lstlisting}[caption=Forward declaration]
 namespace PLCore {
@@ -145,7 +170,7 @@ namespace PLCore {
 
 
 \section{Completeness}
-Each header must provide all information the compiler needs to compile it! So, add includes or if possible the preferred \emph{forward declarations}.
+Each header must provide all information the compiler needs to compile it. So, add includes or if possible the preferred \emph{forward declarations}.
 
 
 
@@ -160,7 +185,7 @@ namespace PLCore {
 } // PLCore
 \end{lstlisting}
 
-It's not allowed to use \emph{using namespace} - this may introduce ugly name conflicts in other projects!
+It's not allowed to use \emph{using namespace} - this may introduce ugly name conflicts in other projects.
 
 
 
@@ -172,7 +197,7 @@ Whenever advisable, do only put one class into one header. The name of the heade
 
 
 \section{Template Implementations}
-When defining templates within a header, do not put it's implementation into the same file, too! Normally, templates are not really good readable, the implementation directly in the same file would not increase the readability! (maybe it would even scare of the reader :)
+When defining templates within a header, do not put it's implementation into the same file, too. Normally, templates are not really good readable, the implementation directly in the same file would not increase the readability. (maybe it would even scare of the reader :)
 
 Put the template implementation in special files with the same filename as the header, but with the file extension \emph{.inl}. Include this file at the bottom of the template header.
 
@@ -180,4 +205,4 @@ Put the template implementation in special files with the same filename as the h
 
 
 \section{Definitions}
-Do only use \emph{\#define} within a header if there's no other way to do it. Normally \emph{enum}, \emph{typedef} or something like \emph{static const int MyConstant} will also do the job and beside will respect namespaces!
+Do only use \emph{\#define} within a header if there's no other way to do it. Normally \emph{enum}, \emph{typedef} or something like \emph{static const int MyConstant} will also do the job and beside will respect namespaces.

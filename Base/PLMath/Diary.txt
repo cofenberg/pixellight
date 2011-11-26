@@ -1,4 +1,10 @@
-﻿>> 15.11.2011
+﻿>> 23.11.2011
+[CO]
+- Perlin noise cleanup
+
+
+
+>> 15.11.2011
 [CO]
 - Yesterday, Prof. Dr. Frank Deinzer mentioned in the weekly meeting of a research project at my university that he noticed that we're wrapping
   functions like "sin" and asked for the reason and whether or not this may introduce performance issues.

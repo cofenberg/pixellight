@@ -30,7 +30,8 @@
 //[-------------------------------------------------------]
 #include <PLCore/PLCore.h>
 #include "PLRendererOpenGL/PLRendererOpenGL.h"
-#ifdef LINUX
+#ifdef LINUX && !defined(APPLE)
+	// Required for "PFNGLXSWAPINTERVALSGIPROC" ("GLX_SGI_swap_control"-extension)
 	#include <X11/Xlib.h>
 	#include <X11/extensions/xf86vmode.h>
 #endif
@@ -45,7 +46,7 @@ namespace PLRendererOpenGL {
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class Renderer;
+class Context;
 
 
 //[-------------------------------------------------------]
@@ -81,10 +82,10 @@ class Extensions {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] cRenderer
-		*    Owner renderer
+		*  @param[in] cContext
+		*    Owner context
 		*/
-		Extensions(Renderer &cRenderer);
+		Extensions(Context &cContext);
 
 		/**
 		*  @brief
@@ -126,6 +127,7 @@ class Extensions {
 		bool IsGL_EXT_texture_filter_anisotropic() const;
 		bool IsGL_EXT_separate_specular_color() const;
 		bool IsGL_EXT_texture_edge_clamp() const;
+		bool IsGL_EXT_texture_array() const;
 		bool IsGL_EXT_texture_rectangle() const;
 		bool IsGL_EXT_texture3D() const;
 		bool IsGL_EXT_texture_cube_map() const;
@@ -275,7 +277,7 @@ class Extensions {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Renderer *m_pRenderer;				/**< Owner renderer, always valid! */
+		Context  *m_pContext;				/**< Owner context, always valid! */
 		bool 	  m_bInitialized;			/**< Are the extensions initialized? */
 		#ifdef APPLE
 			void *m_pOpenGLSharedLibrary;	/**< OpenGL shared library, can be a null pointer */
@@ -304,6 +306,7 @@ class Extensions {
 		bool m_bGL_EXT_texture_filter_anisotropic;
 		bool m_bGL_EXT_separate_specular_color;
 		bool m_bGL_EXT_texture_edge_clamp;
+		bool m_bGL_EXT_texture_array;
 		bool m_bGL_EXT_texture_rectangle;
 		bool m_bGL_EXT_texture3D;
 		bool m_bGL_EXT_texture_cube_map;

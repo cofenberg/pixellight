@@ -167,20 +167,20 @@ void Connection::SetReceiveMode(EReceiveMode nReceiveMode)
 
 /**
 *  @brief
-*    Receive data
+*    Receive data (blocking request)
 */
 int Connection::Receive(char *pBuffer, uint32 nSize)
 {
 	// Read data from socket
-	int nBytes = m_cSocket.Receive(pBuffer, nSize);
+	const int nBytes = m_cSocket.Receive(pBuffer, nSize);
 	if (nBytes > 0)
-		OnReceive(pBuffer, nSize);
+		OnReceive(pBuffer, nBytes);
 	return nBytes;
 }
 
 /**
 *  @brief
-*    Read line of text
+*    Read line of text (blocking request)
 */
 String Connection::ReadLine()
 {

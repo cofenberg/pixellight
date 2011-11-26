@@ -1,5 +1,5 @@
 \chapter{Documentation}
-Because the comments in the code are extremely important to work in an efficient way with the code the PixelLight code is well documented via comments etc. and completely in English. The interfaces etc. are documented using a style Doxygen\footnote{Doxygen can be downloaded from \url{http://www.doxygen.org/}} understands and therefore can create code documentations automatically. Further, we are using a comment style convention and order.
+Source code comments are extremely important in order to make it possible to work with the source code in an efficient way. Also, comments can be considered as a kind of bug uncover mechanism. If a source code doesn't match what the comment is describing, it's either a source code bug or a comment bug. In either way, this situation is suspicious and has to be reviewed. The PixelLight code is extensivly documented via comments and everything is in English. The interfaces are documented using a style Doxygen\footnote{Doxygen can be downloaded from \url{http://www.doxygen.org/}} understands and therefore can create code documentations automatically. Further, we are using a comment style convention and order.
 
 
 
@@ -11,7 +11,7 @@ At the top of the files you will find a short comment header:
 /*********************************************************\
  *  File: <filename>                                     *
  *    <Optional file comment if useful (not within the
- *    source like 'cpp'-files itself!)>
+ *    source like 'cpp'-files itself)>
 \*********************************************************/
 \end{lstlisting}
 
@@ -57,7 +57,7 @@ The \emph{@brief} part should consist of one phrase only. If you can't describe 
 
 
 \section{Tags}
-Within the code documentation we use multiple tags to \emph{mark} points within the code so we can find all marks simply by searching for the tags. Do also don't forget to write a comment to the tag even if you thing a comment would be useless there... especially then!
+Within the code documentation we use multiple tags to \emph{mark} points within the code so we can find all marks simply by searching for the tags. Do also don't forget to write a comment to the tag even if you thing a comment would be useless there... especially then.
 
 \begin{lstlisting}[caption=Comment tags]
 // [TODO] Here's still something that must be done

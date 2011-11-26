@@ -1,3 +1,36 @@
+>> 26.11.2011
+[CO]
+- As feared yesterday, my "Socket::GetNumOfWaitingBytes()"-method wasn't really correct. As mentioned, my network topic experience is near to zero and to be honest,
+  I don't have the time to get into it in detail because I already have to manage all other topics at once. Sadly, my day has only 24 hours - so, we have to rely on
+  teamwork to get everything done. That's why I'am totally happy that within the bug tracker there's response (ID: 3442166) pointing me into the right direction. :D
+  -> Renamed "Socket::GetNumOfWaitingBytes()" into "Socket::IsDataWaiting()"
+- Bugfix (ID: 3442054 - http://sourceforge.net/tracker/index.php?func=detail&aid=3442054&group_id=507544&atid=2063682 ): "PLCore::Connection::Receive()" called
+ "PLCore::Connection::OnReceive()" with the fixed buffer size, instead of with the number of received bytes
+    -> Also reviewed this class and checked whether or not the comments are detailed enough
+
+
+
+>> 25.11.2011
+[CO]
+- There's a first feature request at http://sourceforge.net/tracker/?group_id=507544&atid=2063685 "Socket::IsArrivalData() - ID: 3439371"
+  -> I waited several days to give other team members the option to handle the request, but I'am sure that it's no good idea to have such open minor feature
+     requests for several weeks...
+  -> Added "Socket::GetNumOfWaitingBytes()" returning the number of bytes waiting to be received (non-blocking request)
+  -> I have only a little bit of experience in network related topics, so, if I totally messed it up please tell me :D
+- "PLFrontendOS::FrontendAndroid()": It's now required to provide the constructor with a frontend context instance. This way, it's e.g. possible to tell
+  the frontend about the RTTI class name of the application to start.
+
+
+
+>> 24.11.2011
+[CO]
+- Bugfix: "PLCoreLinux.cpp": The implementation of "wcscasecmp" and "wcsncasecmp" was broken (Mac OS X or Android don't have such primitive "standard" functions)
+  -> "wcscasecmp": http://linux.die.net/man/3/wcscasecmp states
+     "The wcscasecmp() function returns zero if the wide-character strings at s1 and s2 are equal except for case distinctions. It returns a positive integer if s1
+      is greater than s2, ignoring case. It returns a negative integer if s1 is smaller than s2, ignoring case"
+
+
+
 >> 16.11.2011
 [CO]
 PLScriptBindings:

@@ -29,8 +29,8 @@ define_project(63PhysicsRagdoll NOSUFFIX)
 ## Source files
 ##################################################
 add_sources(
-	src/Application.cpp
 	src/Main.cpp
+	src/Application63.cpp
 )
 
 ##################################################

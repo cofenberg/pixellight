@@ -30,7 +30,7 @@ define_project(40ScriptHelloWorld NOSUFFIX)
 ##################################################
 add_sources(
 	src/Main.cpp
-	src/Application.cpp
+	src/Application40.cpp
 )
 
 ##################################################

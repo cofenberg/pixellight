@@ -64,7 +64,7 @@ int RunServer()
 	cServer.Listen(4000);
 
 	// Main loop
-	System::GetInstance()->GetConsole().Print("Press 'ESC' to exit the server");
+	System::GetInstance()->GetConsole().Print("Press 'ESC' to exit the server\n");
 	while (cServer.IsListening()) {
 		// Let the system some time to process other system tasks etc.
 		// If this isn't done the CPU usage is nearly up to 100%!
@@ -100,7 +100,7 @@ void RunClient()
 		String sMessage;
 
 		// Main loop
-		System::GetInstance()->GetConsole().Print("Input text to send and press 'Enter'\nPress 'ESC' to exit the client");
+		System::GetInstance()->GetConsole().Print("Input text to send and press 'Enter'\nPress 'ESC' to exit the client\n");
 		while (bActive) {
 			// Let the system some time to process other system tasks etc.
 			// If this isn't done the CPU usage is nearly up to 100%!
@@ -110,8 +110,8 @@ void RunClient()
 			if (pConnection->IsConnected()) {
 				// Check keys
 				if (System::GetInstance()->GetConsole().IsKeyHit()) {
-					// Get key
-					const int nCharacter = System::GetInstance()->GetConsole().GetCharacter();
+					// Get key and interpret it as character, not number
+					const wchar_t nCharacter = static_cast<wchar_t>(System::GetInstance()->GetConsole().GetCharacter());
 
 					// Quit
 					if (nCharacter == 27)
@@ -139,7 +139,7 @@ void RunClient()
 				}
 			} else {
 				// Connection broken...
-				System::GetInstance()->GetConsole().Print("Error: Connection to the server broken... press any key to exit");
+				System::GetInstance()->GetConsole().Print("Error: Connection to the server broken... press any key to exit\n");
 				bActive = false;
 
 				// Wait for the 'any key'
@@ -151,7 +151,7 @@ void RunClient()
 		pConnection->Disconnect();
 	} else {
 		// Error!
-		System::GetInstance()->GetConsole().Print("Error: Could not connect to server... press any key to exit");
+		System::GetInstance()->GetConsole().Print("Error: Could not connect to server... press any key to exit\n");
 
 		// Wait for the 'any key'
 		System::GetInstance()->GetConsole().GetCharacter();

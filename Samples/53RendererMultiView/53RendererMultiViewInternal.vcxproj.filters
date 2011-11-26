@@ -10,9 +10,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -43,11 +40,11 @@
     <ClCompile Include="..\51RendererTexturing\src\SPTexturing.cpp">
       <Filter>Extern</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application53.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Application.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\SPMultiView.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -92,6 +89,9 @@
     </ClInclude>
     <ClInclude Include="..\51RendererTexturing\src\SPTexturing.h">
       <Filter>Extern</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Application53.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

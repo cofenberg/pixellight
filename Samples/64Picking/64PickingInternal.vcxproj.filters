@@ -7,21 +7,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\MyPicking.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Application64.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Application.h">
+    <ClInclude Include="src\MyPicking.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\MyPicking.h">
+    <ClInclude Include="src\Application64.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

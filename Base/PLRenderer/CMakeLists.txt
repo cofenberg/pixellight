@@ -50,6 +50,7 @@ add_sources(
 	src/Renderer/TextureBuffer.cpp
 	src/Renderer/TextureBuffer1D.cpp
 	src/Renderer/TextureBuffer2D.cpp
+	src/Renderer/TextureBuffer2DArray.cpp
 	src/Renderer/TextureBufferRectangle.cpp
 	src/Renderer/TextureBuffer3D.cpp
 	src/Renderer/TextureBufferCube.cpp

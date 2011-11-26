@@ -28,6 +28,7 @@
 #endif
 #ifdef LINUX
 	#include <netdb.h>
+	#include <fcntl.h>	// For "fcntl()"
 	#include <unistd.h>
 	#include <arpa/inet.h>
 #endif
@@ -234,10 +235,59 @@ int Socket::Send(const char *pBuffer, uint32 nSize) const
 
 /**
 *  @brief
-*    Receives data
+*    Returns whether or not data is waiting to be received (non-blocking request)
+*/
+bool Socket::IsDataWaiting() const
+{
+	// Valid socket?
+	if (m_nSocket != INVALID_SOCKET) {
+		#ifdef WIN32
+			// Bring the socket into a non-blocking mode
+			u_long nNonBlocking = 1;
+			ioctlsocket(m_nSocket, FIONBIO, &nNonBlocking);
+
+			// Are any bytes waiting? (just look, don't touch)
+			// -> "recv" returns the number of bytes received and copied into the buffer (so, the upper limit is our buffer size)
+			char nBuffer = 0;
+			const int nNumOfBytes = recv(m_nSocket, &nBuffer, 1, MSG_PEEK);
+
+			// Bring the socket back into a blocking mode
+			nNonBlocking = 0;
+			ioctlsocket(m_nSocket, FIONBIO, &nNonBlocking);
+
+			// Return the number of bytes waiting to be received
+			return (nNumOfBytes > 0);
+		#else
+			// Get the currently set socket flags
+			const int nFlags = fcntl(m_nSocket, F_GETFL, 0);
+
+			// Are any bytes waiting? (just look, don't touch)
+			// -> "recv" returns the number of bytes received and copied into the buffer (so, the upper limit is our buffer size)
+			fcntl(m_nSocket, F_SETFL, nFlags | O_NONBLOCK);
+
+			// Get the number of waiting bytes (just look, don't touch)
+			char nBuffer = 0;
+			const int nNumOfBytes = recv(m_nSocket, &nBuffer, 1, MSG_PEEK);
+
+			// Bring the socket back into a blocking mode
+			fcntl(m_nSocket, F_SETFL, nFlags);
+
+			// Return the number of bytes waiting to be received
+			return (nNumOfBytes > 0);
+		#endif
+	}
+
+	// Error! No data is waiting to be received...
+	return false;
+}
+
+/**
+*  @brief
+*    Receives data (blocking request)
 */
 int Socket::Receive(char *pBuffer, uint32 nSize) const
 {
+	// "recv" returns the number of bytes received and copied into the buffer (so, the upper limit is our buffer size)
 	return ((pBuffer && m_nSocket != INVALID_SOCKET) ? recv(m_nSocket, pBuffer, nSize, 0) : -1);
 }
 

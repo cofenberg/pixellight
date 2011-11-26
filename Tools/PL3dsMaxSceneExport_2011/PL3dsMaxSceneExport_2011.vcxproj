@@ -79,16 +79,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.31118.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug_2011\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build/debug_2011\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build\debug_2011\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build\debug_2011\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug_2011_64\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build/debug_2011_64\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build\debug_2011_64\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build\debug_2011_64\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release_2011\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build/release_2011\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build\release_2011\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build\release_2011\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateManifest>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\build\release_2011_64\</OutDir>
@@ -147,20 +147,17 @@
     <Link>
       <AdditionalOptions>  %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStatD.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>./build/debug_2011/PL3dsMaxSceneExport_2011.dle</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>../../External/_Windows_x86_32/Max2011/lib/;../../Bin/Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libcp.lib;libci.lib;msvcirt.lib;libcmt.lib;libcmtd.lib;msvcrt.lib;LIBC.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>./build/debug_2011\PL3dsMaxSceneExport_2011.dle.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <BaseAddress>
       </BaseAddress>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention>
-      </DataExecutionPrevention>
-      <ImportLibrary>.\build\debug_2011\PL3dsMaxSceneExport_2011.lib</ImportLibrary>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
+      <OutputFile>$(OutDir)$(TargetName).dle</OutputFile>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -181,30 +178,28 @@
       <PrecompiledHeaderOutputFile>.\build\debug_2011_64/PL3dsMaxSceneExport_2011.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\build/debug_2011_64/</AssemblerListingLocation>
       <ObjectFileName>.\build/debug_2011_64/</ObjectFileName>
-      <ProgramDataBaseFileName>PL3dsMaxSceneExport_2011_64.dle.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>Default</CompileAs>
       <UseFullPaths>true</UseFullPaths>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <AdditionalOptions>  %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStatD.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>./build/debug_2011_64/PL3dsMaxSceneExport_2011.dle</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>../../External/_Windows_x86_64/Max2011/lib/;../../Bin/Lib/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libcp.lib;libci.lib;msvcirt.lib;libcmt.lib;libcmtd.lib;msvcrt.lib;LIBC.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>./build/debug_2011_64\PL3dsMaxSceneExport_2011.dle.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <BaseAddress>
       </BaseAddress>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention>
-      </DataExecutionPrevention>
-      <ImportLibrary>.\build\debug_2011_64\PL3dsMaxSceneExport_2011.lib</ImportLibrary>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
+      <OutputFile>$(OutDir)$(TargetName).dle</OutputFile>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -242,13 +237,11 @@
     <Link>
       <AdditionalOptions>   %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStat.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>./build/release_2011/PL3dsMaxSceneExport_2011.dle</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>../../External/_Windows_x86_32/Max2011/lib/;../../Bin/Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libcp.lib;libci.lib;msvcirt.lib;libcmt.lib;libcmtd.lib;msvcrtd.lib;LIBC.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
-      <ProgramDatabaseFile>./build/release_2011\PL3dsMaxSceneExport_2011.dle.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -257,8 +250,8 @@
       </BaseAddress>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>true</DataExecutionPrevention>
-      <ImportLibrary>.\build\release_2011\PL3dsMaxSceneExport_2011.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
+      <OutputFile>$(OutDir)$(TargetName).dle</OutputFile>
     </Link>
     <PostBuildEvent>
       <Command>copy "build\release_2011\PL3dsMaxSceneExport_2011.dle" ..\..\Bin\Tools\3dsMax\x86\
@@ -267,7 +260,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Full</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -286,20 +279,22 @@
       <PrecompiledHeaderOutputFile>.\build/release_2011_64/PL3dsMaxSceneExport_2011.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\build/release_2011_64/</AssemblerListingLocation>
       <ObjectFileName>.\build/release_2011_64/</ObjectFileName>
-      <ProgramDataBaseFileName>PL3dsMaxSceneExport_2011_64.dle.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <CompileAs>Default</CompileAs>
       <UseFullPaths>true</UseFullPaths>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <AdditionalOptions>/opt:lbr  %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStat.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>./build/release_2011_64/PL3dsMaxSceneExport_2011.dle</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>../../External/_Windows_x86_64/Max2011/lib/;../../Bin/Lib/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libcp.lib;libci.lib;msvcirt.lib;libcmt.lib;libcmtd.lib;msvcrtd.lib;LIBC.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ProgramDatabaseFile>./build/release_2011_64\PL3dsMaxSceneExport_2011_64.dle.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -307,10 +302,9 @@
       <BaseAddress>
       </BaseAddress>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <DataExecutionPrevention>
-      </DataExecutionPrevention>
-      <ImportLibrary>.\build\release_2011_64\PL3dsMaxSceneExport_2011.lib</ImportLibrary>
+      <DataExecutionPrevention>true</DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
+      <OutputFile>$(OutDir)$(TargetName).dle</OutputFile>
     </Link>
     <PostBuildEvent>
       <Command>copy "build\release_2011_64\PL3dsMaxSceneExport_2011.dle" ..\..\Bin\Tools\3dsMax\x64\
@@ -332,7 +326,6 @@
       <PrecompiledHeaderOutputFile>.\build/hybrid_2011/PL3dsMaxSceneExport_2011.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\build/hybrid_2011/</AssemblerListingLocation>
       <ObjectFileName>.\build/hybrid_2011/</ObjectFileName>
-      <ProgramDataBaseFileName>PL3dsMaxSceneExport_2011.dle.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
@@ -342,20 +335,18 @@
     <Link>
       <AdditionalOptions>  %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStat.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>./build/hybrid_2011/PL3dsMaxSceneExport_2011.dle</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>../../External/_Windows_x86_32/Max2011/lib/;../../Bin/Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libcp.lib;libci.lib;msvcirt.lib;libcmt.lib;libcmtd.lib;msvcrtd.lib;LIBC.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>./build/hybrid_2011\PL3dsMaxSceneExport_2011.dle.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <BaseAddress>
       </BaseAddress>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>.\build\hybrid_2011\PL3dsMaxSceneExport_2011.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
+      <OutputFile>$(OutDir)$(TargetName).dle</OutputFile>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -378,7 +369,6 @@
       </AssemblerOutput>
       <AssemblerListingLocation>.\build/hybrid_2011_64/</AssemblerListingLocation>
       <ObjectFileName>.\build/hybrid_2011_64/</ObjectFileName>
-      <ProgramDataBaseFileName>PL3dsMaxSceneExport_2011_64.dle.pdb</ProgramDataBaseFileName>
       <WarningLevel>Level3</WarningLevel>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -388,20 +378,18 @@
     <Link>
       <AdditionalOptions>  %(AdditionalOptions)</AdditionalOptions>
       <AdditionalDependencies>comctl32.lib;core.lib;maxutil.lib;bmm.lib;geom.lib;IGame.lib;PLCoreStat.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>./build/hybrid_2011_64/PL3dsMaxSceneExport_2011.dle</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <AdditionalLibraryDirectories>../../External/_Windows_x86_32/Max2011/lib/;../../Bin/Lib/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libcp.lib;libci.lib;msvcirt.lib;libcmt.lib;libcmtd.lib;msvcrtd.lib;LIBC.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <ProgramDatabaseFile>./build/hybrid_2011_64\PL3dsMaxSceneExport_2011.dle.pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
       <BaseAddress>
       </BaseAddress>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>.\build\hybrid_2011_64\PL3dsMaxSceneExport_2011.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
+      <OutputFile>$(OutDir)$(TargetName).dle</OutputFile>
     </Link>
     <PostBuildEvent>
       <Command>

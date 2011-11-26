@@ -319,6 +319,9 @@
     <ClCompile Include="src\Renderer\Backend\FontManagerBackend.cpp">
       <Filter>Renderer\Backend</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\TextureBuffer2DArray.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRenderer\PLRenderer.h">
@@ -623,6 +626,9 @@
     </ClInclude>
     <ClInclude Include="include\PLRenderer\Renderer\Backend\FontManagerBackend.h">
       <Filter>Renderer\Backend</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRenderer\Renderer\TextureBuffer2DArray.h">
+      <Filter>Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

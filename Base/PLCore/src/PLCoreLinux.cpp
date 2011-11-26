@@ -1146,7 +1146,7 @@ wchar_t *_wcslwr(wchar_t *s)
 			left = towlower(*s1++);
 			right = towlower(*s2++);
 		} while (left && left == right);
-		return (left == right);
+		return (left - right);
 	}
 
 	int wcsncasecmp(const wchar_t *s1, const wchar_t *s2, size_t n)
@@ -1159,7 +1159,7 @@ wchar_t *_wcslwr(wchar_t *s)
 				if (--n == 0)
 					return 0;
 			} while (left && left == right);
-			return (left == right);
+			return (left - right);
 		} else {
 			return 0;
 		}

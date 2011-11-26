@@ -27,6 +27,7 @@
 #include "PLRendererOpenGLES2/FragmentShaderGLSL.h"
 #include "PLRendererOpenGLES2/VertexShaderGLSL.h"
 #include "PLRendererOpenGLES2/Renderer.h"
+#include "PLRendererOpenGLES2/Extensions.h"
 #include "PLRendererOpenGLES2/ShaderToolsGLSL.h"
 #include "PLRendererOpenGLES2/ProgramAttributeGLSL.h"
 #include "PLRendererOpenGLES2/ProgramUniformGLSL.h"
@@ -253,7 +254,7 @@ void ProgramGLSL::BuildUniformInformation()
 						if (nOpenGLESUniformLocation != -1) {
 							// Is this a sampler uniform?
 							int nTextureUnit = -1;
-							if (nType == GL_SAMPLER_2D || nType == GL_SAMPLER_CUBE || nType == GL_SAMPLER_3D_OES) {
+							if (nType == GL_SAMPLER_2D || nType == GL_SAMPLER_2D_ARRAY_EXT || nType == GL_SAMPLER_CUBE || nType == GL_SAMPLER_3D_OES) {
 								// Assign the next free texture unit
 								nTextureUnit = nNextFreeTextureUnit;
 

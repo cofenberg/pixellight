@@ -219,7 +219,7 @@ const char *XmlBase::ReadName(const char *pszData, String &sName, EEncoding nEnc
 		while (pszData && *pszData && (IsAlphaNum(*pszData) || *pszData == '_' || *pszData == '-' || *pszData == '.' || *pszData == ':'))
 			++pszData;
 		if (pszData-pszStart > 0)
-			sName.Copy(pszStart, pszData-pszStart);
+			sName.Copy(pszStart, static_cast<int>(pszData-pszStart));
 		return pszData;
 	}
 	return nullptr;

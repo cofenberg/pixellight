@@ -136,7 +136,7 @@ void SPK_PLPointRendererFixedFunctions::render(const SPK::Group &group)
 			pFixedFunctions->SetVertexBuffer(m_pSPK_PLBuffer->GetVertexBuffer());
 
 			// Draw
-			GetPLRenderer().DrawPrimitives(Primitive::PointList, 0, group.getNbParticles());
+			GetPLRenderer().DrawPrimitives(Primitive::PointList, 0, static_cast<uint32>(group.getNbParticles()));
 		}
 	}
 }

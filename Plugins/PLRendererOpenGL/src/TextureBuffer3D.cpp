@@ -382,7 +382,6 @@ void TextureBuffer3D::BackupDeviceData(uint8 **ppBackup)
 		*ppBackup = new uint8[nTotalNumOfBytes];
 		if (*ppBackup) {
 			// Prepare for backup
-			glEnable(GL_TEXTURE_3D_EXT);
 			glBindTexture(GL_TEXTURE_3D_EXT, m_nOpenGLTexture);
 
 			// Backup

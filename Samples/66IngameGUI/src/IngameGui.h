@@ -34,7 +34,7 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class Application;
+class Application66;
 
 
 //[-------------------------------------------------------]
@@ -60,7 +60,7 @@ class IngameGui : public PLGui::Widget {
 		*  @param[in] pParent
 		*    Parent widget, can be a null pointer
 		*/
-		IngameGui(Application &cApplication, PLGui::Widget *pParent = nullptr);
+		IngameGui(Application66 &cApplication, PLGui::Widget *pParent = nullptr);
 
 
 	//[-------------------------------------------------------]
@@ -78,7 +78,7 @@ class IngameGui : public PLGui::Widget {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Application	*m_pApplication;	/**< Pointer to the owner application, always valid! */
+		Application66	*m_pApplication;	/**< Pointer to the owner application, always valid! */
 
 
 };

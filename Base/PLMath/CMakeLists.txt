@@ -49,6 +49,8 @@ add_sources(
 	src/Vector2i.cpp
 	src/Vector3i.cpp
 	src/PerlinNoise.cpp
+	src/PerlinNoiseTileable.cpp
+	src/PerlinNoiseTurbulence.cpp
 	src/PLMath.cpp
 	src/Sphere.cpp
 	src/Polygon.cpp

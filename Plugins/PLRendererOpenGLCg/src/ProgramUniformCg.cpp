@@ -32,6 +32,7 @@
 #include <PLRendererOpenGL/Renderer.h>
 #include <PLRendererOpenGL/TextureBuffer1D.h>
 #include <PLRendererOpenGL/TextureBuffer2D.h>
+#include <PLRendererOpenGL/TextureBuffer2DArray.h>
 #include <PLRendererOpenGL/TextureBufferRectangle.h>
 #include <PLRendererOpenGL/TextureBuffer3D.h>
 #include <PLRendererOpenGL/TextureBufferCube.h>
@@ -471,6 +472,10 @@ int ProgramUniformCg::Set(PLRenderer::TextureBuffer *pTextureBuffer)
 
 				case PLRenderer::Resource::TypeTextureBuffer2D:
 					nOpenGLTexture = static_cast<PLRendererOpenGL::TextureBuffer2D*>(pTextureBuffer)->GetOpenGLTexture();
+					break;
+
+				case PLRenderer::Resource::TypeTextureBuffer2DArray:
+					nOpenGLTexture = static_cast<PLRendererOpenGL::TextureBuffer2DArray*>(pTextureBuffer)->GetOpenGLTexture();
 					break;
 
 				case PLRenderer::Resource::TypeTextureBufferRectangle:

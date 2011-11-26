@@ -28,6 +28,9 @@
     <ClCompile Include="src\PLCore\Application\CoreApplication.cpp">
       <Filter>PLCore\Application</Filter>
     </ClCompile>
+    <ClCompile Include="src\PLCore\Container\Array.cpp">
+      <Filter>PLCore\Container</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\UnitTest++AddIns\RunAllTests.h">
@@ -58,6 +61,9 @@
     </Filter>
     <Filter Include="PLCore\Application">
       <UniqueIdentifier>{05cc65e3-5bf4-4597-ac8d-4810b1209365}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PLCore\Container">
+      <UniqueIdentifier>{262a4fd0-85d7-4d28-871e-8c732dbe0d0e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

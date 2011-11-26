@@ -292,7 +292,7 @@ void ProgramGLSL::BuildUniformInformation()
 						if (nOpenGLUniformLocation != -1) {
 							// Is this a sampler uniform?
 							int nTextureUnit = -1;
-							if (nType == GL_SAMPLER_1D_ARB || nType == GL_SAMPLER_2D_ARB || nType == GL_SAMPLER_3D_ARB || nType == GL_SAMPLER_CUBE_ARB ||
+							if (nType == GL_SAMPLER_1D_ARB || nType == GL_SAMPLER_2D_ARB || nType == GL_SAMPLER_2D_ARRAY_EXT || nType == GL_SAMPLER_3D_ARB || nType == GL_SAMPLER_CUBE_ARB ||
 								nType == GL_SAMPLER_1D_SHADOW_ARB || nType == GL_SAMPLER_2D_SHADOW_ARB || nType == GL_SAMPLER_2D_RECT_ARB || nType == GL_SAMPLER_2D_RECT_SHADOW_ARB) {
 								// Assign the next free texture unit
 								nTextureUnit = nNextFreeTextureUnit;

@@ -235,7 +235,7 @@ void SPK_PLQuadRendererShaders::render(const SPK::Group &group)
 				GetPLRenderer().SetIndexBuffer(pIndexBuffer);
 
 			// Draw
-			GetPLRenderer().DrawIndexedPrimitives(Primitive::TriangleList, 0, group.getNbParticles()*NumOfVerticesPerParticle-1, 0, group.getNbParticles()*NumOfIndicesPerParticle);
+			GetPLRenderer().DrawIndexedPrimitives(Primitive::TriangleList, 0, static_cast<uint32>(group.getNbParticles()*NumOfVerticesPerParticle-1), 0, static_cast<uint32>(group.getNbParticles()*NumOfIndicesPerParticle));
 		}
 	}
 }

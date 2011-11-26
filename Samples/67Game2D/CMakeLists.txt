@@ -30,7 +30,7 @@ define_project(67Game2D NOSUFFIX)
 ##################################################
 add_sources(
 	src/Main.cpp
-	src/Application.cpp
+	src/Application67.cpp
 	src/SRP2DGame.cpp
 	src/SNBomb.cpp
 	src/SNGun.cpp

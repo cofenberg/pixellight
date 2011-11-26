@@ -29,72 +29,136 @@ define_project(PLInstall NOSUFFIX)
 ## Include directories
 ##################################################
 add_include_directories(
-	${QT_INCLUDE_DIRS}
+	src
+	${CMAKE_SOURCE_DIR}/Base/PLCore/include
+
 	# We need the following to be able to include headers produced by uic in our code
 	# (CMAKE_CURRENT_BINARY_DIR holds a path to the build directory of the current project, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)
 	${CMAKE_CURRENT_BINARY_DIR}
-)
-
-##################################################
-## Include directories
-##################################################
-add_include_directories(
-	${CMAKE_BINARY_DIR}
+	${QT_INCLUDE_DIRS}
 )
 
 ##################################################
 ## Special Qt stuff (see http://www.qtcentre.org/wiki/index.php?title=Compiling_Qt4_apps_with_CMake for more information)
 ##################################################
 # Include files with Qt relevant information
+SET(INC_FILES
+	src/MainWindow.h
+)
 
-#SET(INC_FILES
-#)
+# Qt .ui files
 SET(UI_FILES
 	src/MainWindow.ui
 )
 
-# Run moc
-#QT4_WRAP_CPP(MOC_SRCS ${INC_FILES})
+# Qt .qrc files
+SET(QRC_FILES
+	res/qtresources.qrc
+)
 
-# Run ui
+# Run uic on .ui files
 QT4_WRAP_UI(UI_SRCS ${UI_FILES})
 
+# Run moc
+QT4_WRAP_CPP(MOC_SRCS ${INC_FILES})
+
+# Run rcc
+QT4_ADD_RESOURCES(QRC_SRCS ${QRC_FILES})
 
 ##################################################
 ## Source files
 ##################################################
 add_sources(
 	src/main.cpp
+	src/MainWindow.cpp
+	src/InstallerFunctions.cpp
+	${UI_SRCS}	# Add source produced by uic
+	${MOC_SRCS}	# Add source produced by moc
+	${QRC_SRCS}	# Add sources produced by rcc
+)
+
+##################################################
+## Library directories
+##################################################
+add_link_directories(
+	${PL_LIB_DIR}
 )
 
 ##################################################
 ## Additional libraries
 ##################################################
 add_libs(
-	${WIN32_STANDARD_LIBS}
+	PLCoreStat
 	${QT_LIBRARIES}
 )
+if(WIN32)
+	##################################################
+	## Win32
+	##################################################
+	add_libs(
+		${WIN32_STANDARD_LIBS}
+	)
+endif()
 
 ##################################################
 ## Preprocessor definitions
 ##################################################
 add_compile_defs(
-	${WIN32_COMPILE_DEFS}
+	PLCORE_STATIC
 )
+if(WIN32)
+	##################################################
+	## Win32
+	##################################################
+	add_compile_defs(
+		${WIN32_COMPILE_DEFS}
+	)
+elseif(LINUX)
+	##################################################
+	## Linux
+	##################################################
+	add_compile_defs(
+		${LINUX_COMPILE_DEFS}
+	)
+endif()
 
 ##################################################
 ## Compiler flags
 ##################################################
-add_compile_flags(
-	${WIN32_COMPILE_FLAGS}
-)
+if(WIN32)
+	##################################################
+	## MSVC Compiler
+	##################################################
+	add_compile_flags(
+		${WIN32_COMPILE_FLAGS}
+	)
+elseif(LINUX)
+	##################################################
+	## GCC Compiler
+	##################################################
+	add_compile_flags(
+		${LINUX_COMPILE_FLAGS}
+	)
+endif()
 
 ##################################################
 ## Linker flags
 ##################################################
-add_linker_flags(
-	${WIN32_LINKER_FLAGS}
-)
+if(WIN32)
+	##################################################
+	## MSVC Compiler
+	##################################################
+	add_linker_flags(
+		${WIN32_LINKER_FLAGS}
+	)
+elseif(LINUX)
+	##################################################
+	## GCC Compiler
+	##################################################
+	add_linker_flags(
+		${LINUX_LINKER_FLAGS}
+	)
+endif()
 
 ##################################################
 ## Build
@@ -104,8 +168,9 @@ build_executable(${CMAKETOOLS_CURRENT_TARGET} WIN32)
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET} External-Qt)
-add_dependencies(Tools ${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-Qt PLCoreStat)
+add_dependencies(Tools							${CMAKETOOLS_CURRENT_TARGET})
+
 ##################################################
 ## Post-Build
 ##################################################
@@ -114,3 +179,13 @@ add_dependencies(Tools ${CMAKETOOLS_CURRENT_TARGET})
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} ${PL_RUNTIME_BIN_DIR}
 )
+
+##################################################
+## Install
+##################################################
+
+# Executable
+# [TODO] Enable this when PLInstall is ready for the public PixelLight SDK
+#install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
+#	DESTINATION ${PL_INSTALL_RUNTIME_BIN}	COMPONENT Runtime
+#)

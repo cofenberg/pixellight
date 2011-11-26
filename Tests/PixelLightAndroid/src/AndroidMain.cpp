@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Frontend/FrontendContext.h>
 #include <PLFrontendOS/FrontendAndroid.h>
 
 
@@ -43,8 +44,12 @@ void android_main(struct android_app* state)
 	// Make sure glue isn't stripped
 	app_dummy();
 
+	// Setup the frontend context and tell it about the RTTI class name of the application to start
+	PLCore::FrontendContext cFrontendContext;
+	cFrontendContext.SetFrontendParameters("ApplicationClass=\"Application67\"");
+
 	// Create a frontend instance on the C runtime stack
-	PLFrontendOS::FrontendAndroid cFrontendAndroid(*state);
+	PLFrontendOS::FrontendAndroid cFrontendAndroid(cFrontendContext, *state);
 
 	// Finish the given activity
 	ANativeActivity_finish(state->activity);

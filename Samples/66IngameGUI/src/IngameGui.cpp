@@ -43,7 +43,7 @@ using namespace PLGui;
 *  @brief
 *    Constructor
 */
-IngameGui::IngameGui(Application &cApplication, Widget *pParent) : Widget(pParent),
+IngameGui::IngameGui(Application66 &cApplication, Widget *pParent) : Widget(pParent),
 	m_pApplication(&cApplication)
 {
 	// GuiLabel instance

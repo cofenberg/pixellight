@@ -47,7 +47,7 @@ namespace PLRendererOpenGL {
 *  @brief
 *    Constructor
 */
-ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialiasingSamples) : Context(cRenderer),
+ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialiasingSamples) : Context(),
 	m_pRenderer(&cRenderer),
 	m_hDummyWindow(nullptr),
 	m_hDummyWindowDeviceContext(nullptr),
@@ -66,6 +66,10 @@ ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialias
 	sWindowDummyClass.cbWndExtra	= 0;
 	sWindowDummyClass.hbrBackground	= nullptr;
 	RegisterClass(&sWindowDummyClass);
+
+	// On MS Windows there's a chicken-and-the-egg problem: In order to be able to use wglGetProcAddress which we need
+	// in order to create our proper OpenGL context, we need to have an active OpenGL context so wglGetProcAddress is working...
+	// As a result, the following will look overcomplicated, because it is.
 
 	// Create the OpenGL dummy window
 	m_hDummyWindow = CreateWindow(TEXT("PLOpenGLDummyNativeWindow"), TEXT("PFormat"), WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, 0, 0, 8, 8, HWND_DESKTOP, nullptr, GetModuleHandle(nullptr), nullptr);
@@ -199,6 +203,9 @@ ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialias
 									if (m_hDummyWindowRenderContext != nullptr) {
 										// Make the OpenGL render context to the current one
 										MakeDummyCurrent();
+
+										// Initialize the OpenGL extensions
+										GetExtensions().Init();
 									}
 								}
 							}

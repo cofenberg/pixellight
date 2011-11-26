@@ -1,6 +1,5 @@
 /*********************************************************\
  *  File: PerlinNoise.h                                  *
- *      Perlin noise tool functions
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -39,23 +38,32 @@ namespace PLMath {
 
 
 //[-------------------------------------------------------]
-//[ Functions                                             ]
+//[ Classes                                               ]
 //[-------------------------------------------------------]
-PLMATH_API void PLInitPerlin();
+/**
+*  @brief
+*    Static class containing the original noise implementation from Ken Perlin
+*
+*  @remarks
+*    Coherent noise function over 1, 2 or 3 dimensions
+*    (copyright Ken Perlin)
+*
+*  @see
+*    - http://cs.nyu.edu/~perlin/doc/oscar.html#noise
+*/
+class PerlinNoise {
 
-PLMATH_API float PLNoise1(float fX);
-PLMATH_API float PLNoise2(float fX, float fY);
-PLMATH_API float PLNoise3(float fX, float fY, float fZ);
 
-PLMATH_API float PLTurbulence2(float fX, float fY, float fFreq);
-PLMATH_API float PLTurbulence3(float fX, float fY, float fZ, float fFreq);
+	//[-------------------------------------------------------]
+	//[ Public static functions                               ]
+	//[-------------------------------------------------------]
+	public:
+		static PLMATH_API double Noise1(double arg);
+		static PLMATH_API double Noise2(const double vec[2]);
+		static PLMATH_API double Noise3(const double vec[3]);
 
-PLMATH_API float PLTileableNoise1(float fX, float fW);
-PLMATH_API float PLTileableNoise2(float fX, float fY, float fW, float fH);
-PLMATH_API float PLTileableNoise3(float fX, float fY, float fZ, float fW, float fH, float fD);
 
-PLMATH_API float PLTileableTurbulence2(float fX, float fY, float fW, float fH, float fFreq);
-PLMATH_API float PLTileableTurbulence3(float fX, float fY, float fZ, float fW, float fH, float fD, float fFreq);
+};
 
 
 //[-------------------------------------------------------]

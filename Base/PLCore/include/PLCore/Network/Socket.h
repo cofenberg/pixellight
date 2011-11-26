@@ -231,7 +231,16 @@ class Socket {
 
 		/**
 		*  @brief
-		*    Receives data
+		*    Returns whether or not data is waiting to be received (non-blocking request)
+		*
+		*  @return
+		*    'true' if data is waiting to be received, else 'false'
+		*/
+		PLCORE_API bool IsDataWaiting() const;
+
+		/**
+		*  @brief
+		*    Receives data (blocking request)
 		*
 		*  @param[out] pBuffer
 		*    Buffer that receives the data, if a null pointer, nothing can be received
@@ -243,7 +252,9 @@ class Socket {
 		*
 		*  @note
 		*    - If there is currently not enough data available, this function will read as much
-		*      as possible, meaning that less data can be read than requested.
+		*      as possible, meaning that less data can be read than requested
+		*    - If more data is waiting to be received as the given buffer is able to store,
+		*      you have to call this method multiple times in order to gather all waiting data
 		*/
 		PLCORE_API int Receive(char *pBuffer, uint32 nSize) const;
 

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SPTexturingShaders.cpp                          *
+ *  File: SPTexturingShaders.cpp                         *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *

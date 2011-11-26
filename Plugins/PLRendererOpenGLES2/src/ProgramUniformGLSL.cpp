@@ -30,7 +30,10 @@
 #include <PLGraphics/Color/Color3.h>
 #include <PLGraphics/Color/Color4.h>
 #include "PLRendererOpenGLES2/Renderer.h"
+#include "PLRendererOpenGLES2/Extensions.h"
 #include "PLRendererOpenGLES2/TextureBuffer2D.h"
+#include "PLRendererOpenGLES2/TextureBuffer2DArray.h"
+#include "PLRendererOpenGLES2/TextureBuffer3D.h"
 #include "PLRendererOpenGLES2/TextureBufferCube.h"
 #include "PLRendererOpenGLES2/ProgramUniformGLSL.h"
 
@@ -459,9 +462,14 @@ int ProgramUniformGLSL::Set(PLRenderer::TextureBuffer *pTextureBuffer)
 					nOpenGLESTextureTarget = GL_TEXTURE_2D;
 					break;
 
+				case PLRenderer::Resource::TypeTextureBuffer2DArray:
+					nOpenGLESTexture = static_cast<TextureBuffer2DArray*>(pTextureBuffer)->GetOpenGLESTexture();
+					nOpenGLESTextureTarget = GL_TEXTURE_2D_ARRAY_EXT;
+					break;
+
 				case PLRenderer::Resource::TypeTextureBuffer3D:
-					// [TODO]
-	//				nOpenGLESTexture =  static_cast<TextureBuffer3D*>(pTextureBuffer)->GetOpenGLESTexture();
+					nOpenGLESTexture =  static_cast<TextureBuffer3D*>(pTextureBuffer)->GetOpenGLESTexture();
+					nOpenGLESTextureTarget = GL_TEXTURE_3D_OES;
 					break;
 
 				case PLRenderer::Resource::TypeTextureBufferCube:

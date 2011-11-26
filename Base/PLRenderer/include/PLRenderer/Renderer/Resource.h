@@ -75,15 +75,16 @@ class Resource {
 			TypeUniformBuffer          =  2,	/**< Uniform buffer (UBO) */
 			TypeTextureBuffer1D        =  3,	/**< 1D texture buffer */
 			TypeTextureBuffer2D        =  4,	/**< 2D texture buffer */
-			TypeTextureBufferRectangle =  5,	/**< Rectangle texture buffer */
-			TypeTextureBuffer3D        =  6,	/**< 3D texture buffer */
-			TypeTextureBufferCube      =  7,	/**< Cube texture buffer */
-			TypeOcclusionQuery         =  8,	/**< Occlusion query */
-			TypeVertexShader           =  9,	/**< Vertex shader */
-			TypeGeometryShader         = 10,	/**< Geometry shader */
-			TypeFragmentShader         = 11,	/**< Fragment shader */
-			TypeProgram                = 12,	/**< Program */
-			TypeFont                   = 13		/**< Font */
+			TypeTextureBuffer2DArray   =  5,	/**< 2D array texture buffer (kind of 3D texture, but without filtering between the depth layers) */
+			TypeTextureBufferRectangle =  6,	/**< Rectangle texture buffer */
+			TypeTextureBuffer3D        =  7,	/**< 3D texture buffer */
+			TypeTextureBufferCube      =  8,	/**< Cube texture buffer */
+			TypeOcclusionQuery         =  9,	/**< Occlusion query */
+			TypeVertexShader           = 10,	/**< Vertex shader */
+			TypeGeometryShader         = 11,	/**< Geometry shader */
+			TypeFragmentShader         = 12,	/**< Fragment shader */
+			TypeProgram                = 13,	/**< Program */
+			TypeFont                   = 14		/**< Font */
 		};
 
 

@@ -30,7 +30,7 @@ define_project(52RendererMesh NOSUFFIX)
 ##################################################
 add_sources(
 	src/Main.cpp
-	src/Application.cpp
+	src/Application52.cpp
 	src/SPMesh.cpp
 	src/SPMeshShaders.cpp
 	src/SPMeshFixedFunctions.cpp

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SPTexturingFixedFunctions.h                     *
+ *  File: SPTexturingFixedFunctions.h                    *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *

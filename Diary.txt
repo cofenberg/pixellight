@@ -2,9 +2,27 @@
  *  General diary for anything non directly per project related
 \*********************************************************/
 
+
+
+>> 24.11.2011
+[CO]
+- PLInstall: Updated "CMakeLists.txt" in order to make it work
+- MS Windows 64 bit: It's now possible to build PixelLight also using CMake for this target (building an installable SDK is not tested, yet)
+
+
+
+>> 22.11.2011
+[CO]
+- Visual Studio project settings: Fixed "warning MSB8012: TargetName does not match the Linker's OutputFile property value" by
+  removing the "OutputFile" setting, removed also the "ImportLibrary" setting (the default values are just fine)
+
+
+
 >> 14.11.2011
 [TM]
 - PLInstall: Updated the installer. This includes an new Qt Gui and some changes in the PLCore runtime backend.
+
+
 
 >> 01.11.2011
 [CO]

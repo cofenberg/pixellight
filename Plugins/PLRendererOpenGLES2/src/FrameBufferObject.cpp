@@ -27,6 +27,7 @@
 #include "PLRendererOpenGLES2/Renderer.h"
 #include "PLRendererOpenGLES2/Extensions.h"
 #include "PLRendererOpenGLES2/TextureBuffer2D.h"
+#include "PLRendererOpenGLES2/TextureBuffer2DArray.h"
 #include "PLRendererOpenGLES2/TextureBuffer3D.h"
 #include "PLRendererOpenGLES2/TextureBufferCube.h"
 #include "PLRendererOpenGLES2/FrameBufferObject.h"
@@ -210,6 +211,11 @@ void FrameBufferObject::SwitchTarget(PLRenderer::TextureBuffer &cTextureBuffer, 
 			case PLRenderer::Resource::TypeTextureBuffer2D:
 				nTarget = GL_TEXTURE_2D;
 				nOpenGLID = static_cast<TextureBuffer2D&>(cTextureBuffer).GetOpenGLESTexture();
+				break;
+
+			case PLRenderer::Resource::TypeTextureBuffer2DArray:
+				nTarget = GL_TEXTURE_2D_ARRAY_EXT;
+				nOpenGLID = static_cast<TextureBuffer2DArray&>(cTextureBuffer).GetOpenGLESTexture();
 				break;
 
 			case PLRenderer::Resource::TypeTextureBuffer3D:

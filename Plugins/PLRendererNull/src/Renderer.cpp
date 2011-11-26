@@ -32,6 +32,7 @@
 #include "PLRendererNull/SurfaceTextureBuffer.h"
 #include "PLRendererNull/TextureBuffer1D.h"
 #include "PLRendererNull/TextureBuffer2D.h"
+#include "PLRendererNull/TextureBuffer2DArray.h"
 #include "PLRendererNull/TextureBufferRectangle.h"
 #include "PLRendererNull/TextureBuffer3D.h"
 #include "PLRendererNull/TextureBufferCube.h"
@@ -180,6 +181,10 @@ void Renderer::SetupCapabilities()
 	// Non power of two texture buffers supported?
 	m_sCapabilities.bTextureBufferNonPowerOfTwo = true;
 
+	// 2D array texture buffer support
+	m_sCapabilities.bTextureBuffer2DArray          = true;
+	m_sCapabilities.nMaxTextureBuffer2DArrayLayers = 512;
+
 	// Rectangle texture buffers supported?
 	m_sCapabilities.bTextureBufferRectangle = true;
 
@@ -187,13 +192,13 @@ void Renderer::SetupCapabilities()
 	m_sCapabilities.nMaxRectangleTextureBufferSize = 4096;
 
 	// 3D texture buffers supported?
-	m_sCapabilities.bTextureBuffer3D = 1;
+	m_sCapabilities.bTextureBuffer3D = true;
 
 	// Maximum 3D texture buffer size
 	m_sCapabilities.nMax3DTextureBufferSize = 512;
 
 	// Cube texture buffers supported?
-	m_sCapabilities.bTextureBufferCube = 1;
+	m_sCapabilities.bTextureBufferCube = true;
 
 	// Maximum cube texture buffer size
 	m_sCapabilities.nMaxCubeTextureBufferSize = 2048;
@@ -371,6 +376,16 @@ PLRenderer::TextureBuffer2D *Renderer::CreateTextureBuffer2D(Image &cImage, PLRe
 
 	// Create the null 2D texture buffer
 	return new TextureBuffer2D(*this, cImage, nInternalFormat, nFlags);
+}
+
+PLRenderer::TextureBuffer2DArray *Renderer::CreateTextureBuffer2DArray(Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)
+{
+	// Check texture buffer
+	if (!CheckTextureBuffer2DArray(cImage, nInternalFormat))
+		return nullptr; // Error!
+
+	// Create the null 2D array texture buffer
+	return new TextureBuffer2DArray(*this, cImage, nInternalFormat, nFlags);
 }
 
 PLRenderer::TextureBuffer *Renderer::CreateTextureBufferRectangle(Image &cImage, PLRenderer::TextureBuffer::EPixelFormat nInternalFormat, uint32 nFlags)

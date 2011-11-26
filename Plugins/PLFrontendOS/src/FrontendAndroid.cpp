@@ -29,6 +29,7 @@
 #include <PLCore/System/System.h>
 #include <PLCore/System/SystemAndroid.h>
 #include <PLCore/Frontend/Frontend.h>
+#include <PLCore/Frontend/FrontendContext.h>
 #include "PLFrontendOS/FrontendAndroid.h"
 
 
@@ -52,9 +53,9 @@ pl_implement_class(FrontendAndroid)
 *  @brief
 *    Constructor
 */
-FrontendAndroid::FrontendAndroid(struct android_app &cAndroidApp) :
+FrontendAndroid::FrontendAndroid(const FrontendContext &cFrontendContext, struct android_app &cAndroidApp) :
 	m_pAndroidApp(&cAndroidApp),
-	m_cFrontend(m_cFrontendContext, *this),
+	m_cFrontend(cFrontendContext, *this),
 	m_bQuit(false),
 	m_nTimeToWait(0),
 	m_bAnimating(true),
@@ -73,9 +74,9 @@ FrontendAndroid::FrontendAndroid(struct android_app &cAndroidApp) :
 	PL_LOG(Info, String("Using Android SDK version ") + AConfiguration_getSdkVersion(cAndroidApp.config))
 
 	// Configurate the given native Android application instance
-    cAndroidApp.userData     = this;
-    cAndroidApp.onAppCmd     = onAppCmd;
-    cAndroidApp.onInputEvent = onInputEvent;
+	cAndroidApp.userData     = this;
+	cAndroidApp.onAppCmd     = onAppCmd;
+	cAndroidApp.onInputEvent = onInputEvent;
 
 	// Tell PixelLight about the Android asset manager (this is required in order to be able to load files from the apk)
 	SystemAndroid::SetAssetManager(cAndroidApp.activity->assetManager);
@@ -86,13 +87,21 @@ FrontendAndroid::FrontendAndroid(struct android_app &cAndroidApp) :
 	// Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
 	Runtime::ScanDirectoryPluginsAndData();
 
+	// Set parameters for the frontend RTTI class
+	if (cFrontendContext.GetFrontendParameters().GetLength())
+		m_cFrontend.SetValues(cFrontendContext.GetFrontendParameters());
+
+	// Set parameters for the frontend implementation RTTI class
+	if (cFrontendContext.GetFrontendImplementationParameters().GetLength())
+		SetValues(cFrontendContext.GetFrontendImplementationParameters());
+
 	// Do the frontend life cycle thing - let the world know that we have been created
 	OnCreate();
 
 	// Dummy command line arguments
 	const String sExecutableFilename;
 	const Array<String> lstArguments;
-	
+
 	// Let the world know that this frontend is now going to run
 	OnRun(sExecutableFilename, lstArguments);
 
@@ -120,8 +129,8 @@ FrontendAndroid::~FrontendAndroid()
 */
 void FrontendAndroid::onAppCmd(struct android_app* app, int32_t cmd)
 {
-    FrontendAndroid *pFrontendAndroid = static_cast<FrontendAndroid*>(app->userData);
-    switch (cmd) {
+	FrontendAndroid *pFrontendAndroid = static_cast<FrontendAndroid*>(app->userData);
+	switch (cmd) {
 		// Command from main thread: the AInputQueue has changed. Upon processing
 		// this command, android_app->inputQueue will be updated to the new queue (or nullptr).
 		case APP_CMD_INPUT_CHANGED:
@@ -148,7 +157,6 @@ void FrontendAndroid::onAppCmd(struct android_app* app, int32_t cmd)
 			// Do the frontend life cycle thing - de-initialize
 			pFrontendAndroid->OnPause();
 			pFrontendAndroid->OnStop();
-			
 			break;
 
 		// Command from main thread: the current ANativeWindow has been resized.
@@ -246,7 +254,7 @@ void FrontendAndroid::onAppCmd(struct android_app* app, int32_t cmd)
 			// [DEBUG]
 			PL_LOG(Debug, "! APP_CMD_DESTROY")
 			break;
-    }
+	}
 }
 
 // [HACK] There's going something funny on in the NDK:
@@ -257,88 +265,88 @@ void FrontendAndroid::onAppCmd(struct android_app* app, int32_t cmd)
 // The following code is using jni to show/hide the soft keyboard.
 // Source: http://stackoverflow.com/questions/5864790/how-to-show-the-soft-keyboard-on-native-activity
 void displayKeyboard(ANativeActivity* activity, bool pShow) {
-    // Attaches the current thread to the JVM.
-    jint lResult;
-    jint lFlags = 0;
+	// Attaches the current thread to the JVM.
+	jint lResult;
+	jint lFlags = 0;
 
-    JavaVM* lJavaVM = activity->vm;
-    JNIEnv* lJNIEnv = activity->env;
+	JavaVM* lJavaVM = activity->vm;
+	JNIEnv* lJNIEnv = activity->env;
 
-    JavaVMAttachArgs lJavaVMAttachArgs;
-    lJavaVMAttachArgs.version = JNI_VERSION_1_6;
-    lJavaVMAttachArgs.name = "NativeThread";
-    lJavaVMAttachArgs.group = nullptr;
+	JavaVMAttachArgs lJavaVMAttachArgs;
+	lJavaVMAttachArgs.version = JNI_VERSION_1_6;
+	lJavaVMAttachArgs.name = "NativeThread";
+	lJavaVMAttachArgs.group = nullptr;
 
-    lResult=lJavaVM->AttachCurrentThread(&lJNIEnv, &lJavaVMAttachArgs);
-    if (lResult == JNI_ERR) {
-        return;
-    }
+	lResult=lJavaVM->AttachCurrentThread(&lJNIEnv, &lJavaVMAttachArgs);
+	if (lResult == JNI_ERR) {
+		return;
+	}
 
-    // Retrieves NativeActivity.
-    jobject lNativeActivity = activity->clazz;
-    jclass ClassNativeActivity = lJNIEnv->GetObjectClass(lNativeActivity);
+	// Retrieves NativeActivity.
+	jobject lNativeActivity = activity->clazz;
+	jclass ClassNativeActivity = lJNIEnv->GetObjectClass(lNativeActivity);
 
-    // Retrieves Context.INPUT_METHOD_SERVICE.
-    jclass ClassContext = lJNIEnv->FindClass("android/content/Context");
-    jfieldID FieldINPUT_METHOD_SERVICE =
-        lJNIEnv->GetStaticFieldID(ClassContext,
-            "INPUT_METHOD_SERVICE", "Ljava/lang/String;");
-    jobject INPUT_METHOD_SERVICE =
-        lJNIEnv->GetStaticObjectField(ClassContext,
-            FieldINPUT_METHOD_SERVICE);
-    //jniCheck(INPUT_METHOD_SERVICE);
+	// Retrieves Context.INPUT_METHOD_SERVICE.
+	jclass ClassContext = lJNIEnv->FindClass("android/content/Context");
+	jfieldID FieldINPUT_METHOD_SERVICE =
+		lJNIEnv->GetStaticFieldID(ClassContext,
+			"INPUT_METHOD_SERVICE", "Ljava/lang/String;");
+	jobject INPUT_METHOD_SERVICE =
+		lJNIEnv->GetStaticObjectField(ClassContext,
+			FieldINPUT_METHOD_SERVICE);
+	//jniCheck(INPUT_METHOD_SERVICE);
 
-    // Runs getSystemService(Context.INPUT_METHOD_SERVICE).
-    jclass ClassInputMethodManager = lJNIEnv->FindClass(
-        "android/view/inputmethod/InputMethodManager");
-    jmethodID MethodGetSystemService = lJNIEnv->GetMethodID(
-        ClassNativeActivity, "getSystemService",
-        "(Ljava/lang/String;)Ljava/lang/Object;");
-    jobject lInputMethodManager = lJNIEnv->CallObjectMethod(
-        lNativeActivity, MethodGetSystemService,
-        INPUT_METHOD_SERVICE);
+	// Runs getSystemService(Context.INPUT_METHOD_SERVICE).
+	jclass ClassInputMethodManager = lJNIEnv->FindClass(
+		"android/view/inputmethod/InputMethodManager");
+	jmethodID MethodGetSystemService = lJNIEnv->GetMethodID(
+		ClassNativeActivity, "getSystemService",
+		"(Ljava/lang/String;)Ljava/lang/Object;");
+	jobject lInputMethodManager = lJNIEnv->CallObjectMethod(
+		lNativeActivity, MethodGetSystemService,
+		INPUT_METHOD_SERVICE);
 
-    // Runs getWindow().getDecorView().
-    jmethodID MethodGetWindow = lJNIEnv->GetMethodID(
-        ClassNativeActivity, "getWindow",
-        "()Landroid/view/Window;");
-    jobject lWindow = lJNIEnv->CallObjectMethod(lNativeActivity,
-        MethodGetWindow);
-    jclass ClassWindow = lJNIEnv->FindClass(
-        "android/view/Window");
-    jmethodID MethodGetDecorView = lJNIEnv->GetMethodID(
-        ClassWindow, "getDecorView", "()Landroid/view/View;");
-    jobject lDecorView = lJNIEnv->CallObjectMethod(lWindow,
-        MethodGetDecorView);
+	// Runs getWindow().getDecorView().
+	jmethodID MethodGetWindow = lJNIEnv->GetMethodID(
+		ClassNativeActivity, "getWindow",
+		"()Landroid/view/Window;");
+	jobject lWindow = lJNIEnv->CallObjectMethod(lNativeActivity,
+		MethodGetWindow);
+	jclass ClassWindow = lJNIEnv->FindClass(
+		"android/view/Window");
+	jmethodID MethodGetDecorView = lJNIEnv->GetMethodID(
+		ClassWindow, "getDecorView", "()Landroid/view/View;");
+	jobject lDecorView = lJNIEnv->CallObjectMethod(lWindow,
+		MethodGetDecorView);
 
-    if (pShow) {
-        // Runs lInputMethodManager.showSoftInput(...).
-        jmethodID MethodShowSoftInput = lJNIEnv->GetMethodID(
-            ClassInputMethodManager, "showSoftInput",
-            "(Landroid/view/View;I)Z");
-        jboolean lResult = lJNIEnv->CallBooleanMethod(
-            lInputMethodManager, MethodShowSoftInput,
-            lDecorView, lFlags);
-    } else {
-        // Runs lWindow.getViewToken()
-        jclass ClassView = lJNIEnv->FindClass(
-            "android/view/View");
-        jmethodID MethodGetWindowToken = lJNIEnv->GetMethodID(
-            ClassView, "getWindowToken", "()Landroid/os/IBinder;");
-        jobject lBinder = lJNIEnv->CallObjectMethod(lDecorView,
-            MethodGetWindowToken);
+	if (pShow) {
+		// Runs lInputMethodManager.showSoftInput(...).
+		jmethodID MethodShowSoftInput = lJNIEnv->GetMethodID(
+			ClassInputMethodManager, "showSoftInput",
+			"(Landroid/view/View;I)Z");
+		jboolean lResult = lJNIEnv->CallBooleanMethod(
+			lInputMethodManager, MethodShowSoftInput,
+			lDecorView, lFlags);
+	} else {
+		// Runs lWindow.getViewToken()
+		jclass ClassView = lJNIEnv->FindClass(
+			"android/view/View");
+		jmethodID MethodGetWindowToken = lJNIEnv->GetMethodID(
+			ClassView, "getWindowToken", "()Landroid/os/IBinder;");
+		jobject lBinder = lJNIEnv->CallObjectMethod(lDecorView,
+			MethodGetWindowToken);
 
-        // lInputMethodManager.hideSoftInput(...).
-        jmethodID MethodHideSoftInput = lJNIEnv->GetMethodID(
-            ClassInputMethodManager, "hideSoftInputFromWindow",
-            "(Landroid/os/IBinder;I)Z");
-        jboolean lRes = lJNIEnv->CallBooleanMethod(
-            lInputMethodManager, MethodHideSoftInput,
-            lBinder, lFlags);
-    }
+		// lInputMethodManager.hideSoftInput(...).
+		jmethodID MethodHideSoftInput = lJNIEnv->GetMethodID(
+			ClassInputMethodManager, "hideSoftInputFromWindow",
+			"(Landroid/os/IBinder;I)Z");
+		jboolean lRes = lJNIEnv->CallBooleanMethod(
+			lInputMethodManager, MethodHideSoftInput,
+			lBinder, lFlags);
+	}
 
-    // Finished with the JVM.
-    lJavaVM->DetachCurrentThread();
+	// Finished with the JVM.
+	lJavaVM->DetachCurrentThread();
 }
 
 /**

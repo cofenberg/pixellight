@@ -31,7 +31,7 @@ void MyMobileTestReporter::ReportTestStart(UnitTest::TestDetails const& test)
 }
 void MyMobileTestReporter::ReportFailure(UnitTest::TestDetails const& test, char const* failure)
 {
-	System::GetInstance()->GetConsole().Print(String("*!Failed: ") + test.suiteName + "/" + test.testName + "at line " + test.lineNumber + "\n\t*!Msg   : " + failure + "\n");
+	System::GetInstance()->GetConsole().Print(String("*!Failed: ") + test.suiteName + "/" + test.testName + " at line " + test.lineNumber + "\n\t*!Msg   : " + failure + "\n\n");
 }
 void MyMobileTestReporter::ReportTestFinish(UnitTest::TestDetails const& test, float secondsElapsed)
 {
