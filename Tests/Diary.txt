@@ -1,3 +1,23 @@
+>> 30.11.2011
+[JS]
+PLUnitTests:
+- added a general function to test derived functions of some containers
+- refactored Array tests to use this general function
+- fixed Array tests after some changes to Array class
+- added containers List, Pool with general container function test
+- fixed some compiler warnings (tokens after #endif directive, linux compiler)
+
+
+
+>> 25.11.2011
+[JS]
+PLUnitTests:
+- changed SetName()-test in CoreApplication to test the name based on current configuration
+- added tests for Array
+- changed some console output of mobile reporter
+
+
+
 >> 14.11.2011
 [JS]
 PLUnitTests:

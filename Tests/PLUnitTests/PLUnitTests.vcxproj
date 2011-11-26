@@ -29,6 +29,9 @@
     <ClCompile Include="src\PLCore\Application\ApplicationContext.cpp" />
     <ClCompile Include="src\PLCore\Application\CoreApplication.cpp" />
     <ClCompile Include="src\PLCore\Container\Array.cpp" />
+    <ClCompile Include="src\PLCore\Container\List.cpp" />
+    <ClCompile Include="src\PLCore\Container\ContainerFunctions.h" />
+    <ClCompile Include="src\PLCore\Container\Pool.cpp" />
     <ClCompile Include="src\PLCore\String.cpp" />
     <ClCompile Include="src\PLMath\Vector3.cpp" />
     <ClCompile Include="src\UnitTest++AddIns\MyMobileTestReporter.cpp" />
@@ -140,6 +143,8 @@
       <DataExecutionPrevention>true</DataExecutionPrevention>
       <TargetMachine>MachineX86</TargetMachine>
       <IgnoreSpecificDefaultLibraries>MSVCRT</IgnoreSpecificDefaultLibraries>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug_x86\PLUnitTestsD.exe ..\..\Bin\Tests\x86\</Command>

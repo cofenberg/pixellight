@@ -48,4 +48,4 @@ namespace UnitTest {
 	void CheckEqual(TestResults& results, wchar_t const* expected, wchar_t* actual, TestDetails const& details);
 }
 
-#endif __PLUNITTESTS_UNITTESTADDINS_WCHAR_TEMPLATE_H_
+#endif // __PLUNITTESTS_UNITTESTADDINS_WCHAR_TEMPLATE_H_
