@@ -1,3 +1,10 @@
+>> 26.11.2011
+[CO]
+- "PixelLightBuild"-document: Fixed documentation-tracker entry 3442193 ("In the PixelLightBuild.pdf documentation on page 19 it says that cmake-qui can be used.
+   However, there is only a cmake-qt-gui package in Ocelot (as of 26th of November \'11)")
+
+
+
 >> 24.11.2011
 [CO]
 PixelLightCodingConventions:
