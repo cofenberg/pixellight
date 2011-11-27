@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/PLCore.h>
 #include "PLRendererOpenGL/PLRendererOpenGL.h"
-#ifdef LINUX && !defined(APPLE)
+#if defined(LINUX) && !defined(APPLE)
 	// Required for "PFNGLXSWAPINTERVALSGIPROC" ("GLX_SGI_swap_control"-extension)
 	#include <X11/Xlib.h>
 	#include <X11/extensions/xf86vmode.h>
