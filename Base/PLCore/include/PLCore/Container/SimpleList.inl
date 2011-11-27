@@ -636,9 +636,9 @@ template <class ValueType>
 bool SimpleList<ValueType>::Compare(const Container<ValueType> &lstContainer, uint32 nStart, uint32 nCount) const
 {
 	// Check parameters
-	if (nStart >= lstContainer.GetNumOfElements() || nStart >= m_nNumOfElements) {
+	if (nStart >= lstContainer.GetNumOfElements() || nStart >= GetNumOfElements()) {
 		// Empty containers?
-		if (m_nNumOfElements || lstContainer.GetNumOfElements()) {
+		if (GetNumOfElements() || lstContainer.GetNumOfElements()) {
 			// Error, invalid start index! Not equal!
 			return false;
 		}
