@@ -209,6 +209,7 @@ class SceneNodeModifier : public PLCore::Object {
 		*    'true' if the scene node modifier is now active, else 'false'
 		*
 		*  @note
+		*    - The scene node "Inactive"-flag as well as the "Frozen"-flag are taken into account
 		*    - 'bActivate' will be 'true' if the scene node modifier AND the owner scene node AND it's parent scene container (recursive!) are active
 		*    - 'bActivate' will be 'false' if the scene node modifier OR the owner scene node OR it's parent scene container (recursive!) is inactive
 		*    - The default implementation is empty

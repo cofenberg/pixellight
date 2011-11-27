@@ -203,9 +203,9 @@ bool SceneLoaderPL::LoadV1(SceneContainer &cContainer, const XmlElement &cSceneE
 	if (sParameters.GetLength())
 		cContainer.SetValues(sParameters);
 
-	// Deactivate the container during loading
-	const bool bActive = cContainer.IsActive();
-	cContainer.SetActive(false);
+	// Hide the container during loading
+	const bool bVisible = cContainer.IsVisible();
+	cContainer.SetVisible(false);
 
 	// Initializes the statistics
 	SInstance sInstance;
@@ -225,8 +225,8 @@ bool SceneLoaderPL::LoadV1(SceneContainer &cContainer, const XmlElement &cSceneE
 	// Emit >100% load progress signal to inform that we're done
 	cContainer.SignalLoadProgress(1.1f);
 
-	// Reset container active state
-	cContainer.SetActive(bActive);
+	// Reset container visibility state
+	cContainer.SetVisible(bVisible);
 
 	// Show statistics within the log
 	PL_LOG(Debug, '\n')

@@ -1,4 +1,15 @@
 >> 27.11.2011
+[CO]
+- "Bugfix: Calling SetActive(false) on an SceneNodeModifier had no effect (missing call to OnActivate)", yes, there was still an open point in my TODO-list regarding
+  to the active-states. Now that Stephan noticed that there's still something open, I had to pause my other work in order to get this one done. Sadly, the global active-state
+  is recursive, meaning that "OnActive()" is only allowed to be "true" if everything down to the root is active as well. We have to be really carefully when making
+  changes on those higher level components because often, even when it may look like "a one line bugfix" it's in fact something which has do be done with the complete
+  system in mind. :/
+  -> Added "SceneNode::EvaluateGlobalActiveState()" evaluating whether or not the scene node is active in respect of the complete scene graph
+
+
+
+>> 27.11.2011
 [SW]
 - Bugfix: Calling SetActive(false) on an SceneNodeModifier had no effect (missing call to OnActivate)
 

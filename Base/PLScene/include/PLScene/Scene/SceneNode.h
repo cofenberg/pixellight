@@ -390,6 +390,21 @@ class SceneNode : public PLCore::Object, public PLCore::Element<SceneNode> {
 
 		/**
 		*  @brief
+		*    Evaluates whether or not the scene node is active in respect of the complete scene graph
+		*
+		*  @return
+		*    'true' if the scene node is active in respect of the complete scene graph, else 'false'
+		*
+		*  @note
+		*    - For evaluation, the scene node "Inactive"-flag as well as the "Frozen"-flag are taken into account
+		*    - Will be 'true' if the scene node AND the parent scene container (recursive!) are active
+		*    - Will be 'false' if the scene node OR the parent scene container (recursive!) is inactive
+		*    - Try to avoid using this method when possible, due to it's recursive nature it may affect performance when called to often
+		*/
+		PLS_API bool EvaluateGlobalActiveState() const;
+
+		/**
+		*  @brief
 		*    Returns whether the scene node is visible or not
 		*
 		*  @return
@@ -912,6 +927,7 @@ class SceneNode : public PLCore::Object, public PLCore::Element<SceneNode> {
 		*    'true' if the scene node is now active, else 'false'
 		*
 		*  @note
+		*    - The scene node "Inactive"-flag as well as the "Frozen"-flag are taken into account
 		*    - 'bActivate' will be 'true' if the scene node AND the parent scene container (recursive!) are active
 		*    - 'bActivate' will be 'false' if the scene node OR the parent scene container (recursive!) is inactive
 		*    - The default implementation calls the "OnActivate()" of all attached scene node modifiers

@@ -112,9 +112,9 @@ void SceneNodeModifier::SetActive(bool bActive)
 
 		// Set new flags
 		Flags = nNewFlags;
-		
-		// Call the "OnActivate()"-method
-		OnActivate(!(m_nFlags & Inactive));
+
+		// Call the "OnActivate()"-method, please note that we also have to take the global active state of the owner scene node into account
+		OnActivate(!(m_nFlags & Inactive) && m_pSceneNode->EvaluateGlobalActiveState());
 	}
 }
 

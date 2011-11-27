@@ -359,12 +359,34 @@ void SceneNode::SetActive(bool bActive)
 			}
 
 			// Call the "OnActivate()"-method
-			OnActivate(!(m_nFlags & Inactive) && !(m_nFlags & Frozen));
+			OnActivate(EvaluateGlobalActiveState());
 
 			// Emit signal
 			SignalActive();
 		}
 	}
+}
+
+/**
+*  @brief
+*    Evaluates whether or not the scene node is active in respect of the complete scene graph
+*/
+bool SceneNode::EvaluateGlobalActiveState() const
+{
+	// Go down the rabbit-hole (iterative implementation instead of recursive implementation)
+	const SceneNode *pSceneNode = this;
+	do {
+		// Is the current scene node active and not frozen?
+		const uint32 nFlags = pSceneNode->GetFlags();
+		if ((nFlags & Inactive) || (nFlags & Frozen))
+			return false;	// Not active
+
+		// Go deeper...
+		pSceneNode = pSceneNode->GetContainer();
+	} while (pSceneNode);
+
+	// Still here? Then it's active!
+	return true;
 }
 
 /**
@@ -422,7 +444,7 @@ void SceneNode::SetFrozen(bool bFrozen)
 			m_nFlags &= ~Frozen;
 
 		// Call the "OnActivate()"-method
-		OnActivate(!(m_nFlags & Inactive) && !(m_nFlags & Frozen));
+		OnActivate(EvaluateGlobalActiveState());
 	}
 }
 
@@ -727,7 +749,7 @@ SceneNodeModifier *SceneNode::AddModifier(const String &sClass, const String &sP
 							pModifier->InformedOnInit();
 
 						// Call the "OnActivate()"-method of the modifier
-						pModifier->OnActivate(!(m_nFlags & Inactive) && !(m_nFlags & Frozen));
+						pModifier->OnActivate(EvaluateGlobalActiveState());
 
 						// Return the created modifier
 						return pModifier;
@@ -1137,7 +1159,7 @@ void SceneNode::InitFunction()
 		SignalInit();
 
 		// Call the "OnActivate()"-method
-		OnActivate(!(m_nFlags & Inactive) && !(m_nFlags & Frozen));
+		OnActivate(EvaluateGlobalActiveState());
 	}
 }
 
@@ -1164,8 +1186,13 @@ void SceneNode::DeInitFunction()
 void SceneNode::OnActivate(bool bActivate)
 {
 	// Loop through all modifiers
-	for (uint32 i=0; i<m_lstModifiers.GetNumOfElements(); i++)
-		m_lstModifiers[i]->OnActivate(bActivate);
+	for (uint32 i=0; i<m_lstModifiers.GetNumOfElements(); i++) {
+		// Get the scene node modifier
+		SceneNodeModifier *pSceneNodeModifier = m_lstModifiers[i];
+
+		// Evaluate the global active state
+		pSceneNodeModifier->OnActivate(bActivate && pSceneNodeModifier->IsActive());
+	}
 }
 
 /**
