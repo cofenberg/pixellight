@@ -638,7 +638,7 @@ bool SimpleList<ValueType>::Compare(const Container<ValueType> &lstContainer, ui
 	// Check parameters
 	if (nStart >= lstContainer.GetNumOfElements() || nStart >= GetNumOfElements()) {
 		// Empty containers?
-		if (GetNumOfElements() || lstContainer.GetNumOfElements()) {
+		if (pFirstElement || lstContainer.GetNumOfElements()) {
 			// Error, invalid start index! Not equal!
 			return false;
 		}
