@@ -1,3 +1,9 @@
+>> 27.11.2011
+[SW]
+- Bugfix: Calling SetActive(false) on an SceneNodeModifier had no effect (missing call to OnActivate)
+
+
+
 >> 05.10.2011
 [CO]
 - "SceneContainer": Exposed "LoadByFilename()"-method to the RTTI. With this method, one can now also write within a Lua script e.g.

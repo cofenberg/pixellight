@@ -112,6 +112,9 @@ void SceneNodeModifier::SetActive(bool bActive)
 
 		// Set new flags
 		Flags = nNewFlags;
+		
+		// Call the "OnActivate()"-method
+		OnActivate(!(m_nFlags & Inactive));
 	}
 }
 
