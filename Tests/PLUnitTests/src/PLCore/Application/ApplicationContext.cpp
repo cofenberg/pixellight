@@ -137,16 +137,14 @@ SUITE(ApplicationContext) {
 		Array<String> elems, test;
 
 		test = App.GetArguments();
-		// [TODO] these are not equal? both are empty!
-		//CHECK(elems.Compare(test));
+		CHECK(elems.Compare(test));
 
 		// set empty arguments array
 		App.SetArguments(elems);
 		test = App.GetArguments();
 
 		// compare content of both arrays, has to be the same!
-		// [TODO] these are not equal? both are empty!
-		//CHECK(elems.Compare(test));
+		CHECK(elems.Compare(test));
 	}
 
 	TEST(SetArguments_WithElements) {
