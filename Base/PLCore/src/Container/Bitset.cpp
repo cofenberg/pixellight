@@ -367,20 +367,20 @@ bool &Bitset::AddAtIndex(int nIndex)
 	return Get(nIndex);
 }
 
-bool Bitset::AddAtIndex(const bool &Element, int nIndex)
+bool &Bitset::AddAtIndex(const bool &Element, int nIndex)
 {
 	// Add at end?
 	if (nIndex < 0)
-		return (&Add(Element) != &Bitset::Null);
+		return Add(Element);
 
 	// Check index
 	if (nIndex > static_cast<int>(m_nNumOfElements))
-		return false; // Error!
+		return Bitset::Null; // Error!
 
 	// Check whether the bit set is full and we have to resize it
 	if (m_nNumOfElements >= m_nMaxNumOfElements) {
 		if (!m_nResizeCount || !Resize(m_nMaxNumOfElements+m_nResizeCount, false, false))
-			return false; // Error!
+			return Bitset::Null; // Error!
 	}
 
 	// Add element
@@ -401,7 +401,7 @@ bool Bitset::AddAtIndex(const bool &Element, int nIndex)
 		Clear(nIndex);
 
 	// Done
-	return true;
+	return Get(nIndex);
 }
 
 bool Bitset::RemoveAtIndex(uint32 nIndex)
@@ -453,24 +453,34 @@ bool Bitset::Remove(const Container<bool> &lstContainer, uint32 nStart, uint32 n
 bool Bitset::Copy(const Container<bool> &lstContainer, uint32 nStart, uint32 nCount)
 {
 	// Check start index and elements to copy
-	if (nStart >= lstContainer.GetNumOfElements())
-		return false; // Error, invalid start index!
-	if (!nCount)
-		nCount = lstContainer.GetNumOfElements()-nStart;
-	if (nStart+nCount > lstContainer.GetNumOfElements())
-		nCount = lstContainer.GetNumOfElements()-nStart;
+	if (nStart >= lstContainer.GetNumOfElements()) {
+		// Empty container?
+		if (lstContainer.IsEmpty()) {
+			// That's an easy situation: Just clear this container and it's a copy of the given empty container
+			Clear();
+		} else {
+			// Error, invalid start index!
+			return false;
+		}
+	} else {
+		// Get the number of elements to copy
+		if (!nCount)
+			nCount = lstContainer.GetNumOfElements()-nStart;
+		if (nStart+nCount > lstContainer.GetNumOfElements())
+			nCount = lstContainer.GetNumOfElements()-nStart;
 
-	// Setup bit set size
-	Resize(nCount);
+		// Setup bit set size
+		Resize(nCount);
 
-	// Copy
-	for (uint32 i=0; i<nCount; i++) {
-		if (lstContainer[i+nStart])
-			Set(i);
-		else
-			Clear(i);
+		// Copy
+		for (uint32 i=0; i<nCount; i++) {
+			if (lstContainer[i+nStart])
+				Set(i);
+			else
+				Clear(i);
+		}
+		m_nNumOfElements = nCount;
 	}
-	m_nNumOfElements = nCount;
 
 	// Done
 	return true;
@@ -479,17 +489,24 @@ bool Bitset::Copy(const Container<bool> &lstContainer, uint32 nStart, uint32 nCo
 bool Bitset::Compare(const Container<bool> &lstContainer, uint32 nStart, uint32 nCount) const
 {
 	// Check parameters
-	if (nStart >= lstContainer.GetNumOfElements() || nStart >= m_nNumOfElements)
-		return false; // Not equal!
-	if (!nCount)
-		nCount = lstContainer.GetNumOfElements()-nStart;
-	if (nStart+nCount > lstContainer.GetNumOfElements() || nStart+nCount > m_nNumOfElements)
-		return false; // Not equal!
+	if (nStart >= lstContainer.GetNumOfElements() || nStart >= m_nNumOfElements) {
+		// Empty containers?
+		if (m_nNumOfElements || lstContainer.GetNumOfElements()) {
+			// Error, invalid start index! Not equal!
+			return false;
+		}
+	} else {
+		// Get the number of elements to compare
+		if (!nCount)
+			nCount = lstContainer.GetNumOfElements()-nStart;
+		if (nStart+nCount > lstContainer.GetNumOfElements() || nStart+nCount > m_nNumOfElements)
+			return false; // Not equal!
 
-	// Compare
-	for (uint32 i=nStart; i<nStart+nCount; i++) {
-		if (IsSet(i) != lstContainer[i])
-			return false; // The two containers are not equal!
+		// Compare
+		for (uint32 i=nStart; i<nStart+nCount; i++) {
+			if (IsSet(i) != lstContainer[i])
+				return false; // The two containers are not equal!
+		}
 	}
 
 	// The two containers are equal!

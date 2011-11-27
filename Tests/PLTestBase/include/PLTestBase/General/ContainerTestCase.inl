@@ -66,7 +66,8 @@ bool ContainerTestCase<AType>::Test(PLCore::Container<AType> &cContainer)
 
 	// Add element at index 2
 	StartTask("AddAtIndex()");
-	EndTask(cContainer.AddAtIndex(0, 2) && cContainer.GetNumOfElements() == 4 && cContainer[0] == 1 &&
+	cContainer.AddAtIndex(0, 2);
+	EndTask(cContainer.GetNumOfElements() == 4 && cContainer[0] == 1 &&
 			cContainer[1] == 0 && cContainer[2] == 0 && cContainer[3] == 1);
 
 	{ // Check iterator from 0 -> (NumOfElements-1)

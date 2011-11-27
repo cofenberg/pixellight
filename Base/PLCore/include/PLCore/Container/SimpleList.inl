@@ -448,11 +448,11 @@ ValueType &SimpleList<ValueType>::AddAtIndex(int nIndex)
 }
 
 template <class ValueType>
-bool SimpleList<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
+ValueType &SimpleList<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 {
 	// Add the new element at the end?
 	if (nIndex < 0)
-		return (&Add(Element) != &SimpleList<ValueType>::Null);
+		return Add(Element);
 
 	// Start with the first element
 	ListElement *pElement		  = pFirstElement;
@@ -472,8 +472,8 @@ bool SimpleList<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 			if (pFirstElement == pElement)
 				pFirstElement = pNewElement;
 
-			// All went fine
-			return true;
+			// Return the new element
+			return pNewElement->Data;
 		}
 
 		// Next, please
@@ -484,10 +484,10 @@ bool SimpleList<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 
 	// Add the new element at the end?
 	if (static_cast<uint32>(nIndex) == nCurIndex)
-		return (&Add(Element) != &SimpleList<ValueType>::Null);
+		return Add(Element);
 
 	// Error, there's no such index within the list :(
-	return false;
+	return SimpleList<ValueType>::Null;
 }
 
 template <class ValueType>
@@ -594,20 +594,30 @@ SimpleList<ValueType> &SimpleList<ValueType>::operator -=(const Container<ValueT
 template <class ValueType>
 bool SimpleList<ValueType>::Copy(const Container<ValueType> &lstContainer, uint32 nStart, uint32 nCount)
 {
-	// Clear the old list
-	Clear();
-
 	// Check start index and elements to copy
-	if (nStart >= lstContainer.GetNumOfElements())
-		return false; // Error, invalid start index!
-	if (!nCount)
-		nCount = lstContainer.GetNumOfElements()-nStart;
-	if (nStart+nCount > lstContainer.GetNumOfElements())
-		nCount = lstContainer.GetNumOfElements()-nStart;
+	if (nStart >= lstContainer.GetNumOfElements()) {
+		// Empty container?
+		if (lstContainer.IsEmpty()) {
+			// That's an easy situation: Just clear this container and it's a copy of the given empty container
+			Clear();
+		} else {
+			// Error, invalid start index!
+			return false;
+		}
+	} else {
+		// Clear the old list
+		Clear();
 
-	// Copy
-	for (uint32 i=0; i<nCount; i++)
-		Add(lstContainer[i+nStart]);
+		// Get the number of elements to copy
+		if (!nCount)
+			nCount = lstContainer.GetNumOfElements()-nStart;
+		if (nStart+nCount > lstContainer.GetNumOfElements())
+			nCount = lstContainer.GetNumOfElements()-nStart;
+
+		// Copy
+		for (uint32 i=0; i<nCount; i++)
+			Add(lstContainer[i+nStart]);
+	}
 
 	// Done
 	return true;
@@ -626,29 +636,36 @@ template <class ValueType>
 bool SimpleList<ValueType>::Compare(const Container<ValueType> &lstContainer, uint32 nStart, uint32 nCount) const
 {
 	// Check parameters
-	if (nStart >= lstContainer.GetNumOfElements() || nStart >= GetNumOfElements())
-		return false; // Not equal!
-	if (!nCount)
-		nCount = lstContainer.GetNumOfElements()-nStart;
-	if (nStart+nCount > lstContainer.GetNumOfElements() || nStart+nCount > GetNumOfElements())
-		return false; // Not equal!
+	if (nStart >= lstContainer.GetNumOfElements() || nStart >= m_nNumOfElements) {
+		// Empty containers?
+		if (m_nNumOfElements || lstContainer.GetNumOfElements()) {
+			// Error, invalid start index! Not equal!
+			return false;
+		}
+	} else {
+		// Get the number of elements to compare
+		if (!nCount)
+			nCount = lstContainer.GetNumOfElements()-nStart;
+		if (nStart+nCount > lstContainer.GetNumOfElements() || nStart+nCount > GetNumOfElements())
+			return false; // Not equal!
 
-	// Start with the first element
-	ListElement *pElement = pFirstElement;
-	uint32 nCurIndex = 0;
-	while (pElement && nCurIndex != nStart) {
-		pElement = pElement->pNextElement;
-		nCurIndex++;
-	}
-
-	// Compare
-	for (uint32 i=nStart; i<nStart+nCount; i++) {
-		if (!pElement)
-			return false; // Not equal! (? :)
-		if (pElement->Data == lstContainer[i])
+		// Start with the first element
+		ListElement *pElement = pFirstElement;
+		uint32 nCurIndex = 0;
+		while (pElement && nCurIndex != nStart) {
 			pElement = pElement->pNextElement;
-		else
-			return false; // The two containers are not equal!
+			nCurIndex++;
+		}
+
+		// Compare
+		for (uint32 i=nStart; i<nStart+nCount; i++) {
+			if (!pElement)
+				return false; // Not equal! (? :)
+			if (pElement->Data == lstContainer[i])
+				pElement = pElement->pNextElement;
+			else
+				return false; // The two containers are not equal!
+		}
 	}
 
 	// The two containers are equal!

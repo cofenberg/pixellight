@@ -427,11 +427,15 @@ SUITE(Array_PrimitiveChar) {
 		Arr.Add('3');
 		Arr.Add('4');
 
-		// "copies" element that is at index
-		// TODO: AddAtIndex(index) returns inserted element while AddAtIndex(value, index) returns true/false... intended?
+		// "adds news" element that is at index
 		CHECK_EQUAL('3', Arr.AddAtIndex(2U));
 		CHECK_EQUAL('3', Arr.Get(2U));
 		CHECK_EQUAL(5U, Arr.GetNumOfElements());
+
+		// "copies" element that is at index
+		CHECK_EQUAL('8', Arr.AddAtIndex('8', 3U));
+		CHECK_EQUAL('8', Arr.Get(3U));
+		CHECK_EQUAL(6U, Arr.GetNumOfElements());
 	}
 
 	TEST(AddAtIndex_Outside_Bounds_Positive) {
@@ -839,25 +843,23 @@ SUITE(Array_PrimitiveChar) {
 
 		Arr.Clear();
 		CHECK(!Arr.Copy(CopyArr, 9, 0));
-		// TODO: Compare return false if both containers are empty!
-		//CHECK(Arr.Compare(EmptyArr));
+		CHECK(Arr.Compare(EmptyArr));
 		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 
 		CHECK(!Arr.Copy(CopyArr, 9, 1));
-		// TODO: Compare return false if both containers are empty!
-		//CHECK(Arr.Compare(EmptyArr));
+		CHECK(Arr.Compare(EmptyArr));
 		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 
 		CHECK(!Arr.Copy(CopyArr, 9, 99));
-		// TODO: Compare return false if both containers are empty!
-		//CHECK(Arr.Compare(EmptyArr));
+		CHECK(Arr.Compare(EmptyArr));
 		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 
-		// TODO: this fails? i can't copy an empty array?
-		//CHECK(Arr.Copy(EmptyArr));
-		// TODO: Compare return false if both containers are empty!
-		//CHECK(Arr.Compare(EmptyArr));
-		//CHECK_EQUAL(0U, Arr.GetNumOfElements());
+		// copy an empty array
+		Arr.Add('0');
+		CHECK(Arr.Copy(EmptyArr));
+
+		CHECK(Arr.Compare(EmptyArr));
+		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 	}
 
 	TEST(Operator_Copy) {
@@ -872,12 +874,12 @@ SUITE(Array_PrimitiveChar) {
 		Arr = CopyArr;
 		CHECK(Arr.Compare(CopyArr));
 
-		// TODO: we can't copy empty containers! look at TODO in TEST(Copy)
+		// copy empty container
 		CopyArr.Clear();
 		Arr = CopyArr;
-		// TODO: Compare return false if both containers are empty!
-		//CHECK(Arr.Compare(CopyArr));
-		//CHECK_EQUAL(0U, Arr.GetNumOfElements());
+
+		CHECK(Arr.Compare(CopyArr));
+		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 	}
 
 	TEST(Compare) {
@@ -889,8 +891,7 @@ SUITE(Array_PrimitiveChar) {
 		CompareArr.Add('1');
 		CompareArr.Add('0');
 
-		// TODO: Compare return false if both containers are empty!
-		//CHECK(Arr.Compare(EmptyArr));
+		CHECK(Arr.Compare(EmptyArr));
 
 		Arr = CompareArr;
 
@@ -918,8 +919,7 @@ SUITE(Array_PrimitiveChar) {
 		CompareArr.Add('1');
 		CompareArr.Add('0');
 
-		// TODO: Compare return false if both containers are empty!
-		//CHECK(Arr == EmptyArr);
+		CHECK(Arr == EmptyArr);
 
 		Arr = CompareArr;
 		CHECK(Arr == CompareArr);
@@ -937,8 +937,7 @@ SUITE(Array_PrimitiveChar) {
 		CompareArr.Add('1');
 		CompareArr.Add('0');
 
-		// TODO: Compare return false if both containers are empty!
-		//CHECK(!(Arr != EmptyArr));
+		CHECK(!(Arr != EmptyArr));
 
 		Arr = CompareArr;
 		CHECK(!(Arr != CompareArr));

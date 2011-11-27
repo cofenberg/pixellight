@@ -698,15 +698,15 @@ ValueType &FastPool<ValueType>::AddAtIndex(int nIndex)
 }
 
 template <class ValueType>
-bool FastPool<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
+ValueType &FastPool<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 {
 	// Add the new element at the end?
 	if (nIndex < 0 || static_cast<uint32>(nIndex) == m_nNumOfElements)
-		return (&Add(Element) != &FastPool<ValueType>::Null);
+		return Add(Element);
 
 	// Valid index?
 	if (static_cast<uint32>(nIndex) > m_nNumOfElements)
-		return false; // Error, there's no such index within the pool :(
+		return FastPool<ValueType>::Null; // Error, there's no such index within the pool :(
 
 	// Which search direction?
 	if (static_cast<uint32>(nIndex) < m_nNumOfElements/2) {
@@ -729,8 +729,8 @@ bool FastPool<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 				if (m_pFirstElement == pElement)
 					m_pFirstElement = &cNewElement;
 
-				// All went fine
-				return true;
+				// Return the new element
+				return cNewElement;
 			}
 
 			// Next, please
@@ -757,8 +757,8 @@ bool FastPool<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 				if (m_pFirstElement == pElement)
 					m_pFirstElement = &cNewElement;
 
-				// All went fine
-				return true;
+				// Return the new element
+				return cNewElement;
 			}
 
 			// Previous, please
@@ -768,7 +768,7 @@ bool FastPool<ValueType>::AddAtIndex(const ValueType &Element, int nIndex)
 	}
 
 	// Error! (?!)
-	return false;
+	return FastPool<ValueType>::Null;
 }
 
 template <class ValueType>
@@ -884,20 +884,30 @@ Container<ValueType> &FastPool<ValueType>::operator -=(const Container<ValueType
 template <class ValueType>
 bool FastPool<ValueType>::Copy(const Container<ValueType> &lstContainer, uint32 nStart, uint32 nCount)
 {
-	// Clear the old pool
-	Clear();
-
 	// Check start index and elements to copy
-	if (nStart >= lstContainer.GetNumOfElements())
-		return false; // Error, invalid start index!
-	if (!nCount)
-		nCount = lstContainer.GetNumOfElements()-nStart;
-	if (nStart+nCount > lstContainer.GetNumOfElements())
-		nCount = lstContainer.GetNumOfElements()-nStart;
+	if (nStart >= lstContainer.GetNumOfElements()) {
+		// Empty container?
+		if (lstContainer.IsEmpty()) {
+			// That's an easy situation: Just clear this container and it's a copy of the given empty container
+			Clear();
+		} else {
+			// Error, invalid start index!
+			return false;
+		}
+	} else {
+		// Clear the old pool
+		Clear();
 
-	// Copy
-	for (uint32 i=0; i<nCount; i++)
-		Add(lstContainer[i+nStart]);
+		// Get the number of elements to copy
+		if (!nCount)
+			nCount = lstContainer.GetNumOfElements()-nStart;
+		if (nStart+nCount > lstContainer.GetNumOfElements())
+			nCount = lstContainer.GetNumOfElements()-nStart;
+
+		// Copy
+		for (uint32 i=0; i<nCount; i++)
+			Add(lstContainer[i+nStart]);
+	}
 
 	// Done
 	return true;
@@ -916,41 +926,48 @@ template <class ValueType>
 bool FastPool<ValueType>::Compare(const Container<ValueType> &lstContainer, uint32 nStart, uint32 nCount) const
 {
 	// Check parameters
-	if (nStart >= lstContainer.GetNumOfElements() || nStart >= m_nNumOfElements)
-		return false; // Not equal!
-	if (!nCount)
-		nCount = lstContainer.GetNumOfElements()-nStart;
-	if (nStart+nCount > lstContainer.GetNumOfElements() || nStart+nCount > m_nNumOfElements)
-		return false; // Not equal!
-
-	// Get the start element from which search direction?
-	ValueType *pElement;
-	if (nStart < m_nNumOfElements/2) {
-		// Start with the first element
-		pElement = m_pFirstElement;
-		uint32 nCurIndex = 0;
-		while (pElement && nCurIndex != nStart) {
-			pElement = pElement->m_pNextElement;
-			nCurIndex++;
+	if (nStart >= lstContainer.GetNumOfElements() || nStart >= m_nNumOfElements) {
+		// Empty containers?
+		if (m_nNumOfElements || lstContainer.GetNumOfElements()) {
+			// Error, invalid start index! Not equal!
+			return false;
 		}
 	} else {
-		// Start with the last element
-		pElement = m_pLastElement;
-		uint32 nCurIndex = m_nNumOfElements-1;
-		while (pElement && nCurIndex != nStart) {
-			pElement = pElement->m_pPreviousElement;
-			nCurIndex--;
-		}
-	}
+		// Get the number of elements to compare
+		if (!nCount)
+			nCount = lstContainer.GetNumOfElements()-nStart;
+		if (nStart+nCount > lstContainer.GetNumOfElements() || nStart+nCount > m_nNumOfElements)
+			return false; // Not equal!
 
-	// Compare
-	for (uint32 i=nStart; i<nStart+nCount; i++) {
-		if (!pElement)
-			return false; // Not equal! (? :)
-		if (*pElement == lstContainer[i])
-			pElement = pElement->m_pNextElement;
-		else
-			return false; // The two containers are not equal!
+		// Get the start element from which search direction?
+		ValueType *pElement;
+		if (nStart < m_nNumOfElements/2) {
+			// Start with the first element
+			pElement = m_pFirstElement;
+			uint32 nCurIndex = 0;
+			while (pElement && nCurIndex != nStart) {
+				pElement = pElement->m_pNextElement;
+				nCurIndex++;
+			}
+		} else {
+			// Start with the last element
+			pElement = m_pLastElement;
+			uint32 nCurIndex = m_nNumOfElements-1;
+			while (pElement && nCurIndex != nStart) {
+				pElement = pElement->m_pPreviousElement;
+				nCurIndex--;
+			}
+		}
+
+		// Compare
+		for (uint32 i=nStart; i<nStart+nCount; i++) {
+			if (!pElement)
+				return false; // Not equal! (? :)
+			if (*pElement == lstContainer[i])
+				pElement = pElement->m_pNextElement;
+			else
+				return false; // The two containers are not equal!
+		}
 	}
 
 	// The two containers are equal!

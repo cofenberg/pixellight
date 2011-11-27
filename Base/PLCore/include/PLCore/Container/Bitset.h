@@ -313,7 +313,7 @@ class PLCORE_API Bitset : public Container<bool> {
 		virtual bool Add(const Container<bool> &lstContainer, uint32 nStart = 0, uint32 nCount = 0) override;
 		inline virtual Container<bool> &operator +=(const Container<bool> &lstContainer);
 		virtual bool &AddAtIndex(int nIndex) override;
-		virtual bool AddAtIndex(const bool &Element, int nIndex) override;
+		virtual bool &AddAtIndex(const bool &Element, int nIndex) override;
 		inline virtual bool Remove(const bool &Element);
 		virtual bool RemoveAtIndex(uint32 nElement) override;
 		inline virtual Container<bool> &operator -=(const bool &Element);
