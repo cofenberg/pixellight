@@ -34,6 +34,12 @@
 	// Required for "PFNGLXSWAPINTERVALSGIPROC" ("GLX_SGI_swap_control"-extension)
 	#include <X11/Xlib.h>
 	#include <X11/extensions/xf86vmode.h>
+	#include "../../../../External/Recommended/OpenGL/glx.h"
+
+	// We need to undefine some OS defines to avoid name conflicts... :(
+	#undef None
+	#undef Always
+	#undef Success
 #endif
 
 
