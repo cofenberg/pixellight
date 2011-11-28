@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SurfaceWindowMacOSX.h                          *
+ *  File: SurfaceWindowMacOSX_Cocoa.h                    *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,15 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGL_SURFACE_WINDOWMACOSX_H__
-#define __PLRENDEREROPENGL_SURFACE_WINDOWMACOSX_H__
+#ifndef __PLRENDEREROPENGL_SURFACE_WINDOWMACOSX_COCOA_H__
+#define __PLRENDEREROPENGL_SURFACE_WINDOWMACOSX_COCOA_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGL/SurfaceWindow.h"
+#include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSX_X11.h"
 
 
 //[-------------------------------------------------------]
@@ -42,9 +42,16 @@ namespace PLRendererOpenGL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Mac OS X OpenGL window renderer surface where we can render in
+*    Mac OS X Cocoa OpenGL window renderer surface where we can render in [TODO] This class should not be derived from SurfaceWindowMacOSX_X11
 */
-class SurfaceWindowMacOSX : public SurfaceWindow {
+class SurfaceWindowMacOSX_Cocoa : public SurfaceWindowMacOSX_X11 {
+
+
+	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	// [TODO] Remove this when the Cocoa part is ready
+	friend class ContextMacOSX_X11;
 
 
 	//[-------------------------------------------------------]
@@ -55,13 +62,13 @@ class SurfaceWindowMacOSX : public SurfaceWindow {
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~SurfaceWindowMacOSX();
+		virtual ~SurfaceWindowMacOSX_Cocoa();
 
 
 	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
+	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
-	protected:
+	private:
 		/**
 		*  @brief
 		*    Constructor
@@ -75,7 +82,24 @@ class SurfaceWindowMacOSX : public SurfaceWindow {
 		*  @param[in] bFullscreen
 		*    Fullscreen mode?
 		*/
-		SurfaceWindowMacOSX(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false);
+		SurfaceWindowMacOSX_Cocoa(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false);
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLRenderer::Surface functions         ]
+	//[-------------------------------------------------------]
+	private:
+		virtual bool Init() override;
+		virtual void DeInit() override;
+		virtual bool MakeCurrent(PLCore::uint8 nFace = 0) override;
+		virtual bool Present() override;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		void *m_pNSOpenGLContext;	/**< NSOpenGLContext (it's a CGL wrapper) instance, can be a null pointer */
 
 
 };
@@ -87,4 +111,4 @@ class SurfaceWindowMacOSX : public SurfaceWindow {
 } // PLRendererOpenGL
 
 
-#endif // __PLRENDEREROPENGL_SURFACE_WINDOWMACOSX_H__
+#endif // __PLRENDEREROPENGL_SURFACE_WINDOWMACOSX_COCOA_H__

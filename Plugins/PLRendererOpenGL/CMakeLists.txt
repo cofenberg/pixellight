@@ -84,9 +84,11 @@ elseif(APPLE)
 	##################################################
 	add_sources(
 		src/MacOSX/ContextMacOSX.cpp
+		src/MacOSX/ContextMacOSX_X11.cpp
 		src/MacOSX/ExtensionsMacOSX.cpp
 		src/MacOSX/SurfaceWindowMacOSX.cpp
-		src/MacOSX/SurfaceWindowMacOSXCocoa.mm	# Cocoa & NSOpenGL can only be accessed when using Objective-C :/
+		src/MacOSX/SurfaceWindowMacOSX_X11.cpp
+		src/MacOSX/SurfaceWindowMacOSX_Cocoa.mm	# Cocoa & NSOpenGL can only be accessed when using Objective-C :/
 	)
 elseif(LINUX)
 	##################################################

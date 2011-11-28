@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SurfaceWindowMacOSXCocoa.h                     *
+ *  File: SurfaceWindowMacOSX_X11.                       *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGL_SURFACE_WINDOWMACOSXCOCOA_H__
-#define __PLRENDEREROPENGL_SURFACE_WINDOWMACOSXCOCOA_H__
+#ifndef __PLRENDEREROPENGL_SURFACE_WINDOWMACOSX_X11_H__
+#define __PLRENDEREROPENGL_SURFACE_WINDOWMACOSX_X11_H__
 #pragma once
 
 
@@ -42,15 +42,15 @@ namespace PLRendererOpenGL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Mac OS X Cocoa OpenGL window renderer surface where we can render in
+*    Mac OS X OpenGL window renderer surface where we can render in using X11
 */
-class SurfaceWindowMacOSXCocoa : public SurfaceWindowMacOSX {
+class SurfaceWindowMacOSX_X11 : public SurfaceWindowMacOSX {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class ContextMacOSX;
+	friend class ContextMacOSX_X11;
 
 
 	//[-------------------------------------------------------]
@@ -61,13 +61,13 @@ class SurfaceWindowMacOSXCocoa : public SurfaceWindowMacOSX {
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~SurfaceWindowMacOSXCocoa();
+		virtual ~SurfaceWindowMacOSX_X11();
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		/**
 		*  @brief
 		*    Constructor
@@ -81,24 +81,32 @@ class SurfaceWindowMacOSXCocoa : public SurfaceWindowMacOSX {
 		*  @param[in] bFullscreen
 		*    Fullscreen mode?
 		*/
-		SurfaceWindowMacOSXCocoa(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false);
+		SurfaceWindowMacOSX_X11(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false);
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLRenderer::Surface functions         ]
+	//[ Public virtual PLRenderer::SurfaceWindow functions    ]
 	//[-------------------------------------------------------]
-	private:
+	public:
+		virtual bool GetGamma(float &fRed, float &fGreen, float &fBlue) const override;
+		virtual bool SetGamma(float fRed = 1.0f, float fGreen = 1.0f, float fBlue = 1.0f) override;
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLRenderer::Surface functions          ]
+	//[-------------------------------------------------------]
+	public:
+		virtual PLMath::Vector2i GetSize() const override;
+
+	
+	//[-------------------------------------------------------]
+	//[ Protected virtual PLRenderer::Surface functions       ]
+	//[-------------------------------------------------------]
+	protected:
 		virtual bool Init() override;
 		virtual void DeInit() override;
 		virtual bool MakeCurrent(PLCore::uint8 nFace = 0) override;
 		virtual bool Present() override;
-
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
-		void *m_pNSOpenGLContext;	/**< NSOpenGLContext (it's a CGL wrapper) instance, can be a null pointer */
 
 
 };
@@ -110,4 +118,4 @@ class SurfaceWindowMacOSXCocoa : public SurfaceWindowMacOSX {
 } // PLRendererOpenGL
 
 
-#endif // __PLRENDEREROPENGL_SURFACE_WINDOWMACOSXCOCOA_H__
+#endif // __PLRENDEREROPENGL_SURFACE_WINDOWMACOSX_X11_H__

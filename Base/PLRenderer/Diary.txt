@@ -1,3 +1,12 @@
+>> 28.11.2011
+[CO]
+PLRendererOpenGL:
+- Another Mac OS X related refactoring... after Mac OS 10.7 was installed on the available Apple system, new header chaos came up. We really, really
+  have to keep X11 headers away from the Apple headers, those two constantly fighting each other. :/
+  -> I'am afraid, that in the end, we also have to add Cocoa Support within PLFrontendOS.
+
+
+
 >> 23.11.2011
 [CO]
 - "TextureBuffer::GetFormatFromImage()": Added support for the "DataWord" (16 bit) data type of "PLGraphics::Image"

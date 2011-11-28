@@ -36,8 +36,6 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-typedef struct _XDisplay;
-typedef struct _XDisplay Display;
 namespace PLRendererOpenGL {
 	class Renderer;
 }
@@ -87,15 +85,6 @@ class ContextMacOSX : public Context {
 
 		/**
 		*  @brief
-		*    Returns the X server display connection
-		*
-		*  @return
-		*    The X server display connection, a null pointer on error
-		*/
-		Display *GetDisplay() const;
-
-		/**
-		*  @brief
 		*    Returns the primary render context
 		*
 		*  @return
@@ -111,7 +100,6 @@ class ContextMacOSX : public Context {
 		virtual bool IsValid() const override;
 		virtual void MakeDummyCurrent() const override;
 		virtual bool QueryDisplayModes(PLCore::Array<const PLRenderer::DisplayMode*> &lstDisplayModeList) override;
-		virtual PLRenderer::SurfaceWindow *CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false) override;
 
 
 	//[-------------------------------------------------------]
@@ -136,7 +124,6 @@ class ContextMacOSX : public Context {
 	//[-------------------------------------------------------]
 	private:
 		Renderer	  *m_pRenderer;			/**< The owner renderer, always valid! */
-		Display		  *m_pDisplay;			/**< X server display connection, a null pointer on error */
 		CGLContextObj  m_pCGLContextObj;	/**< Pointer to an opaque CGL context object, can be a null pointer */
 
 

@@ -53,7 +53,7 @@
 #ifdef WIN32
 	#include "PLRendererOpenGL/Windows/ContextWindows.h"
 #elif APPLE
-	#include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
+	#include "PLRendererOpenGL/MacOSX/ContextMacOSX_X11.h"
 #elif LINUX
 	#include "PLRendererOpenGL/Linux/ContextLinux.h"
 #endif
@@ -547,7 +547,7 @@ Context *Renderer::CreateContext()
 	#ifdef WIN32
 		return new ContextWindows(*this, m_nMultisampleAntialiasingSamples);
 	#elif APPLE
-		return new ContextMacOSX(*this);
+		return new ContextMacOSX_X11(*this);
 	#elif LINUX
 		return new ContextLinux(*this);
 	#endif

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SurfaceWindowMacOSX.cpp                        *
+ *  File: ContextMacOSX_X11.h                            *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,7 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSX.h"
+#include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSX_Cocoa.h"
+#include "PLRendererOpenGL/MacOSX/ContextMacOSX_X11.h"
+#include <X11/Xutil.h>	// Include this after the rest, else we get OS definition issues, again 
 
 
 //[-------------------------------------------------------]
@@ -34,27 +36,47 @@ namespace PLRendererOpenGL {
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Destructor
-*/
-SurfaceWindowMacOSX::~SurfaceWindowMacOSX()
-{
-}
-
-
-//[-------------------------------------------------------]
-//[ Protected functions                                   ]
+//[ Public methods                                        ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Constructor
 */
-SurfaceWindowMacOSX::SurfaceWindowMacOSX(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen) :
-	SurfaceWindow(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen)
+ContextMacOSX_X11::ContextMacOSX_X11(Renderer &cRenderer) : ContextMacOSX(cRenderer),
+	m_pDisplay(XOpenDisplay(nullptr))
 {
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+ContextMacOSX_X11::~ContextMacOSX_X11()
+{
+	// Is there a valid X server display connection?
+	if (m_pDisplay) {
+		// Close the X server display connection
+		XCloseDisplay(m_pDisplay);
+	}
+}
+
+/**
+*  @brief
+*    Returns the X server display connection
+*/
+Display *ContextMacOSX_X11::GetDisplay() const
+{
+	return m_pDisplay;
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual Context methods                        ]
+//[-------------------------------------------------------]
+PLRenderer::SurfaceWindow *ContextMacOSX::CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen)
+{
+	// [TODO] This method should create an SurfaceWindowMacOSX_X11 instance
+	return new SurfaceWindowMacOSX_Cocoa(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen);
 }
 
 
