@@ -41,7 +41,7 @@ using namespace PLCore;
 using namespace PLMath;
 namespace PLRendererOpenGL {
 
-	
+
 //[-------------------------------------------------------]
 //[ Global functions methods                              ]
 //[-------------------------------------------------------]

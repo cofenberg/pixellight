@@ -85,7 +85,7 @@ bool SurfaceWindowMacOSX_X11::GetGamma(float &fRed, float &fGreen, float &fBlue)
 		fRed   = sXF86VidModeGamma.red;
 		fGreen = sXF86VidModeGamma.green;
 		fBlue  = sXF86VidModeGamma.blue;
-			
+
 		// Done
 		return true;
 	}
@@ -152,7 +152,6 @@ Vector2i SurfaceWindowMacOSX_X11::GetSize() const
 	}
 }
 
-	
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

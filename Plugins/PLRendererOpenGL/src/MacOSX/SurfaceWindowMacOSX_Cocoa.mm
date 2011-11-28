@@ -82,7 +82,7 @@ bool SurfaceWindowMacOSX_Cocoa::Init()
 		ContextMacOSX &cContextMacOSX = static_cast<ContextMacOSX&>(static_cast<Renderer&>(GetRenderer()).GetContext());
 
 		// [TODO] Implement me
-		// Obj-C style object creation	
+		// Obj-C style object creation
 		NSOpenGLContext *pNSOpenGLContext = [[NSOpenGLContext alloc] initWithFormat:nullptr shareContext:nullptr];
 //		m_pNSOpenGLContext = [[NSOpenGLContext alloc] initWithFormat:nullptr shareContext:cContextMacOSX.GetRenderContext()];
 
