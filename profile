@@ -40,6 +40,8 @@ if [ $OSTYPE == "linux-gnu" ] ; then
 	PLATFORM="Linux"
 elif [ $OSTYPE == "darwin10.0" ] ; then
 	PLATFORM="MacOSX"
+elif [ $OSTYPE == "darwin11" ] ; then
+	PLATFORM="MacOSX"
 else
 	PLATFORM="Unknown"
 fi

@@ -78,6 +78,16 @@ class SurfaceWindowMacOSX : public SurfaceWindow {
 		SurfaceWindowMacOSX(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false);
 
 
+	//[-------------------------------------------------------]
+	//[ Protected virtual PLRenderer::Surface functions       ]
+	//[-------------------------------------------------------]
+	protected:
+		virtual bool Init() override;
+		virtual void DeInit() override;
+		virtual bool MakeCurrent(PLCore::uint8 nFace = 0) override;
+		virtual bool Present() override;
+
+
 };
 
 

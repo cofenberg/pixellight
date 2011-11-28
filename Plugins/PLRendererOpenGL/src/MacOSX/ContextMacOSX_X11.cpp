@@ -73,7 +73,7 @@ Display *ContextMacOSX_X11::GetDisplay() const
 //[-------------------------------------------------------]
 //[ Public virtual Context methods                        ]
 //[-------------------------------------------------------]
-PLRenderer::SurfaceWindow *ContextMacOSX::CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen)
+PLRenderer::SurfaceWindow *ContextMacOSX_X11::CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen)
 {
 	// [TODO] This method should create an SurfaceWindowMacOSX_X11 instance
 	return new SurfaceWindowMacOSX_Cocoa(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen);

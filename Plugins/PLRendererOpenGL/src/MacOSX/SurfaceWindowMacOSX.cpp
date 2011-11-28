@@ -23,6 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <OpenGL/OpenGL.h>
+#include <ApplicationServices/ApplicationServices.h>	// "#include <CoreGraphics/CGDirectDisplay.h>" would do the job, but on Apple we're forced to use the "framework"-approach instead of addressing headers the natural way, and this one here is a "sub-framework" which can't be addressed directly, so we have to use this overkill approach and this really long comment
+#include "PLRendererOpenGL/Renderer.h"
+#include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
 #include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSX.h"
 
 
@@ -57,6 +61,63 @@ SurfaceWindowMacOSX::SurfaceWindowMacOSX(PLRenderer::SurfaceWindowHandler &cHand
 {
 }
 
+
+//[-------------------------------------------------------]
+//[ Protected virtual PLRenderer::Surface functions       ]
+//[-------------------------------------------------------]
+bool SurfaceWindowMacOSX::Init()
+{
+	// Is it fullscreen?
+	if (m_bIsFullscreen) {
+		// Get the MacOS X context implementation
+		ContextMacOSX &cContextMacOSX = static_cast<ContextMacOSX&>(static_cast<Renderer&>(GetRenderer()).GetContext());
+			
+		// [TODO] Switch to the requested resolution
+			
+		// Attach rendering context to a fullscreen drawable object
+		return (CGLSetFullScreenOnDisplay(cContextMacOSX.GetRenderContext(), CGDisplayIDToOpenGLDisplayMask(kCGDirectMainDisplay)) == kCGLNoError);
+	} else {
+		// CGL only supports fullscreen rendering
+	}
+		
+	// Error!
+	return false;
+}
+	
+void SurfaceWindowMacOSX::DeInit()
+{
+	// Is it fullscreen?
+	if (m_bIsFullscreen) {
+		// Get the MacOS X context implementation
+		ContextMacOSX &cContextMacOSX = static_cast<ContextMacOSX&>(static_cast<Renderer&>(GetRenderer()).GetContext());
+			
+		// Disassociat rendering context from any drawable objects attached to it
+		CGLClearDrawable(cContextMacOSX.GetRenderContext());
+			
+		// [TODO] Restore the previous resolution
+	} else {
+		// CGL only supports fullscreen rendering
+	}
+}
+	
+bool SurfaceWindowMacOSX::MakeCurrent(uint8 nFace)
+{
+	// Get the MacOS X context implementation
+	ContextMacOSX &cContextMacOSX = static_cast<ContextMacOSX&>(static_cast<Renderer&>(GetRenderer()).GetContext());
+		
+	// Set the current rendering context
+	return (CGLSetCurrentContext(cContextMacOSX.GetRenderContext())== kCGLNoError);;
+}
+	
+bool SurfaceWindowMacOSX::Present()
+{
+	// Get the MacOS X context implementation
+	ContextMacOSX &cContextMacOSX = static_cast<ContextMacOSX&>(static_cast<Renderer&>(GetRenderer()).GetContext());
+		
+	// Set the current rendering context
+	return (CGLFlushDrawable(cContextMacOSX.GetRenderContext())== kCGLNoError);;
+}
+	
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

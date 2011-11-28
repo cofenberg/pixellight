@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <ApplicationServices/ApplicationServices.h>	// "#include <CoreGraphics/CGDirectDisplay.h>" would do the job, but on Apple we're forced to use the "framework"-approach instead of addressing headers the natural way, and this one here is a "sub-framework" which can't be addressed directly, so we have to use this overkill approach and this really long comment
 #include "PLRendererOpenGL/Extensions.h"	// Include this before including the funny Apple headers, if we don't, the result will be "error: ‘PFNGLBINDBUFFERRANGEEXTPROC’ does not name a type" and x-more of those...
 #include <OpenGL/OpenGL.h>
 #include <PLCore/Log/Log.h>
@@ -39,6 +40,33 @@
 using namespace PLCore;
 using namespace PLMath;
 namespace PLRendererOpenGL {
+
+	
+//[-------------------------------------------------------]
+//[ Global functions methods                              ]
+//[-------------------------------------------------------]
+/**
+ *  @brief
+ *    Returns the number of color bits from a given display mode
+ *
+ *  @param[in] pCGDisplayMode
+ *    Display mode to return the number of color bits from
+ *
+ *  @return
+ *    The number of color bits from the given display mode, 0 on error
+ */
+uint32 GetColorBitsFromDisplayMode(CGDisplayModeRef pCGDisplayMode)
+{
+	uint32 nColorBits = 0;
+	const CFStringRef psString = CGDisplayModeCopyPixelEncoding(pCGDisplayMode);
+	if (CFStringCompare(psString, CFSTR(IO8BitIndexedPixels), kCFCompareCaseInsensitive) == kCFCompareEqualTo)
+		nColorBits = 8;
+	else if (CFStringCompare(psString, CFSTR(IO16BitDirectPixels), kCFCompareCaseInsensitive) == kCFCompareEqualTo)
+		nColorBits = 16;
+	else if (CFStringCompare(psString, CFSTR(IO32BitDirectPixels), kCFCompareCaseInsensitive) == kCFCompareEqualTo)
+		nColorBits = 32;
+	return nColorBits;
+}
 
 
 //[-------------------------------------------------------]
@@ -188,27 +216,6 @@ bool ContextMacOSX::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &lst
 
 	// Done
 	return true;
-}
-
-
-//[-------------------------------------------------------]
-//[ Private methods                                       ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the number of color bits from a given display mode
-*/
-uint32 ContextMacOSX::GetColorBitsFromDisplayMode(CGDisplayModeRef pCGDisplayMode) const
-{
-	uint32 nColorBits = 0;
-	const CFStringRef psString = CGDisplayModeCopyPixelEncoding(pCGDisplayMode);
-	if (CFStringCompare(psString, CFSTR(IO8BitIndexedPixels), kCFCompareCaseInsensitive) == kCFCompareEqualTo)
-		nColorBits = 8;
-	else if (CFStringCompare(psString, CFSTR(IO16BitDirectPixels), kCFCompareCaseInsensitive) == kCFCompareEqualTo)
-		nColorBits = 16;
-	else if (CFStringCompare(psString, CFSTR(IO32BitDirectPixels), kCFCompareCaseInsensitive) == kCFCompareEqualTo)
-		nColorBits = 32;
-	return nColorBits;
 }
 
 

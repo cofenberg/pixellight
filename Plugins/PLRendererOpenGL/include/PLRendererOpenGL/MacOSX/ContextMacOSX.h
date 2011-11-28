@@ -29,7 +29,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <OpenGL/CGLTypes.h>
-#include <CGDirectDisplay.h>	// [TODO] Should be <CoreGraphics/CGDirectDisplay.h> -> See CMakeLists.txt of this project
 #include "PLRendererOpenGL/Context.h"
 
 
@@ -100,23 +99,6 @@ class ContextMacOSX : public Context {
 		virtual bool IsValid() const override;
 		virtual void MakeDummyCurrent() const override;
 		virtual bool QueryDisplayModes(PLCore::Array<const PLRenderer::DisplayMode*> &lstDisplayModeList) override;
-
-
-	//[-------------------------------------------------------]
-	//[ Private methods                                       ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Returns the number of color bits from a given display mode
-		*
-		*  @param[in] pCGDisplayMode
-		*    Display mode to return the number of color bits from
-		*
-		*  @return
-		*    The number of color bits from the given display mode, 0 on error
-		*/
-		PLCore::uint32 GetColorBitsFromDisplayMode(CGDisplayModeRef pCGDisplayMode) const;
 
 
 	//[-------------------------------------------------------]
