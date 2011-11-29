@@ -8,6 +8,8 @@
 [CO]
 - CMake: As discussed in the research project meeting yesterday: Added a trigger to make it possible to disable the build of the samples
 - PLInstall: Code style review
+- PLInstall: Visual Studio project file: Disabled annoying "warning C4127: conditional expression is constant"-warning, it's within the Qt
+  headers were we can't change anything in there :/
 
 
 
