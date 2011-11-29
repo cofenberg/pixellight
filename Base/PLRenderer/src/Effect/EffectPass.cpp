@@ -491,13 +491,8 @@ Program *EffectPass::GetProgram()
 		// Get the shader language to use
 		ShaderLanguage *pShaderLanguage = m_pVertexShader->GetRenderer().GetShaderLanguage(m_pVertexShader->GetShaderLanguage());
 		if (pShaderLanguage) {
-			// Create a program instance
-			m_pProgram = pShaderLanguage->CreateProgram();
-			if (m_pProgram) {
-				// Assign the vertex and fragment shaders to the program
-				m_pProgram->SetVertexShader(m_pVertexShader);
-				m_pProgram->SetFragmentShader(m_pFragmentShader);
-			}
+			// Create a program instance and assign the created vertex and fragment shaders to it
+			m_pProgram = pShaderLanguage->CreateProgram(m_pVertexShader, m_pFragmentShader);
 		}
 	}
 

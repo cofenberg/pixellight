@@ -322,13 +322,9 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 					// Create a fragment shader instance
 					m_pBloomFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode);
 
-					// Create a program instance
-					m_pBloomProgram = pShaderLanguage->CreateProgram();
+					// Create a program instance and assign the created vertex and fragment shaders to it
+					m_pBloomProgram = pShaderLanguage->CreateProgram(m_pBloomVertexShader, m_pBloomFragmentShader);
 					if (m_pBloomProgram) {
-						// Assign the created vertex and fragment shaders to the program
-						m_pBloomProgram->SetVertexShader(m_pBloomVertexShader);
-						m_pBloomProgram->SetFragmentShader(m_pBloomFragmentShader);
-
 						// Add our nark which will inform us as soon as the program gets dirty
 						m_pBloomProgram->EventDirty.Connect(EventHandlerDirty);
 

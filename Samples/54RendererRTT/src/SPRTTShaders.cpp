@@ -136,13 +136,8 @@ SPRTTShaders::SPRTTShaders(Renderer &cRenderer) : SPRTT(cRenderer),
 			// -> I define a Cg profile because when using an GLSL Cg profile (which is the default), the shader is not working correctly on my AMD/ATI ("AMD Catalyst™ 11.3") system while it worked on the tested NVIDIA system...
 			m_pSceneFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode, "arbfp1");
 
-			// Create a program instance
-			m_pSceneProgram = pShaderLanguage->CreateProgram();
-			if (m_pSceneProgram) {
-				// Assign the created vertex and fragment shaders to the program
-				m_pSceneProgram->SetVertexShader(m_pSceneVertexShader);
-				m_pSceneProgram->SetFragmentShader(m_pSceneFragmentShader);
-			}
+			// Create a program instance and assign the created vertex and fragment shaders to it
+			m_pSceneProgram = pShaderLanguage->CreateProgram(m_pSceneVertexShader, m_pSceneFragmentShader);
 		}
 
 		{ // Program
@@ -175,13 +170,8 @@ SPRTTShaders::SPRTTShaders(Renderer &cRenderer) : SPRTT(cRenderer),
 			// -> I define a Cg profile because when using an GLSL Cg profile (which is the default), the shader is not working correctly on my AMD/ATI ("AMD Catalyst™ 11.3") system while it worked on the tested NVIDIA system...
 			m_pFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode, "arbfp1");
 
-			// Create a program instance
-			m_pProgram = pShaderLanguage->CreateProgram();
-			if (m_pProgram) {
-				// Assign the created vertex and fragment shaders to the program
-				m_pProgram->SetVertexShader(m_pVertexShader);
-				m_pProgram->SetFragmentShader(m_pFragmentShader);
-			}
+			// Create a program instance and assign the created vertex and fragment shaders to it
+			m_pProgram = pShaderLanguage->CreateProgram(m_pVertexShader, m_pFragmentShader);
 		}
 	}
 }

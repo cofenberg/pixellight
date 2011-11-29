@@ -137,13 +137,9 @@ SPK_PLLineTrailRendererShaders::SPK_PLLineTrailRendererShaders(PLRenderer::Rende
 			// Create a fragment shader instance
 			m_pFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode, "arbfp1");
 
-			// Create a program instance
-			m_pProgram = pShaderLanguage->CreateProgram();
+			// Create a program instance and assign the created vertex and fragment shaders to it
+			m_pProgram = pShaderLanguage->CreateProgram(m_pVertexShader, m_pFragmentShader);
 			if (m_pProgram) {
-				// Assign the created vertex and fragment shaders to the program
-				m_pProgram->SetVertexShader(m_pVertexShader);
-				m_pProgram->SetFragmentShader(m_pFragmentShader);
-
 				// Add our nark which will inform us as soon as the program gets dirty
 				m_pProgram->EventDirty.Connect(*m_pEventHandlerDirty);
 

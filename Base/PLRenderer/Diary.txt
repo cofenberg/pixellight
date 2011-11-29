@@ -2,6 +2,7 @@
 [CO]
 - "ShaderLanguage": Added comfort methods "CreateVertexShader()", "CreateGeometryShader()" and "CreateFragmentShader()" creating a shader instance and
   setting the shader source code at once
+- "ShaderLanguage": Added comfort methods "CreateProgram()" creating a GPU program and assigning shaders at once
 
 
 

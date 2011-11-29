@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLRenderer/Renderer/Program.h"
 #include "PLRenderer/Renderer/VertexShader.h"
 #include "PLRenderer/Renderer/FragmentShader.h"
 #include "PLRenderer/Renderer/ShaderLanguage.h"
@@ -93,6 +94,43 @@ FragmentShader *ShaderLanguage::CreateFragmentShader(const String &sSourceCode, 
 
 	// Return the created fragment shader instance
 	return pFragmentShader;
+}
+
+/**
+*  @brief
+*    Creates a program and assigns a vertex and fragment shader to it
+*/
+Program *ShaderLanguage::CreateProgram(VertexShader *pVertexShader, FragmentShader *pFragmentShader)
+{
+	// Create a program instance
+	Program *pProgram = CreateProgram();
+	if (pProgram) {
+		// Assign the given vertex and fragment shaders to the program
+		pProgram->SetVertexShader(pVertexShader);
+		pProgram->SetFragmentShader(pFragmentShader);
+	}
+
+	// Return the created program instance
+	return pProgram;
+}
+
+/**
+*  @brief
+*    Creates a program and assigns a vertex, geometry and fragement shader to it
+*/
+Program *ShaderLanguage::CreateProgram(VertexShader *pVertexShader, GeometryShader *pGeometryShader, FragmentShader *pFragmentShader)
+{
+	// Create a program instance
+	Program *pProgram = CreateProgram();
+	if (pProgram) {
+		// Assign the given vertex, geometry and fragment shaders to the program
+		pProgram->SetVertexShader(pVertexShader);
+		pProgram->SetGeometryShader(pGeometryShader);
+		pProgram->SetFragmentShader(pFragmentShader);
+	}
+
+	// Return the created program instance
+	return pProgram;
 }
 
 

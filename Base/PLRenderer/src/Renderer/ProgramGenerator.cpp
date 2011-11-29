@@ -208,13 +208,9 @@ ProgramGenerator::GeneratedProgram *ProgramGenerator::GetProgram(const Flags &cF
 				// Get the shader language to use
 				ShaderLanguage *pShaderLanguage = m_pRenderer->GetShaderLanguage(m_sShaderLanguage);
 				if (pShaderLanguage) {
-					// Create a program instance
-					Program *pProgram = pShaderLanguage->CreateProgram();
+					// Create a program instance and assign the created vertex and fragment shaders to it
+					Program *pProgram = pShaderLanguage->CreateProgram(pVertexShader, pFragmentShader);
 					if (pProgram) {
-						// Assign the created vertex and fragment shaders to the program
-						pProgram->SetVertexShader(pVertexShader);
-						pProgram->SetFragmentShader(pFragmentShader);
-
 						// Create a generated program contained
 						pGeneratedProgram = new GeneratedProgram;
 						pGeneratedProgram->pProgram			    = pProgram;

@@ -137,6 +137,47 @@ class ShaderLanguage : public PLCore::Object {
 		*/
 		PLRENDERER_API FragmentShader *CreateFragmentShader(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "");
 
+		/**
+		*  @brief
+		*    Creates a program and assigns a vertex and fragment shader to it
+		*
+		*  @param[in] pVertexShader
+		*    Vertex shader the program is using, can be a null pointer, vertex shader and program language must match!
+		*  @param[in] pFragmentShader
+		*    Fragment shader the program is using, can be a null pointer, fragment shader and program language must match!
+		*
+		*  @return
+		*    The created program, a null pointer on error
+		*
+		*  @see
+		*    - Virtual "ShaderLanguage::CreateProgram()"-method
+		*    - "Program::SetVertexShader()"
+		*    - "Program::SetFragmentShader()"
+		*/
+		PLRENDERER_API Program *CreateProgram(VertexShader *pVertexShader, FragmentShader *pFragmentShader);
+
+		/**
+		*  @brief
+		*    Creates a program and assigns a vertex, geometry and fragement shader to it
+		*
+		*  @param[in] pVertexShader
+		*    Vertex shader the program is using, can be a null pointer, vertex shader and program language must match!
+		*  @param[in] pGeometryShader
+		*    Geometry shader the program is using, can be a null pointer, geometry shader and program language must match!
+		*  @param[in] pFragmentShader
+		*    Fragment shader the program is using, can be a null pointer, fragment shader and program language must match!
+		*
+		*  @return
+		*    The created program, a null pointer on error
+		*
+		*  @see
+		*    - Virtual "ShaderLanguage::CreateProgram()"-method
+		*    - "Program::SetVertexShader()"
+		*    - "Program::SetGeometryShader()"
+		*    - "Program::SetFragmentShader()"
+		*/
+		PLRENDERER_API Program *CreateProgram(VertexShader *pVertexShader, GeometryShader *pGeometryShader, FragmentShader *pFragmentShader);
+
 
 	//[-------------------------------------------------------]
 	//[ Public virtual ShaderLanguage functions               ]

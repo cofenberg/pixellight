@@ -222,37 +222,25 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 			m_pDownsampleFragmentShader    = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode_Downsample);
 			m_pDownsampleExpFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode_DownsampleExp);
 
-			// Create a program instance
-			m_pDownsampleLogProgram = pShaderLanguage->CreateProgram();
+			// Create a program instance and assign the created vertex and fragment shaders to it
+			m_pDownsampleLogProgram = pShaderLanguage->CreateProgram(m_pVertexShader, m_pDownsampleLogFragmentShader);
 			if (m_pDownsampleLogProgram) {
-				// Assign the created vertex and fragment shaders to the program
-				m_pDownsampleLogProgram->SetVertexShader(m_pVertexShader);
-				m_pDownsampleLogProgram->SetFragmentShader(m_pDownsampleLogFragmentShader);
-
 				// Add our nark which will inform us as soon as the program gets dirty
 				m_pDownsampleLogProgram->EventDirty.Connect(EventHandlerDirty);
 
 				// Get attributes and uniforms
 				OnDirty(m_pDownsampleLogProgram);
 			}
-			m_pDownsampleProgram = pShaderLanguage->CreateProgram();
+			m_pDownsampleProgram = pShaderLanguage->CreateProgram(m_pDownsampleVertexShader, m_pDownsampleFragmentShader);
 			if (m_pDownsampleProgram) {
-				// Assign the created vertex and fragment shaders to the program
-				m_pDownsampleProgram->SetVertexShader(m_pDownsampleVertexShader);
-				m_pDownsampleProgram->SetFragmentShader(m_pDownsampleFragmentShader);
-
 				// Add our nark which will inform us as soon as the program gets dirty
 				m_pDownsampleProgram->EventDirty.Connect(EventHandlerDirty);
 
 				// Get attributes and uniforms
 				OnDirty(m_pDownsampleProgram);
 			}
-			m_pDownsampleExpProgram = pShaderLanguage->CreateProgram();
+			m_pDownsampleExpProgram = pShaderLanguage->CreateProgram(m_pVertexShader, m_pDownsampleExpFragmentShader);
 			if (m_pDownsampleExpProgram) {
-				// Assign the created vertex and fragment shaders to the program
-				m_pDownsampleExpProgram->SetVertexShader(m_pVertexShader);
-				m_pDownsampleExpProgram->SetFragmentShader(m_pDownsampleExpFragmentShader);
-
 				// Add our nark which will inform us as soon as the program gets dirty
 				m_pDownsampleExpProgram->EventDirty.Connect(EventHandlerDirty);
 

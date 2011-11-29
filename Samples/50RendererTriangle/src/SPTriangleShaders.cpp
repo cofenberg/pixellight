@@ -71,9 +71,6 @@ SPTriangleShaders::SPTriangleShaders(Renderer &cRenderer) : SPTriangle(cRenderer
 	// Decide which shader language should be used (for example "GLSL" or "Cg")
 	ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(cRenderer.GetDefaultShaderLanguage());
 	if (pShaderLanguage) {
-		// Create the uniform buffer instance, null pointer if for instance not supported
-		m_pUniformBuffer = pShaderLanguage->CreateUniformBuffer();
-
 		// Shader source code
 		String sVertexShaderSourceCode;
 		String sGeometryShaderSourceCode;
@@ -108,13 +105,11 @@ SPTriangleShaders::SPTriangleShaders(Renderer &cRenderer) : SPTriangle(cRenderer
 		// Create a fragment shader instance
 		m_pFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode);
 
-		// Create a program instance
-		m_pProgram = pShaderLanguage->CreateProgram();
+		// Create a program instance and assign the created vertex, geometry and fragment shaders to it
+		m_pProgram = pShaderLanguage->CreateProgram(m_pVertexShader, m_pGeometryShader, m_pFragmentShader);
 		if (m_pProgram) {
-			// Assign the created vertex, geometry and fragment shaders to the program
-			m_pProgram->SetVertexShader(m_pVertexShader);
-			m_pProgram->SetGeometryShader(m_pGeometryShader);
-			m_pProgram->SetFragmentShader(m_pFragmentShader);
+			// Create the uniform buffer instance, null pointer if for instance not supported
+			m_pUniformBuffer = pShaderLanguage->CreateUniformBuffer();
 
 			// Setup the uniform buffer (if there's one)
 			if (m_pUniformBuffer) {
