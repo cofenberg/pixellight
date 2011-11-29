@@ -379,9 +379,6 @@
     <ClCompile Include="src\System\ThreadLinux.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="src\System\ThreadWindows.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="src\System\Console.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -410,9 +407,6 @@
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="src\System\MutexLinux.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
-    <ClCompile Include="src\System\MutexWindows.cpp">
       <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="src\System\Pipe.cpp">
@@ -584,6 +578,15 @@
       <Filter>File</Filter>
     </ClCompile>
     <ClCompile Include="src\System\SystemMacOSX.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\MutexWindows_Mutex.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\MutexWindows_CriticalSection.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\ThreadWindows.cpp">
       <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1116,9 +1119,6 @@
     <ClInclude Include="include\PLCore\System\ThreadLinux.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLCore\System\ThreadWindows.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLCore\System\Console.h">
       <Filter>System</Filter>
     </ClInclude>
@@ -1150,9 +1150,6 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\System\MutexLinux.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCore\System\MutexWindows.h">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\System\Pipe.h">
@@ -1339,6 +1336,15 @@
       <Filter>File</Filter>
     </ClInclude>
     <ClInclude Include="include\PLCore\System\SystemMacOSX.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\System\MutexWindows_CriticalSection.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\System\MutexWindows_Mutex.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\System\ThreadWindows.h">
       <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>

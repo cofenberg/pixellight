@@ -370,7 +370,8 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="src\System\MutexWindows.cpp" />
+    <ClCompile Include="src\System\MutexWindows_CriticalSection.cpp" />
+    <ClCompile Include="src\System\MutexWindows_Mutex.cpp" />
     <ClCompile Include="src\System\Pipe.cpp" />
     <ClCompile Include="src\System\Process.cpp" />
     <ClCompile Include="src\System\Semaphore.cpp" />
@@ -646,7 +647,8 @@
     <ClInclude Include="include\PLCore\System\MutexGuard.h" />
     <ClInclude Include="include\PLCore\System\MutexImpl.h" />
     <ClInclude Include="include\PLCore\System\MutexLinux.h" />
-    <ClInclude Include="include\PLCore\System\MutexWindows.h" />
+    <ClInclude Include="include\PLCore\System\MutexWindows_CriticalSection.h" />
+    <ClInclude Include="include\PLCore\System\MutexWindows_Mutex.h" />
     <ClInclude Include="include\PLCore\System\Pipe.h" />
     <ClInclude Include="include\PLCore\System\Process.h" />
     <ClInclude Include="include\PLCore\System\Semaphore.h" />

@@ -74,6 +74,23 @@ class Mutex {
 
 		/**
 		*  @brief
+		*    Constructor
+		*
+		*  @param[in] bCriticalSection
+		*    If supported by the platform: 'true' to use "Critical Section" (lock/unlock only inside the same process) instead of "Mutex" (lock/unlock across multiple processes) implementation, else 'false'
+		*
+		*  @remarks
+		*    Platforms handle mutual exclusion implementations differently. POSIX only offeres "Mutex", while MS Windows
+		*    makes a difference between "Mutex" (lock/unlock across multiple processes) and "Critical Section"
+		*    (lock/unlock only inside the same process).
+		*
+		*  @note
+		*    - A new constructed mutex is unlocked by default
+		*/
+		PLCORE_API Mutex(bool bCriticalSection);
+
+		/**
+		*  @brief
 		*    Destructor
 		*/
 		PLCORE_API ~Mutex();

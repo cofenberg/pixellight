@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: MutexWindows.cpp                               *
+ *  File: MutexWindows_CriticalSection.cpp               *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/System/MutexWindows.h"
+#include "PLCore/System/MutexWindows_CriticalSection.h"
 
 
 //[-------------------------------------------------------]
@@ -39,42 +39,51 @@ namespace PLCore {
 *  @brief
 *    Constructor
 */
-MutexWindows::MutexWindows() :
-	m_hMutex(::CreateMutex(nullptr, false, nullptr))
+MutexWindows_CriticalSection::MutexWindows_CriticalSection()
 {
+	// Initialize system critical section
+	InitializeCriticalSectionAndSpinCount(&m_hCriticalSection, 0x00000400);
 }
 
 /**
 *  @brief
 *    Destructor
 */
-MutexWindows::~MutexWindows()
+MutexWindows_CriticalSection::~MutexWindows_CriticalSection()
 {
-	// Destroy system mutex
-	if (m_hMutex)
-		CloseHandle(m_hMutex);
+	// Release system critical section
+	DeleteCriticalSection(&m_hCriticalSection);
 }
 
 
 //[-------------------------------------------------------]
 //[ Private virtual MutexImpl functions                   ]
 //[-------------------------------------------------------]
-bool MutexWindows::Lock()
+bool MutexWindows_CriticalSection::Lock()
 {
-	// Lock mutex
-	return (m_hMutex && WaitForSingleObject(m_hMutex, INFINITE) == WAIT_OBJECT_0);
+	// Lock critical section
+	EnterCriticalSection(&m_hCriticalSection);
+
+	// Done
+	return true;
 }
 
-bool MutexWindows::TryLock(uint64 nTimeout)
+bool MutexWindows_CriticalSection::TryLock(uint64 nTimeout)
 {
-	// Lock mutex
-	return (m_hMutex && WaitForSingleObject(m_hMutex, static_cast<DWORD>(nTimeout)) == WAIT_OBJECT_0);
+	// Lock critical section - there's no timeout version of critical section lock
+	EnterCriticalSection(&m_hCriticalSection);
+
+	// Done
+	return true;
 }
 
-bool MutexWindows::Unlock()
+bool MutexWindows_CriticalSection::Unlock()
 {
-	// Release mutex
-	return (m_hMutex && ReleaseMutex(m_hMutex));
+	// Release critical section
+	LeaveCriticalSection(&m_hCriticalSection);
+
+	// Done
+	return true;
 }
 
 

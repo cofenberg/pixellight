@@ -197,7 +197,8 @@ if(WIN32)
 		src/System/ConsoleWindows.cpp
 		src/System/DynLibWindows.cpp
 		src/System/ThreadWindows.cpp
-		src/System/MutexWindows.cpp
+		src/System/MutexWindows_Mutex.cpp
+		src/System/MutexWindows_CriticalSection.cpp
 		src/System/SemaphoreWindows.cpp
 	)
 elseif(LINUX)

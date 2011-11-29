@@ -1,3 +1,13 @@
+>> 29.11.2011
+[CO]
+- Feature request "ID: 3443487" (http://sourceforge.net/tracker/index.php?func=detail&aid=3443487&group_id=507544&atid=2063685): Added critical section support to
+  the mutex implementation. This is a Windows specific thingy:
+  - "Mutex":            Lock/unlock across multiple processes
+  - "Critical Section": Lock/unlock only inside the same process
+  -> Default has to be "Mutex" to be on the safe universal side
+
+
+
 >> 26.11.2011
 [CO]
 - As feared yesterday, my "Socket::GetNumOfWaitingBytes()"-method wasn't really correct. As mentioned, my network topic experience is near to zero and to be honest,

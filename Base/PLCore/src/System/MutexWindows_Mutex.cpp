@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: MutexWindows.h                                 *
+ *  File: MutexWindows_Mutex.cpp                         *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,16 +20,10 @@
 \*********************************************************/
 
 
-#ifndef __PLCORE_MUTEX_WINDOWS_H__
-#define __PLCORE_MUTEX_WINDOWS_H__
-#pragma once
-
-
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/PLCoreWindowsIncludes.h"
-#include "PLCore/System/MutexImpl.h"
+#include "PLCore/System/MutexWindows_Mutex.h"
 
 
 //[-------------------------------------------------------]
@@ -39,61 +33,52 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Classes                                               ]
+//[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Windows 'Mutex' implementation
+*    Constructor
 */
-class MutexWindows : public MutexImpl {
+MutexWindows_Mutex::MutexWindows_Mutex() :
+	m_hMutex(::CreateMutex(nullptr, false, nullptr))
+{
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+MutexWindows_Mutex::~MutexWindows_Mutex()
+{
+	// Destroy system mutex
+	if (m_hMutex)
+		CloseHandle(m_hMutex);
+}
 
 
-	//[-------------------------------------------------------]
-	//[ Friends                                               ]
-	//[-------------------------------------------------------]
-	friend class Mutex;
+//[-------------------------------------------------------]
+//[ Private virtual MutexImpl functions                   ]
+//[-------------------------------------------------------]
+bool MutexWindows_Mutex::Lock()
+{
+	// Lock mutex
+	return (m_hMutex && WaitForSingleObject(m_hMutex, INFINITE) == WAIT_OBJECT_0);
+}
 
+bool MutexWindows_Mutex::TryLock(uint64 nTimeout)
+{
+	// Lock mutex
+	return (m_hMutex && WaitForSingleObject(m_hMutex, static_cast<DWORD>(nTimeout)) == WAIT_OBJECT_0);
+}
 
-	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Constructor
-		*/
-		MutexWindows();
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		virtual ~MutexWindows();
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual MutexImpl functions                   ]
-	//[-------------------------------------------------------]
-	private:
-		virtual bool Lock() override;
-		virtual bool TryLock(uint64 nTimeout) override;
-		virtual bool Unlock() override;
-
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
-		HANDLE m_hMutex;	/**< System mutex handle */
-
-
-};
+bool MutexWindows_Mutex::Unlock()
+{
+	// Release mutex
+	return (m_hMutex && ReleaseMutex(m_hMutex));
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
-
-
-#endif // __PLCORE_MUTEX_WINDOWS_H__
