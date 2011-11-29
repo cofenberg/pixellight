@@ -23,10 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/System/System.h"
-#include "PLCore/System/Console.h"
 #include "PLCore/File/File.h"
-#include "PLCore/String/String.h"
 #include "PLCore/String/RegEx.h"
 #include "PLCore/Xml/XmlDocument.h"
 #include "PLCore/Xml/XmlDeclaration.h"

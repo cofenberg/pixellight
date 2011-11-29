@@ -72,68 +72,6 @@ Semaphore::~Semaphore()
 		delete m_pSemaphoreImpl;
 }
 
-/**
-*  @brief
-*    Locks the semaphore
-*/
-bool Semaphore::Lock()
-{
-	// Lock semaphore
-	if (m_pSemaphoreImpl->Lock()) {
-		// Success
-		m_nValue--;
-		return true;
-	} else {
-		// Error!
-		return false;
-	}
-}
-
-/**
-*  @brief
-*    Locks the semaphore, but only wait until timeout
-*/
-bool Semaphore::TryLock(uint64 nTimeout)
-{
-	// Lock semaphore
-	if (m_pSemaphoreImpl->TryLock(nTimeout)) {
-		// Success
-		m_nValue--;
-		return true;
-	} else {
-		// Error!
-		return false;
-	}
-}
-
-/**
-*  @brief
-*    Unlocks the semaphore
-*/
-bool Semaphore::Unlock()
-{
-	// Release semaphore
-	m_nValue++;
-	if (m_pSemaphoreImpl->Unlock()) {
-		// Success
-		return true;
-	} else {
-		// Error!
-		m_nValue--;
-		return false;
-	}
-}
-
-/**
-*  @brief
-*    Gets the current value of the semaphore
-*/
-uint32 Semaphore::GetValue() const
-{
-	// Return semaphore value
-	return m_nValue;
-}
-
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]

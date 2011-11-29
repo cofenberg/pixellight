@@ -1540,5 +1540,44 @@
     <None Include="include\PLCore\Tools\Tools.inl">
       <Filter>Tools</Filter>
     </None>
+    <None Include="include\PLCore\File\FileObject.inl">
+      <Filter>File</Filter>
+    </None>
+    <None Include="include\PLCore\File\File.inl">
+      <Filter>File</Filter>
+    </None>
+    <None Include="include\PLCore\File\Directory.inl">
+      <Filter>File</Filter>
+    </None>
+    <None Include="include\PLCore\File\Url.inl">
+      <Filter>File</Filter>
+    </None>
+    <None Include="include\PLCore\System\System.inl">
+      <Filter>System</Filter>
+    </None>
+    <None Include="include\PLCore\System\DynLib.inl">
+      <Filter>System</Filter>
+    </None>
+    <None Include="include\PLCore\System\Mutex.inl">
+      <Filter>System</Filter>
+    </None>
+    <None Include="include\PLCore\System\Semaphore.inl">
+      <Filter>System</Filter>
+    </None>
+    <None Include="include\PLCore\System\Thread.inl">
+      <Filter>System</Filter>
+    </None>
+    <None Include="include\PLCore\File\FileSearch.inl">
+      <Filter>File</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\Timing.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\String\Tokenizer.inl">
+      <Filter>String</Filter>
+    </None>
+    <None Include="include\PLCore\String\RegEx.inl">
+      <Filter>String</Filter>
+    </None>
   </ItemGroup>
 </Project>

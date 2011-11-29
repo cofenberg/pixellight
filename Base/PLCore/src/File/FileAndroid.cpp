@@ -27,6 +27,7 @@
 #include <stdint.h>	// For e.g. "size_t"
 #include <android/asset_manager.h>
 #include "PLCore/System/SystemAndroid.h"
+#include "PLCore/File/File.h"
 #include "PLCore/File/FileSearchAndroid.h"
 #include "PLCore/File/FileAndroid.h"
 
@@ -295,7 +296,7 @@ bool FileAndroid::Flush()
 	return false;
 }
 
-bool FileAndroid::Seek(int32 nOffset, File::ESeek nLocation)
+bool FileAndroid::Seek(int32 nOffset, uint32 nLocation)
 {
 	// Check file pointer
 	if (m_pAAsset) {

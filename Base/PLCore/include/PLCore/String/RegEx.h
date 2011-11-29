@@ -108,7 +108,7 @@ class RegEx {
 		*  @brief
 		*    Constructor
 		*/
-		PLCORE_API RegEx();
+		inline RegEx();
 
 		/**
 		*  @brief
@@ -119,7 +119,7 @@ class RegEx {
 		*  @param[in] nFlags
 		*    Processing mode and encoding (combination of EFlags values)
 		*/
-		PLCORE_API RegEx(const String &sExpression, uint32 nFlags = MatchCaseSensitive | MatchGreedy);
+		inline RegEx(const String &sExpression, uint32 nFlags = MatchCaseSensitive | MatchGreedy);
 
 		/**
 		*  @brief
@@ -128,7 +128,7 @@ class RegEx {
 		*  @param[in] cRegEx
 		*    RegEx to copy
 		*/
-		PLCORE_API RegEx(const RegEx &cRegEx);
+		inline RegEx(const RegEx &cRegEx);
 
 		/**
 		*  @brief
@@ -146,7 +146,7 @@ class RegEx {
 		*  @return
 		*    Reference to this instance
 		*/
-		PLCORE_API RegEx &operator =(const RegEx &cRegEx);
+		inline RegEx &operator =(const RegEx &cRegEx);
 
 		/**
 		*  @brief
@@ -155,7 +155,7 @@ class RegEx {
 		*  @return
 		*    Regular expression
 		*/
-		PLCORE_API String GetExpression() const;
+		inline String GetExpression() const;
 
 		/**
 		*  @brief
@@ -175,7 +175,7 @@ class RegEx {
 		*  @return
 		*    Regular expression
 		*/
-		PLCORE_API bool IsValid() const;
+		inline bool IsValid() const;
 
 		/**
 		*  @brief
@@ -184,7 +184,7 @@ class RegEx {
 		*  @return
 		*    Mode and encoding flags (combination of EFlags values)
 		*/
-		PLCORE_API uint32 GetFlags() const;
+		inline uint32 GetFlags() const;
 
 		/**
 		*  @brief
@@ -193,7 +193,7 @@ class RegEx {
 		*  @return
 		*    'true', if the expression is treated case sensitive, else 'false'
 		*/
-		PLCORE_API bool IsCaseSensitive() const;
+		inline bool IsCaseSensitive() const;
 
 		/**
 		*  @brief
@@ -202,7 +202,7 @@ class RegEx {
 		*  @return
 		*    'true', if the matching is greedy, else 'false'
 		*/
-		PLCORE_API bool IsGreedy() const;
+		inline bool IsGreedy() const;
 
 		/**
 		*  @brief
@@ -211,7 +211,7 @@ class RegEx {
 		*  @return
 		*    'true', if ASCII encoding, else 'false'
 		*/
-		PLCORE_API bool IsASCII() const;
+		inline bool IsASCII() const;
 
 		/**
 		*  @brief
@@ -220,7 +220,7 @@ class RegEx {
 		*  @return
 		*    'true', if UTF8 encoding, else 'false'
 		*/
-		PLCORE_API bool IsUTF8() const;
+		inline bool IsUTF8() const;
 
 		/**
 		*  @brief
@@ -260,7 +260,7 @@ class RegEx {
 		*  @return
 		*    New byte position in the subject string after the last match
 		*/
-		PLCORE_API int GetPosition() const;
+		inline int GetPosition() const;
 
 		/**
 		*  @brief
@@ -269,7 +269,7 @@ class RegEx {
 		*  @return
 		*    List containing all matching groups
 		*/
-		PLCORE_API const Array<String> &GetResults() const;
+		inline const Array<String> &GetResults() const;
 
 		/**
 		*  @brief
@@ -281,7 +281,7 @@ class RegEx {
 		*  @return
 		*    The matching substring or ""
 		*/
-		PLCORE_API String GetResult(uint32 nIndex) const;
+		inline String GetResult(uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -290,7 +290,7 @@ class RegEx {
 		*  @return
 		*    Map containing all matching groups as pairs of name->substring
 		*/
-		PLCORE_API const Map<String, String> &GetNameResults() const;
+		inline const Map<String, String> &GetNameResults() const;
 
 		/**
 		*  @brief
@@ -302,13 +302,13 @@ class RegEx {
 		*  @return
 		*    The matching substring or ""
 		*/
-		PLCORE_API String GetNameResult(const String &sName) const;
+		inline String GetNameResult(const String &sName) const;
 
 		/**
 		*  @brief
 		*    Clear all results
 		*/
-		PLCORE_API void ClearResults();
+		inline void ClearResults();
 
 
 	//[-------------------------------------------------------]
@@ -351,6 +351,12 @@ class RegEx {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/String/RegEx.inl"
 
 
 #endif // __PLCORE_REGEX_H__

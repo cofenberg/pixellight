@@ -109,7 +109,7 @@ class File : public FileObject {
 		*  @brief
 		*    Constructor
 		*/
-		PLCORE_API File();
+		inline File();
 
 		/**
 		*  @brief
@@ -120,7 +120,7 @@ class File : public FileObject {
 		*  @param[in] pAccess
 		*    Additional file access information (can be a null pointer)
 		*/
-		PLCORE_API File(const String &sUrl, const FileAccess *pAccess = nullptr);
+		inline File(const String &sUrl, const FileAccess *pAccess = nullptr);
 
 		/**
 		*  @brief
@@ -131,7 +131,7 @@ class File : public FileObject {
 		*  @param[in] pAccess
 		*    Additional file access information (can be a null pointer)
 		*/
-		PLCORE_API File(const Url &cUrl, const FileAccess *pAccess = nullptr);
+		inline File(const Url &cUrl, const FileAccess *pAccess = nullptr);
 
 		/**
 		*  @brief
@@ -142,7 +142,7 @@ class File : public FileObject {
 		*  @param[in] nAccess
 		*    Access flags that were used to open the stream
 		*/
-		PLCORE_API File(FILE *pFile, uint32 nAccess);
+		inline File(FILE *pFile, uint32 nAccess);
 
 		/**
 		*  @brief
@@ -158,7 +158,7 @@ class File : public FileObject {
 		*      low level io functions, you need to convert the HANDLE to a
 		*      file handle by yourself (see _open_osfhandle).
 		*/
-		PLCORE_API File(handle hFile);
+		inline File(handle hFile);
 
 		/**
 		*  @brief
@@ -183,7 +183,7 @@ class File : public FileObject {
 		*  @note
 		*    - The file is closed automatically
 		*/
-		PLCORE_API virtual ~File();
+		inline virtual ~File();
 
 		/**
 		*  @brief
@@ -195,7 +195,7 @@ class File : public FileObject {
 		*  @return
 		*    'true', if all went fine, else 'false'
 		*/
-		PLCORE_API bool Create(bool bAlways = false);
+		inline bool Create(bool bAlways = false);
 
 		/**
 		*  @brief
@@ -204,7 +204,7 @@ class File : public FileObject {
 		*  @return
 		*    'true', if all went fine, else 'false'
 		*/
-		PLCORE_API bool Delete();
+		inline bool Delete();
 
 		/**
 		*  @brief
@@ -230,7 +230,7 @@ class File : public FileObject {
 		*  @brief
 		*    Close the file
 		*/
-		PLCORE_API void Close();
+		inline void Close();
 
 		/**
 		*  @brief
@@ -242,7 +242,7 @@ class File : public FileObject {
 		*  @see
 		*    - GetMemoryBuffer()
 		*/
-		PLCORE_API bool IsMemoryBuffered() const;
+		inline bool IsMemoryBuffered() const;
 
 		/**
 		*  @brief
@@ -251,7 +251,7 @@ class File : public FileObject {
 		*  @return
 		*    'true', if the file is open, else 'false'
 		*/
-		PLCORE_API bool IsOpen() const;
+		inline bool IsOpen() const;
 
 		/**
 		*  @brief
@@ -260,7 +260,7 @@ class File : public FileObject {
 		*  @return
 		*    'true', if the file can be read, else 'false'
 		*/
-		PLCORE_API bool IsReadable() const;
+		inline bool IsReadable() const;
 
 		/**
 		*  @brief
@@ -269,7 +269,7 @@ class File : public FileObject {
 		*  @return
 		*    'true', if the file can be written, else 'false'
 		*/
-		PLCORE_API bool IsWritable() const;
+		inline bool IsWritable() const;
 
 		/**
 		*  @brief
@@ -278,7 +278,7 @@ class File : public FileObject {
 		*  @return
 		*    String encoding format to use when dealing with string functions
 		*/
-		PLCORE_API String::EFormat GetStringFormat() const;
+		inline String::EFormat GetStringFormat() const;
 
 		/**
 		*  @brief
@@ -287,7 +287,7 @@ class File : public FileObject {
 		*  @return
 		*    'true', if the end of the file has been reached, else 'false'
 		*/
-		PLCORE_API bool IsEof() const;
+		inline bool IsEof() const;
 
 		/**
 		*  @brief
@@ -296,7 +296,7 @@ class File : public FileObject {
 		*  @return
 		*    A character from file, < 0 if there was an error
 		*/
-		PLCORE_API int GetC();
+		inline int GetC();
 
 		/**
 		*  @brief
@@ -308,7 +308,7 @@ class File : public FileObject {
 		*  @return
 		*    'true' if all went fine, else 'false' (maybe file is read only)
 		*/
-		PLCORE_API bool PutC(int nChar);
+		inline bool PutC(int nChar);
 
 		/**
 		*  @brief
@@ -317,7 +317,7 @@ class File : public FileObject {
 		*  @return
 		*    Read string
 		*/
-		PLCORE_API String GetS();
+		inline String GetS();
 
 		/**
 		*  @brief
@@ -329,7 +329,7 @@ class File : public FileObject {
 		*  @return
 		*    Number of bytes written, 0 if nothing was written, < 0 if there was an error
 		*/
-		PLCORE_API int PutS(const String &sString);
+		inline int PutS(const String &sString);
 
 		/**
 		*  @brief
@@ -345,7 +345,7 @@ class File : public FileObject {
 		*  @return
 		*    Number of fully read items, if != 'nCount' an error occurred
 		*/
-		PLCORE_API uint32 Read(void *pBuffer, uint32 nSize, uint32 nCount);
+		inline uint32 Read(void *pBuffer, uint32 nSize, uint32 nCount);
 
 		/**
 		*  @brief
@@ -361,7 +361,7 @@ class File : public FileObject {
 		*  @return
 		*    Number of fully written items, if != 'nCount' an error occurred
 		*/
-		PLCORE_API uint32 Write(const void *pBuffer, uint32 nSize, uint32 nCount);
+		inline uint32 Write(const void *pBuffer, uint32 nSize, uint32 nCount);
 
 		/**
 		*  @brief
@@ -373,7 +373,7 @@ class File : public FileObject {
 		*  @remarks
 		*    Writes down all temporarily buffered data.
 		*/
-		PLCORE_API bool Flush();
+		inline bool Flush();
 
 		/**
 		*  @brief
@@ -387,7 +387,7 @@ class File : public FileObject {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool Seek(int32 nOffset = 0, ESeek nLocation = SeekSet);
+		inline bool Seek(int32 nOffset = 0, ESeek nLocation = SeekSet);
 
 		/**
 		*  @brief
@@ -396,7 +396,7 @@ class File : public FileObject {
 		*  @return
 		*    The current byte position of the file pointer, < 0 if there was an error
 		*/
-		PLCORE_API int32 Tell() const;
+		inline int32 Tell() const;
 
 		/**
 		*  @brief
@@ -405,7 +405,7 @@ class File : public FileObject {
 		*  @return
 		*    File size in bytes
 		*/
-		PLCORE_API uint32 GetSize() const;
+		inline uint32 GetSize() const;
 
 		/**
 		*  @brief
@@ -417,7 +417,7 @@ class File : public FileObject {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool Print(const String &sString);
+		inline bool Print(const String &sString);
 
 		/**
 		*  @brief
@@ -429,7 +429,7 @@ class File : public FileObject {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool PrintLn(const String &sString);
+		inline bool PrintLn(const String &sString);
 
 		/**
 		*  @brief
@@ -441,7 +441,7 @@ class File : public FileObject {
 		*  @see
 		*    - IsMemoryBuffered()
 		*/
-		PLCORE_API const uint8 *GetMemoryBuffer() const;
+		inline const uint8 *GetMemoryBuffer() const;
 
 		/**
 		*  @brief
@@ -496,7 +496,7 @@ class File : public FileObject {
 		*  @brief
 		*    Close the file (for memory buffered files)
 		*/
-		void MemBufClose();
+		PLCORE_API void MemBufClose();
 
 		/**
 		*  @brief
@@ -505,7 +505,7 @@ class File : public FileObject {
 		*  @return
 		*    A character from file, < 0 if there was an error
 		*/
-		int MemBufGetC();
+		PLCORE_API int MemBufGetC();
 
 		/**
 		*  @brief
@@ -514,7 +514,7 @@ class File : public FileObject {
 		*  @return
 		*    Read string
 		*/
-		String MemBufGetS();
+		PLCORE_API String MemBufGetS();
 
 		/**
 		*  @brief
@@ -530,7 +530,7 @@ class File : public FileObject {
 		*  @return
 		*    Number of fully read items, if != 'nCount' an error occurred
 		*/
-		uint32 MemBufRead(void *pBuffer, uint32 nSize, uint32 nCount);
+		PLCORE_API uint32 MemBufRead(void *pBuffer, uint32 nSize, uint32 nCount);
 
 		/**
 		*  @brief
@@ -544,7 +544,7 @@ class File : public FileObject {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool MemBufSeek(int32 nOffset, ESeek nLocation);
+		PLCORE_API bool MemBufSeek(int32 nOffset, ESeek nLocation);
 
 
 	//[-------------------------------------------------------]
@@ -577,6 +577,12 @@ class File : public FileObject {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/File/File.inl"
 
 
 #endif // __PLCORE_FILE_H__

@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLCore/System/Thread.h"
 #include "PLCore/System/ThreadWindows.h"
 
 
@@ -165,7 +166,7 @@ bool ThreadWindows::Join(uint64 nTimeout)
 	return false;
 }
 
-Thread::EPriorityClass ThreadWindows::GetPriorityClass() const
+uint32 ThreadWindows::GetPriorityClass() const
 {
 	// Call OS function
 	const DWORD dwPriorityClass = ::GetPriorityClass(m_hThread);
@@ -182,7 +183,7 @@ Thread::EPriorityClass ThreadWindows::GetPriorityClass() const
 	}
 }
 
-bool ThreadWindows::SetPriorityClass(Thread::EPriorityClass nPriorityClass)
+bool ThreadWindows::SetPriorityClass(uint32 nPriorityClass)
 {
 	// Wrap the priority setting
 	DWORD dwPriorityClass;
@@ -200,7 +201,7 @@ bool ThreadWindows::SetPriorityClass(Thread::EPriorityClass nPriorityClass)
 	return (::SetPriorityClass(m_hThread, dwPriorityClass) != 0);
 }
 
-Thread::EPriority ThreadWindows::GetPriority() const
+uint32 ThreadWindows::GetPriority() const
 {
 	// Call OS function
 	const int nPriority = ::GetThreadPriority(m_hThread);
@@ -218,7 +219,7 @@ Thread::EPriority ThreadWindows::GetPriority() const
 	}
 }
 
-bool ThreadWindows::SetPriority(Thread::EPriority nPriority)
+bool ThreadWindows::SetPriority(uint32 nPriority)
 {
 	// Wrap the priority setting
 	int nWindowsPriority;

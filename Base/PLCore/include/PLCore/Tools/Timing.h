@@ -66,8 +66,8 @@ class Timing : public Singleton<Timing> {
 	// -> We can't break legacy compiler support, especially when only the singletons are responsible for the break
 	// -> See PLCore::Singleton for more details about singletons
 	public:
-		PLCORE_API static Timing *GetInstance();
-		PLCORE_API static bool HasInstance();
+		static PLCORE_API Timing *GetInstance();
+		static PLCORE_API bool HasInstance();
 
 
 	//[-------------------------------------------------------]
@@ -84,7 +84,7 @@ class Timing : public Singleton<Timing> {
 		*  @return
 		*    'true' if the timing is active, else 'false'
 		*/
-		PLCORE_API bool IsActive() const;
+		inline bool IsActive() const;
 
 		/**
 		*  @brief
@@ -98,7 +98,7 @@ class Timing : public Singleton<Timing> {
 		*      two frames will be always the maximum time difference
 		*    - Use it only for testing
 		*/
-		PLCORE_API void SetActive(bool bActive = true);
+		inline void SetActive(bool bActive = true);
 
 		/**
 		*  @brief
@@ -154,7 +154,7 @@ class Timing : public Singleton<Timing> {
 		*    avoid for instance sudden jumps through half of the universe. Further a maximum
 		*    time difference is applied to avoid any totally undesired results.
 		*/
-		PLCORE_API float GetTimeDifference() const;
+		inline float GetTimeDifference() const;
 
 		/**
 		*  @brief
@@ -166,7 +166,7 @@ class Timing : public Singleton<Timing> {
 		*  @note
 		*   - Use GetTimeDifference() instead this function whenever you can
 		*/
-		PLCORE_API float GetTimeDifferenceNoCompensating() const;
+		inline float GetTimeDifferenceNoCompensating() const;
 
 		/**
 		*  @brief
@@ -180,7 +180,7 @@ class Timing : public Singleton<Timing> {
 		*      value which would probably end in undefined problems.
 		*    - A maximum time difference of 0.15 is a good value
 		*/
-		PLCORE_API float GetMaxTimeDifference() const;
+		inline float GetMaxTimeDifference() const;
 
 		/**
 		*  @brief
@@ -192,7 +192,7 @@ class Timing : public Singleton<Timing> {
 		*  @see
 		*    - GetMaxTimeDifference()
 		*/
-		PLCORE_API void SetMaxTimeDifference(float fMaxTimeDifference = 0.15f);
+		inline void SetMaxTimeDifference(float fMaxTimeDifference = 0.15f);
 
 		/**
 		*  @brief
@@ -213,7 +213,7 @@ class Timing : public Singleton<Timing> {
 		*  @remarks
 		*    On each timing update, the current time difference is added to this general timing.
 		*/
-		PLCORE_API float GetTimer() const;
+		inline float GetTimer() const;
 
 		//[-------------------------------------------------------]
 		//[ Frames                                                ]
@@ -225,7 +225,7 @@ class Timing : public Singleton<Timing> {
 		*  @return
 		*    Current frames per second
 		*/
-		PLCORE_API float GetFramesPerSecond() const;
+		inline float GetFramesPerSecond() const;
 
 		/**
 		*  @brief
@@ -234,7 +234,7 @@ class Timing : public Singleton<Timing> {
 		*  @return
 		*    Current frames per second (FPS)
 		*/
-		PLCORE_API uint32 GetPastFrames() const;
+		inline uint32 GetPastFrames() const;
 
 		/**
 		*  @brief
@@ -249,7 +249,7 @@ class Timing : public Singleton<Timing> {
 		*    - Use a FPS limitation only in special situations!
 		*      (users love FPS over 100 even if its more or less senseless ;-)
 		*/
-		PLCORE_API float GetFPSLimit() const;
+		inline float GetFPSLimit() const;
 
 		/**
 		*  @brief
@@ -261,7 +261,7 @@ class Timing : public Singleton<Timing> {
 		*  @see
 		*    - GetFPSLimit()
 		*/
-		PLCORE_API void SetFPSLimit(float fFPSLimit = 0.0f);
+		inline void SetFPSLimit(float fFPSLimit = 0.0f);
 
 		//[-------------------------------------------------------]
 		//[ Time scale                                            ]
@@ -273,7 +273,7 @@ class Timing : public Singleton<Timing> {
 		*  @return
 		*    'true' if the timing is freezed at the moment, else 'false'
 		*/
-		PLCORE_API bool IsFreezed() const;
+		inline bool IsFreezed() const;
 
 		/**
 		*  @brief
@@ -299,7 +299,7 @@ class Timing : public Singleton<Timing> {
 		*    - If the timing is paused scene nodes, particles etc. are not updated
 		*    - The timing will still be updated
 		*/
-		PLCORE_API bool IsPaused() const;
+		inline bool IsPaused() const;
 
 		/**
 		*  @brief
@@ -308,7 +308,7 @@ class Timing : public Singleton<Timing> {
 		*  @param[in] bPause
 		*    Should the timing be paused or not?
 		*/
-		PLCORE_API void Pause(bool bPause = true);
+		inline void Pause(bool bPause = true);
 
 		/**
 		*  @brief
@@ -325,7 +325,7 @@ class Timing : public Singleton<Timing> {
 		*    - Do NOT make the factor 'too' (for example > 4) extreme, this may cause
 		*      problems in certain situations!
 		*/
-		PLCORE_API float GetTimeScaleFactor() const;
+		inline float GetTimeScaleFactor() const;
 
 		/**
 		*  @brief
@@ -340,7 +340,7 @@ class Timing : public Singleton<Timing> {
 		*  @see
 		*    - GetTimeScaleFactor()
 		*/
-		PLCORE_API bool SetTimeScaleFactor(float fFactor = 1.0f);
+		inline bool SetTimeScaleFactor(float fFactor = 1.0f);
 
 		/**
 		*  @brief
@@ -349,7 +349,7 @@ class Timing : public Singleton<Timing> {
 		*  @return
 		*    'true' is the slow motion mode is activated, else 'false'
 		*/
-		PLCORE_API bool IsSlowMotion() const;
+		inline bool IsSlowMotion() const;
 
 		/**
 		*  @brief
@@ -358,7 +358,7 @@ class Timing : public Singleton<Timing> {
 		*  @param[in] bSlowMotion
 		*    Should the slow motion mode be activated?
 		*/
-		PLCORE_API void SetSlowMotion(bool bSlowMotion = false);
+		inline void SetSlowMotion(bool bSlowMotion = false);
 
 		/**
 		*  @brief
@@ -380,7 +380,7 @@ class Timing : public Singleton<Timing> {
 		*    - Do NOT make the factor 'too' (for example > 4) extreme, this may cause
 		*      problems in certain situations!
 		*/
-		PLCORE_API float GetSlowMotionFactor(bool bRealUsed = true) const;
+		inline float GetSlowMotionFactor(bool bRealUsed = true) const;
 
 		/**
 		*  @brief
@@ -395,7 +395,7 @@ class Timing : public Singleton<Timing> {
 		*  @see
 		*    - GetSlowMotionFactor()
 		*/
-		PLCORE_API bool SetSlowMotionFactor(float fSlowMotionFactor = 1.0f);
+		inline bool SetSlowMotionFactor(float fSlowMotionFactor = 1.0f);
 
 		/**
 		*  @brief
@@ -413,7 +413,7 @@ class Timing : public Singleton<Timing> {
 		*      factor changes the game speed
 		*    - Use this factor to temporal slow motion effects
 		*/
-		PLCORE_API float GetCustomSlowMotionFactor(bool bRealUsed = true) const;
+		inline float GetCustomSlowMotionFactor(bool bRealUsed = true) const;
 
 		/**
 		*  @brief
@@ -428,7 +428,7 @@ class Timing : public Singleton<Timing> {
 		*  @see
 		*    - GetCustomSlowMotionFactor()
 		*/
-		PLCORE_API bool SetCustomSlowMotionFactor(float fSlowMotionFactor = 1.0f);
+		inline bool SetCustomSlowMotionFactor(float fSlowMotionFactor = 1.0f);
 
 
 	//[-------------------------------------------------------]
@@ -504,6 +504,12 @@ class Timing : public Singleton<Timing> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Tools/Timing.inl"
 
 
 #endif // __PLCORE_TIMING_H__

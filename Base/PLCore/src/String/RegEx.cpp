@@ -127,75 +127,12 @@ String RegEx::WildcardToRegEx(const String &sWildcard)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
-*/
-RegEx::RegEx() :
-	m_pPCRE(nullptr),
-	m_pExtra(nullptr),
-	m_nFlags(MatchCaseSensitive | MatchGreedy),
-	m_nPosition(0)
-{
-}
-
-/**
-*  @brief
-*    Constructor
-*/
-RegEx::RegEx(const String &sExpression, uint32 nFlags) :
-	m_pPCRE(nullptr),
-	m_pExtra(nullptr),
-	m_nFlags(nFlags),
-	m_nPosition(0)
-{
-	// Set expression
-	SetExpression(sExpression, nFlags);
-}
-
-/**
-*  @brief
-*    Copy constructor
-*/
-RegEx::RegEx(const RegEx &cRegEx) :
-	m_pPCRE(nullptr),
-	m_pExtra(nullptr),
-	m_nFlags(cRegEx.m_nFlags),
-	m_nPosition(0)
-{
-	// Copy expression
-	SetExpression(cRegEx.m_sExpression, cRegEx.m_nFlags);
-}
-
-/**
-*  @brief
 *    Destructor
 */
 RegEx::~RegEx()
 {
 	// Release expression
 	FreePCRE();
-}
-
-/**
-*  @brief
-*    Assignment operator
-*/
-RegEx &RegEx::operator =(const RegEx &cRegEx)
-{
-	// Copy expression
-	SetExpression(cRegEx.m_sExpression, cRegEx.m_nFlags);
-
-	// Return this instance
-	return *this;
-}
-
-/**
-*  @brief
-*    Get regular expression
-*/
-String RegEx::GetExpression() const
-{
-	// Return expression
-	return m_sExpression;
 }
 
 /**
@@ -222,61 +159,6 @@ void RegEx::SetExpression(const String &sExpression, uint32 nFlags)
 
 	// Compile expression
 	CompilePCRE();
-}
-
-/**
-*  @brief
-*    Check if the regular expression is valid
-*/
-bool RegEx::IsValid() const
-{
-	// Return valid flag
-	return (m_pPCRE != nullptr);
-}
-
-/**
-*  @brief
-*    Get mode and encoding flags
-*/
-uint32 RegEx::GetFlags() const
-{
-	return m_nFlags;
-}
-
-/**
-*  @brief
-*    Is the expression case sensitive?
-*/
-bool RegEx::IsCaseSensitive() const
-{
-	return ((m_nFlags & MatchCaseSensitive) != 0);
-}
-
-/**
-*  @brief
-*    Is the expression greedy?
-*/
-bool RegEx::IsGreedy() const
-{
-	return ((m_nFlags & MatchGreedy) != 0);
-}
-
-/**
-*  @brief
-*    Is ASCII encoding used?
-*/
-bool RegEx::IsASCII() const
-{
-	return ((m_nFlags & EncodingASCII) != 0);
-}
-
-/**
-*  @brief
-*    Is UTF8 encoding used?
-*/
-bool RegEx::IsUTF8() const
-{
-	return ((m_nFlags & EncodingUTF8) != 0);
 }
 
 /**
@@ -441,65 +323,6 @@ bool RegEx::Match(const String &sSubject, uint32 nPosition)
 
 	// Error!
 	return false;
-}
-
-/**
-*  @brief
-*    Get current byte position in the subject string
-*/
-int RegEx::GetPosition() const
-{
-	return m_nPosition;
-}
-
-/**
-*  @brief
-*    Get the results of the last check
-*/
-const Array<String> &RegEx::GetResults() const
-{
-	return m_lstGroups;
-}
-
-/**
-*  @brief
-*    Get a matching group from the last check
-*/
-String RegEx::GetResult(uint32 nIndex) const
-{
-	return m_lstGroups[nIndex];
-}
-
-/**
-*  @brief
-*    Get the results of the last check by name
-*/
-const Map<String, String> &RegEx::GetNameResults() const
-{
-	return m_mapGroups;
-}
-
-/**
-*  @brief
-*    Get a matching group from the last check by name
-*/
-String RegEx::GetNameResult(const String &sName) const
-{
-	return m_mapGroups.Get(sName);
-}
-
-/**
-*  @brief
-*    Clear all results
-*/
-void RegEx::ClearResults()
-{
-	// Clear lists
-	m_lstGroups.Reset();
-	m_mapGroups.Clear();
-
-	// Reset byte position
-	m_nPosition = 0;
 }
 
 

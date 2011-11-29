@@ -72,8 +72,8 @@ class ScriptManager : public Singleton<ScriptManager> {
 	// -> We can't break legacy compiler support, especially when only the singletons are responsible for the break
 	// -> See PLCore::Singleton for more details about singletons
 	public:
-		PLCORE_API static ScriptManager *GetInstance();
-		PLCORE_API static bool HasInstance();
+		static PLCORE_API ScriptManager *GetInstance();
+		static PLCORE_API bool HasInstance();
 
 
 	//[-------------------------------------------------------]

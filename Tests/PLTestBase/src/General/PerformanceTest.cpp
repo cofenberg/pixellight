@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <stdlib.h> // For 'rand()'
-#include <PLCore/System/System.h>
+#include <PLCore/String/String.h>
 #include <PLCore/Tools/Stopwatch.h>
 #include <PLCore/Container/Array.h>
 #include <PLCore/Container/HashMap.h>

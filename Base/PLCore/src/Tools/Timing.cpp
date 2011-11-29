@@ -63,24 +63,6 @@ bool Timing::HasInstance()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns whether the timing is active or not
-*/
-bool Timing::IsActive() const
-{
-	return m_bActive;
-}
-
-/**
-*  @brief
-*    Sets whether the timing is active or not
-*/
-void Timing::SetActive(bool bActive)
-{
-	m_bActive = bActive;
-}
-
-/**
-*  @brief
 *    Resets the timing
 */
 void Timing::Reset()
@@ -190,42 +172,6 @@ bool Timing::Update(uint64 *pnTimeToWait)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the past time since last frame (in seconds)
-*/
-float Timing::GetTimeDifference() const
-{
-	return m_bFreezed ? 0.0f : m_fTimeDifference;
-}
-
-/**
-*  @brief
-*    Returns the past time since last frame without any clamping (seconds)
-*/
-float Timing::GetTimeDifferenceNoCompensating() const
-{
-	return m_bFreezed ? 0.0f : m_fTimeDifferenceNoCompensating;
-}
-
-/**
-*  @brief
-*    Returns the maximum time difference
-*/
-float Timing::GetMaxTimeDifference() const
-{
-	return m_fMaxTimeDifference;
-}
-
-/**
-*  @brief
-*    Sets the maximum time difference
-*/
-void Timing::SetMaxTimeDifference(float fMaxTimeDifference)
-{
-	m_fMaxTimeDifference = (fMaxTimeDifference > 0.0f) ? fMaxTimeDifference : 0.0001f;
-}
-
-/**
-*  @brief
 *    Returns the past time in milliseconds since the application start
 */
 uint64 Timing::GetPastTime() const
@@ -233,68 +179,10 @@ uint64 Timing::GetPastTime() const
 	return System::GetInstance()->GetMilliseconds() - m_nTimeStart;
 }
 
-/**
-*  @brief
-*    Returns a general timing
-*/
-float Timing::GetTimer() const
-{
-	return m_fTimer;
-}
-
-
-//[-------------------------------------------------------]
-//[ Frames                                                ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the current frames per second (FPS)
-*/
-float Timing::GetFramesPerSecond() const
-{
-	return m_fFramesPerSecond;
-}
-
-/**
-*  @brief
-*    Returns the number of past frames since timing start
-*/
-uint32 Timing::GetPastFrames() const
-{
-	return m_nPastFrames;
-}
-
-/**
-*  @brief
-*    Returns the FPS limit
-*/
-float Timing::GetFPSLimit() const
-{
-	return m_fFPSLimit;
-}
-
-/**
-*  @brief
-*    Sets the FPS limit
-*/
-void Timing::SetFPSLimit(float fFPSLimit)
-{
-	m_fFPSLimit = (fFPSLimit >= 0.0f) ? fFPSLimit : 0.0f;
-}
-
 
 //[-------------------------------------------------------]
 //[ Time scale                                            ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns if the timing is currently freezed or not
-*/
-bool Timing::IsFreezed() const
-{
-	return m_bFreezed;
-}
-
 /**
 *  @brief
 *    Set freezed mode
@@ -313,123 +201,6 @@ void Timing::Freeze(bool bFreeze)
 			m_nLastFPSUpdateTime += nTimeDifference;
 		}
 		m_bFreezed = false;
-	}
-}
-
-/**
-*  @brief
-*    Returns whether the timing is paused of not
-*/
-bool Timing::IsPaused() const
-{
-	return m_bPause;
-}
-
-/**
-*  @brief
-*    Set pause mode
-*/
-void Timing::Pause(bool bPause)
-{
-	m_bPause = bPause;
-}
-
-/**
-*  @brief
-*    Returns the time scale factor
-*/
-float Timing::GetTimeScaleFactor() const
-{
-	return m_fTimeScaleFactor;
-}
-
-/**
-*  @brief
-*    Sets the time scale factor
-*/
-bool Timing::SetTimeScaleFactor(float fFactor)
-{
-	if (fFactor > 0.0f) {
-		// Set the new factor
-		m_fTimeScaleFactor = fFactor;
-
-		// Done
-		return true;
-	} else {
-		// Error!
-		return false;
-	}
-}
-
-/**
-*  @brief
-*    Returns if the slow motion is activated or not
-*/
-bool Timing::IsSlowMotion() const
-{
-	return m_bSlowMotion;
-}
-
-/**
-*  @brief
-*    Activates/deactivates the slow motion mode
-*/
-void Timing::SetSlowMotion(bool bSlowMotion)
-{
-	m_bSlowMotion = bSlowMotion;
-}
-
-/**
-*  @brief
-*    Sets the custom slow motion factor
-*/
-float Timing::GetSlowMotionFactor(bool bRealUsed) const
-{
-	return bRealUsed && !m_bSlowMotion ? 1.0f : m_fSlowMotionFactor;
-}
-
-/**
-*  @brief
-*    Sets the slow motion factor
-*/
-bool Timing::SetSlowMotionFactor(float fSlowMotionFactor)
-{
-	if (fSlowMotionFactor > 0.0f) {
-		// Set the new factor
-		m_fSlowMotionFactor = fSlowMotionFactor;
-
-		// Done
-		return true;
-	} else {
-		// Error!
-		return false;
-	}
-}
-
-/**
-*  @brief
-*    Returns the custom slow motion factor
-*/
-float Timing::GetCustomSlowMotionFactor(bool bRealUsed) const
-{
-	return bRealUsed && !m_bSlowMotion ? 1.0f : m_fCustomSlowMotionFactor;
-}
-
-/**
-*  @brief
-*    Sets the custom slow motion factor
-*/
-bool Timing::SetCustomSlowMotionFactor(float fSlowMotionFactor)
-{
-	if (fSlowMotionFactor > 0.0f) {
-		// Set the new factor
-		m_fCustomSlowMotionFactor = fSlowMotionFactor;
-
-		// Done
-		return true;
-	} else {
-		// Error!
-		return false;
 	}
 }
 

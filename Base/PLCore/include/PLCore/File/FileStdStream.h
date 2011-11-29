@@ -125,7 +125,7 @@ class FileStdStream : public FileImpl {
 		virtual uint32 Read(void *pBuffer, uint32 nSize, uint32 nCount) override;
 		virtual uint32 Write(const void *pBuffer, uint32 nSize, uint32 nCount) override;
 		virtual bool Flush() override;
-		virtual bool Seek(int32 nOffset, File::ESeek nLocation) override;
+		virtual bool Seek(int32 nOffset, uint32 nLocation) override;
 		virtual int32 Tell() const override;
 		virtual uint32 GetSize() const override;
 		virtual FileSearchImpl *CreateSearch() override;

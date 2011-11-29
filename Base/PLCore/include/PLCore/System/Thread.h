@@ -159,7 +159,7 @@ class Thread : public ThreadFunction {
 		*    for debugging purposes quite useful. It's recommended to give threads unique
 		*    names. By default, no thread name is set.
 		*/
-		PLCORE_API String GetName() const;
+		inline String GetName() const;
 
 		/**
 		*  @brief
@@ -171,7 +171,7 @@ class Thread : public ThreadFunction {
 		*  @see
 		*    - GetName()
 		*/
-		PLCORE_API void SetName(const String &sName);
+		inline void SetName(const String &sName);
 
 		/**
 		*  @brief
@@ -180,7 +180,7 @@ class Thread : public ThreadFunction {
 		*  @return
 		*    Thread ID
 		*/
-		PLCORE_API handle GetID() const;
+		inline handle GetID() const;
 
 		/**
 		*  @brief
@@ -189,7 +189,7 @@ class Thread : public ThreadFunction {
 		*  @return
 		*    'true' if the thread is active, else 'false'
 		*/
-		PLCORE_API bool IsActive() const;
+		inline bool IsActive() const;
 
 		/**
 		*  @brief
@@ -198,7 +198,7 @@ class Thread : public ThreadFunction {
 		*  @return
 		*    'true' if the thread could be started
 		*/
-		PLCORE_API bool Start();
+		inline bool Start();
 
 		/**
 		*  @brief
@@ -213,7 +213,7 @@ class Thread : public ThreadFunction {
 		*    The internal platform implementation may or may not accept this violent act. For example,
 		*    Androids Bionic doesn't support it and a call of this method will have no effect at all.
 		*/
-		PLCORE_API bool Terminate();
+		inline bool Terminate();
 
 		/**
 		*  @brief
@@ -226,7 +226,7 @@ class Thread : public ThreadFunction {
 		*    - It's recommended to use the join version with a timeout instead of this function to
 		*      ensure that the thread is stopped within a defined time (no deadlock's)
 		*/
-		PLCORE_API bool Join();
+		inline bool Join();
 
 		/**
 		*  @brief
@@ -238,7 +238,7 @@ class Thread : public ThreadFunction {
 		*  @return
 		*    'true' if the thread has been stopped
 		*/
-		PLCORE_API bool Join(uint64 nTimeout);
+		inline bool Join(uint64 nTimeout);
 
 		/**
 		*  @brief
@@ -251,7 +251,7 @@ class Thread : public ThreadFunction {
 		*    The thread priority settings are only 'hints' for the OS how to deal with the thread. They
 		*    are no 'facts' and may differ from OS to OS.
 		*/
-		PLCORE_API EPriorityClass GetPriorityClass() const;
+		inline EPriorityClass GetPriorityClass() const;
 
 		/**
 		*  @brief
@@ -266,7 +266,7 @@ class Thread : public ThreadFunction {
 		*  @see
 		*    - GetPriorityClass()
 		*/
-		PLCORE_API bool SetPriorityClass(EPriorityClass nPriorityClass = NormalPriorityClass);
+		inline bool SetPriorityClass(EPriorityClass nPriorityClass = NormalPriorityClass);
 
 		/**
 		*  @brief
@@ -278,7 +278,7 @@ class Thread : public ThreadFunction {
 		*  @see
 		*    - GetPriorityClass()
 		*/
-		PLCORE_API EPriority GetPriority() const;
+		inline EPriority GetPriority() const;
 
 		/**
 		*  @brief
@@ -293,7 +293,7 @@ class Thread : public ThreadFunction {
 		*  @see
 		*    - GetPriorityClass()
 		*/
-		PLCORE_API bool SetPriority(EPriority nPriority = NormalPriority);
+		inline bool SetPriority(EPriority nPriority = NormalPriority);
 
 
 	//[-------------------------------------------------------]
@@ -347,6 +347,12 @@ class Thread : public ThreadFunction {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/System/Thread.inl"
 
 
 #endif // __PLCORE_THREAD_H__

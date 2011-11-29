@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/File/File.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include "PLRenderer/RendererContext.h"
 #include "PLRenderer/Renderer/Program.h"

@@ -119,7 +119,7 @@ class FileSearch {
 		*  @return
 		*    'true' if the file searcher has a next file, else 'false'
 		*/
-		PLCORE_API bool HasNextFile();
+		inline bool HasNextFile();
 
 		/**
 		*  @brief
@@ -128,7 +128,7 @@ class FileSearch {
 		*  @return
 		*    The next filename, empty on error
 		*/
-		PLCORE_API String GetNextFile();
+		inline String GetNextFile();
 
 
 	//[-------------------------------------------------------]
@@ -142,7 +142,7 @@ class FileSearch {
 		*  @return
 		*    'true' if a next file is available
 		*/
-		bool FindNextFile();
+		PLCORE_API bool FindNextFile();
 
 
 	//[-------------------------------------------------------]
@@ -163,6 +163,12 @@ class FileSearch {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/File/FileSearch.inl"
 
 
 #endif // __PLCORE_FILESEARCH_H__

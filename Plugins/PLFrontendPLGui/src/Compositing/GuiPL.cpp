@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Timing.h>
 #include <PLCore/System/MutexGuard.h>
 #include <PLCore/System/CriticalSection.h>
 #include <PLCore/Frontend/Frontend.h>

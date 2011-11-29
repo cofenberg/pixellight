@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/File/File.h"
+#include "PLCore/File/Url.h"
 
 
 //[-------------------------------------------------------]
@@ -351,12 +351,12 @@ class FileImpl {
 		*  @param[in] nOffset
 		*    File offset in bytes relative to the given location
 		*  @param[in] nLocation
-		*    Location
+		*    Location ("File::ESeek"-type)
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		virtual bool Seek(int32 nOffset, File::ESeek nLocation) = 0;
+		virtual bool Seek(int32 nOffset, uint32 nLocation) = 0;
 
 		/**
 		*  @brief

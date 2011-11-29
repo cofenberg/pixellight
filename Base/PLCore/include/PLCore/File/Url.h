@@ -59,7 +59,7 @@ class Url {
 		*  @brief
 		*    Constructor
 		*/
-		PLCORE_API Url();
+		inline Url();
 
 		/**
 		*  @brief
@@ -68,7 +68,7 @@ class Url {
 		*  @param[in] cUrl
 		*    URL to copy
 		*/
-		PLCORE_API Url(const Url &cUrl);
+		inline Url(const Url &cUrl);
 
 		/**
 		*  @brief
@@ -77,13 +77,13 @@ class Url {
 		*  @param[in] sUrl
 		*    URL as string
 		*/
-		PLCORE_API Url(const String &sUrl);
+		inline Url(const String &sUrl);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API ~Url();
+		inline ~Url();
 
 		/**
 		*  @brief
@@ -95,7 +95,7 @@ class Url {
 		*  @return
 		*    Reference to this URL
 		*/
-		PLCORE_API Url &operator =(const Url &cUrl);
+		inline Url &operator =(const Url &cUrl);
 
 		/**
 		*  @brief
@@ -107,7 +107,7 @@ class Url {
 		*  @return
 		*    Reference to this URL
 		*/
-		PLCORE_API Url &operator =(const String &sUrl);
+		inline Url &operator =(const String &sUrl);
 
 		/**
 		*  @brief
@@ -124,7 +124,7 @@ class Url {
 		*    - The second URL must be relative
 		*    - The protocol of the second URL must match the first one or be empty
 		*/
-		PLCORE_API Url operator +(const Url &cUrl) const;
+		inline Url operator +(const Url &cUrl) const;
 
 		/**
 		*  @brief
@@ -139,7 +139,7 @@ class Url {
 		*  @see
 		*    - operator +
 		*/
-		PLCORE_API Url &operator +=(const Url &cUrl);
+		inline Url &operator +=(const Url &cUrl);
 
 		/**
 		*  @brief
@@ -152,7 +152,7 @@ class Url {
 		*    - If the value contains a local file path, a file:// URL is returned
 		*    - Any other URL (e.g. http://) is returned directly
 		*/
-		PLCORE_API String GetUrl() const;
+		inline String GetUrl() const;
 
 		/**
 		*  @brief
@@ -165,7 +165,7 @@ class Url {
 		*    - Returns the URL in native (Windows/Unix) notation, if it is a local path
 		*    - If it is another URL (e.g. http://), the URL is returned
 		*/
-		PLCORE_API String GetNativePath() const;
+		inline String GetNativePath() const;
 
 		/**
 		*  @brief
@@ -178,7 +178,7 @@ class Url {
 		*    - If the value contains a valid Windows or Unix file path or an file:// URL, it is returned in Windows style
 		*    - If the value contains another URL (e.g. http://), the URL is returned without being converted
 		*/
-		PLCORE_API String GetWindowsPath() const;
+		inline String GetWindowsPath() const;
 
 		/**
 		*  @brief
@@ -191,7 +191,7 @@ class Url {
 		*    - If the value contains a valid Windows or Unix file path or an file:// URL, it is returned in Unix style
 		*    - If the value contains another URL (e.g. http://), the URL is returned without being converted
 		*/
-		PLCORE_API String GetUnixPath() const;
+		inline String GetUnixPath() const;
 
 		/**
 		*  @brief
@@ -200,7 +200,7 @@ class Url {
 		*  @return
 		*    'true' if the value is valid, else 'false'
 		*/
-		PLCORE_API bool IsValid() const;
+		inline bool IsValid() const;
 
 		/**
 		*  @brief
@@ -212,7 +212,7 @@ class Url {
 		*  @note
 		*    - A wrapper for IsValidWindowsPath()/IsValidUnixPath() based on the used system
 		*/
-		PLCORE_API bool IsValidNativePath() const;
+		inline bool IsValidNativePath() const;
 
 		/**
 		*  @brief
@@ -225,7 +225,7 @@ class Url {
 		*    - 'false', if the protocol is any other than "file://" or empty
 		*    - 'false', if the file root is any other than "X:/" or empty ("/" is invalid!)
 		*/
-		PLCORE_API bool IsValidWindowsPath() const;
+		inline bool IsValidWindowsPath() const;
 
 		/**
 		*  @brief
@@ -238,7 +238,7 @@ class Url {
 		*    - 'false', if the protocol is any other than "file://" or empty
 		*    - 'false', if the file root is any other than "/" or empty ("X:/" is invalid!)
 		*/
-		PLCORE_API bool IsValidUnixPath() const;
+		inline bool IsValidUnixPath() const;
 
 		/**
 		*  @brief
@@ -250,7 +250,7 @@ class Url {
 		*  @note
 		*    - The protocol is ignored
 		*/
-		PLCORE_API bool IsEmpty() const;
+		inline bool IsEmpty() const;
 
 		/**
 		*  @brief
@@ -259,7 +259,7 @@ class Url {
 		*  @return
 		*    'true' if the path is absolute, else 'false'
 		*/
-		PLCORE_API bool IsAbsolute() const;
+		inline bool IsAbsolute() const;
 
 		/**
 		*  @brief
@@ -268,7 +268,7 @@ class Url {
 		*  @return
 		*    'true' if the path is relative, else 'false'
 		*/
-		PLCORE_API bool IsRelative() const;
+		inline bool IsRelative() const;
 
 		/**
 		*  @brief
@@ -282,7 +282,7 @@ class Url {
 		*    - This is a consideration on pure syntax level - it does not mean that the path pointed
 		*      to is really a directory or that it even exists!
 		*/
-		PLCORE_API bool IsDirectory() const;
+		inline bool IsDirectory() const;
 
 		/**
 		*  @brief
@@ -291,7 +291,7 @@ class Url {
 		*  @return
 		*    Protocol part (e.g. "file://" or "http://")
 		*/
-		PLCORE_API String GetProtocol() const;
+		inline String GetProtocol() const;
 
 		/**
 		*  @brief
@@ -300,7 +300,7 @@ class Url {
 		*  @return
 		*    Root part (e.g. "C:/" or "/")
 		*/
-		PLCORE_API String GetRoot() const;
+		inline String GetRoot() const;
 
 		/**
 		*  @brief
@@ -309,7 +309,7 @@ class Url {
 		*  @return
 		*    Path (e.g. "Programs/")
 		*/
-		PLCORE_API String GetPath() const;
+		inline String GetPath() const;
 
 		/**
 		*  @brief
@@ -318,7 +318,7 @@ class Url {
 		*  @return
 		*    Filename (e.g. "readme.txt")
 		*/
-		PLCORE_API String GetFilename() const;
+		inline String GetFilename() const;
 
 		/**
 		*  @brief
@@ -327,7 +327,7 @@ class Url {
 		*  @return
 		*    Path without filename (e.g. "C:\Programs\App\App.exe"->"C:\Programs\App\")
 		*/
-		PLCORE_API String CutFilename() const;
+		inline String CutFilename() const;
 
 		/**
 		*  @brief
@@ -348,7 +348,7 @@ class Url {
 		*  @return
 		*    Filename without complete extension (e.g. "readme" if the filename was "readme.txt", "archive" if the filename was "archive.tar.gz")
 		*/
-		PLCORE_API String GetTitle() const;
+		inline String GetTitle() const;
 
 		/**
 		*  @brief
@@ -360,7 +360,7 @@ class Url {
 		*  @see
 		*    - "GetTitle()" for an usage example
 		*/
-		PLCORE_API String GetCompleteTitle() const;
+		inline String GetCompleteTitle() const;
 
 		/**
 		*  @brief
@@ -372,7 +372,7 @@ class Url {
 		*  @see
 		*    - "GetTitle()" for an usage example
 		*/
-		PLCORE_API String GetExtension() const;
+		inline String GetExtension() const;
 
 		/**
 		*  @brief
@@ -384,7 +384,7 @@ class Url {
 		*  @see
 		*    - "GetTitle()" for an usage example
 		*/
-		PLCORE_API String CutExtension() const;
+		inline String CutExtension() const;
 
 		/**
 		*  @brief
@@ -396,7 +396,7 @@ class Url {
 		*  @see
 		*    - "GetTitle()" for an usage example
 		*/
-		PLCORE_API String GetCompleteExtension() const;
+		inline String GetCompleteExtension() const;
 
 		/**
 		*  @brief
@@ -408,7 +408,7 @@ class Url {
 		*  @see
 		*    - "GetTitle()" for an usage example
 		*/
-		PLCORE_API String CutCompleteExtension() const;
+		inline String CutCompleteExtension() const;
 
 		/**
 		*  @brief
@@ -424,7 +424,7 @@ class Url {
 		*    - Ignores the root (e.g. "C:/" or "/")
 		*    - Example: "test/foo.bar"->"test"
 		*/
-		PLCORE_API String GetFirstPath(uint32 &nPathPos) const;
+		inline String GetFirstPath(uint32 &nPathPos) const;
 
 		/**
 		*  @brief
@@ -437,7 +437,7 @@ class Url {
 		*    - Ignores the root (e.g. "C:/" or "/")
 		*    - Example: "test/foo.bar"->"test"
 		*/
-		PLCORE_API String GetFirstPath() const;
+		inline String GetFirstPath() const;
 
 		/**
 		*  @brief
@@ -452,7 +452,7 @@ class Url {
 		*  @note
 		*    - Call GetFirstPath() first
 		*/
-		PLCORE_API String GetNextPath(uint32 &nPathPos) const;
+		inline String GetNextPath(uint32 &nPathPos) const;
 
 		/**
 		*  @brief
@@ -479,7 +479,7 @@ class Url {
 		*  @param[in] sUrl
 		*    New URL value
 		*/
-		void SetValue(const String &sUrl);
+		PLCORE_API void SetValue(const String &sUrl);
 
 		/**
 		*  @brief
@@ -491,7 +491,7 @@ class Url {
 		*  @return
 		*    'true', if the character is a letter, else 'false'
 		*/
-		bool IsLetter(char nChar) const;
+		inline bool IsLetter(char nChar) const;
 
 		/**
 		*  @brief
@@ -503,7 +503,7 @@ class Url {
 		*  @return
 		*    'true', if the string is a valid name, else 'false'
 		*/
-		bool IsName(const String &sString) const;
+		inline bool IsName(const String &sString) const;
 
 
 	//[-------------------------------------------------------]
@@ -525,6 +525,12 @@ class Url {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/File/Url.inl"
 
 
 #endif // __PLCORE_URL_H__

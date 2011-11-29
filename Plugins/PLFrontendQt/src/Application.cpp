@@ -25,12 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLCore/Runtime.h>
 #include <PLCore/Log/Log.h>
-#include <PLCore/File/Url.h>
-#include <PLCore/File/File.h>
-#include <PLCore/File/Directory.h>
-#include <PLCore/File/FileSearch.h>
-#include <PLCore/String/String.h>
-#include <PLCore/System/System.h>
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include <PLInput/Input/InputManager.h>

@@ -89,7 +89,7 @@ class Semaphore {
 		*    - Blocking if no 'signal' left
 		*    - Use the lock method with a timeout to avoid potential deadlocks
 		*/
-		PLCORE_API bool Lock();
+		inline bool Lock();
 
 		/**
 		*  @brief
@@ -107,7 +107,7 @@ class Semaphore {
 		*  @see
 		*    - Lock()
 		*/
-		PLCORE_API bool TryLock(uint64 nTimeout);
+		inline bool TryLock(uint64 nTimeout);
 
 		/**
 		*  @brief
@@ -119,7 +119,7 @@ class Semaphore {
 		*  @note
 		*    - Other known names for this operation: v, signal, release, up
 		*/
-		PLCORE_API bool Unlock();
+		inline bool Unlock();
 
 		/**
 		*  @brief
@@ -128,7 +128,7 @@ class Semaphore {
 		*  @return
 		*    Current semaphore value (number of 'signals' left)
 		*/
-		PLCORE_API uint32 GetValue() const;
+		inline uint32 GetValue() const;
 
 
 	//[-------------------------------------------------------]
@@ -172,6 +172,12 @@ class Semaphore {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/System/Semaphore.inl"
 
 
 #endif // __PLCORE_SEMAPHORE_H__

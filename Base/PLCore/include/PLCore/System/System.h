@@ -73,8 +73,8 @@ class System : public Singleton<System> {
 	// -> We can't break legacy compiler support, especially when only the singletons are responsible for the break
 	// -> See PLCore::Singleton for more details about singletons
 	public:
-		PLCORE_API static System *GetInstance();
-		PLCORE_API static bool HasInstance();
+		static PLCORE_API System *GetInstance();
+		static PLCORE_API bool HasInstance();
 
 
 	//[-------------------------------------------------------]
@@ -118,7 +118,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    Platform string (for instance 'Windows' for Windows, 'Linux' for Linux and so on)
 		*/
-		PLCORE_API String GetPlatform() const;
+		inline String GetPlatform() const;
 
 		/**
 		*  @brief
@@ -127,7 +127,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    Platform architecture (for instance 'x86', 'x64', 'armeabi', 'armeabi-v7a' and so on)
 		*/
-		PLCORE_API String GetPlatformArchitecture() const;
+		inline String GetPlatformArchitecture() const;
 
 		/**
 		*  @brief
@@ -136,7 +136,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    Platform bit architecture (for instance '32' for x86, '64' for x64)
 		*/
-		PLCORE_API uint32 GetPlatformBitArchitecture() const;
+		inline uint32 GetPlatformBitArchitecture() const;
 
 		/**
 		*  @brief
@@ -145,7 +145,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    OS information string (for instance 'Windows 7 Service Pack 1 (Build 7601)')
 		*/
-		PLCORE_API String GetOS() const;
+		inline String GetOS() const;
 
 		/**
 		*  @brief
@@ -154,7 +154,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    The directory separator used by the operation system (e.g. '/' on Linux, '\' on Windows)
 		*/
-		PLCORE_API char GetSeparator() const;
+		inline char GetSeparator() const;
 
 		/**
 		*  @brief
@@ -163,7 +163,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    The shared library filename prefix used by the operation system (e.g. 'lib' as in 'libPLCore.so' on Linux, no prefix as in 'PLCore.dll' on Windows)
 		*/
-		PLCORE_API String GetSharedLibraryPrefix() const;
+		inline String GetSharedLibraryPrefix() const;
 
 		/**
 		*  @brief
@@ -172,7 +172,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    The shared library file extension used by the operation system (e.g. 'so' on Linux, 'dll' on Windows)
 		*/
-		PLCORE_API String GetSharedLibraryExtension() const;
+		inline String GetSharedLibraryExtension() const;
 
 		/**
 		*  @brief
@@ -181,7 +181,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    CPU MHz
 		*/
-		PLCORE_API uint32 GetCPUMhz() const;
+		inline uint32 GetCPUMhz() const;
 
 		/**
 		*  @brief
@@ -190,7 +190,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    Computer name
 		*/
-		PLCORE_API String GetComputerName() const;
+		inline String GetComputerName() const;
 
 		/**
 		*  @brief
@@ -199,7 +199,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    User name
 		*/
-		PLCORE_API String GetUserName() const;
+		inline String GetUserName() const;
 
 		/**
 		*  @brief
@@ -214,7 +214,7 @@ class System : public Singleton<System> {
 		*    - Windows XP: C:\Documents and Settings\<Username>
 		*    - Windows 7:  C:\Users\<UserName>
 		*/
-		PLCORE_API String GetUserHomeDir() const;
+		inline String GetUserHomeDir() const;
 
 		/**
 		*  @brief
@@ -229,7 +229,7 @@ class System : public Singleton<System> {
 		*    - Windows XP: C:\Documents and Settings\<Username>\Application Data
 		*    - Windows 7:  C:\Users\<UserName>\AppData\Roaming
 		*/
-		PLCORE_API String GetUserDataDir() const;
+		inline String GetUserDataDir() const;
 
 		/**
 		*  @brief
@@ -246,7 +246,7 @@ class System : public Singleton<System> {
 		*    - Linux:   GetDataDirName("PixelLight") -> ".pixellight"
 		*    - Windows: GetDataDirName("PixelLight") -> "PixelLight"
 		*/
-		PLCORE_API String GetDataDirName(const String &sName) const;
+		inline String GetDataDirName(const String &sName) const;
 
 		/**
 		*  @brief
@@ -258,7 +258,7 @@ class System : public Singleton<System> {
 		*  @note
 		*    - Application executable = currently running process
 		*/
-		PLCORE_API String GetExecutableFilename() const;
+		inline String GetExecutableFilename() const;
 
 		/**
 		*  @brief
@@ -270,7 +270,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    Content of the variable
 		*/
-		PLCORE_API String GetEnvironmentVariable(const String &sName) const;
+		inline String GetEnvironmentVariable(const String &sName) const;
 
 		/**
 		*  @brief
@@ -284,7 +284,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    'true' if the variable has been set successfully, else 'false'
 		*/
-		PLCORE_API bool SetEnvironmentVariable(const String &sName, const String &sValue) const;
+		inline bool SetEnvironmentVariable(const String &sName, const String &sValue) const;
 
 		/**
 		*  @brief
@@ -293,7 +293,7 @@ class System : public Singleton<System> {
 		*  @param[in] sName
 		*    Name of the environment variable to delete
 		*/
-		PLCORE_API void DeleteEnvironmentVariable(const String &sName) const;
+		inline void DeleteEnvironmentVariable(const String &sName) const;
 
 		/**
 		*  @brief
@@ -309,7 +309,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    'true' if the command has been executed successfully, else 'false'
 		*/
-		PLCORE_API bool Execute(const String &sCommand, const String &sParameters, const String &sWorkingDir = "") const;
+		inline bool Execute(const String &sCommand, const String &sParameters, const String &sWorkingDir = "") const;
 
 		/**
 		*  @brief
@@ -326,7 +326,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    The current program locale language information
 		*/
-		PLCORE_API String GetLocaleLanguage() const;
+		inline String GetLocaleLanguage() const;
 
 		/**
 		*  @brief
@@ -335,7 +335,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    Path to the current directory (native path style)
 		*/
-		PLCORE_API String GetCurrentDir() const;
+		inline String GetCurrentDir() const;
 
 		/**
 		*  @brief
@@ -350,7 +350,7 @@ class System : public Singleton<System> {
 		*  @note
 		*    - Whenever possible, do not manipulate the current directory, this may backfire when you don't expect it
 		*/
-		PLCORE_API bool SetCurrentDir(const String &sPath);
+		inline bool SetCurrentDir(const String &sPath);
 
 		/**
 		*  @brief
@@ -359,7 +359,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    Main thread (assumed to be never a null pointer!)
 		*/
-		PLCORE_API Thread *GetMainThread() const;
+		inline Thread *GetMainThread() const;
 
 		/**
 		*  @brief
@@ -368,7 +368,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    Current thread (assumed to be never a null pointer!)
 		*/
-		PLCORE_API Thread *GetCurrentThread() const;
+		inline Thread *GetCurrentThread() const;
 
 		/**
 		*  @brief
@@ -377,7 +377,7 @@ class System : public Singleton<System> {
 		*  @param[in] nReturn
 		*    Return value
 		*/
-		PLCORE_API void Exit(int nReturn);
+		inline void Exit(int nReturn);
 
 		/**
 		*  @brief
@@ -386,7 +386,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    The console instance
 		*/
-		PLCORE_API const Console &GetConsole() const;
+		inline const Console &GetConsole() const;
 
 		/**
 		*  @brief
@@ -406,7 +406,7 @@ class System : public Singleton<System> {
 		*    such a feature may not be available on the used platform or is handled in another way as a normal MS Windows
 		*    message box.
 		*/
-		PLCORE_API void UrgentMessage(const String &sMessage) const;
+		inline void UrgentMessage(const String &sMessage) const;
 
 		//[-------------------------------------------------------]
 		//[ Time functions                                        ]
@@ -418,7 +418,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    Date and time string
 		*/
-		PLCORE_API Time GetTime() const;
+		inline Time GetTime() const;
 
 		/**
 		*  @brief
@@ -427,7 +427,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    Number of milliseconds elapsed since the system was started
 		*/
-		PLCORE_API uint64 GetMilliseconds() const;
+		inline uint64 GetMilliseconds() const;
 
 		/**
 		*  @brief
@@ -436,7 +436,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    Number of microseconds elapsed since the system was started
 		*/
-		PLCORE_API uint64 GetMicroseconds() const;
+		inline uint64 GetMicroseconds() const;
 
 		/**
 		*  @brief
@@ -445,7 +445,7 @@ class System : public Singleton<System> {
 		*  @param[in] nMilliseconds
 		*    Number of milliseconds to sleep, should not be 0 because the behavior is implementation dependent (use 'Yield()' instead)
 		*/
-		PLCORE_API void Sleep(uint64 nMilliseconds) const;
+		inline void Sleep(uint64 nMilliseconds) const;
 
 		/**
 		*  @brief
@@ -457,7 +457,7 @@ class System : public Singleton<System> {
 		*    is in general not exactly predictable. So, use this function to give the processor just a hint
 		*    that you are willed to give processor time away.
 		*/
-		PLCORE_API void Yield() const;
+		inline void Yield() const;
 
 		//[-------------------------------------------------------]
 		//[ Memory functions                                      ]
@@ -469,7 +469,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    An approximation of the percentage of used physical memory
 		*/
-		PLCORE_API float GetPercentageOfUsedPhysicalMemory() const;
+		inline float GetPercentageOfUsedPhysicalMemory() const;
 
 		/**
 		*  @brief
@@ -478,7 +478,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    The total physical memory in bytes
 		*/
-		PLCORE_API uint64 GetTotalPhysicalMemory() const;
+		inline uint64 GetTotalPhysicalMemory() const;
 
 		/**
 		*  @brief
@@ -487,7 +487,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    The current free physical memory in bytes
 		*/
-		PLCORE_API uint64 GetFreePhysicalMemory() const;
+		inline uint64 GetFreePhysicalMemory() const;
 
 		/**
 		*  @brief
@@ -496,7 +496,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    The total virtual memory in bytes
 		*/
-		PLCORE_API uint64 GetTotalVirtualMemory() const;
+		inline uint64 GetTotalVirtualMemory() const;
 
 		/**
 		*  @brief
@@ -505,7 +505,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    The current free virtual memory in bytes
 		*/
-		PLCORE_API uint64 GetFreeVirtualMemory() const;
+		inline uint64 GetFreeVirtualMemory() const;
 
 
 	//[-------------------------------------------------------]
@@ -516,7 +516,7 @@ class System : public Singleton<System> {
 		*  @brief
 		*    Constructor
 		*/
-		System();
+		PLCORE_API System();
 
 		/**
 		*  @brief
@@ -531,7 +531,7 @@ class System : public Singleton<System> {
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~System();
+		PLCORE_API virtual ~System();
 
 		/**
 		*  @brief
@@ -561,6 +561,12 @@ class System : public Singleton<System> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/System/System.inl"
 
 
 #endif // __PLCORE_SYSTEM_H__

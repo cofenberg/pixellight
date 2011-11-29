@@ -8,6 +8,8 @@
 - PLFrontendQt: Visual Studio project file: Disabled annoying "warning C4127: conditional expression is constant"-warning, it's within the Qt
   headers were we can't change anything in there :/
 - Added "CriticalSection"-class, a simple comfort class derived from mutex
+- "FileObject", "File", "Directory", "Url", "System", "DynLib", "Mutex", "Semaphore", "Thread", "FileSearch", "Timing", "Tokenizer", "RegEx": Everything reasonable
+  to be inline is now inline to give the compiler a chance to optimize out expensive function calls. I'am sure that over the time more of such changes will follow.
 
 
 

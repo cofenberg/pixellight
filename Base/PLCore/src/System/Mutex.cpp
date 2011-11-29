@@ -99,36 +99,6 @@ Mutex::~Mutex()
 		delete m_pMutexImpl;
 }
 
-/**
-*  @brief
-*    Locks the mutex
-*/
-bool Mutex::Lock()
-{
-	// Call system implementation
-	return m_pMutexImpl->Lock();
-}
-
-/**
-*  @brief
-*    Locks the mutex, but only wait until timeout
-*/
-bool Mutex::TryLock(uint64 nTimeout)
-{
-	// Call system implementation
-	return m_pMutexImpl->TryLock(nTimeout);
-}
-
-/**
-*  @brief
-*    Unlocks the mutex
-*/
-bool Mutex::Unlock()
-{
-	// Call system implementation
-	return m_pMutexImpl->Unlock();
-}
-
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]

@@ -67,7 +67,7 @@ class Directory : public FileObject {
 		*  @brief
 		*    Constructor
 		*/
-		PLCORE_API Directory();
+		inline Directory();
 
 		/**
 		*  @brief
@@ -78,7 +78,7 @@ class Directory : public FileObject {
 		*  @param[in] pAccess
 		*    Additional file access information (can be a null pointer)
 		*/
-		PLCORE_API Directory(const String &sUrl, const FileAccess *pAccess = nullptr);
+		inline Directory(const String &sUrl, const FileAccess *pAccess = nullptr);
 
 		/**
 		*  @brief
@@ -89,7 +89,7 @@ class Directory : public FileObject {
 		*  @param[in] pAccess
 		*    Additional file access information (can be a null pointer)
 		*/
-		PLCORE_API Directory(const Url &cUrl, const FileAccess *pAccess = nullptr);
+		inline Directory(const Url &cUrl, const FileAccess *pAccess = nullptr);
 
 		/**
 		*  @brief
@@ -98,7 +98,7 @@ class Directory : public FileObject {
 		*  @note
 		*    - The directory is closed automatically
 		*/
-		PLCORE_API virtual ~Directory();
+		inline virtual ~Directory();
 
 		/**
 		*  @brief
@@ -107,7 +107,7 @@ class Directory : public FileObject {
 		*  @return
 		*    'true', if all went fine, else 'false'
 		*/
-		PLCORE_API bool Create();
+		inline bool Create();
 
 		/**
 		*  @brief
@@ -125,7 +125,7 @@ class Directory : public FileObject {
 		*  @return
 		*    'true', if all went fine, else 'false'
 		*/
-		PLCORE_API bool Delete();
+		inline bool Delete();
 
 		/**
 		*  @brief
@@ -173,6 +173,12 @@ class Directory : public FileObject {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/File/Directory.inl"
 
 
 #endif // __PLCORE_DIRECTORY_H__

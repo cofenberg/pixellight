@@ -26,8 +26,6 @@
 #include <PLCore/Log/Log.h>
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/File/File.h>
-#include <PLCore/File/Directory.h>
-#include <PLCore/File/Url.h>
 #include <PLCore/Base/Class.h>
 #include <PLCore/Tools/Loader.h>
 #include <PLCore/Tools/LoadableType.h>

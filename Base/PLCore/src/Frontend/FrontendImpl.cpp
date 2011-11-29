@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include "PLCore/Log/Log.h"
 #include "PLCore/Base/Class.h"
-#include "PLCore/System/System.h"
 #include "PLCore/Frontend/Frontend.h"
 #include "PLCore/Frontend/FrontendContext.h"
 #include "PLCore/Frontend/FrontendImpl.h"

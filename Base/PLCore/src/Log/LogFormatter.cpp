@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLCore/File/File.h"
-#include "PLCore/File/Directory.h"
 #include "PLCore/Log/LogFormatter.h"
 
 

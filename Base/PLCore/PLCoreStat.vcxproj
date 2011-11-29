@@ -767,11 +767,24 @@
     <None Include="include\PLCore\Core\RefCountPtr.inl" />
     <None Include="include\PLCore\Core\Singleton.inl" />
     <None Include="include\PLCore\Core\SmartPtr.inl" />
+    <None Include="include\PLCore\File\Directory.inl" />
+    <None Include="include\PLCore\File\File.inl" />
+    <None Include="include\PLCore\File\FileObject.inl" />
+    <None Include="include\PLCore\File\FileSearch.inl" />
+    <None Include="include\PLCore\File\Url.inl" />
+    <None Include="include\PLCore\String\RegEx.inl" />
+    <None Include="include\PLCore\String\Tokenizer.inl" />
     <None Include="include\PLCore\String\UTF8Tools.inl" />
+    <None Include="include\PLCore\System\DynLib.inl" />
+    <None Include="include\PLCore\System\Mutex.inl" />
     <None Include="include\PLCore\System\MutexGuard.inl" />
     <None Include="CMakeLists.txt" />
     <None Include="Diary.txt" />
+    <None Include="include\PLCore\System\Semaphore.inl" />
+    <None Include="include\PLCore\System\System.inl" />
+    <None Include="include\PLCore\System\Thread.inl" />
     <None Include="include\PLCore\Tools\Stopwatch.inl" />
+    <None Include="include\PLCore\Tools\Timing.inl" />
     <None Include="include\PLCore\Tools\Tools.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

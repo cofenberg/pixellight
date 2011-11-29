@@ -26,6 +26,7 @@
 #include <io.h>
 #include <stdio.h>
 #include "PLCore/PLCoreWindowsIncludes.h"
+#include "PLCore/File/File.h"
 #include "PLCore/File/FileSearchWindows.h"
 #include "PLCore/File/FileWindows.h"
 
@@ -435,7 +436,7 @@ bool FileWindows::Flush()
 	return (m_pFile && !fflush(m_pFile));
 }
 
-bool FileWindows::Seek(int32 nOffset, File::ESeek nLocation)
+bool FileWindows::Seek(int32 nOffset, uint32 nLocation)
 {
 	// Check file pointer
 	if (m_pFile) {

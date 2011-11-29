@@ -93,10 +93,10 @@ class ThreadWindows : public ThreadImpl {
 		virtual bool Terminate() override;
 		virtual bool Join() override;
 		virtual bool Join(uint64 nTimeout) override;
-		virtual Thread::EPriorityClass GetPriorityClass() const override;
-		virtual bool SetPriorityClass(Thread::EPriorityClass nPriorityClass) override;
-		virtual Thread::EPriority GetPriority() const override;
-		virtual bool SetPriority(Thread::EPriority nPriority) override;
+		virtual uint32 GetPriorityClass() const override;
+		virtual bool SetPriorityClass(uint32 nPriorityClass) override;
+		virtual uint32 GetPriority() const override;
+		virtual bool SetPriority(uint32 nPriority) override;
 
 
 	//[-------------------------------------------------------]

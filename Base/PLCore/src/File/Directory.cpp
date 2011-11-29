@@ -23,8 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/System/System.h"
-#include "PLCore/File/FileImpl.h"
 #include "PLCore/File/FileSearch.h"
 #include "PLCore/File/Directory.h"
 
@@ -38,47 +36,6 @@ namespace PLCore {
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Constructor
-*/
-Directory::Directory()
-{
-}
-
-/**
-*  @brief
-*    Constructor
-*/
-Directory::Directory(const String &sUrl, const FileAccess *pAccess) : FileObject(sUrl, pAccess)
-{
-}
-
-/**
-*  @brief
-*    Constructor
-*/
-Directory::Directory(const Url &cUrl, const FileAccess *pAccess) : FileObject(cUrl, pAccess)
-{
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-Directory::~Directory()
-{
-}
-
-/**
-*  @brief
-*    Create directory
-*/
-bool Directory::Create()
-{
-	return m_pFileImpl ? m_pFileImpl->CreateNewDirectory() : false;
-}
-
 /**
 *  @brief
 *    Create a directory recursively
@@ -111,15 +68,6 @@ bool Directory::CreateRecursive()
 		// Create this directory
 		return Create();
 	}
-}
-
-/**
-*  @brief
-*    Delete directory
-*/
-bool Directory::Delete()
-{
-	return m_pFileImpl ? m_pFileImpl->DeleteDirectory() : false;
 }
 
 /**

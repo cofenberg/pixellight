@@ -30,6 +30,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include "PLCore/PLCoreLinuxIncludes.h"
+#include "PLCore/File/File.h"
 #include "PLCore/File/FileSearchLinux.h"
 #include "PLCore/File/FileLinux.h"
 
@@ -380,7 +381,7 @@ bool FileLinux::Flush()
 	return (m_pFile && !fflush(m_pFile));
 }
 
-bool FileLinux::Seek(int32 nOffset, File::ESeek nLocation)
+bool FileLinux::Seek(int32 nOffset, uint32 nLocation)
 {
 	// Check file pointer
 	if (m_pFile) {

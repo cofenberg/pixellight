@@ -89,7 +89,7 @@ class DynLib {
 		*    - Dependent dynamic libraries are first searched within the same path as the given one
 		*    - If the library has already been loaded, this function will fail
 		*/
-		PLCORE_API bool Load(const String &sPath);
+		inline bool Load(const String &sPath);
 
 		/**
 		*  @brief
@@ -98,7 +98,7 @@ class DynLib {
 		*  @return
 		*    'true' if loaded, else 'false'
 		*/
-		PLCORE_API bool IsLoaded() const;
+		inline bool IsLoaded() const;
 
 		/**
 		*  @brief
@@ -107,7 +107,7 @@ class DynLib {
 		*  @return
 		*    The path to the dynamic library
 		*/
-		PLCORE_API String GetPath() const;
+		inline String GetPath() const;
 
 		/**
 		*  @brief
@@ -116,7 +116,7 @@ class DynLib {
 		*  @return
 		*    The absolute path to the dynamic library (native path style)
 		*/
-		PLCORE_API String GetAbsPath() const;
+		inline String GetAbsPath() const;
 
 		/**
 		*  @brief
@@ -131,7 +131,7 @@ class DynLib {
 		*  @note
 		*    - The pointer to the symbol only stays valid as long as this dynamic library instance is not unloaded
 		*/
-		PLCORE_API void *GetSymbol(const String &sSymbol) const;
+		inline void *GetSymbol(const String &sSymbol) const;
 
 		/**
 		*  @brief
@@ -140,7 +140,7 @@ class DynLib {
 		*  @return
 		*    'true' if the library could be unloaded, else false
 		*/
-		PLCORE_API bool Unload();
+		inline bool Unload();
 
 
 	//[-------------------------------------------------------]
@@ -184,6 +184,12 @@ class DynLib {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/System/DynLib.inl"
 
 
 #endif // __PLCORE_DYNLIB_H__
