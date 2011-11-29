@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: TimerThread.h                                  *
+ *  File: CriticalSection.h                              *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,33 +20,21 @@
 \*********************************************************/
 
 
-#ifndef __PLGUI_TIMERTHREAD_H__
-#define __PLGUI_TIMERTHREAD_H__
+#ifndef __PLCORE_CRITICALSECTION_H__
+#define __PLCORE_CRITICALSECTION_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/System/Thread.h>
-#include "PLGui/PLGui.h"
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLCore {
-	class CriticalSection;
-}
-namespace PLGui {
-	class Timer;
-}
+#include "PLCore/System/Mutex.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLGui {
+namespace PLCore {
 
 
 //[-------------------------------------------------------]
@@ -54,9 +42,12 @@ namespace PLGui {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Timer operation thread
+*    Critical section (lock/unlock only inside the same process) class
+*
+*  @note
+*    - Use a critical section to lock/unlock only inside the same process and a mutex to lock/unlock across multiple processes
 */
-class TimerThread : public PLCore::Thread {
+class CriticalSection : public Mutex {
 
 
 	//[-------------------------------------------------------]
@@ -67,50 +58,10 @@ class TimerThread : public PLCore::Thread {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] cTimer
-		*    Reference to the owning Timer object
-		*  @param[in] nTimeout
-		*    Timeout (in milliseconds)
-		*  @param[in] bOnce
-		*    'true' if the timer shall fire only once, else 'false'
+		*  @note
+		*    - A new constructed critical section is unlocked by default
 		*/
-		PLGUI_API TimerThread(Timer &cTimer, PLCore::uint64 nTimeout, bool bOnce);
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		PLGUI_API virtual ~TimerThread();
-
-		/**
-		*  @brief
-		*    Stop timer thread
-		*/
-		PLGUI_API void StopTimer();
-
-		/**
-		*  @brief
-		*    Fire timer
-		*/
-		PLGUI_API void Fire();
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual PLCore::ThreadFunction functions      ]
-	//[-------------------------------------------------------]
-	private:
-		virtual int Run() override;
-
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
-		Timer					 &m_cTimer;				/**< Timer to that this thread belongs */
-		PLCore::CriticalSection *m_pCriticalSection;	/**< Timer critical section (always valid!) */
-		PLCore::uint64			 m_nTimeout;			/**< Timeout value */
-		bool					 m_bOnce;				/**< Timer is firing only once? */
-		volatile bool			 m_bShutdown;			/**< Shutdown thread? */
+		inline CriticalSection() : Mutex(true) {};
 
 
 };
@@ -119,7 +70,7 @@ class TimerThread : public PLCore::Thread {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLGui
+} // PLCore
 
 
-#endif // __PLGUI_TIMERTHREAD_H__
+#endif // __PLCORE_CRITICALSECTION_H__

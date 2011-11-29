@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/System/MutexGuard.h>
+#include <PLCore/System/CriticalSection.h>
 #include <PLCore/Frontend/Frontend.h>
 #include <PLCore/Frontend/FrontendApplication.h>
 #include <PLMath/Rectangle.h>
@@ -82,7 +83,7 @@ GuiPL::GuiPL(Gui *pGui) : GuiImpl(pGui),
 	m_pGui(pGui),
 	m_vScreenSize(1024, 768),
 	m_pRenderer(nullptr),
-	m_pMessageQueueMutex(new Mutex()),
+	m_pMessageQueueCriticalSection(new CriticalSection()),
 	m_pMouseOver(nullptr),
 	m_pInputController(nullptr),
 	m_pKeyTimer(new Timer(*pGui)),
@@ -113,7 +114,7 @@ GuiPL::GuiPL(Gui *pGui) : GuiImpl(pGui),
 GuiPL::~GuiPL()
 {
 	delete m_pKeyTimer;
-	delete m_pMessageQueueMutex;
+	delete m_pMessageQueueCriticalSection;
 }
 
 /**
@@ -229,7 +230,7 @@ void GuiPL::Update()
 bool GuiPL::HasPendingMessages()
 {
 	// Lock the GUI message queue
-	const MutexGuard cMutexGuard(*m_pMessageQueueMutex);
+	const MutexGuard cMutexGuard(*m_pMessageQueueCriticalSection);
 
 	// Is there anything within the GUI message queue?
 	return (m_lstMessageQueue.GetNumOfElements() != 0);
@@ -238,7 +239,7 @@ bool GuiPL::HasPendingMessages()
 void GuiPL::ProcessMessage()
 {
 	// Lock the GUI message queue
-	const MutexGuard cMutexGuard(*m_pMessageQueueMutex);
+	const MutexGuard cMutexGuard(*m_pMessageQueueCriticalSection);
 
 	// Is there anything within the GUI message queue?
 	if (m_lstMessageQueue.GetNumOfElements()) {
@@ -254,7 +255,7 @@ void GuiPL::ProcessMessage()
 void GuiPL::PostMessage(const GuiMessage &cMessage)
 {
 	// Lock the GUI message queue
-	const MutexGuard cMutexGuard(*m_pMessageQueueMutex);
+	const MutexGuard cMutexGuard(*m_pMessageQueueCriticalSection);
 
 	// Add the GUI message to the internal GUI message queue processed by GuiPL::ProcessMessage()
 	m_lstMessageQueue.Add(cMessage);

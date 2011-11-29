@@ -1353,6 +1353,9 @@
     <ClInclude Include="include\PLCore\System\MutexWindows_CriticalSection.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="include\PLCore\System\CriticalSection.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\PLCore\Base\Type\TypeBool.inl">

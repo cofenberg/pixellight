@@ -639,6 +639,7 @@
     <ClInclude Include="include\PLCore\System\Console.h" />
     <ClInclude Include="include\PLCore\System\ConsoleLinux.h" />
     <ClInclude Include="include\PLCore\System\ConsoleWindows.h" />
+    <ClInclude Include="include\PLCore\System\CriticalSection.h" />
     <ClInclude Include="include\PLCore\System\DynLib.h" />
     <ClInclude Include="include\PLCore\System\DynLibImpl.h" />
     <ClInclude Include="include\PLCore\System\DynLibLinux.h" />

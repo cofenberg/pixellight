@@ -417,6 +417,7 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\System\System.cpp" />
     <ClInclude Include="include\PLCore\File\FileAndroid.h" />
     <ClInclude Include="include\PLCore\File\FileSearchAndroid.h" />
+    <ClInclude Include="include\PLCore\System\CriticalSection.h" />
     <ClInclude Include="include\PLCore\System\MutexWindows_CriticalSection.h" />
     <ClInclude Include="include\PLCore\System\MutexWindows_Mutex.h" />
     <ClInclude Include="include\PLCore\System\SystemMacOSX.h" />

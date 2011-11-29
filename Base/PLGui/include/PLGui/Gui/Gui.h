@@ -40,9 +40,6 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLCore {
-	class Mutex;
-}
 namespace PLGui {
 	class GuiMessage;
 	class MessageFilter;

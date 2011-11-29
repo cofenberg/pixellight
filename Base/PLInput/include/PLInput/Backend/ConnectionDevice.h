@@ -37,7 +37,7 @@
 //[-------------------------------------------------------]
 namespace PLCore {
 	class Thread;
-	class Mutex;
+	class CriticalSection;
 }
 
 
@@ -258,7 +258,7 @@ class ConnectionDevice : public DeviceImpl {
 		*    Initialize and start thread for read/write operations
 		*
 		*  @remarks
-		*    Creates and starts the read thread and initializes m_cMutex, which should be
+		*    Creates and starts the read thread and initializes m_cCriticalSection, which should be
 		*    used by derived classes in their Read() and Write() functions.
 		*/
 		PLINPUT_API void InitThread();
@@ -271,21 +271,21 @@ class ConnectionDevice : public DeviceImpl {
 
 		/**
 		*  @brief
-		*    Lock read/write mutex
+		*    Lock read/write critical section
 		*
 		*  @remarks
 		*    This should be used by derived classes inside their Read() and Write() functions!
 		*/
-		PLINPUT_API void LockMutex();
+		PLINPUT_API void LockCriticalSection();
 
 		/**
 		*  @brief
-		*    Unlock read/write mutex
+		*    Unlock read/write critical section
 		*
 		*  @remarks
 		*    This should be used by derived classes inside their Read() and Write() functions!
 		*/
-		PLINPUT_API void UnlockMutex();
+		PLINPUT_API void UnlockCriticalSection();
 
 
 	//[-------------------------------------------------------]
@@ -316,9 +316,9 @@ class ConnectionDevice : public DeviceImpl {
 		PLCore::uint16	 m_nOutputReportSize;	/**< Size of output report in bytes */
 
 		// Read thread
-		PLCore::Thread	*m_pThread;				/**< Update thread, can be a null pointer */
-		PLCore::Mutex	*m_pMutex;				/**< Update mutex, can be a null pointer */
-		bool			 m_bThreadExit;			/**< Flag to exit the thread */
+		PLCore::Thread			*m_pThread;				/**< Update thread, can be a null pointer */
+		PLCore::CriticalSection	*m_pCriticalSection;	/**< Update critical section, can be a null pointer */
+		bool					 m_bThreadExit;			/**< Flag to exit the thread */
 
 
 };

@@ -7,6 +7,7 @@
   -> Default has to be "Mutex" to be on the safe universal side
 - PLFrontendQt: Visual Studio project file: Disabled annoying "warning C4127: conditional expression is constant"-warning, it's within the Qt
   headers were we can't change anything in there :/
+- Added "CriticalSection"-class, a simple comfort class derived from mutex
 
 
 

@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/System/Mutex.h>
 #include <PLCore/System/Thread.h>
+#include <PLCore/System/CriticalSection.h>
 #include "PLInput/Backend/ConnectionDevice.h"
 
 
@@ -49,7 +49,7 @@ ConnectionDevice::ConnectionDevice() :
 	m_nInputReportSize(0),
 	m_nOutputReportSize(0),
 	m_pThread(nullptr),
-	m_pMutex(nullptr),
+	m_pCriticalSection(nullptr),
 	m_bThreadExit(false)
 {
 	// Set backend type
@@ -181,7 +181,7 @@ bool ConnectionDevice::IsOpen() const
 bool ConnectionDevice::Read(uint8 *pBuffer, uint32 nSize)
 {
 	// To be implemented in derived classes
-	// Please call LockMutex() before and UnlockMutex() after the read operation
+	// Please call LockCriticalSection() before and UnlockCriticalSection() after the read operation
 	// And don't forget to call EventOnRead please
 
 	// Not implemented here...
@@ -195,7 +195,7 @@ bool ConnectionDevice::Read(uint8 *pBuffer, uint32 nSize)
 bool ConnectionDevice::Write(const uint8 *pBuffer, uint32 nSize)
 {
 	// To be implemented in derived classes
-	// Please call LockMutex() before and UnlockMutex() after the write operation
+	// Please call LockCriticalSection() before and UnlockCriticalSection() after the write operation
 
 	// Not implemented here...
 	return false;
@@ -219,9 +219,9 @@ void ConnectionDevice::InitThread()
 	if (!m_pOutputBuffer && m_nOutputReportSize > 0)
 		m_pOutputBuffer = new uint8[m_nOutputReportSize];
 
-	// Create mutex
-	if (!m_pMutex)
-		m_pMutex = new Mutex();
+	// Create critical section
+	if (!m_pCriticalSection)
+		m_pCriticalSection = new CriticalSection();
 
 	// Start thread
 	if (!m_pThread) {
@@ -247,10 +247,10 @@ void ConnectionDevice::StopThread()
 		m_pThread = nullptr;
 	}
 
-	// Delete mutex
-	if (m_pMutex) {
-		delete m_pMutex;
-		m_pMutex = nullptr;
+	// Delete critical section
+	if (m_pCriticalSection) {
+		delete m_pCriticalSection;
+		m_pCriticalSection = nullptr;
 	}
 
 	// Destroy input buffer
@@ -268,27 +268,27 @@ void ConnectionDevice::StopThread()
 
 /**
 *  @brief
-*    Lock read/write mutex
+*    Lock read/write critical section
 */
-void ConnectionDevice::LockMutex()
+void ConnectionDevice::LockCriticalSection()
 {
-	// Check mutex
-	if (m_pMutex) {
-		// Lock mutex (no read/write allowed)
-		m_pMutex->Lock();
+	// Check critical section
+	if (m_pCriticalSection) {
+		// Lock critical section (no read/write allowed)
+		m_pCriticalSection->Lock();
 	}
 }
 
 /**
 *  @brief
-*    Unlock read/write mutex
+*    Unlock read/write critical section
 */
-void ConnectionDevice::UnlockMutex()
+void ConnectionDevice::UnlockCriticalSection()
 {
-	// Check mutex
-	if (m_pMutex) {
-		// Unlock mutex
-		m_pMutex->Unlock();
+	// Check critical section
+	if (m_pCriticalSection) {
+		// Unlock critical section
+		m_pCriticalSection->Unlock();
 	}
 }
 

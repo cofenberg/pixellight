@@ -230,33 +230,33 @@ bool BTDeviceLinux::IsOpen() const
 bool BTDeviceLinux::Read(uint8 *pBuffer, uint32 nSize)
 {
 	// Read data
-	LockMutex();
+	LockCriticalSection();
 	uint8 nTemp[BufferSize];
 	int nRes = read(m_nIntSocket, nTemp, nSize+1);
 	if (nRes > 0) {
 		if (nTemp[0] == (TransData | ParamInput)) {
 			memcpy(pBuffer, &nTemp[1], nRes-1);
-			UnlockMutex();
+			UnlockCriticalSection();
 			EventOnRead();
 			return true;
 		}
 	}
 
 	// Error!
-	UnlockMutex();
+	UnlockCriticalSection();
 	return false;
 }
 
 bool BTDeviceLinux::Write(const uint8 *pBuffer, uint32 nSize)
 {
 	// Write data
-	LockMutex();
+	LockCriticalSection();
 	uint8 nTemp[BufferSize];
 	nTemp[0] = TransSetReport | ParamOutput;
 	MemoryManager::Copy(nTemp+1, pBuffer, nSize);
 	int nRes = write(m_nCtrlSocket, nTemp, nSize+1);
 	ReadHandshake();
-	UnlockMutex();
+	UnlockCriticalSection();
 	if (nRes > 0)
 		return (static_cast<uint32>(nRes) - 1 == nSize);
 	else

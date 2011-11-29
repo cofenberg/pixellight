@@ -26,6 +26,7 @@
 #include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
 #include <PLCore/System/MutexGuard.h>
+#include <PLCore/System/CriticalSection.h>
 #include "PLInput/Input/Controller.h"
 #include "PLInput/Input/InputManager.h"
 #include "PLInput/Input/Devices/Device.h"
@@ -74,7 +75,7 @@ bool InputManager::HasInstance()
 void InputManager::Update()
 {
 	// Lock data
-	m_pMutex->Lock();
+	m_pCriticalSection->Lock();
 
 		// Copy list of controls that have changed
 		List<Control*> lstUpdatedControls = m_lstUpdatedControls;
@@ -83,7 +84,7 @@ void InputManager::Update()
 		m_lstUpdatedControls.Clear();
 
 	// Unlock data
-	m_pMutex->Unlock();
+	m_pCriticalSection->Unlock();
 
 	// Inform controllers about changed controls
 	for (uint32 i=0; i<lstUpdatedControls.GetNumOfElements(); i++) {
@@ -107,7 +108,7 @@ void InputManager::Update()
 void InputManager::DetectDevices(bool bReset)
 {
 	// Lock data
-	const MutexGuard cMutexGuard(*m_pMutex);
+	const MutexGuard cMutexGuard(*m_pCriticalSection);
 
 	// Delete all existing providers and devices?
 	if (bReset)
@@ -211,7 +212,7 @@ Mouse *InputManager::GetMouse() const
 *    Constructor
 */
 InputManager::InputManager() :
-	m_pMutex(new Mutex())
+	m_pCriticalSection(new CriticalSection())
 {
 }
 
@@ -220,7 +221,7 @@ InputManager::InputManager() :
 *    Copy constructor
 */
 InputManager::InputManager(const InputManager &cSource) :
-	m_pMutex(nullptr)
+	m_pCriticalSection(nullptr)
 {
 	// No implementation because the copy operator is never used
 }
@@ -234,8 +235,8 @@ InputManager::~InputManager()
 	// Shut down
 	Clear();
 
-	// Destroy thread
-	delete m_pMutex;
+	// Destroy critical section
+	delete m_pCriticalSection;
 }
 
 /**
@@ -326,7 +327,7 @@ void InputManager::RemoveControl(Control *pControl)
 	// Valid pointer?
 	if (pControl) {
 		// Lock data
-		const MutexGuard cMutexGuard(*m_pMutex);
+		const MutexGuard cMutexGuard(*m_pCriticalSection);
 
 		// Remove control from list (if it's within the list at all)
 		m_lstUpdatedControls.Remove(pControl);
@@ -342,7 +343,7 @@ void InputManager::UpdateControl(Control *pControl)
 	// Valid pointer?
 	if (pControl) {
 		// Lock data
-		const MutexGuard cMutexGuard(*m_pMutex);
+		const MutexGuard cMutexGuard(*m_pCriticalSection);
 
 		// Add control to list, but only if it's not already within the list!
 		if (!m_lstUpdatedControls.IsElement(pControl))

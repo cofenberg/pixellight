@@ -169,6 +169,10 @@ void MainWindow::ToggleButtons()
 	wnd_main_ui.btn_checkInstallation->setEnabled(!m_bIsRunning);
 }
 
+
+//[-------------------------------------------------------]
+//[ Private Qt slots                                      ]
+//[-------------------------------------------------------]
 void MainWindow::cancelEvent()
 {
 	if (m_bIsRunning) {
@@ -177,10 +181,6 @@ void MainWindow::cancelEvent()
 	}
 }
 
-
-//[-------------------------------------------------------]
-//[ Private Qt slots                                      ]
-//[-------------------------------------------------------]
 void MainWindow::intallPLRuntimeEvent()
 {
 	if (RunStart()) {

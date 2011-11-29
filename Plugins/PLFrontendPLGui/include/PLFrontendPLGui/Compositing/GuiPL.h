@@ -37,6 +37,9 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+namespace PLCore {
+	class CriticalSection;
+}
 namespace PLMath {
 	class Rectangle;
 }
@@ -286,7 +289,7 @@ class GuiPL : public PLGui::GuiImpl {
 		PLGui::Gui						 *m_pGui;									/**< Platform independent GUI, a null pointer on error */
 		PLMath::Vector2i				  m_vScreenSize;							/**< Screen size */
 		PLRenderer::Renderer			 *m_pRenderer;								/**< Used renderer, a null pointer on error */
-		PLCore::Mutex					 *m_pMessageQueueMutex;						/**< GUI message queue mutex, always valid! */
+		PLCore::CriticalSection			 *m_pMessageQueueCriticalSection;			/**< GUI message queue critical section, always valid! */
 		PLCore::List<PLGui::GuiMessage>   m_lstMessageQueue;						/**< GUI message queue */
 
 		// Widgets

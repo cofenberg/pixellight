@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/System/Mutex.h>
 #include <PLCore/System/System.h>
+#include <PLCore/System/CriticalSection.h>
 #include "PLGui/Gui/Base/GuiMessage.h"
 #include "PLGui/Gui/Resources/Timer.h"
 #include "PLGui/Gui/Resources/TimerThread.h"
@@ -47,7 +47,7 @@ namespace PLGui {
 */
 TimerThread::TimerThread(Timer &cTimer, uint64 nTimeout, bool bOnce) :
 	m_cTimer(cTimer),
-	m_pMutex(new Mutex()),
+	m_pCriticalSection(new CriticalSection()),
 	m_nTimeout(nTimeout),
 	m_bOnce(bOnce),
 	m_bShutdown(false)
@@ -60,8 +60,8 @@ TimerThread::TimerThread(Timer &cTimer, uint64 nTimeout, bool bOnce) :
 */
 TimerThread::~TimerThread()
 {
-	// Delete mutex
-	delete m_pMutex;
+	// Delete critical section
+	delete m_pCriticalSection;
 }
 
 /**
@@ -71,16 +71,16 @@ TimerThread::~TimerThread()
 void TimerThread::StopTimer()
 {
 	// Deactivate timer
-	m_pMutex->Lock();
+	m_pCriticalSection->Lock();
 	m_bShutdown = true;
-	m_pMutex->Unlock();
+	m_pCriticalSection->Unlock();
 
 	// Wait for thread to exit
 	if (!Join(200)) {
 		// We asked politely, but the thread won't listen... so pull out the gun!
 		// (the internal platform implementation may or may not accept this violent act)
 		Terminate();
-		m_pMutex->Unlock();
+		m_pCriticalSection->Unlock();
 	}
 }
 
@@ -110,10 +110,10 @@ int TimerThread::Run()
 		Fire();
 
 		// Check if timer is still active
-		m_pMutex->Lock();
+		m_pCriticalSection->Lock();
 		if (m_bOnce)	 bRunning = false;
 		if (m_bShutdown) bRunning = false;
-		m_pMutex->Unlock();
+		m_pCriticalSection->Unlock();
 	} while (bRunning);
 
 	// Timer is no longer active
