@@ -160,7 +160,6 @@ bool CopyFiles(const String &sSourceDirectory, const String &sTargetDirectory, c
 	}
 
 	// Error... because we can never ever end up in here...
-	return false;
 }
 
 /**
