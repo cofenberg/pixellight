@@ -452,7 +452,7 @@ class Url {
 		*  @note
 		*    - Call GetFirstPath() first
 		*/
-		inline String GetNextPath(uint32 &nPathPos) const;
+		PLCORE_API String GetNextPath(uint32 &nPathPos) const;
 
 		/**
 		*  @brief

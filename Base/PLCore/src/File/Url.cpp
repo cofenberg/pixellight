@@ -39,6 +39,26 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
+*    Returns the next part of the path
+*/
+String Url::GetNextPath(uint32 &nPathPos) const
+{
+	const String sTemp = m_sPath.GetSubstring(nPathPos);
+	const int nBacks = sTemp.IndexOf('\\');
+	int nSlash = sTemp.IndexOf('/');
+	if (nSlash < 0 || (nBacks >= 0 && nBacks < nSlash))
+		nSlash = nBacks;
+	if (nSlash >= 0) {
+		nPathPos += nSlash + 1;
+		return sTemp.GetSubstring(0, nSlash);
+	} else {
+		nPathPos += sTemp.GetLength();
+		return "";
+	}
+}
+
+/**
+*  @brief
 *    Collapses the URL
 */
 Url &Url::Collapse()
@@ -105,26 +125,6 @@ Url &Url::Collapse()
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the next part of the path
-*/
-String Url::GetNextPath(uint32 &nPathPos) const
-{
-	const String sTemp = m_sPath.GetSubstring(nPathPos);
-	const int nBacks = sTemp.IndexOf('\\');
-	int nSlash = sTemp.IndexOf('/');
-	if (nSlash < 0 || (nBacks >= 0 && nBacks < nSlash))
-		nSlash = nBacks;
-	if (nSlash >= 0) {
-		nPathPos += nSlash + 1;
-		return sTemp.GetSubstring(0, nSlash);
-	} else {
-		nPathPos += sTemp.GetLength();
-		return "";
-	}
-}
-
 /**
 *  @brief
 *    Sets the value of the URL
