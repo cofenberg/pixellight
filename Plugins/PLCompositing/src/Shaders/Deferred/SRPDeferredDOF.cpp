@@ -213,18 +213,10 @@ void SRPDeferredDOF::CalculateDepthBlur(const String &sShaderLanguage, VertexBuf
 			}
 
 			// Create a vertex shader instance
-			m_pVertexShader = pShaderLanguage->CreateVertexShader();
-			if (m_pVertexShader) {
-				// Set the vertex shader source code
-				m_pVertexShader->SetSourceCode(sVertexShaderSourceCode);
-			}
+			m_pVertexShader = pShaderLanguage->CreateVertexShader(sVertexShaderSourceCode);
 
 			// Create a fragment shader instance
-			m_pDepthBlurFragmentShader = pShaderLanguage->CreateFragmentShader();
-			if (m_pDepthBlurFragmentShader) {
-				// Set the fragment shader source code
-				m_pDepthBlurFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
-			}
+			m_pDepthBlurFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode);
 
 			// Create a program instance
 			m_pDepthBlurProgram = pShaderLanguage->CreateProgram();
@@ -379,16 +371,8 @@ void SRPDeferredDOF::CalculateBlur(const String &sShaderLanguage, VertexBuffer &
 			}
 
 			// Create a fragment shader instance
-			m_pDownscaleFragmentShader = pShaderLanguage->CreateFragmentShader();
-			if (m_pDownscaleFragmentShader) {
-				// Set the fragment shader source code
-				m_pDownscaleFragmentShader->SetSourceCode(sFragmentShaderSourceCode_Downscale);
-			}
-			m_pBlurFragmentShader = pShaderLanguage->CreateFragmentShader();
-			if (m_pBlurFragmentShader) {
-				// Set the fragment shader source code
-				m_pBlurFragmentShader->SetSourceCode(sFragmentShaderSourceCode_Blur);
-			}
+			m_pDownscaleFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode_Downscale);
+			m_pBlurFragmentShader      = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode_Blur);
 
 			// Create a program instance
 			m_pDownscaleProgram = pShaderLanguage->CreateProgram();
@@ -550,11 +534,7 @@ void SRPDeferredDOF::Debug(const String &sShaderLanguage, VertexBuffer &cVertexB
 			}
 
 			// Create a fragment shader instance
-			m_pDebugFragmentShader = pShaderLanguage->CreateFragmentShader();
-			if (m_pDebugFragmentShader) {
-				// Set the fragment shader source code
-				m_pDebugFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
-			}
+			m_pDebugFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode);
 
 			// Create a program instance
 			m_pDebugProgram = pShaderLanguage->CreateProgram();
@@ -784,11 +764,7 @@ void SRPDeferredDOF::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 														}
 
 														// Create a fragment shader instance
-														m_pResultFragmentShader = pShaderLanguage->CreateFragmentShader();
-														if (m_pResultFragmentShader) {
-															// Set the fragment shader source code
-															m_pResultFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
-														}
+														m_pResultFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode);
 
 														// Create a program instance
 														m_pResultProgram = pShaderLanguage->CreateProgram();

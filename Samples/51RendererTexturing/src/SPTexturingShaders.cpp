@@ -67,10 +67,6 @@ SPTexturingShaders::SPTexturingShaders(Renderer &cRenderer) : SPTexturing(cRende
 	// Decide which shader language should be used (for example "GLSL" or "Cg")
 	ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(cRenderer.GetDefaultShaderLanguage());
 	if (pShaderLanguage) {
-		// Create the shader instances
-		m_pVertexShader   = pShaderLanguage->CreateVertexShader();
-		m_pFragmentShader = pShaderLanguage->CreateFragmentShader();
-
 		// Shader source code
 		String sVertexShaderSourceCode;
 		String sFragmentShaderSourceCode;
@@ -92,13 +88,11 @@ SPTexturingShaders::SPTexturingShaders(Renderer &cRenderer) : SPTexturing(cRende
 			sFragmentShaderSourceCode = sFragmentShaderSourceCodeCg;
 		}
 
-		// Set the vertex shader source code
-		if (m_pVertexShader)
-			m_pVertexShader->SetSourceCode(sVertexShaderSourceCode, "arbvp1");
+		// Create a vertex shader instance
+		m_pVertexShader = pShaderLanguage->CreateVertexShader(sVertexShaderSourceCode, "arbvp1");
 
-		// Set the fragment shader source code
-		if (m_pFragmentShader)
-			m_pFragmentShader->SetSourceCode(sFragmentShaderSourceCode, "arbfp1");
+		// Create a fragment shader instance
+		m_pFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode, "arbfp1");
 
 		// Create a program instance
 		m_pProgram = pShaderLanguage->CreateProgram();

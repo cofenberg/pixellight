@@ -23,12 +23,15 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLRenderer/Renderer/VertexShader.h"
+#include "PLRenderer/Renderer/FragmentShader.h"
 #include "PLRenderer/Renderer/ShaderLanguage.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLCore;
 namespace PLRenderer {
 
 
@@ -36,6 +39,61 @@ namespace PLRenderer {
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
 pl_implement_class(ShaderLanguage)
+
+
+//[-------------------------------------------------------]
+//[ Public functions                                      ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Creates a vertex shader and sets the shader source code
+*/
+VertexShader *ShaderLanguage::CreateVertexShader(const String &sSourceCode, const String &sProfile, const String &sEntry)
+{
+	// Create the vertex shader instance
+	VertexShader *pVertexShader = CreateVertexShader();
+
+	// Set the vertex shader source code
+	if (pVertexShader)
+		pVertexShader->SetSourceCode(sSourceCode, sProfile, sEntry);
+
+	// Return the created vertex shader instance
+	return pVertexShader;
+}
+
+/**
+*  @brief
+*    Creates a geometry shader and sets the shader source code
+*/
+GeometryShader *ShaderLanguage::CreateGeometryShader(const String &sSourceCode, GeometryShader::EInputPrimitiveType nInputPrimitiveType, GeometryShader::EOutputPrimitiveType nOutputPrimitiveType, uint32 nNumOfOutputVertices, const String &sProfile, const String &sEntry)
+{
+	// Create the geometry shader instance
+	GeometryShader *pGeometryShader = CreateGeometryShader();
+
+	// Set the geometry shader source code
+	if (pGeometryShader)
+		pGeometryShader->SetSourceCode(sSourceCode, nInputPrimitiveType, nOutputPrimitiveType, nNumOfOutputVertices, sProfile, sEntry);
+
+	// Return the created geometry shader instance
+	return pGeometryShader;
+}
+
+/**
+*  @brief
+*    Creates a fragment shader and sets the shader source code
+*/
+FragmentShader *ShaderLanguage::CreateFragmentShader(const String &sSourceCode, const String &sProfile, const String &sEntry)
+{
+	// Create the fragment shader instance
+	FragmentShader *pFragmentShader = CreateFragmentShader();
+
+	// Set the fragment shader source code
+	if (pFragmentShader)
+		pFragmentShader->SetSourceCode(sSourceCode, sProfile, sEntry);
+
+	// Return the created fragment shader instance
+	return pFragmentShader;
+}
 
 
 //[-------------------------------------------------------]

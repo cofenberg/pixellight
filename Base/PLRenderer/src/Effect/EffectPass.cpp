@@ -421,12 +421,8 @@ bool EffectPass::LoadVertexShader(const String &sFilename, const String &sShader
 			const String sShaderSourceCode = LoadableManager::GetInstance()->LoadStringFromFile(sFilename);
 			if (sShaderSourceCode.GetLength()) {
 				// Create the shader instances
-				m_pVertexShader = pShaderLanguage->CreateVertexShader();
-
-				// Set the shader source code
+				m_pVertexShader = pShaderLanguage->CreateVertexShader(sShaderSourceCode, sProfile);
 				if (m_pVertexShader) {
-					m_pVertexShader->SetSourceCode(sShaderSourceCode, sProfile);
-
 					// Destroy the current GPU program
 					if (m_pProgram) {
 						delete m_pProgram;
@@ -465,12 +461,8 @@ bool EffectPass::LoadFragmentShader(const String &sFilename, const String &sShad
 			const String sShaderSourceCode = LoadableManager::GetInstance()->LoadStringFromFile(sFilename);
 			if (sShaderSourceCode.GetLength()) {
 				// Create the shader instances
-				m_pFragmentShader = pShaderLanguage->CreateFragmentShader();
-
-				// Set the shader source code
+				m_pFragmentShader = pShaderLanguage->CreateFragmentShader(sShaderSourceCode, sProfile);
 				if (m_pFragmentShader) {
-					m_pFragmentShader->SetSourceCode(sShaderSourceCode, sProfile);
-
 					// Destroy the current GPU program
 					if (m_pProgram) {
 						delete m_pProgram;

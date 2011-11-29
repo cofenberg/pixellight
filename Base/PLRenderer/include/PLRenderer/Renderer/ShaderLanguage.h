@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Object.h>
-#include "PLRenderer/PLRenderer.h"
+#include "PLRenderer/Renderer/GeometryShader.h"
 
 
 //[-------------------------------------------------------]
@@ -44,7 +44,6 @@ namespace PLRenderer {
 class Program;
 class VertexShader;
 class UniformBuffer;
-class GeometryShader;
 class FragmentShader;
 
 
@@ -63,6 +62,80 @@ class ShaderLanguage : public PLCore::Object {
 	//[-------------------------------------------------------]
 	pl_class(PLRENDERER_RTTI_EXPORT, ShaderLanguage, "PLRenderer", PLCore::Object, "Abstract shader language class")
 	pl_class_end
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Creates a vertex shader and sets the shader source code
+		*
+		*  @param[in] sSourceCode
+		*    Shader source code, usually blank ASCII code
+		*  @param[in] sProfile
+		*    Shader profile to use, if empty string, a default profile will be used which usually
+		*    tries to use the best available profile that runs on most hardware
+		*  @param[in] sEntry
+		*    Entry point, if empty string, "main" is used as default
+		*
+		*  @return
+		*    The created vertex shader, a null pointer on error
+		*
+		*  @see
+		*    - Virtual "ShaderLanguage::CreateVertexShader()"-method
+		*    - "Shader::SetSourceCode()"
+		*/
+		PLRENDERER_API VertexShader *CreateVertexShader(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "");
+
+		/**
+		*  @brief
+		*    Creates a geometry shader and sets the shader source code
+		*
+		*  @param[in] sSourceCode
+		*    Geometry shader source code, usually blank ASCII code
+		*  @param[in] nInputPrimitiveType
+		*    Input primitive type, for "Shader::SetSourceCode()" "InputTriangles" is used as default
+		*  @param[in] nOutputPrimitiveType
+		*    Output primitive type, for "Shader::SetSourceCode()" "OutputTriangles" is used as default
+		*  @param[in] nNumOfOutputVertices
+		*    Number of output vertices, 0 if the maximum possible number of output vertices should be used, for "Shader::SetSourceCode()" "0" is used as default
+		*  @param[in] sProfile
+		*    Geometry shader profile to use, if empty string, a default profile will be used which usually
+		*    tries to use the best available profile that runs on most hardware
+		*  @param[in] sEntry
+		*    Entry point, if empty string, "main" is used as default
+		*
+		*  @return
+		*    The created geometry shader, a null pointer on error
+		*
+		*  @see
+		*    - Virtual "ShaderLanguage::CreateGeometryShader()"-method
+		*    - "GeometryShader::SetSourceCode()"
+		*/
+		PLRENDERER_API GeometryShader *CreateGeometryShader(const PLCore::String &sSourceCode, GeometryShader::EInputPrimitiveType nInputPrimitiveType, GeometryShader::EOutputPrimitiveType nOutputPrimitiveType, PLCore::uint32 nNumOfOutputVertices, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "");
+
+		/**
+		*  @brief
+		*    Creates a fragment shader and sets the shader source code
+		*
+		*  @param[in] sSourceCode
+		*    Shader source code, usually blank ASCII code
+		*  @param[in] sProfile
+		*    Shader profile to use, if empty string, a default profile will be used which usually
+		*    tries to use the best available profile that runs on most hardware
+		*  @param[in] sEntry
+		*    Entry point, if empty string, "main" is used as default
+		*
+		*  @return
+		*    The created fragment shader, a null pointer on error
+		*
+		*  @see
+		*    - Virtual "ShaderLanguage::CreateFragmentShader()"-method
+		*    - "Shader::SetSourceCode()"
+		*/
+		PLRENDERER_API FragmentShader *CreateFragmentShader(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "");
 
 
 	//[-------------------------------------------------------]

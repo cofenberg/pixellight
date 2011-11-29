@@ -1,3 +1,10 @@
+>> 29.11.2011
+[CO]
+- "ShaderLanguage": Added comfort methods "CreateVertexShader()", "CreateGeometryShader()" and "CreateFragmentShader()" creating a shader instance and
+  setting the shader source code at once
+
+
+
 >> 28.11.2011
 [CO]
 PLRendererOpenGL:

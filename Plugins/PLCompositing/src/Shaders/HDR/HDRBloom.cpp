@@ -317,18 +317,10 @@ void HDRBloom::CalculateBloom(const String &sShaderLanguage, TextureBufferRectan
 					}
 
 					// Create a vertex shader instance
-					m_pBloomVertexShader = pShaderLanguage->CreateVertexShader();
-					if (m_pBloomVertexShader) {
-						// Set the vertex shader source code
-						m_pBloomVertexShader->SetSourceCode(sVertexShaderSourceCode);
-					}
+					m_pBloomVertexShader = pShaderLanguage->CreateVertexShader(sVertexShaderSourceCode);
 
 					// Create a fragment shader instance
-					m_pBloomFragmentShader = pShaderLanguage->CreateFragmentShader();
-					if (m_pBloomFragmentShader) {
-						// Set the fragment shader source code
-						m_pBloomFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
-					}
+					m_pBloomFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode);
 
 					// Create a program instance
 					m_pBloomProgram = pShaderLanguage->CreateProgram();

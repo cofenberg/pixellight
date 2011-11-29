@@ -218,23 +218,11 @@ void SRPDeferredGlow::CalculateGlow(const String &sShaderLanguage, VertexBuffer 
 		PLRenderer::ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(sShaderLanguage);
 		if (pShaderLanguage) {
 			// Create a vertex shader instance
-			m_pVertexShader = pShaderLanguage->CreateVertexShader();
-			if (m_pVertexShader) {
-				// Set the vertex shader source code
-				m_pVertexShader->SetSourceCode(sVertexShaderSourceCode);
-			}
+			m_pVertexShader = pShaderLanguage->CreateVertexShader(sVertexShaderSourceCode);
 
 			// Create a fragment shader instance
-			m_pDownscaleFragmentShader = pShaderLanguage->CreateFragmentShader();
-			if (m_pDownscaleFragmentShader) {
-				// Set the fragment shader source code
-				m_pDownscaleFragmentShader->SetSourceCode(sFragmentShaderSourceCode_Downscale);
-			}
-			m_pBlurFragmentShader = pShaderLanguage->CreateFragmentShader();
-			if (m_pBlurFragmentShader) {
-				// Set the fragment shader source code
-				m_pBlurFragmentShader->SetSourceCode(sFragmentShaderSourceCode_Blur);
-			}
+			m_pDownscaleFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode_Downscale);
+			m_pBlurFragmentShader      = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode_Blur);
 
 			// Create a program instance
 			m_pDownscaleProgram = pShaderLanguage->CreateProgram();
@@ -457,11 +445,7 @@ void SRPDeferredGlow::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 								}
 
 								// Create a fragment shader instance
-								m_pResultFragmentShader = pShaderLanguage->CreateFragmentShader();
-								if (m_pResultFragmentShader) {
-									// Set the fragment shader source code
-									m_pResultFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
-								}
+								m_pResultFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode);
 
 								// Create a program instance
 								m_pResultProgram = pShaderLanguage->CreateProgram();

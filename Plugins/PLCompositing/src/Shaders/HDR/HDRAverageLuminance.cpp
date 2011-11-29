@@ -214,33 +214,13 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 			}
 
 			// Create a vertex shader instance
-			m_pVertexShader = pShaderLanguage->CreateVertexShader();
-			if (m_pVertexShader) {
-				// Set the vertex shader source code
-				m_pVertexShader->SetSourceCode(sVertexShaderSourceCode);
-			}
-			m_pDownsampleVertexShader = pShaderLanguage->CreateVertexShader();
-			if (m_pDownsampleVertexShader) {
-				// Set the vertex shader source code
-				m_pDownsampleVertexShader->SetSourceCode(sVertexShaderSourceCode_Downsample);
-			}
+			m_pVertexShader           = pShaderLanguage->CreateVertexShader(sVertexShaderSourceCode);
+			m_pDownsampleVertexShader = pShaderLanguage->CreateVertexShader(sVertexShaderSourceCode_Downsample);
 
 			// Create a fragment shader instance
-			m_pDownsampleLogFragmentShader = pShaderLanguage->CreateFragmentShader();
-			if (m_pDownsampleLogFragmentShader) {
-				// Set the fragment shader source code
-				m_pDownsampleLogFragmentShader->SetSourceCode(sFragmentShaderSourceCode_DownsampleLog);
-			}
-			m_pDownsampleFragmentShader = pShaderLanguage->CreateFragmentShader();
-			if (m_pDownsampleFragmentShader) {
-				// Set the fragment shader source code
-				m_pDownsampleFragmentShader->SetSourceCode(sFragmentShaderSourceCode_Downsample);
-			}
-			m_pDownsampleExpFragmentShader = pShaderLanguage->CreateFragmentShader();
-			if (m_pDownsampleExpFragmentShader) {
-				// Set the fragment shader source code
-				m_pDownsampleExpFragmentShader->SetSourceCode(sFragmentShaderSourceCode_DownsampleExp);
-			}
+			m_pDownsampleLogFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode_DownsampleLog);
+			m_pDownsampleFragmentShader    = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode_Downsample);
+			m_pDownsampleExpFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode_DownsampleExp);
 
 			// Create a program instance
 			m_pDownsampleLogProgram = pShaderLanguage->CreateProgram();

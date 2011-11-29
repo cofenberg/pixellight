@@ -93,18 +93,10 @@ SPMeshShaders::SPMeshShaders(Renderer &cRenderer) : SPMesh(cRenderer),
 		}
 
 		// Create a vertex shader instance
-		m_pVertexShader = pShaderLanguage->CreateVertexShader();
-		if (m_pVertexShader) {
-			// Set the vertex shader source code
-			m_pVertexShader->SetSourceCode(sVertexShaderSourceCode, "arbvp1");
-		}
+		m_pVertexShader = pShaderLanguage->CreateVertexShader(sVertexShaderSourceCode, "arbvp1");
 
 		// Create a fragment shader instance
-		m_pFragmentShader = pShaderLanguage->CreateFragmentShader();
-		if (m_pFragmentShader) {
-			// Set the fragment shader source code
-			m_pFragmentShader->SetSourceCode(sFragmentShaderSourceCode, "arbfp1");
-		}
+		m_pFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode, "arbfp1");
 
 		// Create a program instance
 		m_pProgram = pShaderLanguage->CreateProgram();
