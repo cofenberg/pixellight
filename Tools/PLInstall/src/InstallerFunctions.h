@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: InstallerFunctions.h                                       *
+ *  File: InstallerFunctions.h                           *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,22 +20,15 @@
 \*********************************************************/
 
 
-#ifndef INSTALLERFUNCTIONS_H
-#define INSTALLERFUNCTIONS_H
+#ifndef __PLINSTALL_INSTALLERFUNCTIONS_H__
+#define __PLINSTALL_INSTALLERFUNCTIONS_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/String/String.h>
 #include <PLCore/Base/Event/Event.h>
-#include <PLCore/Base/Event/EventHandler.h>
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class InstallerFunctionsImpl;
 
 
 //[-------------------------------------------------------]
@@ -43,7 +36,7 @@ class InstallerFunctionsImpl;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    [TODO] write a description
+*    Installer functions
 *
 *  @note
 *    - Implementation of the bridge design pattern, this class is the abstraction
@@ -67,43 +60,39 @@ class InstallerFunctions {
 		*/
 		~InstallerFunctions();
 
-		
-		void connectProgressEventHandler(PLCore::EventHandler<int> *pProgressEventHandler);
+		void ConnectProgressEventHandler(PLCore::EventHandler<int> *pProgressEventHandler);
+		bool InstallRuntime();
+		int GetInstallRuntimeProgressSteps() const;
+		bool CheckRuntimeInstallation();
+		int GetCheckRuntimeProgressSteps() const;
+		PLCore::String GetLastErrorDescription() const;
+		PLCore::String GetLastSuccessMessage() const;
 
-		bool installRuntime();
 
-		int getInstallRuntimeProgressSteps();
-
-		bool checkRuntimeInstallation();
-
-		int getCheckRuntimeProgressSteps();
-
-		PLCore::String getLastErrorDescription();
-
-		PLCore::String getLastSuccessMessage();
-				
 	//[-------------------------------------------------------]
 	//[ Public events                                         ]
 	//[-------------------------------------------------------]
 	public:
 		PLCore::Event<int> m_pEventProgressUpdate;
 
+
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Private definitions                                   ]
 	//[-------------------------------------------------------]
 	private:
-		
+		static const int INSTALL_RUNTIME_PROGRESS_STEPS = 8;
+		static const int CHECK_RUNTIME_PROGRESS_STEPS   = 4;
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		static const int INSTALL_RUNTIME_PROGRESS_STEPS = 8;
-		static const int CHECK_RUNTIME_PROGRESS_STEPS = 4;
-
 		PLCore::String m_sLastErrorMessage;
 		PLCore::String m_sLastSuccessMessage;
+
+
 };
 
 
-#endif // INSTALLERFUNCTIONS_H
+#endif // __PLINSTALL_INSTALLERFUNCTIONS_H__

@@ -31,6 +31,7 @@ define_project(PLInstall NOSUFFIX)
 add_include_directories(
 	src
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
+	${CMAKE_SOURCE_DIR}/Plugins/PLFrontendQt/include	# We only need the headers and not linking against this library
 
 	# We need the following to be able to include headers produced by uic in our code
 	# (CMAKE_CURRENT_BINARY_DIR holds a path to the build directory of the current project, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)

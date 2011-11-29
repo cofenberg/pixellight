@@ -7,6 +7,7 @@
 >> 29.11.2011
 [CO]
 - CMake: As discussed in the research project meeting yesterday: Added a trigger to make it possible to disable the build of the samples
+- PLInstall: Code style review
 
 
 

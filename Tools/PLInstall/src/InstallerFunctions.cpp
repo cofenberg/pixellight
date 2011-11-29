@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: InstallerFunctions.cpp                                     *
+ *  File: InstallerFunctions.cpp                         *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,16 +23,17 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "InstallerFunctions.h"
-
 #include <PLCore/Runtime.h>
 #include <PLCore/File/Url.h>
 #include <PLCore/System/System.h>
+#include "InstallerFunctions.h"
+
 
 //[-------------------------------------------------------]
-//[ using namespace                                       ]
+//[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
+
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
@@ -43,7 +44,6 @@ using namespace PLCore;
 */
 InstallerFunctions::InstallerFunctions()
 {
-
 }
 
 /**
@@ -52,21 +52,19 @@ InstallerFunctions::InstallerFunctions()
 */
 InstallerFunctions::~InstallerFunctions()
 {
-
 }
 
-void InstallerFunctions::connectProgressEventHandler(PLCore::EventHandler<int> *pProgressEventHandler)
+void InstallerFunctions::ConnectProgressEventHandler(EventHandler<int> *pProgressEventHandler)
 {
 	m_pEventProgressUpdate.Connect(*pProgressEventHandler);
 }
 
-bool InstallerFunctions::installRuntime()
+bool InstallerFunctions::InstallRuntime()
 {
-	String sMessage;
 	// Install the PixelLight runtime
-	
-	//i know it's a bit redundand but we should check the current installation 
-	if(!checkRuntimeInstallation()) {
+
+	// I know it's a bit redundand but we should check the current installation
+	if (!CheckRuntimeInstallation()) {
 		m_pEventProgressUpdate(1);
 
 		// Get the directory this executable is in and add the  platform architecture
@@ -79,34 +77,38 @@ bool InstallerFunctions::installRuntime()
 		//const String sExecutableDirectory =  Url(sCurrentDirectory);
 
 		// Write the PL-runtime directory into the registry and or path or whatever is needed on the specific plattform
+		String sMessage;
 		if (Runtime::SetDirectory(sExecutableDirectory, &sMessage)) {
-			m_sLastSuccessMessage = "PixelLight runtime installed at \"" +  sExecutableDirectory + "\"\n\nYou may need to restart your system";   
+			m_sLastSuccessMessage = "PixelLight runtime installed at \"" +  sExecutableDirectory + "\"\n\nYou may need to restart your system";
 			m_pEventProgressUpdate(1);
+
 			// Success
 			return true;
+		} else {
+			// Error!
+			m_sLastErrorMessage = "Failed to write the PL-runtime directory into  the registry: \"" + sMessage + '\"';
+			m_pEventProgressUpdate(1);
+
+			// Error ocurred!
+			return false;
 		}
-		else
-			m_sLastErrorMessage = "Failed to write the PL-runtime directory into  the registry: \"" + sMessage + '\"';                            // Error
-
-		m_pEventProgressUpdate(1);
-		//error ocurred 
-		return false;
 	}
-	
 
-	//the PL runtime is already installed
+	// The PixelLight runtime is already installed
 	m_pEventProgressUpdate(4);
+
+	// Success
 	return true;
 }
 
-int InstallerFunctions::getInstallRuntimeProgressSteps()
+int InstallerFunctions::GetInstallRuntimeProgressSteps() const
 {
 	return INSTALL_RUNTIME_PROGRESS_STEPS;
 }
 
-bool InstallerFunctions::checkRuntimeInstallation()
-{	 
-	// Get the current PL-runtime directory (e.g.  "C:\PixelLight\Runtime\x86")
+bool InstallerFunctions::CheckRuntimeInstallation()
+{
+	// Get the current PixelLight runtime directory (e.g.  "C:\PixelLight\Runtime\x86")
 	// -> Do also ensure that the registry entry is pointing to the same directory the PLCore shared library is in
 	String sDirectory = Runtime::GetDirectory();
 	m_pEventProgressUpdate(1);
@@ -114,42 +116,37 @@ bool InstallerFunctions::checkRuntimeInstallation()
 	sPLCoreSharedLibraryDirectory.Delete(sPLCoreSharedLibraryDirectory.GetLength()-1);
 
 	m_pEventProgressUpdate(1);
-	String sRegistryDirectory = Runtime::GetRegistryDirectory();
+	const String sRegistryDirectory = Runtime::GetRegistryDirectory();
 	m_pEventProgressUpdate(1);
-	
-	if (sDirectory.GetLength() &&  sPLCoreSharedLibraryDirectory ==  sRegistryDirectory)
-	{
-		// The PixelLight runtime is already installed
-		//the PATH environment or the registry key is pointing to the current directory => PL is installed correctly
+
+	if (sDirectory.GetLength() && sPLCoreSharedLibraryDirectory == sRegistryDirectory) {
+		// The PATH environment or the registry key is pointing to the current directory => PixelLight is already installed correctly
 		m_pEventProgressUpdate(1);
 		m_sLastSuccessMessage = "PixelLight runtime is already installed at \"" +  sDirectory + '\"';
+
+		// Success
 		return true;
 	}
 
+	// The PixelLight runtime could not be found => the runtime isn't installed correctly
 	m_pEventProgressUpdate(1);
-	// the pl runtime could not be found => the runtime isn't installed correctly 
-	m_sLastErrorMessage = L"The PLRuntime directory could not be found.";
+	m_sLastErrorMessage = "The PixelLight runtime directory could not be found";
+
+	// Error!
 	return false;
 }
 
-int InstallerFunctions::getCheckRuntimeProgressSteps()
+int InstallerFunctions::GetCheckRuntimeProgressSteps() const
 {
 	return CHECK_RUNTIME_PROGRESS_STEPS;
 }
 
-String InstallerFunctions::getLastErrorDescription()
+String InstallerFunctions::GetLastErrorDescription() const
 {
 	return m_sLastErrorMessage;
 }
 
-String InstallerFunctions::getLastSuccessMessage()
+String InstallerFunctions::GetLastSuccessMessage() const
 {
 	return m_sLastSuccessMessage;
 }
-
-//[-------------------------------------------------------]
-//[ Private functions                                     ]
-//[-------------------------------------------------------]
-
-
-
