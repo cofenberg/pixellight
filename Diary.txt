@@ -4,6 +4,12 @@
 
 
 
+>> 29.11.2011
+[CO]
+- CMake: As discussed in the research project meeting yesterday: Added a trigger to make it possible to disable the build of the samples
+
+
+
 >> 24.11.2011
 [CO]
 - PLInstall: Updated "CMakeLists.txt" in order to make it work
