@@ -71,6 +71,12 @@ SPTriangleShaders::SPTriangleShaders(Renderer &cRenderer) : SPTriangle(cRenderer
 	// Decide which shader language should be used (for example "GLSL" or "Cg")
 	ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(cRenderer.GetDefaultShaderLanguage());
 	if (pShaderLanguage) {
+		// Create the uniform buffer instance, null pointer if for instance not supported
+		m_pUniformBuffer = pShaderLanguage->CreateUniformBuffer();
+
+		// Create a geometry shader instance
+		m_pGeometryShader = pShaderLanguage->CreateGeometryShader();
+
 		// Shader source code
 		String sVertexShaderSourceCode;
 		String sGeometryShaderSourceCode;
@@ -99,8 +105,9 @@ SPTriangleShaders::SPTriangleShaders(Renderer &cRenderer) : SPTriangle(cRenderer
 		// Create a vertex shader instance
 		m_pVertexShader = pShaderLanguage->CreateVertexShader(sVertexShaderSourceCode);
 
-		// Create a geometry shader instance
-		m_pGeometryShader = pShaderLanguage->CreateGeometryShader(sGeometryShaderSourceCode, GeometryShader::InputTriangles, GeometryShader::OutputTriangles, 6);
+		// Set geometry shader source code
+		if (m_pGeometryShader)
+			m_pGeometryShader->SetSourceCode(sGeometryShaderSourceCode, GeometryShader::InputTriangles, GeometryShader::OutputTriangles, 6);
 
 		// Create a fragment shader instance
 		m_pFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode);
@@ -108,9 +115,6 @@ SPTriangleShaders::SPTriangleShaders(Renderer &cRenderer) : SPTriangle(cRenderer
 		// Create a program instance and assign the created vertex, geometry and fragment shaders to it
 		m_pProgram = pShaderLanguage->CreateProgram(m_pVertexShader, m_pGeometryShader, m_pFragmentShader);
 		if (m_pProgram) {
-			// Create the uniform buffer instance, null pointer if for instance not supported
-			m_pUniformBuffer = pShaderLanguage->CreateUniformBuffer();
-
 			// Setup the uniform buffer (if there's one)
 			if (m_pUniformBuffer) {
 				ProgramUniformBlock *pProgramUniformBlock = m_pProgram->GetUniformBlock("UniformBlock");
