@@ -1,3 +1,9 @@
+>> 30.11.2011
+[CO]
+- Instead of the base directory, the viewer now sets directly the current directory (the viewer is an executable application, not a library, so this should be ok)
+
+
+
 >> 06.11.2011
 [CO]
 - "Application::LoadScene()": In case there's no "/Data/Scenes/" within the scene filename, the directory the scene is in is used as base directory instead

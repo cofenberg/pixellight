@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
 #include <PLCore/File/Url.h>
+#include <PLCore/System/System.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include <PLCore/Script/ScriptManager.h>
 #include <PLInput/Input/Controller.h>
@@ -101,6 +102,17 @@ bool Application::LoadResource(const String &sFilename)
 	// Get file extension
 	const String sExtension = Url(sFilename).GetExtension();
 	if (sExtension.GetLength()) {
+		{ // Make the directory of the scene to load in to the current directory
+			// Validate path
+			const String sDirectory = Url(sFilename).Collapse().CutFilename();
+
+			// Search for "/Data/Scenes/" and get the prefix of that, in case it's not there just use directly the scene directory
+			const int nIndex = sDirectory.IndexOf("/Data/Scenes/");
+
+			// Set the current directory of the application
+			System::GetInstance()->SetCurrentDir("file://" + ((nIndex >= 0) ? sDirectory.GetSubstring(0, nIndex) : sDirectory) + '/');
+		}
+
 		// Is the given filename a supported scene?
 		if (LoadableManager::GetInstance()->IsFormatLoadSupported(sExtension, "Scene")) {
 			// Is the given resource a scene?
@@ -256,26 +268,4 @@ void Application::OnCreateInputController()
 	Controller *pController = reinterpret_cast<Controller*>(GetInputController());
 	if (pController)
 		pController->SignalOnControl.Connect(SlotOnControl);
-}
-
-
-//[-------------------------------------------------------]
-//[ Public virtual PLEngine::EngineApplication functions  ]
-//[-------------------------------------------------------]
-bool Application::LoadScene(const String &sFilename)
-{
-	{ // Make the directory of the scene to load in to the application base directory
-		// Validate path
-		const String sDirectory = Url(sFilename).Collapse().CutFilename();
-
-		// Search for "/Data/Scenes/" and get the prefix of that, in case it's not there just use directly the scene directory
-		const int nIndex = sDirectory.IndexOf("/Data/Scenes/");
-		const String sBaseDirectory = "file://" + ((nIndex >= 0) ? sDirectory.GetSubstring(0, nIndex) : sDirectory) + '/';
-
-		// Set the base directory of the application
-		SetBaseDirectory(sBaseDirectory);
-	}
-
-	// Call base implementation
-	return ScriptApplication::LoadScene(sFilename);
 }
