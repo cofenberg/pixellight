@@ -78,7 +78,7 @@ class XDnDFileDropHelper;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OS Linux frontend implementation class
+*    OS Linux frontend implementation class using X11
 *
 *  @note
 *    - Implementation of the bridge design pattern, this class is the implementor of the 'System' abstraction

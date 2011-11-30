@@ -1,3 +1,10 @@
+>> 30.11.2011
+[CO]
+- PLFrontendOS: Added empty "OSWindowMacOSX"-class as start point for the Cocoa (Objective-C API) port (X11 can be used on Mac OS X, but it's best to avoid using it
+  to avoid compatibility trouble)
+
+
+
 >> 29.11.2011
 [CO]
 - Feature request "ID: 3443487" (http://sourceforge.net/tracker/index.php?func=detail&aid=3443487&group_id=507544&atid=2063685): Added critical section support to

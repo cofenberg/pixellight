@@ -27,6 +27,9 @@
 #include <PLCore/Frontend/Frontend.h>
 #if defined(WIN32)
 	#include "PLFrontendOS/OSWindowWindows.h"
+#elif defined(APPLE)
+	//#include "PLFrontendOS/OSWindowMacOSX.h"	// [TODO] This is what we really want to use on Mac OS X to stay out of compatibility trouble
+	#include "PLFrontendOS/OSWindowLinux.h"	// [TODO] For now, we reuse the X11 implementation from the Linux port
 #elif defined(LINUX)
 	#include "PLFrontendOS/OSWindowLinux.h"
 #endif
@@ -80,6 +83,14 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 	#if defined(WIN32)
 		// Create Windows implementation
 		m_pOSWindow = new OSWindowWindows(*this);
+	#elif defined(APPLE)
+		// Create Mac OS X implementation
+
+		// [TODO] This is what we really want to use on Mac OS X to stay out of compatibility trouble
+		// m_pOSWindow = new OSWindowMacOSX(*this);
+
+		// [TODO] For now, we reuse the X11 implementation from the Linux port
+		m_pOSWindow = new OSWindowLinux(*this);
 	#elif defined(LINUX)
 		// Create Linux implementation
 		m_pOSWindow = new OSWindowLinux(*this);

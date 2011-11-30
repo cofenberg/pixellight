@@ -49,6 +49,21 @@ elseif(ANDROID)
 		src/FrontendAndroid.cpp
 		${ANDROID_NDK}/sources/android/native_app_glue/android_native_app_glue.c
 	)
+elseif(APPLE)
+	##################################################
+	## Mac OS X
+	##################################################
+	add_sources(
+		src/Frontend.cpp
+		src/OSWindow.cpp
+
+		# [TODO] This is what we really want to use on Mac OS X to stay out of compatibility trouble
+		# src/OSWindowMacOSX.mm	# Cocoa can only be accessed when using Objective-C :/
+
+		# [TODO] For now, we reuse the X11 implementation from the Linux port
+		src/OSWindowLinux.cpp
+		src/XDnDFileDropHelper.cpp
+	)
 elseif(LINUX)
 	##################################################
 	## Linux

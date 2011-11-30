@@ -28,6 +28,9 @@
     <ClCompile Include="src\FrontendAndroid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\OSWindowMacOSX.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendOS\PLFrontendOS.h">
@@ -50,6 +53,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLFrontendOS\FrontendAndroid.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendOS\OSWindowMacOSX.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
