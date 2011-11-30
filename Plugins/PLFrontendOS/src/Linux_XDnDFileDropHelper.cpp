@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: XDnDFileDropHelper.cpp                         *
+ *  File: Linux_XDnDFileDropHelper.cpp                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -26,7 +26,7 @@
 #include <string.h>
 #include <PLCore/String/Tokenizer.h>
 #include "PLFrontendOS/OSWindowLinux.h"
-#include "PLFrontendOS/XDnDFileDropHelper.h"
+#include "PLFrontendOS/Linux_XDnDFileDropHelper.h"
 
 
 //[-------------------------------------------------------]
@@ -43,7 +43,7 @@ namespace PLFrontendOS {
 *  @brief
 *    Constructor
 */
-XDnDFileDropHelper::XDnDFileDropHelper(OSWindowLinux &cOSWindowLinux) :
+Linux_XDnDFileDropHelper::Linux_XDnDFileDropHelper(OSWindowLinux &cOSWindowLinux) :
 	m_pOSWindowLinux(&cOSWindowLinux),
 	m_pDisplay(cOSWindowLinux.m_pDisplay),
 	m_nDropWindow(cOSWindowLinux.m_nNativeWindowHandle),
@@ -73,7 +73,7 @@ XDnDFileDropHelper::XDnDFileDropHelper(OSWindowLinux &cOSWindowLinux) :
 *  @brief
 *    Handler for client messages
 */
-bool XDnDFileDropHelper::HandleClientMessage(const XClientMessageEvent &sClientMessage)
+bool Linux_XDnDFileDropHelper::HandleClientMessage(const XClientMessageEvent &sClientMessage)
 {
 	if (sClientMessage.message_type == XdndEnter)
 		HandleXdndEnter(sClientMessage);
@@ -92,7 +92,7 @@ bool XDnDFileDropHelper::HandleClientMessage(const XClientMessageEvent &sClientM
 *  @brief
 *    Handler for the SelectionNotify message
 */
-void XDnDFileDropHelper::HandleXdndSelection(const XSelectionEvent &sSelectionMessage)
+void Linux_XDnDFileDropHelper::HandleXdndSelection(const XSelectionEvent &sSelectionMessage)
 {
 	if (sSelectionMessage.property != XLib::None && sSelectionMessage.selection == XdndSelection) {
 		// Check if target is the requested one
@@ -145,7 +145,7 @@ void XDnDFileDropHelper::HandleXdndSelection(const XSelectionEvent &sSelectionMe
 *  @brief
 *    Fetches all data from a property (Atom)
 */
-XDnDFileDropHelper::PropertyData XDnDFileDropHelper::ReadProperty(Window nNativeWindowHandle, Atom sProperty)
+Linux_XDnDFileDropHelper::PropertyData Linux_XDnDFileDropHelper::ReadProperty(Window nNativeWindowHandle, Atom sProperty)
 {
 	Atom 		   sActualType;
 	int			   nActualFormat;
@@ -172,7 +172,7 @@ XDnDFileDropHelper::PropertyData XDnDFileDropHelper::ReadProperty(Window nNative
 *  @brief
 *    Convert an atom name in to a String
 */
-String XDnDFileDropHelper::GetAtomName(Atom sAtom)
+String Linux_XDnDFileDropHelper::GetAtomName(Atom sAtom)
 {
 	return (sAtom == XLib::None) ? "None" : XGetAtomName(m_pDisplay, sAtom);
 }
@@ -181,7 +181,7 @@ String XDnDFileDropHelper::GetAtomName(Atom sAtom)
 *  @brief
 *    Checks if the drop source supports the "text/uri-list" drop target type
 */
-Atom XDnDFileDropHelper::CheckForSupportedTargetTypeFromAtomList(Atom *pAtomList, int nNumOfItems)
+Atom Linux_XDnDFileDropHelper::CheckForSupportedTargetTypeFromAtomList(Atom *pAtomList, int nNumOfItems)
 {
 	Atom sToBeRequested = XLib::None;
 
@@ -197,7 +197,7 @@ Atom XDnDFileDropHelper::CheckForSupportedTargetTypeFromAtomList(Atom *pAtomList
 *  @brief
 *    Checks if the drop source supports the "text/uri-list" drop target type (from three Atoms)
 */
-Atom XDnDFileDropHelper::CheckForSupportedTargetTypFromAtoms(Atom sAtom1, Atom sAtom2, Atom sAtom3)
+Atom Linux_XDnDFileDropHelper::CheckForSupportedTargetTypFromAtoms(Atom sAtom1, Atom sAtom2, Atom sAtom3)
 {
 	Atom sAtoms[3];
 	int nNumOfAtoms = 0;
@@ -216,7 +216,7 @@ Atom XDnDFileDropHelper::CheckForSupportedTargetTypFromAtoms(Atom sAtom1, Atom s
 *  @brief
 *    Checks if the drop source supports the "text/uri-list" drop target type (from an Property)
 */
-Atom XDnDFileDropHelper::CheckForSupportedTargetTypFromProperty(PropertyData sPropertyData)
+Atom Linux_XDnDFileDropHelper::CheckForSupportedTargetTypFromProperty(PropertyData sPropertyData)
 {
 	// The list of targets is a list of atoms, so it should have type XA_ATOM
 	// but it may have the type TARGETS instead
@@ -239,7 +239,7 @@ Atom XDnDFileDropHelper::CheckForSupportedTargetTypFromProperty(PropertyData sPr
 *  @brief
 *    Copy constructor
 */
-XDnDFileDropHelper::XDnDFileDropHelper(const XDnDFileDropHelper &cOther)
+Linux_XDnDFileDropHelper::Linux_XDnDFileDropHelper(const Linux_XDnDFileDropHelper &cOther)
 {
 }
 
@@ -247,7 +247,7 @@ XDnDFileDropHelper::XDnDFileDropHelper(const XDnDFileDropHelper &cOther)
 *  @brief
 *    Assignment operator
 */
-XDnDFileDropHelper &XDnDFileDropHelper::operator =(const XDnDFileDropHelper &cOther)
+Linux_XDnDFileDropHelper &Linux_XDnDFileDropHelper::operator =(const Linux_XDnDFileDropHelper &cOther)
 {
 	return *this;
 }
@@ -256,7 +256,7 @@ XDnDFileDropHelper &XDnDFileDropHelper::operator =(const XDnDFileDropHelper &cOt
 *  @brief
 *    Handler for the XDnDEnter client message
 */
-void XDnDFileDropHelper::HandleXdndEnter(const XClientMessageEvent &sClientMessage)
+void Linux_XDnDFileDropHelper::HandleXdndEnter(const XClientMessageEvent &sClientMessage)
 {
 	const bool bMoreThan3 = (sClientMessage.data.l[1] & 1);
 	const Window nSource = sClientMessage.data.l[0];
@@ -279,7 +279,7 @@ void XDnDFileDropHelper::HandleXdndEnter(const XClientMessageEvent &sClientMessa
 *  @brief
 *    Handler for the XDnDPosition client message
 */
-void XDnDFileDropHelper::HandleXdndPosition(const XClientMessageEvent &sClientMessage)
+void Linux_XDnDFileDropHelper::HandleXdndPosition(const XClientMessageEvent &sClientMessage)
 {
 	Atom sAction = XdndActionCopy;
 	if (m_XdndVersion >= 2)
@@ -308,7 +308,7 @@ void XDnDFileDropHelper::HandleXdndPosition(const XClientMessageEvent &sClientMe
 *  @brief
 *    Handler for the XDnDDrop client message
 */
-void XDnDFileDropHelper::HandleXdndDrop(const XClientMessageEvent &sClientMessage)
+void Linux_XDnDFileDropHelper::HandleXdndDrop(const XClientMessageEvent &sClientMessage)
 {
 	if (m_ToBeRequestedType == XLib::None) {
 		// It's sending anyway, despite instructions to the contrary.

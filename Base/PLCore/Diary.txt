@@ -2,6 +2,7 @@
 [CO]
 - PLFrontendOS: Added empty "OSWindowMacOSX"-class as start point for the Cocoa (Objective-C API) port (X11 can be used on Mac OS X, but it's best to avoid using it
   to avoid compatibility trouble)
+- PLFrontendOS: Renamed "XDnDFileDropHelper" into "Linux_XDnDFileDropHelper" to make clear that this helper class is Linux related
 
 
 

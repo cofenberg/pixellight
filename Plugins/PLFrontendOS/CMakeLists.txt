@@ -62,7 +62,7 @@ elseif(APPLE)
 
 		# [TODO] For now, we reuse the X11 implementation from the Linux port
 		src/OSWindowLinux.cpp
-		src/XDnDFileDropHelper.cpp
+		src/Linux_XDnDFileDropHelper.cpp
 	)
 elseif(LINUX)
 	##################################################
@@ -72,7 +72,7 @@ elseif(LINUX)
 		src/Frontend.cpp
 		src/OSWindow.cpp
 		src/OSWindowLinux.cpp
-		src/XDnDFileDropHelper.cpp
+		src/Linux_XDnDFileDropHelper.cpp
 	)
 endif()
 

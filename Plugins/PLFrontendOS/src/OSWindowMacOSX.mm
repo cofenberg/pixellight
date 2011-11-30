@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: OSWindowMacOSX.cpp                             *
+ *  File: OSWindowMacOSX.mm                              *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
