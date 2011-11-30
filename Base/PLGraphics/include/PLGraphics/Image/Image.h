@@ -226,7 +226,7 @@ class Image : public PLCore::Loadable {
 		*  @brief
 		*    Constructor
 		*/
-		inline Image();
+		PLGRAPHICS_API Image();
 
 		/**
 		*  @brief
@@ -241,7 +241,7 @@ class Image : public PLCore::Loadable {
 		*  @brief
 		*    Destructor
 		*/
-		inline virtual ~Image();
+		PLGRAPHICS_API virtual ~Image();
 
 		/**
 		*  @brief

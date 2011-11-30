@@ -116,6 +116,14 @@ Image Image::CreateImageAndShareData(EDataFormat nDataFormat, EColorFormat nColo
 //[-------------------------------------------------------]
 /**
 *  @brief
+*    Constructor
+*/
+Image::Image()
+{
+}
+
+/**
+*  @brief
 *    Copy constructor
 */
 Image::Image(const Image &cSource)
@@ -127,6 +135,16 @@ Image::Image(const Image &cSource)
 		m_lstParts.Add(pImagePart);
 		m_mapParts.Add(pImagePart->GetSemantics(), pImagePart);
 	}
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+Image::~Image()
+{
+	// Clear data
+	Unload();
 }
 
 /**

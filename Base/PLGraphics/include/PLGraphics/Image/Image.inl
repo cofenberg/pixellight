@@ -31,24 +31,6 @@ namespace PLGraphics {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
-*/
-inline Image::Image()
-{
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-inline Image::~Image()
-{
-	// Clear data
-	Unload();
-}
-
-/**
-*  @brief
 *    Check if this image is a multi-part image (e.g. a CubeMap)
 */
 inline bool Image::IsMultiPart() const
