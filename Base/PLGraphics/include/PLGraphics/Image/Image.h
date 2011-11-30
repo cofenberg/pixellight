@@ -226,7 +226,7 @@ class Image : public PLCore::Loadable {
 		*  @brief
 		*    Constructor
 		*/
-		PLGRAPHICS_API Image();
+		inline Image();
 
 		/**
 		*  @brief
@@ -241,7 +241,7 @@ class Image : public PLCore::Loadable {
 		*  @brief
 		*    Destructor
 		*/
-		PLGRAPHICS_API virtual ~Image();
+		inline virtual ~Image();
 
 		/**
 		*  @brief
@@ -280,7 +280,7 @@ class Image : public PLCore::Loadable {
 		*  @return
 		*    'true' if the image contains of more than one image part
 		*/
-		PLGRAPHICS_API bool IsMultiPart() const;
+		inline bool IsMultiPart() const;
 
 		/**
 		*  @brief
@@ -289,7 +289,7 @@ class Image : public PLCore::Loadable {
 		*  @return
 		*    Number of image parts
 		*/
-		PLGRAPHICS_API PLCore::uint32 GetNumOfParts() const;
+		inline PLCore::uint32 GetNumOfParts() const;
 
 		/**
 		*  @brief
@@ -301,7 +301,7 @@ class Image : public PLCore::Loadable {
 		*  @return
 		*    Image part, or a null pointer if it doesn't exist
 		*/
-		PLGRAPHICS_API ImagePart *GetPart(PLCore::uint32 nIndex) const;
+		inline ImagePart *GetPart(PLCore::uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -313,7 +313,7 @@ class Image : public PLCore::Loadable {
 		*  @return
 		*    Image part, or a null pointer if it doesn't exist
 		*/
-		PLGRAPHICS_API ImagePart *GetPartBySemantics(PLCore::uint32 nSemantics) const;
+		inline ImagePart *GetPartBySemantics(PLCore::uint32 nSemantics) const;
 
 		/**
 		*  @brief
@@ -322,7 +322,7 @@ class Image : public PLCore::Loadable {
 		*  @return
 		*    List of image parts
 		*/
-		PLGRAPHICS_API const PLCore::Container<ImagePart*> &GetParts() const;
+		inline const PLCore::Container<ImagePart*> &GetParts() const;
 
 		/**
 		*  @brief
@@ -405,6 +405,12 @@ class Image : public PLCore::Loadable {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLGraphics
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLGraphics/Image/Image.inl"
 
 
 #endif // __PLGRAPHICS_IMAGE_H__

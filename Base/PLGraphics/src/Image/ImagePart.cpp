@@ -40,15 +40,6 @@ namespace PLGraphics {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
-*/
-ImagePart::ImagePart() :
-	m_nSemantics(0)
-{
-}
-
-/**
-*  @brief
 *    Copy constructor
 */
 ImagePart::ImagePart(const ImagePart &cSource) :
@@ -60,16 +51,6 @@ ImagePart::ImagePart(const ImagePart &cSource) :
 		ImageBuffer *pImageBuffer = new ImageBuffer(*cSource.m_lstMipmaps[i]);
 		m_lstMipmaps.Add(pImageBuffer);
 	}
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-ImagePart::~ImagePart()
-{
-	// Clear data
-	Clear();
 }
 
 /**
@@ -158,66 +139,6 @@ ECheckConsistency ImagePart::CheckConsistency() const
 
 	// No problem found
 	return CheckOk;
-}
-
-/**
-*  @brief
-*    Get semantics
-*/
-uint32 ImagePart::GetSemantics() const
-{
-	// Return semantics
-	return m_nSemantics;
-}
-
-/**
-*  @brief
-*    Set semantics
-*/
-void ImagePart::SetSemantics(uint32 nSemantics)
-{
-	// Set semantics
-	m_nSemantics = nSemantics;
-}
-
-/**
-*  @brief
-*    Check if the layer has mipmaps
-*/
-bool ImagePart::HasMipmaps() const
-{
-	// Check if there is more than one mipmap
-	return (m_lstMipmaps.GetNumOfElements() > 1);
-}
-
-/**
-*  @brief
-*    Get number of mipmaps
-*/
-uint32 ImagePart::GetNumOfMipmaps() const
-{
-	// Return number of mipmaps
-	return m_lstMipmaps.GetNumOfElements();
-}
-
-/**
-*  @brief
-*    Get mipmap
-*/
-ImageBuffer *ImagePart::GetMipmap(uint32 nIndex) const
-{
-	// Return mipmap
-	return m_lstMipmaps[nIndex];
-}
-
-/**
-*  @brief
-*    Get mipmaps
-*/
-const Container<ImageBuffer*> &ImagePart::GetMipmaps() const
-{
-	// Return mipmap list
-	return m_lstMipmaps;
 }
 
 /**

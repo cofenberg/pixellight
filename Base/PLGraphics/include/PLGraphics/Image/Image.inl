@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ImageEffectWrapper.cpp                         *
+ *  File: Image.inl                                      *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -21,42 +21,80 @@
 
 
 //[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include "PLGraphics/Image/ImageEffectWrapper.h"
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLGraphics {
 
 
 //[-------------------------------------------------------]
-//[ RTTI interface                                        ]
+//[ Public functions                                      ]
 //[-------------------------------------------------------]
-pl_implement_class(ImageEffectWrapper)
-
-
-//[-------------------------------------------------------]
-//[ Public virtual ImageEffect functions                  ]
-//[-------------------------------------------------------]
-bool ImageEffectWrapper::Apply(Image &cImage) const
+/**
+*  @brief
+*    Constructor
+*/
+inline Image::Image()
 {
-	// Call wrapped image effect
-	return m_pImageEffect ? m_pImageEffect->Apply(cImage) : false;
 }
 
-bool ImageEffectWrapper::Apply(ImagePart &cPart) const
+/**
+*  @brief
+*    Destructor
+*/
+inline Image::~Image()
 {
-	// Call wrapped image effect
-	return m_pImageEffect ? m_pImageEffect->Apply(cPart) : false;
+	// Clear data
+	Unload();
 }
 
-bool ImageEffectWrapper::Apply(ImageBuffer &cBuffer) const
+/**
+*  @brief
+*    Check if this image is a multi-part image (e.g. a CubeMap)
+*/
+inline bool Image::IsMultiPart() const
 {
-	// Call wrapped image effect
-	return m_pImageEffect ? m_pImageEffect->Apply(cBuffer) : false;
+	// Check if there is more than one part
+	return (m_lstParts.GetNumOfElements() > 1);
+}
+
+/**
+*  @brief
+*    Get number of image parts
+*/
+inline PLCore::uint32 Image::GetNumOfParts() const
+{
+	// Return number of parts
+	return m_lstParts.GetNumOfElements();
+}
+
+/**
+*  @brief
+*    Get image part
+*/
+inline ImagePart *Image::GetPart(PLCore::uint32 nIndex) const
+{
+	// Return part
+	return m_lstParts[nIndex];
+}
+
+/**
+*  @brief
+*    Get image part by semantics
+*/
+inline ImagePart *Image::GetPartBySemantics(PLCore::uint32 nSemantics) const
+{
+	// Return part
+	return m_mapParts.Get(nSemantics);
+}
+
+/**
+*  @brief
+*    Get image parts
+*/
+inline const PLCore::Container<ImagePart*> &Image::GetParts() const
+{
+	// Return part list
+	return m_lstParts;
 }
 
 

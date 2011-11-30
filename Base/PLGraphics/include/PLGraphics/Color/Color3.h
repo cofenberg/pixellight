@@ -109,7 +109,7 @@ class Color3 {
 		*  @return
 		*    The color as PLCore::uint32
 		*/
-		static PLGRAPHICS_API PLCore::uint32 ToUInt32(float fR, float fG, float fB);
+		static inline PLCore::uint32 ToUInt32(float fR, float fG, float fB);
 
 		/**
 		*  @brief
@@ -121,7 +121,7 @@ class Color3 {
 		*  @return
 		*    The red color component (0.0-1.0)
 		*/
-		static PLGRAPHICS_API float RedFromUInt32(PLCore::uint32 nColor);
+		static inline float RedFromUInt32(PLCore::uint32 nColor);
 
 		/**
 		*  @brief
@@ -133,7 +133,7 @@ class Color3 {
 		*  @return
 		*    The green color component (0.0-1.0)
 		*/
-		static PLGRAPHICS_API float GreenFromUInt32(PLCore::uint32 nColor);
+		static inline float GreenFromUInt32(PLCore::uint32 nColor);
 
 		/**
 		*  @brief
@@ -145,7 +145,7 @@ class Color3 {
 		*  @return
 		*    The blue color component (0.0-1.0)
 		*/
-		static PLGRAPHICS_API float BlueFromUInt32(PLCore::uint32 nColor);
+		static inline float BlueFromUInt32(PLCore::uint32 nColor);
 
 		/**
 		*  @brief
@@ -170,7 +170,7 @@ class Color3 {
 		*  @brief
 		*    Constructor (all components are set to 0.0)
 		*/
-		PLGRAPHICS_API Color3();
+		inline Color3();
 
 		/**
 		*  @brief
@@ -183,7 +183,7 @@ class Color3 {
 		*  @param[in] fB
 		*    Blue color component (0.0-1.0)
 		*/
-		PLGRAPHICS_API Color3(float fR, float fG, float fB);
+		inline Color3(float fR, float fG, float fB);
 
 		/**
 		*  @brief
@@ -196,7 +196,7 @@ class Color3 {
 		*  @param[in] nB
 		*    Blue color component (0-255)
 		*/
-		PLGRAPHICS_API Color3(PLCore::uint8 nR, PLCore::uint8 nG, PLCore::uint8 nB);
+		inline Color3(PLCore::uint8 nR, PLCore::uint8 nG, PLCore::uint8 nB);
 
 		/**
 		*  @brief
@@ -205,7 +205,7 @@ class Color3 {
 		*  @param[in] fColor
 		*    Float array holding the color, MUST have 3 elements! (0.0-1.0)
 		*/
-		PLGRAPHICS_API Color3(const float fColor[]);
+		inline Color3(const float fColor[]);
 
 		/**
 		*  @brief
@@ -214,7 +214,7 @@ class Color3 {
 		*  @param[in] nColor
 		*    PLCore::uint8 array holding the color, MUST have 3 elements! (0-255)
 		*/
-		PLGRAPHICS_API Color3(const PLCore::uint8 nColor[]);
+		inline Color3(const PLCore::uint8 nColor[]);
 
 		/**
 		*  @brief
@@ -223,7 +223,7 @@ class Color3 {
 		*  @param[in] fColor
 		*    Value for all three color components (0.0-1.0)
 		*/
-		PLGRAPHICS_API Color3(float fColor);
+		inline Color3(float fColor);
 
 		/**
 		*  @brief
@@ -232,7 +232,7 @@ class Color3 {
 		*  @param[in] nColor
 		*    Value for all three color components (0-255)
 		*/
-		PLGRAPHICS_API Color3(PLCore::uint8 nColor);
+		inline Color3(PLCore::uint8 nColor);
 
 		/**
 		*  @brief
@@ -241,13 +241,13 @@ class Color3 {
 		*  @param[in] cSource
 		*    Source color
 		*/
-		PLGRAPHICS_API Color3(const Color3 &cSource);
+		inline Color3(const Color3 &cSource);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLGRAPHICS_API ~Color3();
+		inline ~Color3();
 
 		/**
 		*  @brief
@@ -256,7 +256,7 @@ class Color3 {
 		*  @return
 		*    This color as PLCore::uint32
 		*/
-		PLGRAPHICS_API PLCore::uint32 ToUInt32() const;
+		inline PLCore::uint32 ToUInt32() const;
 
 		/**
 		*  @brief
@@ -265,7 +265,7 @@ class Color3 {
 		*  @param[in] nColor
 		*    Color as PLCore::uint32
 		*/
-		PLGRAPHICS_API void FromUInt32(PLCore::uint32 nColor);
+		inline void FromUInt32(PLCore::uint32 nColor);
 
 		/**
 		*  @brief
@@ -278,7 +278,7 @@ class Color3 {
 		*  @param[out] fB
 		*    Will receive the blue color component (0.0-1.0)
 		*/
-		PLGRAPHICS_API void GetRGB(float &fR, float &fG, float &fB) const;
+		inline void GetRGB(float &fR, float &fG, float &fB) const;
 
 		/**
 		*  @brief
@@ -291,7 +291,7 @@ class Color3 {
 		*  @param[out] nB
 		*    Will receive the blue color component (0-255)
 		*/
-		PLGRAPHICS_API void GetRGB(PLCore::uint8 &nR, PLCore::uint8 &nG, PLCore::uint8 &nB) const;
+		inline void GetRGB(PLCore::uint8 &nR, PLCore::uint8 &nG, PLCore::uint8 &nB) const;
 
 		/**
 		*  @brief
@@ -304,7 +304,7 @@ class Color3 {
 		*  @param[in] fB
 		*    Blue color component (0.0-1.0)
 		*/
-		PLGRAPHICS_API void SetRGB(float fR, float fG, float fB);
+		inline void SetRGB(float fR, float fG, float fB);
 
 		/**
 		*  @brief
@@ -317,7 +317,7 @@ class Color3 {
 		*  @param[in] nB
 		*    Blue color component (0-255)
 		*/
-		PLGRAPHICS_API void SetRGB(PLCore::uint8 nR, PLCore::uint8 nG, PLCore::uint8 nB);
+		inline void SetRGB(PLCore::uint8 nR, PLCore::uint8 nG, PLCore::uint8 nB);
 
 		/**
 		*  @brief
@@ -326,7 +326,7 @@ class Color3 {
 		*  @param[out] fColor
 		*    Reference to float array receiving the color values, MUST have 3 elements! (0.0-1.0)
 		*/
-		PLGRAPHICS_API void GetRGB(float fColor[]) const;
+		inline void GetRGB(float fColor[]) const;
 
 		/**
 		*  @brief
@@ -335,7 +335,7 @@ class Color3 {
 		*  @param[out] nColor
 		*    Reference to PLCore::uint8 array receiving the color values, MUST have 3 elements! (0-255)
 		*/
-		PLGRAPHICS_API void GetRGB(PLCore::uint8 nColor[]) const;
+		inline void GetRGB(PLCore::uint8 nColor[]) const;
 
 		/**
 		*  @brief
@@ -344,7 +344,7 @@ class Color3 {
 		*  @param[in] fColor
 		*    Reference to float array containing the color value, MUST have 3 elements! (0.0-1.0)
 		*/
-		PLGRAPHICS_API void SetRGB(const float fColor[]);
+		inline void SetRGB(const float fColor[]);
 
 		/**
 		*  @brief
@@ -353,7 +353,7 @@ class Color3 {
 		*  @param[in] nColor
 		*    Reference to PLCore::uint8 array containing the color value, MUST have 3 elements! (0-255)
 		*/
-		PLGRAPHICS_API void SetRGB(const PLCore::uint8 nColor[]);
+		inline void SetRGB(const PLCore::uint8 nColor[]);
 
 		/**
 		*  @brief
@@ -362,7 +362,7 @@ class Color3 {
 		*  @param[in] fValue
 		*    Value for all three color component (0.0-1.0)
 		*/
-		PLGRAPHICS_API void SetRGB(float fValue);
+		inline void SetRGB(float fValue);
 
 		/**
 		*  @brief
@@ -371,7 +371,7 @@ class Color3 {
 		*  @param[in] nColor
 		*    Value for all three color component (0-255)
 		*/
-		PLGRAPHICS_API void SetRGB(PLCore::uint8 nColor);
+		inline void SetRGB(PLCore::uint8 nColor);
 
 		/**
 		*  @brief
@@ -380,7 +380,7 @@ class Color3 {
 		*  @return
 		*    Red value (0.0-1.0)
 		*/
-		PLGRAPHICS_API float GetR() const;
+		inline float GetR() const;
 
 		/**
 		*  @brief
@@ -389,7 +389,7 @@ class Color3 {
 		*  @return
 		*    Red value (0-255)
 		*/
-		PLGRAPHICS_API PLCore::uint8 GetRInt() const;
+		inline PLCore::uint8 GetRInt() const;
 
 		/**
 		*  @brief
@@ -398,7 +398,7 @@ class Color3 {
 		*  @param[in] fR
 		*    Red value (0.0-1.0)
 		*/
-		PLGRAPHICS_API void SetR(float fR);
+		inline void SetR(float fR);
 
 		/**
 		*  @brief
@@ -407,7 +407,7 @@ class Color3 {
 		*  @param[in] nR
 		*    Red value (0-255)
 		*/
-		PLGRAPHICS_API void SetR(PLCore::uint8 nR);
+		inline void SetR(PLCore::uint8 nR);
 
 		/**
 		*  @brief
@@ -416,7 +416,7 @@ class Color3 {
 		*  @return
 		*    Green value (0.0-1.0)
 		*/
-		PLGRAPHICS_API float GetG() const;
+		inline float GetG() const;
 
 		/**
 		*  @brief
@@ -425,7 +425,7 @@ class Color3 {
 		*  @return
 		*    Green value (0-255)
 		*/
-		PLGRAPHICS_API PLCore::uint8 GetGInt() const;
+		inline PLCore::uint8 GetGInt() const;
 
 		/**
 		*  @brief
@@ -434,7 +434,7 @@ class Color3 {
 		*  @param[in] fG
 		*    Green value (0.0-1.0)
 		*/
-		PLGRAPHICS_API void SetG(float fG);
+		inline void SetG(float fG);
 
 		/**
 		*  @brief
@@ -443,7 +443,7 @@ class Color3 {
 		*  @param[in] nG
 		*    Green value (0-255)
 		*/
-		PLGRAPHICS_API void SetG(PLCore::uint8 nG);
+		inline void SetG(PLCore::uint8 nG);
 
 		/**
 		*  @brief
@@ -452,7 +452,7 @@ class Color3 {
 		*  @return
 		*    Blue value (0.0-1.0)
 		*/
-		PLGRAPHICS_API float GetB() const;
+		inline float GetB() const;
 
 		/**
 		*  @brief
@@ -461,7 +461,7 @@ class Color3 {
 		*  @return
 		*    Blue value (0-255)
 		*/
-		PLGRAPHICS_API PLCore::uint8 GetBInt() const;
+		inline PLCore::uint8 GetBInt() const;
 
 		/**
 		*  @brief
@@ -470,7 +470,7 @@ class Color3 {
 		*  @param[in] fB
 		*    Blue value (0.0-1.0)
 		*/
-		PLGRAPHICS_API void SetB(float fB);
+		inline void SetB(float fB);
 
 		/**
 		*  @brief
@@ -479,7 +479,7 @@ class Color3 {
 		*  @param[in] nB
 		*    Blue value (0-255)
 		*/
-		PLGRAPHICS_API void SetB(PLCore::uint8 nB);
+		inline void SetB(PLCore::uint8 nB);
 
 		/**
 		*  @brief
@@ -488,13 +488,13 @@ class Color3 {
 		*  @return
 		*    'true' if the color is valid, else 'false'
 		*/
-		PLGRAPHICS_API bool IsValid() const;
+		inline bool IsValid() const;
 
 		/**
 		*  @brief
 		*    Clamps the color values between 0.0 and 1.0
 		*/
-		PLGRAPHICS_API void Saturate();
+		inline void Saturate();
 
 		/**
 		*  @brief
@@ -506,7 +506,7 @@ class Color3 {
 		*  @note
 		*    - "human eye formula" (red*0.299 + green*0.587 + blue*0.114) is used
 		*/
-		PLGRAPHICS_API float GetLuminance() const;
+		inline float GetLuminance() const;
 
 		/**
 		*  @brief
@@ -518,7 +518,7 @@ class Color3 {
 		*  @see
 		*    - GetLuminance()
 		*/
-		PLGRAPHICS_API PLCore::uint8 GetLuminanceInt() const;
+		inline PLCore::uint8 GetLuminanceInt() const;
 
 		/**
 		*  @brief
@@ -530,50 +530,50 @@ class Color3 {
 		*  @see
 		*    - GetLuminance()
 		*/
-		PLGRAPHICS_API Color3 GetLuminanceColor() const;
+		inline Color3 GetLuminanceColor() const;
 
 
 		//[-------------------------------------------------------]
 		//[ Assignment operators                                  ]
 		//[-------------------------------------------------------]
-		PLGRAPHICS_API Color3 &operator =(const Color3 &cC);
+		inline Color3 &operator =(const Color3 &cC);
 		PLGRAPHICS_API Color3 &operator =(const Color4 &cC);
-		PLGRAPHICS_API Color3 &operator =(const float fC[]);
-		PLGRAPHICS_API Color3 &operator =(float fD);
-		PLGRAPHICS_API operator float *();
-		PLGRAPHICS_API operator const float *() const;
+		inline Color3 &operator =(const float fC[]);
+		inline Color3 &operator =(float fD);
+		inline operator float *();
+		inline operator const float *() const;
 
 		//[-------------------------------------------------------]
 		//[ Comparison                                            ]
 		//[-------------------------------------------------------]
-		PLGRAPHICS_API bool operator ==(const Color3 &cC) const;
-		PLGRAPHICS_API bool operator !=(const Color3 &cC) const;
+		inline bool operator ==(const Color3 &cC) const;
+		inline bool operator !=(const Color3 &cC) const;
 		PLGRAPHICS_API bool operator ==(const Color4 &cC) const;
 		PLGRAPHICS_API bool operator !=(const Color4 &cC) const;
-		PLGRAPHICS_API bool operator ==(float f) const;
-		PLGRAPHICS_API bool operator !=(float f) const;
+		inline bool operator ==(float f) const;
+		inline bool operator !=(float f) const;
 
 		//[-------------------------------------------------------]
 		//[ Misc                                                  ]
 		//[-------------------------------------------------------]
-		PLGRAPHICS_API Color3  operator +(const Color3 &cC) const;
-		PLGRAPHICS_API Color3  operator +(float fN) const;
-		PLGRAPHICS_API Color3 &operator +=(const Color3 &cC);
-		PLGRAPHICS_API Color3 &operator +=(float fN);
-		PLGRAPHICS_API Color3  operator -() const;
-		PLGRAPHICS_API Color3  operator -(const Color3 &cC) const;
-		PLGRAPHICS_API Color3  operator -(float fN) const;
-		PLGRAPHICS_API Color3 &operator -=(const Color3 &cC);
-		PLGRAPHICS_API Color3 &operator -=(float fN);
-		PLGRAPHICS_API Color3  operator *(const Color3 &cC) const;
-		PLGRAPHICS_API Color3  operator *(float fS) const;
-		PLGRAPHICS_API Color3 &operator *=(const Color3 &cC);
-		PLGRAPHICS_API Color3 &operator *=(float fS);
-		PLGRAPHICS_API Color3  operator /(const Color3 &cC) const;
-		PLGRAPHICS_API Color3  operator /(float fS) const;
-		PLGRAPHICS_API Color3 &operator /=(const Color3 &cC);
-		PLGRAPHICS_API Color3 &operator /=(float fS);
-		PLGRAPHICS_API float  &operator [](int nIndex);
+		inline Color3  operator +(const Color3 &cC) const;
+		inline Color3  operator +(float fN) const;
+		inline Color3 &operator +=(const Color3 &cC);
+		inline Color3 &operator +=(float fN);
+		inline Color3  operator -() const;
+		inline Color3  operator -(const Color3 &cC) const;
+		inline Color3  operator -(float fN) const;
+		inline Color3 &operator -=(const Color3 &cC);
+		inline Color3 &operator -=(float fN);
+		inline Color3  operator *(const Color3 &cC) const;
+		inline Color3  operator *(float fS) const;
+		inline Color3 &operator *=(const Color3 &cC);
+		inline Color3 &operator *=(float fS);
+		inline Color3  operator /(const Color3 &cC) const;
+		inline Color3  operator /(float fS) const;
+		inline Color3 &operator /=(const Color3 &cC);
+		inline Color3 &operator /=(float fS);
+		inline float  &operator [](int nIndex);
 
 		/**
 		*  @brief
@@ -582,7 +582,7 @@ class Color3 {
 		*  @return
 		*    String with the data
 		*/
-		PLGRAPHICS_API PLCore::String ToString() const;
+		inline PLCore::String ToString() const;
 
 		/**
 		*  @brief
@@ -606,6 +606,7 @@ class Color3 {
 //[-------------------------------------------------------]
 //[ Implementation                                        ]
 //[-------------------------------------------------------]
+#include "PLGraphics/Color/Color3.inl"
 #include "PLGraphics/Color/TypeColor3.inl"
 
 

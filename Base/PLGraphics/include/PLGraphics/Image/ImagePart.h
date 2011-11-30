@@ -66,7 +66,7 @@ class ImagePart {
 		*  @brief
 		*    Constructor
 		*/
-		PLGRAPHICS_API ImagePart();
+		inline ImagePart();
 
 		/**
 		*  @brief
@@ -81,7 +81,7 @@ class ImagePart {
 		*  @brief
 		*    Destructor
 		*/
-		PLGRAPHICS_API ~ImagePart();
+		inline ~ImagePart();
 
 		/**
 		*  @brief
@@ -126,7 +126,7 @@ class ImagePart {
 		*  @return
 		*    Semantics ID
 		*/
-		PLGRAPHICS_API PLCore::uint32 GetSemantics() const;
+		inline PLCore::uint32 GetSemantics() const;
 
 		/**
 		*  @brief
@@ -135,7 +135,7 @@ class ImagePart {
 		*  @param[in] nSemantics
 		*    Semantics ID
 		*/
-		PLGRAPHICS_API void SetSemantics(PLCore::uint32 nSemantics);
+		inline void SetSemantics(PLCore::uint32 nSemantics);
 
 		/**
 		*  @brief
@@ -144,7 +144,7 @@ class ImagePart {
 		*  @return
 		*    'true' if the frame contains more than one mipmap
 		*/
-		PLGRAPHICS_API bool HasMipmaps() const;
+		inline bool HasMipmaps() const;
 
 		/**
 		*  @brief
@@ -153,7 +153,7 @@ class ImagePart {
 		*  @return
 		*    Number of mipmaps
 		*/
-		PLGRAPHICS_API PLCore::uint32 GetNumOfMipmaps() const;
+		inline PLCore::uint32 GetNumOfMipmaps() const;
 
 		/**
 		*  @brief
@@ -165,7 +165,7 @@ class ImagePart {
 		*  @return
 		*    Image buffer, or a null pointer if it doesn't exist
 		*/
-		PLGRAPHICS_API ImageBuffer *GetMipmap(PLCore::uint32 nIndex) const;
+		inline ImageBuffer *GetMipmap(PLCore::uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -174,7 +174,7 @@ class ImagePart {
 		*  @return
 		*    List of mipmaps
 		*/
-		PLGRAPHICS_API const PLCore::Container<ImageBuffer*> &GetMipmaps() const;
+		inline const PLCore::Container<ImageBuffer*> &GetMipmaps() const;
 
 		/**
 		*  @brief
@@ -228,6 +228,12 @@ class ImagePart {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLGraphics
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLGraphics/Image/ImagePart.inl"
 
 
 #endif // __PLGRAPHICS_IMAGEPART_H__

@@ -35,7 +35,6 @@ add_sources(
 	src/Image/Image.cpp
 	src/Image/ImageBuffer.cpp
 	src/Image/ImageData.cpp
-	src/Image/ImageEffects.cpp
 	src/Image/ImageEffect.cpp
 	src/Image/ImageEffectWrapper.cpp
 	src/Image/ImageLoader.cpp

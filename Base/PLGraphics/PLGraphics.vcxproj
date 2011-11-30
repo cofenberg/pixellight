@@ -244,7 +244,6 @@ copy build\release_x64\PLGraphics.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\Image\ImageBuffer.cpp" />
     <ClCompile Include="src\Image\ImageData.cpp" />
     <ClCompile Include="src\Image\ImageEffect.cpp" />
-    <ClCompile Include="src\Image\ImageEffects.cpp" />
     <ClCompile Include="src\Image\ImageEffectWrapper.cpp" />
     <ClCompile Include="src\Image\ImageLoader.cpp" />
     <ClCompile Include="src\Image\ImagePalette.cpp" />
@@ -300,10 +299,19 @@ copy build\release_x64\PLGraphics.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLGraphics\Color\Color4.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="include\PLGraphics\Color\Color3.inl" />
+    <None Include="include\PLGraphics\Color\Color4.inl" />
     <None Include="include\PLGraphics\Color\TypeColor3.inl" />
     <None Include="include\PLGraphics\Color\TypeColor4.inl" />
     <None Include="CMakeLists.txt" />
     <None Include="Diary.txt" />
+    <None Include="include\PLGraphics\Image\Image.inl" />
+    <None Include="include\PLGraphics\Image\ImageBuffer.inl" />
+    <None Include="include\PLGraphics\Image\ImageData.inl" />
+    <None Include="include\PLGraphics\Image\ImageEffects.inl" />
+    <None Include="include\PLGraphics\Image\ImageEffectWrapper.inl" />
+    <None Include="include\PLGraphics\Image\ImagePalette.inl" />
+    <None Include="include\PLGraphics\Image\ImagePart.inl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PLCore\PLCore.vcxproj">

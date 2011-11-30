@@ -116,14 +116,6 @@ Image Image::CreateImageAndShareData(EDataFormat nDataFormat, EColorFormat nColo
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
-*/
-Image::Image()
-{
-}
-
-/**
-*  @brief
 *    Copy constructor
 */
 Image::Image(const Image &cSource)
@@ -135,16 +127,6 @@ Image::Image(const Image &cSource)
 		m_lstParts.Add(pImagePart);
 		m_mapParts.Add(pImagePart->GetSemantics(), pImagePart);
 	}
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-Image::~Image()
-{
-	// Clear data
-	Unload();
 }
 
 /**
@@ -275,56 +257,6 @@ ECheckConsistency Image::CheckConsistency() const
 
 /**
 *  @brief
-*    Check if this image is a multi-part image (e.g. a CubeMap)
-*/
-bool Image::IsMultiPart() const
-{
-	// Check if there is more than one part
-	return (m_lstParts.GetNumOfElements() > 1);
-}
-
-/**
-*  @brief
-*    Get number of image parts
-*/
-uint32 Image::GetNumOfParts() const
-{
-	// Return number of parts
-	return m_lstParts.GetNumOfElements();
-}
-
-/**
-*  @brief
-*    Get image part
-*/
-ImagePart *Image::GetPart(uint32 nIndex) const
-{
-	// Return part
-	return m_lstParts[nIndex];
-}
-
-/**
-*  @brief
-*    Get image part by semantics
-*/
-ImagePart *Image::GetPartBySemantics(uint32 nSemantics) const
-{
-	// Return part
-	return m_mapParts.Get(nSemantics);
-}
-
-/**
-*  @brief
-*    Get image parts
-*/
-const Container<ImagePart*> &Image::GetParts() const
-{
-	// Return part list
-	return m_lstParts;
-}
-
-/**
-*  @brief
 *    Create a new image part
 */
 ImagePart *Image::CreatePart(uint32 nSemantics)
@@ -433,6 +365,10 @@ bool Image::Unload()
 	return Loadable::Unload();
 }
 
+
+//[-------------------------------------------------------]
+//[ Public virtual PLCore::Loadable functions             ]
+//[-------------------------------------------------------]
 String Image::GetLoadableTypeName() const
 {
 	static const String sString = "Image";

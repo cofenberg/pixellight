@@ -56,7 +56,7 @@ class ImagePalette {
 		*  @brief
 		*    Constructor
 		*/
-		PLGRAPHICS_API ImagePalette();
+		inline ImagePalette();
 
 		/**
 		*  @brief
@@ -71,7 +71,7 @@ class ImagePalette {
 		*  @brief
 		*    Destructor
 		*/
-		PLGRAPHICS_API ~ImagePalette();
+		inline ~ImagePalette();
 
 		/**
 		*  @brief
@@ -89,7 +89,7 @@ class ImagePalette {
 		*  @brief
 		*    Clear data
 		*/
-		PLGRAPHICS_API void Clear();
+		inline void Clear();
 
 		/**
 		*  @brief
@@ -107,7 +107,7 @@ class ImagePalette {
 		*  @return
 		*    Number of colors
 		*/
-		PLGRAPHICS_API PLCore::uint32 GetNumOfColors() const;
+		inline PLCore::uint32 GetNumOfColors() const;
 
 		/**
 		*  @brief
@@ -119,7 +119,7 @@ class ImagePalette {
 		*  @return
 		*    Color, if index is invalid, Color3::Null (-1 -1 -1) is returned
 		*/
-		PLGRAPHICS_API Color3 GetColor(PLCore::uint32 nIndex) const;
+		inline Color3 GetColor(PLCore::uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -161,7 +161,7 @@ class ImagePalette {
 		*  @return
 		*    Index of new color
 		*/
-		PLGRAPHICS_API PLCore::uint32 AddColor(const Color3 &cColor);
+		inline PLCore::uint32 AddColor(const Color3 &cColor);
 
 		/**
 		*  @brief
@@ -173,7 +173,7 @@ class ImagePalette {
 		*    by calling GetData() and manipulation the palette directly. If you use
 		*    SetColor() or AddColor() instead, this will be done for you automatically.
 		*/
-		PLGRAPHICS_API void RebuildColorIndex();
+		inline void RebuildColorIndex();
 
 		/**
 		*  @brief
@@ -186,7 +186,7 @@ class ImagePalette {
 		*    If you use this function to change the palette data by yourself, be sure to call
 		*    RebuildColorIndex() to invalidate the index->color hash map!
 		*/
-		PLGRAPHICS_API PLCore::uint8 *GetData() const;
+		inline PLCore::uint8 *GetData() const;
 
 
 	//[-------------------------------------------------------]
@@ -220,6 +220,12 @@ class ImagePalette {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLGraphics
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLGraphics/Image/ImagePalette.inl"
 
 
 #endif // __PLGRAPHICS_IMAGEPALETTE_H__

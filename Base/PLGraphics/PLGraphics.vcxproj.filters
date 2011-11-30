@@ -34,9 +34,6 @@
     <ClCompile Include="src\Image\ImageEffect.cpp">
       <Filter>Image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Image\ImageEffects.cpp">
-      <Filter>Image</Filter>
-    </ClCompile>
     <ClCompile Include="src\Image\ImageEffectWrapper.cpp">
       <Filter>Image</Filter>
     </ClCompile>
@@ -202,5 +199,32 @@
     </None>
     <None Include="CMakeLists.txt" />
     <None Include="Diary.txt" />
+    <None Include="include\PLGraphics\Color\Color4.inl">
+      <Filter>Color</Filter>
+    </None>
+    <None Include="include\PLGraphics\Color\Color3.inl">
+      <Filter>Color</Filter>
+    </None>
+    <None Include="include\PLGraphics\Image\Image.inl">
+      <Filter>Image</Filter>
+    </None>
+    <None Include="include\PLGraphics\Image\ImagePart.inl">
+      <Filter>Image</Filter>
+    </None>
+    <None Include="include\PLGraphics\Image\ImageEffects.inl">
+      <Filter>Image</Filter>
+    </None>
+    <None Include="include\PLGraphics\Image\ImageData.inl">
+      <Filter>Image</Filter>
+    </None>
+    <None Include="include\PLGraphics\Image\ImagePalette.inl">
+      <Filter>Image</Filter>
+    </None>
+    <None Include="include\PLGraphics\Image\ImageEffectWrapper.inl">
+      <Filter>Image</Filter>
+    </None>
+    <None Include="include\PLGraphics\Image\ImageBuffer.inl">
+      <Filter>Image</Filter>
+    </None>
   </ItemGroup>
 </Project>

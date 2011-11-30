@@ -67,13 +67,13 @@ class ImageEffectWrapper: public ImageEffect {
 		*  @param[in] sParameters
 		*    Image effect parameters
 		*/
-		PLGRAPHICS_API ImageEffectWrapper(const PLCore::String &sEffect, const PLCore::String &sParameters);
+		inline ImageEffectWrapper(const PLCore::String &sEffect, const PLCore::String &sParameters);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLGRAPHICS_API virtual ~ImageEffectWrapper();
+		inline virtual ~ImageEffectWrapper();
 
 		/**
 		*  @brief
@@ -82,7 +82,7 @@ class ImageEffectWrapper: public ImageEffect {
 		*  @return
 		*    Pointer to wrapped image effect, can be a null pointer
 		*/
-		PLGRAPHICS_API ImageEffect *GetImageEffect() const;
+		inline ImageEffect *GetImageEffect() const;
 
 
 	//[-------------------------------------------------------]
@@ -108,6 +108,12 @@ class ImageEffectWrapper: public ImageEffect {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLGraphics
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLGraphics/Image/ImageEffectWrapper.inl"
 
 
 #endif // __PLGRAPHICS_IMAGEEFFECT_WRAPPER_H__

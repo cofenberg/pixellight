@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ImageEffectWrapper.cpp                         *
+ *  File: ImagePart.inl                                  *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -21,42 +21,91 @@
 
 
 //[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include "PLGraphics/Image/ImageEffectWrapper.h"
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLGraphics {
 
 
 //[-------------------------------------------------------]
-//[ RTTI interface                                        ]
+//[ Public functions                                      ]
 //[-------------------------------------------------------]
-pl_implement_class(ImageEffectWrapper)
-
-
-//[-------------------------------------------------------]
-//[ Public virtual ImageEffect functions                  ]
-//[-------------------------------------------------------]
-bool ImageEffectWrapper::Apply(Image &cImage) const
+/**
+*  @brief
+*    Constructor
+*/
+inline ImagePart::ImagePart() :
+	m_nSemantics(0)
 {
-	// Call wrapped image effect
-	return m_pImageEffect ? m_pImageEffect->Apply(cImage) : false;
 }
 
-bool ImageEffectWrapper::Apply(ImagePart &cPart) const
+/**
+*  @brief
+*    Destructor
+*/
+inline ImagePart::~ImagePart()
 {
-	// Call wrapped image effect
-	return m_pImageEffect ? m_pImageEffect->Apply(cPart) : false;
+	// Clear data
+	Clear();
 }
 
-bool ImageEffectWrapper::Apply(ImageBuffer &cBuffer) const
+/**
+*  @brief
+*    Get semantics
+*/
+inline PLCore::uint32 ImagePart::GetSemantics() const
 {
-	// Call wrapped image effect
-	return m_pImageEffect ? m_pImageEffect->Apply(cBuffer) : false;
+	// Return semantics
+	return m_nSemantics;
+}
+
+/**
+*  @brief
+*    Set semantics
+*/
+inline void ImagePart::SetSemantics(PLCore::uint32 nSemantics)
+{
+	// Set semantics
+	m_nSemantics = nSemantics;
+}
+
+/**
+*  @brief
+*    Check if the layer has mipmaps
+*/
+inline bool ImagePart::HasMipmaps() const
+{
+	// Check if there is more than one mipmap
+	return (m_lstMipmaps.GetNumOfElements() > 1);
+}
+
+/**
+*  @brief
+*    Get number of mipmaps
+*/
+inline PLCore::uint32 ImagePart::GetNumOfMipmaps() const
+{
+	// Return number of mipmaps
+	return m_lstMipmaps.GetNumOfElements();
+}
+
+/**
+*  @brief
+*    Get mipmap
+*/
+inline ImageBuffer *ImagePart::GetMipmap(PLCore::uint32 nIndex) const
+{
+	// Return mipmap
+	return m_lstMipmaps[nIndex];
+}
+
+/**
+*  @brief
+*    Get mipmaps
+*/
+inline const PLCore::Container<ImageBuffer*> &ImagePart::GetMipmaps() const
+{
+	// Return mipmap list
+	return m_lstMipmaps;
 }
 
 

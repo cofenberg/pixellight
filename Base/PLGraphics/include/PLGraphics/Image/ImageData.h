@@ -72,7 +72,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*  @brief
 		*    Constructor
 		*/
-		ImageData();
+		inline ImageData();
 
 		/**
 		*  @brief
@@ -87,7 +87,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~ImageData();
+		inline virtual ~ImageData();
 
 		/**
 		*  @brief
@@ -99,7 +99,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*  @return
 		*    Reference to this object
 		*/
-		ImageData &operator =(const ImageData &cSource);
+		PLGRAPHICS_API ImageData &operator =(const ImageData &cSource);
 
 		/**
 		*  @brief
@@ -118,13 +118,13 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*    Please note that a call to Create() will not immediately create the image buffer itself.
 		*    The image buffer is created on the first call to GetData() or GetCompressedData() respectively.
 		*/
-		void CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone);
+		PLGRAPHICS_API void CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone);
 
 		/**
 		*  @brief
 		*    Clear data
 		*/
-		void Clear();
+		PLGRAPHICS_API void Clear();
 
 		/**
 		*  @brief
@@ -137,7 +137,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*    Only 2D and 3D test images are allowed here. For images containing more than
 		*    one image buffer, you have to use Image::CreateTestImage().
 		*/
-		void CreateTestImage(ETestImage nTestImage = TestImage2DSimple);
+		PLGRAPHICS_API void CreateTestImage(ETestImage nTestImage = TestImage2DSimple);
 
 		/**
 		*  @brief
@@ -146,7 +146,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*  @return
 		*    Data format
 		*/
-		EDataFormat GetDataFormat() const;
+		inline EDataFormat GetDataFormat() const;
 
 		/**
 		*  @brief
@@ -155,7 +155,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*  @return
 		*    Color format
 		*/
-		EColorFormat GetColorFormat() const;
+		inline EColorFormat GetColorFormat() const;
 
 		/**
 		*  @brief
@@ -164,7 +164,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*  @return
 		*    Compression type
 		*/
-		ECompression GetCompression() const;
+		inline ECompression GetCompression() const;
 
 		/**
 		*  @brief
@@ -176,7 +176,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*  @remarks
 		*    This will invalidate the compressed image data buffer
 		*/
-		void SetCompression(ECompression nCompression);
+		PLGRAPHICS_API void SetCompression(ECompression nCompression);
 
 		/**
 		*  @brief
@@ -185,7 +185,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*  @return
 		*    Size of image
 		*/
-		PLMath::Vector3i GetSize() const;
+		inline PLMath::Vector3i GetSize() const;
 
 		/**
 		*  @brief
@@ -194,7 +194,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*  @return
 		*    'true' if image data is available, else 'false'
 		*/
-		bool HasAnyData() const;
+		inline bool HasAnyData() const;
 
 		/**
 		*  @brief
@@ -203,7 +203,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*  @return
 		*    'true' if image data is available, else 'false'
 		*/
-		bool HasData() const;
+		inline bool HasData() const;
 
 		/**
 		*  @brief
@@ -212,7 +212,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*  @return
 		*    Size of image data in bytes
 		*/
-		PLCore::uint32 GetDataSize() const;
+		inline PLCore::uint32 GetDataSize() const;
 
 		/**
 		*  @brief
@@ -225,8 +225,8 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*    If the image contains no uncompressed data, but compressed image data is available the data,
 		*    will be decompressed automatically and stored in the decompressed image buffer this method returns.
 		*/
-		const PLCore::uint8 *GetData() const;
-		PLCore::uint8 *GetData();
+		PLGRAPHICS_API const PLCore::uint8 *GetData() const;
+		PLGRAPHICS_API PLCore::uint8 *GetData();
 
 		/**
 		*  @brief
@@ -235,7 +235,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*  @return
 		*    'true' if compressed image data is available, else 'false'
 		*/
-		bool HasCompressedData() const;
+		inline bool HasCompressedData() const;
 
 		/**
 		*  @brief
@@ -244,7 +244,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*  @return
 		*    Size of compressed image data in bytes
 		*/
-		PLCore::uint32 GetCompressedDataSize() const;
+		inline PLCore::uint32 GetCompressedDataSize() const;
 
 		/**
 		*  @brief
@@ -253,8 +253,8 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*  @return
 		*    Pointer to compressed image data, a null pointer on error
 		*/
-		const PLCore::uint8 *GetCompressedData() const;
-		PLCore::uint8 *GetCompressedData();
+		PLGRAPHICS_API const PLCore::uint8 *GetCompressedData() const;
+		PLGRAPHICS_API PLCore::uint8 *GetCompressedData();
 
 		/**
 		*  @brief
@@ -264,7 +264,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*    If the image contains uncompressed image data, the data will be
 		*    compressed and stored in the compressed image buffer.
 		*/
-		bool Compress();
+		PLGRAPHICS_API bool Compress();
 
 		/**
 		*  @brief
@@ -274,7 +274,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*    If the image contains compressed image data, the data will be
 		*    decompressed and stored in the decompressed image buffer.
 		*/
-		bool Decompress();
+		PLGRAPHICS_API bool Decompress();
 
 		/**
 		*  @brief
@@ -283,7 +283,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*  @param[in] pPalette
 		*    Pointer to color palette, or a null pointer if the image has no palette
 		*/
-		void SetPalette(ImagePalette *pPalette);
+		PLGRAPHICS_API void SetPalette(ImagePalette *pPalette);
 
 		/**
 		*  @brief
@@ -292,8 +292,8 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*  @return
 		*    Pointer to color palette, or a null pointer if the image has no palette
 		*/
-		const ImagePalette *GetPalette() const;
-		ImagePalette *GetPalette();
+		inline const ImagePalette *GetPalette() const;
+		inline ImagePalette *GetPalette();
 
 		/**
 		*  @brief
@@ -302,7 +302,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*  @param[in] pnData
 		*    Data to copy into this image data, must have enough bytes to fill the whole image! The given pointer must be valid!
 		*/
-		void CopyData(const PLCore::uint8 *pnData);
+		PLGRAPHICS_API void CopyData(const PLCore::uint8 *pnData);
 
 		/**
 		*  @brief
@@ -311,7 +311,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*  @param[in] pnData
 		*    Pointer to the image data to be taken over by this image data, must have enough bytes to fill the whole image data! The given pointer must be valid!
 		*/
-		void TakeoverData(PLCore::uint8 *pnData);
+		PLGRAPHICS_API void TakeoverData(PLCore::uint8 *pnData);
 
 		/**
 		*  @brief
@@ -320,7 +320,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*  @param[in] pnData
 		*    Pointer to the image data to be shared by this image data, must have enough bytes to fill the whole image data! The given pointer must be valid!
 		*/
-		void ShareData(PLCore::uint8 *pnData);
+		PLGRAPHICS_API void ShareData(PLCore::uint8 *pnData);
 
 		/**
 		*  @brief
@@ -330,7 +330,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*    The buffer is only created, if it doesn't exist before. So it's safe to call it
 		*    in order to get a valid buffer before accessing it, this won't destroy anything.
 		*/
-		void CreateBuffer();
+		inline void CreateBuffer();
 
 		/**
 		*  @brief
@@ -340,19 +340,19 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 		*    The buffer is only created, if it doesn't exist before. So it's safe to call it
 		*    in order to get a valid buffer before accessing it, this won't destroy anything.
 		*/
-		void CreateCompressedBuffer();
+		inline void CreateCompressedBuffer();
 
 		/**
 		*  @brief
 		*    Destroy image buffer
 		*/
-		void DestroyBuffer();
+		inline void DestroyBuffer();
 
 		/**
 		*  @brief
 		*    Destroy compressed image buffer
 		*/
-		void DestroyCompressedBuffer();
+		inline void DestroyCompressedBuffer();
 
 		/**
 		*  @brief
@@ -456,6 +456,12 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLGraphics
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLGraphics/Image/ImageData.inl"
 
 
 #endif // __PLGRAPHICS_IMAGEDATA_H__

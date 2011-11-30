@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ImageEffectWrapper.cpp                         *
+ *  File: ImageEffectWrapper.inl                         *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -21,42 +21,42 @@
 
 
 //[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include "PLGraphics/Image/ImageEffectWrapper.h"
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLGraphics {
 
 
 //[-------------------------------------------------------]
-//[ RTTI interface                                        ]
+//[ Public functions                                      ]
 //[-------------------------------------------------------]
-pl_implement_class(ImageEffectWrapper)
-
-
-//[-------------------------------------------------------]
-//[ Public virtual ImageEffect functions                  ]
-//[-------------------------------------------------------]
-bool ImageEffectWrapper::Apply(Image &cImage) const
+/**
+*  @brief
+*    Constructor
+*/
+inline ImageEffectWrapper::ImageEffectWrapper(const PLCore::String &sEffect, const PLCore::String &sParameters) :
+	m_pImageEffect(nullptr)
 {
-	// Call wrapped image effect
-	return m_pImageEffect ? m_pImageEffect->Apply(cImage) : false;
 }
 
-bool ImageEffectWrapper::Apply(ImagePart &cPart) const
+/**
+*  @brief
+*    Destructor
+*/
+inline ImageEffectWrapper::~ImageEffectWrapper()
 {
-	// Call wrapped image effect
-	return m_pImageEffect ? m_pImageEffect->Apply(cPart) : false;
+	// Destroy wrapper image effect
+	if (m_pImageEffect)
+		delete m_pImageEffect;
 }
 
-bool ImageEffectWrapper::Apply(ImageBuffer &cBuffer) const
+/**
+*  @brief
+*    Get wrapped image effect
+*/
+inline ImageEffect *ImageEffectWrapper::GetImageEffect() const
 {
-	// Call wrapped image effect
-	return m_pImageEffect ? m_pImageEffect->Apply(cBuffer) : false;
+	// Return image effect
+	return m_pImageEffect;
 }
 
 

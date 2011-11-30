@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLMath/Rectangle.h>
 #include <PLMath/Matrix4x4.h>
-#include <PLGraphics/Color/Color4.h>
 #include "PLRenderer/Renderer/Font.h"
 #include "PLRenderer/Renderer/Renderer.h"
 #include "PLRenderer/Renderer/VertexBuffer.h"

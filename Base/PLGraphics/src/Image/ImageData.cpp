@@ -42,23 +42,6 @@ namespace PLGraphics {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
-*/
-ImageData::ImageData() :
-	m_nDataFormat(DataByte),
-	m_nColorFormat(ColorRGB),
-	m_nCompression(CompressionNone),
-	m_pData(nullptr),
-	m_nDataSize(0),
-	m_bDataShared(false),
-	m_pCompressedData(nullptr),
-	m_nCompressedSize(0),
-	m_pPalette(nullptr)
-{
-}
-
-/**
-*  @brief
 *    Copy constructor
 */
 ImageData::ImageData(const ImageData &cSource) :
@@ -88,16 +71,6 @@ ImageData::ImageData(const ImageData &cSource) :
 	// Copy palette
 	if (cSource.m_pPalette)
 		m_pPalette = new ImagePalette(*cSource.m_pPalette);
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-ImageData::~ImageData()
-{
-	// Clear data
-	Clear();
 }
 
 /**
@@ -264,36 +237,6 @@ void ImageData::CreateTestImage(ETestImage nTestImage)
 
 /**
 *  @brief
-*    Get data format
-*/
-EDataFormat ImageData::GetDataFormat() const
-{
-	// Return format
-	return m_nDataFormat;
-}
-
-/**
-*  @brief
-*    Get color format
-*/
-EColorFormat ImageData::GetColorFormat() const
-{
-	// Return color format
-	return m_nColorFormat;
-}
-
-/**
-*  @brief
-*    Get compression type
-*/
-ECompression ImageData::GetCompression() const
-{
-	// Return compression type
-	return m_nCompression;
-}
-
-/**
-*  @brief
 *    Set compression type
 */
 void ImageData::SetCompression(ECompression nCompression)
@@ -315,46 +258,6 @@ void ImageData::SetCompression(ECompression nCompression)
 		// Calculate the size of the compressed image buffer
 		CalculateCompressedImageBufferSize();
 	}
-}
-
-/**
-*  @brief
-*    Get image size
-*/
-Vector3i ImageData::GetSize() const
-{
-	// Return size
-	return m_vSize;
-}
-
-/**
-*  @brief
-*    Check if uncompressed or compressed data is available
-*/
-bool ImageData::HasAnyData() const
-{
-	// Check if image buffer is valid
-	return (m_pData != nullptr || m_pCompressedData != nullptr);
-}
-
-/**
-*  @brief
-*    Check if uncompressed data is available
-*/
-bool ImageData::HasData() const
-{
-	// Check if image buffer is valid
-	return (m_pData != nullptr);
-}
-
-/**
-*  @brief
-*    Get size of image data
-*/
-uint32 ImageData::GetDataSize() const
-{
-	// Return size of image data
-	return m_nDataSize;
 }
 
 /**
@@ -394,26 +297,6 @@ uint8 *ImageData::GetData()
 
 	// Return image data
 	return m_pData;
-}
-
-/**
-*  @brief
-*    Check if compressed data is available
-*/
-bool ImageData::HasCompressedData() const
-{
-	// Check if compressed image buffer is valid
-	return (m_pCompressedData != nullptr);
-}
-
-/**
-*  @brief
-*    Get size of compressed image data
-*/
-uint32 ImageData::GetCompressedDataSize() const
-{
-	// Return size of compressed image data
-	return m_nCompressedSize;
 }
 
 /**
@@ -616,26 +499,6 @@ void ImageData::SetPalette(ImagePalette *pPalette)
 
 /**
 *  @brief
-*    Get color palette
-*/
-const ImagePalette *ImageData::GetPalette() const
-{
-	// Return palette
-	return m_pPalette;
-}
-
-/**
-*  @brief
-*    Get color palette
-*/
-ImagePalette *ImageData::GetPalette()
-{
-	// Return palette
-	return m_pPalette;
-}
-
-/**
-*  @brief
 *    Copy provided image data into this image data
 */
 void ImageData::CopyData(const uint8 *pnData)
@@ -686,65 +549,6 @@ void ImageData::ShareData(uint8 *pnData)
 	// about the consequences and potential risks in sharing image data.
 	m_pData       = pnData;
 	m_bDataShared = true;
-}
-
-/**
-*  @brief
-*    Create image buffer
-*/
-void ImageData::CreateBuffer()
-{
-	// Check if size is valid and buffer has not been created before
-	if (m_nDataSize > 0 && !m_pData) {
-		// Create image buffer
-		m_pData = new uint8[m_nDataSize];
-	}
-}
-
-
-/**
-*  @brief
-*    Create compressed image buffer
-*/
-void ImageData::CreateCompressedBuffer()
-{
-	// Check if size is valid and buffer has not been created before
-	if (m_nCompressedSize > 0 && !m_pCompressedData) {
-		// Create compressed image buffer
-		m_pCompressedData = new uint8[m_nCompressedSize];
-	}
-}
-
-/**
-*  @brief
-*    Destroy image buffer
-*/
-void ImageData::DestroyBuffer()
-{
-	// Destroy image data
-	if (m_pData) {
-		// Do we own the image data?
-		if (m_bDataShared)
-			m_bDataShared = false;
-		else
-			delete [] m_pData;
-
-		// Reset data pointer
-		m_pData = nullptr;
-	}
-}
-
-/**
-*  @brief
-*    Destroy compressed image buffer
-*/
-void ImageData::DestroyCompressedBuffer()
-{
-	// Destroy compressed image data
-	if (m_pCompressedData) {
-		delete [] m_pCompressedData;
-		m_pCompressedData = nullptr;
-	}
 }
 
 /**

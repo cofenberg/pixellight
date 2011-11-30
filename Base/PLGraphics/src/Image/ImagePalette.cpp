@@ -38,17 +38,6 @@ namespace PLGraphics {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
-*/
-ImagePalette::ImagePalette() :
-	m_pData(nullptr),
-	m_nSize(0),
-	m_nColors(0)
-{
-}
-
-/**
-*  @brief
 *    Copy constructor
 */
 ImagePalette::ImagePalette(const ImagePalette &cSource) :
@@ -66,16 +55,6 @@ ImagePalette::ImagePalette(const ImagePalette &cSource) :
 		// Copy data
 		MemoryManager::Copy(m_pData, cSource.m_pData, m_nSize*3);
 	}
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-ImagePalette::~ImagePalette()
-{
-	// Clear data
-	Clear();
 }
 
 /**
@@ -104,23 +83,6 @@ ImagePalette &ImagePalette::operator =(const ImagePalette &cSource)
 
 /**
 *  @brief
-*    Clear data
-*/
-void ImagePalette::Clear()
-{
-	// Delete palette
-	if (m_pData)
-		delete [] m_pData;
-
-	// Reset data
-	m_pData   = nullptr;
-	m_nSize   = 0;
-	m_nColors = 0;
-	m_mapColors.Clear();
-}
-
-/**
-*  @brief
 *    Create palette
 */
 void ImagePalette::Create(uint32 nColors)
@@ -141,30 +103,6 @@ void ImagePalette::Create(uint32 nColors)
 		m_nColors = nColors;
 		MemoryManager::Set(m_pData, 0, m_nSize*3);
 	}
-}
-
-/**
-*  @brief
-*    Get number of colors
-*/
-uint32 ImagePalette::GetNumOfColors() const
-{
-	// Return number of colors
-	return m_nColors;
-}
-
-/**
-*  @brief
-*    Get color
-*/
-Color3 ImagePalette::GetColor(uint32 nIndex) const
-{
-	// Is index valid?
-	if (nIndex < m_nColors)
-		return Color3(m_pData[nIndex*3], m_pData[nIndex*3+1], m_pData[nIndex*3+2]);
-
-	// Invalid index
-	return Color3::Null;
 }
 
 /**
@@ -220,40 +158,6 @@ void ImagePalette::SetColor(uint32 nIndex, const Color3 &cColor)
 
 	// Rebuild color index
 	RebuildColorIndex();
-}
-
-/**
-*  @brief
-*    Add color
-*/
-uint32 ImagePalette::AddColor(const Color3 &cColor)
-{
-	// Add color to next free place in palette
-	const uint32 nIndex = m_nColors;
-	SetColor(nIndex, cColor);
-
-	// Return color index
-	return nIndex;
-}
-
-/**
-*  @brief
-*    Rebuild color index
-*/
-void ImagePalette::RebuildColorIndex()
-{
-	// Clear hash map. It will be rebuilt next time GetColorIndex() is called
-	m_mapColors.Clear();
-}
-
-/**
-*  @brief
-*    Get color palette data
-*/
-uint8 *ImagePalette::GetData() const
-{
-	// Return palette data
-	return m_pData;
 }
 
 

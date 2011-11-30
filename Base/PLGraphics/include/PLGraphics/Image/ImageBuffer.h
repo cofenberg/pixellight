@@ -107,7 +107,7 @@ class ImageBuffer {
 		*  @return
 		*    The number of bytes per pixel
 		*/
-		static PLGRAPHICS_API PLCore::uint32 GetBytesPerPixel(EDataFormat nDataFormat, EColorFormat nColorFormat);
+		static inline PLCore::uint32 GetBytesPerPixel(EDataFormat nDataFormat, EColorFormat nColorFormat);
 
 		/**
 		*  @brief
@@ -133,7 +133,7 @@ class ImageBuffer {
 		*  @return
 		*    'true' if the given color format has an alpha channel, else 'false'
 		*/
-		static PLGRAPHICS_API bool IsAlphaChannelColorFormat(EColorFormat nColorFormat);
+		static inline bool IsAlphaChannelColorFormat(EColorFormat nColorFormat);
 
 		/**
 		*  @brief
@@ -170,7 +170,7 @@ class ImageBuffer {
 		*  @brief
 		*    Constructor
 		*/
-		PLGRAPHICS_API ImageBuffer();
+		inline ImageBuffer();
 
 		/**
 		*  @brief
@@ -179,13 +179,13 @@ class ImageBuffer {
 		*  @param[in] cSource
 		*    Source to copy from
 		*/
-		PLGRAPHICS_API ImageBuffer(const ImageBuffer &cSource);
+		inline ImageBuffer(const ImageBuffer &cSource);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLGRAPHICS_API ~ImageBuffer();
+		inline ~ImageBuffer();
 
 		/**
 		*  @brief
@@ -197,7 +197,7 @@ class ImageBuffer {
 		*  @return
 		*    Reference to this object
 		*/
-		PLGRAPHICS_API ImageBuffer &operator =(const ImageBuffer &cSource);
+		inline ImageBuffer &operator =(const ImageBuffer &cSource);
 
 		/**
 		*  @brief
@@ -216,13 +216,13 @@ class ImageBuffer {
 		*    Please note that a call to CreateImage() will not immediately create the image buffer itself.
 		*    The image buffer is created on the first call to GetData() or GetCompressedData() respectively.
 		*/
-		PLGRAPHICS_API void CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone);
+		inline void CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone);
 
 		/**
 		*  @brief
 		*    Clear data
 		*/
-		PLGRAPHICS_API void Clear();
+		inline void Clear();
 
 		/**
 		*  @brief
@@ -253,7 +253,7 @@ class ImageBuffer {
 		*    Only 2D and 3D test images are allowed here. For images containing more than
 		*    one image buffer, you have to use Image::CreateTestImage().
 		*/
-		PLGRAPHICS_API void CreateTestImage(ETestImage nTestImage = TestImage2DSimple);
+		inline void CreateTestImage(ETestImage nTestImage = TestImage2DSimple);
 
 		/**
 		*  @brief
@@ -262,7 +262,7 @@ class ImageBuffer {
 		*  @return
 		*    Data format
 		*/
-		PLGRAPHICS_API EDataFormat GetDataFormat() const;
+		inline EDataFormat GetDataFormat() const;
 
 		/**
 		*  @brief
@@ -271,7 +271,7 @@ class ImageBuffer {
 		*  @return
 		*    Color format
 		*/
-		PLGRAPHICS_API EColorFormat GetColorFormat() const;
+		inline EColorFormat GetColorFormat() const;
 
 		/**
 		*  @brief
@@ -280,7 +280,7 @@ class ImageBuffer {
 		*  @return
 		*    The number of components per pixel
 		*/
-		PLGRAPHICS_API PLCore::uint32 GetComponentsPerPixel() const;
+		inline PLCore::uint32 GetComponentsPerPixel() const;
 
 		/**
 		*  @brief
@@ -289,7 +289,7 @@ class ImageBuffer {
 		*  @return
 		*    The number of bytes per pixel component
 		*/
-		PLGRAPHICS_API PLCore::uint32 GetBytesPerPixelComponent() const;
+		inline PLCore::uint32 GetBytesPerPixelComponent() const;
 
 		/**
 		*  @brief
@@ -298,7 +298,7 @@ class ImageBuffer {
 		*  @return
 		*    The number of bytes per pixel
 		*/
-		PLGRAPHICS_API PLCore::uint32 GetBytesPerPixel() const;
+		inline PLCore::uint32 GetBytesPerPixel() const;
 
 		/**
 		*  @brief
@@ -307,7 +307,7 @@ class ImageBuffer {
 		*  @return
 		*    Compression type
 		*/
-		PLGRAPHICS_API ECompression GetCompression() const;
+		inline ECompression GetCompression() const;
 
 		/**
 		*  @brief
@@ -319,7 +319,7 @@ class ImageBuffer {
 		*  @remarks
 		*    This will invalidate the compressed image data buffer
 		*/
-		PLGRAPHICS_API void SetCompression(ECompression nCompression);
+		inline void SetCompression(ECompression nCompression);
 
 		/**
 		*  @brief
@@ -328,7 +328,7 @@ class ImageBuffer {
 		*  @return
 		*    Size of image
 		*/
-		PLGRAPHICS_API PLMath::Vector3i GetSize() const;
+		inline PLMath::Vector3i GetSize() const;
 
 		/**
 		*  @brief
@@ -337,7 +337,7 @@ class ImageBuffer {
 		*  @return
 		*    The number of pixels
 		*/
-		PLGRAPHICS_API PLCore::uint32 GetNumOfPixels() const;
+		inline PLCore::uint32 GetNumOfPixels() const;
 
 		/**
 		*  @brief
@@ -346,7 +346,7 @@ class ImageBuffer {
 		*  @return
 		*    'true' if image data is available, else 'false'
 		*/
-		PLGRAPHICS_API bool HasAnyData() const;
+		inline bool HasAnyData() const;
 
 		/**
 		*  @brief
@@ -355,7 +355,7 @@ class ImageBuffer {
 		*  @return
 		*    'true' if image data is available, else 'false'
 		*/
-		PLGRAPHICS_API bool HasData() const;
+		inline bool HasData() const;
 
 		/**
 		*  @brief
@@ -364,7 +364,7 @@ class ImageBuffer {
 		*  @return
 		*    Size of image data in bytes
 		*/
-		PLGRAPHICS_API PLCore::uint32 GetDataSize() const;
+		inline PLCore::uint32 GetDataSize() const;
 
 		/**
 		*  @brief
@@ -373,7 +373,7 @@ class ImageBuffer {
 		*  @return
 		*    Size of one row in bytes
 		*/
-		PLGRAPHICS_API PLCore::uint32 GetRowSize() const;
+		inline PLCore::uint32 GetRowSize() const;
 
 		/**
 		*  @brief
@@ -389,8 +389,8 @@ class ImageBuffer {
 		*  @note
 		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that you never read or write over the data buffer boundings!
 		*/
-		PLGRAPHICS_API const PLCore::uint8 *GetData() const;
-		PLGRAPHICS_API PLCore::uint8 *GetData();
+		inline const PLCore::uint8 *GetData() const;
+		inline PLCore::uint8 *GetData();
 
 		/**
 		*  @brief
@@ -399,7 +399,7 @@ class ImageBuffer {
 		*  @return
 		*    'true' if compressed image data is available, else 'false'
 		*/
-		PLGRAPHICS_API bool HasCompressedData() const;
+		inline bool HasCompressedData() const;
 
 		/**
 		*  @brief
@@ -408,7 +408,7 @@ class ImageBuffer {
 		*  @return
 		*    Size of compressed image data in bytes
 		*/
-		PLGRAPHICS_API PLCore::uint32 GetCompressedDataSize() const;
+		inline PLCore::uint32 GetCompressedDataSize() const;
 
 		/**
 		*  @brief
@@ -420,8 +420,8 @@ class ImageBuffer {
 		*  @note
 		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that you never read or write over the data buffer boundings!
 		*/
-		PLGRAPHICS_API const PLCore::uint8 *GetCompressedData() const;
-		PLGRAPHICS_API PLCore::uint8 *GetCompressedData();
+		inline const PLCore::uint8 *GetCompressedData() const;
+		inline PLCore::uint8 *GetCompressedData();
 
 		/**
 		*  @brief
@@ -431,7 +431,7 @@ class ImageBuffer {
 		*    If the image contains uncompressed image data, the data will be
 		*    compressed and stored in the compressed image buffer.
 		*/
-		PLGRAPHICS_API bool Compress();
+		inline bool Compress();
 
 		/**
 		*  @brief
@@ -441,7 +441,7 @@ class ImageBuffer {
 		*    If the image contains compressed image data, the data will be
 		*    decompressed and stored in the decompressed image buffer.
 		*/
-		PLGRAPHICS_API bool Decompress();
+		inline bool Decompress();
 
 		/**
 		*  @brief
@@ -450,7 +450,7 @@ class ImageBuffer {
 		*  @param[in] pPalette
 		*    Pointer to color palette, or a null pointer if the image has no palette
 		*/
-		PLGRAPHICS_API void SetPalette(ImagePalette *pPalette);
+		inline void SetPalette(ImagePalette *pPalette);
 
 		/**
 		*  @brief
@@ -459,8 +459,8 @@ class ImageBuffer {
 		*  @return
 		*    Pointer to color palette, or a null pointer if the image has no palette
 		*/
-		PLGRAPHICS_API const ImagePalette *GetPalette() const;
-		PLGRAPHICS_API ImagePalette *GetPalette();
+		inline const ImagePalette *GetPalette() const;
+		inline ImagePalette *GetPalette();
 
 		/**
 		*  @brief
@@ -472,7 +472,7 @@ class ImageBuffer {
 		*  @note
 		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image buffer!
 		*/
-		PLGRAPHICS_API void CopyData(const PLCore::uint8 *pnData);
+		inline void CopyData(const PLCore::uint8 *pnData);
 
 		/**
 		*  @brief
@@ -485,7 +485,7 @@ class ImageBuffer {
 		*    - "Takeover" means that this image buffer will destroy the provided data when it's no longer used!
 		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image buffer!
 		*/
-		PLGRAPHICS_API void TakeoverData(PLCore::uint8 *pnData);
+		inline void TakeoverData(PLCore::uint8 *pnData);
 
 		/**
 		*  @brief
@@ -500,7 +500,7 @@ class ImageBuffer {
 		*    - While this method is quite efficient, it's also quite error prone, so be really careful when using this method
 		*    - Lookout! This method is dangerous and must be used with care! Do always ensure that your given image data has enough bytes for this image buffer!
 		*/
-		PLGRAPHICS_API void ShareData(PLCore::uint8 *pnData);
+		inline void ShareData(PLCore::uint8 *pnData);
 
 
 	//[-------------------------------------------------------]
@@ -511,7 +511,7 @@ class ImageBuffer {
 		*  @brief
 		*    Make image data unique
 		*/
-		void MakeBufferUnique();
+		PLGRAPHICS_API void MakeBufferUnique();
 
 
 	//[-------------------------------------------------------]
@@ -528,6 +528,12 @@ class ImageBuffer {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLGraphics
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLGraphics/Image/ImageBuffer.inl"
 
 
 #endif // __PLGRAPHICS_IMAGEBUFFER_H__
