@@ -28,7 +28,7 @@
     <ClCompile Include="src\FrontendAndroid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\OSWindowMacOSX.cpp">
+    <ClCompile Include="src\OSWindowMacOSX.mm">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
