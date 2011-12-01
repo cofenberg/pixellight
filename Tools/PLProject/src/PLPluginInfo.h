@@ -151,19 +151,25 @@ class PLPluginInfo {
 		*  @brief
 		*    Set active flag, this flag indicates if the plugin is active or not
 		*
+		*  @param[in] bActive
+		*    Active state
+		*
 		*  @note
 		*    - This value can be overwritten by the pl_module_active definition in the main source file of the parsed project
 		*/
-		void SetActive(bool bIsActive);
+		void SetActive(bool bActive);
 
 		/**
 		*  @brief
 		*    Set delayed flag, this flag indicates if delayed loading should be used for this plugin
 		*
+		*  @param[in] bDelayed
+		*    Delayed state
+		*
 		*  @note
 		*    - This value can be overwritten by the pl_module_delayed definition in the main source file of the parsed project
 		*/
-		void SetDelayed(bool bIsDelayed);
+		void SetDelayed(bool bDelayed);
 
 		/**
 		*  @brief
@@ -302,7 +308,7 @@ class PLPluginInfo {
 	private:
 		PLCore::String					  m_sPluginFileVersion;		/**< Plugin version string */
 		PLCore::String					  m_sPLVersion;				/**< PixelLight version string */
-		bool							  m_bIsActive;				/**< Flag if the plugin is active */
+		bool							  m_bActive;				/**< Flag if the plugin is active */
 		bool							  m_bDelayed;				/**< Flag if the delayed loading should be used */
 		PLCore::String					  m_sDescription;			/**< Plugin description */
 		PLCore::String					  m_sVendor;				/**< Plugin vendor information */

@@ -1,3 +1,9 @@
+>> 01.12.2011
+[CO]
+- Bugfix: PLProject was not parsing "pl_module_active" and "pl_module_delayed"
+
+
+
 >> 27.10.2011
 [CO]
 - "plugin"-files: Only adding the information of the current platform is sufficient
