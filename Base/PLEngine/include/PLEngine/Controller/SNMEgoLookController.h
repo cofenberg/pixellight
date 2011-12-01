@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMLookController.h                            *
+ *  File: SNMEgoLookController.h                         *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,16 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLENGINE_CONTROLLER_SNMLOOKCONTROLLER_H__
-#define __PLENGINE_CONTROLLER_SNMLOOKCONTROLLER_H__
+#ifndef __PLENGINE_CONTROLLER_SNMEGOLOOKCONTROLLER_H__
+#define __PLENGINE_CONTROLLER_SNMEGOLOOKCONTROLLER_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Scene/SceneNodeModifiers/SNMTransform.h>
-#include "PLEngine/PLEngine.h"
+#include "PLEngine/Controller/SNMLookController.h"
 
 
 //[-------------------------------------------------------]
@@ -39,56 +38,28 @@ namespace PLEngine {
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class LookController;
-
-
-//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene node rotation input controller modifier class without 3D restriction
+*    Scene node rotation input controller modifier class with 3D restriction
 *
 *  @note
 *    - Primary intended for rapid prototyping
-*    - Unrestricted 3D rotation via rotation quaternion
-*    - Combine this modifier with for example "PLScene::SNMRotationFixRoll" to restrict the
-*      rotation or directly use the specialized "PLEngine::SNMEgoLookController"-modifier
+*    - Restricted 3D rotation via Euler angles
+*    - The up-vector is automatically calculated by using the set scene node rotation quaternion
 */
-class SNMLookController : public PLScene::SNMTransform {
-
-
-	//[-------------------------------------------------------]
-	//[ Public definition                                     ]
-	//[-------------------------------------------------------]
-	public:
-		/**
-		*  @brief
-		*    Scene node modifier flags (PLScene::SceneNodeModifier flags extension)
-		*/
-		enum EFlags {
-			UseRotationKey = 1<<2	/**< If this flag is set, it's required to keep the rotation key pressed in order to rotate */
-		};
-		pl_enum(EFlags)
-			pl_enum_base(PLScene::SNMTransform::EFlags)
-			pl_enum_value(UseRotationKey, "If this flag is set, it's required to keep the rotation key pressed in order to rotate without 3D restriction")
-		pl_enum_end
+class SNMEgoLookController : public SNMLookController {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PL_RTTI_EXPORT, SNMLookController, "PLEngine", PLScene::SNMTransform, "Scene node rotation input controller modifier class")
-		// Attributes
-		pl_attribute(InputSemantic,	PLCore::String,			"",				ReadWrite,	DirectValue,	"Semantic of this input controller (e.g. \"Camera\")",	"")
-			// Overwritten PLScene::SceneNodeModifier attributes
-		pl_attribute(Flags,			pl_flag_type(EFlags),	UseRotationKey,	ReadWrite,	GetSet,			"Flags",												"")
+	pl_class(PL_RTTI_EXPORT, SNMEgoLookController, "PLEngine", PLEngine::SNMLookController, "Scene node rotation input controller modifier class with 3D restriction")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 		// Slots
-		pl_slot_0(OnUpdate,	"Called when the scene node modifier needs to be updated",	"")
+		pl_slot_0(OnRotation,	"Called when the scene node rotation changed",	"")
 	pl_class_end
 
 
@@ -103,27 +74,19 @@ class SNMLookController : public PLScene::SNMTransform {
 		*  @param[in] cSceneNode
 		*    Owner scene node
 		*/
-		PL_API SNMLookController(PLScene::SceneNode &cSceneNode);
+		PL_API SNMEgoLookController(PLScene::SceneNode &cSceneNode);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PL_API virtual ~SNMLookController();
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual PLScene::SceneNodeModifier functions   ]
-	//[-------------------------------------------------------]
-	public:
-		PL_API virtual PLInput::Controller *GetInputController() const override;
+		PL_API virtual ~SNMEgoLookController();
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLScene::SceneNodeModifier functions ]
 	//[-------------------------------------------------------]
 	protected:
-		PL_API virtual void InformedOnInit() override;
 		PL_API virtual void OnActivate(bool bActivate) override;
 
 
@@ -131,18 +94,28 @@ class SNMLookController : public PLScene::SNMTransform {
 	//[ Protected virtual SNMLookController functions         ]
 	//[-------------------------------------------------------]
 	protected:
+		PL_API virtual void OnUpdate() override;
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
 		/**
 		*  @brief
-		*    Called when the scene node modifier needs to be updated
+		*    Called when the scene node rotation changed
 		*/
-		PL_API virtual void OnUpdate();
+		void OnRotation();
 
 
 	//[-------------------------------------------------------]
-	//[ Protected data                                        ]
+	//[ Private data                                          ]
 	//[-------------------------------------------------------]
-	protected:
-		LookController *m_pController;	/**< Look input controller instance, always valid! */
+	private:
+		PLMath::Vector3	m_vUpVector;	/**< Up vector */
+		float			m_fPitch;		/**< X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa) - in degree */
+		float			m_fYaw;			/**< Y rotation axis: Yaw (also called 'heading') change is turning to the left or right - in degree */
+		bool			m_bListen;		/**< Listen to rotation signals? */
 
 
 };
@@ -154,4 +127,4 @@ class SNMLookController : public PLScene::SNMTransform {
 } // PLEngine
 
 
-#endif // __PLENGINE_CONTROLLER_SNMLOOKCONTROLLER_H__
+#endif // __PLENGINE_CONTROLLER_SNMEGOLOOKCONTROLLER_H__

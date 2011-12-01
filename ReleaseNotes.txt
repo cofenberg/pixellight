@@ -2,6 +2,7 @@ Changes in PixelLight 0.9.10-R1 (not yet released)
 - Feature: There's now official 64 bit support
 - Feature: Added Mac OS X support (>=10.6)
 - Feature: Added support for 2D array textures within the renderer (kind of 3D texture, but without filtering between the depth layers)
+- Feature: Added scene node modifier "PLEngine::SNMEgoLookController" for restricted 3D look around
 - Feature request ID: 3443487 (Windows): Added critical section support to the mutex implementation
 - Feature request ID: 3439371: Added method "PLCore::Socket::IsDataWaiting()"
 - Change: Various minor bugfixes and usability improvements within the CMake based build system to make building PixelLight across multiple platforms as painless as possible

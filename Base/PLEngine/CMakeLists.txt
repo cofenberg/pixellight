@@ -41,6 +41,7 @@ add_sources(
 	src/Controller/SNMPhysicsCharacterController.cpp
 	src/Controller/PhysicsCharacterController.cpp
 	src/Controller/SNMLookController.cpp
+	src/Controller/SNMEgoLookController.cpp
 	src/Controller/LookController.cpp
 	src/Controller/SNMMoveController.cpp
 	src/Controller/MoveController.cpp

@@ -269,6 +269,7 @@ copy build\release_x64\PLEngine.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\Controller\PhysicsCharacterController.cpp" />
     <ClCompile Include="src\Controller\PhysicsMouseInteraction.cpp" />
     <ClCompile Include="src\Controller\SNMCameraZoomController.cpp" />
+    <ClCompile Include="src\Controller\SNMEgoLookController.cpp" />
     <ClCompile Include="src\Controller\SNMLookController.cpp" />
     <ClCompile Include="src\Controller\SNMMoveController.cpp" />
     <ClCompile Include="src\Controller\SNMOrbitingController.cpp" />
@@ -306,6 +307,7 @@ copy build\release_x64\PLEngine.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLEngine\Controller\PhysicsCharacterController.h" />
     <ClInclude Include="include\PLEngine\Controller\PhysicsMouseInteraction.h" />
     <ClInclude Include="include\PLEngine\Controller\SNMCameraZoomController.h" />
+    <ClInclude Include="include\PLEngine\Controller\SNMEgoLookController.h" />
     <ClInclude Include="include\PLEngine\Controller\SNMLookController.h" />
     <ClInclude Include="include\PLEngine\Controller\SNMMoveController.h" />
     <ClInclude Include="include\PLEngine\Controller\SNMOrbitingController.h" />

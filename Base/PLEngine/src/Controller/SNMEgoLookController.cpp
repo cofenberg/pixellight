@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMLookController.cpp                          *
+ *  File: SNMEgoLookController.cpp                       *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -25,10 +25,8 @@
 //[-------------------------------------------------------]
 #include <PLCore/Tools/Timing.h>
 #include <PLMath/EulerAngles.h>
-#include <PLInput/Input/InputManager.h>
-#include <PLScene/Scene/SceneContext.h>
 #include "PLEngine/Controller/LookController.h"
-#include "PLEngine/Controller/SNMLookController.h"
+#include "PLEngine/Controller/SNMEgoLookController.h"
 
 
 //[-------------------------------------------------------]
@@ -36,7 +34,6 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLMath;
-using namespace PLInput;
 using namespace PLScene;
 namespace PLEngine {
 
@@ -44,7 +41,7 @@ namespace PLEngine {
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(SNMLookController)
+pl_implement_class(SNMEgoLookController)
 
 
 //[-------------------------------------------------------]
@@ -54,54 +51,42 @@ pl_implement_class(SNMLookController)
 *  @brief
 *    Constructor
 */
-SNMLookController::SNMLookController(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
-	InputSemantic(this),
-	Flags(this),
-	SlotOnUpdate(this),
-	m_pController(new LookController())
+SNMEgoLookController::SNMEgoLookController(SceneNode &cSceneNode) : SNMLookController(cSceneNode),
+	SlotOnRotation(this),
+	m_fPitch(0.0f),
+	m_fYaw(0.0f),
+	m_bListen(true)
 {
-	// Overwrite the default setting of the flags
-	SetFlags(GetFlags()|UseRotationKey);
 }
 
 /**
 *  @brief
 *    Destructor
 */
-SNMLookController::~SNMLookController()
+SNMEgoLookController::~SNMEgoLookController()
 {
-	// Destroy the input controller
-	delete m_pController;
-}
-
-
-//[-------------------------------------------------------]
-//[ Public virtual PLScene::SceneNodeModifier functions   ]
-//[-------------------------------------------------------]
-Controller *SNMLookController::GetInputController() const
-{
-	return m_pController;
 }
 
 
 //[-------------------------------------------------------]
 //[ Protected virtual PLScene::SceneNodeModifier functions ]
 //[-------------------------------------------------------]
-void SNMLookController::InformedOnInit()
+void SNMEgoLookController::OnActivate(bool bActivate)
 {
-	// Emit the input controller found event of the scene context to tell everyone about our input controller
-	InputManager::GetInstance()->EventInputControllerFound(m_pController, InputSemantic);
-}
+	// Call the base implementation
+	SNMLookController::OnActivate(bActivate);
 
-void SNMLookController::OnActivate(bool bActivate)
-{
 	// Connect/disconnect event handler
-	SceneContext *pSceneContext = GetSceneContext();
-	if (pSceneContext) {
-		if (bActivate)
-			pSceneContext->EventUpdate.Connect(SlotOnUpdate);
-		else
-			pSceneContext->EventUpdate.Disconnect(SlotOnUpdate);
+	SceneNode &cSceneNode = GetSceneNode();
+	if (bActivate) {
+		// Connect event handler
+		cSceneNode.GetTransform().EventRotation.Connect(SlotOnRotation);
+
+		// Ensure our Euler angles are representing the current scene node rotation
+		OnRotation();
+	} else {
+		// Disconnect event handler
+		cSceneNode.GetTransform().EventRotation.Disconnect(SlotOnRotation);
 	}
 }
 
@@ -109,13 +94,9 @@ void SNMLookController::OnActivate(bool bActivate)
 //[-------------------------------------------------------]
 //[ Protected virtual SNMLookController functions         ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Called when the scene node modifier needs to be updated
-*/
-void SNMLookController::OnUpdate()
+void SNMEgoLookController::OnUpdate()
 {
-	// [HACK][TODO] Currently it's not possible to define/script a control logic within the control connection to, for instance
+	// [HACK][TODO](same as in " SNMLookController::OnUpdate()") Currently it's not possible to define/script a control logic within the control connection to, for instance
 	// "pass through" a rotation value from a space mouse, but "passing" movements from the mouse only if, for example, the left
 	// mouse button is currently pressed (so we don't look around the every time when moving the mouse to, for instance, move
 	// the mouse cursor to an ingame GUI widget). Because it's REALLY comfortable to use the space mouse, I added this hack so
@@ -124,11 +105,10 @@ void SNMLookController::OnUpdate()
 
 	// Check if input is active and whether or not the rotation key required and pressed
 	if (m_pController->GetActive() && (!(GetFlags() & UseRotationKey) || m_pController->Rotate.IsPressed() || bSpaceMouseRotationHack)) {
-		// Get rotation
+		// Get rotation, ignore z-axis (roll)
 		float fX = m_pController->RotX.GetValue();
 		float fY = m_pController->RotY.GetValue();
-		float fZ = m_pController->RotZ.GetValue();
-		if (fX || fY || fZ) {
+		if (fX || fY) {
 			// Get the current time difference
 			const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
 
@@ -137,19 +117,50 @@ void SNMLookController::OnUpdate()
 				fX *= fTimeDiff;
 			if (!m_pController->RotY.IsValueRelative())
 				fY *= fTimeDiff;
-			if (!m_pController->RotZ.IsValueRelative())
-				fZ *= fTimeDiff;
 
-			// Get a quaternion representation of the rotation delta
-			Quaternion qRotationDelta;
-			EulerAngles::ToQuaternion(static_cast<float>(fX*Math::DegToRad),
-									  static_cast<float>(fY*Math::DegToRad),
-									  static_cast<float>(fZ*Math::DegToRad),
-									  qRotationDelta);
+			// X rotation axis: Update pitch (also called 'bank', change is moving the nose down and the tail up or vice-versa) - in degree
+			m_fPitch += fX;
 
-			// Update rotation
-			GetSceneNode().GetTransform().SetRotation(GetSceneNode().GetTransform().GetRotation()*qRotationDelta);
+			// Y rotation axis: Update yaw (also called 'heading', change is turning to the left or right) - in degree
+			m_fYaw += fY;
+
+			// Limit the pitch
+			if (m_fPitch > 90.0f)
+				m_fPitch = 90.0f;
+			if (m_fPitch < -90.0f)
+				m_fPitch = -90.0f;
+
+			// Get a quaternion representation of your pitch
+			Quaternion qRotationPitch;
+			EulerAngles::ToQuaternion(static_cast<float>(m_fPitch*Math::DegToRad), 0.0f, 0.0f, qRotationPitch);
+
+			// Get a quaternion representation of your yaw
+			Quaternion qRotationYaw;
+			qRotationYaw.FromAxisAngle(m_vUpVector.x, m_vUpVector.y, m_vUpVector.z, static_cast<float>(m_fYaw*Math::DegToRad));
+
+			// Set the new rotation quaternion and don't listen to signals while doing so
+			m_bListen = false;
+			GetSceneNode().GetTransform().SetRotation(qRotationYaw*qRotationPitch);
+			m_bListen = true;
 		}
+	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when the scene node rotation changed
+*/
+void SNMEgoLookController::OnRotation()
+{
+	// Listen to the signal?
+	if (m_bListen) {
+		// Get the current scene node rotation quaternion as up-vector and angle
+		GetSceneNode().GetTransform().GetRotation().ToAxisAngle(m_vUpVector.x, m_vUpVector.y, m_vUpVector.z, m_fYaw);
+		m_fYaw = static_cast<float>(m_fYaw*Math::RadToDeg);
 	}
 }
 
