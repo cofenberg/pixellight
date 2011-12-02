@@ -56,6 +56,8 @@ class SNMEgoLookController : public SNMLookController {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, SNMEgoLookController, "PLEngine", PLEngine::SNMLookController, "Scene node rotation input controller modifier class with 3D restriction")
+		// Attributes
+		pl_attribute(UpVector,	PLMath::Vector3,	PLMath::Vector3(0.0f, 1.0f, 0.0f),	ReadWrite,	DirectValue,	"Up vector",	"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 		// Slots

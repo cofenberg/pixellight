@@ -52,6 +52,7 @@ pl_implement_class(SNMEgoLookController)
 *    Constructor
 */
 SNMEgoLookController::SNMEgoLookController(SceneNode &cSceneNode) : SNMLookController(cSceneNode),
+	UpVector(this),
 	SlotOnRotation(this),
 	m_fPitch(0.0f),
 	m_fYaw(0.0f),
@@ -124,11 +125,11 @@ void SNMEgoLookController::OnUpdate()
 			// Y rotation axis: Update yaw (also called 'heading', change is turning to the left or right) - in degree
 			m_fYaw += fY;
 
-			// Limit the pitch
-			if (m_fPitch > 90.0f)
-				m_fPitch = 90.0f;
-			if (m_fPitch < -90.0f)
-				m_fPitch = -90.0f;
+			// Limit the pitch (no full 90° to avoid dead angles)
+			if (m_fPitch > 89.9f)
+				m_fPitch = 89.9f;
+			if (m_fPitch < -89.9f)
+				m_fPitch = -89.9f;
 
 			// Get a quaternion representation of your pitch
 			Quaternion qRotationPitch;
@@ -136,7 +137,8 @@ void SNMEgoLookController::OnUpdate()
 
 			// Get a quaternion representation of your yaw
 			Quaternion qRotationYaw;
-			qRotationYaw.FromAxisAngle(m_vUpVector.x, m_vUpVector.y, m_vUpVector.z, static_cast<float>(m_fYaw*Math::DegToRad));
+			const Vector3 &vUpVector = UpVector.Get();
+			qRotationYaw.FromAxisAngle(vUpVector.x, vUpVector.y, vUpVector.z, static_cast<float>(m_fYaw*Math::DegToRad));
 
 			// Set the new rotation quaternion and don't listen to signals while doing so
 			m_bListen = false;
@@ -158,9 +160,29 @@ void SNMEgoLookController::OnRotation()
 {
 	// Listen to the signal?
 	if (m_bListen) {
-		// Get the current scene node rotation quaternion as up-vector and angle
-		GetSceneNode().GetTransform().GetRotation().ToAxisAngle(m_vUpVector.x, m_vUpVector.y, m_vUpVector.z, m_fYaw);
+		// Get the transform of the owner scene node
+		const Transform3 &cTransform = GetSceneNode().GetTransform();
+
+		// X rotation axis: Calculate pitch (also called 'bank', change is moving the nose down and the tail up or vice-versa) - in degree
+		// Calculate the dot product (= cosinus) between z-direction- and up-vector
+		m_fPitch = cTransform.GetRotation().GetZAxis().DotProduct(UpVector.Get());
+		// Get the angle in radian
+		m_fPitch = Math::ACos(m_fPitch);
+		// Get the angle in degree
+		m_fPitch = static_cast<float>(m_fPitch*Math::RadToDeg) - 90.0f;
+
+		// Y rotation axis: Calculate yaw (also called 'heading', change is turning to the left or right) - in degree
+		Vector3 vRight, vUp;
+		UpVector.Get().GetRightUp(vRight, vUp);
+		// Calculate the dot product (= cosinus) between x-direction-vector and the right-vector of the up-vector (already confused? :)
+		m_fYaw = cTransform.GetRotation().GetXAxis().DotProduct(vRight);
+		// Get the angle in radian
+		m_fYaw = Math::ACos(m_fYaw);
+		// Get the angle in degree
 		m_fYaw = static_cast<float>(m_fYaw*Math::RadToDeg);
+		// Flip sign if required
+		if (cTransform.GetRotation().GetXAxis().DotProduct(vUp) < 0.0f)
+			m_fYaw = -m_fYaw;
 	}
 }
 
@@ -169,3 +191,4 @@ void SNMEgoLookController::OnRotation()
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLEngine
+
