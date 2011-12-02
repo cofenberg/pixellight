@@ -53,6 +53,7 @@ pl_implement_class(SNMEgoLookController)
 */
 SNMEgoLookController::SNMEgoLookController(SceneNode &cSceneNode) : SNMLookController(cSceneNode),
 	UpVector(this),
+	RollFactor(this),
 	SlotOnRotation(this),
 	m_fPitch(0.0f),
 	m_fYaw(0.0f),
@@ -109,7 +110,8 @@ void SNMEgoLookController::OnUpdate()
 		// Get rotation, ignore z-axis (roll)
 		float fX = m_pController->RotX.GetValue();
 		float fY = m_pController->RotY.GetValue();
-		if (fX || fY) {
+		float fZ = m_pController->RotZ.IsValueRelative() ? 0.0f : m_pController->RotZ.GetValue()*RollFactor;
+		if (fX || fY || fZ) {
 			// Get the current time difference
 			const float fTimeDiff = Timing::GetInstance()->GetTimeDifference();
 
@@ -132,17 +134,23 @@ void SNMEgoLookController::OnUpdate()
 				m_fPitch = -89.9f;
 
 			// Get a quaternion representation of your pitch
-			Quaternion qRotationPitch;
-			EulerAngles::ToQuaternion(static_cast<float>(m_fPitch*Math::DegToRad), 0.0f, 0.0f, qRotationPitch);
+			Quaternion qRotation, qRotationDelta;
+			const Vector3 &vUpVector = UpVector.Get();
+			qRotation.FromAxisAngle(vUpVector.x, vUpVector.y, vUpVector.z, static_cast<float>(m_fYaw*Math::DegToRad));
+
+			// If there's an absolute z-axis (e.g. when using a 3D mouse), apply roll -> looks & feels more natural
+			if (fZ) {
+				EulerAngles::ToQuaternion(0.0f, 0.0f, static_cast<float>(fZ*Math::DegToRad), qRotationDelta);
+				qRotation *= qRotationDelta;
+			}
 
 			// Get a quaternion representation of your yaw
-			Quaternion qRotationYaw;
-			const Vector3 &vUpVector = UpVector.Get();
-			qRotationYaw.FromAxisAngle(vUpVector.x, vUpVector.y, vUpVector.z, static_cast<float>(m_fYaw*Math::DegToRad));
+			EulerAngles::ToQuaternion(static_cast<float>(m_fPitch*Math::DegToRad), 0.0f, 0.0f, qRotationDelta);
+			qRotation *= qRotationDelta;
 
 			// Set the new rotation quaternion and don't listen to signals while doing so
 			m_bListen = false;
-			GetSceneNode().GetTransform().SetRotation(qRotationYaw*qRotationPitch);
+			GetSceneNode().GetTransform().SetRotation(qRotation);
 			m_bListen = true;
 		}
 	}
