@@ -99,13 +99,13 @@ class CommandLine {
 		*  @brief
 		*    Constructor
 		*/
-		PLCORE_API CommandLine();
+		inline CommandLine();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API ~CommandLine();
+		inline ~CommandLine();
 
 		/**
 		*  @brief
@@ -114,7 +114,7 @@ class CommandLine {
 		*  @return
 		*    Number of options that have been registered
 		*/
-		PLCORE_API uint32 GetNumOfOptions() const;
+		inline uint32 GetNumOfOptions() const;
 
 		/**
 		*  @brief
@@ -126,7 +126,7 @@ class CommandLine {
 		*  @return
 		*    Pointer to option, or a null pointer
 		*/
-		PLCORE_API CommandLineOption *GetOption(uint32 nIndex) const;
+		inline CommandLineOption *GetOption(uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -138,7 +138,7 @@ class CommandLine {
 		*  @return
 		*    Pointer to option, or a null pointer
 		*/
-		PLCORE_API CommandLineOption *GetOption(const String &sName) const;
+		inline CommandLineOption *GetOption(const String &sName) const;
 
 		/**
 		*  @brief
@@ -237,7 +237,7 @@ class CommandLine {
 		*  @return
 		*    'true' if there were errors, else 'false'
 		*/
-		PLCORE_API bool HasErrors() const;
+		inline bool HasErrors() const;
 
 		/**
 		*  @brief
@@ -274,7 +274,7 @@ class CommandLine {
 		*    Additional arguments are values that have been provided on the command line but
 		*    do not belong to a specific option (for arbitrary number of arguments)
 		*/
-		PLCORE_API uint32 GetNumOfAdditionalArguments() const;
+		inline uint32 GetNumOfAdditionalArguments() const;
 
 		/**
 		*  @brief
@@ -286,7 +286,7 @@ class CommandLine {
 		*  @return
 		*    Additional argument, or ""
 		*/
-		PLCORE_API String GetAdditionalArgument(uint32 nIndex) const;
+		inline String GetAdditionalArgument(uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -315,6 +315,12 @@ class CommandLine {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Tools/CommandLine.inl"
 
 
 #endif // __PLCORE_COMMANDLINE_H__

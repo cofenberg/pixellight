@@ -75,17 +75,6 @@ XmlComment::~XmlComment()
 {
 }
 
-/**
-*  @brief
-*    Copy operator
-*/
-XmlComment &XmlComment::operator =(const XmlComment &cSource)
-{
-	// Copy the value
-	SetValue(cSource.GetValue());
-	return *this;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public virtual XmlBase functions                      ]

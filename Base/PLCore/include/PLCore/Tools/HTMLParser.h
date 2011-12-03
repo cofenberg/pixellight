@@ -69,13 +69,13 @@ class HTMLParser {
 		*  @brief
 		*    Constructor
 		*/
-		PLCORE_API HTMLParser();
+		inline HTMLParser();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API ~HTMLParser();
+		inline ~HTMLParser();
 
 		/**
 		*  @brief
@@ -99,7 +99,7 @@ class HTMLParser {
 		*  @return
 		*    Pointer to XML document, a null pointer if there's currently no document
 		*/
-		PLCORE_API XmlDocument *GetXML() const;
+		inline XmlDocument *GetXML() const;
 
 		/**
 		*  @brief
@@ -108,7 +108,7 @@ class HTMLParser {
 		*  @return
 		*    Number of errors
 		*/
-		PLCORE_API uint32 GetNumOfErrors() const;
+		inline uint32 GetNumOfErrors() const;
 
 
 	//[-------------------------------------------------------]
@@ -152,7 +152,7 @@ class HTMLParser {
 		*  @return
 		*    'true' the given string is a single tag, else 'false'
 		*/
-		bool IsSingleTag(const String &sTag) const;
+		inline bool IsSingleTag(const String &sTag) const;
 
 
 	//[-------------------------------------------------------]
@@ -175,6 +175,12 @@ class HTMLParser {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Tools/HTMLParser.inl"
 
 
 #endif // __PLCORE_HTMLPARSER_H__

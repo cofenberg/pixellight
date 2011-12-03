@@ -105,7 +105,7 @@ class XmlNode : public XmlBase {
 		*    @endverbatim
 		*    The subclasses will wrap this function.
 		*/
-		PLCORE_API String GetValue() const;
+		inline String GetValue() const;
 
 		/**
 		*  @brief
@@ -117,7 +117,7 @@ class XmlNode : public XmlBase {
 		*  @see
 		*    - GetValue()
 		*/
-		PLCORE_API void SetValue(const String &sValue);
+		inline void SetValue(const String &sValue);
 
 		/**
 		*  @brief
@@ -135,8 +135,8 @@ class XmlNode : public XmlBase {
 		*  @return
 		*    The parent node, a null pointer on error
 		*/
-		PLCORE_API XmlNode *GetParent();
-		PLCORE_API const XmlNode *GetParent() const;
+		inline XmlNode *GetParent();
+		inline const XmlNode *GetParent() const;
 
 		/**
 		*  @brief
@@ -145,8 +145,8 @@ class XmlNode : public XmlBase {
 		*  @return
 		*    The first child of this node, a null pointer if there are no children
 		*/
-		PLCORE_API XmlNode *GetFirstChild();
-		PLCORE_API const XmlNode *GetFirstChild() const;
+		inline XmlNode *GetFirstChild();
+		inline const XmlNode *GetFirstChild() const;
 
 		/**
 		*  @brief
@@ -168,8 +168,8 @@ class XmlNode : public XmlBase {
 		*  @return
 		*    The last child of this node, a null pointer if there are no children
 		*/
-		PLCORE_API XmlNode *GetLastChild();
-		PLCORE_API const XmlNode *GetLastChild() const;
+		inline XmlNode *GetLastChild();
+		inline const XmlNode *GetLastChild() const;
 
 		/**
 		*  @brief
@@ -210,8 +210,8 @@ class XmlNode : public XmlBase {
 		*    the next one. If the previous child is a null pointer, it returns the
 		*    first. 'IterateChildren()' will return a null pointer when done.
 		*/
-		PLCORE_API XmlNode *IterateChildren(XmlNode *pPrevious);
-		PLCORE_API const XmlNode *IterateChildren(const XmlNode *pPrevious) const;
+		inline XmlNode *IterateChildren(XmlNode *pPrevious);
+		inline const XmlNode *IterateChildren(const XmlNode *pPrevious) const;
 
 		/**
 		*  @brief
@@ -225,8 +225,8 @@ class XmlNode : public XmlBase {
 		*  @return
 		*    Next node, a null pointer if there's no next node
 		*/
-		PLCORE_API XmlNode *IterateChildren(const String &sValue, XmlNode *pPrevious);
-		PLCORE_API const XmlNode *IterateChildren(const String &sValue, const XmlNode *pPrevious) const;
+		inline XmlNode *IterateChildren(const String &sValue, XmlNode *pPrevious);
+		inline const XmlNode *IterateChildren(const String &sValue, const XmlNode *pPrevious) const;
 
 		/**
 		*  @brief
@@ -319,8 +319,8 @@ class XmlNode : public XmlBase {
 		*  @return
 		*    The sibling node, a null pointer if there's no sibling node
 		*/
-		PLCORE_API XmlNode *GetPreviousSibling();
-		PLCORE_API const XmlNode *GetPreviousSibling() const;
+		inline XmlNode *GetPreviousSibling();
+		inline const XmlNode *GetPreviousSibling() const;
 
 		/**
 		*  @brief
@@ -342,8 +342,8 @@ class XmlNode : public XmlBase {
 		*  @return
 		*    The sibling node, a null pointer if there's no sibling node
 		*/
-		PLCORE_API XmlNode *GetNextSibling();
-		PLCORE_API const XmlNode *GetNextSibling() const;
+		inline XmlNode *GetNextSibling();
+		inline const XmlNode *GetNextSibling() const;
 
 		/**
 		*  @brief
@@ -368,7 +368,7 @@ class XmlNode : public XmlBase {
 		*  @return
 		*    Returns a null pointer if there is not another element
 		*/
-		PLCORE_API XmlElement *GetNextSiblingElement();
+		inline XmlElement *GetNextSiblingElement();
 		PLCORE_API const XmlElement *GetNextSiblingElement() const;
 
 		/**
@@ -394,7 +394,7 @@ class XmlNode : public XmlBase {
 		*  @return
 		*    Returns a null pointer if there is not another element
 		*/
-		PLCORE_API XmlElement *GetFirstChildElement();
+		inline XmlElement *GetFirstChildElement();
 		PLCORE_API const XmlElement *GetFirstChildElement() const;
 
 		/**
@@ -407,7 +407,7 @@ class XmlNode : public XmlBase {
 		*  @return
 		*    Returns a null pointer if there is not another element
 		*/
-		PLCORE_API XmlElement *GetFirstChildElement(const String &sValue);
+		inline XmlElement *GetFirstChildElement(const String &sValue);
 		PLCORE_API const XmlElement *GetFirstChildElement(const String &sValue) const;
 
 		/**
@@ -417,7 +417,7 @@ class XmlNode : public XmlBase {
 		*  @return
 		*    Type of this node
 		*/
-		PLCORE_API ENodeType GetType() const;
+		inline ENodeType GetType() const;
 
 		/**
 		*  @brief
@@ -426,7 +426,7 @@ class XmlNode : public XmlBase {
 		*  @return
 		*    Pointer to the document this node lives in, a null pointer if not in a document
 		*/
-		PLCORE_API XmlDocument *GetDocument();
+		inline XmlDocument *GetDocument();
 		PLCORE_API const XmlDocument *GetDocument() const;
 
 		/**
@@ -436,24 +436,24 @@ class XmlNode : public XmlBase {
 		*  @return
 		*    'true' if this node has no children, else 'false'
 		*/
-		PLCORE_API bool NoChildren() const;
+		inline bool NoChildren() const;
 
 		/**
 		*  @brief
 		*    Cast functions, will return a null pointer if the given node is not from the requested type
 		*/
-		PLCORE_API XmlDocument *ToDocument();
-		PLCORE_API const XmlDocument *ToDocument() const;
-		PLCORE_API XmlElement *ToElement();
-		PLCORE_API const XmlElement *ToElement() const;
-		PLCORE_API XmlComment *ToComment();
-		PLCORE_API const XmlComment *ToComment() const;
-		PLCORE_API XmlUnknown *ToUnknown();
-		PLCORE_API const XmlUnknown *ToUnknown() const;
-		PLCORE_API XmlText *ToText();
-		PLCORE_API const XmlText *ToText() const;
-		PLCORE_API XmlDeclaration *ToDeclaration();
-		PLCORE_API const XmlDeclaration *ToDeclaration() const;
+		inline XmlDocument *ToDocument();
+		inline const XmlDocument *ToDocument() const;
+		inline XmlElement *ToElement();
+		inline const XmlElement *ToElement() const;
+		inline XmlComment *ToComment();
+		inline const XmlComment *ToComment() const;
+		inline XmlUnknown *ToUnknown();
+		inline const XmlUnknown *ToUnknown() const;
+		inline XmlText *ToText();
+		inline const XmlText *ToText() const;
+		inline XmlDeclaration *ToDeclaration();
+		inline const XmlDeclaration *ToDeclaration() const;
 
 
 	//[-------------------------------------------------------]
@@ -547,6 +547,12 @@ class XmlNode : public XmlBase {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Xml/XmlNode.inl"
 
 
 #endif // __PLCORE_XML_NODE_H__

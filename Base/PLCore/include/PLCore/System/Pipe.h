@@ -55,7 +55,7 @@ class Pipe {
 		*  @brief
 		*    Constructor
 		*/
-		PLCORE_API Pipe();
+		inline Pipe();
 
 		/**
 		*  @brief
@@ -64,13 +64,13 @@ class Pipe {
 		*  @param[in] cSource
 		*    Source to copy
 		*/
-		PLCORE_API Pipe(const Pipe &cSource);
+		inline Pipe(const Pipe &cSource);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API ~Pipe();
+		inline ~Pipe();
 
 		/**
 		*  @brief
@@ -82,7 +82,7 @@ class Pipe {
 		*  @return
 		*    Reference to this Pipe
 		*/
-		PLCORE_API Pipe &operator =(const Pipe &cSource);
+		inline Pipe &operator =(const Pipe &cSource);
 
 		/**
 		*  @brief
@@ -94,7 +94,7 @@ class Pipe {
 		*  @return
 		*    'true', if both Pipe's are equal, else 'false'
 		*/
-		PLCORE_API bool operator ==(const Pipe &cSource) const;
+		inline bool operator ==(const Pipe &cSource) const;
 
 		/**
 		*  @brief
@@ -106,7 +106,7 @@ class Pipe {
 		*  @return
 		*    'true', if the Pipe's are different, else 'false'
 		*/
-		PLCORE_API bool operator !=(const Pipe &cSource) const;
+		inline bool operator !=(const Pipe &cSource) const;
 
 		/**
 		*  @brief
@@ -141,7 +141,7 @@ class Pipe {
 		*  @return
 		*    'true', if the pipe could be opened, else 'false'
 		*/
-		PLCORE_API bool Open(handle hRead, handle hWrite);
+		inline bool Open(handle hRead, handle hWrite);
 
 		/**
 		*  @brief
@@ -168,7 +168,7 @@ class Pipe {
 		*  @return
 		*    'true', if the pipe could be closed, else 'false'
 		*/
-		PLCORE_API bool Close();
+		inline bool Close();
 
 		/**
 		*  @brief
@@ -177,7 +177,7 @@ class Pipe {
 		*  @return
 		*    Name of the pipe
 		*/
-		PLCORE_API String GetName() const;
+		inline String GetName() const;
 
 		/**
 		*  @brief
@@ -190,7 +190,7 @@ class Pipe {
 		*    - On Linux, the handle is a file handle of type int
 		*    - On Windows, the handle is a file handle of type HANDLE
 		*/
-		PLCORE_API handle GetReadHandle() const;
+		inline handle GetReadHandle() const;
 
 		/**
 		*  @brief
@@ -202,7 +202,7 @@ class Pipe {
 		*  @see
 		*    - GetReadHandle()
 		*/
-		PLCORE_API handle GetWriteHandle() const;
+		inline handle GetWriteHandle() const;
 
 
 	//[-------------------------------------------------------]
@@ -210,8 +210,8 @@ class Pipe {
 	//[-------------------------------------------------------]
 	private:
 		// Pipe data
-		String	m_sName;		/**< Name of the pipe */
-		handle	m_hPipe[2];		/**< Pipe handles (0 = read end, 1 = write end) */
+		String	m_sName;	/**< Name of the pipe */
+		handle	m_hPipe[2];	/**< Pipe handles (0 = read end, 1 = write end) */
 
 
 };
@@ -221,6 +221,12 @@ class Pipe {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/System/Pipe.inl"
 
 
 #endif // __PLCORE_PIPE_H__

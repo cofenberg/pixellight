@@ -53,24 +53,6 @@ XmlNode::~XmlNode()
 
 /**
 *  @brief
-*    The meaning of 'value' changes for the specific type of 'XmlNode'
-*/
-String XmlNode::GetValue() const
-{
-	return m_sValue;
-}
-
-/**
-*  @brief
-*    Changes the value of the node
-*/
-void XmlNode::SetValue(const String &sValue)
-{
-	m_sValue = sValue;
-}
-
-/**
-*  @brief
 *    Delete all the children of this node
 */
 void XmlNode::Clear()
@@ -83,34 +65,6 @@ void XmlNode::Clear()
 	}
 	m_pFirstChild = nullptr;
 	m_pLastChild  = nullptr;
-}
-
-/**
-*  @brief
-*    One step up the DOM
-*/
-XmlNode *XmlNode::GetParent()
-{
-	return m_pParent;
-}
-
-const XmlNode *XmlNode::GetParent() const
-{
-	return m_pParent;
-}
-
-/**
-*  @brief
-*    Returns the first child of this node
-*/
-XmlNode *XmlNode::GetFirstChild()
-{
-	return m_pFirstChild;
-}
-
-const XmlNode *XmlNode::GetFirstChild() const
-{
-	return m_pFirstChild;
 }
 
 /**
@@ -137,20 +91,6 @@ const XmlNode *XmlNode::GetFirstChild(const String &sValue) const
 
 /**
 *  @brief
-*    Returns the last child of this node
-*/
-XmlNode *XmlNode::GetLastChild()
-{
-	return m_pLastChild;
-}
-
-const XmlNode *XmlNode::GetLastChild() const
-{
-	return m_pLastChild;
-}
-
-/**
-*  @brief
 *    Returns the last child of this node with the matching 'value'
 */
 XmlNode *XmlNode::GetLastChild(const String &sValue)
@@ -169,34 +109,6 @@ const XmlNode *XmlNode::GetLastChild(const String &sValue) const
 			return pNode;
 	}
 	return nullptr;
-}
-
-/**
-*  @brief
-*    An alternate way to walk the children of a node
-*/
-XmlNode *XmlNode::IterateChildren(XmlNode *pPrevious)
-{
-	return const_cast< XmlNode* >( (const_cast< const XmlNode* >(this))->IterateChildren( pPrevious ) );
-}
-
-const XmlNode *XmlNode::IterateChildren(const XmlNode *pPrevious) const
-{
-	return pPrevious ? pPrevious->GetNextSibling() : GetFirstChild();
-}
-
-/**
-*  @brief
-*    This flavor of 'IterateChildren()' searches for children with a particular 'value'
-*/
-XmlNode *XmlNode::IterateChildren(const String &sValue, XmlNode *pPrevious)
-{
-	return pPrevious ? pPrevious->GetNextSibling(sValue) : GetFirstChild(sValue);
-}
-
-const XmlNode *XmlNode::IterateChildren(const String &sValue, const XmlNode *pPrevious) const
-{
-	return pPrevious ? pPrevious->GetNextSibling(sValue) : GetFirstChild(sValue);
 }
 
 /**
@@ -402,20 +314,6 @@ bool XmlNode::RemoveChild(XmlNode &cRemoveThis)
 
 /**
 *  @brief
-*    Navigate to a sibling node
-*/
-XmlNode *XmlNode::GetPreviousSibling()
-{
-	return m_pPreviousSibling;
-}
-
-const XmlNode *XmlNode::GetPreviousSibling() const
-{
-	return m_pPreviousSibling;
-}
-
-/**
-*  @brief
 *    Navigate to a sibling node with the given 'value'
 */
 XmlNode *XmlNode::GetPreviousSibling(const String &sValue)
@@ -438,20 +336,6 @@ const XmlNode *XmlNode::GetPreviousSibling(const String &sValue) const
 
 	// There's no previous sibling
 	return nullptr;
-}
-
-/**
-*  @brief
-*    Navigate to a sibling node
-*/
-XmlNode *XmlNode::GetNextSibling()
-{
-	return m_pNextSibling;
-}
-
-const XmlNode *XmlNode::GetNextSibling() const
-{
-	return m_pNextSibling;
 }
 
 /**
@@ -484,11 +368,6 @@ const XmlNode *XmlNode::GetNextSibling(const String &sValue) const
 *  @brief
 *    Convenience function to get through elements
 */
-XmlElement *XmlNode::GetNextSiblingElement()
-{
-	return const_cast< XmlElement* >( (const_cast< const XmlNode* >(this))->GetNextSiblingElement() );
-}
-
 const XmlElement *XmlNode::GetNextSiblingElement() const
 {
 	for (const XmlNode *pNode=GetNextSibling(); pNode; pNode=pNode->GetNextSibling()) {
@@ -530,11 +409,6 @@ const XmlElement *XmlNode::GetNextSiblingElement(const String &sValue) const
 *  @brief
 *    Convenience function to get through elements
 */
-XmlElement *XmlNode::GetFirstChildElement()
-{
-	return const_cast< XmlElement* >( (const_cast< const XmlNode* >(this))->GetFirstChildElement() );
-}
-
 const XmlElement *XmlNode::GetFirstChildElement() const
 {
 	for (const XmlNode *pNode=GetFirstChild(); pNode; pNode=pNode->GetNextSibling()) {
@@ -550,11 +424,6 @@ const XmlElement *XmlNode::GetFirstChildElement() const
 *  @brief
 *    Convenience function to get through elements
 */
-XmlElement *XmlNode::GetFirstChildElement(const String &sValue)
-{
-	return const_cast< XmlElement* >( (const_cast< const XmlNode* >(this))->GetFirstChildElement( sValue ) );
-}
-
 const XmlElement *XmlNode::GetFirstChildElement(const String &sValue) const
 {
 	for (const XmlNode *pNode=GetFirstChild(sValue); pNode; pNode=pNode->GetNextSibling(sValue)) {
@@ -568,22 +437,8 @@ const XmlElement *XmlNode::GetFirstChildElement(const String &sValue) const
 
 /**
 *  @brief
-*    Query the type (as an enumerated value, above) of this node
-*/
-XmlNode::ENodeType XmlNode::GetType() const
-{
-	return m_nType;
-}
-
-/**
-*  @brief
 *    Return a pointer to the document this node lives in
 */
-XmlDocument *XmlNode::GetDocument()
-{
-	return const_cast< XmlDocument* >( (const_cast< const XmlNode* >(this))->GetDocument() );
-}
-
 const XmlDocument *XmlNode::GetDocument() const
 {
 	for (const XmlNode *pNode=this; pNode; pNode=pNode->m_pParent) {
@@ -591,79 +446,6 @@ const XmlDocument *XmlNode::GetDocument() const
 			return pNode->ToDocument();
 	}
 	return nullptr;
-}
-
-/**
-*  @brief
-*    Returns true if this node has no children
-*/
-bool XmlNode::NoChildren() const
-{
-	return !m_pFirstChild;
-}
-
-/**
-*  @brief
-*    Cast functions
-*/
-XmlDocument *XmlNode::ToDocument()
-{
-	return (m_nType == Document) ? static_cast<XmlDocument*>(this) : nullptr;
-}
-
-const XmlDocument *XmlNode::ToDocument() const
-{
-	return (m_nType == Document) ? static_cast<const XmlDocument*>(this) : nullptr;
-}
-
-XmlElement *XmlNode::ToElement()
-{
-	return (m_nType == Element) ? static_cast<XmlElement*>(this) : nullptr;
-}
-
-const XmlElement *XmlNode::ToElement() const
-{
-	return (m_nType == Element) ? static_cast<const XmlElement*>(this) : nullptr;
-}
-
-XmlComment *XmlNode::ToComment()
-{
-	return (m_nType == Comment) ? static_cast<XmlComment*>(this) : nullptr;
-}
-
-const XmlComment *XmlNode::ToComment() const
-{
-	return (m_nType == Comment) ? static_cast<const XmlComment*>(this) : nullptr;
-}
-
-XmlUnknown *XmlNode::ToUnknown()
-{
-	return (m_nType == Unknown) ? static_cast<XmlUnknown*>(this) : nullptr;
-}
-
-const XmlUnknown *XmlNode::ToUnknown() const
-{
-	return (m_nType == Unknown) ? static_cast<const XmlUnknown*>(this) : nullptr;
-}
-
-XmlText *XmlNode::ToText()
-{
-	return (m_nType == Text) ? static_cast<XmlText*>(this) : nullptr;
-}
-
-const XmlText *XmlNode::ToText() const
-{
-	return (m_nType == Text) ? static_cast<const XmlText*>(this) : nullptr;
-}
-
-XmlDeclaration *XmlNode::ToDeclaration()
-{
-	return (m_nType == Declaration) ? static_cast<XmlDeclaration*>(this) : nullptr;
-}
-
-const XmlDeclaration *XmlNode::ToDeclaration() const
-{
-	return (m_nType == Declaration) ? static_cast<const XmlDeclaration*>(this) : nullptr;
 }
 
 

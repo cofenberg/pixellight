@@ -93,7 +93,7 @@ class XmlUnknown : public XmlNode {
 		*  @return
 		*    Reference to this instance
 		*/
-		PLCORE_API XmlUnknown &operator =(const XmlUnknown &cSource);
+		inline XmlUnknown &operator =(const XmlUnknown &cSource);
 
 
 	//[-------------------------------------------------------]
@@ -119,6 +119,12 @@ class XmlUnknown : public XmlNode {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Xml/XmlUnknown.inl"
 
 
 #endif // __PLCORE_XML_UNKNOWN_H__

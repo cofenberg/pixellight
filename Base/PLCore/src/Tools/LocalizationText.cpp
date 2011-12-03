@@ -33,46 +33,6 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the group the text is in
-*/
-LocalizationGroup &LocalizationText::GetGroup() const
-{
-	return *m_pGroup;
-}
-
-/**
-*  @brief
-*    Returns the name of the text
-*/
-String LocalizationText::GetName() const
-{
-	return m_sName;
-}
-
-/**
-*  @brief
-*    Returns the translation of the text
-*/
-String LocalizationText::GetTranslation() const
-{
-	return m_sTranslation;
-}
-
-/**
-*  @brief
-*    Sets the translation of the text
-*/
-void LocalizationText::SetTranslation(const String &sTranslation)
-{
-	m_sTranslation = sTranslation;
-}
-
-
-//[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**

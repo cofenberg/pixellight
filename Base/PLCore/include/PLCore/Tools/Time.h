@@ -184,7 +184,7 @@ class Time {
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API ~Time();
+		inline ~Time();
 
 		/**
 		*  @brief
@@ -193,7 +193,7 @@ class Time {
 		*  @return
 		*    Year
 		*/
-		PLCORE_API uint16 GetYear() const;
+		inline uint16 GetYear() const;
 
 		/**
 		*  @brief
@@ -202,7 +202,7 @@ class Time {
 		*  @param[in] nYear
 		*    Year
 		*/
-		PLCORE_API void SetYear(uint16 nYear);
+		inline void SetYear(uint16 nYear);
 
 		/**
 		*  @brief
@@ -211,7 +211,7 @@ class Time {
 		*  @return
 		*    Month [January..December]
 		*/
-		PLCORE_API EMonth GetMonth() const;
+		inline EMonth GetMonth() const;
 
 		/**
 		*  @brief
@@ -220,7 +220,7 @@ class Time {
 		*  @param[in] nMonth
 		*    Month [January..December]
 		*/
-		PLCORE_API void SetMonth(EMonth nMonth);
+		inline void SetMonth(EMonth nMonth);
 
 		/**
 		*  @brief
@@ -229,7 +229,7 @@ class Time {
 		*  @return
 		*    Day of the month [1..31]
 		*/
-		PLCORE_API uint8 GetDayOfMonth() const;
+		inline uint8 GetDayOfMonth() const;
 
 		/**
 		*  @brief
@@ -238,7 +238,7 @@ class Time {
 		*  @param[in] nDayOfMonth
 		*    Day of the month [1..31]
 		*/
-		PLCORE_API void SetDayOfMonth(uint8 nDayOfMonth);
+		inline void SetDayOfMonth(uint8 nDayOfMonth);
 
 		/**
 		*  @brief
@@ -247,7 +247,7 @@ class Time {
 		*  @return
 		*    Day of the week [Sunday..Saturday]
 		*/
-		PLCORE_API EDay GetDayOfWeek() const;
+		inline EDay GetDayOfWeek() const;
 
 		/**
 		*  @brief
@@ -256,7 +256,7 @@ class Time {
 		*  @param[in] nDayOfWeek
 		*    Day of the week [Sunday..Saturday]
 		*/
-		PLCORE_API void SetDayOfWeek(EDay nDayOfWeek);
+		inline void SetDayOfWeek(EDay nDayOfWeek);
 
 		/**
 		*  @brief
@@ -265,7 +265,7 @@ class Time {
 		*  @return
 		*    Hour [0..23]
 		*/
-		PLCORE_API uint8 GetHour() const;
+		inline uint8 GetHour() const;
 
 		/**
 		*  @brief
@@ -274,7 +274,7 @@ class Time {
 		*  @param[in] nHour
 		*    Hour [0..23]
 		*/
-		PLCORE_API void SetHour(uint8 nHour);
+		inline void SetHour(uint8 nHour);
 
 		/**
 		*  @brief
@@ -283,7 +283,7 @@ class Time {
 		*  @return
 		*    Minute [0..59]
 		*/
-		PLCORE_API uint8 GetMinute() const;
+		inline uint8 GetMinute() const;
 
 		/**
 		*  @brief
@@ -292,7 +292,7 @@ class Time {
 		*  @param[in] nMinute
 		*    Minute [0..59]
 		*/
-		PLCORE_API void SetMinute(uint8 nMinute);
+		inline void SetMinute(uint8 nMinute);
 
 		/**
 		*  @brief
@@ -301,7 +301,7 @@ class Time {
 		*  @return
 		*    Second [0..59]
 		*/
-		PLCORE_API uint8 GetSecond() const;
+		inline uint8 GetSecond() const;
 
 		/**
 		*  @brief
@@ -310,7 +310,7 @@ class Time {
 		*  @param[in] nSecond
 		*    Second [0..59]
 		*/
-		PLCORE_API void SetSecond(uint8 nSecond);
+		inline void SetSecond(uint8 nSecond);
 
 		/**
 		*  @brief
@@ -319,7 +319,7 @@ class Time {
 		*  @return
 		*    Millisecond [0..999]
 		*/
-		PLCORE_API uint16 GetMillisecond() const;
+		inline uint16 GetMillisecond() const;
 
 		/**
 		*  @brief
@@ -328,7 +328,7 @@ class Time {
 		*  @param[in] nMillisecond
 		*    Millisecond [0..999]
 		*/
-		PLCORE_API void SetMillisecond(uint16 nMillisecond);
+		inline void SetMillisecond(uint16 nMillisecond);
 
 		/**
 		*  @brief
@@ -394,6 +394,12 @@ class Time {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Tools/Time.inl"
 
 
 #endif // __PLCORE_TIME_H__

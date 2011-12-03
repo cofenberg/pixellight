@@ -45,15 +45,6 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
-*/
-Process::Process() :
-	m_hProcess(NULL_HANDLE)
-{
-}
-
-/**
-*  @brief
 *    Destructor
 */
 Process::~Process()
@@ -268,78 +259,6 @@ void Process::Terminate()
 	m_cFileInput .Assign("");
 	m_cFileOutput.Assign("");
 	m_cFileError .Assign("");
-}
-
-/**
-*  @brief
-*    Get input stream
-*/
-File &Process::GetInput()
-{
-	// Open file if not already done
-	if (!m_cFileInput.IsOpen())
-		m_cFileInput.Open(File::FileWrite | File::FileText);
-
-	// Return file
-	return m_cFileInput;
-}
-
-/**
-*  @brief
-*    Get output stream
-*/
-File &Process::GetOutput()
-{
-	// Open file if not already done
-	if (!m_cFileOutput.IsOpen())
-		m_cFileOutput.Open(File::FileRead | File::FileText);
-
-	// Return file
-	return m_cFileOutput;
-}
-
-/**
-*  @brief
-*    Get error stream
-*/
-File &Process::GetError()
-{
-	// Open file if not already done
-	if (!m_cFileError.IsOpen())
-		m_cFileError.Open(File::FileRead | File::FileText);
-
-	// Return file
-	return m_cFileError;
-}
-
-/**
-*  @brief
-*    Get input pipe
-*/
-const Pipe &Process::GetPipeInput() const
-{
-	// Return pipe
-	return m_cPipeInput;
-}
-
-/**
-*  @brief
-*    Get output pipe
-*/
-const Pipe &Process::GetPipeOutput() const
-{
-	// Return pipe
-	return m_cPipeOutput;
-}
-
-/**
-*  @brief
-*    Get error pipe
-*/
-const Pipe &Process::GetPipeError() const
-{
-	// Return pipe
-	return m_cPipeError;
 }
 
 

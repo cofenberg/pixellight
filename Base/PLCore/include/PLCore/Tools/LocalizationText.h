@@ -70,7 +70,7 @@ class LocalizationText {
 		*  @return
 		*    The group the text is in
 		*/
-		PLCORE_API LocalizationGroup &GetGroup() const;
+		inline LocalizationGroup &GetGroup() const;
 
 		/**
 		*  @brief
@@ -79,7 +79,7 @@ class LocalizationText {
 		*  @return
 		*    The name of the text
 		*/
-		PLCORE_API String GetName() const;
+		inline String GetName() const;
 
 		/**
 		*  @brief
@@ -88,7 +88,7 @@ class LocalizationText {
 		*  @return
 		*    The translation of the text
 		*/
-		PLCORE_API String GetTranslation() const;
+		inline String GetTranslation() const;
 
 		/**
 		*  @brief
@@ -97,7 +97,7 @@ class LocalizationText {
 		*  @param[in] sTranslation
 		*    The translation of the text
 		*/
-		PLCORE_API void SetTranslation(const String &sTranslation);
+		inline void SetTranslation(const String &sTranslation);
 
 
 	//[-------------------------------------------------------]
@@ -164,6 +164,12 @@ class LocalizationText {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Tools/LocalizationText.inl"
 
 
 #endif // __PLCORE_LOCALIZATIONTEXT_H__

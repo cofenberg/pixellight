@@ -125,7 +125,7 @@ class XmlDeclaration : public XmlNode {
 		*  @return
 		*    Version - will return an empty string if none was found
 		*/
-		PLCORE_API String GetVersion() const;
+		inline String GetVersion() const;
 
 		/**
 		*  @brief
@@ -134,7 +134,7 @@ class XmlDeclaration : public XmlNode {
 		*  @return
 		*    Encoding - will return an empty string if none was found
 		*/
-		PLCORE_API String GetEncoding() const;
+		inline String GetEncoding() const;
 
 		/**
 		*  @brief
@@ -143,7 +143,7 @@ class XmlDeclaration : public XmlNode {
 		*  @return
 		*    Standalone - will return an empty string if none was found
 		*/
-		PLCORE_API String GetStandalone() const;
+		inline String GetStandalone() const;
 
 
 	//[-------------------------------------------------------]
@@ -178,6 +178,12 @@ class XmlDeclaration : public XmlNode {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Xml/XmlDeclaration.inl"
 
 
 #endif // __PLCORE_XML_DECLARATION_H__

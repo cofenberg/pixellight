@@ -42,70 +42,6 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
-*/
-Pipe::Pipe()
-{
-	// Initialize handles
-	m_hPipe[0] = INVALID_HANDLE;
-	m_hPipe[1] = INVALID_HANDLE;
-}
-
-/**
-*  @brief
-*    Copy constructor
-*/
-Pipe::Pipe(const Pipe &cSource)
-{
-	// Copy Pipe
-	m_sName		= cSource.m_sName;
-	m_hPipe[0]  = cSource.m_hPipe[0];
-	m_hPipe[1]  = cSource.m_hPipe[1];
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-Pipe::~Pipe()
-{
-}
-
-/**
-*  @brief
-*    Assignment operator
-*/
-Pipe &Pipe::operator =(const Pipe &cSource)
-{
-	// Copy Pipe
-	m_sName		= cSource.m_sName;
-	m_hPipe[0]  = cSource.m_hPipe[0];
-	m_hPipe[1]  = cSource.m_hPipe[1];
-	return *this;
-}
-
-/**
-*  @brief
-*    Comparison operator
-*/
-bool Pipe::operator ==(const Pipe &cSource) const
-{
-	// Compare
-	return (m_sName == cSource.m_sName && m_hPipe[0] == cSource.m_hPipe[0] && m_hPipe[1] == cSource.m_hPipe[1]);
-}
-
-/**
-*  @brief
-*    Comparison operator
-*/
-bool Pipe::operator !=(const Pipe &cSource) const
-{
-	// Compare
-	return (m_sName != cSource.m_sName || m_hPipe[0] != cSource.m_hPipe[0] || m_hPipe[1] != cSource.m_hPipe[1]);
-}
-
-/**
-*  @brief
 *    Creates a new unnamend pipe
 */
 bool Pipe::Create()
@@ -174,20 +110,6 @@ bool Pipe::Create(const String &sName)
 
 /**
 *  @brief
-*    Open a pipe by file handles
-*/
-bool Pipe::Open(handle hRead, handle hWrite)
-{
-	// Save file handles
-	m_hPipe[0] = hRead;
-	m_hPipe[1] = hWrite;
-
-	// Done
-	return true;
-}
-
-/**
-*  @brief
 *    Close read side of the pipe
 */
 bool Pipe::CloseRead()
@@ -238,46 +160,6 @@ bool Pipe::CloseWrite()
 		m_hPipe[1] = INVALID_HANDLE;
 		return true;
 	#endif
-}
-
-/**
-*  @brief
-*    Close both sides of the pipe
-*/
-bool Pipe::Close()
-{
-	// Close read and write
-	return (CloseRead() && CloseWrite());
-}
-
-/**
-*  @brief
-*    Get name of pipe
-*/
-String Pipe::GetName() const
-{
-	// Return name
-	return m_sName;
-}
-
-/**
-*  @brief
-*    Get read handle for the pipe
-*/
-handle Pipe::GetReadHandle() const
-{
-	// Return read-end
-	return m_hPipe[0];
-}
-
-/**
-*  @brief
-*    Get write handle for the pipe
-*/
-handle Pipe::GetWriteHandle() const
-{
-	// Return write-end
-	return m_hPipe[1];
 }
 
 

@@ -60,24 +60,6 @@ Chunk::~Chunk()
 
 /**
 *  @brief
-*    Returns the semantic
-*/
-Chunk::ESemantic Chunk::GetSemantic() const
-{
-	return m_nSemantic;
-}
-
-/**
-*  @brief
-*    Sets the semantic
-*/
-void Chunk::SetSemantic(ESemantic nSemantic)
-{
-	m_nSemantic = nSemantic;
-}
-
-/**
-*  @brief
 *    Allocates the chunk
 */
 bool Chunk::Allocate(EElementType nElementType, uint32 nNumOfComponentsPerElement, uint32 nNumOfElements)
@@ -103,42 +85,6 @@ bool Chunk::Allocate(EElementType nElementType, uint32 nNumOfComponentsPerElemen
 
 /**
 *  @brief
-*    Returns the chunk data
-*/
-uint8 *Chunk::GetData()
-{
-	return m_pData;
-}
-
-/**
-*  @brief
-*    Returns the chunk data
-*/
-const uint8 *Chunk::GetData() const
-{
-	return m_pData;
-}
-
-/**
-*  @brief
-*    Returns the chunk element component data
-*/
-uint8 *Chunk::GetElementComponentData(uint32 nElement, uint32 nComponent)
-{
-	return &m_pData[nElement*GetNumOfBytesPerElement() + nComponent*GetNumOfBytesPerElementComponent()];
-}
-
-/**
-*  @brief
-*    Returns the chunk element component data
-*/
-const uint8 *Chunk::GetElementComponentData(uint32 nElement, uint32 nComponent) const
-{
-	return &m_pData[nElement*GetNumOfBytesPerElement() + nComponent*GetNumOfBytesPerElementComponent()];
-}
-
-/**
-*  @brief
 *    Clears the chunk
 */
 void Chunk::Clear()
@@ -153,33 +99,6 @@ void Chunk::Clear()
 	m_nElementType				 = Float;
 	m_nNumOfComponentsPerElement = 0;
 	m_nNumOfElements			 = 0;
-}
-
-/**
-*  @brief
-*    Returns the element type
-*/
-Chunk::EElementType Chunk::GetElementType() const
-{
-	return m_nElementType;
-}
-
-/**
-*  @brief
-*    Returns the number of components per element
-*/
-uint32 Chunk::GetNumOfComponentsPerElement() const
-{
-	return m_nNumOfComponentsPerElement;
-}
-
-/**
-*  @brief
-*    Returns the number of elements
-*/
-uint32 Chunk::GetNumOfElements() const
-{
-	return m_nNumOfElements;
 }
 
 /**
@@ -216,33 +135,6 @@ uint32 Chunk::GetNumOfBytesPerElementComponent() const
 		default:
 			return 0;
 	}
-}
-
-/**
-*  @brief
-*    Returns the number of bytes per element
-*/
-uint32 Chunk::GetNumOfBytesPerElement() const
-{
-	return GetNumOfBytesPerElementComponent()*m_nNumOfComponentsPerElement;
-}
-
-/**
-*  @brief
-*    Returns the total number of bytes of the chunk data
-*/
-uint32 Chunk::GetTotalNumOfBytes() const
-{
-	return GetNumOfBytesPerElement()*m_nNumOfElements;
-}
-
-/**
-*  @brief
-*    Returns the total number of components (all elements summed up) within the chunk
-*/
-uint32 Chunk::GetTotalNumOfComponents() const
-{
-	return m_nNumOfComponentsPerElement*m_nNumOfElements;
 }
 
 

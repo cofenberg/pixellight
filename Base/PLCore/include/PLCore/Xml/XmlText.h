@@ -107,7 +107,7 @@ class XmlText : public XmlNode {
 		*  @return
 		*    'true' if this is input and output as a CDATA style text element, else 'false'
 		*/
-		PLCORE_API bool IsCDATA() const;
+		inline bool IsCDATA() const;
 
 		/**
 		*  @brief
@@ -116,7 +116,7 @@ class XmlText : public XmlNode {
 		*  @param[in] bCDATA
 		*    'true' if this should be input and output as a CDATA style text element, else 'false'
 		*/
-		PLCORE_API void SetCDATA(bool bCDATA);
+		inline void SetCDATA(bool bCDATA);
 
 
 	//[-------------------------------------------------------]
@@ -149,6 +149,12 @@ class XmlText : public XmlNode {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Xml/XmlText.inl"
 
 
 #endif // __PLCORE_XML_TEXT_H__

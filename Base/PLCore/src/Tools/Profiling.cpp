@@ -74,41 +74,6 @@ ProfileGroupElement::~ProfileGroupElement()
 {
 }
 
-/**
-*  @brief
-*    Returns the text of the element
-*/
-String ProfileGroupElement::GetText() const
-{
-	return m_sText;
-}
-
-/**
-*  @brief
-*    Sets the element text
-*/
-bool ProfileGroupElement::SetText(const String &sText)
-{
-	// Set text
-	m_sText = sText;
-
-	// Done
-	return true;
-}
-
-/**
-*  @brief
-*    Copy operator
-*/
-ProfileGroupElement &ProfileGroupElement::operator =(const ProfileGroupElement &cSource)
-{
-	// Copy text
-	m_sText = cSource.m_sText;
-
-	// Return this implementation
-	return *this;
-}
-
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
@@ -145,43 +110,6 @@ ProfileGroup::~ProfileGroup()
 {
 }
 
-/**
-*  @brief
-*    Returns the text of the element group
-*/
-String ProfileGroup::GetText() const
-{
-	return m_sText;
-}
-
-/**
-*  @brief
-*    Sets the element group text
-*/
-bool ProfileGroup::SetText(const String &sText)
-{
-	// Set text
-	m_sText = sText;
-
-	// Done
-	return true;
-}
-
-/**
-*  @brief
-*    Copy operator
-*/
-ProfileGroup &ProfileGroup::operator =(const ProfileGroup &cSource)
-{
-	// Copy text
-	m_sText = cSource.m_sText;
-
-	// Call base implementation
-
-	// Return this implementation
-	return *this;
-}
-
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
@@ -210,33 +138,6 @@ ProfileGroupElement *ProfileGroup::CreateElement(const String &sName)
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns whether the profiling system is active or not
-*/
-bool Profiling::IsActive() const
-{
-	return m_bActive;
-}
-
-/**
-*  @brief
-*    Sets whether the profiling system is active or not
-*/
-void Profiling::SetActive(bool bActive)
-{
-	m_bActive = bActive;
-}
-
-/**
-*  @brief
-*    Returns the name of the current selected profile group
-*/
-String Profiling::GetSelectedGroup() const
-{
-	return m_sGroupName;
-}
-
 /**
 *  @brief
 *    Selects a profile group

@@ -90,33 +90,6 @@ XmlDeclaration &XmlDeclaration::operator =(const XmlDeclaration &cSource)
 	return *this;
 }
 
-/**
-*  @brief
-*    Version - will return an empty string if none was found
-*/
-String XmlDeclaration::GetVersion() const
-{
-	return m_sVersion;
-}
-
-/**
-*  @brief
-*    Encoding - will return an empty string if none was found
-*/
-String XmlDeclaration::GetEncoding() const
-{
-	return m_sEncoding;
-}
-
-/**
-*  @brief
-*    Standalone - will return an empty string if none was found
-*/
-String XmlDeclaration::GetStandalone() const
-{
-	return m_sStandalone;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public virtual XmlBase functions                      ]

@@ -113,7 +113,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*  @return
 		*    The number of loadable types
 		*/
-		PLCORE_API uint32 GetNumOfTypes();
+		inline uint32 GetNumOfTypes();
 
 		/**
 		*  @brief
@@ -125,7 +125,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*  @return
 		*    The requested loadable type, a null pointer on error
 		*/
-		PLCORE_API LoadableType *GetTypeByIndex(uint32 nIndex);
+		inline LoadableType *GetTypeByIndex(uint32 nIndex);
 
 		/**
 		*  @brief
@@ -137,7 +137,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*  @return
 		*    The requested loadable type, a null pointer on error
 		*/
-		PLCORE_API LoadableType *GetTypeByName(const String &sName);
+		inline LoadableType *GetTypeByName(const String &sName);
 
 		/**
 		*  @brief
@@ -149,7 +149,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*  @return
 		*    The requested loadable type (first found if there are multiple candidates), a null pointer on error
 		*/
-		PLCORE_API LoadableType *GetTypeByExtension(const String &sExtension);
+		inline LoadableType *GetTypeByExtension(const String &sExtension);
 
 		//[-------------------------------------------------------]
 		//[ Loaders                                               ]
@@ -161,7 +161,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*  @return
 		*    The number of loaders
 		*/
-		PLCORE_API uint32 GetNumOfLoaders();
+		inline uint32 GetNumOfLoaders();
 
 		/**
 		*  @brief
@@ -173,7 +173,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*  @return
 		*    The requested loader, a null pointer on error
 		*/
-		PLCORE_API Loader *GetLoaderByIndex(uint32 nIndex);
+		inline Loader *GetLoaderByIndex(uint32 nIndex);
 
 		/**
 		*  @brief
@@ -185,7 +185,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*  @return
 		*    The requested loader (first found if there are multiple candidates), a null pointer on error
 		*/
-		PLCORE_API Loader *GetLoaderByExtension(const String &sExtension);
+		inline Loader *GetLoaderByExtension(const String &sExtension);
 
 		//[-------------------------------------------------------]
 		//[ Formats                                               ]
@@ -197,7 +197,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*  @return
 		*    The number of supported formats
 		*/
-		PLCORE_API uint32 GetNumOfFormats();
+		inline uint32 GetNumOfFormats();
 
 		/**
 		*  @brief
@@ -209,7 +209,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*  @return
 		*    The requested supported format, empty string on error
 		*/
-		PLCORE_API String GetFormat(uint32 nIndex);
+		inline String GetFormat(uint32 nIndex);
 
 		/**
 		*  @brief
@@ -249,7 +249,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*  @return
 		*    Number of base directories
 		*/
-		PLCORE_API uint32 GetNumOfBaseDirs() const;
+		inline uint32 GetNumOfBaseDirs() const;
 
 		/**
 		*  @brief
@@ -261,7 +261,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*  @return
 		*    Path of the base directory or empty string
 		*/
-		PLCORE_API String GetBaseDir(uint32 nNum) const;
+		inline String GetBaseDir(uint32 nNum) const;
 
 		/**
 		*  @brief
@@ -336,7 +336,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*  @return
 		*    'true', if all went fine, else 'false'
 		*/
-		PLCORE_API bool ClearBaseDirs();
+		inline bool ClearBaseDirs();
 
 		/**
 		*  @brief
@@ -464,7 +464,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*  @brief
 		*    Registers queued classes
 		*/
-		void RegisterClasses();
+		PLCORE_API void RegisterClasses();
 
 
 	//[-------------------------------------------------------]
@@ -497,6 +497,12 @@ class LoadableManager : public Singleton<LoadableManager> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Tools/LoadableManager.inl"
 
 
 #endif // __PLCORE_LOADABLEMANAGER_H__

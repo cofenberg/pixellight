@@ -56,7 +56,7 @@ class Process {
 		*  @brief
 		*    Constructor
 		*/
-		PLCORE_API Process();
+		inline Process();
 
 		/**
 		*  @brief
@@ -108,7 +108,7 @@ class Process {
 		*    Pipe for error
 		*/
 		PLCORE_API void ExecuteRedirectIO(const String &sCommand, const String &sArguments,
-											 const Pipe &cPipeIn, const Pipe &cPipeOut, const Pipe &cPipeErr);
+										  const Pipe &cPipeIn, const Pipe &cPipeOut, const Pipe &cPipeErr);
 
 		/**
 		*  @brief
@@ -130,7 +130,7 @@ class Process {
 		*    - On Windows, the handle is a file handle of type HANDLE
 		*/
 		PLCORE_API void ExecuteRedirectIO(const String &sCommand, const String &sArguments,
-											 handle hPipeIn, handle hPipeOut, handle hPipeErr);
+										  handle hPipeIn, handle hPipeOut, handle hPipeErr);
 
 		/**
 		*  @brief
@@ -154,7 +154,7 @@ class Process {
 		*  @return
 		*    Input file for the process
 		*/
-		PLCORE_API File &GetInput();
+		inline File &GetInput();
 
 		/**
 		*  @brief
@@ -163,7 +163,7 @@ class Process {
 		*  @return
 		*    Output file for the process
 		*/
-		PLCORE_API File &GetOutput();
+		inline File &GetOutput();
 
 		/**
 		*  @brief
@@ -172,7 +172,7 @@ class Process {
 		*  @return
 		*    Error file for the process
 		*/
-		PLCORE_API File &GetError();
+		inline File &GetError();
 
 		/**
 		*  @brief
@@ -181,7 +181,7 @@ class Process {
 		*  @return
 		*    Input pipe for the process
 		*/
-		PLCORE_API const Pipe &GetPipeInput() const;
+		inline const Pipe &GetPipeInput() const;
 
 		/**
 		*  @brief
@@ -190,7 +190,7 @@ class Process {
 		*  @return
 		*    Output pipe for the process
 		*/
-		PLCORE_API const Pipe &GetPipeOutput() const;
+		inline const Pipe &GetPipeOutput() const;
 
 		/**
 		*  @brief
@@ -199,7 +199,7 @@ class Process {
 		*  @return
 		*    Error pipe for the process
 		*/
-		PLCORE_API const Pipe &GetPipeError() const;
+		inline const Pipe &GetPipeError() const;
 
 
 	//[-------------------------------------------------------]
@@ -284,6 +284,12 @@ class Process {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/System/Process.inl"
 
 
 #endif // __PLCORE_PROCESS_H__

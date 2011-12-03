@@ -234,34 +234,6 @@ void XmlElement::RemoveAttribute(const String &sName)
 
 /**
 *  @brief
-*    Access the first attribute in this element
-*/
-XmlAttribute *XmlElement::GetFirstAttribute()
-{
-	return m_cAttributeSet.GetFirst();
-}
-
-const XmlAttribute *XmlElement::GetFirstAttribute() const
-{
-	return m_cAttributeSet.GetFirst();
-}
-
-/**
-*  @brief
-*    Access the last attribute in this element
-*/
-XmlAttribute *XmlElement::GetLastAttribute()
-{
-	return m_cAttributeSet.GetLast();
-}
-
-const XmlAttribute *XmlElement::GetLastAttribute() const
-{
-	return m_cAttributeSet.GetLast();
-}
-
-/**
-*  @brief
 *    Convenience function for easy access to the text inside an element
 */
 String XmlElement::GetText() const

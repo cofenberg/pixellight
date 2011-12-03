@@ -79,7 +79,7 @@ class Loader {
 		*  @return
 		*    Loader implementation class
 		*/
-		PLCORE_API const Class &GetClass() const;
+		inline const Class &GetClass() const;
 
 		/**
 		*  @brief
@@ -100,7 +100,7 @@ class Loader {
 		*  @return
 		*    The loadable type, a null pointer on (terrible) error
 		*/
-		PLCORE_API LoadableType *GetType() const;
+		inline LoadableType *GetType() const;
 
 		/**
 		*  @brief
@@ -118,7 +118,7 @@ class Loader {
 		*  @return
 		*    The number of supported formats
 		*/
-		PLCORE_API uint32 GetNumOfFormats();
+		inline uint32 GetNumOfFormats();
 
 		/**
 		*  @brief
@@ -130,7 +130,7 @@ class Loader {
 		*  @return
 		*    The requested supported format, empty string on error
 		*/
-		PLCORE_API String GetFormat(uint32 nIndex);
+		inline String GetFormat(uint32 nIndex);
 
 		/**
 		*  @brief
@@ -225,7 +225,7 @@ class Loader {
 		*  @note
 		*    - If the list is already initialized, nothing happens
 		*/
-		void InitFormatsList();
+		PLCORE_API void InitFormatsList();
 
 
 	//[-------------------------------------------------------]
@@ -245,6 +245,12 @@ class Loader {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Tools/Loader.inl"
 
 
 #endif // __PLCORE_LOADER_H__

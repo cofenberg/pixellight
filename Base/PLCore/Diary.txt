@@ -4,11 +4,16 @@
   Under linux added ARCHITEXTUREANDBITSIZE_STRING define which holds the architecture and bitsize string (e.g. x86 for 32bit x86 code or x64 for 64bit x86 code).
   The string from this define gets appended to the standard install paths of pixellight.
 
+
+
+>> 03.12.2011
 [CO]
 - More inline within PLCore: "String", "Class", "ClassImpl", "ClassManager", "MemberDesc", "Module", "DynEvent", "EventDesc", "EventHandlerDesc", "ConstructorDesc",
  "FuncDesc", "ParamsParser", "ParamsParserXml", "VarDesc", "ApplicationContext", "CoreApplication", "Config", "Frontend", "FrontendApplication", "FrontendContext",
  "FrontendImpl", "Log", "LogFormatter", "LogFormatterHtml", "Buffer", "Connection", "Host", "Socket", "SocketAddress", "HttpClient", "HttpHeader", "Registry",
- "ScriptManager", "Runtime"
+ "ScriptManager", "Runtime", "Pipe", "Process", "Chunk", "CommandLine", "CommandLineOption", "HTMLParser", "Loadable", "LoadableManager", "LoadableType", "Loader",
+ "Localization", "LocalizationGroup", "LocalizationText", "ProfileGroupElement", "Time", "Version", "XmlAttribute", "XmlBase", "XmlComment", "XmlDeclaration",
+ "XmlDocument", "XmlElement", "XmlNode", "XmlText", "XmlUnknown"
 
 
 

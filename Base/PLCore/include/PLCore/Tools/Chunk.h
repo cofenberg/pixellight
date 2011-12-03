@@ -107,7 +107,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The semantic
 		*/
-		PLCORE_API ESemantic GetSemantic() const;
+		inline ESemantic GetSemantic() const;
 
 		/**
 		*  @brief
@@ -116,7 +116,7 @@ class Chunk : public Loadable {
 		*  @param[in] nSemantic
 		*    The semantic
 		*/
-		PLCORE_API void SetSemantic(ESemantic nSemantic);
+		inline void SetSemantic(ESemantic nSemantic);
 
 		/**
 		*  @brief
@@ -141,7 +141,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The chunk data, can be a null pointer - do NOT delete this memory!
 		*/
-		PLCORE_API uint8 *GetData();
+		inline uint8 *GetData();
 
 		/**
 		*  @brief
@@ -150,7 +150,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The chunk data, can be a null pointer - do NOT delete this memory!
 		*/
-		PLCORE_API const uint8 *GetData() const;
+		inline const uint8 *GetData() const;
 
 		/**
 		*  @brief
@@ -164,7 +164,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The chunk element component data, can be a null pointer - do NOT delete this memory!
 		*/
-		PLCORE_API uint8 *GetElementComponentData(uint32 nElement, uint32 nComponent);
+		inline uint8 *GetElementComponentData(uint32 nElement, uint32 nComponent);
 
 		/**
 		*  @brief
@@ -178,7 +178,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The chunk element component data, can be a null pointer - do NOT delete this memory!
 		*/
-		PLCORE_API const uint8 *GetElementComponentData(uint32 nElement, uint32 nComponent) const;
+		inline const uint8 *GetElementComponentData(uint32 nElement, uint32 nComponent) const;
 
 		/**
 		*  @brief
@@ -193,7 +193,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The element type
 		*/
-		PLCORE_API EElementType GetElementType() const;
+		inline EElementType GetElementType() const;
 
 		/**
 		*  @brief
@@ -202,7 +202,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The number of components per element
 		*/
-		PLCORE_API uint32 GetNumOfComponentsPerElement() const;
+		inline uint32 GetNumOfComponentsPerElement() const;
 
 		/**
 		*  @brief
@@ -211,7 +211,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The number of elements
 		*/
-		PLCORE_API uint32 GetNumOfElements() const;
+		inline uint32 GetNumOfElements() const;
 
 		/**
 		*  @brief
@@ -229,7 +229,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The number of bytes per element
 		*/
-		PLCORE_API uint32 GetNumOfBytesPerElement() const;
+		inline uint32 GetNumOfBytesPerElement() const;
 
 		/**
 		*  @brief
@@ -238,7 +238,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The total number of bytes of the chunk data
 		*/
-		PLCORE_API uint32 GetTotalNumOfBytes() const;
+		inline uint32 GetTotalNumOfBytes() const;
 
 		/**
 		*  @brief
@@ -247,7 +247,7 @@ class Chunk : public Loadable {
 		*  @return
 		*    The total number of components within the chunk
 		*/
-		PLCORE_API uint32 GetTotalNumOfComponents() const;
+		inline uint32 GetTotalNumOfComponents() const;
 
 
 	//[-------------------------------------------------------]
@@ -302,6 +302,12 @@ class Chunk : public Loadable {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Tools/Chunk.inl"
 
 
 #endif // __PLCORE_CHUNK_H__

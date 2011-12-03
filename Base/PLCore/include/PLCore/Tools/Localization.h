@@ -117,7 +117,7 @@ class Localization : public Singleton<Localization> {
 		*  @return
 		*    The current language
 		*/
-		PLCORE_API String GetLanguage() const;
+		inline String GetLanguage() const;
 
 		/**
 		*  @brief
@@ -134,7 +134,7 @@ class Localization : public Singleton<Localization> {
 		*    - It's recommended to call this function ONLY on startup because it's possible that some
 		*      texts can't be updated on runtime if another language is set
 		*/
-		PLCORE_API void SetLanguage(const String &sLanguage);
+		inline void SetLanguage(const String &sLanguage);
 
 		/**
 		*  @brief
@@ -158,7 +158,7 @@ class Localization : public Singleton<Localization> {
 		*  @return
 		*    The number of groups
 		*/
-		PLCORE_API uint32 GetNumOfGroups() const;
+		inline uint32 GetNumOfGroups() const;
 
 		/**
 		*  @brief
@@ -170,7 +170,7 @@ class Localization : public Singleton<Localization> {
 		*  @return
 		*    The requested group, a null pointer on error
 		*/
-		PLCORE_API LocalizationGroup *GetGroup(uint32 nIndex) const;
+		inline LocalizationGroup *GetGroup(uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -182,7 +182,7 @@ class Localization : public Singleton<Localization> {
 		*  @return
 		*    The requested group, a null pointer on error
 		*/
-		PLCORE_API LocalizationGroup *GetGroup(const String &sName) const;
+		inline LocalizationGroup *GetGroup(const String &sName) const;
 
 		/**
 		*  @brief
@@ -281,6 +281,12 @@ class Localization : public Singleton<Localization> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Tools/Localization.inl"
 
 
 #endif // __PLCORE_LOCALIZATION_H__

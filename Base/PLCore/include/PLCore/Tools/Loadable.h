@@ -69,7 +69,7 @@ class Loadable {
 		*  @return
 		*    The filename this loadable was given to loaded from
 		*/
-		PLCORE_API String GetFilename() const;
+		inline String GetFilename() const;
 
 		/**
 		*  @brief
@@ -78,7 +78,7 @@ class Loadable {
 		*  @return
 		*    The absolute filename this loadable was loaded from
 		*/
-		PLCORE_API String GetUrl() const;
+		inline String GetUrl() const;
 
 
 	//[-------------------------------------------------------]
@@ -250,6 +250,12 @@ class Loadable {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Tools/Loadable.inl"
 
 
 #endif // __PLCORE_LOADABLE_H__

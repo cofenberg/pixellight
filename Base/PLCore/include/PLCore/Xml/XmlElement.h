@@ -269,8 +269,8 @@ class XmlElement : public XmlNode {
 		*  @return
 		*    The first attribute, a null pointer if there's no first attribute
 		*/
-		PLCORE_API XmlAttribute *GetFirstAttribute();
-		PLCORE_API const XmlAttribute *GetFirstAttribute() const;
+		inline XmlAttribute *GetFirstAttribute();
+		inline const XmlAttribute *GetFirstAttribute() const;
 
 		/**
 		*  @brief
@@ -279,8 +279,8 @@ class XmlElement : public XmlNode {
 		*  @return
 		*    The last attribute, a null pointer if there's no last attribute
 		*/
-		PLCORE_API XmlAttribute *GetLastAttribute();
-		PLCORE_API const XmlAttribute *GetLastAttribute() const;
+		inline XmlAttribute *GetLastAttribute();
+		inline const XmlAttribute *GetLastAttribute() const;
 
 		/**
 		*  @brief
@@ -415,6 +415,12 @@ class XmlElement : public XmlNode {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Xml/XmlElement.inl"
 
 
 #endif // __PLCORE_XML_ELEMENT_H__

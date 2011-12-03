@@ -148,7 +148,7 @@ class XmlBase {
 		*    into a single space or not. The default is to condense. Note changing this
 		*    values is not thread safe.
 		*/
-		static PLCORE_API bool IsWhiteSpaceCondensed();
+		static inline bool IsWhiteSpaceCondensed();
 
 		/**
 		*  @brief
@@ -160,7 +160,7 @@ class XmlBase {
 		*  @see
 		*    - IsWhiteSpaceCondensed()
 		*/
-		static PLCORE_API void SetCondenseWhiteSpace(bool bCondense);
+		static inline void SetCondenseWhiteSpace(bool bCondense);
 
 
 	//[-------------------------------------------------------]
@@ -196,7 +196,7 @@ class XmlBase {
 		*  @see
 		*    - XmlDocument::SetTabSize()
 		*/
-		PLCORE_API int GetRow() const;
+		inline int GetRow() const;
 
 		/**
 		*  @brief
@@ -208,7 +208,7 @@ class XmlBase {
 		*  @see
 		*    - GetRow()
 		*/
-		PLCORE_API int GetColumn() const;
+		inline int GetColumn() const;
 
 		/**
 		*  @brief
@@ -220,7 +220,7 @@ class XmlBase {
 		*  @note
 		*    - The user data is not used internally, it's really user only :)
 		*/
-		PLCORE_API void *GetUserData() const;
+		inline void *GetUserData() const;
 
 		/**
 		*  @brief
@@ -232,7 +232,7 @@ class XmlBase {
 		*  @see
 		*    - GetUserData()
 		*/
-		PLCORE_API void SetUserData(void *pUser);
+		inline void SetUserData(void *pUser);
 
 
 	//[-------------------------------------------------------]
@@ -448,7 +448,7 @@ class XmlBase {
 			NumOfEntities = 5
 		};
 		static Entity sEntity[NumOfEntities];
-		static bool   bCondenseWhiteSpace;
+		static PLCORE_API bool bCondenseWhiteSpace;
 
 
 };
@@ -458,6 +458,12 @@ class XmlBase {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Xml/XmlBase.inl"
 
 
 #endif // __PLCORE_XML_BASE_H__

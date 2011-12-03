@@ -80,7 +80,7 @@ class Version {
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API ~Version();
+		inline ~Version();
 
 		/**
 		*  @brief
@@ -89,7 +89,7 @@ class Version {
 		*  @return
 		*    Name of the project
 		*/
-		PLCORE_API String GetName() const;
+		inline String GetName() const;
 
 		/**
 		*  @brief
@@ -98,7 +98,7 @@ class Version {
 		*  @param[in] sName
 		*    Name of the project
 		*/
-		PLCORE_API void SetName(const String &sName);
+		inline void SetName(const String &sName);
 
 		/**
 		*  @brief
@@ -107,7 +107,7 @@ class Version {
 		*  @return
 		*    Codename of the release
 		*/
-		PLCORE_API String GetCodename() const;
+		inline String GetCodename() const;
 
 		/**
 		*  @brief
@@ -116,7 +116,7 @@ class Version {
 		*  @param[in] sCodename
 		*    Codename of the release
 		*/
-		PLCORE_API void SetCodename(const String &sCodename);
+		inline void SetCodename(const String &sCodename);
 
 		/**
 		*  @brief
@@ -125,7 +125,7 @@ class Version {
 		*  @return
 		*    Major version
 		*/
-		PLCORE_API uint16 GetMajor() const;
+		inline uint16 GetMajor() const;
 
 		/**
 		*  @brief
@@ -134,7 +134,7 @@ class Version {
 		*  @param[in] nMajor
 		*    Major version
 		*/
-		PLCORE_API void SetMajor(uint16 nMajor);
+		inline void SetMajor(uint16 nMajor);
 
 		/**
 		*  @brief
@@ -143,7 +143,7 @@ class Version {
 		*  @return
 		*    Minor version
 		*/
-		PLCORE_API uint16 GetMinor() const;
+		inline uint16 GetMinor() const;
 
 		/**
 		*  @brief
@@ -152,7 +152,7 @@ class Version {
 		*  @param[in] nMinor
 		*    Minor version
 		*/
-		PLCORE_API void SetMinor(uint16 nMinor);
+		inline void SetMinor(uint16 nMinor);
 
 		/**
 		*  @brief
@@ -161,7 +161,7 @@ class Version {
 		*  @return
 		*    Patch number
 		*/
-		PLCORE_API uint16 GetPatch() const;
+		inline uint16 GetPatch() const;
 
 		/**
 		*  @brief
@@ -170,7 +170,7 @@ class Version {
 		*  @param[in] nPatch
 		*    Patch number
 		*/
-		PLCORE_API void SetPatch(uint16 nPatch);
+		inline void SetPatch(uint16 nPatch);
 
 		/**
 		*  @brief
@@ -179,7 +179,7 @@ class Version {
 		*  @return
 		*    Release name
 		*/
-		PLCORE_API String GetRelease() const;
+		inline String GetRelease() const;
 
 		/**
 		*  @brief
@@ -188,7 +188,7 @@ class Version {
 		*  @param[in] sRelease
 		*    Release name
 		*/
-		PLCORE_API void SetRelease(const String &sRelease);
+		inline void SetRelease(const String &sRelease);
 
 		/**
 		*  @brief
@@ -229,6 +229,12 @@ class Version {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Tools/Version.inl"
 
 
 #endif // __PLCORE_VERSION_H__

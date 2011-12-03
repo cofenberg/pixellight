@@ -87,7 +87,7 @@ class XmlAttribute : public XmlBase {
 		*  @return
 		*    Name of this attribute
 		*/
-		PLCORE_API String GetName() const;
+		inline String GetName() const;
 
 		/**
 		*  @brief
@@ -96,7 +96,7 @@ class XmlAttribute : public XmlBase {
 		*  @param[in] sName
 		*    Name of this attribute to set
 		*/
-		PLCORE_API void SetName(const String &sName);
+		inline void SetName(const String &sName);
 
 		/**
 		*  @brief
@@ -105,7 +105,7 @@ class XmlAttribute : public XmlBase {
 		*  @return
 		*    Value of this attribute
 		*/
-		PLCORE_API String GetValue() const;
+		inline String GetValue() const;
 
 		/**
 		*  @brief
@@ -114,7 +114,7 @@ class XmlAttribute : public XmlBase {
 		*  @return
 		*    Value of this attribute, converted to an integer
 		*/
-		PLCORE_API int GetIntValue() const;
+		inline int GetIntValue() const;
 
 		/**
 		*  @brief
@@ -123,7 +123,7 @@ class XmlAttribute : public XmlBase {
 		*  @return
 		*    Value of this attribute, converted to a double
 		*/
-		PLCORE_API double GetDoubleValue() const;
+		inline double GetDoubleValue() const;
 
 		/**
 		*  @brief
@@ -168,7 +168,7 @@ class XmlAttribute : public XmlBase {
 		*  @param[in] sValue
 		*    Attribute value to set
 		*/
-		PLCORE_API void SetValue(const String &sValue);
+		inline void SetValue(const String &sValue);
 
 		/**
 		*  @brief
@@ -177,7 +177,7 @@ class XmlAttribute : public XmlBase {
 		*  @param[in] nValue
 		*    Attribute integer value to set
 		*/
-		PLCORE_API void SetIntValue(int nValue);
+		inline void SetIntValue(int nValue);
 
 		/**
 		*  @brief
@@ -186,7 +186,7 @@ class XmlAttribute : public XmlBase {
 		*  @param[in] dValue
 		*    Attribute double value to set
 		*/
-		PLCORE_API void SetDoubleValue(double dValue);
+		inline void SetDoubleValue(double dValue);
 
 		/**
 		*  @brief
@@ -195,8 +195,8 @@ class XmlAttribute : public XmlBase {
 		*  @return
 		*    The next sibling attribute in the DOM, a null pointer at end
 		*/
-		PLCORE_API XmlAttribute *GetNext();
-		PLCORE_API const XmlAttribute *GetNext() const;
+		inline XmlAttribute *GetNext();
+		inline const XmlAttribute *GetNext() const;
 
 		/**
 		*  @brief
@@ -205,8 +205,8 @@ class XmlAttribute : public XmlBase {
 		*  @return
 		*    The previous sibling attribute in the DOM, a null pointer at beginning
 		*/
-		PLCORE_API XmlAttribute *GetPrevious();
-		PLCORE_API const XmlAttribute *GetPrevious() const;
+		inline XmlAttribute *GetPrevious();
+		inline const XmlAttribute *GetPrevious() const;
 
 		/**
 		*  @brief
@@ -218,9 +218,9 @@ class XmlAttribute : public XmlBase {
 		*  @return
 		*    'true' if the condition is fulfilled, else 'false'
 		*/
-		PLCORE_API bool operator ==(const XmlAttribute &cOther) const;
-		PLCORE_API bool operator <(const XmlAttribute &cOther) const;
-		PLCORE_API bool operator >(const XmlAttribute &cOther) const;
+		inline bool operator ==(const XmlAttribute &cOther) const;
+		inline bool operator <(const XmlAttribute &cOther) const;
+		inline bool operator >(const XmlAttribute &cOther) const;
 
 
 	//[-------------------------------------------------------]
@@ -276,6 +276,12 @@ class XmlAttribute : public XmlBase {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Xml/XmlAttribute.inl"
 
 
 #endif // __PLCORE_XML_ATTRIBUTE_H__

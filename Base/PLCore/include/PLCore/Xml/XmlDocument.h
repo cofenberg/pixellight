@@ -131,7 +131,7 @@ class XmlDocument : public XmlNode {
 		*  @note
 		*    - Will delete any existing document data before loading
 		*/
-		PLCORE_API bool Load(EEncoding nEncoding = EncodingUnknown);
+		inline bool Load(EEncoding nEncoding = EncodingUnknown);
 
 		/**
 		*  @brief
@@ -171,7 +171,7 @@ class XmlDocument : public XmlNode {
 		*  @return
 		*    Returns 'true' if successful, else 'false'
 		*/
-		PLCORE_API bool Save();
+		inline bool Save();
 
 		/**
 		*  @brief
@@ -199,8 +199,8 @@ class XmlDocument : public XmlNode {
 		*    - In well formed XML, there should only be one. This parser is tolerant of
 		*      multiple elements at the document level
 		*/
-		PLCORE_API XmlElement *GetRootElement();
-		PLCORE_API const XmlElement *GetRootElement() const;
+		inline XmlElement *GetRootElement();
+		inline const XmlElement *GetRootElement() const;
 
 		/**
 		*  @brief
@@ -214,7 +214,7 @@ class XmlDocument : public XmlNode {
 		*    - 'GetErrorDesc()' will return the name of the error. (very useful)
 		*    - 'GetErrorRow()' and 'GetErrorColumn()' will return the location of the error (if known)
 		*/
-		PLCORE_API bool Error() const;
+		inline bool Error() const;
 
 		/**
 		*  @brief
@@ -236,7 +236,7 @@ class XmlDocument : public XmlNode {
 		*  @return
 		*    Error ID
 		*/
-		PLCORE_API int GetErrorID() const;
+		inline int GetErrorID() const;
 
 		/**
 		*  @brief
@@ -254,7 +254,7 @@ class XmlDocument : public XmlNode {
 		*  @see
 		*    - SetTabSize(), GetRow() and GetColumn()
 		*/
-		PLCORE_API int GetErrorRow() const;
+		inline int GetErrorRow() const;
 
 		/**
 		*  @brief
@@ -266,7 +266,7 @@ class XmlDocument : public XmlNode {
 		*  @see
 		*    - GetErrorRow()
 		*/
-		PLCORE_API int GetErrorColumn() const;
+		inline int GetErrorColumn() const;
 
 		/**
 		*  @brief
@@ -275,7 +275,7 @@ class XmlDocument : public XmlNode {
 		*  @return
 		*    Tab size
 		*/
-		PLCORE_API uint32 GetTabSize() const;
+		inline uint32 GetTabSize() const;
 
 		/**
 		*  @brief
@@ -302,7 +302,7 @@ class XmlDocument : public XmlNode {
 		*    @see
 		*      - GetRow() and GetColumn()
 		*/
-		PLCORE_API void SetTabSize(uint32 nTabSize = 4);
+		inline void SetTabSize(uint32 nTabSize = 4);
 
 		/**
 		*  @brief
@@ -376,6 +376,12 @@ class XmlDocument : public XmlNode {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Xml/XmlDocument.inl"
 
 
 #endif // __PLCORE_XML_DOCUMENT_H__

@@ -70,13 +70,13 @@ class CommandLineOption {
 		*  @brief
 		*    Constructor
 		*/
-		PLCORE_API CommandLineOption();
+		inline CommandLineOption();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API ~CommandLineOption();
+		inline ~CommandLineOption();
 
 		/**
 		*  @brief
@@ -85,7 +85,7 @@ class CommandLineOption {
 		*  @return
 		*    Type of option
 		*/
-		PLCORE_API EType GetType() const;
+		inline EType GetType() const;
 
 		/**
 		*  @brief
@@ -94,7 +94,7 @@ class CommandLineOption {
 		*  @param[in] nType
 		*    Type of option
 		*/
-		PLCORE_API void SetType(EType nType);
+		inline void SetType(EType nType);
 
 		/**
 		*  @brief
@@ -103,7 +103,7 @@ class CommandLineOption {
 		*  @return
 		*    'true' if the option is required, else 'false'
 		*/
-		PLCORE_API bool IsRequired() const;
+		inline bool IsRequired() const;
 
 		/**
 		*  @brief
@@ -112,7 +112,7 @@ class CommandLineOption {
 		*  @param[in] bRequired
 		*    'true' if the option is required, else 'false'
 		*/
-		PLCORE_API void SetRequired(bool bRequired);
+		inline void SetRequired(bool bRequired);
 
 		/**
 		*  @brief
@@ -121,7 +121,7 @@ class CommandLineOption {
 		*  @return
 		*    Option name (e.g. "Name")
 		*/
-		PLCORE_API String GetName() const;
+		inline String GetName() const;
 
 		/**
 		*  @brief
@@ -130,7 +130,7 @@ class CommandLineOption {
 		*  @param[in] sName
 		*    Option name (e.g. "Name")
 		*/
-		PLCORE_API void SetName(const String &sName);
+		inline void SetName(const String &sName);
 
 		/**
 		*  @brief
@@ -139,7 +139,7 @@ class CommandLineOption {
 		*  @return
 		*    Short option name (e.g. "-a")
 		*/
-		PLCORE_API String GetShortName() const;
+		inline String GetShortName() const;
 
 		/**
 		*  @brief
@@ -148,7 +148,7 @@ class CommandLineOption {
 		*  @param[in] sName
 		*    Short option name (e.g. "-a")
 		*/
-		PLCORE_API void SetShortName(const String &sName);
+		inline void SetShortName(const String &sName);
 
 		/**
 		*  @brief
@@ -157,7 +157,7 @@ class CommandLineOption {
 		*  @return
 		*    Long option name (e.g. "--optiona")
 		*/
-		PLCORE_API String GetLongName() const;
+		inline String GetLongName() const;
 
 		/**
 		*  @brief
@@ -166,7 +166,7 @@ class CommandLineOption {
 		*  @param[in] sName
 		*    Long option name (e.g. "--optiona")
 		*/
-		PLCORE_API void SetLongName(const String &sName);
+		inline void SetLongName(const String &sName);
 
 		/**
 		*  @brief
@@ -175,7 +175,7 @@ class CommandLineOption {
 		*  @return
 		*    Description string
 		*/
-		PLCORE_API String GetDescription() const;
+		inline String GetDescription() const;
 
 		/**
 		*  @brief
@@ -184,7 +184,7 @@ class CommandLineOption {
 		*  @param[in] sDescription
 		*    Description string
 		*/
-		PLCORE_API void SetDescription(const String &sDescription);
+		inline void SetDescription(const String &sDescription);
 
 		/**
 		*  @brief
@@ -193,7 +193,7 @@ class CommandLineOption {
 		*  @return
 		*    Default value
 		*/
-		PLCORE_API String GetDefault() const;
+		inline String GetDefault() const;
 
 		/**
 		*  @brief
@@ -202,7 +202,7 @@ class CommandLineOption {
 		*  @param[in] sDefault
 		*    Default value
 		*/
-		PLCORE_API void SetDefault(const String &sDefault);
+		inline void SetDefault(const String &sDefault);
 
 		/**
 		*  @brief
@@ -211,7 +211,7 @@ class CommandLineOption {
 		*  @return
 		*    'true' if the value is set, else 'false'
 		*/
-		PLCORE_API bool IsSet() const;
+		inline bool IsSet() const;
 
 		/**
 		*  @brief
@@ -220,7 +220,7 @@ class CommandLineOption {
 		*  @return
 		*    Value of option ("true"/"false" for boolean values)
 		*/
-		PLCORE_API String GetValue() const;
+		inline String GetValue() const;
 
 		/**
 		*  @brief
@@ -229,7 +229,7 @@ class CommandLineOption {
 		*  @param[in] sValue
 		*    Option value
 		*/
-		PLCORE_API void SetValue(const String &sValue);
+		inline void SetValue(const String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -253,6 +253,12 @@ class CommandLineOption {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Tools/CommandLineOption.inl"
 
 
 #endif // __PLCORE_COMMANDLINEOPTION_H__

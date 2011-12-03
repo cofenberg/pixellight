@@ -25,10 +25,10 @@
 //[-------------------------------------------------------]
 #include "PLCore/String/Tokenizer.h"
 #include "PLCore/String/RegEx.h"
-#include "PLCore/Tools/CommandLineOption.h"
-#include "PLCore/Tools/CommandLine.h"
 #include "PLCore/System/System.h"
 #include "PLCore/System/Console.h"
+#include "PLCore/Tools/CommandLineOption.h"
+#include "PLCore/Tools/CommandLine.h"
 
 
 //[-------------------------------------------------------]
@@ -211,55 +211,6 @@ Array<String> CommandLine::StringToArguments(const String &sCmdLine)
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Constructor
-*/
-CommandLine::CommandLine() :
-	m_bError(false)
-{
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-CommandLine::~CommandLine()
-{
-	// Clear options
-	Clear();
-}
-
-/**
-*  @brief
-*    Get number of registered options
-*/
-uint32 CommandLine::GetNumOfOptions() const
-{
-	// Return number of options stored in our array
-	return m_lstOptions.GetNumOfElements();
-}
-
-/**
-*  @brief
-*    Get option by index
-*/
-CommandLineOption *CommandLine::GetOption(uint32 nIndex) const
-{
-	// Return option
-	return m_lstOptions[nIndex];
-}
-
-/**
-*  @brief
-*    Get option by name
-*/
-CommandLineOption *CommandLine::GetOption(const String &sName) const
-{
-	// Return option
-	return m_mapOptions.Get(sName);
-}
-
 /**
 *  @brief
 *    Delete all options
@@ -493,16 +444,6 @@ bool CommandLine::ParseCommandLine(const Array<String> &lstArgs)
 
 /**
 *  @brief
-*    Check if there were any errors parsing the command line arguments
-*/
-bool CommandLine::HasErrors() const
-{
-	// Return error flag
-	return m_bError;
-}
-
-/**
-*  @brief
 *    Check if an option value is set ('true' for boolean options or any other than "" for string values)
 */
 bool CommandLine::IsValueSet(const String &sName) const
@@ -521,26 +462,6 @@ String CommandLine::GetValue(const String &sName) const
 	// Get option
 	const CommandLineOption *pOption = GetOption(sName);
 	return pOption ? pOption->GetValue() : "";
-}
-
-/**
-*  @brief
-*    Get number of additional arguments that have been defined
-*/
-uint32 CommandLine::GetNumOfAdditionalArguments() const
-{
-	// Return number of additional arguments
-	return m_lstParameters.GetNumOfElements();
-}
-
-/**
-*  @brief
-*    Get additional argument
-*/
-String CommandLine::GetAdditionalArgument(uint32 nIndex) const
-{
-	// Return argument
-	return m_lstParameters[nIndex];
 }
 
 /**

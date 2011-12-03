@@ -60,51 +60,6 @@ XmlAttribute::~XmlAttribute()
 
 /**
 *  @brief
-*    Return the name of this attribute
-*/
-String XmlAttribute::GetName() const
-{
-	return m_sName;
-}
-
-/**
-*  @brief
-*    Set the name of this attribute
-*/
-void XmlAttribute::SetName(const String &sName)
-{
-	m_sName = sName;
-}
-
-/**
-*  @brief
-*    Return the value of this attribute
-*/
-String XmlAttribute::GetValue() const
-{
-	return m_sValue;
-}
-
-/**
-*  @brief
-*    Return the value of this attribute, converted to an integer
-*/
-int XmlAttribute::GetIntValue() const
-{
-	return m_sValue.GetInt();
-}
-
-/**
-*  @brief
-*    Return the value of this attribute, converted to a double
-*/
-double XmlAttribute::GetDoubleValue() const
-{
-	return m_sValue.GetDouble();
-}
-
-/**
-*  @brief
 *    Examines the value string
 */
 XmlBase::EQueryResult XmlAttribute::QueryIntValue(int &nValue) const
@@ -127,80 +82,6 @@ XmlBase::EQueryResult XmlAttribute::QueryDoubleValue(double &dValue) const
 	if (nResult != Success)
 		dValue = dBackup;
 	return nResult;
-}
-
-/**
-*  @brief
-*    Set the value
-*/
-void XmlAttribute::SetValue(const String &sValue)
-{
-	m_sValue = sValue;
-}
-
-/**
-*  @brief
-*    Set the value from an integer
-*/
-void XmlAttribute::SetIntValue(int nValue)
-{
-	m_sValue = nValue;
-}
-
-/**
-*  @brief
-*    Set the value from a double
-*/
-void XmlAttribute::SetDoubleValue(double dValue)
-{
-	m_sValue = dValue;
-}
-
-/**
-*  @brief
-*    Get the next sibling attribute in the DOM
-*/
-XmlAttribute *XmlAttribute::GetNext()
-{
-	// We are using knowledge of the sentinel. The sentinel have a value or name.
-	return (!m_pNextAttribute->m_sValue.GetLength() && !m_pNextAttribute->m_sName.GetLength()) ? nullptr : m_pNextAttribute;
-}
-
-const XmlAttribute *XmlAttribute::GetNext() const
-{
-	// We are using knowledge of the sentinel. The sentinel have a value or name.
-	return (!m_pNextAttribute->m_sValue.GetLength() && !m_pNextAttribute->m_sName.GetLength()) ? nullptr : m_pNextAttribute;
-}
-
-/**
-*  @brief
-*    Get the previous sibling attribute in the DOM
-*/
-XmlAttribute *XmlAttribute::GetPrevious()
-{
-	// We are using knowledge of the sentinel. The sentinel have a value or name.
-	return (!m_pPreviousAttribute->m_sValue.GetLength() && !m_pPreviousAttribute->m_sName.GetLength()) ? nullptr : m_pPreviousAttribute;
-}
-
-const XmlAttribute *XmlAttribute::GetPrevious() const
-{
-	// We are using knowledge of the sentinel. The sentinel have a value or name.
-	return (!m_pPreviousAttribute->m_sValue.GetLength() && !m_pPreviousAttribute->m_sName.GetLength()) ? nullptr : m_pPreviousAttribute;
-}
-
-bool XmlAttribute::operator ==(const XmlAttribute &cOther) const
-{
-	return (cOther.m_sName == m_sName);
-}
-
-bool XmlAttribute::operator <(const XmlAttribute &cOther) const
-{
-	return (m_sName < cOther.m_sName);
-}
-
-bool XmlAttribute::operator >(const XmlAttribute &cOther) const
-{
-	return (m_sName > cOther.m_sName);
 }
 
 

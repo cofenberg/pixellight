@@ -78,28 +78,6 @@ bool XmlBase::bCondenseWhiteSpace = true;
 
 
 //[-------------------------------------------------------]
-//[ Public static functions                               ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Return the current white space setting
-*/
-bool XmlBase::IsWhiteSpaceCondensed()
-{
-	return bCondenseWhiteSpace;
-}
-
-/**
-*  @brief
-*    Set white space handling
-*/
-void XmlBase::SetCondenseWhiteSpace(bool bCondense)
-{
-	bCondenseWhiteSpace = bCondense;
-}
-
-
-//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -108,42 +86,6 @@ void XmlBase::SetCondenseWhiteSpace(bool bCondense)
 */
 XmlBase::~XmlBase()
 {
-}
-
-/**
-*  @brief
-*    Return the row position, in the original source file, of this node or attribute
-*/
-int XmlBase::GetRow() const
-{
-	return m_cCursor.nRow + 1;
-}
-
-/**
-*  @brief
-*    Return the column position, in the original source file, of this node or attribute
-*/
-int XmlBase::GetColumn() const
-{
-	return m_cCursor.nColumn + 1;
-}
-
-/**
-*  @brief
-*    Returns the user data
-*/
-void *XmlBase::GetUserData() const
-{
-	return m_pUserData;
-}
-
-/**
-*  @brief
-*    Sets the user data
-*/
-void XmlBase::SetUserData(void *pUser)
-{
-	m_pUserData = pUser;
 }
 
 

@@ -132,15 +132,6 @@ XmlDocument &XmlDocument::operator =(const XmlDocument &cSource)
 
 /**
 *  @brief
-*    Load a file using the current document value
-*/
-bool XmlDocument::Load(EEncoding nEncoding)
-{
-	return Load(m_sValue, nEncoding);
-}
-
-/**
-*  @brief
 *    Load a file using the given filename
 */
 bool XmlDocument::Load(const String &sFilename, EEncoding nEncoding)
@@ -221,15 +212,6 @@ bool XmlDocument::Load(File &cFile, EEncoding nEncoding)
 
 /**
 *  @brief
-*    Save a file using the current document value
-*/
-bool XmlDocument::Save()
-{
-	return Save(m_sValue);
-}
-
-/**
-*  @brief
 *    Save a file using the given filename
 */
 bool XmlDocument::Save(const String &sFilename)
@@ -254,29 +236,6 @@ bool XmlDocument::Save(const String &sFilename)
 
 /**
 *  @brief
-*    Get the root element -- the only top level element -- of the document
-*/
-XmlElement *XmlDocument::GetRootElement()
-{
-	return GetFirstChildElement();
-}
-
-const XmlElement *XmlDocument::GetRootElement() const
-{
-	return GetFirstChildElement();
-}
-
-/**
-*  @brief
-*    If an error occurs, error will be set to true
-*/
-bool XmlDocument::Error() const
-{
-	return m_bError;
-}
-
-/**
-*  @brief
 *    Contains a textual (english) description of the error if one occurs
 */
 String XmlDocument::GetErrorDesc(bool bLocation) const
@@ -295,52 +254,6 @@ String XmlDocument::GetErrorDesc(bool bLocation) const
 	} else {
 		return m_sErrorDescription;
 	}
-}
-
-/**
-*  @brief
-*    Generally, you probably want the error string ('GetErrorDesc()') - but if you
-*    prefer the error ID, this function will fetch it
-*/
-int XmlDocument::GetErrorID() const
-{
-	return m_nErrorID;
-}
-
-/**
-*  @brief
-*    Returns the location (if known) of the error
-*/
-int XmlDocument::GetErrorRow() const
-{
-	return m_cErrorCursor.nRow + 1;
-}
-
-/**
-*  @brief
-*    The column where the error occurred
-*/
-int XmlDocument::GetErrorColumn() const
-{
-	return  m_cErrorCursor.nColumn + 1;
-}
-
-/**
-*  @brief
-*    Returns the tab size
-*/
-uint32 XmlDocument::GetTabSize() const
-{
-	return m_nTabSize;
-}
-
-/**
-*  @brief
-*    Sets the tab size
-*/
-void XmlDocument::SetTabSize(uint32 nTabSize)
-{
-	m_nTabSize = nTabSize;
 }
 
 /**

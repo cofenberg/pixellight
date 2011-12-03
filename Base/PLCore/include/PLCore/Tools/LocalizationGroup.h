@@ -79,7 +79,7 @@ class LocalizationGroup : public Loadable {
 		*  @return
 		*    The name of the group
 		*/
-		PLCORE_API String GetName() const;
+		inline String GetName() const;
 
 		/**
 		*  @brief
@@ -88,7 +88,7 @@ class LocalizationGroup : public Loadable {
 		*  @return
 		*    The language used as 'from-key'
 		*/
-		PLCORE_API String GetFromLanguage() const;
+		inline String GetFromLanguage() const;
 
 		/**
 		*  @brief
@@ -97,7 +97,7 @@ class LocalizationGroup : public Loadable {
 		*  @param[in] sFrom
 		*    The language used as 'from-key'
 		*/
-		PLCORE_API void SetFromLanguage(const String &sFrom = English);
+		inline void SetFromLanguage(const String &sFrom = English);
 
 		/**
 		*  @brief
@@ -106,7 +106,7 @@ class LocalizationGroup : public Loadable {
 		*  @return
 		*    The language used as 'to-key'
 		*/
-		PLCORE_API String GetToLanguage() const;
+		inline String GetToLanguage() const;
 
 		/**
 		*  @brief
@@ -115,7 +115,7 @@ class LocalizationGroup : public Loadable {
 		*  @param[in] sTo
 		*    The language used as 'to-key'
 		*/
-		PLCORE_API void SetToLanguage(const String &sTo = English);
+		inline void SetToLanguage(const String &sTo = English);
 
 		/**
 		*  @brief
@@ -124,7 +124,7 @@ class LocalizationGroup : public Loadable {
 		*  @return
 		*    The number of texts
 		*/
-		PLCORE_API uint32 GetNumOfTexts() const;
+		inline uint32 GetNumOfTexts() const;
 
 		/**
 		*  @brief
@@ -136,7 +136,7 @@ class LocalizationGroup : public Loadable {
 		*  @return
 		*    The requested text, a null pointer on error
 		*/
-		PLCORE_API LocalizationText *GetText(uint32 nIndex) const;
+		inline LocalizationText *GetText(uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -148,7 +148,7 @@ class LocalizationGroup : public Loadable {
 		*  @return
 		*    The requested text, a null pointer on error
 		*/
-		PLCORE_API LocalizationText *GetText(const String &sName) const;
+		inline LocalizationText *GetText(const String &sName) const;
 
 		/**
 		*  @brief
@@ -262,6 +262,12 @@ class LocalizationGroup : public Loadable {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Tools/LocalizationGroup.inl"
 
 
 #endif // __PLCORE_LOCALIZATIONGROUP_H__

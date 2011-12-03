@@ -40,15 +40,6 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Loader implementation class
-*/
-const Class &Loader::GetClass() const
-{
-	return *m_pClass;
-}
-
-/**
-*  @brief
 *    Returns the loader implementation
 */
 LoaderImpl *Loader::GetImpl()
@@ -63,41 +54,12 @@ LoaderImpl *Loader::GetImpl()
 
 /**
 *  @brief
-*    Returns the loadable type
-*/
-LoadableType *Loader::GetType() const
-{
-	return m_pLoadableType;
-}
-
-/**
-*  @brief
 *    Returns the name of the loadable type
 */
 String Loader::GetTypeName() const
 {
 	const Class *pClass = m_pClass;
 	return pClass ? pClass->GetProperties().Get("Type") : "";
-}
-
-/**
-*  @brief
-*    Returns the number of supported formats
-*/
-uint32 Loader::GetNumOfFormats()
-{
-	InitFormatsList();
-	return m_lstFormats.GetNumOfElements();
-}
-
-/**
-*  @brief
-*    Returns a supported format
-*/
-String Loader::GetFormat(uint32 nIndex)
-{
-	InitFormatsList();
-	return m_lstFormats[nIndex];
 }
 
 /**

@@ -433,9 +433,6 @@
     <ClCompile Include="src\Tools\CommandLine.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
-    <ClCompile Include="src\Tools\CommandLineOption.cpp">
-      <Filter>Tools</Filter>
-    </ClCompile>
     <ClCompile Include="src\Tools\HTMLParser.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
@@ -1534,12 +1531,6 @@
     <None Include="include\PLCore\System\MutexGuard.inl">
       <Filter>System</Filter>
     </None>
-    <None Include="include\PLCore\Tools\Stopwatch.inl">
-      <Filter>Tools</Filter>
-    </None>
-    <None Include="include\PLCore\Tools\Tools.inl">
-      <Filter>Tools</Filter>
-    </None>
     <None Include="include\PLCore\File\FileObject.inl">
       <Filter>File</Filter>
     </None>
@@ -1569,9 +1560,6 @@
     </None>
     <None Include="include\PLCore\File\FileSearch.inl">
       <Filter>File</Filter>
-    </None>
-    <None Include="include\PLCore\Tools\Timing.inl">
-      <Filter>Tools</Filter>
     </None>
     <None Include="include\PLCore\String\Tokenizer.inl">
       <Filter>String</Filter>
@@ -1677,6 +1665,90 @@
     </None>
     <None Include="include\PLCore\Runtime.inl">
       <Filter>Source Files</Filter>
+    </None>
+    <None Include="include\PLCore\System\Pipe.inl">
+      <Filter>System</Filter>
+    </None>
+    <None Include="include\PLCore\System\Process.inl">
+      <Filter>System</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\Loadable.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\LoadableManager.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\LoadableType.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\Loader.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\Localization.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\LocalizationGroup.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\LocalizationText.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\Profiling.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\Stopwatch.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\Time.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\Timing.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\Tools.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\Version.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\Chunk.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\CommandLine.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\HTMLParser.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\CommandLineOption.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Xml\XmlNode.inl">
+      <Filter>Xml</Filter>
+    </None>
+    <None Include="include\PLCore\Xml\XmlText.inl">
+      <Filter>Xml</Filter>
+    </None>
+    <None Include="include\PLCore\Xml\XmlUnknown.inl">
+      <Filter>Xml</Filter>
+    </None>
+    <None Include="include\PLCore\Xml\XmlAttribute.inl">
+      <Filter>Xml</Filter>
+    </None>
+    <None Include="include\PLCore\Xml\XmlBase.inl">
+      <Filter>Xml</Filter>
+    </None>
+    <None Include="include\PLCore\Xml\XmlComment.inl">
+      <Filter>Xml</Filter>
+    </None>
+    <None Include="include\PLCore\Xml\XmlDeclaration.inl">
+      <Filter>Xml</Filter>
+    </None>
+    <None Include="include\PLCore\Xml\XmlDocument.inl">
+      <Filter>Xml</Filter>
+    </None>
+    <None Include="include\PLCore\Xml\XmlElement.inl">
+      <Filter>Xml</Filter>
     </None>
   </ItemGroup>
 </Project>

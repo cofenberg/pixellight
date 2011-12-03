@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLCore/Log/Log.h"
-#include "PLCore/File/Url.h"
 #include "PLCore/File/File.h"
 #include "PLCore/File/Directory.h"
 #include "PLCore/File/FileSearch.h"
@@ -67,96 +66,6 @@ bool LoadableManager::HasInstance()
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the number of loadable types
-*/
-uint32 LoadableManager::GetNumOfTypes()
-{
-	RegisterClasses();
-	return m_lstTypes.GetNumOfElements();
-}
-
-/**
-*  @brief
-*    Returns a loadable type by using an index
-*/
-LoadableType *LoadableManager::GetTypeByIndex(uint32 nIndex)
-{
-	RegisterClasses();
-	return m_lstTypes.Get(nIndex);
-}
-
-/**
-*  @brief
-*    Returns a loadable type by using it's name
-*/
-LoadableType *LoadableManager::GetTypeByName(const String &sName)
-{
-	RegisterClasses();
-	return m_mapTypes.Get(sName);
-}
-
-/**
-*  @brief
-*    Returns a loadable type by using a loadable extension
-*/
-LoadableType *LoadableManager::GetTypeByExtension(const String &sExtension)
-{
-	RegisterClasses();
-	return m_mapTypesByExtension.Get(sExtension);
-}
-
-/**
-*  @brief
-*    Returns the number of loaders
-*/
-uint32 LoadableManager::GetNumOfLoaders()
-{
-	RegisterClasses();
-	return m_lstLoaders.GetNumOfElements();
-}
-
-/**
-*  @brief
-*    Returns a loader by using an index
-*/
-Loader *LoadableManager::GetLoaderByIndex(uint32 nIndex)
-{
-	RegisterClasses();
-	return m_lstLoaders.Get(nIndex);
-}
-
-/**
-*  @brief
-*    Returns a loader by using a extension
-*/
-Loader *LoadableManager::GetLoaderByExtension(const String &sExtension)
-{
-	RegisterClasses();
-	return m_mapLoaders.Get(sExtension);
-}
-
-/**
-*  @brief
-*    Returns the number of supported formats
-*/
-uint32 LoadableManager::GetNumOfFormats()
-{
-	RegisterClasses();
-	return m_lstFormats.GetNumOfElements();
-}
-
-/**
-*  @brief
-*    Returns a supported format
-*/
-String LoadableManager::GetFormat(uint32 nIndex)
-{
-	RegisterClasses();
-	return m_lstFormats.Get(nIndex);
-}
-
 /**
 *  @brief
 *    Returns whether loading is supported for the given format
@@ -203,25 +112,6 @@ bool LoadableManager::IsFormatSaveSupported(const String &sExtension, const Stri
 
 	// Saving is not supported for the given format
 	return false;
-}
-
-/**
-*  @brief
-*    Returns the number of base directories
-*/
-uint32 LoadableManager::GetNumOfBaseDirs() const
-{
-	return m_lstBaseDirs.GetNumOfElements();
-}
-
-/**
-*  @brief
-*    Returns one of the base directories
-*/
-String LoadableManager::GetBaseDir(uint32 nNum) const
-{
-	// Get directory
-	return m_lstBaseDirs[nNum];
 }
 
 /**
@@ -363,19 +253,6 @@ bool LoadableManager::RemoveBaseDir(uint32 nNum)
 
 	// Error!
 	return false;
-}
-
-/**
-*  @brief
-*    Removes all base directories
-*/
-bool LoadableManager::ClearBaseDirs()
-{
-	// Delete all base dirs
-	m_lstBaseDirs.Clear();
-
-	// Done
-	return true;
 }
 
 /**

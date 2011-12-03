@@ -41,28 +41,6 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the filename this loadable was given to loaded from
-*/
-String Loadable::GetFilename() const
-{
-	return m_sFilename;
-}
-
-/**
-*  @brief
-*    Returns the absolute filename this loadable was loaded from
-*/
-String Loadable::GetUrl() const
-{
-	return m_sUrl;
-}
-
-
-//[-------------------------------------------------------]
 //[ Public virtual Loadable functions                     ]
 //[-------------------------------------------------------]
 /**

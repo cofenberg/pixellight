@@ -77,7 +77,7 @@ class LoadableType {
 		*  @return
 		*    Name of the loadable type
 		*/
-		PLCORE_API String GetName() const;
+		inline String GetName() const;
 
 		/**
 		*  @brief
@@ -86,7 +86,7 @@ class LoadableType {
 		*  @return
 		*    Class of the loadable type
 		*/
-		PLCORE_API const Class &GetClass() const;
+		inline const Class &GetClass() const;
 
 		/**
 		*  @brief
@@ -115,7 +115,7 @@ class LoadableType {
 		*  @return
 		*    The number of supported formats
 		*/
-		PLCORE_API uint32 GetNumOfFormats() const;
+		inline uint32 GetNumOfFormats() const;
 
 		/**
 		*  @brief
@@ -127,7 +127,7 @@ class LoadableType {
 		*  @return
 		*    The requested supported format, empty string on error
 		*/
-		PLCORE_API String GetFormat(uint32 nIndex) const;
+		inline String GetFormat(uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -136,7 +136,7 @@ class LoadableType {
 		*  @return
 		*    The number of loaders
 		*/
-		PLCORE_API uint32 GetNumOfLoaders() const;
+		inline uint32 GetNumOfLoaders() const;
 
 		/**
 		*  @brief
@@ -148,7 +148,7 @@ class LoadableType {
 		*  @return
 		*    The requested loader, a null pointer on error
 		*/
-		PLCORE_API Loader *GetLoaderByIndex(uint32 nIndex) const;
+		inline Loader *GetLoaderByIndex(uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -160,7 +160,7 @@ class LoadableType {
 		*  @return
 		*    The requested loader (first found if there are multiple candidates), a null pointer on error (format is not supported)
 		*/
-		PLCORE_API Loader *GetLoaderByExtension(const String &sExtension) const;
+		inline Loader *GetLoaderByExtension(const String &sExtension) const;
 
 		/**
 		*  @brief
@@ -242,6 +242,12 @@ class LoadableType {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Tools/LoadableType.inl"
 
 
 #endif // __PLCORE_LOADABLETYPE_H__

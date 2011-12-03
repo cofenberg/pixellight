@@ -67,25 +67,6 @@ bool Localization::HasInstance()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the current language
-*/
-String Localization::GetLanguage() const
-{
-	return m_sLanguage;
-}
-
-/**
-*  @brief
-*    Sets the current language
-*/
-void Localization::SetLanguage(const String &sLanguage)
-{
-	// Just set the new language
-	m_sLanguage = sLanguage;
-}
-
-/**
-*  @brief
 *    Returns the translation of the given text
 */
 String Localization::Get(const String &sText, const String &sGroup) const
@@ -101,33 +82,6 @@ String Localization::Get(const String &sText, const String &sGroup) const
 
 	// Error! Return the given text instead...
 	return sText;
-}
-
-/**
-*  @brief
-*    Returns the number of groups
-*/
-uint32 Localization::GetNumOfGroups() const
-{
-	return m_lstGroups.GetNumOfElements();
-}
-
-/**
-*  @brief
-*    Returns a group by index
-*/
-LocalizationGroup *Localization::GetGroup(uint32 nIndex) const
-{
-	return m_lstGroups[nIndex];
-}
-
-/**
-*  @brief
-*    Returns a group by name
-*/
-LocalizationGroup *Localization::GetGroup(const String &sName) const
-{
-	return m_mapGroups.Get(sName);
 }
 
 /**

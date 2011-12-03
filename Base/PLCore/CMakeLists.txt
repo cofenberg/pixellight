@@ -144,7 +144,6 @@ add_sources(
 	src/Tools/Version.cpp
 	src/Tools/Wrapper.cpp
 	src/Tools/CommandLine.cpp
-	src/Tools/CommandLineOption.cpp
 	src/Tools/HTMLParser.cpp
 	src/Tools/Checksum.cpp
 	src/Tools/ChecksumCRC32.cpp

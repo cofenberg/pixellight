@@ -97,7 +97,7 @@ class XmlComment : public XmlNode {
 		*  @return
 		*    Reference to this instance
 		*/
-		PLCORE_API XmlComment &operator =(const XmlComment &cSource);
+		inline XmlComment &operator =(const XmlComment &cSource);
 
 
 	//[-------------------------------------------------------]
@@ -123,6 +123,12 @@ class XmlComment : public XmlNode {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Xml/XmlComment.inl"
 
 
 #endif // __PLCORE_XML_COMMENT_H__

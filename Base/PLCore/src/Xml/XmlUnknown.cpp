@@ -64,17 +64,6 @@ XmlUnknown::~XmlUnknown()
 {
 }
 
-/**
-*  @brief
-*    Copy operator
-*/
-XmlUnknown &XmlUnknown::operator =(const XmlUnknown &cSource)
-{
-	// Copy the value
-	SetValue(cSource.GetValue());
-	return *this;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public virtual XmlBase functions                      ]

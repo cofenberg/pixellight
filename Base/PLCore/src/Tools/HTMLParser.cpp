@@ -43,27 +43,6 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
-*/
-HTMLParser::HTMLParser() :
-	m_nPos(0),
-	m_pXML(nullptr),
-	m_nErrors(0)
-{
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-HTMLParser::~HTMLParser()
-{
-	// Destroy data
-	Clear();
-}
-
-/**
-*  @brief
 *    Clear all data
 */
 void HTMLParser::Clear()
@@ -110,26 +89,6 @@ void HTMLParser::Load(const String &sFilename)
 		// Parse file
 		Parse();
 	}
-}
-
-/**
-*  @brief
-*    Get parsed HTML as an XML document
-*/
-XmlDocument *HTMLParser::GetXML() const
-{
-	// Return HTML tree
-	return m_pXML;
-}
-
-/**
-*  @brief
-*    Get number of errors occurring while parsing the HTML file
-*/
-uint32 HTMLParser::GetNumOfErrors() const
-{
-	// Return number of errors
-	return m_nErrors;
 }
 
 
@@ -297,16 +256,6 @@ String HTMLParser::GetNextToken()
 
 	// Return token
 	return sToken;
-}
-
-/**
-*  @brief
-*    Returns whether or not the given string is a single tag (no closing tag required to be well-formed!)
-*/
-bool HTMLParser::IsSingleTag(const String &sTag) const
-{
-	// Identify known tokens that don't need a closing-tag
-	return (sTag == "img" || sTag == "br" || sTag == "hr");
 }
 
 

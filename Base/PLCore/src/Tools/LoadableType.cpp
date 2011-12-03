@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLCore/Log/Log.h"
-#include "PLCore/File/Url.h"
 #include "PLCore/File/File.h"
 #include "PLCore/System/System.h"
 #include "PLCore/Base/Class.h"
@@ -42,25 +41,6 @@ namespace PLCore {
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the name of the loadable type
-*/
-String LoadableType::GetName() const
-{
-	// Return description
-	return m_sName;
-}
-
-/**
-*  @brief
-*    Returns the class of the loadable type
-*/
-const Class &LoadableType::GetClass() const
-{
-	return *m_pClass;
-}
-
 /**
 *  @brief
 *    Gets the relative version of an absolute file path
@@ -98,51 +78,6 @@ String LoadableType::GetRelativeFilePath(const String &sPath) const
 //[-------------------------------------------------------]
 //[ Formats & loaders                                     ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the number of supported formats
-*/
-uint32 LoadableType::GetNumOfFormats() const
-{
-	return m_lstFormats.GetNumOfElements();
-}
-
-/**
-*  @brief
-*    Returns a supported formats
-*/
-String LoadableType::GetFormat(uint32 nIndex) const
-{
-	return m_lstFormats.Get(nIndex);
-}
-
-/**
-*  @brief
-*    Returns the number of loaders
-*/
-uint32 LoadableType::GetNumOfLoaders() const
-{
-	return m_lstLoaders.GetNumOfElements();
-}
-
-/**
-*  @brief
-*    Returns a loader by using an index
-*/
-Loader *LoadableType::GetLoaderByIndex(uint32 nIndex) const
-{
-	return m_lstLoaders.Get(nIndex);
-}
-
-/**
-*  @brief
-*    Returns a loader by using a loadable extension
-*/
-Loader *LoadableType::GetLoaderByExtension(const String &sExtension) const
-{
-	return m_mapLoaders.Get(sExtension);
-}
-
 /**
 *  @brief
 *    Returns a loader for loading by using a loadable file

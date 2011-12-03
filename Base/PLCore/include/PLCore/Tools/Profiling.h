@@ -76,7 +76,7 @@ class ProfileGroupElement : public Element<ProfileGroupElement> {
 		*  @return
 		*    Text of the element
 		*/
-		PLCORE_API String GetText() const;
+		inline String GetText() const;
 
 		/**
 		*  @brief
@@ -88,7 +88,7 @@ class ProfileGroupElement : public Element<ProfileGroupElement> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool SetText(const String &sText);
+		inline bool SetText(const String &sText);
 
 		/**
 		*  @brief
@@ -100,7 +100,7 @@ class ProfileGroupElement : public Element<ProfileGroupElement> {
 		*  @return
 		*    Reference to this instance
 		*/
-		PLCORE_API ProfileGroupElement &operator =(const ProfileGroupElement &cSource);
+		inline ProfileGroupElement &operator =(const ProfileGroupElement &cSource);
 
 
 	//[-------------------------------------------------------]
@@ -167,7 +167,7 @@ class ProfileGroup : public Element<ProfileGroup>, public ElementManager<Profile
 		*  @return
 		*    Text of the element group
 		*/
-		PLCORE_API String GetText() const;
+		inline String GetText() const;
 
 		/**
 		*  @brief
@@ -179,7 +179,7 @@ class ProfileGroup : public Element<ProfileGroup>, public ElementManager<Profile
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool SetText(const String &sText);
+		inline bool SetText(const String &sText);
 
 		/**
 		*  @brief
@@ -191,7 +191,7 @@ class ProfileGroup : public Element<ProfileGroup>, public ElementManager<Profile
 		*  @return
 		*    Reference to this instance
 		*/
-		PLCORE_API ProfileGroup &operator =(const ProfileGroup &cSource);
+		inline ProfileGroup &operator =(const ProfileGroup &cSource);
 
 
 	//[-------------------------------------------------------]
@@ -295,7 +295,7 @@ class Profiling : public ElementManager<ProfileGroup>, public Singleton<Profilin
 		*    - If the profiling system is active the current profile group
 		*      information will be shown automatically
 		*/
-		PLCORE_API bool IsActive() const;
+		inline bool IsActive() const;
 
 		/**
 		*  @brief
@@ -304,7 +304,7 @@ class Profiling : public ElementManager<ProfileGroup>, public Singleton<Profilin
 		*  @param[in] bActive
 		*    Should the profiling system be active?
 		*/
-		PLCORE_API void SetActive(bool bActive = false);
+		inline void SetActive(bool bActive = false);
 
 		/**
 		*  @brief
@@ -313,7 +313,7 @@ class Profiling : public ElementManager<ProfileGroup>, public Singleton<Profilin
 		*  @return
 		*    Name of the current selected profile group
 		*/
-		PLCORE_API String GetSelectedGroup() const;
+		inline String GetSelectedGroup() const;
 
 		/**
 		*  @brief
@@ -444,6 +444,12 @@ class Profiling : public ElementManager<ProfileGroup>, public Singleton<Profilin
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Tools/Profiling.inl"
 
 
 #endif // __PLCORE_PROFILING_H__

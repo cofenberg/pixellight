@@ -90,24 +90,6 @@ XmlText &XmlText::operator =(const XmlText &cSource)
 	return *this;
 }
 
-/**
-*  @brief
-*    Queries whether this represents text using a CDATA section
-*/
-bool XmlText::IsCDATA() const
-{
-	return m_bCDATA;
-}
-
-/**
-*  @brief
-*    Turns on or off a CDATA representation of text
-*/
-void XmlText::SetCDATA(bool bCDATA)
-{
-	m_bCDATA = bCDATA;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public virtual XmlBase functions                      ]
