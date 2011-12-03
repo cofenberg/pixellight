@@ -40,6 +40,7 @@ set(LINUX_COMPILE_DEFS
 	PIC												# Position-independent code
 	_REENTRANT										# Reentrant code
 	ARCHITECTURE_STRING="${CMAKETOOLS_TARGET_ARCH}"	# Set target architecture so e.g. "PLCore::System::GetPlatformArchitecture()" is able to return the exact architecture it was compiled for
+	ARCHITEXTUREANDBITSIZE_STRING="${CMAKETOOLS_TARGET_ARCHBITSIZE}"
 )
 
 if((NOT CMAKETOOLS_TARGET_BITSIZE MATCHES 32) AND (CMAKE_SIZEOF_VOID_P MATCHES 8))

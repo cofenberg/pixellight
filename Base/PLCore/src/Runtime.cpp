@@ -221,18 +221,24 @@ String Runtime::GetRegistryDirectory()
 			String sSubkey = "SOFTWARE\\PixelLight\\PixelLight-SDK" + sSuffix;
 			if (cRegistry.Open(Registry::KeyLocalMachine, sSubkey, Registry::RegRead)) {
 				const String sRuntime = cRegistry.GetValueString("Runtime");
-				if (sRuntime.GetLength())
-					//convert to valid url
-					return Url(sRuntime).GetUrl(); // Done
+				if (sRuntime.GetLength()) {
+					Directory cDirectory(sRuntime);
+					if (cDirectory.Exists() && cDirectory.IsDirectory())
+						//convert to valid url
+						return Url(sRuntime).GetUrl(); // Done
+				}
 			}
 
 			// Read registry key "PixelLight-Runtime" ("SOFTWARE\\Wow6432Node\\PixelLight\\PixelLight-Runtime" on a 64 bit version and 32 bit application)
 			sSubkey = "SOFTWARE\\PixelLight\\PixelLight-Runtime" + sSuffix;
 			if (cRegistry.Open(Registry::KeyLocalMachine, sSubkey, Registry::RegRead)) {
 				const String sRuntime = cRegistry.GetValueString("Runtime");
-				if (sRuntime.GetLength())
-					//Convert the valid url
-					return Url(sRuntime).GetUrl(); // Done
+				if (sRuntime.GetLength()) {
+					Directory cDirectory(sRuntime);
+					if (cDirectory.Exists() && cDirectory.IsDirectory())
+						//convert to valid url
+						return Url(sRuntime).GetUrl(); // Done
+				}
 			}
 		}
 
@@ -248,19 +254,39 @@ String Runtime::GetRegistryDirectory()
 		// Check if a local pixellight runtime is specified in the environment variable PL_RUNTIME
 		const String sRuntime = System::GetInstance()->GetEnvironmentVariable("PL_RUNTIME");
 		if (sRuntime.GetLength() > 0) {
-			// Use local runtime
-			return sRuntime;
+			Directory cDirectory(sRuntime);
+			if (cDirectory.Exists() && cDirectory.IsDirectory())
+				// Use local runtime
+				return sRuntime;
 		}
 
-		// Let's first check if a local installation is present in '/usr/local/share/pixellight/Runtime'.
-		// If it is, we will use that
-		Directory cDirectory("/usr/local/share/pixellight/Runtime");
-		if (cDirectory.Exists() && cDirectory.IsDirectory())
-			return "/usr/local/share/pixellight/Runtime";
+		{
+			// Let's first check if a local installation is present in '/usr/local/share/pixellight/Runtime/<architecture>'.
+			// If it is, we will use that
+			String sLocalShareDir = "/usr/local/share/pixellight/Runtime";
+			#ifdef ARCHITEXTUREANDBITSIZE_STRING
+			sLocalShareDir += '/';
+			sLocalShareDir += ARCHITEXTUREANDBITSIZE_STRING;
+			#endif
+			Directory cDirectory(sLocalShareDir);
+			if (cDirectory.Exists() && cDirectory.IsDirectory())
+				return sLocalShareDir;
+		}
+		{
+			// Let's check for the global installation in '/usr/share/pixellight/Runtime/<architecture>'
+			// If it is, we will use that
+			String sShareDir = "/usr/share/pixellight/Runtime";
 
-		// Otherwise, we will use a global installation in '/usr/share/pixellight/Runtime'
-		// For now, just return a static path
-		return "/usr/share/pixellight/Runtime";
+			#ifdef ARCHITEXTUREANDBITSIZE_STRING
+			sShareDir += '/';
+			sShareDir += ARCHITEXTUREANDBITSIZE_STRING;
+			#endif
+			Directory cDirectory(sShareDir);
+			if (cDirectory.Exists() && cDirectory.IsDirectory())
+				return sShareDir;
+		}
+		// No "local" or global installation found 
+		return "";
 	#endif
 }
 

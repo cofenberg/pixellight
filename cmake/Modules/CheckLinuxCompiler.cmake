@@ -54,6 +54,7 @@ endmacro(cmaketools_check_cxx_visibility_flag)
 ## Macro: Check if GCC C++0x flag is available
 ##################################################
 macro(cmaketools_check_cxx_cpp0x_flag var)
+message(STATUS "check compiler has C++0x flag")
 	set(SAFE_CMAKE_REQUIRED_DEFINITIONS "${CMAKE_REQUIRED_DEFINITIONS}")
 	set(CMAKE_REQUIRED_DEFINITIONS "-std=c++0x")
 	set(CODE "void testfunc(void *pointer){} int main() {testfunc(nullptr);return 0;}")

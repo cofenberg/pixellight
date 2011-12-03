@@ -1,3 +1,11 @@
+>> 03.12.2011
+[SW]
+- The GetRegistryDirectory Method checks if the path read from the "registry" exists and returns an empty string if not.
+  Under linux added ARCHITEXTUREANDBITSIZE_STRING define which holds the architecture and bitsize string (e.g. x86 for 32bit x86 code or x64 for 64bit x86 code).
+  The string from this define gets appended to the standard install paths of pixellight.
+
+
+
 >> 26.11.2011
 [CO]
 - As feared yesterday, my "Socket::GetNumOfWaitingBytes()"-method wasn't really correct. As mentioned, my network topic experience is near to zero and to be honest,
