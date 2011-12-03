@@ -69,36 +69,6 @@ Buffer::Buffer(const Buffer &cSource) :
 
 /**
 *  @brief
-*    Destructor
-*/
-Buffer::~Buffer()
-{
-	// Destroy buffer
-	Clear();
-}
-
-/**
-*  @brief
-*    Get option for removing line delimiters
-*/
-bool Buffer::GetRemoveLineDelimiters() const
-{
-	// Return option
-	return m_bRemoveDelimiters;
-}
-
-/**
-*  @brief
-*    Set option for removing line delimiters
-*/
-void Buffer::SetRemoveLineDelimiters(bool bRemoveDelimiters)
-{
-	// Set option
-	m_bRemoveDelimiters = bRemoveDelimiters;
-}
-
-/**
-*  @brief
 *    Clear buffer
 */
 void Buffer::Clear()
@@ -129,16 +99,6 @@ void Buffer::Allocate(uint32 nSize)
 		m_pBuffer = new char[nSize];
 		m_nSize   = nSize;
 	}
-}
-
-/**
-*  @brief
-*    Get current buffer size
-*/
-uint32 Buffer::GetSize() const
-{
-	// Return size
-	return m_nSize;
 }
 
 /**
@@ -227,26 +187,6 @@ Buffer &Buffer::operator =(const Buffer &cSource)
 
 	// Return this instance
 	return *this;
-}
-
-/**
-*  @brief
-*    Get data
-*/
-const char *Buffer::GetData() const
-{
-	// Return data pointer
-	return m_pBuffer;
-}
-
-/**
-*  @brief
-*    Get data
-*/
-char *Buffer::GetData()
-{
-	// Return data pointer
-	return m_pBuffer;
 }
 
 

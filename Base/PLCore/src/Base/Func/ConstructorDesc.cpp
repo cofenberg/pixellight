@@ -63,26 +63,6 @@ void ConstructorDesc::Dummy()
 	// This method is just here to ensure, that the compiler will actually create static instances
 }
 
-/**
-*  @brief
-*    Get signature
-*/
-String ConstructorDesc::GetSignature() const
-{
-	// Return signature
-	return m_sSignature;
-}
-
-/**
-*  @brief
-*    Check if this is a default constructor
-*/
-bool ConstructorDesc::IsDefaultConstructor() const
-{
-	// Check if signature is Object*()
-	return (m_sSignature == "Object*()");
-}
-
 
 //[-------------------------------------------------------]
 //[ Public virtual ConstructorDesc functions              ]

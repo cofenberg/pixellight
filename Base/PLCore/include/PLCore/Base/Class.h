@@ -86,7 +86,7 @@ class Class {
 		*  @return
 		*    Module (always valid, do not destroy the returned instance!)
 		*/
-		PLCORE_API const Module *GetModule() const;
+		inline const Module *GetModule() const;
 
 		/**
 		*  @brief
@@ -95,7 +95,7 @@ class Class {
 		*  @return
 		*    Name of class and namespace
 		*/
-		PLCORE_API String GetClassName() const;
+		inline String GetClassName() const;
 
 		/**
 		*  @brief
@@ -104,7 +104,7 @@ class Class {
 		*  @return
 		*    Name of base class and namespace
 		*/
-		PLCORE_API String GetBaseClassName() const;
+		inline String GetBaseClassName() const;
 
 		/**
 		*  @brief
@@ -113,7 +113,7 @@ class Class {
 		*  @return
 		*    Name of class
 		*/
-		PLCORE_API String GetName() const;
+		inline String GetName() const;
 
 		/**
 		*  @brief
@@ -122,7 +122,7 @@ class Class {
 		*  @return
 		*    Description
 		*/
-		PLCORE_API String GetDescription() const;
+		inline String GetDescription() const;
 
 		/**
 		*  @brief
@@ -131,7 +131,7 @@ class Class {
 		*  @return
 		*    Namespace
 		*/
-		PLCORE_API String GetNamespace() const;
+		inline String GetNamespace() const;
 
 		/**
 		*  @brief
@@ -140,7 +140,7 @@ class Class {
 		*  @return
 		*    Pointer to base class (can be a null pointer, do not destroy the returned instance!)
 		*/
-		PLCORE_API const Class *GetBaseClass() const;
+		inline const Class *GetBaseClass() const;
 
 		/**
 		*  @brief
@@ -152,7 +152,7 @@ class Class {
 		*  @return
 		*    'true' if class is derived from given base class, else 'false'
 		*/
-		PLCORE_API bool IsDerivedFrom(const Class &cBaseClass) const;
+		inline bool IsDerivedFrom(const Class &cBaseClass) const;
 
 		/**
 		*  @brief
@@ -164,7 +164,7 @@ class Class {
 		*  @return
 		*    'true' if class is derived from given base class, else 'false'
 		*/
-		PLCORE_API bool IsDerivedFrom(const String &sBaseClass) const;
+		inline bool IsDerivedFrom(const String &sBaseClass) const;
 
 		/**
 		*  @brief
@@ -193,7 +193,7 @@ class Class {
 		*      "PluginType"  -> "Widget"
 		*      "FileFormats" -> "avi mpg mp4"
 		*/
-		PLCORE_API const HashMap<String, String> &GetProperties() const;
+		inline const HashMap<String, String> &GetProperties() const;
 
 		/**
 		*  @brief
@@ -202,7 +202,7 @@ class Class {
 		*  @return
 		*    List of attribute descriptors, do not destroy the returned instances!
 		*/
-		PLCORE_API const List<VarDesc*> &GetAttributes() const;
+		inline const List<VarDesc*> &GetAttributes() const;
 
 		/**
 		*  @brief
@@ -214,7 +214,7 @@ class Class {
 		*  @return
 		*    Attribute descriptor (can be a null pointer, if no member with that name could be found, do not destroy the returned instance!)
 		*/
-		PLCORE_API const VarDesc *GetAttribute(const String &sName) const;
+		inline const VarDesc *GetAttribute(const String &sName) const;
 
 		/**
 		*  @brief
@@ -223,7 +223,7 @@ class Class {
 		*  @return
 		*    List of method descriptors, do not destroy the returned instances!
 		*/
-		PLCORE_API const List<FuncDesc*> &GetMethods() const;
+		inline const List<FuncDesc*> &GetMethods() const;
 
 		/**
 		*  @brief
@@ -235,7 +235,7 @@ class Class {
 		*  @return
 		*    Method descriptor (can be a null pointer, if no member with that name could be found, do not destroy the returned instance!)
 		*/
-		PLCORE_API const FuncDesc *GetMethod(const String &sName) const;
+		inline const FuncDesc *GetMethod(const String &sName) const;
 
 		/**
 		*  @brief
@@ -244,7 +244,7 @@ class Class {
 		*  @return
 		*    List of signal descriptors, do not destroy the returned instances!
 		*/
-		PLCORE_API const List<EventDesc*> &GetSignals() const;
+		inline const List<EventDesc*> &GetSignals() const;
 
 		/**
 		*  @brief
@@ -256,7 +256,7 @@ class Class {
 		*  @return
 		*    Signal descriptor (can be a null pointer, if no member with that name could be found, do not destroy the returned instance!)
 		*/
-		PLCORE_API const EventDesc *GetSignal(const String &sName) const;
+		inline const EventDesc *GetSignal(const String &sName) const;
 
 		/**
 		*  @brief
@@ -265,7 +265,7 @@ class Class {
 		*  @return
 		*    List of slot descriptors, do not destroy the returned instances!
 		*/
-		PLCORE_API const List<EventHandlerDesc*> &GetSlots() const;
+		inline const List<EventHandlerDesc*> &GetSlots() const;
 
 		/**
 		*  @brief
@@ -277,7 +277,7 @@ class Class {
 		*  @return
 		*    Slot descriptor (can be a null pointer, if no member with that name could be found, do not destroy the returned instance!)
 		*/
-		PLCORE_API const EventHandlerDesc *GetSlot(const String &sName) const;
+		inline const EventHandlerDesc *GetSlot(const String &sName) const;
 
 		/**
 		*  @brief
@@ -286,7 +286,7 @@ class Class {
 		*  @return
 		*    'true' if class has at least one constructor, else 'false'
 		*/
-		PLCORE_API bool HasConstructor() const;
+		inline bool HasConstructor() const;
 
 		/**
 		*  @brief
@@ -295,7 +295,7 @@ class Class {
 		*  @return
 		*    'true' if class has a default constructor, else 'false'
 		*/
-		PLCORE_API bool HasDefaultConstructor() const;
+		inline bool HasDefaultConstructor() const;
 
 		/**
 		*  @brief
@@ -304,7 +304,7 @@ class Class {
 		*  @return
 		*    List of constructor descriptors, do not destroy the returned instances!
 		*/
-		PLCORE_API const List<ConstructorDesc*> &GetConstructors() const;
+		inline const List<ConstructorDesc*> &GetConstructors() const;
 
 		/**
 		*  @brief
@@ -316,7 +316,7 @@ class Class {
 		*  @return
 		*    Constructor descriptor (can be a null pointer, if no member with that name could be found, do not destroy the returned instance!)
 		*/
-		PLCORE_API const ConstructorDesc *GetConstructor(const String &sName) const;
+		inline const ConstructorDesc *GetConstructor(const String &sName) const;
 
 		/**
 		*  @brief
@@ -329,7 +329,7 @@ class Class {
 		*    This function will call the default constructor of the class.
 		*    If the class has no default constructor, the function will fail and return a null pointer.
 		*/
-		PLCORE_API Object *Create() const;
+		inline Object *Create() const;
 
 		/**
 		*  @brief
@@ -345,7 +345,7 @@ class Class {
 		*    This function will search for a constructor that matches the signature of the given parameters.
 		*    If no such constructor can be found, the function will fail and return a null pointer.
 		*/
-		PLCORE_API Object *Create(const DynParams &cParams) const;
+		inline Object *Create(const DynParams &cParams) const;
 
 		/**
 		*  @brief
@@ -363,7 +363,7 @@ class Class {
 		*    This function will search for a constructor with the specified name. If no such constructor can be found, or
 		*    the given parameters do not match the signature of the constructor, the function will fail and return a null pointer.
 		*/
-		PLCORE_API Object *Create(const String &sName, const DynParams &cParams) const;
+		inline Object *Create(const String &sName, const DynParams &cParams) const;
 
 		/**
 		*  @brief
@@ -381,7 +381,7 @@ class Class {
 		*    This function will search for a constructor with the specified name. If no such constructor can be found,
 		*    the function will fail and return a null pointer.
 		*/
-		PLCORE_API Object *Create(const String &sName, const String &sParams) const;
+		inline Object *Create(const String &sName, const String &sParams) const;
 
 
 	//[-------------------------------------------------------]
@@ -439,6 +439,12 @@ class Class {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Base/Class.inl"
 
 
 #endif // __PLCORE_CLASS_H__

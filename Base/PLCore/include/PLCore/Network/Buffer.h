@@ -77,7 +77,7 @@ class Buffer {
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API ~Buffer();
+		inline ~Buffer();
 
 		/**
 		*  @brief
@@ -86,7 +86,7 @@ class Buffer {
 		*  @return
 		*    'true' if line delimiters shall be removed, else 'false'
 		*/
-		PLCORE_API bool GetRemoveLineDelimiters() const;
+		inline bool GetRemoveLineDelimiters() const;
 
 		/**
 		*  @brief
@@ -95,7 +95,7 @@ class Buffer {
 		*  @param[in] bRemoveDelimiters
 		*    'true' if line delimiters shall be removed, else 'false'
 		*/
-		PLCORE_API void SetRemoveLineDelimiters(bool bRemoveDelimiters);
+		inline void SetRemoveLineDelimiters(bool bRemoveDelimiters);
 
 		/**
 		*  @brief
@@ -119,7 +119,7 @@ class Buffer {
 		*  @return
 		*    The current buffer size in bytes
 		*/
-		PLCORE_API uint32 GetSize() const;
+		inline uint32 GetSize() const;
 
 		/**
 		*  @brief
@@ -164,7 +164,7 @@ class Buffer {
 		*  @return
 		*    Pointer to buffer
 		*/
-		PLCORE_API const char *GetData() const;
+		inline const char *GetData() const;
 
 		/**
 		*  @brief
@@ -173,7 +173,7 @@ class Buffer {
 		*  @return
 		*    Pointer to buffer
 		*/
-		PLCORE_API char *GetData();
+		inline char *GetData();
 
 
 	//[-------------------------------------------------------]
@@ -193,6 +193,12 @@ class Buffer {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Network/Buffer.inl"
 
 
 #endif // __PLCORE_BUFFER_H__

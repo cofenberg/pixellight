@@ -99,7 +99,7 @@ class EventDesc : public MemberDesc {
 		*  @return
 		*    Signature
 		*/
-		PLCORE_API String GetSignature() const;
+		inline String GetSignature() const;
 
 
 	//[-------------------------------------------------------]
@@ -133,6 +133,12 @@ class EventDesc : public MemberDesc {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Base/Event/EventDesc.inl"
 
 
 #endif // __PLCORE_EVENTDESC_H__

@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/String/String.h"
 #include "PLCore/String/StringBufferManager.h"
 
 
@@ -62,7 +61,7 @@ class StringBuffer {
 	//[ Protected static data                                 ]
 	//[-------------------------------------------------------]
 	protected:
-		static StringBufferManager Manager;	/**< String buffer manager */
+		static PLCORE_API StringBufferManager Manager;	/**< String buffer manager */
 
 
 	//[-------------------------------------------------------]
@@ -93,7 +92,7 @@ class StringBuffer {
 		*  @return
 		*    Length of the string buffer, NEVER 0!
 		*/
-		uint32 GetLength() const;
+		PLCORE_API uint32 GetLength() const;
 
 		/**
 		*  @brief
@@ -132,9 +131,9 @@ class StringBuffer {
 		*    Returns the internal string format
 		*
 		*  @return
-		*    Internal string format
+		*    Internal string format (type: "String::EFormat")
 		*/
-		virtual String::EFormat GetFormat() const = 0;
+		virtual uint32 GetFormat() const = 0;
 
 		/**
 		*  @brief

@@ -73,62 +73,6 @@ void LogFormatterHtml::SetTextFormat(uint8 nLogLevel, const String &sFormat)
 	}
 }
 
-/**
-*  @brief
-*    This text gets printed to the log when the log is opened
-*/
-void LogFormatterHtml::SetHeader(const String &sHeader)
-{
-	m_sHeader = sHeader;
-}
-
-/**
-*  @brief
-*    Sets the title of the log
-*/
-void LogFormatterHtml::SetTitle(const String &sTitle)
-{
-	m_sTitle = sTitle;
-}
-
-/**
-*  @brief
-*    Sets the Background for the HTML document either a color or a image
-*/
-void LogFormatterHtml::SetBackground(const String &sBackground)
-{
-	m_sBackground = sBackground;
-}
-
-/**
-*  @brief
-*    Sets the default text color
-*/
-void LogFormatterHtml::SetDefaultTextColor(const String &sColor)
-{
-	if (sColor.GetLength() > 0)
-		m_sDefaultTextColor = sColor;
-}
-
-/**
-*  @brief
-*    Sets the default text format string
-*/
-void LogFormatterHtml::SetDefaultTextFormat(const String &sFormat)
-{
-	if (sFormat.GetLength() > 0)
-		m_sDefaultTextFormat = sFormat;
-}
-
-/**
-*  @brief
-*    This text gets printed to the log before the log gets closed
-*/
-void LogFormatterHtml::SetFooter(const String &sFooter)
-{
-	m_sFooter = sFooter;
-}
-
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
@@ -268,7 +212,7 @@ bool LogFormatterHtml::Output(uint8 nLogLevel, const String &sText)
 
 bool LogFormatterHtml::Flush()
 {
-	return m_pFile && m_pFile->Flush();
+	return (m_pFile && m_pFile->Flush());
 }
 
 

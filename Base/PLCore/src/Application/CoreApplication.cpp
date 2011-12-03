@@ -57,20 +57,6 @@ CoreApplication *CoreApplication::g_pApplication = nullptr;	/**< Pointer to the 
 
 
 //[-------------------------------------------------------]
-//[ Public static functions                               ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Get pointer to current application
-*/
-CoreApplication *CoreApplication::GetApplication()
-{
-	// Return global application pointer
-	return g_pApplication;
-}
-
-
-//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -120,26 +106,6 @@ CoreApplication::~CoreApplication()
 
 /**
 *  @brief
-*    Get application context
-*/
-const ApplicationContext &CoreApplication::GetApplicationContext() const
-{
-	// Return application context
-	return m_cApplicationContext;
-}
-
-/**
-*  @brief
-*    Get application name
-*/
-String CoreApplication::GetName() const
-{
-	// Return name
-	return m_sName;
-}
-
-/**
-*  @brief
 *    Set application name
 */
 void CoreApplication::SetName(const String &sName)
@@ -152,159 +118,6 @@ void CoreApplication::SetName(const String &sName)
 
 	// Set new name
 	m_sName = sName;
-}
-
-/**
-*  @brief
-*    Get application title
-*/
-String CoreApplication::GetTitle() const
-{
-	// Return title
-	return m_sTitle;
-}
-
-/**
-*  @brief
-*    Set application title
-*/
-void CoreApplication::SetTitle(const String &sTitle)
-{
-	// Set title
-	m_sTitle = sTitle;
-}
-
-/**
-*  @brief
-*    Get version of application
-*/
-const Version &CoreApplication::GetVersion() const
-{
-	// Return version
-	return m_cVersion;
-}
-
-/**
-*  @brief
-*    Set version of application
-*/
-void CoreApplication::SetVersion(const Version &cVersion)
-{
-	// Set version
-	m_cVersion = cVersion;
-}
-
-/**
-*  @brief
-*    Check if application uses multi-user environment
-*/
-bool CoreApplication::GetMultiUser() const
-{
-	// Return multi-user flag
-	return m_bMultiUser;
-}
-
-/**
-*  @brief
-*    Set if application uses multi-user environment
-*/
-void CoreApplication::SetMultiUser(bool bMultiUser)
-{
-	// Set multi-user flag
-	m_bMultiUser = bMultiUser;
-}
-
-/**
-*  @brief
-*    Get name of config file
-*/
-String CoreApplication::GetConfigName() const
-{
-	// Return config name
-	return m_sConfigName;
-}
-
-/**
-*  @brief
-*    Set name of config file
-*/
-void CoreApplication::SetConfigName(const String &sConfigName)
-{
-	// Set config name
-	m_sConfigName = sConfigName;
-}
-
-/**
-*  @brief
-*    Get name of log file
-*/
-String CoreApplication::GetLogName() const
-{
-	// Return log name
-	return m_sLogName;
-}
-
-/**
-*  @brief
-*    Set name of log file
-*/
-void CoreApplication::SetLogName(const String &sLogName)
-{
-	// Set log name
-	m_sLogName = sLogName;
-}
-
-/**
-*  @brief
-*    Get subdirectory for application data files
-*/
-String CoreApplication::GetAppDataSubdir() const
-{
-	// Return application data subdirectory
-	return m_sAppDataSubdir;
-}
-
-/**
-*  @brief
-*    Set subdirectory for application data files
-*/
-void CoreApplication::SetAppDataSubdir(const String &sSubdir)
-{
-	// Set application data subdirectory
-	m_sAppDataSubdir = sSubdir;
-}
-
-/**
-*  @brief
-*    Returns the configuration instance
-*/
-Config &CoreApplication::GetConfig()
-{
-	// Return config
-	return m_cConfig;
-}
-
-/**
-*  @brief
-*    Returns whether or not the application is currently running
-*/
-bool CoreApplication::IsRunning() const
-{
-	// Set config
-	return m_bRunning;
-}
-
-/**
-*  @brief
-*    Exit application
-*/
-void CoreApplication::Exit(int nResult)
-{
-	// Set result
-	m_nResult = nResult;
-
-	// Stop application
-	m_bRunning = false;
 }
 
 /**

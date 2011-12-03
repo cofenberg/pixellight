@@ -116,7 +116,7 @@ class DynEvent : public DynSignature {
 		*    - Don't use this method within performance critical situations because due internal
 		*      implementation, this request has a linear, not constant runtime!
 		*/
-		PLCORE_API uint32 GetNumOfConnects() const;
+		inline uint32 GetNumOfConnects() const;
 
 
 	//[-------------------------------------------------------]
@@ -202,6 +202,12 @@ class DynEvent : public DynSignature {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Base/Event/DynEvent.inl"
 
 
 #endif // __PLCORE_DYNEVENT_H__

@@ -114,14 +114,14 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*    to use two or more Application instances after each other, you should *never*
 		*    use more than one Application instance at a time!
 		*/
-		static PLCORE_API CoreApplication *GetApplication();
+		static inline CoreApplication *GetApplication();
 
 
 	//[-------------------------------------------------------]
 	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
 	private:
-		static CoreApplication *g_pApplication;		/**< Pointer to the current application instance */
+		static PLCORE_API CoreApplication *g_pApplication;	/**< Pointer to the current application instance */
 
 
 	//[-------------------------------------------------------]
@@ -147,7 +147,7 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*  @return
 		*    Application context
 		*/
-		PLCORE_API const ApplicationContext &GetApplicationContext() const;
+		inline const ApplicationContext &GetApplicationContext() const;
 
 		/**
 		*  @brief
@@ -156,7 +156,7 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*  @return
 		*    Name of the application
 		*/
-		PLCORE_API String GetName() const;
+		inline String GetName() const;
 
 		/**
 		*  @brief
@@ -174,7 +174,7 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*  @return
 		*    Title of the application
 		*/
-		PLCORE_API String GetTitle() const;
+		inline String GetTitle() const;
 
 		/**
 		*  @brief
@@ -183,7 +183,7 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*  @param[in] sTitle
 		*    Title of the application
 		*/
-		PLCORE_API void SetTitle(const String &sTitle);
+		inline void SetTitle(const String &sTitle);
 
 		/**
 		*  @brief
@@ -192,7 +192,7 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*  @return
 		*    Version of the program
 		*/
-		PLCORE_API const Version &GetVersion() const;
+		inline const Version &GetVersion() const;
 
 		/**
 		*  @brief
@@ -201,7 +201,7 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*  @param[in] cVersion
 		*    Version of the program
 		*/
-		PLCORE_API void SetVersion(const Version &cVersion);
+		inline void SetVersion(const Version &cVersion);
 
 		/**
 		*  @brief
@@ -210,7 +210,7 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*  @return
 		*    'true' if multi-user environment is used, else 'false'
 		*/
-		PLCORE_API bool GetMultiUser() const;
+		inline bool GetMultiUser() const;
 
 		/**
 		*  @brief
@@ -223,7 +223,7 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*    By default, multi-user environment is used.
 		*    If on, e.g. config and log files are loaded and saved in the user directory
 		*/
-		PLCORE_API void SetMultiUser(bool bMultiUser);
+		inline void SetMultiUser(bool bMultiUser);
 
 		/**
 		*  @brief
@@ -232,7 +232,7 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*  @return
 		*    Config filename (only filename, not a path!)
 		*/
-		PLCORE_API String GetConfigName() const;
+		inline String GetConfigName() const;
 
 		/**
 		*  @brief
@@ -244,7 +244,7 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*  @remarks
 		*    Default is "<appname>.cfg"
 		*/
-		PLCORE_API void SetConfigName(const String &sConfigName);
+		inline void SetConfigName(const String &sConfigName);
 
 		/**
 		*  @brief
@@ -253,7 +253,7 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*  @return
 		*    Log filename (only filename, not a path!)
 		*/
-		PLCORE_API String GetLogName() const;
+		inline String GetLogName() const;
 
 		/**
 		*  @brief
@@ -265,7 +265,7 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*  @remarks
 		*    Default is "<appname>.log"
 		*/
-		PLCORE_API void SetLogName(const String &sLogName);
+		inline void SetLogName(const String &sLogName);
 
 		/**
 		*  @brief
@@ -274,7 +274,7 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*  @return
 		*    Subdirectory (relative path)
 		*/
-		PLCORE_API String GetAppDataSubdir() const;
+		inline String GetAppDataSubdir() const;
 
 		/**
 		*  @brief
@@ -289,7 +289,7 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*    into the typical style for the used OS. Example:
 		*      SetAppDataSubdir(System::GetInstance()->GetDataDirName("MyApplication"))
 		*/
-		PLCORE_API void SetAppDataSubdir(const String &sSubdir);
+		inline void SetAppDataSubdir(const String &sSubdir);
 
 		/**
 		*  @brief
@@ -298,7 +298,7 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*  @return
 		*    The configuration instance
 		*/
-		PLCORE_API Config &GetConfig();
+		inline Config &GetConfig();
 
 		/**
 		*  @brief
@@ -307,7 +307,7 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*  @return
 		*    'true' if the application is currently running, else 'false'
 		*/
-		PLCORE_API bool IsRunning() const;
+		inline bool IsRunning() const;
 
 		/**
 		*  @brief
@@ -320,7 +320,7 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*    This will set the application return code and set m_bRunning to 'false', so that the application
 		*    should exit as soon as possible. To immediately terminate the execution, use System::Exit()
 		*/
-		PLCORE_API void Exit(int nResult);
+		inline void Exit(int nResult);
 
 		/**
 		*  @brief
@@ -640,6 +640,12 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Application/CoreApplication.inl"
 
 
 #endif // __PLCORE_CONSOLE_APPLICATION_H__

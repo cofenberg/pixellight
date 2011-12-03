@@ -83,7 +83,7 @@ class FrontendContext : public ApplicationContext {
 		*    The name of the frontend executable (one can also call it "host", the running executable) is
 		*    used as default whenever a name is required (log, configuration, window title and so on).
 		*/
-		PLCORE_API String GetName() const;
+		inline String GetName() const;
 
 		/**
 		*  @brief
@@ -95,7 +95,7 @@ class FrontendContext : public ApplicationContext {
 		*  @see
 		*    - GetName()
 		*/
-		PLCORE_API void SetName(const String &sName);
+		inline void SetName(const String &sName);
 
 		/**
 		*  @brief
@@ -104,7 +104,7 @@ class FrontendContext : public ApplicationContext {
 		*  @return
 		*    The name of the frontend RTTI class to use (default: "PLCore::FrontendPixelLight")
 		*/
-		PLCORE_API String GetFrontend() const;
+		inline String GetFrontend() const;
 
 		/**
 		*  @brief
@@ -113,7 +113,7 @@ class FrontendContext : public ApplicationContext {
 		*  @param[in] sFrontend
 		*    The name of the frontend RTTI class to use (default: "PLCore::FrontendPixelLight")
 		*/
-		PLCORE_API void SetFrontend(const String &sFrontend);
+		inline void SetFrontend(const String &sFrontend);
 
 		/**
 		*  @brief
@@ -122,7 +122,7 @@ class FrontendContext : public ApplicationContext {
 		*  @return
 		*    The name of the frontend RTTI class constructor to use (default: "")
 		*/
-		PLCORE_API String GetFrontendConstructor() const;
+		inline String GetFrontendConstructor() const;
 
 		/**
 		*  @brief
@@ -131,7 +131,7 @@ class FrontendContext : public ApplicationContext {
 		*  @param[in]
 		*    The name of the frontend RTTI class constructor to use (default: "")
 		*/
-		PLCORE_API void SetFrontendConstructor(const String &sFrontendConstructor);
+		inline void SetFrontendConstructor(const String &sFrontendConstructor);
 
 		/**
 		*  @brief
@@ -140,7 +140,7 @@ class FrontendContext : public ApplicationContext {
 		*  @return
 		*    Parameters for the frontend RTTI class constructor (default: "")
 		*/
-		PLCORE_API String GetFrontendConstructorParameters() const;
+		inline String GetFrontendConstructorParameters() const;
 
 		/**
 		*  @brief
@@ -149,7 +149,7 @@ class FrontendContext : public ApplicationContext {
 		*  @param[in] sFrontendConstructorParameters
 		*    Parameters for the frontend RTTI class constructor (default: "")
 		*/
-		PLCORE_API void SetFrontendConstructorParameters(const String &sFrontendConstructorParameters);
+		inline void SetFrontendConstructorParameters(const String &sFrontendConstructorParameters);
 
 		/**
 		*  @brief
@@ -158,7 +158,7 @@ class FrontendContext : public ApplicationContext {
 		*  @return
 		*    The parameters for the instanced frontend RTTI class (default: "")
 		*/
-		PLCORE_API String GetFrontendParameters() const;
+		inline String GetFrontendParameters() const;
 
 		/**
 		*  @brief
@@ -167,7 +167,7 @@ class FrontendContext : public ApplicationContext {
 		*  @param[in] sFrontendParameters
 		*    The parameters for the instanced frontend RTTI class (default: "")
 		*/
-		PLCORE_API void SetFrontendParameters(const String &sFrontendParameters);
+		inline void SetFrontendParameters(const String &sFrontendParameters);
 
 		/**
 		*  @brief
@@ -176,7 +176,7 @@ class FrontendContext : public ApplicationContext {
 		*  @return
 		*    The name of the frontend implementation RTTI class to use (default: "PLFrontendOS::Frontend")
 		*/
-		PLCORE_API String GetFrontendImplementation() const;
+		inline String GetFrontendImplementation() const;
 
 		/**
 		*  @brief
@@ -185,7 +185,7 @@ class FrontendContext : public ApplicationContext {
 		*  @param[in] sFrontendImplementation
 		*    The name of the frontend implementation RTTI class to use (default: "PLFrontendOS::Frontend")
 		*/
-		PLCORE_API void SetFrontendImplementation(const String &sFrontendImplementation);
+		inline void SetFrontendImplementation(const String &sFrontendImplementation);
 
 		/**
 		*  @brief
@@ -194,7 +194,7 @@ class FrontendContext : public ApplicationContext {
 		*  @return
 		*    The name of the frontend implementation RTTI class constructor to use (default: "")
 		*/
-		PLCORE_API String GetFrontendImplementationConstructor() const;
+		inline String GetFrontendImplementationConstructor() const;
 
 		/**
 		*  @brief
@@ -203,7 +203,7 @@ class FrontendContext : public ApplicationContext {
 		*  @param[in] sFrontendImplementationConstructor
 		*    The name of the frontend implementation RTTI class constructor to use (default: "")
 		*/
-		PLCORE_API void SetFrontendImplementationConstructor(const String &sFrontendImplementationConstructor);
+		inline void SetFrontendImplementationConstructor(const String &sFrontendImplementationConstructor);
 
 		/**
 		*  @brief
@@ -212,7 +212,7 @@ class FrontendContext : public ApplicationContext {
 		*  @return
 		*    The parameters for the frontend implementation RTTI class constructor (default: "")
 		*/
-		PLCORE_API String GetFrontendImplementationConstructorParameters() const;
+		inline String GetFrontendImplementationConstructorParameters() const;
 
 		/**
 		*  @brief
@@ -221,7 +221,7 @@ class FrontendContext : public ApplicationContext {
 		*  @param[in] sFrontendImplementationConstructorParameters
 		*    The parameters for the frontend implementation RTTI class constructor (default: "")
 		*/
-		PLCORE_API void SetFrontendImplementationConstructorParameters(const String &sFrontendImplementationConstructorParameters);
+		inline void SetFrontendImplementationConstructorParameters(const String &sFrontendImplementationConstructorParameters);
 
 		/**
 		*  @brief
@@ -230,7 +230,7 @@ class FrontendContext : public ApplicationContext {
 		*  @return
 		*    The parameters for the instanced frontend implementation RTTI class (default: "")
 		*/
-		PLCORE_API String GetFrontendImplementationParameters() const;
+		inline String GetFrontendImplementationParameters() const;
 
 		/**
 		*  @brief
@@ -239,7 +239,7 @@ class FrontendContext : public ApplicationContext {
 		*  @param[in] sFrontendImplementationParameters
 		*    The parameters for the instanced frontend implementation RTTI class (default: "")
 		*/
-		PLCORE_API void SetFrontendImplementationParameters(const String &sFrontendImplementationParameters);
+		inline void SetFrontendImplementationParameters(const String &sFrontendImplementationParameters);
 
 
 	//[-------------------------------------------------------]
@@ -264,6 +264,12 @@ class FrontendContext : public ApplicationContext {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Frontend/FrontendContext.inl"
 
 
 #endif // __PLCORE_FRONTENDCONTEXT_H__

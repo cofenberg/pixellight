@@ -80,7 +80,7 @@ class Module {
 		*  @return
 		*    Module ID
 		*/
-		PLCORE_API uint32 GetModuleID() const;
+		inline uint32 GetModuleID() const;
 
 		/**
 		*  @brief
@@ -89,7 +89,7 @@ class Module {
 		*  @return
 		*    'true' if module is a plugin, else 'false'
 		*/
-		PLCORE_API bool IsPlugin() const;
+		inline bool IsPlugin() const;
 
 		/**
 		*  @brief
@@ -101,7 +101,7 @@ class Module {
 		*  @remarks
 		*    This function will only return a dynamic library, if the module is a plugin
 		*/
-		PLCORE_API DynLib *GetDynLib() const;
+		inline DynLib *GetDynLib() const;
 
 		/**
 		*  @brief
@@ -113,7 +113,7 @@ class Module {
 		*  @remarks
 		*    This function will only return an absolute filename, if the module is a plugin
 		*/
-		PLCORE_API String GetFilename() const;
+		inline String GetFilename() const;
 
 		/**
 		*  @brief
@@ -122,7 +122,7 @@ class Module {
 		*  @return
 		*    Name
 		*/
-		PLCORE_API String GetName() const;
+		inline String GetName() const;
 
 		/**
 		*  @brief
@@ -131,7 +131,7 @@ class Module {
 		*  @return
 		*    Vendor name
 		*/
-		PLCORE_API String GetVendor() const;
+		inline String GetVendor() const;
 
 		/**
 		*  @brief
@@ -140,7 +140,7 @@ class Module {
 		*  @return
 		*    License
 		*/
-		PLCORE_API String GetLicense() const;
+		inline String GetLicense() const;
 
 		/**
 		*  @brief
@@ -149,7 +149,7 @@ class Module {
 		*  @return
 		*    Description
 		*/
-		PLCORE_API String GetDescription() const;
+		inline String GetDescription() const;
 
 		/**
 		*  @brief
@@ -163,7 +163,7 @@ class Module {
 		*    If you want to search for classes with more specific search criteria,
 		*    have a look at ClassManager::GetClasses().
 		*/
-		PLCORE_API const List<const Class*> &GetClasses() const;
+		inline const List<const Class*> &GetClasses() const;
 
 
 	//[-------------------------------------------------------]
@@ -207,7 +207,7 @@ class Module {
 		*  @param[in] pClass
 		*    Pointer to class (must be valid)
 		*/
-		PLCORE_API void AddClass(const Class *pClass);
+		inline void AddClass(const Class *pClass);
 
 		/**
 		*  @brief
@@ -216,7 +216,7 @@ class Module {
 		*  @param[in] pClass
 		*    Pointer to class (must be valid)
 		*/
-		PLCORE_API void RemoveClass(const Class *pClass);
+		inline void RemoveClass(const Class *pClass);
 
 
 	//[-------------------------------------------------------]
@@ -243,6 +243,12 @@ class Module {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Base/Module.inl"
 
 
 #endif // __PLCORE_MODULE_H__

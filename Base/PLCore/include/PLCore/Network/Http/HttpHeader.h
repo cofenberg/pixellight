@@ -71,7 +71,7 @@ class HttpHeader {
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API ~HttpHeader();
+		inline ~HttpHeader();
 
 		/**
 		*  @brief
@@ -107,7 +107,7 @@ class HttpHeader {
 		*  @return
 		*    List of header entries
 		*/
-		PLCORE_API const Container<String> &GetEntries() const;
+		inline const Container<String> &GetEntries() const;
 
 		/**
 		*  @brief
@@ -116,7 +116,7 @@ class HttpHeader {
 		*  @param[in] sEntry
 		*    Header entry
 		*/
-		PLCORE_API void AddEntry(const String &sEntry);
+		inline void AddEntry(const String &sEntry);
 
 		/**
 		*  @brief
@@ -148,7 +148,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API EHttpProtocol GetProtocol() const;
+		inline EHttpProtocol GetProtocol() const;
 
 		/**
 		*  @brief
@@ -160,7 +160,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API EHttpMessageType GetMessageType() const;
+		inline EHttpMessageType GetMessageType() const;
 
 		/**
 		*  @brief
@@ -172,7 +172,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API EHttpRequest GetRequest() const;
+		inline EHttpRequest GetRequest() const;
 
 		/**
 		*  @brief
@@ -196,7 +196,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API String GetRequestUrl() const;
+		inline String GetRequestUrl() const;
 
 		/**
 		*  @brief
@@ -208,7 +208,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API EHttpConnection GetConnectionType() const;
+		inline EHttpConnection GetConnectionType() const;
 
 		/**
 		*  @brief
@@ -220,7 +220,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API uint32 GetStatusCode() const;
+		inline uint32 GetStatusCode() const;
 
 		/**
 		*  @brief
@@ -232,7 +232,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API String GetStatusString() const;
+		inline String GetStatusString() const;
 
 		/**
 		*  @brief
@@ -244,7 +244,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API String GetLocation() const;
+		inline String GetLocation() const;
 
 		/**
 		*  @brief
@@ -256,7 +256,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API String GetDate() const;
+		inline String GetDate() const;
 
 		/**
 		*  @brief
@@ -268,7 +268,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API String GetServer() const;
+		inline String GetServer() const;
 
 		/**
 		*  @brief
@@ -280,7 +280,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API String GetUserAgent() const;
+		inline String GetUserAgent() const;
 
 		/**
 		*  @brief
@@ -292,7 +292,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API EHttpAuth GetAuthenticationType() const;
+		inline EHttpAuth GetAuthenticationType() const;
 
 		/**
 		*  @brief
@@ -304,7 +304,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API String GetAuthenticationRealm() const;
+		inline String GetAuthenticationRealm() const;
 
 		/**
 		*  @brief
@@ -316,7 +316,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API String GetAuthorization() const;
+		inline String GetAuthorization() const;
 
 		/**
 		*  @brief
@@ -328,7 +328,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API String GetTransferEncoding() const;
+		inline String GetTransferEncoding() const;
 
 		/**
 		*  @brief
@@ -340,7 +340,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API bool IsChunked() const;
+		inline bool IsChunked() const;
 
 		/**
 		*  @brief
@@ -352,7 +352,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API uint32 GetContentLength() const;
+		inline uint32 GetContentLength() const;
 
 		/**
 		*  @brief
@@ -364,7 +364,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API String GetContentLanguage() const;
+		inline String GetContentLanguage() const;
 
 		/**
 		*  @brief
@@ -376,7 +376,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API String GetContentType() const;
+		inline String GetContentType() const;
 
 		/**
 		*  @brief
@@ -388,7 +388,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API String GetETag() const;
+		inline String GetETag() const;
 
 		/**
 		*  @brief
@@ -400,7 +400,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API bool IsPartial() const;
+		inline bool IsPartial() const;
 
 		/**
 		*  @brief
@@ -412,7 +412,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API uint32 GetRangeMin() const;
+		inline uint32 GetRangeMin() const;
 
 		/**
 		*  @brief
@@ -424,7 +424,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API uint32 GetRangeMax() const;
+		inline uint32 GetRangeMax() const;
 
 		/**
 		*  @brief
@@ -436,7 +436,7 @@ class HttpHeader {
 		*  @remarks
 		*    To access this information, Parse() has to be called first
 		*/
-		PLCORE_API uint32 GetRangeTotal() const;
+		inline uint32 GetRangeTotal() const;
 
 
 	//[-------------------------------------------------------]
@@ -476,6 +476,12 @@ class HttpHeader {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Network/Http/HttpHeader.inl"
 
 
 #endif // __PLCORE_HTTPHEADER_H__

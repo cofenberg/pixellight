@@ -115,7 +115,7 @@ inline void RestorePreviousLocale(char *pszPreviousLocale)
 
 
 //[-------------------------------------------------------]
-//[ String Implementation                                 ]
+//[ Static functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -248,15 +248,10 @@ String String::FromUTF8(const char *pszUTF8, int nLength, uint32 nNumOfBytes)
 	return "";
 }
 
-/**
-*  @brief
-*    Default constructor
-*/
-String::String() :
-	m_pStringBuffer(nullptr)
-{
-}
 
+//[-------------------------------------------------------]
+//[ Public functions                                      ]
+//[-------------------------------------------------------]
 /**
 *  @brief
 *    Character constructor
@@ -397,12 +392,6 @@ String::String(const String &sString)
 *  @brief
 *    Number constructor
 */
-String::String(bool bValue) :
-	m_pStringBuffer(nullptr)
-{
-	*this = bValue;
-}
-
 String::String(int nValue)
 {
 	// Sadly, the useful "itoa" is a non-standard extension to the standard C
@@ -427,52 +416,6 @@ String::String(int nValue)
 	#endif
 }
 
-String::String(int64 nValue) :
-	m_pStringBuffer(nullptr)
-{
-	*this = nValue;
-}
-
-String::String(uint8 nValue) :
-	m_pStringBuffer(nullptr)
-{
-	*this = nValue;
-}
-
-String::String(uint32 nValue) :
-	m_pStringBuffer(nullptr)
-{
-	*this = nValue;
-}
-
-String::String(uint64 nValue) :
-	m_pStringBuffer(nullptr)
-{
-	*this = nValue;
-}
-
-String::String(float fValue) :
-	m_pStringBuffer(nullptr)
-{
-	*this = fValue;
-}
-
-String::String(double fValue) :
-	m_pStringBuffer(nullptr)
-{
-	*this = fValue;
-}
-
-/**
-*  @brief
-*    Pointer constructor
-*/
-String::String(void *pValue) :
-	m_pStringBuffer(nullptr)
-{
-	*this = reinterpret_cast<uint_ptr>(pValue);
-}
-
 /**
 *  @brief
 *    Internal copy constructor
@@ -487,103 +430,6 @@ String::String(StringBuffer *pStringBuffer)
 		// Empty string
 		m_pStringBuffer = nullptr;
 	}
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-String::~String()
-{
-	// Release string buffer
-	if (m_pStringBuffer)
-		StringBuffer::Manager.ReleaseStringBuffer(*m_pStringBuffer);
-}
-
-/**
-*  @brief
-*    Returns the length of the string
-*/
-uint32 String::GetLength() const
-{
-	return m_pStringBuffer ? m_pStringBuffer->GetLength() : 0;
-}
-
-/**
-*  @brief
-*    Returns the internal string format
-*/
-String::EFormat String::GetFormat() const
-{
-	return m_pStringBuffer ? m_pStringBuffer->GetFormat() : ASCII;
-}
-
-/**
-*  @brief
-*    Returns the number of bytes the string is using
-*/
-uint32 String::GetNumOfBytes() const
-{
-	return m_pStringBuffer ? m_pStringBuffer->GetNumOfBytes() : 0;
-}
-
-/**
-*  @brief
-*    Get a ASCII character of the string
-*/
-char String::operator [](uint32 nIndex) const
-{
-	// Terminating \0 by default...
-	return (nIndex < GetLength()) ? GetASCII()[nIndex] : '\0';
-}
-
-/**
-*  @brief
-*    Returns the character string as ASCII
-*/
-const char *String::GetASCII() const
-{
-	return m_pStringBuffer ? m_pStringBuffer->GetASCII()->m_pszString : "";
-}
-
-/**
-*  @brief
-*    Returns the ASCII character string
-*/
-String::operator const char *() const
-{
-	return m_pStringBuffer ? m_pStringBuffer->GetASCII()->m_pszString : "";
-}
-
-/**
-*  @brief
-*    Returns the character string as Unicode
-*/
-const wchar_t *String::GetUnicode() const
-{
-	return m_pStringBuffer ? m_pStringBuffer->GetUnicode()->m_pszString : L"";
-}
-
-/**
-*  @brief
-*    Returns the Unicode character string
-*/
-String::operator const wchar_t *() const
-{
-	return m_pStringBuffer ? m_pStringBuffer->GetUnicode()->m_pszString : L"";
-}
-
-/**
-*  @brief
-*    Copy operator
-*/
-String &String::operator =(const String &sString)
-{
-	// Assign new string buffer (all security check are done within this function... :)
-	SetStringBuffer(sString.m_pStringBuffer);
-
-	// Return a reference to this instance
-	return *this;
 }
 
 /**
@@ -1034,52 +880,6 @@ bool String::operator >(const wchar_t *pszString) const
 
 /**
 *  @brief
-*    Compare operator (case sensitive)
-*/
-bool String::operator ==(const String &sString) const
-{
-	return Compare(sString);
-}
-
-/**
-*  @brief
-*    Compare operator (case sensitive)
-*/
-bool String::operator ==(const char *pszString) const
-{
-	return Compare(pszString);
-}
-
-bool String::operator ==(const wchar_t *pszString) const
-{
-	return Compare(pszString);
-}
-
-/**
-*  @brief
-*    Compare operator (case sensitive)
-*/
-bool String::operator !=(const String &sString) const
-{
-	return !Compare(sString);
-}
-
-/**
-*  @brief
-*    Compare operator (case sensitive)
-*/
-bool String::operator !=(const char *pszString) const
-{
-	return !Compare(pszString);
-}
-
-bool String::operator !=(const wchar_t *pszString) const
-{
-	return !Compare(pszString);
-}
-
-/**
-*  @brief
 *    Compare function (case sensitive)
 */
 bool String::Compare(const String &sString, uint32 nPos, int nCount) const
@@ -1312,36 +1112,6 @@ bool String::CompareNoCase(const wchar_t *pszString, uint32 nPos, int nCount) co
 		// Return "strings are equal"
 		return true;
 	}
-}
-
-/**
-*  @brief
-*    Determines whether the string is alphabetic or not
-*/
-bool String::IsAlphabetic() const
-{
-	// No string, no alphabetic
-	return (m_pStringBuffer && m_pStringBuffer->IsAlphabetic());
-}
-
-/**
-*  @brief
-*    Determines whether the string is alpha-numeric or not
-*/
-bool String::IsAlphaNumeric() const
-{
-	// No string, no alpha-numeric
-	return (m_pStringBuffer && m_pStringBuffer->IsAlphaNumeric());
-}
-
-/**
-*  @brief
-*    Determines whether the string is numeric or not
-*/
-bool String::IsNumeric() const
-{
-	// No string, no numeric
-	return (m_pStringBuffer && m_pStringBuffer->IsNumeric());
 }
 
 /**
@@ -1611,38 +1381,6 @@ String String::GetSubstring(uint32 nPos, int nCount) const
 
 	// Done
 	return "";
-}
-
-/**
-*  @brief
-*    Change all characters to lower case
-*/
-String &String::ToLower()
-{
-	// Is there a string buffer?
-	if (m_pStringBuffer) {
-		// Change all characters to lower case, string 'may' be changed
-		SetStringBuffer(m_pStringBuffer->ToLower());
-	}
-
-	// Done
-	return *this;
-}
-
-/**
-*  @brief
-*    Change all characters to upper case
-*/
-String &String::ToUpper()
-{
-	// Is there a string buffer?
-	if (m_pStringBuffer) {
-		// Change all characters to upper case, string 'may' be changed
-		SetStringBuffer(m_pStringBuffer->ToUpper());
-	}
-
-	// Done
-	return *this;
 }
 
 /**
@@ -2073,38 +1811,6 @@ bool String::SetCharacter(uint32 nIndex, wchar_t nCharacter)
 
 /**
 *  @brief
-*    Removes all whitespace (tabs and spaces) at the beginning of the string
-*/
-String &String::TrimLeading()
-{
-	// Is this string empty?
-	if (m_pStringBuffer) {
-		// Delete whitespace at the beginning of the string
-		SetStringBuffer(m_pStringBuffer->TrimLeading());
-	}
-
-	// Done
-	return *this;
-}
-
-/**
-*  @brief
-*    Removes all whitespace (tabs and spaces) at the end of the string
-*/
-String &String::TrimTrailing()
-{
-	// Is this string empty?
-	if (m_pStringBuffer) {
-		// Delete whitespace at the end of the string
-		SetStringBuffer(m_pStringBuffer->TrimTrailing());
-	}
-
-	// Done
-	return *this;
-}
-
-/**
-*  @brief
 *    Removes all whitespace (tabs and spaces) at the beginning and the end of the string
 */
 String &String::Trim()
@@ -2125,35 +1831,10 @@ String &String::Trim()
 	return *this;
 }
 
-/**
-*  @brief
-*    Removes line endings ("\r" or "\n") at the end of the string
-*/
-String &String::RemoveLineEndings()
-{
-	// Is this string empty?
-	if (m_pStringBuffer) {
-		// Remove line endings at the end of the string
-		SetStringBuffer(m_pStringBuffer->RemoveLineEndings());
-	}
-
-	// Done
-	return *this;
-}
-
 
 //[-------------------------------------------------------]
 //[ Conversion functions                                  ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the character string as UTF8
-*/
-const char *String::GetUTF8() const
-{
-	return m_pStringBuffer ? m_pStringBuffer->GetUTF8()->m_pszString : "";
-}
-
 // Is valid tests
 bool String::IsValidInteger() const
 {
@@ -2460,15 +2141,6 @@ uint64 String::GetUInt64() const
 	return 0;
 }
 
-uint_ptr String::GetUIntPtr() const
-{
-	#ifdef X64_ARCHITECTURE
-		return GetUInt64();
-	#else
-		return GetUInt32();
-	#endif
-}
-
 float String::GetFloat() const
 {
 	if (m_pStringBuffer) {
@@ -2532,15 +2204,6 @@ double String::GetDouble() const
 }
 
 // Convert to string
-String &String::operator =(bool bValue)
-{
-	// Set data
-	*this = bValue ? '1' : '0';
-
-	// Return a reference to this instance
-	return *this;
-}
-
 String &String::operator =(char nValue)
 {
 	// Terminating zero?
@@ -2629,90 +2292,6 @@ String &String::operator =(int nValue)
 	return *this;
 }
 
-String &String::operator =(int64 nValue)
-{
-	// Set data
-	#ifdef WIN32
-		*this = Format("%I64", nValue);
-	#else
-		// [TODO] Is this working correctly on Linux or do we need something like
-		/*
-		#include <inttypes.h>
-		int64_t var;
-		sprintf (buf, "%" PRId64, var);
-		*/
-		*this = Format("%ll", nValue);
-	#endif
-
-	// Return a reference to this instance
-	return *this;
-}
-
-String &String::operator =(uint8 nValue)
-{
-	// Set data
-	#ifdef WIN32
-		*this = Format("%I32u", static_cast<uint32>(nValue));
-	#else
-		// [TODO] Is this working correctly on Linux?
-		*this = Format("%u", static_cast<uint32>(nValue));
-	#endif
-
-	// Return a reference to this instance
-	return *this;
-}
-
-String &String::operator =(uint32 nValue)
-{
-	// Set data
-	#ifdef WIN32
-		*this = Format("%I32u", nValue);
-	#else
-		// [TODO] Is this working correctly on Linux?
-		*this = Format("%u", nValue);
-	#endif
-
-	// Return a reference to this instance
-	return *this;
-}
-
-String &String::operator =(uint64 nValue)
-{
-	// Set data
-	#ifdef WIN32
-		*this = Format("%I64u", nValue);
-	#else
-		// [TODO] Is this working correctly on Linux or do we need something like
-		/*
-		#include <inttypes.h>
-		int64_t var;
-		sprintf (buf, "%" PRId64, var);
-		*/
-		*this = Format("%llu", nValue);
-	#endif
-
-	// Return a reference to this instance
-	return *this;
-}
-
-String &String::operator =(float fValue)
-{
-	// Set data
-	*this = Format("%g", fValue);
-
-	// Return a reference to this instance
-	return *this;
-}
-
-String &String::operator =(double dValue)
-{
-	// Set data
-	*this = Format("%g", dValue);
-
-	// Return a reference to this instance
-	return *this;
-}
-
 // Concatenation
 String String::operator +(bool bValue) const
 {
@@ -2769,73 +2348,6 @@ String String::operator +(wchar_t nValue) const
 	}
 }
 
-String String::operator +(int nValue) const
-{
-	return *this + String(nValue);
-}
-
-String String::operator +(int64 nValue) const
-{
-	// Set data
-	#ifdef WIN32
-		return (GetFormat() == Unicode) ? *this + Format(L"%I64", nValue) : *this + Format("%I64", nValue);
-	#else
-		// [TODO] Is this working correctly on Linux or do we need something like
-		/*
-		#include <inttypes.h>
-		int64_t var;
-		sprintf (buf, "%" PRId64, var);
-		*/
-		return (GetFormat() == Unicode) ? *this + Format(L"%ll", nValue) : *this + Format("%ll", nValue);
-	#endif
-}
-
-String String::operator +(uint8 nValue) const
-{
-	#ifdef WIN32
-		return (GetFormat() == Unicode) ? *this + Format(L"%I32u", static_cast<uint32>(nValue)) : *this + Format("%I32u", static_cast<uint32>(nValue));
-	#else
-		// [TODO] Is this working correctly on Linux?
-		return (GetFormat() == Unicode) ? *this + Format(L"%u", static_cast<uint32>(nValue)) : *this + Format("%u", static_cast<uint32>(nValue));
-	#endif
-}
-
-String String::operator +(uint32 nValue) const
-{
-	#ifdef WIN32
-		return (GetFormat() == Unicode) ? *this + Format(L"%I32u", nValue) : *this + Format("%I32u", nValue);
-	#else
-		// [TODO] Is this working correctly on Linux?
-		return (GetFormat() == Unicode) ? *this + Format(L"%u", nValue) : *this + Format("%u", nValue);
-	#endif
-}
-
-String String::operator +(uint64 nValue) const
-{
-	// Set data
-	#ifdef WIN32
-		return (GetFormat() == Unicode) ? *this + Format(L"%I64u", nValue) : *this + Format("%I64u", nValue);
-	#else
-		// [TODO] Is this working correctly on Linux or do we need something like
-		/*
-		#include <inttypes.h>
-		int64_t var;
-		sprintf (buf, "%" PRId64, var);
-		*/
-		return (GetFormat() == Unicode) ? *this + Format(L"%llu", nValue) : *this + Format("%llu", nValue);
-	#endif
-}
-
-String String::operator +(float fValue) const
-{
-	return (GetFormat() == Unicode) ? *this + Format(L"%g", fValue) : *this + Format("%g", fValue);
-}
-
-String String::operator +(double dValue) const
-{
-	return (GetFormat() == Unicode) ? *this + String::Format(L"%g", dValue) : *this + String::Format("%g", dValue);
-}
-
 String operator +(bool bValue, const String &sString)
 {
 	if (sString.GetLength()) {
@@ -2873,71 +2385,6 @@ String operator +(wchar_t nValue, const String &sString)
 		return String(nValue) + sString;	// Compose new string
 	else
 		return nValue;						// Set just this character
-}
-
-String operator +(int nValue, const String &sString)
-{
-	return (sString.GetFormat() == String::Unicode) ? String::Format(L"%d", nValue) + sString : String::Format("%d", nValue) + sString;
-}
-
-String operator +(int64 nValue, const String &sString)
-{
-	#ifdef WIN32
-		return (sString.GetFormat() == String::Unicode) ? String::Format(L"%I64", nValue) + sString : String::Format("%I64", nValue) + sString;
-	#else
-		// [TODO] Is this working correctly on Linux or do we need something like
-		/*
-		#include <inttypes.h>
-		int64_t var;
-		sprintf (buf, "%" PRId64, var);
-		*/
-		return (sString.GetFormat() == String::Unicode) ? String::Format(L"%ll", nValue) + sString : String::Format("%ll", nValue) + sString;
-	#endif
-}
-
-String operator +(uint8 nValue, const String &sString)
-{
-	#ifdef WIN32
-		return (sString.GetFormat() == String::Unicode) ? String::Format(L"%I32u", static_cast<uint32>(nValue)) + sString : String::Format("%I32u", static_cast<uint32>(nValue)) + sString;
-	#else
-		// [TODO] Is this working correctly on Linux?
-		return (sString.GetFormat() == String::Unicode) ? String::Format(L"%u", static_cast<uint32>(nValue)) + sString : String::Format("%u", static_cast<uint32>(nValue)) + sString;
-	#endif
-}
-
-String operator +(uint32 nValue, const String &sString)
-{
-	#ifdef WIN32
-		return (sString.GetFormat() == String::Unicode) ? String::Format(L"%I32u", nValue) + sString : String::Format("%I32u", nValue) + sString;
-	#else
-		// [TODO] Is this working correctly on Linux?
-		return (sString.GetFormat() == String::Unicode) ? String::Format(L"%u", nValue) + sString : String::Format("%u", nValue) + sString;
-	#endif
-}
-
-String operator +(uint64 nValue, const String &sString)
-{
-	#ifdef WIN32
-		return (sString.GetFormat() == String::Unicode) ? String::Format(L"%I64u", nValue) + sString : String::Format("%I64u", nValue) + sString;
-	#else
-		// [TODO] Is this working correctly on Linux or do we need something like
-		/*
-		#include <inttypes.h>
-		int64_t var;
-		sprintf (buf, "%" PRId64, var);
-		*/
-		return (sString.GetFormat() == String::Unicode) ? String::Format(L"%llu", nValue) + sString : String::Format("%llu", nValue) + sString;
-	#endif
-}
-
-String operator +(float fValue, const String &sString)
-{
-	return (sString.GetFormat() == String::Unicode) ? String::Format(L"%g", fValue) + sString : String::Format("%g", fValue) + sString;
-}
-
-String operator +(double dValue, const String &sString)
-{
-	return (sString.GetFormat() == String::Unicode) ? String::Format(L"%g", dValue) + sString : String::Format("%g", dValue) + sString;
 }
 
 String &String::operator +=(bool bValue)
@@ -3012,110 +2459,6 @@ String &String::operator +=(wchar_t nValue)
 	return *this;
 }
 
-String &String::operator +=(int nValue)
-{
-	*this += String(nValue);
-	return *this;
-}
-
-String &String::operator +=(int64 nValue)
-{
-	// Set data
-	#ifdef WIN32
-		if (GetFormat() == Unicode)
-			*this += Format(L"%I64", nValue);
-		else
-			*this += Format("%I64", nValue);
-	#else
-		// [TODO] Is this working correctly on Linux or do we need something like
-		/*
-		#include <inttypes.h>
-		int64_t var;
-		sprintf (buf, "%" PRId64, var);
-		*/
-		if (GetFormat() == Unicode)
-			*this += Format(L"%ll", nValue);
-		else
-			*this += Format("%ll", nValue);
-	#endif
-	return *this;
-}
-
-String &String::operator +=(uint8 nValue)
-{
-	#ifdef WIN32
-		if (GetFormat() == Unicode)
-			*this += Format(L"%I32u", static_cast<uint32>(nValue));
-		else
-			*this += Format("%I32u", static_cast<uint32>(nValue));
-	#else
-		// [TODO] Is this working correctly on Linux?
-		if (GetFormat() == Unicode)
-			*this += Format(L"%u", static_cast<uint32>(nValue));
-		else
-			*this += Format("%u", static_cast<uint32>(nValue));
-	#endif
-	return *this;
-}
-
-String &String::operator +=(uint32 nValue)
-{
-	#ifdef WIN32
-		if (GetFormat() == Unicode)
-			*this += Format(L"%I32u", nValue);
-		else
-			*this += Format("%I32u", nValue);
-	#else
-		// [TODO] Is this working correctly on Linux?
-		if (GetFormat() == Unicode)
-			*this += Format(L"%u", nValue);
-		else
-			*this += Format("%u", nValue);
-	#endif
-	return *this;
-}
-
-String &String::operator +=(uint64 nValue)
-{
-	// Set data
-	#ifdef WIN32
-		if (GetFormat() == Unicode)
-			*this += Format(L"%I64u", nValue);
-		else
-			*this += Format("%I64u", nValue);
-	#else
-		// [TODO] Is this working correctly on Linux or do we need something like
-		/*
-		#include <inttypes.h>
-		int64_t var;
-		sprintf (buf, "%" PRId64, var);
-		*/
-		if (GetFormat() == Unicode)
-			*this += Format(L"%llu", nValue);
-		else
-			*this += Format("%llu", nValue);
-	#endif
-	return *this;
-}
-
-String &String::operator +=(float fValue)
-{
-	if (GetFormat() == Unicode)
-		*this += Format(L"%g", fValue);
-	else
-		*this += Format("%g", fValue);
-	return *this;
-}
-
-String &String::operator +=(double dValue)
-{
-	if (GetFormat() == Unicode)
-		*this += Format(L"%g", dValue);
-	else
-		*this += Format("%g", dValue);
-	return *this;
-}
-
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
@@ -3163,4 +2506,3 @@ void String::ReleaseStringBuffer()
 //[ Compiler settings                                     ]
 //[-------------------------------------------------------]
 PL_WARNING_POP
-

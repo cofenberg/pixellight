@@ -97,7 +97,7 @@ class LogFormatterHtml : public LogFormatter {
 		*  @note
 		*    This text/HTML codes are written after the <body> tags
 		*/
-		PLCORE_API void SetHeader(const String &sHeader = "");
+		inline void SetHeader(const String &sHeader = "");
 
 		/**
 		*  @brief
@@ -106,7 +106,7 @@ class LogFormatterHtml : public LogFormatter {
 		*  @param[in] sTitle
 		*    The log's title
 		*/
-		PLCORE_API void SetTitle(const String &sTitle = "PL-Log");
+		inline void SetTitle(const String &sTitle = "PL-Log");
 
 		/**
 		*  @brief
@@ -119,7 +119,7 @@ class LogFormatterHtml : public LogFormatter {
 		*    - The background is set in the <body> tag
 		*    - You must also give the option name (e.g. bgcolor=<color in HTML notation>)
 		*/
-		PLCORE_API void SetBackground(const String &sBackground = "");
+		inline void SetBackground(const String &sBackground = "");
 
 		/**
 		*  @brief
@@ -132,7 +132,7 @@ class LogFormatterHtml : public LogFormatter {
 		*    The color must be in HTML notation. Either the color name(e.g. red) or the
 		*    RGB values in hexadecimal. (e.g. #FF0000)
 		*/
-		PLCORE_API void SetDefaultTextColor(const String &sColor = "black");
+		inline void SetDefaultTextColor(const String &sColor = "black");
 
 		/**
 		*  @brief
@@ -144,7 +144,7 @@ class LogFormatterHtml : public LogFormatter {
 		*  @note
 		*    - See SetTextFormat()
 		*/
-		PLCORE_API void SetDefaultTextFormat(const String &sFormat = "|<br>");
+		inline void SetDefaultTextFormat(const String &sFormat = "|<br>");
 
 		/**
 		*  @brief
@@ -153,7 +153,7 @@ class LogFormatterHtml : public LogFormatter {
 		*  @param[in] sFooter
 		*    Footer text
 		*/
-		PLCORE_API void SetFooter(const String &sFooter = "");
+		inline void SetFooter(const String &sFooter = "");
 
 
 	//[-------------------------------------------------------]
@@ -227,6 +227,12 @@ class LogFormatterHtml : public LogFormatter {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Log/LogFormatterHtml.inl"
 
 
 #endif // __PLCORE_LOGFORMATTER_HTML_H__

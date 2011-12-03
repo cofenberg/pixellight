@@ -173,7 +173,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @return
 		*    Frontend context
 		*/
-		PLCORE_API const FrontendContext &GetContext() const;
+		inline const FrontendContext &GetContext() const;
 
 		/**
 		*  @brief
@@ -182,7 +182,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @return
 		*    Native window handle for the frontend window, can be a null pointer
 		*/
-		PLCORE_API handle GetNativeWindowHandle() const;
+		inline handle GetNativeWindowHandle() const;
 
 		/**
 		*  @brief
@@ -199,7 +199,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*    - Depending on the frontend implementation, the redraw may not be immediate
 		*    - Doesn't include "Ping()"
 		*/
-		PLCORE_API void Redraw();
+		inline void Redraw();
 
 		/**
 		*  @brief
@@ -215,7 +215,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*    - Whenever possible, don't use this method, do heavy work within e.g. threads
 		*    - Doesn't include "Redraw()"
 		*/
-		PLCORE_API void Ping() const;
+		inline void Ping() const;
 
 		/**
 		*  @brief
@@ -227,7 +227,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @note
 		*    - Whenever possible, don't use this method, do heavy work within e.g. threads
 		*/
-		PLCORE_API void RedrawAndPing();
+		inline void RedrawAndPing();
 
 		/**
 		*  @brief
@@ -244,7 +244,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*    unless you have a good reason to explicitly set an individual frontend
 		*    title, just use the default setting and don't touch the frontend.
 		*/
-		PLCORE_API String GetTitle() const;
+		inline String GetTitle() const;
 
 		/**
 		*  @brief
@@ -256,7 +256,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @see
 		*    - GetTitle()
 		*/
-		PLCORE_API void SetTitle(const String &sTitle);
+		inline void SetTitle(const String &sTitle);
 
 		//[-------------------------------------------------------]
 		//[ Position and size                                     ]
@@ -268,7 +268,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @return
 		*    X position of the frontend
 		*/
-		PLCORE_API int GetX() const;
+		inline int GetX() const;
 
 		/**
 		*  @brief
@@ -277,7 +277,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @return
 		*    Y position of the frontend
 		*/
-		PLCORE_API int GetY() const;
+		inline int GetY() const;
 
 		/**
 		*  @brief
@@ -286,7 +286,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @return
 		*    Width of the frontend
 		*/
-		PLCORE_API uint32 GetWidth() const;
+		inline uint32 GetWidth() const;
 
 		/**
 		*  @brief
@@ -295,7 +295,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @return
 		*    Height of the frontend
 		*/
-		PLCORE_API uint32 GetHeight() const;
+		inline uint32 GetHeight() const;
 
 		/**
 		*  @brief
@@ -318,7 +318,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*    considered to be a request. A frontend implementation may deny the request in general or
 		*    just improper settings (e.g. a too small size, position outside the visible screen etc.).
 		*/
-		PLCORE_API void SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight);
+		inline void SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight);
 
 		//[-------------------------------------------------------]
 		//[ Fullscreen                                            ]
@@ -330,7 +330,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @return
 		*    'true' if it's possible to toggle the fullscreen mode using hotkeys, else 'false'
 		*/
-		PLCORE_API bool GetToggleFullscreenMode() const;
+		inline bool GetToggleFullscreenMode() const;
 
 		/**
 		*  @brief
@@ -342,7 +342,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @note
 		*    - By default, it's allowed to switch widgets into fullscreen mode using Alt-Return or AltGr-Return
 		*/
-		PLCORE_API void SetToggleFullscreenMode(bool bToggleFullscreenMode);
+		inline void SetToggleFullscreenMode(bool bToggleFullscreenMode);
 
 		/**
 		*  @brief
@@ -354,7 +354,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @note
 		*    - Widgets only
 		*/
-		PLCORE_API bool GetFullscreenAltTab() const;
+		inline bool GetFullscreenAltTab() const;
 
 		/**
 		*  @brief
@@ -369,7 +369,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @see
 		*    - GetFullscreenAltTab()
 		*/
-		PLCORE_API void SetFullscreenAltTab(bool bAllowed);
+		inline void SetFullscreenAltTab(bool bAllowed);
 
 		/**
 		*  @brief
@@ -378,7 +378,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @return
 		*    'true' if the frontend is in fullscreen mode, else 'false'
 		*/
-		PLCORE_API bool IsFullscreen() const;
+		inline bool IsFullscreen() const;
 
 		/**
 		*  @brief
@@ -387,13 +387,13 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @param[in] bFullscreen
 		*    'true' if the frontend should be in fullscreen mode, else 'false'
 		*/
-		PLCORE_API void SetFullscreen(bool bFullscreen);
+		inline void SetFullscreen(bool bFullscreen);
 
 		/**
 		*  @brief
 		*    Something related to fullscreen mode has been changed (e.g. the display resolution)
 		*/
-		PLCORE_API void RefreshFullscreen();
+		inline void RefreshFullscreen();
 
 		//[-------------------------------------------------------]
 		//[ Mouse                                                 ]
@@ -405,7 +405,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @return
 		*    'true' if mouse-over, else 'false'
 		*/
-		PLCORE_API bool IsMouseOver() const;
+		inline bool IsMouseOver() const;
 
 		/**
 		*  @brief
@@ -414,7 +414,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @return
 		*    Current mouse cursor X position inside the frontend, negative value if the mouse cursor isn't currently over the frontend
 		*/
-		PLCORE_API int GetMousePositionX() const;
+		inline int GetMousePositionX() const;
 
 		/**
 		*  @brief
@@ -423,7 +423,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @return
 		*    Current mouse cursor Y position inside the frontend, negative value if the mouse cursor isn't currently over the frontend
 		*/
-		PLCORE_API int GetMousePositionY() const;
+		inline int GetMousePositionY() const;
 
 		/**
 		*  @brief
@@ -439,7 +439,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*    - Do only hide the mouse cursor when it really makes sense (e.g. during the period
 		*      the mouse is used to control a "camera look around")
 		*/
-		PLCORE_API bool IsMouseVisible() const;
+		inline bool IsMouseVisible() const;
 
 		/**
 		*  @brief
@@ -451,7 +451,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @see
 		*    - IsMouseVisible()
 		*/
-		PLCORE_API void SetMouseVisible(bool bVisible);
+		inline void SetMouseVisible(bool bVisible);
 
 		/**
 		*  @brief
@@ -464,7 +464,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*    - Do only trap the mouse cursor when it really makes sense (e.g. during the period
 		*      the mouse is used to control a "camera look around")
 		*/
-		PLCORE_API void SetTrapMouse(bool bTrap);
+		inline void SetTrapMouse(bool bTrap);
 
 
 	//[-------------------------------------------------------]
@@ -492,7 +492,7 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*  @return
 		*    Pointer to the implementation backend, can be a null pointer
 		*/
-		PLCORE_API FrontendImpl *GetImpl() const;
+		inline FrontendImpl *GetImpl() const;
 
 
 	//[-------------------------------------------------------]
@@ -551,6 +551,12 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Frontend/Frontend.inl"
 
 
 #endif // __PLCORE_FRONTEND_H__

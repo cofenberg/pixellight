@@ -109,7 +109,7 @@ class Connection : protected Thread {
 		*  @return
 		*    Host
 		*/
-		PLCORE_API const Host &GetHost() const;
+		inline const Host &GetHost() const;
 
 		/**
 		*  @brief
@@ -118,7 +118,7 @@ class Connection : protected Thread {
 		*  @return
 		*    Host
 		*/
-		PLCORE_API Host &GetHost();
+		inline Host &GetHost();
 
 		/**
 		*  @brief
@@ -127,7 +127,7 @@ class Connection : protected Thread {
 		*  @return
 		*    Name of host
 		*/
-		PLCORE_API String GetHostname() const;
+		inline String GetHostname() const;
 
 		/**
 		*  @brief
@@ -136,7 +136,7 @@ class Connection : protected Thread {
 		*  @return
 		*    Port number
 		*/
-		PLCORE_API uint32 GetPort() const;
+		inline uint32 GetPort() const;
 
 		/**
 		*  @brief
@@ -145,7 +145,7 @@ class Connection : protected Thread {
 		*  @return
 		*    The socket object
 		*/
-		PLCORE_API const Socket &GetSocket() const;
+		inline const Socket &GetSocket() const;
 
 		/**
 		*  @brief
@@ -154,7 +154,7 @@ class Connection : protected Thread {
 		*  @return
 		*    The socket object
 		*/
-		PLCORE_API Socket &GetSocket();
+		inline Socket &GetSocket();
 
 		/**
 		*  @brief
@@ -163,7 +163,7 @@ class Connection : protected Thread {
 		*  @return
 		*    'true' if the connection is currently established, else 'false'
 		*/
-		PLCORE_API bool IsConnected() const;
+		inline bool IsConnected() const;
 
 		/**
 		*  @brief
@@ -181,7 +181,7 @@ class Connection : protected Thread {
 		*  @return
 		*    Receive mode
 		*/
-		PLCORE_API EReceiveMode GetReceiveMode() const;
+		inline EReceiveMode GetReceiveMode() const;
 
 		/**
 		*  @brief
@@ -196,7 +196,7 @@ class Connection : protected Thread {
 		*    called. In both cases, OnReceive() will be called whenever new data has arrived. 
 		*    By default, mode is set to ReceiveAutomatic.
 		*/
-		PLCORE_API void SetReceiveMode(EReceiveMode nReceiveMode);
+		inline void SetReceiveMode(EReceiveMode nReceiveMode);
 
 		/**
 		*  @brief
@@ -211,7 +211,7 @@ class Connection : protected Thread {
 		*    Total number of bytes sent. Can be less than the requested size
 		*    to be sent, negative value on error
 		*/
-		PLCORE_API int Send(const char *pBuffer, uint32 nSize) const;
+		inline int Send(const char *pBuffer, uint32 nSize) const;
 
 		/**
 		*  @brief
@@ -223,7 +223,7 @@ class Connection : protected Thread {
 		*  @return
 		*    Total number of bytes sent, negative value on error
 		*/
-		PLCORE_API int Send(const String &sString) const;
+		inline int Send(const String &sString) const;
 
 		/**
 		*  @brief
@@ -385,6 +385,12 @@ class Connection : protected Thread {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Network/Connection.inl"
 
 
 #endif // __PLCORE_CONNECTION_H__

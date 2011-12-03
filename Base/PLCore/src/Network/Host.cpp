@@ -93,16 +93,6 @@ Connection *Host::Connect(const String &sServer, uint32 nPort)
 
 /**
 *  @brief
-*    Check if the host is currently listening for new connections
-*/
-bool Host::IsListening() const
-{
-	// Return listening status
-	return m_bListening;
-}
-
-/**
-*  @brief
 *    Start listening for new connections
 */
 void Host::Listen(uint32 nPort)
@@ -163,59 +153,6 @@ void Host::CloseConnections()
 		delete pConnection;
 	}
 	m_lstConnections.Clear();
-}
-
-/**
-*  @brief
-*    Close host (close all connections and stop listening for new connections)
-*/
-void Host::Close()
-{
-	// Close port (stop listening)
-	ClosePort();
-
-	// Close all connections
-	CloseConnections();
-}
-
-/**
-*  @brief
-*    Returns the currently used port number
-*/
-uint32 Host::GetPort() const
-{
-	// Return host port
-	return m_nPort;
-}
-
-/**
-*  @brief
-*    Returns the maximum number of allowed connections
-*/
-uint32 Host::GetMaxConnections() const
-{
-	// Return maximum number of connections
-	return m_nMaxConnections;
-}
-
-/**
-*  @brief
-*    Sets the maximum number of allowed connections
-*/
-void Host::SetMaxConnections(uint32 nMaxConnections)
-{
-	// Set maximum number of connections
-	m_nMaxConnections = nMaxConnections;
-}
-
-/**
-*  @brief
-*    Get list of active connection
-*/
-const Container<Connection*> &Host::GetConnections() const
-{
-	// Return connection list
-	return m_lstConnections;
 }
 
 /**
@@ -342,32 +279,6 @@ void Host::CheckNewConnections()
 			// Error: too many connections
 			cSocket.Close();
 		}
-	}
-}
-
-/**
-*  @brief
-*    Adds a connection
-*/
-void Host::AddConnection(Connection *pConnection)
-{
-	// Check if connection pointer is valid
-	if (pConnection) {
-		// Add connection
-		m_lstConnections.Add(pConnection);
-	}
-}
-
-/**
-*  @brief
-*    Removes a connection
-*/
-void Host::RemoveConnection(Connection *pConnection)
-{
-	// Check if connection pointer is valid
-	if (pConnection) {
-		// Remove connection
-		m_lstConnections.Remove(pConnection);
 	}
 }
 

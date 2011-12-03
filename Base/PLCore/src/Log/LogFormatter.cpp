@@ -34,20 +34,6 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    To activate/deactivate that the [LogLevel] prefix should be shown
-*    in the log before each log message e.g. [Info] info log level message
-*/
-void LogFormatter::ShowLogLevelPrefix(bool bShow)
-{
-	m_bShowLogLevelPrefix = bShow;
-}
-
-
-//[-------------------------------------------------------]
 //[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**

@@ -87,7 +87,7 @@ class ScriptManager : public Singleton<ScriptManager> {
 		*  @return
 		*    List of the names of the supported script languages
 		*/
-		PLCORE_API const Array<String> &GetScriptLanguages();
+		inline const Array<String> &GetScriptLanguages();
 
 		/**
 		*  @brief
@@ -99,7 +99,7 @@ class ScriptManager : public Singleton<ScriptManager> {
 		*  @return
 		*    Script language, empty string on error (possibly not supported filename extension)
 		*/
-		PLCORE_API String GetScriptLanguageByExtension(const String &sExtension);
+		inline String GetScriptLanguageByExtension(const String &sExtension);
 
 		/**
 		*  @brief
@@ -111,7 +111,7 @@ class ScriptManager : public Singleton<ScriptManager> {
 		*  @return
 		*    'true' if the given script language is supported, else 'false'
 		*/
-		PLCORE_API bool IsSupported(const String &sScriptLanguage);
+		inline bool IsSupported(const String &sScriptLanguage);
 
 		/**
 		*  @brief
@@ -135,7 +135,7 @@ class ScriptManager : public Singleton<ScriptManager> {
 		*  @return
 		*    List of all script binding instances
 		*/
-		PLCORE_API const Array<ScriptBinding*> &GetScriptBindings();
+		inline const Array<ScriptBinding*> &GetScriptBindings();
 
 		/**
 		*  @brief
@@ -215,13 +215,13 @@ class ScriptManager : public Singleton<ScriptManager> {
 		*    - The given class must be a new one, so this function did not check whether the
 		*      class is already registered
 		*/
-		void OnClassLoaded(const Class *pClass);
+		inline void OnClassLoaded(const Class *pClass);
 
 		/**
 		*  @brief
 		*    Registers queued classes
 		*/
-		void RegisterClasses();
+		PLCORE_API void RegisterClasses();
 
 
 	//[-------------------------------------------------------]
@@ -251,6 +251,12 @@ class ScriptManager : public Singleton<ScriptManager> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Script/ScriptManager.inl"
 
 
 #endif // __PLCORE_SCRIPTMANAGER_H__

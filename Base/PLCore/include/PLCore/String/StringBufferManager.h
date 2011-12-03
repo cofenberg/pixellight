@@ -128,7 +128,7 @@ class StringBufferManager {
 		*  @param[in] cStringBuffer
 		*    String buffer instance to release
 		*/
-		void ReleaseStringBuffer(StringBuffer &cStringBuffer);
+		PLCORE_API void ReleaseStringBuffer(StringBuffer &cStringBuffer);
 
 
 	//[-------------------------------------------------------]

@@ -160,7 +160,7 @@ class String {
 		*  @brief
 		*    Default constructor
 		*/
-		PLCORE_API String();
+		inline String();
 
 		/**
 		*  @brief
@@ -205,15 +205,15 @@ class String {
 		*  @param[in] nValue
 		*    Number to put into the string
 		*/
-		PLCORE_API String(bool bValue);
+		inline String(bool bValue);
 		PLCORE_API String(int nValue);
-		PLCORE_API String(int64 nValue);
-		PLCORE_API String(uint8 nValue);
-	//	PLCORE_API String(uint16 nValue);	// We can't do that because wchar_t may be defined the same way as uint16
-		PLCORE_API String(uint32 nValue);
-		PLCORE_API String(uint64 nValue);
-		PLCORE_API String(float fValue);
-		PLCORE_API String(double fValue);
+		inline String(int64 nValue);
+		inline String(uint8 nValue);
+	//	inline String(uint16 nValue);	// We can't do that because wchar_t may be defined the same way as uint16
+		inline String(uint32 nValue);
+		inline String(uint64 nValue);
+		inline String(float fValue);
+		inline String(double fValue);
 
 		/**
 		*  @brief
@@ -222,7 +222,7 @@ class String {
 		*  @param[in] pValue
 		*    Pointer to put into the string
 		*/
-		PLCORE_API String(void *pValue);
+		inline String(void *pValue);
 
 		/**
 		*  @brief
@@ -241,7 +241,7 @@ class String {
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API ~String();
+		inline ~String();
 
 		/**
 		*  @brief
@@ -250,7 +250,7 @@ class String {
 		*  @return
 		*    Length of the string (excluding the terminating zero)
 		*/
-		PLCORE_API uint32 GetLength() const;
+		inline uint32 GetLength() const;
 
 		/**
 		*  @brief
@@ -259,7 +259,7 @@ class String {
 		*  @return
 		*    Internal string format
 		*/
-		PLCORE_API EFormat GetFormat() const;
+		inline EFormat GetFormat() const;
 
 		/**
 		*  @brief
@@ -274,7 +274,7 @@ class String {
 		*    NOT always equal to the length of it! For a pure ASCII string the number of bytes is always equal
 		*    to it's length. 
 		*/
-		PLCORE_API uint32 GetNumOfBytes() const;
+		inline uint32 GetNumOfBytes() const;
 
 		/**
 		*  @brief
@@ -286,7 +286,7 @@ class String {
 		*  @return
 		*    ASCII character at the given position within the string, terminating zero (\0) on error
 		*/
-		PLCORE_API char operator [](uint32 nIndex) const;
+		inline char operator [](uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -303,7 +303,7 @@ class String {
 		*  @note
 		*    - Do NOT manipulate or even mess up the memory by writing outside the given buffer!
 		*/
-		PLCORE_API const char *GetASCII() const;
+		inline const char *GetASCII() const;
 
 		/**
 		*  @brief
@@ -315,7 +315,7 @@ class String {
 		*  @see
 		*    - GetASCII()
 		*/
-		PLCORE_API operator const char *() const;
+		inline operator const char *() const;
 
 		/**
 		*  @brief
@@ -327,7 +327,7 @@ class String {
 		*  @see
 		*    - GetASCII()
 		*/
-		PLCORE_API const wchar_t *GetUnicode() const;
+		inline const wchar_t *GetUnicode() const;
 
 		/**
 		*  @brief
@@ -339,7 +339,7 @@ class String {
 		*  @see
 		*    - GetASCII()
 		*/
-		PLCORE_API operator const wchar_t *() const;
+		inline operator const wchar_t *() const;
 
 		/**
 		*  @brief
@@ -351,7 +351,7 @@ class String {
 		*  @return
 		*    Reference to this string
 		*/
-		PLCORE_API String &operator =(const String &sString);
+		inline String &operator =(const String &sString);
 
 		/**
 		*  @brief
@@ -491,7 +491,7 @@ class String {
 		*  @return
 		*    'true' if the two strings are identical, else 'false'
 		*/
-		PLCORE_API bool operator ==(const String &sString) const;
+		inline bool operator ==(const String &sString) const;
 
 		/**
 		*  @brief
@@ -503,8 +503,8 @@ class String {
 		*  @return
 		*    'true' if the two strings are identical, else 'false'
 		*/
-		PLCORE_API bool operator ==(const char *pszString) const;
-		PLCORE_API bool operator ==(const wchar_t *pszString) const;
+		inline bool operator ==(const char *pszString) const;
+		inline bool operator ==(const wchar_t *pszString) const;
 
 		/**
 		*  @brief
@@ -516,7 +516,7 @@ class String {
 		*  @return
 		*    'true' if the two strings are different, else 'false'
 		*/
-		PLCORE_API bool operator !=(const String &sString) const;
+		inline bool operator !=(const String &sString) const;
 
 		/**
 		*  @brief
@@ -528,8 +528,8 @@ class String {
 		*  @return
 		*    'true' if the two strings are different, else 'false'
 		*/
-		PLCORE_API bool operator !=(const char *pszString) const;
-		PLCORE_API bool operator !=(const wchar_t *pszString) const;
+		inline bool operator !=(const char *pszString) const;
+		inline bool operator !=(const wchar_t *pszString) const;
 
 		/**
 		*  @brief
@@ -607,7 +607,7 @@ class String {
 		*  @note
 		*    - Examples: 'abc' is alphabetic while 'abc12' or 'ab-c' are not
 		*/
-		PLCORE_API bool IsAlphabetic() const;
+		inline bool IsAlphabetic() const;
 
 		/**
 		*  @brief
@@ -619,7 +619,7 @@ class String {
 		*  @note
 		*    - Examples: 'abc', '12' or 'abc12' are alpha-numeric while 'abc-12' is not
 		*/
-		PLCORE_API bool IsAlphaNumeric() const;
+		inline bool IsAlphaNumeric() const;
 
 		/**
 		*  @brief
@@ -632,7 +632,7 @@ class String {
 		*    - Examples: '5' or '0' are numeric,
 		*      while  '5.1', '.', 'AD', '3D', '5,5', '5.2.8' are not
 		*/
-		PLCORE_API bool IsNumeric() const;
+		inline bool IsNumeric() const;
 
 		/**
 		*  @brief
@@ -742,7 +742,7 @@ class String {
 		*  @return
 		*    Reference to this string
 		*/
-		PLCORE_API String &ToLower();
+		inline String &ToLower();
 
 		/**
 		*  @brief
@@ -751,7 +751,7 @@ class String {
 		*  @return
 		*    Reference to this string
 		*/
-		PLCORE_API String &ToUpper();
+		inline String &ToUpper();
 
 		/**
 		*  @brief
@@ -881,7 +881,7 @@ class String {
 		*  @return
 		*    Reference to this string
 		*/
-		PLCORE_API String &TrimLeading();
+		inline String &TrimLeading();
 
 		/**
 		*  @brief
@@ -890,7 +890,7 @@ class String {
 		*  @return
 		*    Reference to this string
 		*/
-		PLCORE_API String &TrimTrailing();
+		inline String &TrimTrailing();
 
 		/**
 		*  @brief
@@ -912,7 +912,7 @@ class String {
 		*    - Carriage return = CR = '\r' = 0x0D = 13 in decimal
 		*    - Line feed = LF = '\n' = 0x0A = 10 in decimal
 		*/
-		PLCORE_API String &RemoveLineEndings();
+		inline String &RemoveLineEndings();
 
 
 	//[-------------------------------------------------------]
@@ -929,7 +929,7 @@ class String {
 		*  @see
 		*    - GetASCII()
 		*/
-		PLCORE_API const char *GetUTF8() const;
+		inline const char *GetUTF8() const;
 
 		// Is valid tests
 		PLCORE_API bool IsValidInteger() const;
@@ -945,12 +945,12 @@ class String {
 		PLCORE_API uint16   GetUInt16()   const;
 		PLCORE_API uint32   GetUInt32()   const;
 		PLCORE_API uint64   GetUInt64()   const;
-		PLCORE_API uint_ptr GetUIntPtr()  const;
+		inline     uint_ptr GetUIntPtr()  const;
 		PLCORE_API float    GetFloat()    const;
 		PLCORE_API double   GetDouble()   const;
 
 		// Convert to string
-		PLCORE_API String &operator =(bool     bValue);
+		inline     String &operator =(bool     bValue);
 		PLCORE_API String &operator =(char     nValue);
 		PLCORE_API String &operator =(wchar_t  nValue);
 		PLCORE_API String &operator =(int      nValue);
@@ -967,35 +967,35 @@ class String {
 		PLCORE_API String operator +(char    nValue) const;
 		PLCORE_API String operator +(wchar_t nValue) const;
 		PLCORE_API String operator +(int     nValue) const;
-		PLCORE_API String operator +(int64   nValue) const;
-		PLCORE_API String operator +(uint8   nValue) const;
-	//	PLCORE_API String operator +(uint16  nValue) const;	// We can't do that because wchar_t may be defined the same way as uint16
-		PLCORE_API String operator +(uint32  nValue) const;
-		PLCORE_API String operator +(uint64  nValue) const;
-		PLCORE_API String operator +(float   fValue) const;
-		PLCORE_API String operator +(double  dValue) const;
+		inline     String operator +(int64   nValue) const;
+		inline     String operator +(uint8   nValue) const;
+	//	inline     String operator +(uint16  nValue) const;	// We can't do that because wchar_t may be defined the same way as uint16
+		inline     String operator +(uint32  nValue) const;
+		inline     String operator +(uint64  nValue) const;
+		inline     String operator +(float   fValue) const;
+		inline     String operator +(double  dValue) const;
 		PLCORE_API friend String operator +(bool     bValue, const String &sString);
 		PLCORE_API friend String operator +(char     nValue, const String &sString);
 		PLCORE_API friend String operator +(wchar_t  nValue, const String &sString);
-		PLCORE_API friend String operator +(int      nValue, const String &sString);
-		PLCORE_API friend String operator +(int64    nValue, const String &sString);
-		PLCORE_API friend String operator +(uint8    nValue, const String &sString);
-	//	PLCORE_API friend String operator +(uint16   nValue, const String &sString);	// We can't do that because wchar_t may be defined the same way as uint16
-		PLCORE_API friend String operator +(uint32   nValue, const String &sString);
-		PLCORE_API friend String operator +(uint64   nValue, const String &sString);
-		PLCORE_API friend String operator +(float    fValue, const String &sString);
-		PLCORE_API friend String operator +(double   dValue, const String &sString);
+		inline     friend String operator +(int      nValue, const String &sString);
+		inline     friend String operator +(int64    nValue, const String &sString);
+		inline     friend String operator +(uint8    nValue, const String &sString);
+	//	inline     friend String operator +(uint16   nValue, const String &sString);	// We can't do that because wchar_t may be defined the same way as uint16
+		inline     friend String operator +(uint32   nValue, const String &sString);
+		inline     friend String operator +(uint64   nValue, const String &sString);
+		inline     friend String operator +(float    fValue, const String &sString);
+		inline     friend String operator +(double   dValue, const String &sString);
 		PLCORE_API String &operator +=(bool     bValue);
 		PLCORE_API String &operator +=(char     nValue);
 		PLCORE_API String &operator +=(wchar_t  nValue);
-		PLCORE_API String &operator +=(int      nValue);
-		PLCORE_API String &operator +=(int64    nValue);
-		PLCORE_API String &operator +=(uint8    nValue);
-	//	PLCORE_API String &operator +=(uint16   nValue);	// We can't do that because wchar_t may be defined the same way as uint16
-		PLCORE_API String &operator +=(uint32   nValue);
-		PLCORE_API String &operator +=(uint64   nValue);
-		PLCORE_API String &operator +=(float    fValue);
-		PLCORE_API String &operator +=(double   dValue);
+		inline     String &operator +=(int      nValue);
+		inline     String &operator +=(int64    nValue);
+		inline     String &operator +=(uint8    nValue);
+	//	inline     String &operator +=(uint16   nValue);	// We can't do that because wchar_t may be defined the same way as uint16
+		inline     String &operator +=(uint32   nValue);
+		inline     String &operator +=(uint64   nValue);
+		inline     String &operator +=(float    fValue);
+		inline     String &operator +=(double   dValue);
 
 
 	//[-------------------------------------------------------]
@@ -1009,7 +1009,7 @@ class String {
 		*  @param[in] pStringBuffer
 		*    New string buffer to use, can be a null pointer
 		*/
-		void SetStringBuffer(StringBuffer *pStringBuffer);
+		PLCORE_API void SetStringBuffer(StringBuffer *pStringBuffer);
 
 		/**
 		*  @brief
@@ -1035,10 +1035,9 @@ class String {
 
 
 //[-------------------------------------------------------]
-//[ Includes                                              ]
+//[ Implementation                                        ]
 //[-------------------------------------------------------]
-// Include the string buffer header if we are in debug mode so we can inspect the string in a quite comfortable way
-#include "PLCore/String/StringBuffer.h"
+#include "PLCore/String/String.inl"
 
 
 #endif // __PLCORE_STRING_H__

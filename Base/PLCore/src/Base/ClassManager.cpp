@@ -82,26 +82,6 @@ bool ClassManager::HasInstance()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Get all registered modules
-*/
-const List<const Module*> &ClassManager::GetModules() const
-{
-	// Return module list
-	return m_lstModules;
-}
-
-/**
-*  @brief
-*    Get module by ID
-*/
-const Module *ClassManager::GetModule(uint32 nModuleID) const
-{
-	// Get module with given ID (can be a null pointer)
-	return m_mapModules.Get(nModuleID);
-}
-
-/**
-*  @brief
 *    Load a module
 */
 const Module *ClassManager::LoadModule(const String &sAbsFilename, bool bForceBuildTypeMatch)
@@ -341,16 +321,6 @@ bool ClassManager::UnloadAllPlugins()
 
 /**
 *  @brief
-*    Get all registered classes
-*/
-const List<const Class*> &ClassManager::GetClasses() const
-{
-	// Return class list
-	return m_lstClasses;
-}
-
-/**
-*  @brief
 *    Get classes based on their base class and/or module (search for classes)
 */
 void ClassManager::GetClasses(List<const Class*> &lstClasses, const String &sClass, ERecursive nRecursive, EIncludeBase nIncludeBase, EIncludeAbstract nIncludeAbstract, uint32 nModuleID) const
@@ -377,16 +347,6 @@ void ClassManager::GetClasses(List<const Class*> &lstClasses, const String &sCla
 			}
 		}
 	}
-}
-
-/**
-*  @brief
-*    Get class
-*/
-const Class *ClassManager::GetClass(const String &sClass) const
-{
-	// Get class
-	return m_mapClasses.Get(sClass);
 }
 
 

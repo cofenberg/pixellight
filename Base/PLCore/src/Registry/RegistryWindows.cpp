@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLCore/Registry/Registry.h"
 #include "PLCore/Registry/RegistryWindows.h"
 
 
@@ -60,13 +61,13 @@ RegistryWindows::~RegistryWindows()
 //[-------------------------------------------------------]
 //[ Private virtual RegistryImpl functions                ]
 //[-------------------------------------------------------]
-Registry::ERegistry RegistryWindows::GetRegistryType() const
+uint32 RegistryWindows::GetRegistryType() const
 {
 	// We have a Windows registry
 	return Registry::Windows;
 }
 
-bool RegistryWindows::Open(Registry::EKey nKey, const String &sSubKey, uint32 nAccess)
+bool RegistryWindows::Open(uint32 nKey, const String &sSubKey, uint32 nAccess)
 {
 	// Close first
 	Close();
@@ -112,7 +113,7 @@ bool RegistryWindows::Open(Registry::EKey nKey, const String &sSubKey, uint32 nA
 	return (RegOpenKeyExW(hRootKey, sSubKey.GetUnicode(), 0, nMode, &m_hKey) == ERROR_SUCCESS);
 }
 
-bool RegistryWindows::Create(Registry::EKey nKey, const String &sSubKey, uint32 nAccess)
+bool RegistryWindows::Create(uint32 nKey, const String &sSubKey, uint32 nAccess)
 {
 	// Close first
 	Close();
@@ -199,7 +200,7 @@ void RegistryWindows::Close()
 	}
 }
 
-Registry::EKey RegistryWindows::GetOpenKey() const
+uint32 RegistryWindows::GetOpenKey() const
 {
 	// Return key ID
 	return m_nKey;
@@ -291,7 +292,7 @@ String RegistryWindows::GetValue(uint32 nIndex) const
 	return "";
 }
 
-Registry::EType RegistryWindows::GetValueType(const String &sName) const
+uint32 RegistryWindows::GetValueType(const String &sName) const
 {
 	// Key opened?
 	if (m_hKey) {

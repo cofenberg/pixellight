@@ -70,7 +70,7 @@ class Socket {
 		*  @param[in] cSocket
 		*    Socket to copy from
 		*/
-		PLCORE_API Socket(const Socket &cSocket);
+		inline Socket(const Socket &cSocket);
 
 		/**
 		*  @brief
@@ -82,13 +82,13 @@ class Socket {
 		*  @note
 		*    - Should be used mainly to create an invalid socket ('INVALID_SOCKET')
 		*/
-		PLCORE_API Socket(handle nSocket);
+		inline Socket(handle nSocket);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API ~Socket();
+		inline ~Socket();
 
 		//[-------------------------------------------------------]
 		//[ Connect                                               ]
@@ -118,7 +118,7 @@ class Socket {
 		*  @return
 		*    The socket address object
 		*/
-		PLCORE_API const SocketAddress &GetSocketAddress() const;
+		inline const SocketAddress &GetSocketAddress() const;
 
 		/**
 		*  @brief
@@ -132,7 +132,7 @@ class Socket {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool Connect(const String &sAddress, uint32 nPort);
+		inline bool Connect(const String &sAddress, uint32 nPort);
 
 		/**
 		*  @brief
@@ -159,7 +159,7 @@ class Socket {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool Bind(uint32 nPort);
+		inline bool Bind(uint32 nPort);
 
 		/**
 		*  @brief
@@ -173,7 +173,7 @@ class Socket {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool Bind(const String &sAddress, uint32 nPort);
+		inline bool Bind(const String &sAddress, uint32 nPort);
 
 		/**
 		*  @brief
@@ -274,6 +274,12 @@ class Socket {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Network/Socket.inl"
 
 
 #endif // __PLCORE_NETWORK_SOCKET_H__

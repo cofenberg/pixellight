@@ -99,7 +99,7 @@ class FuncDesc : public MemberDesc {
 		*  @return
 		*    Signature
 		*/
-		PLCORE_API String GetSignature() const;
+		inline String GetSignature() const;
 
 
 	//[-------------------------------------------------------]
@@ -136,6 +136,12 @@ class FuncDesc : public MemberDesc {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Base/Func/FuncDesc.inl"
 
 
 #endif // __PLCORE_FUNCDESC_H__

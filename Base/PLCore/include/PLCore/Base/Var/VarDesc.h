@@ -101,7 +101,7 @@ class VarDesc : public MemberDesc {
 		*  @return
 		*    Type ID
 		*/
-		PLCORE_API int GetTypeID() const;
+		inline int GetTypeID() const;
 
 		/**
 		*  @brief
@@ -110,7 +110,7 @@ class VarDesc : public MemberDesc {
 		*  @return
 		*    Type name
 		*/
-		PLCORE_API String GetTypeName() const;
+		inline String GetTypeName() const;
 
 
 	//[-------------------------------------------------------]
@@ -154,6 +154,12 @@ class VarDesc : public MemberDesc {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Base/Var/VarDesc.inl"
 
 
 #endif // __PLCORE_VARDESC_H__

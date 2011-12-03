@@ -67,35 +67,6 @@ Socket::Socket() :
 
 /**
 *  @brief
-*    Copy constructor
-*/
-Socket::Socket(const Socket &cSocket) :
-	m_cSocketAddress(cSocket.m_cSocketAddress),
-	m_nSocket(cSocket.m_nSocket)
-{
-}
-
-/**
-*  @brief
-*    Constructor
-*/
-Socket::Socket(handle nSocket) :
-	m_nSocket(nSocket)
-{
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-Socket::~Socket()
-{
-	// Note that we are NOT allowed to close the current socket in here automatically
-	// or we may end up in an ugly mess
-}
-
-/**
-*  @brief
 *    Returns whether the socket is currently valid
 */
 bool Socket::IsValid() const
@@ -132,50 +103,11 @@ bool Socket::Close()
 
 /**
 *  @brief
-*    Returns the socket address object
-*/
-const SocketAddress &Socket::GetSocketAddress() const
-{
-	// Return socket address
-	return m_cSocketAddress;
-}
-
-/**
-*  @brief
-*    Establishes a connection to a host by using an address and port
-*/
-bool Socket::Connect(const String &sAddress, uint32 nPort)
-{
-	return Connect(SocketAddress(sAddress, nPort));
-}
-
-/**
-*  @brief
 *    Establishes a connection to a host by using a given socked address
 */
 bool Socket::Connect(const SocketAddress &cSocketAddress)
 {
 	return (m_nSocket != INVALID_SOCKET && connect(m_nSocket, reinterpret_cast<sockaddr*>(cSocketAddress.m_pSockAddress), sizeof(*cSocketAddress.m_pSockAddress)) != SOCKET_ERROR);
-}
-
-/**
-*  @brief
-*    Associate local address with socket
-*/
-bool Socket::Bind(uint32 nPort)
-{
-	// Bind socket to port
-	return Bind(SocketAddress(nPort));
-}
-
-/**
-*  @brief
-*    Associate local address with socket
-*/
-bool Socket::Bind(const String &sAddress, uint32 nPort)
-{
-	// Bind socket to address and port
-	return Bind(SocketAddress(sAddress, nPort));
 }
 
 /**

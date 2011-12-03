@@ -221,7 +221,7 @@ class Config : public Loadable {
 		*  @return
 		*    The number of configuration class instances
 		*/
-		PLCORE_API uint32 GetNumOfClasses() const;
+		inline uint32 GetNumOfClasses() const;
 
 		/**
 		*  @brief
@@ -233,7 +233,7 @@ class Config : public Loadable {
 		*  @return
 		*    The requested configuration class instance, a null pointer on error
 		*/
-		PLCORE_API ConfigGroup *GetClassByIndex(uint32 nIndex) const;
+		inline ConfigGroup *GetClassByIndex(uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -317,6 +317,12 @@ class Config : public Loadable {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Config/Config.inl"
 
 
 #endif // __PLCORE_CONFIG_H__

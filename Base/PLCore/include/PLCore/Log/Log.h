@@ -147,7 +147,7 @@ class Log : public Singleton<Log> {
 		*              (use Androids "logcat" utility to access this system log)
 		*    - By default the log does not write into the console
 		*/
-		PLCORE_API bool IsVerbose() const;
+		inline bool IsVerbose() const;
 
 		/**
 		*  @brief
@@ -161,7 +161,7 @@ class Log : public Singleton<Log> {
 		*  @see
 		*    - IsVerbose()
 		*/
-		PLCORE_API void SetVerbose(bool bVerbose, bool bVerboseLogLevelPrefix = true);
+		inline void SetVerbose(bool bVerbose, bool bVerboseLogLevelPrefix = true);
 
 		/**
 		*  @brief
@@ -209,7 +209,7 @@ class Log : public Singleton<Log> {
 		*  @return
 		*    The log filename
 		*/
-		PLCORE_API String GetFilename() const;
+		inline String GetFilename() const;
 
 		/**
 		*  @brief
@@ -227,7 +227,7 @@ class Log : public Singleton<Log> {
 		*    The text is written to the log only if the current
 		*    log level is greater or equal to the specified value.
 		*/
-		PLCORE_API bool Output(uint8 nLogLevel, const String &sText);
+		inline bool Output(uint8 nLogLevel, const String &sText);
 
 		/**
 		*  @brief
@@ -236,7 +236,7 @@ class Log : public Singleton<Log> {
 		*  @return
 		*    The current log level
 		*/
-		PLCORE_API uint8 GetLogLevel() const;
+		inline uint8 GetLogLevel() const;
 
 		/**
 		*  @brief
@@ -245,7 +245,7 @@ class Log : public Singleton<Log> {
 		*  @param[in] nLogLevel
 		*    New current log level
 		*/
-		PLCORE_API void SetLogLevel(uint8 nLogLevel = Info);
+		inline void SetLogLevel(uint8 nLogLevel = Info);
 
 		/**
 		*  @brief
@@ -254,7 +254,7 @@ class Log : public Singleton<Log> {
 		*  @return
 		*    Log level for explicitly flush
 		*/
-		PLCORE_API uint8 GetFlushLogLevel() const;
+		inline uint8 GetFlushLogLevel() const;
 
 		/**
 		*  @brief
@@ -263,7 +263,7 @@ class Log : public Singleton<Log> {
 		*  @param[in] nFlushLogLevel
 		*    Log level for the explicitly flush
 		*/
-		PLCORE_API void SetFlushLogLevel(uint8 nFlushLogLevel = Error);
+		inline void SetFlushLogLevel(uint8 nFlushLogLevel = Error);
 
 		/**
 		*  @brief
@@ -275,7 +275,7 @@ class Log : public Singleton<Log> {
 		*  @note
 		*    - Only call this function if really required!
 		*/
-		PLCORE_API bool Flush();
+		inline bool Flush();
 
 		/**
 		*  @brief
@@ -284,7 +284,7 @@ class Log : public Singleton<Log> {
 		*  @return
 		*    Amount of buffered log messages
 		*/
-		PLCORE_API uint32 GetBufferCount() const;
+		inline uint32 GetBufferCount() const;
 
 		/**
 		*  @brief
@@ -305,7 +305,7 @@ class Log : public Singleton<Log> {
 		*  @return
 		*    Queue of n-last log messages
 		*/
-		PLCORE_API const Queue<String> &GetLastMessages() const;
+		inline const Queue<String> &GetLastMessages() const;
 
 		/**
 		*  @brief
@@ -326,7 +326,7 @@ class Log : public Singleton<Log> {
 		*  @return
 		*    The current log formatter object, can be a null pointer, do NOT delete the returned instance!
 		*/
-		PLCORE_API LogFormatter *GetLogFormatter() const;
+		inline LogFormatter *GetLogFormatter() const;
 
 
 	//[-------------------------------------------------------]
@@ -378,7 +378,7 @@ class Log : public Singleton<Log> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool Write(uint8 nLogLevel, const String &sText);
+		PLCORE_API bool Write(uint8 nLogLevel, const String &sText);
 
 
 	//[-------------------------------------------------------]
@@ -403,6 +403,12 @@ class Log : public Singleton<Log> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Log/Log.inl"
 
 
 #endif // __PLCORE_LOG_H__

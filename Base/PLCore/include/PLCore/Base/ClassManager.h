@@ -103,7 +103,7 @@ class ClassManager : public Singleton<ClassManager> {
 		*  @return
 		*    List of modules (do not destroy the returned instances)
 		*/
-		PLCORE_API const List<const Module*> &GetModules() const;
+		inline const List<const Module*> &GetModules() const;
 
 		/**
 		*  @brief
@@ -115,7 +115,7 @@ class ClassManager : public Singleton<ClassManager> {
 		*  @return
 		*    Pointer to module (do not destroy the returned instance, can be a null pointer)
 		*/
-		PLCORE_API const Module *GetModule(uint32 nModuleID) const;
+		inline const Module *GetModule(uint32 nModuleID) const;
 
 		/**
 		*  @brief
@@ -198,7 +198,7 @@ class ClassManager : public Singleton<ClassManager> {
 		*  @return
 		*    List of classes (do not destroy the returned instances)
 		*/
-		PLCORE_API const List<const Class*> &GetClasses() const;
+		inline const List<const Class*> &GetClasses() const;
 
 		/**
 		*  @brief
@@ -233,7 +233,7 @@ class ClassManager : public Singleton<ClassManager> {
 		*  @return
 		*    Pointer to the class, or a null pointer on error (do not destroy the returned instance)
 		*/
-		PLCORE_API const Class *GetClass(const String &sClass) const;
+		inline const Class *GetClass(const String &sClass) const;
 
 
 	//[-------------------------------------------------------]
@@ -404,6 +404,12 @@ class ClassManager : public Singleton<ClassManager> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Base/ClassManager.inl"
 
 
 #endif // __PLCORE_CLASSMANAGER_H__

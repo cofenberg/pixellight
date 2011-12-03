@@ -44,7 +44,6 @@ String Checksum::Get(const uint8 nBuffer[], uint32 nNumOfBytes)
 {
 	// Check buffer size
 	if (nNumOfBytes) {
-
 		// Get the checksum
 		Update(nBuffer, nNumOfBytes);
 		String sChecksum = Final();
