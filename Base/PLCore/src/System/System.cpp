@@ -99,6 +99,39 @@ bool System::IsLittleEndian() const
 	return (p.nBytes[0] == 1u);
 }
 
+/**
+*  @brief
+*    Returns the platform architecture
+*/
+String System::GetPlatformArchitecture() const
+{
+	#ifdef ARCHITECTURE_STRING
+		// The exact architecture PLCore has been compiled for is provided as preprocessor definition
+		static const String sString = ARCHITECTURE_STRING;
+	#else
+		// Use a fallback in case ARCHITECTURE_STRING is not given
+		#if defined(WIN64) || defined(X64_ARCHITECTURE)
+			static const String sString = "x64";
+		#else
+			static const String sString = "x86";
+		#endif
+	#endif
+	return sString;
+}
+
+/**
+*  @brief
+*    Returns the platform bit architecture
+*/
+uint32 System::GetPlatformBitArchitecture() const
+{
+	#if defined(WIN64) || defined(X64_ARCHITECTURE)
+		return 64;
+	#else
+		return 32;
+	#endif
+}
+
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]

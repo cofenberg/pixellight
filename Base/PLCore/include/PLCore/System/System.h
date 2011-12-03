@@ -127,7 +127,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    Platform architecture (for instance 'x86', 'x64', 'armeabi', 'armeabi-v7a' and so on)
 		*/
-		inline String GetPlatformArchitecture() const;
+		PLCORE_API String GetPlatformArchitecture() const;
 
 		/**
 		*  @brief
@@ -136,7 +136,7 @@ class System : public Singleton<System> {
 		*  @return
 		*    Platform bit architecture (for instance '32' for x86, '64' for x64)
 		*/
-		inline uint32 GetPlatformBitArchitecture() const;
+		PLCORE_API uint32 GetPlatformBitArchitecture() const;
 
 		/**
 		*  @brief
