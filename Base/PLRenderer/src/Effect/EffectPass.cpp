@@ -165,7 +165,7 @@ bool EffectPass::Bind(ParameterManager *pParameterManager)
 
 			// Fixed functions
 			if (pFixedFunctions) {
-				pFixedFunctions->SetTransformState(static_cast<FixedFunctions::Transform::Enum>(FixedFunctions::Transform::Texture0 + i), Matrix4x4::Identity);
+				pFixedFunctions->SetTransformState(static_cast<FixedFunctions::Transform::Enum>(static_cast<uint32>(FixedFunctions::Transform::Texture0) + i), Matrix4x4::Identity);
 
 				// Set texture stage states
 				for (uint32 nState=0; nState<FixedFunctions::TextureStage::Number; nState++)

@@ -92,7 +92,7 @@ Texture *TextureCreatorAngleCubeMap::Create(TextureManager &cTextureManager, Tex
 	// Create the image parts
 	Image cImage;
 	for (int i=0; i<6; i++) {
-		ImageBuffer *pImageBuffer = cImage.CreatePart(ImagePartCubeSidePosX + i)->CreateMipmap();
+		ImageBuffer *pImageBuffer = cImage.CreatePart(static_cast<uint32>(ImagePartCubeSidePosX) + i)->CreateMipmap();
 		pImageBuffer->CreateImage(DataByte, ColorRGB, Vector3i(Size, Size, 1));
 	}
 

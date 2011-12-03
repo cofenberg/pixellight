@@ -854,7 +854,7 @@ void GuiLinux::ProcessXEvent(XEvent *pEvent)
 				// Process this message only if the widget is not disabled
 				if (pWidgetLinux->m_bEnabled) {
 					// Get mouse button
-					EMouseButton nButton = static_cast<EMouseButton>(Button0 + (pEvent->xbutton.button - XLib::Button1));
+					EMouseButton nButton = static_cast<EMouseButton>(static_cast<uint32>(Button0) + (pEvent->xbutton.button - XLib::Button1));
 
 					// Send OnMouseButtonUp message
 					pGui->SendMessage(GuiMessage::OnMouseButtonUp(pWidget, nButton, Vector2i(pEvent->xbutton.x, pEvent->xbutton.y)));
