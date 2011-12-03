@@ -619,7 +619,7 @@ void GuiPL::UpdateMouse()
 			};
 			for (uint32 nButton=0; nButton<NumOfMouseButtons; nButton++) {
 				// Get the current mouse button
-				EMouseButton nMouseButton = EMouseButton(Button0 + nButton);
+				const EMouseButton nMouseButton = static_cast<EMouseButton>(static_cast<uint32>(Button0) + nButton);
 
 				// Check for state change
 				if (!m_bMouseButtonPressed[nButton] && bMouseButtonPressed[nButton]) {
