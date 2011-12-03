@@ -73,7 +73,7 @@ Rocket::Core::FileHandle FileInterfacePL::Open(const Rocket::Core::String& path)
 	}
 
 	// Error!
-	return NULL;	// nullptr may cause some compiler issues in here
+	return static_cast<Rocket::Core::FileHandle>(0);	// nullptr may cause some compiler issues in here
 }
 
 void FileInterfacePL::Close(Rocket::Core::FileHandle file)
