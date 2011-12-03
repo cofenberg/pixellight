@@ -90,7 +90,7 @@ class MemberDesc {
 		*  @return
 		*    Member type
 		*/
-		PLCORE_API EMemberType GetMemberType() const;
+		inline EMemberType GetMemberType() const;
 
 		/**
 		*  @brief
@@ -99,7 +99,7 @@ class MemberDesc {
 		*  @return
 		*    Name
 		*/
-		PLCORE_API String GetName() const;
+		inline String GetName() const;
 
 		/**
 		*  @brief
@@ -108,7 +108,7 @@ class MemberDesc {
 		*  @return
 		*    Description
 		*/
-		PLCORE_API String GetDescription() const;
+		inline String GetDescription() const;
 
 		/**
 		*  @brief
@@ -117,7 +117,7 @@ class MemberDesc {
 		*  @return
 		*    Annotation
 		*/
-		PLCORE_API String GetAnnotation() const;
+		inline String GetAnnotation() const;
 
 
 	//[-------------------------------------------------------]
@@ -151,6 +151,12 @@ class MemberDesc {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Base/MemberDesc.inl"
 
 
 #endif // __PLCORE_MEMBERDESC_H__

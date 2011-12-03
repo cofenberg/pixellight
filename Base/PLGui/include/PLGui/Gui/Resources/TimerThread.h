@@ -36,7 +36,7 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLCore {
-	class Mutex;
+	class CriticalSection;
 }
 namespace PLGui {
 	class Timer;
@@ -106,11 +106,11 @@ class TimerThread : public PLCore::Thread {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Timer		   &m_cTimer;		/**< Timer to that this thread belongs */
-		PLCore::Mutex  *m_pMutex;		/**< Timer mutex (always valid!) */
-		PLCore::uint64  m_nTimeout;		/**< Timeout value */
-		bool		    m_bOnce;		/**< Timer is firing only once? */
-		volatile bool	m_bShutdown;	/**< Shutdown thread? */
+		Timer					 &m_cTimer;				/**< Timer to that this thread belongs */
+		PLCore::CriticalSection *m_pCriticalSection;	/**< Timer critical section (always valid!) */
+		PLCore::uint64			 m_nTimeout;			/**< Timeout value */
+		bool					 m_bOnce;				/**< Timer is firing only once? */
+		volatile bool			 m_bShutdown;			/**< Shutdown thread? */
 
 
 };

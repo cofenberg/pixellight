@@ -4,6 +4,35 @@
   Under linux added ARCHITEXTUREANDBITSIZE_STRING define which holds the architecture and bitsize string (e.g. x86 for 32bit x86 code or x64 for 64bit x86 code).
   The string from this define gets appended to the standard install paths of pixellight.
 
+[CO]
+- More inline within PLCore: "String", "Class", "ClassImpl", "ClassManager", "MemberDesc", "Module", "DynEvent", "EventDesc", "EventHandlerDesc", "ConstructorDesc",
+ "FuncDesc", "ParamsParser", "ParamsParserXml", "VarDesc", "ApplicationContext", "CoreApplication", "Config", "Frontend", "FrontendApplication", "FrontendContext",
+ "FrontendImpl", "Log", "LogFormatter", "LogFormatterHtml", "Buffer", "Connection", "Host", "Socket", "SocketAddress", "HttpClient", "HttpHeader", "Registry",
+ "ScriptManager", "Runtime"
+
+
+
+>> 30.11.2011
+[CO]
+- PLFrontendOS: Added empty "OSWindowMacOSX"-class as start point for the Cocoa (Objective-C API) port (X11 can be used on Mac OS X, but it's best to avoid using it
+  to avoid compatibility trouble)
+- PLFrontendOS: Renamed "XDnDFileDropHelper" into "Linux_XDnDFileDropHelper" to make clear that this helper class is Linux related
+
+
+
+>> 29.11.2011
+[CO]
+- Feature request "ID: 3443487" (http://sourceforge.net/tracker/index.php?func=detail&aid=3443487&group_id=507544&atid=2063685): Added critical section support to
+  the mutex implementation. This is a Windows specific thingy:
+  - "Mutex":            Lock/unlock across multiple processes
+  - "Critical Section": Lock/unlock only inside the same process
+  -> Default has to be "Mutex" to be on the safe universal side
+- PLFrontendQt: Visual Studio project file: Disabled annoying "warning C4127: conditional expression is constant"-warning, it's within the Qt
+  headers were we can't change anything in there :/
+- Added "CriticalSection"-class, a simple comfort class derived from mutex
+- "FileObject", "File", "Directory", "Url", "System", "DynLib", "Mutex", "Semaphore", "Thread", "FileSearch", "Timing", "Tokenizer", "RegEx": Everything reasonable
+  to be inline is now inline to give the compiler a chance to optimize out expensive function calls. I'am sure that over the time more of such changes will follow.
+
 
 
 >> 26.11.2011

@@ -377,7 +377,7 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 			uint8 *pnTempData = nullptr;	// Used when "DDS_LINEARSIZE" is set
 			for (uint32 nFace=0; nFace<nNumOfFaces; nFace++){
 				// Create image part with reasonable semantic
-				ImagePart *pImagePart = cImage.CreatePart((nNumOfFaces == 6) ? ImagePartCubeSidePosX + nFace : 0);
+				ImagePart *pImagePart = cImage.CreatePart((nNumOfFaces == 6) ? (static_cast<uint32>(ImagePartCubeSidePosX) + nFace) : 0);
 				if (pImagePart) {
 					// Load in all mipmaps
 					for (uint32 nMipmap=0; nMipmap<nMipmaps; nMipmap++) {
@@ -428,7 +428,7 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 			// Loop through all faces
 			for (uint32 nFace=0; nFace<nNumOfFaces; nFace++){
 				// Create image part with reasonable semantic
-				ImagePart *pImagePart = cImage.GetPartBySemantics((nNumOfFaces == 6) ? ImagePartCubeSidePosX + nFace : 0);
+				ImagePart *pImagePart = cImage.GetPartBySemantics((nNumOfFaces == 6) ? (static_cast<uint32>(ImagePartCubeSidePosX) + nFace) : 0);
 				if (pImagePart) {
 					// Load in all mipmaps
 					for (uint32 nMipmap=0; nMipmap<nMipmaps; nMipmap++) {
@@ -444,7 +444,7 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 			// Loop through all faces
 			for (uint32 nFace=0; nFace<nNumOfFaces; nFace++){
 				// Create image part with reasonable semantic
-				ImagePart *pImagePart = cImage.GetPartBySemantics((nNumOfFaces == 6) ? ImagePartCubeSidePosX + nFace : 0);
+				ImagePart *pImagePart = cImage.GetPartBySemantics((nNumOfFaces == 6) ? (static_cast<uint32>(ImagePartCubeSidePosX) + nFace) : 0);
 				if (pImagePart) {
 					// Load in all mipmaps
 					for (uint32 nMipmap=0; nMipmap<nMipmaps; nMipmap++) {

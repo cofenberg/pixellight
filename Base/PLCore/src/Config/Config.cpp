@@ -176,24 +176,6 @@ bool Config::SetDefault(const String &sClass, const String &sVariable)
 
 /**
 *  @brief
-*    Returns the number of configuration class instances
-*/
-uint32 Config::GetNumOfClasses() const
-{
-	return m_lstConfig.GetNumOfElements();
-}
-
-/**
-*  @brief
-*    Returns a configuration class instance by index
-*/
-ConfigGroup *Config::GetClassByIndex(uint32 nIndex) const
-{
-	return m_lstConfig[nIndex];
-}
-
-/**
-*  @brief
 *    Returns a configuration class instance
 */
 ConfigGroup *Config::GetClass(const String &sName)

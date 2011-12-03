@@ -40,19 +40,6 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Return the pointer to the owner class instance wrapping this class implementation
-*/
-Class *ClassImpl::GetClass() const
-{
-	return m_pClass;
-}
-
-
-//[-------------------------------------------------------]
 //[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
@@ -88,56 +75,6 @@ const Module *ClassImpl::GetModule() const
 {
 	// Return module from class manager
 	return ClassManager::GetInstance()->GetModule(m_nModuleID);
-}
-
-/**
-*  @brief
-*    Get full class name (with namespace)
-*/
-String ClassImpl::GetClassName() const
-{
-	// Return name of class and namespace
-	return m_sClassName;
-}
-
-/**
-*  @brief
-*    Get full name of base class (with namespace)
-*/
-String ClassImpl::GetBaseClassName() const
-{
-	// Return base class
-	return m_sBaseClass;
-}
-
-/**
-*  @brief
-*    Get class name (without namespace)
-*/
-String ClassImpl::GetName() const
-{
-	// Return name of class
-	return m_sName;
-}
-
-/**
-*  @brief
-*    Get class description
-*/
-String ClassImpl::GetDescription() const
-{
-	// Return description
-	return m_sDescription;
-}
-
-/**
-*  @brief
-*    Get namespace
-*/
-String ClassImpl::GetNamespace() const
-{
-	// Return namespace
-	return m_sNamespace;
 }
 
 /**
@@ -184,20 +121,6 @@ bool ClassImpl::IsDerivedFrom(const String &sBaseClass) const
 
 	// Not a base class
 	return false;
-}
-
-/**
-*  @brief
-*    Get properties
-*/
-const HashMap<String, String> &ClassImpl::GetProperties() const
-{
-	// Check if class has been initialized
-	if (!m_bInitialized)
-		InitClass();
-
-	// Return property map
-	return m_mapProperties;
 }
 
 /**

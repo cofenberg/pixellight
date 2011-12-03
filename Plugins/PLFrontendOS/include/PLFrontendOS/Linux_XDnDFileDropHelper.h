@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: XDnDFileDropHelper.h                           *
+ *  File: Linux_XDnDFileDropHelper.h                     *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -84,7 +84,7 @@ class OSWindowLinux;
 *    - It can only receive drop events and only URIs can be dropped
 *    - This code is based on the paste.cc code from http://www.edwardrosten.com/code/x11.html
 */
-class XDnDFileDropHelper {
+class Linux_XDnDFileDropHelper {
 
 
 	//[-------------------------------------------------------]
@@ -114,7 +114,7 @@ class XDnDFileDropHelper {
 		*  @param[in] cOSWindowLinux
 		*    The OSWindowLinux instance which should support drop
 		*/
-		XDnDFileDropHelper(OSWindowLinux &cOSWindowLinux);
+		Linux_XDnDFileDropHelper(OSWindowLinux &cOSWindowLinux);
 
 		/**
 		*  @brief
@@ -234,7 +234,7 @@ class XDnDFileDropHelper {
 		*  @param[in] cOther
 		*    Source to copy from
 		*/
-		XDnDFileDropHelper(const XDnDFileDropHelper &cOther);
+		Linux_XDnDFileDropHelper(const Linux_XDnDFileDropHelper &cOther);
 
 		/**
 		*  @brief
@@ -246,7 +246,7 @@ class XDnDFileDropHelper {
 		*  @return
 		*    Reference to this instance
 		*/
-		XDnDFileDropHelper &operator =(const XDnDFileDropHelper &cOther);
+		Linux_XDnDFileDropHelper &operator =(const Linux_XDnDFileDropHelper &cOther);
 
 		/**
 		*  @brief
@@ -293,7 +293,7 @@ class XDnDFileDropHelper {
 		OSWindowLinux	*m_pOSWindowLinux;		/**< Pointer to an OSWindowLinux instance, always valid */
 		Display			*m_pDisplay;			/**< System display, considered to be always valid */
 		Window 			 m_nDropWindow;			/**< The window which has drop support */
-		//Atoms for Xdnd
+		// Atoms for Xdnd
 		Atom			 XdndEnter;				/**< The atom for the XDnD Enter client message */
 		Atom			 XdndPosition;			/**< The atom for the XDnD Position client message */
 		Atom			 XdndStatus;			/**< The atom for the XDnD Status client message */

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: MutexWindows.cpp                               *
+ *  File: EventHandlerDesc.inl                           *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -21,60 +21,22 @@
 
 
 //[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include "PLCore/System/MutexWindows.h"
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
+*    Get signature
 */
-MutexWindows::MutexWindows() :
-	m_hMutex(::CreateMutex(nullptr, false, nullptr))
+inline String EventHandlerDesc::GetSignature() const
 {
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-MutexWindows::~MutexWindows()
-{
-	// Destroy system mutex
-	if (m_hMutex)
-		CloseHandle(m_hMutex);
-}
-
-
-//[-------------------------------------------------------]
-//[ Private virtual MutexImpl functions                   ]
-//[-------------------------------------------------------]
-bool MutexWindows::Lock()
-{
-	// Lock mutex
-	return (m_hMutex && WaitForSingleObject(m_hMutex, INFINITE) == WAIT_OBJECT_0);
-}
-
-bool MutexWindows::TryLock(uint64 nTimeout)
-{
-	// Lock mutex
-	return (m_hMutex && WaitForSingleObject(m_hMutex, static_cast<DWORD>(nTimeout)) == WAIT_OBJECT_0);
-}
-
-bool MutexWindows::Unlock()
-{
-	// Release mutex
-	return (m_hMutex && ReleaseMutex(m_hMutex));
+	// Return signature
+	return m_sSignature;
 }
 
 

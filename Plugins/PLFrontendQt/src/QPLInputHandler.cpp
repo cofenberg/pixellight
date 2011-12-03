@@ -132,7 +132,7 @@ void QPLInputHandler::RemoveSceneNode(PLScene::SceneNode* pSceneNode)
 		if (pModifier && pModifier->GetInputController()) {
 			PLInput::Controller *controller = pModifier->GetInputController();
 			PLCore::List<PLInput::Connection*> connections = controller->GetConnections();
-			for (int j = 0; j < connections.GetNumOfElements(); ++j) {
+			for (PLCore::uint32 j = 0; j < connections.GetNumOfElements(); ++j) {
 				PLInput::Connection *con = connections.Get(j);
 				if (con->GetInputControl()->GetController() == &virtController) {
 					controller->Disconnect(con);

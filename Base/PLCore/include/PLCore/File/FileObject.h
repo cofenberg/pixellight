@@ -74,7 +74,7 @@ class FileObject {
 		*  @brief
 		*    Constructor
 		*/
-		PLCORE_API FileObject();
+		inline FileObject();
 
 		/**
 		*  @brief
@@ -85,7 +85,7 @@ class FileObject {
 		*  @param[in] pAccess
 		*    Additional file access information (can be a null pointer)
 		*/
-		PLCORE_API FileObject(const String &sUrl, const FileAccess *pAccess = nullptr);
+		inline FileObject(const String &sUrl, const FileAccess *pAccess = nullptr);
 
 		/**
 		*  @brief
@@ -96,7 +96,7 @@ class FileObject {
 		*  @param[in] pAccess
 		*    Additional file access information (can be a null pointer)
 		*/
-		PLCORE_API FileObject(const Url &cUrl, const FileAccess *pAccess = nullptr);
+		inline FileObject(const Url &cUrl, const FileAccess *pAccess = nullptr);
 
 		/**
 		*  @brief
@@ -105,7 +105,7 @@ class FileObject {
 		*  @note
 		*    - The file object is closed automatically
 		*/
-		PLCORE_API virtual ~FileObject();
+		inline virtual ~FileObject();
 
 		/**
 		*  @brief
@@ -116,7 +116,7 @@ class FileObject {
 		*  @param[in] pAccess
 		*    Additional file access information (can be a null pointer)
 		*/
-		PLCORE_API void Assign(const String &sUrl, const FileAccess *pAccess = nullptr);
+		inline void Assign(const String &sUrl, const FileAccess *pAccess = nullptr);
 
 		/**
 		*  @brief
@@ -169,7 +169,7 @@ class FileObject {
 		*    - e.g.: 'Directory("C:\\test")' and 'Directory("C:\\test\\")' are equal, but
 		*      'GetUrl()' will always return "C:/test".
 		*/
-		PLCORE_API const Url &GetUrl() const;
+		inline const Url &GetUrl() const;
 
 		/**
 		*  @brief
@@ -178,7 +178,7 @@ class FileObject {
 		*  @return
 		*    'true', if the object is existing, else 'false'
 		*/
-		PLCORE_API bool Exists() const;
+		inline bool Exists() const;
 
 		/**
 		*  @brief
@@ -187,7 +187,7 @@ class FileObject {
 		*  @return
 		*    'true', if the object is a file, else 'false'
 		*/
-		PLCORE_API bool IsFile() const;
+		inline bool IsFile() const;
 
 		/**
 		*  @brief
@@ -196,7 +196,7 @@ class FileObject {
 		*  @return
 		*    'true', if the object is a directory, else 'false'
 		*/
-		PLCORE_API bool IsDirectory() const;
+		inline bool IsDirectory() const;
 
 		/**
 		*  @brief
@@ -210,7 +210,7 @@ class FileObject {
 		*  @return
 		*    'true', if all went fine, else 'false'
 		*/
-		PLCORE_API bool Copy(const String &sDestination, bool bOverwrite = false) const;
+		inline bool Copy(const String &sDestination, bool bOverwrite = false) const;
 
 		/**
 		*  @brief
@@ -222,7 +222,7 @@ class FileObject {
 		*  @return
 		*    'true', if all went fine, else 'false'
 		*/
-		PLCORE_API bool Move(const String &sDestination);
+		inline bool Move(const String &sDestination);
 
 		/**
 		*  @brief
@@ -234,13 +234,13 @@ class FileObject {
 		*  @return
 		*    'true', if all went fine, else 'false'
 		*/
-		PLCORE_API bool Rename(const String &sName);
+		inline bool Rename(const String &sName);
 
 		/**
 		*  @brief
 		*    Close the file or directory
 		*/
-		PLCORE_API void Close();
+		inline void Close();
 
 
 	//[-------------------------------------------------------]
@@ -335,6 +335,12 @@ class FileObject {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/File/FileObject.inl"
 
 
 #endif // __PLCORE_FILEOBJECT_H__

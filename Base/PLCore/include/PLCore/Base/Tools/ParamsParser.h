@@ -58,13 +58,13 @@ class ParamsParser {
 		*  @brief
 		*    Constructor
 		*/
-		PLCORE_API ParamsParser();
+		inline ParamsParser();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API ~ParamsParser();
+		inline ~ParamsParser();
 
 		/**
 		*  @brief
@@ -99,7 +99,7 @@ class ParamsParser {
 		*  @return
 		*    'true' if there is a current parameter, else 'false'
 		*/
-		PLCORE_API bool HasParam() const;
+		inline bool HasParam() const;
 
 		/**
 		*  @brief
@@ -108,7 +108,7 @@ class ParamsParser {
 		*  @return
 		*    Parameter name
 		*/
-		PLCORE_API String GetName() const;
+		inline String GetName() const;
 
 		/**
 		*  @brief
@@ -117,7 +117,7 @@ class ParamsParser {
 		*  @return
 		*    Parameter name
 		*/
-		PLCORE_API String GetValue() const;
+		inline String GetValue() const;
 
 
 	//[-------------------------------------------------------]
@@ -138,6 +138,12 @@ class ParamsParser {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Base/Tools/ParamsParser.inl"
 
 
 #endif // __PLCORE_TOOLS_PARAMSPARSER_H__

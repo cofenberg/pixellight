@@ -23,14 +23,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <ApplicationServices/ApplicationServices.h>	// "#include <CoreGraphics/CGDirectDisplay.h>" would do the job, but on Apple we're forced to use the "framework"-approach instead of addressing headers the natural way, and this one here is a "sub-framework" which can't be addressed directly, so we have to use this overkill approach and this really long comment
 #include "PLRendererOpenGL/Extensions.h"	// Include this before including the funny Apple headers, if we don't, the result will be "error: ‘PFNGLBINDBUFFERRANGEEXTPROC’ does not name a type" and x-more of those...
 #include <OpenGL/OpenGL.h>
 #include <PLCore/Log/Log.h>
 #include <PLMath/Vector2i.h>
 #include <PLRenderer/Renderer/Types.h>
-#include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSXCocoa.h"
+#include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSX_Cocoa.h"
 #include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
-#include <X11/Xutil.h>						// Include this after the rest, else we get OS definition issues, again 
 #include <IOKit/graphics/IOGraphicsTypes.h>	// Include this after the rest, else we get OS definition issues, again (required for "IO8BitIndexedPixels", "IO16BitIndexedPixels" and "IO32BitIndexedPixels")
 
 
@@ -43,6 +43,33 @@ namespace PLRendererOpenGL {
 
 
 //[-------------------------------------------------------]
+//[ Global functions methods                              ]
+//[-------------------------------------------------------]
+/**
+ *  @brief
+ *    Returns the number of color bits from a given display mode
+ *
+ *  @param[in] pCGDisplayMode
+ *    Display mode to return the number of color bits from
+ *
+ *  @return
+ *    The number of color bits from the given display mode, 0 on error
+ */
+uint32 GetColorBitsFromDisplayMode(CGDisplayModeRef pCGDisplayMode)
+{
+	uint32 nColorBits = 0;
+	const CFStringRef psString = CGDisplayModeCopyPixelEncoding(pCGDisplayMode);
+	if (CFStringCompare(psString, CFSTR(IO8BitIndexedPixels), kCFCompareCaseInsensitive) == kCFCompareEqualTo)
+		nColorBits = 8;
+	else if (CFStringCompare(psString, CFSTR(IO16BitDirectPixels), kCFCompareCaseInsensitive) == kCFCompareEqualTo)
+		nColorBits = 16;
+	else if (CFStringCompare(psString, CFSTR(IO32BitDirectPixels), kCFCompareCaseInsensitive) == kCFCompareEqualTo)
+		nColorBits = 32;
+	return nColorBits;
+}
+
+
+//[-------------------------------------------------------]
 //[ Public methods                                        ]
 //[-------------------------------------------------------]
 /**
@@ -51,7 +78,6 @@ namespace PLRendererOpenGL {
 */
 ContextMacOSX::ContextMacOSX(Renderer &cRenderer) : Context(),
 	m_pRenderer(&cRenderer),
-	m_pDisplay(XOpenDisplay(nullptr)),
 	m_pCGLContextObj(nullptr)
 {
 	CGLError nCGLError = kCGLNoError;
@@ -102,21 +128,6 @@ ContextMacOSX::~ContextMacOSX()
 		if (nCGLError != kCGLNoError)
 			PL_LOG(Error, String("Failed to destroy the CGL context object (\"") + CGLErrorString(nCGLError) + "\")")
 	}
-
-	// Is there a valid X server display connection?
-	if (m_pDisplay) {
-		// Close the X server display connection
-		XCloseDisplay(m_pDisplay);
-	}
-}
-
-/**
-*  @brief
-*    Returns the X server display connection
-*/
-Display *ContextMacOSX::GetDisplay() const
-{
-	return m_pDisplay;
 }
 	
 /**
@@ -205,32 +216,6 @@ bool ContextMacOSX::QueryDisplayModes(Array<const PLRenderer::DisplayMode*> &lst
 
 	// Done
 	return true;
-}
-
-PLRenderer::SurfaceWindow *ContextMacOSX::CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen)
-{
-	return new SurfaceWindowMacOSXCocoa(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen);
-}
-
-
-//[-------------------------------------------------------]
-//[ Private methods                                       ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the number of color bits from a given display mode
-*/
-uint32 ContextMacOSX::GetColorBitsFromDisplayMode(CGDisplayModeRef pCGDisplayMode) const
-{
-	uint32 nColorBits = 0;
-	const CFStringRef psString = CGDisplayModeCopyPixelEncoding(pCGDisplayMode);
-	if (CFStringCompare(psString, CFSTR(IO8BitIndexedPixels), kCFCompareCaseInsensitive) == kCFCompareEqualTo)
-		nColorBits = 8;
-	else if (CFStringCompare(psString, CFSTR(IO16BitDirectPixels), kCFCompareCaseInsensitive) == kCFCompareEqualTo)
-		nColorBits = 16;
-	else if (CFStringCompare(psString, CFSTR(IO32BitDirectPixels), kCFCompareCaseInsensitive) == kCFCompareEqualTo)
-		nColorBits = 32;
-	return nColorBits;
 }
 
 

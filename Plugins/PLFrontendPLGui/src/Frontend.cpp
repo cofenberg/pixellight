@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLCore/Runtime.h>
 #include <PLCore/File/File.h>
-#include <PLCore/System/System.h>
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include <PLCore/Frontend/Frontend.h>

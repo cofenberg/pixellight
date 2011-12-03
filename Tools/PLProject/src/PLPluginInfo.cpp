@@ -47,8 +47,8 @@ using namespace PLCore;
 *    Default constructor
 */
 PLPluginInfo::PLPluginInfo() :
-	m_bIsActive(false),
-	m_bDelayed(false)
+	m_bActive(true),	// By default, projects are active
+	m_bDelayed(true)	// By default, projects are delayed
 {
 }
 
@@ -103,18 +103,18 @@ void PLPluginInfo::SetPLVersion(const String &sPLVersion)
 *  @brief
 *    Set active flag, this flag indicates if the plugin is active or not
 */
-void PLPluginInfo::SetActive(bool bIsActive)
+void PLPluginInfo::SetActive(bool bActive)
 {
-	m_bIsActive = bIsActive;
+	m_bActive = bActive;
 }
 
 /**
 *  @brief
 *    Set delayed flag, this flag indicates if delayed loading should be used for this plugin
 */
-void PLPluginInfo::SetDelayed(bool bIsDelayed)
+void PLPluginInfo::SetDelayed(bool bDelayed)
 {
-	m_bDelayed = bIsDelayed;
+	m_bDelayed = bDelayed;
 }
 
 /**
@@ -188,8 +188,8 @@ bool PLPluginInfo::ParseMainModuleFile(const String &sMainModuleFilename)
 *    Copy constructor
 */
 PLPluginInfo::PLPluginInfo(const PLPluginInfo &cOther) :
-	m_bIsActive(false),
-	m_bDelayed(false)
+	m_bActive(true),	// By default, projects are active
+	m_bDelayed(true)	// By default, projects are delayed
 {
 	// No implementation because the copy constructor is never used
 }
@@ -315,6 +315,14 @@ void PLPluginInfo::ParsePluginModuleBlock(const String &sPluginModuleBlock)
 		} else if (cRegExVersion.Match(sLine)) {
 			m_sModuleVersion = cRegExVersion.GetNameResult("text");
 
+		// Check for pl_module_active
+		} else if (cRegExActive.Match(sLine)) {
+			m_bActive = cRegExActive.GetNameResult("num").GetBool();
+
+		// Check for pl_module_delayed
+		} else if (cRegExDelayed.Match(sLine)) {
+			m_bDelayed = cRegExDelayed.GetNameResult("num").GetBool();
+
 		// Let PLPluginPlatformInfo parse the line
 		} else {
 			m_cPluginPlatformInfo.ParseLine(sLine);
@@ -348,7 +356,7 @@ void PLPluginInfo::AppendInformation(XmlDocument &cDocument) const
 	pRootElement->SetAttribute("Version", m_sPluginFileVersion);
 	pRootElement->SetAttribute("PixelLightVersion", m_sPLVersion);
 
-	AddTextXmlElement(*pRootElement, "Active", m_bIsActive ? "1" : "0");
+	AddTextXmlElement(*pRootElement, "Active",  m_bActive  ? "1" : "0");
 	AddTextXmlElement(*pRootElement, "Delayed", m_bDelayed ? "1" : "0");
 	AddTextXmlElement(*pRootElement, "Name", m_sPluginName);
 	if (m_sModuleVersion.GetLength())

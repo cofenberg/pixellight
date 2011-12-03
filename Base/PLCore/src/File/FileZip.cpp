@@ -304,10 +304,10 @@ bool FileZip::Flush()
 	return false;
 }
 
-bool FileZip::Seek(int32 nOffset, File::ESeek nLocation)
+bool FileZip::Seek(int32 nOffset, uint32 nLocation)
 {
 	// Seek
-	return m_cZipFile.IsFileOpen() ? m_cZipFile.Seek(nOffset, nLocation) : false;
+	return m_cZipFile.IsFileOpen() ? m_cZipFile.Seek(nOffset, static_cast<File::ESeek>(nLocation)) : false;
 }
 
 int32 FileZip::Tell() const

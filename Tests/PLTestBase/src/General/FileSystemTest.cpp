@@ -85,7 +85,7 @@ void FileSystemTest::SpeedTest_CleanUp()
 	if (hFind != INVALID_HANDLE_VALUE) {
 		do {
 			DeleteFile(String::Format("filetest\\%s", sFind.cFileName));
-		} while (FindNextFile(hFind, &sFind));
+		} while (FindNextFileW(hFind, &sFind));
 		FindClose(hFind);
 	}
 #elif defined(LINUX)

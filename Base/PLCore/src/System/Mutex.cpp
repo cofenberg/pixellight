@@ -24,7 +24,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #if defined(WIN32)
-	#include "PLCore/System/MutexWindows.h"
+	#include "PLCore/System/MutexWindows_Mutex.h"
+	#include "PLCore/System/MutexWindows_CriticalSection.h"
 #elif defined(LINUX)
 	#include "PLCore/System/MutexLinux.h"
 #endif
@@ -49,8 +50,35 @@ Mutex::Mutex() :
 {
 	// Create system implementation for the right platform
 	#if defined(WIN32)
-		// Create Windows implementation
-		m_pMutexImpl = new MutexWindows();
+		// Create Windows implementation - Windows has two different mutex implementations:
+		// - "Mutex":            Lock/unlock across multiple processes
+		// - "Critical Section": Lock/unlock only inside the same process
+		// -> Default has to be "Mutex" to be on the safe universal side
+		m_pMutexImpl = new MutexWindows_Mutex();
+	#elif defined(LINUX)
+		// Create Linux implementation
+		m_pMutexImpl = new MutexLinux();
+	#else
+		// Unknown system
+		#error "Unsupported platform"
+	#endif
+}
+
+/**
+*  @brief
+*    Constructor
+*/
+Mutex::Mutex(bool bCriticalSection)
+{
+	// Create system implementation for the right platform
+	#if defined(WIN32)
+		// Create Windows implementation - Windows has two different mutex implementations:
+		// - "Mutex":            Lock/unlock across multiple processes
+		// - "Critical Section": Lock/unlock only inside the same process
+		if (bCriticalSection)
+			m_pMutexImpl = new MutexWindows_CriticalSection();
+		else
+			m_pMutexImpl = new MutexWindows_Mutex();
 	#elif defined(LINUX)
 		// Create Linux implementation
 		m_pMutexImpl = new MutexLinux();
@@ -69,36 +97,6 @@ Mutex::~Mutex()
 	// Destroy system specific implementation
 	if (m_pMutexImpl)
 		delete m_pMutexImpl;
-}
-
-/**
-*  @brief
-*    Locks the mutex
-*/
-bool Mutex::Lock()
-{
-	// Call system implementation
-	return m_pMutexImpl->Lock();
-}
-
-/**
-*  @brief
-*    Locks the mutex, but only wait until timeout
-*/
-bool Mutex::TryLock(uint64 nTimeout)
-{
-	// Call system implementation
-	return m_pMutexImpl->TryLock(nTimeout);
-}
-
-/**
-*  @brief
-*    Unlocks the mutex
-*/
-bool Mutex::Unlock()
-{
-	// Call system implementation
-	return m_pMutexImpl->Unlock();
 }
 
 

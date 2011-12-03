@@ -32,7 +32,6 @@
 #include <PLRenderer/Renderer/VertexShader.h>
 #include <PLRenderer/Renderer/UniformBuffer.h>
 #include <PLRenderer/Renderer/ShaderLanguage.h>
-#include <PLRenderer/Renderer/GeometryShader.h>
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/FragmentShader.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
@@ -72,13 +71,11 @@ SPTriangleShaders::SPTriangleShaders(Renderer &cRenderer) : SPTriangle(cRenderer
 	// Decide which shader language should be used (for example "GLSL" or "Cg")
 	ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(cRenderer.GetDefaultShaderLanguage());
 	if (pShaderLanguage) {
-		// Create the shader instances
-		m_pVertexShader   = pShaderLanguage->CreateVertexShader();
-		m_pGeometryShader = pShaderLanguage->CreateGeometryShader();
-		m_pFragmentShader = pShaderLanguage->CreateFragmentShader();
-
 		// Create the uniform buffer instance, null pointer if for instance not supported
 		m_pUniformBuffer = pShaderLanguage->CreateUniformBuffer();
+
+		// Create a geometry shader instance
+		m_pGeometryShader = pShaderLanguage->CreateGeometryShader();
 
 		// Shader source code
 		String sVertexShaderSourceCode;
@@ -105,26 +102,19 @@ SPTriangleShaders::SPTriangleShaders(Renderer &cRenderer) : SPTriangle(cRenderer
 			sFragmentShaderSourceCode = sFragmentShaderSourceCodeCg;
 		}
 
-		// Set the vertex shader source code
-		if (m_pVertexShader)
-			m_pVertexShader->SetSourceCode(sVertexShaderSourceCode);
+		// Create a vertex shader instance
+		m_pVertexShader = pShaderLanguage->CreateVertexShader(sVertexShaderSourceCode);
 
-		// Set the geometry shader source code
+		// Set geometry shader source code
 		if (m_pGeometryShader)
 			m_pGeometryShader->SetSourceCode(sGeometryShaderSourceCode, GeometryShader::InputTriangles, GeometryShader::OutputTriangles, 6);
 
-		// Set the fragment shader source code
-		if (m_pFragmentShader)
-			m_pFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
+		// Create a fragment shader instance
+		m_pFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode);
 
-		// Create a program instance
-		m_pProgram = pShaderLanguage->CreateProgram();
+		// Create a program instance and assign the created vertex, geometry and fragment shaders to it
+		m_pProgram = pShaderLanguage->CreateProgram(m_pVertexShader, m_pGeometryShader, m_pFragmentShader);
 		if (m_pProgram) {
-			// Assign the created vertex, geometry and fragment shaders to the program
-			m_pProgram->SetVertexShader(m_pVertexShader);
-			m_pProgram->SetGeometryShader(m_pGeometryShader);
-			m_pProgram->SetFragmentShader(m_pFragmentShader);
-
 			// Setup the uniform buffer (if there's one)
 			if (m_pUniformBuffer) {
 				ProgramUniformBlock *pProgramUniformBlock = m_pProgram->GetUniformBlock("UniformBlock");

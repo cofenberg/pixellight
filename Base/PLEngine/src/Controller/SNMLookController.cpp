@@ -107,7 +107,7 @@ void SNMLookController::OnActivate(bool bActivate)
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Protected virtual SNMLookController functions         ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -141,14 +141,14 @@ void SNMLookController::OnUpdate()
 				fZ *= fTimeDiff;
 
 			// Get a quaternion representation of the rotation delta
-			Quaternion qRotInc;
+			Quaternion qRotationDelta;
 			EulerAngles::ToQuaternion(static_cast<float>(fX*Math::DegToRad),
 									  static_cast<float>(fY*Math::DegToRad),
 									  static_cast<float>(fZ*Math::DegToRad),
-									  qRotInc);
+									  qRotationDelta);
 
 			// Update rotation
-			GetSceneNode().GetTransform().SetRotation(GetSceneNode().GetTransform().GetRotation()*qRotInc);
+			GetSceneNode().GetTransform().SetRotation(GetSceneNode().GetTransform().GetRotation()*qRotationDelta);
 		}
 	}
 }

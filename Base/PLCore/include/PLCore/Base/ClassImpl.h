@@ -87,7 +87,7 @@ class ClassImpl {
 		*  @return
 		*    Pointer to the owner class instance (should never be a null pointer, unless something is *terribly* wrong ;-) )
 		*/
-		PLCORE_API Class *GetClass() const;
+		inline Class *GetClass() const;
 
 
 	//[-------------------------------------------------------]
@@ -133,7 +133,7 @@ class ClassImpl {
 		*  @return
 		*    Name of class and namespace
 		*/
-		PLCORE_API String GetClassName() const;
+		inline String GetClassName() const;
 
 		/**
 		*  @brief
@@ -142,7 +142,7 @@ class ClassImpl {
 		*  @return
 		*    Name of base class and namespace
 		*/
-		PLCORE_API String GetBaseClassName() const;
+		inline String GetBaseClassName() const;
 
 		/**
 		*  @brief
@@ -151,7 +151,7 @@ class ClassImpl {
 		*  @return
 		*    Name of class
 		*/
-		PLCORE_API String GetName() const;
+		inline String GetName() const;
 
 		/**
 		*  @brief
@@ -160,7 +160,7 @@ class ClassImpl {
 		*  @return
 		*    Description
 		*/
-		PLCORE_API String GetDescription() const;
+		inline String GetDescription() const;
 
 		/**
 		*  @brief
@@ -169,7 +169,7 @@ class ClassImpl {
 		*  @return
 		*    Namespace
 		*/
-		PLCORE_API String GetNamespace() const;
+		inline String GetNamespace() const;
 
 		/**
 		*  @brief
@@ -217,7 +217,7 @@ class ClassImpl {
 		*      "PluginType"  -> "Widget"
 		*      "FileFormats" -> "avi mpg mp4"
 		*/
-		PLCORE_API const HashMap<String, String> &GetProperties() const;
+		inline const HashMap<String, String> &GetProperties() const;
 
 		//[-------------------------------------------------------]
 		//[ Class management                                      ]
@@ -522,6 +522,12 @@ class ClassImpl {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Base/ClassImpl.inl"
 
 
 #endif // __PLCORE_CLASS_IMPL_H__

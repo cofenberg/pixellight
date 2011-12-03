@@ -164,26 +164,6 @@ FileSearch &FileSearch::operator =(const FileSearch &cFileSearch)
 	return *this;
 }
 
-/**
-*  @brief
-*    Returns whether the file searcher has a next file
-*/
-bool FileSearch::HasNextFile()
-{
-	return (m_sNextFilename.GetLength() > 0);
-}
-
-/**
-*  @brief
-*    Returns the next filename
-*/
-String FileSearch::GetNextFile()
-{
-	const String sFilename = m_sNextFilename;
-	FindNextFile();
-	return sFilename;
-}
-
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]

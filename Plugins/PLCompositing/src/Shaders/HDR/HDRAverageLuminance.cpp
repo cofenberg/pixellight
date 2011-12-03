@@ -214,65 +214,33 @@ void HDRAverageLuminance::CalculateAverageLuminance(const String &sShaderLanguag
 			}
 
 			// Create a vertex shader instance
-			m_pVertexShader = pShaderLanguage->CreateVertexShader();
-			if (m_pVertexShader) {
-				// Set the vertex shader source code
-				m_pVertexShader->SetSourceCode(sVertexShaderSourceCode);
-			}
-			m_pDownsampleVertexShader = pShaderLanguage->CreateVertexShader();
-			if (m_pDownsampleVertexShader) {
-				// Set the vertex shader source code
-				m_pDownsampleVertexShader->SetSourceCode(sVertexShaderSourceCode_Downsample);
-			}
+			m_pVertexShader           = pShaderLanguage->CreateVertexShader(sVertexShaderSourceCode);
+			m_pDownsampleVertexShader = pShaderLanguage->CreateVertexShader(sVertexShaderSourceCode_Downsample);
 
 			// Create a fragment shader instance
-			m_pDownsampleLogFragmentShader = pShaderLanguage->CreateFragmentShader();
-			if (m_pDownsampleLogFragmentShader) {
-				// Set the fragment shader source code
-				m_pDownsampleLogFragmentShader->SetSourceCode(sFragmentShaderSourceCode_DownsampleLog);
-			}
-			m_pDownsampleFragmentShader = pShaderLanguage->CreateFragmentShader();
-			if (m_pDownsampleFragmentShader) {
-				// Set the fragment shader source code
-				m_pDownsampleFragmentShader->SetSourceCode(sFragmentShaderSourceCode_Downsample);
-			}
-			m_pDownsampleExpFragmentShader = pShaderLanguage->CreateFragmentShader();
-			if (m_pDownsampleExpFragmentShader) {
-				// Set the fragment shader source code
-				m_pDownsampleExpFragmentShader->SetSourceCode(sFragmentShaderSourceCode_DownsampleExp);
-			}
+			m_pDownsampleLogFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode_DownsampleLog);
+			m_pDownsampleFragmentShader    = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode_Downsample);
+			m_pDownsampleExpFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode_DownsampleExp);
 
-			// Create a program instance
-			m_pDownsampleLogProgram = pShaderLanguage->CreateProgram();
+			// Create a program instance and assign the created vertex and fragment shaders to it
+			m_pDownsampleLogProgram = pShaderLanguage->CreateProgram(m_pVertexShader, m_pDownsampleLogFragmentShader);
 			if (m_pDownsampleLogProgram) {
-				// Assign the created vertex and fragment shaders to the program
-				m_pDownsampleLogProgram->SetVertexShader(m_pVertexShader);
-				m_pDownsampleLogProgram->SetFragmentShader(m_pDownsampleLogFragmentShader);
-
 				// Add our nark which will inform us as soon as the program gets dirty
 				m_pDownsampleLogProgram->EventDirty.Connect(EventHandlerDirty);
 
 				// Get attributes and uniforms
 				OnDirty(m_pDownsampleLogProgram);
 			}
-			m_pDownsampleProgram = pShaderLanguage->CreateProgram();
+			m_pDownsampleProgram = pShaderLanguage->CreateProgram(m_pDownsampleVertexShader, m_pDownsampleFragmentShader);
 			if (m_pDownsampleProgram) {
-				// Assign the created vertex and fragment shaders to the program
-				m_pDownsampleProgram->SetVertexShader(m_pDownsampleVertexShader);
-				m_pDownsampleProgram->SetFragmentShader(m_pDownsampleFragmentShader);
-
 				// Add our nark which will inform us as soon as the program gets dirty
 				m_pDownsampleProgram->EventDirty.Connect(EventHandlerDirty);
 
 				// Get attributes and uniforms
 				OnDirty(m_pDownsampleProgram);
 			}
-			m_pDownsampleExpProgram = pShaderLanguage->CreateProgram();
+			m_pDownsampleExpProgram = pShaderLanguage->CreateProgram(m_pVertexShader, m_pDownsampleExpFragmentShader);
 			if (m_pDownsampleExpProgram) {
-				// Assign the created vertex and fragment shaders to the program
-				m_pDownsampleExpProgram->SetVertexShader(m_pVertexShader);
-				m_pDownsampleExpProgram->SetFragmentShader(m_pDownsampleExpFragmentShader);
-
 				// Add our nark which will inform us as soon as the program gets dirty
 				m_pDownsampleExpProgram->EventDirty.Connect(EventHandlerDirty);
 

@@ -49,10 +49,13 @@ class LookController;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene node rotation input controller modifier class
+*    Scene node rotation input controller modifier class without 3D restriction
 *
 *  @note
 *    - Primary intended for rapid prototyping
+*    - Unrestricted 3D rotation via rotation quaternion
+*    - Combine this modifier with for example "PLScene::SNMRotationFixRoll" to restrict the
+*      rotation or directly use the specialized "PLEngine::SNMEgoLookController"-modifier
 */
 class SNMLookController : public PLScene::SNMTransform {
 
@@ -70,7 +73,7 @@ class SNMLookController : public PLScene::SNMTransform {
 		};
 		pl_enum(EFlags)
 			pl_enum_base(PLScene::SNMTransform::EFlags)
-			pl_enum_value(UseRotationKey, "If this flag is set, it's required to keep the rotation key pressed in order to rotate")
+			pl_enum_value(UseRotationKey, "If this flag is set, it's required to keep the rotation key pressed in order to rotate without 3D restriction")
 		pl_enum_end
 
 
@@ -125,20 +128,20 @@ class SNMLookController : public PLScene::SNMTransform {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Protected virtual SNMLookController functions         ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		/**
 		*  @brief
 		*    Called when the scene node modifier needs to be updated
 		*/
-		void OnUpdate();
+		PL_API virtual void OnUpdate();
 
 
 	//[-------------------------------------------------------]
-	//[ Private data                                          ]
+	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		LookController *m_pController;	/**< Look input controller instance, always valid! */
 
 

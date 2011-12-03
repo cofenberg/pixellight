@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: MutexWindows.h                                 *
+ *  File: Mutex.inl                                      *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,15 +20,9 @@
 \*********************************************************/
 
 
-#ifndef __PLCORE_MUTEX_WINDOWS_H__
-#define __PLCORE_MUTEX_WINDOWS_H__
-#pragma once
-
-
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/PLCoreWindowsIncludes.h"
 #include "PLCore/System/MutexImpl.h"
 
 
@@ -39,61 +33,40 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Classes                                               ]
+//[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Windows 'Mutex' implementation
+*    Locks the mutex
 */
-class MutexWindows : public MutexImpl {
+inline bool Mutex::Lock()
+{
+	// Call system implementation
+	return m_pMutexImpl->Lock();
+}
 
+/**
+*  @brief
+*    Locks the mutex, but only wait until timeout
+*/
+inline bool Mutex::TryLock(uint64 nTimeout)
+{
+	// Call system implementation
+	return m_pMutexImpl->TryLock(nTimeout);
+}
 
-	//[-------------------------------------------------------]
-	//[ Friends                                               ]
-	//[-------------------------------------------------------]
-	friend class Mutex;
-
-
-	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Constructor
-		*/
-		MutexWindows();
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		virtual ~MutexWindows();
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual MutexImpl functions                   ]
-	//[-------------------------------------------------------]
-	private:
-		virtual bool Lock() override;
-		virtual bool TryLock(uint64 nTimeout) override;
-		virtual bool Unlock() override;
-
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
-		HANDLE m_hMutex;	/**< System mutex handle */
-
-
-};
+/**
+*  @brief
+*    Unlocks the mutex
+*/
+inline bool Mutex::Unlock()
+{
+	// Call system implementation
+	return m_pMutexImpl->Unlock();
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
-
-
-#endif // __PLCORE_MUTEX_WINDOWS_H__

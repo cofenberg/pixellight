@@ -65,35 +65,6 @@ bool ScriptManager::HasInstance()
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns a list of the names of the supported script languages
-*/
-const Array<String> &ScriptManager::GetScriptLanguages()
-{
-	RegisterClasses();
-	return m_lstScriptLanguages;
-}
-
-/**
-*  @brief
-*/
-String ScriptManager::GetScriptLanguageByExtension(const String &sExtension)
-{
-	RegisterClasses();
-	return m_mapScriptLanguagesByExtension.Get(sExtension);
-}
-
-/**
-*  @brief
-*    Checks whether or not a given script language is supported
-*/
-bool ScriptManager::IsSupported(const String &sScriptLanguage)
-{
-	RegisterClasses();
-	return (m_mapScriptLanguages.Get(sScriptLanguage) != nullptr);
-}
-
-/**
-*  @brief
 *    Returns the filename extension of a given script language
 */
 String ScriptManager::GetScriptLanguageExtension(const String &sScriptLanguage)
@@ -119,16 +90,6 @@ String ScriptManager::GetScriptLanguageExtension(const String &sScriptLanguage)
 
 	// Error!
 	return "";
-}
-
-/**
-*  @brief
-*    Returns a list of all script binding instances
-*/
-const Array<ScriptBinding*> &ScriptManager::GetScriptBindings()
-{
-	RegisterClasses();
-	return m_lstScriptBindings;
 }
 
 /**
@@ -226,17 +187,6 @@ ScriptManager::~ScriptManager()
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Register a class
-*/
-void ScriptManager::OnClassLoaded(const Class *pClass)
-{
-	// Just put the new class on the queue - because we can't assume that this class is or can be initialized
-	// already, we can't even expect "IsDerivedFrom" to work, so, just REALLY note this class in here!
-	m_lstNewClasses.Add(pClass);
-}
-
 /**
 *  @brief
 *    Registers queued classes

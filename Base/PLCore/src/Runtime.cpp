@@ -111,36 +111,11 @@ Version Runtime::GetVersion()
 
 /**
 *  @brief
-*    Return whether or not this is a debug version of PixelLight
-*/
-bool Runtime::IsDebugVersion()
-{
-	#ifdef _DEBUG
-		// The executable is using a debug version of PixelLight
-		return true;
-	#else
-		// The executable is using a release version of PixelLight
-		return false;
-	#endif
-}
-
-/**
-*  @brief
 *    Get PixelLight suffix
 */
 String Runtime::GetSuffix()
 {
 	return PIXELLIGHT_SUFFIX;
-}
-
-/**
-*  @brief
-*    Try to find the local PL-runtime directory
-*/
-String Runtime::GetLocalDirectory()
-{
-	// Try to find the PL-runtime directory by using the PLCore shared library
-	return GetDirectory(LocalInstallation);
 }
 
 /**

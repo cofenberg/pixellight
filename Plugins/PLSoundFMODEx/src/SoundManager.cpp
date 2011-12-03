@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/File/File.h>
-#include <PLCore/System/System.h>
 #include <PLCore/Core/MemoryManager.h>
 #include <PLCore/Log/Log.h>
 #include <PLCore/Tools/Localization.h>

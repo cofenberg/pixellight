@@ -28,13 +28,19 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/System/Thread.h"
+#include "PLCore/PLCore.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Thread;
 
 
 //[-------------------------------------------------------]
@@ -157,42 +163,42 @@ class ThreadImpl {
 		*    Returns the priority class the thread is in
 		*
 		*  @return
-		*    The priority class the thread is in
+		*    The priority class the thread is in (type: Thread::EPriorityClass)
 		*/
-		virtual Thread::EPriorityClass GetPriorityClass() const = 0;
+		virtual uint32 GetPriorityClass() const = 0;
 
 		/**
 		*  @brief
 		*    Sets the priority class the thread is in
 		*
 		*  @param[in] nPriorityClass
-		*    New priority class the thread is in
+		*    New priority class the thread is in (type: Thread::EPriorityClass)
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		virtual bool SetPriorityClass(Thread::EPriorityClass nPriorityClass) = 0;
+		virtual bool SetPriorityClass(uint32 nPriorityClass) = 0;
 
 		/**
 		*  @brief
 		*    Returns the thread priority within the priority class it is in
 		*
 		*  @return
-		*    The thread priority within the priority class it is in
+		*    The thread priority within the priority class it is in (type: Thread::EPriority)
 		*/
-		virtual Thread::EPriority GetPriority() const = 0;
+		virtual uint32 GetPriority() const = 0;
 
 		/**
 		*  @brief
 		*    Sets the thread priority within the priority class it is in
 		*
 		*  @param[in] nPriority
-		*    New thread priority within the priority class it is in
+		*    New thread priority within the priority class it is in (type: Thread::EPriority)
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		virtual bool SetPriority(Thread::EPriority nPriority) = 0;
+		virtual bool SetPriority(uint32 nPriority) = 0;
 
 
 	//[-------------------------------------------------------]

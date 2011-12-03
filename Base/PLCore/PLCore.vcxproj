@@ -401,7 +401,8 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="src\System\MutexWindows.cpp" />
+    <ClCompile Include="src\System\MutexWindows_CriticalSection.cpp" />
+    <ClCompile Include="src\System\MutexWindows_Mutex.cpp" />
     <ClCompile Include="src\System\Pipe.cpp" />
     <ClCompile Include="src\System\Process.cpp" />
     <ClCompile Include="src\System\Semaphore.cpp" />
@@ -416,6 +417,9 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\System\System.cpp" />
     <ClInclude Include="include\PLCore\File\FileAndroid.h" />
     <ClInclude Include="include\PLCore\File\FileSearchAndroid.h" />
+    <ClInclude Include="include\PLCore\System\CriticalSection.h" />
+    <ClInclude Include="include\PLCore\System\MutexWindows_CriticalSection.h" />
+    <ClInclude Include="include\PLCore\System\MutexWindows_Mutex.h" />
     <ClInclude Include="include\PLCore\System\SystemMacOSX.h" />
     <ClInclude Include="src\System\SystemAndroid.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -679,7 +683,6 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLCore\System\MutexGuard.h" />
     <ClInclude Include="include\PLCore\System\MutexImpl.h" />
     <ClInclude Include="include\PLCore\System\MutexLinux.h" />
-    <ClInclude Include="include\PLCore\System\MutexWindows.h" />
     <ClInclude Include="include\PLCore\System\Pipe.h" />
     <ClInclude Include="include\PLCore\System\Process.h" />
     <ClInclude Include="include\PLCore\System\Semaphore.h" />
@@ -738,6 +741,21 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLCore\Xml\XmlUnknown.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="include\PLCore\Application\ApplicationContext.inl" />
+    <None Include="include\PLCore\Application\CoreApplication.inl" />
+    <None Include="include\PLCore\Base\Class.inl" />
+    <None Include="include\PLCore\Base\ClassImpl.inl" />
+    <None Include="include\PLCore\Base\ClassManager.inl" />
+    <None Include="include\PLCore\Base\Event\DynEvent.inl" />
+    <None Include="include\PLCore\Base\Event\EventDesc.inl" />
+    <None Include="include\PLCore\Base\Event\EventHandlerDesc.inl" />
+    <None Include="include\PLCore\Base\Func\ConstructorDesc.inl" />
+    <None Include="include\PLCore\Base\Func\FuncDesc.inl" />
+    <None Include="include\PLCore\Base\MemberDesc.inl" />
+    <None Include="include\PLCore\Base\Module.inl" />
+    <None Include="include\PLCore\Base\Object.inl" />
+    <None Include="include\PLCore\Base\Tools\ParamsParser.inl" />
+    <None Include="include\PLCore\Base\Tools\ParamsParserXml.inl" />
     <None Include="include\PLCore\Base\Type\TypeBool.inl" />
     <None Include="include\PLCore\Base\Type\TypeDouble.inl" />
     <None Include="include\PLCore\Base\Type\TypeEnum.inl" />
@@ -762,6 +780,8 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
     <None Include="include\PLCore\Base\Type\TypeVoid.inl" />
     <None Include="include\PLCore\Base\TypeInfo\TypeInfoEnum.inl" />
     <None Include="include\PLCore\Base\TypeInfo\TypeInfoFlag.inl" />
+    <None Include="include\PLCore\Base\Var\VarDesc.inl" />
+    <None Include="include\PLCore\Config\Config.inl" />
     <None Include="include\PLCore\Container\Array.inl" />
     <None Include="include\PLCore\Container\ArrayIterator.inl" />
     <None Include="include\PLCore\Container\BinaryHeap.inl" />
@@ -800,11 +820,41 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
     <None Include="include\PLCore\Core\RefCountPtr.inl" />
     <None Include="include\PLCore\Core\Singleton.inl" />
     <None Include="include\PLCore\Core\SmartPtr.inl" />
+    <None Include="include\PLCore\File\Directory.inl" />
+    <None Include="include\PLCore\File\File.inl" />
+    <None Include="include\PLCore\File\FileObject.inl" />
+    <None Include="include\PLCore\File\FileSearch.inl" />
+    <None Include="include\PLCore\File\Url.inl" />
+    <None Include="include\PLCore\Frontend\Frontend.inl" />
+    <None Include="include\PLCore\Frontend\FrontendApplication.inl" />
+    <None Include="include\PLCore\Frontend\FrontendContext.inl" />
+    <None Include="include\PLCore\Frontend\FrontendImpl.inl" />
+    <None Include="include\PLCore\Log\Log.inl" />
+    <None Include="include\PLCore\Log\LogFormatter.inl" />
+    <None Include="include\PLCore\Log\LogFormatterHtml.inl" />
+    <None Include="include\PLCore\Network\Buffer.inl" />
+    <None Include="include\PLCore\Network\Connection.inl" />
+    <None Include="include\PLCore\Network\Host.inl" />
+    <None Include="include\PLCore\Network\Http\HttpClient.inl" />
+    <None Include="include\PLCore\Network\Http\HttpHeader.inl" />
+    <None Include="include\PLCore\Network\Socket.inl" />
+    <None Include="include\PLCore\Registry\Registry.inl" />
+    <None Include="include\PLCore\Runtime.inl" />
+    <None Include="include\PLCore\Script\ScriptManager.inl" />
+    <None Include="include\PLCore\String\RegEx.inl" />
+    <None Include="include\PLCore\String\String.inl" />
+    <None Include="include\PLCore\String\Tokenizer.inl" />
     <None Include="include\PLCore\String\UTF8Tools.inl" />
+    <None Include="include\PLCore\System\DynLib.inl" />
+    <None Include="include\PLCore\System\Mutex.inl" />
     <None Include="include\PLCore\System\MutexGuard.inl" />
     <None Include="CMakeLists.txt" />
     <None Include="Diary.txt" />
+    <None Include="include\PLCore\System\Semaphore.inl" />
+    <None Include="include\PLCore\System\System.inl" />
+    <None Include="include\PLCore\System\Thread.inl" />
     <None Include="include\PLCore\Tools\Stopwatch.inl" />
+    <None Include="include\PLCore\Tools\Timing.inl" />
     <None Include="include\PLCore\Tools\Tools.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

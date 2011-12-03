@@ -31,6 +31,15 @@
     <ClCompile Include="src\PLCore\Container\Array.cpp">
       <Filter>PLCore\Container</Filter>
     </ClCompile>
+    <ClCompile Include="src\PLCore\Container\ContainerFunctions.h">
+      <Filter>PLCore\Container</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCore\Container\List.cpp">
+      <Filter>PLCore\Container</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCore\Container\Pool.cpp">
+      <Filter>PLCore\Container</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\UnitTest++AddIns\RunAllTests.h">

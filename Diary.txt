@@ -4,6 +4,17 @@
 
 
 
+>> 29.11.2011
+[CO]
+- CMake: As discussed in the research project meeting yesterday: Added a trigger to make it possible to disable the build of the samples
+- PLInstall: Code style review
+- PLInstall: Visual Studio project file: Disabled annoying "warning C4127: conditional expression is constant"-warning, it's within the Qt
+  headers were we can't change anything in there :/
+- Some Visual Studio project files were not set to "Level4 (/W4)" warning level in debug mode (3ds Max exporter projects are intentionally set
+  to "Level3 (/W3)", warning level 4 makes no sense in there due to the mass of resulting warnings within the used external headers)
+
+
+
 >> 24.11.2011
 [CO]
 - PLInstall: Updated "CMakeLists.txt" in order to make it work

@@ -217,7 +217,7 @@ bool EffectPassLayer::BindTexture(const Parameter *pParameter, uint32 nStage) co
 					FixedFunctions *pFixedFunctions = pTextureBuffer->GetRenderer().GetFixedFunctions();
 					if (pFixedFunctions) {
 						// Set identity texture matrix
-						pFixedFunctions->SetTransformState(static_cast<FixedFunctions::Transform::Enum>(FixedFunctions::Transform::Texture0 + nStage), Matrix4x4::Identity);
+						pFixedFunctions->SetTransformState(static_cast<FixedFunctions::Transform::Enum>(static_cast<uint32>(FixedFunctions::Transform::Texture0) + nStage), Matrix4x4::Identity);
 					}
 				}
 

@@ -33,6 +33,7 @@
 	#include <wctype.h>
 	#include "PLCore/PLCoreLinuxWrapper.h"
 #endif
+#include "PLCore/String/String.h"
 #include "PLCore/String/UTF8Tools.h"
 #include "PLCore/String/StringBufferASCII.h"
 #include "PLCore/String/StringBufferUTF8.h"
@@ -156,7 +157,7 @@ void StringBufferUnicode::SetCharacter(wchar_t nCharacter)
 //[-------------------------------------------------------]
 //[ Public virtual StringBuffer functions                 ]
 //[-------------------------------------------------------]
-String::EFormat StringBufferUnicode::GetFormat() const
+uint32 StringBufferUnicode::GetFormat() const
 {
 	return String::Unicode;
 }

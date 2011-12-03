@@ -2,11 +2,15 @@ Changes in PixelLight 0.9.10-R1 (not yet released)
 - Feature: There's now official 64 bit support
 - Feature: Added Mac OS X support (>=10.6)
 - Feature: Added support for 2D array textures within the renderer (kind of 3D texture, but without filtering between the depth layers)
+- Feature: Added scene node modifier "PLEngine::SNMEgoLookController" for restricted 3D look around
+- Feature request ID: 3443487 (Windows): Added critical section support to the mutex implementation
+- Feature request ID: 3439371: Added method "PLCore::Socket::IsDataWaiting()"
 - Change: Various minor bugfixes and usability improvements within the CMake based build system to make building PixelLight across multiple platforms as painless as possible
 - Bugfix (ID: 3431174): Within the "PLCore::System"-constructor, the main thread was created incorrectly
 - Bugfix (ID: 3433006): The return value of "PLCore::FileObject::GenericMove()" and "FileObject::PLCore::GenericCopy()" was always "false"
 - Bugfix (ID: 3433854): The Autodesk 3ds Max scene exporter options "PL directories" and "Subdirectories" did not work correctly
 - Bugfix (ID: 3442054): "PLCore::Connection::Receive()" called "PLCore::Connection::OnReceive()" with the fixed buffer size, instead of with the number of received bytes
+- Bugfix: PLProject was not parsing "pl_module_active" and "pl_module_delayed"
 
 
 Changes in PixelLight 0.9.9-R1 (released on October 23, 2011)

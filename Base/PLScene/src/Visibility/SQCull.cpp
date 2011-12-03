@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLCore/Tools/Tools.h>
 #include <PLCore/Tools/Stopwatch.h>
-#include <PLCore/System/System.h>
 #include <PLMath/Matrix4x4.h>
 #include <PLMath/Intersect.h>
 #include <PLRenderer/RendererContext.h>

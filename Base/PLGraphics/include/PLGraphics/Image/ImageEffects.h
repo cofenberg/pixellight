@@ -77,7 +77,7 @@ class ImageEffects {
 		*  @return
 		*    Image effect
 		*/
-		static PLGRAPHICS_API ImageEffectWrapper Effect(const PLCore::String &sEffect, const PLCore::String &sParameters);
+		static inline ImageEffectWrapper Effect(const PLCore::String &sEffect, const PLCore::String &sParameters);
 
 		/**
 		*  @brief
@@ -86,7 +86,7 @@ class ImageEffects {
 		*  @return
 		*    Image filter
 		*/
-		static PLGRAPHICS_API IEFilter Filter();
+		static inline IEFilter Filter();
 
 		/**
 		*  @brief
@@ -103,7 +103,7 @@ class ImageEffects {
 		*  @return
 		*    Scale image effect
 		*/
-		static PLGRAPHICS_API IEScale Scale(const PLMath::Vector3i &vNewSize, bool bUseMipmaps);
+		static inline IEScale Scale(const PLMath::Vector3i &vNewSize, bool bUseMipmaps);
 
 		/**
 		*  @brief
@@ -117,7 +117,7 @@ class ImageEffects {
 		*  @return
 		*    Image conversion effect
 		*/
-		static PLGRAPHICS_API IEConvert Convert(EDataFormat nDataFormat, EColorFormat nColorFormat);
+		static inline IEConvert Convert(EDataFormat nDataFormat, EColorFormat nColorFormat);
 
 		/**
 		*  @brief
@@ -126,7 +126,7 @@ class ImageEffects {
 		*  @return
 		*    Monochrome image effect
 		*/
-		static PLGRAPHICS_API IEMonochrome Monochrome();
+		static inline IEMonochrome Monochrome();
 
 		/**
 		*  @brief
@@ -140,7 +140,7 @@ class ImageEffects {
 		*  @return
 		*    Color key image effect
 		*/
-		static PLGRAPHICS_API IEColorKey ColorKey(const Color3 &cColor, float fTolerance);
+		static inline IEColorKey ColorKey(const Color3 &cColor, float fTolerance);
 
 		/**
 		*  @brief
@@ -149,7 +149,7 @@ class ImageEffects {
 		*  @return
 		*    Flip the image around the x axis image effect
 		*/
-		static PLGRAPHICS_API IEFlipXAxis FlipXAxis();
+		static inline IEFlipXAxis FlipXAxis();
 
 		/**
 		*  @brief
@@ -158,7 +158,7 @@ class ImageEffects {
 		*  @return
 		*    Flip the image around the y axis image effect
 		*/
-		static PLGRAPHICS_API IEFlipYAxis FlipYAxis();
+		static inline IEFlipYAxis FlipYAxis();
 
 		/**
 		*  @brief
@@ -167,7 +167,7 @@ class ImageEffects {
 		*  @return
 		*    Remove palette image effect
 		*/
-		static PLGRAPHICS_API IERemovePalette RemovePalette();
+		static inline IERemovePalette RemovePalette();
 
 
 };
@@ -177,6 +177,12 @@ class ImageEffects {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLGraphics
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLGraphics/Image/ImageEffects.inl"
 
 
 #endif // __PLGRAPHICS_IMAGEEFFECTS_H__

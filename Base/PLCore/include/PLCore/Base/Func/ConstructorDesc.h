@@ -99,7 +99,7 @@ class ConstructorDesc : public MemberDesc {
 		*  @return
 		*    Signature
 		*/
-		PLCORE_API String GetSignature() const;
+		inline String GetSignature() const;
 
 		/**
 		*  @brief
@@ -108,7 +108,7 @@ class ConstructorDesc : public MemberDesc {
 		*  @return
 		*    'true' if the constructor is a default constructor, else 'false'
 		*/
-		PLCORE_API bool IsDefaultConstructor() const;
+		inline bool IsDefaultConstructor() const;
 
 
 	//[-------------------------------------------------------]
@@ -163,6 +163,12 @@ class ConstructorDesc : public MemberDesc {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Base/Func/ConstructorDesc.inl"
 
 
 #endif // __PLCORE_CONSTRUCTORDESC_H__

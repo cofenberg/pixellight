@@ -63,16 +63,6 @@ void FuncDesc::Dummy()
 	// This method is just here to ensure, that the compiler will actually create static instances
 }
 
-/**
-*  @brief
-*    Get signature
-*/
-String FuncDesc::GetSignature() const
-{
-	// Return signature
-	return m_sSignature;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public virtual FuncDesc functions                     ]

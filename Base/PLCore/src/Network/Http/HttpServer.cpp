@@ -23,8 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/File/File.h"
-#include "PLCore/System/System.h"
 #include "PLCore/Network/Http/MimeTypeManager.h"
 #include "PLCore/Network/Http/HttpServerConnection.h"
 #include "PLCore/Network/Http/HttpServer.h"

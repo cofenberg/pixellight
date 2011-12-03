@@ -97,7 +97,7 @@ class Runtime {
 		*  @return
 		*    'true' if the running process is using a debug version of PixelLight, else 'false'
 		*/
-		static PLCORE_API bool IsDebugVersion();
+		static inline bool IsDebugVersion();
 
 		/**
 		*  @brief
@@ -115,7 +115,7 @@ class Runtime {
 		*  @return
 		*    Path to the local PL-runtime directory (e.g. "C:\MyApplication\x86"), or ""
 		*/
-		static PLCORE_API String GetLocalDirectory();
+		static inline String GetLocalDirectory();
 
 		/**
 		*  @brief
@@ -339,6 +339,12 @@ class Runtime {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Runtime.inl"
 
 
 #endif // __PLCORE_RUNTIME_H__

@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLCore/Core/MemoryManager.h"
+#include "PLCore/String/String.h"
 #include "PLCore/String/StringBufferASCII.h"
 #include "PLCore/String/StringBufferUnicode.h"
 #include "PLCore/String/StringBufferManager.h"

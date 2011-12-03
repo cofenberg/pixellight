@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ImageEffects.cpp                               *
+ *  File: ImagePalette.inl                               *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -21,101 +21,108 @@
 
 
 //[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include "PLGraphics/Image/ImageEffects.h"
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLCore;
-using namespace PLMath;
 namespace PLGraphics {
 
 
 //[-------------------------------------------------------]
-//[ Public static functions                               ]
+//[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Create image effect dynamically
+*    Constructor
 */
-ImageEffectWrapper ImageEffects::Effect(const String &sEffect, const String &sParameters)
+inline ImagePalette::ImagePalette() :
+	m_pData(nullptr),
+	m_nSize(0),
+	m_nColors(0)
 {
-	return ImageEffectWrapper(sEffect, sParameters);
 }
 
 /**
 *  @brief
-*    Create image filter
+*    Destructor
 */
-IEFilter ImageEffects::Filter()
+inline ImagePalette::~ImagePalette()
 {
-	return IEFilter();
+	// Clear data
+	Clear();
 }
 
 /**
 *  @brief
-*    Create scale image effect
+*    Clear data
 */
-IEScale ImageEffects::Scale(const Vector3i &vNewSize, bool bUseMipmaps)
+inline void ImagePalette::Clear()
 {
-	return IEScale(vNewSize, bUseMipmaps);
+	// Delete palette
+	if (m_pData)
+		delete [] m_pData;
+
+	// Reset data
+	m_pData   = nullptr;
+	m_nSize   = 0;
+	m_nColors = 0;
+	m_mapColors.Clear();
 }
 
 /**
 *  @brief
-*    Create image conversion effect
+*    Get number of colors
 */
-IEConvert ImageEffects::Convert(EDataFormat nDataFormat, EColorFormat nColorFormat)
+inline PLCore::uint32 ImagePalette::GetNumOfColors() const
 {
-	return IEConvert(nDataFormat, nColorFormat);
+	// Return number of colors
+	return m_nColors;
 }
 
 /**
 *  @brief
-*    Create monochrome image effect
+*    Get color
 */
-IEMonochrome ImageEffects::Monochrome()
+inline Color3 ImagePalette::GetColor(PLCore::uint32 nIndex) const
 {
-	return IEMonochrome();
+	// Is index valid?
+	if (nIndex < m_nColors)
+		return Color3(m_pData[nIndex*3], m_pData[nIndex*3+1], m_pData[nIndex*3+2]);
+
+	// Invalid index
+	return Color3::Null;
 }
 
 /**
 *  @brief
-*    Create color key image effect
+*    Add color
 */
-IEColorKey ImageEffects::ColorKey(const Color3 &cColor, float fTolerance)
+inline PLCore::uint32 ImagePalette::AddColor(const Color3 &cColor)
 {
-	return IEColorKey(cColor, fTolerance);
+	// Add color to next free place in palette
+	const PLCore::uint32 nIndex = m_nColors;
+	SetColor(nIndex, cColor);
+
+	// Return color index
+	return nIndex;
 }
 
 /**
 *  @brief
-*    Create flip the image around the x axis image effect
+*    Rebuild color index
 */
-IEFlipXAxis ImageEffects::FlipXAxis()
+inline void ImagePalette::RebuildColorIndex()
 {
-	return IEFlipXAxis();
+	// Clear hash map. It will be rebuilt next time GetColorIndex() is called
+	m_mapColors.Clear();
 }
 
 /**
 *  @brief
-*    Create flip the image around the y axis image effect
+*    Get color palette data
 */
-IEFlipYAxis ImageEffects::FlipYAxis()
+inline PLCore::uint8 *ImagePalette::GetData() const
 {
-	return IEFlipYAxis();
-}
-
-/**
-*  @brief
-*    Create remove palette image effect
-*/
-IERemovePalette ImageEffects::RemovePalette()
-{
-	return IERemovePalette();
+	// Return palette data
+	return m_pData;
 }
 
 

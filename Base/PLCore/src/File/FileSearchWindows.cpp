@@ -79,7 +79,7 @@ String FileSearchWindows::GetNextFile()
 {
 	if (m_bHasNext) {
 		m_sFilename = m_sFindData.cFileName;
-		m_bHasNext  = (FindNextFile(m_hFind, &m_sFindData) > 0);
+		m_bHasNext  = (FindNextFileW(m_hFind, &m_sFindData) > 0);
 		return m_sFilename;
 	} else {
 		return "";

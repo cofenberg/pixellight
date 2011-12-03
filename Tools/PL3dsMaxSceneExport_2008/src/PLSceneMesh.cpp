@@ -23,9 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/File/Url.h>
 #include <PLCore/File/File.h>
-#include <PLCore/String/String.h>
 #include <IGame/IGame.h>
 #include <IGame/IGameModifier.h>
 #include <iparamb2.h>

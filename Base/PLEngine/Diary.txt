@@ -1,3 +1,10 @@
+>> 01.12.2011
+[CO]
+- Added scene node modifier "PLEngine::SNMEgoLookController" for restricted 3D look around
+  (see PixelLight forum post http://dev.pixellight.org/forum/viewtopic.php?f=6&t=115)
+
+
+
 >> 23.10.2011
 [CO]
 - The camcorder is now also using the loadable system

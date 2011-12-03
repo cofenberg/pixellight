@@ -148,6 +148,12 @@
     <ClCompile Include="src\TextureBuffer2DArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\MacOSX\ContextMacOSX_X11.cpp">
+      <Filter>MacOSX</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MacOSX\SurfaceWindowMacOSX_X11.cpp">
+      <Filter>MacOSX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRendererOpenGL\Context.h">
@@ -285,9 +291,21 @@
     <ClInclude Include="include\PLRendererOpenGL\TextureBuffer2DArray.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\MacOSX\SurfaceWindowMacOSX_Cocoa.h">
+      <Filter>MacOSX</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\MacOSX\ContextMacOSX_X11.h">
+      <Filter>MacOSX</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\MacOSX\SurfaceWindowMacOSX_X11.h">
+      <Filter>MacOSX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
     <None Include="..\..\Base\PLRenderer\Diary.txt" />
+    <None Include="src\MacOSX\SurfaceWindowMacOSX_Cocoa.mm">
+      <Filter>MacOSX</Filter>
+    </None>
   </ItemGroup>
 </Project>

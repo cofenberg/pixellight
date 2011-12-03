@@ -26,7 +26,6 @@
 #include <PLCore/System/System.h>
 #include <PLCore/File/File.h>
 #include <PLCore/File/Directory.h>
-#include <PLCore/File/Url.h>
 #include <PLMath/Matrix4x4.h>
 #include <PLRenderer/Renderer/IndexBuffer.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>

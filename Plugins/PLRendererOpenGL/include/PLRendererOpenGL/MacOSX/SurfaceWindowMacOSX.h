@@ -47,13 +47,6 @@ namespace PLRendererOpenGL {
 class SurfaceWindowMacOSX : public SurfaceWindow {
 
 
-	// [TODO] Remove this when the Cocoa part is ready
-	//[-------------------------------------------------------]
-	//[ Friends                                               ]
-	//[-------------------------------------------------------]
-	friend class ContextMacOSX;
-
-
 	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
@@ -85,21 +78,6 @@ class SurfaceWindowMacOSX : public SurfaceWindow {
 		SurfaceWindowMacOSX(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false);
 
 
-	//[-------------------------------------------------------]
-	//[ Public virtual PLRenderer::SurfaceWindow functions    ]
-	//[-------------------------------------------------------]
-	public:
-		virtual bool GetGamma(float &fRed, float &fGreen, float &fBlue) const override;
-		virtual bool SetGamma(float fRed = 1.0f, float fGreen = 1.0f, float fBlue = 1.0f) override;
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual PLRenderer::Surface functions          ]
-	//[-------------------------------------------------------]
-	public:
-		virtual PLMath::Vector2i GetSize() const override;
-
-	
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLRenderer::Surface functions       ]
 	//[-------------------------------------------------------]

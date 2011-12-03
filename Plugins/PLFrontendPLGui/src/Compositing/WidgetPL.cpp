@@ -127,7 +127,7 @@ WidgetPL::~WidgetPL()
 				// We REALLY need to check whether there are still some GUI messages within the internal GUI message queue using this widget!
 
 				// Lock the GUI message queue
-				const MutexGuard cMutexGuard(*pGuiPL->m_pMessageQueueMutex);
+				const MutexGuard cMutexGuard(reinterpret_cast<Mutex&>(*pGuiPL->m_pMessageQueueCriticalSection));
 
 				// Loop through the queue
 				for (uint32 i=0; i<pGuiPL->m_lstMessageQueue.GetNumOfElements(); i++) {

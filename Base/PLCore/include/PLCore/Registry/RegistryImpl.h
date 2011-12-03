@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Registry/Registry.h"
+#include "PLCore/String/String.h"
 
 
 //[-------------------------------------------------------]
@@ -79,16 +79,16 @@ class RegistryImpl {
 		*    Get type of registry
 		*
 		*  @return
-		*    Type of registry ('RegistryNone' if no registry is available on your system!)
+		*    Type of registry ('RegistryNone' if no registry is available on your system!) (type: "Registry::ERegistry")
 		*/
-		virtual Registry::ERegistry GetRegistryType() const = 0;
+		virtual uint32 GetRegistryType() const = 0;
 
 		/**
 		*  @brief
 		*    Open registry key
 		*
 		*  @param[in] nKey
-		*    Registry key
+		*    Registry key (type: "Registry::EKey")
 		*  @param[in] sSubKey
 		*    Name of subkey
 		*  @param[in] nAccess
@@ -97,14 +97,14 @@ class RegistryImpl {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		virtual bool Open(Registry::EKey nKey, const String &sSubKey, uint32 nAccess) = 0;
+		virtual bool Open(uint32 nKey, const String &sSubKey, uint32 nAccess) = 0;
 
 		/**
 		*  @brief
 		*    Create a new registry key
 		*
 		*  @param[in] nKey
-		*    Registry key
+		*    Registry key (type: "Registry::EKey")
 		*  @param[in] sSubKey
 		*    Name of subkey
 		*  @param[in] nAccess
@@ -113,7 +113,7 @@ class RegistryImpl {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		virtual bool Create(Registry::EKey nKey, const String &sSubKey, uint32 nAccess) = 0;
+		virtual bool Create(uint32 nKey, const String &sSubKey, uint32 nAccess) = 0;
 
 		/**
 		*  @brief
@@ -135,9 +135,9 @@ class RegistryImpl {
 		*    Get ID of opened registry key
 		*
 		*  @return
-		*    Key ID
+		*    Key ID (type: "Registry::EKey")
 		*/
-		virtual Registry::EKey GetOpenKey() const = 0;
+		virtual uint32 GetOpenKey() const = 0;
 
 		/**
 		*  @brief
@@ -207,9 +207,9 @@ class RegistryImpl {
 		*    Name of the value
 		*
 		*  @return
-		*    Type of the value
+		*    Type of the value (type: "Registry::EType")
 		*/
-		virtual Registry::EType GetValueType(const String &sName) const = 0;
+		virtual uint32 GetValueType(const String &sName) const = 0;
 
 		/**
 		*  @brief

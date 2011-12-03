@@ -580,8 +580,6 @@ int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 		cProject.sSuffix        = sSuffix;
 		cProject.sEntryFileName = sEntryFileName;
 		cProject.bModulePlugin  = false;
-		cProject.cPLPluginInfo.SetActive(true); // By default, projects are active
-		cProject.cPLPluginInfo.SetDelayed(true); // By default, projects are delayed
 		cProject.cPLPluginInfo.SetPluginFileVersion("1");
 		cProject.cPLPluginInfo.SetPLVersion(Runtime::GetVersion().ToString());
 

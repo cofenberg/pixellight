@@ -94,7 +94,7 @@ class Tokenizer {
 		*  @brief
 		*    Destructor
 		*/
-		PLCORE_API ~Tokenizer();
+		inline ~Tokenizer();
 
 		/**
 		*  @brief
@@ -103,7 +103,7 @@ class Tokenizer {
 		*  @return
 		*    Delimiter characters
 		*/
-		PLCORE_API String GetDelimiters() const;
+		inline String GetDelimiters() const;
 
 		/**
 		*  @brief
@@ -115,7 +115,7 @@ class Tokenizer {
 		*  @remarks
 		*    Default: " \t\r\n"
 		*/
-		PLCORE_API void SetDelimiters(const String &sDelimiters);
+		inline void SetDelimiters(const String &sDelimiters);
 
 		/**
 		*  @brief
@@ -124,7 +124,7 @@ class Tokenizer {
 		*  @return
 		*    Single characters
 		*/
-		PLCORE_API String GetSingleChars() const;
+		inline String GetSingleChars() const;
 
 		/**
 		*  @brief
@@ -136,7 +136,7 @@ class Tokenizer {
 		*  @remarks
 		*    Default: "{}()[]<*>/=,;\""
 		*/
-		PLCORE_API void SetSingleChars(const String &sSingleChars);
+		inline void SetSingleChars(const String &sSingleChars);
 
 		/**
 		*  @brief
@@ -145,7 +145,7 @@ class Tokenizer {
 		*  @return
 		*    Quote characters
 		*/
-		PLCORE_API String GetQuotes() const;
+		inline String GetQuotes() const;
 
 		/**
 		*  @brief
@@ -157,7 +157,7 @@ class Tokenizer {
 		*  @remarks
 		*    Default: "\"\'"
 		*/
-		PLCORE_API void SetQuotes(const String &sQuotes);
+		inline void SetQuotes(const String &sQuotes);
 
 		/**
 		*  @brief
@@ -166,7 +166,7 @@ class Tokenizer {
 		*  @return
 		*    Comment start tag
 		*/
-		PLCORE_API String GetCommentStartTag() const;
+		inline String GetCommentStartTag() const;
 
 		/**
 		*  @brief
@@ -178,7 +178,7 @@ class Tokenizer {
 		*  @remarks
 		*    Default is slash-star ("/ *" without the space in the middle, just written with a space to keep C++ compilers happy).
 		*/
-		PLCORE_API void SetCommentStartTag(const String &sCommentStartTag);
+		inline void SetCommentStartTag(const String &sCommentStartTag);
 
 		/**
 		*  @brief
@@ -187,7 +187,7 @@ class Tokenizer {
 		*  @return
 		*    Comment end tag
 		*/
-		PLCORE_API String GetCommentEndTag() const;
+		inline String GetCommentEndTag() const;
 
 		/**
 		*  @brief
@@ -199,7 +199,7 @@ class Tokenizer {
 		*  @remarks
 		*    Default: "*\/"
 		*/
-		PLCORE_API void SetCommentEndTag(const String &sCommentEndTag);
+		inline void SetCommentEndTag(const String &sCommentEndTag);
 
 		/**
 		*  @brief
@@ -208,7 +208,7 @@ class Tokenizer {
 		*  @return
 		*    Comment start tag
 		*/
-		PLCORE_API String GetSingleLineComment() const;
+		inline String GetSingleLineComment() const;
 
 		/**
 		*  @brief
@@ -220,7 +220,7 @@ class Tokenizer {
 		*  @remarks
 		*    Default: "//"
 		*/
-		PLCORE_API void SetSingleLineComment(const String &sSingleLineComment);
+		inline void SetSingleLineComment(const String &sSingleLineComment);
 
 		/**
 		*  @brief
@@ -229,7 +229,7 @@ class Tokenizer {
 		*  @return
 		*    'true' if the text is parsed case sensitive
 		*/
-		PLCORE_API bool IsCaseSensitive() const;
+		inline bool IsCaseSensitive() const;
 
 		/**
 		*  @brief
@@ -241,7 +241,7 @@ class Tokenizer {
 		*  @remarks
 		*    Default: false
 		*/
-		PLCORE_API void SetCaseSensitive(bool bCaseSensitive);
+		inline void SetCaseSensitive(bool bCaseSensitive);
 
 		/**
 		*  @brief
@@ -339,7 +339,7 @@ class Tokenizer {
 		*    - Does not go to the next token in the stream, so multiple calls of this function will
 		*      always return the same token.
 		*/
-		PLCORE_API String GetToken() const;
+		inline String GetToken() const;
 
 		/**
 		*  @brief
@@ -357,7 +357,7 @@ class Tokenizer {
 		*    - IsCaseSensitive()
 		*    - SetCaseSensitive()
 		*/
-		PLCORE_API bool CompareToken(const String &sExpected);
+		inline bool CompareToken(const String &sExpected);
 
 		/**
 		*  @brief
@@ -366,7 +366,7 @@ class Tokenizer {
 		*  @return
 		*    Position in the stream
 		*/
-		PLCORE_API uint32 GetPosition() const;
+		inline uint32 GetPosition() const;
 
 		/**
 		*  @brief
@@ -375,7 +375,7 @@ class Tokenizer {
 		*  @return
 		*    Line in the file
 		*/
-		PLCORE_API uint32 GetLine() const;
+		inline uint32 GetLine() const;
 
 		/**
 		*  @brief
@@ -393,7 +393,7 @@ class Tokenizer {
 		*  @brief
 		*    Deletes the last saved state from the stack
 		*/
-		PLCORE_API void DropState();
+		inline void DropState();
 
 		/**
 		*  @brief
@@ -409,7 +409,7 @@ class Tokenizer {
 		*    - If a number has been found, the tokenizer goes to the next token in the stream,
 		*      otherwise it stays at the current token
 		*/
-		PLCORE_API bool ParseNumber(int &nNumber);
+		inline bool ParseNumber(int &nNumber);
 
 		/**
 		*  @brief
@@ -425,7 +425,7 @@ class Tokenizer {
 		*    - If a number has been found, the tokenizer goes to the next token in the stream,
 		*      otherwise it stays at the current token
 		*/
-		PLCORE_API bool ParseNumber(float &fNumber);
+		inline bool ParseNumber(float &fNumber);
 
 		/**
 		*  @brief
@@ -441,7 +441,7 @@ class Tokenizer {
 		*    - If a number has been found, the tokenizer goes to the next token in the stream,
 		*      otherwise it stays at the current token
 		*/
-		PLCORE_API bool ParseNumber(double &dNumber);
+		inline bool ParseNumber(double &dNumber);
 
 		/**
 		*  @brief
@@ -587,7 +587,7 @@ class Tokenizer {
 		*    - If an equation has been found, the tokenizer goes to the next token in the stream,
 		*      otherwise it stays at the current token
 		*/
-		PLCORE_API bool ParseEquation(String &sName, int &nValue, const String &sEquation = "");
+		inline bool ParseEquation(String &sName, int &nValue, const String &sEquation = "");
 
 		/**
 		*  @brief
@@ -610,7 +610,7 @@ class Tokenizer {
 		*    - If an equation has been found, the tokenizer goes to the next token in the stream,
 		*      otherwise it stays at the current token
 		*/
-		PLCORE_API bool ParseEquation(String &sName, float &fValue, const String &sEquation = "");
+		inline bool ParseEquation(String &sName, float &fValue, const String &sEquation = "");
 
 		/**
 		*  @brief
@@ -633,7 +633,7 @@ class Tokenizer {
 		*    - If an equation has been found, the tokenizer goes to the next token in the stream,
 		*      otherwise it stays at the current token
 		*/
-		PLCORE_API bool ParseEquation(String &sName, double &dValue, const String &sEquation = "");
+		inline bool ParseEquation(String &sName, double &dValue, const String &sEquation = "");
 
 
 	//[-------------------------------------------------------]
@@ -674,7 +674,7 @@ class Tokenizer {
 		*  @note
 		*    - 'm_pStream' must be valid!
 		*/
-		bool StreamIsString(const String &sString);
+		inline bool StreamIsString(const String &sString);
 
 		/**
 		*  @brief
@@ -752,6 +752,12 @@ class Tokenizer {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/String/Tokenizer.inl"
 
 
 #endif // __PLCORE_TOKENIZER_H__

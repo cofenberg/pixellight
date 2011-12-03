@@ -29,7 +29,7 @@
 #include <PLCore/Frontend/Frontend.h>
 #include <PLCore/Frontend/FrontendContext.h>
 #include "PLFrontendOS/Frontend.h"
-#include "PLFrontendOS/XDnDFileDropHelper.h"
+#include "PLFrontendOS/Linux_XDnDFileDropHelper.h"
 #include "PLFrontendOS/OSWindowLinux.h"
 
 
@@ -100,7 +100,7 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 		SetTitle(m_pFrontendOS->GetFrontend() ? m_pFrontendOS->GetFrontend()->GetContext().GetName() : "");
 
 		// Create the drag'n'drop helper instance
-		m_pDropHelper = new XDnDFileDropHelper(*this);
+		m_pDropHelper = new Linux_XDnDFileDropHelper(*this);
 
 		// Do it!
 		XSync(m_pDisplay, False);

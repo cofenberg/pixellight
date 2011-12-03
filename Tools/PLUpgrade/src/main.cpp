@@ -25,9 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/Main.h>
 #include <PLCore/System/System.h>
-#include <PLCore/File/Directory.h>
 #include <PLCore/File/File.h>
-#include <PLCore/File/FileSearch.h>
 
 
 //[-------------------------------------------------------]

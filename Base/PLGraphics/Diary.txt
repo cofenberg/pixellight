@@ -1,3 +1,10 @@
+>> 30.11.2011
+[CO]
+- "Color3", "Color4", "Image", "ImagePart", "ImageEffects", "ImageData", "ImagePalette", "ImageEffectWrapper", "ImageBuffer": Everything reasonable
+  to be inline is now inline to give the compiler a chance to optimize out expensive function calls
+
+
+
 >> 29.09.2011
 [CO]
 - Bugfix: Uncompressed dds images with mipmaps and "DDS_LINEARSIZE" set were not loaded correctly

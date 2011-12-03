@@ -154,7 +154,7 @@ class Registry {
 		*  @return
 		*    Type of registry ('None' if no registry is available on your system!)
 		*/
-		PLCORE_API ERegistry GetRegistryType() const;
+		inline ERegistry GetRegistryType() const;
 
 		/**
 		*  @brief
@@ -170,7 +170,7 @@ class Registry {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool Open(EKey nKey, const String &sSubKey, uint32 nAccess);
+		inline bool Open(EKey nKey, const String &sSubKey, uint32 nAccess);
 
 		/**
 		*  @brief
@@ -186,7 +186,7 @@ class Registry {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool Create(EKey nKey, const String &sSubKey, uint32 nAccess);
+		inline bool Create(EKey nKey, const String &sSubKey, uint32 nAccess);
 
 		/**
 		*  @brief
@@ -195,13 +195,13 @@ class Registry {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool Delete();
+		inline bool Delete();
 
 		/**
 		*  @brief
 		*    Close registry key
 		*/
-		PLCORE_API void Close();
+		inline void Close();
 
 		/**
 		*  @brief
@@ -210,7 +210,7 @@ class Registry {
 		*  @return
 		*    Key ID
 		*/
-		PLCORE_API EKey GetOpenKey() const;
+		inline EKey GetOpenKey() const;
 
 		/**
 		*  @brief
@@ -219,7 +219,7 @@ class Registry {
 		*  @return
 		*    Name of sub-key
 		*/
-		PLCORE_API String GetOpenSubKey() const;
+		inline String GetOpenSubKey() const;
 
 		/**
 		*  @brief
@@ -228,7 +228,7 @@ class Registry {
 		*  @return
 		*    Access modes
 		*/
-		PLCORE_API uint32 GetOpenAccessMode() const;
+		inline uint32 GetOpenAccessMode() const;
 
 		/**
 		*  @brief
@@ -237,7 +237,7 @@ class Registry {
 		*  @return
 		*    Number of sub-keys
 		*/
-		PLCORE_API uint32 GetNumOfSubKeys() const;
+		inline uint32 GetNumOfSubKeys() const;
 
 		/**
 		*  @brief
@@ -249,7 +249,7 @@ class Registry {
 		*  @return
 		*    Name of the sub-key, or "" if no more sub-keys are present
 		*/
-		PLCORE_API String GetSubKey(uint32 nIndex) const;
+		inline String GetSubKey(uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -258,7 +258,7 @@ class Registry {
 		*  @return
 		*    Number of values
 		*/
-		PLCORE_API uint32 GetNumOfValues() const;
+		inline uint32 GetNumOfValues() const;
 
 		/**
 		*  @brief
@@ -270,7 +270,7 @@ class Registry {
 		*  @return
 		*    Name of the value, or "" if no more values are present
 		*/
-		PLCORE_API String GetValue(uint32 nIndex) const;
+		inline String GetValue(uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -282,7 +282,7 @@ class Registry {
 		*  @return
 		*    Type of the value
 		*/
-		PLCORE_API EType GetValueType(const String &sName) const;
+		inline EType GetValueType(const String &sName) const;
 
 		/**
 		*  @brief
@@ -294,7 +294,7 @@ class Registry {
 		*  @return
 		*    String value
 		*/
-		PLCORE_API String GetValueString(const String &sName) const;
+		inline String GetValueString(const String &sName) const;
 
 		/**
 		*  @brief
@@ -306,7 +306,7 @@ class Registry {
 		*  @return
 		*    Value
 		*/
-		PLCORE_API uint32 GetValueDWord(const String &sName) const;
+		inline uint32 GetValueDWord(const String &sName) const;
 
 		/**
 		*  @brief
@@ -322,7 +322,7 @@ class Registry {
 		*  @return
 		*    Number of bytes written to the buffer
 		*/
-		PLCORE_API uint32 GetValueBinary(const String &sName, uint8 *pBuffer, uint32 nSize) const;
+		inline uint32 GetValueBinary(const String &sName, uint8 *pBuffer, uint32 nSize) const;
 
 		/**
 		*  @brief
@@ -336,7 +336,7 @@ class Registry {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool SetValueString(const String &sName, const String &sValue);
+		inline bool SetValueString(const String &sName, const String &sValue);
 
 		/**
 		*  @brief
@@ -350,7 +350,7 @@ class Registry {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool SetValueDWord(const String &sName, uint32 nValue);
+		inline bool SetValueDWord(const String &sName, uint32 nValue);
 
 		/**
 		*  @brief
@@ -366,13 +366,13 @@ class Registry {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLCORE_API bool SetValueBinary(const String &sName, const uint8 *pBuffer, uint32 nSize);
+		inline bool SetValueBinary(const String &sName, const uint8 *pBuffer, uint32 nSize);
 
 		/**
 		*  @brief
 		*    Write all values to the registry
 		*/
-		PLCORE_API void Flush();
+		inline void Flush();
 
 		/**
 		*  @brief
@@ -384,7 +384,7 @@ class Registry {
 		*  @return
 		*    Reference to this instance
 		*/
-		PLCORE_API Registry &operator =(const Registry &cRegistry);
+		inline Registry &operator =(const Registry &cRegistry);
 
 
 	//[-------------------------------------------------------]
@@ -401,6 +401,12 @@ class Registry {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Registry/Registry.inl"
 
 
 #endif // __PLCORE_REGISTRY_H__

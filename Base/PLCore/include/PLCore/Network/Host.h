@@ -105,7 +105,7 @@ class Host {
 		*  @return
 		*    'true' if host is listening for new connections, else 'false'
 		*/
-		PLCORE_API bool IsListening() const;
+		inline bool IsListening() const;
 
 		/**
 		*  @brief
@@ -146,7 +146,7 @@ class Host {
 		*  @brief
 		*    Close host (close all connections and stop listening for new connections)
 		*/
-		PLCORE_API void Close();
+		inline void Close();
 
 		/**
 		*  @brief
@@ -155,7 +155,7 @@ class Host {
 		*  @return
 		*    Number of the currently used port
 		*/
-		PLCORE_API uint32 GetPort() const;
+		inline uint32 GetPort() const;
 
 		/**
 		*  @brief
@@ -164,7 +164,7 @@ class Host {
 		*  @return
 		*    Maximum number of allowed connections
 		*/
-		PLCORE_API uint32 GetMaxConnections() const;
+		inline uint32 GetMaxConnections() const;
 
 		/**
 		*  @brief
@@ -173,7 +173,7 @@ class Host {
 		*  @param[in] nMaxConnections
 		*    Maximum number of allowed connections
 		*/
-		PLCORE_API void SetMaxConnections(uint32 nMaxConnections);
+		inline void SetMaxConnections(uint32 nMaxConnections);
 
 		/**
 		*  @brief
@@ -182,7 +182,7 @@ class Host {
 		*  @return
 		*    List of connections
 		*/
-		PLCORE_API const Container<Connection*> &GetConnections() const;
+		inline const Container<Connection*> &GetConnections() const;
 
 		/**
 		*  @brief
@@ -270,7 +270,7 @@ class Host {
 		*  @param[in] pConnection
 		*    Connection
 		*/
-		void AddConnection(Connection *pConnection);
+		inline void AddConnection(Connection *pConnection);
 
 		/**
 		*  @brief
@@ -279,7 +279,7 @@ class Host {
 		*  @param[in] cConnection
 		*    Connection
 		*/
-		void RemoveConnection(Connection *pConnection);
+		inline void RemoveConnection(Connection *pConnection);
 
 
 	//[-------------------------------------------------------]
@@ -355,6 +355,12 @@ class Host {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Network/Host.inl"
 
 
 #endif // __PLCORE_HOST_H__

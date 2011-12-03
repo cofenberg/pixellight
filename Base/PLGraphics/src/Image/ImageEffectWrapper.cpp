@@ -29,7 +29,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLCore;
 namespace PLGraphics {
 
 
@@ -37,40 +36,6 @@ namespace PLGraphics {
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
 pl_implement_class(ImageEffectWrapper)
-
-
-//[-------------------------------------------------------]
-//[ Public functions                                      ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Constructor
-*/
-ImageEffectWrapper::ImageEffectWrapper(const String &sEffect, const String &sParameters) :
-	m_pImageEffect(nullptr)
-{
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-ImageEffectWrapper::~ImageEffectWrapper()
-{
-	// Destroy wrapper image effect
-	if (m_pImageEffect)
-		delete m_pImageEffect;
-}
-
-/**
-*  @brief
-*    Get wrapped image effect
-*/
-ImageEffect *ImageEffectWrapper::GetImageEffect() const
-{
-	// Return image effect
-	return m_pImageEffect;
-}
 
 
 //[-------------------------------------------------------]

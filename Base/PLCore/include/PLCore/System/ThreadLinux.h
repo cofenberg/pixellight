@@ -99,10 +99,10 @@ class ThreadLinux : public ThreadImpl {
 		virtual bool Terminate() override;
 		virtual bool Join() override;
 		virtual bool Join(uint64 nTimeout) override;
-		virtual Thread::EPriorityClass GetPriorityClass() const override;
-		virtual bool SetPriorityClass(Thread::EPriorityClass nPriorityClass) override;
-		virtual Thread::EPriority GetPriority() const override;
-		virtual bool SetPriority(Thread::EPriority nPriority) override;
+		virtual uint32 GetPriorityClass() const override;
+		virtual bool SetPriorityClass(uint32 nPriorityClass) override;
+		virtual uint32 GetPriority() const override;
+		virtual bool SetPriority(uint32 nPriority) override;
 
 
 	//[-------------------------------------------------------]
@@ -126,10 +126,10 @@ class ThreadLinux : public ThreadImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		pthread_t				 m_nThreadID;		/**< PThread thread ID */
-		Mutex					*m_pMutex;			/**< Mutex used to detect running state of the thread */
-		Thread::EPriorityClass	 m_nPriorityClass;	/**< Priority class the thread is in */
-		Thread::EPriority		 m_nPriority;		/**< Thread priority within the priority class it is in */
+		pthread_t	 m_nThreadID;		/**< PThread thread ID */
+		Mutex		*m_pMutex;			/**< Mutex used to detect running state of the thread */
+		uint32		 m_nPriorityClass;	/**< Priority class the thread is in (type: Thread::EPriorityClass) */
+		uint32		 m_nPriority;		/**< Thread priority within the priority class it is in (type: Thread::EPriority) */
 
 
 };

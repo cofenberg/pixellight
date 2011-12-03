@@ -71,142 +71,6 @@ Tokenizer::Tokenizer() :
 
 /**
 *  @brief
-*    Destructor
-*/
-Tokenizer::~Tokenizer()
-{
-	// Stop tokenizer
-	Stop();
-}
-
-/**
-*  @brief
-*    Get delimiters (characters that a treated as whitespace)
-*/
-String Tokenizer::GetDelimiters() const
-{
-	return m_sDelimiters;
-}
-
-/**
-*  @brief
-*    Set delimiters (characters that a treated as whitespace)
-*/
-void Tokenizer::SetDelimiters(const String &sDelimiters)
-{
-	m_sDelimiters = sDelimiters;
-}
-
-/**
-*  @brief
-*    Get single characters
-*/
-String Tokenizer::GetSingleChars() const
-{
-	return m_sSingleChars;
-}
-
-/**
-*  @brief
-*    Set single characters
-*/
-void Tokenizer::SetSingleChars(const String &sSingleChars)
-{
-	m_sSingleChars = sSingleChars;
-}
-
-/**
-*  @brief
-*    Get characters that are used for quotes
-*/
-String Tokenizer::GetQuotes() const
-{
-	return m_sQuotes;
-}
-
-/**
-*  @brief
-*    Set characters that are used for quotes
-*/
-void Tokenizer::SetQuotes(const String &sQuotes)
-{
-	m_sQuotes = sQuotes;
-}
-
-/**
-*  @brief
-*    Get the string that starts a multi-line comment
-*/
-String Tokenizer::GetCommentStartTag() const
-{
-	return m_sCommentStartTag;
-}
-
-/**
-*  @brief
-*    Set the string that starts a multi-line comment
-*/
-void Tokenizer::SetCommentStartTag(const String &sCommentStartTag)
-{
-	m_sCommentStartTag = sCommentStartTag;
-}
-
-/**
-*  @brief
-*    Get the string that ends a multi-line comment
-*/
-String Tokenizer::GetCommentEndTag() const
-{
-	return m_sCommentEndTag;
-}
-
-/**
-*  @brief
-*    Set the string that ends a multi-line comment
-*/
-void Tokenizer::SetCommentEndTag(const String &sCommentEndTag)
-{
-	m_sCommentEndTag = sCommentEndTag;
-}
-
-/**
-*  @brief
-*    Get the string that starts a single-line comment
-*/
-String Tokenizer::GetSingleLineComment() const
-{
-	return m_sSingleLineComment;
-}
-
-/**
-*  @brief
-*    Set the string that starts a single-line comment
-*/
-void Tokenizer::SetSingleLineComment(const String &sSingleLineComment)
-{
-	m_sSingleLineComment = sSingleLineComment;
-}
-
-/**
-*  @brief
-*    Get case sensitivity flag
-*/
-bool Tokenizer::IsCaseSensitive() const
-{
-	return m_bCaseSensitive;
-}
-
-/**
-*  @brief
-*    Set case sensitivity flag
-*/
-void Tokenizer::SetCaseSensitive(bool bCaseSensitive)
-{
-	m_bCaseSensitive = bCaseSensitive;
-}
-
-/**
-*  @brief
 *    Starts the tokenizer on a string
 */
 void Tokenizer::Start(const String &sBuffer)
@@ -575,45 +439,6 @@ bool Tokenizer::FindToken(const String &sExpected)
 
 /**
 *  @brief
-*    Returns the current token
-*/
-String Tokenizer::GetToken() const
-{
-	// Return current token
-	return m_sToken;
-}
-
-/**
-*  @brief
-*    Compares the current token with a given string
-*/
-bool Tokenizer::CompareToken(const String &sExpected)
-{
-	return (m_bCaseSensitive ? m_sToken.Compare(sExpected) : m_sToken.CompareNoCase(sExpected));
-}
-
-/**
-*  @brief
-*    Returns the current position in the stream
-*/
-uint32 Tokenizer::GetPosition() const
-{
-	// Return current position
-	return m_nPosition;
-}
-
-/**
-*  @brief
-*    Returns the current line (counted by '\n' occurrences)
-*/
-uint32 Tokenizer::GetLine() const
-{
-	// Return current line
-	return m_nLine;
-}
-
-/**
-*  @brief
 *    Saves the current state of the tokenizer on a state stack
 */
 void Tokenizer::PushState()
@@ -647,73 +472,6 @@ void Tokenizer::PopState()
 		if (m_pStream)
 			m_pStream->Seek(m_nPosition);
 	}
-}
-
-/**
-*  @brief
-*    Deletes the last saved state from the stack
-*/
-void Tokenizer::DropState()
-{
-	// Is the stack empty?
-	if (m_cStateStack.GetNumOfElements() > 0) {
-		// Pop saved state from stack
-		m_cStateStack.Pop();
-	}
-}
-
-/**
-*  @brief
-*    Expects the next token to be a number and returns it as an integer value
-*/
-bool Tokenizer::ParseNumber(int &nNumber)
-{
-	const String sToken = GetNextToken();
-	if (sToken.GetLength()) {
-		nNumber = sToken.GetInt();
-
-		// Done
-		return true;
-	}
-
-	// Error!
-	return false;
-}
-
-/**
-*  @brief
-*    Expects the next token to be a floating point number and returns it as a float value
-*/
-bool Tokenizer::ParseNumber(float &fNumber)
-{
-	const String sToken = GetNextToken();
-	if (sToken.GetLength()) {
-		fNumber = sToken.GetFloat();
-
-		// Done
-		return true;
-	}
-
-	// Error!
-	return false;
-}
-
-/**
-*  @brief
-*    Expects the next token to be a floating point number and returns it as a double value
-*/
-bool Tokenizer::ParseNumber(double &dNumber)
-{
-	const String sToken = GetNextToken();
-	if (sToken.GetLength()) {
-		dNumber = sToken.GetDouble();
-
-		// Done
-		return true;
-	}
-
-	// Error!
-	return false;
 }
 
 /**
@@ -856,60 +614,6 @@ bool Tokenizer::ParseEquation(String &sName, String &sValue, const String &sEqua
 	return false;
 }
 
-/**
-*  @brief
-*    Expects the next tokens to be an equation and returns it
-*/
-bool Tokenizer::ParseEquation(String &sName, int &nValue, const String &sEquation)
-{
-	String sValue;
-	if (ParseEquation(sName, sValue, sEquation)) {
-		nValue = sValue.GetInt();
-
-		// Done
-		return true;
-	}
-
-	// Error!
-	return false;
-}
-
-/**
-*  @brief
-*    Expects the next tokens to be an equation and returns it
-*/
-bool Tokenizer::ParseEquation(String &sName, float &fValue, const String &sEquation)
-{
-	String sValue;
-	if (ParseEquation(sName, sValue, sEquation)) {
-		fValue = sValue.GetFloat();
-
-		// Done
-		return true;
-	}
-
-	// Error!
-	return false;
-}
-
-/**
-*  @brief
-*    Expects the next tokens to be an equation and returns it
-*/
-bool Tokenizer::ParseEquation(String &sName, double &dValue, const String &sEquation)
-{
-	String sValue;
-	if (ParseEquation(sName, sValue, sEquation)) {
-		dValue = sValue.GetDouble();
-
-		// Done
-		return true;
-	}
-
-	// Error!
-	return false;
-}
-
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
@@ -948,7 +652,7 @@ Tokenizer &Tokenizer::operator =(const Tokenizer &cSource)
 *  @brief
 *    Checks if the next string in the stream equals the given one
 */
-bool Tokenizer::StreamIsString(const String &sString)
+inline bool Tokenizer::StreamIsString(const String &sString)
 {
 	if (!m_pStream->IsEof())
 		return (m_bCaseSensitive ? m_pStream->IsString(sString) : m_pStream->IsStringNoCase(sString));

@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/File/File.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include "PLRenderer/RendererContext.h"
 #include "PLRenderer/Renderer/Program.h"
@@ -166,7 +165,7 @@ bool EffectPass::Bind(ParameterManager *pParameterManager)
 
 			// Fixed functions
 			if (pFixedFunctions) {
-				pFixedFunctions->SetTransformState(static_cast<FixedFunctions::Transform::Enum>(FixedFunctions::Transform::Texture0 + i), Matrix4x4::Identity);
+				pFixedFunctions->SetTransformState(static_cast<FixedFunctions::Transform::Enum>(static_cast<uint32>(FixedFunctions::Transform::Texture0) + i), Matrix4x4::Identity);
 
 				// Set texture stage states
 				for (uint32 nState=0; nState<FixedFunctions::TextureStage::Number; nState++)
@@ -421,12 +420,8 @@ bool EffectPass::LoadVertexShader(const String &sFilename, const String &sShader
 			const String sShaderSourceCode = LoadableManager::GetInstance()->LoadStringFromFile(sFilename);
 			if (sShaderSourceCode.GetLength()) {
 				// Create the shader instances
-				m_pVertexShader = pShaderLanguage->CreateVertexShader();
-
-				// Set the shader source code
+				m_pVertexShader = pShaderLanguage->CreateVertexShader(sShaderSourceCode, sProfile);
 				if (m_pVertexShader) {
-					m_pVertexShader->SetSourceCode(sShaderSourceCode, sProfile);
-
 					// Destroy the current GPU program
 					if (m_pProgram) {
 						delete m_pProgram;
@@ -465,12 +460,8 @@ bool EffectPass::LoadFragmentShader(const String &sFilename, const String &sShad
 			const String sShaderSourceCode = LoadableManager::GetInstance()->LoadStringFromFile(sFilename);
 			if (sShaderSourceCode.GetLength()) {
 				// Create the shader instances
-				m_pFragmentShader = pShaderLanguage->CreateFragmentShader();
-
-				// Set the shader source code
+				m_pFragmentShader = pShaderLanguage->CreateFragmentShader(sShaderSourceCode, sProfile);
 				if (m_pFragmentShader) {
-					m_pFragmentShader->SetSourceCode(sShaderSourceCode, sProfile);
-
 					// Destroy the current GPU program
 					if (m_pProgram) {
 						delete m_pProgram;
@@ -499,13 +490,8 @@ Program *EffectPass::GetProgram()
 		// Get the shader language to use
 		ShaderLanguage *pShaderLanguage = m_pVertexShader->GetRenderer().GetShaderLanguage(m_pVertexShader->GetShaderLanguage());
 		if (pShaderLanguage) {
-			// Create a program instance
-			m_pProgram = pShaderLanguage->CreateProgram();
-			if (m_pProgram) {
-				// Assign the vertex and fragment shaders to the program
-				m_pProgram->SetVertexShader(m_pVertexShader);
-				m_pProgram->SetFragmentShader(m_pFragmentShader);
-			}
+			// Create a program instance and assign the created vertex and fragment shaders to it
+			m_pProgram = pShaderLanguage->CreateProgram(m_pVertexShader, m_pFragmentShader);
 		}
 	}
 

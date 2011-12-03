@@ -22,10 +22,13 @@
     <ClCompile Include="src\Frontend.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\XDnDFileDropHelper.cpp">
+    <ClCompile Include="src\Linux_XDnDFileDropHelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\FrontendAndroid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OSWindowMacOSX.mm">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -46,10 +49,13 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="include\PLFrontendOS\XDnDFileDropHelper.h">
+    <ClInclude Include="include\PLFrontendOS\Linux_XDnDFileDropHelper.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLFrontendOS\FrontendAndroid.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendOS\OSWindowMacOSX.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

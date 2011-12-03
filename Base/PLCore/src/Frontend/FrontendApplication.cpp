@@ -44,20 +44,6 @@ pl_implement_class(FrontendApplication)
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the frontend this application is running in
-*/
-Frontend &FrontendApplication::GetFrontend() const
-{
-	// Return reference to the frontend
-	return *m_pFrontend;
-}
-
-
-//[-------------------------------------------------------]
 //[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**

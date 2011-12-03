@@ -43,8 +43,8 @@
 #endif
 
 // [DEBUG]
-#include <PLCore/System/System.h>
-#include <PLCore/System/Console.h>
+//#include <PLCore/System/System.h>
+//#include <PLCore/System/Console.h>
 
 
 //[-------------------------------------------------------]

@@ -40,7 +40,7 @@
 //[-------------------------------------------------------]
 namespace PLCore {
 	class Thread;
-	class Mutex;
+	class CriticalSection;
 }
 namespace PLInput {
 	class Provider;
@@ -303,7 +303,7 @@ class InputManager : public PLCore::Singleton<InputManager> {
 		PLCore::HashMap<PLCore::String, Provider*>	 m_mapProviders;		/**< Hash map of providers */
 		PLCore::List<Device*>						 m_lstDevices;			/**< List of devices */
 		PLCore::HashMap<PLCore::String, Device*>	 m_mapDevices;			/**< Hash map of devices */
-		PLCore::Mutex								*m_pMutex;				/**< Mutex for reading/writing input messages, always valid! */
+		PLCore::CriticalSection						*m_pCriticalSection;	/**< Critical section for reading/writing input messages, always valid! */
 		PLCore::List<Control*>						 m_lstUpdatedControls;	/**< List of controls that have been updated (message list) */
 
 

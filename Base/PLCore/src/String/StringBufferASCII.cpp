@@ -32,6 +32,7 @@
 	#include <wchar.h>
 	#include "PLCore/PLCoreLinuxWrapper.h"
 #endif
+#include "PLCore/String/String.h"
 #include "PLCore/String/UTF8Tools.h"
 #include "PLCore/String/StringBufferUnicode.h"
 #include "PLCore/String/StringBufferUTF8.h"
@@ -155,7 +156,7 @@ void StringBufferASCII::SetCharacter(char nCharacter)
 //[-------------------------------------------------------]
 //[ Public virtual StringBuffer functions                 ]
 //[-------------------------------------------------------]
-String::EFormat StringBufferASCII::GetFormat() const
+uint32 StringBufferASCII::GetFormat() const
 {
 	return String::ASCII;
 }

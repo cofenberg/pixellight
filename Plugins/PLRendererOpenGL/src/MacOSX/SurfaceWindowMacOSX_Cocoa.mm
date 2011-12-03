@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SurfaceWindowMacOSXCocoa.mm                    *
+ *  File: SurfaceWindowMacOSX_Cocoa.mm                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -26,7 +26,7 @@
 #include <AppKit/NSOpenGL.h>
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
-#include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSXCocoa.h"
+#include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSX_Cocoa.h"
 
 
 //[-------------------------------------------------------]
@@ -43,7 +43,7 @@ namespace PLRendererOpenGL {
 *  @brief
 *    Destructor
 */
-SurfaceWindowMacOSXCocoa::~SurfaceWindowMacOSXCocoa()
+SurfaceWindowMacOSX_Cocoa::~SurfaceWindowMacOSX_Cocoa()
 {
 	// De-initialize the OpenGL surface window
 	DeInit();
@@ -57,10 +57,10 @@ SurfaceWindowMacOSXCocoa::~SurfaceWindowMacOSXCocoa()
 *  @brief
 *    Constructor
 */
-SurfaceWindowMacOSXCocoa::SurfaceWindowMacOSXCocoa(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen) :
+SurfaceWindowMacOSX_Cocoa::SurfaceWindowMacOSX_Cocoa(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen) :
 	// [TODO] This is just a test -> For now, do never ever go into fullscreen or we may have to restart the Mac Mini in order to close an appliation...
-	SurfaceWindowMacOSX(cHandler, nNativeWindowHandle, sDisplayMode, false),
-//	SurfaceWindowMacOSX(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen),
+	SurfaceWindowMacOSX_X11(cHandler, nNativeWindowHandle, sDisplayMode, false),
+//	SurfaceWindowMacOSX_X11(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen),
 	m_pNSOpenGLContext(nullptr)
 {
 	// Initialize the OpenGL surface window
@@ -71,18 +71,18 @@ SurfaceWindowMacOSXCocoa::SurfaceWindowMacOSXCocoa(PLRenderer::SurfaceWindowHand
 //[-------------------------------------------------------]
 //[ Private virtual PLRenderer::Surface functions         ]
 //[-------------------------------------------------------]
-bool SurfaceWindowMacOSXCocoa::Init()
+bool SurfaceWindowMacOSX_Cocoa::Init()
 {
 	// Is it fullscreen?
 	if (m_bIsFullscreen) {
 		// Call base implementation
-		return SurfaceWindowMacOSX::Init();
+		return SurfaceWindowMacOSX_X11::Init();
 	} else {
 		// Get the MacOS X context implementation
 		ContextMacOSX &cContextMacOSX = static_cast<ContextMacOSX&>(static_cast<Renderer&>(GetRenderer()).GetContext());
 
 		// [TODO] Implement me
-		// Obj-C style object creation	
+		// Obj-C style object creation
 		NSOpenGLContext *pNSOpenGLContext = [[NSOpenGLContext alloc] initWithFormat:nullptr shareContext:nullptr];
 //		m_pNSOpenGLContext = [[NSOpenGLContext alloc] initWithFormat:nullptr shareContext:cContextMacOSX.GetRenderContext()];
 
@@ -91,12 +91,12 @@ bool SurfaceWindowMacOSXCocoa::Init()
 	}
 }
 
-void SurfaceWindowMacOSXCocoa::DeInit()
+void SurfaceWindowMacOSX_Cocoa::DeInit()
 {
 	// Is it fullscreen?
 	if (m_bIsFullscreen) {
 		// Call base implementation
-		SurfaceWindowMacOSX::DeInit();
+		SurfaceWindowMacOSX_X11::DeInit();
 	} else {
 		if (m_pNSOpenGLContext) {
 			delete static_cast<NSOpenGLContext*>(m_pNSOpenGLContext);
@@ -106,24 +106,24 @@ void SurfaceWindowMacOSXCocoa::DeInit()
 	}
 }
 
-bool SurfaceWindowMacOSXCocoa::MakeCurrent(uint8 nFace)
+bool SurfaceWindowMacOSX_Cocoa::MakeCurrent(uint8 nFace)
 {
 	// Is it fullscreen?
 	if (m_bIsFullscreen) {
 		// Call base implementation
-		return SurfaceWindowMacOSX::MakeCurrent(nFace);
+		return SurfaceWindowMacOSX_X11::MakeCurrent(nFace);
 	} else {
 		// [TODO] Implement me
 		return false;
 	}
 }
 
-bool SurfaceWindowMacOSXCocoa::Present()
+bool SurfaceWindowMacOSX_Cocoa::Present()
 {
 	// Is it fullscreen?
 	if (m_bIsFullscreen) {
 		// Call base implementation
-		return SurfaceWindowMacOSX::Present();
+		return SurfaceWindowMacOSX_X11::Present();
 	} else {
 		// [TODO] Implement me
 		return false;

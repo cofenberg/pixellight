@@ -144,13 +144,6 @@ class Application : public PLEngine::ScriptApplication {
 		virtual void OnCreateInputController() override;
 
 
-	//[-------------------------------------------------------]
-	//[ Public virtual PLEngine::EngineApplication functions  ]
-	//[-------------------------------------------------------]
-	public:
-		virtual bool LoadScene(const PLCore::String &sFilename) override;
-
-
 };
 
 

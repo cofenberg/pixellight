@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: MainWindow.h                                       *
+ *  File: MainWindow.h                                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -19,12 +19,19 @@
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
 \*********************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
 
+#ifndef __PLINSTALL_MAINWINDOW_H__
+#define __PLINSTALL_MAINWINDOW_H__
+#pragma once
+
+
+//[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
 #include <QtGui/QDialog.h>
 #include <PLCore/Base/Event/EventHandler.h>
 #include "ui_MainWindow.h"
+
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
@@ -37,62 +44,47 @@ class InstallerFunctions;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    [TODO] write a description
-*
-*  @note
-*    [TODO] write node
+*    Main window
 */
-class MainWindow : QDialog
-{	
-	
+class MainWindow : public QDialog {
+
+
 	//[-------------------------------------------------------]
 	//[ Qt definitions (MOC)                                  ]
 	//[-------------------------------------------------------]
 	Q_OBJECT	// All files using the Q_OBJECT macro need to be compiled using the Meta-Object Compiler (MOC) of Qt, else slots won't work!
 				// (VisualStudio: Header file -> Right click -> Properties -> "Custom Build Tool")
-	
+
+
+	//[-------------------------------------------------------]
+	//[ Public Qt slots                                       ]
+	//[-------------------------------------------------------]
+	public slots:
+
+
 	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
+		MainWindow();
+		virtual ~MainWindow();
 
-		MainWindow(QWidget *parent = 0);
-		~MainWindow();
-		
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
-	//[-------------------------------------------------------]	
-	private:
-		void initButtons();
-		void initTextAndLabels();
-
-		bool runStart();
-		void runComplete();
-
-		void onUpdateProgress(int value);
-
-		void showDialog(PLCore::String msg);
-		
-		void toggleButtons();
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Ui::MainWindow wnd_main_ui;
-		InstallerFunctions *m_pInstallerFunctions;
-		PLCore::EventHandler<int> *m_pProgressEventHandler;
-		bool m_bIsRunning;
-		double m_installationProgressStepPercentage;
-		double m_installationProgressPrecentage;
-		
+		void InitButtons();
+		void InitTextAndLabels();
+		bool RunStart();
+		void RunComplete();
+		void OnUpdateProgress(int nValue);
+		void ShowDialog(const PLCore::String &sMessage) const;
+		void ToggleButtons();
+
+
 	//[-------------------------------------------------------]
-	//[ public qt slots                                       ]
-	//[-------------------------------------------------------]
-	public slots:
-	
-	//[-------------------------------------------------------]
-	//[ Private qt slots                                      ]
+	//[ Private Qt slots                                      ]
 	//[-------------------------------------------------------]
 	private slots:
 		void cancelEvent();
@@ -100,6 +92,19 @@ class MainWindow : QDialog
 		void checkInstallationEvent();
 
 
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		Ui::MainWindow				 wnd_main_ui;
+		InstallerFunctions			*m_pInstallerFunctions;	/**< Installer functions, always valid! */
+		PLCore::EventHandler<int>	*m_pProgressEventHandler;
+		bool						 m_bIsRunning;
+		float						 m_fInstallationProgressStepPercentage;
+		float						 m_fInstallationProgressPrecentage;
+
+
 };
 
-#endif // MAINWINDOW_H
+
+#endif // __PLINSTALL_MAINWINDOW_H__

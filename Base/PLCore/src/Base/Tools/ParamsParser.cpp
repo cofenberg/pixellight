@@ -37,24 +37,6 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
-*/
-ParamsParser::ParamsParser() :
-	m_cRegEx("\\s*((\\w*\\s*=\\s*\"[^\"]*\")|(\\w*\\s*=\\s*'[^']*')|(\\w*\\s*=\\s*\\w*))"),
-	m_nParsePos(-1)
-{
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-ParamsParser::~ParamsParser()
-{
-}
-
-/**
-*  @brief
 *    Parse parameter string
 */
 bool ParamsParser::ParseString(const String &sParameters)
@@ -108,35 +90,6 @@ bool ParamsParser::Next()
 	m_sValue	= "";
 	m_nParsePos	= -1;
 	return false;
-}
-
-/**
-*  @brief
-*    Check if the current (last parsed) parameter is valid
-*/
-bool ParamsParser::HasParam() const
-{
-	return (m_sName.GetLength() != 0);
-}
-
-/**
-*  @brief
-*    Get name of currently parsed parameter
-*/
-String ParamsParser::GetName() const
-{
-	// Return parameter name
-	return m_sName;
-}
-
-/**
-*  @brief
-*    Get value of currently parsed parameter
-*/
-String ParamsParser::GetValue() const
-{
-	// Return parameter value
-	return m_sValue;
 }
 
 

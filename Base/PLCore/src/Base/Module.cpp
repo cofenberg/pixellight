@@ -34,100 +34,6 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Get module ID
-*/
-uint32 Module::GetModuleID() const
-{
-	// Return ID
-	return m_nModuleID;
-}
-
-/**
-*  @brief
-*    Check if module is loaded as a plugin
-*/
-bool Module::IsPlugin() const
-{
-	// Return if module is plugin
-	return m_bPlugin;
-}
-
-/**
-*  @brief
-*    Get dynamic library that contains the plugin
-*/
-DynLib *Module::GetDynLib() const
-{
-	// Return library
-	return m_pDynLib;
-}
-
-/**
-*  @brief
-*    Get absolute filename of dynamic library that contains the plugin
-*/
-String Module::GetFilename() const
-{
-	// Return filename
-	return m_sFilename;
-}
-
-/**
-*  @brief
-*    Get module name
-*/
-String Module::GetName() const
-{
-	// Return name
-	return m_sName;
-}
-
-/**
-*  @brief
-*    Get module vendor
-*/
-String Module::GetVendor() const
-{
-	// Return vendor
-	return m_sVendor;
-}
-
-/**
-*  @brief
-*    Get module license
-*/
-String Module::GetLicense() const
-{
-	// Return license
-	return m_sLicense;
-}
-
-/**
-*  @brief
-*    Get module description
-*/
-String Module::GetDescription() const
-{
-	// Return description
-	return m_sDescription;
-}
-
-/**
-*  @brief
-*    Get classes of module
-*/
-const List<const Class*> &Module::GetClasses() const
-{
-	// Return class list
-	return m_lstClasses;
-}
-
-
-//[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
@@ -167,26 +73,6 @@ void Module::SetModuleInfo(const String &sName, const String &sVendor, const Str
 	m_sVendor		= sVendor;
 	m_sLicense		= sLicense;
 	m_sDescription	= sDescription;
-}
-
-/**
-*  @brief
-*    Add class
-*/
-void Module::AddClass(const Class *pClass)
-{
-	// Add class to list
-	m_lstClasses.Add(pClass);
-}
-
-/**
-*  @brief
-*    Remove class
-*/
-void Module::RemoveClass(const Class *pClass)
-{
-	// Remove class from list
-	m_lstClasses.Remove(pClass);
 }
 
 

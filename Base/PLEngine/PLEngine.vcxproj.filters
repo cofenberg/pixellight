@@ -132,6 +132,9 @@
     <ClCompile Include="src\Tools\CamcorderLoader.cpp">
       <Filter>Tools</Filter>
     </ClCompile>
+    <ClCompile Include="src\Controller\SNMEgoLookController.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLEngine\Application\EngineApplication.h">
@@ -244,6 +247,9 @@
     </ClInclude>
     <ClInclude Include="include\PLEngine\Tools\CamcorderLoader.h">
       <Filter>Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Controller\SNMEgoLookController.h">
+      <Filter>Controller</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

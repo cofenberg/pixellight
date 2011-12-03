@@ -89,15 +89,6 @@ void DynEvent::Disconnect(DynEventHandler &cHandler)
 	}
 }
 
-/**
-*  @brief
-*    Return the number of connections
-*/
-uint32 DynEvent::GetNumOfConnects() const
-{
-	return m_lstHandlers.GetNumOfElements();
-}
-
 
 //[-------------------------------------------------------]
 //[ Public virtual DynEvent functions                     ]

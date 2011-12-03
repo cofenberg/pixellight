@@ -26,7 +26,6 @@
 #include <PLCore/Runtime.h>
 #include <PLCore/File/File.h>
 #include <PLCore/String/RegEx.h>
-#include <PLCore/System/System.h>
 #if defined(WIN32)
 	#include "PublishWin32.h"
 #elif defined(LINUX)
@@ -160,7 +159,6 @@ bool CopyFiles(const String &sSourceDirectory, const String &sTargetDirectory, c
 	}
 
 	// Error... because we can never ever end up in here...
-	return false;
 }
 
 /**

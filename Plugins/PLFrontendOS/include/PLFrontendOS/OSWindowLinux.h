@@ -70,7 +70,7 @@ namespace PLFrontendOS {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class Frontend;
-class XDnDFileDropHelper;
+class Linux_XDnDFileDropHelper;
 
 
 //[-------------------------------------------------------]
@@ -78,7 +78,7 @@ class XDnDFileDropHelper;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OS Linux frontend implementation class
+*    OS Linux frontend implementation class using X11
 *
 *  @note
 *    - Implementation of the bridge design pattern, this class is the implementor of the 'System' abstraction
@@ -90,7 +90,7 @@ class OSWindowLinux : public OSWindow {
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class Frontend;
-	friend class XDnDFileDropHelper;
+	friend class Linux_XDnDFileDropHelper;
 
 
 	//[-------------------------------------------------------]
@@ -126,7 +126,7 @@ class OSWindowLinux : public OSWindow {
 
 		/**
 		*  @brief
-		*    Gets called from the XDnDFileDropHelper when a drop occurred
+		*    Gets called from the Linux_XDnDFileDropHelper when a drop occurred
 		*
 		*  @param[in] lstFiles
 		*    List of file names
@@ -177,20 +177,20 @@ class OSWindowLinux : public OSWindow {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Frontend			*m_pFrontendOS;			/**< Owner frontend implementation instance, always valid! */
-		::Display			*m_pDisplay;			/**< System display, considered to be always valid */
-		::Window			 m_nNativeWindowHandle;	/**< Native window handle, can be a null handle */
-		bool				 m_bVisible;			/**< Was the window made visible? (independent of the real OS window visibility state) */
-		bool				 m_bIsMouseOver;		/**< Is the mouse cursor currently over the window? */
-		bool				 m_bMouseVisible;		/**< Is the mouse cursor visible? */
-		::Cursor			 m_nInvisibleCursor;	/**< The invisible cursor, can be null */
+		Frontend  *m_pFrontendOS;			/**< Owner frontend implementation instance, always valid! */
+		::Display *m_pDisplay;				/**< System display, considered to be always valid */
+		::Window   m_nNativeWindowHandle;	/**< Native window handle, can be a null handle */
+		bool	   m_bVisible;				/**< Was the window made visible? (independent of the real OS window visibility state) */
+		bool	   m_bIsMouseOver;			/**< Is the mouse cursor currently over the window? */
+		bool	   m_bMouseVisible;			/**< Is the mouse cursor visible? */
+		::Cursor   m_nInvisibleCursor;		/**< The invisible cursor, can be null */
 		// Atoms
-		::Atom				 WM_DELETE_WINDOW;		/**< System atom for delete */
-		::Atom				 UTF8_STRING;			/**< Atom for the type of a window title */
-		::Atom 				 WM_NAME;				/**< Window title (old?) */
-		::Atom 				 _NET_WM_NAME;			/**< Window title */
-		::Atom 				 _NET_WM_VISIBLE_NAME;	/**< Window title (visible title, can be different) */
-		XDnDFileDropHelper	*m_pDropHelper;			/**< XDnD drop helper instance, can be a null pointer */
+		::Atom					 WM_DELETE_WINDOW;		/**< System atom for delete */
+		::Atom					 UTF8_STRING;			/**< Atom for the type of a window title */
+		::Atom 					 WM_NAME;				/**< Window title (old?) */
+		::Atom 					 _NET_WM_NAME;			/**< Window title */
+		::Atom 					 _NET_WM_VISIBLE_NAME;	/**< Window title (visible title, can be different) */
+		Linux_XDnDFileDropHelper *m_pDropHelper;		/**< XDnD drop helper instance, can be a null pointer */
 
 
 };

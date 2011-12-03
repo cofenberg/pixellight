@@ -42,4 +42,4 @@ namespace UnitTest {
 	int RunAllTests(TestReporter& rep, char* const SuiteName = NULL);
 }
 
-#endif __PLUNITTESTS_UNITTESTADDINS_RUNALLTESTS_H_
+#endif // __PLUNITTESTS_UNITTESTADDINS_RUNALLTESTS_H_

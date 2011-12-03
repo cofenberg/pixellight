@@ -84,7 +84,7 @@ class HttpClient : protected Client {
 		*  @return
 		*    Client signature
 		*/
-		PLCORE_API EClientSignature GetClientSignature() const;
+		inline EClientSignature GetClientSignature() const;
 
 		/**
 		*  @brief
@@ -98,7 +98,7 @@ class HttpClient : protected Client {
 		*    identification, so the server will know, who we are ;-) If you want to mimic
 		*    other clients, you can set this to another value, e.g. to mimic a Mozilla client.
 		*/
-		PLCORE_API void SetClientSignature(EClientSignature nClientSignature);
+		inline void SetClientSignature(EClientSignature nClientSignature);
 
 		/**
 		*  @brief
@@ -107,7 +107,7 @@ class HttpClient : protected Client {
 		*  @return
 		*    HTTP protocol version
 		*/
-		PLCORE_API EHttpProtocol GetProtocol() const;
+		inline EHttpProtocol GetProtocol() const;
 
 		/**
 		*  @brief
@@ -116,7 +116,7 @@ class HttpClient : protected Client {
 		*  @param[in] nProtocol
 		*    HTTP protocol version
 		*/
-		PLCORE_API void SetProtocol(EHttpProtocol nProtocol);
+		inline void SetProtocol(EHttpProtocol nProtocol);
 
 		/**
 		*  @brief
@@ -125,7 +125,7 @@ class HttpClient : protected Client {
 		*  @return
 		*    HTTP connection type
 		*/
-		PLCORE_API EHttpConnection GetConnectionType() const;
+		inline EHttpConnection GetConnectionType() const;
 
 		/**
 		*  @brief
@@ -134,7 +134,7 @@ class HttpClient : protected Client {
 		*  @param[in] nConnection
 		*    HTTP connection type
 		*/
-		PLCORE_API void SetConnectionType(EHttpConnection nConnection);
+		inline void SetConnectionType(EHttpConnection nConnection);
 
 		/**
 		*  @brief
@@ -143,7 +143,7 @@ class HttpClient : protected Client {
 		*  @return
 		*    HTTP authentication type
 		*/
-		PLCORE_API EHttpAuth GetAuthentication() const;
+		inline EHttpAuth GetAuthentication() const;
 
 		/**
 		*  @brief
@@ -156,7 +156,7 @@ class HttpClient : protected Client {
 		*  @param[in] sPassword
 		*    Password
 		*/
-		PLCORE_API void SetAuthentication(EHttpAuth nAuth, const String &sUsername, const String &sPassword);
+		inline void SetAuthentication(EHttpAuth nAuth, const String &sUsername, const String &sPassword);
 
 		//[-------------------------------------------------------]
 		//[ Functions                                             ]
@@ -168,7 +168,7 @@ class HttpClient : protected Client {
 		*  @return
 		*    'true' if connection is open, else 'false'
 		*/
-		PLCORE_API bool IsConnected() const;
+		inline bool IsConnected() const;
 
 		/**
 		*  @brief
@@ -251,7 +251,7 @@ class HttpClient : protected Client {
 		*  @return
 		*    Header of HTTP answer from server
 		*/
-		PLCORE_API const HttpHeader &GetHeader() const;
+		inline const HttpHeader &GetHeader() const;
 
 		/**
 		*  @brief
@@ -328,6 +328,12 @@ class HttpClient : protected Client {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Network/Http/HttpClient.inl"
 
 
 #endif // __PLCORE_HTTPCLIENT_H__

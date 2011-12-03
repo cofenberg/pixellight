@@ -74,6 +74,23 @@ class Mutex {
 
 		/**
 		*  @brief
+		*    Constructor
+		*
+		*  @param[in] bCriticalSection
+		*    If supported by the platform: 'true' to use "Critical Section" (lock/unlock only inside the same process) instead of "Mutex" (lock/unlock across multiple processes) implementation, else 'false'
+		*
+		*  @remarks
+		*    Platforms handle mutual exclusion implementations differently. POSIX only offeres "Mutex", while MS Windows
+		*    makes a difference between "Mutex" (lock/unlock across multiple processes) and "Critical Section"
+		*    (lock/unlock only inside the same process).
+		*
+		*  @note
+		*    - A new constructed mutex is unlocked by default
+		*/
+		PLCORE_API Mutex(bool bCriticalSection);
+
+		/**
+		*  @brief
 		*    Destructor
 		*/
 		PLCORE_API ~Mutex();
@@ -90,7 +107,7 @@ class Mutex {
 		*    - Use the lock method with a timeout to avoid potential deadlocks
 		*    - In the literature, this operation is also known as "acquire"
 		*/
-		PLCORE_API bool Lock();
+		inline bool Lock();
 
 		/**
 		*  @brief
@@ -108,7 +125,7 @@ class Mutex {
 		*  @see
 		*    - Lock()
 		*/
-		PLCORE_API bool TryLock(uint64 nTimeout);
+		inline bool TryLock(uint64 nTimeout);
 
 		/**
 		*  @brief
@@ -120,7 +137,7 @@ class Mutex {
 		*  @note
 		*    - In the literature, this operation is also known as "release"
 		*/
-		PLCORE_API bool Unlock();
+		inline bool Unlock();
 
 
 	//[-------------------------------------------------------]
@@ -163,6 +180,12 @@ class Mutex {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/System/Mutex.inl"
 
 
 #endif // __PLCORE_MUTEX_H__

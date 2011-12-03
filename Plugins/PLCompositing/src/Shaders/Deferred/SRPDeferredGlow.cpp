@@ -218,43 +218,23 @@ void SRPDeferredGlow::CalculateGlow(const String &sShaderLanguage, VertexBuffer 
 		PLRenderer::ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(sShaderLanguage);
 		if (pShaderLanguage) {
 			// Create a vertex shader instance
-			m_pVertexShader = pShaderLanguage->CreateVertexShader();
-			if (m_pVertexShader) {
-				// Set the vertex shader source code
-				m_pVertexShader->SetSourceCode(sVertexShaderSourceCode);
-			}
+			m_pVertexShader = pShaderLanguage->CreateVertexShader(sVertexShaderSourceCode);
 
 			// Create a fragment shader instance
-			m_pDownscaleFragmentShader = pShaderLanguage->CreateFragmentShader();
-			if (m_pDownscaleFragmentShader) {
-				// Set the fragment shader source code
-				m_pDownscaleFragmentShader->SetSourceCode(sFragmentShaderSourceCode_Downscale);
-			}
-			m_pBlurFragmentShader = pShaderLanguage->CreateFragmentShader();
-			if (m_pBlurFragmentShader) {
-				// Set the fragment shader source code
-				m_pBlurFragmentShader->SetSourceCode(sFragmentShaderSourceCode_Blur);
-			}
+			m_pDownscaleFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode_Downscale);
+			m_pBlurFragmentShader      = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode_Blur);
 
-			// Create a program instance
-			m_pDownscaleProgram = pShaderLanguage->CreateProgram();
+			// Create a program instance and assign the created vertex and fragment shaders to it
+			m_pDownscaleProgram = pShaderLanguage->CreateProgram(m_pVertexShader, m_pDownscaleFragmentShader);
 			if (m_pDownscaleProgram) {
-				// Assign the created vertex and fragment shaders to the program
-				m_pDownscaleProgram->SetVertexShader(m_pVertexShader);
-				m_pDownscaleProgram->SetFragmentShader(m_pDownscaleFragmentShader);
-
 				// Add our nark which will inform us as soon as the program gets dirty
 				m_pDownscaleProgram->EventDirty.Connect(EventHandlerDirty);
 
 				// Get attributes and uniforms
 				OnDirty(m_pDownscaleProgram);
 			}
-			m_pBlurProgram = pShaderLanguage->CreateProgram();
+			m_pBlurProgram = pShaderLanguage->CreateProgram(m_pVertexShader, m_pBlurFragmentShader);
 			if (m_pBlurProgram) {
-				// Assign the created vertex and fragment shaders to the program
-				m_pBlurProgram->SetVertexShader(m_pVertexShader);
-				m_pBlurProgram->SetFragmentShader(m_pBlurFragmentShader);
-
 				// Add our nark which will inform us as soon as the program gets dirty
 				m_pBlurProgram->EventDirty.Connect(EventHandlerDirty);
 
@@ -457,19 +437,11 @@ void SRPDeferredGlow::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 								}
 
 								// Create a fragment shader instance
-								m_pResultFragmentShader = pShaderLanguage->CreateFragmentShader();
-								if (m_pResultFragmentShader) {
-									// Set the fragment shader source code
-									m_pResultFragmentShader->SetSourceCode(sFragmentShaderSourceCode);
-								}
+								m_pResultFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode);
 
-								// Create a program instance
-								m_pResultProgram = pShaderLanguage->CreateProgram();
+								// Create a program instance and assign the created vertex and fragment shaders to it
+								m_pResultProgram = pShaderLanguage->CreateProgram(m_pVertexShader, m_pResultFragmentShader);
 								if (m_pResultProgram) {
-									// Assign the created vertex and fragment shaders to the program
-									m_pResultProgram->SetVertexShader(m_pVertexShader);
-									m_pResultProgram->SetFragmentShader(m_pResultFragmentShader);
-
 									// Add our nark which will inform us as soon as the program gets dirty
 									m_pResultProgram->EventDirty.Connect(EventHandlerDirty);
 

@@ -51,76 +51,6 @@ Connection::Connection(Host &cHost) :
 
 /**
 *  @brief
-*    Get host that owns this connection
-*/
-const Host &Connection::GetHost() const
-{
-	// Return host
-	return *m_pHost;
-}
-
-/**
-*  @brief
-*    Get host that owns this connection
-*/
-Host &Connection::GetHost()
-{
-	// Return host
-	return *m_pHost;
-}
-
-/**
-*  @brief
-*    Get name of connected host
-*/
-String Connection::GetHostname() const
-{
-	// Return host name
-	return m_sHostname;
-}
-
-/**
-*  @brief
-*    Get port
-*/
-uint32 Connection::GetPort() const
-{
-	// Return port number
-	return m_nPort;
-}
-
-/**
-*  @brief
-*    Get socket
-*/
-const Socket &Connection::GetSocket() const
-{
-	// Return socket
-	return m_cSocket;
-}
-
-/**
-*  @brief
-*    Get socket
-*/
-Socket &Connection::GetSocket()
-{
-	// Return socket
-	return m_cSocket;
-}
-
-/**
-*  @brief
-*    Check if connection is active
-*/
-bool Connection::IsConnected() const
-{
-	// Return state
-	return m_bConnected;
-}
-
-/**
-*  @brief
 *    Disconnect
 */
 bool Connection::Disconnect()
@@ -143,26 +73,6 @@ bool Connection::Disconnect()
 
 	// Error!
 	return false;
-}
-
-/**
-*  @brief
-*    Get receive mode
-*/
-Connection::EReceiveMode Connection::GetReceiveMode() const
-{
-	// Return receive mode
-	return m_nReceiveMode;
-}
-
-/**
-*  @brief
-*    Set receive mode
-*/
-void Connection::SetReceiveMode(EReceiveMode nReceiveMode)
-{
-	// Set receive mode
-	m_nReceiveMode = nReceiveMode;
 }
 
 /**
@@ -200,33 +110,6 @@ String Connection::ReadLine()
 
 	// Error!
 	return "";
-}
-
-/**
-*  @brief
-*    Send data
-*/
-int Connection::Send(const char *pBuffer, uint32 nSize) const
-{
-	// Send data buffer
-	return (pBuffer && nSize > 0) ? m_cSocket.Send(pBuffer, nSize) : -1;
-}
-
-/**
-*  @brief
-*    Send string
-*/
-int Connection::Send(const String &sString) const
-{
-	// Check if string is not empty
-	if (sString.GetLength()) {
-		// Send string
-		// [TODO] What's with Unicode strings?? Check \0 at the end...
-		return Send(sString.GetASCII(), sString.GetLength());
-	} else {
-		// Error, invalid string
-		return -1;
-	}
 }
 
 

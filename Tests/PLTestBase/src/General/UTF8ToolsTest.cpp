@@ -28,7 +28,6 @@
 	#include <wchar.h>
 	#include <PLCore/PLCoreLinuxWrapper.h>
 #endif
-#include <PLCore/System/System.h>
 #include <PLCore/String/UTF8Tools.h>
 #include "PLTestBase/General/UTF8ToolsTest.h"
 

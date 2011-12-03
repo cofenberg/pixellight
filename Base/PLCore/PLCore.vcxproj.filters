@@ -379,9 +379,6 @@
     <ClCompile Include="src\System\MutexLinux.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="src\System\MutexWindows.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="src\System\Pipe.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -584,6 +581,12 @@
       <Filter>File</Filter>
     </ClCompile>
     <ClCompile Include="src\System\SystemMacOSX.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\MutexWindows_Mutex.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\System\MutexWindows_CriticalSection.cpp">
       <Filter>System</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1092,9 +1095,6 @@
     <ClInclude Include="include\PLCore\System\MutexLinux.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLCore\System\MutexWindows.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLCore\System\Pipe.h">
       <Filter>System</Filter>
     </ClInclude>
@@ -1347,6 +1347,15 @@
     <ClInclude Include="include\PLCore\System\SystemMacOSX.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="include\PLCore\System\MutexWindows_Mutex.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\System\MutexWindows_CriticalSection.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\System\CriticalSection.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\PLCore\Base\Type\TypeBool.inl">
@@ -1548,6 +1557,147 @@
     </None>
     <None Include="include\PLCore\Tools\Tools.inl">
       <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\File\FileObject.inl">
+      <Filter>File</Filter>
+    </None>
+    <None Include="include\PLCore\File\File.inl">
+      <Filter>File</Filter>
+    </None>
+    <None Include="include\PLCore\File\Directory.inl">
+      <Filter>File</Filter>
+    </None>
+    <None Include="include\PLCore\File\Url.inl">
+      <Filter>File</Filter>
+    </None>
+    <None Include="include\PLCore\System\System.inl">
+      <Filter>System</Filter>
+    </None>
+    <None Include="include\PLCore\System\DynLib.inl">
+      <Filter>System</Filter>
+    </None>
+    <None Include="include\PLCore\System\Mutex.inl">
+      <Filter>System</Filter>
+    </None>
+    <None Include="include\PLCore\System\Semaphore.inl">
+      <Filter>System</Filter>
+    </None>
+    <None Include="include\PLCore\System\Thread.inl">
+      <Filter>System</Filter>
+    </None>
+    <None Include="include\PLCore\File\FileSearch.inl">
+      <Filter>File</Filter>
+    </None>
+    <None Include="include\PLCore\Tools\Timing.inl">
+      <Filter>Tools</Filter>
+    </None>
+    <None Include="include\PLCore\String\Tokenizer.inl">
+      <Filter>String</Filter>
+    </None>
+    <None Include="include\PLCore\String\RegEx.inl">
+      <Filter>String</Filter>
+    </None>
+    <None Include="include\PLCore\String\String.inl">
+      <Filter>String</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Class.inl">
+      <Filter>Base</Filter>
+    </None>
+    <None Include="include\PLCore\Base\ClassManager.inl">
+      <Filter>Base</Filter>
+    </None>
+    <None Include="include\PLCore\Base\MemberDesc.inl">
+      <Filter>Base</Filter>
+    </None>
+    <None Include="include\PLCore\Base\ClassImpl.inl">
+      <Filter>Base</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Module.inl">
+      <Filter>Base</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Object.inl">
+      <Filter>Base</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Event\EventDesc.inl">
+      <Filter>Base\Event</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Event\DynEvent.inl">
+      <Filter>Base\Event</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Event\EventHandlerDesc.inl">
+      <Filter>Base\Event</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Func\FuncDesc.inl">
+      <Filter>Base\Func</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Func\ConstructorDesc.inl">
+      <Filter>Base\Func</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Tools\ParamsParserXml.inl">
+      <Filter>Base\Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Tools\ParamsParser.inl">
+      <Filter>Base\Tools</Filter>
+    </None>
+    <None Include="include\PLCore\Base\Var\VarDesc.inl">
+      <Filter>Base\Var</Filter>
+    </None>
+    <None Include="include\PLCore\Application\CoreApplication.inl">
+      <Filter>Application</Filter>
+    </None>
+    <None Include="include\PLCore\Application\ApplicationContext.inl">
+      <Filter>Application</Filter>
+    </None>
+    <None Include="include\PLCore\Config\Config.inl">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="include\PLCore\Frontend\Frontend.inl">
+      <Filter>Frontend</Filter>
+    </None>
+    <None Include="include\PLCore\Frontend\FrontendApplication.inl">
+      <Filter>Frontend</Filter>
+    </None>
+    <None Include="include\PLCore\Frontend\FrontendContext.inl">
+      <Filter>Frontend</Filter>
+    </None>
+    <None Include="include\PLCore\Frontend\FrontendImpl.inl">
+      <Filter>Frontend</Filter>
+    </None>
+    <None Include="include\PLCore\Log\LogFormatterHtml.inl">
+      <Filter>Log</Filter>
+    </None>
+    <None Include="include\PLCore\Log\Log.inl">
+      <Filter>Log</Filter>
+    </None>
+    <None Include="include\PLCore\Log\LogFormatter.inl">
+      <Filter>Log</Filter>
+    </None>
+    <None Include="include\PLCore\Network\Socket.inl">
+      <Filter>Network</Filter>
+    </None>
+    <None Include="include\PLCore\Network\Buffer.inl">
+      <Filter>Network</Filter>
+    </None>
+    <None Include="include\PLCore\Network\Connection.inl">
+      <Filter>Network</Filter>
+    </None>
+    <None Include="include\PLCore\Network\Host.inl">
+      <Filter>Network</Filter>
+    </None>
+    <None Include="include\PLCore\Network\Http\HttpHeader.inl">
+      <Filter>Network\Http</Filter>
+    </None>
+    <None Include="include\PLCore\Network\Http\HttpClient.inl">
+      <Filter>Network\Http</Filter>
+    </None>
+    <None Include="include\PLCore\Registry\Registry.inl">
+      <Filter>Registry</Filter>
+    </None>
+    <None Include="include\PLCore\Script\ScriptManager.inl">
+      <Filter>Script</Filter>
+    </None>
+    <None Include="include\PLCore\Runtime.inl">
+      <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
 </Project>

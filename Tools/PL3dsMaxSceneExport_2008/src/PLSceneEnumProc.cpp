@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Xml/Xml.h>
-#include <PLCore/File/File.h>
 #include <PLCore/File/Directory.h>
 #include <IGame/IGame.h>
 #include "PL3dsMaxSceneExport/PLSceneExportDialogs.h"

@@ -84,9 +84,11 @@ elseif(APPLE)
 	##################################################
 	add_sources(
 		src/MacOSX/ContextMacOSX.cpp
+		src/MacOSX/ContextMacOSX_X11.cpp
 		src/MacOSX/ExtensionsMacOSX.cpp
 		src/MacOSX/SurfaceWindowMacOSX.cpp
-		src/MacOSX/SurfaceWindowMacOSXCocoa.mm	# Cocoa & NSOpenGL can only be accessed when using Objective-C :/
+		src/MacOSX/SurfaceWindowMacOSX_X11.cpp
+		src/MacOSX/SurfaceWindowMacOSX_Cocoa.mm	# Cocoa & NSOpenGL can only be accessed when using Objective-C :/
 	)
 elseif(LINUX)
 	##################################################
@@ -112,15 +114,6 @@ add_include_directories(
 if(PL_PLUGIN_RENDERER_OPENGL_FONT)
 	add_include_directories(
 		${FREETYPE_INCLUDE_DIRS}
-	)
-endif()
-if(APPLE)
-	##################################################
-	## Apple
-	##################################################
-	add_include_directories(
-		# [TODO] We need to include <CoreGraphics/CGDirectDisplay.h> ... currently the following include path is hard coded to have anything to start with, maybe we need a CMake find script for this?
-		/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/CoreGraphics.framework/Versions/A/Headers/
 	)
 endif()
 

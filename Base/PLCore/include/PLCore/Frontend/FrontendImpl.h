@@ -98,7 +98,7 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*  @return
 		*    The frontend instance, can be a null pointer
 		*/
-		PLCORE_API Frontend *GetFrontend() const;
+		inline Frontend *GetFrontend() const;
 
 
 	//[-------------------------------------------------------]
@@ -505,6 +505,12 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Frontend/FrontendImpl.inl"
 
 
 #endif // __PLCORE_FRONTEND_IMPL_H__

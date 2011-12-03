@@ -75,19 +75,19 @@ class RegistryWindows : public RegistryImpl {
 	//[ Private virtual RegistryImpl functions                ]
 	//[-------------------------------------------------------]
 	private:
-		virtual Registry::ERegistry GetRegistryType() const override;
-		virtual bool Open(Registry::EKey nKey, const String &sSubKey, uint32 nAccess) override;
-		virtual bool Create(Registry::EKey nKey, const String &sSubKey, uint32 nAccess) override;
+		virtual uint32 GetRegistryType() const override;
+		virtual bool Open(uint32 nKey, const String &sSubKey, uint32 nAccess) override;
+		virtual bool Create(uint32 nKey, const String &sSubKey, uint32 nAccess) override;
 		virtual bool Delete() override;
 		virtual void Close() override;
-		virtual Registry::EKey GetOpenKey() const override;
+		virtual uint32 GetOpenKey() const override;
 		virtual String GetOpenSubKey() const override;
 		virtual uint32 GetOpenAccessMode() const override;
 		virtual uint32 GetNumOfSubKeys() const override;
 		virtual String GetSubKey(uint32 nIndex) const override;
 		virtual uint32 GetNumOfValues() const override;
 		virtual String GetValue(uint32 nIndex) const override;
-		virtual Registry::EType GetValueType(const String &sName) const override;
+		virtual uint32 GetValueType(const String &sName) const override;
 		virtual String GetValueString(const String &sName) const override;
 		virtual uint32 GetValueDWord(const String &sName) const override;
 		virtual uint32 GetValueBinary(const String &sName, uint8 *pBuffer, uint32 nSize) const override;
@@ -101,10 +101,10 @@ class RegistryWindows : public RegistryImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Registry::EKey	m_nKey;		/**< Registry key */
-		String			m_sSubKey;	/**< Sub key */
-		uint32			m_nAccess;	/**< Access modes */
-		HKEY			m_hKey;		/**< Windows registry key handle */
+		uint32	m_nKey;		/**< Registry key (type: "Registry::EKey") */
+		String	m_sSubKey;	/**< Sub key */
+		uint32	m_nAccess;	/**< Access modes */
+		HKEY	m_hKey;		/**< Windows registry key handle */
 
 
 };

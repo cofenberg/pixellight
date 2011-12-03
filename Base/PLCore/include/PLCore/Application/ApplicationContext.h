@@ -95,7 +95,7 @@ class ApplicationContext : public Object, public AbstractContext {
 		*  @return
 		*    Path to executable (e.g. on Windows: 'C:\MyApplication\Test.exe')
 		*/
-		PLCORE_API String GetExecutableFilename() const;
+		inline String GetExecutableFilename() const;
 
 		/**
 		*  @brief
@@ -113,7 +113,7 @@ class ApplicationContext : public Object, public AbstractContext {
 		*  @return
 		*    List of command line arguments that were passed to the program
 		*/
-		PLCORE_API const Array<String> &GetArguments() const;
+		inline const Array<String> &GetArguments() const;
 
 		/**
 		*  @brief
@@ -122,7 +122,7 @@ class ApplicationContext : public Object, public AbstractContext {
 		*  @param[in] lstArguments
 		*    List of command line arguments that were passed to the program
 		*/
-		PLCORE_API void SetArguments(const Array<String> &lstArguments);
+		inline void SetArguments(const Array<String> &lstArguments);
 
 		/**
 		*  @brief
@@ -135,7 +135,7 @@ class ApplicationContext : public Object, public AbstractContext {
 		*    This is just a convenience function and is the same as using
 		*      Url(Url(GetExecutableFile()).CutFilename() + "../").Collapse().GetUrl()
 		*/
-		PLCORE_API String GetAppDirectory() const;
+		inline String GetAppDirectory() const;
 
 		/**
 		*  @brief
@@ -144,7 +144,7 @@ class ApplicationContext : public Object, public AbstractContext {
 		*  @return
 		*    Current directory that was set when the application constructor was called (e.g. on Windows: 'C:\MyApplication')
 		*/
-		PLCORE_API String GetStartupDirectory() const;
+		inline String GetStartupDirectory() const;
 
 		/**
 		*  @brief
@@ -153,7 +153,7 @@ class ApplicationContext : public Object, public AbstractContext {
 		*  @param[in] sStartupDirectory
 		*    Current directory that was set when the application constructor was called
 		*/
-		PLCORE_API void SetStartupDirectory(const String &sStartupDirectory);
+		inline void SetStartupDirectory(const String &sStartupDirectory);
 
 		/**
 		*  @brief
@@ -162,7 +162,7 @@ class ApplicationContext : public Object, public AbstractContext {
 		*  @return
 		*    Absolute path to log file, empty if log has not been opened
 		*/
-		PLCORE_API String GetLogFilename() const;
+		inline String GetLogFilename() const;
 
 		/**
 		*  @brief
@@ -171,7 +171,7 @@ class ApplicationContext : public Object, public AbstractContext {
 		*  @param[in] sLog
 		*    Absolute path to log file, empty if log has not been opened
 		*/
-		PLCORE_API void SetLogFilename(const String &sLog);
+		inline void SetLogFilename(const String &sLog);
 
 		/**
 		*  @brief
@@ -180,7 +180,7 @@ class ApplicationContext : public Object, public AbstractContext {
 		*  @return
 		*    Absolute path to config file, empty if no config is used
 		*/
-		PLCORE_API String GetConfigFilename() const;
+		inline String GetConfigFilename() const;
 
 		/**
 		*  @brief
@@ -189,7 +189,7 @@ class ApplicationContext : public Object, public AbstractContext {
 		*  @param[in] sConfig
 		*    Absolute path to config file, empty if no config is used
 		*/
-		PLCORE_API void SetConfigFilename(const String &sConfig);
+		inline void SetConfigFilename(const String &sConfig);
 
 
 		//[-------------------------------------------------------]
@@ -226,6 +226,12 @@ class ApplicationContext : public Object, public AbstractContext {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Application/ApplicationContext.inl"
 
 
 #endif // __PLCORE_APPLICATIONCONTEXT_H__

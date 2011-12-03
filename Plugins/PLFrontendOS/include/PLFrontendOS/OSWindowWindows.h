@@ -49,7 +49,7 @@ class Frontend;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    OS Window frontend implementation class
+*    OS Window frontend implementation class using standard Win32-functions
 *
 *  @note
 *    - Implementation of the bridge design pattern, this class is the implementor of the 'System' abstraction

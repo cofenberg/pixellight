@@ -118,7 +118,7 @@ endif()
 if(PL_EXPORTER_3DSMAX_2012)
 	add_subdirectory(Max2012)
 endif()
-if(PL_UNITTESTS)
+if(PL_TESTS)
 	add_subdirectory(UnitTest++)
 endif()
 

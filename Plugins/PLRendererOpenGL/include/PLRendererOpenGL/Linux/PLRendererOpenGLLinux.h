@@ -30,9 +30,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/PLCoreLinuxIncludes.h>
-#include <stddef.h>
 #include "../../../../../External/Recommended/OpenGL/gl.h"
-#include "../../../../../External/Recommended/OpenGL/glx.h"
 #include "../../../../../External/Recommended/OpenGL/glu.h"
 #include "../../../../../External/Recommended/OpenGL/glext.h"
 

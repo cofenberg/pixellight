@@ -82,6 +82,7 @@
 #undef Yield
 #undef SendMessage
 #undef PostMessage
+#undef FindNextFile
 
 
 #endif // __PLCORE_WINDOWSINCLUDES_H__

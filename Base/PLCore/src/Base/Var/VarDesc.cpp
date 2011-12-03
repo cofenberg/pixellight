@@ -65,26 +65,6 @@ void VarDesc::Dummy()
 	// This method is just here to ensure, that the compiler will actually create static instances
 }
 
-/**
-*  @brief
-*    Get type ID
-*/
-int VarDesc::GetTypeID() const
-{
-	// Return type ID
-	return m_nType;
-}
-
-/**
-*  @brief
-*    Get type name
-*/
-String VarDesc::GetTypeName() const
-{
-	// Return type name
-	return m_sType;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public virtual VarDesc functions                      ]

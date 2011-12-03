@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "PLCore/String/String.h"
 #include "PLCore/String/UTF8Tools.h"
 #include "PLCore/String/StringBufferUTF8.h"
 
@@ -81,7 +82,7 @@ StringBufferUTF8::~StringBufferUTF8()
 //[-------------------------------------------------------]
 //[ Public virtual StringBuffer functions                 ]
 //[-------------------------------------------------------]
-String::EFormat StringBufferUTF8::GetFormat() const
+uint32 StringBufferUTF8::GetFormat() const
 {
 	return String::UTF8;
 }

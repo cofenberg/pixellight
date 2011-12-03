@@ -95,7 +95,7 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 		*  @note
 		*    - Try to avoid to access the frontend whenever possible (Hollywood Principle: "Don't call us, we'll call you")
 		*/
-		PLCORE_API Frontend &GetFrontend() const;
+		inline Frontend &GetFrontend() const;
 
 
 	//[-------------------------------------------------------]
@@ -265,6 +265,12 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Frontend/FrontendApplication.inl"
 
 
 #endif // __PLCORE_APPLICATION_H__

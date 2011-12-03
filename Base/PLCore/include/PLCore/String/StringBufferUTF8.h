@@ -104,7 +104,7 @@ class StringBufferUTF8 : public StringBuffer {
 	//[ Public virtual StringBuffer functions                 ]
 	//[-------------------------------------------------------]
 	public:
-		virtual String::EFormat GetFormat() const override;
+		virtual uint32 GetFormat() const override;
 		virtual StringBufferASCII *GetASCII() override;
 		virtual StringBufferUnicode *GetUnicode() override;
 		virtual StringBufferUTF8 *GetUTF8() override;

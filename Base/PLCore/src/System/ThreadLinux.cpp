@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <signal.h>
 #include "PLCore/System/Mutex.h"
+#include "PLCore/System/Thread.h"
 #include "PLCore/System/ThreadLinux.h"
 
 // [DEBUG]
@@ -188,12 +189,12 @@ bool ThreadLinux::Join(uint64 nTimeout)
 	*/
 }
 
-Thread::EPriorityClass ThreadLinux::GetPriorityClass() const
+uint32 ThreadLinux::GetPriorityClass() const
 {
 	return m_nPriorityClass;
 }
 
-bool ThreadLinux::SetPriorityClass(Thread::EPriorityClass nPriorityClass)
+bool ThreadLinux::SetPriorityClass(uint32 nPriorityClass)
 {
 	// Backup given setting
 	m_nPriorityClass = nPriorityClass;
@@ -204,12 +205,12 @@ bool ThreadLinux::SetPriorityClass(Thread::EPriorityClass nPriorityClass)
 	return true;
 }
 
-Thread::EPriority ThreadLinux::GetPriority() const
+uint32 ThreadLinux::GetPriority() const
 {
 	return m_nPriority;
 }
 
-bool ThreadLinux::SetPriority(Thread::EPriority nPriority)
+bool ThreadLinux::SetPriority(uint32 nPriority)
 {
 	// Backup given setting
 	m_nPriority = nPriority;

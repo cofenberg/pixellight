@@ -38,23 +38,6 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
-*/
-ParamsParserXml::ParamsParserXml() :
-	m_pElement(nullptr)
-{
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-ParamsParserXml::~ParamsParserXml()
-{
-}
-
-/**
-*  @brief
 *    Parse parameters from XML
 */
 bool ParamsParserXml::ParseXml(const XmlElement &cElement)
@@ -98,35 +81,6 @@ bool ParamsParserXml::Next()
 	m_sName		 = "";
 	m_sValue	 = "";
 	return false;
-}
-
-/**
-*  @brief
-*    Check if the current (last parsed) parameter is valid
-*/
-bool ParamsParserXml::HasParam() const
-{
-	return (m_sName.GetLength() != 0);
-}
-
-/**
-*  @brief
-*    Get name of currently parsed parameter
-*/
-String ParamsParserXml::GetName() const
-{
-	// Return parameter name
-	return m_sName;
-}
-
-/**
-*  @brief
-*    Get value of currently parsed parameter
-*/
-String ParamsParserXml::GetValue() const
-{
-	// Return parameter value
-	return m_sValue;
 }
 
 

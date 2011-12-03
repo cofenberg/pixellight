@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SurfaceWindowMacOSXCocoa.h                     *
+ *  File: ContextMacOSX_X11.h                            *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,15 +20,22 @@
 \*********************************************************/
 
 
-#ifndef __PLRENDEREROPENGL_SURFACE_WINDOWMACOSXCOCOA_H__
-#define __PLRENDEREROPENGL_SURFACE_WINDOWMACOSXCOCOA_H__
+#ifndef __PLRENDEREROPENGL_CONTEXTMACOSX_X11_H__
+#define __PLRENDEREROPENGL_CONTEXTMACOSX_X11_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSX.h"
+#include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+typedef struct _XDisplay;
+typedef struct _XDisplay Display;
 
 
 //[-------------------------------------------------------]
@@ -42,63 +49,52 @@ namespace PLRendererOpenGL {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Mac OS X Cocoa OpenGL window renderer surface where we can render in
+*    Mac OS X OpenGL context using X11
 */
-class SurfaceWindowMacOSXCocoa : public SurfaceWindowMacOSX {
+class ContextMacOSX_X11 : public ContextMacOSX {
 
 
 	//[-------------------------------------------------------]
-	//[ Friends                                               ]
-	//[-------------------------------------------------------]
-	friend class ContextMacOSX;
-
-
-	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
+	//[ Public methods                                        ]
 	//[-------------------------------------------------------]
 	public:
 		/**
 		*  @brief
-		*    Destructor
-		*/
-		virtual ~SurfaceWindowMacOSXCocoa();
-
-
-	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
 		*    Constructor
 		*
-		*  @param[in] cHandler
-		*    Renderer surface handler this surface is assigned with (MUST be valid!)
-		*  @param[in] nNativeWindowHandle
-		*    Handle to the native window the renderer surface is assigned with
-		*  @param[in] sDisplayMode
-		*    Display mode information
-		*  @param[in] bFullscreen
-		*    Fullscreen mode?
+		*  @param[in] cRenderer
+		*    The owner renderer
 		*/
-		SurfaceWindowMacOSXCocoa(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false);
+		ContextMacOSX_X11(Renderer &cRenderer);
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		virtual ~ContextMacOSX_X11();
+
+		/**
+		*  @brief
+		*    Returns the X server display connection
+		*
+		*  @return
+		*    The X server display connection, a null pointer on error
+		*/
+		Display *GetDisplay() const;
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLRenderer::Surface functions         ]
+	//[ Public virtual Context methods                        ]
 	//[-------------------------------------------------------]
-	private:
-		virtual bool Init() override;
-		virtual void DeInit() override;
-		virtual bool MakeCurrent(PLCore::uint8 nFace = 0) override;
-		virtual bool Present() override;
+	public:
+		virtual PLRenderer::SurfaceWindow *CreateSurfaceWindow(PLRenderer::SurfaceWindowHandler &cHandler, PLCore::handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen = false) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		void *m_pNSOpenGLContext;	/**< NSOpenGLContext (it's a CGL wrapper) instance, can be a null pointer */
+		Display *m_pDisplay;	/**< X server display connection, a null pointer on error */
 
 
 };
@@ -110,4 +106,4 @@ class SurfaceWindowMacOSXCocoa : public SurfaceWindowMacOSX {
 } // PLRendererOpenGL
 
 
-#endif // __PLRENDEREROPENGL_SURFACE_WINDOWMACOSXCOCOA_H__
+#endif // __PLRENDEREROPENGL_CONTEXTMACOSX_X11_H__

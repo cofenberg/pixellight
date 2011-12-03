@@ -68,105 +68,8 @@ HttpClient::~HttpClient()
 }
 
 //[-------------------------------------------------------]
-//[ Options                                               ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Get client signature
-*/
-EClientSignature HttpClient::GetClientSignature() const
-{
-	// Return client signature
-	return m_nClientSignature;
-}
-
-/**
-*  @brief
-*    Set client signature
-*/
-void HttpClient::SetClientSignature(EClientSignature nClientSignature)
-{
-	// Set client signature
-	m_nClientSignature = nClientSignature;
-}
-
-/**
-*  @brief
-*    Get protocol version
-*/
-EHttpProtocol HttpClient::GetProtocol() const
-{
-	// Return protocol
-	return m_nHttpProtocol;
-}
-
-/**
-*  @brief
-*    Set protocol version
-*/
-void HttpClient::SetProtocol(EHttpProtocol nProtocol)
-{
-	// Set protocol
-	m_nHttpProtocol = nProtocol;
-}
-
-/**
-*  @brief
-*    Get connection type
-*/
-EHttpConnection HttpClient::GetConnectionType() const
-{
-	// Return connection type
-	return m_nConnection;
-}
-
-/**
-*  @brief
-*    Set connection type
-*/
-void HttpClient::SetConnectionType(EHttpConnection nConnection)
-{
-	// Set connection type
-	m_nConnection = nConnection;
-}
-
-/**
-*  @brief
-*    Get authentication
-*/
-EHttpAuth HttpClient::GetAuthentication() const
-{
-	// Return authentication
-	return m_nHttpAuth;
-}
-
-/**
-*  @brief
-*    Set authentication
-*/
-void HttpClient::SetAuthentication(EHttpAuth nAuth, const String &sUsername, const String &sPassword)
-{
-	// Set authentication
-	m_nHttpAuth = nAuth;
-
-	// Set username and password
-	m_sUsername = sUsername;
-	m_sPassword = sPassword;
-}
-
-//[-------------------------------------------------------]
 //[ Functions                                             ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Check if a connection is open
-*/
-bool HttpClient::IsConnected() const
-{
-	// Return if a connection is active
-	return (m_pConnection != nullptr);
-}
-
 /**
 *  @brief
 *    Open connection to server
@@ -392,16 +295,6 @@ bool HttpClient::Delete(const String &sURL)
 
 	// Error!
 	return false;
-}
-
-/**
-*  @brief
-*    Get HTTP header sent from server
-*/
-const HttpHeader &HttpClient::GetHeader() const
-{
-	// Return header
-	return m_cHttpHeader;
 }
 
 /**

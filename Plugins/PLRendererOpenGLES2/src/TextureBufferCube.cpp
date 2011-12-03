@@ -130,7 +130,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 				// Upload the texture buffer
 				for (uint8 nFace=0; nFace<6; nFace++) {
 					// Get the current image
-					ImagePart *pFaceImagePart = cImage.GetPartBySemantics(ImagePartCubeSidePosX + nFace);
+					ImagePart *pFaceImagePart = cImage.GetPartBySemantics(static_cast<uint32>(ImagePartCubeSidePosX) + nFace);
 					if (pFaceImagePart) {
 						// Upload
 						if (bAutomaticMipmaps) {

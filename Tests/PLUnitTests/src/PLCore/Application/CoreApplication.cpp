@@ -24,7 +24,8 @@ SUITE(CoreApplication) {
 	}
 
 	TEST(SetName_EmptyString) {
-		// initial GetName() == name of this projects target name
+		// TODO: do we know what we can expect here?
+		// initial GetName() == name of this projects target name OR something else if we run the app again in android!
 		sExpect = coreApp.GetName();
 		#ifdef _DEBUG
 			CHECK_EQUAL("PLUnitTestsD", sExpect.GetASCII());

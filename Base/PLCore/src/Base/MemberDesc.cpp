@@ -56,46 +56,6 @@ MemberDesc::~MemberDesc()
 {
 }
 
-/**
-*  @brief
-*    Get type
-*/
-EMemberType MemberDesc::GetMemberType() const
-{
-	// Return type
-	return m_nMemberType;
-}
-
-/**
-*  @brief
-*    Get name
-*/
-String MemberDesc::GetName() const
-{
-	// Return name of var
-	return m_sName;
-}
-
-/**
-*  @brief
-*    Get description
-*/
-String MemberDesc::GetDescription() const
-{
-	// Return description of var
-	return m_sDescription;
-}
-
-/**
-*  @brief
-*    Get annotation
-*/
-String MemberDesc::GetAnnotation() const
-{
-	// Return annotation of var
-	return m_sAnnotation;
-}
-
 
 //[-------------------------------------------------------]
 //[ Protected functions                                   ]

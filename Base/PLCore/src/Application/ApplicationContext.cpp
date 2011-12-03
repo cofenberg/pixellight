@@ -63,15 +63,6 @@ ApplicationContext::~ApplicationContext()
 //[-------------------------------------------------------]
 //[ Options and data                                      ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Get absolute path of application executable
-*/
-String ApplicationContext::GetExecutableFilename() const
-{
-	// Return absolute executable filename
-	return m_sExecutableFilename;
-}
 
 /**
 *  @brief
@@ -91,96 +82,6 @@ void ApplicationContext::SetExecutableFilename(const String &sExecutableFilename
 	// No empty string, please (it should always be possible to add e.g. '/Data' without problems)
 	if (!m_sAppDirectory.GetLength())
 		m_sAppDirectory = '.';
-}
-
-/**
-*  @brief
-*    Get command line arguments
-*/
-const Array<String> &ApplicationContext::GetArguments() const
-{
-	// Return argument list
-	return m_lstArguments;
-}
-
-/**
-*  @brief
-*    Set command line arguments
-*/
-void ApplicationContext::SetArguments(const Array<String> &lstArguments)
-{
-	// Set argument list
-	m_lstArguments = lstArguments;
-}
-
-/**
-*  @brief
-*    Get directory of application executable
-*/
-String ApplicationContext::GetAppDirectory() const
-{
-	// Return application directory
-	return m_sAppDirectory;
-}
-
-/**
-*  @brief
-*    Get current directory when the application constructor was called
-*/
-String ApplicationContext::GetStartupDirectory() const
-{
-	// Return startup directory
-	return m_sStartupDirectory;
-}
-
-/**
-*  @brief
-*    Set current directory when the application constructor was called
-*/
-void ApplicationContext::SetStartupDirectory(const String &sStartupDirectory)
-{
-	// Set startup directory
-	m_sStartupDirectory = sStartupDirectory;
-}
-
-/**
-*  @brief
-*    Get log filename
-*/
-String ApplicationContext::GetLogFilename() const
-{
-	// Return log filename
-	return m_sLog;
-}
-
-/**
-*  @brief
-*    Set log filename
-*/
-void ApplicationContext::SetLogFilename(const String &sLog)
-{
-	// Set log filename
-	m_sLog = sLog;
-}
-
-/**
-*  @brief
-*    Get config filename
-*/
-String ApplicationContext::GetConfigFilename() const
-{
-	// Return config filename
-	return m_sConfig;
-}
-
-/**
-*  @brief
-*    Set config filename
-*/
-void ApplicationContext::SetConfigFilename(const String &sConfig)
-{
-	// Set config filename
-	m_sConfig = sConfig;
 }
 
 

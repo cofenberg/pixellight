@@ -82,7 +82,7 @@ class LogFormatter {
 		*    This option can be ignored in an log formatter implementation if the log formatter
 		*    wants that the prefix is always shown.
 		*/
-		PLCORE_API void ShowLogLevelPrefix(bool bShow = true);
+		inline void ShowLogLevelPrefix(bool bShow = true);
 
 
 	//[-------------------------------------------------------]
@@ -206,6 +206,12 @@ class LogFormatter {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/Log/LogFormatter.inl"
 
 
 #endif // __PLCORE_LOGFORMATTER_H__

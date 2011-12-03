@@ -57,6 +57,7 @@ class Frontend : public PLCore::FrontendImpl {
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class OSWindowWindows;
+	friend class OSWindowMacOSX;
 	friend class OSWindowLinux;
 
 

@@ -23,8 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Timing.h>
-#include <PLMath/Matrix4x4.h>
 #include "PLRenderer/RendererContext.h"
 #include "PLRenderer/Material/Parameter.h"
 #include "PLRenderer/Material/ParameterManager.h"
