@@ -31,6 +31,7 @@
 #include <UnitTest++AddIns/MyTestReporter.h>
 #include <UnitTest++AddIns/MyMobileTestReporter.h>
 #include <UnitTest++AddIns/RunAllTests.h>
+#include <PLCore/PLCore.h>	// For "nullptr" in case the compiler doesn't support this C++11 feature
 
 
 //[-------------------------------------------------------]

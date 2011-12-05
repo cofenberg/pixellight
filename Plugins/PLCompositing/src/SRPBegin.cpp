@@ -132,6 +132,8 @@ void SRPBegin::SwapRenderTargets()
 //[-------------------------------------------------------]
 void SRPBegin::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 {
+	TextureFormat = PLRenderer::TextureBuffer::Unknown;
+
 	{ // Set all render states to known default settings
 		cRenderer.ResetRenderStates();
 	//	cRenderer.ResetTransformStates(); // Would also reset camera settings, not ok
