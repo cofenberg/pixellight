@@ -10,9 +10,6 @@
     <Filter Include="UnitTest++AddIns">
       <UniqueIdentifier>{eeeb0bdf-dd78-47ed-9e45-ae221d127c4c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="PLCore\Application">
-      <UniqueIdentifier>{eb6bd1a5-5054-4140-b48b-bb5cc333ec5a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\PLCore\Container\Hashmap.cpp">
@@ -30,8 +27,9 @@
     <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\RunAllTests.cpp">
       <Filter>UnitTest++AddIns</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="UnitPerfTests.cpp" />
+    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\MainAndroid.cpp" />
+    <ClCompile Include="src\UnitTestsPerformance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\MyMobileTestReporter.h">

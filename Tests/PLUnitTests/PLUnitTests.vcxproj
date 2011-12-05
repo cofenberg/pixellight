@@ -50,7 +50,7 @@
     <None Include="CMakeLists.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{5F50784F-148B-4F30-854D-021185506877}</ProjectGuid>
+    <ProjectGuid>{33BE53FD-1506-4346-8B2E-8501A19B96A3}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

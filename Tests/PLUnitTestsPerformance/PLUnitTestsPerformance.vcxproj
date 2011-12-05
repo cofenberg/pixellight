@@ -14,7 +14,7 @@
     <ProjectGuid>{BA144945-00C2-46F3-A389-2A46F77C11B6}</ProjectGuid>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
-    <RootNamespace>PLUnitPerfTests</RootNamespace>
+    <RootNamespace>PLUnitTestsPerformance^</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -83,9 +83,10 @@
     <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\MyTestReporter.cpp" />
     <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\RunAllTests.cpp" />
     <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\wchar_template.cpp" />
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\MainAndroid.cpp" />
     <ClCompile Include="src\PLCore\Container\Hashmap.cpp" />
-    <ClCompile Include="UnitPerfTests.cpp" />
+    <ClCompile Include="src\UnitTestsPerformance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\MyMobileTestReporter.h" />

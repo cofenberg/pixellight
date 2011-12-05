@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: UnitTests.cpp                                  *
+ *  File: Hashmap.cpp                                    *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -19,24 +19,30 @@
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
 \*********************************************************/
 
-/*
+
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-*/
-
-
-#include <UnitTest++/UnitTest++.h>
-#include <iostream>
 #include <map>
-#include "PLCore/Container/HashMap.h"
-#include "PLCore/Tools/Stopwatch.h"
 #include <fstream>
+#include <iostream>
+#include <UnitTest++/UnitTest++.h>
+#include "PLCore/Tools/Stopwatch.h"
+#include "PLCore/Container/HashMap.h"
 
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
 using namespace std;
 using namespace PLCore;
 
+
+//[-------------------------------------------------------]
+//[ Global variables                                      ]
+//[-------------------------------------------------------]
 extern ofstream outputFile;
+
 
 /*
 * Naming Convention for SUITE:
@@ -52,7 +58,7 @@ SUITE(Hashmap_Performance) {
 	HashMap<char, int> PLHashmap;
 	std::map<char, int> CHashmap;
 	Stopwatch Counter;
-	
+
 	TEST(PL_Hashmap_Add){
 
 		Counter.Start();
@@ -93,7 +99,7 @@ SUITE(Hashmap_Performance) {
 		Counter.Stop();
 		outputFile << "Counter: PLSet: \t" << Counter.GetMilliseconds() << endl;
 	}
-	
+
 	TEST(C_Hashmap_Set){
 		Counter.Start();
 		for (int i=0; i<testloops; i++)
@@ -101,7 +107,7 @@ SUITE(Hashmap_Performance) {
 		Counter.Stop();
 		outputFile << "Counter: CSet: \t\t" << Counter.GetMilliseconds() << endl;
 	}
-	
+
 	TEST(PL_Hashmap_Get){
 		Counter.Start();
 		for (int i=0; i<testloops; i++)
@@ -150,7 +156,4 @@ SUITE(Hashmap_Performance) {
 		outputFile << "Counter: CRemoveV: Backwards\t" << Counter.GetMilliseconds() << endl;
 		outputFile << endl;
 	}
-	
-	
-	
 }

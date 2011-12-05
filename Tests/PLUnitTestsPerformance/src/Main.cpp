@@ -1,5 +1,6 @@
 /*********************************************************\
- *  File: UnitTests.cpp                                  *
+ *  File: Main.cpp                                       *
+ *    Program entry point for MS Windows, Linux, Mac OS X
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,39 +24,27 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <iostream>
-#include <UnitTest++/UnitTest++.h>
-#include <PLCore/Container/Array.h>
-#include <PLCore/String/String.h>
-#include <UnitTest++AddIns/MyTestReporter.h>
-#include <UnitTest++AddIns/MyMobileTestReporter.h>
-#include <UnitTest++AddIns/RunAllTests.h>
-#include <time.h>
-#include <string>
-#include <fstream>
+#include <PLCore/Main.h>
 
-std::ofstream outputFile;
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-using namespace std;
+
 
 //[-------------------------------------------------------]
-//[ Unit tests program entry point                        ]
+//[ Global functions                                      ]
 //[-------------------------------------------------------]
-int UnitPerfTests(const String &sExecutableFilename, const Array<String> &lstArguments)
+extern int UnitTestsPerformance(const String &sExecutableFilename, const Array<String> &lstArguments);
+
+
+//[-------------------------------------------------------]
+//[ Program entry point                                   ]
+//[-------------------------------------------------------]
+// ... kind of first unit tests: Is our universal program entry point working?
+int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
-	char timeStr [9];
-	string filename ("result ");
-	outputFile.open (filename + _strtime( timeStr)  + ".txt");
-	MyMobileTestReporter rep;
-	//MyTestReporter rep;
-	int result = UnitTest::RunAllTests(rep);
-
-	outputFile.close();
-
-	return result;
+	// Execute the unit tests
+	return UnitTestsPerformance(sExecutableFilename, lstArguments);
 }
-

@@ -1,6 +1,5 @@
 /*********************************************************\
- *  File: Main.cpp                                       *
- *    Program entry point for MS Windows, Linux, Mac OS X
+ *  File: UnitTestsPerformance.cpp                       *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -24,27 +23,44 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Main.h>
-
+#include <iostream>
+#include <UnitTest++/UnitTest++.h>
+#include <PLCore/Container/Array.h>
+#include <PLCore/String/String.h>
+#include <UnitTest++AddIns/MyTestReporter.h>
+#include <UnitTest++AddIns/MyMobileTestReporter.h>
+#include <UnitTest++AddIns/RunAllTests.h>
+#include <time.h>
+#include <string>
+#include <fstream>
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-
-//[-------------------------------------------------------]
-//[ Global functions                                      ]
-//[-------------------------------------------------------]
-extern int UnitPerfTests(const String &sExecutableFilename, const Array<String> &lstArguments);
+using namespace std;
 
 
 //[-------------------------------------------------------]
-//[ Program entry point                                   ]
+//[ Global variables                                      ]
 //[-------------------------------------------------------]
-// ... kind of first unit tests: Is our universal program entry point working?
-int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
+ofstream outputFile;
+
+
+//[-------------------------------------------------------]
+//[ Unit tests program entry point                        ]
+//[-------------------------------------------------------]
+int UnitTestsPerformance(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
-	// Execute the unit tests
-	return UnitPerfTests(sExecutableFilename, lstArguments);
+	char timeStr [9];
+	string filename ("result ");
+	outputFile.open (filename + _strtime( timeStr)  + ".txt");
+	MyMobileTestReporter rep;
+	//MyTestReporter rep;
+	int result = UnitTest::RunAllTests(rep);
+
+	outputFile.close();
+
+	return result;
 }
