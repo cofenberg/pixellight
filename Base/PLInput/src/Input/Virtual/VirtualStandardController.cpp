@@ -28,6 +28,7 @@
 #include "PLInput/Input/Devices/Keyboard.h"
 #include "PLInput/Input/Devices/Joystick.h"
 #include "PLInput/Input/Devices/SpaceMouse.h"
+#include "PLInput/Input/Devices/SplitTouchPad.h"
 #include "PLInput/Input/Devices/WiiMote.h"
 #include "PLInput/Input/Virtual/VirtualStandardController.h"
 
@@ -357,6 +358,22 @@ void VirtualStandardController::ConnectToDevices()
 			Connect("Button3",			&pSpaceMouse->Button2);
 			Connect("Button4",			&pSpaceMouse->Button3);
 			Connect("Button5",			&pSpaceMouse->Button4);
+		}
+
+		// Splitscreen touchpad device
+		else if (pDevice->GetName().IsSubstring("SplitTouchPad")) {
+			// Get splitscreen touchpad device
+			SplitTouchPad *pSplitTouchPad = static_cast<SplitTouchPad*>(pDevice);
+
+			// Movement
+			// RotX: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)
+			Connect("RotX",				&pSplitTouchPad->RightX, 1.0f);
+			// RotY: Yaw (also called 'heading') change is turning to the left or right
+			Connect("RotY",				&pSplitTouchPad->RightY, 1.0f);
+			// X translation axis: Strafe left/right (+/-)
+			Connect("TransX",			&pSplitTouchPad->LeftX,  1.0f);
+			// Y translation axis: Move up/down (+/-)
+			Connect("TransY",			&pSplitTouchPad->LeftY,  1.0f);
 		}
 
 		// WiiMote

@@ -34,6 +34,7 @@ add_sources(
 	src/Input/Controller.cpp
 	src/Input/Devices/Device.cpp
 	src/Input/Devices/Mouse.cpp
+	src/Input/Devices/SplitTouchPad.cpp
 	src/Input/Devices/Keyboard.cpp
 	src/Input/Devices/Joystick.cpp
 	src/Input/Devices/SpaceMouse.cpp
@@ -82,6 +83,7 @@ elseif(ANDROID)
 		src/Backend/Android/AndroidProvider.cpp
 		src/Backend/Android/AndroidKeyboardDevice.cpp
 		src/Backend/Android/AndroidMouseDevice.cpp
+		src/Backend/Android/AndroidSplitTouchPadDevice.cpp
 		src/Backend/Android/AndroidSensorManagerDevice.cpp
 		src/Backend/HID/HIDLinux.cpp
 	)

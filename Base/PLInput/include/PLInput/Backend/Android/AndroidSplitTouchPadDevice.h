@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: AndroidProvider.h                              *
+ *  File: AndroidSplitTouchPadDevice.h                   *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,16 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLINPUT_ANDROIDPROVIDER_H__
-#define __PLINPUT_ANDROIDPROVIDER_H__
+#ifndef __PLINPUT_ANDROIDSPLITTOUCHPADDEVICE_H__
+#define __PLINPUT_ANDROIDSPLITTOUCHPADDEVICE_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Event/EventHandler.h>
-#include "PLInput/Backend/Provider.h"
+#include "PLInput/Backend/UpdateDevice.h"
 
 
 //[-------------------------------------------------------]
@@ -38,9 +37,7 @@
 struct AInputEvent;
 typedef struct AInputEvent AInputEvent;
 namespace PLInput {
-	class AndroidKeyboardDevice;
-	class AndroidMouseDevice;
-	class AndroidSplitTouchPadDevice;
+	class Mouse;
 }
 
 
@@ -55,18 +52,9 @@ namespace PLInput {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Standard input provider for Android
+*    Slitscreen touchpad device for Android
 */
-class AndroidProvider : public Provider {
-
-
-	//[-------------------------------------------------------]
-	//[ RTTI interface                                        ]
-	//[-------------------------------------------------------]
-	pl_class(PLINPUT_RTTI_EXPORT, AndroidProvider, "PLInput", PLInput::Provider, "Standard input provider for Android")
-		// Constructors
-		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
-	pl_class_end
+class AndroidSplitTouchPadDevice : public UpdateDevice {
 
 
 	//[-------------------------------------------------------]
@@ -75,52 +63,37 @@ class AndroidProvider : public Provider {
 	public:
 		/**
 		*  @brief
-		*    Default constructor
+		*    Constructor
 		*/
-		PLINPUT_API AndroidProvider();
+		AndroidSplitTouchPadDevice();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLINPUT_API virtual ~AndroidProvider();
+		virtual ~AndroidSplitTouchPadDevice();
 
-
-	//[-------------------------------------------------------]
-	//[ Private virtual Provider functions                    ]
-	//[-------------------------------------------------------]
-	private:
-		virtual void QueryDevices() override;
-
-
-	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
 		/**
 		*  @brief
-		*    Called to process the next Android input event
+		*    Call this to process the next motion input event
 		*
-		*  @param[in] cAInputEvent
-		*    Android input event to process
+		*  @param[in] cAMotionInputEvent
+		*    Motion input event to process
 		*/
-		void OnInputEvent(const struct AInputEvent &cAInputEvent);
+		void OnMotionInputEvent(const struct AInputEvent &cAMotionInputEvent);
 
 
 	//[-------------------------------------------------------]
-	//[ Private slots                                         ]
+	//[ Public virtual UpdateDevice functions                 ]
 	//[-------------------------------------------------------]
-	private:
-		PLCore::EventHandler<const struct AInputEvent&> SlotInputEvent;
+	public:
+		virtual void Update() override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		AndroidKeyboardDevice		*m_pAndroidKeyboardDevice;	/**< Android keyboard device instance, can be a null pointer */
-		AndroidMouseDevice			*m_pAndroidMouseDevice;		/**< Android mouse device instance, can be a null pointer */
-		AndroidSplitTouchPadDevice	*m_pAndroidSplitTouchPadDevice;		/**< Android splited touchscreen mouse device instance, can be a null pointer */
 
 
 };
@@ -132,4 +105,4 @@ class AndroidProvider : public Provider {
 } // PLInput
 
 
-#endif // __PLINPUT_ANDROIDPROVIDER_H__
+#endif // __PLINPUT_ANDROIDSPLITTOUCHPADDEVICE_H__
