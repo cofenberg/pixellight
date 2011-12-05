@@ -55,6 +55,7 @@ add_include_directories(
 	include
 	${UNITTESTPP_INCLUDE_DIRS}
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
+	../PLUnitTests/include/
 )
 
 ##################################################

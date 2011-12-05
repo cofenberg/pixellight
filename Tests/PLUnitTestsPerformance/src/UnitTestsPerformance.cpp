@@ -44,10 +44,19 @@ std::ofstream outputFile;
 //[-------------------------------------------------------]
 int UnitTestsPerformance()
 {
-	// Get the current time as ASCII string and replace ':' (not valid within filenames) by '-'
+	// Get the current time as ASCII string
 	char szTime[9];
-	_strtime(szTime);
-	szTime[2] = szTime[5] = '-';
+	#ifdef WIN32
+		_strtime(szTime);
+		// replace ':' (not valid within filenames) by '-'
+		szTime[2] = szTime[5] = '-';
+	#else
+		struct tm sTime;
+		struct timeval sNow;
+		gettimeofday(&sNow, nullptr);
+		localtime_r(&sNow.tv_sec, &sTime);
+		sprintf(szTime, "%2d_%2d_%2d", sTime.tm_hour, sTime.tm_min, sTime.tm_sec);
+	#endif
 
 	// Open the results output file
 	char szFilename[256];

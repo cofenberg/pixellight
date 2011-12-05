@@ -7,6 +7,15 @@ PLUnitTestsPerformance:
 
 
 >> 05.12.2011
+[CO]
+PLUnitTestsPerformance
+- Renamed "PLUnitPerfTests" into "PLUnitTestsPerformance" to have a human readadable name (shorted names may lead to confusion and misinterpretation :)
+- Updated Visual Studio project file to make it work with x64 as well
+- Made the project compilable under Linux as well
+
+
+
+>> 05.12.2011
 [CP]
 PLUnitPerfTests:
 - Added file structure for unit performance tests.
