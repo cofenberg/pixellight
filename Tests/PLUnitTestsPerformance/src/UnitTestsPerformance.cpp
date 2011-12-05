@@ -23,44 +23,47 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <iostream>
-#include <UnitTest++/UnitTest++.h>
-#include <PLCore/Container/Array.h>
-#include <PLCore/String/String.h>
-#include <UnitTest++AddIns/MyTestReporter.h>
-#include <UnitTest++AddIns/MyMobileTestReporter.h>
-#include <UnitTest++AddIns/RunAllTests.h>
 #include <time.h>
 #include <string>
 #include <fstream>
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
-using namespace PLCore;
-using namespace std;
+#include <iostream>
+#include <UnitTest++/UnitTest++.h>
+#include <UnitTest++AddIns/MyTestReporter.h>
+#include <UnitTest++AddIns/MyMobileTestReporter.h>
+#include <UnitTest++AddIns/RunAllTests.h>
 
 
 //[-------------------------------------------------------]
 //[ Global variables                                      ]
 //[-------------------------------------------------------]
-ofstream outputFile;
+std::ofstream outputFile;
 
 
 //[-------------------------------------------------------]
 //[ Unit tests program entry point                        ]
 //[-------------------------------------------------------]
-int UnitTestsPerformance(const String &sExecutableFilename, const Array<String> &lstArguments)
+int UnitTestsPerformance()
 {
-	char timeStr [9];
-	string filename ("result ");
-	outputFile.open (filename + _strtime( timeStr)  + ".txt");
-	MyMobileTestReporter rep;
-	//MyTestReporter rep;
-	int result = UnitTest::RunAllTests(rep);
+	// Get the current time as ASCII string and replace ':' (not valid within filenames) by '-'
+	char szTime[9];
+	_strtime(szTime);
+	szTime[2] = szTime[5] = '-';
 
+	// Open the results output file
+	char szFilename[256];
+	sprintf(szFilename, "PLUnitTestsPerformance_Result_%s.txt", szTime);
+	outputFile.open(szFilename);
+
+	// Create an reporter instance
+	MyMobileTestReporter cReporter;
+	// MyTestReporter cReporter;
+
+	// Run all unit tests
+	const int nResult = UnitTest::RunAllTests(cReporter);
+
+	// Close the results output file
 	outputFile.close();
 
-	return result;
+	// Done
+	return nResult;
 }

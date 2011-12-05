@@ -36,7 +36,7 @@ using namespace PLCore;
 //[-------------------------------------------------------]
 //[ Global functions                                      ]
 //[-------------------------------------------------------]
-extern int UnitTestsPerformance(const String &sExecutableFilename, const Array<String> &lstArguments);
+extern int UnitTestsPerformance();
 
 
 //[-------------------------------------------------------]
@@ -45,6 +45,6 @@ extern int UnitTestsPerformance(const String &sExecutableFilename, const Array<S
 // ... kind of first unit tests: Is our universal program entry point working?
 int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
-	// Execute the unit tests
-	return UnitTestsPerformance(sExecutableFilename, lstArguments);
+	// Execute the unit tests (passing thru program arguments like "GetApplicationContext().GetExecutableFilename(), GetApplicationContext().GetArguments()" is not required in here)
+	return UnitTestsPerformance();
 }

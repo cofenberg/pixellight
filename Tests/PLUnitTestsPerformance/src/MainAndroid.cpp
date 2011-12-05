@@ -37,7 +37,7 @@ using namespace PLCore;
 //[-------------------------------------------------------]
 //[ Global functions                                      ]
 //[-------------------------------------------------------]
-extern int UnitTestsPerformance(const String &sExecutableFilename, const Array<String> &lstArguments);
+extern int UnitTestsPerformance();
 
 
 //[-------------------------------------------------------]
@@ -97,8 +97,8 @@ class Application : public PLCore::FrontendApplication {
 		{
 			// Call base implementation
 			if (FrontendApplication::OnStart()) {
-				// Execute the unit tests
-				Exit(UnitTestsPerformance(GetApplicationContext().GetExecutableFilename(), GetApplicationContext().GetArguments()));
+				// Execute the unit tests (passing thru program arguments like "GetApplicationContext().GetExecutableFilename(), GetApplicationContext().GetArguments()" is not required in here)
+				Exit(UnitTestsPerformance());
 
 				// Done
 				return true;
