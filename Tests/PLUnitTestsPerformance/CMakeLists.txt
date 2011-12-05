@@ -33,10 +33,10 @@ add_sources(
 	# PLCore
 	src/PLCore/Container/Hashmap.cpp
 	# UnitTest++ AddIns
-	../../PLUnitTests/src/UnitTest++AddIns/MyTestReporter.cpp
-	../../PLUnitTests/src/UnitTest++AddIns/MyMobileTestReporter.cpp
-	../../PLUnitTests/src/UnitTest++AddIns/RunAllTests.cpp
-	../../PLUnitTests/src/UnitTest++AddIns/wchar_template.cpp
+	../PLUnitTests/src/UnitTest++AddIns/MyTestReporter.cpp
+	../PLUnitTests/src/UnitTest++AddIns/MyMobileTestReporter.cpp
+	../PLUnitTests/src/UnitTest++AddIns/RunAllTests.cpp
+	../PLUnitTests/src/UnitTest++AddIns/wchar_template.cpp
 )
 if(ANDROID)
 	add_sources(

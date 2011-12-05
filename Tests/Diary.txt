@@ -1,4 +1,12 @@
 ﻿>> 05.12.2011
+[TM]
+PLUnitTestsPerformance:
+- minor bug fix in the CMakeLists.txt: changed the path to the UnitTest++AddIns cpp files
+(e.g. "../../PLUnitTests/src/UnitTest++AddIns/MyTestReporter.cpp" to "../PLUnitTests/src/UnitTest++AddIns/MyTestReporter.cpp")
+
+
+
+>> 05.12.2011
 [CP]
 PLUnitPerfTests:
 - Added file structure for unit performance tests.
@@ -977,4 +985,3 @@ Base Tests:
 - Dieses Projekt wird nun PLDemos ersetzen. Durch den anderen Namen unserer internen PL Tests kommt das nicht mit dem 
   großen PL Demo bzw. mit möglicherweise kleineren öffentlichen PL Demos durcheinander. Dieses Projekt ist also quasi
   unsere 'interne Spielwiese' zum Experimentieren und Testen. Das alte PL Demos liegt nun verpackt im 'Backup/Old'-Ordner.
-
