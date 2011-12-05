@@ -2,21 +2,18 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="PLCore">
-      <UniqueIdentifier>{0a1206f8-537b-4be2-83f9-05da18c3c7aa}</UniqueIdentifier>
+      <UniqueIdentifier>{f11b1b1a-b2c6-414e-819c-5ac180b4f852}</UniqueIdentifier>
     </Filter>
     <Filter Include="PLCore\Container">
-      <UniqueIdentifier>{0c489268-8267-4c60-8376-8fa18373b8c8}</UniqueIdentifier>
+      <UniqueIdentifier>{685e2af7-6b9a-42cd-9543-c1bd2ef539a2}</UniqueIdentifier>
     </Filter>
     <Filter Include="UnitTest++AddIns">
-      <UniqueIdentifier>{eeeb0bdf-dd78-47ed-9e45-ae221d127c4c}</UniqueIdentifier>
+      <UniqueIdentifier>{a19cc6be-ea5f-49a3-a330-e433b06acec8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\PLCore\Container\Hashmap.cpp">
       <Filter>PLCore\Container</Filter>
-    </ClCompile>
-    <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\wchar_template.cpp">
-      <Filter>UnitTest++AddIns</Filter>
     </ClCompile>
     <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\MyMobileTestReporter.cpp">
       <Filter>UnitTest++AddIns</Filter>
@@ -27,14 +24,14 @@
     <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\RunAllTests.cpp">
       <Filter>UnitTest++AddIns</Filter>
     </ClCompile>
+    <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\wchar_template.cpp">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClCompile>
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\MainAndroid.cpp" />
     <ClCompile Include="src\UnitTestsPerformance.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\MyMobileTestReporter.h">
-      <Filter>UnitTest++AddIns</Filter>
-    </ClInclude>
     <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\MyTestReporter.h">
       <Filter>UnitTest++AddIns</Filter>
     </ClInclude>
@@ -44,5 +41,12 @@
     <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\wchar_template.h">
       <Filter>UnitTest++AddIns</Filter>
     </ClInclude>
+    <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\MyMobileTestReporter.h">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CMakeLists.txt" />
+    <None Include="..\Diary.txt" />
   </ItemGroup>
 </Project>

@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
+    <None Include="..\Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="PLCore">
