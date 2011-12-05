@@ -1,3 +1,11 @@
+﻿>> 05.12.2011
+[CP]
+PLUnitPerfTests:
+- Added file structure for unit performance tests.
+- Added the performance test for Hashmap (Comparing C-Map and Pixellight-Hashmap)
+
+
+
 >> 30.11.2011
 [JS]
 PLUnitTests:
