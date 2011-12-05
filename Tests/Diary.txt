@@ -6,6 +6,15 @@ PLUnitPerfTests:
 
 
 
+>> 05.12.2011
+[JS]
+PLUnitTests:
+- uncommented initial getName() test in CoreApplication as we don't know which name the application gets after startup
+- added Array tests for derived functions from Container for testing specific implementation of Array that can't be covered by generic ContainerFunction test (e.g. resizing of Array)
+- implementet Resize() Test for Array
+
+
+
 >> 30.11.2011
 [JS]
 PLUnitTests:

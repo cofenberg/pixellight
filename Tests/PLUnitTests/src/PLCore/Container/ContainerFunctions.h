@@ -5,7 +5,6 @@
 #include <UnitTest++/UnitTest++.h>
 #include <PLCore/Container/Container.h>
 #include <PLCore/Container/Array.h>
-#include <iostream>
 
 using namespace PLCore;
 
@@ -16,7 +15,6 @@ void CheckDerivedContainerFuncs(Container<AType>& con) {
 	*
 	*/
 	Array<AType> Emptycon, Appendcon, Copycon, Comparecon, TestArr, Removecon;
-	//std::cout << "HELLO WORLD!" << std::endl;
 
 	// isEmpty_and_Clear
 	{
