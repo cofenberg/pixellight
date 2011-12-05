@@ -623,6 +623,16 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLRendererOpenGLES2", "Plug
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLSoundOpenSLES", "Plugins\PLSoundOpenSLES\PLSoundOpenSLES.vcxproj", "{083D507F-F7FA-413D-973A-6663CA92D990}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLUnitTestsPerformance", "Tests\PLUnitTestsPerformance\PLUnitTestsPerformance.vcxproj", "{BA144945-00C2-46F3-A389-2A46F77C11B6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E793F581-0152-4143-9809-6EEEF19360A6} = {E793F581-0152-4143-9809-6EEEF19360A6}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLUnitTests", "Tests\PLUnitTests\PLUnitTests.vcxproj", "{33BE53FD-1506-4346-8B2E-8501A19B96A3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E793F581-0152-4143-9809-6EEEF19360A6} = {E793F581-0152-4143-9809-6EEEF19360A6}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -1751,6 +1761,26 @@ Global
 		{083D507F-F7FA-413D-973A-6663CA92D990}.Release|Win32.Build.0 = Release|Win32
 		{083D507F-F7FA-413D-973A-6663CA92D990}.Release|x64.ActiveCfg = Release|x64
 		{083D507F-F7FA-413D-973A-6663CA92D990}.Release|x64.Build.0 = Release|x64
+		{BA144945-00C2-46F3-A389-2A46F77C11B6}.Debug|Win32.ActiveCfg = Debug|Win32
+		{BA144945-00C2-46F3-A389-2A46F77C11B6}.Debug|Win32.Build.0 = Debug|Win32
+		{BA144945-00C2-46F3-A389-2A46F77C11B6}.Debug|x64.ActiveCfg = Debug|Win32
+		{BA144945-00C2-46F3-A389-2A46F77C11B6}.Hybrid|Win32.ActiveCfg = Release|Win32
+		{BA144945-00C2-46F3-A389-2A46F77C11B6}.Hybrid|Win32.Build.0 = Release|Win32
+		{BA144945-00C2-46F3-A389-2A46F77C11B6}.Hybrid|x64.ActiveCfg = Release|Win32
+		{BA144945-00C2-46F3-A389-2A46F77C11B6}.Release|Win32.ActiveCfg = Release|Win32
+		{BA144945-00C2-46F3-A389-2A46F77C11B6}.Release|Win32.Build.0 = Release|Win32
+		{BA144945-00C2-46F3-A389-2A46F77C11B6}.Release|x64.ActiveCfg = Release|Win32
+		{33BE53FD-1506-4346-8B2E-8501A19B96A3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{33BE53FD-1506-4346-8B2E-8501A19B96A3}.Debug|Win32.Build.0 = Debug|Win32
+		{33BE53FD-1506-4346-8B2E-8501A19B96A3}.Debug|x64.ActiveCfg = Debug|x64
+		{33BE53FD-1506-4346-8B2E-8501A19B96A3}.Debug|x64.Build.0 = Debug|x64
+		{33BE53FD-1506-4346-8B2E-8501A19B96A3}.Hybrid|Win32.ActiveCfg = Release|x64
+		{33BE53FD-1506-4346-8B2E-8501A19B96A3}.Hybrid|x64.ActiveCfg = Release|x64
+		{33BE53FD-1506-4346-8B2E-8501A19B96A3}.Hybrid|x64.Build.0 = Release|x64
+		{33BE53FD-1506-4346-8B2E-8501A19B96A3}.Release|Win32.ActiveCfg = Release|Win32
+		{33BE53FD-1506-4346-8B2E-8501A19B96A3}.Release|Win32.Build.0 = Release|Win32
+		{33BE53FD-1506-4346-8B2E-8501A19B96A3}.Release|x64.ActiveCfg = Release|x64
+		{33BE53FD-1506-4346-8B2E-8501A19B96A3}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

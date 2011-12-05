@@ -47,6 +47,7 @@ add_custom_target(Tests)
 ## Projects
 ##################################################
 add_subdirectory(PLUnitTests)
+add_subdirectory(PLUnitTestsPerformance)
 add_subdirectory(PLTest)		# [TODO] Remove me when the new unit tests are there
 add_subdirectory(PLTestBase)	# [TODO] Remove me when the new unit tests are there
 # Experimental

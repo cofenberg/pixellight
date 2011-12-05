@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="PLCore">
+      <UniqueIdentifier>{0a1206f8-537b-4be2-83f9-05da18c3c7aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PLCore\Container">
+      <UniqueIdentifier>{0c489268-8267-4c60-8376-8fa18373b8c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UnitTest++AddIns">
+      <UniqueIdentifier>{eeeb0bdf-dd78-47ed-9e45-ae221d127c4c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\PLCore\Container\Hashmap.cpp">
+      <Filter>PLCore\Container</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\wchar_template.cpp">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\MyMobileTestReporter.cpp">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\MyTestReporter.cpp">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\RunAllTests.cpp">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\MainAndroid.cpp" />
+    <ClCompile Include="src\UnitTestsPerformance.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\MyMobileTestReporter.h">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\MyTestReporter.h">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\RunAllTests.h">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\wchar_template.h">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
