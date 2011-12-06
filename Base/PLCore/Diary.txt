@@ -1,3 +1,11 @@
+>> 06.12.2011
+[CO]
+- While adding more unit tests, Jens Schmer found another bug within the container classes. When down resizing an full array, the number of elements within
+  the array was not the new maximum number of elements, it was the new maximum number of elements -1. Interessting that this never caused any problems. Cool
+  that we now have someone testing thru the classes in detail via unit tests. :D
+
+
+
 >> 03.12.2011
 [SW]
 - The GetRegistryDirectory Method checks if the path read from the "registry" exists and returns an empty string if not.

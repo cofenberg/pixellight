@@ -131,18 +131,19 @@ bool Array<ValueType>::Resize(uint32 nMaxNumOfElements, bool bAdded, bool bInit)
 			m_nNumOfElements = m_nMaxNumOfElements;
 		}
 	} else {
-		// Destroy the array?
-		if (nMaxNumOfElements) { // Resize array
+		// Clear the array completely or just resize it?
+		if (nMaxNumOfElements) {
 			// Create the new data
 			ValueType *pNewData = new ValueType[nMaxNumOfElements];
 
-			// If there is old data
+			// Use the new maximum number of elements to clamp the number of current elements
+			if (m_nNumOfElements > nMaxNumOfElements)
+				m_nNumOfElements = nMaxNumOfElements;
+
+			// If there is old data, rescue what's possible
 			if (m_pData) {
 				// Copy old data content
-				uint32 nNumOfElements = m_nNumOfElements;
-				if (nNumOfElements > nMaxNumOfElements)
-					nNumOfElements = nMaxNumOfElements;
-				for (uint32 i=0; i<nNumOfElements; i++)
+				for (uint32 i=0; i<m_nNumOfElements; i++)
 					pNewData[i] = m_pData[i];
 
 				// Destroy the old data
@@ -160,11 +161,10 @@ bool Array<ValueType>::Resize(uint32 nMaxNumOfElements, bool bAdded, bool bInit)
 
 			// Update element counters
 			m_nMaxNumOfElements = nMaxNumOfElements;
-			if (m_nNumOfElements > m_nMaxNumOfElements)
-				m_nNumOfElements = m_nMaxNumOfElements-1;
 			if (bAdded)
 				m_nNumOfElements = m_nMaxNumOfElements;
 		} else {
+			// The resized array has to be completely empty
 			Clear();
 		}
 	}

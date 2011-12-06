@@ -223,17 +223,15 @@ SUITE(Array_PrimitiveInt) {
 		// resize to 2 elements, preserve these first two elements
 		CHECK(Arr.Resize(2U, false, false));
 		CHECK_EQUAL(2U, Arr.GetMaxNumOfElements());
-		// TODO: returns only 1 element! I expect 2 when i resize to 2 elements!
-		//CHECK_EQUAL(2U, Arr.GetNumOfElements());
-		//CHECK_EQUAL(3, Arr.Get(1));
+		CHECK_EQUAL(2U, Arr.GetNumOfElements());
+		CHECK_EQUAL(3, Arr.Get(1));
 
 		Arr = HelperArr;
 		// resize to 2 elements, preserve these first two elements
 		CHECK(Arr.Resize(2U, false, true));
 		CHECK_EQUAL(2U, Arr.GetMaxNumOfElements());
-		// TODO: returns only 1 element! I expect 2 when i resize to 2 elements!
-		//CHECK_EQUAL(2U, Arr.GetNumOfElements());
-		//CHECK_EQUAL(3, Arr.Get(1));
+		CHECK_EQUAL(2U, Arr.GetNumOfElements());
+		CHECK_EQUAL(3, Arr.Get(1));
 
 		Arr = HelperArr;
 		// resize to 2 elements, preserve these first two elements
