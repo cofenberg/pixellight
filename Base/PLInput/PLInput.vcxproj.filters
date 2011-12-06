@@ -187,6 +187,12 @@
     <ClCompile Include="src\Backend\Android\AndroidKeyboardDevice.cpp">
       <Filter>Backend\Android</Filter>
     </ClCompile>
+    <ClCompile Include="src\Input\Devices\SplitTouchPad.cpp">
+      <Filter>Input\Devices</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Backend\Android\AndroidSplitTouchPadDevice.cpp">
+      <Filter>Backend\Android</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLInput\PLInput.h">
@@ -352,6 +358,12 @@
       <Filter>Backend\Android</Filter>
     </ClInclude>
     <ClInclude Include="include\PLInput\Backend\Android\AndroidMouseDevice.h">
+      <Filter>Backend\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLInput\Input\Devices\SplitTouchPad.h">
+      <Filter>Input\Devices</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLInput\Backend\Android\AndroidSplitTouchPadDevice.h">
       <Filter>Backend\Android</Filter>
     </ClInclude>
   </ItemGroup>
