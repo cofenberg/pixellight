@@ -1,3 +1,9 @@
+>> 06.12.2011
+[CO]
+- "SNMEgoLookController": Limited the yaw (to huge values may cause problems, so, bring them into a well known interval)
+
+
+
 >> 01.12.2011
 [CO]
 - Added scene node modifier "PLEngine::SNMEgoLookController" for restricted 3D look around

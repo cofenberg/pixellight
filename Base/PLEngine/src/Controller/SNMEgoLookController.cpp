@@ -133,6 +133,9 @@ void SNMEgoLookController::OnUpdate()
 			if (m_fPitch < -89.9f)
 				m_fPitch = -89.9f;
 
+			// Limit the yaw (to huge values may cause problems, so, bring them into a well known interval)
+			m_fYaw = Math::WrapToInterval(m_fYaw, 0.0f, 360.0f);
+
 			// Get a quaternion representation of your pitch
 			Quaternion qRotation, qRotationDelta;
 			const Vector3 &vUpVector = UpVector.Get();
@@ -191,6 +194,9 @@ void SNMEgoLookController::OnRotation()
 		// Flip sign if required
 		if (cTransform.GetRotation().GetXAxis().DotProduct(vUp) < 0.0f)
 			m_fYaw = -m_fYaw;
+
+		// Limit the yaw (to huge values may cause problems, so, bring them into a well known interval)
+		m_fYaw = Math::WrapToInterval(m_fYaw, 0.0f, 360.0f);
 	}
 }
 

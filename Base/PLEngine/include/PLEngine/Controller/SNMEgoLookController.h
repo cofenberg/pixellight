@@ -116,8 +116,8 @@ class SNMEgoLookController : public SNMLookController {
 	//[-------------------------------------------------------]
 	private:
 		PLMath::Vector3	m_vUpVector;	/**< Up vector */
-		float			m_fPitch;		/**< X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa) - in degree */
-		float			m_fYaw;			/**< Y rotation axis: Yaw (also called 'heading') change is turning to the left or right - in degree */
+		float			m_fPitch;		/**< X rotation axis: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa) - in degree [-89.9, 89.9] */
+		float			m_fYaw;			/**< Y rotation axis: Yaw (also called 'heading') change is turning to the left or right - in degree [0, 360] */
 		bool			m_bListen;		/**< Listen to rotation signals? */
 
 
