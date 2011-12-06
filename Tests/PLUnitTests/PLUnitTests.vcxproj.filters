@@ -29,16 +29,19 @@
       <Filter>PLCore\Application</Filter>
     </ClCompile>
     <ClCompile Include="src\PLCore\Container\Array.cpp">
-      <Filter>PLCore\Container</Filter>
+      <Filter>PLCore\Container\Container</Filter>
     </ClCompile>
-    <ClCompile Include="src\PLCore\Container\ContainerFunctions.h">
-      <Filter>PLCore\Container</Filter>
+    <ClCompile Include="src\PLCore\Container\ContainerTests.h">
+      <Filter>PLCore\Container\Container</Filter>
     </ClCompile>
     <ClCompile Include="src\PLCore\Container\List.cpp">
-      <Filter>PLCore\Container</Filter>
+      <Filter>PLCore\Container\Container</Filter>
     </ClCompile>
     <ClCompile Include="src\PLCore\Container\Pool.cpp">
-      <Filter>PLCore\Container</Filter>
+      <Filter>PLCore\Container\Container</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCore\Container\FastPool.cpp">
+      <Filter>PLCore\Container\Container</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -53,6 +56,12 @@
     </ClInclude>
     <ClInclude Include="include\UnitTest++AddIns\wchar_template.h">
       <Filter>UnitTest++AddIns</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PLCore\Container\MapTests.h">
+      <Filter>PLCore\Container\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PLCore\Container\HeapTests.h">
+      <Filter>PLCore\Container\Heap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +83,15 @@
     </Filter>
     <Filter Include="PLCore\Container">
       <UniqueIdentifier>{262a4fd0-85d7-4d28-871e-8c732dbe0d0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PLCore\Container\Container">
+      <UniqueIdentifier>{43639058-74a5-4b65-a09d-cbbe444ce070}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PLCore\Container\Map">
+      <UniqueIdentifier>{c600ed4c-ea28-4b6b-89e3-db5915995bcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PLCore\Container\Heap">
+      <UniqueIdentifier>{387fefdc-1119-42ac-9a14-78f2241c094d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

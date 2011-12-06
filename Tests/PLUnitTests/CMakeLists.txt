@@ -35,6 +35,12 @@ add_sources(
 	src/PLCore/Application/ApplicationContext.cpp
 	src/PLCore/Application/CoreApplication.cpp
 	src/PLCore/Container/Array.cpp
+	src/PLCore/Container/ContainerTests.h
+	src/PLCore/Container/FastPool.cpp
+	src/PLCore/Container/HeapTests.h
+	src/PLCore/Container/List.cpp
+	src/PLCore/Container/MapTests.h
+	src/PLCore/Container/Pool.cpp
 	# PLMath
 	src/PLMath/Vector3.cpp
 	# UnitTest++ AddIns

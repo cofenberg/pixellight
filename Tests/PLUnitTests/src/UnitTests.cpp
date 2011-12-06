@@ -44,7 +44,7 @@ int UnitTests(const String &sExecutableFilename, const Array<String> &lstArgumen
 {
 	MyMobileTestReporter rep;
 	//MyTestReporter rep;
-	UnitTest::RunAllTests(rep);
-	return getchar();
+
+	return UnitTest::RunAllTests(rep);
 }
 

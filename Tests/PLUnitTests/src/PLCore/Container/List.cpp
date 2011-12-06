@@ -5,7 +5,7 @@
 #include <PLCore/Container/List.h>
 #include <PLCore/Container/Container.h>
 
-#include "ContainerFunctions.h"
+#include "ContainerTests.h"
 
 using namespace PLCore;
 
@@ -24,15 +24,15 @@ SUITE(List_PrimitiveInt) {
 	{
 		ConstructTestList() { 
 			/* some setup */
-			Lst.Add('1');
-			Lst.Add('2');
-			Lst.Add('3');
-			Lst.Add('4');
+			Lst.Add(1);
+			Lst.Add(2);
+			Lst.Add(3);
+			Lst.Add(4);
 
-			TestLst.Add('3');
-			TestLst.Add('2');
-			TestLst.Add('1');
-			TestLst.Add('0');
+			TestLst.Add(3);
+			TestLst.Add(2);
+			TestLst.Add(1);
+			TestLst.Add(0);
 		}
 		~ConstructTestList() {
 			/* some teardown */
@@ -43,6 +43,6 @@ SUITE(List_PrimitiveInt) {
 	};
 
 	TEST_FIXTURE(ConstructTestList, DerivedContainerFunctions) {
-		CheckDerivedContainerFuncs(Lst);
+		CheckDerivedContainerFunctions(Lst);
 	}
 }

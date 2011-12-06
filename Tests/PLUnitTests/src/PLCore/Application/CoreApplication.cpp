@@ -17,10 +17,10 @@ SUITE(CoreApplication) {
 
 	TEST(Enum_ESignal) {
 		CoreApplication::ESignal sig = CoreApplication::SignalInterrupt;
-		CHECK_EQUAL(1, sig);
+		CHECK_EQUAL(1U, (unsigned int) sig);
 
 		sig = CoreApplication::SignalTerm;
-		CHECK_EQUAL(2, sig);
+		CHECK_EQUAL(2U, (unsigned int) sig);
 	}
 
 	TEST(SetName_EmptyString) {

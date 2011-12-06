@@ -29,8 +29,9 @@
     <ClCompile Include="src\PLCore\Application\ApplicationContext.cpp" />
     <ClCompile Include="src\PLCore\Application\CoreApplication.cpp" />
     <ClCompile Include="src\PLCore\Container\Array.cpp" />
+    <ClCompile Include="src\PLCore\Container\FastPool.cpp" />
     <ClCompile Include="src\PLCore\Container\List.cpp" />
-    <ClCompile Include="src\PLCore\Container\ContainerFunctions.h" />
+    <ClCompile Include="src\PLCore\Container\ContainerTests.h" />
     <ClCompile Include="src\PLCore\Container\Pool.cpp" />
     <ClCompile Include="src\PLCore\String.cpp" />
     <ClCompile Include="src\PLMath\Vector3.cpp" />
@@ -45,6 +46,8 @@
     <ClInclude Include="include\UnitTest++AddIns\MyTestReporter.h" />
     <ClInclude Include="include\UnitTest++AddIns\RunAllTests.h" />
     <ClInclude Include="include\UnitTest++AddIns\wchar_template.h" />
+    <ClInclude Include="src\PLCore\Container\HeapTests.h" />
+    <ClInclude Include="src\PLCore\Container\MapTests.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Diary.txt" />
