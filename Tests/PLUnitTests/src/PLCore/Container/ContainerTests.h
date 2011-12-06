@@ -1,5 +1,5 @@
-#ifndef __CONTAINERFUNCTIONS_CPP__
-#define __CONTAINERFUNCTIONS_CPP__
+#ifndef __CONTAINERTESTS_H__
+#define __CONTAINERTESTS_H__
 #pragma once
 
 #include <UnitTest++/UnitTest++.h>
@@ -9,9 +9,9 @@
 using namespace PLCore;
 
 template <class AType>
-void CheckDerivedContainerFuncs(Container<AType>& con) {
+void CheckDerivedContainerFunctions(Container<AType>& con) {
 	/*
-	* general container functions 
+	* general container functions
 	*
 	*/
 	Array<AType> Emptycon, Appendcon, Copycon, Comparecon, TestArr, Removecon;
@@ -143,7 +143,7 @@ void CheckDerivedContainerFuncs(Container<AType>& con) {
 		CHECK_EQUAL(2U, con.GetNumOfElements());
 	}
 
-	// ConstructTestArray, Add_Element
+	// Add_Element
 	{
 		con.Clear();
 
@@ -154,8 +154,10 @@ void CheckDerivedContainerFuncs(Container<AType>& con) {
 
 		CHECK_EQUAL(1, con.Get(0U));
 		CHECK_EQUAL(2, con.Get(1U));
+	}
 
 		// Add_C_Array
+		{
 		con.Clear();
 		AType ccon[] = {40, 41, 42, 43};
 
@@ -756,5 +758,8 @@ void CheckDerivedContainerFuncs(Container<AType>& con) {
 		con.RemoveAtIndex(1);
 		CHECK(con != Comparecon);
 	}
+
+
+	// TODO: test iterator!
 }
-#endif // __CONTAINERFUNCTIONS_CPP__
+#endif // __CONTAINERTESTS_H__

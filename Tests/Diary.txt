@@ -1,4 +1,15 @@
-﻿>> 05.12.2011
+﻿>> 06.12.2011
+[JS]
+PLUnitTests:
+- changed name: ContainerFunctions.h => ContainerTests.h
+- added files for generic Map- and Heaptests
+- added file for Fastpool container
+- introduced new Filters in Visual Studio Project to group files related to Container/Maps/Heaps
+- refactored Arrays Resize() test
+
+
+
+>> 05.12.2011
 [TM]
 PLUnitTestsPerformance:
 - minor bug fix in the CMakeLists.txt: changed the path to the UnitTest++AddIns cpp files

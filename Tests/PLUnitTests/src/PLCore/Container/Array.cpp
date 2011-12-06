@@ -5,7 +5,7 @@
 #include <PLCore/Container/Array.h>
 #include <PLCore/Container/Container.h>
 
-#include "ContainerFunctions.h"
+#include "ContainerTests.h"
 
 using namespace PLCore;
 
@@ -44,11 +44,11 @@ SUITE(Array_PrimitiveInt) {
 		}
 
 		// Container for testing
-		Array<int> Arr, EmptyArr, TestArr, HelperArr;
+		Array<int> EmptyArr, Arr, TestArr, HelperArr;
 	};
 
 	TEST_FIXTURE(ConstructTestArray, DerivedContainerFunctions) {
-		CheckDerivedContainerFuncs(Arr);
+		CheckDerivedContainerFunctions(Arr);
 	}
 
 	TEST_FIXTURE(ConstructTestArray, SetResizeCount_Zero) {
@@ -76,184 +76,178 @@ SUITE(Array_PrimitiveInt) {
 		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 	}
 
-	TEST_FIXTURE(ConstructTestArray, Resize) {
+	TEST_FIXTURE(ConstructTestArray, Resize_EmptyArray) {
 		Arr.Clear();
 
-		// testcases => resize empty array
-		{
-			// nothing happens here
-			CHECK(Arr.Resize(0U, false, false));
-			CHECK_EQUAL(0U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(0U, Arr.GetNumOfElements());
+		// nothing happens here
+		CHECK(Arr.Resize(0U, false, false));
+		CHECK_EQUAL(0U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 
-			// nothing happens here
-			CHECK(Arr.Resize(0U, false, true));
-			CHECK_EQUAL(0U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(0U, Arr.GetNumOfElements());
+		// nothing happens here
+		CHECK(Arr.Resize(0U, false, true));
+		CHECK_EQUAL(0U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 
-			// nothing happens here
-			CHECK(Arr.Resize(0U, true, false));
-			CHECK_EQUAL(0U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(0U, Arr.GetNumOfElements());
+		// nothing happens here
+		CHECK(Arr.Resize(0U, true, false));
+		CHECK_EQUAL(0U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 
-			// nothing happens here
-			CHECK(Arr.Resize(0U, true, true));
-			CHECK_EQUAL(0U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(0U, Arr.GetNumOfElements());
+		// nothing happens here
+		CHECK(Arr.Resize(0U, true, true));
+		CHECK_EQUAL(0U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 
-			// size: 10, not added, no init
-			CHECK(Arr.Resize(20U, false, false));
-			CHECK_EQUAL(20U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(0U, Arr.GetNumOfElements());
-			Arr.Clear();
+		// size: 10, not added, no init
+		CHECK(Arr.Resize(20U, false, false));
+		CHECK_EQUAL(20U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(0U, Arr.GetNumOfElements());
+		Arr.Clear();
 
-			// size: 10, not added, init
-			CHECK(Arr.Resize(20U, false, true));
-			CHECK_EQUAL(20U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(0U, Arr.GetNumOfElements());
-			CHECK_EQUAL(0, Arr.Get(0));
-			CHECK_EQUAL(0, Arr.Get(9));
-			Arr.Clear();
+		// size: 10, not added, init
+		CHECK(Arr.Resize(20U, false, true));
+		CHECK_EQUAL(20U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(0U, Arr.GetNumOfElements());
+		CHECK_EQUAL(0, Arr.Get(0));
+		CHECK_EQUAL(0, Arr.Get(9));
+		Arr.Clear();
 
-			// size: 10, added, no init
-			CHECK(Arr.Resize(20U, true, false));
-			CHECK_EQUAL(20U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(20U, Arr.GetNumOfElements());
-			Arr.Clear();
+		// size: 10, added, no init
+		CHECK(Arr.Resize(20U, true, false));
+		CHECK_EQUAL(20U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(20U, Arr.GetNumOfElements());
+		Arr.Clear();
 
-			// size: 10, added, init
-			CHECK(Arr.Resize(20U, true, true));
-			CHECK_EQUAL(20U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(20U, Arr.GetNumOfElements());
-			CHECK_EQUAL(0, Arr.Get(0));
-			CHECK_EQUAL(0, Arr.Get(9));
-			Arr.Clear();
-		}
+		// size: 10, added, init
+		CHECK(Arr.Resize(20U, true, true));
+		CHECK_EQUAL(20U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(20U, Arr.GetNumOfElements());
+		CHECK_EQUAL(0, Arr.Get(0));
+		CHECK_EQUAL(0, Arr.Get(9));
+	}
 
-		// testcases => resize array to same size
-		{
-			Arr = HelperArr;
-			// nothing happens here
-			CHECK(Arr.Resize(10U, false, false));
-			CHECK_EQUAL(10U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(4U, Arr.GetNumOfElements());
+	TEST_FIXTURE(ConstructTestArray, Resize_ToSameSize) {
+		Arr = HelperArr;
+		// nothing happens here
+		CHECK(Arr.Resize(10U, false, false));
+		CHECK_EQUAL(10U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(4U, Arr.GetNumOfElements());
 
-			Arr = HelperArr;
-			// nothing happens here
-			CHECK(Arr.Resize(10U, false, true));
-			CHECK_EQUAL(10U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(4U, Arr.GetNumOfElements());
+		Arr = HelperArr;
+		// nothing happens here
+		CHECK(Arr.Resize(10U, false, true));
+		CHECK_EQUAL(10U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(4U, Arr.GetNumOfElements());
 
-			Arr = HelperArr;
-			// sets numofelements to maxnumofelements: all elements already added
-			CHECK(Arr.Resize(10U, true, false));
-			CHECK_EQUAL(10U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(10U, Arr.GetNumOfElements());
+		Arr = HelperArr;
+		// sets numofelements to maxnumofelements: all elements already added
+		CHECK(Arr.Resize(10U, true, false));
+		CHECK_EQUAL(10U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(10U, Arr.GetNumOfElements());
 
-			Arr = HelperArr;
-			// sets numofelements to maxnumofelements:
-			// all elements already added and all elements above numofelements will be initialized with 0
-			CHECK(Arr.Resize(10U, true, true));
-			CHECK_EQUAL(10U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(10U, Arr.GetNumOfElements());
-			CHECK_EQUAL(0, Arr.Get(9));
-		}
+		Arr = HelperArr;
+		// sets numofelements to maxnumofelements:
+		// all elements already added and all elements above numofelements will be initialized with 0
+		CHECK(Arr.Resize(10U, true, true));
+		CHECK_EQUAL(10U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(10U, Arr.GetNumOfElements());
+		CHECK_EQUAL(0, Arr.Get(9));
+	}
 
+	TEST_FIXTURE(ConstructTestArray, Resize_ToBiggerArray) {
 		// testcases => resize array with content to bigger array
-		{
-			Arr = HelperArr;
-			// clears array
-			CHECK(Arr.Resize(0U, false, false));
-			CHECK_EQUAL(0U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(0U, Arr.GetNumOfElements());
 
-			Arr = HelperArr;
-			// clears array
-			CHECK(Arr.Resize(0U, false, true));
-			CHECK_EQUAL(0U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(0U, Arr.GetNumOfElements());
+		Arr = HelperArr;
+		// clears array
+		CHECK(Arr.Resize(0U, false, false));
+		CHECK_EQUAL(0U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 
-			Arr = HelperArr;
-			// clears array
-			CHECK(Arr.Resize(0U, true, false));
-			CHECK_EQUAL(0U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(0U, Arr.GetNumOfElements());
+		Arr = HelperArr;
+		// clears array
+		CHECK(Arr.Resize(0U, false, true));
+		CHECK_EQUAL(0U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 
-			Arr = HelperArr;
-			// clears array
-			CHECK(Arr.Resize(0U, true, true));
-			CHECK_EQUAL(0U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(0U, Arr.GetNumOfElements());
+		Arr = HelperArr;
+		// clears array
+		CHECK(Arr.Resize(0U, true, false));
+		CHECK_EQUAL(0U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 
-			Arr = HelperArr;
-			// expands to size: 20, not added, no init, copies existing values -- HelperArr contains 3 values
-			CHECK(Arr.Resize(20U, false, false));
-			CHECK_EQUAL(20U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(4U, Arr.GetNumOfElements());
+		Arr = HelperArr;
+		// clears array
+		CHECK(Arr.Resize(0U, true, true));
+		CHECK_EQUAL(0U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(0U, Arr.GetNumOfElements());
 
-			Arr = HelperArr;
-			// expands to size: 20, not added, init
-			CHECK(Arr.Resize(20U, false, true));
-			CHECK_EQUAL(20U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(4U, Arr.GetNumOfElements());
-			// old values still have to exist!
-			CHECK_EQUAL(3, Arr.Get(1));
-			// additional fields have to be initialized with 0
-			CHECK_EQUAL(0, Arr.Get(19));
+		Arr = HelperArr;
+		// expands to size: 20, not added, no init, copies existing values -- HelperArr contains 3 values
+		CHECK(Arr.Resize(20U, false, false));
+		CHECK_EQUAL(20U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(4U, Arr.GetNumOfElements());
 
-			Arr = HelperArr;
-			// expands to size: 20, added, no init
-			CHECK(Arr.Resize(20U, true, false));
-			CHECK_EQUAL(20U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(20U, Arr.GetNumOfElements());
-			// old values still have to exist!
-			CHECK_EQUAL(3, Arr.Get(1));
+		Arr = HelperArr;
+		// expands to size: 20, not added, init
+		CHECK(Arr.Resize(20U, false, true));
+		CHECK_EQUAL(20U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(4U, Arr.GetNumOfElements());
+		// old values still have to exist!
+		CHECK_EQUAL(3, Arr.Get(1));
+		// additional fields have to be initialized with 0
+		CHECK_EQUAL(0, Arr.Get(19));
 
-			Arr = HelperArr;
-			// expands to size: 20, added, init
-			CHECK(Arr.Resize(20U, true, true));
-			CHECK_EQUAL(20U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(20U, Arr.GetNumOfElements());
-			// old values still have to exist!
-			CHECK_EQUAL(3, Arr.Get(1));
-			// additional fields have to be initialized with 0
-			CHECK_EQUAL(0, Arr.Get(19));
-		}
+		Arr = HelperArr;
+		// expands to size: 20, added, no init
+		CHECK(Arr.Resize(20U, true, false));
+		CHECK_EQUAL(20U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(20U, Arr.GetNumOfElements());
+		// old values still have to exist!
+		CHECK_EQUAL(3, Arr.Get(1));
 
+		Arr = HelperArr;
+		// expands to size: 20, added, init
+		CHECK(Arr.Resize(20U, true, true));
+		CHECK_EQUAL(20U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(20U, Arr.GetNumOfElements());
+		// old values still have to exist!
+		CHECK_EQUAL(3, Arr.Get(1));
+		// additional fields have to be initialized with 0
+		CHECK_EQUAL(0, Arr.Get(19));
+	}
+	TEST_FIXTURE(ConstructTestArray, Resize_ToSmallerArray) {
 		// testcases => resize array to smaller size
-		{
-			Arr = HelperArr;
-			// resize to 2 elements, preserve these first two elements
-			CHECK(Arr.Resize(2U, false, false));
-			CHECK_EQUAL(2U, Arr.GetMaxNumOfElements());
-			// TODO: returns only 1 element! I expect 2 when i resize to 2 elements!
-			//CHECK_EQUAL(2U, Arr.GetNumOfElements());
-			//CHECK_EQUAL(3, Arr.Get(1));
 
-			Arr = HelperArr;
-			// resize to 2 elements, preserve these first two elements
-			CHECK(Arr.Resize(2U, false, true));
-			CHECK_EQUAL(2U, Arr.GetMaxNumOfElements());
-			// TODO: returns only 1 element! I expect 2 when i resize to 2 elements!
-			//CHECK_EQUAL(2U, Arr.GetNumOfElements());
-			//CHECK_EQUAL(3, Arr.Get(1));
+		Arr = HelperArr;
+		// resize to 2 elements, preserve these first two elements
+		CHECK(Arr.Resize(2U, false, false));
+		CHECK_EQUAL(2U, Arr.GetMaxNumOfElements());
+		// TODO: returns only 1 element! I expect 2 when i resize to 2 elements!
+		//CHECK_EQUAL(2U, Arr.GetNumOfElements());
+		//CHECK_EQUAL(3, Arr.Get(1));
 
-			Arr = HelperArr;
-			// resize to 2 elements, preserve these first two elements
-			CHECK(Arr.Resize(2U, true, false));
-			CHECK_EQUAL(2U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(2U, Arr.GetNumOfElements());
-			CHECK_EQUAL(3, Arr.Get(1));
+		Arr = HelperArr;
+		// resize to 2 elements, preserve these first two elements
+		CHECK(Arr.Resize(2U, false, true));
+		CHECK_EQUAL(2U, Arr.GetMaxNumOfElements());
+		// TODO: returns only 1 element! I expect 2 when i resize to 2 elements!
+		//CHECK_EQUAL(2U, Arr.GetNumOfElements());
+		//CHECK_EQUAL(3, Arr.Get(1));
 
-			Arr = HelperArr;
-			// resize to 2 elements, preserve these first two elements
-			CHECK(Arr.Resize(2U, true, true));
-			CHECK_EQUAL(2U, Arr.GetMaxNumOfElements());
-			CHECK_EQUAL(2U, Arr.GetNumOfElements());
-			CHECK_EQUAL(3, Arr.Get(1));
-		}
+		Arr = HelperArr;
+		// resize to 2 elements, preserve these first two elements
+		CHECK(Arr.Resize(2U, true, false));
+		CHECK_EQUAL(2U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(2U, Arr.GetNumOfElements());
+		CHECK_EQUAL(3, Arr.Get(1));
 
-
+		Arr = HelperArr;
+		// resize to 2 elements, preserve these first two elements
+		CHECK(Arr.Resize(2U, true, true));
+		CHECK_EQUAL(2U, Arr.GetMaxNumOfElements());
+		CHECK_EQUAL(2U, Arr.GetNumOfElements());
+		CHECK_EQUAL(3, Arr.Get(1));
 	}
 
 	// additional tesst for derived virutal functions and specific implementation of Array
