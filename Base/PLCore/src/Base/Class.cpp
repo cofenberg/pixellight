@@ -40,12 +40,10 @@ namespace PLCore {
 *  @brief
 *    Get derived classes
 */
-const List<const Class*> Class::GetDerivedClasses() const
+void Class::GetDerivedClasses(List<const Class*> &lstClasses) const
 {
 	// Get list of derived classes
-	List<const Class*> lstClasses;
 	ClassManager::GetInstance()->GetClasses(lstClasses, m_pClassImpl->GetClassName(), NonRecursive, NoBase, IncludeAbstract);
-	return lstClasses;
 }
 
 

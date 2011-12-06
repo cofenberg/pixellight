@@ -3,6 +3,18 @@
 - While adding more unit tests, Jens Schmer found another bug within the container classes. When down resizing an full array, the number of elements within
   the array was not the new maximum number of elements, it was the new maximum number of elements -1. Interessting that this never caused any problems. Cool
   that we now have someone testing thru the classes in detail via unit tests. :D
+- The implementation of "Class::GetDerivedClasses()" was
+	const List<const Class*> Class::GetDerivedClasses() const
+	{
+		// Get list of derived classes
+		List<const Class*> lstClasses;
+		ClassManager::GetInstance()->GetClasses(lstClasses, m_pClassImpl->GetClassName(), NonRecursive, NoBase, IncludeAbstract);
+		return lstClasses;
+	}
+  -> This is clearly quite ineffective, especially because it's a linked listed. Changed the signature of this comfort method into
+     "void GetDerivedClasses(List<const Class*> &lstClasses) const"
+     meaning that there is no longer a temporary coping around and such a signature is not totally unusual.
+  -> Within PixelLight itself, this method is never used, so, no other updates were necessary
 
 
 

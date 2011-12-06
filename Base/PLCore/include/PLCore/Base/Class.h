@@ -170,15 +170,15 @@ class Class {
 		*  @brief
 		*    Get derived classes
 		*
-		*  @return
-		*    List of derived classes, do not destroy the returned instances!
+		*  @paran[out] lstClasses
+		*    Receives the list of derived classes, given list is not cleared before adding new elements, do not destroy the returned instances!
 		*
 		*  @remarks
 		*    This method always returns all sub-classes of a class.
 		*    If you want to search for classes with more specific search criteria,
 		*    have a look at ClassManager::GetClasses().
 		*/
-		PLCORE_API const List<const Class*> GetDerivedClasses() const;
+		PLCORE_API void GetDerivedClasses(List<const Class*> &lstClasses) const;
 
 		/**
 		*  @brief
