@@ -1,11 +1,13 @@
 >> 06.12.2011
 [CO]
-PixelLightCodingConventions:
+PixelLightConventions: (previously "PixelLightCodingConventions")
 - Added section "Locality and Scope"
 - Minor extension within the "Reuseability and adding new Stuff"-section
 - Added section "C runtime stack Vs. C heap"
 - Added section "Inline"
 - Added section "Global Variables and Global Functions"
+- Renamed "PixelLightCodingConventions" into "PixelLightConventions" because I intend to also write down stuff like "Contribution-Conventions" in here to have
+  one document were all convention related information is gathered in one place (adding more special documents doesn't improve the overview over the complete project)
 
 
 

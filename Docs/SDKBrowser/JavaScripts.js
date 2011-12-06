@@ -79,7 +79,7 @@ shortcut("Doc_PixelLightFeatures",			"Docs\\PixelLightFeatures.pdf");
 shortcut("Doc_PixelLightBase",				"Docs\\PixelLightBase.pdf");
 shortcut("Doc_PixelLightAPI",				"Docs\\PixelLightAPI.chm");
 shortcut("Doc_PixelLightCompositing",		"Docs\\PixelLightCompositing.pdf");
-shortcut("Doc_PixelLightCodingConventions",	"Docs\\PixelLightCodingConventions.pdf");
+shortcut("Doc_PixelLightConventions",		"Docs\\PixelLightConventions.pdf");
 shortcut("Doc_PixelLightBuild",				"Docs\\PixelLightBuild.pdf");
 shortcut("Doc_PixelLightScript",			"Docs\\PixelLightScript.pdf");
 shortcut("Doc_PixelLight3dsMaxSceneExport",	"Docs\\PixelLight3dsMaxSceneExport.pdf");
