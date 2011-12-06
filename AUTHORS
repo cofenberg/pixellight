@@ -28,11 +28,11 @@ Jens Dörholt (j.doerholt@pixellight.org, http://www.3dimensionen.de) - Lead arti
 
 == Contributors ==
 Stephan Wezel (FireFly, thewolfwillcome, [SW]) - Maintainer of the Linux port and initiator of the PLFrontendQt project
-Thomas Mühsam (Lim4, [TM])
+Thomas Mühsam (Lim4, [TM]) - Primarily PLInput (new devices)
+Jens Schmer (liggers, [JS]) - Primarily unit tests
+Christian Petry (greever, [CP]) - Primarily performance unit tests
 Kevin Eilers (anjin-san) - Admin
 Florian Schlögl (FlorianS) - Wiki moderator
-Jens Schmer (liggers, [JS])
-Christian Petry (greever, [CP])
 
 
 If we've forgotten you in the above list, please contact us! (contact@pixellight.org)
