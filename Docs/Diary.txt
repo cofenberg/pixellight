@@ -4,6 +4,8 @@ PixelLightCodingConventions:
 - Added section "Locality and Scope"
 - Minor extension within the "Reuseability and adding new Stuff"-section
 - Added section "C runtime stack Vs. C heap"
+- Added section "Inline"
+- Added section "Global Variables and Global Functions"
 
 
 

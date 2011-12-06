@@ -18,6 +18,7 @@ We work with multiple operation systems so we have to take into account \emph{ho
 
 
 \section{File Extension}
+\label{General:FileExtension}
 First of all, we use the old fashion \emph{.h}-file extension to mark header files - \emph{hpp} would be the \emph{correct} extension for C++, but it's not widely used. Usually, we outsource inline implementations into files with an \emph{inl}-extension to keep the header files good readable. For source codes, we use the file extension \emph{cpp}.
 
 
@@ -68,6 +69,12 @@ Having only a hand full of local variables with a well defined scope makes it ea
 Prefer allocating variables on the C runtime stack over the C heap whenever possible. Dynamic memory allocation and deallocation via the C heap is considered to be slow compared to using the C runtime stack. The C heap introduces the risk of memory leaks while the C runtime stack is cleaned up automatically when leaving a scope. Also the C heap suffers from something called fragmentation and caching may be an issue. In concurrent programming the C runtime stack is less painful because every thread has it's own C runtime stack, while all threads share the same C heap which is a source of really nasty bugs in case one is sloppy when dealing with dynamically allocated memory.
 
 Be aware of the difference between C runtime stack and C heap. If you're not familiar or unsafe about this terminology and topic, please refer to the widely available literature about C/C++. For example, adding a class member variable instance directly to a class, meaning without using a pointer, doesn't necessarily mean that this will be super fast because this member variable will be automatically allocated on the C runtime stack. If this class is allocated on the C heap, the member variable will be allocated on the C heap as well.
+
+
+
+
+\section{Global Variables and Global Functions}
+Whenever possible, try to avoid using global variables and global functions. If you really have to, because e.g. everything else would be overcomplex for a tiny application, document at least why you had to make it global. In general, especially global variables lead to hard to understand, debuggable and maintainable code.
 
 
 
@@ -186,6 +193,16 @@ String sMyString;
 \end{lstlisting}
 
 Try to avoid using \emph{using namespace} too often or this will result in name conflicts which you then have to resolve by hand by adding for instance \emph{PLCore::}. We recommend to never use \emph{using namespace} within header files.
+
+
+
+
+\section{Inline}
+Whenever reasonable, mark methods as inline in order to give the compiler a chance to optimize out function calls. This may not always result in a huge performance improvement, but we have to use features like inline to get a decent overall performance and restricting the performance impact introduced by heavily using \ac{OOP}. This is especially true when considering devices like Smartphones which have more restricted resources as a powerful workstation. For example, by marking a getter-method as inline, requesting the value of a member variable may not introduce any performance drawback compared to making the attribute public and accessing it directly.
+
+Potential candidates for inline are one-line-methods which don't require to include more headers within the class headers, meaning that the header complexity is not significantly increasing by using inline. Other candidates are methods which require only to include really lightweight headers or headers which have usually already been included. Beside the mentioned one-line-methods, methods with multiple instructions and lines can also be marked as inline as long as you consider it as reasonable after thinking it thru again. Complex methods should not be marked as inline to avoid increasing the resulting binary size and therefore making the life of the cache harder. Do only mark complex methods as inline if there are extremely good, and especially documented reasons for doing so. Do not inline methods if this requires to include system or so called \emph{standard}-headers, except there's a really good and heavily documented reason for doing so.
+
+Do not directly write the inline implementation into the class header. The class headers have to stay human readable and shouldn't disclose to many implementation details - not because they are top secret, but because the class has to be usable by only looking at it's interface. So, move the inline implementations into a separate \emph{inl} file as described within section~\ref{General:FileExtension}. Of course, the inline implementation is still visible to the user, but not when looking at the class header directly.
 
 
 
