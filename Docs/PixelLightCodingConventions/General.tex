@@ -44,6 +44,7 @@ Don't use \emph{extern templates}\footnote{\url{http://www2.research.att.com/~bs
 
 
 \section{For-Scope}
+\label{General:For-Scope}
 Within the PixelLight projects, the \emph{for-scope} is active by default. The following for instance will produce a compiler error:
 \begin{lstlisting}[caption=for-scope]
 for (int i=0; i<1; i++) {
@@ -51,6 +52,22 @@ for (int i=0; i<1; i++) {
 }
 i = 20;	// i has already gone out of scope
 \end{lstlisting}
+
+
+
+
+\section{Locality and Scope}
+Locality means that one should keep things together whenever possible. A good example is the \emph{for-scope} from section~\ref{General:For-Scope}. Do not define all variables you're using within a function right at the top of the function. Define and initialize local variables when you first need them. If reasonable, it's also fine to add a new scope by using brackets in order to restrict the life of a local variable which is only required within a tiny section of your implementation. Consider moving this inner bracket into an own function if it makes sense in some way, but this is no requirement if you can's see any point in adding another tiny function.
+
+Having only a hand full of local variables with a well defined scope makes it easier to understand and debug the code. It also avoids trashing the valuable C runtime stack. If there's only a limited number of local variables, a good compiler might also have the chance to produce more effective code. Another benefit of this approach is that this local variable may never be created and touched at all in case the part of the implementation is never executed.
+
+
+
+
+\section{C runtime stack Vs. C heap}
+Prefer allocating variables on the C runtime stack over the C heap whenever possible. Dynamic memory allocation and deallocation via the C heap is considered to be slow compared to using the C runtime stack. The C heap introduces the risk of memory leaks while the C runtime stack is cleaned up automatically when leaving a scope. Also the C heap suffers from something called fragmentation and caching may be an issue. In concurrent programming the C runtime stack is less painful because every thread has it's own C runtime stack, while all threads share the same C heap which is a source of really nasty bugs in case one is sloppy when dealing with dynamically allocated memory.
+
+Be aware of the difference between C runtime stack and C heap. If you're not familiar or unsafe about this terminology and topic, please refer to the widely available literature about C/C++. For example, adding a class member variable instance directly to a class, meaning without using a pointer, doesn't necessarily mean that this will be super fast because this member variable will be automatically allocated on the C runtime stack. If this class is allocated on the C heap, the member variable will be allocated on the C heap as well.
 
 
 
@@ -323,7 +340,10 @@ pl_class_end
 
 
 
+
 \section{Reuseability and adding new Stuff}
 Before you add new classes, functions and so on - check first whether there's already something similar within PixelLight. If there's something you can already use directly, use it instead of writing new stuff. If there's something quite similar, have a more detailed look at it and contact your team colleagues to discuss whether a refactoring is possible and reasonable to update and/or to enhance existing stuff.
+
+This is also true for adding new precompiler definitions. Look deeply whether or not there's already a definition (or better method) existing which can be used. If new precompiler definitions are really required we should dicuss them first because adding new of thoses may make it harder to compile PixelLight in the correct way.
 
 Reuseability is one of the most important concepts when creating frameworks like PixelLight... and reuseability does not mean that it's possible to copy'n'past it and then hacking around for a certain project. Reuseability means that it's possible to directly reuse, to share something between multiple projects in a quite universal way without the need to enhance and hack around constantly.

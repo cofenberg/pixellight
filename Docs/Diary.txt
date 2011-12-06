@@ -1,3 +1,12 @@
+>> 06.12.2011
+[CO]
+PixelLightCodingConventions:
+- Added section "Locality and Scope"
+- Minor extension within the "Reuseability and adding new Stuff"-section
+- Added section "C runtime stack Vs. C heap"
+
+
+
 >> 26.11.2011
 [CO]
 - "PixelLightBuild"-document: Fixed documentation-tracker entry 3442193 ("In the PixelLightBuild.pdf documentation on page 19 it says that cmake-qui can be used.
