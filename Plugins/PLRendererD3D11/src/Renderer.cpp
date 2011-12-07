@@ -258,6 +258,31 @@ ID3D11Device *Renderer::GetD3D11Device() const
 */
 void Renderer::SetupCapabilities()
 {
+	// Total available GPU memory in kilobytes
+	m_sCapabilities.nTotalAvailableGPUMemory = 0;
+	{ // Get the used DXGI factory 1 instance
+		// IDXGIDevice1
+		IDXGIDevice1 *pDXGIDevice1 = nullptr;
+		m_pD3D11Device->QueryInterface(__uuidof(IDXGIDevice1), reinterpret_cast<void **>(&pDXGIDevice1));
+		if (pDXGIDevice1) {
+			// IDXGIAdapter1
+			IDXGIAdapter1 *pDXGIAdapter1 = nullptr;
+			pDXGIDevice1->GetParent(__uuidof(IDXGIAdapter1), reinterpret_cast<void **>(&pDXGIAdapter1));
+			if (pDXGIAdapter1) {
+				DXGI_ADAPTER_DESC sDXGIAdapterDesc;
+				pDXGIAdapter1->GetDesc(&sDXGIAdapterDesc);
+				m_sCapabilities.nTotalAvailableGPUMemory = sDXGIAdapterDesc.DedicatedVideoMemory;
+
+				// Cleanup
+				pDXGIAdapter1->Release();
+				pDXGIDevice1->Release();
+			} else {
+				// Error!
+				pDXGIDevice1->Release();
+			}
+		}
+	}
+
 	// [TODO] Check those "?"-points
 	// The capabilities are depending on the feature level - data from: http://msdn.microsoft.com/en-us/library/ff476876%28v=vs.85%29.aspx
 	switch (m_nD3DFeatureLevel) {

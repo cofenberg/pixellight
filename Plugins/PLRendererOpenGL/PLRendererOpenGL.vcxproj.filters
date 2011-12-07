@@ -14,6 +14,9 @@
     <Filter Include="MacOSX">
       <UniqueIdentifier>{5550c414-7ba1-4303-a82d-efd114c6124c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="OpenGL">
+      <UniqueIdentifier>{12c3ee74-9d0e-42ec-8727-c9f6949fb2d0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Context.cpp">
@@ -300,12 +303,33 @@
     <ClInclude Include="include\PLRendererOpenGL\MacOSX\SurfaceWindowMacOSX_X11.h">
       <Filter>MacOSX</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\External\Recommended\OpenGL\glx.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\External\Recommended\OpenGL\glxext.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\External\Recommended\OpenGL\wglext.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\External\Recommended\OpenGL\gl.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\External\Recommended\OpenGL\glext.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\External\Recommended\OpenGL\glu.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
     <None Include="..\..\Base\PLRenderer\Diary.txt" />
     <None Include="src\MacOSX\SurfaceWindowMacOSX_Cocoa.mm">
       <Filter>MacOSX</Filter>
+    </None>
+    <None Include="..\..\External\Recommended\OpenGL\Readme.txt">
+      <Filter>OpenGL</Filter>
     </None>
   </ItemGroup>
 </Project>

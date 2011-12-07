@@ -347,6 +347,12 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\Windows\SurfaceWindowWindows.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\External\Recommended\OpenGL\gl.h" />
+    <ClInclude Include="..\..\External\Recommended\OpenGL\glext.h" />
+    <ClInclude Include="..\..\External\Recommended\OpenGL\glu.h" />
+    <ClInclude Include="..\..\External\Recommended\OpenGL\glx.h" />
+    <ClInclude Include="..\..\External\Recommended\OpenGL\glxext.h" />
+    <ClInclude Include="..\..\External\Recommended\OpenGL\wglext.h" />
     <ClInclude Include="include\PLRendererOpenGL\Context.h" />
     <ClInclude Include="include\PLRendererOpenGL\Extensions.h" />
     <ClInclude Include="include\PLRendererOpenGL\FixedFunctions.h" />
@@ -398,6 +404,7 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Base\PLRenderer\Diary.txt" />
+    <None Include="..\..\External\Recommended\OpenGL\Readme.txt" />
     <None Include="CMakeLists.txt" />
     <None Include="src\MacOSX\SurfaceWindowMacOSX_Cocoa.mm">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>

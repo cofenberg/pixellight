@@ -1,3 +1,20 @@
+>> 07.12.2011
+[CO]
+- Within my master thesis I have to deal with quite big texture data... so, I need a way to figure out how much graphics memory is available
+  in order to make the correct decisions what to do with the data.
+  While this task sounds simple, it isn't, at least when using OpenGL. Nowadays there are extensions like GL_NVX_gpu_memory_info (NVIDIA),
+  WGL_AMD_gpu_association (AMD Windows) and GLX_AMD_gpu_association (AMD Linux) as well as GL_ATI_meminfo (AMD).
+  I tried over an hour to get WGL_AMD_gpu_association up and running on my "ATI Mobility Radeon HD 4850" using Catalyst 11.11, without much
+  success. While "wglGetContextGPUIDAMD()" gave me "1" which looks correct, everything else totally failed. I really tried all combinations
+  I was able to think of, read the AMD whitepaper http://developer.amd.com/sdks/wgsdk/Documents/GPU_Association_WhitePaper.pdf - nothing worked.
+  So, it apperars that on my system GL_ATI_meminfo is the only way which doesn't end up in a pure hacking around with versions for x-platforms.
+  It's no option to just e.g. create a D3D context and ask it for the available graphics memory. "GL_ATI_meminfo" only returns the still free
+  memory, divided into texture, VBO and renderbuffer memory. All three sections gave me "480" for my 512 MiB graphics card. This is close enough
+  and has to do the job. At least the solution is simple and cross-plattform. On NVIDIA systems I'am using of course "GL_NVX_gpu_memory_info".
+  -> Within PLRenderer, this information is available via "PLRenderer::Capabilities::nTotalAvailableGPUMemory"
+
+
+
 >> 29.11.2011
 [CO]
 - "ShaderLanguage": Added comfort methods "CreateVertexShader()", "CreateGeometryShader()" and "CreateFragmentShader()" creating a shader instance and

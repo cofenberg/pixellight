@@ -151,6 +151,7 @@ bool Extensions::IsGL_ARB_texture_rectangle()			const { return m_bGL_ARB_texture
 bool Extensions::IsGL_ARB_multisample()					const { return m_bGL_ARB_multisample;				 }
 bool Extensions::IsGL_ARB_uniform_buffer_object()		const { return m_bGL_ARB_uniform_buffer_object;		 }
 // ATI
+bool Extensions::IsGL_ATI_meminfo()						const { return m_bGL_ATI_meminfo;					 }
 bool Extensions::IsGL_ATI_separate_stencil()			const { return m_bGL_ATI_separate_stencil;			 }
 bool Extensions::IsGL_ATI_draw_buffers()				const { return m_bGL_ATI_draw_buffers;				 }
 bool Extensions::IsGL_ATI_texture_compression_3dc()		const { return m_bGL_ATI_texture_compression_3dc;	 }
@@ -159,6 +160,7 @@ bool Extensions::IsGL_AMD_vertex_shader_tessellator()	const { return m_bGL_AMD_v
 // NV
 bool Extensions::IsGL_NV_texture_rectangle()			const { return m_bGL_NV_texture_rectangle;			 }
 bool Extensions::IsGL_NV_occlusion_query()				const { return m_bGL_NV_occlusion_query;			 }
+bool Extensions::IsGL_NVX_gpu_memory_info()				const { return m_bGL_NVX_gpu_memory_info;			 }
 // SGIS
 bool Extensions::IsGL_SGIS_generate_mipmap()			const { return m_bGL_SGIS_generate_mipmap;			 }
 // HP
@@ -341,6 +343,7 @@ void Extensions::ResetExtensions()
 	m_bGL_ARB_multisample					= false;
 	m_bGL_ARB_uniform_buffer_object			= false;
 	// ATI
+	m_bGL_ATI_meminfo						= false;
 	m_bGL_ATI_separate_stencil				= false;
 	m_bGL_ATI_draw_buffers					= false;
 	m_bGL_ATI_texture_compression_3dc		= false;
@@ -349,6 +352,7 @@ void Extensions::ResetExtensions()
 	// NV
 	m_bGL_NV_texture_rectangle				= false;
 	m_bGL_NV_occlusion_query				= false;
+	m_bGL_NVX_gpu_memory_info				= false;
 	// SGIS
 	m_bGL_SGIS_generate_mipmap				= false;
 	// HP
@@ -866,6 +870,9 @@ bool Extensions::InitUniversal()
 	//[-------------------------------------------------------]
 	//[ ATI                                                   ]
 	//[-------------------------------------------------------]
+	// GL_ATI_meminfo
+	m_bGL_ATI_meminfo = IsSupported("GL_ATI_meminfo");
+
 	// GL_ATI_separate_stencil
 	m_bGL_ATI_separate_stencil = IsSupported("GL_ATI_separate_stencil");
 	if (m_bGL_ATI_separate_stencil) {
@@ -925,6 +932,9 @@ bool Extensions::InitUniversal()
 		IMPORT_FUNC(glGetOcclusionQueryuivNV)
 		m_bGL_NV_occlusion_query = bResult;
 	}
+
+	// GL_NVX_gpu_memory_info
+	m_bGL_NVX_gpu_memory_info = IsSupported("GL_NVX_gpu_memory_info");
 
 
 	//[-------------------------------------------------------]

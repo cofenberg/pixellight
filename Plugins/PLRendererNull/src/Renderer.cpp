@@ -163,6 +163,9 @@ Renderer::~Renderer()
 */
 void Renderer::SetupCapabilities()
 {
+	// Total available GPU memory in kilobytes
+	m_sCapabilities.nTotalAvailableGPUMemory = 0;
+
 	// Maximum number of color render targets
 	m_sCapabilities.nMaxColorRenderTargets = 1;
 

@@ -623,6 +623,9 @@ void Renderer::SetupCapabilities()
 	// Get the extensions class instance
 	const Extensions &cExtensions = GetContext().GetExtensions();
 
+	// [TODO] Total available GPU memory in kilobytes
+	m_sCapabilities.nTotalAvailableGPUMemory = 0;
+
 	// "GL_ARB_draw_buffers"-extension available?
 	if (cExtensions.IsGL_ARB_draw_buffers()) {
 		// Maximum number of color render targets

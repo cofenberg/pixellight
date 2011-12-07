@@ -450,6 +450,7 @@ struct DisplayMode {
 *    Holds all hardware capabilities
 */
 struct Capabilities {
+	PLCore::uint32 nTotalAvailableGPUMemory;		/**< Total available GPU memory in kilobytes, 0 if it was not possible to determine this value, this value may not match your graphics card specification (e.g. "512 MiB" may get you "480 MiB" in here) */
 	PLCore::uint8  nMaxColorRenderTargets;			/**< Maximum number of color render targets (multi render targets (MRT)) */
 	PLCore::uint8  nMaxTextureUnits;				/**< Maximum number of texture units */
 	PLCore::uint16 nMaxAnisotropy;					/**< Maximum anisotropy */

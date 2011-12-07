@@ -696,6 +696,34 @@ void Renderer::SetupCapabilities()
 	const Extensions &cExtensions = m_pContext->GetExtensions();
 	GLint nGLTemp;
 
+	// Total available GPU memory in kilobytes
+	m_sCapabilities.nTotalAvailableGPUMemory = 0;
+	if (cExtensions.IsGL_ATI_meminfo()) {
+		// I was unable to get WGL_AMD_gpu_association up and running on my "ATI Mobility Radeon HD 4850" using Catalyst 11.11 on Windows 7 64 bit, so, GL_ATI_meminfo must do the job in here
+
+		// http://www.opengl.org/registry/specs/ATI/meminfo.txt says:
+		// [0] - total memory free in the pool
+		// [1] - largest available free block in the pool
+		// [2] - total auxiliary memory free
+		// [3] - largest auxiliary free block
+		GLint nFreeMemory[4];
+
+		// We're only interested in "Total available GPU memory in kilobytes", not in technical details
+		// -> Get the highest one
+		glGetIntegerv(GL_VBO_FREE_MEMORY_ATI, nFreeMemory);
+		m_sCapabilities.nTotalAvailableGPUMemory = nFreeMemory[0];
+		glGetIntegerv(GL_TEXTURE_FREE_MEMORY_ATI, nFreeMemory);
+		if (m_sCapabilities.nTotalAvailableGPUMemory < nFreeMemory[0])
+			m_sCapabilities.nTotalAvailableGPUMemory = nFreeMemory[0];
+		glGetIntegerv(GL_RENDERBUFFER_FREE_MEMORY_ATI, nFreeMemory);
+		if (m_sCapabilities.nTotalAvailableGPUMemory < nFreeMemory[0])
+			m_sCapabilities.nTotalAvailableGPUMemory = nFreeMemory[0];
+	} else if (cExtensions.IsGL_NVX_gpu_memory_info()) {
+		GLint nAvailableMemory = 0;
+		// #define GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX 0x9048
+		glGetIntegerv(0x9048, &nAvailableMemory);
+	}
+
 	// Maximum number of color render targets
 	if (cExtensions.IsGL_ARB_draw_buffers())
 		glGetIntegerv(GL_MAX_DRAW_BUFFERS_ARB, &nGLTemp);

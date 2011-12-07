@@ -117,9 +117,9 @@ class Extensions {
 		bool IsWGL_ARB_pixel_format() const;
 		bool IsWGL_ARB_render_texture() const;
 		bool IsWGL_ARB_make_current_read() const;
-		bool IsWGL_ARB_multisample() const;
-		bool IsWGL_ATI_pixel_format_float() const;
-		bool IsWGL_NV_float_buffer() const;
+		bool IsWGL_ARB_multisample() const;			// "GLX_ARB_multisample" under Linux
+		bool IsWGL_ATI_pixel_format_float() const;	// "GLX_ATI_pixel_format_float" under Linux
+		bool IsWGL_NV_float_buffer() const;			// "GLX_NV_float_buffer" under Linux
 		// GLX (Linux only)
 		bool IsGLX_SGI_swap_control() const;
 		// EXT
@@ -173,6 +173,7 @@ class Extensions {
 		bool IsGL_ARB_multisample() const;
 		bool IsGL_ARB_uniform_buffer_object() const;
 		// ATI
+		bool IsGL_ATI_meminfo() const;
 		bool IsGL_ATI_separate_stencil() const;
 		bool IsGL_ATI_draw_buffers() const;
 		bool IsGL_ATI_texture_compression_3dc() const;
@@ -181,6 +182,7 @@ class Extensions {
 		// NV
 		bool IsGL_NV_texture_rectangle() const;
 		bool IsGL_NV_occlusion_query() const;
+		bool IsGL_NVX_gpu_memory_info() const;
 		// SGIS
 		bool IsGL_SGIS_generate_mipmap() const;
 		// HP
@@ -352,6 +354,7 @@ class Extensions {
 		bool m_bGL_ARB_multisample;
 		bool m_bGL_ARB_uniform_buffer_object;
 		// ATI
+		bool m_bGL_ATI_meminfo;
 		bool m_bGL_ATI_separate_stencil;
 		bool m_bGL_ATI_draw_buffers;
 		bool m_bGL_ATI_texture_compression_3dc;
@@ -360,6 +363,7 @@ class Extensions {
 		// NV
 		bool m_bGL_NV_texture_rectangle;
 		bool m_bGL_NV_occlusion_query;
+		bool m_bGL_NVX_gpu_memory_info;
 		// SGIS
 		bool m_bGL_SGIS_generate_mipmap;
 		// HP
@@ -390,6 +394,10 @@ class Extensions {
 	// WGL_ARB_extensions_string
 	FNDEF_EX(wglGetExtensionsStringARB,	PFNWGLGETEXTENSIONSSTRINGARBPROC);
 
+	// WGL_EXT_swap_control
+	FNDEF_EX(wglSwapIntervalEXT,	PFNWGLSWAPINTERVALEXTPROC);
+	FNDEF_EX(wglGetSwapIntervalEXT,	PFNWGLGETSWAPINTERVALEXTPROC);
+
 	// WGL_ARB_pixel_format
 	FNDEF_EX(wglGetPixelFormatAttribivARB,	PFNWGLGETPIXELFORMATATTRIBIVARBPROC);
 	FNDEF_EX(wglGetPixelFormatAttribfvARB,	PFNWGLGETPIXELFORMATATTRIBFVARBPROC);
@@ -402,10 +410,6 @@ class Extensions {
 	// WGL_ARB_make_current_read
 	FNDEF_EX(wglMakeContextCurrentARB,	PFNWGLMAKECONTEXTCURRENTARBPROC);
 	FNDEF_EX(wglGetCurrentReadDCARB,	PFNWGLGETCURRENTREADDCARBPROC);
-
-	// WGL_EXT_swap_control
-	FNDEF_EX(wglSwapIntervalEXT,	PFNWGLSWAPINTERVALEXTPROC);
-	FNDEF_EX(wglGetSwapIntervalEXT,	PFNWGLGETSWAPINTERVALEXTPROC);
 #endif
 
 

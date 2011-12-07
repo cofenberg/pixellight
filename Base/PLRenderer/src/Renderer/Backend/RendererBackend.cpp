@@ -268,6 +268,7 @@ void RendererBackend::ShowRendererCapabilities() const
 {
 	PL_LOG(Info, " ")
 	PL_LOG(Info, "Renderer capabilities:")
+	PL_LOG(Info, String("  TotalAvailableGPUMemory: ")		 + m_sCapabilities.nTotalAvailableGPUMemory + " KiB (" + m_sCapabilities.nTotalAvailableGPUMemory/1024 + " MiB)")
 	PL_LOG(Info, String("  MaxColorRenderTargets: ")		 + m_sCapabilities.nMaxColorRenderTargets)
 	PL_LOG(Info, String("  MaxTextureUnits: ")				 + m_sCapabilities.nMaxTextureUnits)
 	PL_LOG(Info, String("  MaxAnisotropy: ")				 + static_cast<uint32>(m_sCapabilities.nMaxAnisotropy))

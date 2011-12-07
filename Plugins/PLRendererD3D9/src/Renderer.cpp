@@ -558,6 +558,9 @@ void Renderer::SetupCapabilities()
 	D3DCAPS9 pCaps;
 	m_pD3D->GetDeviceCaps(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &pCaps);
 
+	// [TODO] Total available GPU memory in kilobytes
+	m_sCapabilities.nTotalAvailableGPUMemory = 0;
+
 	// Maximum number of color render targets
 	m_sCapabilities.nMaxColorRenderTargets = static_cast<uint8>(pCaps.NumSimultaneousRTs);
 
