@@ -1,3 +1,9 @@
+>> 07.12.2011
+[CO]
+- "SystemAndroid": Added "GetAndroidApp()" and "SetAndroidApp()"
+
+
+
 >> 06.12.2011
 [CO]
 - While adding more unit tests, Jens Schmer found another bug within the container classes. When down resizing an full array, the number of elements within

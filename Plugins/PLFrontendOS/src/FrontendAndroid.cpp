@@ -78,6 +78,9 @@ FrontendAndroid::FrontendAndroid(const FrontendContext &cFrontendContext, struct
 	cAndroidApp.onAppCmd     = onAppCmd;
 	cAndroidApp.onInputEvent = onInputEvent;
 
+	// Tell PixelLight about the native Android application
+	SystemAndroid::SetAndroidApp(&cAndroidApp);
+
 	// Tell PixelLight about the Android asset manager (this is required in order to be able to load files from the apk)
 	SystemAndroid::SetAssetManager(cAndroidApp.activity->assetManager);
 

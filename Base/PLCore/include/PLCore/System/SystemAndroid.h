@@ -36,6 +36,8 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+struct android_app;
+typedef struct android_app android_app;
 struct AAssetManager;
 typedef struct AAssetManager AAssetManager;
 struct AInputEvent;
@@ -77,10 +79,32 @@ class SystemAndroid : public SystemLinux {
 	public:
 		/**
 		*  @brief
+		*    Returns the native Android application
+		*
+		*  @return
+		*    The native Android application, can be a null pointer, do not delete the returned instance
+		*/
+		static PLCORE_API android_app *GetAndroidApp();
+
+		/**
+		*  @brief
+		*    Sets the native Android application
+		*
+		*  @param[in] pAndroidApp
+		*    Native Android application, can be a null pointer, the given instance is just shared and not destroyed by this class
+		*/
+		static PLCORE_API void SetAndroidApp(android_app *pAndroidApp);
+
+		/**
+		*  @brief
 		*    Returns the Android asset manager
 		*
 		*  @return
 		*    The Android asset manager, can be a null pointer, do not delete the returned instance
+		*
+		*  @note
+		*    - Information can also be received thru the native Android application pointer received via "GetAndroidApp()"
+		*      (native Android activity only, that's why this special asset manager method exists in here)
 		*/
 		static PLCORE_API AAssetManager *GetAssetManager();
 
@@ -151,6 +175,7 @@ class SystemAndroid : public SystemLinux {
 	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
 	private:
+		static android_app   *g_pAndroidApp;			/**< Native Android application, can be a null pointer, the given instance is just shared and not destroyed by this class */
 		static AAssetManager *g_pAAssetManager;			/**< Android asset manager, can be a null pointer, the given instance is just shared and not destroyed by this class */
 		static bool			  g_bConsoleToKernelLog;	/**< 'true' if console messages are also written into the Android in-kernel log buffer, else 'false', default is 'false' */
 

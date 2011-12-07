@@ -42,6 +42,7 @@ Event<const struct AInputEvent&> SystemAndroid::EventInputEvent;	/**< Android in
 //[-------------------------------------------------------]
 //[ Private static data                                   ]
 //[-------------------------------------------------------]
+android_app   *SystemAndroid::g_pAndroidApp         = nullptr;	/**< Native Android application, can be a null pointer, the given instance is just shared and not destroyed by this class */
 AAssetManager *SystemAndroid::g_pAAssetManager      = nullptr;	/**< Android asset manager, can be a null pointer, the given instance is just shared and not destroyed by this class */
 bool		   SystemAndroid::g_bConsoleToKernelLog = false;	/**< 'true' if console messages are also written into the Android in-kernel log buffer, else 'false', default is 'false' */
 
@@ -49,6 +50,24 @@ bool		   SystemAndroid::g_bConsoleToKernelLog = false;	/**< 'true' if console me
 //[-------------------------------------------------------]
 //[ Public static functions                               ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Returns the native Android application
+*/
+android_app *SystemAndroid::GetAndroidApp()
+{
+	return g_pAndroidApp;
+}
+
+/**
+*  @brief
+*    Sets the native Android application
+*/
+void SystemAndroid::SetAndroidApp(android_app *pAndroidApp)
+{
+	g_pAndroidApp = pAndroidApp;
+}
+
 /**
 *  @brief
 *    Returns the Android asset manager
