@@ -713,15 +713,16 @@ void Renderer::SetupCapabilities()
 		glGetIntegerv(GL_VBO_FREE_MEMORY_ATI, nFreeMemory);
 		m_sCapabilities.nTotalAvailableGPUMemory = nFreeMemory[0];
 		glGetIntegerv(GL_TEXTURE_FREE_MEMORY_ATI, nFreeMemory);
-		if (m_sCapabilities.nTotalAvailableGPUMemory < nFreeMemory[0])
+		if (m_sCapabilities.nTotalAvailableGPUMemory < static_cast<uint32>(nFreeMemory[0]))
 			m_sCapabilities.nTotalAvailableGPUMemory = nFreeMemory[0];
 		glGetIntegerv(GL_RENDERBUFFER_FREE_MEMORY_ATI, nFreeMemory);
-		if (m_sCapabilities.nTotalAvailableGPUMemory < nFreeMemory[0])
+		if (m_sCapabilities.nTotalAvailableGPUMemory < static_cast<uint32>(nFreeMemory[0]))
 			m_sCapabilities.nTotalAvailableGPUMemory = nFreeMemory[0];
 	} else if (cExtensions.IsGL_NVX_gpu_memory_info()) {
 		GLint nAvailableMemory = 0;
 		// #define GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX 0x9048
 		glGetIntegerv(0x9048, &nAvailableMemory);
+		m_sCapabilities.nTotalAvailableGPUMemory = nAvailableMemory;
 	}
 
 	// Maximum number of color render targets
