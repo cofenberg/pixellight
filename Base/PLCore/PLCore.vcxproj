@@ -853,6 +853,7 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
     <None Include="include\PLCore\System\Process.inl" />
     <None Include="include\PLCore\System\Semaphore.inl" />
     <None Include="include\PLCore\System\System.inl" />
+    <None Include="include\PLCore\System\SystemAndroid.inl" />
     <None Include="include\PLCore\System\Thread.inl" />
     <None Include="include\PLCore\Tools\Chunk.inl" />
     <None Include="include\PLCore\Tools\CommandLine.inl" />

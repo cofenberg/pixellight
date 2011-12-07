@@ -1771,5 +1771,8 @@
     <None Include="include\PLCore\Xml\XmlDocument.inl">
       <Filter>Xml</Filter>
     </None>
+    <None Include="include\PLCore\System\SystemAndroid.inl">
+      <Filter>System</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -84,7 +84,7 @@ class SystemAndroid : public SystemLinux {
 		*  @return
 		*    The native Android application, can be a null pointer, do not delete the returned instance
 		*/
-		static PLCORE_API android_app *GetAndroidApp();
+		static inline android_app *GetAndroidApp();
 
 		/**
 		*  @brief
@@ -93,7 +93,7 @@ class SystemAndroid : public SystemLinux {
 		*  @param[in] pAndroidApp
 		*    Native Android application, can be a null pointer, the given instance is just shared and not destroyed by this class
 		*/
-		static PLCORE_API void SetAndroidApp(android_app *pAndroidApp);
+		static inline void SetAndroidApp(android_app *pAndroidApp);
 
 		/**
 		*  @brief
@@ -106,7 +106,7 @@ class SystemAndroid : public SystemLinux {
 		*    - Information can also be received thru the native Android application pointer received via "GetAndroidApp()"
 		*      (native Android activity only, that's why this special asset manager method exists in here)
 		*/
-		static PLCORE_API AAssetManager *GetAssetManager();
+		static inline AAssetManager *GetAssetManager();
 
 		/**
 		*  @brief
@@ -115,7 +115,7 @@ class SystemAndroid : public SystemLinux {
 		*  @param[in] pAAssetManager
 		*    Android asset manager, can be a null pointer, the given instance is just shared and not destroyed by this class
 		*/
-		static PLCORE_API void SetAssetManager(AAssetManager *pAAssetManager);
+		static inline void SetAssetManager(AAssetManager *pAAssetManager);
 
 		/**
 		*  @brief
@@ -124,7 +124,7 @@ class SystemAndroid : public SystemLinux {
 		*  @param[in] sAInputEvent
 		*    Android input event to emit
 		*/
-		static PLCORE_API void EmitInputEvent(const struct AInputEvent &sAInputEvent);
+		static inline void EmitInputEvent(const struct AInputEvent &sAInputEvent);
 
 		/**
 		*  @brief
@@ -133,7 +133,7 @@ class SystemAndroid : public SystemLinux {
 		*  @return
 		*    'true' if console messages are also written into the Android in-kernel log buffer, else 'false'
 		*/
-		static PLCORE_API bool GetConsoleToKernelLog();
+		static inline bool GetConsoleToKernelLog();
 
 		/**
 		*  @brief
@@ -142,7 +142,7 @@ class SystemAndroid : public SystemLinux {
 		*  @param[in] bConsoleToKernelLog
 		*    'true' if console messages are also written into the Android in-kernel log buffer, else 'false', default is 'false'
 		*/
-		static PLCORE_API void SetConsoleToKernelLog(bool bConsoleToKernelLog);
+		static inline void SetConsoleToKernelLog(bool bConsoleToKernelLog);
 
 
 	//[-------------------------------------------------------]
@@ -175,9 +175,9 @@ class SystemAndroid : public SystemLinux {
 	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
 	private:
-		static android_app   *g_pAndroidApp;			/**< Native Android application, can be a null pointer, the given instance is just shared and not destroyed by this class */
-		static AAssetManager *g_pAAssetManager;			/**< Android asset manager, can be a null pointer, the given instance is just shared and not destroyed by this class */
-		static bool			  g_bConsoleToKernelLog;	/**< 'true' if console messages are also written into the Android in-kernel log buffer, else 'false', default is 'false' */
+		static PLCORE_API android_app   *g_pAndroidApp;			/**< Native Android application, can be a null pointer, the given instance is just shared and not destroyed by this class */
+		static PLCORE_API AAssetManager *g_pAAssetManager;		/**< Android asset manager, can be a null pointer, the given instance is just shared and not destroyed by this class */
+		static PLCORE_API bool			 g_bConsoleToKernelLog;	/**< 'true' if console messages are also written into the Android in-kernel log buffer, else 'false', default is 'false' */
 
 
 	//[-------------------------------------------------------]
@@ -194,6 +194,12 @@ class SystemAndroid : public SystemLinux {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLCore
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLCore/System/SystemAndroid.inl"
 
 
 #endif // __PLCORE_SYSTEM_ANDROID_H__

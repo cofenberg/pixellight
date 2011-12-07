@@ -1,6 +1,7 @@
 >> 07.12.2011
 [CO]
 - "SystemAndroid": Added "GetAndroidApp()" and "SetAndroidApp()"
+- "SystemAndroid": Made some methods inline
 
 
 
