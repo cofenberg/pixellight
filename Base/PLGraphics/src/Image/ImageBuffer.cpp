@@ -221,6 +221,23 @@ ECheckConsistency ImageBuffer::CheckConsistency() const
 //[-------------------------------------------------------]
 /**
 *  @brief
+*    Make new empty image data
+*/
+void ImageBuffer::MakeNewBuffer()
+{
+	// Create new image data, but do not copy data from old one
+	ImageData *pImageData = new ImageData();
+
+	// Release old image data
+	m_pImageData->Release();
+
+	// Set pointer to new image data
+	m_pImageData = pImageData;
+	m_pImageData->AddReference();
+}
+
+/**
+*  @brief
 *    Make image data unique
 */
 void ImageBuffer::MakeBufferUnique()

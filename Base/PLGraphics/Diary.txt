@@ -1,3 +1,12 @@
+>> 07.12.2011
+[CO]
+- "ImageBuffer": "CreateImage()", "Clear()" and "CreateTestImage()" create fresh image data and were using "MakeBufferUnique()" in order to ensure
+  that everything is fine when using shared image data. "MakeBufferUnique()" copies the image data to ensure that the image which is going to be manipulated
+  has unique data... but in here the copy-process was overhead because we know that we're creating totally new image data. So, no need for data copy which
+  really hurts when your image is >500 MiB.
+
+
+
 >> 30.11.2011
 [CO]
 - "Color3", "Color4", "Image", "ImagePart", "ImageEffects", "ImageData", "ImagePalette", "ImageEffectWrapper", "ImageBuffer": Everything reasonable

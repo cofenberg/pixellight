@@ -509,6 +509,12 @@ class ImageBuffer {
 	private:
 		/**
 		*  @brief
+		*    Make new empty image data
+		*/
+		PLGRAPHICS_API void MakeNewBuffer();
+
+		/**
+		*  @brief
 		*    Make image data unique
 		*/
 		PLGRAPHICS_API void MakeBufferUnique();

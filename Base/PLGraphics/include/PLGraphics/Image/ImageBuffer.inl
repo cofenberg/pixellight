@@ -115,7 +115,7 @@ inline void ImageBuffer::CreateImage(EDataFormat nDataFormat, EColorFormat nColo
 {
 	// Image is going to be changed, so make image data unique
 	if (m_pImageData->GetRefCount() > 1)
-		MakeBufferUnique();
+		MakeNewBuffer();	// Do not use "MakeBufferUnique()" in here because we know that we're going to destroy the current image data anyway, no need to copy the image data!
 
 	// Create image
 	m_pImageData->CreateImage(nDataFormat, nColorFormat, vSize, nCompression);
@@ -129,10 +129,9 @@ inline void ImageBuffer::Clear()
 {
 	// Image is going to be changed, so make image data unique
 	if (m_pImageData->GetRefCount() > 1)
-		MakeBufferUnique();
-
-	// Clear image
-	m_pImageData->Clear();
+		MakeNewBuffer();		// Do not use "MakeBufferUnique()" in here because we know that we're going to destroy the current image data anyway, no need to copy the image data!
+	else
+		m_pImageData->Clear();	// Clear image
 }
 
 /**
@@ -143,7 +142,7 @@ inline void ImageBuffer::CreateTestImage(ETestImage nTestImage)
 {
 	// Image is going to be changed, so make image data unique
 	if (m_pImageData->GetRefCount() > 1)
-		MakeBufferUnique();
+		MakeNewBuffer();	// Do not use "MakeBufferUnique()" in here because we know that we're going to destroy the current image data anyway, no need to copy the image data!
 
 	// Create test image
 	m_pImageData->CreateTestImage(nTestImage);
