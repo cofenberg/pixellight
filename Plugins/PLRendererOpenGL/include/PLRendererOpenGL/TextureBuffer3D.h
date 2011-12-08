@@ -34,6 +34,17 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLGraphics {
+	class ImageBuffer;
+}
+namespace PLRendererOpenGL {
+	class Renderer;
+}
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLRendererOpenGL {
@@ -53,6 +64,7 @@ class TextureBuffer3D : public PLRenderer::TextureBuffer3D {
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class Renderer;
+	friend class TextureBuffer2DArray;	// The "TextureBuffer2DArray"-implementation is reusing "InitialUploadVolumeData()"
 
 
 	//[-------------------------------------------------------]
@@ -73,6 +85,13 @@ class TextureBuffer3D : public PLRenderer::TextureBuffer3D {
 		*    OpenGL resource ID of the texture buffer
 		*/
 		PLRENDEREROPENGL_API PLCore::uint32 GetOpenGLTexture() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Private static functions                              ]
+	//[-------------------------------------------------------]
+	private:
+		static void InitialUploadVolumeData(Renderer &cRendererOpenGL, const PLGraphics::ImageBuffer &cImageBuffer, const PLMath::Vector3i &vSize, bool bUsePreCompressedData, bool bCompressedFormat, EPixelFormat nImageFormat, GLenum nOpenGLTarget, GLint nOpenGLLevel, GLenum nOpenGLInternalformat, GLenum nOpenGLFormat, GLenum nOpenGLType, EPixelFormat &nPrimaryImageFormat);
 
 
 	//[-------------------------------------------------------]

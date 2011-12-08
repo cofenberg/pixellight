@@ -1,3 +1,23 @@
+>> 08.12.2011
+[CO]
+- When trying to upload a 512x512x1743 8 bit (435,75 MiB) uncompressed volume to the GPU using one "glTexImage3DEXT"-call and asking for LATC1 as
+  internal format (resulting in 217,875 MiB), the result was a crash inside the graphics driver.
+  -> Used system: "ATI Mobility Radeon HD 4850" (512 MiB) using Catalyst 11.11 and Windows 7 64 bit
+  -> Using 512x512x128 voxel (32,00 MiB) was working
+  -> Using 512x512x255 voxel (63,75 MiB) was working as well
+  -> Using 512x512x256 voxel (64,00 MiB) or more -> Crash inside the graphics driver
+  -> So, to be on the safe side, do not upload big volume textures using one "glTexImage3DEXT"-call,
+     split the upload into multiple "glTexSubImage3DEXT"-calls
+  -> Hopefully 32,00 MiB per "glTexSubImage3DEXT"-call is fine across various graphics cards
+  -> The ugly stuff is handled within the new "TextureBuffer3D::InitialUploadVolumeData()"-method. I'am sure more similar handling is required
+     within "TextureBuffer3D" and "TextureBuffer2DArray" but for now I'am totally happy to be able to upload a 512x512x1743 8 bit volume and
+     compressing it by using LATC1 in order to enable my "ATI Mobility Radeon HD 4850" (512 MiB) to handle this volume wihout been forced to
+     scale it down to be able to at least use it (performance is another topic :).
+  -> Creating a 3D texture is still easy, just use e.g. "cRenderer.CreateTextureBuffer3D(cImage, TextureBuffer::LATC1, 0)", the renderer hides the
+     internal complexity
+
+
+
 >> 07.12.2011
 [CO]
 - Within my master thesis I have to deal with quite big texture data... so, I need a way to figure out how much graphics memory is available

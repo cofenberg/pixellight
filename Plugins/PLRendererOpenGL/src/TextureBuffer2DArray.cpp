@@ -30,6 +30,7 @@
 #include "PLRendererOpenGL/Context.h"
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/Extensions.h"
+#include "PLRendererOpenGL/TextureBuffer3D.h"
 #include "PLRendererOpenGL/TextureBuffer2DArray.h"
 
 
@@ -129,24 +130,8 @@ TextureBuffer2DArray::TextureBuffer2DArray(PLRenderer::Renderer &cRenderer, Imag
 					if (cRendererOpenGL.GetContext().GetExtensions().IsGL_SGIS_generate_mipmap()) {
 						glTexParameteri(GL_TEXTURE_2D_ARRAY_EXT, GL_GENERATE_MIPMAP_SGIS, true);
 
-						// Upload the texture buffer
-						if (bUsePreCompressedData)
-							glCompressedTexImage3DARB(GL_TEXTURE_2D_ARRAY_EXT, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, m_vSize.z, 0, pImageBuffer->GetCompressedDataSize(), pImageBuffer->GetCompressedData());
-						else 
-							glTexImage3DEXT(GL_TEXTURE_2D_ARRAY_EXT, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, m_vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasAnyData() ? pImageBuffer->GetData() : nullptr);
-
-						// If compressed internal format, check whether all went fine
-						if (bCompressedFormat) {
-							GLint nCompressed;
-							glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY_EXT, 0, GL_TEXTURE_COMPRESSED_ARB, &nCompressed);
-							if (!nCompressed) {
-								// There was an error, use no compression
-								m_nFormat = nImageFormat;
-								const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
-								if (pAPIPixelFormatFallback)
-									glTexImage3DEXT(GL_TEXTURE_2D_ARRAY_EXT, 0, *pAPIPixelFormatFallback, m_vSize.x, m_vSize.y, m_vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasAnyData() ? pImageBuffer->GetData() : nullptr);
-							}
-						}
+						// Upload
+						TextureBuffer3D::InitialUploadVolumeData(cRendererOpenGL, *pImageBuffer, m_vSize, bUsePreCompressedData, bCompressedFormat, nImageFormat, GL_TEXTURE_2D_ARRAY_EXT, 0, *pAPIPixelFormat, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, m_nFormat);
 					} else {
 						// [TODO] It looks like that gluBuild3DMipmaps() is NOT supported under Windows :(
 						m_nNumOfMipmaps = 0;
@@ -189,24 +174,8 @@ TextureBuffer2DArray::TextureBuffer2DArray(PLRenderer::Renderer &cRenderer, Imag
 							// Get the size of this mipmap level
 							vSize = pMipmapImageBuffer->GetSize();
 
-							// Upload the texture buffer
-							if (bUsePreCompressedData && pMipmapImageBuffer->HasCompressedData())
-								glCompressedTexImage3DARB(GL_TEXTURE_2D_ARRAY_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, pMipmapImageBuffer->GetCompressedDataSize(), pMipmapImageBuffer->GetCompressedData());
-							else
-								glTexImage3DEXT(GL_TEXTURE_2D_ARRAY_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasAnyData() ? pMipmapImageBuffer->GetData() : nullptr);
-
-							// If compressed internal format, check whether all went fine
-							if (bCompressedFormat) {
-								GLint nCompressed;
-								glGetTexLevelParameteriv(GL_TEXTURE_2D_ARRAY_EXT, nLevel, GL_TEXTURE_COMPRESSED_ARB, &nCompressed);
-								if (!nCompressed) {
-									// There was an error, use no compression as fallback
-									m_nFormat = nImageFormat;
-									const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
-									if (pAPIPixelFormatFallback)
-										glTexImage3DEXT(GL_TEXTURE_2D_ARRAY_EXT, nLevel, *pAPIPixelFormatFallback, vSize.x, vSize.y, vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasAnyData() ? pMipmapImageBuffer->GetData() : nullptr);
-								}
-							}
+							// Upload
+							TextureBuffer3D::InitialUploadVolumeData(cRendererOpenGL, *pMipmapImageBuffer, vSize, bUsePreCompressedData, bCompressedFormat, nImageFormat, GL_TEXTURE_2D_ARRAY_EXT, nLevel, *pAPIPixelFormat, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, m_nFormat);
 
 							// Update the total number of bytes this texture buffer requires
 							m_nTotalNumOfBytes += GetNumOfBytes(nLevel);

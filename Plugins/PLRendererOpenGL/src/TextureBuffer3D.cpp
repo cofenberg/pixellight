@@ -70,6 +70,73 @@ uint32 TextureBuffer3D::GetOpenGLTexture() const
 
 
 //[-------------------------------------------------------]
+//[ Private static functions                              ]
+//[-------------------------------------------------------]
+void TextureBuffer3D::InitialUploadVolumeData(Renderer &cRendererOpenGL, const ImageBuffer &cImageBuffer, const Vector3i &vSize, bool bUsePreCompressedData, bool bCompressedFormat, EPixelFormat nImageFormat, GLenum nOpenGLTarget, GLint nOpenGLLevel, GLenum nOpenGLInternalformat, GLenum nOpenGLFormat, GLenum nOpenGLType, EPixelFormat &nPrimaryImageFormat)
+{
+	// Upload the texture buffer
+	if (bUsePreCompressedData && cImageBuffer.HasCompressedData()) {
+		// Pass thru the already compressed data to the GPU
+		glCompressedTexImage3DARB(nOpenGLTarget, nOpenGLLevel, nOpenGLInternalformat, vSize.x, vSize.y, vSize.z, 0, cImageBuffer.GetCompressedDataSize(), cImageBuffer.GetCompressedData());
+	} else {
+		// When trying to upload a 512x512x1743 8 bit (435,75 MiB) uncompressed volume to the GPU using one "glTexImage3DEXT"-call and asking for
+		// LATC1 as internal format (resulting in 217,875 MiB), the result was a crash inside the graphics driver.
+		// -> Used system: "ATI Mobility Radeon HD 4850" (512 MiB) using Catalyst 11.11 and Windows 7 64 bit
+		// -> Using 512x512x128 voxel (32,00 MiB) was working
+		// -> Using 512x512x255 voxel (63,75 MiB) was working as well
+		// -> Using 512x512x256 voxel (64,00 MiB) or more -> Crash inside the graphics driver
+		// -> So, to be on the safe side, do not upload big volume textures using one "glTexImage3DEXT"-call,
+		//    split the upload into multiple "glTexSubImage3DEXT"-calls
+		// -> Hopefully 32,00 MiB per "glTexSubImage3DEXT"-call is fine across various graphics cards
+		static const uint32 nMaximumNumberOfBytesPerCall = 512*512*128;
+
+		// Has the texture data a critical size?
+		if (cImageBuffer.HasAnyData() && cImageBuffer.GetDataSize() > nMaximumNumberOfBytesPerCall) {
+			// Split the upload into multiple "glTexSubImage3DEXT"-calls to be on the safe side
+
+			// Ask the GPU to allocate the texture
+			glTexImage3DEXT(nOpenGLTarget, nOpenGLLevel, nOpenGLInternalformat, vSize.x, vSize.y, vSize.z, 0, nOpenGLFormat, nOpenGLType, nullptr);
+
+			// Update the texture data
+			if (cImageBuffer.HasAnyData()) {
+				// [TODO] Upload along the longest image axis
+
+				// Get the number of bytes per depth layer
+				const uint32 nNumOfLayerBytes = vSize.x*vSize.y*cImageBuffer.GetBytesPerPixel();
+
+				// Get a pointer to the start position of the given image data
+				const uint8 *pImageData = cImageBuffer.GetData();
+
+				// Add each depth layer by using a seperate OpenGL API call
+				for (int i=0; i<vSize.z; i++, pImageData+=nNumOfLayerBytes) {
+					// Update the image data of the current depth layer
+					glTexSubImage3DEXT(nOpenGLTarget, nOpenGLLevel, 0, 0, i, vSize.x, vSize.y, 1, nOpenGLFormat, nOpenGLType, pImageData);
+				}
+			}
+		} else {
+			// We can do all in one simple "glTexImage3DEXT"-call
+			glTexImage3DEXT(nOpenGLTarget, nOpenGLLevel, nOpenGLInternalformat, vSize.x, vSize.y, vSize.z, 0, nOpenGLFormat, nOpenGLType, cImageBuffer.HasAnyData() ? cImageBuffer.GetData() : nullptr);
+		}
+	}
+
+	// If compressed internal format, check whether all went fine
+	if (bCompressedFormat) {
+		GLint nCompressed;
+		glGetTexLevelParameteriv(nOpenGLTarget, nOpenGLLevel, GL_TEXTURE_COMPRESSED_ARB, &nCompressed);
+		if (!nCompressed) {
+			// There was an error, use no compression as fallback
+			nPrimaryImageFormat = nImageFormat;
+			const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(nPrimaryImageFormat);
+			if (pAPIPixelFormatFallback) {
+				// ... aaaaannd again...
+				InitialUploadVolumeData(cRendererOpenGL, cImageBuffer, vSize, false, false, nImageFormat, nOpenGLTarget, nOpenGLLevel, *pAPIPixelFormatFallback, nOpenGLFormat, nOpenGLType, nPrimaryImageFormat);
+			}
+		}
+	}
+}
+
+
+//[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
@@ -129,24 +196,8 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 					if (cRendererOpenGL.GetContext().GetExtensions().IsGL_SGIS_generate_mipmap()) {
 						glTexParameteri(GL_TEXTURE_3D_EXT, GL_GENERATE_MIPMAP_SGIS, true);
 
-						// Upload the texture buffer
-						if (bUsePreCompressedData)
-							glCompressedTexImage3DARB(GL_TEXTURE_3D_EXT, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, m_vSize.z, 0, pImageBuffer->GetCompressedDataSize(), pImageBuffer->GetCompressedData());
-						else 
-							glTexImage3DEXT(GL_TEXTURE_3D_EXT, 0, *pAPIPixelFormat, m_vSize.x, m_vSize.y, m_vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasAnyData() ? pImageBuffer->GetData() : nullptr);
-
-						// If compressed internal format, check whether all went fine
-						if (bCompressedFormat) {
-							GLint nCompressed;
-							glGetTexLevelParameteriv(GL_TEXTURE_3D_EXT, 0, GL_TEXTURE_COMPRESSED_ARB, &nCompressed);
-							if (!nCompressed) {
-								// There was an error, use no compression
-								m_nFormat = nImageFormat;
-								const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
-								if (pAPIPixelFormatFallback)
-									glTexImage3DEXT(GL_TEXTURE_3D_EXT, 0, *pAPIPixelFormatFallback, m_vSize.x, m_vSize.y, m_vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pImageBuffer->HasAnyData() ? pImageBuffer->GetData() : nullptr);
-							}
-						}
+						// Upload
+						InitialUploadVolumeData(cRendererOpenGL, *pImageBuffer, m_vSize, bUsePreCompressedData, bCompressedFormat, nImageFormat, GL_TEXTURE_3D_EXT, 0, *pAPIPixelFormat, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, m_nFormat);
 					} else {
 						// [TODO] It looks like that gluBuild3DMipmaps() is NOT supported under Windows :(
 						m_nNumOfMipmaps = 0;
@@ -189,24 +240,8 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 							// Get the size of this mipmap level
 							vSize = pMipmapImageBuffer->GetSize();
 
-							// Upload the texture buffer
-							if (bUsePreCompressedData && pMipmapImageBuffer->HasCompressedData())
-								glCompressedTexImage3DARB(GL_TEXTURE_3D_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, pMipmapImageBuffer->GetCompressedDataSize(), pMipmapImageBuffer->GetCompressedData());
-							else
-								glTexImage3DEXT(GL_TEXTURE_3D_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasAnyData() ? pMipmapImageBuffer->GetData() : nullptr);
-
-							// If compressed internal format, check whether all went fine
-							if (bCompressedFormat) {
-								GLint nCompressed;
-								glGetTexLevelParameteriv(GL_TEXTURE_3D_EXT, nLevel, GL_TEXTURE_COMPRESSED_ARB, &nCompressed);
-								if (!nCompressed) {
-									// There was an error, use no compression as fallback
-									m_nFormat = nImageFormat;
-									const uint32 *pAPIPixelFormatFallback = cRendererOpenGL.GetAPIPixelFormat(m_nFormat);
-									if (pAPIPixelFormatFallback)
-										glTexImage3DEXT(GL_TEXTURE_3D_EXT, nLevel, *pAPIPixelFormatFallback, vSize.x, vSize.y, vSize.z, 0, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, pMipmapImageBuffer->HasAnyData() ? pMipmapImageBuffer->GetData() : nullptr);
-								}
-							}
+							// Upload
+							InitialUploadVolumeData(cRendererOpenGL, *pMipmapImageBuffer, vSize, bUsePreCompressedData, bCompressedFormat, nImageFormat, GL_TEXTURE_3D_EXT, nLevel, *pAPIPixelFormat, nAPIImageFormatUncompressed, nImageDataFormatUncompressed, m_nFormat);
 
 							// Update the total number of bytes this texture buffer requires
 							m_nTotalNumOfBytes += GetNumOfBytes(nLevel);
