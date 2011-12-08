@@ -9,11 +9,13 @@ Changes in PixelLight 0.9.10-R1 (not yet released)
 - Change: Various minor bugfixes and usability improvements within the CMake based build system to make building PixelLight across multiple platforms as painless as possible
 - Change: Made more methods inline in order to give the compiler a chance to optimize out function calls
 - Change: Renamed the document "PixelLightCodingConventions" into "PixelLightConventions" and continued to add more details
+- Change: "PLRendererOpenGL" is now making the upload and the on-the-fly compression of 3D textures easier for the graphics driver in case extensive texture data is given (reduces the risk of a driver crash)
 - Bugfix (ID: 3431174): Within the "PLCore::System"-constructor, the main thread was created incorrectly
 - Bugfix (ID: 3433006): The return value of "PLCore::FileObject::GenericMove()" and "FileObject::PLCore::GenericCopy()" was always "false"
 - Bugfix (ID: 3433854): The Autodesk 3ds Max scene exporter options "PL directories" and "Subdirectories" did not work correctly
 - Bugfix (ID: 3442054): "PLCore::Connection::Receive()" called "PLCore::Connection::OnReceive()" with the fixed buffer size, instead of with the number of received bytes
 - Bugfix: PLProject was not parsing "pl_module_active" and "pl_module_delayed"
+- Bugfix: "PLRendererOpenGL::Renderer::ChooseFormats()" was also returning compression formats even when the data type of the given image was not "byte"
 
 
 Changes in PixelLight 0.9.9-R1 (released on October 23, 2011)

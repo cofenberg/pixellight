@@ -502,9 +502,9 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 
 		// Use compression?
 		if ((nFlags & PLRenderer::TextureBuffer::Compression) && !bUsePreCompressedData) {
-			// Get the first image buffer
+			// Get the first image buffer and ensure that the data format is "byte" (the supported compression formats only support byte)
 			ImageBuffer *pImageBuffer = cImage.GetBuffer();
-			if (pImageBuffer) {
+			if (pImageBuffer && pImageBuffer->GetDataFormat() == DataByte) {
 				switch (pImageBuffer->GetComponentsPerPixel()) {
 					case 1:
 						if (cExtensions.IsGL_EXT_texture_compression_latc())

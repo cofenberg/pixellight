@@ -15,6 +15,7 @@
      scale it down to be able to at least use it (performance is another topic :).
   -> Creating a 3D texture is still easy, just use e.g. "cRenderer.CreateTextureBuffer3D(cImage, TextureBuffer::LATC1, 0)", the renderer hides the
      internal complexity
+- Bugfix: "PLRendererOpenGL::Renderer::ChooseFormats()" was also returning compression formats even when the data type of the given image was not "byte"
 
 
 
