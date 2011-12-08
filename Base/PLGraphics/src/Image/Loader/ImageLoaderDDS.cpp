@@ -43,12 +43,30 @@ namespace PLGraphics {
 //[-------------------------------------------------------]
 //[ Definitions                                           ]
 //[-------------------------------------------------------]
-static const uint32 DDSCAPS2_CUBEMAP	= 0x00000200;
-static const uint32 DDS_FOURCC			= 0x00000004;
-static const uint32 DDS_LUMINANCE		= 0x00020000;
-static const uint32 DDS_ALPHAPIXELS		= 0x00000001;
-static const uint32 DDS_LINEARSIZE		= 0x00080000;
-static const uint32 DDS_PITCH			= 0x00000008;
+static const uint32 DDSCAPS2_CUBEMAP			= 0x00000200;
+static const uint32 DDS_FOURCC					= 0x00000004;
+static const uint32 DDS_LUMINANCE				= 0x00020000;
+static const uint32 DDS_ALPHAPIXELS				= 0x00000001;
+static const uint32 DDS_LINEARSIZE				= 0x00080000;
+static const uint32 DDS_PITCH					= 0x00000008;
+static const uint32 DDSD_CAPS					= 0x00000001;
+static const uint32 DDSD_PIXELFORMAT			= 0x00001000;
+static const uint32 DDSD_HEIGHT					= 0x00000002;
+static const uint32 DDSD_WIDTH					= 0x00000004;
+static const uint32 DDSD_MIPMAPCOUNT			= 0x00020000;
+static const uint32 DDSD_DEPTH					= 0x00800000;
+static const uint32 DDPF_FOURCC					= 0x00000004;
+static const uint32 DDSCAPS_TEXTURE				= 0x00001000;
+static const uint32 DDSCAPS_MIPMAP				= 0x00400000;
+static const uint32 DDSCAPS_COMPLEX				= 0x00000008;
+static const uint32 DDSCAPS2_VOLUME				= 0x00200000;
+static const uint32 DDSCAPS2_CUBEMAP_POSITIVEX	= 0x00000400;
+static const uint32 DDSCAPS2_CUBEMAP_NEGATIVEX	= 0x00000800;
+static const uint32 DDSCAPS2_CUBEMAP_POSITIVEY	= 0x00001000;
+static const uint32 DDSCAPS2_CUBEMAP_NEGATIVEY	= 0x00002000;
+static const uint32 DDSCAPS2_CUBEMAP_POSITIVEZ	= 0x00004000;
+static const uint32 DDSCAPS2_CUBEMAP_NEGATIVEZ	= 0x00008000;
+static const uint32 DDSCAPS2_CUBEMAP_ALL_FACES	= (DDSCAPS2_CUBEMAP_POSITIVEX | DDSCAPS2_CUBEMAP_NEGATIVEX | DDSCAPS2_CUBEMAP_POSITIVEY | DDSCAPS2_CUBEMAP_NEGATIVEY | DDSCAPS2_CUBEMAP_POSITIVEZ | DDSCAPS2_CUBEMAP_NEGATIVEZ);
 
 
 //[-------------------------------------------------------]
@@ -368,7 +386,7 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 		}
 
 		// Get the number of mipmaps
-		const uint32 nMipmaps = (!sHeader.nMipMapCount) ? 1 : sHeader.nMipMapCount;
+		const uint32 nNumOfMipmaps = (!sHeader.nMipMapCount) ? 1 : sHeader.nMipMapCount;
 
 		// Cube map?
 		const uint32 nNumOfFaces = (sHeader.ddsCaps.nCaps2 & DDSCAPS2_CUBEMAP) ? 6 : 1;
@@ -380,7 +398,7 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 				ImagePart *pImagePart = cImage.CreatePart((nNumOfFaces == 6) ? (static_cast<uint32>(ImagePartCubeSidePosX) + nFace) : 0);
 				if (pImagePart) {
 					// Load in all mipmaps
-					for (uint32 nMipmap=0; nMipmap<nMipmaps; nMipmap++) {
+					for (uint32 nMipmap=0; nMipmap<nNumOfMipmaps; nMipmap++) {
 						// Create image buffer
 						ImageBuffer *pImageBuffer = pImagePart->CreateMipmap();
 						pImageBuffer->CreateImage(nDataFormat,
@@ -431,7 +449,7 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 				ImagePart *pImagePart = cImage.GetPartBySemantics((nNumOfFaces == 6) ? (static_cast<uint32>(ImagePartCubeSidePosX) + nFace) : 0);
 				if (pImagePart) {
 					// Load in all mipmaps
-					for (uint32 nMipmap=0; nMipmap<nMipmaps; nMipmap++) {
+					for (uint32 nMipmap=0; nMipmap<nNumOfMipmaps; nMipmap++) {
 						// Get image buffer
 						ImageBuffer *pImageBuffer = pImagePart->GetMipmap(nMipmap);
 
@@ -447,7 +465,7 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 				ImagePart *pImagePart = cImage.GetPartBySemantics((nNumOfFaces == 6) ? (static_cast<uint32>(ImagePartCubeSidePosX) + nFace) : 0);
 				if (pImagePart) {
 					// Load in all mipmaps
-					for (uint32 nMipmap=0; nMipmap<nMipmaps; nMipmap++) {
+					for (uint32 nMipmap=0; nMipmap<nNumOfMipmaps; nMipmap++) {
 						// Get image buffer
 						ImageBuffer *pImageBuffer = pImagePart->GetMipmap(nMipmap);
 
@@ -472,7 +490,131 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 
 bool ImageLoaderDDS::Save(const Image &cImage, File &cFile)
 {
-	// [TODO] Implement
+	#define MCHAR4(a, b, c, d) (a | (b << 8) | (c << 16) | (d << 24))
+
+	// Get the first image part
+	const ImagePart *pImagePart = cImage.GetPart(0);
+	if (pImagePart) {
+		// Get the first image buffer
+		const ImageBuffer *pImageBuffer = pImagePart->GetMipmap(0);
+		if (pImageBuffer && pImageBuffer->GetRowSize()) {
+			// Get important image information
+			const uint32	nNumOfMipmaps = pImagePart->GetNumOfMipmaps();
+			const Vector3i &vSize		  = pImageBuffer->GetSize();
+
+			// Set up the header
+			DDSHeader sHeader;
+			MemoryManager::Set(&sHeader, 0, sizeof(DDSHeader));
+			DDSHeaderDX10 sHeaderDX10;
+			MemoryManager::Set(&sHeaderDX10, 0, sizeof(DDSHeaderDX10));
+
+			// Header
+			sHeader.nMagic[0]			= 'D';
+			sHeader.nMagic[1]			= 'D';
+			sHeader.nMagic[2]			= 'S';
+			sHeader.nMagic[3]			= ' ';
+			sHeader.nSize				= 124;
+			sHeader.nFlags				= DDSD_CAPS | DDSD_PIXELFORMAT | DDSD_WIDTH | DDSD_HEIGHT | ((nNumOfMipmaps > 1) ? DDSD_MIPMAPCOUNT : 0) | ((vSize.z > 1) ? DDSD_DEPTH : 0);
+			sHeader.nHeight				= vSize.y;
+			sHeader.nWidth				= vSize.x;
+			sHeader.nPitchOrLinearSize	= 0;
+			sHeader.nDepth				= (vSize.z > 1) ? vSize.z : 0;
+			sHeader.nMipMapCount		= (nNumOfMipmaps > 1) ? nNumOfMipmaps : 0;
+
+			// Check compression
+			sHeader.ddpfPixelFormat.nSize = 32;
+			switch (pImageBuffer->GetCompression()) {
+				// No compression
+				case CompressionNone:
+					// [TODO] Implement DDS save without compression (there are multiple image data format and image color format variations)
+					return false; // Error!
+
+				// DXT1 compression (known as BC1 in DirectX 10, RGB compression: 8:1, 8 bytes per block)
+				case CompressionDXT1:
+					sHeader.ddpfPixelFormat.nFlags  = DDPF_FOURCC;
+					sHeader.ddpfPixelFormat.nFourCC = MCHAR4('D','X','T','1');
+					break;
+
+				// DXT3 compression (known as BC2 in DirectX 10, RGBA compression: 4:1, 16 bytes per block)
+				case CompressionDXT3:
+					sHeader.ddpfPixelFormat.nFlags  = DDPF_FOURCC;
+					sHeader.ddpfPixelFormat.nFourCC = MCHAR4('D','X','T','3');
+					break;
+
+				// DXT5 compression (known as BC3 in DirectX 10, RGBA compression: 4:1, 16 bytes per block)
+				case CompressionDXT5:
+					sHeader.ddpfPixelFormat.nFlags  = DDPF_FOURCC;
+					sHeader.ddpfPixelFormat.nFourCC = MCHAR4('D','X','T','5');
+					break;
+
+				// 1 component texture compression (also known as 3DC+/ATI1N, known as BC4 in DirectX 10, 8 bytes per block)
+				case CompressionLATC1:
+					sHeader.ddpfPixelFormat.nFlags  = DDPF_FOURCC;
+					sHeader.ddpfPixelFormat.nFourCC = MCHAR4('A','T','I','1');
+					break;
+
+				// 2 component texture compression (luminance & alpha compression 4:1 -> normal map compression, also known as 3DC/ATI2N, known as BC5 in DirectX 10, 16 bytes per block)
+				case CompressionLATC2:
+					sHeader.ddpfPixelFormat.nFlags  = DDPF_FOURCC;
+					sHeader.ddpfPixelFormat.nFourCC = MCHAR4('A','T','I','2');
+					break;
+			}
+
+			// Header
+			sHeader.ddsCaps.nCaps1			= DDSCAPS_TEXTURE | ((nNumOfMipmaps > 1) ? (DDSCAPS_MIPMAP | DDSCAPS_COMPLEX) : 0) | ((vSize.z != 1) ? DDSCAPS_COMPLEX : 0);
+			sHeader.ddsCaps.nCaps2			= (vSize.z > 1) ? DDSCAPS2_VOLUME : ((vSize.z == 0) ? (DDSCAPS2_CUBEMAP | DDSCAPS2_CUBEMAP_ALL_FACES) : 0);
+			sHeader.ddsCaps.nReserved[0]	= 0;
+			sHeader.ddsCaps.nReserved[1]	= 0;
+			sHeader.nReserved2				= 0;
+
+			// Write the header
+			cFile.Write(&sHeader, 1, sizeof(DDSHeader));
+			if (sHeaderDX10.nDXGIFormat)
+				cFile.Write(&sHeaderDX10, 1, sizeof(DDSHeaderDX10));
+
+			// Is it a cube map?
+			if (cImage.GetNumOfParts() == 6) {
+				// Save all faces
+				for (uint32 nFace=0; nFace<6; nFace++){
+					// Get image part
+					const ImagePart *pImagePart = cImage.GetPart(nFace);
+
+					// Save in all mipmaps
+					for (uint32 nMipmap=0; nMipmap<nNumOfMipmaps; nMipmap++) {
+						// Get image buffer
+						const ImageBuffer *pImageBuffer = pImagePart->GetMipmap(nMipmap);
+
+						// Write down the image data
+						if (sHeader.ddpfPixelFormat.nFlags == DDPF_FOURCC)
+							cFile.Write(pImageBuffer->GetCompressedData(), 1, pImageBuffer->GetCompressedDataSize());
+						else
+							cFile.Write(pImageBuffer->GetData(), 1, pImageBuffer->GetDataSize());
+					}
+				}
+			} else {
+				// In case there are multiple parts, but it's no cube map... just ignore the other image parts...
+
+				// Save in all mipmaps
+				for (uint32 nMipmap=0; nMipmap<nNumOfMipmaps; nMipmap++) {
+					// Get image buffer
+					const ImageBuffer *pImageBuffer = pImagePart->GetMipmap(nMipmap);
+
+					// Write down the image data
+					if (sHeader.ddpfPixelFormat.nFlags == DDPF_FOURCC)
+						cFile.Write(pImageBuffer->GetCompressedData(), 1, pImageBuffer->GetCompressedDataSize());
+					else
+						cFile.Write(pImageBuffer->GetData(), 1, pImageBuffer->GetDataSize());
+				}
+			}
+
+			// Done
+			return true;
+		}
+	}
+
+	#undef MCHAR4
+
+	// Error!
 	return false;
 }
 

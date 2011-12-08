@@ -51,7 +51,14 @@ struct DDSHeader;
 *  @brief
 *    Image loader implementation for DDS file formats
 *
+*  @remarks
+*    This file format supports GPU texture compression formats like DXT3 and therefore makes it possible to load in
+*    compressed image data as efficient as possible by directly passing thru the compressed loaded data to the GPU
+*    without need for any further processing.
+*
 *  @note
+*    - DirectDraw Surface file format from Microsoft
+*    - Use e.g. "The Compressonator" from AMD (http://developer.amd.com/tools/compressonator/pages/default.aspx) to open, view, edit and save the dds-file
 *    - BGR(A) color format is automatically converted to RGB(A)
 */
 class ImageLoaderDDS : public ImageLoader {

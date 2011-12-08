@@ -1,3 +1,11 @@
+>> 08.12.2011
+[CO]
+- "ImageLoaderDDS": Implemented the save-method, but only for compressed data because that was exactly what I currently need and this implementation is easy.
+  There are multiple image data format and image color format variations for uncompressed data, shouldn't be too complex, but right know I have more important
+  stuff to do.
+
+
+
 >> 07.12.2011
 [CO]
 - "ImageBuffer": "CreateImage()", "Clear()" and "CreateTestImage()" create fresh image data and were using "MakeBufferUnique()" in order to ensure
