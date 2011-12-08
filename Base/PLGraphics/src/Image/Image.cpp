@@ -50,7 +50,7 @@ Image Image::CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, con
 	// Create and allocate the image instance
 	Image cImage;
 	ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
-	pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
+	pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, nCompression);
 
 	// Return the created image
 	return cImage;
@@ -58,14 +58,14 @@ Image Image::CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, con
 
 /**
 *  @brief
-*    Create image and copy given image data
+*    Create image and copy given uncompressed image data
 */
 Image Image::CreateImageAndCopyData(EDataFormat nDataFormat, EColorFormat nColorFormat, const Vector3i &vSize, ECompression nCompression, const uint8 *pnData)
 {
 	// Create and allocate the image instance
 	Image cImage;
 	ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
-	pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
+	pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, nCompression);
 
 	// Copy the provided data
 	pImageBuffer->CopyData(pnData);
@@ -76,14 +76,14 @@ Image Image::CreateImageAndCopyData(EDataFormat nDataFormat, EColorFormat nColor
 
 /**
 *  @brief
-*    Create image and takeover given image data
+*    Create image and takeover given uncompressed image data
 */
 Image Image::CreateImageAndTakeoverData(EDataFormat nDataFormat, EColorFormat nColorFormat, const Vector3i &vSize, ECompression nCompression, uint8 *pnData)
 {
 	// Create and allocate the image instance
 	Image cImage;
 	ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
-	pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
+	pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, nCompression);
 
 	// Takeover the provided data
 	pImageBuffer->TakeoverData(pnData);
@@ -94,14 +94,14 @@ Image Image::CreateImageAndTakeoverData(EDataFormat nDataFormat, EColorFormat nC
 
 /**
 *  @brief
-*    Create image and share given image data
+*    Create image and share given uncompressed image data
 */
 Image Image::CreateImageAndShareData(EDataFormat nDataFormat, EColorFormat nColorFormat, const Vector3i &vSize, ECompression nCompression, uint8 *pnData)
 {
 	// Create and allocate the image instance
 	Image cImage;
 	ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
-	pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
+	pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, nCompression);
 
 	// Share the provided data
 	pImageBuffer->ShareData(pnData);

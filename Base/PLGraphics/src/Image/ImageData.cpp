@@ -499,7 +499,7 @@ void ImageData::SetPalette(ImagePalette *pPalette)
 
 /**
 *  @brief
-*    Copy provided image data into this image data
+*    Copy provided uncompressed image data into this image data
 */
 void ImageData::CopyData(const uint8 *pnData)
 {
@@ -518,7 +518,7 @@ void ImageData::CopyData(const uint8 *pnData)
 
 /**
 *  @brief
-*    Let this image data takeover provided image data
+*    Let this image data takeover provided uncompressed image data
 */
 void ImageData::TakeoverData(uint8 *pnData)
 {
@@ -535,7 +535,7 @@ void ImageData::TakeoverData(uint8 *pnData)
 
 /**
 *  @brief
-*    Let this image data share provided image data
+*    Let this image data share provided uncompressed image data
 */
 void ImageData::ShareData(uint8 *pnData)
 {

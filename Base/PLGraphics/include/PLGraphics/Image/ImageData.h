@@ -297,7 +297,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 
 		/**
 		*  @brief
-		*    Copy provided image data into this image data
+		*    Copy provided uncompressed image data into this image data
 		*
 		*  @param[in] pnData
 		*    Data to copy into this image data, must have enough bytes to fill the whole image! The given pointer must be valid!
@@ -306,7 +306,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 
 		/**
 		*  @brief
-		*    Let this image data takeover provided image data
+		*    Let this image data takeover provided uncompressed image data
 		*
 		*  @param[in] pnData
 		*    Pointer to the image data to be taken over by this image data, must have enough bytes to fill the whole image data! The given pointer must be valid!
@@ -315,7 +315,7 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 
 		/**
 		*  @brief
-		*    Let this image data share provided image data
+		*    Let this image data share provided uncompressed image data
 		*
 		*  @param[in] pnData
 		*    Pointer to the image data to be shared by this image data, must have enough bytes to fill the whole image data! The given pointer must be valid!

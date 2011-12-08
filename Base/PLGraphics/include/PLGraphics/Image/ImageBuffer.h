@@ -464,7 +464,7 @@ class ImageBuffer {
 
 		/**
 		*  @brief
-		*    Copy provided image data into this image buffer
+		*    Copy provided uncompressed image data into this image buffer
 		*
 		*  @param[in] pnData
 		*    Data to copy into this image buffer, must have enough bytes to fill the whole image! If null pointer, this method does nothing.
@@ -476,7 +476,7 @@ class ImageBuffer {
 
 		/**
 		*  @brief
-		*    Let this image buffer takeover provided image data
+		*    Let this image buffer takeover provided uncompressed image data
 		*
 		*  @param[in] pnData
 		*    Pointer to the image data to be taken over by this image buffer, must have enough bytes to fill the whole image buffer! If null pointer, this method does nothing.
@@ -489,7 +489,7 @@ class ImageBuffer {
 
 		/**
 		*  @brief
-		*    Let this image buffer share provided image data
+		*    Let this image buffer share provided uncompressed image data
 		*
 		*  @param[in] pnData
 		*    Pointer to the image data to be shared by this image buffer, must have enough bytes to fill the whole image buffer! If null pointer, this method does nothing.

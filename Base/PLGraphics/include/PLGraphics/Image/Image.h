@@ -104,14 +104,14 @@ class Image : public PLCore::Loadable {
 		*  @verbatim
 		*    Image cImage;
 		*    ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
-		*    pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
+		*    pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, nCompression);
 		*  @endverbatim
 		*/
 		static PLGRAPHICS_API Image CreateImage(EDataFormat nDataFormat, EColorFormat nColorFormat, const PLMath::Vector3i &vSize, ECompression nCompression = CompressionNone);
 
 		/**
 		*  @brief
-		*    Create image and copy given image data
+		*    Create image and copy given uncompressed image data
 		*
 		*  @param[in] nDataFormat
 		*    Desired data format
@@ -134,7 +134,7 @@ class Image : public PLCore::Loadable {
 		*  @verbatim
 		*    Image cImage;
 		*    ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
-		*    pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
+		*    pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, nCompression);
 		*    pImageBuffer->CopyData(pnData);
 		*  @endverbatim
 		*
@@ -145,7 +145,7 @@ class Image : public PLCore::Loadable {
 
 		/**
 		*  @brief
-		*    Create image and takeover given image data
+		*    Create image and takeover given uncompressed image data
 		*
 		*  @param[in] nDataFormat
 		*    Desired data format
@@ -170,7 +170,7 @@ class Image : public PLCore::Loadable {
 		*  @verbatim
 		*    Image cImage;
 		*    ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
-		*    pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
+		*    pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, nCompression);
 		*    pImageBuffer->TakeoverData(pnData);
 		*  @endverbatim
 		*
@@ -181,7 +181,7 @@ class Image : public PLCore::Loadable {
 
 		/**
 		*  @brief
-		*    Create image and share given image data
+		*    Create image and share given uncompressed image data
 		*
 		*  @param[in] nDataFormat
 		*    Desired data format
@@ -206,7 +206,7 @@ class Image : public PLCore::Loadable {
 		*  @verbatim
 		*    Image cImage;
 		*    ImageBuffer *pImageBuffer = cImage.CreatePart()->CreateMipmap();
-		*    pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, CompressionNone);
+		*    pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, nCompression);
 		*    pImageBuffer->ShareData(pnData);
 		*  @endverbatim
 		*

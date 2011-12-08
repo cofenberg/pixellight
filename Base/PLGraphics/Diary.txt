@@ -3,6 +3,8 @@
 - "ImageLoaderDDS": Implemented the save-method, but only for compressed data because that was exactly what I currently need and this implementation is easy.
   There are multiple image data format and image color format variations for uncompressed data, shouldn't be too complex, but right know I have more important
   stuff to do.
+- "Image"-Bugfix: "CreateImage()", "CreateImageAndCopyData()", "CreateImageAndTakeoverData()", "CreateImageAndShareData()": Compression was always "CompressionNone"
+  instead of the given compression setting
 
 
 

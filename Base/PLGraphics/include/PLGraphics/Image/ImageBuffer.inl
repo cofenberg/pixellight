@@ -407,7 +407,7 @@ inline ImagePalette *ImageBuffer::GetPalette()
 
 /**
 *  @brief
-*    Copy provided image data into this image buffer
+*    Copy provided uncompressed image data into this image buffer
 */
 inline void ImageBuffer::CopyData(const PLCore::uint8 *pnData)
 {
@@ -424,7 +424,7 @@ inline void ImageBuffer::CopyData(const PLCore::uint8 *pnData)
 
 /**
 *  @brief
-*    Let this image buffer takeover provided image data
+*    Let this image buffer takeover provided uncompressed image data
 */
 inline void ImageBuffer::TakeoverData(PLCore::uint8 *pnData)
 {
@@ -441,7 +441,7 @@ inline void ImageBuffer::TakeoverData(PLCore::uint8 *pnData)
 
 /**
 *  @brief
-*    Let this image buffer share provided image data
+*    Let this image buffer share provided uncompressed image data
 */
 inline void ImageBuffer::ShareData(PLCore::uint8 *pnData)
 {
