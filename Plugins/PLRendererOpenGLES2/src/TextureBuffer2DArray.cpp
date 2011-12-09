@@ -263,7 +263,7 @@ bool TextureBuffer2DArray::Upload(uint32 nMipmap, EPixelFormat nFormat, const vo
 	return false;
 }
 
-bool TextureBuffer2DArray::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace)
+bool TextureBuffer2DArray::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
 {
 	// "GL_NV_get_tex_image"-extension available?
 	if (static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_NV_get_tex_image()) {

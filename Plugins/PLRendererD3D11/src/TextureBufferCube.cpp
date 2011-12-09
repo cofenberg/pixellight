@@ -98,7 +98,7 @@ bool TextureBufferCube::Upload(uint32 nMipmap, EPixelFormat nFormat, const void 
 	return !(nMipmap != 0 || nFormat == Unknown || !pData || nFace > 5);
 }
 
-bool TextureBufferCube::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace)
+bool TextureBufferCube::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
 {
 	// Error?
 	return !(nMipmap != 0 || nFormat == Unknown || !pData || nFace > 5);

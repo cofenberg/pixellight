@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLGraphics/PLGraphics.h>
 #include "PLRenderer/Renderer/Resource.h"
 
 
@@ -102,9 +103,9 @@ class TextureBuffer : public Resource {
 			R8G8B8A8      = 13,	/**< 32-bit pixel format, 8 bits for red, green, blue and alpha */
 			R10G10B10A2   = 14,	/**< 32-bit pixel format, 10 bits for red, green, blue and 2 bits for alpha */
 			R16G16B16A16  = 15,	/**< 64-bit pixel format, 16 bits for red, green, blue and alpha */
-			DXT1          = 16,	/**< DXT1 format (known as BC1 in DirectX 10, RGB compression: 8:1) */
-			DXT3          = 17,	/**< DXT3 format (known as BC2 in DirectX 10, RGBA compression: 4:1) */
-			DXT5          = 18,	/**< DXT5 format (known as BC3 in DirectX 10, RGBA compression: 4:1) */
+			DXT1          = 16,	/**< DXT1 compression (known as BC1 in DirectX 10, RGB compression: 8:1, 8 bytes per block) */
+			DXT3          = 17,	/**< DXT3 compression (known as BC2 in DirectX 10, RGBA compression: 4:1, 16 bytes per block) */
+			DXT5          = 18,	/**< DXT5 compression (known as BC3 in DirectX 10, RGBA compression: 4:1, 16 bytes per block) */
 			LATC1         = 19,	/**< 1 component texture compression (also known as 3DC+/ATI1N, known as BC4 in DirectX 10, 8 bytes per block) */
 			LATC2         = 20, /**< 2 component texture compression (luminance & alpha compression 4:1 -> normal map compression, also known as 3DC/ATI2N, known as BC5 in DirectX 10, 16 bytes per block) */
 			// Floating-point formats
@@ -362,6 +363,43 @@ class TextureBuffer : public Resource {
 
 		/**
 		*  @brief
+		*    Returns the image (PLGraphics::Image) settings required to be able to store the texture buffer data within an image
+		*
+		*  @param[out] nDataFormat
+		*    Receives the required image data format
+		*  @param[out] nColorFormat
+		*    Receives the required image color format
+		*  @param[out] nCompression
+		*    Receives the required image compression
+		*  @param[out] nTextureBufferFomat
+		*    Receives the required texture buffer format to use within "TextureBuffer::Download()" in order to ask the GPU for the texture buffer data
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @remarks
+		*    This method maps the internal texture buffer format as close as possible to image data format and image color format.
+		*    -> We may also need to choose another texture buffer format for the GPU texture buffer data request
+		*    -> We can't e.g. just change PLGraphics in order to use the same pixel format scheme as the texture buffer
+		*       because PLGraphics has to be generic, while texture buffer has to support special GPU formats usually not
+		*       used in generic image processing
+		*/
+		PLRENDERER_API bool GetFormatForImage(PLGraphics::EDataFormat &nDataFormat, PLGraphics::EColorFormat &nColorFormat, PLGraphics::ECompression &nCompression, EPixelFormat &nTextureBufferFomat) const;
+
+		/**
+		*  @brief
+		*    Returns the texture buffer data as image
+		*
+		*  @param[out] cImage
+		*    Receives the texture buffer data (no need to allocated the image, this is done automatically, just pass in any image instance)
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		PLRENDERER_API bool DownloadAsImage(PLGraphics::Image &cImage) const;
+
+		/**
+		*  @brief
 		*    Downloads the texture buffer content and returns the number of NAN values in it
 		*
 		*  @param[in] nMipmap
@@ -380,7 +418,7 @@ class TextureBuffer : public Resource {
 		*    - This function can only be used if the texture buffer format is a floating point one
 		*    - This function should only be used for debugging
 		*/
-		PLRENDERER_API PLCore::uint32 GetNumOfNANValues(PLCore::uint32 nMipmap = 0, PLCore::uint8 nFace = 0);
+		PLRENDERER_API PLCore::uint32 GetNumOfNANValues(PLCore::uint32 nMipmap = 0, PLCore::uint8 nFace = 0) const;
 
 		/**
 		*  @brief
@@ -475,7 +513,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    'true' if all went fine, else 'false' (invalid mipmap level? invalid data?)
 		*/
-		virtual bool Download(PLCore::uint32 nMipmap, EPixelFormat nFormat, void *pData, PLCore::uint8 nFace = 0) = 0;
+		virtual bool Download(PLCore::uint32 nMipmap, EPixelFormat nFormat, void *pData, PLCore::uint8 nFace = 0) const = 0;
 
 
 	//[-------------------------------------------------------]

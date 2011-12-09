@@ -395,7 +395,7 @@ bool TextureBufferCube::Upload(uint32 nMipmap, EPixelFormat nFormat, const void 
 	return false;
 }
 
-bool TextureBufferCube::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace)
+bool TextureBufferCube::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
 {
 	// Check parameters
 	if (nMipmap > m_nNumOfMipmaps || nFormat == Unknown || !pData || nFace > 5)

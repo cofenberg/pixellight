@@ -285,7 +285,7 @@ bool TextureBuffer2DArray::Upload(uint32 nMipmap, EPixelFormat nFormat, const vo
 	return false;
 }
 
-bool TextureBuffer2DArray::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace)
+bool TextureBuffer2DArray::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
 {
 	// Check parameters
 	if (nMipmap > m_nNumOfMipmaps || nFormat == Unknown || !pData || nFace)

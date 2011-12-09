@@ -100,7 +100,7 @@ bool TextureBufferRectangle::Upload(uint32 nMipmap, EPixelFormat nFormat, const 
 	return !(nMipmap != 0 || nFormat == Unknown || !pData || nFace);
 }
 
-bool TextureBufferRectangle::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace)
+bool TextureBufferRectangle::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
 {
 	// Error?
 	return !(nMipmap != 0 || nFormat == Unknown || !pData || nFace);

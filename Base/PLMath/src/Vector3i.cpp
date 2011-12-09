@@ -65,6 +65,17 @@ Vector3i::Vector3i(const Vector2i &vVector, int nZ) :
 
 /**
 *  @brief
+*    Set X, Y and Z component
+*/
+void Vector3i::SetXYZ(const Vector2i &vXY, int nZ)
+{
+	x = vXY.x;
+	y = vXY.y;
+	z = nZ;
+}
+
+/**
+*  @brief
 *    To string
 */
 String Vector3i::ToString() const

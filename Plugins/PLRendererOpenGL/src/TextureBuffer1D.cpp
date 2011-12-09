@@ -318,7 +318,7 @@ bool TextureBuffer1D::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *p
 	return false;
 }
 
-bool TextureBuffer1D::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace)
+bool TextureBuffer1D::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
 {
 	// Check parameters
 	if (nMipmap > m_nNumOfMipmaps || nFormat == Unknown || !pData || nFace)

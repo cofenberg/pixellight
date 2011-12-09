@@ -1,4 +1,10 @@
-﻿>> 23.11.2011
+﻿>> 09.12.2011
+[CO]
+- Added "Vector3i::SetXYZ()"
+
+
+
+>> 23.11.2011
 [CO]
 - Perlin noise cleanup
 

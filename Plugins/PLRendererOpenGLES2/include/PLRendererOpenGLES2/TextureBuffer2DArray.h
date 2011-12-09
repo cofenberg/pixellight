@@ -111,7 +111,7 @@ class TextureBuffer2DArray : public PLRenderer::TextureBuffer2DArray {
 	//[-------------------------------------------------------]
 	public:
 		virtual bool Upload(PLCore::uint32 nMipmap, EPixelFormat nFormat, const void *pData, PLCore::uint8 nFace = 0) override;
-		virtual bool Download(PLCore::uint32 nMipmap, EPixelFormat nFormat, void *pData, PLCore::uint8 nFace = 0) override;
+		virtual bool Download(PLCore::uint32 nMipmap, EPixelFormat nFormat, void *pData, PLCore::uint8 nFace = 0) const override;
 
 
 	//[-------------------------------------------------------]

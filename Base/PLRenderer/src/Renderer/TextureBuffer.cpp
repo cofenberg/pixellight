@@ -26,8 +26,15 @@
 #include <PLMath/Math.h>
 #include <PLMath/Half.h>
 #include <PLGraphics/Image/Image.h>
+#include <PLGraphics/Image/ImagePart.h>
 #include <PLGraphics/Image/ImageBuffer.h>
 #include "PLRenderer/Renderer/Renderer.h"
+#include "PLRenderer/Renderer/TextureBuffer1D.h"		// For the comfort-method "DownloadAsImage()"
+#include "PLRenderer/Renderer/TextureBuffer2D.h"		// For the comfort-method "DownloadAsImage()"
+#include "PLRenderer/Renderer/TextureBuffer2DArray.h"	// For the comfort-method "DownloadAsImage()"
+#include "PLRenderer/Renderer/TextureBufferRectangle.h"	// For the comfort-method "DownloadAsImage()"
+#include "PLRenderer/Renderer/TextureBuffer3D.h"		// For the comfort-method "DownloadAsImage()"
+#include "PLRenderer/Renderer/TextureBufferCube.h"		// For the comfort-method "DownloadAsImage()"
 #include "PLRenderer/Renderer/TextureBuffer.h"
 
 
@@ -515,9 +522,279 @@ uint32 TextureBuffer::GetTotalNumOfBytes() const
 
 /**
 *  @brief
+*    Returns the image (PLGraphics::Image) settings required to be able to store the texture buffer data within an image
+*/
+bool TextureBuffer::GetFormatForImage(EDataFormat &nDataFormat, EColorFormat &nColorFormat, ECompression &nCompression, TextureBuffer::EPixelFormat &nTextureBufferFomat) const
+{
+	// Set known default values
+	nDataFormat			= DataByte;
+	nColorFormat		= ColorRGB;
+	nCompression		= CompressionNone;
+	nTextureBufferFomat	= m_nFormat;
+
+	// Perform the mapping
+	switch (m_nFormat) {
+		// 8-bit pixel format, all bits luminance
+		case L8:
+			nDataFormat  = DataByte;		// Byte (8 bit)
+			nColorFormat = ColorGrayscale;	// Gray scale image
+			break;
+
+		// 16-bit pixel format, all bits luminance
+		case L16:
+			nDataFormat  = DataWord;		// Word (16 bit)
+			nColorFormat = ColorGrayscale;	// Gray scale image
+			break;
+
+		// 8-bit pixel format, all bits alpha
+		case A8:
+			// Trade "A8" the same way as "L8"
+			nDataFormat  = DataByte;		// Byte (8 bit)
+			nColorFormat = ColorGrayscale;	// Gray scale image
+			break;
+
+		// 8-bit pixel format, 4 bits for luminance and alpha
+		case L4A4:
+			// Trade "L4A4" the same way as "L8A8"
+			nDataFormat			= DataByte;			// Byte (8 bit)
+			nColorFormat		= ColorGrayscaleA;	// Gray scale image with alpha
+			nTextureBufferFomat	= L8A8;				// We need a 8 bits data format
+			break;
+
+		// 16-bit pixel format, 8 bits for luminance and alpha
+		case L8A8:
+			nDataFormat  = DataByte;		// Byte (8 bit)
+			nColorFormat = ColorGrayscaleA;	// Gray scale image with alpha
+			break;
+
+		// 16-bit z-buffer bit depth
+		case D16:
+			nDataFormat  = DataWord;		// Word (16 bit)
+			nColorFormat = ColorGrayscale;	// Gray scale image
+			break;
+
+		// 32-bit z-buffer bit depth using 24 bits for the depth channel
+		case D24:
+			// There's no double word (32 bit) "PLGraphics::DataDoubleWord" data format, so we have to truncate to 16 bit
+			nDataFormat			= DataWord;			// Word (16 bit)
+			nColorFormat		= ColorGrayscale;	// Gray scale image
+			nTextureBufferFomat	= D16;				// We need a 16 bits data format
+			break;
+
+		// 32-bit z-buffer bit depth
+		case D32:
+			// There's no double word (32 bit) "PLGraphics::DataDoubleWord" data format, so we have to truncate to 16 bit
+			nDataFormat			= DataWord;			// Word (16 bit)
+			nColorFormat		= ColorGrayscale;	// Gray scale image
+			nTextureBufferFomat	= D16;				// We need a 16 bits data format
+			break;
+
+		// 8-bit pixel format, 3 bits red, 3 bits green and 2 bits blue
+		case R3G3B2:
+			// Trade "R3G3B2" the same way as "R8G8B8"
+			nDataFormat			= DataByte;	// Byte (8 bit)
+			nColorFormat		= ColorRGB;	// RGB
+			nTextureBufferFomat	= R8G8B8;	// We need a 8 bits data format
+			break;
+
+		// 16-bit pixel format, 5 bits red, 6 bits green and 5 bits blue
+		case R5G6B5:
+			// Trade "R5G6B5" the same way as "R8G8B8"
+			nDataFormat			= DataByte;	// Byte (8 bit)
+			nColorFormat		= ColorRGB;	// RGB
+			nTextureBufferFomat	= R8G8B8;	// We need a 8 bits data format
+			break;
+
+		// 16-bit pixel format, 5 bits red, 5 bits green, 5 bits blue and 1 bits alpha
+		case R5G5B5A1:
+			// Trade "R5G5B5A1" the same way as "R8G8B8A8"
+			nDataFormat			= DataByte;		// Byte (8 bit)
+			nColorFormat		= ColorRGBA;	// RGBA
+			nTextureBufferFomat	= R8G8B8A8;		// We need a 8 bits data format
+			break;
+
+		// 16-bit pixel format, 4 bits for red, green, blue and alpha
+		case R4G4B4A4:
+			// Trade "R4G4B4A4" the same way as "R8G8B8A8"
+			nDataFormat			= DataByte;		// Byte (8 bit)
+			nColorFormat		= ColorRGBA;	// RGBA
+			nTextureBufferFomat	= R8G8B8A8;		// We need a 8 bits data format
+			break;
+
+		// 24-bit (or 32-bit if 24-bits are not supported by the hardware) pixel format, 8 bits for red, green and blue
+		case R8G8B8:
+			nDataFormat  = DataByte;	// Byte (8 bit)
+			nColorFormat = ColorRGB;	// RGB
+			break;
+
+		// 32-bit pixel format, 8 bits for red, green, blue and alpha
+		case R8G8B8A8:
+			nDataFormat  = DataByte;	// Byte (8 bit)
+			nColorFormat = ColorRGBA;	// RGBA
+			break;
+
+		// 32-bit pixel format, 10 bits for red, green, blue and 2 bits for alpha
+		case R10G10B10A2:
+			// Trade "R10G10B10A2" the same way as "R16G16B16A16"
+			nDataFormat			= DataWord;		// Word (16 bit)
+			nColorFormat		= ColorRGBA;	// RGBA
+			nTextureBufferFomat	= R16G16B16A16;	// We need a 16 bits data format
+			break;
+
+		// 64-bit pixel format, 16 bits for red, green, blue and alpha
+		case R16G16B16A16:
+			nDataFormat  = DataWord;	// Word (16 bit)
+			nColorFormat = ColorRGBA;	// RGBA
+			break;
+
+		// DXT1 compression (known as BC1 in DirectX 10, RGB compression: 8:1, 8 bytes per block)
+		case DXT1:
+			nDataFormat  = DataByte;		// Byte (8 bit)
+			nColorFormat = ColorRGB;		// RGB
+			nCompression = CompressionDXT1;	// DXT1
+			break;
+
+		// DXT3 compression (known as BC2 in DirectX 10, RGBA compression: 4:1, 16 bytes per block)
+		case DXT3:
+			nDataFormat  = DataByte;		// Byte (8 bit)
+			nColorFormat = ColorRGBA;		// RGBA
+			nCompression = CompressionDXT3;	// DXT3
+			break;
+
+		// DXT5 compression (known as BC3 in DirectX 10, RGBA compression: 4:1, 16 bytes per block)
+		case DXT5:
+			nDataFormat  = DataByte;		// Byte (8 bit)
+			nColorFormat = ColorRGBA;		// RGBA
+			nCompression = CompressionDXT5;	// DXT5
+			break;
+
+		// 1 component texture compression (also known as 3DC+/ATI1N, known as BC4 in DirectX 10, 8 bytes per block)
+		case LATC1:
+			nDataFormat  = DataByte;			// Byte (8 bit)
+			nColorFormat = ColorGrayscale;		// Gray scale image
+			nCompression = CompressionLATC1;	// LATC1
+			break;
+
+		// 2 component texture compression (luminance & alpha compression 4:1 -> normal map compression, also known as 3DC/ATI2N, known as BC5 in DirectX 10, 16 bytes per block)
+		case LATC2:
+			nDataFormat  = DataByte;			// Byte (8 bit)
+			nColorFormat = ColorGrayscaleA;		// Gray scale image with alpha
+			nCompression = CompressionLATC2;	// LATC2
+			break;
+
+		// 16-bit float format using 16 bits for luminance
+		case L16F:
+			nDataFormat  = DataHalf;		// Half (16 bit float)
+			nColorFormat = ColorGrayscale;	// Gray scale image
+			break;
+
+		// 32-bit float format using 32 bits for luminance
+		case L32F:
+			nDataFormat  = DataFloat;		// IEEE float (32 bit)
+			nColorFormat = ColorGrayscale;	// Gray scale image
+			break;
+
+		// 64-bit float format using 16 bits for the each channel (red, green, blue, alpha)
+		case R16G16B16A16F:
+			nDataFormat  = DataHalf;	// Half (16 bit float)
+			nColorFormat = ColorRGBA;	// RGBA
+			break;
+
+		// 128-bit float format using 32 bits for the each channel (red, green, blue, alpha)
+		case R32G32B32A32F:
+			nDataFormat  = DataFloat;	// IEEE float (32 bit)
+			nColorFormat = ColorRGBA;	// RGBA
+			break;
+
+		default:
+			return false; // Error!
+	}
+
+	// Done
+	return true;
+}
+
+/**
+*  @brief
+*    Returns the texture buffer data as image
+*/
+bool TextureBuffer::DownloadAsImage(Image &cImage) const
+{
+	// Map the internal texture buffer format as close as possible to image data format and image color format
+	EDataFormat					nDataFormat			= DataByte;
+	EColorFormat				nColorFormat		= ColorRGB;
+	ECompression				nCompression		= CompressionNone;
+	TextureBuffer::EPixelFormat	nTextureBufferFomat	= m_nFormat;
+	if (GetFormatForImage(nDataFormat, nColorFormat, nCompression, nTextureBufferFomat)) {
+		// Get the image size and the number of faces
+		Vector3i vSize;
+		uint8 nNumOfFaces = 1;
+		switch (GetType()) {
+			case TypeTextureBuffer1D:
+				vSize.x = reinterpret_cast<const TextureBuffer1D*>(this)->GetSize();
+				vSize.y = vSize.z = 1;
+				break;
+
+			case TypeTextureBuffer2D:
+				vSize.SetXYZ(reinterpret_cast<const TextureBuffer2D*>(this)->GetSize(), 1);
+				break;
+
+			case TypeTextureBuffer2DArray:
+				vSize = reinterpret_cast<const TextureBuffer2DArray*>(this)->GetSize();
+				break;
+
+			case TypeTextureBufferRectangle:
+				vSize.SetXYZ(reinterpret_cast<const TextureBufferRectangle*>(this)->GetSize(), 1);
+				break;
+
+			case TypeTextureBuffer3D:
+				vSize = reinterpret_cast<const TextureBuffer3D*>(this)->GetSize();
+				break;
+
+			case TypeTextureBufferCube:
+				vSize.x = vSize.y = reinterpret_cast<const TextureBufferCube*>(this)->GetSize();
+				vSize.z = 1;
+				nNumOfFaces = 6;
+				break;
+
+			default:
+				return false;	// Error! (... we should never ever end up in here...)
+		}
+
+		// Clear the given image
+		cImage.Unload();
+
+		// Loop through all faces
+		EImagePart nImagePartSemantic = (nNumOfFaces > 1) ? ImagePartCubeSidePosX : ImagePartStatic;
+		for (uint8 nFace=0; nFace<nNumOfFaces; nFace++, nImagePartSemantic=static_cast<EImagePart>(static_cast<uint32>(nImagePartSemantic) + 1)) {
+			// Create the image part
+			ImagePart *pImagePart = cImage.CreatePart(nImagePartSemantic);
+
+			// Loop through all mipmaps
+			for (uint32 nMipmap=0; nMipmap<=m_nNumOfMipmaps; nMipmap++) {
+				// Create and allocate the image buffer instance holding this mipmap
+				ImageBuffer *pImageBuffer = pImagePart->CreateMipmap();
+				pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, nCompression);
+
+				// Download the mipmap texture buffer data from the GPU
+				if (!Download(nMipmap, nTextureBufferFomat, (nCompression == CompressionNone) ? pImageBuffer->GetData() : pImageBuffer->GetCompressedData(), nFace))
+					return false;	// Error!
+			}
+		}
+
+		// Done
+		return true;
+	}
+
+	// Error!
+	return false;
+}
+
+/**
+*  @brief
 *    Downloads the texture buffer content and returns the number of NAN values in it
 */
-uint32 TextureBuffer::GetNumOfNANValues(uint32 nMipmap, uint8 nFace)
+uint32 TextureBuffer::GetNumOfNANValues(uint32 nMipmap, uint8 nFace) const
 {
 	// The number of found NANs
 	uint32 nNumOfNANs = 0;

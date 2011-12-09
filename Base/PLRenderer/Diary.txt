@@ -1,3 +1,13 @@
+>> 09.12.2011
+[CO]
+- Added method "TextureBuffer::GetFormatForImage()" (similar name as "TextureBuffer::GetFormatFromImage()") which returns the image (PLGraphics::Image)
+  settings required to be able to store the texture buffer data within an image
+- Added comfort method "TextureBuffer::DownloadAsImage()" downloading the texture buffer data into an image instance which then can for example be saved
+  as dds-file. First I thought about something like "pTextureBuffer->DownloadAsImage().SaveByFilename("MyTexture.dds");", but this would have required
+  to add more includes into the basic texture buffer header increasing the overall header complexity just for one tiny comfort method. :/
+
+
+
 >> 08.12.2011
 [CO]
 - When trying to upload a 512x512x1743 8 bit (435,75 MiB) uncompressed volume to the GPU using one "glTexImage3DEXT"-call and asking for LATC1 as

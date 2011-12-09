@@ -102,9 +102,9 @@ class Texture : public PLCore::Resource<Texture> {
 		*/
 		enum ECompressionFormat {
 			Default			= 0,	/**< Data is used as provided (for instance 'tga' is not compressed, 'dds' may be compressed) */
-			DXT1			= 1,	/**< DXT1 format (known as BC1 in DirectX 10, RGB compression: 8:1) */
-			DXT3			= 2,	/**< DXT3 format (known as BC2 in DirectX 10, RGBA compression: 4:1) */
-			DXT5			= 3,	/**< DXT5 format (known as BC3 in DirectX 10, RGBA compression: 4:1) */
+			DXT1			= 1,	/**< DXT1 compression (known as BC1 in DirectX 10, RGB compression: 8:1, 8 bytes per block) */
+			DXT3			= 2,	/**< DXT3 compression (known as BC2 in DirectX 10, RGBA compression: 4:1, 16 bytes per block) */
+			DXT5			= 3,	/**< DXT5 compression (known as BC3 in DirectX 10, RGBA compression: 4:1, 16 bytes per block) */
 			DXT5_xGxR		= 4,	/**< Swizzled DXT5 (same as above!) format for normal map compression (red stored in alpha, blue unused) */
 			LATC1			= 5,	/**< 1 component texture compression (also known as 3DC+/ATI1N, known as BC4 in DirectX 10, 8 bytes per block) */
 			LATC2			= 6,	/**< 2 component texture compression (luminance & alpha compression 4:1 -> normal map compression, also known as 3DC/ATI2N, known as BC5 in DirectX 10, 16 bytes per block) */

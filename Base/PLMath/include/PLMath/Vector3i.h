@@ -183,6 +183,17 @@ class Vector3i {
 
 		/**
 		*  @brief
+		*    Set X, Y and Z component
+		*
+		*  @param[in] vXY
+		*    Vector2 instance to take the X and Y components from
+		*  @param[in] nZ
+		*    Z component value
+		*/
+		PLMATH_API void SetXYZ(const Vector2i &vXY, int nZ = 0);
+
+		/**
+		*  @brief
 		*    Set Z component
 		*
 		*  @param[in] nZ
