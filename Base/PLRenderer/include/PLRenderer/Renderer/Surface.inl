@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: AnimationFrameInfo.cpp                         *
+ *  File: Surface.inl                                    *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -21,12 +21,6 @@
 
 
 //[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include "PLRenderer/Animation/AnimationFrameInfo.h"
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLRenderer {
@@ -37,59 +31,65 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
+*    Returns the owner renderer
 */
-AnimationFrameInfo::AnimationFrameInfo() :
-	m_fSpeed(1.0f)
+inline Renderer &Surface::GetRenderer() const
 {
+	return *m_pRenderer;
 }
 
 /**
 *  @brief
-*    Destructor
+*    Returns the surface type
 */
-AnimationFrameInfo::~AnimationFrameInfo()
+inline Surface::EType Surface::GetType() const
 {
+	return m_nType;
 }
 
 /**
 *  @brief
-*    Returns the speed of an animation frame
+*    Returns whether the surface is active or not
 */
-float AnimationFrameInfo::GetSpeed() const
+inline bool Surface::IsActive() const
 {
-	return m_fSpeed;
+	return m_bActive;
 }
 
 /**
 *  @brief
-*    Sets the animation frame speed
+*    Sets whether the surface is active or not
 */
-void AnimationFrameInfo::SetSpeed(float fSpeed)
+inline void Surface::SetActive(bool bActive)
 {
-	m_fSpeed = fSpeed;
+	m_bActive = bActive;
 }
 
 /**
 *  @brief
-*    Copy operator
+*    Returns the surface painter
 */
-AnimationFrameInfo &AnimationFrameInfo::operator =(const AnimationFrameInfo &cSource)
+inline SurfacePainter *Surface::GetPainter() const
 {
-	// Copy data
-	m_fSpeed = cSource.m_fSpeed;
-
-	// Return pointer
-	return *this;
+	return m_pPainter;
 }
 
 /**
 *  @brief
-*    Compare operator
+*    Returns the whether the surface is flipped along the y axis
 */
-bool AnimationFrameInfo::operator ==(const AnimationFrameInfo &cSource) const
+inline bool Surface::IsSwapY() const
 {
-	return (m_fSpeed == cSource.m_fSpeed);
+	return m_bSwapY;
+}
+
+/**
+*  @brief
+*    Sets the whether the surface is flipped along the y axis
+*/
+inline void Surface::SetSwapY(bool bSwapY)
+{
+	m_bSwapY = bSwapY;
 }
 
 

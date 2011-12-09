@@ -130,7 +130,7 @@ class Texture : public PLCore::Resource<Texture> {
 		*  @return
 		*     The texture manager this texture is in
 		*/
-		PLRENDERER_API TextureManager &GetTextureManager() const;
+		inline TextureManager &GetTextureManager() const;
 
 		/**
 		*  @brief
@@ -161,7 +161,7 @@ class Texture : public PLCore::Resource<Texture> {
 		*    The texture compression hint JUST indicates the format or it's special usage.
 		*    It must not match the real internal format of the used renderer texture.
 		*/
-		PLRENDERER_API ECompressionFormat GetCompressionHint() const;
+		inline ECompressionFormat GetCompressionHint() const;
 
 		/**
 		*  @brief
@@ -173,7 +173,7 @@ class Texture : public PLCore::Resource<Texture> {
 		*  @see
 		*    - GetCompressionHint()
 		*/
-		PLRENDERER_API void SetCompressionHint(ECompressionFormat nFormat = Default);
+		inline void SetCompressionHint(ECompressionFormat nFormat = Default);
 
 		/**
 		*  @brief
@@ -188,7 +188,7 @@ class Texture : public PLCore::Resource<Texture> {
 		*    texture dimension. Use GetResource() to get the internal renderer texture where
 		*    you can request more information about the texture on the GPU.
 		*/
-		PLRENDERER_API const PLMath::Vector3i &GetOriginalSize() const;
+		inline const PLMath::Vector3i &GetOriginalSize() const;
 
 		/**
 		*  @brief
@@ -289,6 +289,12 @@ class Texture : public PLCore::Resource<Texture> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Texture/Texture.inl"
 
 
 #endif // __PLRENDERER_TEXTURE_H__

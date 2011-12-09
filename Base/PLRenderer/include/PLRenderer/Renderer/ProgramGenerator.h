@@ -222,7 +222,7 @@ class ProgramGenerator {
 		*  @return
 		*    The used renderer
 		*/
-		PLRENDERER_API Renderer &GetRenderer() const;
+		inline Renderer &GetRenderer() const;
 
 		/**
 		*  @brief
@@ -231,7 +231,7 @@ class ProgramGenerator {
 		*  @return
 		*    The name of the used shader language
 		*/
-		PLRENDERER_API PLCore::String GetShaderLanguage() const;
+		inline PLCore::String GetShaderLanguage() const;
 
 		/**
 		*  @brief
@@ -240,7 +240,7 @@ class ProgramGenerator {
 		*  @return
 		*    The used vertex shader source code
 		*/
-		PLRENDERER_API PLCore::String GetVertexShaderSourceCode() const;
+		inline PLCore::String GetVertexShaderSourceCode() const;
 
 		/**
 		*  @brief
@@ -249,7 +249,7 @@ class ProgramGenerator {
 		*  @return
 		*    The used fragment shader source code
 		*/
-		PLRENDERER_API PLCore::String GetFragmentShaderSourceCode() const;
+		inline PLCore::String GetFragmentShaderSourceCode() const;
 
 		/**
 		*  @brief
@@ -346,6 +346,12 @@ class ProgramGenerator {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/ProgramGenerator.inl"
 
 
 #endif // __PLRENDERER_PROGRAMGENERATOR_H__

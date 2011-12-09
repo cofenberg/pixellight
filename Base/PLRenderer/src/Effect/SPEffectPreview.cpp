@@ -66,24 +66,6 @@ SPEffectPreview::~SPEffectPreview()
 {
 }
 
-/**
-*  @brief
-*    Returns the name of the used effect
-*/
-String SPEffectPreview::GetEffect() const
-{
-	return m_sEffect;
-}
-
-/**
-*  @brief
-*    Sets the name of the used effect
-*/
-void SPEffectPreview::SetEffect(const String &sName)
-{
-	m_sEffect = sName;
-}
-
 
 //[-------------------------------------------------------]
 //[ Private virtual SurfacePainter functions              ]

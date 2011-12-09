@@ -85,7 +85,7 @@ class AnimationEvent : public PLCore::Element<AnimationEvent> {
 		*  @return
 		*    Event ID
 		*/
-		PLRENDERER_API int GetID() const;
+		inline int GetID() const;
 
 		/**
 		*  @brief
@@ -94,7 +94,7 @@ class AnimationEvent : public PLCore::Element<AnimationEvent> {
 		*  @param[in] nID
 		*    Event ID
 		*/
-		PLRENDERER_API void SetID(int nID);
+		inline void SetID(int nID);
 
 		/**
 		*  @brief
@@ -103,7 +103,7 @@ class AnimationEvent : public PLCore::Element<AnimationEvent> {
 		*  @return
 		*    The frame which will cause this event
 		*/
-		PLRENDERER_API PLCore::uint32 GetFrame() const;
+		inline PLCore::uint32 GetFrame() const;
 
 		/**
 		*  @brief
@@ -112,7 +112,7 @@ class AnimationEvent : public PLCore::Element<AnimationEvent> {
 		*  @param[in] nFrame
 		*    Frame causing this event
 		*/
-		PLRENDERER_API void SetFrame(PLCore::uint32 nFrame);
+		inline void SetFrame(PLCore::uint32 nFrame);
 
 
 	//[-------------------------------------------------------]
@@ -153,6 +153,12 @@ class AnimationEventManager : public PLCore::ElementManager<AnimationEvent> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Animation/AnimationEvent.inl"
 
 
 #endif // __PLRENDERER_ANIMATIONEVENT_H__

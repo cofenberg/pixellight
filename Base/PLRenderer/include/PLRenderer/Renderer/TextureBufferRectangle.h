@@ -81,7 +81,7 @@ class TextureBufferRectangle : public TextureBuffer {
 		*  @return
 		*    Texture buffer size
 		*/
-		PLRENDERER_API PLMath::Vector2i GetSize() const;
+		inline const PLMath::Vector2i &GetSize() const;
 
 
 	//[-------------------------------------------------------]
@@ -148,6 +148,12 @@ class TextureBufferRectangle : public TextureBuffer {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/TextureBufferRectangle.inl"
 
 
 #endif // __PLRENDERER_TEXTUREBUFFERRECTANGLE_H__

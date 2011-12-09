@@ -239,7 +239,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    The texture buffer flags (see EFlags)
 		*/
-		PLRENDERER_API PLCore::uint32 GetFlags() const;
+		inline PLCore::uint32 GetFlags() const;
 
 		/**
 		*  @brief
@@ -248,7 +248,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    The texture buffer pixel format
 		*/
-		PLRENDERER_API EPixelFormat GetFormat() const;
+		inline EPixelFormat GetFormat() const;
 
 		/**
 		*  @brief
@@ -257,7 +257,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    'true' if the used texture buffer format is compressed, else 'false'
 		*/
-		PLRENDERER_API bool IsCompressedFormat() const;
+		inline bool IsCompressedFormat() const;
 
 		/**
 		*  @brief
@@ -266,7 +266,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    'true' if the used texture buffer format is a depth buffer format, else 'false'
 		*/
-		PLRENDERER_API bool IsDepthFormat() const;
+		inline bool IsDepthFormat() const;
 
 		/**
 		*  @brief
@@ -275,7 +275,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    Uncompressed texture buffer format, if the used format was not compressed, the used format will be returned
 		*/
-		PLRENDERER_API EPixelFormat GetUncompressedFormat() const;
+		inline EPixelFormat GetUncompressedFormat() const;
 
 		/**
 		*  @brief
@@ -284,7 +284,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    'true' if the texture buffer format is a floating point format, else 'false'
 		*/
-		PLRENDERER_API bool IsFloatingPointFormat() const;
+		inline bool IsFloatingPointFormat() const;
 
 		/**
 		*  @brief
@@ -293,7 +293,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    The number of components per pixel, 0 if unknown format
 		*/
-		PLRENDERER_API PLCore::uint32 GetComponentsPerPixel() const;
+		inline PLCore::uint32 GetComponentsPerPixel() const;
 
 		/**
 		*  @brief
@@ -302,7 +302,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    The number of bytes per pixel component, 0 if unknown format or no full byte per component
 		*/
-		PLRENDERER_API PLCore::uint32 GetBytesPerPixelComponent() const;
+		inline PLCore::uint32 GetBytesPerPixelComponent() const;
 
 		/**
 		*  @brief
@@ -311,7 +311,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    The number of bytes per pixel, 0 if unknown format or no full byte per pixel (compressed format)
 		*/
-		PLRENDERER_API PLCore::uint32 GetBytesPerPixel() const;
+		inline PLCore::uint32 GetBytesPerPixel() const;
 
 		/**
 		*  @brief
@@ -329,7 +329,7 @@ class TextureBuffer : public Resource {
 		*
 		*    Note that mipmaps are only created/used from a given image if the flag 'Mipmaps' is set.
 		*/
-		PLRENDERER_API PLCore::uint32 GetNumOfMipmaps() const;
+		inline PLCore::uint32 GetNumOfMipmaps() const;
 
 		/**
 		*  @brief
@@ -338,7 +338,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    The number of faces, always >0!
 		*/
-		PLRENDERER_API PLCore::uint8 GetNumOfFaces() const;
+		inline PLCore::uint8 GetNumOfFaces() const;
 
 		/**
 		*  @brief
@@ -359,7 +359,7 @@ class TextureBuffer : public Resource {
 		*  @note
 		*    - If the texture buffer is using a compressed format, compression is also taken into account
 		*/
-		PLRENDERER_API PLCore::uint32 GetTotalNumOfBytes() const;
+		inline PLCore::uint32 GetTotalNumOfBytes() const;
 
 		/**
 		*  @brief
@@ -595,6 +595,12 @@ class TextureBuffer : public Resource {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/TextureBuffer.inl"
 
 
 #endif // __PLRENDERER_TEXTUREBUFFER_H__

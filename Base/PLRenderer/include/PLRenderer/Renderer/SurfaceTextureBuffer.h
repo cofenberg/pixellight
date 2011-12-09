@@ -81,7 +81,7 @@ class SurfaceTextureBuffer : public Surface {
 		*  @return
 		*    The texture buffer format
 		*/
-		PLRENDERER_API TextureBuffer::EPixelFormat GetFormat() const;
+		inline TextureBuffer::EPixelFormat GetFormat() const;
 
 		/**
 		*  @brief
@@ -90,7 +90,7 @@ class SurfaceTextureBuffer : public Surface {
 		*  @return
 		*    The texture buffer surface flags (see EFlags)
 		*/
-		PLRENDERER_API PLCore::uint32 GetFlags() const;
+		inline PLCore::uint32 GetFlags() const;
 
 		/**
 		*  @brief
@@ -99,7 +99,7 @@ class SurfaceTextureBuffer : public Surface {
 		*  @return
 		*    The maximum number of color render targets
 		*/
-		PLRENDERER_API PLCore::uint8 GetMaxColorTargets() const;
+		inline PLCore::uint8 GetMaxColorTargets() const;
 
 		/**
 		*  @brief
@@ -108,7 +108,7 @@ class SurfaceTextureBuffer : public Surface {
 		*  @param[in] nMaxColorTargets
 		*    The maximum number of color render targets
 		*/
-		PLRENDERER_API void SetMaxColorTargets(PLCore::uint8 nMaxColorTargets);
+		inline void SetMaxColorTargets(PLCore::uint8 nMaxColorTargets);
 
 
 	//[-------------------------------------------------------]
@@ -212,6 +212,12 @@ class SurfaceTextureBuffer : public Surface {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/SurfaceTextureBuffer.inl"
 
 
 #endif // __PLRENDERER_SURFACE_TEXTUREBUFFER_H__

@@ -90,15 +90,6 @@ SurfaceHandler &SurfaceHandler::operator =(const SurfaceHandler &cSource)
 
 /**
 *  @brief
-*    Returns the renderer surface of this handler
-*/
-Surface *SurfaceHandler::GetSurface() const
-{
-	return m_pSurface;
-}
-
-/**
-*  @brief
 *    Set the renderer surface of this handler
 */
 void SurfaceHandler::SetSurface(Surface *pSurface)

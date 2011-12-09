@@ -76,7 +76,7 @@ class Parameter {
 		*  @return
 		*    The parameter manager this parameter is in
 		*/
-		PLRENDERER_API ParameterManager &GetManager() const;
+		inline ParameterManager &GetManager() const;
 
 		/**
 		*  @brief
@@ -113,7 +113,7 @@ class Parameter {
 		*  @return
 		*    Parameter type, NEVER Parameters::UnknownDataType!
 		*/
-		PLRENDERER_API Parameters::EDataType GetType() const;
+		inline Parameters::EDataType GetType() const;
 
 		/**
 		*  @brief
@@ -122,7 +122,7 @@ class Parameter {
 		*  @return
 		*    Parameter name
 		*/
-		PLRENDERER_API PLCore::String GetName() const;
+		inline PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -169,93 +169,93 @@ class Parameter {
 		PLRENDERER_API bool SetParameterString(const PLCore::String &sValue);
 
 		// Integer
-		PLRENDERER_API bool GetValue1i(int &nX) const;
-		PLRENDERER_API int GetValue1i() const;
+		inline bool GetValue1i(int &nX) const;
+		inline int GetValue1i() const;
 		PLRENDERER_API bool SetValue1i(int nX);
 
 		// Integer2
-		PLRENDERER_API bool GetValue2i(int &nX, int &nY) const;
-		PLRENDERER_API const int *GetValue2iv() const;
+		inline bool GetValue2i(int &nX, int &nY) const;
+		inline const int *GetValue2iv() const;
 		PLRENDERER_API bool SetValue2i(int nX, int nY);
 		PLRENDERER_API bool SetValue2iv(const int nValue[]);
 
 		// Integer3
-		PLRENDERER_API bool GetValue3i(int &nX, int &nY, int &nZ) const;
-		PLRENDERER_API const int *GetValue3iv() const;
+		inline bool GetValue3i(int &nX, int &nY, int &nZ) const;
+		inline const int *GetValue3iv() const;
 		PLRENDERER_API bool SetValue3i(int nX, int nY, int nZ);
 		PLRENDERER_API bool SetValue3iv(const int nValue[]);
 
 		// Integer4
-		PLRENDERER_API bool GetValue4i(int &nX, int &nY, int &nZ, int &nW) const;
-		PLRENDERER_API const int *GetValue4iv() const;
+		inline bool GetValue4i(int &nX, int &nY, int &nZ, int &nW) const;
+		inline const int *GetValue4iv() const;
 		PLRENDERER_API bool SetValue4i(int nX, int nY, int nZ, int nW);
 		PLRENDERER_API bool SetValue4iv(const int nValue[]);
 
 		// Float
-		PLRENDERER_API bool GetValue1f(float &fX) const;
-		PLRENDERER_API float GetValue1f() const;
+		inline bool GetValue1f(float &fX) const;
+		inline float GetValue1f() const;
 		PLRENDERER_API bool SetValue1f(float fX);
 
 		// Float2
-		PLRENDERER_API bool GetValue2f(float &fX, float &fY) const;
-		PLRENDERER_API const float *GetValue2fv() const;
+		inline bool GetValue2f(float &fX, float &fY) const;
+		inline const float *GetValue2fv() const;
 		PLRENDERER_API bool SetValue2f(float fX, float fY);
 		PLRENDERER_API bool SetValue2fv(const float fValue[]);
 
 		// Float3
-		PLRENDERER_API bool GetValue3f(float &fX, float &fY, float &fZ) const;
-		PLRENDERER_API const float *GetValue3fv() const;
+		inline bool GetValue3f(float &fX, float &fY, float &fZ) const;
+		inline const float *GetValue3fv() const;
 		PLRENDERER_API bool SetValue3f(float fX, float fY, float fZ);
 		PLRENDERER_API bool SetValue3fv(const float fValue[]);
 
 		// Float4
-		PLRENDERER_API bool GetValue4f(float &fX, float &fY, float &fZ, float &fW) const;
-		PLRENDERER_API const float *GetValue4fv() const;
+		inline bool GetValue4f(float &fX, float &fY, float &fZ, float &fW) const;
+		inline const float *GetValue4fv() const;
 		PLRENDERER_API bool SetValue4f(float fX, float fY, float fZ, float fW);
 		PLRENDERER_API bool SetValue4fv(const float fValue[]);
 
 		// Double
-		PLRENDERER_API bool GetValue1d(double &fW) const;
+		inline bool GetValue1d(double &fW) const;
 		PLRENDERER_API bool SetValue1d(double fW);
 
 		// Double2
-		PLRENDERER_API bool GetValue2d(double &fX, double &fY) const;
-		PLRENDERER_API const double *GetValue2dv() const;
+		inline bool GetValue2d(double &fX, double &fY) const;
+		inline const double *GetValue2dv() const;
 		PLRENDERER_API bool SetValue2d(double fX, double fY);
 		PLRENDERER_API bool SetValue2dv(const double fValue[]);
 
 		// Double3
-		PLRENDERER_API bool GetValue3d(double &fX, double &fY, double &fZ) const;
-		PLRENDERER_API const double *GetValue3dv() const;
+		inline bool GetValue3d(double &fX, double &fY, double &fZ) const;
+		inline const double *GetValue3dv() const;
 		PLRENDERER_API bool SetValue3d(double fX, double fY, double fZ);
 		PLRENDERER_API bool SetValue3dv(const double fValue[]);
 
 		// Double4
-		PLRENDERER_API bool GetValue4d(double &fX, double &fY, double &fZ, double &fW) const;
-		PLRENDERER_API const double *GetValue4dv() const;
+		inline bool GetValue4d(double &fX, double &fY, double &fZ, double &fW) const;
+		inline const double *GetValue4dv() const;
 		PLRENDERER_API bool SetValue4d(double fX, double fY, double fZ, double fW);
 		PLRENDERER_API bool SetValue4dv(const double fValue[]);
 
 		// Float3x3
-		PLRENDERER_API const float *GetValueFloat3x3() const;
+		inline const float *GetValueFloat3x3() const;
 		PLRENDERER_API bool SetValueFloat3x3(const float fValue[]);
 
 		// Float3x4
-		PLRENDERER_API const float *GetValueFloat3x4() const;
+		inline const float *GetValueFloat3x4() const;
 		PLRENDERER_API bool SetValueFloat3x4(const float fValue[]);
 
 		// Float4x4
-		PLRENDERER_API const float *GetValueMatrixfv() const;
+		inline const float *GetValueMatrixfv() const;
 		PLRENDERER_API bool SetValueMatrixfv(const float fValue[]);
 
 		// Double4x4
-		PLRENDERER_API const double *GetValueMatrixdv() const;
+		inline const double *GetValueMatrixdv() const;
 		PLRENDERER_API bool SetValueMatrixdv(const double fValue[]);
 
 		// Texture
 		PLRENDERER_API Texture *GetValueTexture() const;
 		PLRENDERER_API TextureBuffer *GetValueTextureBuffer() const;
-		PLRENDERER_API TextureHandler *GetValueTextureHandler() const;
+		inline TextureHandler *GetValueTextureHandler() const;
 		PLRENDERER_API bool SetValueTexture(Texture *pTexture);
 		PLRENDERER_API bool SetValueTexture(const PLCore::String &sFilename);
 
@@ -301,6 +301,12 @@ class Parameter {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Material/Parameter.inl"
 
 
 #endif // __PLRENDERER_MATERIAL_PARAMETER_H__

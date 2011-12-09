@@ -65,24 +65,6 @@ SPTexturePreview::~SPTexturePreview()
 {
 }
 
-/**
-*  @brief
-*    Returns the name of the used texture
-*/
-String SPTexturePreview::GetTexture() const
-{
-	return m_sTexture;
-}
-
-/**
-*  @brief
-*    Sets the name of the used texture
-*/
-void SPTexturePreview::SetTexture(const String &sName)
-{
-	m_sTexture = sName;
-}
-
 
 //[-------------------------------------------------------]
 //[ Private virtual SurfacePainter functions              ]

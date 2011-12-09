@@ -5,6 +5,11 @@
 - Added comfort method "TextureBuffer::DownloadAsImage()" downloading the texture buffer data into an image instance which then can for example be saved
   as dds-file. First I thought about something like "pTextureBuffer->DownloadAsImage().SaveByFilename("MyTexture.dds");", but this would have required
   to add more includes into the basic texture buffer header increasing the overall header complexity just for one tiny comfort method. :/
+- Inline within PLRenderer: "Animation", "AnimationBase", "AnimationEvent", "AnimationFrameInfo", "AnimationInfo", "RendererApplication", "Effect",
+  "EffectManager", "EffectPass", "EffectPassLayer", "EffectTechnique", "SPEffectPreview", "Material", "MaterialManager", "Parameter", "ParameterManager",
+  "SPMaterialPreview", "RendererContext", "SPPreview", "Buffer", "Font", "FontGlyph", "FontManager", "IndexBuffer", "ProgramGenerator", "RenderStates",
+  "Resource", "ResourceHandler", "SamplerStates", "Surface", "SurfaceHandler", "SurfacePainter", "SurfaceTextureBuffer", "SurfaceWindow", "SurfaceWindowHandler",
+  "TextureBuffer", "TextureBufferRectangle", "VertexBuffer", "RendererBackend", "SPTexturePreview", "Texture", "TextureAni", "TextureHandler", "TextureManager"
 
 
 

@@ -100,7 +100,7 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 		*  @return
 		*    The renderer context, a null pointer on error
 		*/
-		PLRENDERER_API PLRenderer::RendererContext *GetRendererContext() const;
+		inline PLRenderer::RendererContext *GetRendererContext() const;
 
 		/**
 		*  @brief
@@ -247,6 +247,12 @@ class RendererApplication : public PLCore::FrontendApplication, public PLRendere
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Application/RendererApplication.inl"
 
 
 #endif // __PLRENDERER_APPLICATION_H__

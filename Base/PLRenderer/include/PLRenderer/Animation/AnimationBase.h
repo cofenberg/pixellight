@@ -101,7 +101,7 @@ class AnimationBase : public AnimationInfo {
 		*  @return
 		*    Frames per second
 		*/
-		PLRENDERER_API float GetFrameRate() const;
+		inline float GetFrameRate() const;
 
 		/**
 		*  @brief
@@ -110,7 +110,7 @@ class AnimationBase : public AnimationInfo {
 		*  @param[in] fFrameRate
 		*    Frames per second
 		*/
-		PLRENDERER_API void SetFrameRate(float fFrameRate = 24.0f);
+		inline void SetFrameRate(float fFrameRate = 24.0f);
 
 		/**
 		*  @brief
@@ -119,7 +119,7 @@ class AnimationBase : public AnimationInfo {
 		*  @return
 		*    Frame keys
 		*/
-		PLRENDERER_API PLCore::Array<FrameKeys> &GetFrameKeys();
+		inline PLCore::Array<FrameKeys> &GetFrameKeys();
 
 
 	//[-------------------------------------------------------]
@@ -144,6 +144,12 @@ class AnimationBase : public AnimationInfo {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Animation/AnimationBase.inl"
 
 
 #endif // __PLRENDERER_ANIMATIONBASE_H__

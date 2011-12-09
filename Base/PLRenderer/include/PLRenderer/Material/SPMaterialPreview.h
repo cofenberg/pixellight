@@ -82,7 +82,7 @@ class SPMaterialPreview : public SPPreview {
 		*  @return
 		*    Name of the used material
 		*/
-		PLRENDERER_API PLCore::String GetMaterial() const;
+		inline PLCore::String GetMaterial() const;
 
 		/**
 		*  @brief
@@ -91,7 +91,7 @@ class SPMaterialPreview : public SPPreview {
 		*  @param[in] sName
 		*    Name of the used material
 		*/
-		PLRENDERER_API void SetMaterial(const PLCore::String &sName = "");
+		inline void SetMaterial(const PLCore::String &sName = "");
 
 
 	//[-------------------------------------------------------]
@@ -115,6 +115,12 @@ class SPMaterialPreview : public SPPreview {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Material/SPMaterialPreview.inl"
 
 
 #endif // __PLRENDERER_MATERIAL_SURFACEPAINTER_H__

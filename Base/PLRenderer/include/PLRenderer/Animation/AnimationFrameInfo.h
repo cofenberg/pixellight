@@ -26,12 +26,6 @@
 
 
 //[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include "PLRenderer/PLRenderer.h"
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLRenderer {
@@ -55,13 +49,13 @@ class AnimationFrameInfo {
 		*  @brief
 		*    Constructor
 		*/
-		PLRENDERER_API AnimationFrameInfo();
+		inline AnimationFrameInfo();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLRENDERER_API ~AnimationFrameInfo();
+		inline ~AnimationFrameInfo();
 
 		/**
 		*  @brief
@@ -74,7 +68,7 @@ class AnimationFrameInfo {
 		*    - If speed is 0 the frame will be skipped
 		*    - If speed is less 0 there's no frame interpolation
 		*/
-		PLRENDERER_API float GetSpeed() const;
+		inline float GetSpeed() const;
 
 		/**
 		*  @brief
@@ -86,7 +80,7 @@ class AnimationFrameInfo {
 		*  @see
 		*    - GetSpeed()
 		*/
-		PLRENDERER_API void SetSpeed(float fSpeed = 1.0f);
+		inline void SetSpeed(float fSpeed = 1.0f);
 
 		/**
 		*  @brief
@@ -98,7 +92,7 @@ class AnimationFrameInfo {
 		*  @return
 		*    Reference to this class instance
 		*/
-		PLRENDERER_API AnimationFrameInfo &operator =(const AnimationFrameInfo &cSource);
+		inline AnimationFrameInfo &operator =(const AnimationFrameInfo &cSource);
 
 		/**
 		*  @brief
@@ -110,7 +104,7 @@ class AnimationFrameInfo {
 		*  @return
 		*    'true' if the two animation frame information are equal, else 'false'
 		*/
-		PLRENDERER_API bool operator ==(const AnimationFrameInfo &cSource) const;
+		inline bool operator ==(const AnimationFrameInfo &cSource) const;
 
 
 	//[-------------------------------------------------------]
@@ -127,6 +121,12 @@ class AnimationFrameInfo {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Animation/AnimationFrameInfo.inl"
 
 
 #endif // __PLRENDERER_ANIMATIONFRAMEINFO_H__

@@ -29,8 +29,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLCore;
-using namespace PLMath;
 namespace PLRenderer {
 
 
@@ -38,28 +36,6 @@ namespace PLRenderer {
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
 pl_implement_class(SPPreview)
-
-
-//[-------------------------------------------------------]
-//[ Public functions                                      ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the camera position
-*/
-const Vector3 &SPPreview::GetCameraPosition() const
-{
-	return m_vCameraPosition;
-}
-
-/**
-*  @brief
-*    Sets the camera position
-*/
-void SPPreview::SetCameraPosition(const Vector3 &vPosition)
-{
-	m_vCameraPosition = vPosition;
-}
 
 
 //[-------------------------------------------------------]

@@ -48,60 +48,6 @@ Font::~Font()
 	DestroyGlyphs();
 }
 
-/**
-*  @brief
-*    Returns the creating font manager
-*/
-FontManager &Font::GetFontManager() const
-{
-	return *m_pFontManager;
-}
-
-/**
-*  @brief
-*    Returns the filename of the font file the data came from
-*/
-String Font::GetFilename() const
-{
-	return m_sFilename;
-}
-
-/**
-*  @brief
-*    Returns the font size in points (72 points per inch)
-*/
-uint32 Font::GetSize() const
-{
-	return m_nSize;
-}
-
-/**
-*  @brief
-*    Returns the horizontal and vertical resolution in DPI
-*/
-uint32 Font::GetResolution() const
-{
-	return m_nResolution;
-}
-
-/**
-*  @brief
-*    Returns the font size in pixels
-*/
-uint32 Font::GetSizeInPixels() const
-{
-	return static_cast<uint32>(m_nSize/72.0f*m_nResolution);
-}
-
-/**
-*  @brief
-*    Returns the font height in pixels
-*/
-uint32 Font::GetHeightInPixels() const
-{
-	return static_cast<uint32>(GetHeight()/72.0f*m_nResolution);
-}
-
 
 //[-------------------------------------------------------]
 //[ Public virtual Font functions                         ]

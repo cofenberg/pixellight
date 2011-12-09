@@ -50,52 +50,6 @@ IndexBuffer::~IndexBuffer()
 
 /**
 *  @brief
-*    Returns the type of the buffer elements
-*/
-IndexBuffer::EType IndexBuffer::GetElementType() const
-{
-	return m_nElementType;
-}
-
-/**
-*  @brief
-*    Sets the type of the buffer elements
-*/
-bool IndexBuffer::SetElementType(EType nType)
-{
-	// Is the index buffer already allocated?
-	if (IsAllocated())
-		return false; // Error!
-
-	// Set element type
-	m_nElementType = nType;
-
-	// Done
-	return true;
-}
-
-/**
-*  @brief
-*    Sets the type of the buffer elements automatically by using a given maximum vertex index
-*/
-bool IndexBuffer::SetElementTypeByMaximumIndex(uint32 nMaximumIndex)
-{
-	// Is the index buffer already allocated?
-	if (IsAllocated())
-		return false; // Error!
-
-	// Set element type
-	if (nMaximumIndex <= MaxVertexIndexUByte)
-		m_nElementType = UByte;
-	else
-		m_nElementType = (nMaximumIndex <= MaxVertexIndexUShort) ? UShort : UInt;
-
-	// Done
-	return true;
-}
-
-/**
-*  @brief
 *    Copy operator
 */
 IndexBuffer &IndexBuffer::operator =(const IndexBuffer &cSource)

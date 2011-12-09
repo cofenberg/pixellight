@@ -65,16 +65,6 @@ Texture::~Texture()
 
 /**
 *  @brief
-*    Returns the texture manager this texture is in
-*/
-TextureManager &Texture::GetTextureManager() const
-{
-	// There MUST always be a manager!
-	return static_cast<TextureManager&>(*m_pManager);
-}
-
-/**
-*  @brief
 *    Returns the texture buffer
 */
 TextureBuffer *Texture::GetTextureBuffer() const
@@ -92,33 +82,6 @@ void Texture::SetTextureBuffer(TextureBuffer *pTextureBuffer)
 		DestroyTextureBuffer();
 		m_pTextureBufferHandler->SetResource(pTextureBuffer);
 	}
-}
-
-/**
-*  @brief
-*    Returns the texture compression hint
-*/
-Texture::ECompressionFormat Texture::GetCompressionHint() const
-{
-	return m_nCompressionHint;
-}
-
-/**
-*  @brief
-*    Sets the texture compression hint
-*/
-void Texture::SetCompressionHint(ECompressionFormat nFormat)
-{
-	m_nCompressionHint = nFormat;
-}
-
-/**
-*  @brief
-*    Returns the original texture size
-*/
-const Vector3i &Texture::GetOriginalSize() const
-{
-	return m_vOriginalSize;
 }
 
 /**

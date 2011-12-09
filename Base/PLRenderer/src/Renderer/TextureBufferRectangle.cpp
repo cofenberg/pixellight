@@ -30,7 +30,6 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-using namespace PLMath;
 namespace PLRenderer {
 
 
@@ -43,15 +42,6 @@ namespace PLRenderer {
 */
 TextureBufferRectangle::~TextureBufferRectangle()
 {
-}
-
-/**
-*  @brief
-*    Returns the texture buffer size
-*/
-Vector2i TextureBufferRectangle::GetSize() const
-{
-	return m_vSize;
 }
 
 

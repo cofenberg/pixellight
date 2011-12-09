@@ -66,7 +66,7 @@ class SPPreview : public SurfacePainter {
 		*  @return
 		*    Camera position
 		*/
-		PLRENDERER_API const PLMath::Vector3 &GetCameraPosition() const;
+		inline const PLMath::Vector3 &GetCameraPosition() const;
 
 		/**
 		*  @brief
@@ -75,7 +75,7 @@ class SPPreview : public SurfacePainter {
 		*  @param[in] vPosition
 		*    New camera position
 		*/
-		PLRENDERER_API void SetCameraPosition(const PLMath::Vector3 &vPosition);
+		inline void SetCameraPosition(const PLMath::Vector3 &vPosition);
 
 
 	//[-------------------------------------------------------]
@@ -138,6 +138,12 @@ class SPPreview : public SurfacePainter {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/SPPreview.inl"
 
 
 #endif // __PLRENDERER_PREVIEWSURFACEPAINTER_H__

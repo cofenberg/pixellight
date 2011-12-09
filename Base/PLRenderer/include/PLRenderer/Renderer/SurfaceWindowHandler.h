@@ -89,7 +89,7 @@ class SurfaceWindowHandler {
 		*  @return
 		*    The owner renderer, can be a null pointer
 		*/
-		PLRENDERER_API Renderer *GetRenderer() const;
+		inline Renderer *GetRenderer() const;
 
 		/**
 		*  @brief
@@ -98,7 +98,7 @@ class SurfaceWindowHandler {
 		*  @return
 		*    The renderer surface of this handler, can be a null pointer
 		*/
-		PLRENDERER_API Surface *GetSurface() const;
+		inline Surface *GetSurface() const;
 
 
 	//[-------------------------------------------------------]
@@ -168,6 +168,12 @@ class SurfaceWindowHandler {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/SurfaceWindowHandler.inl"
 
 
 #endif // __PLRENDERER_SURFACE_WINDOW_HANDLER_H__

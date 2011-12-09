@@ -108,7 +108,7 @@ class Surface {
 		*  @return
 		*    The owner renderer
 		*/
-		PLRENDERER_API Renderer &GetRenderer() const;
+		inline Renderer &GetRenderer() const;
 
 		/**
 		*  @brief
@@ -117,7 +117,7 @@ class Surface {
 		*  @return
 		*    Surface type
 		*/
-		PLRENDERER_API EType GetType() const;
+		inline EType GetType() const;
 
 		/**
 		*  @brief
@@ -126,7 +126,7 @@ class Surface {
 		*  @return
 		*    'true' if the surface is active, else 'false'
 		*/
-		PLRENDERER_API bool IsActive() const;
+		inline bool IsActive() const;
 
 		/**
 		*  @brief
@@ -135,7 +135,7 @@ class Surface {
 		*  @param[in] bActive
 		*    'true' if the surface is active, else 'false'
 		*/
-		PLRENDERER_API void SetActive(bool bActive = true);
+		inline void SetActive(bool bActive = true);
 
 		/**
 		*  @brief
@@ -144,7 +144,7 @@ class Surface {
 		*  @return
 		*    The surface painter, a null pointer if there's no surface painter
 		*/
-		PLRENDERER_API SurfacePainter *GetPainter() const;
+		inline SurfacePainter *GetPainter() const;
 
 		/**
 		*  @brief
@@ -180,7 +180,7 @@ class Surface {
 		*  @return
 		*    'true' if the surface is flipped along the y axis, else 'false'
 		*/
-		PLRENDERER_API bool IsSwapY() const;
+		inline bool IsSwapY() const;
 
 		/**
 		*  @brief
@@ -189,7 +189,7 @@ class Surface {
 		*  @param[in] bSwapY
 		*    'true' if the surface is flipped along the y axis, else 'false'
 		*/
-		PLRENDERER_API void SetSwapY(bool bSwapY = false);
+		inline void SetSwapY(bool bSwapY = false);
 
 
 	//[-------------------------------------------------------]
@@ -352,6 +352,12 @@ class Surface {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/Surface.inl"
 
 
 #endif // __PLRENDERER_SURFACE_H__

@@ -78,7 +78,7 @@ class EffectPass {
 		*  @return
 		*    Owner effect technique
 		*/
-		PLRENDERER_API EffectTechnique &GetTechnique() const;
+		inline EffectTechnique &GetTechnique() const;
 
 		/**
 		*  @brief
@@ -87,7 +87,7 @@ class EffectPass {
 		*  @return
 		*    Pass name
 		*/
-		PLRENDERER_API PLCore::String GetName() const;
+		inline PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -96,7 +96,7 @@ class EffectPass {
 		*  @param[in] sName
 		*    New pass name
 		*/
-		PLRENDERER_API void SetName(const PLCore::String &sName = "Pass");
+		inline void SetName(const PLCore::String &sName = "Pass");
 
 		/**
 		*  @brief
@@ -132,7 +132,7 @@ class EffectPass {
 		*  @return
 		*    General color
 		*/
-		PLRENDERER_API const PLGraphics::Color4 &GetColor() const;
+		inline const PLGraphics::Color4 &GetColor() const;
 
 		/**
 		*  @brief
@@ -141,7 +141,7 @@ class EffectPass {
 		*  @param[in] cColor
 		*    New general color
 		*/
-		PLRENDERER_API void SetColor(const PLGraphics::Color4 &cColor = PLGraphics::Color4::White);
+		inline void SetColor(const PLGraphics::Color4 &cColor = PLGraphics::Color4::White);
 
 		/**
 		*  @brief
@@ -150,8 +150,8 @@ class EffectPass {
 		*  @return
 		*    The render states
 		*/
-		PLRENDERER_API RenderStates &GetRenderStates();
-		PLRENDERER_API const RenderStates &GetRenderStates() const;
+		inline RenderStates &GetRenderStates();
+		inline const RenderStates &GetRenderStates() const;
 
 		/**
 		*  @brief
@@ -160,8 +160,8 @@ class EffectPass {
 		*  @return
 		*    The fixed functions render states
 		*/
-		PLRENDERER_API FixedFunctionsRenderStates &GetFixedFunctionsRenderStates();
-		PLRENDERER_API const FixedFunctionsRenderStates &GetFixedFunctionsRenderStates() const;
+		inline FixedFunctionsRenderStates &GetFixedFunctionsRenderStates();
+		inline const FixedFunctionsRenderStates &GetFixedFunctionsRenderStates() const;
 
 		/**
 		*  @brief
@@ -180,7 +180,7 @@ class EffectPass {
 		*  @return
 		*    The value of the queried material state variable
 		*/
-		PLRENDERER_API PLCore::uint32 GetMaterialState(FixedFunctions::MaterialState::Enum nState) const;
+		inline PLCore::uint32 GetMaterialState(FixedFunctions::MaterialState::Enum nState) const;
 
 		/**
 		*  @brief
@@ -196,7 +196,7 @@ class EffectPass {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool SetMaterialState(FixedFunctions::MaterialState::Enum nState, PLCore::uint32 nValue);
+		inline bool SetMaterialState(FixedFunctions::MaterialState::Enum nState, PLCore::uint32 nValue);
 
 		//[-------------------------------------------------------]
 		//[ Layers                                                ]
@@ -208,7 +208,7 @@ class EffectPass {
 		*  @return
 		*    Number of texture layers
 		*/
-		PLRENDERER_API PLCore::uint32 GetNumOfLayers() const;
+		inline PLCore::uint32 GetNumOfLayers() const;
 
 		/**
 		*  @brief
@@ -229,7 +229,7 @@ class EffectPass {
 		*  @return
 		*    Effect pass layer, a null pointer if there was an error
 		*/
-		PLRENDERER_API EffectPassLayer *GetLayer(PLCore::uint32 nIndex = 0) const;
+		inline EffectPassLayer *GetLayer(PLCore::uint32 nIndex = 0) const;
 
 		/**
 		*  @brief
@@ -340,6 +340,12 @@ class EffectPass {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Effect/EffectPass.inl"
 
 
 #endif // __PLRENDERER_EFFECT_PASS_H__

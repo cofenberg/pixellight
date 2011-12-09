@@ -52,9 +52,6 @@
     <ClCompile Include="src\Texture\AniInfoManager.cpp">
       <Filter>Texture</Filter>
     </ClCompile>
-    <ClCompile Include="src\Texture\SPTexturelPreview.cpp">
-      <Filter>Texture</Filter>
-    </ClCompile>
     <ClCompile Include="src\Texture\Texture.cpp">
       <Filter>Texture</Filter>
     </ClCompile>
@@ -158,9 +155,6 @@
       <Filter>Animation</Filter>
     </ClCompile>
     <ClCompile Include="src\Animation\AnimationEvent.cpp">
-      <Filter>Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Animation\AnimationFrameInfo.cpp">
       <Filter>Animation</Filter>
     </ClCompile>
     <ClCompile Include="src\Animation\AnimationHandler.cpp">
@@ -321,6 +315,9 @@
     </ClCompile>
     <ClCompile Include="src\Renderer\TextureBuffer2DArray.cpp">
       <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Texture\SPTexturePreview.cpp">
+      <Filter>Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -634,5 +631,137 @@
   <ItemGroup>
     <None Include="CMakeLists.txt" />
     <None Include="Diary.txt" />
+    <None Include="include\PLRenderer\Animation\Animation.inl">
+      <Filter>Animation</Filter>
+    </None>
+    <None Include="include\PLRenderer\Animation\AnimationBase.inl">
+      <Filter>Animation</Filter>
+    </None>
+    <None Include="include\PLRenderer\Animation\AnimationEvent.inl">
+      <Filter>Animation</Filter>
+    </None>
+    <None Include="include\PLRenderer\Animation\AnimationFrameInfo.inl">
+      <Filter>Animation</Filter>
+    </None>
+    <None Include="include\PLRenderer\Animation\AnimationInfo.inl">
+      <Filter>Animation</Filter>
+    </None>
+    <None Include="include\PLRenderer\Application\RendererApplication.inl">
+      <Filter>Application</Filter>
+    </None>
+    <None Include="include\PLRenderer\Effect\Effect.inl">
+      <Filter>Effect</Filter>
+    </None>
+    <None Include="include\PLRenderer\Effect\EffectManager.inl">
+      <Filter>Effect</Filter>
+    </None>
+    <None Include="include\PLRenderer\Effect\EffectPass.inl">
+      <Filter>Effect</Filter>
+    </None>
+    <None Include="include\PLRenderer\Effect\EffectPassLayer.inl">
+      <Filter>Effect</Filter>
+    </None>
+    <None Include="include\PLRenderer\Effect\EffectTechnique.inl">
+      <Filter>Effect</Filter>
+    </None>
+    <None Include="include\PLRenderer\Effect\SPEffectPreview.inl">
+      <Filter>Effect</Filter>
+    </None>
+    <None Include="include\PLRenderer\Material\SPMaterialPreview.inl">
+      <Filter>Material</Filter>
+    </None>
+    <None Include="include\PLRenderer\Material\Material.inl">
+      <Filter>Material</Filter>
+    </None>
+    <None Include="include\PLRenderer\Material\MaterialManager.inl">
+      <Filter>Material</Filter>
+    </None>
+    <None Include="include\PLRenderer\Material\Parameter.inl">
+      <Filter>Material</Filter>
+    </None>
+    <None Include="include\PLRenderer\Material\ParameterManager.inl">
+      <Filter>Material</Filter>
+    </None>
+    <None Include="include\PLRenderer\RendererContext.inl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="include\PLRenderer\SPPreview.inl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\FontGlyph.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\FontManager.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\IndexBuffer.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\ProgramGenerator.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\RenderStates.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\Resource.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\ResourceHandler.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\SamplerStates.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\Surface.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\SurfaceHandler.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\SurfacePainter.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\SurfaceTextureBuffer.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\SurfaceWindow.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\SurfaceWindowHandler.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\TextureBuffer.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\TextureBufferRectangle.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\Buffer.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\Font.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\VertexBuffer.inl">
+      <Filter>Renderer</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\Backend\RendererBackend.inl">
+      <Filter>Renderer\Backend</Filter>
+    </None>
+    <None Include="include\PLRenderer\Texture\Texture.inl">
+      <Filter>Texture</Filter>
+    </None>
+    <None Include="include\PLRenderer\Texture\TextureAni.inl">
+      <Filter>Texture</Filter>
+    </None>
+    <None Include="include\PLRenderer\Texture\TextureHandler.inl">
+      <Filter>Texture</Filter>
+    </None>
+    <None Include="include\PLRenderer\Texture\TextureManager.inl">
+      <Filter>Texture</Filter>
+    </None>
+    <None Include="include\PLRenderer\Texture\SPTexturePreview.inl">
+      <Filter>Texture</Filter>
+    </None>
   </ItemGroup>
 </Project>

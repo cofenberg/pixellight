@@ -130,51 +130,6 @@ Matrix4x4 TextureHandler::AnimationState::GetFrameMatrix(int nIndex) const
 
 /**
 *  @brief
-*    Returns the texture animation
-*/
-Animation &TextureHandler::AnimationState::GetTextureAnimation()
-{
-	return *m_pTextureAnimation;
-}
-
-/**
-*  @brief
-*    Returns the matrix animation
-*/
-Animation &TextureHandler::AnimationState::GetMatrixAnimation()
-{
-	return *m_pMatrixAnimation;
-}
-
-/**
-*  @brief
-*    Returns the current texture transformation matrix
-*/
-Matrix4x4 &TextureHandler::AnimationState::GetMatrix()
-{
-	return m_mTrans;
-}
-
-/**
-*  @brief
-*    Returns the color animation
-*/
-Animation &TextureHandler::AnimationState::GetColorAnimation()
-{
-	return *m_pColorAnimation;
-}
-
-/**
-*  @brief
-*    Returns the current texture color
-*/
-const Color4 &TextureHandler::AnimationState::GetColor() const
-{
-	return m_cColor;
-}
-
-/**
-*  @brief
 *    Copy operator
 */
 TextureHandler::AnimationState &TextureHandler::AnimationState::operator =(const TextureHandler::AnimationState &cSource)
@@ -526,15 +481,6 @@ Texture *TextureHandler::GetTexture() const
 {
 	// Is there a texture animation?
 	return m_pAnimationState ? m_pAnimationState->GetTexture() : GetResource();
-}
-
-/**
-*  @brief
-*    Returns the texture animation state object (if there's one :)
-*/
-TextureHandler::AnimationState *TextureHandler::GetAnimationState() const
-{
-	return m_pAnimationState;
 }
 
 /**

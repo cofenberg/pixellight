@@ -74,7 +74,7 @@ class MaterialManager : public PLCore::ResourceManager<Material> {
 		*  @return
 		*    Reference to the owner renderer context of this manager
 		*/
-		PLRENDERER_API RendererContext &GetRendererContext() const;
+		inline RendererContext &GetRendererContext() const;
 
 		/**
 		*  @brief
@@ -127,6 +127,12 @@ class MaterialManager : public PLCore::ResourceManager<Material> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Material/MaterialManager.inl"
 
 
 #endif // __PLRENDERER_MATERIAL_MANAGER_H__

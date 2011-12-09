@@ -43,15 +43,6 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the owner renderer
-*/
-Renderer &FontManager::GetRenderer() const
-{
-	return *m_pRenderer;
-}
-
-/**
-*  @brief
 *    Returns the default texture font
 */
 Font *FontManager::GetDefaultFontTexture()

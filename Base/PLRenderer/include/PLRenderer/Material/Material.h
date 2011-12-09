@@ -120,7 +120,7 @@ class Material : public PLCore::Resource<Material> {
 		*  @return
 		*     The material manager this material is in
 		*/
-		PLRENDERER_API MaterialManager &GetMaterialManager() const;
+		inline MaterialManager &GetMaterialManager() const;
 
 		/**
 		*  @brief
@@ -177,7 +177,7 @@ class Material : public PLCore::Resource<Material> {
 		*  @return
 		*    The parameter manager of the material
 		*/
-		PLRENDERER_API ParameterManager &GetParameterManager() const;
+		inline ParameterManager &GetParameterManager() const;
 
 		/**
 		*  @brief
@@ -198,7 +198,7 @@ class Material : public PLCore::Resource<Material> {
 		*  @return
 		*    The number of materials
 		*/
-		PLRENDERER_API PLCore::uint32 GetNumOfMaterials() const;
+		inline PLCore::uint32 GetNumOfMaterials() const;
 
 		/**
 		*  @brief
@@ -360,6 +360,12 @@ class Material : public PLCore::Resource<Material> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Material/Material.inl"
 
 
 #endif // __PLRENDERER_MATERIAL_MATERIAL_H__

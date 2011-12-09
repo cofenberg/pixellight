@@ -44,51 +44,6 @@ Buffer::~Buffer()
 {
 }
 
-/**
-*  @brief
-*    Returns the number of buffer elements
-*/
-uint32 Buffer::GetNumOfElements() const
-{
-	return m_nElements;
-}
-
-/**
-*  @brief
-*    Returns the buffer size
-*/
-uint32 Buffer::GetSize() const
-{
-	return m_nSize;
-}
-
-/**
-*  @brief
-*    Returns the usage flag
-*/
-Usage::Enum Buffer::GetUsage() const
-{
-	return m_nUsage;
-}
-
-/**
-*  @brief
-*    Returns whether the buffer is managed or not
-*/
-bool Buffer::IsManaged() const
-{
-	return m_bManaged;
-}
-
-/**
-*  @brief
-*    Returns the lock count
-*/
-uint16 Buffer::GetLockCount() const
-{
-	return m_nLockCount;
-}
-
 
 //[-------------------------------------------------------]
 //[ Protected functions                                   ]
@@ -105,21 +60,6 @@ Buffer::Buffer(Renderer &cRenderer, EType nType) : Resource(cRenderer, nType),
 	m_nLockCount(0),
 	m_nLockStartTime(0)
 {
-}
-
-/**
-*  @brief
-*    Forces immediately vertex buffer unlock
-*/
-bool Buffer::ForceUnlock()
-{
-	// Is the buffer locked?
-	if (!m_nLockCount)
-		return false; // Error!
-
-	// Force unlock now!
-	m_nLockCount = 1;
-	return Unlock();
 }
 
 

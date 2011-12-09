@@ -74,7 +74,7 @@ class EffectPassLayer {
 		*  @return
 		*    The layer owner
 		*/
-		PLRENDERER_API EffectPass &GetPass() const;
+		inline EffectPass &GetPass() const;
 
 		/**
 		*  @brief
@@ -101,7 +101,7 @@ class EffectPassLayer {
 		*  @return
 		*    The name of the used texture parameter
 		*/
-		PLRENDERER_API PLCore::String GetTexture() const;
+		inline PLCore::String GetTexture() const;
 
 		/**
 		*  @brief
@@ -110,7 +110,7 @@ class EffectPassLayer {
 		*  @param[in] sTexture
 		*    The name of the used texture parameter
 		*/
-		PLRENDERER_API void SetTexture(const PLCore::String &sTexture);
+		inline void SetTexture(const PLCore::String &sTexture);
 
 		/**
 		*  @brief
@@ -119,8 +119,8 @@ class EffectPassLayer {
 		*  @return
 		*    The sampler states
 		*/
-		PLRENDERER_API SamplerStates &GetSamplerStates();
-		PLRENDERER_API const SamplerStates &GetSamplerStates() const;
+		inline SamplerStates &GetSamplerStates();
+		inline const SamplerStates &GetSamplerStates() const;
 
 		/**
 		*  @brief
@@ -129,8 +129,8 @@ class EffectPassLayer {
 		*  @return
 		*    The fixed functions texture stage states
 		*/
-		PLRENDERER_API FixedFunctionsTextureStageStates &GetFixedFunctionsTextureStageStates();
-		PLRENDERER_API const FixedFunctionsTextureStageStates &GetFixedFunctionsTextureStageStates() const;
+		inline FixedFunctionsTextureStageStates &GetFixedFunctionsTextureStageStates();
+		inline const FixedFunctionsTextureStageStates &GetFixedFunctionsTextureStageStates() const;
 
 		/**
 		*  @brief
@@ -142,7 +142,7 @@ class EffectPassLayer {
 		*  @return
 		*    This instance
 		*/
-		PLRENDERER_API EffectPassLayer &operator =(const EffectPassLayer &cSource);
+		inline EffectPassLayer &operator =(const EffectPassLayer &cSource);
 
 
 	//[-------------------------------------------------------]
@@ -156,13 +156,13 @@ class EffectPassLayer {
 		*  @param[in] cFXPass
 		*    Layer owner
 		*/
-		EffectPassLayer(EffectPass &cFXPass);
+		inline EffectPassLayer(EffectPass &cFXPass);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		~EffectPassLayer();
+		inline ~EffectPassLayer();
 
 		/**
 		*  @brief
@@ -196,6 +196,12 @@ class EffectPassLayer {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Effect/EffectPassLayer.inl"
 
 
 #endif // __PLRENDERER_EFFECT_EFFECTPASSLAYER_H__

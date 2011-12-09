@@ -66,7 +66,7 @@ class FontGlyph {
 		*  @return
 		*    The size (in pixel) of the glyph
 		*/
-		PLRENDERER_API const PLMath::Vector2i &GetSize() const;
+		inline const PLMath::Vector2i &GetSize() const;
 
 		/**
 		*  @brief
@@ -75,7 +75,7 @@ class FontGlyph {
 		*  @return
 		*    The distance (in pixel) from the current pen position to the glyph bitmap
 		*/
-		PLRENDERER_API const PLMath::Vector2 &GetCorner() const;
+		inline const PLMath::Vector2 &GetCorner() const;
 
 		/**
 		*  @brief
@@ -84,7 +84,7 @@ class FontGlyph {
 		*  @return
 		*    The object space pen advance
 		*/
-		PLRENDERER_API const PLMath::Vector2 &GetPenAdvance() const;
+		inline const PLMath::Vector2 &GetPenAdvance() const;
 
 
 	//[-------------------------------------------------------]
@@ -140,6 +140,12 @@ class FontGlyph {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/FontGlyph.inl"
 
 
 #endif // __PLRENDERER_FONTGLYPH_H__

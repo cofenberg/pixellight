@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Tools.h>
 #include "PLRenderer/Renderer/SamplerStates.h"
 
 
@@ -38,103 +37,6 @@ namespace PLRenderer {
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
 pl_implement_class(SamplerStates)
-
-
-//[-------------------------------------------------------]
-//[ Public RTTI get/set functions                         ]
-//[-------------------------------------------------------]
-// Address modes
-TextureAddressing::Enum SamplerStates::GetAddressU() const
-{
-	return static_cast<TextureAddressing::Enum>(m_nSS[Sampler::AddressU]);
-}
-
-void SamplerStates::SetAddressU(TextureAddressing::Enum nValue)
-{
-	m_nSS[Sampler::AddressU] = nValue;
-}
-
-TextureAddressing::Enum SamplerStates::GetAddressV() const
-{
-	return static_cast<TextureAddressing::Enum>(m_nSS[Sampler::AddressV]);
-}
-
-void SamplerStates::SetAddressV(TextureAddressing::Enum nValue)
-{
-	m_nSS[Sampler::AddressV] = nValue;
-}
-
-TextureAddressing::Enum SamplerStates::GetAddressW() const
-{
-	return static_cast<TextureAddressing::Enum>(m_nSS[Sampler::AddressW]);
-}
-
-void SamplerStates::SetAddressW(TextureAddressing::Enum nValue)
-{
-	m_nSS[Sampler::AddressW] = nValue;
-}
-
-// Filter
-TextureFiltering::Enum SamplerStates::GetMagFilter() const
-{
-	return static_cast<TextureFiltering::Enum>(m_nSS[Sampler::MagFilter]);
-}
-
-void SamplerStates::SetMagFilter(TextureFiltering::Enum nValue)
-{
-	m_nSS[Sampler::MagFilter] = nValue;
-}
-
-TextureFiltering::Enum SamplerStates::GetMinFilter() const
-{
-	return static_cast<TextureFiltering::Enum>(m_nSS[Sampler::MinFilter]);
-}
-
-void SamplerStates::SetMinFilter(TextureFiltering::Enum nValue)
-{
-	m_nSS[Sampler::MinFilter] = nValue;
-}
-
-TextureFiltering::Enum SamplerStates::GetMipFilter() const
-{
-	return static_cast<TextureFiltering::Enum>(m_nSS[Sampler::MipFilter]);
-}
-
-void SamplerStates::SetMipFilter(TextureFiltering::Enum nValue)
-{
-	m_nSS[Sampler::MipFilter] = nValue;
-}
-
-// Filter
-float SamplerStates::GetMipmapLODBias() const
-{
-	return Tools::UInt32ToFloat(m_nSS[Sampler::MipmapLODBias]);
-}
-
-void SamplerStates::SetMipmapLODBias(float fValue)
-{
-	m_nSS[Sampler::MipmapLODBias] = Tools::FloatToUInt32(fValue);
-}
-
-uint32 SamplerStates::GetMaxMapLevel() const
-{
-	return m_nSS[Sampler::MaxMapLevel];
-}
-
-void SamplerStates::SetMaxMapLevel(int nValue)
-{
-	m_nSS[Sampler::MaxMapLevel] = nValue;
-}
-
-uint32 SamplerStates::GetMaxAnisotropy() const
-{
-	return m_nSS[Sampler::MaxAnisotropy];
-}
-
-void SamplerStates::SetMaxAnisotropy(uint32 nValue)
-{
-	m_nSS[Sampler::MaxAnisotropy] = nValue;
-}
 
 
 //[-------------------------------------------------------]
@@ -196,47 +98,6 @@ SamplerStates::SamplerStates(const SamplerStates &cSource) :
 */
 SamplerStates::~SamplerStates()
 {
-}
-
-/**
-*  @brief
-*    Retrieves a sampler-state value
-*/
-uint32 SamplerStates::Get(Sampler::Enum nState) const
-{
-	// Check whether the state is a valid sampler member
-	return (nState < Sampler::Number) ? m_nSS[nState] : 0;
-}
-
-/**
-*  @brief
-*    Sets a single sampler-state parameter
-*/
-bool SamplerStates::Set(Sampler::Enum nState, uint32 nValue)
-{
-	// Check whether the state is a valid sampler member
-	if (nState >= Sampler::Number)
-		return false; // Error!
-
-	// Set sampler state value
-	m_nSS[nState] = nValue;
-
-	// Done
-	return true;
-}
-
-/**
-*  @brief
-*    Copy operator
-*/
-SamplerStates &SamplerStates::operator =(const SamplerStates &cSource)
-{
-	// Copy states
-	for (uint32 i=0; i<Sampler::Number; i++)
-		m_nSS[i] = cSource.m_nSS[i];
-
-	// Return this
-	return *this;
 }
 
 

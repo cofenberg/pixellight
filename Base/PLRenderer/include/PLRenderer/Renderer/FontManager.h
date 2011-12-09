@@ -80,7 +80,7 @@ class FontManager {
 		*  @return
 		*    The owner renderer
 		*/
-		PLRENDERER_API Renderer &GetRenderer() const;
+		inline Renderer &GetRenderer() const;
 
 		//[-------------------------------------------------------]
 		//[ Texture font                                          ]
@@ -244,6 +244,12 @@ class FontManager {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/FontManager.inl"
 
 
 #endif // __PLRENDERER_FONTMANAGER_H__

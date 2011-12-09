@@ -52,33 +52,6 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the owner effect technique
-*/
-EffectTechnique &EffectPass::GetTechnique() const
-{
-	return *m_pTechnique;
-}
-
-/**
-*  @brief
-*    Returns the pass name
-*/
-String EffectPass::GetName() const
-{
-	return m_sName;
-}
-
-/**
-*  @brief
-*    Sets the pass name
-*/
-void EffectPass::SetName(const String &sName)
-{
-	m_sName = sName;
-}
-
-/**
-*  @brief
 *    Binds the pass
 */
 bool EffectPass::Bind(ParameterManager *pParameterManager)
@@ -243,52 +216,6 @@ EffectPass &EffectPass::operator =(const EffectPass &cSource)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the general color
-*/
-const Color4 &EffectPass::GetColor() const
-{
-	return m_cColor;
-}
-
-/**
-*  @brief
-*    Sets the general color
-*/
-void EffectPass::SetColor(const Color4 &cColor)
-{
-	m_cColor = cColor;
-}
-
-/**
-*  @brief
-*    Returns the render states
-*/
-RenderStates &EffectPass::GetRenderStates()
-{
-	return m_cRenderStates;
-}
-
-const RenderStates &EffectPass::GetRenderStates() const
-{
-	return m_cRenderStates;
-}
-
-/**
-*  @brief
-*    Returns the fixed functions render states
-*/
-FixedFunctionsRenderStates &EffectPass::GetFixedFunctionsRenderStates()
-{
-	return m_cFixedFunctionsRenderStates;
-}
-
-const FixedFunctionsRenderStates &EffectPass::GetFixedFunctionsRenderStates() const
-{
-	return m_cFixedFunctionsRenderStates;
-}
-
-/**
-*  @brief
 *    Resets all material states to default
 */
 void EffectPass::ResetMaterialStates()
@@ -307,46 +234,10 @@ void EffectPass::ResetMaterialStates()
 	}
 }
 
-/**
-*  @brief
-*    Retrieves a material-state value
-*/
-uint32 EffectPass::GetMaterialState(FixedFunctions::MaterialState::Enum nState) const
-{
-	// Check if the state is a value renderer material state member
-	return (nState < FixedFunctions::MaterialState::Number) ? m_nMaterialState[nState] : 0;
-}
-
-/**
-*  @brief
-*    Sets a single material-state parameter
-*/
-bool EffectPass::SetMaterialState(FixedFunctions::MaterialState::Enum nState, uint32 nValue)
-{
-	// Check if the state is a value renderer material state member
-	if (nState >= FixedFunctions::MaterialState::Number)
-		return false; // Error!
-
-	// Set material state value
-	m_nMaterialState[nState] = nValue;
-
-	// Done
-	return true;
-}
-
 
 //[-------------------------------------------------------]
 //[ Layers                                                ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the number of texture layers
-*/
-uint32 EffectPass::GetNumOfLayers() const
-{
-	return m_lstLayers.GetNumOfElements();
-}
-
 /**
 *  @brief
 *    Adds a new layer
@@ -356,15 +247,6 @@ EffectPassLayer *EffectPass::AddLayer()
 	EffectPassLayer *ppFXPassLayer = new EffectPassLayer(*this);
 	m_lstLayers.Add(ppFXPassLayer);
 	return ppFXPassLayer;
-}
-
-/**
-*  @brief
-*    Returns a layer
-*/
-EffectPassLayer *EffectPass::GetLayer(uint32 nIndex) const
-{
-	return m_lstLayers[nIndex];
 }
 
 /**

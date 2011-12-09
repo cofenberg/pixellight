@@ -78,7 +78,7 @@ class RendererBackend : public Renderer {
 		*  @return
 		*    The writable renderer statistics
 		*/
-		PLRENDERER_API Statistics &GetWritableStatistics();
+		inline Statistics &GetWritableStatistics();
 
 		/**
 		*  @brief
@@ -130,7 +130,7 @@ class RendererBackend : public Renderer {
 		*  @return
 		*    The API pixel format of the given PixelLight pixel format, a null pointer on error
 		*/
-		PLRENDERER_API PLCore::uint32 *GetAPIPixelFormat(TextureBuffer::EPixelFormat nPixelFormat) const;
+		inline PLCore::uint32 *GetAPIPixelFormat(TextureBuffer::EPixelFormat nPixelFormat) const;
 
 
 	//[-------------------------------------------------------]
@@ -385,6 +385,12 @@ class RendererBackend : public Renderer {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/Backend/RendererBackend.inl"
 
 
 #endif // __PLRENDERERBACKEND_RENDERERBACKEND_H__

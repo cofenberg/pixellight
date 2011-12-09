@@ -63,51 +63,6 @@ Surface::~Surface()
 
 /**
 *  @brief
-*    Returns the owner renderer
-*/
-Renderer &Surface::GetRenderer() const
-{
-	return *m_pRenderer;
-}
-
-/**
-*  @brief
-*    Returns the surface type
-*/
-Surface::EType Surface::GetType() const
-{
-	return m_nType;
-}
-
-/**
-*  @brief
-*    Returns whether the surface is active or not
-*/
-bool Surface::IsActive() const
-{
-	return m_bActive;
-}
-
-/**
-*  @brief
-*    Sets whether the surface is active or not
-*/
-void Surface::SetActive(bool bActive)
-{
-	m_bActive = bActive;
-}
-
-/**
-*  @brief
-*    Returns the surface painter
-*/
-SurfacePainter *Surface::GetPainter() const
-{
-	return m_pPainter;
-}
-
-/**
-*  @brief
 *    Set a surface painter
 */
 bool Surface::SetPainter(SurfacePainter *pPainter, bool bDestroy)
@@ -157,24 +112,6 @@ void Surface::Draw()
 		// Update statistics (all renderer backends must be derived from the renderer backend class in order to have a common ground, so, this cast is assumed to be safe)
 		reinterpret_cast<RendererBackend*>(m_pRenderer)->GetWritableStatistics().fRenderingTime += cStopwatch.GetMilliseconds();
 	}
-}
-
-/**
-*  @brief
-*    Returns the whether the surface is flipped along the y axis
-*/
-bool Surface::IsSwapY() const
-{
-	return m_bSwapY;
-}
-
-/**
-*  @brief
-*    Sets the whether the surface is flipped along the y axis
-*/
-void Surface::SetSwapY(bool bSwapY)
-{
-	m_bSwapY = bSwapY;
 }
 
 

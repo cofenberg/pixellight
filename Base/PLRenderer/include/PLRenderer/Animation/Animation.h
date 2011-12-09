@@ -114,7 +114,7 @@ class Animation : public PLCore::Element<Animation> {
 		*  @return
 		*    'true' if the animation is active, else 'false'
 		*/
-		PLRENDERER_API bool IsActive() const;
+		inline bool IsActive() const;
 
 		/**
 		*  @brief
@@ -126,7 +126,7 @@ class Animation : public PLCore::Element<Animation> {
 		*  @note
 		*    - If an animation is inactive it is ignored
 		*/
-		PLRENDERER_API void SetActive(bool bActive = true);
+		inline void SetActive(bool bActive = true);
 
 		/**
 		*  @brief
@@ -135,7 +135,7 @@ class Animation : public PLCore::Element<Animation> {
 		*  @return
 		*    Animation type (for instance  0=skeleton  1=vertex)
 		*/
-		PLRENDERER_API PLCore::uint32 GetType() const;
+		inline PLCore::uint32 GetType() const;
 
 		/**
 		*  @brief
@@ -144,7 +144,7 @@ class Animation : public PLCore::Element<Animation> {
 		*  @param[in] nType
 		*    Animation type (for instance  0=skeleton  1=vertex)
 		*/
-		PLRENDERER_API void SetType(PLCore::uint32 nType = 0);
+		inline void SetType(PLCore::uint32 nType = 0);
 
 		/**
 		*  @brief
@@ -191,13 +191,13 @@ class Animation : public PLCore::Element<Animation> {
 		*  @brief
 		*    Pause the animation
 		*/
-		PLRENDERER_API void Pause();
+		inline void Pause();
 
 		/**
 		*  @brief
 		*    Continues the animation
 		*/
-		PLRENDERER_API void Continue();
+		inline void Continue();
 
 		/**
 		*  @brief
@@ -206,7 +206,7 @@ class Animation : public PLCore::Element<Animation> {
 		*  @return
 		*    Animation information, a null pointer if there's no one
 		*/
-		PLRENDERER_API AnimationInfo *GetAnimation() const;
+		inline AnimationInfo *GetAnimation() const;
 
 		/**
 		*  @brief
@@ -215,7 +215,7 @@ class Animation : public PLCore::Element<Animation> {
 		*  @return
 		*    Animation weight (normally 0.0-1.0)
 		*/
-		PLRENDERER_API float GetWeight() const;
+		inline float GetWeight() const;
 
 		/**
 		*  @brief
@@ -224,7 +224,7 @@ class Animation : public PLCore::Element<Animation> {
 		*  @param[in] fWeight
 		*    Animation weight (normally 0.0-1.0)
 		*/
-		PLRENDERER_API void SetWeight(float fWeight = 1.0f);
+		inline void SetWeight(float fWeight = 1.0f);
 
 		/**
 		*  @brief
@@ -233,7 +233,7 @@ class Animation : public PLCore::Element<Animation> {
 		*  @return
 		*    Current speed of the animation, if negative, the animation is played reversed
 		*/
-		PLRENDERER_API float GetSpeed() const;
+		inline float GetSpeed() const;
 
 		/**
 		*  @brief
@@ -242,7 +242,7 @@ class Animation : public PLCore::Element<Animation> {
 		*  @param[in] fSpeed
 		*    New speed for the animation, if negative, the animation is played reversed
 		*/
-		PLRENDERER_API void SetSpeed(float fSpeed = 24.0f);
+		inline void SetSpeed(float fSpeed = 24.0f);
 
 		/**
 		*  @brief
@@ -251,7 +251,7 @@ class Animation : public PLCore::Element<Animation> {
 		*  @return
 		*    Animation information flags (see EFlags)
 		*/
-		PLRENDERER_API PLCore::uint32 GetFlags() const;
+		inline PLCore::uint32 GetFlags() const;
 
 		/**
 		*  @brief
@@ -260,7 +260,7 @@ class Animation : public PLCore::Element<Animation> {
 		*  @param[in] nFlags
 		*    Animation information flags (see EFlags)
 		*/
-		PLRENDERER_API void SetFlags(PLCore::uint32 nFlags = 0);
+		inline void SetFlags(PLCore::uint32 nFlags = 0);
 
 		/**
 		*  @brief
@@ -269,7 +269,7 @@ class Animation : public PLCore::Element<Animation> {
 		*  @return
 		*    'true' if the animation is currently running, else 'false'
 		*/
-		PLRENDERER_API bool IsRunning() const;
+		inline bool IsRunning() const;
 
 		/**
 		*  @brief
@@ -278,7 +278,7 @@ class Animation : public PLCore::Element<Animation> {
 		*  @return
 		*    The start frame (inclusive)
 		*/
-		PLRENDERER_API PLCore::uint32 GetStartFrame() const;
+		inline PLCore::uint32 GetStartFrame() const;
 
 		/**
 		*  @brief
@@ -287,7 +287,7 @@ class Animation : public PLCore::Element<Animation> {
 		*  @return
 		*    The end frame (inclusive)
 		*/
-		PLRENDERER_API PLCore::uint32 GetEndFrame() const;
+		inline PLCore::uint32 GetEndFrame() const;
 
 		/**
 		*  @brief
@@ -296,7 +296,7 @@ class Animation : public PLCore::Element<Animation> {
 		*  @return
 		*    The number of frames
 		*/
-		PLRENDERER_API PLCore::uint32 GetNumOfFrames() const;
+		inline PLCore::uint32 GetNumOfFrames() const;
 
 		/**
 		*  @brief
@@ -373,7 +373,7 @@ class Animation : public PLCore::Element<Animation> {
 		*    - If animation events are enabled special frames are able to send
 		*      an event message to the scene node connected with the animation
 		*/
-		PLRENDERER_API bool GetEvents() const;
+		inline bool GetEvents() const;
 
 		/**
 		*  @brief
@@ -385,7 +385,7 @@ class Animation : public PLCore::Element<Animation> {
 		*  @see
 		*    - GetEvents()
 		*/
-		PLRENDERER_API void SetEvents(bool bEvents = true);
+		inline void SetEvents(bool bEvents = true);
 
 		//[-------------------------------------------------------]
 		//[ Operators                                             ]
@@ -436,6 +436,12 @@ class Animation : public PLCore::Element<Animation> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Animation/Animation.inl"
 
 
 #endif // __PLRENDERER_ANIMATION_H__

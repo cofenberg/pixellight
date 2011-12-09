@@ -98,7 +98,7 @@ class ResourceHandler {
 		*  @return
 		*    The resource handlers resource, can be a null pointer
 		*/
-		PLRENDERER_API Resource *GetResource() const;
+		inline Resource *GetResource() const;
 
 		/**
 		*  @brief
@@ -135,6 +135,12 @@ class ResourceHandler {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/ResourceHandler.inl"
 
 
 #endif // __PLRENDERER_RESOURCE_HANDLER_H__

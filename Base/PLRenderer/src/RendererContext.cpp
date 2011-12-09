@@ -92,15 +92,6 @@ RendererContext::~RendererContext()
 
 /**
 *  @brief
-*    Returns the used renderer
-*/
-Renderer &RendererContext::GetRenderer() const
-{
-	return *m_pRenderer;
-}
-
-/**
-*  @brief
 *    Returns the texture manager of this renderer context
 */
 TextureManager &RendererContext::GetTextureManager()

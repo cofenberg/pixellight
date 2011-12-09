@@ -125,8 +125,8 @@ class TextureAni : public Texture {
 		*  @return
 		*    The texture handlers texture animation manager
 		*/
-		PLRENDERER_API AniInfoManager &GetTextureAnimationManager();
-		PLRENDERER_API const AniInfoManager &GetTextureAnimationManager() const;
+		inline AniInfoManager &GetTextureAnimationManager();
+		inline const AniInfoManager &GetTextureAnimationManager() const;
 
 		/**
 		*  @brief
@@ -144,8 +144,8 @@ class TextureAni : public Texture {
 		*  @return
 		*    The texture frames array
 		*/
-		PLRENDERER_API PLCore::Array<TextureFrame*> &GetTextureFrames();
-		PLRENDERER_API const PLCore::Array<TextureFrame*> &GetTextureFrames() const;
+		inline PLCore::Array<TextureFrame*> &GetTextureFrames();
+		inline const PLCore::Array<TextureFrame*> &GetTextureFrames() const;
 
 		//[-------------------------------------------------------]
 		//[ Matrix animation                                      ]
@@ -157,8 +157,8 @@ class TextureAni : public Texture {
 		*  @return
 		*    The texture handlers matrix animation manager
 		*/
-		PLRENDERER_API AniInfoManager &GetMatrixAnimationManager();
-		PLRENDERER_API const AniInfoManager &GetMatrixAnimationManager() const;
+		inline AniInfoManager &GetMatrixAnimationManager();
+		inline const AniInfoManager &GetMatrixAnimationManager() const;
 
 		/**
 		*  @brief
@@ -176,8 +176,8 @@ class TextureAni : public Texture {
 		*  @return
 		*    The matrix frames array
 		*/
-		PLRENDERER_API PLCore::Array<MatrixFrame*> &GetMatrixFrames();
-		PLRENDERER_API const PLCore::Array<MatrixFrame*> &GetMatrixFrames() const;
+		inline PLCore::Array<MatrixFrame*> &GetMatrixFrames();
+		inline const PLCore::Array<MatrixFrame*> &GetMatrixFrames() const;
 
 		//[-------------------------------------------------------]
 		//[ Color animation                                       ]
@@ -189,8 +189,8 @@ class TextureAni : public Texture {
 		*  @return
 		*    The texture handlers color animation manager
 		*/
-		PLRENDERER_API AniInfoManager &GetColorAnimationManager();
-		PLRENDERER_API const AniInfoManager &GetColorAnimationManager() const;
+		inline AniInfoManager &GetColorAnimationManager();
+		inline const AniInfoManager &GetColorAnimationManager() const;
 
 		/**
 		*  @brief
@@ -208,8 +208,8 @@ class TextureAni : public Texture {
 		*  @return
 		*    The color frames array
 		*/
-		PLRENDERER_API PLCore::Array<ColorFrame*> &GetColorFrames();
-		PLRENDERER_API const PLCore::Array<ColorFrame*> &GetColorFrames() const;
+		inline PLCore::Array<ColorFrame*> &GetColorFrames();
+		inline const PLCore::Array<ColorFrame*> &GetColorFrames() const;
 
 
 	//[-------------------------------------------------------]
@@ -268,6 +268,12 @@ class TextureAni : public Texture {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Texture/TextureAni.inl"
 
 
 #endif // __PLRENDERER_TEXTUREANI_H__

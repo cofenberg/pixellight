@@ -105,7 +105,7 @@ class Resource {
 		*  @return
 		*    The owner renderer
 		*/
-		PLRENDERER_API Renderer &GetRenderer() const;
+		inline Renderer &GetRenderer() const;
 
 		/**
 		*  @brief
@@ -114,7 +114,7 @@ class Resource {
 		*  @return
 		*    Resource type
 		*/
-		PLRENDERER_API EType GetType() const;
+		inline EType GetType() const;
 
 		/**
 		*  @brief
@@ -123,7 +123,7 @@ class Resource {
 		*  @return
 		*    The number of resource handlers
 		*/
-		PLRENDERER_API PLCore::uint32 GetNumOfHandlers() const;
+		inline PLCore::uint32 GetNumOfHandlers() const;
 
 		/**
 		*  @brief
@@ -139,7 +139,7 @@ class Resource {
 		*    - The handlers will be informed if the resource was lost
 		*    - The handlers itself are not deleted etc. they are only 'added' to a list
 		*/
-		PLRENDERER_API bool IsHandler(ResourceHandler &cHandler) const;
+		inline bool IsHandler(ResourceHandler &cHandler) const;
 
 		/**
 		*  @brief
@@ -270,6 +270,12 @@ class Resource {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/Resource.inl"
 
 
 #endif // __PLRENDERER_RESOURCE_H__

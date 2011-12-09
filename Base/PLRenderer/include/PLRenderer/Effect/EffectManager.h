@@ -86,7 +86,7 @@ class EffectManager : public PLCore::ResourceManager<Effect> {
 		*  @return
 		*    Reference to the owner renderer context of this manager
 		*/
-		PLRENDERER_API RendererContext &GetRendererContext() const;
+		inline RendererContext &GetRendererContext() const;
 
 		/**
 		*  @brief
@@ -161,6 +161,12 @@ class EffectManager : public PLCore::ResourceManager<Effect> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Effect/EffectManager.inl"
 
 
 #endif // __PLRENDERER_EFFECT_MANAGER_H__

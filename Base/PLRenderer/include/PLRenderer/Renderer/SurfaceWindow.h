@@ -78,7 +78,7 @@ class SurfaceWindow : public Surface {
 		*  @return
 		*    The renderer surface handler this surface is assigned with, can be a null pointer
 		*/
-		PLRENDERER_API SurfaceWindowHandler *GetHandler() const;
+		inline SurfaceWindowHandler *GetHandler() const;
 
 		/**
 		*  @brief
@@ -87,7 +87,7 @@ class SurfaceWindow : public Surface {
 		*  @return
 		*    The native window the surface is assigned with, can be a null pointer
 		*/
-		PLRENDERER_API PLCore::handle GetNativeWindowHandle() const;
+		inline PLCore::handle GetNativeWindowHandle() const;
 
 		/**
 		*  @brief
@@ -96,7 +96,7 @@ class SurfaceWindow : public Surface {
 		*  @return
 		*    'true' if the window is in fullscreen mode, else 'false'
 		*/
-		PLRENDERER_API bool IsFullscreen() const;
+		inline bool IsFullscreen() const;
 
 
 	//[-------------------------------------------------------]
@@ -204,6 +204,12 @@ class SurfaceWindow : public Surface {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/SurfaceWindow.inl"
 
 
 #endif // __PLRENDERER_SURFACE_WINDOW_H__

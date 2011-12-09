@@ -51,42 +51,6 @@ Resource::~Resource()
 
 /**
 *  @brief
-*    Returns the owner renderer
-*/
-Renderer &Resource::GetRenderer() const
-{
-	return *m_pRenderer;
-}
-
-/**
-*  @brief
-*    Returns the resource type
-*/
-Resource::EType Resource::GetType() const
-{
-	return m_nType;
-}
-
-/**
-*  @brief
-*    Returns the number of resource handlers
-*/
-uint32 Resource::GetNumOfHandlers() const
-{
-	return m_lstHandlers.GetNumOfElements();
-}
-
-/**
-*  @brief
-*    Returns whether a resource handler is using this resource
-*/
-bool Resource::IsHandler(ResourceHandler &cHandler) const
-{
-	return m_lstHandlers.IsElement(&cHandler);
-}
-
-/**
-*  @brief
 *    Adds a resource handler
 */
 bool Resource::AddHandler(ResourceHandler &cHandler)

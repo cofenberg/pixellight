@@ -118,7 +118,7 @@ class Font : public Resource {
 		*  @return
 		*    The creating font manager
 		*/
-		PLRENDERER_API FontManager &GetFontManager() const;
+		inline FontManager &GetFontManager() const;
 
 		/**
 		*  @brief
@@ -127,7 +127,7 @@ class Font : public Resource {
 		*  @return
 		*    The filename of the font file the data came from
 		*/
-		PLRENDERER_API PLCore::String GetFilename() const;
+		inline PLCore::String GetFilename() const;
 
 		/**
 		*  @brief
@@ -136,7 +136,7 @@ class Font : public Resource {
 		*  @return
 		*    The nominal font size in points, for example 12
 		*/
-		PLRENDERER_API PLCore::uint32 GetSize() const;
+		inline PLCore::uint32 GetSize() const;
 
 		/**
 		*  @brief
@@ -145,7 +145,7 @@ class Font : public Resource {
 		*  @return
 		*    The horizontal and vertical resolution in DPI, for example 96
 		*/
-		PLRENDERER_API PLCore::uint32 GetResolution() const;
+		inline PLCore::uint32 GetResolution() const;
 
 		/**
 		*  @brief
@@ -161,7 +161,7 @@ class Font : public Resource {
 		*    Font size in pixels = ------------------- × 96 dpi = ---- × 96 = 16 pixels
 		*                          72 points per inch              72
 		*/
-		PLRENDERER_API PLCore::uint32 GetSizeInPixels() const;
+		inline PLCore::uint32 GetSizeInPixels() const;
 
 		/**
 		*  @brief
@@ -173,7 +173,7 @@ class Font : public Resource {
 		*  @see
 		*    - GetSizeInPixels()
 		*/
-		PLRENDERER_API PLCore::uint32 GetHeightInPixels() const;
+		inline PLCore::uint32 GetHeightInPixels() const;
 
 
 	//[-------------------------------------------------------]
@@ -334,6 +334,12 @@ class Font : public Resource {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/Font.inl"
 
 
 #endif // __PLRENDERER_FONT_H__

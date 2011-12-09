@@ -51,24 +51,6 @@ const String TextureManager::Default = "Data/Textures/Default.dds";
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the owner renderer context of this manager
-*/
-RendererContext &TextureManager::GetRendererContext() const
-{
-	return *m_pRendererContext;
-}
-
-/**
-*  @brief
-*    Returns the texture quality
-*/
-float TextureManager::GetTextureQuality() const
-{
-	return m_fTextureQuality;
-}
-
-/**
-*  @brief
 *    Sets the texture quality
 */
 void TextureManager::SetTextureQuality(float fQuality)
@@ -80,60 +62,6 @@ void TextureManager::SetTextureQuality(float fQuality)
 		m_fTextureQuality = 0.0f;
 	else if (m_fTextureQuality > 1.0f)
 		m_fTextureQuality = 1.0f;
-}
-
-/**
-*  @brief
-*    Returns whether the next lower valid texture size should be taken or the higher one
-*/
-bool TextureManager::GetTextureFit() const
-{
-	return m_bTextureFitLower;
-}
-
-/**
-*  @brief
-*    Sets whether the next lower valid texture size should be taken or the higher one
-*/
-void TextureManager::SetTextureFit(bool bLower)
-{
-	m_bTextureFitLower = bLower;
-}
-
-/**
-*  @brief
-*    Returns whether or not the usage of texture mipmaps is allowed
-*/
-bool TextureManager::AreTextureMipmapsAllowed() const
-{
-	return m_bTextureMipmapsAllowed;
-}
-
-/**
-*  @brief
-*    Sets whether or not the usage of texture mipmaps is allowed
-*/
-void TextureManager::SetTextureMipmapsAllowed(bool bAllowed)
-{
-	m_bTextureMipmapsAllowed = bAllowed;
-}
-
-/**
-*  @brief
-*    Returns whether or not the usage of texture compression is allowed
-*/
-bool TextureManager::IsTextureCompressionAllowed() const
-{
-	return m_bTextureCompressionAllowed;
-}
-
-/**
-*  @brief
-*    Sets whether or not the usage of texture compression is allowed
-*/
-void TextureManager::SetTextureCompressionAllowed(bool bAllowed)
-{
-	m_bTextureCompressionAllowed = bAllowed;
 }
 
 /**

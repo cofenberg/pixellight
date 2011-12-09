@@ -69,15 +69,6 @@ const char *GetBoolString(bool bValue)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the writable renderer statistics for internal usage
-*/
-Statistics &RendererBackend::GetWritableStatistics()
-{
-	return m_sStatistics;
-}
-
-/**
-*  @brief
 *    Makes a surface to the renderers current render target
 */
 bool RendererBackend::MakeSurfaceCurrent(Surface &cSurface, uint8 nFace)
@@ -101,16 +92,6 @@ bool RendererBackend::UnmakeSurfaceCurrent(Surface &cSurface)
 bool RendererBackend::MakeTextureBufferCurrent(TextureBuffer &cTextureBuffer, uint32 nStage)
 {
 	return cTextureBuffer.MakeCurrent(nStage);
-}
-
-/**
-*  @brief
-*    Returns the API pixel format
-*/
-uint32 *RendererBackend::GetAPIPixelFormat(TextureBuffer::EPixelFormat nPixelFormat) const
-{
-	uint32 &nAPI = m_cPLE_TPFWrapper[nPixelFormat];
-	return (&nAPI != &Array<uint32>::Null) ? &nAPI : nullptr;
 }
 
 

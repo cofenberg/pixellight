@@ -74,7 +74,7 @@ class EffectTechnique {
 		*  @return
 		*    Owner effect
 		*/
-		PLRENDERER_API Effect &GetEffect() const;
+		inline Effect &GetEffect() const;
 
 		/**
 		*  @brief
@@ -88,7 +88,7 @@ class EffectTechnique {
 		*    shader isn't supported by the hardware you shouldn't use this
 		*    technique because it may produce ugly results!
 		*/
-		PLRENDERER_API bool IsValid() const;
+		inline bool IsValid() const;
 
 		/**
 		*  @brief
@@ -97,7 +97,7 @@ class EffectTechnique {
 		*  @param[in] bValid
 		*    Technique valid?
 		*/
-		PLRENDERER_API void SetValid(bool bValid);
+		inline void SetValid(bool bValid);
 
 		/**
 		*  @brief
@@ -106,7 +106,7 @@ class EffectTechnique {
 		*  @return
 		*    Name of the technique
 		*/
-		PLRENDERER_API PLCore::String GetName() const;
+		inline PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -115,7 +115,7 @@ class EffectTechnique {
 		*  @param[in] sName
 		*    New technique name
 		*/
-		PLRENDERER_API void SetName(const PLCore::String &sName = "");
+		inline void SetName(const PLCore::String &sName = "");
 
 		/**
 		*  @brief
@@ -124,7 +124,7 @@ class EffectTechnique {
 		*  @return
 		*    Number of passes
 		*/
-		PLRENDERER_API PLCore::uint32 GetNumOfPasses() const;
+		inline PLCore::uint32 GetNumOfPasses() const;
 
 		/**
 		*  @brief
@@ -166,7 +166,7 @@ class EffectTechnique {
 		*  @return
 		*    The requested pass, a null pointer on error
 		*/
-		PLRENDERER_API EffectPass *GetPass(PLCore::uint32 nIndex = 0) const;
+		inline EffectPass *GetPass(PLCore::uint32 nIndex = 0) const;
 
 		/**
 		*  @brief
@@ -232,6 +232,12 @@ class EffectTechnique {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Effect/EffectTechnique.inl"
 
 
 #endif // __PLRENDERER_EFFECT_EFFECTTECHNIQUE_H__

@@ -397,105 +397,6 @@ TextureBuffer::~TextureBuffer()
 
 /**
 *  @brief
-*    Returns the texture buffer flags
-*/
-uint32 TextureBuffer::GetFlags() const
-{
-	return m_nFlags;
-}
-
-/**
-*  @brief
-*    Returns the texture buffer pixel format
-*/
-TextureBuffer::EPixelFormat TextureBuffer::GetFormat() const
-{
-	return m_nFormat;
-}
-
-/**
-*  @brief
-*    Returns whether or not the used texture buffer format is compressed
-*/
-bool TextureBuffer::IsCompressedFormat() const
-{
-	return IsCompressedFormat(m_nFormat);
-}
-
-/**
-*  @brief
-*    Returns whether or not the used texture buffer format is a depth buffer format
-*/
-bool TextureBuffer::IsDepthFormat() const
-{
-	return IsDepthFormat(m_nFormat);
-}
-
-/**
-*  @brief
-*    If the used texture buffer format is compressed, a proper uncompressed texture buffer format will be returned
-*/
-TextureBuffer::EPixelFormat TextureBuffer::GetUncompressedFormat() const
-{
-	return GetUncompressedFormat(m_nFormat);
-}
-
-/**
-*  @brief
-*    Returns whether or not the used texture buffer format is a floating point format
-*/
-bool TextureBuffer::IsFloatingPointFormat() const
-{
-	return IsFloatingPointFormat(m_nFormat);
-}
-
-/**
-*  @brief
-*    Returns the number of components per pixel
-*/
-uint32 TextureBuffer::GetComponentsPerPixel() const
-{
-	return GetComponentsPerPixel(m_nFormat);
-}
-
-/**
-*  @brief
-*    Returns the number of bytes per pixel component
-*/
-uint32 TextureBuffer::GetBytesPerPixelComponent() const
-{
-	return GetBytesPerPixelComponent(m_nFormat);
-}
-
-/**
-*  @brief
-*    Returns the number of bytes per pixel
-*/
-uint32 TextureBuffer::GetBytesPerPixel() const
-{
-	return GetBytesPerPixel(m_nFormat);
-}
-
-/**
-*  @brief
-*    Returns the number of mipmap levels
-*/
-uint32 TextureBuffer::GetNumOfMipmaps() const
-{
-	return m_nNumOfMipmaps;
-}
-
-/**
-*  @brief
-*    Returns the number of faces
-*/
-uint8 TextureBuffer::GetNumOfFaces() const
-{
-	return (GetType() == TypeTextureBufferCube) ? 6 : 1;
-}
-
-/**
-*  @brief
 *    Returns the total number of pixels including all mipmaps
 */
 uint32 TextureBuffer::GetTotalNumOfPixels() const
@@ -509,15 +410,6 @@ uint32 TextureBuffer::GetTotalNumOfPixels() const
 
 	// Return the total number of pixels
 	return nTotalNumOfPixels;
-}
-
-/**
-*  @brief
-*    Returns the total number of bytes required for the texture buffer data including all mipmaps
-*/
-uint32 TextureBuffer::GetTotalNumOfBytes() const
-{
-	return m_nTotalNumOfBytes;
 }
 
 /**

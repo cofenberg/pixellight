@@ -60,15 +60,6 @@ VertexBuffer::~VertexBuffer()
 
 /**
 *  @brief
-*    Returns the number of vertex attributes
-*/
-uint32 VertexBuffer::GetNumOfVertexAttributes() const
-{
-	return m_lstVertexAttributes.GetNumOfElements();
-}
-
-/**
-*  @brief
 *    Clears the vertex attributes
 */
 bool VertexBuffer::ClearVertexAttributes()
@@ -183,15 +174,6 @@ bool VertexBuffer::AddVertexAttribute(ESemantic nSemantic, uint32 nChannel, ETyp
 
 /**
 *  @brief
-*    Returns a vertex attribute
-*/
-const VertexBuffer::Attribute *VertexBuffer::GetVertexAttribute(uint32 nIndex) const
-{
-	return m_lstVertexAttributes[nIndex];
-}
-
-/**
-*  @brief
 *    Returns the first found vertex attribute with the requested semantic
 */
 const VertexBuffer::Attribute *VertexBuffer::GetVertexAttribute(ESemantic nSemantic, uint32 nChannel) const
@@ -208,15 +190,6 @@ const VertexBuffer::Attribute *VertexBuffer::GetVertexAttribute(ESemantic nSeman
 
 	// Error, no vertex attribute with the requested semantic found!
 	return nullptr;
-}
-
-/**
-*  @brief
-*    Returns the vertex size in bytes
-*/
-uint32 VertexBuffer::GetVertexSize() const
-{
-	return m_nVertexSize;
 }
 
 /**

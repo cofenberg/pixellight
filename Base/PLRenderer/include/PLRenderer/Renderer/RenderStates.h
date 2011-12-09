@@ -109,90 +109,93 @@ class RenderStates : public PLCore::Object {
 	//[-------------------------------------------------------]
 	public:
 		// Modes
-		PLRENDERER_API Fill::Enum GetFillMode() const;
-		PLRENDERER_API void SetFillMode(Fill::Enum nValue);
-		PLRENDERER_API Cull::Enum GetCullMode() const;
-		PLRENDERER_API void SetCullMode(Cull::Enum nValue);
+		inline Fill::Enum GetFillMode() const;
+		inline void SetFillMode(Fill::Enum nValue);
+		inline Cull::Enum GetCullMode() const;
+		inline void SetCullMode(Cull::Enum nValue);
 		// Z buffer
-		PLRENDERER_API bool GetZEnable() const;
-		PLRENDERER_API void SetZEnable(bool bValue);
-		PLRENDERER_API bool GetZWriteEnable() const;
-		PLRENDERER_API void SetZWriteEnable(bool bValue);
-		PLRENDERER_API Compare::Enum GetZFunc() const;
-		PLRENDERER_API void SetZFunc(Compare::Enum nValue);
-		PLRENDERER_API float GetZBias() const;
-		PLRENDERER_API void SetZBias(float fValue);
-		PLRENDERER_API float GetSlopeScaleDepthBias() const;
-		PLRENDERER_API void SetSlopeScaleDepthBias(float fValue);
-		PLRENDERER_API float GetDepthBias() const;
-		PLRENDERER_API void SetDepthBias(float fValue);
+		inline bool GetZEnable() const;
+		inline void SetZEnable(bool bValue);
+		inline bool GetZWriteEnable() const;
+		inline void SetZWriteEnable(bool bValue);
+		inline Compare::Enum GetZFunc() const;
+		inline void SetZFunc(Compare::Enum nValue);
+		inline float GetZBias() const;
+		inline void SetZBias(float fValue);
+		inline float GetSlopeScaleDepthBias() const;
+		inline void SetSlopeScaleDepthBias(float fValue);
+		inline float GetDepthBias() const;
+		inline void SetDepthBias(float fValue);
 		// Blend
-		PLRENDERER_API bool GetBlendEnable() const;
-		PLRENDERER_API void SetBlendEnable(bool bValue);
-		PLRENDERER_API BlendFunc::Enum GetSrcBlendFunc() const;
-		PLRENDERER_API void SetSrcBlendFunc(BlendFunc::Enum nValue);
-		PLRENDERER_API BlendFunc::Enum GetDstBlendFunc() const;
-		PLRENDERER_API void SetDstBlendFunc(BlendFunc::Enum nValue);
+		inline bool GetBlendEnable() const;
+		inline void SetBlendEnable(bool bValue);
+		inline BlendFunc::Enum GetSrcBlendFunc() const;
+		inline void SetSrcBlendFunc(BlendFunc::Enum nValue);
+		inline BlendFunc::Enum GetDstBlendFunc() const;
+		inline void SetDstBlendFunc(BlendFunc::Enum nValue);
 		// Stencil
-		PLRENDERER_API bool GetStencilEnable() const;
-		PLRENDERER_API void SetStencilEnable(bool bValue);
-		PLRENDERER_API Compare::Enum GetStencilFunc() const;
-		PLRENDERER_API void SetStencilFunc(Compare::Enum nValue);
-		PLRENDERER_API PLCore::uint32 GetStencilRef() const;
-		PLRENDERER_API void SetStencilRef(PLCore::uint32 nValue);
-		PLRENDERER_API PLCore::uint32 GetStencilMask() const;
-		PLRENDERER_API void SetStencilMask(PLCore::uint32 nValue);
-		PLRENDERER_API StencilOp::Enum GetStencilFail() const;
-		PLRENDERER_API void SetStencilFail(StencilOp::Enum nValue);
-		PLRENDERER_API StencilOp::Enum GetStencilZFail() const;
-		PLRENDERER_API void SetStencilZFail(StencilOp::Enum nValue);
-		PLRENDERER_API StencilOp::Enum GetStencilPass() const;
-		PLRENDERER_API void SetStencilPass(StencilOp::Enum nValue);
-		PLRENDERER_API bool GetTwoSidedStencilMode() const;
-		PLRENDERER_API void SetTwoSidedStencilMode(bool bValue);
-		PLRENDERER_API Compare::Enum GetCCWStencilFunc() const;
-		PLRENDERER_API void SetCCWStencilFunc(Compare::Enum nValue);
-		PLRENDERER_API StencilOp::Enum GetCCWStencilFail() const;
-		PLRENDERER_API void SetCCWStencilFail(StencilOp::Enum nValue);
-		PLRENDERER_API StencilOp::Enum GetCCWStencilZFail() const;
-		PLRENDERER_API void SetCCWStencilZFail(StencilOp::Enum nValue);
-		PLRENDERER_API StencilOp::Enum GetCCWStencilPass() const;
-		PLRENDERER_API void SetCCWStencilPass(StencilOp::Enum nValue);
+		inline bool GetStencilEnable() const;
+		inline void SetStencilEnable(bool bValue);
+		inline Compare::Enum GetStencilFunc() const;
+		inline void SetStencilFunc(Compare::Enum nValue);
+		inline PLCore::uint32 GetStencilRef() const;
+		inline void SetStencilRef(PLCore::uint32 nValue);
+		inline PLCore::uint32 GetStencilMask() const;
+		inline void SetStencilMask(PLCore::uint32 nValue);
+		inline StencilOp::Enum GetStencilFail() const;
+		inline void SetStencilFail(StencilOp::Enum nValue);
+		inline StencilOp::Enum GetStencilZFail() const;
+		inline void SetStencilZFail(StencilOp::Enum nValue);
+		inline StencilOp::Enum GetStencilPass() const;
+		inline void SetStencilPass(StencilOp::Enum nValue);
+		inline bool GetTwoSidedStencilMode() const;
+		inline void SetTwoSidedStencilMode(bool bValue);
+		inline Compare::Enum GetCCWStencilFunc() const;
+		inline void SetCCWStencilFunc(Compare::Enum nValue);
+		inline StencilOp::Enum GetCCWStencilFail() const;
+		inline void SetCCWStencilFail(StencilOp::Enum nValue);
+		inline StencilOp::Enum GetCCWStencilZFail() const;
+		inline void SetCCWStencilZFail(StencilOp::Enum nValue);
+		inline StencilOp::Enum GetCCWStencilPass() const;
+		inline void SetCCWStencilPass(StencilOp::Enum nValue);
 		// Point and line
-		PLRENDERER_API float GetPointSize() const;
-		PLRENDERER_API void SetPointSize(float fValue);
-		PLRENDERER_API bool GetPointScaleEnable() const;
-		PLRENDERER_API void SetPointScaleEnable(bool bValue);
-		PLRENDERER_API float GetPointSizeMin() const;
-		PLRENDERER_API void SetPointSizeMin(float fValue);
-		PLRENDERER_API float GetPointSizeMax() const;
-		PLRENDERER_API void SetPointSizeMax(float fValue);
-		PLRENDERER_API float GetPointScaleA() const;
-		PLRENDERER_API void SetPointScaleA(float fValue);
-		PLRENDERER_API float GetPointScaleB() const;
-		PLRENDERER_API void SetPointScaleB(float fValue);
-		PLRENDERER_API float GetPointScaleC() const;
-		PLRENDERER_API void SetPointScaleC(float fValue);
-		PLRENDERER_API float GetLineWidth() const;
-		PLRENDERER_API void SetLineWidth(float fValue);
+		inline float GetPointSize() const;
+		inline void SetPointSize(float fValue);
+		inline bool GetPointScaleEnable() const;
+		inline void SetPointScaleEnable(bool bValue);
+		inline float GetPointSizeMin() const;
+		inline void SetPointSizeMin(float fValue);
+		inline float GetPointSizeMax() const;
+		inline void SetPointSizeMax(float fValue);
+		inline float GetPointScaleA() const;
+		inline void SetPointScaleA(float fValue);
+		inline float GetPointScaleB() const;
+		inline void SetPointScaleB(float fValue);
+		inline float GetPointScaleC() const;
+		inline void SetPointScaleC(float fValue);
+		inline float GetLineWidth() const;
+		inline void SetLineWidth(float fValue);
 		// Tessellation
-		PLRENDERER_API PLCore::uint32 GetTessellationFactor() const;
-		PLRENDERER_API void SetTessellationFactor(PLCore::uint32 nValue);
-		PLRENDERER_API TessellationMode::Enum GetTessellationMode() const;
-		PLRENDERER_API void SetTessellationMode(TessellationMode::Enum nValue);
+		inline PLCore::uint32 GetTessellationFactor() const;
+		inline void SetTessellationFactor(PLCore::uint32 nValue);
+		/*
+		// [TODO] Linux GCC: "error: changes meaning of ‘TessellationMode’ from ‘class PLRenderer::TessellationMode"
+		inline TessellationMode::Enum GetTessellationMode() const;
+		inline void SetTessellationMode(TessellationMode::Enum nValue);
+		*/
 		// Misc
-		PLRENDERER_API bool GetPointSpriteEnable() const;
-		PLRENDERER_API void SetPointSpriteEnable(bool bValue);
-		PLRENDERER_API bool GetDitherEnable() const;
-		PLRENDERER_API void SetDitherEnable(bool bValue);
-		PLRENDERER_API bool GetScissorTestEnable() const;
-		PLRENDERER_API void SetScissorTestEnable(bool bValue);
-		PLRENDERER_API bool GetMultisampleEnable() const;
-		PLRENDERER_API void SetMultisampleEnable(bool bValue);
-		PLRENDERER_API bool GetInvCullMode() const;
-		PLRENDERER_API void SetInvCullMode(bool bValue);
-		PLRENDERER_API Fill::Enum GetFixedFillMode() const;
-		PLRENDERER_API void SetFixedFillMode(Fill::Enum nValue);
+		inline bool GetPointSpriteEnable() const;
+		inline void SetPointSpriteEnable(bool bValue);
+		inline bool GetDitherEnable() const;
+		inline void SetDitherEnable(bool bValue);
+		inline bool GetScissorTestEnable() const;
+		inline void SetScissorTestEnable(bool bValue);
+		inline bool GetMultisampleEnable() const;
+		inline void SetMultisampleEnable(bool bValue);
+		inline bool GetInvCullMode() const;
+		inline void SetInvCullMode(bool bValue);
+		inline Fill::Enum GetFixedFillMode() const;
+		inline void SetFixedFillMode(Fill::Enum nValue);
 
 
 	//[-------------------------------------------------------]
@@ -235,7 +238,7 @@ class RenderStates : public PLCore::Object {
 		*    - Some settings like stencil, fog and scissor test aren't set
 		*      by the material through the default setting
 		*/
-		PLRENDERER_API PLCore::uint32 Get(RenderState::Enum nState) const;
+		inline PLCore::uint32 Get(RenderState::Enum nState) const;
 
 		/**
 		*  @brief
@@ -254,7 +257,7 @@ class RenderStates : public PLCore::Object {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool Set(RenderState::Enum nState, PLCore::uint32 nValue);
+		inline bool Set(RenderState::Enum nState, PLCore::uint32 nValue);
 
 		/**
 		*  @brief
@@ -266,7 +269,7 @@ class RenderStates : public PLCore::Object {
 		*  @return
 		*    This class
 		*/
-		PLRENDERER_API RenderStates &operator =(const RenderStates &cSource);
+		inline RenderStates &operator =(const RenderStates &cSource);
 
 
 	//[-------------------------------------------------------]
@@ -284,6 +287,12 @@ class RenderStates : public PLCore::Object {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/RenderStates.inl"
 
 
 #endif // __PLRENDERER_RENDERSTATES_H__

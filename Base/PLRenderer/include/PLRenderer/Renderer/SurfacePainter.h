@@ -82,7 +82,7 @@ class SurfacePainter : public PLCore::Object {
 		*  @return
 		*    The owner renderer
 		*/
-		PLRENDERER_API Renderer &GetRenderer() const;
+		inline Renderer &GetRenderer() const;
 
 
 	//[-------------------------------------------------------]
@@ -180,6 +180,12 @@ class SurfacePainter : public PLCore::Object {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/SurfacePainter.inl"
 
 
 #endif // __PLRENDERER_SURFACEPAINTER_H__

@@ -50,15 +50,6 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the layer owner
-*/
-EffectPass &EffectPassLayer::GetPass() const
-{
-	return *m_pFXPass;
-}
-
-/**
-*  @brief
 *    Makes the texture buffer of the texture handlers texture to the current renderer texture buffer
 */
 bool EffectPassLayer::Bind(uint32 nStage, ParameterManager *pParameterManager) const
@@ -89,90 +80,10 @@ bool EffectPassLayer::Bind(uint32 nStage, ParameterManager *pParameterManager) c
 	return true;
 }
 
-/**
-*  @brief
-*    Returns the name of the used texture parameter
-*/
-String EffectPassLayer::GetTexture() const
-{
-	return m_sTexture;
-}
-
-/**
-*  @brief
-*    Sets the name of the used texture parameter
-*/
-void EffectPassLayer::SetTexture(const String &sTexture)
-{
-	m_sTexture = sTexture;
-}
-
-/**
-*  @brief
-*    Returns the sampler states
-*/
-SamplerStates &EffectPassLayer::GetSamplerStates()
-{
-	return m_cSamplerStates;
-}
-
-const SamplerStates &EffectPassLayer::GetSamplerStates() const
-{
-	return m_cSamplerStates;
-}
-
-/**
-*  @brief
-*    Returns the fixed functions texture stage states
-*/
-FixedFunctionsTextureStageStates &EffectPassLayer::GetFixedFunctionsTextureStageStates()
-{
-	return m_cFixedFunctionsTextureStageStates;
-}
-
-const FixedFunctionsTextureStageStates &EffectPassLayer::GetFixedFunctionsTextureStageStates() const
-{
-	return m_cFixedFunctionsTextureStageStates;
-}
-
-/**
-*  @brief
-*    Copy operator
-*/
-EffectPassLayer &EffectPassLayer::operator =(const EffectPassLayer &cSource)
-{
-	// Texture
-	m_sTexture = cSource.m_sTexture;
-
-	// Copy states
-	m_cSamplerStates				    = cSource.m_cSamplerStates;
-	m_cFixedFunctionsTextureStageStates = cSource.m_cFixedFunctionsTextureStageStates;
-
-	// Done
-	return *this;
-}
-
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Constructor
-*/
-EffectPassLayer::EffectPassLayer(EffectPass &cFXPass) :
-	m_pFXPass(&cFXPass)
-{
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-EffectPassLayer::~EffectPassLayer()
-{
-}
-
 /**
 *  @brief
 *    Binds a texture

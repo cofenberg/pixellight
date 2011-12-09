@@ -47,15 +47,6 @@ const String EffectManager::Default = "Default";
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the owner renderer context of this manager
-*/
-RendererContext &EffectManager::GetRendererContext() const
-{
-	return *m_pRendererContext;
-}
-
-/**
-*  @brief
 *    Reloads all effects
 */
 bool EffectManager::ReloadEffects()

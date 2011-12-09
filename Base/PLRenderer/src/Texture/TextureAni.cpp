@@ -107,20 +107,6 @@ TextureAni &TextureAni::operator =(const TextureAni &cSource)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the texture animation manager
-*/
-AniInfoManager &TextureAni::GetTextureAnimationManager()
-{
-	return m_cTextureAnimationManager;
-}
-
-const AniInfoManager &TextureAni::GetTextureAnimationManager() const
-{
-	return m_cTextureAnimationManager;
-}
-
-/**
-*  @brief
 *    Create standard texture animation
 */
 void TextureAni::CreateStandardTextureAnimation()
@@ -135,38 +121,10 @@ void TextureAni::CreateStandardTextureAnimation()
 	}
 }
 
-/**
-*  @brief
-*    Returns the texture frames array
-*/
-Array<TextureAni::TextureFrame*> &TextureAni::GetTextureFrames()
-{
-	return m_lstTextureFrames;
-}
-
-const Array<TextureAni::TextureFrame*> &TextureAni::GetTextureFrames() const
-{
-	return m_lstTextureFrames;
-}
-
 
 //[-------------------------------------------------------]
 //[ Matrix animation                                      ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the matrix animation manager
-*/
-AniInfoManager &TextureAni::GetMatrixAnimationManager()
-{
-	return m_cMatrixAnimationManager;
-}
-
-const AniInfoManager &TextureAni::GetMatrixAnimationManager() const
-{
-	return m_cMatrixAnimationManager;
-}
-
 /**
 *  @brief
 *    Create standard matrix animation
@@ -183,38 +141,10 @@ void TextureAni::CreateStandardMatrixAnimation()
 	}
 }
 
-/**
-*  @brief
-*    Returns the matrix frames array
-*/
-Array<TextureAni::MatrixFrame*> &TextureAni::GetMatrixFrames()
-{
-	return m_lstMatrixFrames;
-}
-
-const Array<TextureAni::MatrixFrame*> &TextureAni::GetMatrixFrames() const
-{
-	return m_lstMatrixFrames;
-}
-
 
 //[-------------------------------------------------------]
 //[ Color animation                                       ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the color animation manager
-*/
-AniInfoManager &TextureAni::GetColorAnimationManager()
-{
-	return m_cColorAnimationManager;
-}
-
-const AniInfoManager &TextureAni::GetColorAnimationManager() const
-{
-	return m_cColorAnimationManager;
-}
-
 /**
 *  @brief
 *    Create standard texture animation
@@ -229,20 +159,6 @@ void TextureAni::CreateStandardColorAnimation()
 		pAnimation->SetSpeed(1.0f);
 		pAnimation->SetFlags(AnimationInfo::Loop);
 	}
-}
-
-/**
-*  @brief
-*    Returns the color frames array
-*/
-Array<TextureAni::ColorFrame*> &TextureAni::GetColorFrames()
-{
-	return m_lstColorFrames;
-}
-
-const Array<TextureAni::ColorFrame*> &TextureAni::GetColorFrames() const
-{
-	return m_lstColorFrames;
 }
 
 

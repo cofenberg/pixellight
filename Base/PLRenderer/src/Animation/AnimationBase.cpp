@@ -53,33 +53,6 @@ AnimationBase::~AnimationBase()
 {
 }
 
-/**
-*  @brief
-*    Returns the frame rate
-*/
-float AnimationBase::GetFrameRate() const
-{
-	return m_fFrameRate;
-}
-
-/**
-*  @brief
-*    Sets the frame rate
-*/
-void AnimationBase::SetFrameRate(float fFrameRate)
-{
-	m_fFrameRate = fFrameRate;
-}
-
-/**
-*  @brief
-*    Returns the frame keys
-*/
-Array<AnimationBase::FrameKeys> &AnimationBase::GetFrameKeys()
-{
-	return m_lstFrameKeys;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public virtual AnimationInfo functions                ]

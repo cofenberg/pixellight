@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SurfaceTextureBuffer.h                         *
+ *  File: SurfaceTextureBuffer.cpp                       *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -42,43 +42,6 @@ namespace PLRenderer {
 */
 SurfaceTextureBuffer::~SurfaceTextureBuffer()
 {
-}
-
-/**
-*  @brief
-*    Returns the texture buffer format
-*/
-TextureBuffer::EPixelFormat SurfaceTextureBuffer::GetFormat() const
-{
-	const PLRenderer::TextureBuffer *pTextureBuffer = GetTextureBuffer();
-	return pTextureBuffer ? pTextureBuffer->GetFormat() : TextureBuffer::Unknown;
-}
-
-/**
-*  @brief
-*    Returns the texture buffer surface flags
-*/
-uint32 SurfaceTextureBuffer::GetFlags() const
-{
-	return m_nFlags;
-}
-
-/**
-*  @brief
-*    Returns the maximum number of color render targets
-*/
-uint8 SurfaceTextureBuffer::GetMaxColorTargets() const
-{
-	return m_nMaxColorTargets;
-}
-
-/**
-*  @brief
-*    Sets the maximum number of color render targets
-*/
-void SurfaceTextureBuffer::SetMaxColorTargets(uint8 nMaxColorTargets)
-{
-	m_nMaxColorTargets = nMaxColorTargets;
 }
 
 

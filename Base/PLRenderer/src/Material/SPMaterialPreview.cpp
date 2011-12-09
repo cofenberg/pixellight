@@ -64,24 +64,6 @@ SPMaterialPreview::~SPMaterialPreview()
 {
 }
 
-/**
-*  @brief
-*    Returns the name of the used material
-*/
-String SPMaterialPreview::GetMaterial() const
-{
-	return m_sMaterial;
-}
-
-/**
-*  @brief
-*    Sets the name of the used material
-*/
-void SPMaterialPreview::SetMaterial(const String &sName)
-{
-	m_sMaterial = sName;
-}
-
 
 //[-------------------------------------------------------]
 //[ Private virtual SurfacePainter functions              ]

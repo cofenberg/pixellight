@@ -72,15 +72,6 @@ RendererApplication::~RendererApplication()
 
 /**
 *  @brief
-*    Returns the renderer context
-*/
-RendererContext *RendererApplication::GetRendererContext() const
-{
-	return m_pRendererContext;
-}
-
-/**
-*  @brief
 *    Get surface painter of the main window
 */
 SurfacePainter *RendererApplication::GetPainter() const

@@ -41,15 +41,6 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the owner renderer context of this manager
-*/
-RendererContext &MaterialManager::GetRendererContext() const
-{
-	return *m_pRendererContext;
-}
-
-/**
-*  @brief
 *    Reloads all materials
 */
 bool MaterialManager::ReloadMaterials()

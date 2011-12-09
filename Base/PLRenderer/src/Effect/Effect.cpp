@@ -58,52 +58,6 @@ Effect::~Effect()
 
 /**
 *  @brief
-*    Returns the effect manager this effect is in
-*/
-EffectManager &Effect::GetEffectManager() const
-{
-	// There MUST always be a manager!
-	return static_cast<EffectManager&>(*m_pManager);
-}
-
-/**
-*  @brief
-*    Returns the parameter manager of the effect
-*/
-ParameterManager &Effect::GetParameterManager() const
-{
-	return *m_pParameterManager;
-}
-
-/**
-*  @brief
-*    Returns whether the effect should be blend or not
-*/
-bool Effect::GetBlend() const
-{
-	return m_bBlend;
-}
-
-/**
-*  @brief
-*    Activates/deactivates the effect blending
-*/
-void Effect::SetBlend(bool bBlend)
-{
-	m_bBlend = bBlend;
-}
-
-/**
-*  @brief
-*    Returns whether the effect is loaded or not
-*/
-bool Effect::IsLoaded() const
-{
-	return (m_sFilename.GetLength() != 0);
-}
-
-/**
-*  @brief
 *    Copy operator
 */
 Effect &Effect::operator =(const Effect &cSource)
@@ -130,39 +84,8 @@ Effect &Effect::operator =(const Effect &cSource)
 
 
 //[-------------------------------------------------------]
-//[ General                                               ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the flags
-*/
-uint32 Effect::GetFlags() const
-{
-	return m_nFlags;
-}
-
-/**
-*  @brief
-*    Sets the flags
-*/
-void Effect::SetFlags(uint32 nFlags)
-{
-	m_nFlags = nFlags;
-}
-
-
-//[-------------------------------------------------------]
 //[ Technique functions                                   ]
 //[-------------------------------------------------------]
-/**
-*  @brief
-*    Gets the number of techniques
-*/
-uint32 Effect::GetNumOfTechniques() const
-{
-	return m_lstTechnique.GetNumOfElements();
-}
-
 /**
 *  @brief
 *    Adds a technique
@@ -173,15 +96,6 @@ EffectTechnique *Effect::AddTechnique(int nTechnique)
 	pTechnique->SetName(String("Technique_") + m_lstTechnique.GetNumOfElements());
 	m_lstTechnique.AddAtIndex(pTechnique, nTechnique);
 	return pTechnique;
-}
-
-/**
-*  @brief
-*    Gets a technique
-*/
-EffectTechnique *Effect::GetTechnique(uint32 nIndex) const
-{
-	return m_lstTechnique[nIndex];
 }
 
 /**
@@ -214,41 +128,6 @@ void Effect::RemoveAllTechniques()
 		delete m_lstTechnique[i];
 	m_lstTechnique.Clear();
 	m_nSelectedTechnique = -1;
-}
-
-/**
-*  @brief
-*    Gets the current selected technique
-*/
-EffectTechnique *Effect::GetSelectedTechnique() const
-{
-	return m_lstTechnique[m_nSelectedTechnique];
-}
-
-/**
-*  @brief
-*    Gets the index of the current selected technique
-*/
-int Effect::GetSelectedTechniqueIndex() const
-{
-	return m_nSelectedTechnique;
-}
-
-/**
-*  @brief
-*    Select the current technique by index
-*/
-bool Effect::SelectTechnique(uint32 nIndex)
-{
-	if (m_lstTechnique[nIndex]) {
-		m_nSelectedTechnique = nIndex;
-
-		// Done
-		return true;
-	} else {
-		// Error!
-		return false;
-	}
 }
 
 /**

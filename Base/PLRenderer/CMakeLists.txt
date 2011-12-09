@@ -92,7 +92,7 @@ add_sources(
 	src/Texture/Creator/TextureCreatorSpot2D.cpp
 	src/Texture/TextureAniLoaderPL.cpp
 	src/Texture/TextureAniLoader.cpp
-	src/Texture/SPTexturelPreview.cpp
+	src/Texture/SPTexturePreview.cpp
 	src/Texture/TextureHandler.cpp
 	src/Texture/AniInfoManager.cpp
 	src/Texture/Texture.cpp
@@ -120,7 +120,6 @@ add_sources(
 	src/Animation/Animation.cpp
 	src/Animation/AnimationBase.cpp
 	src/Animation/AnimationEvent.cpp
-	src/Animation/AnimationFrameInfo.cpp
 	src/Animation/AnimationHandler.cpp
 	src/Animation/AnimationInfo.cpp
 	src/Animation/AnimationManager.cpp

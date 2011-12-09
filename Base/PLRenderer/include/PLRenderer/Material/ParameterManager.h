@@ -90,7 +90,7 @@ class ParameterManager : public Parameters {
 		*  @return
 		*    Reference to the owner renderer context
 		*/
-		PLRENDERER_API RendererContext &GetRendererContext() const;
+		inline RendererContext &GetRendererContext() const;
 
 		/**
 		*  @brief
@@ -99,7 +99,7 @@ class ParameterManager : public Parameters {
 		*  @return
 		*    Number of parameters
 		*/
-		PLRENDERER_API PLCore::uint32 GetNumOfParameters() const;
+		inline PLCore::uint32 GetNumOfParameters() const;
 
 		/**
 		*  @brief
@@ -126,7 +126,7 @@ class ParameterManager : public Parameters {
 		*  @return
 		*    The requested parameter, a null pointer on error
 		*/
-		PLRENDERER_API Parameter *GetParameter(PLCore::uint32 nIndex) const;
+		inline Parameter *GetParameter(PLCore::uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -138,7 +138,7 @@ class ParameterManager : public Parameters {
 		*  @return
 		*    The requested parameter, a null pointer on error
 		*/
-		PLRENDERER_API Parameter *GetParameter(const PLCore::String &sName) const;
+		inline Parameter *GetParameter(const PLCore::String &sName) const;
 
 		/**
 		*  @brief
@@ -344,6 +344,12 @@ class ParameterManager : public Parameters {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Material/ParameterManager.inl"
 
 
 #endif // __PLRENDERER_MATERIAL_PARAMETERMANAGER_H__

@@ -126,7 +126,7 @@ class TextureHandler : public PLCore::ResourceHandler<Texture> {
 				*  @return
 				*    The texture handlers texture animation
 				*/
-				PLRENDERER_API Animation &GetTextureAnimation();
+				inline Animation &GetTextureAnimation();
 
 				/**
 				*  @brief
@@ -135,7 +135,7 @@ class TextureHandler : public PLCore::ResourceHandler<Texture> {
 				*  @return
 				*    The texture handlers matrix animation
 				*/
-				PLRENDERER_API Animation &GetMatrixAnimation();
+				inline Animation &GetMatrixAnimation();
 
 				/**
 				*  @brief
@@ -144,7 +144,7 @@ class TextureHandler : public PLCore::ResourceHandler<Texture> {
 				*  @return
 				*    Current texture transformation matrix
 				*/
-				PLRENDERER_API PLMath::Matrix4x4 &GetMatrix();
+				inline PLMath::Matrix4x4 &GetMatrix();
 
 				/**
 				*  @brief
@@ -153,7 +153,7 @@ class TextureHandler : public PLCore::ResourceHandler<Texture> {
 				*  @return
 				*    The texture handlers color animation
 				*/
-				PLRENDERER_API Animation &GetColorAnimation();
+				inline Animation &GetColorAnimation();
 
 				/**
 				*  @brief
@@ -162,7 +162,7 @@ class TextureHandler : public PLCore::ResourceHandler<Texture> {
 				*  @return
 				*    Current texture color
 				*/
-				PLRENDERER_API const PLGraphics::Color4 &GetColor() const;
+				inline const PLGraphics::Color4 &GetColor() const;
 
 				/**
 				*  @brief
@@ -312,7 +312,7 @@ class TextureHandler : public PLCore::ResourceHandler<Texture> {
 		*  @return
 		*    The texture animation state object, a null pointer if there's no such object
 		*/
-		PLRENDERER_API AnimationState *GetAnimationState() const;
+		inline AnimationState *GetAnimationState() const;
 
 
 	//[-------------------------------------------------------]
@@ -329,6 +329,12 @@ class TextureHandler : public PLCore::ResourceHandler<Texture> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Texture/TextureHandler.inl"
 
 
 #endif // __PLRENDERER_TEXTUREHANDLER_H__

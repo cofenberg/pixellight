@@ -74,26 +74,26 @@ class SamplerStates : public PLCore::Object {
 	//[-------------------------------------------------------]
 	public:
 		// Address modes
-		PLRENDERER_API TextureAddressing::Enum GetAddressU() const;
-		PLRENDERER_API void SetAddressU(TextureAddressing::Enum nValue);
-		PLRENDERER_API TextureAddressing::Enum GetAddressV() const;
-		PLRENDERER_API void SetAddressV(TextureAddressing::Enum nValue);
-		PLRENDERER_API TextureAddressing::Enum GetAddressW() const;
-		PLRENDERER_API void SetAddressW(TextureAddressing::Enum nValue);
+		inline TextureAddressing::Enum GetAddressU() const;
+		inline void SetAddressU(TextureAddressing::Enum nValue);
+		inline TextureAddressing::Enum GetAddressV() const;
+		inline void SetAddressV(TextureAddressing::Enum nValue);
+		inline TextureAddressing::Enum GetAddressW() const;
+		inline void SetAddressW(TextureAddressing::Enum nValue);
 		// Filter
-		PLRENDERER_API TextureFiltering::Enum GetMagFilter() const;
-		PLRENDERER_API void SetMagFilter(TextureFiltering::Enum nValue);
-		PLRENDERER_API TextureFiltering::Enum GetMinFilter() const;
-		PLRENDERER_API void SetMinFilter(TextureFiltering::Enum nValue);
-		PLRENDERER_API TextureFiltering::Enum GetMipFilter() const;
-		PLRENDERER_API void SetMipFilter(TextureFiltering::Enum nValue);
+		inline TextureFiltering::Enum GetMagFilter() const;
+		inline void SetMagFilter(TextureFiltering::Enum nValue);
+		inline TextureFiltering::Enum GetMinFilter() const;
+		inline void SetMinFilter(TextureFiltering::Enum nValue);
+		inline TextureFiltering::Enum GetMipFilter() const;
+		inline void SetMipFilter(TextureFiltering::Enum nValue);
 		// Filter
-		PLRENDERER_API float GetMipmapLODBias() const;
-		PLRENDERER_API void SetMipmapLODBias(float fValue);
-		PLRENDERER_API PLCore::uint32 GetMaxMapLevel() const;
-		PLRENDERER_API void SetMaxMapLevel(int nValue);
-		PLRENDERER_API PLCore::uint32 GetMaxAnisotropy() const;
-		PLRENDERER_API void SetMaxAnisotropy(PLCore::uint32 nValue);
+		inline float GetMipmapLODBias() const;
+		inline void SetMipmapLODBias(float fValue);
+		inline PLCore::uint32 GetMaxMapLevel() const;
+		inline void SetMaxMapLevel(int nValue);
+		inline PLCore::uint32 GetMaxAnisotropy() const;
+		inline void SetMaxAnisotropy(PLCore::uint32 nValue);
 
 
 	//[-------------------------------------------------------]
@@ -132,7 +132,7 @@ class SamplerStates : public PLCore::Object {
 		*  @return
 		*    The value of the queried sampler state variable
 		*/
-		PLRENDERER_API PLCore::uint32 Get(Sampler::Enum nState) const;
+		inline PLCore::uint32 Get(Sampler::Enum nState) const;
 
 		/**
 		*  @brief
@@ -151,7 +151,7 @@ class SamplerStates : public PLCore::Object {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool Set(Sampler::Enum nState, PLCore::uint32 nValue);
+		inline bool Set(Sampler::Enum nState, PLCore::uint32 nValue);
 
 		/**
 		*  @brief
@@ -163,7 +163,7 @@ class SamplerStates : public PLCore::Object {
 		*  @return
 		*    This class
 		*/
-		PLRENDERER_API SamplerStates &operator =(const SamplerStates &cSource);
+		inline SamplerStates &operator =(const SamplerStates &cSource);
 
 
 	//[-------------------------------------------------------]
@@ -181,6 +181,12 @@ class SamplerStates : public PLCore::Object {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/SamplerStates.inl"
 
 
 #endif // __PLRENDERER_SAMPLERSTATES_H__

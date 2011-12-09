@@ -59,33 +59,6 @@ AnimationInfo::~AnimationInfo()
 
 /**
 *  @brief
-*    Returns the type of the animation
-*/
-uint32 AnimationInfo::GetType() const
-{
-	return m_nType;
-}
-
-/**
-*  @brief
-*    Sets the animation type
-*/
-void AnimationInfo::SetType(uint32 nType)
-{
-	m_nType = nType;
-}
-
-/**
-*  @brief
-*    Returns the animation start frame
-*/
-uint32 AnimationInfo::GetStartFrame() const
-{
-	return m_nStart;
-}
-
-/**
-*  @brief
 *    Sets the animation start frame
 */
 void AnimationInfo::SetStartFrame(uint32 nStartFrame)
@@ -95,17 +68,9 @@ void AnimationInfo::SetStartFrame(uint32 nStartFrame)
 
 	// Resize frame information
 	int i = m_nEnd-m_nStart;
-	if (i < 0) i = -i;
+	if (i < 0)
+		i = -i;
 	m_lstFrameInfos.Resize(i+1);
-}
-
-/**
-*  @brief
-*    Returns the animation end frame
-*/
-uint32 AnimationInfo::GetEndFrame() const
-{
-	return m_nEnd;
 }
 
 /**
@@ -119,77 +84,9 @@ void AnimationInfo::SetEndFrame(uint32 nEndFrame)
 
 	// Resize frame information
 	int i = m_nEnd-m_nStart;
-	if (i < 0) i = -i;
+	if (i < 0)
+		i = -i;
 	m_lstFrameInfos.Resize(i+1);
-}
-
-/**
-*  @brief
-*    Returns the number of animation frames
-*/
-uint32 AnimationInfo::GetNumOfFrames() const
-{
-	return m_nEnd > m_nStart ? m_nEnd-m_nStart+1 : m_nStart-m_nEnd+1;
-}
-
-/**
-*  @brief
-*    Get the animation speed
-*/
-float AnimationInfo::GetSpeed() const
-{
-	return m_fSpeed;
-}
-
-/**
-*  @brief
-*    Set the animation speed
-*/
-void AnimationInfo::SetSpeed(float fSpeed)
-{
-	m_fSpeed = fSpeed;
-}
-
-/**
-*  @brief
-*    Get the animation information flags
-*/
-uint32 AnimationInfo::GetFlags() const
-{
-	return m_nFlags;
-}
-
-/**
-*  @brief
-*    Sets the animation information flags
-*/
-void AnimationInfo::SetFlags(uint32 nFlags)
-{
-	m_nFlags = nFlags;
-}
-
-/**
-*  @brief
-*    Returns information about a frame
-*/
-AnimationFrameInfo *AnimationInfo::GetFrameInfo(uint32 nIndex) const
-{
-	AnimationFrameInfo &cAnimationFrameInfo = m_lstFrameInfos[nIndex];
-	return (&cAnimationFrameInfo != &Array<AnimationFrameInfo>::Null) ? &cAnimationFrameInfo : nullptr;
-}
-
-/**
-*  @brief
-*    Returns the event manager
-*/
-AnimationEventManager &AnimationInfo::GetEventManager()
-{
-	return m_cEventManager;
-}
-
-const AnimationEventManager &AnimationInfo::GetEventManager() const
-{
-	return m_cEventManager;
 }
 
 

@@ -65,7 +65,7 @@ class Buffer : public Resource {
 		*  @return
 		*    Number of buffer elements
 		*/
-		PLRENDERER_API PLCore::uint32 GetNumOfElements() const;
+		inline PLCore::uint32 GetNumOfElements() const;
 
 		/**
 		*  @brief
@@ -74,7 +74,7 @@ class Buffer : public Resource {
 		*  @return
 		*    Buffer size (in bytes)
 		*/
-		PLRENDERER_API PLCore::uint32 GetSize() const;
+		inline PLCore::uint32 GetSize() const;
 
 		/**
 		*  @brief
@@ -83,7 +83,7 @@ class Buffer : public Resource {
 		*  @return
 		*    Usage flag
 		*/
-		PLRENDERER_API Usage::Enum GetUsage() const;
+		inline Usage::Enum GetUsage() const;
 
 		/**
 		*  @brief
@@ -95,7 +95,7 @@ class Buffer : public Resource {
 		*  @see
 		*    - Allocate()
 		*/
-		PLRENDERER_API bool IsManaged() const;
+		inline bool IsManaged() const;
 
 		/**
 		*  @brief
@@ -104,7 +104,7 @@ class Buffer : public Resource {
 		*  @return
 		*    0 if the buffer is currently unlocked, else the lock count is returned
 		*/
-		PLRENDERER_API PLCore::uint16 GetLockCount() const;
+		inline PLCore::uint16 GetLockCount() const;
 
 
 	//[-------------------------------------------------------]
@@ -242,7 +242,7 @@ class Buffer : public Resource {
 		*    'true' if all went fine, else 'false'
 		*    (Maybe the buffer isn't locked?)
 		*/
-		PLRENDERER_API bool ForceUnlock();
+		inline bool ForceUnlock();
 
 
 	//[-------------------------------------------------------]
@@ -290,6 +290,12 @@ class Buffer : public Resource {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/Buffer.inl"
 
 
 #endif // __PLRENDERER_BUFFER_H__

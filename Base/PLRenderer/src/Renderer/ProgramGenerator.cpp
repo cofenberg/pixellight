@@ -69,42 +69,6 @@ ProgramGenerator::~ProgramGenerator()
 
 /**
 *  @brief
-*    Returns the used renderer
-*/
-Renderer &ProgramGenerator::GetRenderer() const
-{
-	return *m_pRenderer;
-}
-
-/**
-*  @brief
-*    Returns the name of the used shader language
-*/
-String ProgramGenerator::GetShaderLanguage() const
-{
-	return m_sShaderLanguage;
-}
-
-/**
-*  @brief
-*    Returns the used vertex shader source code
-*/
-String ProgramGenerator::GetVertexShaderSourceCode() const
-{
-	return m_sVertexShader;
-}
-
-/**
-*  @brief
-*    Returns the used fragment shader source code
-*/
-String ProgramGenerator::GetFragmentShaderSourceCode() const
-{
-	return m_sFragmentShader;
-}
-
-/**
-*  @brief
 *    Returns a program
 */
 ProgramGenerator::GeneratedProgram *ProgramGenerator::GetProgram(const Flags &cFlags)

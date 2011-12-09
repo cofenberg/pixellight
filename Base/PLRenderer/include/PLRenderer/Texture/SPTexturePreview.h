@@ -82,7 +82,7 @@ class SPTexturePreview : public SPPreview {
 		*  @return
 		*    Name of the used texture
 		*/
-		PLRENDERER_API PLCore::String GetTexture() const;
+		inline PLCore::String GetTexture() const;
 
 		/**
 		*  @brief
@@ -91,7 +91,7 @@ class SPTexturePreview : public SPPreview {
 		*  @param[in] sName
 		*    Name of the used texture
 		*/
-		PLRENDERER_API void SetTexture(const PLCore::String &sName = "");
+		inline void SetTexture(const PLCore::String &sName = "");
 
 
 	//[-------------------------------------------------------]
@@ -115,6 +115,12 @@ class SPTexturePreview : public SPPreview {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Texture/SPTexturePreview.inl"
 
 
 #endif // __PLRENDERER_TEXTURE_SURFACEPAINTER_H__

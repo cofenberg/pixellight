@@ -39,60 +39,6 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the owner effect
-*/
-Effect &EffectTechnique::GetEffect() const
-{
-	return *m_pFX;
-}
-
-/**
-*  @brief
-*    Returns whether the technique is valid or not
-*/
-bool EffectTechnique::IsValid() const
-{
-	return m_bValid;
-}
-
-/**
-*  @brief
-*    Sets whether the technique is valid or not
-*/
-void EffectTechnique::SetValid(bool bValid)
-{
-	m_bValid = bValid;
-}
-
-/**
-*  @brief
-*    Gets the name of the technique
-*/
-String EffectTechnique::GetName() const
-{
-	return m_sName;
-}
-
-/**
-*  @brief
-*    Sets the name of the technique
-*/
-void EffectTechnique::SetName(const String &sName)
-{
-	m_sName = sName;
-}
-
-/**
-*  @brief
-*    Gets the number of render passes the technique is using
-*/
-uint32 EffectTechnique::GetNumOfPasses() const
-{
-	return m_lstPass.GetNumOfElements();
-}
-
-/**
-*  @brief
 *    Adds a pass
 */
 EffectPass *EffectTechnique::AddPass(int nIndex)
@@ -132,15 +78,6 @@ void EffectTechnique::RemoveAllPasses()
 	for (uint32 i=0; i<m_lstPass.GetNumOfElements(); i++)
 		delete m_lstPass[i];
 	m_lstPass.Clear();
-}
-
-/**
-*  @brief
-*    Gets a pass
-*/
-EffectPass *EffectTechnique::GetPass(uint32 nIndex) const
-{
-	return m_lstPass[nIndex];
 }
 
 /**

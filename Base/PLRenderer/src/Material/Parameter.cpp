@@ -47,15 +47,6 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the parameter manager this parameter is in
-*/
-ParameterManager &Parameter::GetManager() const
-{
-	return *m_pManager;
-}
-
-/**
-*  @brief
 *    Sets the value of this parameter to a parameter within the given manager
 */
 bool Parameter::SetManagerParameterValue(Parameters &cManager, const PLCore::String &sName) const
@@ -238,24 +229,6 @@ bool Parameter::SetManagerParameterValue(Program &cProgram, const PLCore::String
 
 	// Error!
 	return false;
-}
-
-/**
-*  @brief
-*    Get the parameter type
-*/
-Parameters::EDataType Parameter::GetType() const
-{
-	return m_nType;
-}
-
-/**
-*  @brief
-*    Get the parameter name
-*/
-PLCore::String Parameter::GetName() const
-{
-	return m_sName;
 }
 
 /**
@@ -583,19 +556,6 @@ bool Parameter::SetParameterString(const PLCore::String &sValue)
 }
 
 // Integer
-bool Parameter::GetValue1i(int &nX) const
-{
-	if (m_nType != Parameters::Integer)
-		return false; // Error!
-	nX = *static_cast<const int*>(m_pValue);
-	return true; // Done
-}
-
-int Parameter::GetValue1i() const
-{
-	return (m_nType == Parameters::Integer) ? *static_cast<const int*>(m_pValue) : 0;
-}
-
 bool Parameter::SetValue1i(int nX)
 {
 	if (m_nType != Parameters::Integer)
@@ -606,20 +566,6 @@ bool Parameter::SetValue1i(int nX)
 }
 
 // Integer2
-bool Parameter::GetValue2i(int &nX, int &nY) const
-{
-	if (m_nType != Parameters::Integer2)
-		return false; // Error!
-	nX = static_cast<const int*>(m_pValue)[0];
-	nY = static_cast<const int*>(m_pValue)[1];
-	return true; // Done
-}
-
-const int *Parameter::GetValue2iv() const
-{
-	return (m_nType == Parameters::Integer2) ? static_cast<const int*>(m_pValue) : nullptr;
-}
-
 bool Parameter::SetValue2i(int nX, int nY)
 {
 	if (m_nType != Parameters::Integer2)
@@ -641,21 +587,6 @@ bool Parameter::SetValue2iv(const int nValue[])
 }
 
 // Integer3
-bool Parameter::GetValue3i(int &nX, int &nY, int &nZ) const
-{
-	if (m_nType != Parameters::Integer3)
-		return false; // Error!
-	nX = static_cast<const int*>(m_pValue)[0];
-	nY = static_cast<const int*>(m_pValue)[1];
-	nZ = static_cast<const int*>(m_pValue)[2];
-	return true; // Done
-}
-
-const int *Parameter::GetValue3iv() const
-{
-	return (m_nType == Parameters::Integer3) ? static_cast<const int*>(m_pValue) : nullptr;
-}
-
 bool Parameter::SetValue3i(int nX, int nY, int nZ)
 {
 	if (m_nType != Parameters::Integer3)
@@ -679,22 +610,6 @@ bool Parameter::SetValue3iv(const int nValue[])
 }
 
 // Integer4
-bool Parameter::GetValue4i(int &nX, int &nY, int &nZ, int &nW) const
-{
-	if (m_nType != Parameters::Integer4)
-		return false; // Error!
-	nX = static_cast<const int*>(m_pValue)[0];
-	nY = static_cast<const int*>(m_pValue)[1];
-	nZ = static_cast<const int*>(m_pValue)[2];
-	nW = static_cast<const int*>(m_pValue)[3];
-	return true; // Done
-}
-
-const int *Parameter::GetValue4iv() const
-{
-	return (m_nType == Parameters::Integer4) ? static_cast<const int*>(m_pValue) : nullptr;
-}
-
 bool Parameter::SetValue4i(int nX, int nY, int nZ, int nW)
 {
 	if (m_nType != Parameters::Integer4)
@@ -721,19 +636,6 @@ bool Parameter::SetValue4iv(const int nValue[])
 
 
 // Float
-bool Parameter::GetValue1f(float &fX) const
-{
-	if (m_nType != Parameters::Float)
-		return false; // Error!
-	fX = *static_cast<const float*>(m_pValue);
-	return true; // Done
-}
-
-float Parameter::GetValue1f() const
-{
-	return (m_nType == Parameters::Float) ? *static_cast<const float*>(m_pValue) : 0.0f;
-}
-
 bool Parameter::SetValue1f(float fX)
 {
 	if (m_nType != Parameters::Float)
@@ -744,20 +646,6 @@ bool Parameter::SetValue1f(float fX)
 }
 
 // Float2
-bool Parameter::GetValue2f(float &fX, float &fY) const
-{
-	if (m_nType != Parameters::Float2)
-		return false; // Error!
-	fX = static_cast<const float*>(m_pValue)[0];
-	fY = static_cast<const float*>(m_pValue)[1];
-	return true; // Done
-}
-
-const float *Parameter::GetValue2fv() const
-{
-	return (m_nType == Parameters::Float2) ? static_cast<const float*>(m_pValue) : nullptr;
-}
-
 bool Parameter::SetValue2f(float fX, float fY)
 {
 	if (m_nType != Parameters::Float2)
@@ -779,21 +667,6 @@ bool Parameter::SetValue2fv(const float fValue[])
 }
 
 // Float3
-bool Parameter::GetValue3f(float &fX, float &fY, float &fZ) const
-{
-	if (m_nType != Parameters::Float3)
-		return false; // Error!
-	fX = static_cast<const float*>(m_pValue)[0];
-	fY = static_cast<const float*>(m_pValue)[1];
-	fZ = static_cast<const float*>(m_pValue)[2];
-	return true; // Done
-}
-
-const float *Parameter::GetValue3fv() const
-{
-	return (m_nType == Parameters::Float3) ? static_cast<const float*>(m_pValue) : nullptr;
-}
-
 bool Parameter::SetValue3f(float fX, float fY, float fZ)
 {
 	if (m_nType != Parameters::Float3)
@@ -817,22 +690,6 @@ bool Parameter::SetValue3fv(const float fValue[])
 }
 
 // Float4
-bool Parameter::GetValue4f(float &fX, float &fY, float &fZ, float &fW) const
-{
-	if (m_nType != Parameters::Float4)
-		return false; // Error!
-	fX = static_cast<const float*>(m_pValue)[0];
-	fY = static_cast<const float*>(m_pValue)[1];
-	fZ = static_cast<const float*>(m_pValue)[2];
-	fW = static_cast<const float*>(m_pValue)[3];
-	return true; // Done
-}
-
-const float *Parameter::GetValue4fv() const
-{
-	return (m_nType == Parameters::Float4) ? static_cast<const float*>(m_pValue) : nullptr;
-}
-
 bool Parameter::SetValue4f(float fX, float fY, float fZ, float fW)
 {
 	if (m_nType != Parameters::Float4)
@@ -859,14 +716,6 @@ bool Parameter::SetValue4fv(const float fValue[])
 
 
 // Double
-bool Parameter::GetValue1d(double &fX) const
-{
-	if (m_nType != Parameters::Double)
-		return false; // Error!
-	fX = *static_cast<const double*>(m_pValue);
-	return true; // Done
-}
-
 bool Parameter::SetValue1d(double fX)
 {
 	if (m_nType != Parameters::Double)
@@ -877,20 +726,6 @@ bool Parameter::SetValue1d(double fX)
 }
 
 // Double2
-bool Parameter::GetValue2d(double &fX, double &fY) const
-{
-	if (m_nType != Parameters::Double2)
-		return false; // Error!
-	fX = static_cast<const double*>(m_pValue)[0];
-	fY = static_cast<const double*>(m_pValue)[1];
-	return true; // Done
-}
-
-const double *Parameter::GetValue2dv() const
-{
-	return (m_nType == Parameters::Double2) ? static_cast<const double*>(m_pValue) : nullptr;
-}
-
 bool Parameter::SetValue2d(double fX, double fY)
 {
 	if (m_nType != Parameters::Double2)
@@ -912,21 +747,6 @@ bool Parameter::SetValue2dv(const double fValue[])
 }
 
 // Double3
-bool Parameter::GetValue3d(double &fX, double &fY, double &fZ) const
-{
-	if (m_nType != Parameters::Double3)
-		return false; // Error!
-	fX = static_cast<const double*>(m_pValue)[0];
-	fY = static_cast<const double*>(m_pValue)[1];
-	fZ = static_cast<const double*>(m_pValue)[2];
-	return true; // Done
-}
-
-const double *Parameter::GetValue3dv() const
-{
-	return (m_nType == Parameters::Double3) ? static_cast<const double*>(m_pValue) : nullptr;
-}
-
 bool Parameter::SetValue3d(double fX, double fY, double fZ)
 {
 	if (m_nType != Parameters::Double3)
@@ -950,22 +770,6 @@ bool Parameter::SetValue3dv(const double fValue[])
 }
 
 // Double4
-bool Parameter::GetValue4d(double &fX, double &fY, double &fZ, double &fW) const
-{
-	if (m_nType != Parameters::Double4)
-		return false; // Error!
-	fX = static_cast<const double*>(m_pValue)[0];
-	fY = static_cast<const double*>(m_pValue)[1];
-	fZ = static_cast<const double*>(m_pValue)[2];
-	fW = static_cast<const double*>(m_pValue)[3];
-	return true; // Done
-}
-
-const double *Parameter::GetValue4dv() const
-{
-	return (m_nType == Parameters::Double4) ? static_cast<const double*>(m_pValue) : nullptr;
-}
-
 bool Parameter::SetValue4d(double fX, double fY, double fZ, double fW)
 {
 	if (m_nType != Parameters::Double4)
@@ -992,11 +796,6 @@ bool Parameter::SetValue4dv(const double fValue[])
 
 
 // Float3x3
-const float *Parameter::GetValueFloat3x3() const
-{
-	return (m_nType == Parameters::Float3x3) ? static_cast<const float*>(m_pValue) : nullptr;
-}
-
 bool Parameter::SetValueFloat3x3(const float fValue[])
 {
 	if (m_nType != Parameters::Float3x3)
@@ -1008,11 +807,6 @@ bool Parameter::SetValueFloat3x3(const float fValue[])
 
 
 // Float3x4
-const float *Parameter::GetValueFloat3x4() const
-{
-	return (m_nType == Parameters::Float3x4) ? static_cast<const float*>(m_pValue) : nullptr;
-}
-
 bool Parameter::SetValueFloat3x4(const float fValue[])
 {
 	if (m_nType != Parameters::Float3x4)
@@ -1024,11 +818,6 @@ bool Parameter::SetValueFloat3x4(const float fValue[])
 
 
 // Float4x4
-const float *Parameter::GetValueMatrixfv() const
-{
-	return (m_nType == Parameters::Float4x4) ? static_cast<const float*>(m_pValue) : nullptr;
-}
-
 bool Parameter::SetValueMatrixfv(const float fValue[])
 {
 	if (m_nType != Parameters::Float4x4)
@@ -1040,11 +829,6 @@ bool Parameter::SetValueMatrixfv(const float fValue[])
 
 
 // Double4x4
-const double *Parameter::GetValueMatrixdv() const
-{
-	return (m_nType == Parameters::Double4x4) ? static_cast<const double*>(m_pValue) : nullptr;
-}
-
 bool Parameter::SetValueMatrixdv(const double fValue[])
 {
 	if (m_nType != Parameters::Double4x4)
@@ -1069,11 +853,6 @@ TextureBuffer *Parameter::GetValueTextureBuffer() const
 	} else {
 		return nullptr;
 	}
-}
-
-TextureHandler *Parameter::GetValueTextureHandler() const
-{
-	return (m_nType == Parameters::TextureBuffer) ? static_cast<TextureHandler*>(m_pValue) : nullptr;
 }
 
 bool Parameter::SetValueTexture(Texture *pTexture)

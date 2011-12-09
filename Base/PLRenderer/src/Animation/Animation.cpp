@@ -83,42 +83,6 @@ void Animation::Reset()
 
 /**
 *  @brief
-*    Get the animation active status
-*/
-bool Animation::IsActive() const
-{
-	return m_bActive;
-}
-
-/**
-*  @brief
-*    Set the animation active status
-*/
-void Animation::SetActive(bool bActive)
-{
-	m_bActive = bActive;
-}
-
-/**
-*  @brief
-*    Type of animation
-*/
-uint32 Animation::GetType() const
-{
-	return m_nType;
-}
-
-/**
-*  @brief
-*    Sets the animation type
-*/
-void Animation::SetType(uint32 nType)
-{
-	m_nType = nType;
-}
-
-/**
-*  @brief
 *    Starts an animation
 */
 void Animation::Start(uint32 nStart, uint32 nEnd, float fSpeed, uint32 nFlags)
@@ -188,124 +152,6 @@ void Animation::Stop()
 		// Emit stop event
 		EventStop();
 	}
-}
-
-/**
-*  @brief
-*    Pause the animation
-*/
-void Animation::Pause()
-{
-	m_bRunning = false;
-}
-
-/**
-*  @brief
-*    Continues the animation
-*/
-void Animation::Continue()
-{
-	if (m_nStart != m_nEnd)
-		m_bRunning = true;
-}
-
-/**
-*  @brief
-*    Returns the animation information
-*/
-AnimationInfo *Animation::GetAnimation() const
-{
-	return m_pAnimationInfo;
-}
-
-/**
-*  @brief
-*    Gets the animation weight
-*/
-float Animation::GetWeight() const
-{
-	return m_fWeight;
-}
-
-/**
-*  @brief
-*    Sets the animation weight
-*/
-void Animation::SetWeight(float fWeight)
-{
-	m_fWeight = fWeight;
-}
-
-/**
-*  @brief
-*    Get the animation speed
-*/
-float Animation::GetSpeed() const
-{
-	return m_fSpeed;
-}
-
-/**
-*  @brief
-*    Set the animation speed
-*/
-void Animation::SetSpeed(float fSpeed)
-{
-	m_fSpeed = fSpeed;
-}
-
-/**
-*  @brief
-*    Get the animation information flags
-*/
-uint32 Animation::GetFlags() const
-{
-	return m_nFlags;
-}
-
-/**
-*  @brief
-*    Sets the animation information flags
-*/
-void Animation::SetFlags(uint32 nFlags)
-{
-	m_nFlags = nFlags;
-}
-
-/**
-*  @brief
-*    Get the animation running status
-*/
-bool Animation::IsRunning() const
-{
-	return m_bRunning;
-}
-
-/**
-*  @brief
-*    Returns the start frame
-*/
-uint32 Animation::GetStartFrame() const
-{
-	return m_nStart;
-}
-
-/**
-*  @brief
-*    Returns the end frame
-*/
-uint32 Animation::GetEndFrame() const
-{
-	return m_nEnd;
-}
-
-/**
-*  @brief
-*    Returns the number of frames
-*/
-uint32 Animation::GetNumOfFrames() const
-{
-	return (m_nEnd > m_nStart) ? m_nEnd-m_nStart : m_nStart-m_nEnd;
 }
 
 /**
@@ -609,28 +455,6 @@ void Animation::Update(float fTimeDifference)
 		// Check if a event is caused
 		CheckEvent(static_cast<int>(fPreviousFrame));
 	}
-}
-
-
-//[-------------------------------------------------------]
-//[ Events                                                ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns whether animation events are enabled or not
-*/
-bool Animation::GetEvents() const
-{
-	return m_bEvents;
-}
-
-/**
-*  @brief
-*    Sets whether animation events are enabled or not
-*/
-void Animation::SetEvents(bool bEvents)
-{
-	m_bEvents = bEvents;
 }
 
 

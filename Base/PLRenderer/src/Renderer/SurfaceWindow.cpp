@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SurfaceWindow.h                                *
+ *  File: SurfaceWindow.cpp                              *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -49,33 +49,6 @@ SurfaceWindow::~SurfaceWindow()
 		// Inform handler
 		m_pHandler->m_pSurfaceHandler->SetSurface(nullptr);
 	}
-}
-
-/**
-*  @brief
-*    Returns the renderer surface handler this surface is assigned with
-*/
-SurfaceWindowHandler *SurfaceWindow::GetHandler() const
-{
-	return m_pHandler;
-}
-
-/**
-*  @brief
-*    Returns the native window the surface is assigned with
-*/
-handle SurfaceWindow::GetNativeWindowHandle() const
-{
-	return m_nNativeWindowHandle;
-}
-
-/**
-*  @brief
-*    Returns whether the window is in fullscreen mode or not
-*/
-bool SurfaceWindow::IsFullscreen() const
-{
-	return m_bIsFullscreen;
 }
 
 

@@ -44,33 +44,6 @@ FontGlyph::~FontGlyph()
 {
 }
 
-/**
-*  @brief
-*    Returns the size (in pixel) of the glyph
-*/
-const Vector2i &FontGlyph::GetSize() const
-{
-	return m_nSize;
-}
-
-/**
-*  @brief
-*    Returns the distance (in pixel) from the current pen position to the glyph bitmap
-*/
-const Vector2 &FontGlyph::GetCorner() const
-{
-	return m_vCorner;
-}
-
-/**
-*  @brief
-*    Returns the object space pen advance
-*/
-const Vector2 &FontGlyph::GetPenAdvance() const
-{
-	return m_vPenAdvance;
-}
-
 
 //[-------------------------------------------------------]
 //[ Protected functions                                   ]

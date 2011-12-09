@@ -142,7 +142,7 @@ class VertexBuffer : public Buffer {
 		*  @return
 		*    Number of vertex attributes
 		*/
-		PLRENDERER_API PLCore::uint32 GetNumOfVertexAttributes() const;
+		inline PLCore::uint32 GetNumOfVertexAttributes() const;
 
 		/**
 		*  @brief
@@ -189,7 +189,7 @@ class VertexBuffer : public Buffer {
 		*  @return
 		*    The requested vertex attribute, a null pointer on error
 		*/
-		PLRENDERER_API const Attribute *GetVertexAttribute(PLCore::uint32 nIndex = 0) const;
+		inline const Attribute *GetVertexAttribute(PLCore::uint32 nIndex = 0) const;
 
 		/**
 		*  @brief
@@ -212,7 +212,7 @@ class VertexBuffer : public Buffer {
 		*  @return
 		*    Vertex size (in bytes)
 		*/
-		PLRENDERER_API PLCore::uint32 GetVertexSize() const;
+		inline PLCore::uint32 GetVertexSize() const;
 
 		/**
 		*  @brief
@@ -386,6 +386,12 @@ class VertexBuffer : public Buffer {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/VertexBuffer.inl"
 
 
 #endif // __PLRENDERER_VERTEXBUFFER_H__

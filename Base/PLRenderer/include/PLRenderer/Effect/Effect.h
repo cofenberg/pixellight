@@ -89,7 +89,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*  @return
 		*     The effect manager this effect is in
 		*/
-		PLRENDERER_API EffectManager &GetEffectManager() const;
+		inline EffectManager &GetEffectManager() const;
 
 		/**
 		*  @brief
@@ -98,7 +98,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*  @return
 		*    The parameter manager of the effect
 		*/
-		PLRENDERER_API ParameterManager &GetParameterManager() const;
+		inline ParameterManager &GetParameterManager() const;
 
 		/**
 		*  @brief
@@ -112,7 +112,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*    Because transparent objects should be rendered after all solid objects this
 		*    setting indicates when the object should be rendered.
 		*/
-		PLRENDERER_API bool GetBlend() const;
+		inline bool GetBlend() const;
 
 		/**
 		*  @brief
@@ -124,7 +124,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*  @see
 		*    - GetBlend()
 		*/
-		PLRENDERER_API void SetBlend(bool bBlend = false);
+		inline void SetBlend(bool bBlend = false);
 
 		/**
 		*  @brief
@@ -133,7 +133,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*  @return
 		*    'true' if the effect is loaded, else 'false'
 		*/
-		PLRENDERER_API bool IsLoaded() const;
+		inline bool IsLoaded() const;
 
 		/**
 		*  @brief
@@ -157,7 +157,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*  @return
 		*    Flags
 		*/
-		PLRENDERER_API PLCore::uint32 GetFlags() const;
+		inline PLCore::uint32 GetFlags() const;
 
 		/**
 		*  @brief
@@ -166,25 +166,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*  @param[in] nFlags
 		*    Flags
 		*/
-		PLRENDERER_API void SetFlags(PLCore::uint32 nFlags = 0);
-
-		/**
-		*  @brief
-		*    Returns the internal timer
-		*
-		*  @return
-		*    Internal timer
-		*/
-		PLRENDERER_API float GetTimer() const;
-
-		/**
-		*  @brief
-		*    Sets the internal timer
-		*
-		*  @param[in] fTimer
-		*    Time to set
-		*/
-		PLRENDERER_API void SetTimer(float fTimer = 0.0f);
+		inline void SetFlags(PLCore::uint32 nFlags = 0);
 
 		//[-------------------------------------------------------]
 		//[ Technique functions                                   ]
@@ -196,7 +178,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*  @return
 		*    The number of techniques
 		*/
-		PLRENDERER_API PLCore::uint32 GetNumOfTechniques() const;
+		inline PLCore::uint32 GetNumOfTechniques() const;
 
 		/**
 		*  @brief
@@ -220,7 +202,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*  @return
 		*    The effect technique, a null pointer on error
 		*/
-		PLRENDERER_API EffectTechnique *GetTechnique(PLCore::uint32 nIndex) const;
+		inline EffectTechnique *GetTechnique(PLCore::uint32 nIndex) const;
 
 		/**
 		*  @brief
@@ -247,7 +229,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*  @return
 		*    The current selected technique, a null pointer if no technique is selected
 		*/
-		PLRENDERER_API EffectTechnique *GetSelectedTechnique() const;
+		inline EffectTechnique *GetSelectedTechnique() const;
 
 		/**
 		*  @brief
@@ -256,7 +238,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*  @return
 		*    Index of the current selected technique, < 0 if no technique is selected
 		*/
-		PLRENDERER_API int GetSelectedTechniqueIndex() const;
+		inline int GetSelectedTechniqueIndex() const;
 
 		/**
 		*  @brief
@@ -268,7 +250,7 @@ class Effect : public PLCore::Resource<Effect> {
 		*  @return
 		*    'true' if all went fine, else 'false' (invalid or unknown technique)
 		*/
-		PLRENDERER_API bool SelectTechnique(PLCore::uint32 nIndex = 0);
+		inline bool SelectTechnique(PLCore::uint32 nIndex = 0);
 
 		/**
 		*  @brief
@@ -327,6 +309,12 @@ class Effect : public PLCore::Resource<Effect> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Effect/Effect.inl"
 
 
 #endif // __PLRENDERER_EFFECT_EFFECT_H__

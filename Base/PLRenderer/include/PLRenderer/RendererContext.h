@@ -143,7 +143,7 @@ class RendererContext : public PLCore::AbstractContext {
 		*  @return
 		*    Reference to the used renderer
 		*/
-		PLRENDERER_API Renderer &GetRenderer() const;
+		inline Renderer &GetRenderer() const;
 
 		/**
 		*  @brief
@@ -229,6 +229,12 @@ class RendererContext : public PLCore::AbstractContext {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/RendererContext.inl"
 
 
 #endif // __PLRENDERER_RENDERERCONTEXT_H__

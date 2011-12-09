@@ -41,19 +41,6 @@ pl_implement_class(SurfacePainter)
 
 
 //[-------------------------------------------------------]
-//[ Public functions                                      ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Returns the owner renderer
-*/
-Renderer &SurfacePainter::GetRenderer() const
-{
-	return *m_pRenderer;
-}
-
-
-//[-------------------------------------------------------]
 //[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**

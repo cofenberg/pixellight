@@ -78,16 +78,6 @@ Material::~Material()
 
 /**
 *  @brief
-*    Returns the material manager this material is in
-*/
-MaterialManager &Material::GetMaterialManager() const
-{
-	// There MUST always be a manager!
-	return static_cast<MaterialManager&>(*m_pManager);
-}
-
-/**
-*  @brief
 *    Copy operator
 */
 Material &Material::operator =(const Material &cSource)
@@ -157,15 +147,6 @@ TextureBuffer *Material::GetParameterTextureBuffer(const String &sName) const
 
 /**
 *  @brief
-*    Returns the parameter manager of the material
-*/
-ParameterManager &Material::GetParameterManager() const
-{
-	return *m_pParameterManager;
-}
-
-/**
-*  @brief
 *    Reloads all textures used direct or indirect by the material
 */
 bool Material::ReloadTextures()
@@ -225,15 +206,6 @@ bool Material::ReloadTextures()
 
 	// Done
 	return bResult;
-}
-
-/**
-*  @brief
-*    Returns the number of materials
-*/
-uint32 Material::GetNumOfMaterials() const
-{
-	return m_lstMaterials.GetNumOfElements();
 }
 
 /**

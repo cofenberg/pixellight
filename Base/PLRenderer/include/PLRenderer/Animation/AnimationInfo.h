@@ -85,7 +85,7 @@ class AnimationInfo {
 		*  @return
 		*    Animation type (for instance  0=skeleton  1=vertex)
 		*/
-		PLRENDERER_API PLCore::uint32 GetType() const;
+		inline PLCore::uint32 GetType() const;
 
 		/**
 		*  @brief
@@ -94,7 +94,7 @@ class AnimationInfo {
 		*  @param[in] nType
 		*    Animation type (for instance  0=skeleton  1=vertex)
 		*/
-		PLRENDERER_API void SetType(PLCore::uint32 nType = 0);
+		inline void SetType(PLCore::uint32 nType = 0);
 
 		/**
 		*  @brief
@@ -103,7 +103,7 @@ class AnimationInfo {
 		*  @return
 		*    Animation start frame
 		*/
-		PLRENDERER_API PLCore::uint32 GetStartFrame() const;
+		inline PLCore::uint32 GetStartFrame() const;
 
 		/**
 		*  @brief
@@ -121,7 +121,7 @@ class AnimationInfo {
 		*  @return
 		*    Animation end frame
 		*/
-		PLRENDERER_API PLCore::uint32 GetEndFrame() const;
+		inline PLCore::uint32 GetEndFrame() const;
 
 		/**
 		*  @brief
@@ -139,7 +139,7 @@ class AnimationInfo {
 		*  @return
 		*    Number of animation frames (normally EndFrame-StartFrame+1)
 		*/
-		PLRENDERER_API PLCore::uint32 GetNumOfFrames() const;
+		inline PLCore::uint32 GetNumOfFrames() const;
 
 		/**
 		*  @brief
@@ -148,7 +148,7 @@ class AnimationInfo {
 		*  @return
 		*    Playback speed of the animation, if negative, the animation is played reversed
 		*/
-		PLRENDERER_API float GetSpeed() const;
+		inline float GetSpeed() const;
 
 		/**
 		*  @brief
@@ -157,7 +157,7 @@ class AnimationInfo {
 		*  @param[in] fSpeed
 		*    New playback speed for the animation, if negative, the animation is played reversed
 		*/
-		PLRENDERER_API void SetSpeed(float fSpeed = 24.0f);
+		inline void SetSpeed(float fSpeed = 24.0f);
 
 		/**
 		*  @brief
@@ -166,7 +166,7 @@ class AnimationInfo {
 		*  @return
 		*    Animation information flags (see EFlags)
 		*/
-		PLRENDERER_API PLCore::uint32 GetFlags() const;
+		inline PLCore::uint32 GetFlags() const;
 
 		/**
 		*  @brief
@@ -175,7 +175,7 @@ class AnimationInfo {
 		*  @param[in] nFlags
 		*    Animation information flags (see EFlags)
 		*/
-		PLRENDERER_API void SetFlags(PLCore::uint32 nFlags = 0);
+		inline void SetFlags(PLCore::uint32 nFlags = 0);
 
 		/**
 		*  @brief
@@ -187,7 +187,7 @@ class AnimationInfo {
 		*  @return
 		*    Frame information, a null pointer if there's an error
 		*/
-		PLRENDERER_API AnimationFrameInfo *GetFrameInfo(PLCore::uint32 nIndex = 0) const;
+		inline AnimationFrameInfo *GetFrameInfo(PLCore::uint32 nIndex = 0) const;
 
 		/**
 		*  @brief
@@ -196,8 +196,8 @@ class AnimationInfo {
 		*  @return
 		*    Event manager
 		*/
-		PLRENDERER_API AnimationEventManager &GetEventManager();
-		PLRENDERER_API const AnimationEventManager &GetEventManager() const;
+		inline AnimationEventManager &GetEventManager();
+		inline const AnimationEventManager &GetEventManager() const;
 
 
 	//[-------------------------------------------------------]
@@ -260,6 +260,12 @@ class AnimationInfo {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Animation/AnimationInfo.inl"
 
 
 #endif // __PLRENDERER_ANIMATIONINFO_H__

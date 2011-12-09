@@ -85,7 +85,7 @@ class IndexBuffer : public Buffer {
 		*  @return
 		*    The type of the buffer elements
 		*/
-		PLRENDERER_API EType GetElementType() const;
+		inline EType GetElementType() const;
 
 		/**
 		*  @brief
@@ -101,7 +101,7 @@ class IndexBuffer : public Buffer {
 		*    - It's only possible to change the element type if the buffer isn't allocated
 		*    - Try to avoid UInt whenever possible for more performance and better compatibility to for example mobile graphics API's
 		*/
-		PLRENDERER_API bool SetElementType(EType nType = UShort);
+		inline bool SetElementType(EType nType = UShort);
 
 		/**
 		*  @brief
@@ -123,7 +123,7 @@ class IndexBuffer : public Buffer {
 		*  @see
 		*    - SetElementType()
 		*/
-		PLRENDERER_API bool SetElementTypeByMaximumIndex(PLCore::uint32 nMaximumIndex);
+		inline bool SetElementTypeByMaximumIndex(PLCore::uint32 nMaximumIndex);
 
 		/**
 		*  @brief
@@ -224,6 +224,12 @@ class IndexBuffer : public Buffer {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/IndexBuffer.inl"
 
 
 #endif // __PLRENDERER_INDEXBUFFER_H__

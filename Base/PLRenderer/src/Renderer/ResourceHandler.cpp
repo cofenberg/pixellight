@@ -90,15 +90,6 @@ ResourceHandler &ResourceHandler::operator =(const ResourceHandler &cSource)
 
 /**
 *  @brief
-*    Returns the resource handlers resource
-*/
-Resource *ResourceHandler::GetResource() const
-{
-	return m_pResource;
-}
-
-/**
-*  @brief
 *    Sets the resource handlers resource
 */
 void ResourceHandler::SetResource(Resource *pResource)

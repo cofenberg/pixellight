@@ -44,24 +44,6 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the owner renderer context
-*/
-RendererContext &ParameterManager::GetRendererContext() const
-{
-	return *m_pRendererContext;
-}
-
-/**
-*  @brief
-*    Gets the number of parameters
-*/
-uint32 ParameterManager::GetNumOfParameters() const
-{
-	return m_lstParameters.GetNumOfElements();
-}
-
-/**
-*  @brief
 *    Creates a new parameter
 */
 Parameter *ParameterManager::CreateParameter(EDataType nType, const PLCore::String &sName)
@@ -82,24 +64,6 @@ Parameter *ParameterManager::CreateParameter(EDataType nType, const PLCore::Stri
 
 	// Return the created parameter
 	return pParameter;
-}
-
-/**
-*  @brief
-*    Gets a parameter by index
-*/
-Parameter *ParameterManager::GetParameter(uint32 nIndex) const
-{
-	return m_lstParameters[nIndex];
-}
-
-/**
-*  @brief
-*    Gets a parameter by name
-*/
-Parameter *ParameterManager::GetParameter(const PLCore::String &sName) const
-{
-	return m_mapParameters.Get(sName);
 }
 
 /**

@@ -49,42 +49,6 @@ AnimationEvent::AnimationEvent(int nID, uint32 nFrame, AnimationEventManager *pM
 		SetName(String("Event ") + pManager->GetNumOfElements());
 }
 
-/**
-*  @brief
-*    Returns the event ID
-*/
-int AnimationEvent::GetID() const
-{
-	return m_nID;
-}
-
-/**
-*  @brief
-*    Sets the event ID
-*/
-void AnimationEvent::SetID(int nID)
-{
-	m_nID = nID;
-}
-
-/**
-*  @brief
-*    Returns the frame which will cause this event
-*/
-uint32 AnimationEvent::GetFrame() const
-{
-	return m_nFrame;
-}
-
-/**
-*  @brief
-*    Sets the frame causing this event
-*/
-void AnimationEvent::SetFrame(uint32 nFrame)
-{
-	m_nFrame = nFrame;
-}
-
 
 //[-------------------------------------------------------]
 //[ Public virtual PLCore::Element functions              ]

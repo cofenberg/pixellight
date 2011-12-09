@@ -105,7 +105,7 @@ class SurfaceHandler {
 		*  @return
 		*    The renderer surface of this handler, can be a null pointer
 		*/
-		PLRENDERER_API Surface *GetSurface() const;
+		inline Surface *GetSurface() const;
 
 		/**
 		*  @brief
@@ -131,6 +131,12 @@ class SurfaceHandler {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Renderer/SurfaceHandler.inl"
 
 
 #endif // __PLRENDERER_SURFACE_HANDLER_H__

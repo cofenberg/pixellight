@@ -82,7 +82,7 @@ class SPEffectPreview : public SPPreview {
 		*  @return
 		*    Name of the used effect
 		*/
-		PLRENDERER_API PLCore::String GetEffect() const;
+		inline PLCore::String GetEffect() const;
 
 		/**
 		*  @brief
@@ -91,7 +91,7 @@ class SPEffectPreview : public SPPreview {
 		*  @param[in] sName
 		*    Name of the used effect
 		*/
-		PLRENDERER_API void SetEffect(const PLCore::String &sName);
+		inline void SetEffect(const PLCore::String &sName);
 
 
 	//[-------------------------------------------------------]
@@ -115,6 +115,12 @@ class SPEffectPreview : public SPPreview {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Effect/SPEffectPreview.inl"
 
 
 #endif // __PLRENDERER_EFFECT_SURFACEPAINTER_H__

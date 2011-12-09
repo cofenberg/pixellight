@@ -83,7 +83,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 		*  @return
 		*    Reference to the owner renderer context of this manager
 		*/
-		PLRENDERER_API RendererContext &GetRendererContext() const;
+		inline RendererContext &GetRendererContext() const;
 
 		/**
 		*  @brief
@@ -95,7 +95,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 		*  @see
 		*    - SetTextureQuality()
 		*/
-		PLRENDERER_API float GetTextureQuality() const;
+		inline float GetTextureQuality() const;
 
 		/**
 		*  @brief
@@ -124,7 +124,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 		*    With the texture fit setting you can setup whether the next lower or higher valid texture
 		*    size is selected automatically.
 		*/
-		PLRENDERER_API bool GetTextureFit() const;
+		inline bool GetTextureFit() const;
 
 		/**
 		*  @brief
@@ -141,7 +141,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 		*  @note
 		*    - Only has an influence on newly loaded textures, not already loaded ones
 		*/
-		PLRENDERER_API void SetTextureFit(bool bLower = true);
+		inline void SetTextureFit(bool bLower = true);
 
 		/**
 		*  @brief
@@ -153,7 +153,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 		*  @see
 		*    - SetTextureMipmapsAllowed()
 		*/
-		PLRENDERER_API bool AreTextureMipmapsAllowed() const;
+		inline bool AreTextureMipmapsAllowed() const;
 
 		/**
 		*  @brief
@@ -165,7 +165,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 		*  @note
 		*    - Only has an influence on newly loaded textures, not already loaded ones
 		*/
-		PLRENDERER_API void SetTextureMipmapsAllowed(bool bAllowed);
+		inline void SetTextureMipmapsAllowed(bool bAllowed);
 
 		/**
 		*  @brief
@@ -177,7 +177,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 		*  @see
 		*    - SetTextureCompressionAllowed()
 		*/
-		PLRENDERER_API bool IsTextureCompressionAllowed() const;
+		inline bool IsTextureCompressionAllowed() const;
 
 		/**
 		*  @brief
@@ -189,7 +189,7 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 		*  @note
 		*    - Only has an influence on newly loaded textures, not already loaded ones
 		*/
-		PLRENDERER_API void SetTextureCompressionAllowed(bool bAllowed);
+		inline void SetTextureCompressionAllowed(bool bAllowed);
 
 		/**
 		*  @brief
@@ -282,6 +282,12 @@ class TextureManager : public PLCore::ResourceManager<Texture> {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLRenderer
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLRenderer/Texture/TextureManager.inl"
 
 
 #endif // __PLRENDERER_TEXTUREMANAGER_H__

@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLRenderer/Renderer/Renderer.h"
-#include "PLRenderer/Renderer/SurfaceHandler.h"
 #include "PLRenderer/Renderer/SurfaceWindow.h"
 #include "PLRenderer/Renderer/SurfaceWindowHandler.h"
 
@@ -58,24 +57,6 @@ SurfaceWindowHandler::~SurfaceWindowHandler()
 	// Destroy the renderer surface
 	DeInit();
 	delete m_pSurfaceHandler;
-}
-
-/**
-*  @brief
-*    Returns the owner renderer
-*/
-Renderer *SurfaceWindowHandler::GetRenderer() const
-{
-	return m_pRenderer;
-}
-
-/**
-*  @brief
-*    Returns the renderer surface of this handler
-*/
-Surface *SurfaceWindowHandler::GetSurface() const
-{
-	return m_pSurfaceHandler->GetSurface();
 }
 
 
