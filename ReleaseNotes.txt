@@ -1,5 +1,5 @@
 Changes in PixelLight 0.9.10-R1 (not yet released)
-- Feature: There's now official 64 bit support
+- Feature: There's now official 64 bit support (no prebuild SDK, but building PixelLight is easy and described in detail within the "PixelLightBuild"-document)
 - Feature: Added Mac OS X support (>=10.6, "PLRendererOpenGL"-port is still under construction)
 - Feature: Added support for 2D array textures within the renderer (kind of 3D texture, but without filtering between the depth layers)
 - Feature: Added scene node modifier "PLEngine::SNMEgoLookController" for restricted 3D look around

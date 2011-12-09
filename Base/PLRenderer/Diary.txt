@@ -46,7 +46,8 @@
   So, it apperars that on my system GL_ATI_meminfo is the only way which doesn't end up in a pure hacking around with versions for x-platforms.
   It's no option to just e.g. create a D3D context and ask it for the available graphics memory. "GL_ATI_meminfo" only returns the still free
   memory, divided into texture, VBO and renderbuffer memory. All three sections gave me "480" for my 512 MiB graphics card. This is close enough
-  and has to do the job. At least the solution is simple and cross-plattform. On NVIDIA systems I'am using of course "GL_NVX_gpu_memory_info".
+  and has to do the job. On Linux it gives me 287 MiB, not really close to 512 MiB. At least the solution is simple and cross-plattform, more or less.
+  On NVIDIA systems I'am using of course "GL_NVX_gpu_memory_info" which gave me the expected value (2048 MiB) on the available system.
   -> Within PLRenderer, this information is available via "PLRenderer::Capabilities::nTotalAvailableGPUMemory"
 
 
