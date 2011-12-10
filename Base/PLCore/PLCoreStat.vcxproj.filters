@@ -178,9 +178,6 @@
     <ClCompile Include="src\Container\Bitset.cpp">
       <Filter>Container</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\MemoryManager.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="src\File\FileLinux.cpp">
       <Filter>File</Filter>
     </ClCompile>
@@ -1749,6 +1746,9 @@
     </None>
     <None Include="include\PLCore\Xml\XmlElement.inl">
       <Filter>Xml</Filter>
+    </None>
+    <None Include="include\PLCore\Core\MemoryManagerOnlyOncePerProject.inl">
+      <Filter>Core</Filter>
     </None>
   </ItemGroup>
 </Project>

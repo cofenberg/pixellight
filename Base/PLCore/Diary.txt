@@ -1,3 +1,17 @@
+>> 10.12.2011
+[CO]
+- "MemoryManager": Made the methods inline in order to give the compiler a chance to optimize out function calls. Of course, for this it's required to include
+  "standard"-headers into PixelLight headers which is potentially dangerous when it comes to cross-platform because usually this makes at least on one platform
+  problems in a certain header include combination. But these memory operations are totally basic building blocks, same topic as in PLMath diary entry "15.11.2011"
+  regarding to the "PLMath::Math"-class with fundamental math building blocks. So, this must be worth the rest. It's still better then directly using the
+  "standard"-function because in case there are serious issues on a platform in the future, it's quite easy to resolve them because only this one header has to
+  be touched. I added as usual a long comment explaining why this header is including "standard"-headers and also a long dirary entry so everyone can see that
+  this isn't an inline-mood. :D
+-> By the way, the first PixelLight diary, this one, just reached 10.000> lines... sure, there are spaces and one could play around with the line size, but hey,
+   10.000> lines. Took just 9> years...
+
+
+
 >> 07.12.2011
 [CO]
 - "SystemAndroid": Added "GetAndroidApp()" and "SetAndroidApp()"

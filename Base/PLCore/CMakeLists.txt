@@ -34,7 +34,6 @@ add_sources(
 	src/Container/Functions.cpp
 	src/Container/Bitset.cpp
 	src/Container/BitsetIterator.cpp
-	src/Core/MemoryManager.cpp
 	src/Core/AbstractContext.cpp
 	src/Core/AbstractLifecycle.cpp
 	src/File/Directory.cpp

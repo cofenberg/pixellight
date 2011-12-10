@@ -255,7 +255,6 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\Container\Functions.cpp" />
     <ClCompile Include="src\Core\AbstractContext.cpp" />
     <ClCompile Include="src\Core\AbstractLifecycle.cpp" />
-    <ClCompile Include="src\Core\MemoryManager.cpp" />
     <ClCompile Include="src\File\Directory.cpp" />
     <ClCompile Include="src\File\File.cpp" />
     <ClCompile Include="src\File\FileAccess.cpp" />
@@ -815,6 +814,7 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
     <None Include="include\PLCore\Container\SimpleMapKeyIterator.inl" />
     <None Include="include\PLCore\Container\Stack.inl" />
     <None Include="include\PLCore\Core\MemoryManager.inl" />
+    <None Include="include\PLCore\Core\MemoryManagerOnlyOncePerProject.inl" />
     <None Include="include\PLCore\Core\RefCount.inl" />
     <None Include="include\PLCore\Core\RefCountPtr.inl" />
     <None Include="include\PLCore\Core\Singleton.inl" />

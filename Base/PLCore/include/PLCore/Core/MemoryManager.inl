@@ -1,7 +1,6 @@
 /*********************************************************\
  *  File: MemoryManager.inl                              *
- *      Memory manager inline implementation. This header can ONLY be includes once per project!
- *      (normally automatically included within 'PLCore/ModuleMain.h')
+ *      Memory manager inline implementation
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,98 +22,91 @@
 
 
 //[-------------------------------------------------------]
+//[ Debugging options for Microsoft Visual Studio         ]
+//[-------------------------------------------------------]
+// <<nostepinto>> PLCore::MemoryManager::.*
+// <<nostepinto>> operator delete.*
+// <<nostepinto>> operator new.*
+
+
+// For performance reasons we include so called "standard headers" in here even if they are not standardized across all platforms.
+// Usually the used headers don't introduce definition conflicts across the platforms, so, this should be fine... but it's still
+// highly recommended to use this "MemoryManager" helper class in case there are issues on a new platform. Changing this one header
+// is easier than changing all source codes of all projects.
+
+
+//[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/Core/MemoryManager.h"
+#include <stdlib.h>	// For "realloc()", "malloc()" and "free()"
+#include <string.h>	// For "memcpy()", "memset()" and "memcmp()"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLCore {
 
 
 //[-------------------------------------------------------]
 //[ Public static functions                               ]
 //[-------------------------------------------------------]
-inline void *operator new(size_t nNumOfBytes)
+/**
+*  @brief
+*    Copies memory
+*/
+inline void MemoryManager::Copy(void *pDestination, const void *pSource, uint32 nNumOfBytes)
 {
-	// ANSI says: allocation requests of 0 bytes will still return a valid value
-	if (!nNumOfBytes)
-		nNumOfBytes = 1;
-
-	// ANSI says: loop continuously because the error handler could possibly free up some memory
-	for (;;) {
-		// Try the allocation
-		void *pAddress = PLCore::MemoryManager::Allocator(PLCore::MemoryManager::New, nNumOfBytes, "?", 0);
-		if (pAddress)
-			return pAddress;
-	}
+	memcpy(pDestination, pSource, nNumOfBytes);
 }
 
-inline void *operator new[](size_t nNumOfBytes)
+/**
+*  @brief
+*    Sets memory to a specified character
+*/
+inline void MemoryManager::Set(void *pDestination, int nCharacter, uint32 nNumOfBytes)
 {
-	// The ANSI standard says that allocation requests of 0 bytes will still return a valid value
-	if (!nNumOfBytes)
-		nNumOfBytes = 1;
-
-	// ANSI says: loop continuously because the error handler could possibly free up some memory
-	for (;;) {
-		// Try the allocation
-		void *pAddress = PLCore::MemoryManager::Allocator(PLCore::MemoryManager::NewArray, nNumOfBytes, "?", 0);
-		if (pAddress)
-			return pAddress;
-	}
+	memset(pDestination, nCharacter, nNumOfBytes);
 }
 
-inline void operator delete(void *pAddress)
+/**
+*  @brief
+*    Compares memory
+*/
+inline int MemoryManager::Compare(const void *pFirstBuffer, const void *pSecondBuffer, uint32 nNumOfBytes)
 {
-	// ANSI says: delete & delete[] allow null pointers (they do nothing)
-	if (pAddress)
-		PLCore::MemoryManager::Deallocator(PLCore::MemoryManager::Delete, pAddress, "?", 0);
+	return memcmp(pFirstBuffer, pSecondBuffer, nNumOfBytes);
 }
 
-inline void operator delete[](void *pAddress)
+/**
+*  @brief
+*    Reallocates memory
+*/
+inline void *MemoryManager::Reallocator(void *pAddress, size_t nNumOfBytes, EType nType, const char *pszSourceFile, int nSourceLine)
 {
-	// ANSI says: delete & delete[] allow null pointers (they do nothing)
-	if (pAddress)
-		PLCore::MemoryManager::Deallocator(PLCore::MemoryManager::DeleteArray, pAddress, "?", 0);
+	return realloc(pAddress, nNumOfBytes);
 }
 
-inline void *operator new(size_t nNumOfBytes, const char *pszSourceFile, int nSourceLine)
+/**
+*  @brief
+*    Allocates new memory
+*/
+inline void *MemoryManager::Allocator(EType nType, size_t nNumOfBytes, const char *pszSourceFile, int nSourceLine)
 {
-	// ANSI says: allocation requests of 0 bytes will still return a valid value
-	if (!nNumOfBytes)
-		nNumOfBytes = 1;
-
-	// ANSI says: loop continuously because the error handler could possibly free up some memory
-	for (;;) {
-		// Try the allocation
-		void *pAddress = PLCore::MemoryManager::Allocator(PLCore::MemoryManager::New, nNumOfBytes, pszSourceFile, nSourceLine);
-		if (pAddress)
-			return pAddress;
-	}
+	return malloc(nNumOfBytes);
 }
 
-inline void *operator new[](size_t nNumOfBytes, const char *pszSourceFile, int nSourceLine)
+/**
+*  @brief
+*    Frees memory
+*/
+inline void MemoryManager::Deallocator(EType nType, void *pAddress, const char *pszSourceFile, int nSourceLine)
 {
-	// ANSI says: allocation requests of 0 bytes will still return a valid value
-	if (!nNumOfBytes)
-		nNumOfBytes = 1;
-
-	// ANSI says: loop continuously because the error handler could possibly free up some memory
-	for (;;) {
-		// Try the allocation
-		void *pAddress = PLCore::MemoryManager::Allocator(PLCore::MemoryManager::New, nNumOfBytes, pszSourceFile, nSourceLine);
-		if (pAddress)
-			return pAddress;
-	}
+	free(pAddress);
 }
 
-inline void operator delete(void *pAddress, const char *pszSourceFile, int nSourceLine)
-{
-	// ANSI says: delete & delete[] allow null pointers (they do nothing)
-	if (pAddress)
-		PLCore::MemoryManager::Deallocator(PLCore::MemoryManager::Delete, pAddress, pszSourceFile, nSourceLine);
-}
 
-inline void operator delete[](void *pAddress, const char *pszSourceFile, int nSourceLine)
-{
-	// ANSI says: delete & delete[] allow null pointers (they do nothing)
-	if (pAddress)
-		PLCore::MemoryManager::Deallocator(PLCore::MemoryManager::Delete, pAddress, pszSourceFile, nSourceLine);
-}
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLCore
