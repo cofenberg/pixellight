@@ -197,10 +197,12 @@ String Runtime::GetRegistryDirectory()
 			if (cRegistry.Open(Registry::KeyLocalMachine, sSubkey, Registry::RegRead)) {
 				const String sRuntime = cRegistry.GetValueString("Runtime");
 				if (sRuntime.GetLength()) {
+					// Ensure that the given directory really exists, if not, ignore the registry entry
 					Directory cDirectory(sRuntime);
-					if (cDirectory.Exists() && cDirectory.IsDirectory())
-						//convert to valid url
-						return Url(sRuntime).GetUrl(); // Done
+					if (cDirectory.Exists() && cDirectory.IsDirectory()) {
+						// Convert to valid URL
+						return Url(sRuntime).GetUrl();	// Done
+					}
 				}
 			}
 
@@ -209,10 +211,12 @@ String Runtime::GetRegistryDirectory()
 			if (cRegistry.Open(Registry::KeyLocalMachine, sSubkey, Registry::RegRead)) {
 				const String sRuntime = cRegistry.GetValueString("Runtime");
 				if (sRuntime.GetLength()) {
+					// Ensure that the given directory really exists, if not, ignore the registry entry
 					Directory cDirectory(sRuntime);
-					if (cDirectory.Exists() && cDirectory.IsDirectory())
-						//convert to valid url
-						return Url(sRuntime).GetUrl(); // Done
+					if (cDirectory.Exists() && cDirectory.IsDirectory()) {
+						// Convert to valid URL
+						return Url(sRuntime).GetUrl();	// Done
+					}
 				}
 			}
 		}
@@ -223,44 +227,36 @@ String Runtime::GetRegistryDirectory()
 
 	// Linux
 	#ifdef LINUX
-		// [TODO] Maybe we could distinguish between different versions and therefore different directories
-		//        (e.g. based on current version or library name)
-
 		// Check if a local pixellight runtime is specified in the environment variable PL_RUNTIME
 		const String sRuntime = System::GetInstance()->GetEnvironmentVariable("PL_RUNTIME");
 		if (sRuntime.GetLength() > 0) {
+			// Ensure that the given directory really exists, if not, ignore the registry entry
 			Directory cDirectory(sRuntime);
-			if (cDirectory.Exists() && cDirectory.IsDirectory())
+			if (cDirectory.Exists() && cDirectory.IsDirectory()) {
 				// Use local runtime
 				return sRuntime;
+			}
 		}
 
 		{
 			// Let's first check if a local installation is present in '/usr/local/share/pixellight/Runtime/<architecture>'.
-			// If it is, we will use that
-			String sLocalShareDir = "/usr/local/share/pixellight/Runtime";
-			#ifdef ARCHITEXTUREANDBITSIZE_STRING
-			sLocalShareDir += '/';
-			sLocalShareDir += ARCHITEXTUREANDBITSIZE_STRING;
-			#endif
-			Directory cDirectory(sLocalShareDir);
+			// If it is, we will use that.
+			const String sLocalShareDirectory = "/usr/local/share/pixellight/Runtime/" + Systen::GetInstance()->GetPlatformArchitecture();
+			Directory cDirectory(sLocalShareDirectory);
 			if (cDirectory.Exists() && cDirectory.IsDirectory())
-				return sLocalShareDir;
+				return sLocalShareDirectory;
 		}
+
 		{
 			// Let's check for the global installation in '/usr/share/pixellight/Runtime/<architecture>'
-			// If it is, we will use that
-			String sShareDir = "/usr/share/pixellight/Runtime";
-
-			#ifdef ARCHITEXTUREANDBITSIZE_STRING
-			sShareDir += '/';
-			sShareDir += ARCHITEXTUREANDBITSIZE_STRING;
-			#endif
-			Directory cDirectory(sShareDir);
+			// If it is, we will use that.
+			const String sShareDirectory = "/usr/share/pixellight/Runtime/" + Systen::GetInstance()->GetPlatformArchitecture();
+			Directory cDirectory(sShareDirectory);
 			if (cDirectory.Exists() && cDirectory.IsDirectory())
-				return sShareDir;
+				return sShareDirectory;
 		}
-		// No "local" or global installation found 
+
+		// No "local" or global installation found
 		return "";
 	#endif
 }

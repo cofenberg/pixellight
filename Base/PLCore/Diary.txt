@@ -9,6 +9,12 @@
   this isn't an inline-mood. :D
 -> By the way, the first PixelLight diary, this one, just reached 10.000> lines... sure, there are spaces and one could play around with the line size, but hey,
    10.000> lines. Took just 9> years...
+- Reviewed commit 1786dd0e5be679c566891d5aae62a6c38771df50 (see PLCore diary entry "03.12.2011")
+  -> Looks fine in general, except that "PLCore::System" is already providing the required information, removed "ARCHITEXTUREANDBITSIZE_STRING" definition
+  -> "LinuxCommon.cmake" was using "CMAKETOOLS_TARGET_ARCH" while it should have used "CMAKETOOLS_TARGET_ARCHBITSIZE"
+  -> "PLCore::Systen::GetPlatformArchitecture()" returns for instance 'x86', 'x64', 'armeabi', 'armeabi-v7a' and so on (as extensively documented). Yes, the
+     technical proper name for x64 would be "x86 architecture with 64 bit extensions", but that's far to technical and something like "x86_64" is more difficult
+     to read and name during a conversation as the marketing term "x64". That's why e.g. the runtime subdirectory is named "x64", not "x86_64".
 
 
 
