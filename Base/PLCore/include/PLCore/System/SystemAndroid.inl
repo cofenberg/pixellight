@@ -67,15 +67,6 @@ inline void SystemAndroid::SetAssetManager(AAssetManager *pAAssetManager)
 
 /**
 *  @brief
-*    Emit Android input event
-*/
-inline void SystemAndroid::EmitInputEvent(const struct AInputEvent &sAInputEvent)
-{
-	EventInputEvent(sAInputEvent);
-}
-
-/**
-*  @brief
 *    Returns whether or not console messages are also written into the Android in-kernel log buffer (use Androids "logcat" utility to access this system log)
 */
 inline bool SystemAndroid::GetConsoleToKernelLog()

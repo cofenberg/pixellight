@@ -124,7 +124,7 @@ class SystemAndroid : public SystemLinux {
 		*  @param[in] sAInputEvent
 		*    Android input event to emit
 		*/
-		static inline void EmitInputEvent(const struct AInputEvent &sAInputEvent);
+		static PLCORE_API void EmitInputEvent(const struct AInputEvent &sAInputEvent);
 
 		/**
 		*  @brief

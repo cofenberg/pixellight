@@ -52,65 +52,11 @@ bool		   SystemAndroid::g_bConsoleToKernelLog = false;	/**< 'true' if console me
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the native Android application
-*/
-android_app *SystemAndroid::GetAndroidApp()
-{
-	return g_pAndroidApp;
-}
-
-/**
-*  @brief
-*    Sets the native Android application
-*/
-void SystemAndroid::SetAndroidApp(android_app *pAndroidApp)
-{
-	g_pAndroidApp = pAndroidApp;
-}
-
-/**
-*  @brief
-*    Returns the Android asset manager
-*/
-AAssetManager *SystemAndroid::GetAssetManager()
-{
-	return g_pAAssetManager;
-}
-
-/**
-*  @brief
-*    Sets the Android asset manager
-*/
-void SystemAndroid::SetAssetManager(AAssetManager *pAAssetManager)
-{
-	g_pAAssetManager = pAAssetManager;
-}
-
-/**
-*  @brief
 *    Emit Android input event
 */
 void SystemAndroid::EmitInputEvent(const struct AInputEvent &sAInputEvent)
 {
 	EventInputEvent(sAInputEvent);
-}
-
-/**
-*  @brief
-*    Returns whether or not console messages are also written into the Android in-kernel log buffer (use Androids "logcat" utility to access this system log)
-*/
-bool SystemAndroid::GetConsoleToKernelLog()
-{
-	return g_bConsoleToKernelLog;
-}
-
-/**
-*  @brief
-*    Sets whether or not console messages are also written into the Android in-kernel log buffer (use Androids "logcat" utility to access this system log)
-*/
-void SystemAndroid::SetConsoleToKernelLog(bool bConsoleToKernelLog)
-{
-	g_bConsoleToKernelLog = bConsoleToKernelLog;
 }
 
 
