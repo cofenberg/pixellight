@@ -285,6 +285,11 @@ export PL_RUNTIME="<PixelLight root path>/Bin-Linux/Runtime/x86"
 This is the most comfortable way, because you only have to do this once, and then you can use the PixelLight runtime even across multiple terminal instances.
 
 
+\paragraph{LD\_LIBRARY\_PATH}
+You may also want to have a look into the \emph{LD\_LIBRARY\_PATH} environment variable of Linux. It's comparable to the \emph{PATH} environment variable under Windows and enables the \ac{OS} to find, for example, the \emph{PLCore} shared library if one is requesting it by just using the library name.
+
+
+
 
 \subsection{2. Install the PixelLight \ac{SDK} Locally}
 Installing means copying the files built by the project into your local Linux system so that the libraries and applications can be found there. The CMake build script therefore provides you with an \emph{install} target that installs everything on your local machine into the \emph{/usr/local} directory.

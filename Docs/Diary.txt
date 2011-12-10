@@ -2,6 +2,14 @@
 [CO]
 - "PixelLightBuild": Yesterday, a team member had problems cloning the PixelLight Git repository on Mac OS X. Firewall issues. So, also mentioned the
   "ssh"-way by using the SourceFourge user account.
+- "PixelLightBuild": There's an ongoing thread within the PixelLight forum at http://dev.pixellight.org/forum/viewtopic.php?f=6&t=116 about the Linux deb SDK
+  and handling how the system is finding the PixelLight shared libaries. As for me, the current solution described within PixelLightBuild works quite fine and
+  I have also no issues when I want to publish e.g. a new Linux version of the PixelLight dungeon demo. I have no time to get into more Linux details, that's
+  why I can't say that much on this topic. Sorry, I just can't solve every existing issue on any possible platform on my own while on the same time managing the
+  team, continuing the development of PixelLight in general, working on a research project, writing 20 pages for a course, oh, and by the way, working on my
+  master-thesis. Just mentioned this so no one can say "He just don't cares about Linux at all!".
+  -> So, I hope that http://dev.pixellight.org/forum/viewtopic.php?f=6&t=116 comes to a decent solution, and also realizes it
+  -> Because "LD_LIBRARY_PATH" is also working at this very moment, I mentioned it in the document as well to have one place one can refer to
 
 
 
