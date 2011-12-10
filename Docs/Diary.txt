@@ -1,3 +1,10 @@
+>> 10.12.2011
+[CO]
+- "PixelLightBuild": Yesterday, a team member had problems cloning the PixelLight Git repository on Mac OS X. Firewall issues. So, also mentioned the
+  "ssh"-way by using the SourceFourge user account.
+
+
+
 >> 06.12.2011
 [CO]
 PixelLightConventions: (previously "PixelLightCodingConventions")
