@@ -241,7 +241,7 @@ String Runtime::GetRegistryDirectory()
 		{
 			// Let's first check if a local installation is present in '/usr/local/share/pixellight/Runtime/<architecture>'.
 			// If it is, we will use that.
-			const String sLocalShareDirectory = "/usr/local/share/pixellight/Runtime/" + Systen::GetInstance()->GetPlatformArchitecture();
+			const String sLocalShareDirectory = "/usr/local/share/pixellight/Runtime/" + System::GetInstance()->GetPlatformArchitecture();
 			Directory cDirectory(sLocalShareDirectory);
 			if (cDirectory.Exists() && cDirectory.IsDirectory())
 				return sLocalShareDirectory;
@@ -250,7 +250,7 @@ String Runtime::GetRegistryDirectory()
 		{
 			// Let's check for the global installation in '/usr/share/pixellight/Runtime/<architecture>'
 			// If it is, we will use that.
-			const String sShareDirectory = "/usr/share/pixellight/Runtime/" + Systen::GetInstance()->GetPlatformArchitecture();
+			const String sShareDirectory = "/usr/share/pixellight/Runtime/" + System::GetInstance()->GetPlatformArchitecture();
 			Directory cDirectory(sShareDirectory);
 			if (cDirectory.Exists() && cDirectory.IsDirectory())
 				return sShareDirectory;
