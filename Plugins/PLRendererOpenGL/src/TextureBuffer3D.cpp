@@ -88,6 +88,8 @@ void TextureBuffer3D::InitialUploadVolumeData(Renderer &cRendererOpenGL, const I
 		// -> So, to be on the safe side, do not upload big volume textures using one "glTexImage3DEXT"-call,
 		//    split the upload into multiple "glTexSubImage3DEXT"-calls
 		// -> Hopefully 32,00 MiB per "glTexSubImage3DEXT"-call is fine across various graphics cards
+		// -> On NVIDIA GeForce GTX 285 (2048 MiB) using driver version 285.62 WHQL and Windows 7 64 bit,
+		//    there were no such issues and it was possible to upload the data in once single call
 		static const uint32 nMaximumNumberOfBytesPerCall = 512*512*128;
 
 		// Has the texture data a critical size?
