@@ -6,6 +6,7 @@ Changes in PixelLight 0.9.10-R1 (not yet released)
 - Feature request ID: 3443487 (Windows): Added critical section support to the mutex implementation
 - Feature request ID: 3439371: Added method "PLCore::Socket::IsDataWaiting()"
 - Feature: Added "PLRenderer::TextureBuffer::DownloadAsImage()" downloading texture data from the GPU as "PLGraphics::Image" instance which can e.g. be used to save the data easily
+- Feature: Added comfort renderer program wrapper "PLRenderer::ProgramWrapper"
 - Feature (not part of the prebuild SDK): Added "PLUnitTests" and "PLUnitTestsPerformance" basing on UnitTest++ (http://unittest-cpp.sourceforge.net/) as replacement for the old unit tests
 - Change: Various minor bugfixes and usability improvements within the CMake based build system to make building PixelLight across multiple platforms as painless as possible
 - Change: Made more methods inline in order to give the compiler a chance to optimize out function calls

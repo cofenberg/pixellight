@@ -356,6 +356,7 @@ copy build\release_x64\PLRenderer.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLRenderer\RendererContext.h" />
     <ClInclude Include="include\PLRenderer\Renderer\Backend\FontManagerBackend.h" />
     <ClInclude Include="include\PLRenderer\Renderer\ProgramUniformBlock.h" />
+    <ClInclude Include="include\PLRenderer\Renderer\ProgramWrapper.h" />
     <ClInclude Include="include\PLRenderer\Renderer\TextureBuffer2DArray.h" />
     <ClInclude Include="include\PLRenderer\Renderer\UniformBuffer.h" />
     <ClInclude Include="include\PLRenderer\SPDefault.h" />
@@ -479,6 +480,7 @@ copy build\release_x64\PLRenderer.lib ..\..\Bin\Lib\x64\
     <None Include="include\PLRenderer\Renderer\FontManager.inl" />
     <None Include="include\PLRenderer\Renderer\IndexBuffer.inl" />
     <None Include="include\PLRenderer\Renderer\ProgramGenerator.inl" />
+    <None Include="include\PLRenderer\Renderer\ProgramWrapper.inl" />
     <None Include="include\PLRenderer\Renderer\RenderStates.inl" />
     <None Include="include\PLRenderer\Renderer\Resource.inl" />
     <None Include="include\PLRenderer\Renderer\ResourceHandler.inl" />
