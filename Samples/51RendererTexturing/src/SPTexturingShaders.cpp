@@ -26,14 +26,11 @@
 #include <PLCore/Tools/Timing.h>
 #include <PLMath/Matrix4x4.h>
 #include <PLMath/Rectangle.h>
-#include <PLRenderer/Renderer/Program.h>
 #include <PLRenderer/Renderer/Renderer.h>
-#include <PLRenderer/Renderer/VertexBuffer.h>
 #include <PLRenderer/Renderer/VertexShader.h>
 #include <PLRenderer/Renderer/FragmentShader.h>
 #include <PLRenderer/Renderer/ShaderLanguage.h>
-#include <PLRenderer/Renderer/ProgramUniform.h>
-#include <PLRenderer/Renderer/ProgramAttribute.h>
+#include <PLRenderer/Renderer/ProgramWrapper.h>
 #include "SPTexturingShaders.h"
 
 
@@ -95,7 +92,7 @@ SPTexturingShaders::SPTexturingShaders(Renderer &cRenderer) : SPTexturing(cRende
 		m_pFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode, "arbfp1");
 
 		// Create a program instance and assign the created vertex and fragment shaders to it
-		m_pProgram = pShaderLanguage->CreateProgram(m_pVertexShader, m_pFragmentShader);
+		m_pProgram = static_cast<ProgramWrapper*>(pShaderLanguage->CreateProgram(m_pVertexShader, m_pFragmentShader));
 	}
 }
 
@@ -165,20 +162,14 @@ void SPTexturingShaders::OnPaint(Surface &cSurface)
 		}
 
 		// Set "TextureMap" program uniform
-		pProgramUniform = m_pProgram->GetUniform("TextureMap");
-		if (pProgramUniform)
-			pProgramUniform->Set(m_pTextureBuffer);
+		m_pProgram->Set("TextureMap", m_pTextureBuffer);
+
+		// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+		m_pProgram->Set("VertexPosition", m_pVertexBuffer, VertexBuffer::Position);
+		m_pProgram->Set("VertexTexCoord", m_pVertexBuffer, VertexBuffer::TexCoord);
 
 		// No back face culling, please. Else we can only see one 'side' of the quad
 		cRenderer.SetRenderState(RenderState::CullMode, Cull::None);
-
-		// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
-		ProgramAttribute *pProgramAttribute = m_pProgram->GetAttribute("VertexPosition");
-		if (pProgramAttribute)
-			pProgramAttribute->Set(m_pVertexBuffer, VertexBuffer::Position);
-		pProgramAttribute = m_pProgram->GetAttribute("VertexTexCoord");
-		if (pProgramAttribute)
-			pProgramAttribute->Set(m_pVertexBuffer, VertexBuffer::TexCoord);
 
 		// Now draw the primitives of our cool quad.
 		// The primitive type is 'triangle strip', we start at vertex 0 and draw '4' vertices.

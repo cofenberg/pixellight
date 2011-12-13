@@ -26,16 +26,12 @@
 #include <PLCore/Tools/Timing.h>
 #include <PLMath/Matrix4x4.h>
 #include <PLMath/Rectangle.h>
-#include <PLRenderer/Renderer/Program.h>
 #include <PLRenderer/Renderer/Renderer.h>
-#include <PLRenderer/Renderer/VertexBuffer.h>
 #include <PLRenderer/Renderer/VertexShader.h>
 #include <PLRenderer/Renderer/UniformBuffer.h>
 #include <PLRenderer/Renderer/ShaderLanguage.h>
-#include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/FragmentShader.h>
-#include <PLRenderer/Renderer/ProgramAttribute.h>
-#include <PLRenderer/Renderer/ProgramUniformBlock.h>
+#include <PLRenderer/Renderer/ProgramWrapper.h>
 #include "SPTriangleShaders.h"
 
 
@@ -113,7 +109,7 @@ SPTriangleShaders::SPTriangleShaders(Renderer &cRenderer) : SPTriangle(cRenderer
 		m_pFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode);
 
 		// Create a program instance and assign the created vertex, geometry and fragment shaders to it
-		m_pProgram = pShaderLanguage->CreateProgram(m_pVertexShader, m_pGeometryShader, m_pFragmentShader);
+		m_pProgram = static_cast<ProgramWrapper*>(pShaderLanguage->CreateProgram(m_pVertexShader, m_pGeometryShader, m_pFragmentShader));
 		if (m_pProgram) {
 			// Setup the uniform buffer (if there's one)
 			if (m_pUniformBuffer) {
@@ -220,30 +216,20 @@ void SPTriangleShaders::OnPaint(Surface &cSurface)
 		// Use uniform buffer?
 		if (m_pUniformBuffer) {
 			// Create a connection between "Uniform Block" and "Uniform Buffer" at binding point 0
-			ProgramUniformBlock *pProgramUniformBlock = m_pProgram->GetUniformBlock("UniformBlock");
-			if (pProgramUniformBlock)
-				pProgramUniformBlock->SetUniformBuffer(m_pUniformBuffer, 0);
+			m_pProgram->Set("UniformBlock", m_pUniformBuffer, 0);
 		} else {
 			// Nope, so set the program uniforms by using the good old way - one after another!
 			// (resulting in more internal API calls and is therefore somewhat slower)
-			ProgramUniform *pProgramUniform = m_pProgram->GetUniform("ObjectSpaceToClipSpaceMatrix");
-			if (pProgramUniform)
-				pProgramUniform->Set(cUniformBuffer.mObjectSpaceToClipSpaceMatrix);
-			pProgramUniform = m_pProgram->GetUniform("Color");
-			if (pProgramUniform)
-				pProgramUniform->Set(cUniformBuffer.cColor);
+			m_pProgram->Set("ObjectSpaceToClipSpaceMatrix", cUniformBuffer.mObjectSpaceToClipSpaceMatrix);
+			m_pProgram->Set("Color", cUniformBuffer.cColor);
 		}
+
+		// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
+		m_pProgram->Set("VertexPosition", m_pVertexBuffer, VertexBuffer::Position);
+		m_pProgram->Set("VertexColor", m_pVertexBuffer, VertexBuffer::Color);
 
 		// No back face culling, please. Else we can only see one 'side' of the triangle
 		cRenderer.SetRenderState(RenderState::CullMode, Cull::None);
-
-		// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
-		ProgramAttribute *pProgramAttribute = m_pProgram->GetAttribute("VertexPosition");
-		if (pProgramAttribute)
-			pProgramAttribute->Set(m_pVertexBuffer, VertexBuffer::Position);
-		pProgramAttribute = m_pProgram->GetAttribute("VertexColor");
-		if (pProgramAttribute)
-			pProgramAttribute->Set(m_pVertexBuffer, VertexBuffer::Color);
 
 		// Now draw the primitives of our cool triangle.
 		// The primitive type is 'triangles', we start at vertex 0 and draw '3' vertices.

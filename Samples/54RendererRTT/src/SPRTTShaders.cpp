@@ -28,10 +28,10 @@
 #include <PLMath/Rectangle.h>
 #include <PLGraphics/Image/Image.h>
 #include <PLGraphics/Image/ImageBuffer.h>
-#include <PLRenderer/Renderer/Program.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
 #include <PLRenderer/Renderer/VertexShader.h>
+#include <PLRenderer/Renderer/ProgramWrapper.h>
 #include <PLRenderer/Renderer/ShaderLanguage.h>
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
@@ -171,7 +171,7 @@ SPRTTShaders::SPRTTShaders(Renderer &cRenderer) : SPRTT(cRenderer),
 			m_pFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode, "arbfp1");
 
 			// Create a program instance and assign the created vertex and fragment shaders to it
-			m_pProgram = pShaderLanguage->CreateProgram(m_pVertexShader, m_pFragmentShader);
+			m_pProgram = static_cast<ProgramWrapper*>(pShaderLanguage->CreateProgram(m_pVertexShader, m_pFragmentShader));
 		}
 	}
 }
@@ -342,20 +342,12 @@ void SPRTTShaders::OnPaint(Surface &cSurface)
 	// Make our program to the current one
 	if (cRenderer.SetProgram(m_pProgram)) {
 		// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
-		ProgramAttribute *pProgramAttribute = m_pProgram->GetAttribute("VertexPosition");
-		if (pProgramAttribute)
-			pProgramAttribute->Set(m_pPositionVertexBuffer, VertexBuffer::Position);
-		pProgramAttribute = m_pProgram->GetAttribute("VertexTextureCoordinate");
-		if (pProgramAttribute)
-			pProgramAttribute->Set(m_pPositionVertexBuffer, VertexBuffer::TexCoord);
-		pProgramAttribute = m_pProgram->GetAttribute("VertexColor");
-		if (pProgramAttribute)
-			pProgramAttribute->Set(m_pColorVertexBuffer, VertexBuffer::Color);
+		m_pProgram->Set("VertexPosition",		   m_pPositionVertexBuffer, VertexBuffer::Position);
+		m_pProgram->Set("VertexTextureCoordinate", m_pPositionVertexBuffer, VertexBuffer::TexCoord);
+		m_pProgram->Set("VertexColor",			   m_pColorVertexBuffer,    VertexBuffer::Color);
 
 		// Set color factor
-		ProgramUniform *pProgramUniform = m_pProgram->GetUniform("ColorFactor");
-		if (pProgramUniform)
-			pProgramUniform->Set(0.0f);
+		m_pProgram->Set("ColorFactor", 0.0f);
 
 		// Calculate the composed view projection matrix - we need it multiple times
 		Matrix4x4 mViewProjection;
@@ -384,16 +376,14 @@ void SPRTTShaders::OnPaint(Surface &cSurface)
 		Matrix4x4 mWorld;
 		{ // Draw quadrangle 1: Primary render target
 			// Set object space to clip space matrix uniform
-			pProgramUniform = m_pProgram->GetUniform("ObjectSpaceToClipSpaceMatrix");
+			ProgramUniform *pProgramUniform = m_pProgram->GetUniform("ObjectSpaceToClipSpaceMatrix");
 			if (pProgramUniform) {
 				mWorld.SetTranslationMatrix(2.0f, 1.0f, 0.0f);
 				pProgramUniform->Set(mViewProjection*mWorld);
 			}
 
-			// Set the texture buffer we rendered our teapot in as the current texture buffer
-			pProgramUniform = m_pProgram->GetUniform("DiffuseMap");
-			if (pProgramUniform) {
-				const int nTextureUnit = pProgramUniform->Set(m_pRenderTarget->GetTextureBuffer());
+			{ // Set the texture buffer we rendered our teapot in as the current texture buffer
+				const int nTextureUnit = m_pProgram->Set("DiffuseMap", m_pRenderTarget->GetTextureBuffer());
 				if (nTextureUnit >= 0) {
 					// Disable mip mapping - this is required because we created/filled no mipmaps for your texture buffer
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::Linear);
@@ -408,17 +398,15 @@ void SPRTTShaders::OnPaint(Surface &cSurface)
 
 		{ // Draw quadrangle 2: Color render target 1
 			// Set object space to clip space matrix uniform
-			pProgramUniform = m_pProgram->GetUniform("ObjectSpaceToClipSpaceMatrix");
+			ProgramUniform *pProgramUniform = m_pProgram->GetUniform("ObjectSpaceToClipSpaceMatrix");
 			if (pProgramUniform) {
 				mWorld.FromEulerAngleY(static_cast<float>(m_fRotation*Math::DegToRad));
 				mWorld.SetTranslation(-2.0f, 1.0f, 0.0f);
 				pProgramUniform->Set(mViewProjection*mWorld);
 			}
 
-			// Set the texture buffer we rendered our teapot in as the current texture buffer
-			pProgramUniform = m_pProgram->GetUniform("DiffuseMap");
-			if (pProgramUniform) {
-				const int nTextureUnit = pProgramUniform->Set(m_pColorTarget1 ? static_cast<TextureBuffer*>(m_pColorTarget1) : m_pRenderTarget->GetTextureBuffer());
+			{ // Set the texture buffer we rendered our teapot in as the current texture buffer
+				const int nTextureUnit = m_pProgram->Set("DiffuseMap", m_pColorTarget1 ? static_cast<TextureBuffer*>(m_pColorTarget1) : m_pRenderTarget->GetTextureBuffer());
 				if (nTextureUnit >= 0) {
 					// Disable mip mapping - this is required because we created/filled no mipmaps for your texture buffer
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::Linear);
@@ -433,17 +421,15 @@ void SPRTTShaders::OnPaint(Surface &cSurface)
 
 		{ // Draw quadrangle 3: Color render target 2
 			// Set object space to clip space matrix uniform
-			pProgramUniform = m_pProgram->GetUniform("ObjectSpaceToClipSpaceMatrix");
+			ProgramUniform *pProgramUniform = m_pProgram->GetUniform("ObjectSpaceToClipSpaceMatrix");
 			if (pProgramUniform) {
 				mWorld.FromEulerAngleZ(static_cast<float>(m_fRotation*Math::DegToRad));
 				mWorld.SetTranslation(0.0f, 1.0f, 0.0f);
 				pProgramUniform->Set(mViewProjection*mWorld);
 			}
 
-			// Set the texture buffer we rendered our teapot in as the current texture buffer
-			pProgramUniform = m_pProgram->GetUniform("DiffuseMap");
-			if (pProgramUniform) {
-				const int nTextureUnit = pProgramUniform->Set(m_pColorTarget2 ? static_cast<TextureBuffer*>(m_pColorTarget2) : m_pRenderTarget->GetTextureBuffer());
+			{ // Set the texture buffer we rendered our teapot in as the current texture buffer
+				const int nTextureUnit = m_pProgram->Set("DiffuseMap", m_pColorTarget2 ? static_cast<TextureBuffer*>(m_pColorTarget2) : m_pRenderTarget->GetTextureBuffer());
 				if (nTextureUnit >= 0) {
 					// Disable mip mapping - this is required because we created/filled no mipmaps for your texture buffer
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::Linear);
@@ -458,17 +444,15 @@ void SPRTTShaders::OnPaint(Surface &cSurface)
 
 		{ // Draw quadrangle 4: Color render target 3
 			// Set object space to clip space matrix uniform
-			pProgramUniform = m_pProgram->GetUniform("ObjectSpaceToClipSpaceMatrix");
+			ProgramUniform *pProgramUniform = m_pProgram->GetUniform("ObjectSpaceToClipSpaceMatrix");
 			if (pProgramUniform) {
 				mWorld.FromEulerAngleZ(static_cast<float>(-m_fRotation*Math::DegToRad));
 				mWorld.SetTranslation(-2.0f, -1.0f, 0.0f);
 				pProgramUniform->Set(mViewProjection*mWorld);
 			}
 
-			// Set the texture buffer we rendered our teapot in as the current texture buffer
-			pProgramUniform = m_pProgram->GetUniform("DiffuseMap");
-			if (pProgramUniform) {
-				const int nTextureUnit = pProgramUniform->Set(m_pColorTarget3 ? static_cast<TextureBuffer*>(m_pColorTarget3) : m_pRenderTarget->GetTextureBuffer());
+			{ // Set the texture buffer we rendered our teapot in as the current texture buffer
+				const int nTextureUnit = m_pProgram->Set("DiffuseMap", m_pColorTarget3 ? static_cast<TextureBuffer*>(m_pColorTarget3) : m_pRenderTarget->GetTextureBuffer());
 				if (nTextureUnit >= 0) {
 					// Disable mip mapping - this is required because we created/filled no mipmaps for your texture buffer
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::Linear);
@@ -483,7 +467,7 @@ void SPRTTShaders::OnPaint(Surface &cSurface)
 
 		{ // Draw quadrangle 4: Primary render target, but with per vertex color - the primitive will be quite colorful :)
 			// Set object space to clip space matrix uniform
-			pProgramUniform = m_pProgram->GetUniform("ObjectSpaceToClipSpaceMatrix");
+			ProgramUniform *pProgramUniform = m_pProgram->GetUniform("ObjectSpaceToClipSpaceMatrix");
 			if (pProgramUniform) {
 				mWorld.FromEulerAngleZ(static_cast<float>(-m_fRotation*Math::DegToRad));
 				mWorld.SetTranslation(2.0f, -1.0f, 0.0f);
@@ -491,14 +475,10 @@ void SPRTTShaders::OnPaint(Surface &cSurface)
 			}
 
 			// Set color factor
-			pProgramUniform = m_pProgram->GetUniform("ColorFactor");
-			if (pProgramUniform)
-				pProgramUniform->Set(1.0f);
+			m_pProgram->Set("ColorFactor", 1.0f);
 
-			// Set the texture buffer we rendered our teapot in as the current texture buffer
-			pProgramUniform = m_pProgram->GetUniform("DiffuseMap");
-			if (pProgramUniform) {
-				const int nTextureUnit = pProgramUniform->Set(m_pRenderTarget->GetTextureBuffer());
+			{ // Set the texture buffer we rendered our teapot in as the current texture buffer
+				const int nTextureUnit = m_pProgram->Set("DiffuseMap", m_pRenderTarget->GetTextureBuffer());
 				if (nTextureUnit >= 0) {
 					// Disable mip mapping - this is required because we created/filled no mipmaps for your texture buffer
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::Linear);

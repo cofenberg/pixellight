@@ -35,9 +35,9 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLRenderer {
-	class Program;
 	class VertexShader;
 	class FragmentShader;
+	class ProgramWrapper;
 }
 
 
@@ -89,7 +89,7 @@ class SPTexturingShaders : public SPTexturing {
 	private:
 		PLRenderer::VertexShader	*m_pVertexShader;	/**< Vertex shader, can be a null pointer */
 		PLRenderer::FragmentShader	*m_pFragmentShader;	/**< Fragment shader, can be a null pointer */
-		PLRenderer::Program			*m_pProgram;		/**< GPU program, can be a null pointer */
+		PLRenderer::ProgramWrapper	*m_pProgram;		/**< GPU program, can be a null pointer */
 
 
 	//[-------------------------------------------------------]
