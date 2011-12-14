@@ -201,14 +201,8 @@ void SPTriangleShaders::OnPaint(Surface &cSurface)
 		// Cg fails on my system when updating the uniform buffer data while a program using this uniform buffer is currently in use (no problems with GLSL)
 		cRenderer.SetProgram(nullptr);
 
-		// Lock the uniform buffer
-		if (m_pUniformBuffer->Lock(Lock::WriteOnly)) {
-			// Copy over all the uniform data at once
-			MemoryManager::Copy(m_pUniformBuffer->GetData(), &cUniformBuffer, sizeof(cUniformBuffer));
-
-			// Unlock the uniform buffer
-			m_pUniformBuffer->Unlock();
-		}
+		// Copy over all the uniform data at once into the uniform buffer
+		m_pUniformBuffer->CopyFrom(&cUniformBuffer);
 	}
 
 	// Make our program to the current one

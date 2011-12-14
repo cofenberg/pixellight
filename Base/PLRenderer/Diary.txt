@@ -1,3 +1,9 @@
+>> 14.12.2011
+[CO]
+- "UniformBuffer": Added ease of use methods "CopyFrom()" and "CopyTo()"
+
+
+
 >> 13.12.2011
 [CO]
 - Added comfort renderer program wrapper "ProgramWrapper". The "Program.h"-header is slim and the program interface is designed to be universal and efficient.

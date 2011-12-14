@@ -493,6 +493,7 @@ copy build\release_x64\PLRenderer.lib ..\..\Bin\Lib\x64\
     <None Include="include\PLRenderer\Renderer\SurfaceWindowHandler.inl" />
     <None Include="include\PLRenderer\Renderer\TextureBuffer.inl" />
     <None Include="include\PLRenderer\Renderer\TextureBufferRectangle.inl" />
+    <None Include="include\PLRenderer\Renderer\UniformBuffer.inl" />
     <None Include="include\PLRenderer\Renderer\VertexBuffer.inl" />
     <None Include="include\PLRenderer\SPPreview.inl" />
     <None Include="include\PLRenderer\Texture\SPTexturePreview.inl" />

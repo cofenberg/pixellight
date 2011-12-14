@@ -769,5 +769,8 @@
     <None Include="include\PLRenderer\Renderer\ProgramWrapper.inl">
       <Filter>Renderer</Filter>
     </None>
+    <None Include="include\PLRenderer\Renderer\UniformBuffer.inl">
+      <Filter>Renderer</Filter>
+    </None>
   </ItemGroup>
 </Project>
