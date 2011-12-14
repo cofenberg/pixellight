@@ -249,6 +249,9 @@ class Program : public Resource {
 		*
 		*  @return
 		*    Uniform (do not delete it, can be a null pointer, if no uniform with that name could be found)
+		*
+		*  @see
+		*    - "ProgramUniform"-class for more information
 		*/
 		virtual ProgramUniform *GetUniform(const PLCore::String &sName) = 0;
 

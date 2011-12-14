@@ -67,9 +67,25 @@ namespace PLRenderer {
 *  @brief
 *    Abstract renderer program uniform
 *
+*  @remarks
+*    An uniform is a program parameter which stays the same for all elements processed within the shader pipeline.
+*    Whether or not parameter shadowing is used, depends on the internal shader API. GLSL and Cg perform parameter
+*    shadowing. Shadowing means that the uniform will keep it's value when another program is set and still has
+*    the same value when the program of the uniform is set again as the currently one used for rendering.
+*
+*    Please note that the internal shader API like GLSL or Cg may handle uniforms differently. When using Cg it's
+*    possible to set the uniform value at each time, even when the program the uniform is part of is currently
+*    not the used renderer program. When using GLSL, it's only possible to access the value of an uniform when
+*    the program, the uniform is part of, is the currently used for rendering. For performance reasons, this
+*    abstract program uniform interface can't compensate those differences. It has to be as lightweight as possible
+*    in order to keep the interface performance impact as low as possible.
+*
+*    In order to be as internal shader API independent as possible, it's highly recommended to access program
+*    uniforms only when the program, the uniform is part of, is currently used for rendering.
+*
 *  @note
-*    - An uniform is a program parameter that stays the same for all elements processed within the shader pipeline
-*    - Whether or not parameter shadowing is used, depends on the internal shader API, GLSL and Cg perform parameter shadowing
+*    - The value of an uniform is directly coupled to a certain program
+*    - Do only access uniform values when the program, the uniform is part of, is currently used for rendering
 */
 class ProgramUniform {
 

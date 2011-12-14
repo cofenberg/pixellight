@@ -1,6 +1,7 @@
 >> 14.12.2011
 [CO]
 - "UniformBuffer": Added ease of use methods "CopyFrom()" and "CopyTo()"
+- "ProgramUniform": Added more comments on how to use this interface
 
 
 

@@ -100,7 +100,7 @@ class ProgramWrapper : public Program {
 	//[-------------------------------------------------------]
 	public:
 		//[-------------------------------------------------------]
-		//[ Program uniform ("ProgramUniform"-class)              ]
+		//[ Program uniform ("ProgramUniform"-class)              ] -> See "ProgramUniform"-class for more information
 		//[-------------------------------------------------------]
 		inline void Get(const PLCore::String &sUniformName, int &nX);
 		inline void Get(const PLCore::String &sUniformName, float &fX);
@@ -168,7 +168,7 @@ class ProgramWrapper : public Program {
 		inline int Set(const PLCore::String &sUniformName, TextureBuffer *pTextureBuffer);
 
 		//[-------------------------------------------------------]
-		//[ Program uniform buffer ("ProgramUniformBlock"-class)  ]
+		//[ Program uniform buffer ("ProgramUniformBlock"-class)  ] -> See "ProgramUniformBlock"-class for more information
 		//[-------------------------------------------------------]
 		/**
 		*  @brief
@@ -193,7 +193,7 @@ class ProgramWrapper : public Program {
 		inline bool Set(const PLCore::String &sUniformBlockName, UniformBuffer *pUniformBuffer, PLCore::uint32 nBindingPoint);
 
 		//[-------------------------------------------------------]
-		//[ Program attribute ("ProgramAttribute"-class)          ]
+		//[ Program attribute ("ProgramAttribute"-class)          ] -> See "ProgramAttribute"-class for more information
 		//[-------------------------------------------------------]
 		/**
 		*  @brief
