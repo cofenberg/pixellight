@@ -1,3 +1,22 @@
+>> 13.12.2011
+[CO]
+- Added comfort renderer program wrapper "ProgramWrapper". The "Program.h"-header is slim and the program interface is designed to be universal and efficient.
+  While this is fine in general, it may feel to complicated in simple daily use. For example, in order to set a program attribute one has to write for instance
+    ProgramAttribute *pProgramAttribute = pProgram->GetAttribute("VertexPosition");
+    if (pProgramAttribute)
+        pProgramAttribute->Set(pVertexBuffer, VertexBuffer::Position);
+  The purpose of this "ProgramWrapper"-interface is to make simple usage as shown in the example above more compact and direct by allowing to write
+    m_pProgram->Set("VertexPosition", m_pVertexBuffer, VertexBuffer::Position)
+  instead.
+  Please note that "ProgramWrapper" is just an interface and no real class which can be instanced. All methods are inlined and simple. In order to use this
+  interface write e.g.
+    ProgramWrapper *pProgram = static_cast<ProgramWrapper*>(pShaderLanguage->CreateProgram(pVertexShader, pFragmentShader));
+  This means that it is actually a hack because one has to cast an class instance to a certain class, altought the class
+  instance is in fact not an instance of it. Due to the simplicity of "ProgramWrapper" and the fact that it doesn't introduce
+  e.g. new variables, this is working.
+
+
+
 >> 09.12.2011
 [CO]
 - Added method "TextureBuffer::GetFormatForImage()" (similar name as "TextureBuffer::GetFormatFromImage()") which returns the image (PLGraphics::Image)

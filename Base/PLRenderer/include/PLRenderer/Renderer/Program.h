@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/String/String.h>
 #include <PLCore/Base/Event/Event.h>
 #include "PLRenderer/Renderer/Resource.h"
 
@@ -65,6 +64,8 @@ namespace PLRenderer {
 *  @note
 *    - While each program must have a vertex shader and a fragment shader, a geometry shader is optional
 *    - The program is using lazy evaluation, so the program is only compiled & linked when really required
+*    - In performance critical situations, use uniform blocks if they are available
+*    - In performance critical situations, you may want to request e.g. the pointer to uniforms only once, not constantly
 */
 class Program : public Resource {
 

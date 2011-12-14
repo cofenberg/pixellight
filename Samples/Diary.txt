@@ -1,3 +1,9 @@
+>> 13.12.2011
+[CO]
+- The samples are now using the new "PLRenderer::ProgramWrapper"-interface
+
+
+
 >> 26.11.2011
 [CO]
 - Reviewed "05NetworkChat": After the bugfix

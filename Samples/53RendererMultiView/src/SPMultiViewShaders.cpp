@@ -25,14 +25,11 @@
 //[-------------------------------------------------------]
 #include <PLMath/Matrix4x4.h>
 #include <PLMath/Rectangle.h>
-#include <PLRenderer/Renderer/Program.h>
 #include <PLRenderer/Renderer/Renderer.h>
-#include <PLRenderer/Renderer/VertexBuffer.h>
 #include <PLRenderer/Renderer/VertexShader.h>
 #include <PLRenderer/Renderer/ShaderLanguage.h>
-#include <PLRenderer/Renderer/ProgramUniform.h>
-#include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/FragmentShader.h>
+#include <PLRenderer/Renderer/ProgramWrapper.h>
 #include <PLMesh/MeshHandler.h>
 #include <PLMesh/MeshLODLevel.h>
 #include "SPMultiViewShaders.h"
@@ -98,7 +95,7 @@ SPMultiViewShaders::SPMultiViewShaders(Renderer &cRenderer) : SPMultiView(cRende
 		m_pFragmentShader = pShaderLanguage->CreateFragmentShader(sFragmentShaderSourceCode, "arbfp1");
 
 		// Create a program instance and assign the created vertex and fragment shaders to it
-		m_pProgram = pShaderLanguage->CreateProgram(m_pVertexShader, m_pFragmentShader);
+		m_pProgram = static_cast<ProgramWrapper*>(pShaderLanguage->CreateProgram(m_pVertexShader, m_pFragmentShader));
 	}
 }
 
@@ -160,14 +157,10 @@ void SPMultiViewShaders::DrawScene(uint32 nScene)
 		}
 
 		// Set object space to world space matrix uniform
-		pProgramUniform = m_pProgram->GetUniform("ObjectSpaceToWorldSpaceMatrix");
-		if (pProgramUniform)
-			pProgramUniform->Set(mWorld);
+		m_pProgram->Set("ObjectSpaceToWorldSpaceMatrix", mWorld);
 
 		// Set world space light direction
-		pProgramUniform = m_pProgram->GetUniform("LightDirection");
-		if (pProgramUniform)
-			pProgramUniform->Set(Vector3::UnitZ);
+		m_pProgram->Set("LightDirection", Vector3::UnitZ);
 
 		// Get the mesh handler representing the scene to draw
 		const MeshHandler *pMeshHandler = nullptr;
@@ -198,12 +191,8 @@ void SPMultiViewShaders::DrawScene(uint32 nScene)
 				VertexBuffer *pVertexBuffer = pMeshHandler->GetVertexBuffer();
 				if (pVertexBuffer) {
 					// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
-					ProgramAttribute *pProgramAttribute = m_pProgram->GetAttribute("VertexPosition");
-					if (pProgramAttribute)
-						pProgramAttribute->Set(pVertexBuffer, VertexBuffer::Position);
-					pProgramAttribute = m_pProgram->GetAttribute("VertexNormal");
-					if (pProgramAttribute)
-						pProgramAttribute->Set(pVertexBuffer, VertexBuffer::Normal);
+					m_pProgram->Set("VertexPosition", pVertexBuffer, VertexBuffer::Position);
+					m_pProgram->Set("VertexNormal", pVertexBuffer, VertexBuffer::Normal);
 
 					// Loop through all geometries of the mesh
 					const Array<Geometry> &lstGeometries = *pLODLevel->GetGeometries();

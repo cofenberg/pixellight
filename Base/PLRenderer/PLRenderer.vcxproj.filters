@@ -627,6 +627,9 @@
     <ClInclude Include="include\PLRenderer\Renderer\TextureBuffer2DArray.h">
       <Filter>Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="include\PLRenderer\Renderer\ProgramWrapper.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
@@ -762,6 +765,9 @@
     </None>
     <None Include="include\PLRenderer\Texture\SPTexturePreview.inl">
       <Filter>Texture</Filter>
+    </None>
+    <None Include="include\PLRenderer\Renderer\ProgramWrapper.inl">
+      <Filter>Renderer</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -35,9 +35,9 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLRenderer {
-	class Program;
 	class VertexShader;
 	class FragmentShader;
+	class ProgramWrapper;
 	class TextureBuffer2D;
 	class SurfaceTextureBuffer;
 }
@@ -109,7 +109,7 @@ class SPRTTShaders : public SPRTT {
 		PLRenderer::Program				 *m_pSceneProgram;			/**< Scene GPU program, can be a null pointer */
 		PLRenderer::VertexShader		 *m_pVertexShader;			/**< Vertex shader, can be a null pointer */
 		PLRenderer::FragmentShader		 *m_pFragmentShader;		/**< Fragment shader, can be a null pointer */
-		PLRenderer::Program				 *m_pProgram;				/**< GPU program, can be a null pointer */
+		PLRenderer::ProgramWrapper		 *m_pProgram;				/**< GPU program, can be a null pointer */
 
 
 	//[-------------------------------------------------------]
