@@ -29,7 +29,6 @@
 #include <PLCore/Log/Log.h>
 #include <PLCore/System/System.h>
 #include <PLCore/System/SystemAndroid.h>
-#include <PLCore/String/String.h>
 #include "PLInput/Input/Devices/SplitTouchPad.h"
 #include "PLInput/Backend/Android/AndroidSplitTouchPadDevice.h"
 
@@ -50,24 +49,25 @@ namespace PLInput {
 *    Constructor
 */
 AndroidSplitTouchPadDevice::AndroidSplitTouchPadDevice() :
-	m_bRightTouchMoved(false),
-	m_fPreviousRightTouchPositionX(0.0f),
-	m_fPreviousRightTouchPositionY(0.0f),
-	m_fPreviousRightTouchPressure(0.0f),
-	m_fRightTouchPositionX(0.0f),
-	m_fRightTouchPositionY(0.0f),
-	m_fRightTouchPressure(0.0f),
-	m_bLeftTouchMoved(false),
-	m_fPreviousLeftTouchPositionX(0.0f),
-	m_fPreviousLeftTouchPositionY(0.0f),
-	m_fPreviousLeftTouchPressure(0.0f),
+	// Left
+	m_nLeftTouchPointerID(-1),
+	m_fOriginLeftTouchPositionX(0.0f),
+	m_fOriginLeftTouchPositionY(0.0f),
+	m_fOriginLeftTouchPressure(0.0f),
 	m_fLeftTouchPositionX(0.0f),
 	m_fLeftTouchPositionY(0.0f),
-	m_fLeftTouchPressure(0.0f)
+	m_fLeftTouchPressure(0.0f),
+	// Right
+	m_nRightTouchPointerID(-1),
+	m_fOriginRightTouchPositionX(0.0f),
+	m_fOriginRightTouchPositionY(0.0f),
+	m_fOriginRightTouchPressure(0.0f),
+	m_fRightTouchPositionX(0.0f),
+	m_fRightTouchPositionY(0.0f),
+	m_fRightTouchPressure(0.0f)
 {
 	// Destroy device implementation automatically
 	m_bDelete = true;
-
 }
 
 /**
@@ -85,123 +85,114 @@ AndroidSplitTouchPadDevice::~AndroidSplitTouchPadDevice()
 void AndroidSplitTouchPadDevice::OnMotionInputEvent(const struct AInputEvent &cAMotionInputEvent)
 {
 	// We need the display size and orientation for splitting the screen
-	// Get display size 
-	struct android_app *app = ((SystemAndroid *) System::GetInstance())->GetAndroidApp();
-	if(app != NULL) {
-		ANativeWindow *pANativeWindow = app->window;
-		if(pANativeWindow != NULL) {
-			//get the screen width ... this is our base line for splitting
-			const int32_t iScreenWidth  = ANativeWindow_getWidth(pANativeWindow);
-			//const int32_t iScreenHeight = ANativeWindow_getHeight(pANativeWindow);
+	struct android_app *pAndroidApp = reinterpret_cast<SystemAndroid*>(System::GetInstance())->GetAndroidApp();
+	if (pAndroidApp) {
+		ANativeWindow *pANativeWindow = pAndroidApp->window;
+		if (pANativeWindow) {
+			// Get the screen width: This is our base line for splitting
+			const int32_t nScreenWidth = ANativeWindow_getWidth(pANativeWindow);
 
 			// Get the number of pointers of data contained in this event
 			const size_t nAndroidPointerCount = AMotionEvent_getPointerCount(&cAMotionInputEvent);
 
 			// Evaluate every point
-			for(int i = 0; i < nAndroidPointerCount; i++) {
-				//LogEventValues(cAMotionInputEvent);
-	
-				// Get the current action and pointer index
-				const int32_t nAndroidCombinedAction		= AMotionEvent_getAction(&cAMotionInputEvent);
-				const int32_t nAndroidAction				= (nAndroidCombinedAction & AMOTION_EVENT_ACTION_MASK);
-				const int32_t nAndroidActionPointerIndex	= ((nAndroidCombinedAction & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT);
-										
-				// Get the current X and Y coordinate of this event for the given pointer index
-				const float fPointerPositionX = AMotionEvent_getX(&cAMotionInputEvent, i);
-				const float fPointerPositionY = AMotionEvent_getY(&cAMotionInputEvent, i);
-				const float fPointerPressure  = AMotionEvent_getPressure(&cAMotionInputEvent, i);
-				
-				
-				// Does the touch start ?
-				if(nAndroidAction == AMOTION_EVENT_ACTION_DOWN) {
-
-					// Decide if the point is in the left or right screen half
-					if(fPointerPositionX < (iScreenWidth/2)) {
-						// This is the on the left half of the screen
-
-						// This is our initial start point (previous position = current position)
-						m_fPreviousLeftTouchPositionX = fPointerPositionX;
-						m_fPreviousLeftTouchPositionY = fPointerPositionY;
-						m_fPreviousLeftTouchPressure  = fPointerPressure;
-
-						// The pointer was not yet moved
-						m_bLeftTouchMoved = false;
-
-					} else {
-						// This is on the right half of the screen
-
-						// This is our initial start point (previous position = current position)
-						m_fPreviousRightTouchPositionX = fPointerPositionX;
-						m_fPreviousRightTouchPositionY = fPointerPositionY;
-						m_fPreviousRightTouchPressure  = fPointerPressure;
-
-						// The pointer was not yet moved
-						m_bRightTouchMoved = false;
-
-					}
-				} else {
-					// Does the touch stop?
-					if(nAndroidAction == AMOTION_EVENT_ACTION_UP) {
-
-						// Decide if the pointer is in the left or right screen half
-						if(fPointerPositionX < (iScreenWidth/2)) {
-							// This is the on the left half of the screen
-
-							// This is our initial end point (previous position = current position)
-							m_fPreviousLeftTouchPositionX = fPointerPositionX;
-							m_fPreviousLeftTouchPositionY = fPointerPositionY;
-							m_fPreviousLeftTouchPressure  = fPointerPressure;
-							
-							// The pointer stoped moving
-							m_bLeftTouchMoved = false;
-						} else {
-							// This is on the right half of the screen
-
-							// this is our initial end point (previous position = current position)
-							m_fPreviousRightTouchPositionX = fPointerPositionX;
-							m_fPreviousRightTouchPositionY = fPointerPositionY;
-							m_fPreviousRightTouchPressure  = fPointerPressure;
-							
-							// The pointer stoped moving
-							m_bRightTouchMoved = false;
-
-						}
-					} else {
-						// Did we move?
-						if(nAndroidAction == AMOTION_EVENT_ACTION_MOVE)
-						{
-							// Decide if the pointer is in the left or right screen half
-							if(fPointerPositionX < (iScreenWidth/2)) {
-								// This is the on the left half of the screen
-								m_fLeftTouchPositionX = fPointerPositionX;
-								m_fLeftTouchPositionY = fPointerPositionY;
-								m_fLeftTouchPressure  = fPointerPressure;
-								m_bLeftTouchMoved = true;
-								
-							} else {
-								// This is on the right half of the screen
-								m_fRightTouchPositionX = fPointerPositionX;
-								m_fRightTouchPositionY = fPointerPositionY;
-								m_fRightTouchPressure  = fPointerPressure;
-								m_bRightTouchMoved = true;
-
-							}
-						}
-					}
+			for (size_t i=0; i<nAndroidPointerCount; i++) {
+				size_t nAndroidPointerID    = AMotionEvent_getPointerId(&cAMotionInputEvent, i);
+				size_t nAndroidAction       = (AMotionEvent_getAction(&cAMotionInputEvent) & AMOTION_EVENT_ACTION_MASK);
+				size_t nAndroidPointerIndex = i;
+				if (nAndroidAction == AMOTION_EVENT_ACTION_POINTER_DOWN || nAndroidAction == AMOTION_EVENT_ACTION_POINTER_UP) {
+					nAndroidPointerIndex = (AMotionEvent_getAction(&cAMotionInputEvent) & AMOTION_EVENT_ACTION_POINTER_INDEX_MASK) >> AMOTION_EVENT_ACTION_POINTER_INDEX_SHIFT;
+					nAndroidPointerID    = AMotionEvent_getPointerId(&cAMotionInputEvent, nAndroidPointerIndex);
 				}
 
-				
-			}
+				// Get the current X and Y coordinate of this event for the given pointer index
+				const float fPointerPositionX = AMotionEvent_getX(&cAMotionInputEvent, nAndroidPointerIndex);
+				const float fPointerPositionY = AMotionEvent_getY(&cAMotionInputEvent, nAndroidPointerIndex);
+				const float fPointerPressure  = AMotionEvent_getPressure(&cAMotionInputEvent, nAndroidPointerIndex);
 
+				// Does the touch start?
+				if (nAndroidAction == AMOTION_EVENT_ACTION_DOWN || nAndroidAction == AMOTION_EVENT_ACTION_POINTER_DOWN) {
+					// Decide if the point is in the left or right screen half
+					if (fPointerPositionX < (nScreenWidth/2)) {
+						// This is the on the left half of the screen
+						if (m_nLeftTouchPointerID == -1) {
+							// This is our initial start point (origin position = current position)
+							m_fOriginLeftTouchPositionX = m_fLeftTouchPositionX = fPointerPositionX;
+							m_fOriginLeftTouchPositionY = m_fLeftTouchPositionY = fPointerPositionY;
+							m_fOriginLeftTouchPressure  = m_fLeftTouchPressure  = fPointerPressure;
+
+							// We're now active, save the ID of this pointer
+							m_nLeftTouchPointerID = nAndroidPointerID;
+						}
+					} else {
+						// This is on the right half of the screen
+						if (m_nRightTouchPointerID == -1) {
+							// This is our initial start point (origin position = current position)
+							m_fOriginRightTouchPositionX = m_fRightTouchPositionX = fPointerPositionX;
+							m_fOriginRightTouchPositionY = m_fRightTouchPositionY = fPointerPositionY;
+							m_fOriginRightTouchPressure  = m_fRightTouchPressure  = fPointerPressure;
+
+							// We're now active, save the ID of this pointer
+							m_nRightTouchPointerID = nAndroidPointerID;
+						}
+					}
+
+				// Does the touch stop?
+				} else if (nAndroidAction == AMOTION_EVENT_ACTION_UP || nAndroidAction == AMOTION_EVENT_ACTION_POINTER_UP) {
+					// Use the pointer ID to figure out whether this is our left or right pointer
+					if (m_nLeftTouchPointerID == nAndroidPointerID) {
+						// We're now longer active
+						m_nLeftTouchPointerID = -1;
+
+						// Let the left simulated pad stick snap back to it's origin
+						SplitTouchPad *pSplitTouchPad = static_cast<SplitTouchPad*>(m_pDevice);
+						if (pSplitTouchPad) {
+							pSplitTouchPad->LeftX.SetValue(0.0f, false);
+							pSplitTouchPad->LeftY.SetValue(0.0f, false);
+						}
+						m_fLeftTouchPositionX = m_fOriginLeftTouchPositionX;
+						m_fLeftTouchPositionY = m_fOriginLeftTouchPositionY;
+						m_fLeftTouchPressure  = m_fOriginLeftTouchPressure;
+
+					} else if (m_nRightTouchPointerID == nAndroidPointerID) {
+						// We're now longer active
+						m_nRightTouchPointerID = -1;
+
+						// Let the right simulated pad stick snap back to it's origin
+						SplitTouchPad *pSplitTouchPad = static_cast<SplitTouchPad*>(m_pDevice);
+						if (pSplitTouchPad) {
+							pSplitTouchPad->RightX.SetValue(0.0f, false);
+							pSplitTouchPad->RightY.SetValue(0.0f, false);
+						}
+						m_fRightTouchPositionX = m_fOriginRightTouchPositionX;
+						m_fRightTouchPositionY = m_fOriginRightTouchPositionY;
+						m_fRightTouchPressure  = m_fOriginRightTouchPressure;
+					}
+
+				// Did we move?
+				} else if (nAndroidAction == AMOTION_EVENT_ACTION_MOVE) {
+					// Use the pointer ID to figure out whether this is our left or right pointer
+					if (m_nLeftTouchPointerID == nAndroidPointerID) {
+						m_fLeftTouchPositionX = fPointerPositionX;
+						m_fLeftTouchPositionY = fPointerPositionY;
+						m_fLeftTouchPressure  = fPointerPressure;
+
+					} else if (m_nRightTouchPointerID == nAndroidPointerID) {
+						m_fRightTouchPositionX = fPointerPositionX;
+						m_fRightTouchPositionY = fPointerPositionY;
+						m_fRightTouchPressure  = fPointerPressure;
+					}
+				}
+			}
 		} else {
-			//Error: there is now window instance ...
-			PL_LOG(Debug,String("Error: No window instance, can't get the screen size"));
+			// Error: there is now window instance...
+			PL_LOG(Debug, "Error: No window instance, can't get the screen size")
 		}
 	} else {
-		PL_LOG(Debug,String("Error: No window instance, can't get the screen size"));
+		PL_LOG(Debug, "Error: No window instance, can't get the screen size")
 	}
-	
 }
+
 
 //[-------------------------------------------------------]
 //[ Public virtual UpdateDevice functions                 ]
@@ -210,59 +201,82 @@ void AndroidSplitTouchPadDevice::Update()
 {
 	// Check if input device is valid
 	if (m_pDevice) {
-		// Get mouse device
+		// Get split touch pad device
 		SplitTouchPad *pSplitTouchPad = static_cast<SplitTouchPad*>(m_pDevice);
 
-		{ // Update right axes
-			
-			// Get the right touch movement
-			float fRightDeltaX		  = m_fRightTouchPositionX - m_fPreviousRightTouchPositionX;
-			float fRightDeltaY		  = m_fRightTouchPositionY - m_fPreviousRightTouchPositionY;
-			float fRightDeltaPressure = m_fRightTouchPressure - m_fPreviousRightTouchPressure;
-			
-			// Was the right touch point already moved?
-			if (!m_bRightTouchMoved) {
-				fRightDeltaX = fRightDeltaY = 0.0f;
-				m_fPreviousRightTouchPositionX = m_fRightTouchPositionX;
-				m_fPreviousRightTouchPositionY = m_fRightTouchPositionY;
-			}
+		// Maximum allowed delta
+		static const float MaxDelta = 160.0f;
+		static const float MinDelta = 5.0f;
 
-			// Now update right axes
-			if (pSplitTouchPad->RightX.GetValue() != fRightDeltaX)
-			{
-				PL_LOG(Debug,String("Touch RightDeltaX: ") + fRightDeltaX);	
-				pSplitTouchPad->RightX.SetValue(fRightDeltaX, false);
+		// Update left axes?
+		if (m_nLeftTouchPointerID != -1) {
+			// Get the left touch movement and clamp it to the maximum allowed delta
+			float fLeftDeltaX		 = m_fLeftTouchPositionX - m_fOriginLeftTouchPositionX;
+			float fLeftDeltaY		 = m_fLeftTouchPositionY - m_fOriginLeftTouchPositionY;
+			float fLeftDeltaPressure = m_fLeftTouchPressure  - m_fOriginLeftTouchPressure;
+			if (fLeftDeltaX > MaxDelta)
+				fLeftDeltaX = MaxDelta;
+			if (fLeftDeltaX < -MaxDelta)
+				fLeftDeltaX = -MaxDelta;
+			if (fLeftDeltaY > MaxDelta)
+				fLeftDeltaY = MaxDelta;
+			if (fLeftDeltaY < -MaxDelta)
+				fLeftDeltaY = -MaxDelta;
+
+			// Give our fat finger some space to sit down :D
+			if (Math::Abs(fLeftDeltaX) < MinDelta)
+				fLeftDeltaX = 0.0f;
+			else
+				fLeftDeltaX -= MinDelta*Math::Sign(fLeftDeltaX);
+			if (Math::Abs(fLeftDeltaY) < MinDelta)
+				fLeftDeltaY = 0.0f;
+			else
+				fLeftDeltaY -= MinDelta*Math::Sign(fLeftDeltaY);
+
+			// Now update left axes
+			if (pSplitTouchPad->LeftX.GetValue() != fLeftDeltaX) {
+				PL_LOG(Debug, String("Touch LeftDeltaX: ") + fLeftDeltaX)
+				pSplitTouchPad->LeftX.SetValue(fLeftDeltaX, false);
 			}
-			if (pSplitTouchPad->RightY.GetValue() != fRightDeltaY)
-			{
-				PL_LOG(Debug,String("Touch RightDeltaY: ") + fRightDeltaY);	
-				pSplitTouchPad->RightY.SetValue(fRightDeltaY, false);
+			if (pSplitTouchPad->LeftY.GetValue() != fLeftDeltaY) {
+				PL_LOG(Debug, String("Touch LeftDeltaY: ") + fLeftDeltaY)
+				pSplitTouchPad->LeftY.SetValue(fLeftDeltaY, false);
 			}
 		}
 
-		{ // Update left axes
-			// Get the left touch movement
-			float fLeftDeltaX		 = m_fLeftTouchPositionX - m_fPreviousLeftTouchPositionX;
-			float fLeftDeltaY		 = m_fLeftTouchPositionY - m_fPreviousLeftTouchPositionY;
-			float fLeftDeltaPressure = m_fLeftTouchPressure - m_fPreviousLeftTouchPressure;
+		// Update right axes?
+		if (m_nRightTouchPointerID != -1) {
+			// Get the right touch movement and clamp it to the maximum allowed delta
+			float fRightDeltaX		  = m_fRightTouchPositionX - m_fOriginRightTouchPositionX;
+			float fRightDeltaY		  = m_fRightTouchPositionY - m_fOriginRightTouchPositionY;
+			float fRightDeltaPressure = m_fRightTouchPressure  - m_fOriginRightTouchPressure;
+			if (fRightDeltaX > MaxDelta)
+				fRightDeltaX = MaxDelta;
+			if (fRightDeltaX < -MaxDelta)
+				fRightDeltaX = -MaxDelta;
+			if (fRightDeltaY > MaxDelta)
+				fRightDeltaY = MaxDelta;
+			if (fRightDeltaY < -MaxDelta)
+				fRightDeltaY = -MaxDelta;
 
-			// Was the left touch point already moved?
-			if (!m_bLeftTouchMoved) {
-				fLeftDeltaX = fLeftDeltaY = 0.0f;
-				m_fPreviousLeftTouchPositionX = m_fLeftTouchPositionX;
-				m_fPreviousLeftTouchPositionY = m_fLeftTouchPositionY;
-			}
+			// Give our fat finger some space to sit down :D
+			if (Math::Abs(fRightDeltaX) < MinDelta)
+				fRightDeltaX = 0.0f;
+			else
+				fRightDeltaX -= MinDelta*Math::Sign(fRightDeltaX);
+			if (Math::Abs(fRightDeltaY) < MinDelta)
+				fRightDeltaY = 0.0f;
+			else
+				fRightDeltaY -= MinDelta*Math::Sign(fRightDeltaY);
 
-			// Now update left axes
-			if (pSplitTouchPad->LeftX.GetValue() != fLeftDeltaX)
-			{
-				PL_LOG(Debug,String("Touch LeftDeltaX: ") + fLeftDeltaX);
-				pSplitTouchPad->LeftX.SetValue(fLeftDeltaX, false);
+			// Now update right axes
+			if (pSplitTouchPad->RightX.GetValue() != fRightDeltaX) {
+				PL_LOG(Debug, String("Touch RightDeltaX: ") + fRightDeltaX)
+				pSplitTouchPad->RightX.SetValue(fRightDeltaX, false);
 			}
-			if (pSplitTouchPad->LeftY.GetValue() != fLeftDeltaY)
-			{
-				PL_LOG(Debug,String("Touch LeftDeltaY: ") + fLeftDeltaY);
-				pSplitTouchPad->LeftY.SetValue(fLeftDeltaY, false);
+			if (pSplitTouchPad->RightY.GetValue() != fRightDeltaY) {
+				PL_LOG(Debug, String("Touch RightDeltaY: ") + fRightDeltaY)
+				pSplitTouchPad->RightY.SetValue(fRightDeltaY, false);
 			}
 		}
 	}
@@ -337,9 +351,9 @@ void AndroidSplitTouchPadDevice::LogEventValues(const struct AInputEvent &cAInpu
 			//get display size 
 			PL_LOG(Debug,String("- Window:           "));
 			struct android_app *app = ((SystemAndroid *) System::GetInstance())->GetAndroidApp();
-			if(app != NULL) {
+			if (app) {
 				ANativeWindow *pANativeWindow = app->window;
-				if(pANativeWindow != NULL) {
+				if (pANativeWindow) {
 					const int32_t width = ANativeWindow_getWidth(pANativeWindow);
 					const int32_t height = ANativeWindow_getHeight(pANativeWindow);
 					PL_LOG(Debug,String("-- Width:          ") + width							+ "     --");
@@ -351,9 +365,9 @@ void AndroidSplitTouchPadDevice::LogEventValues(const struct AInputEvent &cAInpu
 				PL_LOG(Debug,String("-- Error: NO APPLICATION INSTANCE   --"));
 			}
 		}
-		
 	}
 }
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

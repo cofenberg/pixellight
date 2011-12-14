@@ -367,13 +367,13 @@ void VirtualStandardController::ConnectToDevices()
 
 			// Movement
 			// RotX: Pitch (also called 'bank') change is moving the nose down and the tail up (or vice-versa)
-			Connect("RotY",				&pSplitTouchPad->RightX, -0.1f);
+			Connect("RotY",				&pSplitTouchPad->RightX, -0.5f);
 			// RotY: Yaw (also called 'heading') change is turning to the left or right
-			Connect("RotX",				&pSplitTouchPad->RightY, 0.1f);
+			Connect("RotX",				&pSplitTouchPad->RightY, 0.5f);
 			// X translation axis: Strafe left/right (+/-)
-			Connect("TransX",			&pSplitTouchPad->LeftX,  -0.1f);
+			Connect("TransX",			&pSplitTouchPad->LeftX,  -0.01f);
 			// Y translation axis: Move up/down (+/-)
-			Connect("TransZ",			&pSplitTouchPad->LeftY,  -0.1f);
+			Connect("TransZ",			&pSplitTouchPad->LeftY,  -0.01f);
 		}
 
 		// WiiMote
