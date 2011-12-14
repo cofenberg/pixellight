@@ -1,3 +1,13 @@
+>> 14.12.2011
+[TM]
+- SplitTouchPad: added a first implementation for the split touchpad device on android. At the moment it uses the first touch point as initial point. 
+  On the left half of the screen is the movement control on the right half the rotation control. We experienced some difficulties with the first touch
+  point as initial point so it might be a good idee to provide an interface for setting the initial point to integrate the navigation with some gui/hud etc.
+- SplitTouchPad: some first callibration was done but this has to be much better. Adding some tolerance to the touch events might help to improve 
+   the smoth navigation.
+
+
+
 >> 05.12.2011
 [TM]
 - initial "SplitTouchPad": Added a new splitscreen touchpad device to use the touchscreens of mobile devices to navigate. (not working yet)
