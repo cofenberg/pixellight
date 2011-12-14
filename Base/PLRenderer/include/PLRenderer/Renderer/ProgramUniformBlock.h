@@ -55,6 +55,20 @@ namespace PLRenderer {
 /**
 *  @brief
 *    Abstract renderer program uniform block
+*
+*  @remarks
+*    The behaviour of the "SetUniformBuffer()"-method depends on the used internal shader API. When using Cg,
+*    a call of the "SetUniformBuffer()"-method has only an effect when then program is going to be set in the
+*    near future - meaning it has no effect when the program, the uniform block is part of, is already the program
+*    currently used for rendering. When using GLSL, the "SetUniformBuffer()"-method is accessing a global UBO
+*    binding point, meaning that it doesn't matter whether or not the program, the uniform block is part of, is
+*    currently used for rendering. For performance reasons, this abstract program uniform block interface can't
+*    compensate those differences. It has to be as lightweight as possible in order to keep the interface performance
+*    impact as low as possible. So, to be on the safe side, do only call the "SetUniformBuffer()"-method if the program,
+*    the uniform block is part of, is currently not used for rendering.
+*
+*  @note
+*    - Do only call the "SetUniformBuffer()"-method when the program, the uniform block is part of, is currently not used for rendering
 */
 class ProgramUniformBlock {
 

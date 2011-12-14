@@ -68,6 +68,8 @@ bool ProgramUniformBlockCg::SetUniformBuffer(PLRenderer::UniformBuffer *pUniform
 	if (pUniformBuffer) {
 		// The given uniform buffer must have at least the same number of bytes as this uniform block and the shader language must match!
 		if (cgGetParameterResourceSize(m_pCgParameter) <= static_cast<long>(pUniformBuffer->GetSize()) && m_sShaderLanguage == pUniformBuffer->GetShaderLanguage()) {
+			// The Cg-documentation states: (http://http.developer.nvidia.com/Cg/cgSetProgramBuffer.html)
+			// "When the next program bind operation occurs, each buffer index which is set to a valid buffer handle is bound (along with the program) for use by the 3D API"
 			cgSetProgramBuffer(cgGetParameterProgram(m_pCgParameter), cgGetParameterBufferIndex(m_pCgParameter), static_cast<UniformBufferCg*>(pUniformBuffer)->GetCgBuffer());
 		} else {
 			// Error!

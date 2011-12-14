@@ -198,20 +198,19 @@ void SPTriangleShaders::OnPaint(Surface &cSurface)
 	// (please note that the data remains on the GPU side, so there's no need to
 	//  upload this data to the GPU each time when there's no change within the data)
 	if (m_pUniformBuffer) {
-		// Cg fails on my system when updating the uniform buffer data while a program using this uniform buffer is currently in use (no problems with GLSL)
-		cRenderer.SetProgram(nullptr);
-
 		// Copy over all the uniform data at once into the uniform buffer
 		m_pUniformBuffer->CopyFrom(&cUniformBuffer);
+
+		// Create a connection between "Uniform Block" and "Uniform Buffer" at binding point 0
+		// -> When using Cg, this must be done while the program is not active, when using GLSL it doesn't matter
+		cRenderer.SetProgram(nullptr);
+		m_pProgram->Set("UniformBlock", m_pUniformBuffer, 0);
 	}
 
 	// Make our program to the current one
 	if (cRenderer.SetProgram(m_pProgram)) {
 		// Use uniform buffer?
-		if (m_pUniformBuffer) {
-			// Create a connection between "Uniform Block" and "Uniform Buffer" at binding point 0
-			m_pProgram->Set("UniformBlock", m_pUniformBuffer, 0);
-		} else {
+		if (!m_pUniformBuffer) {
 			// Nope, so set the program uniforms by using the good old way - one after another!
 			// (resulting in more internal API calls and is therefore somewhat slower)
 			m_pProgram->Set("ObjectSpaceToClipSpaceMatrix", cUniformBuffer.mObjectSpaceToClipSpaceMatrix);

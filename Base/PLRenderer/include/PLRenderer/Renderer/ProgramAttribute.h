@@ -42,10 +42,11 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract renderer program attribute
+*    Abstract renderer program attribute (also known as "varying parameter")
 *
 *  @note
 *    - For per-vertex data
+*    - It doesn't matter whether or not the program, the attribute is part of, is currently used for rendering
 */
 class ProgramAttribute {
 

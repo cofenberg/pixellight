@@ -2,6 +2,7 @@
 [CO]
 - "UniformBuffer": Added ease of use methods "CopyFrom()" and "CopyTo()"
 - "ProgramUniform": Added more comments on how to use this interface
+- "ProgramUniformBlock": Added more comments on how to use this interface
 
 
 
