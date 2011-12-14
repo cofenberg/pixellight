@@ -93,12 +93,12 @@ class SpaceMouse : public Device {
 	//[ Controller definition                                 ]
 	//[-------------------------------------------------------]
 	public:
-		PLInput::Axis	TransX;		/**< X translation axis */
-		PLInput::Axis	TransY;		/**< Y translation axis */
-		PLInput::Axis	TransZ;		/**< Z translation axis */
-		PLInput::Axis	RotX;		/**< X rotation axis */
-		PLInput::Axis	RotY;		/**< Y rotation axis */
-		PLInput::Axis	RotZ;		/**< Z rotation axis */
+		PLInput::Axis	TransX;		/**< Absolute x translation axis (the values are usually roughly between [-400 .. 400]) */
+		PLInput::Axis	TransY;		/**< Absolute y translation axis (the values are usually roughly between [-400 .. 400]) */
+		PLInput::Axis	TransZ;		/**< Absolute z translation axis (the values are usually roughly between [-400 .. 400]) */
+		PLInput::Axis	RotX;		/**< Absolute x rotation axis (the values are usually roughly between [-400 .. 400]) */
+		PLInput::Axis	RotY;		/**< Absolute y rotation axis (the values are usually roughly between [-400 .. 400]) */
+		PLInput::Axis	RotZ;		/**< Absolute z rotation axis (the values are usually roughly between [-400 .. 400]) */
 		PLInput::Button	Button0;	/**< Button #0 */
 		PLInput::Button	Button1;	/**< Button #1 */
 		PLInput::Button	Button2;	/**< Button #2 */

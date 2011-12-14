@@ -1,4 +1,10 @@
 >> 14.12.2011
+[CO]
+- "SpaceMouse": Added comment about the expected range of the values (they are not scaled to e.g. "1.0" in order to have access to the original device data)
+
+
+
+>> 14.12.2011
 [TM]
 - SplitTouchPad: added a first implementation for the split touchpad device on android. At the moment it uses the first touch point as initial point. 
   On the left half of the screen is the movement control on the right half the rotation control. We experienced some difficulties with the first touch
