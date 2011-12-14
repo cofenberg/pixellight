@@ -36,9 +36,6 @@
 //[-------------------------------------------------------]
 struct AInputEvent;
 typedef struct AInputEvent AInputEvent;
-namespace PLInput {
-	class Mouse;
-}
 
 
 //[-------------------------------------------------------]

@@ -36,9 +36,6 @@
 //[-------------------------------------------------------]
 struct AInputEvent;
 typedef struct AInputEvent AInputEvent;
-namespace PLInput {
-	class Mouse;
-}
 
 
 //[-------------------------------------------------------]
@@ -89,12 +86,36 @@ class AndroidSplitTouchPadDevice : public UpdateDevice {
 	public:
 		virtual void Update() override;
 
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Writes all possible values from an android event to the consol
+		*  @param[in] cAInputEvent
+		*    Input event to log
+		**/
+		void LogEventValues(const struct AInputEvent &cAInputEvent);
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-
+		bool  m_bRightTouchMoved;				/**< The right screen touch moved during the current touch? */
+		float m_fPreviousRightTouchPositionX;	/**< Previous right touch x position */
+		float m_fPreviousRightTouchPositionY;	/**< Previous right touch y position */
+		float m_fPreviousRightTouchPressure;	/**< Previous right touch pressure */
+		float m_fRightTouchPositionX;			/**< Current right touch x position */
+		float m_fRightTouchPositionY;			/**< Current right touch y position */
+		float m_fRightTouchPressure;			/**< Current right touch pressure */
+		bool  m_bLeftTouchMoved;				/**< The left screen touch moved during the current touch? */
+		float m_fPreviousLeftTouchPositionX;	/**< Previous left touch x position */
+		float m_fPreviousLeftTouchPositionY;	/**< Previous left touch y position */
+		float m_fPreviousLeftTouchPressure;		/**< Previous left touch pressure */
+		float m_fLeftTouchPositionX;			/**< Current left touch x position */
+		float m_fLeftTouchPositionY;			/**< Current left touch y position */
+		float m_fLeftTouchPressure;				/**< Current left touch pressure */
 
 };
 
