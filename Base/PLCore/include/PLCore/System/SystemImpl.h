@@ -260,7 +260,10 @@ class SystemImpl {
 		*    Returns the current directory
 		*
 		*  @return
-		*    Path to the current directory (native path style)
+		*    Path to the current directory as the OS provided it (native path style)
+		*
+		*  @note
+		*    - On Windows for example "C:\Programs\App"
 		*/
 		virtual String GetCurrentDir() const = 0;
 

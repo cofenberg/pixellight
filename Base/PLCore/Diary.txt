@@ -1,6 +1,7 @@
 >> 15.12.2011
 [CO]
 - "Url": Added more examples within the documentation in order to be able to understand what the URL-class will do with provided data
+- "System::GetCurrentDir()": Enhanced documentation to make it possible to understand it's behavior
 
 
 

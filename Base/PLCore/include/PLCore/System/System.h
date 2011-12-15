@@ -333,7 +333,11 @@ class System : public Singleton<System> {
 		*    Returns the current directory
 		*
 		*  @return
-		*    Path to the current directory (native path style)
+		*    Path to the current directory as the OS provided it (native path style)
+		*
+		*  @note
+		*    - In case of an internally empty string you will receive "." in order to make it possible to add e.g. "/Data" and still end up in a valid path
+		*    - On Windows for example "C:\Programs\App"
 		*/
 		inline String GetCurrentDir() const;
 
