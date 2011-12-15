@@ -47,6 +47,7 @@ namespace PLCore {
 *  @note
 *    - An URL is always stored using a protocol ("file://" for a local path) and "/" as the delimiter.
 *    - For getting the URL in native style, use the specific functions (GetWindowsPath(), GetUnixPath(), GetNativePath())
+*    - If there's a "/" at the end of a given path it will be kept, but no "/" is added automatically
 */
 class Url {
 
@@ -151,6 +152,9 @@ class Url {
 		*  @note
 		*    - If the value contains a local file path, a file:// URL is returned
 		*    - Any other URL (e.g. http://) is returned directly
+		*    - For example "Url("C:\\Programs\\App\\App.exe")" will result in "file://C:/Programs/App/App.exe"
+		*    - For example "Url("C:\\Programs\\App\\")" will result in "file://C:/Programs/App/"
+		*    - For example "Url("C:\\Programs\\App")" will result in "file://C:/Programs/App"
 		*/
 		inline String GetUrl() const;
 
@@ -164,6 +168,12 @@ class Url {
 		*  @note
 		*    - Returns the URL in native (Windows/Unix) notation, if it is a local path
 		*    - If it is another URL (e.g. http://), the URL is returned
+		*    - On Windows for example "Url("C:\\Programs\\App\\App.exe")" will result in "C:\Programs\App\App.exe"
+		*    - On Windows for example "Url("C:\\Programs\\App\\")" will result in "C:\Programs\App\"
+		*    - On Windows for example "Url("C:\\Programs\\App")" will result in "C:\Programs\App"
+		*    - On Linux for example "Url("C:\\Programs\\App\\App.exe")" will result in "C:/Programs/App/App.exe"
+		*    - On Linux for example "Url("C:\\Programs\\App\\")" will result in "C:/Programs/App/"
+		*    - On Linux for example "Url("C:\\Programs\\App")" will result in "C:/Programs/App"
 		*/
 		inline String GetNativePath() const;
 
@@ -177,6 +187,9 @@ class Url {
 		*  @note
 		*    - If the value contains a valid Windows or Unix file path or an file:// URL, it is returned in Windows style
 		*    - If the value contains another URL (e.g. http://), the URL is returned without being converted
+		*    - For example "Url("C:\\Programs\\App\\App.exe")" will result in "C:\Programs\App\App.exe"
+		*    - For example "Url("C:\\Programs\\App\\")" will result in "C:\Programs\App\"
+		*    - For example "Url("C:\\Programs\\App")" will result in "C:\Programs\App"
 		*/
 		inline String GetWindowsPath() const;
 
@@ -190,6 +203,9 @@ class Url {
 		*  @note
 		*    - If the value contains a valid Windows or Unix file path or an file:// URL, it is returned in Unix style
 		*    - If the value contains another URL (e.g. http://), the URL is returned without being converted
+		*    - For example "Url("C:\\Programs\\App\\App.exe")" will result in "C:/Programs/App/App.exe"
+		*    - For example "Url("C:\\Programs\\App\\")" will result in "C:/Programs/App/"
+		*    - For example "Url("C:\\Programs\\App")" will result in "C:/Programs/App"
 		*/
 		inline String GetUnixPath() const;
 
@@ -325,7 +341,10 @@ class Url {
 		*    Returns the path without the filename
 		*
 		*  @return
-		*    Path without filename (e.g. "C:\Programs\App\App.exe"->"C:\Programs\App\")
+		*    Path without filename (e.g. "C:/Programs/App/App.exe"->"C:/Programs/App/")
+		*
+		*  @note
+		*    - The protocol is omitted for a local path (e.g. the result will not be "file://C:/Programs/App/")
 		*/
 		inline String CutFilename() const;
 

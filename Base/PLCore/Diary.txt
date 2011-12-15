@@ -1,3 +1,9 @@
+>> 15.12.2011
+[CO]
+- "Url": Added more examples within the documentation in order to be able to understand what the URL-class will do with provided data
+
+
+
 >> 10.12.2011
 [CO]
 - "MemoryManager": Made the methods inline in order to give the compiler a chance to optimize out function calls. Of course, for this it's required to include
