@@ -120,7 +120,7 @@ String Runtime::GetSuffix()
 
 /**
 *  @brief
-*    Try to find the local PL-runtime data directory
+*    Try to find the local PixelLight runtime data directory
 */
 String Runtime::GetLocalDataDirectory()
 {
@@ -128,7 +128,7 @@ String Runtime::GetLocalDataDirectory()
 	const String sPLDirectory = GetDirectory(LocalInstallation);
 	if (sPLDirectory.GetLength()) {
 		// Return the local runtime data directory
-		return Url(sPLDirectory + "/../Data/").Collapse().GetUrl();
+		return Url(sPLDirectory + "/../Data").Collapse().GetUrl();
 	} else {
 		// Error!
 		return "";
@@ -137,19 +137,19 @@ String Runtime::GetLocalDataDirectory()
 
 /**
 *  @brief
-*    Try to find the system PL-runtime directory
+*    Try to find the system PixelLight runtime directory
 */
 String Runtime::GetSystemDirectory()
 {
-	// First: Try to find the system PL-runtime directory by reading the registry
+	// First: Try to find the system PixelLight runtime directory by reading the registry
 	// -> We really need to check for the registry, first: When building for Linux, there
 	//    are fixed build in locations like "/home/bob/pixellight/cmakeout/Base/PLCore/" and
 	//    build executables will link against those shared libraries -> You'll receive
-	//    "/home/bob/pixellight/cmakeout/Base/PLCore/" as PL system directory, not e.g.
+	//    "/home/bob/pixellight/cmakeout/Base/PLCore/" as PixelLight system directory, not e.g.
 	//    "/home/bob/pixellight/Bin-Linux/Runtime/x86" as expected.
 	String sPLDirectory = GetRegistryDirectory();
 	if (!sPLDirectory.GetLength()) {
-		// Second: Try to find the PL-runtime directory by using the PLCore shared library
+		// Second: Try to find the PixelLight runtime directory by using the PLCore shared library
 		sPLDirectory = GetDirectory(SystemInstallation);
 	}
 
@@ -159,7 +159,7 @@ String Runtime::GetSystemDirectory()
 
 /**
 *  @brief
-*    Try to find the system PL-runtime data directory
+*    Try to find the system PixelLight runtime data directory
 */
 String Runtime::GetSystemDataDirectory()
 {
@@ -167,7 +167,7 @@ String Runtime::GetSystemDataDirectory()
 	const String sPLDirectory = GetSystemDirectory();
 	if (sPLDirectory.GetLength()) {
 		// Return the system runtime data directory
-		return Url(sPLDirectory + "/../Data/").Collapse().GetUrl();
+		return Url(sPLDirectory + "/../Data").Collapse().GetUrl();
 	} else {
 		// Error!
 		return "";
@@ -176,7 +176,7 @@ String Runtime::GetSystemDataDirectory()
 
 /**
 *  @brief
-*    Try to find the system PL-runtime directory by reading the registry
+*    Try to find the system PixelLight runtime directory by reading the registry
 */
 String Runtime::GetRegistryDirectory()
 {
@@ -263,7 +263,7 @@ String Runtime::GetRegistryDirectory()
 
 /**
 *  @brief
-*    Try to find the system PL-runtime data directory by reading the registry
+*    Try to find the system PixelLight runtime data directory by reading the registry
 */
 String Runtime::GetRegistryDataDirectory()
 {
@@ -271,7 +271,7 @@ String Runtime::GetRegistryDataDirectory()
 	const String sPLDirectory = GetRegistryDirectory();
 	if (sPLDirectory.GetLength()) {
 		// Return the registry runtime data directory
-		return Url(sPLDirectory + "/../Data/").Collapse().GetUrl();
+		return Url(sPLDirectory + "/../Data").Collapse().GetUrl();
 	} else {
 		// Error!
 		return "";
@@ -280,16 +280,16 @@ String Runtime::GetRegistryDataDirectory()
 
 /**
 *  @brief
-*    Try to find the PL-runtime directory used by the running process
+*    Try to find the PixelLight runtime directory used by the running process
 */
 String Runtime::GetDirectory()
 {
-	// First: Try to find the local PL-runtime directory
+	// First: Try to find the local PixelLight runtime directory
 	String sPLDirectory = GetLocalDirectory();
 	if (!sPLDirectory.GetLength()) {
-		// No local PL-runtime directory found
+		// No local PixelLight runtime directory found
 
-		// Second: Try to find the system PL-runtime directory
+		// Second: Try to find the system PixelLight runtime directory
 		sPLDirectory = GetSystemDirectory();
 	}
 
@@ -299,7 +299,7 @@ String Runtime::GetDirectory()
 
 /**
 *  @brief
-*    Try to find the PL-runtime data directory used by the running process
+*    Try to find the PixelLight runtime data directory used by the running process
 */
 String Runtime::GetDataDirectory()
 {
@@ -307,7 +307,7 @@ String Runtime::GetDataDirectory()
 	const String sPLDirectory = GetDirectory();
 	if (sPLDirectory.GetLength()) {
 		// Return the runtime data directory used by the running process
-		return Url(sPLDirectory + "/../Data/").Collapse().GetUrl();
+		return Url(sPLDirectory + "/../Data").Collapse().GetUrl();
 	} else {
 		// Error!
 		return "";
@@ -340,9 +340,15 @@ String Runtime::GetPLCoreSharedLibraryDirectory()
 	// Load the shared library
 	DynLib cPLCoreDynLib;
 	if (cPLCoreDynLib.Load(GetPLCoreSharedLibraryName())) {
+		// Get the absolute path the PLCore shared library is in (e.g. "C:/Programs/App/PLCore.dll"->"C:/Programs/App/")
+		String sDirectory = Url(cPLCoreDynLib.GetAbsPath()).CutFilename();
+
+		// Ensure that there's no "/" at the end, else this method woud have another behaviour as the other runtime methods -> bad
+		if (sDirectory.GetLength() && sDirectory[sDirectory.GetLength()-1] == '/')
+			sDirectory.Delete(sDirectory.GetLength()-1);
+
 		// Return the absolute path the PLCore shared library is in
-		
-		return Url(Url(cPLCoreDynLib.GetAbsPath()).CutFilename()).GetUrl();
+		return Url(sDirectory).GetUrl();
 	}
 
 	// Error!
@@ -351,7 +357,7 @@ String Runtime::GetPLCoreSharedLibraryDirectory()
 
 /**
 *  @brief
-*    Sets the given PL-runtime directory
+*    Sets the given PixelLight runtime directory
 */
 bool Runtime::SetDirectory(const String &sDirectory, String *pszErrorMessage)
 {
@@ -460,7 +466,7 @@ bool Runtime::SetDirectory(const String &sDirectory, String *pszErrorMessage)
 
 /**
 *  @brief
-*    Scan PL-runtime directory for compatible plugins and load them in
+*    Scan PixelLight runtime directory for compatible plugins and load them in
 */
 void Runtime::ScanDirectoryPlugins(const String &sDirectory, bool bDelayedPluginLoading)
 {
@@ -479,7 +485,7 @@ void Runtime::ScanDirectoryPlugins(const String &sDirectory, bool bDelayedPlugin
 
 /**
 *  @brief
-*    Scan PL-runtime directory for compatible data and register it
+*    Scan PixelLight runtime directory for compatible data and register it
 */
 void Runtime::ScanDirectoryData(const String &sDirectory)
 {
@@ -496,7 +502,7 @@ void Runtime::ScanDirectoryData(const String &sDirectory)
 
 /**
 *  @brief
-*    Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
+*    Scan PixelLight runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
 */
 bool Runtime::ScanDirectoryPluginsAndData(bool bUrgentMessageAllowed)
 {
@@ -524,7 +530,7 @@ bool Runtime::ScanDirectoryPluginsAndData(bool bUrgentMessageAllowed)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Try to find the PL-runtime directory by using the PLCore shared library
+*    Try to find the PixelLight runtime directory by using the PLCore shared library
 */
 String Runtime::GetDirectory(EType nType)
 {

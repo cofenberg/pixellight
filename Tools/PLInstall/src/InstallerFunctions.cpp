@@ -56,7 +56,7 @@ InstallerFunctions::~InstallerFunctions()
 
 void InstallerFunctions::ConnectProgressEventHandler(EventHandler<int> *pProgressEventHandler)
 {
-	m_pEventProgressUpdate.Connect(*pProgressEventHandler);
+	m_cEventProgressUpdate.Connect(*pProgressEventHandler);
 }
 
 bool InstallerFunctions::InstallRuntime()
@@ -65,29 +65,26 @@ bool InstallerFunctions::InstallRuntime()
 
 	// I know it's a bit redundand but we should check the current installation
 	if (!CheckRuntimeInstallation()) {
-		m_pEventProgressUpdate(1);
+		m_cEventProgressUpdate(1);
 
-		// Get the directory this executable is in and add the  platform architecture
-		const String sCurrentDirectory = System::GetInstance()->GetCurrentDir();
-		m_pEventProgressUpdate(1);
-		const String sExecutableDirectory =  sCurrentDirectory; //+  System::GetInstance()->GetPlatformArchitecture() + '/';
-		m_pEventProgressUpdate(1);
+		// Get the directory this executable is in
+		// -> There's no need to add platform architecture information because this executable is directly within the proper runtime directory
+		m_cEventProgressUpdate(1);
+		const String sExecutableDirectory = System::GetInstance()->GetCurrentDir();
+		m_cEventProgressUpdate(1);
 
-		// In case  PLInstall is not within the runtime directory, but I assume this will  never be the case because the new installer is using the Qt shared libraries
-		//const String sExecutableDirectory =  Url(sCurrentDirectory);
-
-		// Write the PL-runtime directory into the registry and or path or whatever is needed on the specific plattform
+		// Write the PixelLight-runtime directory into the registry and or path or whatever is needed on the specific plattform
 		String sMessage;
 		if (Runtime::SetDirectory(sExecutableDirectory, &sMessage)) {
 			m_sLastSuccessMessage = "PixelLight runtime installed at \"" +  sExecutableDirectory + "\"\n\nYou may need to restart your system";
-			m_pEventProgressUpdate(1);
+			m_cEventProgressUpdate(1);
 
 			// Success
 			return true;
 		} else {
 			// Error!
-			m_sLastErrorMessage = "Failed to write the PL-runtime directory into  the registry: \"" + sMessage + '\"';
-			m_pEventProgressUpdate(1);
+			m_sLastErrorMessage = "Failed to write the PixelLight-runtime directory into  the registry: \"" + sMessage + '\"';
+			m_cEventProgressUpdate(1);
 
 			// Error ocurred!
 			return false;
@@ -95,7 +92,7 @@ bool InstallerFunctions::InstallRuntime()
 	}
 
 	// The PixelLight runtime is already installed
-	m_pEventProgressUpdate(4);
+	m_cEventProgressUpdate(4);
 
 	// Success
 	return true;
@@ -108,20 +105,19 @@ int InstallerFunctions::GetInstallRuntimeProgressSteps() const
 
 bool InstallerFunctions::CheckRuntimeInstallation()
 {
-	// Get the current PixelLight runtime directory (e.g.  "C:\PixelLight\Runtime\x86")
+	// Get the current PixelLight runtime directory (e.g. "file://C:/PixelLight/Runtime/x86" on Windows)
 	// -> Do also ensure that the registry entry is pointing to the same directory the PLCore shared library is in
-	String sDirectory = Runtime::GetDirectory();
-	m_pEventProgressUpdate(1);
-	String sPLCoreSharedLibraryDirectory = Runtime::GetPLCoreSharedLibraryDirectory();
-	sPLCoreSharedLibraryDirectory.Delete(sPLCoreSharedLibraryDirectory.GetLength()-1);
+	const String sDirectory = Runtime::GetDirectory();
+	m_cEventProgressUpdate(1);
+	const String sPLCoreSharedLibraryDirectory = Runtime::GetPLCoreSharedLibraryDirectory();
 
-	m_pEventProgressUpdate(1);
+	m_cEventProgressUpdate(1);
 	const String sRegistryDirectory = Runtime::GetRegistryDirectory();
-	m_pEventProgressUpdate(1);
+	m_cEventProgressUpdate(1);
 
 	if (sDirectory.GetLength() && sPLCoreSharedLibraryDirectory == sRegistryDirectory) {
 		// The PATH environment or the registry key is pointing to the current directory => PixelLight is already installed correctly
-		m_pEventProgressUpdate(1);
+		m_cEventProgressUpdate(1);
 		m_sLastSuccessMessage = "PixelLight runtime is already installed at \"" +  sDirectory + '\"';
 
 		// Success
@@ -129,7 +125,7 @@ bool InstallerFunctions::CheckRuntimeInstallation()
 	}
 
 	// The PixelLight runtime could not be found => the runtime isn't installed correctly
-	m_pEventProgressUpdate(1);
+	m_cEventProgressUpdate(1);
 	m_sLastErrorMessage = "The PixelLight runtime directory could not be found";
 
 	// Error!

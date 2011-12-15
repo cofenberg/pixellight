@@ -66,22 +66,33 @@ Application::~Application()
 //[-------------------------------------------------------]
 void Application::Main()
 {
+	// System directories
 	System::GetInstance()->GetConsole().Print("System directories:\n");
-	System::GetInstance()->GetConsole().Print("- Executable: " + System::GetInstance()->GetExecutableFilename() + '\n');
-	System::GetInstance()->GetConsole().Print("- Home:       " + System::GetInstance()->GetUserHomeDir() + '\n');
-	System::GetInstance()->GetConsole().Print("- Data:       " + System::GetInstance()->GetUserDataDir() + '\n');
-	System::GetInstance()->GetConsole().Print("- Current:    " + System::GetInstance()->GetCurrentDir() + '\n');
+	System::GetInstance()->GetConsole().Print("- Executable:    " + System::GetInstance()->GetExecutableFilename() + '\n');
+	System::GetInstance()->GetConsole().Print("- Home:          " + System::GetInstance()->GetUserHomeDir() + '\n');
+	System::GetInstance()->GetConsole().Print("- Data:          " + System::GetInstance()->GetUserDataDir() + '\n');
+	System::GetInstance()->GetConsole().Print("- Current:       " + System::GetInstance()->GetCurrentDir() + '\n');
 	System::GetInstance()->GetConsole().Print('\n');
 
-	System::GetInstance()->GetConsole().Print("PixelLight directories:\n");
-	System::GetInstance()->GetConsole().Print("- Runtime:    " + Runtime::GetDirectory() + '\n');
+	// PixelLight runtime directories (usually you only need "Runtime::GetDirectory()" and "Runtime::GetDirectoryData()")
+	System::GetInstance()->GetConsole().Print("PixelLight runtime directories:\n");
+	System::GetInstance()->GetConsole().Print("- Local:         " + Runtime::GetLocalDirectory() + '\n');
+	System::GetInstance()->GetConsole().Print("- Local data:    " + Runtime::GetLocalDataDirectory() + '\n');
+	System::GetInstance()->GetConsole().Print("- System:        " + Runtime::GetSystemDirectory() + '\n');
+	System::GetInstance()->GetConsole().Print("- System data:   " + Runtime::GetSystemDataDirectory() + '\n');
+	System::GetInstance()->GetConsole().Print("- Registry:      " + Runtime::GetRegistryDirectory() + '\n');
+	System::GetInstance()->GetConsole().Print("- Registry data: " + Runtime::GetRegistryDataDirectory() + '\n');
+	System::GetInstance()->GetConsole().Print("- Runtime:       " + Runtime::GetDirectory() + '\n');
+	System::GetInstance()->GetConsole().Print("- Runtime data:  " + Runtime::GetDataDirectory() + '\n');
+	System::GetInstance()->GetConsole().Print("- PLCore:        " + Runtime::GetPLCoreSharedLibraryDirectory() + '\n');
 	System::GetInstance()->GetConsole().Print('\n');
 
+	// Application context
 	System::GetInstance()->GetConsole().Print("Application context:\n");
-	System::GetInstance()->GetConsole().Print("- Executable: " + GetApplicationContext().GetExecutableFilename() + '\n');
-	System::GetInstance()->GetConsole().Print("- Startup:    " + GetApplicationContext().GetStartupDirectory() + '\n');
-	System::GetInstance()->GetConsole().Print("- AppDir:     " + GetApplicationContext().GetAppDirectory() + '\n');
-	System::GetInstance()->GetConsole().Print("- Log:        " + GetApplicationContext().GetLogFilename() + '\n');
-	System::GetInstance()->GetConsole().Print("- Config:     " + GetApplicationContext().GetConfigFilename() + '\n');
+	System::GetInstance()->GetConsole().Print("- Executable:    " + GetApplicationContext().GetExecutableFilename() + '\n');
+	System::GetInstance()->GetConsole().Print("- Startup:       " + GetApplicationContext().GetStartupDirectory() + '\n');
+	System::GetInstance()->GetConsole().Print("- AppDir:        " + GetApplicationContext().GetAppDirectory() + '\n');
+	System::GetInstance()->GetConsole().Print("- Log:           " + GetApplicationContext().GetLogFilename() + '\n');
+	System::GetInstance()->GetConsole().Print("- Config:        " + GetApplicationContext().GetConfigFilename() + '\n');
 	System::GetInstance()->GetConsole().Print('\n');
 }

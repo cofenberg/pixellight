@@ -73,7 +73,7 @@ class InstallerFunctions {
 	//[ Public events                                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLCore::Event<int> m_pEventProgressUpdate;
+		PLCore::Event<int> m_cEventProgressUpdate;
 
 
 	//[-------------------------------------------------------]

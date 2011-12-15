@@ -46,11 +46,11 @@ inline bool Runtime::IsDebugVersion()
 
 /**
 *  @brief
-*    Try to find the local PL-runtime directory
+*    Try to find the local PixelLight runtime directory
 */
 inline String Runtime::GetLocalDirectory()
 {
-	// Try to find the PL-runtime directory by using the PLCore shared library
+	// Try to find the PixelLight runtime directory by using the PLCore shared library
 	return GetDirectory(LocalInstallation);
 }
 

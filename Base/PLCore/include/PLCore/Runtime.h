@@ -110,53 +110,53 @@ class Runtime {
 
 		/**
 		*  @brief
-		*    Try to find the local PL-runtime directory
+		*    Try to find the local PixelLight runtime directory
 		*
 		*  @return
-		*    Path to the local PL-runtime directory (e.g. "C:\MyApplication\x86"), or ""
+		*    Path to the local PixelLight runtime directory (e.g. "file://C:/MyApplication/x86" on Windows), or ""
 		*/
 		static inline String GetLocalDirectory();
 
 		/**
 		*  @brief
-		*    Try to find the local PL-runtime data directory
+		*    Try to find the local PixelLight runtime data directory
 		*
 		*  @return
-		*    Path to the local PL-runtime data directory (e.g. "C:\MyApplication\Data"), or ""
+		*    Path to the local PixelLight runtime data directory (e.g. "file://C:/MyApplication/Data" on Windows), or ""
 		*/
 		static PLCORE_API String GetLocalDataDirectory();
 
 		/**
 		*  @brief
-		*    Try to find the system PL-runtime directory
+		*    Try to find the system PixelLight runtime directory
 		*
 		*  @return
-		*    Path to the system PL-runtime directory (e.g. "C:\PixelLight\Runtime\x86"), or ""
+		*    Path to the system PixelLight runtime directory (e.g. "file://C:/PixelLight/Runtime/x86" on Windows), or ""
 		*/
 		static PLCORE_API String GetSystemDirectory();
 
 		/**
 		*  @brief
-		*    Try to find the system PL-runtime data directory
+		*    Try to find the system PixelLight runtime data directory
 		*
 		*  @return
-		*    Path to the system PL-runtime data directory (e.g. "C:\PixelLight\Runtime\Data"), or ""
+		*    Path to the system PixelLight runtime data directory (e.g. "file://C:/PixelLight/Runtime/Data" on Windows), or ""
 		*/
 		static PLCORE_API String GetSystemDataDirectory();
 
 		/**
 		*  @brief
-		*    Try to find the system PL-runtime directory by reading the registry
+		*    Try to find the system PixelLight runtime directory by reading the registry
 		*
 		*  @return
-		*    Path to the system PL-runtime directory (e.g. "C:\PixelLight\Runtime\x86"), or ""
+		*    Path to the system PixelLight runtime directory (e.g. "file://C:/PixelLight/Runtime/x86" on Windows), or ""
 		*
 		*  @remarks
 		*    For this method, you also need to add a key to the registry (or environment, depending on the used OS, in here
 		*    the MS Windows terminology is used), so that the path to the build PixelLight runtime can be found during runtime.
 		*    This means that there's a high probability that this registry key does not exist or it's configuration is invalid.
 		*    So, if you don't really need this method, try to avoid using it to reduce possible errors. When e.g. using a static
-		*    build of PLCore, this registry method has to be used in order to be able to find the system PL-runtime directory.
+		*    build of PLCore, this registry method has to be used in order to be able to find the system PixelLight runtime directory.
 		*
 		*    On MS Windows, this key has to be at "HKEY_LOCAL_MACHINE/SOFTWARE/PixelLight/PixelLight-SDK/Runtime" (or at
 		*    "HKEY_LOCAL_MACHINE/SOFTWARE/Wow6432Node/PixelLight/PixelLight-SDK/Runtime" if you are using a 32 bit PixelLight
@@ -173,10 +173,10 @@ class Runtime {
 
 		/**
 		*  @brief
-		*    Try to find the system PL-runtime data directory by reading the registry
+		*    Try to find the system PixelLight runtime data directory by reading the registry
 		*
 		*  @return
-		*    Path to the system PL-runtime data directory (e.g. "C:\PixelLight\Runtime\Data"), or ""
+		*    Path to the system PixelLight runtime data directory (e.g. "file://C:/PixelLight/Runtime/Data" on Windows), or ""
 		*
 		*  @see
 		*    - "GetRegistryDirectory()"
@@ -185,10 +185,10 @@ class Runtime {
 
 		/**
 		*  @brief
-		*    Try to find the PL-runtime directory used by the running process
+		*    Try to find the PixelLight runtime directory used by the running process
 		*
 		*  @return
-		*    Path to the PL-runtime directory used by the running process (e.g. "C:\MyApplication\x86" or "C:\PixelLight\Runtime\x86" etc.), or ""
+		*    Path to the PixelLight runtime directory used by the running process (e.g. "file://C:/MyApplication/x86" or "file://C:/PixelLight/Runtime/x86" etc. on Windows), or ""
 		*
 		*  @remarks
 		*    As soon as an application executable is started and therefore has become a running process, it's bound to a
@@ -205,10 +205,10 @@ class Runtime {
 
 		/**
 		*  @brief
-		*    Try to find the PL-runtime data directory used by the running process
+		*    Try to find the PixelLight runtime data directory used by the running process
 		*
 		*  @return
-		*    Path to the PL-runtime data directory used by the running process (e.g. "C:\MyApplication\Data" or "C:\PixelLight\Runtime\Data" etc.), or ""
+		*    Path to the PixelLight runtime data directory used by the running process (e.g. "file://C:/MyApplication/Data" or "file://C:/PixelLight/Runtime/Data" etc. on Windows), or ""
 		*
 		*  @see
 		*    - GetDirectory()
@@ -229,7 +229,7 @@ class Runtime {
 		*    Returns the absolute path to the directory the PLCore shared library is in
 		*
 		*  @return
-		*    The absolute path to the directory the PLCore shared library is in, empty string on error
+		*    The absolute path to the directory the PLCore shared library is in (e.g. "file://C:/PixelLight/Runtime/x86" on Windows), empty string on error
 		*/
 		static PLCORE_API String GetPLCoreSharedLibraryDirectory();
 
@@ -239,10 +239,10 @@ class Runtime {
 		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    Sets the given PL-runtime directory
+		*    Sets the given PixelLight runtime directory
 		*
 		*  @param[in]  sDirectory
-		*    Path to the PL-runtime directory (e.g. "C:\PixelLight\Runtime\x86"), or ""
+		*    Path to the PixelLight runtime directory (e.g. "C:\PixelLight\Runtime\x86" on Windows), or ""
 		*  @param[out] pszErrorMessage
 		*    If this parameter is no null pointer and there was an error, this string will receive a human readable error description,
 		*    if there was no error this string is not touched
@@ -257,7 +257,7 @@ class Runtime {
 
 		/**
 		*  @brief
-		*    Scan system PL-runtime directory for compatible plugins and load them in
+		*    Scan system PixelLight runtime directory for compatible plugins and load them in
 		*
 		*  @param[in] sDirectory
 		*    Directory to use (for example the result of "GetDirectory()", "GetLocalDirectory()" or "GetSystemDirectory()"), if empty string the result of "GetDirectory()" will be used
@@ -277,7 +277,7 @@ class Runtime {
 
 		/**
 		*  @brief
-		*    Scan system PL-runtime directory for compatible data and register it
+		*    Scan system PixelLight runtime directory for compatible data and register it
 		*
 		*  @param[in] sDirectory
 		*    Directory to use (for example the result of "GetDataDirectory()", "GetLocalDataDirectory()" or "GetSystemDataDirectory()"), if empty string the result of "GetDataDirectory()" will be used
@@ -295,7 +295,7 @@ class Runtime {
 
 		/**
 		*  @brief
-		*    Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
+		*    Scan PixelLight runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
 		*
 		*  @param[in] bUrgentMessageAllowed
 		*    Is this method allowed to show an urgent message to the user in case of a failure?
@@ -321,13 +321,13 @@ class Runtime {
 	private:
 		/**
 		*  @brief
-		*    Try to find the PL-runtime directory by using the PLCore shared library
+		*    Try to find the PixelLight runtime directory by using the PLCore shared library
 		*
 		*  @param[in] nType
 		*    Runtime installation type, must be "LocalInstallation" or "SystemInstallation"
 		*
 		*  @return
-		*    Path to the PL-runtime directory (e.g. "C:\MyApplication\x86"), or ""
+		*    Path to the PixelLight runtime directory (e.g. "C:\MyApplication\x86" on Windows), or ""
 		*/
 		static PLCORE_API String GetDirectory(EType nType);
 

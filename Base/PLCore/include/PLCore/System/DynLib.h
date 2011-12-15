@@ -105,7 +105,7 @@ class DynLib {
 		*    Get the path (set within 'Load()') to the dynamic library
 		*
 		*  @return
-		*    The path to the dynamic library
+		*    The path to the dynamic library (e.g. "file://C:/PixelLight/Runtime/x86/PLCore.dll" on Windows)
 		*/
 		inline String GetPath() const;
 
@@ -114,7 +114,7 @@ class DynLib {
 		*    Get the absolute path to the dynamic library
 		*
 		*  @return
-		*    The absolute path to the dynamic library (native path style)
+		*    The absolute path to the dynamic library (native path style, e.g. "C:\PixelLight\Runtime\x86\PLCore.dll" on Windows)
 		*/
 		inline String GetAbsPath() const;
 

@@ -1,7 +1,17 @@
 >> 15.12.2011
 [CO]
 - "Url": Added more examples within the documentation in order to be able to understand what the URL-class will do with provided data
-- "System::GetCurrentDir()": Enhanced documentation to make it possible to understand it's behavior
+- "System::GetCurrentDir()": Enhanced documentation to make it possible to understand it's behaviour
+- When Thomas Mühsam worked on PLInstall, he noticed that the behaviour is different across multiple methods dealing with filenames and
+  paths. I finally took the time to have a look into it by documenting behaviour of some methods in more detail and adding more examples.
+  One typical confusion is whether there's a "/" at the end of a path - this is usually up to the user and e.g. the "Url"-class will not force
+  a certain approach onto the user. Another confusion is whether not not there has to be a "file://" for every local path. This is another thing
+  handled by the "Url"-class. For example "Url::CutFilename()" will omit the protocol for a local path (e.g. the result will not be
+  "file://C:/Programs/App/"). I was unable to find an explanation for this within the documentation or diary, but I'am sure there's a good
+  reason for this. Changing the behaviour of such a fundamental class on the fly is a no go, so I don't touch this right now. The overall
+  URL handling in PixelLight is determined by the "Url"-class and other components of PixelLight should not try to break with "Url"-class behaviour.
+- Reviewed the relatively new "Runtime"-class and ensured that the different methods return the paths in the same format
+- "Runtime": The "Data"-methods no longer have a "/" at the end to have a similar behaviour across this class
 
 
 
