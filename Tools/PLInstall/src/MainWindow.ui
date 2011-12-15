@@ -14,7 +14,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>PixelLigh Installer</string>
+   <string>PixelLight Runtime Installer</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../res/qtresources.qrc">

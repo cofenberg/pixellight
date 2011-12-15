@@ -36,6 +36,9 @@
   <ItemGroup>
     <None Include="CMakeLists.txt" />
     <None Include="..\..\Diary.txt" />
+    <None Include="..\..\PixelLight\PL.ico">
+      <Filter>Resources</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="src\MainWindow.ui">
@@ -52,5 +55,11 @@
     <ClInclude Include="src\InstallerFunctions.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PLInstall.rc" />
   </ItemGroup>
 </Project>

@@ -147,6 +147,7 @@ String Runtime::GetSystemDirectory()
 	//    build executables will link against those shared libraries -> You'll receive
 	//    "/home/bob/pixellight/cmakeout/Base/PLCore/" as PixelLight system directory, not e.g.
 	//    "/home/bob/pixellight/Bin-Linux/Runtime/x86" as expected.
+	// -> When using 32 bit and 64 bit on the same system, using the registry first is also the better way
 	String sPLDirectory = GetRegistryDirectory();
 	if (!sPLDirectory.GetLength()) {
 		// Second: Try to find the PixelLight runtime directory by using the PLCore shared library

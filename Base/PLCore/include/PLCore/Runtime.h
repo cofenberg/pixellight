@@ -46,6 +46,8 @@ namespace PLCore {
 *
 *  @note
 *    - There can be a local and system runtime at the same time, although this is not recommended
+*    - On Windows 64 bit it's possible to have a 32 bit and a 64 bit PixelLight runtime version
+*      installed at the same time (even in the PATH environment variable, the OS will automatically pick the correct dll)
 */
 class Runtime {
 

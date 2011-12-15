@@ -77,6 +77,14 @@ add_sources(
 	${MOC_SRCS}	# Add source produced by moc
 	${QRC_SRCS}	# Add sources produced by rcc
 )
+if(WIN32)
+	##################################################
+	## Win32
+	##################################################
+	add_sources(
+		PLInstall.rc
+	)
+endif()
 
 ##################################################
 ## Library directories

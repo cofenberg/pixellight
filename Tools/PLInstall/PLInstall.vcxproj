@@ -262,6 +262,7 @@
     <ClCompile Include="src\ui_MainWindow.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\PixelLight\PL.ico" />
     <None Include="CMakeLists.txt" />
     <None Include="..\..\Diary.txt" />
     <CustomBuild Include="src\MainWindow.ui">
@@ -324,7 +325,11 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="src\InstallerFunctions.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PLInstall.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
