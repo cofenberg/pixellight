@@ -82,8 +82,14 @@ LogFormatterText &LogFormatterText::operator =(const LogFormatterText &cSource)
 //[-------------------------------------------------------]
 bool LogFormatterText::Open(const String &sFilename)
 {
-	// Open the log file via the helper function of the base-class, use UTF8 string encoding format so one can also put cryptic none English characters into the log
-	m_pFile = OpenFile(sFilename, String::UTF8);
+	// Open the log file via the helper function of the base-class
+	// -> Do not use UTF8 string encoding format so one can also put cryptic none English characters into the log:
+	//    While this looks good at first, not every tool can handle UTF8 correctly and in general things get more
+	//    complicated has they have to be (just write English log messages and use simple ASCII logs for best compatibility)
+	m_pFile = OpenFile(sFilename, String::ASCII);
+
+	// Inform about ASCII and that Unicode characters may not show up correctly
+	Output(Log::Always, "This is just a simple ASCII log for best compatibility, Unicode characters may not be shown correctly");
 
 	// Error?
 	return (m_pFile != nullptr);
@@ -131,7 +137,7 @@ bool LogFormatterText::Output(uint8 nLogLevel, const String &sText)
 
 bool LogFormatterText::Flush()
 {
-	return m_pFile && m_pFile->Flush();
+	return (m_pFile && m_pFile->Flush());
 }
 
 

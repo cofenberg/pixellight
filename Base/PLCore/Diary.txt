@@ -12,6 +12,9 @@
   URL handling in PixelLight is determined by the "Url"-class and other components of PixelLight should not try to break with "Url"-class behaviour.
 - Reviewed the relatively new "Runtime"-class and ensured that the different methods return the paths in the same format
 - "Runtime": The "Data"-methods no longer have a "/" at the end to have a similar behaviour across this class
+- "LogFormatterText::Open()": Reverted the change from "19.10.2011", UTF8 within logs is trouble we best avoid... there are tools out there still
+  having issues with UTF8 and UTF8 is in general more complex and for a simple text log those additional efforts and troubles are not justifiable. Wrote
+  a hint into the first log line so that no one wonders when a cryptic Unicode character from a none English language doesn't show up correctly.
 
 
 
