@@ -18,7 +18,8 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../res/qtresources.qrc">
-    <normaloff>:/icon/PixelLight/PL.ico</normaloff>:/icon/PixelLight/PL.ico</iconset>
+    <normaloff>:/icon/PixelLight/PL.png</normaloff>:/icon/PixelLight/PL.png
+   </iconset>
   </property>
   <property name="locale">
    <locale language="English" country="UnitedStates"/>

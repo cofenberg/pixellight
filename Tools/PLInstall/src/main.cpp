@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
 {
 	// Create Qt application
 	QApplication cQApplication(argc, argv);
+	cQApplication.setWindowIcon(QIcon(":/icon/PixelLight/PL.png"));
 
 	// Create host dialog
 	new MainWindow();

@@ -7,6 +7,8 @@
 >> 15.12.2011
 [CO]
 - PLInstall: Under Windows, the executable has now an icon
+- PLInstall: Qt wasn't showing me any icon in it's window, only the Windows default icon. When setting an Qt application icon by using
+  "QApplication::setWindowIcon()" it works, but only when not using a "ico"-file.
 
 
 
