@@ -343,9 +343,21 @@ if(X86_64)
 
 	# There's no 64 bit version available of the OpenGL ES 2.0 Emulator from ARM (http://www.malideveloper.com/tools/software-development/opengl-es-20-emulator.php)
 	unset (PL_PLUGIN_RENDERER_OPENGLES2_EMULATOR	CACHE)
+
+	# [TODO] The following plugins are not yet supported (create prebuild external packages and test it)
+	if(LINUX AND NOT APPLE AND NOT ANDROID)
+		# Linux x64
+		unset (PL_PLUGIN_SCRIPT_V8					CACHE)
+		unset (PL_PLUGIN_SCRIPT_PYTHON				CACHE)
+		unset (PL_PLUGIN_SCRIPT_ANGELSCRIPT			CACHE)
+		unset (PL_PLUGIN_DATABASE_MYSQL				CACHE)
+		unset (PL_PLUGIN_DATABASE_POSTGRESQL		CACHE)
+		unset (PL_PLUGIN_DATABASE_SQLITE			CACHE)
+		unset (PL_PLUGIN_PHYSICS_ODE				CACHE)
+	endif()
 endif()
 
-# Windows
+# Not Windows
 if(NOT WIN32)
 	# Windows only features, for other targets, don't show this options
 	unset (PL_PLUGIN_PHYSICS_PHYSX					CACHE)
@@ -361,6 +373,8 @@ if(NOT WIN32)
 	unset (PL_PLUGIN_ENGINE_IMAGEEXR				CACHE)
 	unset (PL_TOOL_PLINSTALL						CACHE)
 elseif(X86_64)
+	# Windows x64
+
 	# [TODO] The following plugins are not yet supported (create prebuild external packages and test it)
 	unset (PL_PLUGIN_DATABASE_POSTGRESQL			CACHE)
 	unset (PL_PLUGIN_PHYSICS_PHYSX					CACHE)

@@ -9,6 +9,15 @@
 - PLInstall: Under Windows, the executable has now an icon
 - PLInstall: Qt wasn't showing me any icon in it's window, only the Windows default icon. When setting an Qt application icon by using
   "QApplication::setWindowIcon()" it works, but only when not using a "ico"-file.
+- Linux x64 - "PixelLight.cmake": Disabled projects were we don't have prebuild external packages, yet. The PixelLight default configuration
+  has to build out-of-the-box in order to avoid negative feedback like http://sourceforge.net/tracker/?func=detail&aid=3443335&group_id=507544&atid=2063684
+  -> Not tested due to lack of Linux x64, would be nice if someone can test this
+  -> The tracker post above mentions that PL_PLUGIN_FRONTEND_QT is not working under Linux x64, altought there's a prebuild package available and
+     Stephan Wezel is using it, hm
+  -> In CMake there's also the option to mark something as "advanced" so that it doesn't show up in the CMake GUI as long as no advanced stuff should be
+     shown. I'am not sure whether or not we should use this "advanced"-option to hide projects not working out-of-the-box... this may lead again to feedback
+     like "PixelLight is not compiling" even when just an optional plugin is not compiling... but someone new to PixelLight can't know that and may lose
+     interest in PixelLight at once when it's not even compiling...
 
 
 
