@@ -125,9 +125,9 @@ SNMOrbiting::SNMOrbiting(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 	Pan(this),
 	EventHandlerDrawDebug			  (&SNMOrbiting::OnDrawDebug,			   this),
 	EventHandlerPositionRotationUpdate(&SNMOrbiting::OnPositionRotationUpdate, this),
-	m_fMinDistance(-1),
-	m_fMaxDistance(-1),
-	m_fDistance(-1),
+	m_fMinDistance(0.0f),
+	m_fMaxDistance(-1.0f),
+	m_fDistance(-1.0f),
 	m_bPositionListening(true)
 {
 	// Update the rotation also on position change: If this is not done in here, too, the camera may 'shiver'
