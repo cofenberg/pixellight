@@ -46,6 +46,7 @@ add_sources(
 	src/Controller/SNMMoveController.cpp
 	src/Controller/MoveController.cpp
 	src/Controller/SNMOrbitingController.cpp
+	src/Controller/SNMEgoOrbitingController.cpp
 	src/Controller/OrbitingController.cpp
 	src/Controller/SNMCameraZoomController.cpp
 	src/Controller/CameraZoomController.cpp
