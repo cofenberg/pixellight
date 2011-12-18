@@ -109,14 +109,14 @@ class SNMOrbitingController : public PLScene::SNMOrbiting {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Protected virtual SNMOrbitingController functions     ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		/**
 		*  @brief
 		*    Called when the scene node modifier needs to be updated
 		*/
-		void OnUpdate();
+		PL_API virtual void OnUpdate();
 
 
 	//[-------------------------------------------------------]
@@ -127,9 +127,9 @@ class SNMOrbitingController : public PLScene::SNMOrbiting {
 
 
 	//[-------------------------------------------------------]
-	//[ Private data                                          ]
+	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		OrbitingController *m_pController;	/**< Orbiting input controller instance, always valid! */
 
 

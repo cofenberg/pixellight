@@ -135,6 +135,9 @@
     <ClCompile Include="src\Controller\SNMEgoLookController.cpp">
       <Filter>Controller</Filter>
     </ClCompile>
+    <ClCompile Include="src\Controller\SNMEgoOrbitingController.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLEngine\Application\EngineApplication.h">
@@ -249,6 +252,9 @@
       <Filter>Tools</Filter>
     </ClInclude>
     <ClInclude Include="include\PLEngine\Controller\SNMEgoLookController.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Controller\SNMEgoOrbitingController.h">
       <Filter>Controller</Filter>
     </ClInclude>
   </ItemGroup>

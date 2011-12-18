@@ -107,7 +107,7 @@ void SNMOrbitingController::OnActivate(bool bActivate)
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Protected virtual SNMOrbitingController functions     ]
 //[-------------------------------------------------------]
 /**
 *  @brief

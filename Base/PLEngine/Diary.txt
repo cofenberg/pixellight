@@ -8,6 +8,8 @@
   In Autodesk 3ds Max 2012 the rotation direction is also the same as now used, just checked it. I hope that are enough reasons for this change. :D
 - "SNMOrbitingController": Zoom is now also working by using a 3D mouse (same hack as in "SNMLookController::OnUpdate()")
 - "SNMOrbitingController": Pan is now also working by using a 3D mouse (same hack as in "SNMLookController::OnUpdate()")
+- Added scene node modifier "SNMEgoOrbitingController" for restricted 3D orbiting. It's similar to "SNMEgoLookController", that's why I put
+  "Ego" into the name. Maybe we find over the time a better name instead of "Ego", but "Limited", "Restricted" or "Euler" didn't sound right either. :/
 
 
 
