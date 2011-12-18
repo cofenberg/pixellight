@@ -1,3 +1,16 @@
+>> 18.12.2011
+[CO]
+- "SNMOrbitingController": Added same space mouse hack as in "SNMLookController::OnUpdate()" (currently I have to time to finally have a closer look into this)
+- "SNMOrbitingController": The rotation axis were inverted, I'am not sure why. Rotating by using the mouse felt odd, rotating using a 3D mouse was confusing.
+  I know that the rotation direction is something were everyone has another preference - but now it feels more consistent to e.g. "SNMLookController" and there's
+  no manipulation of the device data within this modifier. Experiment: When using a 3D mouse to rotate a free camera around a point in the 3D scene and then,
+  while keeping my hand position on the device, switching to an orbiter camera the movement will stay the same and not suddenly invert it's rotation direction.
+  In Autodesk 3ds Max 2012 the rotation direction is also the same as now used, just checked it. I hope that are enough reasons for this change. :D
+- "SNMOrbitingController": Zoom is now also working by using a 3D mouse (same hack as in "SNMLookController::OnUpdate()")
+- "SNMOrbitingController": Pan is now also working by using a 3D mouse (same hack as in "SNMLookController::OnUpdate()")
+
+
+
 >> 06.12.2011
 [CO]
 - "SNMEgoLookController": Limited the yaw (to huge values may cause problems, so, bring them into a well known interval)

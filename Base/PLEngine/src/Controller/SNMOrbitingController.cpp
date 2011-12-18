@@ -117,6 +117,14 @@ void SNMOrbitingController::OnUpdate()
 {
 	// Check if input is active
 	if (m_pController->GetActive()) {
+		// [HACK][TODO](same as in " SNMLookController::OnUpdate()") Currently it's not possible to define/script a control logic within the control connection to, for instance
+		// "pass through" a rotation value from a space mouse, but "passing" movements from the mouse only if, for example, the left
+		// mouse button is currently pressed (so we don't look around the every time when moving the mouse to, for instance, move
+		// the mouse cursor to an ingame GUI widget). Because it's REALLY comfortable to use the space mouse, I added this hack so
+		// the space mouse (provides us with absolute values!) can be used as expected during the last steps of the input system refactoring.
+		const bool bSpaceMouseRotationHack = (!m_pController->RotX.IsValueRelative() || !m_pController->RotY.IsValueRelative());
+		const bool bSpaceMouseZoomHack     = (!m_pController->ZoomAxis.IsValueRelative());
+
 		// Get the current speed
 		float fSpeed = 1.0f;
 		if (m_pController->Run.IsPressed())
@@ -126,7 +134,7 @@ void SNMOrbitingController::OnUpdate()
 		const float fTimedSpeed = fSpeed*Timing::GetInstance()->GetTimeDifference();
 
 		// Rotation
-		if (m_pController->Rotate.IsPressed()) {
+		if (m_pController->Rotate.IsPressed() || bSpaceMouseRotationHack) {
 			float fX = m_pController->RotX.GetValue();
 			float fY = m_pController->RotY.GetValue();
 			float fZ = m_pController->RotZ.GetValue();
@@ -138,9 +146,9 @@ void SNMOrbitingController::OnUpdate()
 
 				// Get a quaternion representation of the rotation delta
 				Quaternion qRotInc;
-				EulerAngles::ToQuaternion(-static_cast<float>(fX*Math::DegToRad),
-										  -static_cast<float>(fY*Math::DegToRad),
-										  -static_cast<float>(fZ*Math::DegToRad),
+				EulerAngles::ToQuaternion(static_cast<float>(fX*Math::DegToRad),
+										  static_cast<float>(fY*Math::DegToRad),
+										  static_cast<float>(fZ*Math::DegToRad),
 										  qRotInc);
 
 				// Update rotation
@@ -166,10 +174,27 @@ void SNMOrbitingController::OnUpdate()
 				vPan.z += fZ;
 				Pan.Set(vPan);
 			}
+		} else {
+			// [HACK][TODO](See above)
+			if (!m_pController->PanX.IsValueRelative() || !m_pController->PanY.IsValueRelative()) {
+				float fX = m_pController->PanX.GetValue();
+				float fY = m_pController->PanY.GetValue();
+				if (fX || fY) {
+					// Do we need to take the current time difference into account?
+					fX *= m_pController->PanX.IsValueRelative() ? fSpeed : fTimedSpeed;
+					fY *= m_pController->PanY.IsValueRelative() ? fSpeed : fTimedSpeed;
+
+					// Set pan
+					Vector3 vPan = Pan.Get();
+					vPan.x += fX;
+					vPan.y += fY;
+					Pan.Set(vPan);
+				}
+			}
 		}
 
 		// Zoom
-		if (m_pController->Zoom.IsPressed()) {
+		if (m_pController->Zoom.IsPressed() || bSpaceMouseZoomHack) {
 			float fZoomAxis = m_pController->ZoomAxis.GetValue();
 			if (fZoomAxis) {
 				// Do we need to take the current time difference into account?

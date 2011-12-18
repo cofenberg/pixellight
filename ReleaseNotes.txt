@@ -18,6 +18,7 @@ Changes in PixelLight 0.9.10-R1 (not yet released)
 - Bugfix (ID: 3442054): "PLCore::Connection::Receive()" called "PLCore::Connection::OnReceive()" with the fixed buffer size, instead of with the number of received bytes
 - Bugfix: PLProject was not parsing "pl_module_active" and "pl_module_delayed"
 - Bugfix: "PLRendererOpenGL::Renderer::ChooseFormats()" was also returning compression formats even when the data type of the given image was not "byte"
+- Bugfix: "PLEngine::SNMOrbitingController": The rotation axis were inverted
 
 
 Changes in PixelLight 0.9.9-R1 (released on October 23, 2011)
