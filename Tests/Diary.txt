@@ -1,4 +1,12 @@
-﻿>> 06.12.2011
+﻿>> 19.12.2011
+[CP]
+PLUnitPerformance:
+- changed output into csv-files
+- added Queue- and Stack-functions
+- started String-functions
+- added two types of counters (Pixellight, TestReporter)
+
+>> 06.12.2011
 [JS]
 PLUnitTests:
 - changed name: ContainerFunctions.h => ContainerTests.h

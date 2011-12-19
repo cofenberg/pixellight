@@ -10,15 +10,15 @@
     <Filter Include="UnitTest++AddIns">
       <UniqueIdentifier>{a19cc6be-ea5f-49a3-a330-e433b06acec8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UnitTest++AddInsPerformance">
+      <UniqueIdentifier>{86f33f41-58e9-48bd-aa39-a59084e9b34b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\PLCore\Container\Hashmap.cpp">
       <Filter>PLCore\Container</Filter>
     </ClCompile>
     <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\MyMobileTestReporter.cpp">
-      <Filter>UnitTest++AddIns</Filter>
-    </ClCompile>
-    <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\MyTestReporter.cpp">
       <Filter>UnitTest++AddIns</Filter>
     </ClCompile>
     <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\RunAllTests.cpp">
@@ -30,11 +30,20 @@
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\MainAndroid.cpp" />
     <ClCompile Include="src\UnitTestsPerformance.cpp" />
+    <ClCompile Include="src\PLCore\Container\Queue.cpp">
+      <Filter>PLCore\Container</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UnitTest++AddIns\MyTestReporter.cpp">
+      <Filter>UnitTest++AddInsPerformance</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCore\Container\Stack.cpp">
+      <Filter>PLCore\Container</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCore\String\String.cpp">
+      <Filter>PLCore\Container</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\MyTestReporter.h">
-      <Filter>UnitTest++AddIns</Filter>
-    </ClInclude>
     <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\RunAllTests.h">
       <Filter>UnitTest++AddIns</Filter>
     </ClInclude>
@@ -43,6 +52,9 @@
     </ClInclude>
     <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\MyMobileTestReporter.h">
       <Filter>UnitTest++AddIns</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UnitTest++AddIns\MyTestReporter.h">
+      <Filter>UnitTest++AddInsPerformance</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

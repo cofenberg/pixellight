@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\MyMobileTestReporter.cpp" />
-    <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\MyTestReporter.cpp" />
     <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\RunAllTests.cpp" />
     <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\wchar_template.cpp" />
     <ClCompile Include="src\Main.cpp" />
@@ -31,13 +30,17 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="src\PLCore\Container\Hashmap.cpp" />
+    <ClCompile Include="src\PLCore\Container\Queue.cpp" />
+    <ClCompile Include="src\PLCore\Container\Stack.cpp" />
+    <ClCompile Include="src\PLCore\String\String.cpp" />
+    <ClCompile Include="src\UnitTest++AddIns\MyTestReporter.cpp" />
     <ClCompile Include="src\UnitTestsPerformance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\MyMobileTestReporter.h" />
-    <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\MyTestReporter.h" />
     <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\RunAllTests.h" />
     <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\wchar_template.h" />
+    <ClInclude Include="include\UnitTest++AddIns\MyTestReporter.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Diary.txt" />

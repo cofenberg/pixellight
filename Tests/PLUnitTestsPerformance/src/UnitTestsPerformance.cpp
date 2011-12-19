@@ -61,12 +61,12 @@ int UnitTestsPerformance()
 
 	// Open the results output file
 	char szFilename[256];
-	sprintf(szFilename, "PLUnitTestsPerformance_Result_%s.txt", szTime);
+	sprintf(szFilename, "PLUnitTestsPerformance_Result_%s.csv", szTime);
 	outputFile.open(szFilename);
 
 	// Create an reporter instance
-	MyMobileTestReporter cReporter;
-	// MyTestReporter cReporter;
+	//MyMobileTestReporter cReporter;
+	MyTestReporter cReporter;
 
 	// Run all unit tests
 	const int nResult = UnitTest::RunAllTests(cReporter);
