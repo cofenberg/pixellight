@@ -3,7 +3,6 @@
 //[-------------------------------------------------------]
 #include <UnitTest++/UnitTest++.h>
 #include <PLCore/Container/BinaryHeap.h>
-#include <PLCore/Container/Container.h>
 
 #include "HeapTests.h"
 

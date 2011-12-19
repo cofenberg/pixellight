@@ -76,6 +76,12 @@
     <ClCompile Include="src\PLMath\Vector2.cpp">
       <Filter>PLMath</Filter>
     </ClCompile>
+    <ClCompile Include="src\PLCore\Container\HashMap.cpp">
+      <Filter>PLCore\Container\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCore\Container\SimpleMap.cpp">
+      <Filter>PLCore\Container\Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\UnitTest++AddIns\RunAllTests.h">

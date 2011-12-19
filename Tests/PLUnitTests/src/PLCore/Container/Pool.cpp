@@ -3,7 +3,6 @@
 //[-------------------------------------------------------]
 #include <UnitTest++/UnitTest++.h>
 #include <PLCore/Container/Pool.h>
-#include <PLCore/Container/Container.h>
 
 #include "ContainerTests.h"
 
@@ -24,10 +23,10 @@ SUITE(Pool_PrimitiveInt) {
 	{
 		ConstructTestPool() { 
 			/* some setup */
-			Pool.Add(1);
-			Pool.Add(2);
-			Pool.Add(3);
-			Pool.Add(4);
+			cPool.Add(1);
+			cPool.Add(2);
+			cPool.Add(3);
+			cPool.Add(4);
 
 			TestPool.Add(3);
 			TestPool.Add(2);
@@ -39,30 +38,30 @@ SUITE(Pool_PrimitiveInt) {
 		}
 
 		// Container for testing
-		Pool<int> Pool, EmptyPool, TestPool;
+		Pool<int> cPool, EmptyPool, TestPool;
 	};
 
 	TEST_FIXTURE(ConstructTestPool, DerivedContainerFunctions) {
-		CheckDerivedContainerFunctions<int>(Pool);
+		CheckDerivedContainerFunctions<int>(cPool);
 	}
 
 	TEST_FIXTURE(ConstructTestPool, FreeElementsFunctions) {
-		CHECK_EQUAL(0U, Pool.GetNumOfFreeElements());
+		CHECK_EQUAL(0U, cPool.GetNumOfFreeElements());
 
-		Pool.Remove(2);
-		CHECK_EQUAL(1U, Pool.GetNumOfFreeElements());
+		cPool.Remove(2);
+		CHECK_EQUAL(1U, cPool.GetNumOfFreeElements());
 
-		Pool.FreeElements();
-		CHECK_EQUAL(4U, Pool.GetNumOfFreeElements());
+		cPool.FreeElements();
+		CHECK_EQUAL(4U, cPool.GetNumOfFreeElements());
 
-		Pool.RemoveAllFreeElements();
-		CHECK_EQUAL(0U, Pool.GetNumOfFreeElements());
+		cPool.RemoveAllFreeElements();
+		CHECK_EQUAL(0U, cPool.GetNumOfFreeElements());
 	}
 
 	TEST_FIXTURE(ConstructTestPool, FreeSize) {
-		CHECK_EQUAL(0U, Pool.GetFreeSize());
+		CHECK_EQUAL(0U, cPool.GetFreeSize());
 
-		Pool.Remove(2);
-		CHECK_EQUAL(sizeof(int), Pool.GetFreeSize());
+		cPool.Remove(2);
+		CHECK_EQUAL(sizeof(int), cPool.GetFreeSize());
 	}
 }

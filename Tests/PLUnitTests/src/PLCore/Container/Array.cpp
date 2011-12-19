@@ -3,7 +3,6 @@
 //[-------------------------------------------------------]
 #include <UnitTest++/UnitTest++.h>
 #include <PLCore/Container/Array.h>
-#include <PLCore/Container/Container.h>
 
 #include "ContainerTests.h"
 

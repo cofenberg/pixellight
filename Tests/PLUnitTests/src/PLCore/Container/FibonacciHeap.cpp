@@ -3,7 +3,6 @@
 //[-------------------------------------------------------]
 #include <UnitTest++/UnitTest++.h>
 #include <PLCore/Container/FibonacciHeap.h>
-#include <PLCore/Container/Container.h>
 
 #include "HeapTests.h"
 

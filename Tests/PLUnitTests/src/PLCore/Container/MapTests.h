@@ -49,7 +49,7 @@ void CheckDerivedMapFunctions(Map<KeyType, ValueType>& map) {
 		CHECK_EQUAL(2, map.Get(2));
 		CHECK_EQUAL(5, map.Get(5));
 		CHECK_EQUAL(1, map.Get(1));
-		CHECK_EQUAL(Map<KeyType,ValueType>::Null, map.Get(1));
+		CHECK_EQUAL(NULL, map.Get(99));
 	}
 
 	// Replace(key, newValue)
@@ -63,10 +63,11 @@ void CheckDerivedMapFunctions(Map<KeyType, ValueType>& map) {
 
 	// Set(key, Value)
 	{	
-		CHECK(map.Set(10, 10);
+		// adds element
+		CHECK(!map.Set(10, 10));
 
 		CHECK_EQUAL(6, map.Get(5));
-		CHECK(!map.Set(5, 5);
+		CHECK(map.Set(5, 5));
 		CHECK_EQUAL(5, map.Get(5));
 	}
 
@@ -79,7 +80,7 @@ void CheckDerivedMapFunctions(Map<KeyType, ValueType>& map) {
 
 	// RemoveValue(value)
 	{	
-		CHECK(map.RemoveValue(5);
+		CHECK(map.RemoveValue(5));
 
 		CHECK(!map.RemoveValue(10));
 	}

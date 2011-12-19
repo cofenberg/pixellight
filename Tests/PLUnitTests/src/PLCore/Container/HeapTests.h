@@ -28,6 +28,7 @@ void CheckDerivedHeapFunctions(Heap<KeyType, ValType>& map) {
 		CHECK(map.Add(2, 2));
 		CHECK(map.Add(2, 8));
 		CHECK(map.Add(3, 3));
+		CHECK_EQUAL(5U, map.GetNumOfElements());
 	}
 
 	// GetTop
