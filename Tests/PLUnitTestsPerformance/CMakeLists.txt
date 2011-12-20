@@ -36,6 +36,8 @@ add_sources(
 	src/PLCore/Container/Stack.cpp
 	src/PLCore/String/String.cpp
 	# UnitTest++ AddIns
+	src/UnitTest++AddIns/MyPerformanceReporter.cpp
+	# UnitTest++ AddIns
 	../PLUnitTests/src/UnitTest++AddIns/MyTestReporter.cpp
 	../PLUnitTests/src/UnitTest++AddIns/MyMobileTestReporter.cpp
 	../PLUnitTests/src/UnitTest++AddIns/RunAllTests.cpp

@@ -33,14 +33,14 @@
     <ClCompile Include="src\PLCore\Container\Queue.cpp" />
     <ClCompile Include="src\PLCore\Container\Stack.cpp" />
     <ClCompile Include="src\PLCore\String\String.cpp" />
-    <ClCompile Include="src\UnitTest++AddIns\MyTestReporter.cpp" />
+    <ClCompile Include="src\UnitTest++AddIns\MyPerformanceReporter.cpp" />
     <ClCompile Include="src\UnitTestsPerformance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\MyMobileTestReporter.h" />
     <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\RunAllTests.h" />
     <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\wchar_template.h" />
-    <ClInclude Include="include\UnitTest++AddIns\MyTestReporter.h" />
+    <ClInclude Include="include\UnitTest++AddIns\MyPerformanceReporter.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Diary.txt" />

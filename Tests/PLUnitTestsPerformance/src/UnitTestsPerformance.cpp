@@ -32,6 +32,7 @@
 #include <UnitTest++AddIns/MyMobileTestReporter.h>
 #include <UnitTest++AddIns/RunAllTests.h>
 #include <PLCore/PLCore.h>	// For "nullptr" in case the compiler doesn't support this C++11 feature
+#include "UnitTest++AddIns/MyPerformanceReporter.h"
 
 
 //[-------------------------------------------------------]
@@ -65,8 +66,7 @@ int UnitTestsPerformance()
 	outputFile.open(szFilename);
 
 	// Create an reporter instance
-	//MyMobileTestReporter cReporter;
-	MyTestReporter cReporter;
+	MyPerformanceReporter cReporter;
 
 	// Run all unit tests
 	const int nResult = UnitTest::RunAllTests(cReporter);
