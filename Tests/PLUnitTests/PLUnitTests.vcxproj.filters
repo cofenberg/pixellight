@@ -43,6 +43,15 @@
     <ClCompile Include="src\PLCore\Container\FastPool.cpp">
       <Filter>PLCore\Container\Container</Filter>
     </ClCompile>
+    <ClCompile Include="src\PLCore\Container\BinaryHeap.cpp">
+      <Filter>PLCore\Container\Heap</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCore\Container\BinominalHeap.cpp">
+      <Filter>PLCore\Container\Heap</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCore\Container\FibonacciHeap.cpp">
+      <Filter>PLCore\Container\Heap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\UnitTest++AddIns\RunAllTests.h">

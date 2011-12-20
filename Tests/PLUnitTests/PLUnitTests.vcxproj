@@ -29,7 +29,10 @@
     <ClCompile Include="src\PLCore\Application\ApplicationContext.cpp" />
     <ClCompile Include="src\PLCore\Application\CoreApplication.cpp" />
     <ClCompile Include="src\PLCore\Container\Array.cpp" />
+    <ClCompile Include="src\PLCore\Container\BinaryHeap.cpp" />
+    <ClCompile Include="src\PLCore\Container\BinominalHeap.cpp" />
     <ClCompile Include="src\PLCore\Container\FastPool.cpp" />
+    <ClCompile Include="src\PLCore\Container\FibonacciHeap.cpp" />
     <ClCompile Include="src\PLCore\Container\List.cpp" />
     <ClCompile Include="src\PLCore\Container\ContainerTests.h" />
     <ClCompile Include="src\PLCore\Container\Pool.cpp" />

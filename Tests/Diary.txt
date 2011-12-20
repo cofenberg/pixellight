@@ -1,10 +1,20 @@
-﻿>> 19.12.2011
+>> 19.12.2011
 [CP]
 PLUnitPerformance:
 - changed output into csv-files
 - added Queue- and Stack-functions
 - started String-functions
 - added two types of counters (Pixellight, TestReporter)
+
+
+
+>> 08.12.2011
+[JS]
+PLUnitTests:
+- implemented a portion of generic Heap tests
+- added files for Heap container tests
+
+
 
 >> 06.12.2011
 [JS]
