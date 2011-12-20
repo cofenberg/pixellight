@@ -1,7 +1,7 @@
 \chapter{Android}
 In principle, there's no difference in building PixelLight for Android on a \ac{MS} Windows or Linux host. So, the following description is e.g. not \ac{MS} Windows only.
 
-Warning: We noticed several issues when using the \ac{NDK} under \ac{MS} Windows (tested with \emph{"ndk r6b})
+Warning: We noticed several issues when using the \ac{NDK} under \ac{MS} Windows (tested with \emph{ndk r6b})
 \begin{itemize}
 \item{The linker eat characters resulting in errors like "CMakeFiles/PLCore.dr/src/File/FileSearchLinux.cpp not found" while the filename was "CMakeFiles/PLCore.dir/src/File/FileSearchLinux.cpp"}
 \item{Performance issues, the build process is slow, really slow}
@@ -21,7 +21,7 @@ In case you never ever did native Android development before, you may have a loo
 Install the usual Android development tools. The following versions are those used when writing this documentation, other versions may work as well:
 \begin{itemize}
 \item{Android \ac{SDK} Platform Android 2.3, \ac{API} 9\footnote{See \url{http://developer.android.com/guide/appendix/api-levels.html}}}
-\item{Android \ac{NDK} (\emph{ndk r6b})}
+\item{Android \ac{NDK} (tested with \emph{ndk r6b} and \emph{ndk r7})}
 \end{itemize}
 Have a look at appendix~\ref{Appendix:AndroidNativeBuildTutorial} for details about setting up the Android development tools.
 
