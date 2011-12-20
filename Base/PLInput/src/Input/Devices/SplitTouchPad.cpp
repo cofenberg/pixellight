@@ -47,11 +47,11 @@ pl_implement_class(SplitTouchPad)
 *  @brief
 *    Constructor
 */
-SplitTouchPad::SplitTouchPad(const String &sName, DeviceImpl *pImpl) : Device(sName, "Splitscreen input for touchscreen devices", pImpl),
-	LeftX	(this, "LeftX",		"X axis on the left touchscreen side (movement data, no absolute data)"),
-	LeftY	(this, "LeftY",		"Y axis on the left touchscreen side (movement data, no absolute data)"),
-	RightX	(this, "RightX",	"X axis on the right touchscreen side (movement data, no absolute data)"),
-	RightY	(this, "RightY",	"Y axis on the right touchscreen side (movement data, no absolute data)")
+SplitTouchPad::SplitTouchPad(const String &sName, DeviceImpl *pImpl) : Device(sName, "Gamepad device emulation by using a touch screen making it possible to e.g. move & look at the same time", pImpl),
+	LeftX	(this, "LeftX",		"Absolute x axis on the left touchscreen side"),
+	LeftY	(this, "LeftY",		"Absolute y axis on the left touchscreen side"),
+	RightX	(this, "RightX",	"Absolute x axis on the right touchscreen side"),
+	RightY	(this, "RightY",	"Absolute y axis on the right touchscreen side")
 {
 }
 

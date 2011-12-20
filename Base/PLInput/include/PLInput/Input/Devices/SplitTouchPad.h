@@ -44,7 +44,7 @@ namespace PLInput {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Splitscreen input for touchscreen devices
+*    Gamepad device emulation by using a touch screen making it possible to e.g. move & look at the same time
 *
 *  @remarks
 *    This class supports the following device backend types:
@@ -56,7 +56,7 @@ class SplitTouchPad : public Device {
 	//[-------------------------------------------------------]
 	//[ Class definition                                      ]
 	//[-------------------------------------------------------]
-	pl_class(PLINPUT_RTTI_EXPORT, SplitTouchPad, "PLInput", PLInput::Device, "Splitscreen input for touchscreen devices")
+	pl_class(PLINPUT_RTTI_EXPORT, SplitTouchPad, "PLInput", PLInput::Device, "Gamepad device emulation by using a touch screen making it possible to e.g. move & look at the same time")
 	pl_class_end
 
 
@@ -64,10 +64,10 @@ class SplitTouchPad : public Device {
 	//[ Controller definition                                 ]
 	//[-------------------------------------------------------]
 	public:
-		PLInput::Axis	LeftX;	/**< X axis on the left touchscreen side (movement data, no absolute data) */
-		PLInput::Axis	LeftY;	/**< Y axis on the left touchscreen side (movement data, no absolute data) */
-		PLInput::Axis	RightX;	/**< X axis on the right touchscreen side (movement data, no absolute data) */
-		PLInput::Axis	RightY;	/**< Y axis on the right touchscreen side (movement data, no absolute data) */
+		PLInput::Axis	LeftX;	/**< Absolute x axis on the left touchscreen side */
+		PLInput::Axis	LeftY;	/**< Absolute y axis on the left touchscreen side */
+		PLInput::Axis	RightX;	/**< Absolute x axis on the right touchscreen side */
+		PLInput::Axis	RightY;	/**< Absolute y axis on the right touchscreen side */
 
 
 	//[-------------------------------------------------------]

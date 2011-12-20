@@ -49,7 +49,7 @@ namespace PLInput {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Slitscreen touchpad device for Android
+*    Android gamepad device emulation by using a touch screen making it possible to e.g. move & look at the same time
 */
 class AndroidSplitTouchPadDevice : public UpdateDevice {
 
@@ -88,20 +88,6 @@ class AndroidSplitTouchPadDevice : public UpdateDevice {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Writes all possible values from an android event to the consol
-		*
-		*  @param[in] cAInputEvent
-		*    Input event to log
-		**/
-		void LogEventValues(const struct AInputEvent &cAInputEvent);
-
-
-	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
@@ -109,18 +95,14 @@ class AndroidSplitTouchPadDevice : public UpdateDevice {
 		int   m_nLeftTouchPointerID;		/**< Left screen touch pointer ID, -1 if none */
 		float m_fOriginLeftTouchPositionX;	/**< Origin left touch x position */
 		float m_fOriginLeftTouchPositionY;	/**< Origin left touch y position */
-		float m_fOriginLeftTouchPressure;	/**< Origin left touch pressure */
 		float m_fLeftTouchPositionX;		/**< Current left touch x position */
 		float m_fLeftTouchPositionY;		/**< Current left touch y position */
-		float m_fLeftTouchPressure;			/**< Current left touch pressure */
 		// Right
 		int   m_nRightTouchPointerID;		/**< Right screen touch pointer ID, -1 if none */
 		float m_fOriginRightTouchPositionX;	/**< Origin right touch x position */
 		float m_fOriginRightTouchPositionY;	/**< Origin right touch y position */
-		float m_fOriginRightTouchPressure;	/**< Origin right touch pressure */
 		float m_fRightTouchPositionX;		/**< Current right touch x position */
 		float m_fRightTouchPositionY;		/**< Current right touch y position */
-		float m_fRightTouchPressure;		/**< Current right touch pressure */
 
 
 };
