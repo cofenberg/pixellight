@@ -26,6 +26,7 @@
 #include <android/input.h>
 #include <PLMath/Math.h>
 #include "PLInput/Input/Devices/Mouse.h"
+#include "PLInput/Backend/Android/AndroidSplitTouchPadDevice.h"
 #include "PLInput/Backend/Android/AndroidMouseDevice.h"
 
 
@@ -150,7 +151,7 @@ void AndroidMouseDevice::Update()
 		// Update relative axes?
 		// ->  In case there's an active "AndroidSplitTouchPadDevice"-instance we have to deactivate the
 		//     "mouse movement"-emulation or this will conflict with "AndroidSplitTouchPadDevice"
-		if (!pAndroidSplitTouchPadDevice || !pAndroidSplitTouchPadDevice->GetDevice() || !pAndroidSplitTouchPadDevice->GetDevice()->GetActive()) {
+		if (!m_pAndroidSplitTouchPadDevice || !m_pAndroidSplitTouchPadDevice->GetDevice() || !m_pAndroidSplitTouchPadDevice->GetDevice()->GetActive()) {
 			// Get the mouse movement
 			float fDeltaX = m_fMousePositionX - m_fPreviousMousePositionX;
 			float fDeltaY = m_fMousePositionY - m_fPreviousMousePositionY;
