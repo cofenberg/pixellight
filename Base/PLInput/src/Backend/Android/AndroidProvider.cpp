@@ -59,8 +59,8 @@ pl_implement_class(AndroidProvider)
 AndroidProvider::AndroidProvider() :
 	SlotInputEvent(&AndroidProvider::OnInputEvent, this),
 	m_pAndroidKeyboardDevice(nullptr),
-	m_pAndroidMouseDevice(nullptr),
-	m_pAndroidSplitTouchPadDevice(nullptr)
+	m_pAndroidSplitTouchPadDevice(nullptr),
+	m_pAndroidMouseDevice(nullptr)
 {
 	// Connect the Android input event handler
 	SystemAndroid::EventInputEvent.Connect(SlotInputEvent);
@@ -87,18 +87,18 @@ void AndroidProvider::QueryDevices()
 		AddDevice("Keyboard", new Keyboard("Keyboard", m_pAndroidKeyboardDevice));
 	}
 
-	// Create a mouse device
-	if (!CheckDevice("Mouse")) {
-		// Add device
-		m_pAndroidMouseDevice = new AndroidMouseDevice();
-		AddDevice("Mouse", new Mouse("Mouse", m_pAndroidMouseDevice));
-	}
-
 	// Create a splitscreen touch pad device
 	if (!CheckDevice("SplitTouchPad")) {
 		// Add device
 		m_pAndroidSplitTouchPadDevice = new AndroidSplitTouchPadDevice();
 		AddDevice("SplitTouchPad", new SplitTouchPad("SplitTouchPad", m_pAndroidSplitTouchPadDevice));
+	}
+
+	// Create a mouse device
+	if (!CheckDevice("Mouse")) {
+		// Add device
+		m_pAndroidMouseDevice = new AndroidMouseDevice(m_pAndroidSplitTouchPadDevice);
+		AddDevice("Mouse", new Mouse("Mouse", m_pAndroidMouseDevice));
 	}
 
 	// Create a sensor manager device

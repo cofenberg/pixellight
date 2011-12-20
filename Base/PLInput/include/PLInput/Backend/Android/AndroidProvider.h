@@ -38,8 +38,8 @@
 struct AInputEvent;
 typedef struct AInputEvent AInputEvent;
 namespace PLInput {
-	class AndroidKeyboardDevice;
 	class AndroidMouseDevice;
+	class AndroidKeyboardDevice;
 	class AndroidSplitTouchPadDevice;
 }
 
@@ -118,9 +118,9 @@ class AndroidProvider : public Provider {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		AndroidKeyboardDevice		*m_pAndroidKeyboardDevice;	/**< Android keyboard device instance, can be a null pointer */
-		AndroidMouseDevice			*m_pAndroidMouseDevice;		/**< Android mouse device instance, can be a null pointer */
-		AndroidSplitTouchPadDevice	*m_pAndroidSplitTouchPadDevice;		/**< Android splited touchscreen mouse device instance, can be a null pointer */
+		AndroidKeyboardDevice		*m_pAndroidKeyboardDevice;		/**< Android keyboard device instance, can be a null pointer */
+		AndroidSplitTouchPadDevice	*m_pAndroidSplitTouchPadDevice;	/**< Android splited touchscreen mouse device instance, can be a null pointer */
+		AndroidMouseDevice			*m_pAndroidMouseDevice;			/**< Android mouse device instance, can be a null pointer */
 
 
 };

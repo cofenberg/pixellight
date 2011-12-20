@@ -43,7 +43,8 @@ namespace PLInput {
 *  @brief
 *    Constructor
 */
-AndroidMouseDevice::AndroidMouseDevice() :
+AndroidMouseDevice::AndroidMouseDevice(AndroidSplitTouchPadDevice *pAndroidSplitTouchPadDevice) :
+	m_pAndroidSplitTouchPadDevice(pAndroidSplitTouchPadDevice),
 	m_bMouseMoved(false),
 	m_fPreviousMousePositionX(0.0f),
 	m_fPreviousMousePositionY(0.0f),
@@ -77,7 +78,7 @@ void AndroidMouseDevice::OnMotionInputEvent(const struct AInputEvent &cAMotionIn
 		// Get the current X and Y coordinate of this event for the given pointer index
 		m_fMousePositionX = AMotionEvent_getX(&cAMotionInputEvent, 0);
 		m_fMousePositionY = AMotionEvent_getY(&cAMotionInputEvent, 0);
-		m_fMousePressure = AMotionEvent_getPressure(&cAMotionInputEvent, 0);
+		m_fMousePressure  = AMotionEvent_getPressure(&cAMotionInputEvent, 0);
 
 		// Get the combined motion event action code and the action code
 		const int32_t nAndroidCombinedAction = AMotionEvent_getAction(&cAMotionInputEvent);
@@ -146,7 +147,10 @@ void AndroidMouseDevice::Update()
 		// Get mouse device
 		Mouse *pMouse = static_cast<Mouse*>(m_pDevice);
 
-		{ // Update axes
+		// Update relative axes?
+		// ->  In case there's an active "AndroidSplitTouchPadDevice"-instance we have to deactivate the
+		//     "mouse movement"-emulation or this will conflict with "AndroidSplitTouchPadDevice"
+		if (!pAndroidSplitTouchPadDevice || !pAndroidSplitTouchPadDevice->GetDevice() || !pAndroidSplitTouchPadDevice->GetDevice()->GetActive()) {
 			// Get the mouse movement
 			float fDeltaX = m_fMousePositionX - m_fPreviousMousePositionX;
 			float fDeltaY = m_fMousePositionY - m_fPreviousMousePositionY;

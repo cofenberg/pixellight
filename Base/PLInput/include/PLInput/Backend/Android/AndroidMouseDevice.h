@@ -36,6 +36,9 @@
 //[-------------------------------------------------------]
 struct AInputEvent;
 typedef struct AInputEvent AInputEvent;
+namespace PLInput {
+	class AndroidSplitTouchPadDevice;
+}
 
 
 //[-------------------------------------------------------]
@@ -69,8 +72,11 @@ class AndroidMouseDevice : public UpdateDevice {
 		/**
 		*  @brief
 		*    Constructor
+		*
+		*  @param[in] pAndroidSplitTouchPadDevice
+		*    Optional Android split touch pad device this device interacts with, can be a null pointer
 		*/
-		AndroidMouseDevice();
+		AndroidMouseDevice(AndroidSplitTouchPadDevice *pAndroidSplitTouchPadDevice);
 
 		/**
 		*  @brief
@@ -99,14 +105,15 @@ class AndroidMouseDevice : public UpdateDevice {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		bool  m_bMouseMoved;				/**< Mouse moved during the current touch? */
-		float m_fPreviousMousePositionX;	/**< Previous mouse x position */
-		float m_fPreviousMousePositionY;	/**< Previous mouse y position */
-		float m_fPreviousMousePressure;		/**< Previous mouse pressure */
-		float m_fMousePositionX;			/**< Current mouse x position */
-		float m_fMousePositionY;			/**< Current mouse y position */
-		float m_fMousePressure;				/**< Current mouse pressure */
-		bool  m_bLeftMouseButton;			/**< Is the left mouse button currently down? */
+		AndroidSplitTouchPadDevice *m_pAndroidSplitTouchPadDevice;	/**< Optional Android split touch pad device this device interacts with, can be a null pointer */
+		bool						m_bMouseMoved;					/**< Mouse moved during the current touch? */
+		float						m_fPreviousMousePositionX;		/**< Previous mouse x position */
+		float						m_fPreviousMousePositionY;		/**< Previous mouse y position */
+		float						m_fPreviousMousePressure;		/**< Previous mouse pressure */
+		float						m_fMousePositionX;				/**< Current mouse x position */
+		float						m_fMousePositionY;				/**< Current mouse y position */
+		float						m_fMousePressure;				/**< Current mouse pressure */
+		bool						m_bLeftMouseButton;				/**< Is the left mouse button currently down? */
 
 
 };

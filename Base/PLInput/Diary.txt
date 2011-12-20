@@ -1,6 +1,9 @@
 >> 20.12.2011
 [CO]
 - Minor "SplitTouchPad" and "AndroidSplitTouchPadDevice" cleanup
+- "AndroidMouseDevice": In case there's an active "AndroidSplitTouchPadDevice"-instance we have to deactivate the "mouse movement"-emulation or this
+  will conflict with "AndroidSplitTouchPadDevice". This is definitely no perfect solution but must to the job for now. By using the touch screen, it's
+  possible to move & look and also to "click" around, e.g. on 3D objects within the scene.
 
 
 
