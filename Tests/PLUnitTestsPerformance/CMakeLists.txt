@@ -32,6 +32,9 @@ add_sources(
 	src/UnitTestsPerformance.cpp
 	# PLCore
 	src/PLCore/Container/Hashmap.cpp
+	src/PLCore/Container/Queue.cpp
+	src/PLCore/Container/Stack.cpp
+	src/PLCore/String/String.cpp
 	# UnitTest++ AddIns
 	../PLUnitTests/src/UnitTest++AddIns/MyTestReporter.cpp
 	../PLUnitTests/src/UnitTest++AddIns/MyMobileTestReporter.cpp
