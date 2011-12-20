@@ -19,6 +19,7 @@ Changes in PixelLight 0.9.10-R1 (not yet released)
 - Bugfix: PLProject was not parsing "pl_module_active" and "pl_module_delayed"
 - Bugfix: "PLRendererOpenGL::Renderer::ChooseFormats()" was also returning compression formats even when the data type of the given image was not "byte"
 - Bugfix: "PLEngine::SNMOrbitingController": The rotation axis were inverted
+- Bugfix: "PLScriptLua"-plugin: Setting a boolean RTTI attribute by writing e.g. "MyRTTIObject.MyBooleanAttribute = true" within a Lua script didn't work
 
 
 Changes in PixelLight 0.9.9-R1 (released on October 23, 2011)

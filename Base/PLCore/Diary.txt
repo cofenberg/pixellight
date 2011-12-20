@@ -2,6 +2,9 @@
 [CO]
 - "String"-class: Added "String &Insert(char nCharacter, uint32 nPos)" and "String &Insert(wchar_t nCharacter, uint32 nPos)" (there were already such
   "Replace()"-method variants)
+- Bugfix within script implementation "PLScriptLua::RTTIObjectPointer::NewIndexMetamethod()": We can't just use "lua_tostring(pLuaState, 3)" because Lua
+  will give us e.g. for a boolean type just an empty string, meaning that within a Lua script something intuitive like "MyRTTIObject.MyBooleanAttribute = true"
+  would not work. Handled this Lua behaviour.
 
 
 
