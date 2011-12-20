@@ -307,6 +307,40 @@ inline String &String::ToUpper()
 
 /**
 *  @brief
+*    Insert a character at a given location
+*/
+inline String &String::Insert(char nCharacter, uint32 nPos)
+{
+	// Append or insert?
+	if (nPos == GetLength()) {
+		// Append -> Fast!
+		*this += nCharacter;
+
+		// Done
+		return *this;
+	} else {
+		// Insert -> Slow!
+		return Insert(&nCharacter, nPos, 1);
+	}
+}
+
+inline String &String::Insert(wchar_t nCharacter, uint32 nPos)
+{
+	// Append or insert?
+	if (nPos == GetLength()) {
+		// Append -> Fast!
+		*this += nCharacter;
+
+		// Done
+		return *this;
+	} else {
+		// Insert -> Slow!
+		return Insert(&nCharacter, nPos, 1);
+	}
+}
+
+/**
+*  @brief
 *    Removes all whitespace (tabs and spaces) at the beginning of the string
 */
 inline String &String::TrimLeading()

@@ -1,3 +1,10 @@
+>> 20.12.2011
+[CO]
+- "String"-class: Added "String &Insert(char nCharacter, uint32 nPos)" and "String &Insert(wchar_t nCharacter, uint32 nPos)" (there were already such
+  "Replace()"-method variants)
+
+
+
 >> 15.12.2011
 [CO]
 - "Url": Added more examples within the documentation in order to be able to understand what the URL-class will do with provided data

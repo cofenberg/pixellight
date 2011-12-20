@@ -769,6 +769,24 @@ class String {
 
 		/**
 		*  @brief
+		*    Insert a character at a given location
+		*
+		*  @param[in] nCharacter
+		*    Character to insert
+		*  @param[in] nPos
+		*    Position at which to insert the character
+		*
+		*  @return
+		*    Reference to this string
+		*
+		*  @note
+		*    - In case you just want to append a character, you may want to use the faster "+="-operator instead
+		*/
+		inline String &Insert(char nCharacter, uint32 nPos = 0);
+		inline String &Insert(wchar_t nCharacter, uint32 nPos = 0);
+
+		/**
+		*  @brief
 		*    Insert a string at a given location
 		*
 		*  @param[in] sString
@@ -780,6 +798,9 @@ class String {
 		*
 		*  @return
 		*    Reference to this string
+		*
+		*  @note
+		*    - In case you just want to append a string, you may want to use the faster "+="-operator instead
 		*/
 		PLCORE_API String &Insert(const String &sString, uint32 nPos = 0, int nCount = -1);
 
@@ -796,6 +817,9 @@ class String {
 		*
 		*  @return
 		*    Reference to this string
+		*
+		*  @note
+		*    - In case you just want to append a string, you may want to use the faster "+="-operator instead
 		*/
 		PLCORE_API String &Insert(const char *pszString, uint32 nPos = 0, int nCount = -1);
 		PLCORE_API String &Insert(const wchar_t *pszString, uint32 nPos = 0, int nCount = -1);
