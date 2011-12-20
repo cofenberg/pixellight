@@ -13,6 +13,9 @@
     <Filter Include="UnitTest++AddInsPerformance">
       <UniqueIdentifier>{86f33f41-58e9-48bd-aa39-a59084e9b34b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PLCore\String">
+      <UniqueIdentifier>{0219d986-23a8-4474-8910-f9bd391246fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\PLCore\Container\Hashmap.cpp">
@@ -40,7 +43,7 @@
       <Filter>PLCore\Container</Filter>
     </ClCompile>
     <ClCompile Include="src\PLCore\String\String.cpp">
-      <Filter>PLCore\Container</Filter>
+      <Filter>PLCore\String</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
