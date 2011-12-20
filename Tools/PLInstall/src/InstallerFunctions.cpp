@@ -113,6 +113,10 @@ bool InstallerFunctions::CheckRuntimeInstallation()
 
 	m_cEventProgressUpdate(1);
 	const String sRegistryDirectory = Runtime::GetRegistryDirectory();
+	// [TODO] Windows: One thing... "Runtime::GetPLCoreSharedLibraryDirectory()" is going to load "PLCore.dll" and the OS will also have a look
+	// into the directory PLInstall is in, meaning this dll will be found even if the directory is not within the PATH environment variable.
+	// -> So, this test is pointless because it will always tell us "Yes, I was able to find PLCore.dll" :/
+	// -> We probably should access the PATH environment variable by using the registry
 	m_cEventProgressUpdate(1);
 
 	if (sDirectory.GetLength() && sPLCoreSharedLibraryDirectory == sRegistryDirectory) {
