@@ -20,6 +20,12 @@
 
 
 
+>> 22.12.2011
+[SW]
+- Linux: removed XXX_RTTI_EXPORT Hack (the define was always set to 1). Because now the compiler instanciate the templates for RTTI elements more then once,
+  which the Hack was initially introduced to solve.
+
+
 >> 15.12.2011
 [CO]
 - PLInstall: Under Windows, the executable has now an icon

@@ -37,13 +37,15 @@
 		// To import classes, methods and variables
 		#define PLFRONTENDPLGUI_API
 	#endif
+
+	// To export RTTI elements
+	#define PLFRONTENDPLGUI_RTTI_EXPORT 1
 #else
 	// To import classes, methods and variables
 	#define PLFRONTENDPLGUI_API
+
+	// To import RTTI elements
+	#define PLFRONTENDPLGUI_RTTI_EXPORT 0
 #endif
-
-// To export RTTI elements - unlike in MSVC for Microsoft Windows, this in here must always be 1 or the RTTI may not work correctly
-#define PLFRONTENDPLGUI_RTTI_EXPORT 1
-
 
 #endif // __PLFRONTENDPLGUI_LINUX_H__

@@ -32,16 +32,13 @@
 	#ifdef HAVE_VISIBILITY_ATTR
 		// To export classes, methods and variables
 		#define PLGUIXMLTEXT_API __attribute__ ((visibility("default")))
-
-		// To export RTTI elements
-		#define PLGUIXMLTEXT_RTTI_EXPORT 1
 	#else
 		// To export classes, methods and variables
 		#define PLGUIXMLTEXT_API
-
-		// To export RTTI elements
-		#define PLGUIXMLTEXT_RTTI_EXPORT 1
 	#endif
+
+	// To export RTTI elements
+	#define PLGUIXMLTEXT_RTTI_EXPORT 1
 #else
 	// To import classes, methods and variables
 	#define PLGUIXMLTEXT_API
@@ -49,6 +46,5 @@
 	// To import RTTI elements
 	#define PLGUIXMLTEXT_RTTI_EXPORT 0
 #endif
-
 
 #endif // __PLGUIXMLTEXT_LINUX_H__

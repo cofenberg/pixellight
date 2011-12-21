@@ -37,13 +37,16 @@
 		// To import classes, methods and variables
 		#define PL_API
 	#endif
+
+	// To export RTTI elements
+	#define PL_RTTI_EXPORT 1
 #else
 	// To import classes, methods and variables
 	#define PL_API
-#endif
 
-// To export RTTI elements - unlike in MSVC for Microsoft Windows, this in here must always be 1 or the RTTI may not work correctly
-#define PL_RTTI_EXPORT 1
+	// To import RTTI elements
+	#define PL_RTTI_EXPORT 0
+#endif
 
 
 #endif // __PLENGINE_LINUX_H__

@@ -37,13 +37,16 @@
 		// To export classes, methods and variables
 		#define PLSOUND_API
 	#endif
+
+	// To export RTTI elements
+	#define PLSOUND_RTTI_EXPORT 1
 #else
 	// To import classes, methods and variables
 	#define PLSOUND_API
-#endif
 
-// To export RTTI elements - unlike in MSVC for Microsoft Windows, this in here must always be 1 or the RTTI may not work correctly
-#define PLSOUND_RTTI_EXPORT 1
+	// To import RTTI elements
+	#define PLSOUND_RTTI_EXPORT 0
+#endif
 
 
 #endif // __PLSOUND_LINUX_H__

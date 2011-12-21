@@ -37,13 +37,16 @@
 		// To export classes, methods and variables
 		#define PLMESH_API
 	#endif
+
+	// To export RTTI elements
+	#define PLMESH_RTTI_EXPORT 1
 #else
 	// To import classes, methods and variables
 	#define PLMESH_API
-#endif
 
-// To export RTTI elements - unlike in MSVC for Microsoft Windows, this in here must always be 1 or the RTTI may not work correctly
-#define PLMESH_RTTI_EXPORT 1
+	// To import RTTI elements
+	#define PLMESH_RTTI_EXPORT 0
+#endif
 
 
 #endif // __PLMESH_LINUX_H__
