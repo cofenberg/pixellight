@@ -4,6 +4,13 @@
 
 
 
+>> 21.12.2011
+[CO]
+- Replaced "PLEngine::SNMLookController" with "PLEngine::SNMEgoLookController" and "PLEngine::SNMOrbitingController" with "PLEngine::SNMEgoOrbitingController"
+  to have no spinning effect which is confusing several persons :D
+
+
+
 >> 15.12.2011
 [CO]
 - PLInstall: Under Windows, the executable has now an icon

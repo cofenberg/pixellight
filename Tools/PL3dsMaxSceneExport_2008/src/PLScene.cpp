@@ -812,12 +812,7 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 				} else {
 					// Add scene node modifier so we can automatically look around
 					XmlElement *pModifierElement = new XmlElement("Modifier");
-					pModifierElement->SetAttribute("Class", "PLEngine::SNMLookController");
-					pNodeElement->LinkEndChild(*pModifierElement);
-
-					// Add scene node modifier automatically fixing rotation
-					pModifierElement = new XmlElement("Modifier");
-					pModifierElement->SetAttribute("Class", "PLScene::SNMRotationFixRoll");
+					pModifierElement->SetAttribute("Class", "PLEngine::SNMEgoLookController");
 					pNodeElement->LinkEndChild(*pModifierElement);
 
 					// Add scene node modifier so we can automatically move around

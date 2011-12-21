@@ -6,8 +6,7 @@
         <Modifier Class="PLScene::SNMLightRandomAnimation" FixColor="0.1 0.1 0.1" Color="1.0 0.0 0.0" />
     </Node>
     <Node Class="PLScene::SNCamera" Name="FreeCamera" Position="6.0 0.0 10.0" Rotation="0.0 180.0 0.0">
-        <Modifier Class="PLEngine::SNMLookController" />
-        <Modifier Class="PLScene::SNMRotationFixRoll" />
+        <Modifier Class="PLEngine::SNMEgoLookController" />
         <Modifier Class="PLEngine::SNMMoveController" Speed="4" />
     </Node>
     <Node Class="PLScene::SNMesh" Name="No modifiers" Position="3.0 0.0 0.0" Scale="6.0 6.0 6.0" Mesh="Create PLMesh::MeshCreatorTeapot Material='Data/Textures/Checker.dds'" />

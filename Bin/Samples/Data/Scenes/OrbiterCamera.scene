@@ -3,8 +3,7 @@
     <Node Class="PLScene::SNKeyValue" Key="ClearColor" Value="0.5 0.5 0.5" />
     <Node Class="PLScene::SNHelper" Name="SoldierTargetHelper" />
     <Node Class="PLScene::SNCamera" Name="OrbiterCamera_Mouse">
-        <Modifier Class="PLEngine::SNMOrbitingController" Target="SoldierTargetHelper" Distance="3" />
-        <Modifier Class="PLScene::SNMRotationFixRoll" />
+        <Modifier Class="PLEngine::SNMEgoOrbitingController" Target="SoldierTargetHelper" Distance="3" />
     </Node>
     <Node Class="PLScene::SNCamera" Name="OrbiterCamera_Keys">
         <Modifier Class="PLScene::SNMRotationTarget" Target="SoldierTargetHelper" />

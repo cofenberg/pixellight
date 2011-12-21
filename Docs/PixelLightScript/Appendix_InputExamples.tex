@@ -15,8 +15,7 @@ function OnInit()
 		sceneContainer:Create("PLScene::SNDirectionalLight", "Sun", "Rotation='45 0 0'")
 		local camera = sceneContainer:Create("PLScene::SNCamera", "FreeCamera")
 		if camera ~= nil then
-			camera:AddModifier("PLEngine::SNMLookController")
-			camera:AddModifier("PLScene::SNMRotationFixRoll")
+			camera:AddModifier("PLEngine::SNMEgoLookController")
 			camera:AddModifier("PLEngine::SNMMoveController")
 		end
 		this:SetCamera(camera)
