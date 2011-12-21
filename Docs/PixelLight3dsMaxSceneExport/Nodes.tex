@@ -19,9 +19,8 @@ Supported properties:
 Sometimes you want to \emph{move around} a camera for debugging purposes (to inspect the exported scene). PixelLight comes with some default controller scene node modifiers that enable you to move around scene nodes. Add this scene node modifiers to your camera node:
 
 \begin{lstlisting}[caption=Free camera scene node modifiers]
-Mod=Class="PLEngine::SNMMouseLookController"
-Mod1=Class="PLEngine::SNMRotationFixRoll"
-Mod2=Class="PLEngine::SNMMoveController"
+Mod=Class="PLEngine::SNMEgoLookController"
+Mod1=Class="PLEngine::SNMMoveController"
 \end{lstlisting}
 
 If you select the camera within \emph{PLViewer} for instance, you can move around this camera. The first modifier modifies the rotation of the camera by using user input. The second scene node modifier fixes undesired \emph{roll} by align the rotation along a given \emph{up-vector} which is \emph{(0 1 0)} by default. If you have a \emph{target camera}, this second modifier is not required. The last modifier is for the movement. If you don't already know how to add such PixelLight scene node modifiers within \emph{Autodesk 3ds Max}, you should have a look at the \emph{User Properties}-section below.
@@ -61,9 +60,8 @@ By using the \emph{User Properties} of a \emph{Autodesk 3ds Max} node it's possi
 Here's an example how to add \emph{scene node modifiers}:
 
 \begin{lstlisting}[caption=Multiple scene node modifiers]
-Mod=Class="PLEngine::SNMMouseLookController"
-Mod1=Class="PLEngine::SNMRotationFixRoll"
-Mod2=Class="PLEngine::SNMMoveController"
+Mod=Class="PLEngine::SNMEgoLookController"
+Mod1=Class="PLEngine::SNMMoveController"
 \end{lstlisting}
 
 Here's an example how to change the PixelLight node class of the exported node:

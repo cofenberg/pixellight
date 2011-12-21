@@ -8,7 +8,6 @@
     <Node Class="PLScene::SNCoordinateAxisRotation" />
     <Node Class="PLScene::SNHelper" Name="TeapotTargetHelper" />
     <Node Class="PLScene::SNCamera" Name="OrbiterCamera" Position="-11.0 12.0 -1.0">
-        <Modifier Class="PLEngine::SNMOrbitingController" Target="TeapotTargetHelper" />
-        <Modifier Class="PLScene::SNMRotationFixRoll" />
+        <Modifier Class="PLEngine::SNMEgoOrbitingController" Target="TeapotTargetHelper" />
     </Node>
 </Scene>
