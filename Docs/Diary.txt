@@ -1,3 +1,12 @@
+>> 21.12.2011
+[CO]
+PixelLightConventions:
+- Added section "5.2 Contributor License Agreement". This is the agreement Stefan Buschmann and I decided to use shortly after officially publishing PixelLight.
+  So, this is nothing new, there was just no information that such an agreement exists.
+- Added section "5.3 Commit Checklist"
+
+
+
 >> 10.12.2011
 [CO]
 - "PixelLightBuild": Yesterday, a team member had problems cloning the PixelLight Git repository on Mac OS X. Firewall issues. So, also mentioned the
