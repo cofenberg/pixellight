@@ -89,7 +89,7 @@ SPTriangleShaders::SPTriangleShaders(Renderer &cRenderer) : SPTriangle(cRenderer
 				// with this version we can keep the precision qualifiers) so that this shader requirements are as low as possible
 				sVertexShaderSourceCode   = "#version 110\n" + Shader::RemovePrecisionQualifiersFromGLSL(m_pUniformBuffer ? sVertexShaderSourceCodeGLSL_UniformBuffer : sVertexShaderSourceCodeGLSL);
 				sGeometryShaderSourceCode = Shader::RemovePrecisionQualifiersFromGLSL(sGeometryShaderSourceCodeGLSL);
-				sFragmentShaderSourceCode = m_pGeometryShader ? sFragmentShaderSourceCodeGLSL_GS : ("#version 110\n" + Shader::RemovePrecisionQualifiersFromGLSL(sFragmentShaderSourceCodeGLSL));
+				sFragmentShaderSourceCode = ("#version 110\n" + Shader::RemovePrecisionQualifiersFromGLSL(m_pGeometryShader ? sFragmentShaderSourceCodeGLSL_GS : sFragmentShaderSourceCodeGLSL));
 			}
 		} else if (pShaderLanguage->GetShaderLanguage() == "Cg") {
 			#include "SPTriangleShaders_Cg.h"

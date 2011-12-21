@@ -137,13 +137,9 @@ void main()
 
 
 // GLSL (OpenGL 2.0 ("#version 110")) fragment shader source code, "#version" is added by hand
-static const PLCore::String sFragmentShaderSourceCodeGLSL_GS =
-// GLSL preprocessor directives
-"#version 110\n"	// OpenGL 2.0
-
-STRINGIFY(
+static const PLCore::String sFragmentShaderSourceCodeGLSL_GS = STRINGIFY(
 // Attributes
-in highp vec4 VertexColorGS;	// Interpolated vertex color input from geometry shader
+varying highp vec4 VertexColorGS;	// Interpolated vertex color input from geometry shader
 
 // Programs
 void main()
