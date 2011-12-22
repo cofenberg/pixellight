@@ -121,7 +121,7 @@ endif()
 if(ANDROID)
 	build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 else()
-	build_executable(${CMAKETOOLS_CURRENT_TARGET} WIN32)
+	build_executable(${CMAKETOOLS_CURRENT_TARGET} CONSOLE)
 endif()
 
 ##################################################
