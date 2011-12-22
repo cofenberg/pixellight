@@ -53,6 +53,8 @@ set(ANDROID_THIS_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})	# Directory this CMake fil
 ##   Directory were to construct the apk file in (e.g. "${CMAKE_BINARY_DIR}/apk")
 ## @param shared_libraries
 ##   List of shared libraries (absolute filenames) this application is using, these libraries are copied into the apk file and will be loaded automatically within a generated Java file
+## @param shared_libraries
+##   List of external shared libraries (absolute filenames) this application is using, these libraries are copied into the apk file and will be loaded automatically within a generated Java file
 ## @param assets
 ##   List of assets to copy into the apk file (absolute filenames, wildcards like "*.*" are allowed)
 ## @param data_directory
@@ -66,7 +68,7 @@ set(ANDROID_THIS_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})	# Directory this CMake fil
 ##   - "jarsigner" (part of the JDK)
 ##   - "zipalign" (part of the Android SDK)
 ##################################################
-macro(android_create_apk name apk_directory shared_libraries assets data_directory)
+macro(android_create_apk name apk_directory shared_libraries shared_external_libraries assets data_directory)
 	if(ANDROID_APK_CREATE)
 		# Construct the current package name and theme
 		set(ANDROID_APK_PACKAGE "${ANDROID_APK_TOP_LEVEL_DOMAIN}.${ANDROID_APK_DOMAIN}.${ANDROID_APK_SUBDOMAIN}")
@@ -76,7 +78,21 @@ macro(android_create_apk name apk_directory shared_libraries assets data_directo
 			set(ANDROID_APK_THEME "")
 		endif()
 		set(ANDROID_NAME ${name})
-
+		if(CMAKE_BUILD_TYPE MATCHES Debug)
+			set(ANDROID_APK_DEBUGGABLE "true")
+			set(ANDROID_APK_RELEASE_LOCAL "0")
+		else()
+			set(ANDROID_APK_DEBUGGABLE "false")
+			set(ANDROID_APK_RELEASE_LOCAL ${ANDROID_APK_RELEASE})
+		endif()
+		
+		
+		# Determine debug suffix
+		set(suffix "")
+		if(CMAKE_BUILD_TYPE MATCHES Debug)
+		  set(suffix "D")
+		endif()
+		
 		# Create "AndroidManifest.xml"
 		configure_file("${ANDROID_THIS_DIRECTORY}/AndroidManifest.xml.in" "${apk_directory}/AndroidManifest.xml")
 
@@ -93,11 +109,42 @@ macro(android_create_apk name apk_directory shared_libraries assets data_directo
 			STRING(LENGTH ${shared_library_filename} shared_library_filename_length)
 			math(EXPR shared_library_filename_length ${shared_library_filename_length}-3)
 			STRING(SUBSTRING ${shared_library_filename} 3 ${shared_library_filename_length} shared_library_filename)
-
+			
 			# "shared_library_filename" is now e.g. "PLCore", this is what we want -> Add it to the list
-			set(ANDROID_SHARED_LIBRARIES_TO_LOAD ${ANDROID_SHARED_LIBRARIES_TO_LOAD} ${shared_library_filename})
+			# In debug mode we need "PLCoreD" so add the suffix
+			set(ANDROID_SHARED_LIBRARIES_TO_LOAD ${ANDROID_SHARED_LIBRARIES_TO_LOAD} ${shared_library_filename}${suffix})
 		endforeach()
+				
+		# Add the external libraries to the list with libraries to load
+		foreach(value ${shared_external_libraries})
+			# "value" is e.g. "/home/cofenberg/pl_ndk/Bin-Linux-ndk/Runtime/armeabi/libNewton.so"
+			get_filename_component(shared_library_filename ${value} NAME_WE)
 
+			# "shared_library_filename" is e.g. "libNewton", but we need "Newton"
+			STRING(LENGTH ${shared_library_filename} shared_library_filename_length)
+			math(EXPR shared_library_filename_length ${shared_library_filename_length}-3)
+			STRING(SUBSTRING ${shared_library_filename} 3 ${shared_library_filename_length} shared_library_filename)
+			
+			# "shared_library_filename" is now e.g. "NEWTON", this is what we want -> Add it to the list
+			set(ANDROID_SHARED_LIBRARIES_TO_LOAD ${ANDROID_SHARED_LIBRARIES_TO_LOAD} ${shared_library_filename})
+		endforeach()		
+		
+		# Add the debug suffix to the shared libraries to copy
+		set(ANDROID_SHARED_LIBRARIES_TO_COPY "")
+		foreach(value ${shared_libraries})
+			# "value" is e.g. "/home/cofenberg/pl_ndk/Bin-Linux-ndk/Runtime/armeabi/libPLCore.so" but we need
+			# "/home/cofenberg/pl_ndk/Bin-Linux-ndk/Runtime/armeabi/libPLCore" 
+			STRING(LENGTH ${value} shard_library_path_and_filename_length)
+			math(EXPR shard_library_path_and_filename_length ${shard_library_path_and_filename_length}-3)
+			STRING(SUBSTRING ${value} 0 ${shard_library_path_and_filename_length}  shard_library_path_and_filename)
+			
+			# "shared_library_filename" is now e.g. "PLCore", this is what we want -> Add it to the list
+			set(ANDROID_SHARED_LIBRARIES_TO_COPY ${ANDROID_SHARED_LIBRARIES_TO_COPY} ${shard_library_path_and_filename}${suffix}.so)
+		endforeach()
+		
+		# Add the external libraries to the list with libraries to copy
+		set(ANDROID_SHARED_LIBRARIES_TO_COPY ${ANDROID_SHARED_LIBRARIES_TO_COPY} ${shared_external_libraries})
+		
 		# Create Java file which is responsible for loading in the required shared libraries (the content of "ANDROID_SHARED_LIBRARIES_TO_LOAD" is used for this)
 		configure_file("${ANDROID_THIS_DIRECTORY}/LoadLibraries.java.in" "${apk_directory}/src/${ANDROID_APK_TOP_LEVEL_DOMAIN}/${ANDROID_APK_DOMAIN}/${ANDROID_APK_SUBDOMAIN}/LoadLibraries.java")
 
@@ -112,7 +159,7 @@ macro(android_create_apk name apk_directory shared_libraries assets data_directo
 		)
 
 		# Copy the used shared libraries
-		foreach(value ${shared_libraries})
+		foreach(value ${ANDROID_SHARED_LIBRARIES_TO_COPY})
 			add_custom_command(TARGET ${ANDROID_NAME}
 				POST_BUILD
 				COMMAND ${CMAKE_COMMAND} -E copy ${value} "${apk_directory}/libs/${ARM_TARGET}"
@@ -143,7 +190,7 @@ macro(android_create_apk name apk_directory shared_libraries assets data_directo
 		)
 
 		# Build the apk file
-		if(ANDROID_APK_RELEASE)
+		if(ANDROID_APK_RELEASE_LOCAL)
 			# Let Ant create the unsigned apk file
 			add_custom_command(TARGET ${ANDROID_NAME}
 				COMMAND ant release
