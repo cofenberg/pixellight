@@ -9,10 +9,10 @@ This document is meant for artists using the content creation tool \emph{Autodes
 With the PixelLight scene exporter for \emph{Autodesk 3ds Max} you are able to export scenes into the framework own scene format. The following is exported:
 \begin{itemize}
 \item{Position, rotation and scale of nodes}
-\item{Cameras will be exported as a node of the class \emph{PLEngine::SNCamera}}
-\item{Light sources will be exported as \emph{PLEngine::SN<Type>Light} scene nodes}
-\item{Objects with a geometry will be exported as \emph{PLEngine::SNMesh} scene node. The mesh of the object will be saved as as PixelLight mesh with the name of the object.}
-\item{All unknown \emph{Autodesk 3ds Max} nodes are saved as \emph{PLEngine::SNUnknown} scene nodes, so, they can still be used as target}
+\item{Cameras will be exported as a node of the class \emph{PLScene::SNCamera}}
+\item{Light sources will be exported as \emph{PLScene::SN<Type>Light} scene nodes}
+\item{Objects with a geometry will be exported as \emph{PLScene::SNMesh} scene node. The mesh of the object will be saved as as PixelLight mesh with the name of the object.}
+\item{All unknown \emph{Autodesk 3ds Max} nodes are saved as \emph{PLScene::SNUnknown} scene nodes, so, they can still be used as target}
 \item{\emph{LookAt} and \emph{Path} node controller are supported, they will result in scene node modifiers}
 \item{Instancing is supported. If one object is an instance of another one they will share the mesh. Use instances whenever possible to save memory!}
 \item{If a \emph{Autodesk 3ds Max} node is casting shadows\footnote{Select object, right mouse button, properties, cast shadows = true} the scene node flag \emph{CastShadow} is set, for receiving shadows\footnote{Select object, right mouse button, properties, receive shadows = true} the scene node flag \emph{ReceiveShadow} is set. If \emph{Hide} and/or \emph{Renderable} is set, the flag \emph{Invisible} is added. If \emph{Freeze} is set, the flag \emph{Frozen} is added. Exclusion from lighting is supported by using the \emph{Object Properties...} -> \emph{Adv. Lighting} -> \emph{Exclude from Adv. Lighting Calculations}, in this case the \emph{NoLighting}-flag is added.}

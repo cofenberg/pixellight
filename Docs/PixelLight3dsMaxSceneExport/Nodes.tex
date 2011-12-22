@@ -33,9 +33,9 @@ Without lights, normally one can see absolute nothing. So, put lights into your 
 
 Supported light types:
 \begin{itemize}
-\item{Omni: \textbf{PLEngine::SNPointLight} or \textbf{PLEngine::SNProjectivePointLight} (if there's also an active \emph{projector map}) light scene node.}
-\item{Spot: \textbf{PLEngine::SNSpotLight} or \textbf{PLEngine::SNProjectiveSpotLight} (if there's also an active \emph{projector map}) light scene node. Falloff/field variable is used for the \emph{OuterAngle} variable of this scene node type. \emph{Circle} and \emph{Rectangle} light shape is supported. \emph{Aspect} is only used for \emph{Rectangle} spot lights. \emph{Hotspot}/\emph{beam} is used for the \emph{InnerAngle} variable of this scene node type - only supported for \emph{Circle} light shape. The \textbf{far attenuation start} variable of light is used as \emph{ZNear} of the spot light inside PixelLight (use responsible settings!).}
-\item{Directional: \textbf{PLEngine::SNDirectionalLight} light scene node.}
+\item{Omni: \textbf{PLScene::SNPointLight} or \textbf{PLScene::SNProjectivePointLight} (if there's also an active \emph{projector map}) light scene node.}
+\item{Spot: \textbf{PLScene::SNSpotLight} or \textbf{PLScene::SNProjectiveSpotLight} (if there's also an active \emph{projector map}) light scene node. Falloff/field variable is used for the \emph{OuterAngle} variable of this scene node type. \emph{Circle} and \emph{Rectangle} light shape is supported. \emph{Aspect} is only used for \emph{Rectangle} spot lights. \emph{Hotspot}/\emph{beam} is used for the \emph{InnerAngle} variable of this scene node type - only supported for \emph{Circle} light shape. The \textbf{far attenuation start} variable of light is used as \emph{ZNear} of the spot light inside PixelLight (use responsible settings!).}
+\item{Directional: \textbf{PLScene::SNDirectionalLight} light scene node.}
 \end{itemize}
 
 If a light is not \emph{on} within \emph{Autodesk 3ds Max}, the PixelLight light scene node receives an \emph{Invisible}-flag.
@@ -48,7 +48,7 @@ Light color multiplier is supported.
 
 
 \section{Paths}
-If a node is moving on a path, a \emph{PLEngine::SNMPositionPath} scene node modifier is added to the exported node automatically. If \emph{Follow} is checked within a path, a \emph{PLEngine::SNMRotationMoveDirection} scene node modifier is added, too. So the node will always look into the movement direction.
+If a node is moving on a path, a \emph{PLScene::SNMPositionPath} scene node modifier is added to the exported node automatically. If \emph{Follow} is checked within a path, a \emph{PLScene::SNMRotationMoveDirection} scene node modifier is added, too. So the node will always look into the movement direction.
 
 
 
