@@ -63,8 +63,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "20Gui", "20Gui\20Gui.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "30Input", "30Input\30Input.vcxproj", "{6E9BD895-888A-4A32-A736-D122EF0100B4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "21GuiWidgets", "21GuiWidgets\21GuiWidgets.vcxproj", "{D10B2B86-5227-4088-BFF7-554B94A38F33}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -195,10 +193,6 @@ Global
 		{6E9BD895-888A-4A32-A736-D122EF0100B4}.Debug|Win32.Build.0 = Debug|Win32
 		{6E9BD895-888A-4A32-A736-D122EF0100B4}.Release|Win32.ActiveCfg = Release|Win32
 		{6E9BD895-888A-4A32-A736-D122EF0100B4}.Release|Win32.Build.0 = Release|Win32
-		{D10B2B86-5227-4088-BFF7-554B94A38F33}.Debug|Win32.ActiveCfg = Debug|Win32
-		{D10B2B86-5227-4088-BFF7-554B94A38F33}.Debug|Win32.Build.0 = Debug|Win32
-		{D10B2B86-5227-4088-BFF7-554B94A38F33}.Release|Win32.ActiveCfg = Release|Win32
-		{D10B2B86-5227-4088-BFF7-554B94A38F33}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
