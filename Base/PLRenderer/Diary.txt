@@ -1,3 +1,10 @@
+>> 22.12.2011
+[CO]
+- Bugfix within the CMake file of "PLRendererOpenGLCg": For example "cg.dll" was still copied into "<Runtime Directory>/PLRenderer/cg.dll" instead of
+  "<Runtime Directory>/cg.dll"
+
+
+
 >> 14.12.2011
 [CO]
 - "UniformBuffer": Added ease of use methods "CopyFrom()" and "CopyTo()"
