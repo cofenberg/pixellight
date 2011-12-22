@@ -44,7 +44,8 @@
 	// To import classes, methods and variables
 	#define PLINPUT_API
 
-	#ifdef HAVE_VISIBILITY_ATTR
+	#if defined(HAVE_VISIBILITY_ATTR) && !defined(ALWAYS_RTTI_EXPORT)
+	
 		// To import RTTI elements
 		#define PLINPUT_RTTI_EXPORT 0
 	#else

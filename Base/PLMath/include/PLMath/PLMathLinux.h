@@ -46,7 +46,7 @@
 	// To import classes, methods and variables
 	#define PLMATH_API
 
-	#ifdef HAVE_VISIBILITY_ATTR
+	#if defined(HAVE_VISIBILITY_ATTR) && !defined(ALWAYS_RTTI_EXPORT)
 		// To import RTTI elements
 		#define PLMATH_RTTI_EXPORT 0
 	#else

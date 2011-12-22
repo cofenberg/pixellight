@@ -20,6 +20,7 @@
 \*********************************************************/
 
 #include "UnitTest++AddIns/MyTestReporter.h"
+#include <cstdio>
 
 
 void MyTestReporter::ReportTestStart(UnitTest::TestDetails const& test)

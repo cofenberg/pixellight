@@ -44,7 +44,7 @@
 	// To import classes, methods and variables
 	#define PLS_API
 
-	#ifdef HAVE_VISIBILITY_ATTR
+	#if defined(HAVE_VISIBILITY_ATTR) && !defined(ALWAYS_RTTI_EXPORT)
 		// To import RTTI elements
 		#define PLS_RTTI_EXPORT 0
 	#else

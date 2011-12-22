@@ -24,6 +24,7 @@
 [SW]
 - Linux: The XXX_RTTI_EXPORT "Hack" (the define was always set to 1) is now only used, when the visibility feature isn't used (either not activated or not supported).
 	Because now the compiler instanciate the templates for RTTI elements more then once in conjunction with the visibility feature, which the Hack was initially introduced to solve.
+- Linux: The XXX_RTTI_EXPORT "Hack" must be also activated when the gcc 4.4.x is used (even with visibility feature active).
 
 
 >> 15.12.2011
