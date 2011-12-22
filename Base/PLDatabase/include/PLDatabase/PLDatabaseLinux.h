@@ -44,8 +44,13 @@
 	// To import classes, methods and variables
 	#define PLDATABASE_API
 
-	// To import RTTI elements
-	#define PLDATABASE_RTTI_EXPORT 0
+	#ifdef HAVE_VISIBILITY_ATTR
+		// To import RTTI elements
+		#define PLDATABASE_RTTI_EXPORT 0
+	#else
+		// When the visibility feature is not used/supported then always "export" RTTI elements
+		#define PLDATABASE_RTTI_EXPORT 1
+	#endif
 #endif
 
 
