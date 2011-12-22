@@ -1,3 +1,10 @@
+>> 22.12.2011
+[CO]
+- "PixelLight3dsMaxSceneExport"-document: Updated a few RTTI class names like "PLEngine::SNPointLight"->"PLScene::SNPointLight", the "PLEngine"/"PLScene"
+  project split had be done shortly before the first public release
+
+
+
 >> 21.12.2011
 [CO]
 PixelLightConventions:
