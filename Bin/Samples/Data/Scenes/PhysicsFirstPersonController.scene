@@ -17,14 +17,8 @@
         <Node Class="PLScene::SNMesh" Position="-4 -1.0 -5" Scale="4 0.1 1.0" Rotation="90 90 0" Name="Wall3" Mesh="Default">
             <Modifier Class="PLPhysics::SNMPhysicsBodyBox" />
         </Node>
-        <Node Class="PLScene::SNMesh" Position="-3 -1.5 -5" Scale="0.5 0.5 0.5" Name="StatueSocket" Mesh="Default">
+        <Node Class="PLScene::SNMesh" Position="-3 -1.5 -5" Scale="0.5 0.5 0.5" Name="Socket" Mesh="Default">
             <Modifier Class="PLPhysics::SNMPhysicsBodyBox" Mass="1" />
-        </Node>
-        <Node Class="PLScene::SNMesh" Position="-3 -0.02 -5" Name="Statue" Mesh="Data/Meshes/Statue.mesh">
-            <Modifier Class="PLPhysics::SNMPhysicsBodyConvexHull" Mass="6" />
-        </Node>
-        <Node Class="PLScene::SNMesh" Position="2 -1.5 -4" Scale="0.5 0.5 0.5" Name="MiniStatue" Mesh="Data/Meshes/Statue.mesh">
-            <Modifier Class="PLPhysics::SNMPhysicsBodyEllipsoid" Mass="1.0" CenterOfMass="0.0 -2.0 0.0" />
         </Node>
         <Node Class="PLScene::SNMesh" Position="-2 -1.75 -2" Scale="0.25 0.25 0.25" Name="Box0" Mesh="Default">
             <Modifier Class="PLPhysics::SNMPhysicsBodyBox" Mass="1" />

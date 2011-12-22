@@ -583,7 +583,7 @@ void EngineApplication::OnCreateScene(SceneContainer &cContainer)
 		pCamera->AddModifier("PLEngine::SNMMoveController");
 	}
 
-	// Create a scene node with the statue mesh which can produce a shadow
+	// Create a scene node representing a simple box
 	cContainer.Create("PLScene::SNMesh", "Box", "Position=\"0.0 0.0 -5.0\" Mesh=\"Default\"");
 
 	// Set scene container
