@@ -69,6 +69,9 @@ if(NOT PL_RUNTIME_BIN_DIR OR PL_RUNTIME_BIN_DIR STREQUAL "")
 	endif()
 endif()
 
+# Add this option to the cmake gui
+set (PL_RUNTIME_BIN_DIR ${PL_RUNTIME_BIN_DIR}	CACHE STRING "This is the PixelLight runtime path")
+
 # Get general variables
 get_filename_component(PL_ARCHBITSIZE		"${PL_RUNTIME_BIN_DIR}"							NAME_WE)
 get_filename_component(PL_ROOT				"${PL_RUNTIME_BIN_DIR}/../../.."				ABSOLUTE)
