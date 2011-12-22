@@ -1,3 +1,15 @@
+>> 22.12.2011
+[TM]
+- Android/Apk.cmake: Added support for debug build. If CMAKE_BUILD_TYPE is set to Debug. The signing of the generated apk file is not done and the
+  debug version of PixelLight is used.
+- Changed the apk macro to get separated lists for PixelLight shared libraries and external shared libraries. Only the PixelLight shared libraries are build
+  with debug symbols. The external ones are always release builds.
+- Added two separate lists in the apk macro. One for list of libraries to load (this list is added to the java file) and another for libraries to copy.
+- Android/AndroidManifest.xml.in: Added the android:debuggable flag to generate a debuggable apk with the corresponding manifest.
+- The PL_RUNTIME_BIN_DIR flag is now shown in the cmake gui. Its easier to check it there or if its not set to set it. 
+
+
+
 >> 24.11.2011
 [CO]
 - Added support for the CMake generator "Visual Studio 10 Win64" for building PixelLight using CMake for 64 bit. Other 64 bit generators may work

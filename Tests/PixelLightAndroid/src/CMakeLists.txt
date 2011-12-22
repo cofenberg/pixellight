@@ -41,14 +41,6 @@ set(CURRENT_SHARED_LIBRARIES
 	${PL_PLSOUND_LIBRARY}
 	${PL_PLENGINE_LIBRARY}
 	${PL_PLGUI_LIBRARY}					# Required by "71libRocket"
-	# Newton
-	${PL_NEWTON_LIBRARY}				# Required by "PLPhysicsNewton"
-	# libRocket
-	${PL_LIBROCKETCORE_LIBRARY}			# Required by "PLlibRocket"
-	${PL_LIBROCKETCONTROLS_LIBRARY}		# Required by "PLlibRocket"
-	${PL_LIBROCKETDEBUGGER_LIBRARY}		# Required by "PLlibRocket"
-	# FMOD Ex
-	${PL_FMODEX_LIBRARY}				# Required by "PLSoundFMODEx"
 	# Plugins
 	${PL_PLFRONTENDOS_LIBRARY}			# The PixelLight Android frontend
 	${PL_PLRENDEREROPENGLES2_LIBRARY}
@@ -87,6 +79,17 @@ set(CURRENT_SHARED_LIBRARIES
 	"${PL_SAMPLES_BIN_DIR}/lib71libRocket.so"
 )
 
+# This are the external shared libraries which are always release builds
+set(CURRENT_EXTERNAL_SHARED_LIBRARIES
+	# Newton
+	${PL_NEWTON_LIBRARY}				# Required by "PLPhysicsNewton"
+	# libRocket
+	${PL_LIBROCKETCORE_LIBRARY}			# Required by "PLlibRocket"
+	${PL_LIBROCKETCONTROLS_LIBRARY}		# Required by "PLlibRocket"
+	${PL_LIBROCKETDEBUGGER_LIBRARY}		# Required by "PLlibRocket"
+	# FMOD Ex
+	${PL_FMODEX_LIBRARY}				# Required by "PLSoundFMODEx"
+)
 
 ##################################################
 ## Assets
@@ -105,7 +108,7 @@ set(CURRENT_ASSETS
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -ffor-scope -fno-rtti -fno-exceptions -pipe -ffunction-sections -fdata-sections -ffast-math -Wnon-virtual-dtor -Wreorder -Wsign-promo -fvisibility=hidden -fvisibility-inlines-hidden -Wstrict-null-sentinel -Os -funroll-all-loops -fpeel-loops -ftree-vectorize")
 set(LINKER_FLAGS "${LINKER_FLAGS} -Wl,--as-needed -Wl,--gc-sections -Wl,--no-undefined -Wl,--strip-all -Wl,-rpath-link=${ANDROID_NDK_SYSROOT}/usr/lib/ -L${ANDROID_NDK_SYSROOT}/usr/lib/")
 add_library(${CURRENT_TARGET_NAME} SHARED ${CURRENT_SRC})
-target_link_libraries(${CURRENT_TARGET_NAME} log android ${CURRENT_SHARED_LIBRARIES})
+target_link_libraries(${CURRENT_TARGET_NAME} log android ${CURRENT_SHARED_LIBRARIES} ${CURRENT_EXTERNAL_SHARED_LIBRARIES})
 set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES COMPILE_DEFINITIONS "__STDC_INT64__;LINUX;ANDROID")	# PLCore needs the preprocessor definitions "LINUX" and "ANDROID"
 
 
@@ -114,10 +117,10 @@ set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES COMPILE_DEFINITIONS "__S
 ##################################################
 
 # Copy the build shared library as well
-set(CURRENT_SHARED_LIBRARIES
-	${CURRENT_SHARED_LIBRARIES}
+set(CURRENT_EXTERNAL_SHARED_LIBRARIES
+	${CURRENT_EXTERNAL_SHARED_LIBRARIES}
 	"${CMAKE_BINARY_DIR}/libs/${ARM_TARGET}/lib${CURRENT_TARGET_NAME}.so"
 )
 
 # Create Android apk file (macro from "<PixelLight>/cmake/Android/Apk.cmake")
-android_create_apk("${CURRENT_TARGET_NAME}" "${CMAKE_BINARY_DIR}/apk" "${CURRENT_SHARED_LIBRARIES}" "${CURRENT_ASSETS}" "Data")
+android_create_apk("${CURRENT_TARGET_NAME}" "${CMAKE_BINARY_DIR}/apk" "${CURRENT_SHARED_LIBRARIES}" "${CURRENT_EXTERNAL_SHARED_LIBRARIES}" "${CURRENT_ASSETS}" "Data")
