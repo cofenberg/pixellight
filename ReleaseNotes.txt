@@ -1,4 +1,4 @@
-Changes in PixelLight 0.9.10-R1 (not yet released)
+Changes in PixelLight 0.9.10-R1 (released on December 23, 2011)
 - Feature: There's now official 64 bit support (no prebuild SDK, but building PixelLight is easy and described in detail within the "PixelLightBuild"-document)
 - Feature: Added Mac OS X support (>=10.6, "PLRendererOpenGL"-port is still under construction)
 - Feature: Added "PLInput::SplitTouchPad": This is a gamepad device emulation by using a touch screen making it possible to e.g. move & look at the same time, Android backend implemented
