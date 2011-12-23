@@ -3,7 +3,7 @@
 
 # [TODO] Add verbose command line option
 # [TODO] Write the current PixelLight version into the XML plugin file
-# [TODO] Change "PLProject V1.0 (Python)" into "PLProject <PixelLight version> (Python)" (e.g. "PLProject PixelLight 0.9.10-R1 (Python)")
+# [TODO] Change "PLProject V1.0 (Python)" into "PLProject <PixelLight version> (Python)" (e.g. "PLProject PixelLight 0.9.11-R1 (Python)")
 # [TODO] Add "Delayed" option within the resulting XML plugin file (currently always set to "0")
 # [TODO] Add RTTI class metadata within the resulting XML plugin file
 

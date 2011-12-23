@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<Plugin Version="1" PixelLightVersion="PixelLight 0.9.10-R1">
+<Plugin Version="1" PixelLightVersion="PixelLight 0.9.11-R1">
     <Active>1</Active>
     <Delayed>1</Delayed>
     <Name>PLRendererOpenGL</Name>
