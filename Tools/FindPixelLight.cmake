@@ -57,7 +57,7 @@ include(FindPackageHandleStandardArgs)
 # Determine debug suffix
 set(suffix "")
 if(CMAKE_BUILD_TYPE STREQUAL Debug)
-  set(suffix "D")
+	set(suffix "D")
 endif()
 
 # Read environment variable PL_RUNTIME, but only if PL_RUNTIME_BIN_DIR has not been provided by the outside world
@@ -69,8 +69,8 @@ if(NOT PL_RUNTIME_BIN_DIR OR PL_RUNTIME_BIN_DIR STREQUAL "")
 	endif()
 endif()
 
-# Add this option to the cmake gui
-set (PL_RUNTIME_BIN_DIR ${PL_RUNTIME_BIN_DIR}	CACHE STRING "This is the PixelLight runtime path")
+# Add this option to the CMake GUI in order to give the user a chance to alter this path
+set(PL_RUNTIME_BIN_DIR ${PL_RUNTIME_BIN_DIR} CACHE STRING "This is the PixelLight runtime path")
 
 # Get general variables
 get_filename_component(PL_ARCHBITSIZE		"${PL_RUNTIME_BIN_DIR}"							NAME_WE)

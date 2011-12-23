@@ -7,7 +7,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR}/../../Tools
 # Determine debug suffix
 set(suffix "")
 if(CMAKE_BUILD_TYPE MATCHES Debug)
-  set(suffix "D")
+	set(suffix "D")
 endif()
 
 # Define the project, use the current directory name as project name

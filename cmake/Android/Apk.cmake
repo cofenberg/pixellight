@@ -85,14 +85,13 @@ macro(android_create_apk name apk_directory shared_libraries shared_external_lib
 			set(ANDROID_APK_DEBUGGABLE "false")
 			set(ANDROID_APK_RELEASE_LOCAL ${ANDROID_APK_RELEASE})
 		endif()
-		
-		
+
 		# Determine debug suffix
 		set(suffix "")
 		if(CMAKE_BUILD_TYPE MATCHES Debug)
-		  set(suffix "D")
+			set(suffix "D")
 		endif()
-		
+
 		# Create "AndroidManifest.xml"
 		configure_file("${ANDROID_THIS_DIRECTORY}/AndroidManifest.xml.in" "${apk_directory}/AndroidManifest.xml")
 
@@ -109,12 +108,12 @@ macro(android_create_apk name apk_directory shared_libraries shared_external_lib
 			STRING(LENGTH ${shared_library_filename} shared_library_filename_length)
 			math(EXPR shared_library_filename_length ${shared_library_filename_length}-3)
 			STRING(SUBSTRING ${shared_library_filename} 3 ${shared_library_filename_length} shared_library_filename)
-			
+
 			# "shared_library_filename" is now e.g. "PLCore", this is what we want -> Add it to the list
 			# In debug mode we need "PLCoreD" so add the suffix
 			set(ANDROID_SHARED_LIBRARIES_TO_LOAD ${ANDROID_SHARED_LIBRARIES_TO_LOAD} ${shared_library_filename}${suffix})
 		endforeach()
-				
+
 		# Add the external libraries to the list with libraries to load
 		foreach(value ${shared_external_libraries})
 			# "value" is e.g. "/home/cofenberg/pl_ndk/Bin-Linux-ndk/Runtime/armeabi/libNewton.so"
@@ -124,11 +123,11 @@ macro(android_create_apk name apk_directory shared_libraries shared_external_lib
 			STRING(LENGTH ${shared_library_filename} shared_library_filename_length)
 			math(EXPR shared_library_filename_length ${shared_library_filename_length}-3)
 			STRING(SUBSTRING ${shared_library_filename} 3 ${shared_library_filename_length} shared_library_filename)
-			
+
 			# "shared_library_filename" is now e.g. "NEWTON", this is what we want -> Add it to the list
 			set(ANDROID_SHARED_LIBRARIES_TO_LOAD ${ANDROID_SHARED_LIBRARIES_TO_LOAD} ${shared_library_filename})
-		endforeach()		
-		
+		endforeach()
+
 		# Add the debug suffix to the shared libraries to copy
 		set(ANDROID_SHARED_LIBRARIES_TO_COPY "")
 		foreach(value ${shared_libraries})
@@ -137,11 +136,11 @@ macro(android_create_apk name apk_directory shared_libraries shared_external_lib
 			STRING(LENGTH ${value} shard_library_path_and_filename_length)
 			math(EXPR shard_library_path_and_filename_length ${shard_library_path_and_filename_length}-3)
 			STRING(SUBSTRING ${value} 0 ${shard_library_path_and_filename_length}  shard_library_path_and_filename)
-			
+
 			# "shared_library_filename" is now e.g. "PLCore", this is what we want -> Add it to the list
 			set(ANDROID_SHARED_LIBRARIES_TO_COPY ${ANDROID_SHARED_LIBRARIES_TO_COPY} ${shard_library_path_and_filename}${suffix}.so)
 		endforeach()
-		
+
 		# Add the external libraries to the list with libraries to copy
 		set(ANDROID_SHARED_LIBRARIES_TO_COPY ${ANDROID_SHARED_LIBRARIES_TO_COPY} ${shared_external_libraries})
 		
@@ -149,7 +148,7 @@ macro(android_create_apk name apk_directory shared_libraries shared_external_lib
 		configure_file("${ANDROID_THIS_DIRECTORY}/LoadLibraries.java.in" "${apk_directory}/src/${ANDROID_APK_TOP_LEVEL_DOMAIN}/${ANDROID_APK_DOMAIN}/${ANDROID_APK_SUBDOMAIN}/LoadLibraries.java")
 
 		# Create the directory for the libraries
- 		add_custom_command(TARGET ${ANDROID_NAME}
+		add_custom_command(TARGET ${ANDROID_NAME}
 			PRE_BUILD
 			COMMAND ${CMAKE_COMMAND} -E remove_directory "${apk_directory}/libs"
 		)
