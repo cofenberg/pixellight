@@ -51,10 +51,10 @@ set(ANDROID_THIS_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})	# Directory this CMake fil
 ##   Name of the project (e.g. "MyProject"), this will also be the name of the created apk file
 ## @param apk_directory
 ##   Directory were to construct the apk file in (e.g. "${CMAKE_BINARY_DIR}/apk")
+## @param shared_external_libraries
+##   List of external shared libraries (absolute filenames) this application is using, these libraries are copied into the apk file and will be loaded automatically within a generated Java file - Lookout! The order is important due to shared library dependencies!
 ## @param shared_libraries
-##   List of shared libraries (absolute filenames) this application is using, these libraries are copied into the apk file and will be loaded automatically within a generated Java file
-## @param shared_libraries
-##   List of external shared libraries (absolute filenames) this application is using, these libraries are copied into the apk file and will be loaded automatically within a generated Java file
+##   List of shared libraries (absolute filenames) this application is using, these libraries are copied into the apk file and will be loaded automatically within a generated Java file - Lookout! The order is important due to shared library dependencies!
 ## @param assets
 ##   List of assets to copy into the apk file (absolute filenames, wildcards like "*.*" are allowed)
 ## @param data_directory
@@ -68,7 +68,7 @@ set(ANDROID_THIS_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})	# Directory this CMake fil
 ##   - "jarsigner" (part of the JDK)
 ##   - "zipalign" (part of the Android SDK)
 ##################################################
-macro(android_create_apk name apk_directory shared_libraries shared_external_libraries assets data_directory)
+macro(android_create_apk name apk_directory shared_external_libraries shared_libraries assets data_directory)
 	if(ANDROID_APK_CREATE)
 		# Construct the current package name and theme
 		set(ANDROID_APK_PACKAGE "${ANDROID_APK_TOP_LEVEL_DOMAIN}.${ANDROID_APK_DOMAIN}.${ANDROID_APK_SUBDOMAIN}")
@@ -98,8 +98,22 @@ macro(android_create_apk name apk_directory shared_libraries shared_external_lib
 		# Create "res/values/strings.xml"
 		configure_file("${ANDROID_THIS_DIRECTORY}/strings.xml.in" "${apk_directory}/res/values/strings.xml")
 
-		# Get a list of libraries to load in (e.g. "PLCore;PLMath" etc.)
+		# Add the external libraries to the list with libraries to load
 		set(ANDROID_SHARED_LIBRARIES_TO_LOAD "")
+		foreach(value ${shared_external_libraries})
+			# "value" is e.g. "/home/cofenberg/pl_ndk/Bin-Linux-ndk/Runtime/armeabi/libNewton.so"
+			get_filename_component(shared_library_filename ${value} NAME_WE)
+
+			# "shared_library_filename" is e.g. "libNewton", but we need "Newton"
+			STRING(LENGTH ${shared_library_filename} shared_library_filename_length)
+			math(EXPR shared_library_filename_length ${shared_library_filename_length}-3)
+			STRING(SUBSTRING ${shared_library_filename} 3 ${shared_library_filename_length} shared_library_filename)
+
+			# "shared_library_filename" is now e.g. "NEWTON", this is what we want -> Add it to the list
+			set(ANDROID_SHARED_LIBRARIES_TO_LOAD ${ANDROID_SHARED_LIBRARIES_TO_LOAD} ${shared_library_filename})
+		endforeach()
+
+		# Get a list of libraries to load in (e.g. "PLCore;PLMath" etc.)
 		foreach(value ${shared_libraries})
 			# "value" is e.g. "/home/cofenberg/pl_ndk/Bin-Linux-ndk/Runtime/armeabi/libPLCore.so"
 			get_filename_component(shared_library_filename ${value} NAME_WE)
@@ -112,20 +126,6 @@ macro(android_create_apk name apk_directory shared_libraries shared_external_lib
 			# "shared_library_filename" is now e.g. "PLCore", this is what we want -> Add it to the list
 			# In debug mode we need "PLCoreD" so add the suffix
 			set(ANDROID_SHARED_LIBRARIES_TO_LOAD ${ANDROID_SHARED_LIBRARIES_TO_LOAD} ${shared_library_filename}${suffix})
-		endforeach()
-
-		# Add the external libraries to the list with libraries to load
-		foreach(value ${shared_external_libraries})
-			# "value" is e.g. "/home/cofenberg/pl_ndk/Bin-Linux-ndk/Runtime/armeabi/libNewton.so"
-			get_filename_component(shared_library_filename ${value} NAME_WE)
-
-			# "shared_library_filename" is e.g. "libNewton", but we need "Newton"
-			STRING(LENGTH ${shared_library_filename} shared_library_filename_length)
-			math(EXPR shared_library_filename_length ${shared_library_filename_length}-3)
-			STRING(SUBSTRING ${shared_library_filename} 3 ${shared_library_filename_length} shared_library_filename)
-
-			# "shared_library_filename" is now e.g. "NEWTON", this is what we want -> Add it to the list
-			set(ANDROID_SHARED_LIBRARIES_TO_LOAD ${ANDROID_SHARED_LIBRARIES_TO_LOAD} ${shared_library_filename})
 		endforeach()
 
 		# Add the debug suffix to the shared libraries to copy
