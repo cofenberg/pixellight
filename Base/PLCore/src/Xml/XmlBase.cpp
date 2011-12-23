@@ -312,7 +312,7 @@ const char *XmlBase::GetChar(const char *pszData, char *pszValue, int &nLength, 
 		*pszValue = *pszData;
 		return pszData + 1;
 	} else if (nLength) {
-		for (int i=0; pszData[i] && i<nLength; ++i)
+		for (int i=0; i<nLength && pszData[i]; ++i)
 			pszValue[i] = pszData[i];
 		return pszData + nLength;
 	} else {

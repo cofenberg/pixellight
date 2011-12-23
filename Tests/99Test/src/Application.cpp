@@ -447,7 +447,7 @@ void Application::TestFuncs()
 	System::GetInstance()->GetConsole().Print("Testing constructors:\n");
 
 	System::GetInstance()->GetConsole().Print("- MyCreate: ");
-	RttiObject *pObject = (RttiObject*)MyCreate();
+	RttiObject *pObject = static_cast<RttiObject*>(MyCreate());
 	if (pObject) System::GetInstance()->GetConsole().Print('\n');
 	else		 System::GetInstance()->GetConsole().Print("ERROR: Could not create object!\n");
 
@@ -1055,7 +1055,7 @@ void Application::TestStringRef()
 	const PLCore::Class *pClass = PLCore::ClassManager::GetInstance()->GetClass("RttiObject");
 	if (pClass) {
 	    // Create an instance of the RTTI class
-		RttiObject *pObject = (RttiObject*)pClass->Create();
+		RttiObject *pObject = static_cast<RttiObject*>(pClass->Create());
 
 	    // Call RTTI method
 
