@@ -175,8 +175,8 @@ String File::GetContentAsString()
 				// Load in the data -> We also take care of the terminating zero (\0)
 				const uint32 nNumOfCharacters = nFileSize/sizeof(wchar_t);
 				wchar_t *pData = new wchar_t[nNumOfCharacters + 1];
-				Read(pData, nFileSize, 1);
-				pData[nFileSize] = L'\0';
+				Read(pData, nNumOfCharacters*sizeof(wchar_t), 1);
+				pData[nNumOfCharacters] = L'\0';
 
 				// The string class takes over the control of the memory
 				return String(pData, false, nFileSize);

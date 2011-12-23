@@ -63,7 +63,7 @@ bool LoadWav(File *pFile, Array<uint8> &lstBuffer, ALenum &nFormat, ALsizei &nFr
 			nFrequency = sWavHeader.SamplesPerSec;
 
 			// Keep reading until all is read
-			static const uint32 BufferSize = 32768;	// 32 KB buffers
+			static const uint32 BufferSize = 8192;	// 8 KB buffers
 			uint8 nArray[BufferSize];				// Local fixed size array
 			pFile->Seek(sizeof(StreamWav::Header));
 			long nSize   = BufferSize;

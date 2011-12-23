@@ -58,17 +58,17 @@ SUITE(Hashmap_Performance) {
 
 	TEST(PL_Hashmap_Add){
 		for (int i=0; i<testloops*10; i++)
-			PLHashmap.Add(i+48, i);
+			PLHashmap.Add(static_cast<char>(i+48), i);
 	}
-	
+
 	TEST(C_Hashmap_Add){
 		for (int i=0; i<testloops; i++)
-			CHashmap[i+48] = i;
+			CHashmap[static_cast<char>(i+48)] = i;
 	}
-	
+
 	TEST(PL_Hashmap_Replace){
 		for (int i=0; i<testloops; i++)
-			PLHashmap.Replace((char)48, i);
+			PLHashmap.Replace(static_cast<char>(48), i);
 	}
 
 	TEST(C_Hashmap_Replace){
@@ -88,12 +88,12 @@ SUITE(Hashmap_Performance) {
 
 	TEST(PL_Hashmap_Get){
 		for (int i=0; i<testloops; i++)
-			PLHashmap.Get(testloops-i);
+			PLHashmap.Get(static_cast<char>(testloops-i));
 	}
 
 	TEST(C_Hashmap_Get){
 		for (int i=0; i<testloops; i++)
-			CHashmap.find(testloops-i);
+			CHashmap.find(static_cast<char>(testloops-i));
 	}
 
 	TEST(PL_Hashmap_RemoveV_Forwards){
@@ -103,7 +103,7 @@ SUITE(Hashmap_Performance) {
 
 	TEST(C_Hashmap_RemoveV_Forwards){
 		for (int i=0; i<testloops; i++)
-			CHashmap.erase(i);
+			CHashmap.erase(static_cast<char>(i));
 	}
 
 	TEST(PL_Hashmap_RemoveV_Backwards){
@@ -113,6 +113,6 @@ SUITE(Hashmap_Performance) {
 
 	TEST(C_Hashmap_RemoveV_Backwards){
 		for (int i=0; i<testloops; i++)
-			CHashmap.erase(testloops-i);
+			CHashmap.erase(static_cast<char>(testloops-i));
 	}
 }

@@ -1,4 +1,13 @@
-﻿>> 11.11.2011
+﻿>> 23.12.2011
+[CO]
+PLSoundOpenAL:
+- When using the static code analysis of Microsoft Visual Studio 2010 Ultimate I received warnings like
+    "warning C6262: Function uses '17156' bytes of stack: exceeds /analyze:stacksize'16384'. Consider moving some data to heap"
+  -> Reduced 32 KiB arrays on the C-runtime stack to 8 KiB to avoid flooding the stack
+
+
+
+>> 11.11.2011
 [CO]
 - "PLSoundNull" & "PLSoundOpenSLES" & "PLSoundOpenAL" & "PLSoundFMODEx": Updated x64 Visual Studio project settings
 - "PLSoundFMOD": We don't support x64 for this legacy API, use the new version "PLSoundFMODEx" instead

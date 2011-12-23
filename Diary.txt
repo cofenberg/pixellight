@@ -4,6 +4,15 @@
 
 
 
+>> 23.12.2011
+[CO]
+- Did the usual automatic checks
+  -> Source code spell check
+  -> Fixed issues found by "Cppcheck 1.52" (interesting: also "C-style pointer casting" was blamed)
+  -> Fixed issues found by the static code analysis of Microsoft Visual Studio 2010 Ultimate
+
+
+
 >> 21.12.2011
 [CO]
 - Replaced "PLEngine::SNMLookController" with "PLEngine::SNMEgoLookController" and "PLEngine::SNMOrbitingController" with "PLEngine::SNMEgoOrbitingController"

@@ -577,12 +577,12 @@ bool ImageLoaderDDS::Save(const Image &cImage, File &cFile)
 				// Save all faces
 				for (uint32 nFace=0; nFace<6; nFace++){
 					// Get image part
-					const ImagePart *pImagePart = cImage.GetPart(nFace);
+					pImagePart = cImage.GetPart(nFace);
 
 					// Save in all mipmaps
 					for (uint32 nMipmap=0; nMipmap<nNumOfMipmaps; nMipmap++) {
 						// Get image buffer
-						const ImageBuffer *pImageBuffer = pImagePart->GetMipmap(nMipmap);
+						pImageBuffer = pImagePart->GetMipmap(nMipmap);
 
 						// Write down the image data
 						if (sHeader.ddpfPixelFormat.nFlags == DDPF_FOURCC)
@@ -597,7 +597,7 @@ bool ImageLoaderDDS::Save(const Image &cImage, File &cFile)
 				// Save in all mipmaps
 				for (uint32 nMipmap=0; nMipmap<nNumOfMipmaps; nMipmap++) {
 					// Get image buffer
-					const ImageBuffer *pImageBuffer = pImagePart->GetMipmap(nMipmap);
+					pImageBuffer = pImagePart->GetMipmap(nMipmap);
 
 					// Write down the image data
 					if (sHeader.ddpfPixelFormat.nFlags == DDPF_FOURCC)

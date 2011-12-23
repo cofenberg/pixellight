@@ -70,9 +70,9 @@ bool LoadOGG(File *pFile, Array<uint8> &lstBuffer, ALenum &nFormat, ALsizei &nFr
 
 			// Keep reading until all is read
 			lstBuffer.Resize(pFile->GetSize()*100, false);
-			static const uint32 BufferSize = 32768;	// 32 KB buffers
-			uint8 nArray[BufferSize];	// Local fixed size array
-			int nEndian = 0;			// 0 for Little-Endian, 1 for Big-Endian
+			static const uint32 BufferSize = 8192;	// 8 KB buffers
+			uint8 nArray[BufferSize];				// Local fixed size array
+			int nEndian = 0;						// 0 for Little-Endian, 1 for Big-Endian
 			int nBitStream;
 			long nBytes;
 			do {
@@ -131,14 +131,14 @@ bool LoadOGG(const uint8 nData[], uint32 nSize, Array<uint8> &lstBuffer, ALenum 
 		bResult = true;
 
 		// Keep reading until all is read
-		static const uint32 BufferSize = 32768;	// 32 KB buffers
-		uint8 nArray[32768];	// Local fixed size array
-		int nEndian = 0;		// 0 for Little-Endian, 1 for Big-Endian
+		static const uint32 BufferSize = 8192;	// 8 KB buffers
+		uint8 nArray[BufferSize];				// Local fixed size array
+		int nEndian = 0;						// 0 for Little-Endian, 1 for Big-Endian
 		int nBitStream;
 		long nBytes;
 		do {
 			// Read up to a buffer's worth of decoded sound data
-			nBytes = ov_read(&oggFile, reinterpret_cast<char*>(nArray), 32768, nEndian, 2, 1, &nBitStream);
+			nBytes = ov_read(&oggFile, reinterpret_cast<char*>(nArray), BufferSize, nEndian, 2, 1, &nBitStream);
 			if (nBytes < 0) {
 				// Error!
 				bResult = false;
