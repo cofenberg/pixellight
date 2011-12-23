@@ -323,7 +323,7 @@ void GuiAndroid::OnMotionInputEvent(const struct AInputEvent &cAMotionInputEvent
 
 				// Was the mouse already moved? (if so, we're in "mouse move"-mode, not in "left mouse button click"-mode)
 				if (!m_bMouseMoved) {
-					// Check whether or not the mouse was moved - with a little bit of tollerance
+					// Check whether or not the mouse was moved - with a little bit of tolerance
 					if ((Math::Abs(fDeltaX) > 6 || Math::Abs(fDeltaY) > 6) && Math::Abs(fDeltaPressure) < 0.4f) {
 						m_bMouseMoved = true;
 					} else {

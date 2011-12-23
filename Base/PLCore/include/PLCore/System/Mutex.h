@@ -80,7 +80,7 @@ class Mutex {
 		*    If supported by the platform: 'true' to use "Critical Section" (lock/unlock only inside the same process) instead of "Mutex" (lock/unlock across multiple processes) implementation, else 'false'
 		*
 		*  @remarks
-		*    Platforms handle mutual exclusion implementations differently. POSIX only offeres "Mutex", while MS Windows
+		*    Platforms handle mutual exclusion implementations differently. POSIX only offers "Mutex", while MS Windows
 		*    makes a difference between "Mutex" (lock/unlock across multiple processes) and "Critical Section"
 		*    (lock/unlock only inside the same process).
 		*

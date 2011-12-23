@@ -119,7 +119,7 @@ class AndroidProvider : public Provider {
 	//[-------------------------------------------------------]
 	private:
 		AndroidKeyboardDevice		*m_pAndroidKeyboardDevice;		/**< Android keyboard device instance, can be a null pointer */
-		AndroidSplitTouchPadDevice	*m_pAndroidSplitTouchPadDevice;	/**< Android splited touchscreen mouse device instance, can be a null pointer */
+		AndroidSplitTouchPadDevice	*m_pAndroidSplitTouchPadDevice;	/**< Android splitted touchscreen mouse device instance, can be a null pointer */
 		AndroidMouseDevice			*m_pAndroidMouseDevice;			/**< Android mouse device instance, can be a null pointer */
 
 

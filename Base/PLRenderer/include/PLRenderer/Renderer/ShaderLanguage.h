@@ -158,7 +158,7 @@ class ShaderLanguage : public PLCore::Object {
 
 		/**
 		*  @brief
-		*    Creates a program and assigns a vertex, geometry and fragement shader to it
+		*    Creates a program and assigns a vertex, geometry and fragment shader to it
 		*
 		*  @param[in] pVertexShader
 		*    Vertex shader the program is using, can be a null pointer, vertex shader and program language must match!

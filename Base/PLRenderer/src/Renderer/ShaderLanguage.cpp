@@ -116,7 +116,7 @@ Program *ShaderLanguage::CreateProgram(VertexShader *pVertexShader, FragmentShad
 
 /**
 *  @brief
-*    Creates a program and assigns a vertex, geometry and fragement shader to it
+*    Creates a program and assigns a vertex, geometry and fragment shader to it
 */
 Program *ShaderLanguage::CreateProgram(VertexShader *pVertexShader, GeometryShader *pGeometryShader, FragmentShader *pFragmentShader)
 {

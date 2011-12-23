@@ -209,7 +209,7 @@ bool ContextRuntimeLinking::LoadLibraries()
 	#elif APPLE
 		// [TODO] It looks like the OpenGL ES 2.0 emulator from ARM is not available for Mac OS X, find another emulator?
 		// First, try the OpenGL ES 2.0 emulator from ARM (it's possible to move around this dylib without issues, so, this one first)
-		// Give Mac OS X an absolute path, if this is not done, I just rececive a polite "[PLCore] error while loading libEGL.dylib " -> "libEGL.dylib: cannot open shared object file: No such file or directory"
+		// Give Mac OS X an absolute path, if this is not done, I just receive a polite "[PLCore] error while loading libEGL.dylib " -> "libEGL.dylib: cannot open shared object file: No such file or directory"
 		const String sRuntimeDirectory = Runtime::GetDirectory();
 		bResult = m_pEGLDynLib->Load(sRuntimeDirectory.GetLength() ? (sRuntimeDirectory + "/libEGL.dylib") : "libEGL.dylib");
 		if (bResult) {
@@ -224,7 +224,7 @@ bool ContextRuntimeLinking::LoadLibraries()
 	}
 	#elif LINUX
 		// First, try the OpenGL ES 2.0 emulator from ARM (it's possible to move around this so without issues, so, this one first)
-		// Give Linux an absolute path, if this is not done, I just rececive a polite "[PLCore] error while loading libEGL.so " -> "libEGL.so: cannot open shared object file: No such file or directory"
+		// Give Linux an absolute path, if this is not done, I just receive a polite "[PLCore] error while loading libEGL.so " -> "libEGL.so: cannot open shared object file: No such file or directory"
 		const String sRuntimeDirectory = Runtime::GetDirectory();
 		bResult = m_pEGLDynLib->Load(sRuntimeDirectory.GetLength() ? (sRuntimeDirectory + "/libEGL.so") : "libEGL.so");
 		if (bResult) {

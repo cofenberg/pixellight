@@ -83,7 +83,7 @@ class BTLinux : public BTImpl {
 
 		/**
 		*  @brief
-		*    Enumerate bluetooth devices
+		*    Enumerate Bluetooth devices
 		*
 		*  @param[out] lstDevices
 		*    List that will receive the devices

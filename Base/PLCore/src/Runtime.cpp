@@ -344,7 +344,7 @@ String Runtime::GetPLCoreSharedLibraryDirectory()
 		// Get the absolute path the PLCore shared library is in (e.g. "C:/Programs/App/PLCore.dll"->"C:/Programs/App/")
 		String sDirectory = Url(cPLCoreDynLib.GetAbsPath()).CutFilename();
 
-		// Ensure that there's no "/" at the end, else this method woud have another behaviour as the other runtime methods -> bad
+		// Ensure that there's no "/" at the end, else this method would have another behavior as the other runtime methods -> bad
 		if (sDirectory.GetLength() && sDirectory[sDirectory.GetLength()-1] == '/')
 			sDirectory.Delete(sDirectory.GetLength()-1);
 

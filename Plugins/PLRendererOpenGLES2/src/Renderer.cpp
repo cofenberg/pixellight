@@ -669,7 +669,7 @@ void Renderer::SetupCapabilities()
 		m_sCapabilities.nMaxTextureBuffer2DArrayLayers = 0;
 	}
 
-	// Same as texture 2D - so it's supported by OpenGL ES 2.0 (altought it's not really the same, e.g. normalized texture coordinates are used)
+	// Same as texture 2D - so it's supported by OpenGL ES 2.0 (although it's not really the same, e.g. normalized texture coordinates are used)
 	m_sCapabilities.bTextureBufferRectangle			= true;
 	m_sCapabilities.nMaxRectangleTextureBufferSize	= m_sCapabilities.nMaxTextureBufferSize;
 

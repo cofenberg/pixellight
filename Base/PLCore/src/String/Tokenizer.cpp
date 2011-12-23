@@ -140,7 +140,7 @@ String Tokenizer::GetNextToken()
 	// Clear the current token
 	m_sToken = "";
 
-	// Valid stram?
+	// Valid stream?
 	if (m_pStream) {
 		// ASCII or Unicode?
 		if (m_pStream->GetStringFormat() == String::ASCII) {

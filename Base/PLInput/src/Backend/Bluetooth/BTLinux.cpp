@@ -69,7 +69,7 @@ BTLinux::~BTLinux()
 
 /**
 *  @brief
-*    Enumerate bluetooth devices
+*    Enumerate Bluetooth devices
 */
 void BTLinux::EnumerateBluetoothDevices(List<BTDevice*> &lstDevices, DBusConnection &cConnection)
 {

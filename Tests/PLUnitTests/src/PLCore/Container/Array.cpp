@@ -248,7 +248,7 @@ SUITE(Array_PrimitiveInt) {
 		CHECK_EQUAL(3, Arr.Get(1));
 	}
 
-	// additional tesst for derived virutal functions and specific implementation of Array
+	// additional test for derived virtual functions and specific implementation of Array
 	TEST_FIXTURE(ConstructTestArray, Add_NoPassedElement_NoResize) {
 		Arr.Clear();
 		Arr.SetResizeCount(0U);

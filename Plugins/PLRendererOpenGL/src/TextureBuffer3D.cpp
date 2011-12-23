@@ -109,7 +109,7 @@ void TextureBuffer3D::InitialUploadVolumeData(Renderer &cRendererOpenGL, const I
 				// Get a pointer to the start position of the given image data
 				const uint8 *pImageData = cImageBuffer.GetData();
 
-				// Add each depth layer by using a seperate OpenGL API call
+				// Add each depth layer by using a separate OpenGL API call
 				for (int i=0; i<vSize.z; i++, pImageData+=nNumOfLayerBytes) {
 					// Update the image data of the current depth layer
 					glTexSubImage3DEXT(nOpenGLTarget, nOpenGLLevel, 0, 0, i, vSize.x, vSize.y, 1, nOpenGLFormat, nOpenGLType, pImageData);

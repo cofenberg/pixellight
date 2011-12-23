@@ -73,7 +73,7 @@ FrontendAndroid::FrontendAndroid(const FrontendContext &cFrontendContext, struct
 	// Write the used Android SDK version into the log
 	PL_LOG(Info, String("Using Android SDK version ") + AConfiguration_getSdkVersion(cAndroidApp.config))
 
-	// Configurate the given native Android application instance
+	// Configure the given native Android application instance
 	cAndroidApp.userData     = this;
 	cAndroidApp.onAppCmd     = onAppCmd;
 	cAndroidApp.onInputEvent = onInputEvent;

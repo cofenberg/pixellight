@@ -91,7 +91,7 @@ void SurfaceWindowMacOSX::DeInit()
 		// Get the MacOS X context implementation
 		ContextMacOSX &cContextMacOSX = static_cast<ContextMacOSX&>(static_cast<Renderer&>(GetRenderer()).GetContext());
 
-		// Disassociat rendering context from any drawable objects attached to it
+		// Disassociate rendering context from any drawable objects attached to it
 		CGLClearDrawable(cContextMacOSX.GetRenderContext());
 
 		// [TODO] Restore the previous resolution

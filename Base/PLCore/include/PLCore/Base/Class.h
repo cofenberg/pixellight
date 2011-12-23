@@ -170,7 +170,7 @@ class Class {
 		*  @brief
 		*    Get derived classes
 		*
-		*  @paran[out] lstClasses
+		*  @param[out] lstClasses
 		*    Receives the list of derived classes, given list is not cleared before adding new elements, do not destroy the returned instances!
 		*
 		*  @remarks

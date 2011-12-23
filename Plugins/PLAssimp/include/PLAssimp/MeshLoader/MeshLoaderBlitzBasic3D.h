@@ -50,7 +50,7 @@ class MeshLoaderBlitzBasic3D : public MeshLoader {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, MeshLoaderBlitzBasic3D, "PLAssim", PLAssimp::MeshLoader, "Mesh loader implementation for b3d (BlitzBasic 3D) using Assimp")
+	pl_class(pl_rtti_export, MeshLoaderBlitzBasic3D, "PLAssimp", PLAssimp::MeshLoader, "Mesh loader implementation for b3d (BlitzBasic 3D) using Assimp")
 		// Properties
 		pl_properties
 			pl_property("Formats",	"b3d,B3D")

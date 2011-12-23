@@ -985,7 +985,7 @@ void WiiMote::OnReadClassic(uint32 nOffset)
 	//  the deadzone calculations)
 	xl *= 2; yl *= 2; xr *= 2; yr *= 2;
 
-	// apply the deadzones (if any) and write the final values to the state
+	// apply the dead zones (if any) and write the final values to the state
 	ApplyJoystickDeadZonesAndWrite(joyL, xl, yl);
 	ApplyJoystickDeadZonesAndWrite(joyR, xr, yr);
 

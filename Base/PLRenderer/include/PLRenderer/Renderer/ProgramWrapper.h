@@ -85,7 +85,7 @@ namespace PLRenderer {
 *    Please note that "ProgramWrapper" is just an interface and no real class which can be instanced. All
 *    methods are inlined and simple. In order to use this interface write e.g.
 *        ProgramWrapper *pProgram = static_cast<ProgramWrapper*>(pShaderLanguage->CreateProgram(pVertexShader, pFragmentShader));
-*    This means that it is actually a hack because one has to cast an class instance to a certain class, altought the class
+*    This means that it is actually a hack because one has to cast an class instance to a certain class, although the class
 *    instance is in fact not an instance of it. Due to the simplicity of "ProgramWrapper" and the fact that it doesn't introduce
 *    e.g. new variables, this is working.
 *

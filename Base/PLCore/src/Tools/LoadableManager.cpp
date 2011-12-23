@@ -337,7 +337,7 @@ bool LoadableManager::OpenFile(File &cFile, const String &sFilename, bool bCreat
 					// Use current directory
 					cFile.Assign(System::GetInstance()->GetCurrentDir() + '/' + sFilename);
 				} else {
-					// Use given gase directory
+					// Use given base directory
 					cFile.Assign(sBaseDir + sFilename);
 				}
 

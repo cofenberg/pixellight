@@ -154,7 +154,7 @@ namespace PLGui {
 //[-------------------------------------------------------]
 #elif defined(ANDROID)
 
-// Do not include this header in here or we get thousends of compiler erros because this header is messing up the global namespace
+// Do not include this header in here or we get thousands of compiler errors because this header is messing up the global namespace
 //#include <android/keycodes.h>
 
 //           Virtual code               Hex Value                   Key

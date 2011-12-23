@@ -55,7 +55,7 @@ MainWindow::MainWindow() :
 	// Initialize buttons
 	InitButtons();
 
-	// Pack gui
+	// Pack GUI
 	adjustSize();
 
 	// Set fixed size for the dialog
@@ -108,9 +108,9 @@ void MainWindow::InitTextAndLabels()
 
 	// Setup installer description
 	wnd_main_ui.lbl_description->setText("<br>"\
-		"PixelLight Installer will set all needed variables for the Pixellight Runtime.<br>"\
+		"PixelLight Installer will set all needed variables for the PixelLight Runtime.<br>"\
 		"<br>"\
-		"Hompage: <a href='http://www.pixellight.org'>www.pixellight.org</a><br>"\
+		"Homepage: <a href='http://www.pixellight.org'>www.pixellight.org</a><br>"\
 		"Forum: <a href='http://dev.pixellight.org/forum/'>dev.pixellight.org/forum/</a><br>"\
 		"<br>"\
 		"PixelLight is released under the terms of the <a href='http://pixellight.org/site/index.php/page/11.html'> GNU Lesser General Public License</a>.");

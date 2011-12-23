@@ -63,7 +63,7 @@ bool InstallerFunctions::InstallRuntime()
 {
 	// Install the PixelLight runtime
 
-	// I know it's a bit redundand but we should check the current installation
+	// I know it's a bit redundant but we should check the current installation
 	if (!CheckRuntimeInstallation()) {
 		m_cEventProgressUpdate(1);
 
@@ -73,7 +73,7 @@ bool InstallerFunctions::InstallRuntime()
 		const String sExecutableDirectory = System::GetInstance()->GetCurrentDir();
 		m_cEventProgressUpdate(1);
 
-		// Write the PixelLight-runtime directory into the registry and or path or whatever is needed on the specific plattform
+		// Write the PixelLight-runtime directory into the registry and or path or whatever is needed on the specific platform
 		String sMessage;
 		if (Runtime::SetDirectory(sExecutableDirectory, &sMessage)) {
 			m_sLastSuccessMessage = "PixelLight runtime installed at \"" +  Url(sExecutableDirectory).GetNativePath() + "\"\n\nYou may need to restart your system";	// Show the user a native path he's familiar with
@@ -86,7 +86,7 @@ bool InstallerFunctions::InstallRuntime()
 			m_sLastErrorMessage = "Failed to write the PixelLight-runtime directory into the registry: \"" + sMessage + '\"';
 			m_cEventProgressUpdate(1);
 
-			// Error ocurred!
+			// Error occurred!
 			return false;
 		}
 	}

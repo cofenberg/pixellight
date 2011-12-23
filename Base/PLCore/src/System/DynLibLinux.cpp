@@ -77,7 +77,7 @@ bool DynLibLinux::Load(const Url &cUrl)
 		return false; // Error!
 
 	// Load library. Under Linux, there's nothing like 'LOAD_WITH_ALTERED_SEARCH_PATH' from MS Windows so the other files
-	// will be searched within the same directory as this one. This has to be configurated by using the RPATH when linking
+	// will be searched within the same directory as this one. This has to be configured by using the RPATH when linking
 	// the resulting binary (see http://www.cmake.org/Wiki/CMake_RPATH_handling). Type e.g. "objdump -x libPLCore.so" and
 	// have a look at "Dynamic Section"->"RPATH", should be "$ORIGIN" when this option is enabled.
 	const String sPath = cUrl.GetUnixPath();
