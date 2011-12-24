@@ -2,6 +2,10 @@
 [CO]
 - "FindPixelLight.cmake": Within the "_pixellight_find_lib"-macro we need to unset previous variables, if we don't do this a change of CMAKE_BUILD_TYPE
   won't have any effect
+- "PixelLight.cmake" and "CMakeLists.txt" from "PixelLightAndroid": For some reasons the CMake variable "CMAKE_BUILD_TYPE" is empty by default and not
+  "Release" as expected. So, we need to ensure the CMake variable CMAKE_BUILD_TYPE exists and has a value, in case it's an empty string assign "Release"
+  to make it easier to find this variable within the CMake GUI (looks like a CMake cache problem?). Thomas noticed this while adding debug support
+  to the "PixelLightAndroid" example project.
 
 
 

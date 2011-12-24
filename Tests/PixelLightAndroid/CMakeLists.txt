@@ -4,6 +4,12 @@ cmake_minimum_required(VERSION 2.8.3)
 #set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR})
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR}/../../Tools)	# For this test, don't duplicate the "FindPixelLight.cmake"-file
 
+# Ensure the CMake variable CMAKE_BUILD_TYPE exists and has a value, in case it's an empty
+# string assign "Release" to make it easier to find this variable within the CMake GUI (looks like a CMake cache problem?)
+if(NOT CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "")
+	set (CMAKE_BUILD_TYPE Release CACHE STRING "One of: None Debug Release RelWithDebInfo MinSizeRel." FORCE)
+endif()
+
 # Determine debug suffix
 set(suffix "")
 if(CMAKE_BUILD_TYPE MATCHES Debug)

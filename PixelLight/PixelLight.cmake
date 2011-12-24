@@ -35,6 +35,12 @@
 # Project name
 set(CMAKETOOLS_PROJECT_NAME "PixelLight")
 
+# Ensure the CMake variable CMAKE_BUILD_TYPE exists and has a value, in case it's an empty
+# string assign "Release" to make it easier to find this variable within the CMake GUI (looks like a CMake cache problem?)
+if(NOT CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "")
+	set (CMAKE_BUILD_TYPE Release CACHE STRING "One of: None Debug Release RelWithDebInfo MinSizeRel." FORCE)
+endif()
+
 # Check which architecture has the host system
 # X86_64 aka x64
 if(${CMAKE_SYSTEM_PROCESSOR} MATCHES amd64* OR ${CMAKE_SYSTEM_PROCESSOR} MATCHES x86_64* OR CMAKE_GENERATOR MATCHES "Visual Studio 10 Win64")
