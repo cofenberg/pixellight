@@ -1,3 +1,10 @@
+>> 24.12.2011
+[CO]
+- "FindPixelLight.cmake": Within the "_pixellight_find_lib"-macro we need to unset previous variables, if we don't do this a change of CMAKE_BUILD_TYPE
+  won't have any effect
+
+
+
 >> 22.12.2011
 [TM]
 - Android/Apk.cmake: Added support for debug build. If CMAKE_BUILD_TYPE is set to Debug. The signing of the generated apk file is not done and the

@@ -110,6 +110,10 @@ endif()
 
 # Macro to determine if a specific PixelLight library is there
 macro(_pixellight_find_lib varname header library basepath)
+	# Unset previous variables, if we don't do this a change of CMAKE_BUILD_TYPE won't have any effect
+	unset(${varname}_INCLUDE_DIR CACHE)
+	unset(${varname}_LIBRARY CACHE)
+
 	# Include
 	FIND_PATH(${varname}_INCLUDE_DIR 		${header}
 				"${PL_INCLUDE_DIR}"
