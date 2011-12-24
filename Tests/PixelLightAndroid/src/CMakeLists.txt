@@ -28,8 +28,8 @@ set(CURRENT_SRC
 ##################################################
 ## Shared libraries
 ##################################################
+set(CURRENT_SHARED_LIBRARIES
 # These are the external shared libraries which are always release builds
-set(CURRENT_EXTERNAL_SHARED_LIBRARIES
 	# Newton
 	${PL_NEWTON_LIBRARY}				# Required by "PLPhysicsNewton"
 	# libRocket
@@ -38,10 +38,7 @@ set(CURRENT_EXTERNAL_SHARED_LIBRARIES
 	${PL_LIBROCKETDEBUGGER_LIBRARY}		# Required by "PLlibRocket"
 	# FMOD Ex
 	${PL_FMODEX_LIBRARY}				# Required by "PLSoundFMODEx"
-)
-
 # These are the shared libraries which may be in release or debug build
-set(CURRENT_SHARED_LIBRARIES
 	# Base
 	${PL_PLCORE_LIBRARY}
 	${PL_PLMATH_LIBRARY}
@@ -70,27 +67,28 @@ set(CURRENT_SHARED_LIBRARIES
 	${PL_PLSOUNDOPENSLES_LIBRARY}		# Required by "61Sound"
 	${PL_PLFRONTENDPLGUI_LIBRARY}		# Required by "66IngameGUI"
 	# Application
-	"${PL_TESTS_BIN_DIR}/libPLUnitTests.so"
-	"${PL_SAMPLES_BIN_DIR}/lib30Input.so"
-	"${PL_SAMPLES_BIN_DIR}/lib40ScriptHelloWorld.so"
-	"${PL_SAMPLES_BIN_DIR}/lib41ScriptGlobalVariables.so"
-	"${PL_SAMPLES_BIN_DIR}/lib42ScriptFunctors.so"
-	"${PL_SAMPLES_BIN_DIR}/lib43ScriptBindings.so"
-	"${PL_SAMPLES_BIN_DIR}/lib44ScriptOOP.so"
-	"${PL_SAMPLES_BIN_DIR}/lib50RendererTriangle.so"
-	"${PL_SAMPLES_BIN_DIR}/lib51RendererTexturing.so"
-	"${PL_SAMPLES_BIN_DIR}/lib52RendererMesh.so"
-	"${PL_SAMPLES_BIN_DIR}/lib54RendererRTT.so"
-	"${PL_SAMPLES_BIN_DIR}/lib60Scene.so"
-	"${PL_SAMPLES_BIN_DIR}/lib61Sound.so"	# [TODO] Implement OpenSL ES for sound
-	"${PL_SAMPLES_BIN_DIR}/lib62Physics.so"
-	"${PL_SAMPLES_BIN_DIR}/lib63PhysicsRagdoll.so"
-	"${PL_SAMPLES_BIN_DIR}/lib64Picking.so"
-	"${PL_SAMPLES_BIN_DIR}/lib66IngameGUI.so"
-	"${PL_SAMPLES_BIN_DIR}/lib67Game2D.so"
-	"${PL_SAMPLES_BIN_DIR}/lib70SPARK.so"
-	"${PL_SAMPLES_BIN_DIR}/lib71libRocket.so"
+	"${PL_TESTS_BIN_DIR}/libPLUnitTests${suffix}.so"
+	"${PL_SAMPLES_BIN_DIR}/lib30Input${suffix}.so"
+	"${PL_SAMPLES_BIN_DIR}/lib40ScriptHelloWorld${suffix}.so"
+	"${PL_SAMPLES_BIN_DIR}/lib41ScriptGlobalVariables${suffix}.so"
+	"${PL_SAMPLES_BIN_DIR}/lib42ScriptFunctors${suffix}.so"
+	"${PL_SAMPLES_BIN_DIR}/lib43ScriptBindings${suffix}.so"
+	"${PL_SAMPLES_BIN_DIR}/lib44ScriptOOP${suffix}.so"
+	"${PL_SAMPLES_BIN_DIR}/lib50RendererTriangle${suffix}.so"
+	"${PL_SAMPLES_BIN_DIR}/lib51RendererTexturing${suffix}.so"
+	"${PL_SAMPLES_BIN_DIR}/lib52RendererMesh${suffix}.so"
+	"${PL_SAMPLES_BIN_DIR}/lib54RendererRTT${suffix}.so"
+	"${PL_SAMPLES_BIN_DIR}/lib60Scene${suffix}.so"
+	"${PL_SAMPLES_BIN_DIR}/lib61Sound${suffix}.so"	# [TODO] Implement OpenSL ES for sound
+	"${PL_SAMPLES_BIN_DIR}/lib62Physics${suffix}.so"
+	"${PL_SAMPLES_BIN_DIR}/lib63PhysicsRagdoll${suffix}.so"
+	"${PL_SAMPLES_BIN_DIR}/lib64Picking${suffix}.so"
+	"${PL_SAMPLES_BIN_DIR}/lib66IngameGUI${suffix}.so"
+	"${PL_SAMPLES_BIN_DIR}/lib67Game2D${suffix}.so"
+	"${PL_SAMPLES_BIN_DIR}/lib70SPARK${suffix}.so"
+	"${PL_SAMPLES_BIN_DIR}/lib71libRocket${suffix}.so"
 )
+
 
 ##################################################
 ## Assets
@@ -109,7 +107,7 @@ set(CURRENT_ASSETS
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -ffor-scope -fno-rtti -fno-exceptions -pipe -ffunction-sections -fdata-sections -ffast-math -Wnon-virtual-dtor -Wreorder -Wsign-promo -fvisibility=hidden -fvisibility-inlines-hidden -Wstrict-null-sentinel -Os -funroll-all-loops -fpeel-loops -ftree-vectorize")
 set(LINKER_FLAGS "${LINKER_FLAGS} -Wl,--as-needed -Wl,--gc-sections -Wl,--no-undefined -Wl,--strip-all -Wl,-rpath-link=${ANDROID_NDK_SYSROOT}/usr/lib/ -L${ANDROID_NDK_SYSROOT}/usr/lib/")
 add_library(${CURRENT_TARGET_NAME} SHARED ${CURRENT_SRC})
-target_link_libraries(${CURRENT_TARGET_NAME} log android ${CURRENT_EXTERNAL_SHARED_LIBRARIES} ${CURRENT_SHARED_LIBRARIES})
+target_link_libraries(${CURRENT_TARGET_NAME} log android ${CURRENT_SHARED_LIBRARIES})
 set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES COMPILE_DEFINITIONS "__STDC_INT64__;LINUX;ANDROID")	# PLCore needs the preprocessor definitions "LINUX" and "ANDROID"
 
 
@@ -124,4 +122,4 @@ set(CURRENT_SHARED_LIBRARIES
 )
 
 # Create Android apk file (macro from "<PixelLight>/cmake/Android/Apk.cmake")
-android_create_apk("${CURRENT_TARGET_NAME}" "${CMAKE_BINARY_DIR}/apk" "${CURRENT_EXTERNAL_SHARED_LIBRARIES}" "${CURRENT_SHARED_LIBRARIES}" "${CURRENT_ASSETS}" "Data")
+android_create_apk("${CURRENT_TARGET_NAME}" "${CMAKE_BINARY_DIR}/apk" "${CURRENT_SHARED_LIBRARIES}" "${CURRENT_ASSETS}" "Data")

@@ -6,6 +6,12 @@
   "Release" as expected. So, we need to ensure the CMake variable CMAKE_BUILD_TYPE exists and has a value, in case it's an empty string assign "Release"
   to make it easier to find this variable within the CMake GUI (looks like a CMake cache problem?). Thomas noticed this while adding debug support
   to the "PixelLightAndroid" example project.
+- After Thomas made the Android debug support kickoff, I now also had a look into it and was able to re-simplify certain stuff. A single shared libaries
+  list within "Apk.cmake" and "PixelLightAndroid" is now sufficient. It appears that the main issue was that "FindPixelLight.cmake" wasn't updating it's
+  variables after setting "CMAKE_BUILD_TYPE" from "Release" to "Debug".
+  -> The release APK file size of the Android test project "PixelLightAndroid" is 12,8 MiB and the device is showing me that this App requires 31 MiB memory
+  -> The debug APK file size of the Android test project "PixelLightAndroid" is 76,4 MiB and the device is showing me that this App requires 364 MiB memory
+  -> Running the bigger debug version of "PixelLightAndroid" was working as well without issues. Next stop: Playing around with remote debugging via GDB.
 
 
 
