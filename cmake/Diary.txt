@@ -12,6 +12,7 @@
   -> The release APK file size of the Android test project "PixelLightAndroid" is 12,8 MiB and the device is showing me that this App requires 31 MiB memory
   -> The debug APK file size of the Android test project "PixelLightAndroid" is 76,4 MiB and the device is showing me that this App requires 364 MiB memory
   -> Running the bigger debug version of "PixelLightAndroid" was working as well without issues. Next stop: Playing around with remote debugging via GDB.
+- Android-Toolchain: Added CMAKE_GDB"-variable and "CMAKE_GDBSERVER"-variable to have easy access to the GDB executables
 
 
 

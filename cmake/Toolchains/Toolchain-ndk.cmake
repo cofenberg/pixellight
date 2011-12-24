@@ -19,6 +19,8 @@ set(CMAKETOOLS_CONFIG_NO_FULL_CONTROL	1)	# Don't dare to just reset carefully ch
 # Changes in the following third party script
 # [CHANGED] Do not set output paths, this is done by PixelLight's build system
 # [CHANGED] Changed default Android API level from 8 to 9 (we need native EGL and native activity introduced in this version)
+# [CHANGED] Added "CMAKE_GDB"-variable
+# [CHANGED] Added "CMAKE_GDBSERVER"-variable
 
 
 # ----------------------------------------------------------------------------
@@ -247,6 +249,8 @@ set( CMAKE_OBJCOPY      "${ANDROID_NDK_TOOLCHAIN_ROOT}/bin/arm-linux-androideabi
 set( CMAKE_OBJDUMP      "${ANDROID_NDK_TOOLCHAIN_ROOT}/bin/arm-linux-androideabi-objdump${TOOL_OS_SUFFIX}" CACHE PATH "objdump" FORCE )
 set( CMAKE_STRIP        "${ANDROID_NDK_TOOLCHAIN_ROOT}/bin/arm-linux-androideabi-strip${TOOL_OS_SUFFIX}"   CACHE PATH "strip" FORCE )
 set( CMAKE_RANLIB       "${ANDROID_NDK_TOOLCHAIN_ROOT}/bin/arm-linux-androideabi-ranlib${TOOL_OS_SUFFIX}"  CACHE PATH "ranlib" FORCE )
+set( CMAKE_GDB          "${ANDROID_NDK_TOOLCHAIN_ROOT}/bin/arm-linux-androideabi-gdb${TOOL_OS_SUFFIX}"     CACHE PATH "gdb" FORCE )			# [CHANGED] Added
+set( CMAKE_GDBSERVER    "${ANDROID_NDK_TOOLCHAIN_ROOT}/bin/../../gdbserver"                                CACHE PATH "gdbserver" FORCE )	# [CHANGED] Added
 
 #setup build targets, mutually exclusive
 set( PossibleArmTargets "armeabi;armeabi-v7a;armeabi-v7a with NEON;armeabi-v7a with VFPV3" )
