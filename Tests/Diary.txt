@@ -1,3 +1,10 @@
+>> 24.12.2011
+[CO]
+- "PixelLightAndroid": The name of the release version of the Test-App is now "PLAndroid" and the debug version is named "PLAndroidD". "PixelLightAndroid" was
+  to long making it impossible to see in the Android App menu which one of the two Apps was the release and which the debug version.
+
+
+
 >> 20.12.2011
 [CO]
 - I played around with the current "PLUnitTestsPerformance" version. I was a little bit surprised when I saw the following extreme results

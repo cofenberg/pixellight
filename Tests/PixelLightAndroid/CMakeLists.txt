@@ -16,9 +16,12 @@ endif()
 #set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR})
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_LIST_DIR}/../../Tools)	# For this test, don't duplicate the "FindPixelLight.cmake"-file
 
-# Define the project, use the current directory name as project name
-get_filename_component(CURRENT_TARGET_NAME ${CMAKE_CURRENT_LIST_DIR} NAME_WE)
-set(CURRENT_TARGET_NAME ${CURRENT_TARGET_NAME}${suffix})
+# Set the project name (= App name)
+#get_filename_component(CURRENT_TARGET_NAME ${CMAKE_CURRENT_LIST_DIR} NAME_WE)	# Use the current directory name as project name
+set(CURRENT_TARGET_NAME "PLAndroid")											# Set a project name by hand
+set(CURRENT_TARGET_NAME "${CURRENT_TARGET_NAME}${suffix}")						# Add suffix (example result: "PLAndroid" for release and "PLAndroidD" for debug)
+
+# Define the project
 project(${CURRENT_TARGET_NAME})
 
 # Add the source code directory
