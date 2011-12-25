@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/PLCore.h>
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarStringTreeItem.h"
 
 

@@ -29,7 +29,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/PLCoreWindowsIncludes.h>
-#include <PLCore/PLCore.h>
 #include "PLRendererOpenGL/Context.h"
 
 

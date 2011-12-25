@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/PLCore.h>
 #include "PLRendererOpenGL/PLRendererOpenGL.h"
 #if defined(LINUX) && !defined(APPLE)
 	// Required for "PFNGLXSWAPINTERVALSGIPROC" ("GLX_SGI_swap_control"-extension)

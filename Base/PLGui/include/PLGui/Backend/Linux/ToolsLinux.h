@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/PLCore.h>
 #include <PLGraphics/Color/Color4.h>
 #include "PLGui/PLGui.h"
 #include "PLGui/PLGuiLinuxIncludes.h"

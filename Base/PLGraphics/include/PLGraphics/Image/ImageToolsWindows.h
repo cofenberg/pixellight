@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/PLCore.h>
 #include <PLCore/PLCoreWindowsIncludes.h>
 #include "PLGraphics/PLGraphics.h"
 

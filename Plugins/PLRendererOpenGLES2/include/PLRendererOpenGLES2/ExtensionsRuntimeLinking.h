@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/PLCore.h>
 #include "PLRendererOpenGLES2/Context.h"
 #include "PLRendererOpenGLES2/Extensions.h"
 
