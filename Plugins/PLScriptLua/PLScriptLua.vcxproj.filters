@@ -42,12 +42,6 @@
     <ClInclude Include="include\PLScriptLua\PLScriptLua.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLScriptLua\PLScriptLuaLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScriptLua\PLScriptLuaWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLScriptLua\LuaContext.h">
       <Filter>Source Files</Filter>
     </ClInclude>

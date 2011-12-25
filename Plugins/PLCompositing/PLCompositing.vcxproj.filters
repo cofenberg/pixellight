@@ -249,12 +249,6 @@
     <ClInclude Include="include\PLCompositing\PLCompositing.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLCompositing\PLCompositingLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLCompositing\PLCompositingWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLCompositing\SRPBackground.h">
       <Filter>Source Files</Filter>
     </ClInclude>

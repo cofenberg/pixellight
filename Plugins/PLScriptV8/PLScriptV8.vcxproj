@@ -267,8 +267,6 @@ copy ..\..\External\_Windows_x86_64\V8\bin\v8.dll ..\..\Bin\Runtime\x64
   <ItemGroup>
     <ClInclude Include="include\PLScriptV8\Script.h" />
     <ClInclude Include="include\PLScriptV8\PLScriptV8.h" />
-    <ClInclude Include="include\PLScriptV8\PLScriptV8Linux.h" />
-    <ClInclude Include="include\PLScriptV8\PLScriptV8Windows.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Base\PLCore\Diary.txt" />

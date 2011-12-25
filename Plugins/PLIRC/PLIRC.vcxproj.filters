@@ -39,12 +39,6 @@
     <ClInclude Include="include\PLIRC\PLIRC.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLIRC\PLIRCLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLIRC\PLIRCWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLIRC\Topic.h">
       <Filter>Source Files</Filter>
     </ClInclude>

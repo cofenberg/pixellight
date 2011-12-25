@@ -260,8 +260,6 @@ copy build\release_64\PLGuiXmlText.lib ..\..\Bin\Lib\x64\
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLGuiXmlText\PLGuiXmlText.h" />
-    <ClInclude Include="include\PLGuiXmlText\PLGuiXmlTextLinux.h" />
-    <ClInclude Include="include\PLGuiXmlText\PLGuiXmlTextWindows.h" />
     <ClInclude Include="include\PLGuiXmlText\XmlTextBreak.h" />
     <ClInclude Include="include\PLGuiXmlText\XmlTextElement.h" />
     <ClInclude Include="include\PLGuiXmlText\XmlTextImage.h" />

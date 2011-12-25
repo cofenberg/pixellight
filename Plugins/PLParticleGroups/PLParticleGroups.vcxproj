@@ -288,8 +288,6 @@ copy build\release_x64\PLParticleGroups.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLParticleGroups\PGSpring.h" />
     <ClInclude Include="include\PLParticleGroups\PGStretch.h" />
     <ClInclude Include="include\PLParticleGroups\PLParticleGroups.h" />
-    <ClInclude Include="include\PLParticleGroups\PLParticleGroupsLinux.h" />
-    <ClInclude Include="include\PLParticleGroups\PLParticleGroupsWindows.h" />
     <ClInclude Include="include\PLParticleGroups\SNParticleGroup.h" />
   </ItemGroup>
   <ItemGroup>

@@ -33,12 +33,6 @@
     <ClInclude Include="include\PLDatabaseMySQL\PLDatabaseMySQL.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLDatabaseMySQL\PLDatabaseMySQLLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLDatabaseMySQL\PLDatabaseMySQLWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />

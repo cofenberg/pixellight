@@ -330,8 +330,6 @@ copy build\release_x64\PLPhysics.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLPhysics\JointUniversal.h" />
     <ClInclude Include="include\PLPhysics\JointUpVector.h" />
     <ClInclude Include="include\PLPhysics\PLPhysics.h" />
-    <ClInclude Include="include\PLPhysics\PLPhysicsLinux.h" />
-    <ClInclude Include="include\PLPhysics\PLPhysicsWindows.h" />
     <ClInclude Include="include\PLPhysics\Sensor.h" />
     <ClInclude Include="include\PLPhysics\SensorAABoundingBox.h" />
     <ClInclude Include="include\PLPhysics\SensorRaycast.h" />

@@ -396,12 +396,6 @@
     <ClInclude Include="include\PLScene\PLScene.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLScene\PLSceneLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\PLSceneWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SCCell.h">
       <Filter>Scene</Filter>
     </ClInclude>

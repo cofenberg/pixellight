@@ -50,27 +50,4 @@
 #endif
 
 
-//[-------------------------------------------------------]
-//[ Import/Export                                         ]
-//[-------------------------------------------------------]
-#ifdef PLRENDEREROPENGL_EXPORTS
-	#if defined(HAVE_VISIBILITY_ATTR)
-		// To export classes, methods and variables
-		#define PLRENDEREROPENGL_API __attribute__ ((visibility("default")))
-	#else
-		// To export classes, methods and variables
-		#define PLRENDEREROPENGL_API
-	#endif
-
-	// To export RTTI elements
-	#define PLRENDEREROPENGL_RTTI_EXPORT 1
-#else
-	// To import classes, methods and variables
-	#define PLRENDEREROPENGL_API
-
-	// To import RTTI elements
-	#define PLRENDEREROPENGL_RTTI_EXPORT 0
-#endif
-
-
 #endif // __PLRENDEREROPENGL_LINUX_H__

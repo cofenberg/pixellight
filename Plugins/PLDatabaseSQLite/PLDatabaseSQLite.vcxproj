@@ -267,8 +267,6 @@ copy build\release_x64\PLDatabaseSQLite.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLDatabaseSQLite\DatabaseQuery.h" />
     <ClInclude Include="include\PLDatabaseSQLite\Database.h" />
     <ClInclude Include="include\PLDatabaseSQLite\PLDatabaseSQLite.h" />
-    <ClInclude Include="include\PLDatabaseSQLite\PLDatabaseSQLiteLinux.h" />
-    <ClInclude Include="include\PLDatabaseSQLite\PLDatabaseSQLiteWindows.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Base\PLDatabase\Diary.txt" />

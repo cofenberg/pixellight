@@ -24,12 +24,6 @@
     <ClInclude Include="include\99TestPlugin\99TestPlugin.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\99TestPlugin\99TestPluginLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\99TestPlugin\99TestPluginWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\99TestPlugin\TestClass1.h">
       <Filter>Source Files</Filter>
     </ClInclude>

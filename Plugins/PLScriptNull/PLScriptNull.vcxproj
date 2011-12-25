@@ -263,8 +263,6 @@ copy build\release_x64\PLScriptNull.lib ..\..\Bin\Lib\x64\
   <ItemGroup>
     <ClInclude Include="include\PLScriptNull\Script.h" />
     <ClInclude Include="include\PLScriptNull\PLScriptNull.h" />
-    <ClInclude Include="include\PLScriptNull\PLScriptNullLinux.h" />
-    <ClInclude Include="include\PLScriptNull\PLScriptNullWindows.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Base\PLCore\Diary.txt" />

@@ -269,8 +269,6 @@ copy ..\..\External\_Windows_x86_64\MySQL\bin\libmysql.dll ..\..\Bin\Runtime\x64
     <ClInclude Include="include\PLDatabaseMySQL\DatabaseQuery.h" />
     <ClInclude Include="include\PLDatabaseMySQL\DatabaseQueryResult.h" />
     <ClInclude Include="include\PLDatabaseMySQL\PLDatabaseMySQL.h" />
-    <ClInclude Include="include\PLDatabaseMySQL\PLDatabaseMySQLLinux.h" />
-    <ClInclude Include="include\PLDatabaseMySQL\PLDatabaseMySQLWindows.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Base\PLDatabase\Diary.txt" />

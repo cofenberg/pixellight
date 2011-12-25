@@ -33,12 +33,6 @@
     <ClInclude Include="include\PLDatabaseNull\PLDatabaseNull.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLDatabaseNull\PLDatabaseNullLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLDatabaseNull\PLDatabaseNullWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />

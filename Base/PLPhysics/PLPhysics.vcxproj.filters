@@ -251,12 +251,6 @@
     <ClInclude Include="include\PLPhysics\PLPhysics.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLPhysics\PLPhysicsLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLPhysics\PLPhysicsWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLPhysics\Sensor.h">
       <Filter>Source Files</Filter>
     </ClInclude>

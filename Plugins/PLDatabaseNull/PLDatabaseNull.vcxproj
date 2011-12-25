@@ -267,8 +267,6 @@ copy build\release_x64\PLDatabaseNull.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLDatabaseNull\DatabaseQuery.h" />
     <ClInclude Include="include\PLDatabaseNull\DatabaseQueryResult.h" />
     <ClInclude Include="include\PLDatabaseNull\PLDatabaseNull.h" />
-    <ClInclude Include="include\PLDatabaseNull\PLDatabaseNullLinux.h" />
-    <ClInclude Include="include\PLDatabaseNull\PLDatabaseNullWindows.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Base\PLDatabase\Diary.txt" />

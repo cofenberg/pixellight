@@ -300,8 +300,6 @@ copy build\release_x64\PLMesh.lib ..\..\Bin\Lib\x64\
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLMesh\PLMesh.h" />
-    <ClInclude Include="include\PLMesh\PLMeshLinux.h" />
-    <ClInclude Include="include\PLMesh\PLMeshWindows.h" />
     <ClInclude Include="include\PLMesh\Creator\MeshCreator.h" />
     <CustomBuildStep Include="include\PLMesh\Creator\MeshCreatorBezierPatch.h" />
     <CustomBuildStep Include="include\PLMesh\Creator\MeshCreatorCappedCylinder.h" />

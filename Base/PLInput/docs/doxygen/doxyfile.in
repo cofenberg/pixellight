@@ -692,9 +692,7 @@ RECURSIVE              = YES
 # subdirectory from a directory tree whose root is specified with the INPUT tag. 
 # Note that relative paths are relative to directory from which doxygen is run.
 
-EXCLUDE                = ../../include/PLInput/PLInputWindows.h \
-                         ../../include/PLInput/PLInputWindowsIncludes.h \
-                         ../../include/PLInput/PLInputLinux.h \
+EXCLUDE                = ../../include/PLInput/PLInputWindowsIncludes.h \
                          ../../include/PLInput/PLInputLinuxIncludes.h \
                          ../../include/PLInput/Backend/
 

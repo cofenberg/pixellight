@@ -53,12 +53,6 @@
     <ClInclude Include="include\PLSound\PLSound.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLSound\PLSoundLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLSound\PLSoundWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLSound\Resource.h">
       <Filter>Source Files</Filter>
     </ClInclude>

@@ -270,8 +270,6 @@ copy ..\..\External\_Windows_x86_64\Python\bin\python27.dll ..\..\Bin\Runtime\x6
     <ClInclude Include="include\PLScriptPython\PythonContext.h" />
     <ClInclude Include="include\PLScriptPython\Script.h" />
     <ClInclude Include="include\PLScriptPython\PLScriptPython.h" />
-    <ClInclude Include="include\PLScriptPython\PLScriptPythonLinux.h" />
-    <ClInclude Include="include\PLScriptPython\PLScriptPythonWindows.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Base\PLCore\Diary.txt" />

@@ -258,8 +258,6 @@ copy build\release_x86\99TestPlugin.lib ..\..\Bin\Lib\x86
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\99TestPlugin\99TestPlugin.h" />
-    <ClInclude Include="include\99TestPlugin\99TestPluginLinux.h" />
-    <ClInclude Include="include\99TestPlugin\99TestPluginWindows.h" />
     <ClInclude Include="include\99TestPlugin\TestClass1.h" />
     <ClInclude Include="include\99TestPlugin\TestClass2.h" />
     <ClInclude Include="include\99TestPlugin\TestClass3.h" />

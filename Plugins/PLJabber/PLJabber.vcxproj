@@ -248,8 +248,6 @@ copy build\release_x64\PLJabber.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLJabber\JabberID.h" />
     <ClInclude Include="include\PLJabber\OutputStream.h" />
     <ClInclude Include="include\PLJabber\PLJabber.h" />
-    <ClInclude Include="include\PLJabber\PLJabberLinux.h" />
-    <ClInclude Include="include\PLJabber\PLJabberWindows.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />

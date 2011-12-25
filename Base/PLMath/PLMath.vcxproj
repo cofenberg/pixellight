@@ -310,8 +310,6 @@ copy build\release_x64\PLMath.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLMath\Plane.h" />
     <ClInclude Include="include\PLMath\PlaneSet.h" />
     <ClInclude Include="include\PLMath\PLMath.h" />
-    <ClInclude Include="include\PLMath\PLMathLinux.h" />
-    <ClInclude Include="include\PLMath\PLMathWindows.h" />
     <ClInclude Include="include\PLMath\Polygon.h" />
     <ClInclude Include="include\PLMath\Quadtree.h" />
     <ClInclude Include="include\PLMath\Quaternion.h" />

@@ -261,8 +261,6 @@ copy build\release_x64\PLIRC.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLIRC\IRCClient.h" />
     <ClInclude Include="include\PLIRC\IRCConnection.h" />
     <ClInclude Include="include\PLIRC\PLIRC.h" />
-    <ClInclude Include="include\PLIRC\PLIRCLinux.h" />
-    <ClInclude Include="include\PLIRC\PLIRCWindows.h" />
     <ClInclude Include="include\PLIRC\Topic.h" />
     <ClInclude Include="include\PLIRC\User.h" />
   </ItemGroup>

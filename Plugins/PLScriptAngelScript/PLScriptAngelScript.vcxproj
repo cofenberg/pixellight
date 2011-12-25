@@ -276,8 +276,6 @@ copy ..\..\External\_Windows_x86_64\AngelScript\bin\angelscript.dll ..\..\Bin\Ru
     <ClInclude Include="include\PLScriptAngelScript\AngelScriptContext.h" />
     <ClInclude Include="include\PLScriptAngelScript\Script.h" />
     <ClInclude Include="include\PLScriptAngelScript\PLScriptAngelScript.h" />
-    <ClInclude Include="include\PLScriptAngelScript\PLScriptAngelScriptLinux.h" />
-    <ClInclude Include="include\PLScriptAngelScript\PLScriptAngelScriptWindows.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Base\PLCore\Diary.txt" />

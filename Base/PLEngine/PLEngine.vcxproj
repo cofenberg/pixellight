@@ -317,8 +317,6 @@ copy build\release_x64\PLEngine.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLEngine\Controller\SNMPhysicsCharacterController.h" />
     <ClInclude Include="include\PLEngine\Controller\SNPhysicsMouseInteraction.h" />
     <ClInclude Include="include\PLEngine\PLEngine.h" />
-    <ClInclude Include="include\PLEngine\PLEngineLinux.h" />
-    <ClInclude Include="include\PLEngine\PLEngineWindows.h" />
     <ClInclude Include="include\PLEngine\Picking\MousePicking.h" />
     <ClInclude Include="include\PLEngine\Picking\Picking.h" />
     <ClInclude Include="include\PLEngine\Picking\PickingResult.h" />

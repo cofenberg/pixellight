@@ -324,12 +324,6 @@
     <ClInclude Include="include\PLRenderer\PLRenderer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLRenderer\PLRendererLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLRenderer\PLRendererWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLRenderer\RendererContext.h">
       <Filter>Source Files</Filter>
     </ClInclude>

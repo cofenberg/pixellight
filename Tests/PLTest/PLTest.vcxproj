@@ -259,8 +259,6 @@ copy build\release_x64\PLTest.lib ..\..\Bin\Lib\x64\
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLTest\PLTest.h" />
-    <ClInclude Include="include\PLTest\PLTestLinux.h" />
-    <ClInclude Include="include\PLTest\PLTestWindows.h" />
     <ClInclude Include="include\PLTest\TestCase.h" />
     <ClInclude Include="include\PLTest\TestManager.h" />
   </ItemGroup>

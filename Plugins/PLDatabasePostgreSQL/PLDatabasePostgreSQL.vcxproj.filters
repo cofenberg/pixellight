@@ -33,12 +33,6 @@
     <ClInclude Include="include\PLDatabasePostgreSQL\PLDatabasePostgreSQL.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLDatabasePostgreSQL\PLDatabasePostgreSQLLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLDatabasePostgreSQL\PLDatabasePostgreSQLWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />

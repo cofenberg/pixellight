@@ -36,16 +36,26 @@
 
 
 //[-------------------------------------------------------]
-//[ OS definitions                                        ]
+//[ Includes                                              ]
 //[-------------------------------------------------------]
-// Windows platform
-#ifdef WIN32
-	#include "PLScriptPython/PLScriptPythonWindows.h"
-#endif
+#include <PLCore/PLCore.h>
 
-// Linux platform
-#ifdef LINUX
-	#include "PLScriptPython/PLScriptPythonLinux.h"
+
+//[-------------------------------------------------------]
+//[ Import/Export                                         ]
+//[-------------------------------------------------------]
+#ifdef PLSCRIPTPYTHON_EXPORTS
+	// To export classes, methods and variables
+	#define PLSCRIPTPYTHON_API			PL_GENERIC_API_EXPORT
+
+	// To export RTTI elements
+	#define PLSCRIPTPYTHON_RTTI_EXPORT	PL_GENERIC_RTTI_EXPORT
+#else
+	// To import classes, methods and variables
+	#define PLSCRIPTPYTHON_API			PL_GENERIC_API_IMPORT
+
+	// To import RTTI elements
+	#define PLSCRIPTPYTHON_RTTI_EXPORT	PL_GENERIC_RTTI_IMPORT
 #endif
 
 

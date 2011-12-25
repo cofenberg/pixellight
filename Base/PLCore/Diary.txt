@@ -1,3 +1,42 @@
+>> 25.12.2011
+[CO]
+- Over the last past days, Stephan reported some issues with RTTI classes being instanced multiple times. A known issue. Added Stephans patches adding some more
+  compiler checks and finally did the export/import refactoring discussed some time ago. The required compiler/definition checks are getting more complex
+  as we add support for more platforms and compiler versions. PLCore now defines "PL_GENERIC_API_EXPORT" and "PL_GENERIC_RTTI_EXPORT" for export as
+  well as "PL_GENERIC_API_IMPORT" and "PL_GENERIC_RTTI_IMPORT" for import. Instead of performing the compiler/definition check in every project, those
+  projects should now use this new definitions. Updated the projects performing export/import and removed no longer required files:
+    - "PLDatabase": Removed "PLDatabaseLinux.h" & "PLDatabaseWindows.h"
+    - "PLMath": Removed "PLMathLinux.h" & "PLMathWindows.h"
+    - "PLGraphics": Removed "PLGraphicsLinux.h" & "PLGraphicsWindows.h"
+    - "PLInput": Removed "PLInputLinux.h" & "PLInputWindows.h"
+    - "PLGui": Removed "PLGuiLinux.h" & "PLGuiWindows.h"
+    - "PLRenderer": Removed "PLRendererLinux.h" & "PLRendererWindows.h"
+    - "PLMesh": Removed "PLMeshLinux.h" & "PLMeshWindows.h"
+    - "PLScene": Removed "PLSceneLinux.h" & "PLSceneWindows.h"
+    - "PLEngine": Removed "PLEngineLinux.h" & "PLEngineWindows.h"
+    - "PLPhysics": Removed "PLPhysicsLinux.h" & "PLPhysicsWindows.h"
+    - "PLSound": Removed "PLSoundLinux.h" & "PLSoundWindows.h"
+    - "PLIRC": Removed "PLIRCLinux.h" & "PLIRCWindows.h"
+    - "PLJabber": Removed "PLJabberLinux.h" & "PLJabberWindows.h"
+    - "PLParticleGroups": Removed "PLParticleGroupsLinux.h" & "PLParticleGroupsWindows.h"
+    - "PLSPARK_PL": Removed "PLSPARK_PLLinux.h" & "PLSPARK_PLWindows.h"
+    - "PLlibRocket": Removed "PLlibRocketLinux.h" & "PLlibRocketWindows.h"
+    - "PLCompositing": Removed "PLCompositingLinux.h" & "PLCompositingWindows.h"
+    - "PLGuiXmlText": Removed "PLGuiXmlTextLinux.h" & "PLGuiXmlTextWindows.h"
+    - "PLFrontendPLGui": Removed "PLFrontendPLGuiLinux.h" & "PLFrontendPLGuiWindows.h"
+    - "PLDatabaseSQLite": Removed "PLDatabaseSQLiteLinux.h" & "PLDatabaseSQLiteWindows.h"
+    - "PLDatabaseMySQL": Removed "PLDatabaseMySQLLinux.h" & "PLDatabaseMySQLWindows.h"
+    - "PLDatabaseNull": Removed "PLDatabaseNullLinux.h" & "PLDatabaseNullWindows.h"
+    - "PLDatabasePostgreSQL": Removed "PLDatabasePostgreSQLLinux.h" & "PLDatabasePostgreSQLWindows.h"
+    - "PLScriptV8": Removed "PLScriptV8Linux.h" & "PLScriptV8Windows.h"
+    - "PLScriptPython": Removed "PLScriptPythonLinux.h" & "PLScriptPythonWindows.h"
+    - "PLScriptNull": Removed "PLScriptNullLinux.h" & "PLScriptNullWindows.h"
+    - "PLScriptLua": Removed "PLScriptLuaLinux.h" & "PLScriptLuaWindows.h"
+    - "PLScriptAngelScript": Removed "PLScriptAngelScriptLinux.h" & "PLScriptAngelScriptWindows.h"
+    - "99TestPlugin": Removed "99TestPluginLinux.h" & "99TestPluginWindows.h"
+
+
+
 >> 20.12.2011
 [CO]
 - "String"-class: Added "String &Insert(char nCharacter, uint32 nPos)" and "String &Insert(wchar_t nCharacter, uint32 nPos)" (there were already such

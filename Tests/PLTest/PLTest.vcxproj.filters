@@ -21,12 +21,6 @@
     <ClInclude Include="include\PLTest\PLTest.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLTest\PLTestLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTest\PLTestWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLTest\TestCase.h">
       <Filter>Source Files</Filter>
     </ClInclude>

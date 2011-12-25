@@ -112,26 +112,28 @@ PL_WARNING_DISABLE(4481) // "nonstandard extension used: override specifier 'ove
 
 
 //[-------------------------------------------------------]
+//[ Project independent generic export                    ]
+//[-------------------------------------------------------]
+// To export classes, methods and variables
+#define PL_GENERIC_API_EXPORT	__declspec(dllexport)
+
+// To export RTTI elements
+#define PL_GENERIC_RTTI_EXPORT	1
+
+
+//[-------------------------------------------------------]
+//[ Project independent generic import                    ]
+//[-------------------------------------------------------]
+// To import classes, methods and variables
+#define PL_GENERIC_API_IMPORT	__declspec(dllimport)
+
+// To import RTTI elements
+#define PL_GENERIC_RTTI_IMPORT	0
+
+
+//[-------------------------------------------------------]
 //[ Import/Export                                         ]
 //[-------------------------------------------------------]
-#ifdef PLCORE_STATIC
-	// Static library
-	#define PLCORE_API
-	#define PLCORE_RTTI_EXPORT 1
-#elif defined(PLCORE_EXPORTS)
-	// To export classes, methods and variables
-	#define PLCORE_API __declspec(dllexport)
-
-	// To export RTTI elements
-	#define PLCORE_RTTI_EXPORT 1
-#else
-	// To import classes, methods and variables
-	#define PLCORE_API __declspec(dllimport)
-
-	// To import RTTI elements
-	#define PLCORE_RTTI_EXPORT 0
-#endif
-
 // To export/import class templates
 #define PLCORE_TMPL
 

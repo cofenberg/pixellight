@@ -33,12 +33,6 @@
     <ClInclude Include="include\PLDatabaseSQLite\PLDatabaseSQLite.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLDatabaseSQLite\PLDatabaseSQLiteLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLDatabaseSQLite\PLDatabaseSQLiteWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />

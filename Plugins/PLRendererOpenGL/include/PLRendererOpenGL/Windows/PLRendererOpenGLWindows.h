@@ -46,22 +46,4 @@
 #endif
 
 
-//[-------------------------------------------------------]
-//[ Import/Export                                         ]
-//[-------------------------------------------------------]
-#ifdef PLRENDEREROPENGL_EXPORTS
-	// To export classes, methods and variables
-	#define PLRENDEREROPENGL_API __declspec(dllexport)
-
-	// To export RTTI elements
-	#define PLRENDEREROPENGL_RTTI_EXPORT 1
-#else
-	// To import classes, methods and variables
-	#define PLRENDEREROPENGL_API __declspec(dllimport)
-
-	// To import RTTI elements
-	#define PLRENDEREROPENGL_RTTI_EXPORT 0
-#endif
-
-
 #endif // __PLRENDEREROPENGL_WINDOWS_H__

@@ -462,9 +462,7 @@ copy build\release_x64\PLGui.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLGui\Backend\Null\WidgetNull.h" />
     <ClInclude Include="include\PLGui\PLGui.h" />
     <ClInclude Include="include\PLGui\PLGuiDefinitions.h" />
-    <ClInclude Include="include\PLGui\PLGuiLinux.h" />
     <ClInclude Include="include\PLGui\PLGuiLinuxIncludes.h" />
-    <ClInclude Include="include\PLGui\PLGuiWindows.h" />
     <ClInclude Include="include\PLGui\PLGuiWindowsIncludes.h" />
     <ClInclude Include="include\PLGui\Backend\ClipBoardImpl.h" />
     <ClInclude Include="include\PLGui\Backend\CursorImpl.h" />

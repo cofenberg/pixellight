@@ -374,8 +374,6 @@ copy build\release_x64\SPARK_PL.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\SPARK_PL\RenderingAPIs\PixelLight\SPK_PLQuadRendererShaders.h" />
     <ClInclude Include="include\SPARK_PL\RenderingAPIs\PixelLight\SPK_PLRenderer.h" />
     <ClInclude Include="include\SPARK_PL\SPARK_PL.h" />
-    <ClInclude Include="include\SPARK_PL\SPARK_PLLinux.h" />
-    <ClInclude Include="include\SPARK_PL\SPARK_PLWindows.h" />
     <ClInclude Include="include\SPARK_PL\SPK.h" />
     <ClInclude Include="src\RenderingAPIs\PixelLight\SPK_PLLineRendererShaders_Cg.h" />
     <ClInclude Include="src\RenderingAPIs\PixelLight\SPK_PLLineRendererShaders_GLSL.h" />

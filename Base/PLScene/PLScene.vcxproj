@@ -372,8 +372,6 @@ copy build\release_x64\PLScene.lib ..\..\Bin\Lib\x64\
   <ItemGroup>
     <ClInclude Include="include\PLScene\Application\SceneApplication.h" />
     <ClInclude Include="include\PLScene\PLScene.h" />
-    <ClInclude Include="include\PLScene\PLSceneLinux.h" />
-    <ClInclude Include="include\PLScene\PLSceneWindows.h" />
     <ClInclude Include="include\PLScene\Scene\SCCell.h" />
     <ClInclude Include="include\PLScene\Scene\SceneContainer.h" />
     <ClInclude Include="include\PLScene\Scene\SceneContext.h" />

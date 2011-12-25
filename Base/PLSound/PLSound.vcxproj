@@ -264,8 +264,6 @@ copy build\release_x64\PLSound.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLSound\Buffer.h" />
     <ClInclude Include="include\PLSound\BufferHandler.h" />
     <ClInclude Include="include\PLSound\PLSound.h" />
-    <ClInclude Include="include\PLSound\PLSoundLinux.h" />
-    <ClInclude Include="include\PLSound\PLSoundWindows.h" />
     <ClInclude Include="include\PLSound\Resource.h" />
     <ClInclude Include="include\PLSound\ResourceHandler.h" />
     <ClInclude Include="include\PLSound\SoundManager.h" />
