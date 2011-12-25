@@ -351,8 +351,6 @@ copy build\release_x64\PLRenderer.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLRenderer\Application\Config.h" />
     <ClInclude Include="include\PLRenderer\Application\RendererApplication.h" />
     <ClInclude Include="include\PLRenderer\PLRenderer.h" />
-    <ClInclude Include="include\PLRenderer\PLRendererLinux.h" />
-    <ClInclude Include="include\PLRenderer\PLRendererWindows.h" />
     <ClInclude Include="include\PLRenderer\RendererContext.h" />
     <ClInclude Include="include\PLRenderer\Renderer\Backend\FontManagerBackend.h" />
     <ClInclude Include="include\PLRenderer\Renderer\ProgramUniformBlock.h" />

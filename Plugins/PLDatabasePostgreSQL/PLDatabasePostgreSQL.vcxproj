@@ -287,8 +287,6 @@ copy build\release64\PLDatabasePostgreSQL64.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLDatabasePostgreSQL\DatabaseQuery.h" />
     <ClInclude Include="include\PLDatabasePostgreSQL\DatabaseQueryResult.h" />
     <ClInclude Include="include\PLDatabasePostgreSQL\PLDatabasePostgreSQL.h" />
-    <ClInclude Include="include\PLDatabasePostgreSQL\PLDatabasePostgreSQLLinux.h" />
-    <ClInclude Include="include\PLDatabasePostgreSQL\PLDatabasePostgreSQLWindows.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Base\PLDatabase\Diary.txt" />

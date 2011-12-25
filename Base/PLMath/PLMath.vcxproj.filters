@@ -183,12 +183,6 @@
     <ClInclude Include="include\PLMath\PLMath.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLMath\PLMathLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLMath\PLMathWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLMath\Polygon.h">
       <Filter>Source Files</Filter>
     </ClInclude>

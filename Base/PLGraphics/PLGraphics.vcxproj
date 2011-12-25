@@ -268,9 +268,7 @@ copy build\release_x64\PLGraphics.lib ..\..\Bin\Lib\x64\
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLGraphics\PLGraphics.h" />
-    <ClInclude Include="include\PLGraphics\PLGraphicsLinux.h" />
     <ClInclude Include="include\PLGraphics\PLGraphicsLinuxIncludes.h" />
-    <ClInclude Include="include\PLGraphics\PLGraphicsWindows.h" />
     <ClInclude Include="include\PLGraphics\Image\Image.h" />
     <ClInclude Include="include\PLGraphics\Image\ImageBuffer.h" />
     <ClInclude Include="include\PLGraphics\Image\ImageData.h" />

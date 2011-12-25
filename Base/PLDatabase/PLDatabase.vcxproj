@@ -259,8 +259,6 @@ copy build\release_x64\PLDatabase.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLDatabase\DatabaseQuery.h" />
     <ClInclude Include="include\PLDatabase\DatabaseQueryResult.h" />
     <ClInclude Include="include\PLDatabase\PLDatabase.h" />
-    <ClInclude Include="include\PLDatabase\PLDatabaseLinux.h" />
-    <ClInclude Include="include\PLDatabase\PLDatabaseWindows.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />

@@ -364,9 +364,7 @@ copy build\release_x64\PLInput.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLInput\Input\Devices\SplitTouchPad.h" />
     <ClInclude Include="include\PLInput\PLInput.h" />
     <ClInclude Include="include\PLInput\PLInputDefinitions.h" />
-    <ClInclude Include="include\PLInput\PLInputLinux.h" />
     <ClInclude Include="include\PLInput\PLInputLinuxIncludes.h" />
-    <ClInclude Include="include\PLInput\PLInputWindows.h" />
     <ClInclude Include="include\PLInput\PLInputWindowsIncludes.h" />
     <ClInclude Include="include\PLInput\Input\Controller.h" />
     <ClInclude Include="include\PLInput\Input\InputManager.h" />

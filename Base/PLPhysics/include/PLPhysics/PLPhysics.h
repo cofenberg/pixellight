@@ -36,16 +36,26 @@
 
 
 //[-------------------------------------------------------]
-//[ OS definitions                                        ]
+//[ Includes                                              ]
 //[-------------------------------------------------------]
-// Windows platform
-#ifdef WIN32
-	#include "PLPhysics/PLPhysicsWindows.h"
-#endif
+#include <PLCore/PLCore.h>
 
-// Linux platform
-#ifdef LINUX
-	#include "PLPhysics/PLPhysicsLinux.h"
+
+//[-------------------------------------------------------]
+//[ Import/Export                                         ]
+//[-------------------------------------------------------]
+#ifdef PLPHYSICS_EXPORTS
+	// To export classes, methods and variables
+	#define PLPHYSICS_API			PL_GENERIC_API_EXPORT
+
+	// To export RTTI elements
+	#define PLPHYSICS_RTTI_EXPORT	PL_GENERIC_RTTI_EXPORT
+#else
+	// To import classes, methods and variables
+	#define PLPHYSICS_API			PL_GENERIC_API_IMPORT
+
+	// To import RTTI elements
+	#define PLPHYSICS_RTTI_EXPORT	PL_GENERIC_RTTI_IMPORT
 #endif
 
 

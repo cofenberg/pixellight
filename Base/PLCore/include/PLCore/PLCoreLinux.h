@@ -93,36 +93,38 @@
 
 
 //[-------------------------------------------------------]
-//[ Import/Export                                         ]
+//[ Project independent generic export                    ]
 //[-------------------------------------------------------]
-#ifdef PLCORE_EXPORTS
-	#if defined(PLCORE_STATIC)
-		// To export classes, methods and variables
-		#define PLCORE_API
-
-		// To export RTTI elements
-		#define PLCORE_RTTI_EXPORT 1
-	#elif defined(HAVE_VISIBILITY_ATTR)
-		// To export classes, methods and variables
-		#define PLCORE_API __attribute__ ((visibility("default")))
-
-		// To export RTTI elements
-		#define PLCORE_RTTI_EXPORT 1
-	#else
-		// To export classes, methods and variables
-		#define PLCORE_API
-
-		// To export RTTI elements
-		#define PLCORE_RTTI_EXPORT 1
-	#endif
+// To export classes, methods and variables
+#if defined(HAVE_VISIBILITY_ATTR)
+	#define PL_GENERIC_API_EXPORT __attribute__ ((visibility("default")))
 #else
-	// To import classes, methods and variables
-	#define PLCORE_API
-
-	// To import RTTI elements
-	#define PLCORE_RTTI_EXPORT 0
+	#define PL_GENERIC_API_EXPORT
 #endif
 
+// To export RTTI elements
+#define PL_GENERIC_RTTI_EXPORT 1
+
+
+//[-------------------------------------------------------]
+//[ Project independent generic import                    ]
+//[-------------------------------------------------------]
+// To import classes, methods and variables
+#define PL_GENERIC_API_IMPORT
+
+// To import RTTI elements
+#if defined(HAVE_VISIBILITY_ATTR) && !defined(ALWAYS_RTTI_EXPORT)
+	// To import RTTI elements
+	#define PL_GENERIC_RTTI_IMPORT 0
+#else
+	// When the visibility feature is not used/supported then always "export" RTTI elements
+	#define PL_GENERIC_RTTI_IMPORT 1
+#endif
+
+
+//[-------------------------------------------------------]
+//[ Import/Export                                         ]
+//[-------------------------------------------------------]
 #if defined(HAVE_VISIBILITY_ATTR) && !defined(PLCORE_STATIC)
 		// To import/export class templates
 		#define PLCORE_TMPL __attribute__ ((visibility("default")))

@@ -24,12 +24,6 @@
     <ClInclude Include="include\PLScriptPython\PLScriptPython.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLScriptPython\PLScriptPythonLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScriptPython\PLScriptPythonWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLScriptPython\PythonContext.h">
       <Filter>Source Files</Filter>
     </ClInclude>

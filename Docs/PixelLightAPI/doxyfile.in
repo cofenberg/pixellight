@@ -733,51 +733,26 @@ EXCLUDE                = ../../Base/PLCore/include/PLCore/FileSystem/Windows/ \
                          ../../Base/PLCore/include/PLCore/PLCoreLinux.h \
                          ../../Base/PLCore/include/PLCore/PLCoreWindowsIncludes.h \
                          ../../Base/PLCore/include/PLCore/PLCoreLinuxIncludes.h \
-                         ../../Base/PLCore/include/PLScript/PLScript.h \
-                         ../../Base/PLCore/include/PLScript/PLScriptWindows.h \
-                         ../../Base/PLCore/include/PLScript/PLScriptLinux.h \
                          ../../Base/PLMath/include/PLMath/PLMath.h \
-                         ../../Base/PLMath/include/PLMath/PLMathWindows.h \
-                         ../../Base/PLMath/include/PLMath/PLMathLinux.h \
                          ../../Base/PLGraphics/include/PLGraphics/PLGraphics.h \
-                         ../../Base/PLGraphics/include/PLGraphics/PLGraphicsWindows.h \
-                         ../../Base/PLGraphics/include/PLGraphics/PLGraphicsLinux.h \
                          ../../Base/PLDatabase/include/PLDatabase/PLDatabase.h \
-                         ../../Base/PLDatabase/include/PLDatabase/PLDatabaseWindows.h \
-                         ../../Base/PLDatabase/include/PLDatabase/PLDatabaseLinux.h \
                          ../../Base/PLGui/include/PLGui/PLGui.h \
-                         ../../Base/PLGui/include/PLGui/PLGuiWindows.h \
                          ../../Base/PLGui/include/PLGui/PLGuiWindowsIncludes.h \
-                         ../../Base/PLGui/include/PLGui/PLGuiLinux.h \
                          ../../Base/PLGui/include/PLGui/PLGuiLinuxIncludes.h \
                          ../../Base/PLGui/include/PLGui/Backend/ \
                          ../../Base/PLInput/include/PLInput/PLInput.h \
-                         ../../Base/PLInput/include/PLInput/PLInputWindows.h \
                          ../../Base/PLInput/include/PLInput/PLInputWindowsIncludes.h \
-                         ../../Base/PLInput/include/PLInput/PLInputLinux.h \
                          ../../Base/PLInput/include/PLInput/PLInputLinuxIncludes.h \
                          ../../Base/PLInput/include/PLInput/Backend/ \
                          ../../Base/PLRenderer/include/PLRenderer/PLRenderer.h \
-                         ../../Base/PLRenderer/include/PLRenderer/PLRendererWindows.h \
-                         ../../Base/PLRenderer/include/PLRenderer/PLRendererLinux.h \
                          ../../Base/PLRenderer/include/PLRenderer/Renderer/Backend/ \
                          ../../Base/PLMesh/include/PLMesh/PLMesh.h \
-                         ../../Base/PLMesh/include/PLMesh/PLMeshWindows.h \
-                         ../../Base/PLMesh/include/PLMesh/PLMeshLinux.h \
                          ../../Base/PLScene/include/PLScene/PLScene.h \
-                         ../../Base/PLScene/include/PLScene/PLSceneWindows.h \
-                         ../../Base/PLScene/include/PLScene/PLSceneLinux.h \
                          ../../Base/PLSound/include/PLSound/PLSound.h \
-                         ../../Base/PLSound/include/PLSound/PLSoundWindows.h \
-                         ../../Base/PLSound/include/PLSound/PLSoundLinux.h \
                          ../../Base/PLPhysics/include/PLPhysics/PLPhysics.h \
-                         ../../Base/PLPhysics/include/PLPhysics/PLPhysicsWindows.h \
-                         ../../Base/PLPhysics/include/PLPhysics/PLPhysicsLinux.h \
                          ../../Base/PLPhysics/include/PLPhysics/BodyImpl.h \
                          ../../Base/PLPhysics/include/PLPhysics/JointImpl.h \
-                         ../../Base/PLEngine/include/PLEngine/PLEngine.h \
-                         ../../Base/PLEngine/include/PLEngine/PLEngineWindows.h \
-                         ../../Base/PLEngine/include/PLEngine/PLEngineLinux.h
+                         ../../Base/PLEngine/include/PLEngine/PLEngine.h
 
 # The EXCLUDE_SYMLINKS tag can be used select whether or not files or 
 # directories that are symbolic links (a Unix file system feature) are excluded 

@@ -21,12 +21,6 @@
     <ClInclude Include="include\PLScriptV8\PLScriptV8.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLScriptV8\PLScriptV8Linux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScriptV8\PLScriptV8Windows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />

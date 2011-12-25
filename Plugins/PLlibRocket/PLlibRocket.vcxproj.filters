@@ -11,8 +11,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLlibRocket\PLlibRocket.h" />
-    <ClInclude Include="include\PLlibRocket\PLlibRocketLinux.h" />
-    <ClInclude Include="include\PLlibRocket\PLlibRocketWindows.h" />
     <ClInclude Include="include\PLlibRocket\RenderInterfacePL.h" />
     <ClInclude Include="include\PLlibRocket\SystemInterfacePL.h" />
     <ClInclude Include="include\PLlibRocket\RenderInterfacePLShaders.h" />

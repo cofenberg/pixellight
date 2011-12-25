@@ -84,12 +84,6 @@
     <ClInclude Include="include\PLFrontendPLGui\Compositing\FontPL.h">
       <Filter>Compositing</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGuiLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGuiWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLFrontendPLGui\Frontend.h">
       <Filter>Source Files</Filter>
     </ClInclude>

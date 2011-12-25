@@ -35,16 +35,26 @@
 
 
 //[-------------------------------------------------------]
-//[ OS definitions                                        ]
+//[ Includes                                              ]
 //[-------------------------------------------------------]
-// Win32 platform
-#ifdef WIN32
-	#include "PLGui/PLGuiWindows.h"
-#endif
+#include <PLCore/PLCore.h>
 
-// Linux platform
-#ifdef LINUX
-	#include "PLGui/PLGuiLinux.h"
+
+//[-------------------------------------------------------]
+//[ Import/Export                                         ]
+//[-------------------------------------------------------]
+#ifdef PLGUI_EXPORTS
+	// To export classes, methods and variables
+	#define PLGUI_API			PL_GENERIC_API_EXPORT
+
+	// To export RTTI elements
+	#define PLGUI_RTTI_EXPORT	PL_GENERIC_RTTI_EXPORT
+#else
+	// To import classes, methods and variables
+	#define PLGUI_API			PL_GENERIC_API_IMPORT
+
+	// To import RTTI elements
+	#define PLGUI_RTTI_EXPORT	PL_GENERIC_RTTI_IMPORT
 #endif
 
 

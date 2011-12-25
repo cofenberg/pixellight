@@ -45,12 +45,6 @@
     <ClInclude Include="include\PLJabber\PLJabber.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLJabber\PLJabberLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLJabber\PLJabberWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />

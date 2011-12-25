@@ -48,12 +48,6 @@
     <ClInclude Include="include\PLScriptAngelScript\PLScriptAngelScript.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLScriptAngelScript\PLScriptAngelScriptLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScriptAngelScript\PLScriptAngelScriptWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLScriptAngelScript\AngelScriptContext.h">
       <Filter>Source Files</Filter>
     </ClInclude>

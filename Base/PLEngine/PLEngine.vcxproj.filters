@@ -146,12 +146,6 @@
     <ClInclude Include="include\PLEngine\PLEngine.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLEngine\PLEngineLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLEngine\PLEngineWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLEngine\Picking\MousePicking.h">
       <Filter>Picking</Filter>
     </ClInclude>

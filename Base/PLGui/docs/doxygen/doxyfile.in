@@ -693,9 +693,7 @@ RECURSIVE              = YES
 # Note that relative paths are relative to directory from which doxygen is run.
 
 EXCLUDE                = ../../include/PLGui/PLGui.h \
-                         ../../include/PLGui/PLGuiWindows.h \
                          ../../include/PLGui/PLGuiWindowsIncludes.h \
-                         ../../include/PLGui/PLGuiLinux.h \
                          ../../include/PLGui/PLGuiLinuxIncludes.h \
                          ../../include/PLGui/Backend/
 

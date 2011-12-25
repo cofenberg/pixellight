@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/PLCore.h>	// Only needed for compilers which doesn't have nullptr as a builtin type
 #include "PLFrontendQt/DataModels/PLIntrospectionModel.h"
 
 

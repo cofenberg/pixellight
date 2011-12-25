@@ -46,9 +46,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLGuiXmlText\PLGuiXmlTextWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLGuiXmlText\XmlTextBreak.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -83,9 +80,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLGuiXmlText\PLGuiXmlText.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLGuiXmlText\PLGuiXmlTextLinux.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -390,13 +390,7 @@
     <ClInclude Include="include\PLGui\PLGuiDefinitions.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLGui\PLGuiLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLGui\PLGuiLinuxIncludes.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLGui\PLGuiWindows.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLGui\PLGuiWindowsIncludes.h">

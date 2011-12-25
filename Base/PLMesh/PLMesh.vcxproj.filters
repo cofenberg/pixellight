@@ -150,12 +150,6 @@
     <ClInclude Include="include\PLMesh\PLMesh.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLMesh\PLMeshLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLMesh\PLMeshWindows.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLMesh\Creator\MeshCreator.h">
       <Filter>Creator</Filter>
     </ClInclude>

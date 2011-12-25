@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/PLCore.h>
 #include "PLGui/PLGui.h"
 #include "PLGui/PLGuiDefinitions.h"
 

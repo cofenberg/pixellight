@@ -36,16 +36,26 @@
 
 
 //[-------------------------------------------------------]
-//[ OS definitions                                        ]
+//[ Includes                                              ]
 //[-------------------------------------------------------]
-// Windows platform
-#ifdef WIN32
-	#include "PLGuiXmlText/PLGuiXmlTextWindows.h"
-#endif
+#include <PLCore/PLCore.h>
 
-// Linux platform
-#ifdef LINUX
-	#include "PLGuiXmlText/PLGuiXmlTextLinux.h"
+
+//[-------------------------------------------------------]
+//[ Import/Export                                         ]
+//[-------------------------------------------------------]
+#ifdef PLGUIXMLTEXT_EXPORTS
+	// To export classes, methods and variables
+	#define PLGUIXMLTEXT_API			PL_GENERIC_API_EXPORT
+
+	// To export RTTI elements
+	#define PLGUIXMLTEXT_RTTI_EXPORT	PL_GENERIC_RTTI_EXPORT
+#else
+	// To import classes, methods and variables
+	#define PLGUIXMLTEXT_API			PL_GENERIC_API_IMPORT
+
+	// To import RTTI elements
+	#define PLGUIXMLTEXT_RTTI_EXPORT	PL_GENERIC_RTTI_IMPORT
 #endif
 
 

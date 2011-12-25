@@ -19,6 +19,7 @@
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
 \*********************************************************/
 
+#include <cstdio>
 #include "UnitTest++AddIns/MyTestReporter.h"
 
 

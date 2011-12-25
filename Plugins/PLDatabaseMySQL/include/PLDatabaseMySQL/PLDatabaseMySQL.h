@@ -36,16 +36,26 @@
 
 
 //[-------------------------------------------------------]
-//[ OS definitions                                        ]
+//[ Includes                                              ]
 //[-------------------------------------------------------]
-// Windows platform
-#ifdef WIN32
-	#include "PLDatabaseMySQL/PLDatabaseMySQLWindows.h"
-#endif
+#include <PLCore/PLCore.h>
 
-// Linux platform
-#ifdef LINUX
-	#include "PLDatabaseMySQL/PLDatabaseMySQLLinux.h"
+
+//[-------------------------------------------------------]
+//[ Import/Export                                         ]
+//[-------------------------------------------------------]
+#ifdef PLDATABASEMYSQL_EXPORTS
+	// To export classes, methods and variables
+	#define PLDATABASEMYSQL_API			PL_GENERIC_API_EXPORT
+
+	// To export RTTI elements
+	#define PLDATABASEMYSQL_RTTI_EXPORT	PL_GENERIC_RTTI_EXPORT
+#else
+	// To import classes, methods and variables
+	#define PLDATABASEMYSQL_API			PL_GENERIC_API_IMPORT
+
+	// To import RTTI elements
+	#define PLDATABASEMYSQL_RTTI_EXPORT	PL_GENERIC_RTTI_IMPORT
 #endif
 
 

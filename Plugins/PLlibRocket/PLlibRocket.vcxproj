@@ -270,8 +270,6 @@ copy ..\..\External\_Windows_x86_64\libRocket\bin\RocketDebugger.dll ..\..\Bin\R
     <ClInclude Include="include\PLlibRocket\FileInterfacePL.h" />
     <ClInclude Include="include\PLlibRocket\libRocketAdapter.h" />
     <ClInclude Include="include\PLlibRocket\PLlibRocket.h" />
-    <ClInclude Include="include\PLlibRocket\PLlibRocketLinux.h" />
-    <ClInclude Include="include\PLlibRocket\PLlibRocketWindows.h" />
     <ClInclude Include="include\PLlibRocket\PLGuiMessageFilterRocket.h" />
     <ClInclude Include="include\PLlibRocket\RenderInterfacePL.h" />
     <ClInclude Include="include\PLlibRocket\RenderInterfacePLShaders.h" />

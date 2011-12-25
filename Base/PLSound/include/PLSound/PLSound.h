@@ -36,16 +36,26 @@
 
 
 //[-------------------------------------------------------]
-//[ OS definitions                                        ]
+//[ Includes                                              ]
 //[-------------------------------------------------------]
-// Windows platform
-#ifdef WIN32
-	#include "PLSound/PLSoundWindows.h"
-#endif
+#include <PLCore/PLCore.h>
 
-// Linux platform
-#ifdef LINUX
-	#include "PLSound/PLSoundLinux.h"
+
+//[-------------------------------------------------------]
+//[ Import/Export                                         ]
+//[-------------------------------------------------------]
+#ifdef PLSOUND_EXPORTS
+	// To export classes, methods and variables
+	#define PLSOUND_API			PL_GENERIC_API_EXPORT
+
+	// To export RTTI elements
+	#define PLSOUND_RTTI_EXPORT	PL_GENERIC_RTTI_EXPORT
+#else
+	// To import classes, methods and variables
+	#define PLSOUND_API			PL_GENERIC_API_IMPORT
+
+	// To import RTTI elements
+	#define PLSOUND_RTTI_EXPORT	PL_GENERIC_RTTI_IMPORT
 #endif
 
 

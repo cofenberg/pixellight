@@ -281,8 +281,6 @@ copy build\release_x64\PLFrontendPLGui.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLFrontendPLGui\Frontend.h" />
     <ClInclude Include="include\PLFrontendPLGui\ModTrapMouse.h" />
     <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGui.h" />
-    <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGuiLinux.h" />
-    <ClInclude Include="include\PLFrontendPLGui\PLFrontendPLGuiWindows.h" />
     <ClInclude Include="include\PLFrontendPLGui\PreviewWidget.h" />
     <ClInclude Include="include\PLFrontendPLGui\RenderWidget.h" />
     <ClInclude Include="include\PLFrontendPLGui\RenderWindow.h" />

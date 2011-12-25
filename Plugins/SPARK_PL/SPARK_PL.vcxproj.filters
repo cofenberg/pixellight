@@ -167,8 +167,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\SPARK_PL\SPARK_PL.h" />
-    <ClInclude Include="include\SPARK_PL\SPARK_PLLinux.h" />
-    <ClInclude Include="include\SPARK_PL\SPARK_PLWindows.h" />
     <ClInclude Include="include\SPARK_PL\PLSceneNodes\SNGalaxyDemo.h">
       <Filter>PLSceneNodes</Filter>
     </ClInclude>

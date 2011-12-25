@@ -36,6 +36,12 @@
 
 
 //[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <PLCore/PLCore.h>
+
+
+//[-------------------------------------------------------]
 //[ OS definitions                                        ]
 //[-------------------------------------------------------]
 // Windows platform
@@ -46,6 +52,24 @@
 // Linux platform
 #ifdef LINUX
 	#include "PLRendererOpenGL/Linux/PLRendererOpenGLLinux.h"
+#endif
+
+
+//[-------------------------------------------------------]
+//[ Import/Export                                         ]
+//[-------------------------------------------------------]
+#ifdef PLRENDEREROPENGL_EXPORTS
+	// To export classes, methods and variables
+	#define PLRENDEREROPENGL_API			PL_GENERIC_API_EXPORT
+
+	// To export RTTI elements
+	#define PLRENDEREROPENGL_RTTI_EXPORT	PL_GENERIC_RTTI_EXPORT
+#else
+	// To import classes, methods and variables
+	#define PLRENDEREROPENGL_API			PL_GENERIC_API_IMPORT
+
+	// To import RTTI elements
+	#define PLRENDEREROPENGL_RTTI_EXPORT	PL_GENERIC_RTTI_IMPORT
 #endif
 
 

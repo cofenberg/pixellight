@@ -102,13 +102,7 @@
     <ClInclude Include="include\PLGraphics\PLGraphics.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLGraphics\PLGraphicsLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLGraphics\PLGraphicsLinuxIncludes.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLGraphics\PLGraphicsWindows.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLGraphics\Image\Image.h">

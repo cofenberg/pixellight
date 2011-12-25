@@ -35,16 +35,26 @@
 
 
 //[-------------------------------------------------------]
-//[ OS definitions                                        ]
+//[ Includes                                              ]
 //[-------------------------------------------------------]
-// Windows platform
-#ifdef WIN32
-	#include "99TestPlugin/99TestPluginWindows.h"
-#endif
+#include <PLCore/PLCore.h>
 
-// Linux platform
-#ifdef LINUX
-	#include "99TestPlugin/99TestPluginLinux.h"
+
+//[-------------------------------------------------------]
+//[ Import/Export                                         ]
+//[-------------------------------------------------------]
+#ifdef TESTPLUGIN_EXPORTS
+	// To export classes, methods and variables
+	#define TESTPLUGIN_API			PL_GENERIC_API_EXPORT
+
+	// To export RTTI elements
+	#define TESTPLUGIN_RTTI_EXPORT	PL_GENERIC_RTTI_EXPORT
+#else
+	// To import classes, methods and variables
+	#define TESTPLUGIN_API			PL_GENERIC_API_IMPORT
+
+	// To import RTTI elements
+	#define TESTPLUGIN_RTTI_EXPORT	PL_GENERIC_RTTI_IMPORT
 #endif
 
 

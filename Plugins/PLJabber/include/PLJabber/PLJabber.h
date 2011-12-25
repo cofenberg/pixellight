@@ -39,16 +39,20 @@
 
 
 //[-------------------------------------------------------]
-//[ OS definitions                                        ]
+//[ Includes                                              ]
 //[-------------------------------------------------------]
-// Windows platform
-#ifdef WIN32
-	#include "PLJabber/PLJabberWindows.h"
-#endif
+#include <PLCore/PLCore.h>
 
-// Linux platform
-#ifdef LINUX
-	#include "PLJabber/PLJabberLinux.h"
+
+//[-------------------------------------------------------]
+//[ Import/Export                                         ]
+//[-------------------------------------------------------]
+#ifdef PLJABBER_EXPORTS
+	// To export classes, methods and variables
+	#define PLJABBER_API	PL_GENERIC_API_EXPORT
+#else
+	// To import classes, methods and variables
+	#define PLJABBER_API	PL_GENERIC_API_IMPORT
 #endif
 
 

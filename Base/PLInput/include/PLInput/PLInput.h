@@ -36,16 +36,26 @@
 
 
 //[-------------------------------------------------------]
-//[ OS definitions                                        ]
+//[ Includes                                              ]
 //[-------------------------------------------------------]
-// Windows platform
-#ifdef WIN32
-	#include "PLInput/PLInputWindows.h"
-#endif
+#include <PLCore/PLCore.h>
 
-// Linux platform
-#ifdef LINUX
-	#include "PLInput/PLInputLinux.h"
+
+//[-------------------------------------------------------]
+//[ Import/Export                                         ]
+//[-------------------------------------------------------]
+#ifdef PLINPUT_EXPORTS
+	// To export classes, methods and variables
+	#define PLINPUT_API			PL_GENERIC_API_EXPORT
+
+	// To export RTTI elements
+	#define PLINPUT_RTTI_EXPORT	PL_GENERIC_RTTI_EXPORT
+#else
+	// To import classes, methods and variables
+	#define PLINPUT_API			PL_GENERIC_API_IMPORT
+
+	// To import RTTI elements
+	#define PLINPUT_RTTI_EXPORT	PL_GENERIC_RTTI_IMPORT
 #endif
 
 
