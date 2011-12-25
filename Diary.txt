@@ -27,6 +27,7 @@
 - Linux: The XXX_RTTI_EXPORT "Hack" must be also activated when the gcc 4.4.x is used (even with visibility feature active).
 
 
+
 >> 15.12.2011
 [CO]
 - PLInstall: Under Windows, the executable has now an icon
