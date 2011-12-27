@@ -1,3 +1,14 @@
+>> 27.12.2011
+[CO]
+- "54RendererRTT": In order to avoid error messages like
+  "ERROR: 0:2: Array index '1' out of bounds. Array size is 1
+   ERROR: 0:2: Array index '2' out of bounds. Array size is 1
+   ERROR: 0:2: Array index '3' out of bounds. Array size is 1
+   ERROR: 3 compilation errors. No code generated."
+  I added some fragment shader definitions to avoid writing into unavailable render targets
+
+
+
 >> 23.12.2011
 [CO]
 - VisualStudio project files of "80QtHelloWorld", "81QtScene", "82QtInputHandling": Disabled "warning C4127: conditional expression is constant"

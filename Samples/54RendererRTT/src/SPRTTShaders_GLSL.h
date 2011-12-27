@@ -108,30 +108,35 @@ void main()
 //[ Scene program - Fragment shader source code           ]
 //[-------------------------------------------------------]
 // GLSL (OpenGL 2.1 ("#version 120") and OpenGL ES 2.0 ("#version 100")) fragment shader source code, "#version" is added by hand
-static const PLCore::String sSceneFragmentShaderSourceCodeGLSL = STRINGIFY(
-// Attributes
-varying highp vec3 VertexNormalVS;	// World space vertex normal input from vertex shader
-
-// Uniforms
-uniform highp vec3 LightDirection;	// World space light direction
-
-// Programs
-void main()
-{
-	// Set fragment color by using primitive directional lighting
-	lowp float intensity = clamp(dot(LightDirection, VertexNormalVS), 0.0, 1.0);
-	gl_FragData[0] = vec4(intensity, intensity, intensity, intensity);
-
-	// Color 1 only red component
-	gl_FragData[1] = vec4(1.0, 0.0, 0.0, 0.0);
-
-	// Color 2 only green component
-	gl_FragData[2] = vec4(0.0, 1.0, 0.0, 0.0);
-
-	// Color 3 only blue component
-	gl_FragData[3] = vec4(0.0, 0.0, 1.0, 0.0);
-}
-);	// STRINGIFY
+static const PLCore::String sSceneFragmentShaderSourceCodeGLSL = "\
+// Attributes\n\
+varying highp vec3 VertexNormalVS;	// World space vertex normal input from vertex shader\n\
+\n\
+// Uniforms\n\
+uniform highp vec3 LightDirection;	// World space light direction\n\
+\n\
+// Programs\n\
+void main()\n\
+{\n\
+	// Set fragment color by using primitive directional lighting\n\
+	lowp float intensity = clamp(dot(LightDirection, VertexNormalVS), 0.0, 1.0);\n\
+	gl_FragData[0] = vec4(intensity, intensity, intensity, intensity);\n\
+\n\
+	// Color 1 only red component\n\
+	#ifdef MRT_1\n\
+		gl_FragData[1] = vec4(1.0, 0.0, 0.0, 0.0);\n\
+	#endif\n\
+\n\
+	// Color 2 only green component\n\
+	#ifdef MRT_2\n\
+		gl_FragData[2] = vec4(0.0, 1.0, 0.0, 0.0);\n\
+	#endif\n\
+\n\
+	// Color 3 only blue component\n\
+	#ifdef MRT_3\n\
+		gl_FragData[3] = vec4(0.0, 0.0, 1.0, 0.0);\n\
+	#endif\n\
+}";
 
 
 //[-------------------------------------------------------]

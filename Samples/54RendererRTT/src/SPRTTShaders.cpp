@@ -106,6 +106,15 @@ SPRTTShaders::SPRTTShaders(Renderer &cRenderer) : SPRTT(cRenderer),
 	ShaderLanguage *pShaderLanguage = cRenderer.GetShaderLanguage(cRenderer.GetDefaultShaderLanguage());
 	if (pShaderLanguage) {
 		{ // Scene program (with MRT support)
+			// Construct the string containing the fragment shader definitions
+			String sDefinitions;
+			if (m_pColorTarget1)
+				sDefinitions += "#define MRT_1\n";
+			if (m_pColorTarget2)
+				sDefinitions += "#define MRT_2\n";
+			if (m_pColorTarget3)
+				sDefinitions += "#define MRT_3\n";
+
 			// Shader source code
 			String sVertexShaderSourceCode;
 			String sFragmentShaderSourceCode;
@@ -114,13 +123,13 @@ SPRTTShaders::SPRTTShaders(Renderer &cRenderer) : SPRTT(cRenderer),
 				if (cRenderer.GetAPI() == "OpenGL ES 2.0") {
 					// Get shader source codes
 					sVertexShaderSourceCode   = "#version 100\n" + sSceneVertexShaderSourceCodeGLSL;
-					sFragmentShaderSourceCode = "#version 100\n" + sSceneFragmentShaderSourceCodeGLSL;
+					sFragmentShaderSourceCode = "#version 100\n" + sDefinitions + sSceneFragmentShaderSourceCodeGLSL;
 				} else {
 					// Remove precision qualifiers so that we're able to use 120 (OpenGL 2.1 shaders) instead of 130 (OpenGL 3.0 shaders,
 					// with this version we can keep the precision qualifiers) so that this shader requirements are as low as possible
 					// -> In here we're using 120 instead of 110 because matrix casts are quite comfortable...
 					sVertexShaderSourceCode   = "#version 120\n" + Shader::RemovePrecisionQualifiersFromGLSL(sSceneVertexShaderSourceCodeGLSL);
-					sFragmentShaderSourceCode = "#version 120\n" + Shader::RemovePrecisionQualifiersFromGLSL(sSceneFragmentShaderSourceCodeGLSL);
+					sFragmentShaderSourceCode = "#version 120\n" + sDefinitions + Shader::RemovePrecisionQualifiersFromGLSL(sSceneFragmentShaderSourceCodeGLSL);
 				}
 			} else if (pShaderLanguage->GetShaderLanguage() == "Cg") {
 				#include "SPRTTShaders_Cg.h"
