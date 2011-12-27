@@ -1830,43 +1830,48 @@ bool Renderer::Clear(uint32 nFlags, const Color4 &cColor, float fZ, uint32 nSten
 //[-------------------------------------------------------]
 bool Renderer::SetRenderTarget(PLRenderer::Surface *pSurface, uint8 nFace)
 {
-	// Check parameter
-	if (!m_lstSurfaces.IsElement(pSurface))
-		return false; // Error!
+	bool bResult = true; // No error by default
 
-	// Check face index
-	if (pSurface->GetType() == PLRenderer::Surface::TextureBuffer) {
-		PLRenderer::SurfaceTextureBuffer *pSurfaceTextureBuffer = static_cast<PLRenderer::SurfaceTextureBuffer*>(pSurface);
-		if (pSurfaceTextureBuffer->GetTextureBuffer()) {
-			if (pSurfaceTextureBuffer->GetTextureBuffer()->GetType() == PLRenderer::Resource::TypeTextureBufferCube) {
-				if (nFace > 5)
-					return false; // Error!
+	// Is this surface already the current render target?
+	if (m_cCurrentSurface.GetSurface() != pSurface || m_nCurrentSurfaceFace != nFace) {
+		// Check parameter
+		if (!m_lstSurfaces.IsElement(pSurface))
+			return false; // Error!
+
+		// Check face index
+		if (pSurface->GetType() == PLRenderer::Surface::TextureBuffer) {
+			PLRenderer::SurfaceTextureBuffer *pSurfaceTextureBuffer = static_cast<PLRenderer::SurfaceTextureBuffer*>(pSurface);
+			if (pSurfaceTextureBuffer->GetTextureBuffer()) {
+				if (pSurfaceTextureBuffer->GetTextureBuffer()->GetType() == PLRenderer::Resource::TypeTextureBufferCube) {
+					if (nFace > 5)
+						return false; // Error!
+				} else {
+					if (nFace > 0)
+						return false; // Error!
+				}
 			} else {
-				if (nFace > 0)
-					return false; // Error!
+				// ??!
+				return false;
 			}
 		} else {
-			// Error!?!
-			return false;
+			if (nFace > 0)
+				return false; // Error!
 		}
-	} else {
-		if (nFace > 0)
-			return false; // Error!
+
+		if (m_cCurrentSurface.GetSurface())
+			UnmakeSurfaceCurrent(*m_cCurrentSurface.GetSurface());
+		m_cCurrentSurface.SetSurface(pSurface);
+
+		// Make the surface to the current render target
+		bResult = MakeSurfaceCurrent(*pSurface, nFace);
 	}
-
-	if (m_cCurrentSurface.GetSurface())
-		UnmakeSurfaceCurrent(*m_cCurrentSurface.GetSurface());
-	m_cCurrentSurface.SetSurface(pSurface);
-
-	// Make the surface to the current render target
-	const bool bError = MakeSurfaceCurrent(*pSurface, nFace);
 
 	// Setup viewport and scissor rectangle
 	SetViewport();
 	SetScissorRect();
 
 	// Done
-	return bError;
+	return bResult;
 }
 
 bool Renderer::SetColorRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, uint8 nColorIndex, uint8 nFace)

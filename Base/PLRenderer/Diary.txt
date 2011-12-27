@@ -29,6 +29,7 @@ PLRendererOpenGLES2:
       value."
   -> This appears to be a shader compiler bug - I have no other explaination for this. This means that we have to only write out into gl_FragColor
      to be on the safe side even when the official GLSL specification defines another behaviour. :/
+- "Renderer::SetRenderTarget()": Added a check whether or not the surface to set is already the current surface
 
 
 
