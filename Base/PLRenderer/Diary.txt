@@ -1,3 +1,16 @@
+>> 27.12.2011
+[CO]
+PLRendererOpenGLES2:
+- "FontTexture::CreateGlyphTextureAtlas()": When calling "glGenerateMipmap(GL_TEXTURE_2D);" before allocating the texture data by using "glTexImage2D"
+  there were no issues on the smartphone "LG P990 Optimus Speed" (Tegra 2, Android 2.3.4) or on "Asus Eee Pad Transformer" (Tegra 2, Android 3.2.1).
+  On "LG P920 Optimus 3D" (PowerVR SGX 540, Android 2.3.5) the App directly closed without any further information within the Android logcat.
+  When calling "glGenerateMipmap(GL_TEXTURE_2D);" after allocating the texture data by using "glTexImage2D" this issue was gone. When looking into
+  "OpenGL ES Common Profile Specification Version 2.0.25 (Full Specification) (November 2, 2010)" I found no information which order is the correct
+  one. When thinking about this order it makes sense, but this is still just a guess how it's implemented in the graphics driver...
+  Within e.g. "TextureBuffer2D" the order was already "correct".
+
+
+
 >> 22.12.2011
 [CO]
 - Bugfix within the CMake file of "PLRendererOpenGLCg": For example "cg.dll" was still copied into "<Runtime Directory>/PLRenderer/cg.dll" instead of

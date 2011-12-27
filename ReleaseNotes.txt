@@ -1,5 +1,5 @@
 Changes in PixelLight 0.9.11-R1 (not yet released)
--
+- Bugfix: "PLRendererOpenGLES2" font rendering worked on "Tegra 2", but failed on "PowerVR SGX 540"
 
 
 Changes in PixelLight 0.9.10-R1 (released on December 23, 2011)
