@@ -8,6 +8,27 @@ PLRendererOpenGLES2:
   "OpenGL ES Common Profile Specification Version 2.0.25 (Full Specification) (November 2, 2010)" I found no information which order is the correct
   one. When thinking about this order it makes sense, but this is still just a guess how it's implemented in the graphics driver...
   Within e.g. "TextureBuffer2D" the order was already "correct".
+- "DrawHelpersBackendShaders::GetAndSetGeneratedProgram()": On "LG P920 Optimus 3D" (PowerVR SGX 540, Android 2.3.5) the shader compiler gave me the detailed
+  error description: "Compile failed." -> "Link Error: Fragment shader was not successfully compiled."
+  There's no such error when using Tegra 2 or an OpenGL ES 2.0 emulator or a PC driver supporting native OpenGL ES 2.0. I had to play with various shader
+  combinations to narror down the issue:
+    if (gl_FragColor.a < AlphaReference)
+      discard;
+  works but
+    gl_FragColor *= Color;
+  or
+    gl_FragColor = gl_FragColor*Color;
+  or
+    lowp vec4 fragmentColor = gl_FragColor;
+    gl_FragColor = fragmentColor*Color;
+  does not and the shader compiler gives me the mentioned error. When only writing out into gl_FragColor there are no issues.
+  -> "OpenGL ES Common Profile Specification Version 2.0.25 (Full Specification) (November 2, 2010)" - "7.2 Fragment Shader Special Variables" states:
+     "These variables may be written to more than once within a fragment shader. If so, the last value assigned
+      is the one used in the subsequent fixed function pipeline. The values written to these variables may be
+      read back after writing them. Reading from these variables before writing to them results in an undefined
+      value."
+  -> This appears to be a shader compiler bug - I have no other explaination for this. This means that we have to only write out into gl_FragColor
+     to be on the safe side even when the official GLSL specification defines another behaviour. :/
 
 
 

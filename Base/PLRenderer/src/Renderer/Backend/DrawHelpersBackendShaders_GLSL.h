@@ -81,18 +81,18 @@ void main()\n\
 {\n\
 #ifdef FS_DIFFUSEMAP\n\
 	#ifdef FS_DIFFUSEMAP2D\n\
-		gl_FragColor = texture2D(DiffuseMap, VertexTextureCoordinateVS);\n\
+		lowp vec4 diffuseColor = texture2D(DiffuseMap, VertexTextureCoordinateVS);\n\
 	#else\n\
-		gl_FragColor = texture2DRect(DiffuseMap, VertexTextureCoordinateVS);\n\
+		lowp vec4 diffuseColor = texture2DRect(DiffuseMap, VertexTextureCoordinateVS);\n\
 	#endif\n\
 	#ifdef FS_ALPHATEST\n\
 		// Perform an alpha test to discard fragments\n\
-		if (gl_FragColor.a < AlphaReference)\n\
+		if (diffuseColor.a < AlphaReference)\n\
 			discard; // Throw the fragment away and don't draw it!\n\
 	#endif\n\
 \n\
 	// Still here? Then apply the given color...\n\
-	gl_FragColor *= Color;\n\
+	gl_FragColor = diffuseColor*Color;\n\
 #else\n\
 	gl_FragColor = Color;\n\
 #endif\n\
