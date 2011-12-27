@@ -1,3 +1,10 @@
+>> 27.12.2011
+[CO]
+- "Apk.cmake": In case of a debug build, gdbserver is added to the created apk file - it appears that on not rooted devices this is the only way to be
+  able to get remote debugging up and running
+
+
+
 >> 24.12.2011
 [CO]
 - "FindPixelLight.cmake": Within the "_pixellight_find_lib"-macro we need to unset previous variables, if we don't do this a change of CMAKE_BUILD_TYPE

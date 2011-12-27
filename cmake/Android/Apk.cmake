@@ -144,6 +144,14 @@ macro(android_create_apk name apk_directory shared_libraries assets data_directo
 			android_copy_files(${value} "${apk_directory}/assets/${data_directory}")
 		endforeach()
 
+		# In case of debug build, do also copy gdbserver
+		if(CMAKE_BUILD_TYPE MATCHES Debug)
+			add_custom_command(TARGET ${ANDROID_NAME}
+				POST_BUILD
+				COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_GDBSERVER} "${apk_directory}/libs/${ARM_TARGET}"
+			)
+		endif()
+
 		# Uninstall previous version from the device/emulator (else we may get e.g. signature conflicts)
 		add_custom_command(TARGET ${ANDROID_NAME}
 			COMMAND adb uninstall ${ANDROID_APK_PACKAGE}
