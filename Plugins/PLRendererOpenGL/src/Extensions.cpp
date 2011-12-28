@@ -150,6 +150,7 @@ bool Extensions::IsGL_ARB_texture_non_power_of_two()	const { return m_bGL_ARB_te
 bool Extensions::IsGL_ARB_texture_rectangle()			const { return m_bGL_ARB_texture_rectangle;			 }
 bool Extensions::IsGL_ARB_multisample()					const { return m_bGL_ARB_multisample;				 }
 bool Extensions::IsGL_ARB_uniform_buffer_object()		const { return m_bGL_ARB_uniform_buffer_object;		 }
+bool Extensions::IsGL_ARB_half_float_vertex()			const { return m_bGL_ARB_half_float_vertex;			 }
 // ATI
 bool Extensions::IsGL_ATI_meminfo()						const { return m_bGL_ATI_meminfo;					 }
 bool Extensions::IsGL_ATI_separate_stencil()			const { return m_bGL_ATI_separate_stencil;			 }
@@ -161,6 +162,7 @@ bool Extensions::IsGL_AMD_vertex_shader_tessellator()	const { return m_bGL_AMD_v
 bool Extensions::IsGL_NV_texture_rectangle()			const { return m_bGL_NV_texture_rectangle;			 }
 bool Extensions::IsGL_NV_occlusion_query()				const { return m_bGL_NV_occlusion_query;			 }
 bool Extensions::IsGL_NVX_gpu_memory_info()				const { return m_bGL_NVX_gpu_memory_info;			 }
+bool Extensions::IsGL_NV_half_float()					const { return m_bGL_NV_half_float;					 }
 // SGIS
 bool Extensions::IsGL_SGIS_generate_mipmap()			const { return m_bGL_SGIS_generate_mipmap;			 }
 // HP
@@ -342,6 +344,7 @@ void Extensions::ResetExtensions()
 	m_bGL_ARB_texture_rectangle				= false;
 	m_bGL_ARB_multisample					= false;
 	m_bGL_ARB_uniform_buffer_object			= false;
+	m_bGL_ARB_half_float_vertex				= false;
 	// ATI
 	m_bGL_ATI_meminfo						= false;
 	m_bGL_ATI_separate_stencil				= false;
@@ -353,6 +356,7 @@ void Extensions::ResetExtensions()
 	m_bGL_NV_texture_rectangle				= false;
 	m_bGL_NV_occlusion_query				= false;
 	m_bGL_NVX_gpu_memory_info				= false;
+	m_bGL_NV_half_float						= false;
 	// SGIS
 	m_bGL_SGIS_generate_mipmap				= false;
 	// HP
@@ -866,6 +870,9 @@ bool Extensions::InitUniversal()
 		m_bGL_ARB_uniform_buffer_object = bResult;
 	}
 
+	// GL_ARB_half_float_vertex
+	m_bGL_ARB_half_float_vertex = IsSupported("GL_ARB_half_float_vertex");
+
 
 	//[-------------------------------------------------------]
 	//[ ATI                                                   ]
@@ -935,6 +942,9 @@ bool Extensions::InitUniversal()
 
 	// GL_NVX_gpu_memory_info
 	m_bGL_NVX_gpu_memory_info = IsSupported("GL_NVX_gpu_memory_info");
+
+	// GL_NV_half_float
+	m_bGL_NV_half_float = IsSupported("GL_NV_half_float");
 
 
 	//[-------------------------------------------------------]

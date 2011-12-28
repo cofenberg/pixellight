@@ -171,6 +171,7 @@ class Extensions {
 		bool IsGL_ARB_texture_rectangle() const;
 		bool IsGL_ARB_multisample() const;
 		bool IsGL_ARB_uniform_buffer_object() const;
+		bool IsGL_ARB_half_float_vertex() const;
 		// ATI
 		bool IsGL_ATI_meminfo() const;
 		bool IsGL_ATI_separate_stencil() const;
@@ -182,6 +183,7 @@ class Extensions {
 		bool IsGL_NV_texture_rectangle() const;
 		bool IsGL_NV_occlusion_query() const;
 		bool IsGL_NVX_gpu_memory_info() const;
+		bool IsGL_NV_half_float() const;
 		// SGIS
 		bool IsGL_SGIS_generate_mipmap() const;
 		// HP
@@ -352,6 +354,7 @@ class Extensions {
 		bool m_bGL_ARB_texture_rectangle;
 		bool m_bGL_ARB_multisample;
 		bool m_bGL_ARB_uniform_buffer_object;
+		bool m_bGL_ARB_half_float_vertex;
 		// ATI
 		bool m_bGL_ATI_meminfo;
 		bool m_bGL_ATI_separate_stencil;
@@ -363,6 +366,7 @@ class Extensions {
 		bool m_bGL_NV_texture_rectangle;
 		bool m_bGL_NV_occlusion_query;
 		bool m_bGL_NVX_gpu_memory_info;
+		bool m_bGL_NV_half_float;
 		// SGIS
 		bool m_bGL_SGIS_generate_mipmap;
 		// HP

@@ -111,9 +111,8 @@ bool VertexBuffer::AddVertexAttribute(ESemantic nSemantic, uint32 nChannel, ETyp
 			break;
 	}
 
-	// Add vertex attribute
+	// Allocate vertex attribute
 	Attribute *pAttribute = new Attribute;
-	m_lstVertexAttributes.Add(pAttribute);
 	// Setup values
 	pAttribute->nSemantic	   = nSemantic;
 	pAttribute->nChannel	   = nChannel;
@@ -126,6 +125,18 @@ bool VertexBuffer::AddVertexAttribute(ESemantic nSemantic, uint32 nChannel, ETyp
 
 	// Call API dependent vertex attribute added function
 	VertexAttributeAdded(*pAttribute);
+	if (!pAttribute->nSizeAPI) {
+		// Failed to setup the vertex attribute (maybe unknown type?)
+
+		// Deallocate vertex attribute
+		delete pAttribute;
+
+		// Error!
+		return false;
+	}
+
+	// Add vertex attribute
+	m_lstVertexAttributes.Add(pAttribute);
 
 	// Update vertex size
 	uint32 nVertexSize = m_nVertexSize;

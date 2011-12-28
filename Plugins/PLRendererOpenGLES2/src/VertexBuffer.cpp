@@ -174,46 +174,97 @@ void VertexBuffer::VertexAttributeAdded(Attribute &cAttribute)
 {
 	// Setup API dependent attribute values
 	switch (cAttribute.nType) {
+		// Color (legacy API dependent storage which is no longer required when using modern shader based API's, do always use GetColor() and SetColor()!)
 		case RGBA:
 			cAttribute.nSizeAPI		  = sizeof(float)*4;
 			cAttribute.nTypeAPI		  = GL_FLOAT;
 			cAttribute.nComponentsAPI = 4;
 			break;
 
+		// Float 1 (one component per element, 32 bit floating point per component)
 		case Float1:
 			cAttribute.nSizeAPI		  = sizeof(float);
 			cAttribute.nTypeAPI		  = GL_FLOAT;
 			cAttribute.nComponentsAPI = 1;
 			break;
 
+		// Float 2 (two components per element, 32 bit floating point per component)
 		case Float2:
 			cAttribute.nSizeAPI		  = sizeof(float)*2;
 			cAttribute.nTypeAPI		  = GL_FLOAT;
 			cAttribute.nComponentsAPI = 2;
 			break;
 
+		// Float 3 (three components per element, 32 bit floating point per component)
 		case Float3:
 			cAttribute.nSizeAPI		  = sizeof(float)*3;
 			cAttribute.nTypeAPI		  = GL_FLOAT;
 			cAttribute.nComponentsAPI = 3;
 			break;
 
+		// Float 4 (four components per element, 32 bit floating point per component)
 		case Float4:
 			cAttribute.nSizeAPI		  = sizeof(float)*4;
 			cAttribute.nTypeAPI		  = GL_FLOAT;
 			cAttribute.nComponentsAPI = 4;
 			break;
 
+		// Short 2 (two components per element, 16 bit integer per component)
 		case Short2:
 			cAttribute.nSizeAPI		  = sizeof(short)*2;
 			cAttribute.nTypeAPI		  = GL_SHORT;
 			cAttribute.nComponentsAPI = 2;
 			break;
 
+		// Short 4 (four components per element, 16 bit integer per component)
 		case Short4:
 			cAttribute.nSizeAPI		  = sizeof(short)*4;
 			cAttribute.nTypeAPI		  = GL_SHORT;
 			cAttribute.nComponentsAPI = 4;
+			break;
+
+		// Half 1 (one component per element, 16 bit floating point per component, may not be supported by each API)
+		case Half1:
+			if (static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_OES_vertex_half_float()) {
+				cAttribute.nSizeAPI		  = sizeof(float)/2;
+				cAttribute.nTypeAPI		  = GL_HALF_FLOAT_OES;
+				cAttribute.nComponentsAPI = 1;
+			} else {
+				cAttribute.nSizeAPI = cAttribute.nTypeAPI = cAttribute.nComponentsAPI = 0;
+			}
+			break;
+
+		// Half 2 (two components per element, 16 bit floating point per component, may not be supported by each API)
+		case Half2:
+			if (static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_OES_vertex_half_float()) {
+				cAttribute.nSizeAPI		  = sizeof(float)/2*2;
+				cAttribute.nTypeAPI		  = GL_HALF_FLOAT_OES;
+				cAttribute.nComponentsAPI = 2;
+			} else {
+				cAttribute.nSizeAPI = cAttribute.nTypeAPI = cAttribute.nComponentsAPI = 0;
+			}
+			break;
+
+		// Half 3 (three components per element, 16 bit floating point per component, may not be supported by each API)
+		case Half3:
+			if (static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_OES_vertex_half_float()) {
+				cAttribute.nSizeAPI		  = sizeof(float)/2*3;
+				cAttribute.nTypeAPI		  = GL_HALF_FLOAT_OES;
+				cAttribute.nComponentsAPI = 3;
+			} else {
+				cAttribute.nSizeAPI = cAttribute.nTypeAPI = cAttribute.nComponentsAPI = 0;
+			}
+			break;
+
+		// Half 4 (four components per element, 16 bit floating point per component, may not be supported by each API)
+		case Half4:
+			if (static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_OES_vertex_half_float()) {
+				cAttribute.nSizeAPI		  = sizeof(float)/2*4;
+				cAttribute.nTypeAPI		  = GL_HALF_FLOAT_OES;
+				cAttribute.nComponentsAPI = 4;
+			} else {
+				cAttribute.nSizeAPI = cAttribute.nTypeAPI = cAttribute.nComponentsAPI = 0;
+			}
 			break;
 	}
 }

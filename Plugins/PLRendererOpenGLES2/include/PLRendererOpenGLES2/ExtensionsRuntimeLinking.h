@@ -104,6 +104,7 @@ class ExtensionsRuntimeLinking : public Extensions {
 		virtual bool IsGL_OES_packed_depth_stencil() const override;
 		virtual bool IsGL_OES_depth24() const override;
 		virtual bool IsGL_OES_depth32() const override;
+		virtual bool IsGL_OES_vertex_half_float() const override;
 		// ANGLE
 		virtual bool IsGL_ANGLE_framebuffer_blit() const override;
 		virtual bool IsGL_ANGLE_framebuffer_multisample() const override;
@@ -135,6 +136,7 @@ class ExtensionsRuntimeLinking : public Extensions {
 		bool m_bGL_OES_packed_depth_stencil;
 		bool m_bGL_OES_depth24;
 		bool m_bGL_OES_depth32;
+		bool m_bGL_OES_vertex_half_float;
 		// ANGLE
 		bool m_bGL_ANGLE_framebuffer_blit;
 		bool m_bGL_ANGLE_framebuffer_multisample;

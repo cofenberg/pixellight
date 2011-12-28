@@ -302,42 +302,69 @@ void VertexBuffer::VertexAttributeAdded(Attribute &cAttribute)
 {
 	// Setup API dependent attribute values
 	switch (cAttribute.nType) {
+		// Color (legacy API dependent storage which is no longer required when using modern shader based API's, do always use GetColor() and SetColor()!)
 		case RGBA:
-			cAttribute.nSizeAPI = sizeof(D3DCOLOR);
-			cAttribute.nTypeAPI = D3DDECLTYPE_D3DCOLOR;
+			cAttribute.nSizeAPI       = sizeof(D3DCOLOR);
+			cAttribute.nTypeAPI       = D3DDECLTYPE_D3DCOLOR;
+			cAttribute.nComponentsAPI = 1;
 			break;
 
+		// Float 1 (one component per element, 32 bit floating point per component)
 		case Float1:
-			cAttribute.nSizeAPI = sizeof(float);
-			cAttribute.nTypeAPI = D3DDECLTYPE_FLOAT1;
+			cAttribute.nSizeAPI       = sizeof(float);
+			cAttribute.nTypeAPI       = D3DDECLTYPE_FLOAT1;
+			cAttribute.nComponentsAPI = 1;
 			break;
 
+		// Float 2 (two components per element, 32 bit floating point per component)
 		case Float2:
-			cAttribute.nSizeAPI = sizeof(float)*2;
-			cAttribute.nTypeAPI = D3DDECLTYPE_FLOAT2;
+			cAttribute.nSizeAPI       = sizeof(float)*2;
+			cAttribute.nTypeAPI       = D3DDECLTYPE_FLOAT2;
+			cAttribute.nComponentsAPI = 1;
 			break;
 
+		// Float 3 (three components per element, 32 bit floating point per component)
 		case Float3:
-			cAttribute.nSizeAPI = sizeof(float)*3;
-			cAttribute.nTypeAPI = D3DDECLTYPE_FLOAT3;
+			cAttribute.nSizeAPI       = sizeof(float)*3;
+			cAttribute.nTypeAPI       = D3DDECLTYPE_FLOAT3;
+			cAttribute.nComponentsAPI = 1;
 			break;
 
+		// Float 4 (four components per element, 32 bit floating point per component)
 		case Float4:
-			cAttribute.nSizeAPI = sizeof(float)*4;
-			cAttribute.nTypeAPI = D3DDECLTYPE_FLOAT4;
+			cAttribute.nSizeAPI       = sizeof(float)*4;
+			cAttribute.nTypeAPI       = D3DDECLTYPE_FLOAT4;
+			cAttribute.nComponentsAPI = 1;
 			break;
 
+		// Short 2 (two components per element, 16 bit integer per component)
 		case Short2:
-			cAttribute.nSizeAPI = sizeof(short)*2;
-			cAttribute.nTypeAPI = D3DDECLTYPE_SHORT2;
+			cAttribute.nSizeAPI       = sizeof(short)*2;
+			cAttribute.nTypeAPI       = D3DDECLTYPE_SHORT2;
+			cAttribute.nComponentsAPI = 1;
 			break;
 
+		// Short 4 (four components per element, 16 bit integer per component)
 		case Short4:
-			cAttribute.nSizeAPI = sizeof(short)*4;
-			cAttribute.nTypeAPI = D3DDECLTYPE_SHORT4;
+			cAttribute.nSizeAPI       = sizeof(short)*4;
+			cAttribute.nTypeAPI       = D3DDECLTYPE_SHORT4;
+			cAttribute.nComponentsAPI = 1;
+			break;
+
+		// Half 1 (one component per element, 16 bit floating point per component, may not be supported by each API)
+		// Half 2 (two components per element, 16 bit floating point per component, may not be supported by each API)
+		// Half 3 (three components per element, 16 bit floating point per component, may not be supported by each API)
+		// Half 4 (four components per element, 16 bit floating point per component, may not be supported by each API)
+		case Half1:
+		case Half2:
+		case Half3:
+		case Half4:
+			// Not supported
+			cAttribute.nSizeAPI       = 0;
+			cAttribute.nTypeAPI       = 0;
+			cAttribute.nComponentsAPI = 0;
 			break;
 	}
-	cAttribute.nComponentsAPI = 1;
 }
 
 

@@ -171,48 +171,69 @@ void VertexBuffer::VertexAttributeAdded(Attribute &cAttribute)
 {
 	// Setup API dependent attribute values
 	switch (cAttribute.nType) {
+		// Color (legacy API dependent storage which is no longer required when using modern shader based API's, do always use GetColor() and SetColor()!)
 		case RGBA:
 			cAttribute.nSizeAPI		  = sizeof(float)*4;
 			cAttribute.nTypeAPI		  = 0;
 			cAttribute.nComponentsAPI = 4;
 			break;
 
+		// Float 1 (one component per element, 32 bit floating point per component)
 		case Float1:
 			cAttribute.nSizeAPI		  = sizeof(float);
 			cAttribute.nTypeAPI		  = 0;
 			cAttribute.nComponentsAPI = 1;
 			break;
 
+		// Float 2 (two components per element, 32 bit floating point per component)
 		case Float2:
 			cAttribute.nSizeAPI		  = sizeof(float)*2;
 			cAttribute.nTypeAPI		  = 0;
 			cAttribute.nComponentsAPI = 2;
 			break;
 
+		// Float 3 (three components per element, 32 bit floating point per component)
 		case Float3:
 			cAttribute.nSizeAPI		  = sizeof(float)*3;
 			cAttribute.nTypeAPI		  = 0;
 			cAttribute.nComponentsAPI = 3;
 			break;
 
+		// Float 4 (four components per element, 32 bit floating point per component)
 		case Float4:
 			cAttribute.nSizeAPI		  = sizeof(float)*4;
 			cAttribute.nTypeAPI		  = 0;
 			cAttribute.nComponentsAPI = 4;
 			break;
 
+		// Short 2 (two components per element, 16 bit integer per component)
 		case Short2:
 			cAttribute.nSizeAPI		  = sizeof(short)*2;
 			cAttribute.nTypeAPI		  = 0;
 			cAttribute.nComponentsAPI = 2;
 			break;
 
+		// Short 4 (four components per element, 16 bit integer per component)
 		case Short4:
 			cAttribute.nSizeAPI		  = sizeof(short)*4;
 			cAttribute.nTypeAPI		  = 0;
 			cAttribute.nComponentsAPI = 4;
 			break;
+
+		// Half 1 (one component per element, 16 bit floating point per component, may not be supported by each API)
+		// Half 2 (two components per element, 16 bit floating point per component, may not be supported by each API)
+		// Half 3 (three components per element, 16 bit floating point per component, may not be supported by each API)
+		// Half 4 (four components per element, 16 bit floating point per component, may not be supported by each API)
+		case Half1:
+		case Half2:
+		case Half3:
+		case Half4:
+			// [TODO] Implement me
+			cAttribute.nSizeAPI = 0;
+			cAttribute.nTypeAPI = 0;
+			break;
 	}
+	cAttribute.nComponentsAPI = 1;
 }
 
 

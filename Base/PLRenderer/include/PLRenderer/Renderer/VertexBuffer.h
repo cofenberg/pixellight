@@ -95,13 +95,17 @@ class VertexBuffer : public Buffer {
 		*    Vertex attribute types
 		*/
 		enum EType {
-			RGBA   = 0,	/**< Color (API dependent storage, do always use GetColor() and SetColor()!) */
-			Float1 = 1,	/**< Float 1 */
-			Float2 = 2,	/**< Float 2 */
-			Float3 = 3,	/**< Float 3 */
-			Float4 = 4,	/**< Float 4 */
-			Short2 = 5,	/**< Short 2 */
-			Short4 = 6	/**< Short 4 */
+			RGBA   = 0,	/**< Color (legacy API dependent storage which is no longer required when using modern shader based API's, do always use GetColor() and SetColor()!) */
+			Float1 = 1,	/**< Float 1 (one component per element, 32 bit floating point per component) */
+			Float2 = 2,	/**< Float 2 (two components per element, 32 bit floating point per component) */
+			Float3 = 3,	/**< Float 3 (three components per element, 32 bit floating point per component) */
+			Float4 = 4,	/**< Float 4 (four components per element, 32 bit floating point per component) */
+			Short2 = 5,	/**< Short 2 (two components per element, 16 bit integer per component) */
+			Short4 = 6,	/**< Short 4 (four components per element, 16 bit integer per component) */
+			Half1  = 7,	/**< Half 1 (one component per element, 16 bit floating point per component, may not be supported by each API) */
+			Half2  = 8,	/**< Half 2 (two components per element, 16 bit floating point per component, may not be supported by each API) */
+			Half3  = 9,	/**< Half 3 (three components per element, 16 bit floating point per component, may not be supported by each API) */
+			Half4  = 10	/**< Half 4 (four components per element, 16 bit floating point per component, may not be supported by each API) */
 		};
 
 
@@ -170,7 +174,7 @@ class VertexBuffer : public Buffer {
 		*    Any member of the EType enumeration type
 		*
 		*  @return
-		*    'true' if all went fine, else 'false' (maybe this vertex attribute is already there)
+		*    'true' if all went fine, else 'false' (maybe this vertex attribute is already there or the requested type is not supported)
 		*
 		*  @note
 		*    - You shouldn't change the vertex attribute after the vertex buffer was
@@ -362,8 +366,8 @@ class VertexBuffer : public Buffer {
 		*  @brief
 		*    Is called after a vertex attribute was added to setup some API dependent stuff
 		*
-		*  @param[in] cAttribute
-		*    The added vertex attribute
+		*  @param[in, out] cAttribute
+		*    The added vertex attribute, a returned "Attribute::nSizeAPI" of 0 has to be handled like an error
 		*
 		*  @note
 		*    - This function will setup the API dependent vertex attribute data

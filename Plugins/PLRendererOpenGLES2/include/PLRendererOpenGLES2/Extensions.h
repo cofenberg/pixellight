@@ -84,6 +84,7 @@ class Extensions {
 		virtual bool IsGL_OES_packed_depth_stencil() const = 0;
 		virtual bool IsGL_OES_depth24() const = 0;
 		virtual bool IsGL_OES_depth32() const = 0;
+		virtual bool IsGL_OES_vertex_half_float() const = 0;
 		// ANGLE
 		virtual bool IsGL_ANGLE_framebuffer_blit() const = 0;
 		virtual bool IsGL_ANGLE_framebuffer_multisample() const = 0;

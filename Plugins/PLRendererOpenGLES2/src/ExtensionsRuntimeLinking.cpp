@@ -66,6 +66,7 @@ ExtensionsRuntimeLinking::ExtensionsRuntimeLinking() :
 	m_bGL_OES_packed_depth_stencil(false),
 	m_bGL_OES_depth24(false),
 	m_bGL_OES_depth32(false),
+	m_bGL_OES_vertex_half_float(false),
 	// ANGLE
 	m_bGL_ANGLE_framebuffer_blit(false),
 	m_bGL_ANGLE_framebuffer_multisample(false)
@@ -194,6 +195,7 @@ void ExtensionsRuntimeLinking::Init()
 	m_bGL_OES_packed_depth_stencil = sExtensions.IsSubstring("GL_OES_packed_depth_stencil");
 	m_bGL_OES_depth24			   = sExtensions.IsSubstring("GL_OES_depth24");
 	m_bGL_OES_depth32			   = sExtensions.IsSubstring("GL_OES_depth32");
+	m_bGL_OES_vertex_half_float	   = sExtensions.IsSubstring("GL_OES_vertex_half_float");
 
 	//[-------------------------------------------------------]
 	//[ ANGLE                                                 ]
@@ -309,6 +311,11 @@ bool ExtensionsRuntimeLinking::IsGL_OES_depth24() const
 bool ExtensionsRuntimeLinking::IsGL_OES_depth32() const
 {
 	return m_bGL_OES_depth32;
+}
+
+bool ExtensionsRuntimeLinking::IsGL_OES_vertex_half_float() const
+{
+	return m_bGL_OES_vertex_half_float;
 }
 
 // ANGLE
