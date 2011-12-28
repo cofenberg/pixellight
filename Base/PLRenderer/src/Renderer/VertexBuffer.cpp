@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Half.h>
 #include <PLMath/Vector3.h>
 #include "PLRenderer/Renderer/Renderer.h"
 #include "PLRenderer/Renderer/FixedFunctions.h"
@@ -35,6 +36,7 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLMath;
+using namespace PLGraphics;
 namespace PLRenderer {
 
 
@@ -240,6 +242,359 @@ VertexBuffer &VertexBuffer::operator =(const VertexBuffer &cSource)
 
 	// Done
 	return *this;
+}
+
+/**
+*  @brief
+*    Fills the data of a vertex buffer attribute into four given generic floating point components
+*/
+bool VertexBuffer::GetFloat(uint32 nIndex, uint32 nSemantic, uint32 nChannel, float &fX, float &fY, float &fZ, float &fW)
+{
+	// Get the first found vertex attribute with the requested semantic
+	const Attribute *pAttribute = GetVertexAttribute(static_cast<ESemantic>(nSemantic), nChannel);
+	if (pAttribute) {
+		// Check attribute type
+		switch (pAttribute->nType) {
+			// Color (legacy API dependent storage which is no longer required when using modern shader based API's, do always use GetColor() and SetColor()!)
+			case RGBA:
+			{
+				const Color4 cColor = GetColor(nIndex, nChannel);
+				fX = cColor.r;
+				fY = cColor.g;
+				fZ = cColor.b;
+				fW = cColor.a;
+
+				// Done
+				return true;
+			}
+
+			// Float 1 (one component per element, 32 bit floating point per component)
+			case Float1:
+			{
+				const float *pfVertex = static_cast<const float*>(GetData(nIndex, nSemantic, nChannel));
+				if (pfVertex) {
+					fX = pfVertex[0];
+					fY = 0.0f;
+					fZ = 0.0f;
+					fW = 0.0f;
+
+					// Done
+					return true;
+				}
+				break;
+			}
+
+			// Float 2 (two components per element, 32 bit floating point per component)
+			case Float2:
+			{
+				const float *pfVertex = static_cast<const float*>(GetData(nIndex, nSemantic, nChannel));
+				if (pfVertex) {
+					fX = pfVertex[0];
+					fY = pfVertex[1];
+					fZ = 0.0f;
+					fW = 0.0f;
+
+					// Done
+					return true;
+				}
+				break;
+			}
+
+			// Float 3 (three components per element, 32 bit floating point per component)
+			case Float3:
+			{
+				const float *pfVertex = static_cast<const float*>(GetData(nIndex, nSemantic, nChannel));
+				if (pfVertex) {
+					fX = pfVertex[0];
+					fY = pfVertex[1];
+					fZ = pfVertex[2];
+					fW = 0.0f;
+
+					// Done
+					return true;
+				}
+				break;
+			}
+
+			// Float 4 (four components per element, 32 bit floating point per component)
+			case Float4:
+			{
+				const float *pfVertex = static_cast<const float*>(GetData(nIndex, nSemantic, nChannel));
+				if (pfVertex) {
+					fX = pfVertex[0];
+					fY = pfVertex[1];
+					fZ = pfVertex[2];
+					fW = pfVertex[3];
+
+					// Done
+					return true;
+				}
+				break;
+			}
+
+			// Short 2 (two components per element, 16 bit integer per component)
+			case Short2:
+			{
+				const uint16 *pnVertex = static_cast<const uint16*>(GetData(nIndex, nSemantic, nChannel));
+				if (pnVertex) {
+					fX = static_cast<float>(pnVertex[0]);
+					fY = static_cast<float>(pnVertex[1]);
+
+					// Done
+					return true;
+				}
+				break;
+			}
+
+			// Short 4 (four components per element, 16 bit integer per component)
+			case Short4:
+			{
+				const uint16 *pnVertex = static_cast<const uint16*>(GetData(nIndex, nSemantic, nChannel));
+				if (pnVertex) {
+					fX = static_cast<float>(pnVertex[0]);
+					fY = static_cast<float>(pnVertex[1]);
+					fZ = static_cast<float>(pnVertex[2]);
+					fW = static_cast<float>(pnVertex[3]);
+
+					// Done
+					return true;
+				}
+				break;
+			}
+
+			// Half 1 (one component per element, 16 bit floating point per component, may not be supported by each API)
+			case Half1:
+			{
+				const uint16 *pnVertex = static_cast<const uint16*>(GetData(nIndex, nSemantic, nChannel));
+				if (pnVertex) {
+					fX = Half::ToFloat(pnVertex[0]);
+
+					// Done
+					return true;
+				}
+				break;
+			}
+
+			// Half 2 (two components per element, 16 bit floating point per component, may not be supported by each API)
+			case Half2:
+			{
+				const uint16 *pnVertex = static_cast<const uint16*>(GetData(nIndex, nSemantic, nChannel));
+				if (pnVertex) {
+					fX = Half::ToFloat(pnVertex[0]);
+					fY = Half::ToFloat(pnVertex[1]);
+
+					// Done
+					return true;
+				}
+				break;
+			}
+
+			// Half 3 (three components per element, 16 bit floating point per component, may not be supported by each API)
+			case Half3:
+			{
+				const uint16 *pnVertex = static_cast<const uint16*>(GetData(nIndex, nSemantic, nChannel));
+				if (pnVertex) {
+					fX = Half::ToFloat(pnVertex[0]);
+					fY = Half::ToFloat(pnVertex[1]);
+					fZ = Half::ToFloat(pnVertex[2]);
+
+					// Done
+					return true;
+				}
+				break;
+			}
+
+			// Half 4 (four components per element, 16 bit floating point per component, may not be supported by each API)
+			case Half4:
+			{
+				const uint16 *pnVertex = static_cast<const uint16*>(GetData(nIndex, nSemantic, nChannel));
+				if (pnVertex) {
+					fX = Half::ToFloat(pnVertex[0]);
+					fY = Half::ToFloat(pnVertex[1]);
+					fZ = Half::ToFloat(pnVertex[2]);
+					fW = Half::ToFloat(pnVertex[3]);
+
+					// Done
+					return true;
+				}
+				break;
+			}
+		}
+	}
+
+	// Error!
+	fX = 0.0f;
+	fY = 0.0f;
+	fZ = 0.0f;
+	fW = 0.0f;
+	return false;
+}
+
+/**
+*  @brief
+*    Sets the data of a vertex buffer attribute by using four given generic floating point components
+*/
+bool VertexBuffer::SetFloat(uint32 nIndex, uint32 nSemantic, uint32 nChannel, float fX, float fY, float fZ, float fW)
+{
+	// Get the first found vertex attribute with the requested semantic
+	const Attribute *pAttribute = GetVertexAttribute(static_cast<ESemantic>(nSemantic), nChannel);
+	if (pAttribute) {
+		// Check attribute type
+		switch (pAttribute->nType) {
+			// Color (legacy API dependent storage which is no longer required when using modern shader based API's, do always use GetColor() and SetColor()!)
+			case RGBA:
+				return SetColor(nIndex, Color4(fX, fY, fZ, fW), nChannel);
+
+			// Float 1 (one component per element, 32 bit floating point per component)
+			case Float1:
+			{
+				float *pfVertex = static_cast<float*>(GetData(nIndex, nSemantic, nChannel));
+				if (pfVertex) {
+					pfVertex[0] = fX;
+
+					// Done
+					return true;
+				}
+				break;
+			}
+
+			// Float 2 (two components per element, 32 bit floating point per component)
+			case Float2:
+			{
+				float *pfVertex = static_cast<float*>(GetData(nIndex, nSemantic, nChannel));
+				if (pfVertex) {
+					pfVertex[0] = fX;
+					pfVertex[1] = fY;
+
+					// Done
+					return true;
+				}
+				break;
+			}
+
+			// Float 3 (three components per element, 32 bit floating point per component)
+			case Float3:
+			{
+				float *pfVertex = static_cast<float*>(GetData(nIndex, nSemantic, nChannel));
+				if (pfVertex) {
+					pfVertex[0] = fX;
+					pfVertex[1] = fY;
+					pfVertex[2] = fZ;
+
+					// Done
+					return true;
+				}
+				break;
+			}
+
+			// Float 4 (four components per element, 32 bit floating point per component)
+			case Float4:
+			{
+				float *pfVertex = static_cast<float*>(GetData(nIndex, nSemantic, nChannel));
+				if (pfVertex) {
+					pfVertex[0] = fX;
+					pfVertex[1] = fY;
+					pfVertex[2] = fZ;
+					pfVertex[3] = fW;
+
+					// Done
+					return true;
+				}
+				break;
+			}
+
+			// Short 2 (two components per element, 16 bit integer per component)
+			case Short2:
+			{
+				uint16 *pnVertex = static_cast<uint16*>(GetData(nIndex, nSemantic, nChannel));
+				if (pnVertex) {
+					pnVertex[0] = static_cast<uint16>(fX);
+					pnVertex[1] = static_cast<uint16>(fY);
+
+					// Done
+					return true;
+				}
+				break;
+			}
+
+			// Short 4 (four components per element, 16 bit integer per component)
+			case Short4:
+			{
+				uint16 *pnVertex = static_cast<uint16*>(GetData(nIndex, nSemantic, nChannel));
+				if (pnVertex) {
+					pnVertex[0] = static_cast<uint16>(fX);
+					pnVertex[1] = static_cast<uint16>(fY);
+					pnVertex[2] = static_cast<uint16>(fZ);
+					pnVertex[3] = static_cast<uint16>(fW);
+
+					// Done
+					return true;
+				}
+				break;
+			}
+
+			// Half 1 (one component per element, 16 bit floating point per component, may not be supported by each API)
+			case Half1:
+			{
+				uint16 *pnVertex = static_cast<uint16*>(GetData(nIndex, nSemantic, nChannel));
+				if (pnVertex) {
+					pnVertex[0] = Half::FromFloat(fX);
+
+					// Done
+					return true;
+				}
+				break;
+			}
+
+			// Half 2 (two components per element, 16 bit floating point per component, may not be supported by each API)
+			case Half2:
+			{
+				uint16 *pnVertex = static_cast<uint16*>(GetData(nIndex, nSemantic, nChannel));
+				if (pnVertex) {
+					pnVertex[0] = Half::FromFloat(fX);
+					pnVertex[1] = Half::FromFloat(fY);
+
+					// Done
+					return true;
+				}
+				break;
+			}
+
+			// Half 3 (three components per element, 16 bit floating point per component, may not be supported by each API)
+			case Half3:
+			{
+				uint16 *pnVertex = static_cast<uint16*>(GetData(nIndex, nSemantic, nChannel));
+				if (pnVertex) {
+					pnVertex[0] = Half::FromFloat(fX);
+					pnVertex[1] = Half::FromFloat(fY);
+					pnVertex[2] = Half::FromFloat(fZ);
+
+					// Done
+					return true;
+				}
+				break;
+			}
+
+			// Half 4 (four components per element, 16 bit floating point per component, may not be supported by each API)
+			case Half4:
+			{
+				uint16 *pnVertex = static_cast<uint16*>(GetData(nIndex, nSemantic, nChannel));
+				if (pnVertex) {
+					pnVertex[0] = Half::FromFloat(fX);
+					pnVertex[1] = Half::FromFloat(fY);
+					pnVertex[2] = Half::FromFloat(fZ);
+					pnVertex[3] = Half::FromFloat(fW);
+
+					// Done
+					return true;
+				}
+				break;
+			}
+		}
+	}
+
+	// Error!
+	return false;
 }
 
 /**

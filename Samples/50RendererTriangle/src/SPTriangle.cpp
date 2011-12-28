@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLMath/Half.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
 #include "SPTriangle.h"
@@ -32,8 +31,6 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLCore;
-using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLRenderer;
 
@@ -62,11 +59,8 @@ SPTriangle::SPTriangle(Renderer &cRenderer) : SurfacePainter(cRenderer),
 		// -> First try efficient "half" (16 bit floating point) as data type, if this fails fall back to traditional more expensive "float" (32 bit floating point)
 		// -> This is just an example. Because the half data type is no primitive C++ data type there's a CPU conversion overhead you may
 		//    want to avoid in case it's not worth the effort... like when only drawing a simple triangle... as mentioned, this is just an example.
-		bool bPositionHalf = true;
-		if (!m_pVertexBuffer->AddVertexAttribute(VertexBuffer::Position, 0, VertexBuffer::Half3)) {
+		if (!m_pVertexBuffer->AddVertexAttribute(VertexBuffer::Position, 0, VertexBuffer::Half3))
 			m_pVertexBuffer->AddVertexAttribute(VertexBuffer::Position, 0, VertexBuffer::Float3);
-			bPositionHalf = false;
-		}
 
 		// There should also be a color value per vertex. Note that the internal representation
 		// depends on the used renderer implementation.
@@ -86,62 +80,27 @@ SPTriangle::SPTriangle(Renderer &cRenderer) : SurfacePainter(cRenderer),
 			// and SetColor() functions to ensure that you put the data at the correct position into the buffer. For
 			// instance the color value can have a different size on different renderer implementations! For
 			// security we check the pointer given by GetData() for a null pointer, but normally that's not required.
+			// -> "m_pVertexBuffer->SetFloat(0, VertexBuffer::Position, 0.0f, 1.0f, 0.0f);" is using a comfort function.
+			//    It's still possible to access the data in a more direct way to e.g. copy over data within a single
+			//    memory copy operation. Here's an example how to access data in a more performant direct way:
+			//        float *pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(0, VertexBuffer::Position));
+			//        if (pfVertex) {
+			//            pfVertex[0] = 0.0f;
+			//            pfVertex[1] = 1.0f;
+			//            pfVertex[2] = 0.0f;
+			//        }
 
-			// Setup vertex color
+			// Setup vertex 0
+			m_pVertexBuffer->SetFloat(0, VertexBuffer::Position, 0, 0.0f, 1.0f, 0.0f);
 			m_pVertexBuffer->SetColor(0, Color4::Red);
+
+			// Setup vertex 1
+			m_pVertexBuffer->SetFloat(1, VertexBuffer::Position, 0, -1.0f, -1.0f, 0.0f);
 			m_pVertexBuffer->SetColor(1, Color4::Green);
+
+			// Setup vertex 2
+			m_pVertexBuffer->SetFloat(2, VertexBuffer::Position, 0, 1.0f, -1.0f, 0.0f);
 			m_pVertexBuffer->SetColor(2, Color4::Blue);
-
-			// Check the used data type for the vertex position
-			if (bPositionHalf) {
-				// Setup vertex 0
-				uint16 *pnVertex = static_cast<uint16*>(m_pVertexBuffer->GetData(0, VertexBuffer::Position));
-				if (pnVertex) {
-					pnVertex[0] = Half::Zero;
-					pnVertex[1] = Half::One;
-					pnVertex[2] = Half::Zero;
-				}
-
-				// Setup vertex 1
-				pnVertex = static_cast<uint16*>(m_pVertexBuffer->GetData(1, VertexBuffer::Position));
-				if (pnVertex) {
-					pnVertex[0] = Half::FromFloat(-1.0f);
-					pnVertex[1] = Half::FromFloat(-1.0f);
-					pnVertex[2] = Half::Zero;
-				}
-
-				// Setup vertex 2
-				pnVertex = static_cast<uint16*>(m_pVertexBuffer->GetData(2, VertexBuffer::Position));
-				if (pnVertex) {
-					pnVertex[0] = Half::One;
-					pnVertex[1] = Half::FromFloat(-1.0f);
-					pnVertex[2] = Half::Zero;
-				}
-			} else {
-				// Setup vertex 0
-				float *pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(0, VertexBuffer::Position));
-				if (pfVertex) {
-					pfVertex[0] = 0.0f;
-					pfVertex[1] = 1.0f;
-					pfVertex[2] = 0.0f;
-				}
-
-				// Setup vertex 1
-				pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(1, VertexBuffer::Position));
-				if (pfVertex) {
-					pfVertex[0] = -1.0f;
-					pfVertex[1] = -1.0f;
-					pfVertex[2] =  0.0f;
-				}
-
-				// Setup vertex 2
-				pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(2, VertexBuffer::Position));
-				if (pfVertex) {
-					pfVertex[0] =  1.0f;
-					pfVertex[1] = -1.0f;
-					pfVertex[2] =  0.0f;
-				}
-			}
 
 			// Now that we have filled the buffer with our data, unlock it. Locked buffers
 			// CANNOT be used for rendering!

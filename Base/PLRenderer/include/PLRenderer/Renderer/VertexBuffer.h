@@ -230,6 +230,75 @@ class VertexBuffer : public Buffer {
 		*/
 		PLRENDERER_API VertexBuffer &operator =(const VertexBuffer &cSource);
 
+		//[-------------------------------------------------------]
+		//[ Tool functions                                        ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Fills the data of a vertex buffer attribute into four given generic floating point components
+		*
+		*  @param[in]  nIndex
+		*    Vertex index
+		*  @param[in]  nSemantic
+		*    Any member of the vertex attribute semantic enumeration type
+		*  @param[in]  nChannel
+		*    Pipeline channel (see ESemantic)
+		*  @param[out] fX
+		*    On success, receives the first component, set to null on error
+		*  @param[out] fY
+		*    On success, receives the second component, set to null on error or when the component does not exist
+		*  @param[out] fZ
+		*    On success, receives the third component, set to null on error or when the component does not exist
+		*  @param[out] fW
+		*    On success, receives the fourth component, set to null on error or when the component does not exist
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - Performance warning: This is only a comfort method and there's a notable overhead
+		*      due to the required multiple checks, access the data directly if you need maximum possible performance
+		*    - Unavailable components are ignored, e.g. when setting "Float1" the given "fY", "fZ" and "fW" will be ignored
+		*    - See GetData() in Buffer
+		*    - This function will give you the correct offset of the requested
+		*      vertex attribute
+		*    - When manipulating color data you should use GetColor() and SetColor()!
+		*/
+		PLRENDERER_API bool GetFloat(PLCore::uint32 nIndex, PLCore::uint32 nSemantic, PLCore::uint32 nChannel, float &fX, float &fY, float &fZ, float &fW);
+
+		/**
+		*  @brief
+		*    Sets the data of a vertex buffer attribute by using four given generic floating point components
+		*
+		*  @param[in] nIndex
+		*    Vertex index
+		*  @param[in] nSemantic
+		*    Any member of the vertex attribute semantic enumeration type
+		*  @param[in] nChannel
+		*    Pipeline channel (see ESemantic)
+		*  @param[in] fX
+		*    First component
+		*  @param[in] fY
+		*    Second component
+		*  @param[in] fZ
+		*    Third component
+		*  @param[in] fW
+		*    Fourth component
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - Performance warning: This is only a comfort method and there's a notable overhead
+		*      due to the required multiple checks, access the data directly if you need maximum possible performance
+		*    - Unavailable components are ignored, e.g. when setting "Float1" the given "fY", "fZ" and "fW" will be ignored
+		*    - See GetData() in Buffer
+		*    - This function will give you the correct offset of the requested
+		*      vertex attribute
+		*    - When manipulating color data you should use GetColor() and SetColor()!
+		*/
+		PLRENDERER_API bool SetFloat(PLCore::uint32 nIndex, PLCore::uint32 nSemantic, PLCore::uint32 nChannel, float fX, float fY = 0.0f, float fZ = 0.0f, float fW = 0.0f);
+
 		/**
 		*  @brief
 		*    Returns the vertex buffer bounding box

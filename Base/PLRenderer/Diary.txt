@@ -1,6 +1,7 @@
 >> 28.12.2011
 [CO]
 - "VertexBuffer": Added support for the "half" data type (16 bit floating point)
+- "VertexBuffer": Added generic comfort methods "GetFloat()" and "SetFloat()"
 - "PLRendererOpenGL": Added support for "GL_NV_half_float" and "GL_ARB_half_float_vertex"
 - "PLRendererOpenGLES2": Added support for "GL_OES_vertex_half_float"
 
