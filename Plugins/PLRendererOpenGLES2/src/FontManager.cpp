@@ -186,7 +186,9 @@ PLRenderer::VertexBuffer *FontManager::GetVertexBuffer()
 		m_pVertexBuffer = m_pRenderer->CreateVertexBuffer();
 
 		// Add vertex position attribute to the vertex buffer, zw stores the texture coordinate
-		m_pVertexBuffer->AddVertexAttribute(PLRenderer::VertexBuffer::Position, 0, PLRenderer::VertexBuffer::Float3);
+		// -> First try efficient "half" (16 bit floating point) as data type, if this fails fall back to traditional more expensive "float" (32 bit floating point)
+		if (!m_pVertexBuffer->AddVertexAttribute(PLRenderer::VertexBuffer::Position, 0, PLRenderer::VertexBuffer::Half3))
+			m_pVertexBuffer->AddVertexAttribute(PLRenderer::VertexBuffer::Position, 0, PLRenderer::VertexBuffer::Float3);
 
 		// Allocate four vertices
 		m_pVertexBuffer->Allocate(4);

@@ -102,10 +102,10 @@ class VertexBuffer : public Buffer {
 			Float4 = 4,	/**< Float 4 (four components per element, 32 bit floating point per component) */
 			Short2 = 5,	/**< Short 2 (two components per element, 16 bit integer per component) */
 			Short4 = 6,	/**< Short 4 (four components per element, 16 bit integer per component) */
-			Half1  = 7,	/**< Half 1 (one component per element, 16 bit floating point per component, may not be supported by each API) */
-			Half2  = 8,	/**< Half 2 (two components per element, 16 bit floating point per component, may not be supported by each API) */
-			Half3  = 9,	/**< Half 3 (three components per element, 16 bit floating point per component, may not be supported by each API) */
-			Half4  = 10	/**< Half 4 (four components per element, 16 bit floating point per component, may not be supported by each API) */
+			Half1  = 7,	/**< Half 1 (one component per element, 16 bit floating point per component, may not be supported by each API, be careful with this data type because not every GPU driver is optimized for it) */
+			Half2  = 8,	/**< Half 2 (two components per element, 16 bit floating point per component, may not be supported by each API, be careful with this data type because not every GPU driver is optimized for it) */
+			Half3  = 9,	/**< Half 3 (three components per element, 16 bit floating point per component, may not be supported by each API, be careful with this data type because not every GPU driver is optimized for it) */
+			Half4  = 10	/**< Half 4 (four components per element, 16 bit floating point per component, may not be supported by each API, be careful with this data type because not every GPU driver is optimized for it) */
 		};
 
 

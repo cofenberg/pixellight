@@ -17,7 +17,10 @@
   behaviour on larger vertex data... this resulted in a horrible performance on my "ATI Mobility Radeon HD 4850". Slide show, while totally fluidly when using
   float, similiar to what I noticed in the simple font rendering test, only worse. If this horrible performance is not limited to my mobile GPU, I ask myself why
   "GL_ARB_half_float_vertex" is provided in the first place when it's practically useless on ATI/AMD drivers. I wonder if it's the same on NVIDIA GPUs, have to
-  check this out when I'am back at the university.
+  check this out when I'am back at the university. At least on a Tegra 2 GL_OES_vertex_half_float is working quite fine, the performance is slightly better instead
+  of incredible worse as noticed on my desktop GPU. I was unable to find visible precision errors, but still, the half data type has to be used carefully - but
+  when it can be used we can half the memory consumtion of vertex data which is really useful on mobile devices with a limited amout of available memory compared
+  to a desktop PC... even when the first mobile devices with 1 GiB ram are now out, 512 MiB is more common which is usually already full of up and running apps.
 
 
 
