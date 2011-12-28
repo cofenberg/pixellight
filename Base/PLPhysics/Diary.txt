@@ -1,3 +1,9 @@
+>> 28.11.2011
+[CO]
+- "PLPhysicsNewton": "BodyMesh" & "BodyConvexHull": Added "VertexBuffer::Half3" & "VertexBuffer::Half4" support
+
+
+
 >> 12.11.2011
 [CO]
 - "PLPhysicsODE": Updated x64 Visual Studio project settings

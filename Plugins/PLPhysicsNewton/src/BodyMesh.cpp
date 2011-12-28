@@ -26,6 +26,7 @@
 #include <PLCore/System/System.h>
 #include <PLCore/File/File.h>
 #include <PLCore/File/Directory.h>
+#include <PLMath/Half.h>
 #include <PLMath/Matrix4x4.h>
 #include <PLRenderer/Renderer/IndexBuffer.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
@@ -108,113 +109,151 @@ BodyMesh::BodyMesh(PLPhysics::World &cWorld, MeshManager &cMeshManager, const St
 					// Setup tree collision
 					VertexBuffer *pVertexBuffer = pMesh->GetMorphTarget()->GetVertexBuffer();
 					if (pVertexBuffer && pVertexBuffer->Lock(Lock::ReadOnly)) {
-						IndexBuffer *pIndexBuffer = pLODLevel->GetIndexBuffer();
-						if (pIndexBuffer && pIndexBuffer->Lock(Lock::ReadOnly)) {
-							// Create collision primitive
-							pCollision = NewtonCreateTreeCollision(pNewtonWorld, 0);
-							if (pCollision) {
-								// Start collision tree
-								NewtonTreeCollisionBeginBuild(pCollision);
+						// Get and check vertex position attribute
+						const VertexBuffer::Attribute *pPositionAttribute = pVertexBuffer->GetVertexAttribute(VertexBuffer::Position);
+						if (pPositionAttribute && (pPositionAttribute->nType == VertexBuffer::Float3 || pPositionAttribute->nType == VertexBuffer::Float4 ||
+							pPositionAttribute->nType == VertexBuffer::Half3 || pPositionAttribute->nType == VertexBuffer::Half4)) {
+							const bool bHalf = (pPositionAttribute->nType == VertexBuffer::Half3 || pPositionAttribute->nType == VertexBuffer::Half4);
 
-								// Process every geometry object
-								float fVertex[9];
-								uint32 nFaces = 0;
-								const Array<Geometry> &lstGeometries = *pLODLevel->GetGeometries();
-								for (uint32 i=0; i<lstGeometries.GetNumOfElements(); i++) {
-									// Get geometry object
-									const Geometry &cGeometry = lstGeometries[i];
+							// Get index buffer
+							IndexBuffer *pIndexBuffer = pLODLevel->GetIndexBuffer();
+							if (pIndexBuffer && pIndexBuffer->Lock(Lock::ReadOnly)) {
+								// Create collision primitive
+								pCollision = NewtonCreateTreeCollision(pNewtonWorld, 0);
+								if (pCollision) {
+									// Start collision tree
+									NewtonTreeCollisionBeginBuild(pCollision);
 
-									// Get the material this geometry is using and check whether or not it's two sided
-									bool bTwoSided = false;
-									const Material *pMaterial = pMeshHandler->GetMaterial(cGeometry.GetMaterial());
-									if (pMaterial) {
-										// Two sided material?
-										static const String sTwoSided = "TwoSided";
-										const Parameter *pParameter = pMaterial->GetParameter(sTwoSided);
-										if (pParameter)
-											bTwoSided = (pParameter->GetValue1f() == 1.0f);
+									// Process every geometry object
+									float fVertex[9];
+									uint32 nFaces = 0;
+									const Array<Geometry> &lstGeometries = *pLODLevel->GetGeometries();
+									for (uint32 i=0; i<lstGeometries.GetNumOfElements(); i++) {
+										// Get geometry object
+										const Geometry &cGeometry = lstGeometries[i];
+
+										// Get the material this geometry is using and check whether or not it's two sided
+										bool bTwoSided = false;
+										const Material *pMaterial = pMeshHandler->GetMaterial(cGeometry.GetMaterial());
+										if (pMaterial) {
+											// Two sided material?
+											static const String sTwoSided = "TwoSided";
+											const Parameter *pParameter = pMaterial->GetParameter(sTwoSided);
+											if (pParameter)
+												bTwoSided = (pParameter->GetValue1f() == 1.0f);
+										}
+
+										// Two sided triangle? If so, we need to add the other side, too
+										if (bTwoSided) {
+											// Process every triangle
+											for (uint32 j=0; j<cGeometry.GetNumOfTriangles(); j++) {
+												// Get triangle
+												uint32 nVertex[3];
+												pLODLevel->GetTriangle(i, j, nVertex[0], nVertex[1], nVertex[2]);
+
+												{ // Add first side face
+													// Get triangle vertices
+													if (bHalf) {
+														for (int nV=0; nV<3; nV++) {
+															const uint16 *pnVertex = static_cast<const uint16*>(pVertexBuffer->GetData(nVertex[nV], VertexBuffer::Position));
+															fVertex[nV*3+0] = Half::ToFloat(pnVertex[0])*m_vMeshScale.x;
+															fVertex[nV*3+1] = Half::ToFloat(pnVertex[1])*m_vMeshScale.y;
+															fVertex[nV*3+2] = Half::ToFloat(pnVertex[2])*m_vMeshScale.z;
+														}
+													} else {
+														for (int nV=0; nV<3; nV++) {
+															const float *pfVertex = static_cast<const float*>(pVertexBuffer->GetData(nVertex[nV], VertexBuffer::Position));
+															fVertex[nV*3+0] = pfVertex[0]*m_vMeshScale.x;
+															fVertex[nV*3+1] = pfVertex[1]*m_vMeshScale.y;
+															fVertex[nV*3+2] = pfVertex[2]*m_vMeshScale.z;
+														}
+													}
+
+													// Add face
+													NewtonTreeCollisionAddFace(pCollision, 3, fVertex, sizeof(float)*3, 1);
+													nFaces++;
+												}
+
+												/* // [TODO] Currently not working correctly and may produce a hang under Linux
+												   // Check http://www.newtondynamics.com/forum/viewtopic.php?f=9&t=4922&start=465
+												   // [TODO] "half"-support
+												{ // Add second side face
+													// Get triangle vertices
+													for (int nV=0; nV<3; nV++) {
+														const float *pfVertex = static_cast<const float*>(pVertexBuffer->GetData(nVertex[2-nV], VertexBuffer::Position));
+														fVertex[nV*3+0] = pfVertex[0]*m_vMeshScale.x;
+														fVertex[nV*3+1] = pfVertex[1]*m_vMeshScale.y;
+														fVertex[nV*3+2] = pfVertex[2]*m_vMeshScale.z;
+													}
+
+													// Add face
+													NewtonTreeCollisionAddFace(pCollision, 3, fVertex, sizeof(float)*3, 1);
+													nFaces++;
+												}
+												*/
+											}
+										} else {
+											// Process every triangle
+											if (bHalf) {
+												for (uint32 j=0; j<cGeometry.GetNumOfTriangles(); j++) {
+													// Get triangle
+													uint32 nVertex[3];
+													pLODLevel->GetTriangle(i, j, nVertex[0], nVertex[1], nVertex[2]);
+
+													// Get triangle vertices
+													for (int nV=0; nV<3; nV++) {
+														const uint16 *pnVertex = static_cast<const uint16*>(pVertexBuffer->GetData(nVertex[nV], VertexBuffer::Position));
+														fVertex[nV*3+0] = Half::ToFloat(pnVertex[0])*m_vMeshScale.x;
+														fVertex[nV*3+1] = Half::ToFloat(pnVertex[1])*m_vMeshScale.y;
+														fVertex[nV*3+2] = Half::ToFloat(pnVertex[2])*m_vMeshScale.z;
+													}
+
+													// Add face
+													NewtonTreeCollisionAddFace(pCollision, 3, fVertex, sizeof(float)*3, 1);
+													nFaces++;
+												}
+											} else {
+												for (uint32 j=0; j<cGeometry.GetNumOfTriangles(); j++) {
+													// Get triangle
+													uint32 nVertex[3];
+													pLODLevel->GetTriangle(i, j, nVertex[0], nVertex[1], nVertex[2]);
+
+													// Get triangle vertices
+													for (int nV=0; nV<3; nV++) {
+														const float *pfVertex = static_cast<const float*>(pVertexBuffer->GetData(nVertex[nV], VertexBuffer::Position));
+														fVertex[nV*3+0] = pfVertex[0]*m_vMeshScale.x;
+														fVertex[nV*3+1] = pfVertex[1]*m_vMeshScale.y;
+														fVertex[nV*3+2] = pfVertex[2]*m_vMeshScale.z;
+													}
+
+													// Add face
+													NewtonTreeCollisionAddFace(pCollision, 3, fVertex, sizeof(float)*3, 1);
+													nFaces++;
+												}
+											}
+										}
 									}
 
-									// Two sided triangle? If so, we need to add the other side, too
-									if (bTwoSided) {
-										// Process every triangle
-										for (uint32 j=0; j<cGeometry.GetNumOfTriangles(); j++) {
-											// Get triangle
-											uint32 nVertex[3];
-											pLODLevel->GetTriangle(i, j, nVertex[0], nVertex[1], nVertex[2]);
+									// Finish tree collision (may take some time!)
+									NewtonTreeCollisionEndBuild(pCollision, m_bOptimize);
 
-											{ // Add first side face
-												// Get triangle vertices
-												for (int nV=0; nV<3; nV++) {
-													const float *pfVertex = static_cast<const float*>(pVertexBuffer->GetData(nVertex[nV], VertexBuffer::Position));
-													fVertex[nV*3+0] = pfVertex[0]*m_vMeshScale.x;
-													fVertex[nV*3+1] = pfVertex[1]*m_vMeshScale.y;
-													fVertex[nV*3+2] = pfVertex[2]*m_vMeshScale.z;
-												}
-
-												// Add face
-												NewtonTreeCollisionAddFace(pCollision, 3, fVertex, sizeof(float)*3, 1);
-												nFaces++;
-											}
-
-											/* // [TODO] Currently not working correctly and may produce a hang under Linux
-											   // Check http://www.newtondynamics.com/forum/viewtopic.php?f=9&t=4922&start=465
-											{ // Add second side face
-												// Get triangle vertices
-												for (int nV=0; nV<3; nV++) {
-													const float *pfVertex = static_cast<const float*>(pVertexBuffer->GetData(nVertex[2-nV], VertexBuffer::Position));
-													fVertex[nV*3+0] = pfVertex[0]*m_vMeshScale.x;
-													fVertex[nV*3+1] = pfVertex[1]*m_vMeshScale.y;
-													fVertex[nV*3+2] = pfVertex[2]*m_vMeshScale.z;
-												}
-
-												// Add face
-												NewtonTreeCollisionAddFace(pCollision, 3, fVertex, sizeof(float)*3, 1);
-												nFaces++;
-											}
-											*/
-										}
-									} else {
-										// Process every triangle
-										for (uint32 j=0; j<cGeometry.GetNumOfTriangles(); j++) {
-											// Get triangle
-											uint32 nVertex[3];
-											pLODLevel->GetTriangle(i, j, nVertex[0], nVertex[1], nVertex[2]);
-
-											// Get triangle vertices
-											for (int nV=0; nV<3; nV++) {
-												const float *pfVertex = static_cast<const float*>(pVertexBuffer->GetData(nVertex[nV], VertexBuffer::Position));
-												fVertex[nV*3+0] = pfVertex[0]*m_vMeshScale.x;
-												fVertex[nV*3+1] = pfVertex[1]*m_vMeshScale.y;
-												fVertex[nV*3+2] = pfVertex[2]*m_vMeshScale.z;
-											}
-
-											// Add face
-											NewtonTreeCollisionAddFace(pCollision, 3, fVertex, sizeof(float)*3, 1);
-											nFaces++;
-										}
+									// Try to cache the result so we don't need to do this again next time
+									File *pFile = OpenFile(cWorld, sMeshScale, true);
+									if (pFile) {
+										NewtonCollisionSerialize(pNewtonWorld, pCollision, World::PhysicsSerialize, pFile);
+										pFile->Close();
+										delete pFile;
+										pFile = nullptr;
 									}
 								}
 
-								// Finish tree collision (may take some time!)
-								NewtonTreeCollisionEndBuild(pCollision, m_bOptimize);
-
-								// Try to cache the result so we don't need to do this again next time
-								File *pFile = OpenFile(cWorld, sMeshScale, true);
-								if (pFile) {
-									NewtonCollisionSerialize(pNewtonWorld, pCollision, World::PhysicsSerialize, pFile);
-									pFile->Close();
-									delete pFile;
-									pFile = nullptr;
-								}
+								// Unlock the index buffer
+								pIndexBuffer->Unlock();
 							}
 
-							// Unlock the index buffer
-							pIndexBuffer->Unlock();
+							// Unlock the vertex buffer
+							pVertexBuffer->Unlock();
 						}
-
-						// Unlock the vertex buffer
-						pVertexBuffer->Unlock();
 					}
 				}
 			}

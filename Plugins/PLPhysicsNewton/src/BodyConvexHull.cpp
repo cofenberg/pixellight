@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Half.h>
 #include <PLMath/Matrix4x4.h>
 #include <PLRenderer/Renderer/VertexBuffer.h>
 #include <PLMesh/Mesh.h>
@@ -87,41 +88,93 @@ BodyConvexHull::BodyConvexHull(PLPhysics::World &cWorld, MeshManager &cMeshManag
 		if (pMesh && pMesh->GetMorphTarget() && pMesh->GetMorphTarget()->GetVertexBuffer()) {
 			VertexBuffer *pVertexBuffer = pMesh->GetMorphTarget()->GetVertexBuffer();
 
-			// Setup tree collision
-			static const float fTolerance = 0.01f; // (setting from Newton SDK samples)
-			if (pVertexBuffer->Lock(Lock::ReadOnly)) {
-				if (m_vMeshScale == Vector3::One) { // We can take the original vertex data
-					pCollision = NewtonCreateConvexHull(pNewtonWorld, pVertexBuffer->GetNumOfElements(),
-														static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::Position)),
-														pVertexBuffer->GetVertexSize(), fTolerance, 0, nullptr);
-				} else { // We have to use own scaled vertex data
-					float *fVertices = new float[3*pVertexBuffer->GetNumOfElements()];
-					float *fVertex = fVertices;
+			// Get and check vertex position attribute
+			const VertexBuffer::Attribute *pPositionAttribute = pVertexBuffer->GetVertexAttribute(VertexBuffer::Position);
+			if (pPositionAttribute && (pPositionAttribute->nType == VertexBuffer::Float3 || pPositionAttribute->nType == VertexBuffer::Float4 ||
+				pPositionAttribute->nType == VertexBuffer::Half3 || pPositionAttribute->nType == VertexBuffer::Half4)) {
+				const bool bHalf = (pPositionAttribute->nType == VertexBuffer::Half3 || pPositionAttribute->nType == VertexBuffer::Half4);
 
-					// Fill our scaled vertex data
-					for (uint32 i=0; i<pVertexBuffer->GetNumOfElements(); i++) {
-						const float *fVertexT = static_cast<const float*>(pVertexBuffer->GetData(i, VertexBuffer::Position));
-						fVertex[Vector3::X] = fVertexT[Vector3::X]*m_vMeshScale.x;
-						fVertex[Vector3::Y] = fVertexT[Vector3::Y]*m_vMeshScale.y;
-						fVertex[Vector3::Z] = fVertexT[Vector3::Z]*m_vMeshScale.z;
-						fVertex += 3;
+				// Setup tree collision
+				static const float fTolerance = 0.01f; // (setting from Newton SDK samples)
+				if (pVertexBuffer->Lock(Lock::ReadOnly)) {
+					if (bHalf) {
+						// 16 bit floating point
+						if (m_vMeshScale == Vector3::One) { // We can take the original vertex data
+							float *fVertices = new float[3*pVertexBuffer->GetNumOfElements()];
+							float *fVertex = fVertices;
+
+							// Fill our scaled vertex data
+							for (uint32 i=0; i<pVertexBuffer->GetNumOfElements(); i++) {
+								const uint16 *nVertexT = static_cast<const uint16*>(pVertexBuffer->GetData(i, VertexBuffer::Position));
+								fVertex[Vector3::X] = Half::ToFloat(nVertexT[Vector3::X]);
+								fVertex[Vector3::Y] = Half::ToFloat(nVertexT[Vector3::Y]);
+								fVertex[Vector3::Z] = Half::ToFloat(nVertexT[Vector3::Z]);
+								fVertex += 3;
+							}
+
+							// Create the convex hull
+							pCollision = NewtonCreateConvexHull(pNewtonWorld, pVertexBuffer->GetNumOfElements(),
+																fVertices, sizeof(float)*3, fTolerance, 0, nullptr);
+
+							// Cleanup
+							delete [] fVertices;
+						} else { // We have to use own scaled vertex data
+							float *fVertices = new float[3*pVertexBuffer->GetNumOfElements()];
+							float *fVertex = fVertices;
+
+							// Fill our scaled vertex data
+							for (uint32 i=0; i<pVertexBuffer->GetNumOfElements(); i++) {
+								const float *fVertexT = static_cast<const float*>(pVertexBuffer->GetData(i, VertexBuffer::Position));
+								fVertex[Vector3::X] = fVertexT[Vector3::X]*m_vMeshScale.x;
+								fVertex[Vector3::Y] = fVertexT[Vector3::Y]*m_vMeshScale.y;
+								fVertex[Vector3::Z] = fVertexT[Vector3::Z]*m_vMeshScale.z;
+								fVertex += 3;
+							}
+
+							// Create the convex hull
+							pCollision = NewtonCreateConvexHull(pNewtonWorld, pVertexBuffer->GetNumOfElements(),
+																fVertices, sizeof(float)*3, fTolerance, 0, nullptr);
+
+							// Cleanup
+							delete [] fVertices;
+						}
+					} else {
+						// 32 bit floating point
+						if (m_vMeshScale == Vector3::One) { // We can take the original vertex data
+							pCollision = NewtonCreateConvexHull(pNewtonWorld, pVertexBuffer->GetNumOfElements(),
+																static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::Position)),
+																pVertexBuffer->GetVertexSize(), fTolerance, 0, nullptr);
+						} else { // We have to use own scaled vertex data
+							float *fVertices = new float[3*pVertexBuffer->GetNumOfElements()];
+							float *fVertex = fVertices;
+
+							// Fill our scaled vertex data
+
+							for (uint32 i=0; i<pVertexBuffer->GetNumOfElements(); i++) {
+								const float *fVertexT = static_cast<const float*>(pVertexBuffer->GetData(i, VertexBuffer::Position));
+								fVertex[Vector3::X] = fVertexT[Vector3::X]*m_vMeshScale.x;
+								fVertex[Vector3::Y] = fVertexT[Vector3::Y]*m_vMeshScale.y;
+								fVertex[Vector3::Z] = fVertexT[Vector3::Z]*m_vMeshScale.z;
+								fVertex += 3;
+							}
+
+							// Create the convex hull
+							pCollision = NewtonCreateConvexHull(pNewtonWorld, pVertexBuffer->GetNumOfElements(),
+																fVertices, sizeof(float)*3, fTolerance, 0, nullptr);
+
+							// Cleanup
+							delete [] fVertices;
+						}
 					}
 
-					// Create the convex hull
-					pCollision = NewtonCreateConvexHull(pNewtonWorld, pVertexBuffer->GetNumOfElements(),
-														fVertices, sizeof(float)*3, fTolerance, 0, nullptr);
-
-					// Cleanup
-					delete [] fVertices;
+					// Unlock the vertex buffer
+					pVertexBuffer->Unlock();
 				}
 
-				// Unlock the vertex buffer
-				pVertexBuffer->Unlock();
+				// Add to convex hull collision map
+				if (pCollision)
+					static_cast<World&>(cWorld).GetCollisionConvexHullMap().Add(sMeshScale, pCollision);
 			}
-
-			// Add to convex hull collision map
-			if (pCollision)
-				static_cast<World&>(cWorld).GetCollisionConvexHullMap().Add(sMeshScale, pCollision);
 		}
 
 		// Cleanup
