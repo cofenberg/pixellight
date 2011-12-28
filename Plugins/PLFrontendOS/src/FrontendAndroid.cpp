@@ -496,24 +496,30 @@ void FrontendAndroid::SetTitle(const String &sTitle)
 
 int FrontendAndroid::GetX() const
 {
-	// Always 0
-	return 0;
+	// Lookout! We need to use the current content rectangle of the window, not the window surface
+	// because the OS may add something like a virtual back-key to the window surface.
+	return m_pAndroidApp->contentRect.left;
 }
 
 int FrontendAndroid::GetY() const
 {
-	// Always 0
-	return 0;
+	// Lookout! We need to use the current content rectangle of the window, not the window surface
+	// because the OS may add something like a virtual back-key to the window surface.
+	return m_pAndroidApp->contentRect.top;
 }
 
 uint32 FrontendAndroid::GetWidth() const
 {
-	return m_pAndroidApp->window ? ANativeWindow_getWidth(m_pAndroidApp->window) : 0;
+	// Lookout! We need to use the current content rectangle of the window, not the window surface
+	// because the OS may add something like a virtual back-key to the window surface.
+	return m_pAndroidApp->contentRect.right - m_pAndroidApp->contentRect.left;
 }
 
 uint32 FrontendAndroid::GetHeight() const
 {
-	return m_pAndroidApp->window ? ANativeWindow_getHeight(m_pAndroidApp->window) : 0;
+	// Lookout! We need to use the current content rectangle of the window, not the window surface
+	// because the OS may add something like a virtual back-key to the window surface.
+	return m_pAndroidApp->contentRect.bottom - m_pAndroidApp->contentRect.top;
 }
 
 void FrontendAndroid::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)

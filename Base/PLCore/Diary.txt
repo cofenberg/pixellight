@@ -1,3 +1,12 @@
+>> 28.12.2011
+[CO]
+PLFrontendOS:
+- "FrontendAndroid": "GetX()", "GetY()", "GetWidth()" and "GetHeight()": Lookout! We need to use the current content rectangle of the window, not the window surface
+  because the OS may add something like a virtual back-key to the window surface. If we directly use the window surface something like the FPS display on the bottom
+  of the screen might be cut off.
+
+
+
 >> 25.12.2011
 [CO]
 - Over the last past days, Stephan reported some issues with RTTI classes being instanced multiple times. A known issue. Added Stephans patches adding some more
