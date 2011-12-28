@@ -77,40 +77,20 @@ SPRTT::SPRTT(Renderer &cRenderer) : SurfacePainter(cRenderer),
 		// Setup the vertex buffer data
 		if (m_pPositionVertexBuffer->Lock(Lock::WriteOnly)) {
 			// Setup vertex 0
-			float *pfVertex = static_cast<float*>(m_pPositionVertexBuffer->GetData(0, VertexBuffer::Position));
-			pfVertex[0] = -1.0f;
-			pfVertex[1] = -1.0f;
-			pfVertex[2] =  0.0f;
-			pfVertex    = static_cast<float*>(m_pPositionVertexBuffer->GetData(0, VertexBuffer::TexCoord));
-			pfVertex[0] =  0.0f;
-			pfVertex[1] =  0.0f;
+			m_pPositionVertexBuffer->SetFloat(0, VertexBuffer::Position, 0, -1.0f, -1.0f, 0.0f);
+			m_pPositionVertexBuffer->SetFloat(0, VertexBuffer::TexCoord, 0,  0.0f,  0.0f);
 
 			// Setup vertex 1
-			pfVertex    = static_cast<float*>(m_pPositionVertexBuffer->GetData(1, VertexBuffer::Position));
-			pfVertex[0] =  1.0f;
-			pfVertex[1] = -1.0f;
-			pfVertex[2] =  0.0f;
-			pfVertex    = static_cast<float*>(m_pPositionVertexBuffer->GetData(1, VertexBuffer::TexCoord));
-			pfVertex[0] = 1.0f;
-			pfVertex[1] = 0.0f;
+			m_pPositionVertexBuffer->SetFloat(1, VertexBuffer::Position, 0, 1.0f, -1.0f, 0.0f);
+			m_pPositionVertexBuffer->SetFloat(1, VertexBuffer::TexCoord, 0, 1.0f,  0.0f);
 
 			// Setup vertex 2
-			pfVertex    = static_cast<float*>(m_pPositionVertexBuffer->GetData(2, VertexBuffer::Position));
-			pfVertex[0] = -1.0f;
-			pfVertex[1] =  1.0f;
-			pfVertex[2] =  0.0f;
-			pfVertex    = static_cast<float*>(m_pPositionVertexBuffer->GetData(2, VertexBuffer::TexCoord));
-			pfVertex[0] = 0.0f;
-			pfVertex[1] = 1.0f;
+			m_pPositionVertexBuffer->SetFloat(2, VertexBuffer::Position, 0, -1.0f, 1.0f, 0.0f);
+			m_pPositionVertexBuffer->SetFloat(2, VertexBuffer::TexCoord, 0,  0.0f, 1.0f);
 
 			// Setup vertex 3
-			pfVertex    = static_cast<float*>(m_pPositionVertexBuffer->GetData(3, VertexBuffer::Position));
-			pfVertex[0] = 1.0f;
-			pfVertex[1] = 1.0f;
-			pfVertex[2] = 0.0f;
-			pfVertex    = static_cast<float*>(m_pPositionVertexBuffer->GetData(3, VertexBuffer::TexCoord));
-			pfVertex[0] = 1.0f;
-			pfVertex[1] = 1.0f;
+			m_pPositionVertexBuffer->SetFloat(3, VertexBuffer::Position, 0, 1.0f, 1.0f, 0.0f);
+			m_pPositionVertexBuffer->SetFloat(3, VertexBuffer::TexCoord, 0, 1.0f, 1.0f);
 
 			// Unlock the vertex buffer
 			m_pPositionVertexBuffer->Unlock();

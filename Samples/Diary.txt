@@ -1,3 +1,9 @@
+>> 28.12.2011
+[CO]
+- In order to be as painless as possible, the samples are now using the new "PLRenderer::VertexBuffer::SetFloat()" to fill vertex buffer data
+
+
+
 >> 27.12.2011
 [CO]
 - "54RendererRTT": In order to avoid error messages like

@@ -82,58 +82,31 @@ SPTexturing::SPTexturing(Renderer &cRenderer) : SurfacePainter(cRenderer),
 			// and SetColor() functions to ensure that you put the data at the correct position into the buffer. For
 			// instance the color value can have a different size on different renderer implementations! For
 			// security we check the pointer given by GetData() for a null pointer, but normally that's not required.
+			// -> "m_pVertexBuffer->SetFloat(0, VertexBuffer::Position, 0.0f, 1.0f, 0.0f);" is using a comfort function.
+			//    It's still possible to access the data in a more direct way to e.g. copy over data within a single
+			//    memory copy operation. Here's an example how to access data in a more performant direct way:
+			//        float *pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(0, VertexBuffer::Position));
+			//        if (pfVertex) {
+			//            pfVertex[0] = 0.0f;
+			//            pfVertex[1] = 1.0f;
+			//            pfVertex[2] = 0.0f;
+			//        }
 
 			// Setup vertex 0
-			float *pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(0, VertexBuffer::Position));
-			if (pfVertex) {
-				pfVertex[0] = -1.0f;
-				pfVertex[1] =  1.0f;
-				pfVertex[2] =  0.0f;
-			}
-			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(0, VertexBuffer::TexCoord));
-			if (pfVertex) {
-				pfVertex[0] = 0.0f;
-				pfVertex[1] = 0.0f;
-			}
+			m_pVertexBuffer->SetFloat(0, VertexBuffer::Position, 0, -1.0f, 1.0f, 0.0f);
+			m_pVertexBuffer->SetFloat(0, VertexBuffer::TexCoord, 0,  0.0f, 0.0f);
 
 			// Setup vertex 1
-			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(1, VertexBuffer::Position));
-			if (pfVertex) {
-				pfVertex[0] = -1.0f;
-				pfVertex[1] = -1.0f;
-				pfVertex[2] =  0.0f;
-			}
-			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(1, VertexBuffer::TexCoord));
-			if (pfVertex) {
-				pfVertex[0] = 0.0f;
-				pfVertex[1] = 1.0f;
-			}
+			m_pVertexBuffer->SetFloat(1, VertexBuffer::Position, 0, -1.0f, -1.0f, 0.0f);
+			m_pVertexBuffer->SetFloat(1, VertexBuffer::TexCoord, 0,  0.0f,  1.0f);
 
 			// Setup vertex 2
-			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(2, VertexBuffer::Position));
-			if (pfVertex) {
-				pfVertex[0] = 1.0f;
-				pfVertex[1] = 1.0f;
-				pfVertex[2] = 0.0f;
-			}
-			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(2, VertexBuffer::TexCoord));
-			if (pfVertex) {
-				pfVertex[0] = 1.0f;
-				pfVertex[1] = 0.0f;
-			}
+			m_pVertexBuffer->SetFloat(2, VertexBuffer::Position, 0, 1.0f, 1.0f, 0.0f);
+			m_pVertexBuffer->SetFloat(2, VertexBuffer::TexCoord, 0, 1.0f, 0.0f);
 
 			// Setup vertex 3
-			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(3, VertexBuffer::Position));
-			if (pfVertex) {
-				pfVertex[0] =  1.0f;
-				pfVertex[1] = -1.0f;
-				pfVertex[2] =  0.0f;
-			}
-			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(3, VertexBuffer::TexCoord));
-			if (pfVertex) {
-				pfVertex[0] = 1.0f;
-				pfVertex[1] = 1.0f;
-			}
+			m_pVertexBuffer->SetFloat(3, VertexBuffer::Position, 0, 1.0f, -1.0f, 0.0f);
+			m_pVertexBuffer->SetFloat(3, VertexBuffer::TexCoord, 0, 1.0f,  1.0f);
 
 			// Now that we have filled the buffer with our data, unlock it. Locked buffers
 			// CANNOT be used for rendering!
