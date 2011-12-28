@@ -56,7 +56,7 @@ SPTriangle::SPTriangle(Renderer &cRenderer) : SurfacePainter(cRenderer),
 	if (m_pVertexBuffer) {
 		// Tell the vertex buffer that it has to provide vertex position data. Each
 		// vertex position has three floating point components. (x/y/z)
-		// -> First try efficient "half" (16 bit floating point) as data type, if this fails fall back to traditional more expensive "float" (32 bit floating point)
+		// -> First try usually efficient "half" (16 bit floating point) as data type, if this fails fall back to traditional more expensive "float" (32 bit floating point)
 		// -> This is just an example. Because the half data type is no primitive C++ data type there's a CPU conversion overhead you may
 		//    want to avoid in case it's not worth the effort... like when only drawing a simple triangle... as mentioned, this is just an example.
 		if (!m_pVertexBuffer->AddVertexAttribute(VertexBuffer::Position, 0, VertexBuffer::Half3))

@@ -4,6 +4,10 @@
 - "VertexBuffer": Added generic comfort methods "GetFloat()" and "SetFloat()"
 - "PLRendererOpenGL": Added support for "GL_NV_half_float" and "GL_ARB_half_float_vertex"
 - "PLRendererOpenGLES2": Added support for "GL_OES_vertex_half_float"
+- "PLRendererOpenGL" & "PLRendererOpenGLES2": This is not performance critical, so, I use the comfort method "VertexBuffer::SetFloat()" instead of
+  "VertexBuffer::GetFloat()" to fill the vertex buffer. Interesting: In a test situation the FPS was around 90 when using "Float3", and around 74 FPS
+  when using "Half3". Used system: "ATI Mobility Radeon HD 4850" (512 MiB) using Catalyst 12.1 and Windows 7 64 bit. I still have to do some more
+  testing to see whether or not it's the same on mobile devices, or for bigger vertex data sets.
 
 
 

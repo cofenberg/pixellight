@@ -188,38 +188,24 @@ PLRenderer::VertexBuffer *FontManager::GetVertexBuffer()
 		// Add vertex position attribute to the vertex buffer, zw stores the texture coordinate
 		m_pVertexBuffer->AddVertexAttribute(PLRenderer::VertexBuffer::Position, 0, PLRenderer::VertexBuffer::Float3);
 
-		// Allocate
+		// Allocate four vertices
 		m_pVertexBuffer->Allocate(4);
 
-		// Fill
+		// Fill vertex positions
 		if (m_pVertexBuffer->Lock(PLRenderer::Lock::WriteOnly)) {
-		// Vertex 0 - lower/left corner
-			// Position
-			float *pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(0, PLRenderer::VertexBuffer::Position));
-			pfVertex[Vector4::X] = 0.0f;	// x
-			pfVertex[Vector4::Y] = 0.0f;	// y
-			pfVertex[Vector4::Z] = 0.0f;	// Index
+			// This is not performance critical, so, use the comfort method "VertexBuffer::SetFloat()" instead of "VertexBuffer::GetFloat()"
 
-		// Vertex 1 - lower/right corner
-			// Position
-			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(1, PLRenderer::VertexBuffer::Position));
-			pfVertex[Vector4::X] = 1.0f;	// x
-			pfVertex[Vector4::Y] = 0.0f;	// y
-			pfVertex[Vector4::Z] = 1.0f;	// Index
+			// Vertex 0 - lower/left corner										x	  y		Index
+			m_pVertexBuffer->SetFloat(0, PLRenderer::VertexBuffer::Position, 0, 0.0f, 0.0f, 0.0f);
 
-		// Vertex 2 - upper/left corner
-			// Position
-			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(2, PLRenderer::VertexBuffer::Position));
-			pfVertex[Vector4::X] = 0.0f;	// x
-			pfVertex[Vector4::Y] = 1.0f;	// y
-			pfVertex[Vector4::Z] = 2.0f;	// Index
+			// Vertex 1 - lower/right corner									x	  y		Index
+			m_pVertexBuffer->SetFloat(1, PLRenderer::VertexBuffer::Position, 0, 1.0f, 0.0f, 1.0f);
 
-		// Vertex 3 - upper/right corner
-			// Position
-			pfVertex = static_cast<float*>(m_pVertexBuffer->GetData(3, PLRenderer::VertexBuffer::Position));
-			pfVertex[Vector4::X] = 1.0f;	// x
-			pfVertex[Vector4::Y] = 1.0f;	// y
-			pfVertex[Vector4::Z] = 3.0f;	// Index
+			// Vertex 2 - upper/left corner										x	  y		Index
+			m_pVertexBuffer->SetFloat(2, PLRenderer::VertexBuffer::Position, 0, 0.0f, 1.0f, 2.0f);
+
+			// Vertex 3 - upper/right corner									x	  y		Index
+			m_pVertexBuffer->SetFloat(3, PLRenderer::VertexBuffer::Position, 0, 1.0f, 1.0f, 3.0f);
 
 			// Unlock the vertex buffer
 			m_pVertexBuffer->Unlock();
