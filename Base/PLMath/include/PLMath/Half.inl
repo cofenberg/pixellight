@@ -101,26 +101,6 @@ inline bool Half::IsDenormalized(PLCore::uint16 nHalf)
 	return (nExponent == 0 && nMantissa != 0);
 }
 
-/**
-*  @brief
-*    Convertes a given half value into a float value
-*/
-inline float Half::ToFloat(PLCore::uint16 nHalf)
-{
-	// [TODO]
-	return 0.0f;
-}
-
-/**
-*  @brief
-*    Convertes a given float value into a half value
-*/
-inline PLCore::uint16 Half::FromFloat(float fFloat)
-{
-	// [TODO]
-	return 0;
-}
-
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

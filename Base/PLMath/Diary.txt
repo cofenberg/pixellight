@@ -1,4 +1,11 @@
-﻿>> 09.12.2011
+﻿>> 28.12.2011
+[CO]
+- "Half": Added "ToFloat()" and "FromFloat()" implementations. Having a buggy implemtation for this task would be fatal, so, I don't dare to write an
+  own implementation. I'am using the robust OpenEXR IlmBase 1.0.2 (Modified BSD License) implementation.
+
+
+
+>> 09.12.2011
 [CO]
 - Added "Vector3i::SetXYZ()"
 

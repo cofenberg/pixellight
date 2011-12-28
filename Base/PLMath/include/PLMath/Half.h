@@ -45,8 +45,9 @@ namespace PLMath {
 *    Static helper class for the half data type (16 bit floating point)
 *
 *  @note
-*    - This class is using information from "Fast Half Float Conversions" (http://www.fox-toolkit.org/ftp/fasthalffloatconversion.pdf)
-*      written by Jeroen van der Zijp, November 2008
+*    - This class is using information from "Fast Half Float Conversions" (ftp://ftp.fox-toolkit.org/pub/fasthalffloatconversion.pdf)
+*      written by Jeroen van der Zijp, November 2008 (Revised September 2010)
+*    - OpenEXR IlmBase 1.0.2 (Modified BSD License)
 */
 class Half {
 
@@ -163,11 +164,8 @@ class Half {
 		*
 		*  @return
 		*    The given half value as float
-		*
-		*  [TODO]
-		*    - Implement
 		*/
-		static inline float ToFloat(PLCore::uint16 nHalf);
+		static PLMATH_API float ToFloat(PLCore::uint16 nHalf);
 
 		/**
 		*  @brief
@@ -178,11 +176,8 @@ class Half {
 		*
 		*  @return
 		*    The given float value as half
-		*
-		*  [TODO]
-		*    - Implement
 		*/
-		static inline PLCore::uint16 FromFloat(float fFloat);
+		static PLMATH_API PLCore::uint16 FromFloat(float fFloat);
 
 
 };
