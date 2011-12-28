@@ -64,7 +64,7 @@ class Tools {
 		*  @return
 		*    The converted float value
 		*/
-		inline static uint32 FloatToUInt32(float f);
+		static inline uint32 FloatToUInt32(float f);
 
 		/**
 		*  @brief
@@ -76,7 +76,7 @@ class Tools {
 		*  @return
 		*    The converted uint32 value
 		*/
-		inline static float UInt32ToFloat(uint32 n);
+		static inline float UInt32ToFloat(uint32 n);
 
 		//[-------------------------------------------------------]
 		//[ String tools                                          ]
@@ -91,7 +91,7 @@ class Tools {
 		*  @return
 		*    Base64 encoded string
 		*/
-		inline static String GetBase64(const String &sString);
+		static inline String GetBase64(const String &sString);
 
 
 };

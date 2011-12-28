@@ -75,7 +75,7 @@ class Math {
 		*  @return
 		*    'true' if the value is not a number, else 'false'
 		*/
-		inline static bool IsNotANumber(float fValue);
+		static inline bool IsNotANumber(float fValue);
 
 		/**
 		*  @brief
@@ -84,7 +84,7 @@ class Math {
 		*  @return
 		*    'true' if the value is not a number, else 'false'
 		*/
-		inline static bool IsNotANumber(double dValue);
+		static inline bool IsNotANumber(double dValue);
 
 		/**
 		*  @brief
@@ -93,7 +93,7 @@ class Math {
 		*  @return
 		*    'true' if the value is finite, (–INF < fValue < +INF) else 'false' (infinite or not a number)
 		*/
-		inline static bool IsFinite(float fValue);
+		static inline bool IsFinite(float fValue);
 
 		/**
 		*  @brief
@@ -102,7 +102,7 @@ class Math {
 		*  @return
 		*    'true' if the value is finite, (–INF < dValue < +INF) else 'false' (infinite or not a number)
 		*/
-		inline static bool IsFinite(double dValue);
+		static inline bool IsFinite(double dValue);
 
 		//[-------------------------------------------------------]
 		//[ Nearest power of two                                  ]
@@ -117,7 +117,7 @@ class Math {
 		*  @return
 		*    'true' if the number is a power of 2, else 'false'
 		*/
-		inline static bool IsPowerOfTwo(int nNumber);
+		static inline bool IsPowerOfTwo(int nNumber);
 
 		/**
 		*  @brief
@@ -131,7 +131,7 @@ class Math {
 		*  @return
 		*    The nearest power of 2, if it couldn't be found 'nNumber'
 		*/
-		inline static int GetNearestPowerOfTwo(int nNumber, bool bLower = true);
+		static inline int GetNearestPowerOfTwo(int nNumber, bool bLower = true);
 
 		//[-------------------------------------------------------]
 		//[ Random                                                ]
@@ -143,7 +143,7 @@ class Math {
 		*  @return
 		*    A positive random number
 		*/
-		inline static PLCore::uint32 GetRand();
+		static inline PLCore::uint32 GetRand();
 
 		/**
 		*  @brief
@@ -152,7 +152,7 @@ class Math {
 		*  @return
 		*    A positive or negative random number
 		*/
-		inline static int GetRandNeg();
+		static inline int GetRandNeg();
 
 		/**
 		*  @brief
@@ -161,7 +161,7 @@ class Math {
 		*  @return
 		*    A positive float random number between 0..1
 		*/
-		inline static float GetRandFloat();
+		static inline float GetRandFloat();
 
 		/**
 		*  @brief
@@ -170,7 +170,7 @@ class Math {
 		*  @return
 		*    A positive or negative float random number between -1..1
 		*/
-		inline static float GetRandNegFloat();
+		static inline float GetRandNegFloat();
 
 		/**
 		*  @brief
@@ -184,7 +184,7 @@ class Math {
 		*  @return
 		*    A float random number between the given minimum/maximum
 		*/
-		inline static float GetRandMinMaxFloat(float fMin, float fMax);
+		static inline float GetRandMinMaxFloat(float fMin, float fMax);
 
 		//[-------------------------------------------------------]
 		//[ Misc                                                  ]
@@ -203,7 +203,7 @@ class Math {
 		*  @return
 		*    'true' if the given numbers are equal, else 'false'
 		*/
-		inline static bool AreEqual(float f1, float f2, float fEpsilon = Math::Epsilon);
+		static inline bool AreEqual(float f1, float f2, float fEpsilon = Math::Epsilon);
 
 		/**
 		*  @brief
@@ -219,7 +219,7 @@ class Math {
 		*  @return
 		*    'true' if the given numbers are equal, else 'false'
 		*/
-		inline static bool AreEqual(double d1, double d2, double dEpsilon = Math::Epsilon);
+		static inline bool AreEqual(double d1, double d2, double dEpsilon = Math::Epsilon);
 
 		/**
 		*  @brief
@@ -233,9 +233,9 @@ class Math {
 		*  @return
 		*    The minimum of the 2 given values
 		*/
-		inline static float Min(float a, float b);
-		inline static int Min(int a, int b);
-		inline static PLCore::uint32 Min(PLCore::uint32 a, PLCore::uint32 b);
+		static inline float Min(float a, float b);
+		static inline int Min(int a, int b);
+		static inline PLCore::uint32 Min(PLCore::uint32 a, PLCore::uint32 b);
 
 		/**
 		*  @brief
@@ -249,9 +249,9 @@ class Math {
 		*  @return
 		*    The maximum of the 2 given values
 		*/
-		inline static float Max(float a, float b);
-		inline static int Max(int a, int b);
-		inline static PLCore::uint32 Max(PLCore::uint32 a, PLCore::uint32 b);
+		static inline float Max(float a, float b);
+		static inline int Max(int a, int b);
+		static inline PLCore::uint32 Max(PLCore::uint32 a, PLCore::uint32 b);
 
 		/**
 		*  @brief
@@ -269,9 +269,9 @@ class Math {
 		*  @return
 		*    The minimum of the 4 given values
 		*/
-		inline static float Min(float a, float b, float c, float d);
-		inline static int Min(int a, int b, int c, int d);
-		inline static PLCore::uint32 Min(PLCore::uint32 a, PLCore::uint32 b, PLCore::uint32 c, PLCore::uint32 d);
+		static inline float Min(float a, float b, float c, float d);
+		static inline int Min(int a, int b, int c, int d);
+		static inline PLCore::uint32 Min(PLCore::uint32 a, PLCore::uint32 b, PLCore::uint32 c, PLCore::uint32 d);
 
 		/**
 		*  @brief
@@ -289,9 +289,9 @@ class Math {
 		*  @return
 		*    The maximum of the 4 given values
 		*/
-		inline static float Max(float a, float b, float c, float d);
-		inline static int Max(int a, int b, int c, int d);
-		inline static PLCore::uint32 Max(PLCore::uint32 a, PLCore::uint32 b, PLCore::uint32 c, PLCore::uint32 d);
+		static inline float Max(float a, float b, float c, float d);
+		static inline int Max(int a, int b, int c, int d);
+		static inline PLCore::uint32 Max(PLCore::uint32 a, PLCore::uint32 b, PLCore::uint32 c, PLCore::uint32 d);
 
 		/**
 		*  @brief
@@ -303,7 +303,7 @@ class Math {
 		*  @return
 		*    '-1' if the given value is negative, else '1'
 		*/
-		inline static float Sign(float x);
+		static inline float Sign(float x);
 
 		/**
 		*  @brief
@@ -319,7 +319,7 @@ class Math {
 		*  @return
 		*    The value within the interval [fMin, fMax]
 		*/
-		inline static float ClampToInterval(float fValue, float fMin, float fMax);
+		static inline float ClampToInterval(float fValue, float fMin, float fMax);
 
 		/**
 		*  @brief
@@ -335,7 +335,7 @@ class Math {
 		*  @return
 		*    The value within the interval [fMin, fMax]
 		*/
-		inline static float WrapToInterval(float fValue, float fMin, float fMax);
+		static inline float WrapToInterval(float fValue, float fMin, float fMax);
 
 		/**
 		*  @brief
@@ -347,7 +347,7 @@ class Math {
 		*  @return
 		*    Absolute value of the given value
 		*/
-		inline static int Abs(int x);
+		static inline int Abs(int x);
 
 		/**
 		*  @brief
@@ -359,7 +359,7 @@ class Math {
 		*  @return
 		*    Absolute value of the given value
 		*/
-		inline static float Abs(float x);
+		static inline float Abs(float x);
 
 		/**
 		*  @brief
@@ -371,7 +371,7 @@ class Math {
 		*  @return
 		*    Absolute value of the given value
 		*/
-		inline static double Abs(double x);
+		static inline double Abs(double x);
 
 		/**
 		*  @brief
@@ -382,7 +382,7 @@ class Math {
 		*  @param[in, out] b
 		*    Second value
 		*/
-		inline static void Swap(float &a, float &b);
+		static inline void Swap(float &a, float &b);
 
 		/**
 		*  @brief
@@ -394,7 +394,7 @@ class Math {
 		*  @return
 		*    Clamped value
 		*/
-		inline static float Saturate(float fValue);
+		static inline float Saturate(float fValue);
 
 		/**
 		*  @brief
@@ -410,7 +410,7 @@ class Math {
 		*    This function returns a floating-point value representing the largest integer value that
 		*    is less than or equal to the given value.
 		*/
-		inline static float Floor(float fValue);
+		static inline float Floor(float fValue);
 
 		/**
 		*  @brief
@@ -426,7 +426,7 @@ class Math {
 		*    This function returns a floating-point value representing the smallest integer value
 		*    that is greater than or equal to the given value.
 		*/
-		inline static float Ceil(float fValue);
+		static inline float Ceil(float fValue);
 
 		/**
 		*  @brief
@@ -440,7 +440,7 @@ class Math {
 		*  @return
 		*    The rounded value of the given value
 		*/
-		inline static float Round(float fValue, PLCore::uint32 nPrecision = 0);
+		static inline float Round(float fValue, PLCore::uint32 nPrecision = 0);
 
 		/**
 		*  @brief
@@ -457,7 +457,7 @@ class Math {
 		*      than or equal to –263, a loss of significance in the result occurs
 		*    - Sine of 0 is 0
 		*/
-		inline static float Sin(float fAngle);
+		static inline float Sin(float fAngle);
 
 		/**
 		*  @brief
@@ -472,7 +472,7 @@ class Math {
 		*  @see
 		*    - Sin(float) above
 		*/
-		inline static double Sin(double dAngle);
+		static inline double Sin(double dAngle);
 
 		/**
 		*  @brief
@@ -489,7 +489,7 @@ class Math {
 		*    If the given value is less than –1 or greater than 1, ASin returns an indefinite
 		*    (same as a quiet NaN).
 		*/
-		inline static float ASin(float fValue);
+		static inline float ASin(float fValue);
 
 		/**
 		*  @brief
@@ -504,7 +504,7 @@ class Math {
 		*  @see
 		*    - ASin(float) above
 		*/
-		inline static double ASin(double dValue);
+		static inline double ASin(double dValue);
 
 		/**
 		*  @brief
@@ -521,7 +521,7 @@ class Math {
 		*      than or equal to –263, a loss of significance in the result occurs
 		*    - Cosine of 0 is 1
 		*/
-		inline static float Cos(float fAngle);
+		static inline float Cos(float fAngle);
 
 		/**
 		*  @brief
@@ -536,7 +536,7 @@ class Math {
 		*  @see
 		*    - Cos(float) above
 		*/
-		inline static double Cos(double dAngle);
+		static inline double Cos(double dAngle);
 
 		/**
 		*  @brief
@@ -553,7 +553,7 @@ class Math {
 		*    If the given value is less than –1 or greater than 1, ACos returns an indefinite
 		*    (same as a quiet NaN).
 		*/
-		inline static float ACos(float fValue);
+		static inline float ACos(float fValue);
 
 		/**
 		*  @brief
@@ -568,7 +568,7 @@ class Math {
 		*  @see
 		*    - ACos(float) above
 		*/
-		inline static double ACos(double dValue);
+		static inline double ACos(double dValue);
 
 		/**
 		*  @brief
@@ -585,7 +585,7 @@ class Math {
 		*      than or equal to –263, a loss of significance in the result occurs
 		*    - Tangent of 0 is 0
 		*/
-		inline static float Tan(float fAngle);
+		static inline float Tan(float fAngle);
 
 		/**
 		*  @brief
@@ -600,7 +600,7 @@ class Math {
 		*  @see
 		*    - Tan(float) above
 		*/
-		inline static double Tan(double dAngle);
+		static inline double Tan(double dAngle);
 
 		/**
 		*  @brief
@@ -612,7 +612,7 @@ class Math {
 		*  @return
 		*    Arccosine of the given value
 		*/
-		inline static float ATan(float fValue);
+		static inline float ATan(float fValue);
 
 		/**
 		*  @brief
@@ -624,7 +624,7 @@ class Math {
 		*  @return
 		*    Arccosine of the given value
 		*/
-		inline static double ATan(double dValue);
+		static inline double ATan(double dValue);
 
 		/**
 		*  @brief
@@ -646,7 +646,7 @@ class Math {
 		*    - If fX is 0, this function returns 0
 		*    - If both parameters are 0, the function returns 0
 		*/
-		inline static float ATan2(float fX, float fY);
+		static inline float ATan2(float fX, float fY);
 
 		/**
 		*  @brief
@@ -663,7 +663,7 @@ class Math {
 		*  @see
 		*    - ATan2(float, float) above
 		*/
-		inline static double ATan2(double dX, double dY);
+		static inline double ATan2(double dX, double dY);
 
 		/**
 		*  @brief
@@ -676,7 +676,7 @@ class Math {
 		*  @return
 		*    The square-root of the given value, indefinite on error
 		*/
-		inline static float Sqrt(float fValue);
+		static inline float Sqrt(float fValue);
 
 		/**
 		*  @brief
@@ -689,7 +689,7 @@ class Math {
 		*  @return
 		*    The square-root of the given value, indefinite on error
 		*/
-		inline static double Sqrt(double dValue);
+		static inline double Sqrt(double dValue);
 
 		/**
 		*  @brief
@@ -707,7 +707,7 @@ class Math {
 		*    So, be careful when using this method and only use it when you're sure that the results are
 		*    correct in your use case.
 		*/
-		inline static float FastInvSqrt(float fValue);
+		static inline float FastInvSqrt(float fValue);
 
 		/**
 		*  @brief
@@ -721,7 +721,7 @@ class Math {
 		*  @return
 		*    x raised to the power of y
 		*/
-		inline static float Pow(float x, float y);
+		static inline float Pow(float x, float y);
 
 		/**
 		*  @brief
@@ -735,7 +735,7 @@ class Math {
 		*  @return
 		*    x raised to the power of y
 		*/
-		inline static double Pow(double x, double y);
+		static inline double Pow(double x, double y);
 
 		/**
 		*  @brief
@@ -749,7 +749,7 @@ class Math {
 		*  @return
 		*    x raised to the power of y
 		*/
-		inline static double Pow(int x, int y);
+		static inline double Pow(int x, int y);
 
 		/**
 		*  @brief
@@ -761,7 +761,7 @@ class Math {
 		*  @return
 		*    The natural logarithm of the given number
 		*/
-		inline static float Log(float x);
+		static inline float Log(float x);
 
 		/**
 		*  @brief
@@ -773,7 +773,7 @@ class Math {
 		*  @return
 		*    The natural logarithm of the given number
 		*/
-		inline static double Log(double x);
+		static inline double Log(double x);
 
 		/**
 		*  @brief
@@ -788,7 +788,7 @@ class Math {
 		*  @remarks
 		*    Log(x)/Log(2)
 		*/
-		inline static float Log2(float x);
+		static inline float Log2(float x);
 
 		/**
 		*  @brief
@@ -803,7 +803,7 @@ class Math {
 		*  @remarks
 		*    Log(x)/Log(2)
 		*/
-		inline static double Log2(double x);
+		static inline double Log2(double x);
 
 		/**
 		*  @brief
@@ -815,7 +815,7 @@ class Math {
 		*  @return
 		*    The e number raised to the power x
 		*/
-		inline static float Exp(float x);
+		static inline float Exp(float x);
 
 		/**
 		*  @brief
@@ -827,7 +827,7 @@ class Math {
 		*  @return
 		*    The e number raised to the power x
 		*/
-		inline static double Exp(double x);
+		static inline double Exp(double x);
 
 
 };

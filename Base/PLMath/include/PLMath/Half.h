@@ -80,7 +80,7 @@ class Half {
 		*  @return
 		*    'true' if the given half value is zero, else 'false'
 		*/
-		inline static bool IsZero(PLCore::uint16 nHalf);
+		static inline bool IsZero(PLCore::uint16 nHalf);
 
 		/**
 		*  @brief
@@ -92,7 +92,7 @@ class Half {
 		*  @return
 		*    'true' if the given half value is negative, else 'false'
 		*/
-		inline static bool IsNegative(PLCore::uint16 nHalf);
+		static inline bool IsNegative(PLCore::uint16 nHalf);
 
 		/**
 		*  @brief
@@ -104,7 +104,7 @@ class Half {
 		*  @return
 		*    'true' if the given half value is not a number, else 'false'
 		*/
-		inline static bool IsNotANumber(PLCore::uint16 nHalf);
+		static inline bool IsNotANumber(PLCore::uint16 nHalf);
 
 		/**
 		*  @brief
@@ -116,7 +116,7 @@ class Half {
 		*  @return
 		*    'true' if the given half value is finite, else 'false'
 		*/
-		inline static bool IsFinite(PLCore::uint16 nHalf);
+		static inline bool IsFinite(PLCore::uint16 nHalf);
 
 		/**
 		*  @brief
@@ -128,7 +128,7 @@ class Half {
 		*  @return
 		*    'true' if the given half value is infinity, else 'false'
 		*/
-		inline static bool IsInfinity(PLCore::uint16 nHalf);
+		static inline bool IsInfinity(PLCore::uint16 nHalf);
 
 		/**
 		*  @brief
@@ -140,7 +140,7 @@ class Half {
 		*  @return
 		*    'true' if the given half value is normalized, else 'false'
 		*/
-		inline static bool IsNormalized(PLCore::uint16 nHalf);
+		static inline bool IsNormalized(PLCore::uint16 nHalf);
 
 		/**
 		*  @brief
@@ -152,7 +152,7 @@ class Half {
 		*  @return
 		*    'true' if the given half value is de-normalized, else 'false'
 		*/
-		inline static bool IsDenormalized(PLCore::uint16 nHalf);
+		static inline bool IsDenormalized(PLCore::uint16 nHalf);
 
 		/**
 		*  @brief
@@ -167,7 +167,7 @@ class Half {
 		*  [TODO]
 		*    - Implement
 		*/
-		inline static float ToFloat(PLCore::uint16 nHalf);
+		static inline float ToFloat(PLCore::uint16 nHalf);
 
 		/**
 		*  @brief
@@ -182,7 +182,7 @@ class Half {
 		*  [TODO]
 		*    - Implement
 		*/
-		inline static PLCore::uint16 FromFloat(float fFloat);
+		static inline PLCore::uint16 FromFloat(float fFloat);
 
 
 };

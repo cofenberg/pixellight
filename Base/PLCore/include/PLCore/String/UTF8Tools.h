@@ -61,7 +61,7 @@ class UTF8Tools {
 		*  @return
 		*    'true' if the given character is an octal digit, else 'false'
 		*/
-		inline static bool IsOctalDigit(char nCharacter);
+		static inline bool IsOctalDigit(char nCharacter);
 
 		/**
 		*  @brief
@@ -73,7 +73,7 @@ class UTF8Tools {
 		*  @return
 		*    'true' if the given character is a hex digit, else 'false'
 		*/
-		inline static bool IsHexDigit(char nCharacter);
+		static inline bool IsHexDigit(char nCharacter);
 
 		/**
 		*  @brief
@@ -85,7 +85,7 @@ class UTF8Tools {
 		*  @return
 		*    'true' if the given character is the start of a UTF8 sequence, else 'false'
 		*/
-		inline static bool IsSequenceStart(char nCharacter);
+		static inline bool IsSequenceStart(char nCharacter);
 
 		/**
 		*  @brief
