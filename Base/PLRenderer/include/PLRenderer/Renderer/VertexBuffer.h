@@ -410,7 +410,7 @@ class VertexBuffer : public Buffer {
 	//[-------------------------------------------------------]
 	protected:
 		PLCore::Array<Attribute*> m_lstVertexAttributes;	/**< The vertex attributes */
-		PLCore::uint32			  m_nVertexSize;			/**< Size in bytes of the vertex buffer (in bytes) */
+		PLCore::uint32			  m_nVertexSize;			/**< Size (in bytes) of the vertex buffer */
 
 
 	//[-------------------------------------------------------]

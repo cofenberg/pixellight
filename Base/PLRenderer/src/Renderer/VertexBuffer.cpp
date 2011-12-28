@@ -75,6 +75,9 @@ bool VertexBuffer::ClearVertexAttributes()
 		delete m_lstVertexAttributes[i];
 	m_lstVertexAttributes.Clear();
 
+	// Reset size (in bytes) of the vertex buffer
+	m_nVertexSize = 0;
+
 	// Done
 	return true;
 }

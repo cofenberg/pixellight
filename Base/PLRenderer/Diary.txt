@@ -8,6 +8,7 @@
   "VertexBuffer::GetFloat()" to fill the vertex buffer. Interesting: In a test situation the FPS was around 90 when using "Float3", and around 74 FPS
   when using "Half3". Used system: "ATI Mobility Radeon HD 4850" (512 MiB) using Catalyst 12.1 and Windows 7 64 bit. I still have to do some more
   testing to see whether or not it's the same on mobile devices, or for bigger vertex data sets.
+- Bugfix: "VertexBuffer::ClearVertexAttributes()" was not resetting the size of the vertex buffer
 
 
 
