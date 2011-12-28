@@ -95,8 +95,8 @@ bool VertexBuffer::AddVertexAttribute(ESemantic nSemantic, uint32 nChannel, ETyp
 			return false; // Error, the vertex attribute is already defined!
 	}
 
-	// Check normal, tangent and binormal
-	if ((nSemantic == Normal || nSemantic == Tangent || nSemantic == Binormal) && nType != Float3)
+	// Check normal, tangent and binormal (only Float3/Half3 allowed due to restrictions of legacy APIs!)
+	if ((nSemantic == Normal || nSemantic == Tangent || nSemantic == Binormal) && nType != Float3 && nType != Half3)
 		return false; // Error!
 
 	// Check color

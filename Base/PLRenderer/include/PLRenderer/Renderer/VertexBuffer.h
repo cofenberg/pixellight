@@ -78,14 +78,14 @@ class VertexBuffer : public Buffer {
 		enum ESemantic {
 			Position     =  0,	/**< Position data (1 channel) */
 			BlendWeight  =  1,	/**< Blend weight data (1 channel) */
-			Normal       =  2,	/**< Normal data (1 channel, only Float3 allowed!) */
+			Normal       =  2,	/**< Normal data (1 channel, only Float3/Half3 allowed due to restrictions of legacy APIs!) */
 			Color        =  3,	/**< Color data (2 channels, only RGBA allowed, second channel requires Capabilities::bVertexBufferSecondaryColor) */
 			FogCoord     =  4,	/**< Fog coordinate data (1 channel, only Float1 allowed, requires FixedFunctions::Capabilities::bVertexBufferFogCoord) */
 			PointSize    =  5,	/**< Point sprite size data (1 channel, only Float1 allowed! Known as "PSize", but this name may conflict with OS definitions) */
 			BlendIndices =  6,	/**< Blend indices data (1 channel) */
 			TexCoord     =  7,	/**< Texture coordinate data (n channels) */
-			Tangent      =  8,	/**< Tangent data (1 channel, only Float3 allowed!) */
-			Binormal     =  9	/**< Binormal (also referred to as bitangent) data (1 channel, only Float3 allowed!) */
+			Tangent      =  8,	/**< Tangent data (1 channel, only Float3/Half3 allowed due to restrictions of legacy APIs!) */
+			Binormal     =  9	/**< Binormal (also referred to as bitangent) data (1 channel, only Float3/Half3 allowed due to restrictions of legacy APIs!) */
 		};
 		static const PLCore::uint8 NumOfSemantics      = 10;	/**< Number of vertex attribute semantics */
 		static const PLCore::uint8 MaxPipelineChannels = 16;	/**< Maximum possible number of channels */
