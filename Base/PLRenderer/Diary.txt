@@ -12,6 +12,12 @@
 - "VertexBuffer::AddVertexAttribute()": Reviewed "Float3" (or now also "Half3") restriction of "Normal", "Tangent" and "Binormal". At first this restriction
   looked artificially because in modern OpenGL a vertex attribute is a vertex attribute, but the "PLRenderer"-API has still support for a legacy fixed
   functions API and here normal vectors must have exactly three components.
+- Current progress on testing whether or not the "half" data type within vertex buffers can be used to increase the performance beside reducing the memory
+  requirements: The font rendering on a Tegra 2 smartphone was slightly better *tiny vertex buffer*. Converted on-the-fly a scene to "half"-usage to test the
+  behaviour on larger vertex data... this resulted in a horrible performance on my "ATI Mobility Radeon HD 4850". Slide show, while totally fluidly when using
+  float, similiar to what I noticed in the simple font rendering test, only worse. If this horrible performance is not limited to my mobile GPU, I ask myself why
+  "GL_ARB_half_float_vertex" is provided in the first place when it's practically useless on ATI/AMD drivers. I wonder if it's the same on NVIDIA GPUs, have to
+  check this out when I'am back at the university.
 
 
 
