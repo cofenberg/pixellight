@@ -1,3 +1,10 @@
+>> 29.12.2011
+[CO]
+- Started "PLViewerQt"-project with the goal to provide a more sophisticated generic PixelLight viewer application. PLViewer will not be removed because a
+  minimalistic PixelLight viewer supporting scenes and scripts is still useful. For more details please have a look into the "PLViewerQt"-project diary.
+
+
+
 >> 30.11.2011
 [CO]
 - Instead of the base directory, the viewer now sets directly the current directory (the viewer is an executable application, not a library, so this should be ok)

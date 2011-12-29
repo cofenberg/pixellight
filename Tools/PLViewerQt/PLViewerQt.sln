@@ -1,0 +1,35 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLViewerQt", "PLViewerQt.vcxproj", "{C412324A-1958-4141-A2C8-EF60711F4D7A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLViewerQtStandalone", "PLViewerQtStandalone.vcxproj", "{139D4829-148B-483B-95F6-43A175914DD9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C412324A-1958-4141-A2C8-EF60711F4D7A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C412324A-1958-4141-A2C8-EF60711F4D7A}.Debug|Win32.Build.0 = Debug|Win32
+		{C412324A-1958-4141-A2C8-EF60711F4D7A}.Debug|x64.ActiveCfg = Debug|x64
+		{C412324A-1958-4141-A2C8-EF60711F4D7A}.Debug|x64.Build.0 = Debug|x64
+		{C412324A-1958-4141-A2C8-EF60711F4D7A}.Release|Win32.ActiveCfg = Release|Win32
+		{C412324A-1958-4141-A2C8-EF60711F4D7A}.Release|Win32.Build.0 = Release|Win32
+		{C412324A-1958-4141-A2C8-EF60711F4D7A}.Release|x64.ActiveCfg = Release|x64
+		{C412324A-1958-4141-A2C8-EF60711F4D7A}.Release|x64.Build.0 = Release|x64
+		{139D4829-148B-483B-95F6-43A175914DD9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{139D4829-148B-483B-95F6-43A175914DD9}.Debug|Win32.Build.0 = Debug|Win32
+		{139D4829-148B-483B-95F6-43A175914DD9}.Debug|x64.ActiveCfg = Debug|x64
+		{139D4829-148B-483B-95F6-43A175914DD9}.Debug|x64.Build.0 = Debug|x64
+		{139D4829-148B-483B-95F6-43A175914DD9}.Release|Win32.ActiveCfg = Release|Win32
+		{139D4829-148B-483B-95F6-43A175914DD9}.Release|Win32.Build.0 = Release|Win32
+		{139D4829-148B-483B-95F6-43A175914DD9}.Release|x64.ActiveCfg = Release|x64
+		{139D4829-148B-483B-95F6-43A175914DD9}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

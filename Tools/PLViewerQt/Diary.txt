@@ -1,0 +1,137 @@
+>> 29.12.2011
+[CO]
+- Started "PLViewerQt"-project with the goal to provide a more sophisticated generic PixelLight viewer application. PLViewer will not be removed because a
+  minimalistic PixelLight viewer supporting scenes and scripts is still useful.
+  Since the first public release of PixelLight there are the following points on the roadmap at http://www.pixellight.org/site/index.php/page/20.html
+  - "Make PLViewer a more universal viewer also capable of viewing all kind of data (e.g. texture and meshes)"
+  - "Create a nice UI for PLViewer (ingame GUI)"
+  While those are quite important points, no one realized them... because this will be useful for my Master Thesis I'll now start the project instead of
+  writing an own GUI for my Master Thesis. Over a year ago it was planned to create the GUI by using PLGui, which would have been cool... sadly since then
+  no one had worked on PLGui. Although it has a really good design, PLGui is currently in no shape to be used in a more GUI intensive project without
+  spending days in just implementing general GUI features. This approach was taken in some other projects, the results were good, but it was time consuming
+  to archive the result. Right now I can't afford to spend days on just working on reimplementing GUI features e.g. Qt offers, and still having only poor and
+  buggy result and issues across multiple platforms.
+  So, the only reasonable option left appears to be using Qt for a more sophisticated generic PixelLight viewer application. Stephan Wezel already
+  added "PLFrontendQt" which is a Qt<->PL adapter project. This project already offers several generic GUI elements like an RTTI inspector. I'am going to
+  use "PLFrontendQt" for "PLViewerQt" and put everything reasonable in "PLFrontendQt" so that "PLViewerQt" can be as compact as possible, while still offering
+  advanced features.
+  On "10.08.2011" Stephan and I started "PLEditor" because there were questions from the community when such an editor will come. Goal was to make a start and
+  motivate other people to jump onto the editor train. While people are interested in such a tool, it appears that no one is interested in helping to realize
+  it. Stephan and I can't create a descend editor on our own while working on such a mammoth project as PixelLight itself. There are now some new PixelLight team
+  members, but everybody has only a limited amount of time and they are still in the processes of getting experienced with the technology. When "PLViewerQt" is
+  up and running, maybe it will show other persons how cool such an editor would be and that it's nothing overcomplicated from a programmers point of view... a
+  lot of PixelLight implementation details are far more complex.
+  Enough project opening speech. The goal is simple: Provide a generic PixelLight viewer with rudimentary edit features via GUI so it's for example possible to
+  manipulate RTTI attributes of a scene node and be able to see the effect on the screen at once. Goal isn't to create a fully featured editor - that's what
+  the editor project is for. I'am trying to keep the "core" of this viewer as close possible the viewer not using Qt to make it possible to see the Qt relevant part
+  at once. Meaning I'am e.g. not using "main" etc. as usually done within Qt based applications.
+
+
+
+/*********************************************************\
+ *  The entries below are from PLViewer which was used as start point
+\*********************************************************/
+
+
+
+>> 30.11.2011
+[CO]
+- Instead of the base directory, the viewer now sets directly the current directory (the viewer is an executable application, not a library, so this should be ok)
+
+
+
+>> 06.11.2011
+[CO]
+- "Application::LoadScene()": In case there's no "/Data/Scenes/" within the scene filename, the directory the scene is in is used as base directory instead
+
+
+
+>> 21.08.2011
+[CO]
+- PLViewer is no longer closing at once when not provided with the filename of the scene/script to load in, or the loading failed
+- PLViewer is now misusing the frontend title to communicate with the user *scrooge approach*
+
+
+
+>> 15.08.2011
+[CO]
+- The PLViewer application is now directly within the tools executable directory. The purpose of PLViewer is to have a minimalistic and generic
+  viewer application - but this application shouldn't e.g. require any own data in order to be able to run. For more than just viewing something,
+  the planned PixelLight editor should do the job (one bigger decent tool instead of many small programs).
+
+
+
+>> 31.07.2011
+[CO]
+- The PLViewer application is now using PLInput instead of PLGui to get and process input events
+
+
+
+>> 13.06.2011
+[CO]
+- PLViewer can now also run scripted stand-alone applications instead of just showing scenes
+
+
+
+>> 12.06.2011
+[CO]
+- Changed within "PLViewerConfig" the setting "DefaultScene" into the more generic "DefaultFilename"
+
+
+
+/*********************************************************\
+ *  The entries below are in German only
+\*********************************************************/
+
+
+
+>> 21.08.2010
+[CO]
+- "PLViewerStandalone" hinzugefügt welches sich von "PLViewer" nur darin unterscheidet das es "SetMultiUser(true)" aufruft
+
+
+
+>> 20.08.2010
+[CO]
+- "PLViewerConfig" hinzugefügt mit "DefaultScene", dadurch lässt sich die Default-Szene von außen über die Konfiguration einstellen
+
+
+
+>> 10.08.2010
+[CO]
+- "MultiUser" Komandozeilen Parameter in "Standalone" umbenannt
+
+
+
+>> 09.08.2010
+[CO]
+- "MultiUser" Komandozeilen Parameter hinzugefügt, darüber lässt sich von außen Einstellen ob z.B. Log & Config direkt bei
+  der exe liegen sollen, oder sauber im User-Verzeichnis. Für "Standalone"-Szenen die man packen und schnell mal so mit PLViewer
+  weitergeben will ist das recht Praktisch. Diesen Parameter werte ich momentan in "Application::OnInitLog()" und nicht in
+  "Application::OnInitCmdLine()" aus damit sich dieser Parameter auch auf das Log auswirkt.
+
+
+
+>> 06.08.2010
+[SB]
+- Mit Escape kann das Programm nun beendet werden.
+
+
+
+>> 17.07.2010
+[CO]
+- Bugfix: Basispfad "" sollte nicht entfernt werden -> Dies ist das aktuelle Verzeichnis, das normalerweise direkt das Verzeichnis
+  ist in dem die exe liegt... so können z.B. noch PLViewer Daten geladen werden
+
+
+
+>> 03.07.2010
+[CO]
+- PLViewer auf neues PLGui3 umgestellt, GUI Dinge erstmal rausgenommen
+
+
+
+>> 23.05.2010
+[CO]
+- "PLSceneViewer" aus PLSamples nach PLTools verschoben und in "PLViewer" umbenannt. Zukünftig wird dieses kleine Tool nicht
+  nur Szenen, sondern auch Texturen etc. Anzeigen können.
