@@ -116,14 +116,20 @@ void FrontendMainWindow::MakeVisible()
 void FrontendMainWindow::timerEvent(QTimerEvent *pQTimerEvent)
 {
 	if (pQTimerEvent->timerId() == m_nWindowRedrawTimerID) {
-		// Check if we're allowed to perform an update right now
-		if (PLCore::Timing::GetInstance()->Update()) {
-			// Let the frontend update it's states (do this before drawing else, e.g. the first frame may have an unwanted content)
-			m_pFrontendQt->OnUpdate();
-		}
+		// Is the frontend still running?
+		if (m_pFrontendQt->GetFrontend() && m_pFrontendQt->GetFrontend()->IsRunning()) {
+			// Check if we're allowed to perform an update right now
+			if (PLCore::Timing::GetInstance()->Update()) {
+				// Let the frontend update it's states (do this before drawing else, e.g. the first frame may have an unwanted content)
+				m_pFrontendQt->OnUpdate();
+			}
 
-		// Ask Qt politely to update (and repaint) the widget
-		update();
+			// Ask Qt politely to update (and repaint) the widget
+			update();
+		} else {
+			// The frontend is no longer running -> Close this Qt widget
+			close();
+		}
 	}
 }
 
