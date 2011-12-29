@@ -177,6 +177,15 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 
 		/**
 		*  @brief
+		*    Get frontend implementation
+		*
+		*  @return
+		*    Pointer to the implementation backend, can be a null pointer
+		*/
+		inline FrontendImpl *GetImpl() const;
+
+		/**
+		*  @brief
 		*    Get native window handle
 		*
 		*  @return
@@ -479,20 +488,6 @@ class Frontend : public Object, protected AbstractLifecycle, protected AbstractF
 		*    'true' if the frontend is currently running, else 'false'
 		*/
 		virtual bool IsRunning() const = 0;
-
-
-	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
-	//[-------------------------------------------------------]
-	protected:
-		/**
-		*  @brief
-		*    Get frontend implementation
-		*
-		*  @return
-		*    Pointer to the implementation backend, can be a null pointer
-		*/
-		inline FrontendImpl *GetImpl() const;
 
 
 	//[-------------------------------------------------------]

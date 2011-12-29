@@ -46,6 +46,16 @@ inline const FrontendContext &Frontend::GetContext() const
 
 /**
 *  @brief
+*    Get frontend implementation
+*/
+inline FrontendImpl *Frontend::GetImpl() const
+{
+	// Return implementation
+	return m_pFrontendImpl;
+}
+
+/**
+*  @brief
 *    Get native window handle
 */
 inline handle Frontend::GetNativeWindowHandle() const
@@ -283,20 +293,6 @@ inline void Frontend::SetTrapMouse(bool bTrap)
 {
 	// Call backend
 	m_pFrontendImpl->SetTrapMouse(bTrap);
-}
-
-
-//[-------------------------------------------------------]
-//[ Protected functions                                   ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Get frontend implementation
-*/
-inline FrontendImpl *Frontend::GetImpl() const
-{
-	// Return implementation
-	return m_pFrontendImpl;
 }
 
 

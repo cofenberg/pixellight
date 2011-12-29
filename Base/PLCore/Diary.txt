@@ -1,5 +1,6 @@
 >> 29.12.2011
 [CO]
+- "Frontend": The "GetImpl()"-method needs to be public because it might be required to e.g. access the Qt frontend
 PLFrontendQt:
 - Added missing "ressources.qrc" processing within the Visual Studio project file
 - "FrontendMainWindow": To make it possible to add e.g. a menu bar, it's required to render only into the "central widget". By default there's no central widget -
