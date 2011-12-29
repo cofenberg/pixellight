@@ -102,6 +102,7 @@ add_sources(
 	src/Frontend.cpp
 	src/FrontendMainWindow.cpp
 	src/FrontendRenderWindow.cpp
+	src/ConstructFileFilter.cpp
 	src/QPLContext.cpp
 	src/Application.cpp
 	src/QPLSceneContext.cpp

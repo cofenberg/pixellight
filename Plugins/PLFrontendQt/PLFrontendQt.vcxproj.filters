@@ -151,6 +151,9 @@
     <ClCompile Include="src\FrontendRenderWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ConstructFileFilter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarTreeItemsFactory.h">
@@ -181,6 +184,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLFrontendQt\FrontendRenderWindow.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\ConstructFileFilter.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

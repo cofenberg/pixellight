@@ -8,6 +8,7 @@ PLFrontendQt:
 - "QPLRenderWindow" is now derived from "FrontendRenderWindow"
 - "FrontendMainWindow::timerEvent()": When performing the update step, we need to check whether the frontend is still valid and running, if not we have to shut
   down our application
+- Added static helper class "ConstructFileFilter" for constructing file filters for "QFileDialog"
 
 
 
