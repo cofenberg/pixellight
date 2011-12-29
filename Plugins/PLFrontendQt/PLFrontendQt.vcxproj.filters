@@ -52,54 +52,6 @@
     <ClCompile Include="src\External\qtcolorbutton.cpp">
       <Filter>External</Filter>
     </ClCompile>
-    <ClCompile Include="src\External\moc_qtcolorbutton.cpp">
-      <Filter>External</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DataModels\moc_PLIntrospectionModel.cpp">
-      <Filter>DataModels</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DataModels\moc_TreeItemBase.cpp">
-      <Filter>DataModels</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DataModels\moc_TreeModelBase.cpp">
-      <Filter>DataModels</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DataModels\moc_SceneGraphNodeTreeItemBase.cpp">
-      <Filter>DataModels</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DataModels\moc_SceneGraphTreeModel.cpp">
-      <Filter>DataModels</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DataModels\moc_SceneNodeInfoDelegate.cpp">
-      <Filter>DataModels</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DataModels\moc_SceneNodeInfoModel.cpp">
-      <Filter>DataModels</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DataModels\PLTreeItems\moc_PLDynVarFloatTreeItem.cpp">
-      <Filter>DataModels\PLTreeItems</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DataModels\PLTreeItems\moc_PLDynVarStringTreeItem.cpp">
-      <Filter>DataModels\PLTreeItems</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DataModels\PLTreeItems\moc_PLDynVarVector3TreeItem.cpp">
-      <Filter>DataModels\PLTreeItems</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DataModels\PLTreeItems\moc_PLDynVarColorTreeItem.cpp">
-      <Filter>DataModels\PLTreeItems</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DataModels\PLTreeItems\moc_PLDynVarFlagsTreeItem.cpp">
-      <Filter>DataModels\PLTreeItems</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DataModels\SceneRendererDataModel\moc_SceneRendererHeaderTreeItem.cpp">
-      <Filter>DataModels\SceneRendererDataModel</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DataModels\SceneRendererDataModel\moc_SceneRendererPassTreeItem.cpp">
-      <Filter>DataModels\SceneRendererDataModel</Filter>
-    </ClCompile>
-    <ClCompile Include="src\DataModels\SceneRendererDataModel\moc_SceneRendererDataModel.cpp">
-      <Filter>DataModels\SceneRendererDataModel</Filter>
-    </ClCompile>
     <ClCompile Include="src\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -107,24 +59,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\FrontendMainWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\moc_Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\moc_QPLContext.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\moc_QPLDebugDialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\moc_QPLInputHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\moc_QPLRenderWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\moc_QPLSceneContext.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\PLFrontendQt.cpp">
@@ -144,6 +78,72 @@
     </ClCompile>
     <ClCompile Include="src\QPLSceneContext.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_Application.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_TreeModelBase.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarColorTreeItem.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarFlagsTreeItem.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarFloatTreeItem.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarStringTreeItem.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarVector3TreeItem.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_PLIntrospectionModel.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_QPLContext.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_QPLDebugDialog.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_QPLInputHandler.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_QPLRenderWindow.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_QPLSceneContext.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_qtcolorbutton.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_SceneGraphNodeTreeItemBase.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_SceneGraphTreeModel.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_SceneNodeInfoDelegate.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_SceneNodeInfoModel.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_SceneRendererDataModel.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_SceneRendererHeaderTreeItem.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_SceneRendererPassTreeItem.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_TreeItemBase.cpp">
+      <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,6 +194,9 @@
     </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{f62d6b9c-aa6e-4c6e-b098-e5fd00575bf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GeneratedQtFiles">
+      <UniqueIdentifier>{d20402cd-867b-4dc0-80a1-4c1e54039589}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

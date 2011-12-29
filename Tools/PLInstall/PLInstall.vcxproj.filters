@@ -12,6 +12,9 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{d7744b71-10b8-4c06-96bb-2e60964c36b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GeneratedQtFiles">
+      <UniqueIdentifier>{ab36bab1-794b-492c-8c38-e65696945602}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -26,11 +29,11 @@
     <ClCompile Include="src\MainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\moc_MainWindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\InstallerFunctions.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_MainWindow.cpp">
+      <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

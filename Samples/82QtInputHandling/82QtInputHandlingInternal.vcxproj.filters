@@ -5,6 +5,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="GeneratedQtFiles">
+      <UniqueIdentifier>{9fcaeece-62e0-470c-8dc4-c3f2f82fecf9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -16,8 +19,8 @@
     <ClCompile Include="src\MyRenderWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\moc_MyRenderWindow.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="build\GeneratedQtFiles\moc_MyRenderWindow.cpp">
+      <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

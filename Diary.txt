@@ -4,6 +4,13 @@
 
 
 
+
+>> 29.12.2011
+[CO]
+- Visual Studio project files of Qt based projects: The generated moc files are now within "build\GeneratedQtFiles"
+
+
+
 >> 23.12.2011
 [CO]
 - Did the usual automatic checks
