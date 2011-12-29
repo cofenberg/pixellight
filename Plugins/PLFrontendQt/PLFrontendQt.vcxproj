@@ -285,6 +285,7 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
     <ClCompile Include="build\GeneratedQtFiles\moc_SceneRendererPassTreeItem.cpp" />
     <ClCompile Include="build\GeneratedQtFiles\moc_TreeItemBase.cpp" />
     <ClCompile Include="build\GeneratedQtFiles\moc_TreeModelBase.cpp" />
+    <ClCompile Include="build\GeneratedQtFiles\res_ressources.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\DataModels\PLIntrospectionModel.cpp" />
     <ClCompile Include="src\DataModels\PLTreeItems\PLDynVarColorTreeItem.cpp" />
@@ -740,6 +741,25 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compiling %(Filename)%(Extension) using Qt UIC</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(RootDir)%(Directory)..\..\include\PLFrontendQt\ui_%(Filename).h</Outputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../External/_Windows_x86_64/Qt/bin/uic.exe</AdditionalInputs>
+    </CustomBuild>
+    <CustomBuild Include="ressources\ressources.qrc">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/rcc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\res_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt RCC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build\GeneratedQtFiles\res_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/rcc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/rcc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\res_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt RCC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build\GeneratedQtFiles\res_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/rcc.exe</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../External/_Windows_x86_64/Qt/bin/rcc.exe</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../External/_Windows_x86_64/Qt/bin/rcc.exe</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build\GeneratedQtFiles\res_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build\GeneratedQtFiles\res_%(Filename).cpp</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compiling %(Filename)%(Extension) using Qt RCC</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compiling %(Filename)%(Extension) using Qt RCC</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"../../External/_Windows_x86_64/Qt/bin/rcc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\res_%(Filename).cpp"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"../../External/_Windows_x86_64/Qt/bin/rcc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\res_%(Filename).cpp"</Command>
     </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

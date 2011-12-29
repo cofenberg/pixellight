@@ -23,14 +23,14 @@
     <ClCompile Include="src\ui_MainWindow.h">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\res_qtresources.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\MainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\InstallerFunctions.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\res_qtresources.cpp">
+      <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
     <ClCompile Include="build\GeneratedQtFiles\moc_MainWindow.cpp">
       <Filter>GeneratedQtFiles</Filter>
@@ -39,9 +39,6 @@
   <ItemGroup>
     <None Include="CMakeLists.txt" />
     <None Include="..\..\Diary.txt" />
-    <None Include="..\..\PixelLight\PL.ico">
-      <Filter>Resources</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="src\MainWindow.ui">

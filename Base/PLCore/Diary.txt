@@ -1,3 +1,10 @@
+>> 29.12.2011
+[CO]
+PLFrontendQt:
+- Added missing "ressources.qrc" processing within the Visual Studio project file
+
+
+
 >> 28.12.2011
 [CO]
 PLFrontendOS:

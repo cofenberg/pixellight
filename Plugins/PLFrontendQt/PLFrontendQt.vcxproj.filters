@@ -145,6 +145,9 @@
     <ClCompile Include="build\GeneratedQtFiles\moc_TreeItemBase.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\res_ressources.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarTreeItemsFactory.h">
@@ -197,6 +200,9 @@
     </Filter>
     <Filter Include="GeneratedQtFiles">
       <UniqueIdentifier>{d20402cd-867b-4dc0-80a1-4c1e54039589}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{ae6b5db6-f1e5-4634-8a50-786349f60404}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -268,6 +274,9 @@
     </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\QPLSceneContext.h">
       <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ressources\ressources.qrc">
+      <Filter>Resources</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
