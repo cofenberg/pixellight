@@ -37,6 +37,7 @@
 namespace PLInput {
 	class Control;
 }
+class Gui;
 
 
 //[-------------------------------------------------------]
@@ -128,6 +129,7 @@ class Application : public PLEngine::ScriptApplication {
 	private:
 		virtual void OnInitLog() override;
 		virtual void OnInit() override;
+		virtual void OnDeInit() override;
 
 
 	//[-------------------------------------------------------]
@@ -142,6 +144,13 @@ class Application : public PLEngine::ScriptApplication {
 	//[-------------------------------------------------------]
 	private:
 		virtual void OnCreateInputController() override;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		Gui *m_pGui;	/**< GUI, can be a null pointer */
 
 
 };

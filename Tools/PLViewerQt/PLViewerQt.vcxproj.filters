@@ -5,6 +5,9 @@
       <UniqueIdentifier>{dd38ffa0-e0bc-43db-b9d0-6d1e4c7eee7f}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;def;odl;idl;hpj;bat;asm</Extensions>
     </Filter>
+    <Filter Include="GeneratedQtFiles">
+      <UniqueIdentifier>{65ee1015-e8fc-44d9-bcd4-274af94da1c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -15,6 +18,12 @@
     </ClCompile>
     <ClCompile Include="src\Main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Gui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_Gui.cpp">
+      <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -33,5 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PLViewerQt.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="src\Gui.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>

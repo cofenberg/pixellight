@@ -59,6 +59,7 @@ add_sources(
 	src/Application.cpp
 	src/Config.cpp
 	src/Main.cpp
+	src/Gui.cpp
 	${UI_SRCS}	# Add source produced by uic
 	${MOC_SRCS}	# Add source produced by moc
 	${QRC_SRCS}	# Add sources produced by rcc

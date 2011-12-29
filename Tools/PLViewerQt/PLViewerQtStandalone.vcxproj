@@ -241,14 +241,17 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="build\GeneratedQtFiles\moc_Gui.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Config.cpp" />
+    <ClCompile Include="src\Gui.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\Config.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="src\Gui.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />

@@ -3,6 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLViewerQt", "PLViewerQt.vcxproj", "{C412324A-1958-4141-A2C8-EF60711F4D7A}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLViewerQtStandalone", "PLViewerQtStandalone.vcxproj", "{139D4829-148B-483B-95F6-43A175914DD9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C412324A-1958-4141-A2C8-EF60711F4D7A} = {C412324A-1958-4141-A2C8-EF60711F4D7A}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

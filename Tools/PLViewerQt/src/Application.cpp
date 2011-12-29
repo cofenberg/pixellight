@@ -32,6 +32,7 @@
 #include <PLInput/Input/Controls/Button.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SPScene.h>
+#include "Gui.h"
 #include "Application.h"
 
 
@@ -67,7 +68,8 @@ const String Application::DefaultFilename = "";
 *    Constructor
 */
 Application::Application(Frontend &cFrontend) : ScriptApplication(cFrontend),
-	SlotOnControl(this)
+	SlotOnControl(this),
+	m_pGui(nullptr)
 {
 	// Set no multiuser if standalone application
 	#ifdef STANDALONE
@@ -207,6 +209,10 @@ void Application::OnInitLog()
 
 void Application::OnInit()
 {
+	// Initialize the GUI
+	if (!m_pGui)
+		m_pGui = new Gui(*this);
+
 	// Filename given?
 	String sFilename = m_cCommandLine.GetValue("Filename");
 	if (!sFilename.GetLength()) {
@@ -244,6 +250,19 @@ void Application::OnInit()
 		SetStateText("Nothing loaded");
 	}
 }
+
+void Application::OnDeInit()
+{
+	// De-initialize the GUI
+	if (m_pGui) {
+		delete m_pGui;
+		m_pGui = nullptr;
+	}
+
+	// Call base implementation
+	ScriptApplication::OnInit();
+}
+
 
 
 //[-------------------------------------------------------]

@@ -241,14 +241,34 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="build\GeneratedQtFiles\moc_Gui.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Config.cpp" />
+    <ClCompile Include="src\Gui.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\Config.h" />
     <ClInclude Include="resource.h" />
+    <CustomBuild Include="src\Gui.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build\GeneratedQtFiles\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build\GeneratedQtFiles\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../External/_Windows_x86_64/Qt/bin/moc.exe</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build\GeneratedQtFiles\moc_%(Filename).cpp</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"../../External/_Windows_x86_64/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"../../External/_Windows_x86_64/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build\GeneratedQtFiles\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../External/_Windows_x86_64/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
