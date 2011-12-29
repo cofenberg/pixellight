@@ -30,16 +30,18 @@ define_project(PLViewerQt NOSUFFIX)
 ##################################################
 # Include files with Qt relevant information
 SET(INC_FILES
-#	src/MainWindow.h
+	src/Gui.h
 )
 
 # Qt .ui files
 SET(UI_FILES
+# [TODO] Currently unused, remove later if still unused
 #	src/MainWindow.ui
 )
 
 # Qt .qrc files
 SET(QRC_FILES
+# [TODO] Currently unused, remove later if still unused
 #	res/qtresources.qrc
 )
 

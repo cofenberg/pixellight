@@ -27,6 +27,7 @@
   at once. Meaning I'am e.g. not using "main" etc. as usually done within Qt based applications.
 - Started the GUI implementation
 - Implemented "Gui::QtSlotLoad()" by using "PLFrontendQt::ConstructFileFilter" to automatically fill the file filters with the supported file formats
+- Ensured that the new "PLViewerQt" is compiling and running under Linux as well
 
 
 
