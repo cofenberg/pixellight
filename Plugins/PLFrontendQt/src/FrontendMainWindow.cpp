@@ -35,6 +35,7 @@
 #include <PLCore/Frontend/FrontendContext.h>
 #include "PLFrontendQt/Frontend.h"
 #include "PLFrontendQt/QtStringAdapter.h"
+#include "PLFrontendQt/FrontendRenderWindow.h"
 #include "PLFrontendQt/FrontendMainWindow.h"
 
 
@@ -51,7 +52,7 @@ namespace PLFrontendQt {
 *  @brief
 *    Constructor
 */
-FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) : QMainWindow(nullptr, Qt::MSWindowsOwnDC),	// Same settings as used in Qt's QGLWidget
+FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) :
 	m_pFrontendQt(&cFrontendQt),
 	m_bVisible(false),
 	m_nWindowRedrawTimerID(startTimer(10))	// An interval of 10 milliseconds should be enough
@@ -59,17 +60,8 @@ FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) : QMainWindow(null
 	// Tell the frontend about this instance at once because it may already be required during frontend life cycle initialization
 	m_pFrontendQt->SetMainWindow(this);
 
-	// Disable window system background to avoid "white flickering" caused by automatic overdraw
-	// (same settings as used in Qt's QGLWidget)
-	setAttribute(Qt::WA_PaintOnScreen);
-	setAttribute(Qt::WA_NoSystemBackground);
-
-	// Now, there's still "black flickering" - in order to get rid of this we're not using any built-in paint engines of Qt
-	// -> Overwrite the "QPaintDevice::paintEngine()"-method and just return a null pointer
-	// -> Set the following attribute
-	setAttribute(Qt::WA_OpaquePaintEvent, true);
-
-	// ... at this point, we should be finally flicker-free...
+	// Set central widget
+	setCentralWidget(new FrontendRenderWindow(this));
 
 	// Set window title and size
 	setWindowTitle(m_pFrontendQt->GetFrontend() ? QtStringAdapter::PLToQt(m_pFrontendQt->GetFrontend()->GetContext().GetName()) : "");
@@ -133,25 +125,6 @@ void FrontendMainWindow::timerEvent(QTimerEvent *pQTimerEvent)
 		// Ask Qt politely to update (and repaint) the widget
 		update();
 	}
-}
-
-
-//[-------------------------------------------------------]
-//[ Protected virtual QPaintDevice functions              ]
-//[-------------------------------------------------------]
-QPaintEngine *FrontendMainWindow::paintEngine() const
-{
-	#if defined(Q_WS_WIN)
-		// We're not using any built-in paint engines of Qt ("flickering"-avoidance)
-		return nullptr;
-	#else
-		// On Linux there's no "flickering"-issue and when returning a null pointer in here
-		// "QPainter::begin: Paint device returned engine == 0, type: 1" will be written
-		// into the console - all the time.
-
-		// Call base implementation
-		return QMainWindow::paintEngine();
-	#endif
 }
 
 

@@ -28,10 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <QtGui/QWidget>
 #include <PLRenderer/Renderer/Types.h>
 #include <PLRenderer/Renderer/SurfaceWindowHandler.h>
-#include "PLFrontendQt/PLFrontendQt.h"
+#include "PLFrontendQt/FrontendRenderWindow.h"
 
 
 //[-------------------------------------------------------]
@@ -56,7 +55,7 @@ namespace PLFrontendQt {
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-class PLFRONTENDQT_API QPLRenderWindow : public QWidget, public PLRenderer::SurfaceWindowHandler {
+class PLFRONTENDQT_API QPLRenderWindow : public FrontendRenderWindow, public PLRenderer::SurfaceWindowHandler {
 
 
 	//[-------------------------------------------------------]
@@ -108,13 +107,6 @@ class PLFRONTENDQT_API QPLRenderWindow : public QWidget, public PLRenderer::Surf
 	//[-------------------------------------------------------]
 	protected:
 		virtual void timerEvent(QTimerEvent *pQTimerEvent) override;
-
-
-	//[-------------------------------------------------------]
-	//[ Protected virtual QPaintDevice functions              ]
-	//[-------------------------------------------------------]
-	protected:
-		virtual QPaintEngine *paintEngine() const;
 
 
 	//[-------------------------------------------------------]

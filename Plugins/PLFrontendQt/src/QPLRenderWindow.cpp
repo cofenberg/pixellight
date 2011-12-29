@@ -55,38 +55,19 @@ namespace PLFrontendQt {
 *  @param[in] parent
 *    parent widget of this widget
 */
-QPLRenderWindow::QPLRenderWindow(QPLContext *pContext, const PLRenderer::DisplayMode *pDisplayMode, QWidget *parent) : QWidget(parent),
+QPLRenderWindow::QPLRenderWindow(QPLContext *pContext, const PLRenderer::DisplayMode *pDisplayMode, QWidget *parent) : FrontendRenderWindow(parent),
 	m_nWindowRedrawTimerID(startTimer(10)),	// An interval of 10 milliseconds should be enough
 	m_pContext(pContext),
 	m_pInputHandler(nullptr)
 {
-	// Disable window system background to avoid "white flickering" caused by automatic overdraw
-	// (same settings as used in Qt's QGLWidget)
-	setAttribute(Qt::WA_PaintOnScreen);
-	setAttribute(Qt::WA_NoSystemBackground);
-
-	// Now, there's still "black flickering" - in order to get rid of this we're not using any built-in paint engines of Qt
-	// -> Overwrite the "QPaintDevice::paintEngine()"-method and just return a null pointer
-	// -> Set the following attribute
-	setAttribute(Qt::WA_OpaquePaintEvent, true);
-
 	InitWindow(pDisplayMode);
 }
 
-QPLRenderWindow::QPLRenderWindow(QWidget *parent) : QWidget(parent),
+QPLRenderWindow::QPLRenderWindow(QWidget *parent) : FrontendRenderWindow(parent),
 	m_nWindowRedrawTimerID(startTimer(10)),	// An interval of 10 milliseconds should be enough
 	m_pContext(nullptr),
 	m_pInputHandler(nullptr)
 {
-	// Disable window system background to avoid "white flickering" caused by automatic overdraw
-	// (same settings as used in Qt's QGLWidget)
-	setAttribute(Qt::WA_PaintOnScreen);
-	setAttribute(Qt::WA_NoSystemBackground);
-
-	// Now, there's still "black flickering" - in order to get rid of this we're not using any built-in paint engines of Qt
-	// -> Overwrite the "QPaintDevice::paintEngine()"-method and just return a null pointer
-	// -> Set the following attribute
-	setAttribute(Qt::WA_OpaquePaintEvent, true);
 }
 
 void QPLRenderWindow::SetupWindow(QPLContext *pContext, const PLRenderer::DisplayMode *pDisplayMode)
@@ -160,25 +141,6 @@ void QPLRenderWindow::timerEvent(QTimerEvent *pQTimerEvent)
 		// Ask Qt politely to update (and repaint) the widget
 		update();
 	}
-}
-
-
-//[-------------------------------------------------------]
-//[ Protected virtual QPaintDevice functions              ]
-//[-------------------------------------------------------]
-QPaintEngine *QPLRenderWindow::paintEngine() const
-{
-	#if defined(Q_WS_WIN)
-		// We're not using any built-in paint engines of Qt ("flickering"-avoidance)
-		return nullptr;
-	#else
-		// On Linux there's no "flickering"-issue and when returning a null pointer in here
-		// "QPainter::begin: Paint device returned engine == 0, type: 1" will be written
-		// into the console - all the time.
-
-		// Call base implementation
-		return QWidget::paintEngine();
-	#endif
 }
 
 

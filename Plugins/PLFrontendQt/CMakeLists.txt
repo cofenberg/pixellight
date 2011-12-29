@@ -101,6 +101,7 @@ add_sources(
 	src/PLFrontendQt.cpp
 	src/Frontend.cpp
 	src/FrontendMainWindow.cpp
+	src/FrontendRenderWindow.cpp
 	src/QPLContext.cpp
 	src/Application.cpp
 	src/QPLSceneContext.cpp

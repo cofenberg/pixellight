@@ -306,6 +306,7 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
     <ClCompile Include="src\External\qtcolorbutton.cpp" />
     <ClCompile Include="src\Frontend.cpp" />
     <ClCompile Include="src\FrontendMainWindow.cpp" />
+    <ClCompile Include="src\FrontendRenderWindow.cpp" />
     <ClCompile Include="src\PLFrontendQt.cpp" />
     <ClCompile Include="src\QPLContext.cpp" />
     <ClCompile Include="src\QPLDebugDialog.cpp" />
@@ -623,6 +624,7 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
     </CustomBuild>
     <ClInclude Include="include\PLFrontendQt\Frontend.h" />
     <ClInclude Include="include\PLFrontendQt\FrontendMainWindow.h" />
+    <ClInclude Include="include\PLFrontendQt\FrontendRenderWindow.h" />
     <ClInclude Include="include\PLFrontendQt\InputHandler.h" />
     <ClInclude Include="include\PLFrontendQt\PLFrontendQt.h" />
     <ClInclude Include="include\PLFrontendQt\PLFrontendQtLinux.h" />

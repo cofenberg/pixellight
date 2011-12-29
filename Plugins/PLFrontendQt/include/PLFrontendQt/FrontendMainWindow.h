@@ -93,13 +93,6 @@ class FrontendMainWindow : public QMainWindow {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual QPaintDevice functions              ]
-	//[-------------------------------------------------------]
-	protected:
-		virtual QPaintEngine *paintEngine() const override;
-
-
-	//[-------------------------------------------------------]
 	//[ Protected virtual QWidget functions                   ]
 	//[-------------------------------------------------------]
 	protected:
