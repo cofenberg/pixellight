@@ -584,7 +584,7 @@ void EngineApplication::OnCreateScene(SceneContainer &cContainer)
 	}
 
 	// Create a scene node representing a simple box
-	cContainer.Create("PLScene::SNMesh", "Box", "Position=\"0.0 0.0 -5.0\" Mesh=\"Default\"");
+	cContainer.Create("PLScene::SNMesh", "Box", "Position=\"0 0 5\" Mesh=\"Default\"");
 
 	// Set scene container
 	SetScene(&cContainer);

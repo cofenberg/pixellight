@@ -1,3 +1,9 @@
+>> 29.12.2011
+[CO]
+- "EngineApplication::OnCreateScene()": Minor change in the created default scene so one can see something at once
+
+
+
 >> 18.12.2011
 [CO]
 - "SNMOrbitingController": Added same space mouse hack as in "SNMLookController::OnUpdate()" (currently I have to time to finally have a closer look into this)
