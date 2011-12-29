@@ -32,6 +32,7 @@ PL_WARNING_POP
 #include <PLFrontendQt/Frontend.h>
 #include <PLFrontendQt/QtStringAdapter.h>
 #include <PLFrontendQt/FrontendMainWindow.h>
+#include <PLFrontendQt/ConstructFileFilter.h>
 #include "Application.h"
 #include "Gui.h"
 
@@ -39,6 +40,7 @@ PL_WARNING_POP
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLCore;
 using namespace PLFrontendQt;
 
 
@@ -75,7 +77,7 @@ Gui::~Gui()
 FrontendMainWindow *Gui::GetFrontendMainWindow() const
 {
 	// Get Qt frontend implementation
-	Frontend *pFrontendQt = static_cast<Frontend*>(m_pApplication->GetFrontend().GetImpl());
+	PLFrontendQt::Frontend *pFrontendQt = static_cast<PLFrontendQt::Frontend*>(m_pApplication->GetFrontend().GetImpl());
 	if (pFrontendQt) {
 		// Return the frontend main window
 		return pFrontendQt->GetMainWindow();
@@ -101,7 +103,7 @@ void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 		{ // Setup the load action
 			QAction *pQAction = new QAction(cQMainWindow.tr("L&oad"), &cQMainWindow);
 			connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotLoad()));
-			pQAction->setShortcut(cQMainWindow.tr("Ctrl+M"));
+			pQAction->setShortcut(cQMainWindow.tr("Ctrl+L"));
 			pQMenu->addAction(pQAction);
 		}
 
@@ -118,14 +120,19 @@ void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 	}
 }
 
+
 //[-------------------------------------------------------]
 //[ Private Qt slots (MOC)                                ]
 //[-------------------------------------------------------]
 void Gui::QtSlotLoad()
 {
+	// Fill the file filter (filter example: "Scene (*.scene *.SCENE);;Script (*.lua *.LUA)")
+	String sFileFilter = ConstructFileFilter::ByLoadableType(QtStringAdapter::QtToPL(tr("Scene")), "Scene");
+	sFileFilter += ";;";
+	sFileFilter += ConstructFileFilter::ByScriptLanguages(QtStringAdapter::QtToPL(tr("Script")));
+
 	// Open a file dialog were the user can choose a filename
-	// [TODO] Use the RTTI to fill the file filter
-	const QString sQFilename = QFileDialog::getOpenFileName(GetFrontendMainWindow(), "", "", "Scenes (*.scene)");
+	const QString sQFilename = QFileDialog::getOpenFileName(GetFrontendMainWindow(), "", "", QtStringAdapter::PLToQt(sFileFilter));
 
 	// Filename chosen?
 	if (sQFilename.length())
