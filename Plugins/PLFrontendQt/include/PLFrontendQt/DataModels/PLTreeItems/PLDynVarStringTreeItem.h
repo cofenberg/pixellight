@@ -53,7 +53,7 @@ namespace DataModels {
 *  @brief
 *    Dynamic variable tree item: String
 */
-class PLDynVarStringTreeItem : public TreeItemBase {
+class PLFRONTENDQT_API PLDynVarStringTreeItem : public TreeItemBase {
 
 
 	//[-------------------------------------------------------]

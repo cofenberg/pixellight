@@ -58,7 +58,7 @@ namespace DataModels {
 *  @brief
 *    Scene graph tree model
 */
-class SceneGraphTreeModel : public TreeModelBase {
+class PLFRONTENDQT_API SceneGraphTreeModel : public TreeModelBase {
 
 
 	//[-------------------------------------------------------]

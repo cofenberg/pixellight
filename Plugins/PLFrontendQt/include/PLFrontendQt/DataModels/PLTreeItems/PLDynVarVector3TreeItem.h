@@ -46,7 +46,7 @@ namespace DataModels {
 *  @brief
 *    Dynamic variable tree item: Vector3
 */
-class PLDynVarVector3TreeItem : public PLDynVarStringTreeItem {
+class PLFRONTENDQT_API PLDynVarVector3TreeItem : public PLDynVarStringTreeItem {
 
 
 	//[-------------------------------------------------------]

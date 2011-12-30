@@ -45,7 +45,7 @@ namespace DataModels {
 *  @brief
 *    Dynamic variable tree item: Float
 */
-class PLDynVarFloatTreeItem : public PLDynVarStringTreeItem {
+class PLFRONTENDQT_API PLDynVarFloatTreeItem : public PLDynVarStringTreeItem {
 
 
 	//[-------------------------------------------------------]

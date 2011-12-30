@@ -26,6 +26,12 @@
 
 
 //[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include "PLFrontendQt/PLFrontendQt.h"
+
+
+//[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLCore {
@@ -53,7 +59,7 @@ namespace DataModels {
 *  @brief
 *    Dynamic variable tree item factors
 */
-class PLDynVarTreeItemsFactory {
+class PLFRONTENDQT_API PLDynVarTreeItemsFactory {
 
 
 	//[-------------------------------------------------------]

@@ -45,7 +45,7 @@ namespace DataModels {
 *  @brief
 *    Dynamic variable tree item: Color3
 */
-class PLDynVarColorTreeItem : public PLDynVarStringTreeItem {
+class PLFRONTENDQT_API PLDynVarColorTreeItem : public PLDynVarStringTreeItem {
 
 
 	//[-------------------------------------------------------]

@@ -54,7 +54,7 @@ namespace DataModels {
 *  @brief
 *    Scene node info model
 */
-class SceneNodeInfoModel : public PLIntrospectionModel {
+class PLFRONTENDQT_API SceneNodeInfoModel : public PLIntrospectionModel {
 
 
 	//[-------------------------------------------------------]

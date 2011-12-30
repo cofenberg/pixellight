@@ -45,7 +45,7 @@ namespace DataModels {
 *  @brief
 *    Dynamic variable tree item: Flags
 */
-class PLDynVarFlagsTreeItem : public PLDynVarStringTreeItem {
+class PLFRONTENDQT_API PLDynVarFlagsTreeItem : public PLDynVarStringTreeItem {
 
 
 	//[-------------------------------------------------------]

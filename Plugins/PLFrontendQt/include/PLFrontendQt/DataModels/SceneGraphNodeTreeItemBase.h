@@ -53,7 +53,7 @@ namespace DataModels {
 *  @brief
 *    Scene graph node tree item base
 */
-class SceneGraphNodeTreeItemBase : public TreeItemBase {
+class PLFRONTENDQT_API SceneGraphNodeTreeItemBase : public TreeItemBase {
 
 
 	//[-------------------------------------------------------]
