@@ -48,7 +48,7 @@ SUITE(Array_PrimitiveInt) {
 	};
 
 	TEST_FIXTURE(ConstructTestArray, DerivedContainerFunctions) {
-		CheckDerivedContainerFunctions(Arr);
+		CheckDerivedContainerFunctions<int>(Arr);
 	}
 
 	TEST_FIXTURE(ConstructTestArray, SetResizeCount_Zero) {
@@ -216,6 +216,7 @@ SUITE(Array_PrimitiveInt) {
 		// additional fields have to be initialized with 0
 		CHECK_EQUAL(0, Arr.Get(19));
 	}
+
 	TEST_FIXTURE(ConstructTestArray, Resize_ToSmallerArray) {
 		// testcases => resize array to smaller size
 
@@ -248,7 +249,7 @@ SUITE(Array_PrimitiveInt) {
 		CHECK_EQUAL(3, Arr.Get(1));
 	}
 
-	// additional test for derived virtual functions and specific implementation of Array
+	// additional tests for derived virutal functions and specific implementation of Array
 	TEST_FIXTURE(ConstructTestArray, Add_NoPassedElement_NoResize) {
 		Arr.Clear();
 		Arr.SetResizeCount(0U);

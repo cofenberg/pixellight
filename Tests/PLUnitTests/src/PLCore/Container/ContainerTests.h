@@ -6,15 +6,13 @@
 #include <PLCore/Container/Container.h>
 #include <PLCore/Container/Array.h>
 
-using namespace PLCore;
-
 template <class AType>
-void CheckDerivedContainerFunctions(Container<AType>& con) {
+void CheckDerivedContainerFunctions(PLCore::Container<AType>& con) {
 	/*
-	* general container functions
+	* general PLCore::Container functions
 	*
 	*/
-	Array<AType> Emptycon, Appendcon, Copycon, Comparecon, TestArr, Removecon;
+	PLCore::Array<AType> Emptycon, Appendcon, Copycon, Comparecon, TestArr, Removecon, Itercon;
 
 	// isEmpty_and_Clear
 	{
@@ -70,7 +68,7 @@ void CheckDerivedContainerFunctions(Container<AType>& con) {
 		con.Clear();
 		con.Add(4);
 
-		CHECK_EQUAL(Container<AType>::Null, con.Get(6U));
+		CHECK_EQUAL(PLCore::Container<AType>::Null, con.Get(6U));
 	}
 
 	// Operator_AccessElement_Within_Bounds
@@ -89,7 +87,7 @@ void CheckDerivedContainerFunctions(Container<AType>& con) {
 		con.Add(1);
 		con.Add(2);
 
-		CHECK_EQUAL(Container<AType>::Null, con[5U]);
+		CHECK_EQUAL(PLCore::Container<AType>::Null, con[5U]);
 	}
 
 	// Replace_ElementWithin
@@ -169,7 +167,7 @@ void CheckDerivedContainerFunctions(Container<AType>& con) {
 		CHECK_EQUAL(41, con.Get(1U));
 		CHECK_EQUAL(42, con.Get(2U));
 		CHECK_EQUAL(43, con.Get(3U));
-		CHECK_EQUAL(Container<AType>::Null, con.Get(4U));
+		CHECK_EQUAL(PLCore::Container<AType>::Null, con.Get(4U));
 
 		// append
 		CHECK_EQUAL(2U, con.Add(ccon, 2));
@@ -181,7 +179,7 @@ void CheckDerivedContainerFunctions(Container<AType>& con) {
 		CHECK_EQUAL(43, con.Get(3U));
 		CHECK_EQUAL(40, con.Get(4U));
 		CHECK_EQUAL(41, con.Get(5U));
-		CHECK_EQUAL(Container<AType>::Null, con.Get(6U));
+		CHECK_EQUAL(PLCore::Container<AType>::Null, con.Get(6U));
 	}
 
 	// Operator_Add_Element
@@ -191,7 +189,7 @@ void CheckDerivedContainerFunctions(Container<AType>& con) {
 
 		CHECK_EQUAL(1U, con.GetNumOfElements());
 		CHECK_EQUAL(40, con.Get(0U));
-		CHECK_EQUAL(NULL, con.Get(1U));
+		CHECK_EQUAL(PLCore::Container<AType>::Null, con.Get(1U));
 
 		con += 41;
 
@@ -203,7 +201,7 @@ void CheckDerivedContainerFunctions(Container<AType>& con) {
 	// Add_Container
 	{
 		con.Clear();
-		// constructing container for adding
+		// constructing Container for adding
 		Appendcon.Clear();
 		Appendcon.Add(1);
 		Appendcon.Add(2);
@@ -284,7 +282,7 @@ void CheckDerivedContainerFunctions(Container<AType>& con) {
 	{
 		con.Clear();
 
-		// constructing container for adding
+		// constructing Container for adding
 		Appendcon.Clear();
 		Appendcon.Add(1);
 		Appendcon.Add(2);
@@ -322,7 +320,7 @@ void CheckDerivedContainerFunctions(Container<AType>& con) {
 		con.Add(3);
 		con.Add(4);
 
-		CHECK_EQUAL(Array<AType>::Null, con.AddAtIndex(99));
+		CHECK_EQUAL(PLCore::Container<AType>::Null, con.AddAtIndex(99));
 	}
 
 	// AddAtIndex_Outside_Bounds_Negative
@@ -333,8 +331,8 @@ void CheckDerivedContainerFunctions(Container<AType>& con) {
 		con.Add(3);
 		con.Add(4);
 
-		// should append at the end of container, element not initialized! e.g. we can't check its value
-		CHECK(Array<AType>::Null != con.AddAtIndex(-10));
+		// should append at the end of Container, element not initialized! e.g. we can't check its value
+		CHECK(PLCore::Container<AType>::Null != con.AddAtIndex(-10));
 		CHECK_EQUAL(5U, con.GetNumOfElements());
 		CHECK(con.Compare(con, 0, 4));
 	}
@@ -361,7 +359,7 @@ void CheckDerivedContainerFunctions(Container<AType>& con) {
 		con.Add(3);
 		con.Add(4);
 
-		CHECK_EQUAL(Array<AType>::Null, con.AddAtIndex(1, 99));
+		CHECK_EQUAL(PLCore::Container<AType>::Null, con.AddAtIndex(1, 99));
 	}
 
 	// AddAtIndex_Element_Outside_Bounds_Negative
@@ -372,7 +370,7 @@ void CheckDerivedContainerFunctions(Container<AType>& con) {
 		con.Add(3);
 		con.Add(4);
 
-		// should append at the end of container
+		// should append at the end of Container
 		CHECK_EQUAL(1, con.AddAtIndex(1, -10));
 		CHECK_EQUAL(5U, con.GetNumOfElements());
 		CHECK_EQUAL(1, con.Get(con.GetNumOfElements()-1));
@@ -398,7 +396,7 @@ void CheckDerivedContainerFunctions(Container<AType>& con) {
 		con.Add(3);
 		con.Add(4);
 
-		// should NOT append at the end of container
+		// should NOT append at the end of Container
 		CHECK(!con.Remove(9));
 		CHECK_EQUAL(4U, con.GetNumOfElements());
 	}
@@ -455,7 +453,7 @@ void CheckDerivedContainerFunctions(Container<AType>& con) {
 		CHECK_EQUAL(4U, con.GetNumOfElements());
 	}
 
-	// ConstructTestArray, Remove_Container
+	// Remove_Container
 	{
 		/*
 		TODO: refactor these: each scenario = one TEST()
@@ -663,7 +661,7 @@ void CheckDerivedContainerFunctions(Container<AType>& con) {
 		CHECK(!con.Copy(Copycon, 9, 99));
 		CHECK(con.Compare(Emptycon));
 
-		// copy an empty Array
+		// copy an empty PLCore::Array
 		con.Add(0);
 		CHECK(con.Copy(Emptycon));
 		CHECK(con.Compare(Emptycon));
@@ -682,7 +680,7 @@ void CheckDerivedContainerFunctions(Container<AType>& con) {
 		con = Copycon;
 		CHECK(con.Compare(Copycon));
 
-		// copy empty container
+		// copy empty Container
 		Copycon.Clear();
 		con = Copycon;
 		CHECK(con.Compare(Copycon));
@@ -712,9 +710,9 @@ void CheckDerivedContainerFunctions(Container<AType>& con) {
 		CHECK(con.Compare(Comparecon, 1, con.GetNumOfElements()-1));
 
 		// TODO: review this case :) -- returns false
-		// functions add/remove would crop number 4 down to 2 because this is the maximum number of elements in container
+		// functions add/remove would crop number 4 down to 2 because this is the maximum number of elements in PLCore::Container
 		//
-		//CHECK(con.Compare(Comparecon, 1, 4));
+		CHECK(con.Compare(Comparecon, 1, 4));
 
 		CHECK(!con.Compare(Comparecon, 10, 0));
 		CHECK(!con.Compare(Comparecon, 10, 2));
@@ -760,6 +758,60 @@ void CheckDerivedContainerFunctions(Container<AType>& con) {
 	}
 
 
-	// TODO: test iterator!
+	// test iterator
+	{
+		// setting up Containers for testing
+		con.Clear();
+		Itercon.Clear();
+		Itercon.Add(1);
+		Itercon.Add(3);
+
+		PLCore::Iterator<AType> iter = con.GetIterator();
+
+		// iterator, no elements
+		CHECK(!iter.HasNext());
+		CHECK(!iter.HasPrevious());
+		CHECK_EQUAL(PLCore::Container<AType>::Null, iter.Next());
+		CHECK_EQUAL(PLCore::Container<AType>::Null, iter.Previous());
+
+		// iterator, 2 elements
+		con = Itercon;
+
+		iter = con.GetIterator();
+		CHECK(iter.HasNext());
+		CHECK(!iter.HasPrevious());
+
+		CHECK_EQUAL(1, iter.Next());
+		CHECK(iter.HasNext());
+		CHECK(iter.HasPrevious());
+
+		CHECK_EQUAL(3, iter.Next());
+		CHECK(!iter.HasNext());
+		CHECK(iter.HasPrevious());
+
+		CHECK_EQUAL(PLCore::Container<AType>::Null, iter.Next());
+		CHECK(!iter.HasNext());
+		CHECK(iter.HasPrevious());
+
+		
+		// enditerator, 2 elements
+		con = Itercon;
+
+		iter = con.GetEndIterator();
+		CHECK(!iter.HasNext());
+		CHECK(iter.HasPrevious());
+
+		CHECK_EQUAL(3, iter.Previous());
+		CHECK(iter.HasNext());
+		CHECK(iter.HasPrevious());
+
+		CHECK_EQUAL(1, iter.Previous());
+		CHECK(iter.HasNext());
+		CHECK(!iter.HasPrevious());
+
+		CHECK_EQUAL(PLCore::Container<AType>::Null, iter.Previous());
+		CHECK(iter.HasNext());
+		CHECK(!iter.HasPrevious());
+	}
 }
 #endif // __CONTAINERTESTS_H__

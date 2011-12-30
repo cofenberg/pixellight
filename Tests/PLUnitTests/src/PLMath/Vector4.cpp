@@ -2,14 +2,13 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <UnitTest++/UnitTest++.h>
-#include <PLCore/String/String.h>
-#include "UnitTest++AddIns/wchar_template.h"
+#include <PLMath/Vector4.h>
 
 /*
 * Naming Convention for SUITE:
 * CLASSNAME
 */
-SUITE(String) {
+SUITE(Vector4) {
 	/*
 	* Naming Convention for METHOD:
 	* METHODNAME_SCENARIO
@@ -26,10 +25,12 @@ SUITE(String) {
 		}
 
 		// Container for testing
-		PLCore::String str;
+		PLMath::Vector4 vec;
 	};
 
 	TEST_FIXTURE(ConstructTest, Dummy) {
-		CHECK_EQUAL(0U, str.GetLength());
+		vec.ToString();
+
+		CHECK(false);
 	}
 }

@@ -89,7 +89,7 @@ SUITE(ApplicationContext) {
 		sExpect = "file://" + sExpect.GetSubstring(0, sExpect.GetLength()-1);
 
 		// [TODO] expects "file://C:/TestPath" but is "file://C:"
-		//CHECK_EQUAL(sExpect.GetASCII(), App.GetAppDirectory().GetASCII());		
+		CHECK_EQUAL(sExpect.GetASCII(), App.GetAppDirectory().GetASCII());		
 	}
 
 	TEST(SetExecutableFilename_LongValidFilePath) {
@@ -106,7 +106,7 @@ SUITE(ApplicationContext) {
 		sExpect = "file://" + sExpect.GetSubstring(0, sExpect.GetLength()-1);
 
 		// [TODO] expects "file://C:/I_am_a_String....." but is "file://C:", look at TODO of test "SetExecutableFilename_AverageValidFilePath"
-		//CHECK_EQUAL(sExpect.GetASCII(), App.GetAppDirectory().GetASCII());
+		CHECK_EQUAL(sExpect.GetASCII(), App.GetAppDirectory().GetASCII());
 	}
 
 	TEST(SetExecutableFilename_NonValidFilePath) {
@@ -130,7 +130,7 @@ SUITE(ApplicationContext) {
 		CHECK_EQUAL(sExpect.GetASCII(), sPath.GetASCII());
 
 		// [TODO] What to expect here? "http:/" is definitely wrong! 
-		//CHECK_EQUAL(sPath.GetASCII(), App.GetAppDirectory().GetASCII());		
+		CHECK_EQUAL(sPath.GetASCII(), App.GetAppDirectory().GetASCII());		
 	}
 
 	TEST(SetArguments_NoElements) {

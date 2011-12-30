@@ -1,77 +1,10 @@
->> 24.12.2011
-[CO]
-- "PixelLightAndroid": The name of the release version of the Test-App is now "PLAndroid" and the debug version is named "PLAndroidD". "PixelLightAndroid" was
-  to long making it impossible to see in the Android App menu which one of the two Apps was the release and which the debug version.
-
-
-
->> 20.12.2011
-[CO]
-- I played around with the current "PLUnitTestsPerformance" version. I was a little bit surprised when I saw the following extreme results
-    PL_String_insert;42.0725;42.074
-    C_String_insert;0.555361;0.557
-  ("PL_String_insert"->"PLCore::String::Insert" and "C_String_insert"->"std::string::insert"... maybe we should change the performance log names and we should
-   also add the unit, are those in milliseconds or in cookies? :)
-  because I did a similar test some time ago (see PLCore diary entry "29.11.2010"). The tests look like this (see "PLUnitTestsPerformance"-project)
-    for (int i=0; i<10000; i++)
-      PLString->Insert(char(i+48));
-    for (int i=0; i<10000; i++)
-      CString->insert(char(i+48),0);
-  When looking at "PLCore::String", there's only a "..Insert(const char *pszString ..."-method, but no "char"-method as it's existing for the "+=" operator
-  usually used within PixelLight (altought this has another behaviour...). It appears that there's also need for a "single character insert"-methode beside
-  the already existing "+="-operator.
-  -> "PLCore::String"-class: Added "String &Insert(char nCharacter, uint32 nPos)" and "String &Insert(wchar_t nCharacter, uint32 nPos)" (there were already such
-     "Replace()"-method variants)
-  -> The original test from top now gives me
-      PL_String_insert;36.3402;36.341
-      C_String_insert;0.534317;0.536
-  -> When having a closer look into the performance test, it becomes clear that both tests do not perform the same task. The "PLCore::String" test added
-     "char(i+48)" at the first string position while the "std::string" test added "0" hat string position "char(i+48)".
-  -> When writing
-       for (int i=0; i<10000; i++)
-         PLString->Insert(char(0), i+48);	// First parameter is what to insert, second is position
-       for (int i=0; i<10000; i++)
-         CString->insert(i+48,0);	// First parameter is position, second is what to insert
-    the performance result is
-      PL_String_insert;0.0723715;0.072
-      C_String_insert;0.529184;0.529
-    -> This is an invalid test because characters are inserted at invalid positions, PixelLight returns "false" while std throws an exception, this may explain the
-       notable performance difference in this situation)
-  -> When writing
-       for (int i=0; i<10000; i++)
-         PLString->Insert(i+48, 0);	// First parameter is what to insert, second is position
-     and for std::string
-       char insert[2];
-       insert[1] = '\0';
-       for (int i=0; i<10000; i++) {
-         insert[0] = char(i+48);
-         CString->insert(0, insert);	// First parameter is position, second is what to insert
-       }
-   the performance result is
-      PL_String_insert;36.3931;36.394
-      C_String_insert;40.7108;40.712
-   and another run
-      PL_String_insert;38.9538;38.955
-      C_String_insert;36.4824;36.483
-   and another run
-      PL_String_insert;36.3936;36.394
-      C_String_insert;36.3392;36.339
-   ... sorry for this long diary entry. I wanted to point out how important it is to analyse in detail whether or not performance tests really do the same thing...
-   especially when there are extreme performance differences it's required to have a closer look at the performance test itself... and of course a look into the
-   implementations used.
-   -> The queue and stack tests look fine. "PLCore::Queue" and "PLCore::Stack" are trivial implementations using simple linked lists while std has more sophisticated
-      implementations for those two data structures. This exlains the performance difference, but I think it isn't that dramatically and important for the overall
-      PixelLight performance to make the "PLCore::Queue" and "PLCore::Stack" implementations more efficient (right now there's more important stuff :).
-
-
-
->> 19.12.2011
-[CP]
-PLUnitPerformance:
-- changed output into csv-files
-- added Queue- and Stack-functions
-- started String-functions
-- added two types of counters (Pixellight, TestReporter)
+﻿>> 13.12.2011
+[JS]PLUnitTests:
+- added all files for testing PLMath classes (only important ones like in PLTestBase)
+- implemented Maptests and Heaptests
+- fixed function call to template function CheckDerivedContainerFunctions (specified passed element type)
+- fixed some typos/added some comments
+- uncommented failing tests with TODOs (as discussed in our meeting)
 
 
 

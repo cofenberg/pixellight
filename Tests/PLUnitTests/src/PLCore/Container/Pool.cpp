@@ -24,25 +24,45 @@ SUITE(Pool_PrimitiveInt) {
 	{
 		ConstructTestPool() { 
 			/* some setup */
-			Pol.Add(1);
-			Pol.Add(2);
-			Pol.Add(3);
-			Pol.Add(4);
+			Pool.Add(1);
+			Pool.Add(2);
+			Pool.Add(3);
+			Pool.Add(4);
 
-			TestPol.Add(3);
-			TestPol.Add(2);
-			TestPol.Add(1);
-			TestPol.Add(0);
+			TestPool.Add(3);
+			TestPool.Add(2);
+			TestPool.Add(1);
+			TestPool.Add(0);
 		}
 		~ConstructTestPool() {
 			/* some teardown */
 		}
 
 		// Container for testing
-		Pool<int> Pol, EmptyPol, TestPol;
+		Pool<int> Pool, EmptyPool, TestPool;
 	};
 
 	TEST_FIXTURE(ConstructTestPool, DerivedContainerFunctions) {
-		CheckDerivedContainerFunctions(Pol);
+		CheckDerivedContainerFunctions<int>(Pool);
+	}
+
+	TEST_FIXTURE(ConstructTestPool, FreeElementsFunctions) {
+		CHECK_EQUAL(0U, Pool.GetNumOfFreeElements());
+
+		Pool.Remove(2);
+		CHECK_EQUAL(1U, Pool.GetNumOfFreeElements());
+
+		Pool.FreeElements();
+		CHECK_EQUAL(4U, Pool.GetNumOfFreeElements());
+
+		Pool.RemoveAllFreeElements();
+		CHECK_EQUAL(0U, Pool.GetNumOfFreeElements());
+	}
+
+	TEST_FIXTURE(ConstructTestPool, FreeSize) {
+		CHECK_EQUAL(0U, Pool.GetFreeSize());
+
+		Pool.Remove(2);
+		CHECK_EQUAL(sizeof(int), Pool.GetFreeSize());
 	}
 }

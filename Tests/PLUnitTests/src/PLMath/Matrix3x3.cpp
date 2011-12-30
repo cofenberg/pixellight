@@ -2,14 +2,13 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <UnitTest++/UnitTest++.h>
-#include <PLCore/String/String.h>
-#include "UnitTest++AddIns/wchar_template.h"
+#include <PLMath/Matrix3x3.h>
 
 /*
 * Naming Convention for SUITE:
 * CLASSNAME
 */
-SUITE(String) {
+SUITE(Matrix3x3) {
 	/*
 	* Naming Convention for METHOD:
 	* METHODNAME_SCENARIO
@@ -26,10 +25,12 @@ SUITE(String) {
 		}
 
 		// Container for testing
-		PLCore::String str;
+		PLMath::Matrix3x3 mat;
 	};
 
 	TEST_FIXTURE(ConstructTest, Dummy) {
-		CHECK_EQUAL(0U, str.GetLength());
+		mat.IsZero();
+
+		CHECK(false);
 	}
 }

@@ -9,12 +9,6 @@ using namespace PLCore;
 
 template <class KeyType, class ValType>
 void CheckDerivedHeapFunctions(Heap<KeyType, ValType>& map) {
-	// TODO: test functions!
-	/*
-	bool map.add(const KeyType &Key, const ValueType &Value);
-	bool GetTop(ValueType *pValue=nullptr, KeyType *pKey=nullptr);
-	bool ExtractTop(ValueType *pValue=nullptr, KeyType *pKey=nullptr);
-	*/
 	// isEmpty_and_Clear
 	{
 		map.Clear();
@@ -58,8 +52,5 @@ void CheckDerivedHeapFunctions(Heap<KeyType, ValType>& map) {
 		CHECK_EQUAL(1, key);
 		CHECK_EQUAL(0, val);
 	}
-
-
-	// TODO: test iterator!
 }
 #endif // __HEAPTESTS_H__
