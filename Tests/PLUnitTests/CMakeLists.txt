@@ -45,7 +45,9 @@ add_sources(
 	src/PLCore/Container/FibonacciHeap.cpp
 	src/PLCore/Container/HeapTests.h
 	# Map
+	src/PLCore/Container/HashMap.cpp
 	src/PLCore/Container/MapTests.h
+	src/PLCore/Container/SimpleMap.cpp
 	# PLMath
 	src/PLMath/EulerAngles.cpp
 	src/PLMath/Graph.cpp

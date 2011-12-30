@@ -27,21 +27,39 @@ SUITE(HashMap_Int_Int) {
 			Hash.Add(2, 2);
 			Hash.Add(3, 3);
 			Hash.Add(4, 4);
-
-			TestHash.Add(3, 3);
-			TestHash.Add(2, 2);
-			TestHash.Add(1, 1);
-			TestHash.Add(0, 0);
 		}
 		~ConstructTestHashMap() {
 			/* some teardown */
 		}
 
 		// Container for testing
-		HashMap<int, int> Hash, EmptyHash, TestHash;
+		HashMap<int, int> Hash;
 	};
 
 	TEST_FIXTURE(ConstructTestHashMap, DerivedMapFunctions) {
 		CheckDerivedMapFunctions<int,int>(Hash);
+	}
+
+	TEST_FIXTURE(ConstructTestHashMap, CopyConstructor) {
+		HashMap<int, int> HashMapCopy = Hash;
+
+		CHECK_EQUAL(Hash.GetNumOfElements(), HashMapCopy.GetNumOfElements());
+		CHECK_EQUAL(Hash.Get(1), HashMapCopy.Get(1));
+		CHECK_EQUAL(Hash.Get(2), HashMapCopy.Get(2));
+		CHECK_EQUAL(Hash.Get(3), HashMapCopy.Get(3));
+		CHECK_EQUAL(Hash.Get(4), HashMapCopy.Get(4));
+		CHECK_EQUAL(Hash.Get(5), HashMapCopy.Get(5));
+	}
+
+	TEST_FIXTURE(ConstructTestHashMap, CopyOperator) {
+		HashMap<int, int> HashMapCopy;
+		HashMapCopy = Hash;
+
+		CHECK_EQUAL(Hash.GetNumOfElements(), HashMapCopy.GetNumOfElements());
+		CHECK_EQUAL(Hash.Get(1), HashMapCopy.Get(1));
+		CHECK_EQUAL(Hash.Get(2), HashMapCopy.Get(2));
+		CHECK_EQUAL(Hash.Get(3), HashMapCopy.Get(3));
+		CHECK_EQUAL(Hash.Get(4), HashMapCopy.Get(4));
+		CHECK_EQUAL(Hash.Get(5), HashMapCopy.Get(5));
 	}
 }

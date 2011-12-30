@@ -4,28 +4,12 @@
 
 #include <UnitTest++/UnitTest++.h>
 #include <PLCore/Container/Map.h>
-
-using namespace PLCore;
+#include <PLCore/Container/List.h>
 
 template <class KeyType, class ValueType>
-void CheckDerivedMapFunctions(Map<KeyType, ValueType>& map) {
-	/* TODO: test functions!
-	void Clear()
-	bool IsEmpty
-	uint GetNumOfElements
-
-	bool Add(key, value)
-	ValueType Get(Key)
-
-	bool Replace(key, newvalue)
-
-	bool Set(key, value) // replace if key exists
-
-	bool Remove(key)
-
-	uint RemoveValue(value)
-	*/
-
+void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
+	// backup lists to check order of elements
+	List<int> lstKeys, lstElems;
 
 	// Clear(), IsEmpty(), GetNumOfElements()
 	{
@@ -49,7 +33,7 @@ void CheckDerivedMapFunctions(Map<KeyType, ValueType>& map) {
 		CHECK_EQUAL(2, map.Get(2));
 		CHECK_EQUAL(5, map.Get(5));
 		CHECK_EQUAL(1, map.Get(1));
-		CHECK_EQUAL(NULL, map.Get(99));
+		CHECK_EQUAL((PLCore::Map<KeyType, ValueType>::Null), map.Get(99));
 	}
 
 	// Replace(key, newValue)
@@ -83,6 +67,133 @@ void CheckDerivedMapFunctions(Map<KeyType, ValueType>& map) {
 		CHECK(map.RemoveValue(5));
 
 		CHECK(!map.RemoveValue(10));
+	}
+
+	// Iterator, empty map
+	{
+		map.Clear();
+
+		Iterator<int> cIterator = map.GetIterator();
+
+		CHECK(!cIterator.HasPrevious());
+		CHECK(!cIterator.HasNext());
+	}
+
+	// KeyIterator, empty map
+	{
+		Iterator<int> cIterator = map.GetKeyIterator();
+
+		CHECK(!cIterator.HasPrevious());
+		CHECK(!cIterator.HasNext());
+	}
+
+	// EndIterator, empty map
+	{
+		map.Clear();
+
+		Iterator<int> cIterator = map.GetEndIterator();
+
+		CHECK(!cIterator.HasPrevious());
+		CHECK(!cIterator.HasNext());
+	}
+
+	// EndKeyIterator, empty map
+	{
+		Iterator<int> cIterator = map.GetEndKeyIterator();
+
+		CHECK(!cIterator.HasPrevious());
+		CHECK(!cIterator.HasNext());
+	}
+
+	// Iterator, one element map
+	{
+		map.Clear();
+		map.Add(1, 1);
+
+		Iterator<int> cIterator = map.GetIterator();
+
+		CHECK(!cIterator.HasPrevious());
+		CHECK(cIterator.HasNext());
+	}
+	
+	// KeyIterator, one element map
+	{
+		Iterator<int> cIterator = map.GetKeyIterator();
+
+		CHECK(!cIterator.HasPrevious());
+		CHECK(cIterator.HasNext());
+	}
+
+	// EndIterator, one element map
+	{
+		Iterator<int> cIterator = map.GetEndIterator();
+
+		CHECK(cIterator.HasPrevious());
+		CHECK(!cIterator.HasNext());
+	}
+
+	// EndKeyIterator, one element map
+	{
+		Iterator<int> cIterator = map.GetEndKeyIterator();
+
+		CHECK(cIterator.HasPrevious());
+		CHECK(!cIterator.HasNext());
+	}
+
+	// Iterator
+	{
+		map.Clear();
+		CHECK(map.Add(2, 2));
+		CHECK(map.Add(5, 5));
+		CHECK(map.Add(4, 4));
+		CHECK(map.Add(1, 1));
+
+		Iterator<int> cIterator = map.GetIterator();
+
+		while (cIterator.HasNext())
+			lstElems.Add(++cIterator);
+
+		CHECK(cIterator.HasPrevious());
+		CHECK(!cIterator.HasNext());
+	}
+
+	// KeyIterator
+	{
+		Iterator<int> cIterator = map.GetKeyIterator();
+
+		while (cIterator.HasNext())
+			lstKeys.Add(++cIterator);
+
+		CHECK(cIterator.HasPrevious());
+		CHECK(!cIterator.HasNext());
+	}
+
+	// EndIterator
+	{
+		Iterator<int> cIterator = map.GetEndIterator();
+
+		// check the order of the elements in lstElems against the backward iterator
+		for (int i=lstElems.GetNumOfElements()-1; cIterator.HasPrevious(); i--)
+			CHECK(lstElems[i] == --cIterator);
+
+		CHECK_EQUAL(lstElems.GetNumOfElements(), map.GetNumOfElements());
+
+		CHECK(!cIterator.HasPrevious());
+		CHECK(cIterator.HasNext());
+	}
+
+	// EndKeyIterator
+	{
+		Iterator<int> cIterator = map.GetEndKeyIterator();
+
+		// check the order of the elements in lstKeys against the backward iterator
+		for (int i=lstKeys.GetNumOfElements()-1; cIterator.HasPrevious(); i--)
+			CHECK(lstKeys[i] == --cIterator);
+
+		CHECK_EQUAL(lstKeys.GetNumOfElements(), map.GetNumOfElements());
+
+		CHECK(!cIterator.HasPrevious());
+		CHECK(cIterator.HasNext());
 	}
 }
 #endif // __MAPTESTS_H__
