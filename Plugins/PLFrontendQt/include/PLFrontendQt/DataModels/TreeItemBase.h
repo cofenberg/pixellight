@@ -32,6 +32,7 @@
 #include <QtCore/QObject>
 #include <QtCore/QModelIndex>
 #include <PLCore/PLCore.h>	// Only needed for compilers which doesn't have nullptr as a builtin type
+#include "PLFrontendQt/PLFrontendQt.h"
 
 
 //[-------------------------------------------------------]
@@ -48,7 +49,7 @@ namespace DataModels {
 *  @brief
 *    Tree item base
 */
-class TreeItemBase : public QObject {
+class PLFRONTENDQT_API TreeItemBase : public QObject {
 
 
 	//[-------------------------------------------------------]
