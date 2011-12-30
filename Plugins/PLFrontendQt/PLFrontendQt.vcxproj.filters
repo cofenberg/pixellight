@@ -180,14 +180,14 @@
     <ClInclude Include="include\PLFrontendQt\QtStringAdapter.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLFrontendQt\ui_QPLDebugDialog.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLFrontendQt\FrontendRenderWindow.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLFrontendQt\ConstructFileFilter.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="build\GeneratedQtFiles\ui_QPLDebugDialog.h">
+      <Filter>GeneratedQtFiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

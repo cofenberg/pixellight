@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <QtGui/QDialog.h>
 #include <PLCore/Base/Event/EventHandler.h>
-#include "ui_MainWindow.h"
+#include "ui_MainWindow.h"	// Automatically created by Qt's uic, output directory is "build/GeneratedQtFiles"
 
 
 //[-------------------------------------------------------]
