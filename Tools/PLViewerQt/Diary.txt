@@ -1,3 +1,9 @@
+>> 30.12.2011
+[CO]
+- Added a menu bar entry which makes it possible to select the currently used camera
+
+
+
 >> 29.12.2011
 [CO]
 - Started "PLViewerQt"-project with the goal to provide a more sophisticated generic PixelLight viewer application. PLViewer will not be removed because a

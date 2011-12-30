@@ -29,6 +29,8 @@ PL_WARNING_PUSH
 	#include <QtGui/qmenubar.h>
 	#include <QtGui/qfiledialog.h>
 PL_WARNING_POP
+#include <PLScene/Scene/SceneContainer.h>
+#include <PLScene/Scene/SceneQueries/SQByClassName.h>
 #include <PLFrontendQt/Frontend.h>
 #include <PLFrontendQt/QtStringAdapter.h>
 #include <PLFrontendQt/FrontendMainWindow.h>
@@ -41,6 +43,7 @@ PL_WARNING_POP
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
+using namespace PLScene;
 using namespace PLFrontendQt;
 
 
@@ -52,7 +55,10 @@ using namespace PLFrontendQt;
 *    Constructor
 */
 Gui::Gui(Application &cApplication) :
-	m_pApplication(&cApplication)
+	EventHandlerCameraFound(&Gui::OnCameraFound, this),
+	m_pApplication(&cApplication),
+	m_pQMenuCamera(nullptr),
+	m_pQActionGroupCamera(nullptr)
 {
 	// Get the Qt main window
 	FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
@@ -118,6 +124,30 @@ void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 			pQMenu->addAction(pQAction);
 		}
 	}
+
+	{ // Setup the camera menu
+		m_pQMenuCamera = cQMainWindow.menuBar()->addMenu(cQMainWindow.tr("&Camera"));
+		connect(m_pQMenuCamera, SIGNAL(aboutToShow()), this, SLOT(QtSlotMenuCameraAboutToShow()));
+
+		// Menu is filled when it's about to show
+	}
+}
+
+/**
+*  @brief
+*    Called when a camera scene node was found
+*/
+void Gui::OnCameraFound(SceneQuery &cQuery, SceneNode &cSceneNode)
+{
+	// Camera Qt menu there?
+	if (m_pQMenuCamera) {
+		// Add camera to the menu
+		QAction *pQAction = m_pQMenuCamera->addAction(QtStringAdapter::PLToQt(cSceneNode.GetAbsoluteName()));
+		pQAction->setCheckable(true);
+		if (reinterpret_cast<SceneNode*>(m_pApplication->GetCamera()) == &cSceneNode)
+			pQAction->setChecked(true);
+		m_pQActionGroupCamera->addAction(pQAction);
+	}
 }
 
 
@@ -143,4 +173,54 @@ void Gui::QtSlotExit()
 {
 	// Shut down the application
 	m_pApplication->Exit(0);
+}
+
+void Gui::QtSlotMenuCameraAboutToShow()
+{
+	// Camera Qt menu there?
+	if (m_pQMenuCamera) {
+		// Clear the previous content - this is not performance critical so there's no reason to implement a
+		// more complex solution e.g. updating the menu entries as soon as there's a change within the scene
+		m_pQMenuCamera->clear();
+		if (m_pQActionGroupCamera)
+			delete m_pQActionGroupCamera;
+		m_pQActionGroupCamera = new QActionGroup(GetFrontendMainWindow());
+		connect(m_pQActionGroupCamera, SIGNAL(selected(QAction*)), this, SLOT(QtSlotSelectedCamera(QAction*)));
+
+		// Automatically fill the Qt camera menu by using the cameras which are within the scene
+
+		// Get the scene container with our 'concrete scene'
+		SceneContainer *pSceneContainer = m_pApplication->GetScene();
+		if (pSceneContainer) {
+			// Create a scene query instance
+			SQByClassName *pSceneQuery = static_cast<SQByClassName*>(pSceneContainer->CreateQuery("PLScene::SQByClassName"));
+			if (pSceneQuery) {
+				// Setup the regular expression of the scene query
+				pSceneQuery->SetRegEx(RegEx("PLScene::SNCamera"));
+
+				// Connect event handler
+				pSceneQuery->SignalSceneNode.Connect(EventHandlerCameraFound);
+
+				// Perform the scene query
+				pSceneQuery->PerformQuery();
+
+				// Destroy scene query instance
+				pSceneContainer->DestroyQuery(*pSceneQuery);
+			}
+		}
+	}
+}
+
+void Gui::QtSlotSelectedCamera(QAction *pQAction)
+{
+	// Get the scene container with our 'concrete scene'
+	SceneContainer *pSceneContainer = m_pApplication->GetScene();
+	if (pSceneContainer) {
+		// Get the chosen camera scene node
+		SceneNode *pSceneNode = pSceneContainer->GetByName(QtStringAdapter::QtToPL(pQAction->text()));
+		if (pSceneNode && pSceneNode->IsCamera()) {
+			// Set the new application camera
+			m_pApplication->SetCamera(reinterpret_cast<SNCamera*>(pSceneNode));
+		}
+	}
 }

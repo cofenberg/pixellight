@@ -29,14 +29,22 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <QtCore/qobject.h>
+#include <PLCore/Base/Event/EventHandler.h>
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 QT_BEGIN_NAMESPACE
+class QMenu;
+class QAction;
 class QMainWindow;
+class QActionGroup;
 QT_END_NAMESPACE
+namespace PLScene {
+	class SceneNode;
+	class SceneQuery;
+}
 namespace PLFrontendQt {
 	class FrontendMainWindow;
 }
@@ -102,6 +110,17 @@ class Gui : public QObject {
 		*/
 		void InitMainWindow(QMainWindow &cQMainWindow);
 
+		/**
+		*  @brief
+		*    Called when a camera scene node was found
+		*
+		*  @param[in] cQuery
+		*    Query found the scene node
+		*  @param[in] cSceneNode
+		*    Found scene node
+		*/
+		void OnCameraFound(PLScene::SceneQuery &cQuery, PLScene::SceneNode &cSceneNode);
+
 
 	//[-------------------------------------------------------]
 	//[ Private Qt slots (MOC)                                ]
@@ -109,13 +128,24 @@ class Gui : public QObject {
 	private slots:
 		void QtSlotLoad();
 		void QtSlotExit();
+		void QtSlotMenuCameraAboutToShow();
+		void QtSlotSelectedCamera(QAction *);
+
+
+	//[-------------------------------------------------------]
+	//[ Private event handlers                                ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<PLScene::SceneQuery &, PLScene::SceneNode &> EventHandlerCameraFound;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Application	*m_pApplication;	/**< Owner application, always valid */
+		Application	 *m_pApplication;			/**< Owner application, always valid */
+		QMenu		 *m_pQMenuCamera;			/**< Camera Qt menu, can be a null pointer */
+		QActionGroup *m_pQActionGroupCamera;	/**< Camera Qt action group, can be a null pointer */
 
 
 };
