@@ -9,7 +9,7 @@
 template <class KeyType, class ValueType>
 void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
 	// backup lists to check order of elements
-	List<int> lstKeys, lstElems;
+	PLCore::List<ValueType> lstKeys, lstElems;
 
 	// Clear(), IsEmpty(), GetNumOfElements()
 	{
@@ -73,7 +73,7 @@ void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
 	{
 		map.Clear();
 
-		Iterator<int> cIterator = map.GetIterator();
+		PLCore::Iterator<ValueType> cIterator = map.GetIterator();
 
 		CHECK(!cIterator.HasPrevious());
 		CHECK(!cIterator.HasNext());
@@ -81,7 +81,7 @@ void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
 
 	// KeyIterator, empty map
 	{
-		Iterator<int> cIterator = map.GetKeyIterator();
+		PLCore::Iterator<KeyType> cIterator = map.GetKeyIterator();
 
 		CHECK(!cIterator.HasPrevious());
 		CHECK(!cIterator.HasNext());
@@ -91,7 +91,7 @@ void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
 	{
 		map.Clear();
 
-		Iterator<int> cIterator = map.GetEndIterator();
+		PLCore::Iterator<ValueType> cIterator = map.GetEndIterator();
 
 		CHECK(!cIterator.HasPrevious());
 		CHECK(!cIterator.HasNext());
@@ -99,7 +99,7 @@ void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
 
 	// EndKeyIterator, empty map
 	{
-		Iterator<int> cIterator = map.GetEndKeyIterator();
+		PLCore::Iterator<KeyType> cIterator = map.GetEndKeyIterator();
 
 		CHECK(!cIterator.HasPrevious());
 		CHECK(!cIterator.HasNext());
@@ -110,7 +110,7 @@ void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
 		map.Clear();
 		map.Add(1, 1);
 
-		Iterator<int> cIterator = map.GetIterator();
+		PLCore::Iterator<ValueType> cIterator = map.GetIterator();
 
 		CHECK(!cIterator.HasPrevious());
 		CHECK(cIterator.HasNext());
@@ -118,7 +118,7 @@ void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
 	
 	// KeyIterator, one element map
 	{
-		Iterator<int> cIterator = map.GetKeyIterator();
+		PLCore::Iterator<KeyType> cIterator = map.GetKeyIterator();
 
 		CHECK(!cIterator.HasPrevious());
 		CHECK(cIterator.HasNext());
@@ -126,7 +126,7 @@ void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
 
 	// EndIterator, one element map
 	{
-		Iterator<int> cIterator = map.GetEndIterator();
+		PLCore::Iterator<ValueType> cIterator = map.GetEndIterator();
 
 		CHECK(cIterator.HasPrevious());
 		CHECK(!cIterator.HasNext());
@@ -134,7 +134,7 @@ void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
 
 	// EndKeyIterator, one element map
 	{
-		Iterator<int> cIterator = map.GetEndKeyIterator();
+		PLCore::Iterator<KeyType> cIterator = map.GetEndKeyIterator();
 
 		CHECK(cIterator.HasPrevious());
 		CHECK(!cIterator.HasNext());
@@ -148,7 +148,7 @@ void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
 		CHECK(map.Add(4, 4));
 		CHECK(map.Add(1, 1));
 
-		Iterator<int> cIterator = map.GetIterator();
+		PLCore::Iterator<ValueType> cIterator = map.GetIterator();
 
 		while (cIterator.HasNext())
 			lstElems.Add(++cIterator);
@@ -159,7 +159,7 @@ void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
 
 	// KeyIterator
 	{
-		Iterator<int> cIterator = map.GetKeyIterator();
+		PLCore::Iterator<KeyType> cIterator = map.GetKeyIterator();
 
 		while (cIterator.HasNext())
 			lstKeys.Add(++cIterator);
@@ -170,7 +170,7 @@ void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
 
 	// EndIterator
 	{
-		Iterator<int> cIterator = map.GetEndIterator();
+		PLCore::Iterator<ValueType> cIterator = map.GetEndIterator();
 
 		// check the order of the elements in lstElems against the backward iterator
 		for (int i=lstElems.GetNumOfElements()-1; cIterator.HasPrevious(); i--)
@@ -184,7 +184,7 @@ void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
 
 	// EndKeyIterator
 	{
-		Iterator<int> cIterator = map.GetEndKeyIterator();
+		PLCore::Iterator<KeyType> cIterator = map.GetEndKeyIterator();
 
 		// check the order of the elements in lstKeys against the backward iterator
 		for (int i=lstKeys.GetNumOfElements()-1; cIterator.HasPrevious(); i--)

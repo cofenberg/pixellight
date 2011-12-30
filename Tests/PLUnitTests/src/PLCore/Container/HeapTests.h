@@ -26,7 +26,7 @@ void CheckDerivedHeapFunctions(PLCore::Heap<KeyType, ValType>& heap) {
 	{
 		heap.Clear();
 
-		Iterator<ValType> cIterator = heap.GetIterator();
+		PLCore::Iterator<ValType> cIterator = heap.GetIterator();
 
 		CHECK(!cIterator.HasPrevious());
 		CHECK(!cIterator.HasNext());
@@ -34,7 +34,7 @@ void CheckDerivedHeapFunctions(PLCore::Heap<KeyType, ValType>& heap) {
 
 	// Iterator backwards, empty heap
 	{
-		Iterator<ValType> cIterator = heap.GetEndIterator();
+		PLCore::Iterator<ValType> cIterator = heap.GetEndIterator();
 
 		CHECK(!cIterator.HasPrevious());
 		CHECK(!cIterator.HasNext());
@@ -44,7 +44,7 @@ void CheckDerivedHeapFunctions(PLCore::Heap<KeyType, ValType>& heap) {
 	{
 		heap.Add(1, 1);
 
-		Iterator<ValType> cIterator = heap.GetIterator();
+		PLCore::Iterator<ValType> cIterator = heap.GetIterator();
 
 		CHECK(!cIterator.HasPrevious());
 		CHECK(cIterator.HasNext());
@@ -52,7 +52,7 @@ void CheckDerivedHeapFunctions(PLCore::Heap<KeyType, ValType>& heap) {
 
 	// Iterator backwards, one element
 	{
-		Iterator<ValType> cIterator = heap.GetEndIterator();
+		PLCore::Iterator<ValType> cIterator = heap.GetEndIterator();
 
 		CHECK(cIterator.HasPrevious());
 		CHECK(!cIterator.HasNext());
@@ -71,7 +71,7 @@ void CheckDerivedHeapFunctions(PLCore::Heap<KeyType, ValType>& heap) {
 
 	// Iterator
 	{
-		Iterator<ValType> cIterator = heap.GetIterator();
+		PLCore::Iterator<ValType> cIterator = heap.GetIterator();
 		lstElems.Clear();
 
 		CHECK(!cIterator.HasPrevious());
@@ -88,7 +88,7 @@ void CheckDerivedHeapFunctions(PLCore::Heap<KeyType, ValType>& heap) {
 
 	// Iterator backwards
 	{
-		Iterator<ValType> cIterator = heap.GetEndIterator();
+		PLCore::Iterator<ValType> cIterator = heap.GetEndIterator();
 
 		CHECK(!cIterator.HasNext());
 
