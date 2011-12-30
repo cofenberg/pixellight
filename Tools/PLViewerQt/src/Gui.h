@@ -121,6 +121,17 @@ class Gui : public QObject {
 		*/
 		void OnCameraFound(PLScene::SceneQuery &cQuery, PLScene::SceneNode &cSceneNode);
 
+		/**
+		*  @brief
+		*    Fills the window menu recursivity
+		*
+		*  @param[in] cQMenu
+		*    Current Qt menu to fill
+		*  @param[in] sBaseClass
+		*    Name of the currently used RTTI base class
+		*/
+		void FillMenuWindowRec(QMenu &cQMenu, const PLCore::String &sBaseClass);
+
 
 	//[-------------------------------------------------------]
 	//[ Private Qt slots (MOC)                                ]
@@ -130,6 +141,8 @@ class Gui : public QObject {
 		void QtSlotExit();
 		void QtSlotMenuCameraAboutToShow();
 		void QtSlotSelectedCamera(QAction *);
+		void QtSlotMenuWindowAboutToShow();
+		void QtSlotSelectedWindow(QAction *);
 
 
 	//[-------------------------------------------------------]
@@ -146,6 +159,8 @@ class Gui : public QObject {
 		Application	 *m_pApplication;			/**< Owner application, always valid */
 		QMenu		 *m_pQMenuCamera;			/**< Camera Qt menu, can be a null pointer */
 		QActionGroup *m_pQActionGroupCamera;	/**< Camera Qt action group, can be a null pointer */
+		QMenu		 *m_pQMenuWindow;			/**< Window Qt menu, can be a null pointer */
+		QActionGroup *m_pQActionGroupWindow;	/**< Window Qt action group, can be a null pointer */
 
 
 };

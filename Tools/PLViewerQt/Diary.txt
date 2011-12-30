@@ -1,6 +1,8 @@
 >> 30.12.2011
 [CO]
 - Added a menu bar entry which makes it possible to select the currently used camera
+- Added a menu bar entry which makes it possible to create new dockable widgets. This is currently still under construction, but shows that the RTTI dock
+  widget concept is working quite well. See PLFrontendQt entry within the PLCore diary for details.
 
 
 

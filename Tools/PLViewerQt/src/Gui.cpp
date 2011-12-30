@@ -29,12 +29,14 @@ PL_WARNING_PUSH
 	#include <QtGui/qmenubar.h>
 	#include <QtGui/qfiledialog.h>
 PL_WARNING_POP
+#include <PLCore/Base/Class.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SceneQueries/SQByClassName.h>
 #include <PLFrontendQt/Frontend.h>
 #include <PLFrontendQt/QtStringAdapter.h>
 #include <PLFrontendQt/FrontendMainWindow.h>
 #include <PLFrontendQt/ConstructFileFilter.h>
+#include <PLFrontendQt/DockWidget/DockWidget.h>
 #include "Application.h"
 #include "Gui.h"
 
@@ -58,7 +60,9 @@ Gui::Gui(Application &cApplication) :
 	EventHandlerCameraFound(&Gui::OnCameraFound, this),
 	m_pApplication(&cApplication),
 	m_pQMenuCamera(nullptr),
-	m_pQActionGroupCamera(nullptr)
+	m_pQActionGroupCamera(nullptr),
+	m_pQMenuWindow(nullptr),
+	m_pQActionGroupWindow(nullptr)
 {
 	// Get the Qt main window
 	FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
@@ -131,6 +135,13 @@ void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 
 		// Menu is filled when it's about to show
 	}
+
+	{ // Setup the window menu
+		m_pQMenuWindow = cQMainWindow.menuBar()->addMenu(cQMainWindow.tr("&Window"));
+		connect(m_pQMenuWindow, SIGNAL(aboutToShow()), this, SLOT(QtSlotMenuWindowAboutToShow()));
+
+		// Menu is filled when it's about to show
+	}
 }
 
 /**
@@ -147,6 +158,43 @@ void Gui::OnCameraFound(SceneQuery &cQuery, SceneNode &cSceneNode)
 		if (reinterpret_cast<SceneNode*>(m_pApplication->GetCamera()) == &cSceneNode)
 			pQAction->setChecked(true);
 		m_pQActionGroupCamera->addAction(pQAction);
+	}
+}
+
+/**
+*  @brief
+*    Fills the window menu recursivity
+*/
+void Gui::FillMenuWindowRec(QMenu &cQMenu, const String &sBaseClass)
+{
+	// Get a list of RTTI classes derived from the current base class
+	List<const Class*> lstClasses;
+	ClassManager::GetInstance()->GetClasses(lstClasses, sBaseClass, NonRecursive, NoBase, IncludeAbstract);
+	ConstIterator<const Class*> cIterator = lstClasses.GetConstIterator();
+	while (cIterator.HasNext()) {
+		// Get the current RTTI class
+		const Class *pClass = cIterator.Next();
+
+		// Abstract class?
+		if (pClass->HasConstructor()) {
+			// Class can be instanced
+
+			// Add action
+			QAction *pQAction = cQMenu.addAction(tr(pClass->GetProperties().Get("Title")));
+			pQAction->setCheckable(true);
+			pQAction->setData(QtStringAdapter::PLToQt(pClass->GetClassName()));
+			m_pQActionGroupWindow->addAction(pQAction);
+
+			// One can also derive from classes which can be instanced, but by convention this should not be done for RTTI dock widgets
+		} else {
+			// Abstract class
+
+			// Add sub-menu
+			QMenu *pQMenuSub = cQMenu.addMenu(tr(pClass->GetProperties().Get("Title")));
+
+			// Automatically fill the Qt window menu by using RTTI information
+			FillMenuWindowRec(*pQMenuSub, pClass->GetClassName());
+		}
 	}
 }
 
@@ -180,7 +228,7 @@ void Gui::QtSlotMenuCameraAboutToShow()
 	// Camera Qt menu there?
 	if (m_pQMenuCamera) {
 		// Clear the previous content - this is not performance critical so there's no reason to implement a
-		// more complex solution e.g. updating the menu entries as soon as there's a change within the scene
+		// more complex solution like e.g. updating the menu entries as soon as there's a change within the scene
 		m_pQMenuCamera->clear();
 		if (m_pQActionGroupCamera)
 			delete m_pQActionGroupCamera;
@@ -221,6 +269,41 @@ void Gui::QtSlotSelectedCamera(QAction *pQAction)
 		if (pSceneNode && pSceneNode->IsCamera()) {
 			// Set the new application camera
 			m_pApplication->SetCamera(reinterpret_cast<SNCamera*>(pSceneNode));
+		}
+	}
+}
+
+void Gui::QtSlotMenuWindowAboutToShow()
+{
+	// Window Qt menu there?
+	if (m_pQMenuWindow) {
+		// Clear the previous content - this is not performance critical so there's no reason to implement a
+		// more complex solution like e.g. updating the menu entries as soon as there's a change within the scene
+		m_pQMenuWindow->clear();
+		if (m_pQActionGroupWindow)
+			delete m_pQActionGroupWindow;
+		m_pQActionGroupWindow = new QActionGroup(GetFrontendMainWindow());
+		m_pQActionGroupWindow->setExclusive(false);
+		connect(m_pQActionGroupWindow, SIGNAL(selected(QAction*)), this, SLOT(QtSlotSelectedWindow(QAction*)));
+
+		// Automatically fill the Qt window menu by using RTTI information
+		FillMenuWindowRec(*m_pQMenuWindow, "PLFrontendQt::DockWidget");
+	}
+}
+
+void Gui::QtSlotSelectedWindow(QAction *pQAction)
+{
+	// Get the Qt main window
+	FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
+	if (pFrontendMainWindow) {
+		// Get the chosen dock widget RTTI class...
+		const Class *pClass = ClassManager::GetInstance()->GetClass(QtStringAdapter::QtToPL(pQAction->data().toString()));
+		if (pClass) {
+			// [TODO] Avoid instancing a RTTI dock widget which is currently just hidden
+			// [TODO] Avoid instancing one RTTI dock widget multiple times
+
+			// ... and create an instance of it
+			DockWidget *pDockWidget = reinterpret_cast<DockWidget*>(pClass->Create(Params<Object*, QWidget*>(pFrontendMainWindow)));
 		}
 	}
 }
