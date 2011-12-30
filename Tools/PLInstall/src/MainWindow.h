@@ -30,7 +30,7 @@
 //[-------------------------------------------------------]
 #include <QtGui/QDialog.h>
 #include <PLCore/Base/Event/EventHandler.h>
-#include "ui_MainWindow.h"	// Automatically created by Qt's uic, output directory is "build/GeneratedQtFiles"
+#include "ui_MainWindow.h"	// Automatically created by Qt's uic (output directory is "build/GeneratedQtFiles" within the hand configured Visual Studio files, another directory when using CMake)
 
 
 //[-------------------------------------------------------]
