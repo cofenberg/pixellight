@@ -154,6 +154,21 @@
     <ClCompile Include="src\ConstructFileFilter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\DockWidget\DockWidget.cpp">
+      <Filter>DockWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DockWidget\DockWidgetSceneGraph.cpp">
+      <Filter>DockWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DockWidget\DockWidgetObject.cpp">
+      <Filter>DockWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DockWidget\DockWidgetSceneNode.cpp">
+      <Filter>DockWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DockWidget\DockWidgetScene.cpp">
+      <Filter>DockWidget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarTreeItemsFactory.h">
@@ -189,6 +204,21 @@
     <ClInclude Include="build\GeneratedQtFiles\ui_QPLDebugDialog.h">
       <Filter>GeneratedQtFiles</Filter>
     </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidget.h">
+      <Filter>DockWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneGraph.h">
+      <Filter>DockWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetObject.h">
+      <Filter>DockWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneNode.h">
+      <Filter>DockWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetScene.h">
+      <Filter>DockWidget</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Base\PLCore\Diary.txt" />
@@ -215,6 +245,9 @@
     </Filter>
     <Filter Include="Resources">
       <UniqueIdentifier>{ae6b5db6-f1e5-4634-8a50-786349f60404}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DockWidget">
+      <UniqueIdentifier>{be095273-8a1e-46af-b13d-7fe5d0f9c92b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

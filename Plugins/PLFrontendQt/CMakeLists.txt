@@ -126,6 +126,11 @@ add_sources(
 	src/DataModels/SceneRendererDataModel/SceneRendererPassTreeItem.cpp
 	src/DataModels/SceneRendererDataModel/SceneRendererHeaderTreeItem.cpp
 	src/External/qtcolorbutton.cpp
+	src/DockWidget/DockWidget.cpp
+	src/DockWidget/DockWidgetObject.cpp
+	src/DockWidget/DockWidgetScene.cpp
+	src/DockWidget/DockWidgetSceneNode.cpp
+	src/DockWidget/DockWidgetSceneGraph.cpp
 	${UI_SRCS}	# Add source produced by uic
 	${MOC_SRCS}	# Add source produced by moc
 	${QRC_SRCS}	# Add sources produced by rcc

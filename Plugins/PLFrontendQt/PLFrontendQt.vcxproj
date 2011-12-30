@@ -304,6 +304,11 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
     <ClCompile Include="src\DataModels\SceneRendererDataModel\SceneRendererPassTreeItem.cpp" />
     <ClCompile Include="src\DataModels\TreeItemBase.cpp" />
     <ClCompile Include="src\DataModels\TreeModelBase.cpp" />
+    <ClCompile Include="src\DockWidget\DockWidget.cpp" />
+    <ClCompile Include="src\DockWidget\DockWidgetObject.cpp" />
+    <ClCompile Include="src\DockWidget\DockWidgetScene.cpp" />
+    <ClCompile Include="src\DockWidget\DockWidgetSceneGraph.cpp" />
+    <ClCompile Include="src\DockWidget\DockWidgetSceneNode.cpp" />
     <ClCompile Include="src\External\qtcolorbutton.cpp" />
     <ClCompile Include="src\Frontend.cpp" />
     <ClCompile Include="src\FrontendMainWindow.cpp" />
@@ -625,6 +630,11 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build\GeneratedQtFiles\moc_%(Filename).cpp</Outputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../External/_Windows_x86_64/Qt/bin/moc.exe</AdditionalInputs>
     </CustomBuild>
+    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidget.h" />
+    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetObject.h" />
+    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetScene.h" />
+    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneGraph.h" />
+    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneNode.h" />
     <ClInclude Include="include\PLFrontendQt\Frontend.h" />
     <ClInclude Include="include\PLFrontendQt\FrontendMainWindow.h" />
     <ClInclude Include="include\PLFrontendQt\FrontendRenderWindow.h" />
