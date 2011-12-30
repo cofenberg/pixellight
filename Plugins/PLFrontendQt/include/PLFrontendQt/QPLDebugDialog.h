@@ -73,7 +73,19 @@ class PLFRONTENDQT_API QPLDebugDialog : public QWidget {
 	//[-------------------------------------------------------]
 	public:
 		explicit QPLDebugDialog(QWidget *parent = nullptr, Qt::WindowFlags f = 0);
-		void SetContext(QPLSceneContext *context);
+		
+		/**
+		*  @brief
+		*    Set scene context for which the information should be shown
+		*
+		*  @param[in] context
+		*    the scene context to be used
+		* 
+		*  @param[in] hideSceneStartNode
+		*    specifies if the start node of the scene should be hidden
+		*/
+		
+		void SetContext(QPLSceneContext *context, bool hideSceneStartNode = false);
 
 
 	//[-------------------------------------------------------]
@@ -101,6 +113,7 @@ class PLFRONTENDQT_API QPLDebugDialog : public QWidget {
 		DataModels::SceneGraphTreeModel	*graphModel;
 		DataModels::SceneNodeInfoModel	*nodeInfoModel;
 		PLCore::EventHandler<>			 EventHandlerSceneContextUpdate;
+		bool							 m_hideSceneStartNode;
 
 
 };

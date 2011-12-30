@@ -73,7 +73,18 @@ class PLFRONTENDQT_API SceneGraphTreeModel : public TreeModelBase {
 	//[-------------------------------------------------------]
 	public:
 		explicit SceneGraphTreeModel(QObject *parent = nullptr);
-		void SetStartNode(PLScene::SceneNode *nodeObj);
+		
+		/**
+		*  @brief
+		*    Set the start scene node for this model
+		*
+		*  @param[in] nodeObj
+		*    the start scene node
+		* 
+		*  @param[in] hideStartNode
+		*    specifies if the start node be hidden
+		*/
+		void SetStartNode(PLScene::SceneNode *nodeObj, bool hideStartNode = false);
 		PLScene::SceneNode *GetSceneNodeFromIndex(QModelIndex &index);
 		SceneGraphNodeTreeItemBase *GetSceneTreeItemFromIndex(QModelIndex &index);
 

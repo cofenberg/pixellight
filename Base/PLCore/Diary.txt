@@ -1,3 +1,9 @@
+>> 30.12.2011
+[SW]
+PLFrontendQt:
+- When setting the start SceneNode for the SceneGraphTreeModel the user can now specify if the start node should be hidden. The same parameter is also added to QPLDebugDialog::SetContext
+
+
 >> 29.12.2011
 [CO]
 - "Frontend": The "GetImpl()"-method needs to be public because it might be required to e.g. access the Qt frontend

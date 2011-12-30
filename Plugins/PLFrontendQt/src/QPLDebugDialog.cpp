@@ -47,7 +47,8 @@ QPLDebugDialog::QPLDebugDialog(QWidget *parent, Qt::WindowFlags f) : QWidget(par
 	ui(new Ui::DebugView),
 	graphModel(nullptr),
 	nodeInfoModel(nullptr),
-	EventHandlerSceneContextUpdate(&QPLDebugDialog::OnSceneContextUpdate, this)
+	EventHandlerSceneContextUpdate(&QPLDebugDialog::OnSceneContextUpdate, this),
+	m_hideSceneStartNode(false)
 {
 	ui->setupUi(this);
 
@@ -60,7 +61,7 @@ QPLDebugDialog::QPLDebugDialog(QWidget *parent, Qt::WindowFlags f) : QWidget(par
 	ui->sceneNodeTree->setItemDelegate(new SceneNodeInfoDelegate);
 }
 
-void QPLDebugDialog::SetContext(QPLSceneContext *context)
+void QPLDebugDialog::SetContext(QPLSceneContext *context, bool hideSceneStartNode)
 {
 	if (m_context) {
 		//m_context->GetSceneContext()->EventUpdate.Disconnect(&EventHandlerSceneContextUpdate);
@@ -68,6 +69,7 @@ void QPLDebugDialog::SetContext(QPLSceneContext *context)
 	}
 
 	m_context = context;
+	m_hideSceneStartNode = hideSceneStartNode;
 
 	if (m_context) {
 		connect(m_context, SIGNAL(ContextChanged()), this, SLOT(onSceneChanged()));
@@ -94,7 +96,7 @@ void QPLDebugDialog::OnSceneContextUpdate()
 
 void QPLDebugDialog::onSceneChanged()
 {
-	graphModel->SetStartNode(m_context->GetScene());
+	graphModel->SetStartNode(m_context->GetScene(), m_hideSceneStartNode);
 }
 
 void QPLDebugDialog::onBeginSceneChanged()
