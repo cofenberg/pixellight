@@ -27,21 +27,32 @@ SUITE(FibonacciHeap_Int_Int) {
 			FiboHeap.Add(2, 2);
 			FiboHeap.Add(3, 3);
 			FiboHeap.Add(4, 4);
-
-			TestFiboHeap.Add(3, 3);
-			TestFiboHeap.Add(2, 2);
-			TestFiboHeap.Add(1, 1);
-			TestFiboHeap.Add(0, 0);
 		}
 		~ConstructTestFibonacciHeap() {
 			/* some teardown */
 		}
 
 		// Container for testing
-		FibonacciHeap<int, int> FiboHeap, EmptyFiboHeap, TestFiboHeap;
+		FibonacciHeap<int, int> FiboHeap;
 	};
 
 	TEST_FIXTURE(ConstructTestFibonacciHeap, DerivedContainerFunctions) {
-		CheckDerivedHeapFunctions(FiboHeap);
+		CheckDerivedHeapFunctions<int,int>(FiboHeap);
+	}
+
+	TEST_FIXTURE(ConstructTestFibonacciHeap, Consolidate_and_Normalize) {
+		FiboHeap.Clear();
+		FiboHeap.Add(5, 5);
+		FiboHeap.Add(2, 2);
+		FiboHeap.Add(1, 1);
+
+		// should NOT be normalized
+		CHECK(!FiboHeap.IsNormalized());
+
+		// consolidate heap
+		CHECK(FiboHeap.Consolidate());
+
+		// should BE normalized now
+		CHECK(FiboHeap.IsNormalized());
 	}
 }
