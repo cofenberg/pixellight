@@ -32,7 +32,7 @@
 #include "PLFrontendQt/DataModels/SceneGraphNodeTreeItemBase.h"
 #include "PLFrontendQt/QPLSceneContext.h"
 #include "PLFrontendQt/QPLDebugDialog.h"
-#include "ui_QPLDebugDialog.h"	// Automatically created by Qt's uic -> Do not write "PLFrontendQt/ui_QPLDebugDialog.h" because the resulting location of the automatically created file is directly in the binary output directory
+#include "ui_QPLDebugDialog.h"	// Automatically created by Qt's uic (output directory is "build/GeneratedQtFiles" within the hand configured Visual Studio files, another directory when using CMake)
 
 
 //[-------------------------------------------------------]

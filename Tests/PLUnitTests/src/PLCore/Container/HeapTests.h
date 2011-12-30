@@ -4,62 +4,125 @@
 
 #include <UnitTest++/UnitTest++.h>
 #include <PLCore/Container/Heap.h>
-
-using namespace PLCore;
+#include <PLCore/Container/List.h>
 
 template <class KeyType, class ValType>
-void CheckDerivedHeapFunctions(Heap<KeyType, ValType>& map) {
-	// TODO: test functions!
-	/*
-	bool map.add(const KeyType &Key, const ValueType &Value);
-	bool GetTop(ValueType *pValue=nullptr, KeyType *pKey=nullptr);
-	bool ExtractTop(ValueType *pValue=nullptr, KeyType *pKey=nullptr);
-	*/
+void CheckDerivedHeapFunctions(PLCore::Heap<KeyType, ValType>& heap) {
+	// backup list to check order of elements
+	PLCore::List<ValType> lstElems;
+	
 	// isEmpty_and_Clear
 	{
-		map.Clear();
-		CHECK(map.IsEmpty());
-		CHECK_EQUAL(0U, map.GetNumOfElements());
+		heap.Clear();
+		CHECK(heap.IsEmpty());
+		CHECK_EQUAL(0U, heap.GetNumOfElements());
 
-		map.Add(1, 1);
-		CHECK(!map.IsEmpty());
-		CHECK_EQUAL(1U, map.GetNumOfElements());
+		heap.Add(1, 1);
+		CHECK(!heap.IsEmpty());
+		CHECK_EQUAL(1U, heap.GetNumOfElements());
+	}
+
+	// Iterator, empty heap
+	{
+		heap.Clear();
+
+		PLCore::Iterator<ValType> cIterator = heap.GetIterator();
+
+		CHECK(!cIterator.HasPrevious());
+		CHECK(!cIterator.HasNext());
+	}
+
+	// Iterator backwards, empty heap
+	{
+		PLCore::Iterator<ValType> cIterator = heap.GetEndIterator();
+
+		CHECK(!cIterator.HasPrevious());
+		CHECK(!cIterator.HasNext());
+	}
+
+	// Iterator, one element
+	{
+		heap.Add(1, 1);
+
+		PLCore::Iterator<ValType> cIterator = heap.GetIterator();
+
+		CHECK(!cIterator.HasPrevious());
+		CHECK(cIterator.HasNext());
+	}
+
+	// Iterator backwards, one element
+	{
+		PLCore::Iterator<ValType> cIterator = heap.GetEndIterator();
+
+		CHECK(cIterator.HasPrevious());
+		CHECK(!cIterator.HasNext());
 	}
 
 	// add
 	{
-		map.Clear();
-		CHECK(map.Add(0, 0));
-		CHECK(map.Add(1, 0));
-		CHECK(map.Add(2, 2));
-		CHECK(map.Add(2, 8));
-		CHECK(map.Add(3, 3));
+		heap.Clear();
+		CHECK(heap.Add(5, 0));
+		CHECK(heap.Add(2, 3));
+		CHECK(heap.Add(1, 4));
+		CHECK(heap.Add(4, 1));
+		CHECK(heap.Add(3, 2));
+		CHECK_EQUAL(5U, heap.GetNumOfElements());
+	}
+
+	// Iterator
+	{
+		PLCore::Iterator<ValType> cIterator = heap.GetIterator();
+		lstElems.Clear();
+
+		CHECK(!cIterator.HasPrevious());
+
+		// add all elements to our backuplist to check the order of the elements against the backward iterator
+		while (cIterator.HasNext())
+			lstElems.Add(++cIterator);
+
+		CHECK_EQUAL(5U, lstElems.GetNumOfElements());
+
+		CHECK(cIterator.HasPrevious());
+		CHECK(!cIterator.HasNext());
+	}
+
+	// Iterator backwards
+	{
+		PLCore::Iterator<ValType> cIterator = heap.GetEndIterator();
+
+		CHECK(!cIterator.HasNext());
+
+		// check the order of the elements in lstElems against the backward iterator
+		for (int i=lstElems.GetNumOfElements()-1; cIterator.HasPrevious(); i--)
+			CHECK(lstElems[i] == --cIterator);
+
+		CHECK_EQUAL(lstElems.GetNumOfElements(), heap.GetNumOfElements());
+
+		CHECK(!cIterator.HasPrevious());
+		CHECK(cIterator.HasNext());	
 	}
 
 	// GetTop
 	{
 		int key, val;
-		CHECK(map.GetTop(&val, &key));
-		CHECK_EQUAL(0, key);
-		CHECK_EQUAL(0, val);
-		CHECK_EQUAL(5U, map.GetNumOfElements());
+		CHECK(heap.GetTop(&val, &key));
+		CHECK_EQUAL(1, key);
+		CHECK_EQUAL(4, val);
+		CHECK_EQUAL(5U, heap.GetNumOfElements());
 	}
 
 	// ExtractTop
 	{
 		int key, val;
-		CHECK(map.ExtractTop(&val, &key));
-		CHECK_EQUAL(0, key);
-		CHECK_EQUAL(0, val);
-		CHECK_EQUAL(4U, map.GetNumOfElements());
+		CHECK(heap.ExtractTop(&val, &key));
+		CHECK_EQUAL(1, key);
+		CHECK_EQUAL(4, val);
+		CHECK_EQUAL(4U, heap.GetNumOfElements());
 
 		// check next set
-		CHECK(map.GetTop(&val, &key));
-		CHECK_EQUAL(1, key);
-		CHECK_EQUAL(0, val);
+		CHECK(heap.GetTop(&val, &key));
+		CHECK_EQUAL(2, key);
+		CHECK_EQUAL(3, val);
 	}
-
-
-	// TODO: test iterator!
 }
 #endif // __HEAPTESTS_H__

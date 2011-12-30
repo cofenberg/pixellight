@@ -2,9 +2,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <UnitTest++/UnitTest++.h>
-#include <PLCore/Container/BinominalHeap.h>
+#include <PLCore/Container/SimpleMap.h>
 
-#include "HeapTests.h"
+#include "MapTests.h"
 
 using namespace PLCore;
 
@@ -12,31 +12,31 @@ using namespace PLCore;
 * Naming Convention for SUITE:
 * CLASSNAME
 */
-SUITE(BinominalHeap_Int_Int) {
+SUITE(SimpleMap_Int_Int) {
 	/*
 	* Naming Convention for METHOD:
 	* METHODNAME_SCENARIO
 	*/
 
 	// Our List Test Fixture :)
-	struct ConstructTestBinominalHeap
+	struct ConstructTestSimpleMap
 	{
-		ConstructTestBinominalHeap() { 
+		ConstructTestSimpleMap() { 
 			/* some setup */
-			biHeap.Add(1, 1);
-			biHeap.Add(2, 2);
-			biHeap.Add(3, 3);
-			biHeap.Add(4, 4);
+			SimMap.Add(1, 1);
+			SimMap.Add(2, 2);
+			SimMap.Add(3, 3);
+			SimMap.Add(4, 4);
 		}
-		~ConstructTestBinominalHeap() {
+		~ConstructTestSimpleMap() {
 			/* some teardown */
 		}
 
 		// Container for testing
-		BinominalHeap<int, int> biHeap;
+		SimpleMap<int, int> SimMap;
 	};
 
-	TEST_FIXTURE(ConstructTestBinominalHeap, DerivedContainerFunctions) {
-		CheckDerivedHeapFunctions<int,int>(biHeap);
+	TEST_FIXTURE(ConstructTestSimpleMap, DerivedMapFunctions) {
+		CheckDerivedMapFunctions<int,int>(SimMap);
 	}
 }

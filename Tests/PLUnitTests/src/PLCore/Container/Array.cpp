@@ -3,7 +3,6 @@
 //[-------------------------------------------------------]
 #include <UnitTest++/UnitTest++.h>
 #include <PLCore/Container/Array.h>
-#include <PLCore/Container/Container.h>
 
 #include "ContainerTests.h"
 
@@ -29,11 +28,6 @@ SUITE(Array_PrimitiveInt) {
 			Arr.Add(3);
 			Arr.Add(4);
 
-			TestArr.Add(3);
-			TestArr.Add(2);
-			TestArr.Add(1);
-			TestArr.Add(0);
-
 			HelperArr.Add(1);
 			HelperArr.Add(3);
 			HelperArr.Add(6);
@@ -44,11 +38,11 @@ SUITE(Array_PrimitiveInt) {
 		}
 
 		// Container for testing
-		Array<int> EmptyArr, Arr, TestArr, HelperArr;
+		Array<int> Arr, HelperArr;
 	};
 
 	TEST_FIXTURE(ConstructTestArray, DerivedContainerFunctions) {
-		CheckDerivedContainerFunctions(Arr);
+		CheckDerivedContainerFunctions<int>(Arr);
 	}
 
 	TEST_FIXTURE(ConstructTestArray, SetResizeCount_Zero) {
@@ -216,6 +210,7 @@ SUITE(Array_PrimitiveInt) {
 		// additional fields have to be initialized with 0
 		CHECK_EQUAL(0, Arr.Get(19));
 	}
+
 	TEST_FIXTURE(ConstructTestArray, Resize_ToSmallerArray) {
 		// testcases => resize array to smaller size
 
@@ -248,7 +243,7 @@ SUITE(Array_PrimitiveInt) {
 		CHECK_EQUAL(3, Arr.Get(1));
 	}
 
-	// additional test for derived virtual functions and specific implementation of Array
+	// additional tests for derived virutal functions and specific implementation of Array
 	TEST_FIXTURE(ConstructTestArray, Add_NoPassedElement_NoResize) {
 		Arr.Clear();
 		Arr.SetResizeCount(0U);

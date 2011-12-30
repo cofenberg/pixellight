@@ -31,13 +31,23 @@
     <ClCompile Include="src\PLCore\Container\Array.cpp" />
     <ClCompile Include="src\PLCore\Container\BinaryHeap.cpp" />
     <ClCompile Include="src\PLCore\Container\BinominalHeap.cpp" />
-    <ClCompile Include="src\PLCore\Container\FastPool.cpp" />
     <ClCompile Include="src\PLCore\Container\FibonacciHeap.cpp" />
+    <ClCompile Include="src\PLCore\Container\HashMap.cpp" />
     <ClCompile Include="src\PLCore\Container\List.cpp" />
     <ClCompile Include="src\PLCore\Container\ContainerTests.h" />
     <ClCompile Include="src\PLCore\Container\Pool.cpp" />
+    <ClCompile Include="src\PLCore\Container\SimpleMap.cpp" />
     <ClCompile Include="src\PLCore\String.cpp" />
+    <ClCompile Include="src\PLMath\EulerAngles.cpp" />
+    <ClCompile Include="src\PLMath\Graph.cpp" />
+    <ClCompile Include="src\PLMath\GraphPath.cpp" />
+    <ClCompile Include="src\PLMath\Matrix3x3.cpp" />
+    <ClCompile Include="src\PLMath\Matrix3x4.cpp" />
+    <ClCompile Include="src\PLMath\Matrix4x4.cpp" />
+    <ClCompile Include="src\PLMath\Quaternion.cpp" />
+    <ClCompile Include="src\PLMath\Vector2.cpp" />
     <ClCompile Include="src\PLMath\Vector3.cpp" />
+    <ClCompile Include="src\PLMath\Vector4.cpp" />
     <ClCompile Include="src\UnitTest++AddIns\MyMobileTestReporter.cpp" />
     <ClCompile Include="src\UnitTest++AddIns\MyTestReporter.cpp" />
     <ClCompile Include="src\UnitTest++AddIns\RunAllTests.cpp" />
@@ -128,7 +138,7 @@
     <ClCompile>
       <AdditionalOptions>/D "_CRT_SECURE_NO_DEPRECATE" %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>include/;../../External/_Windows_x86_32/UnitTest++/include/;../../Base/PLCore/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../External/_Windows_x86_32/UnitTest++/include/;../../Base/PLCore/include/;../../Base/PLMath/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>Sync</ExceptionHandling>
@@ -143,7 +153,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>UnitTest++.lib;PLCoreD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>UnitTest++.lib;PLCoreD.lib;PLMathD.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../External/_Windows_x86_32/UnitTest++/lib/;../../Bin/Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
@@ -201,7 +211,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>include/;../../External/_Windows_x86_32/UnitTest++/include/;../../Base/PLCore/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../../External/_Windows_x86_32/UnitTest++/include/;../../Base/PLCore/include/;../../Base/PLMath/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -221,7 +231,7 @@
       <FloatingPointExceptions>false</FloatingPointExceptions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>UnitTest++.lib;PLCore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>UnitTest++.lib;PLCore.lib;PLMath.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../External/_Windows_x86_32/UnitTest++/lib/;../../Bin/Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>

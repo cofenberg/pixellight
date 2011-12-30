@@ -40,9 +40,6 @@
     <ClCompile Include="src\PLCore\Container\Pool.cpp">
       <Filter>PLCore\Container\Container</Filter>
     </ClCompile>
-    <ClCompile Include="src\PLCore\Container\FastPool.cpp">
-      <Filter>PLCore\Container\Container</Filter>
-    </ClCompile>
     <ClCompile Include="src\PLCore\Container\BinaryHeap.cpp">
       <Filter>PLCore\Container\Heap</Filter>
     </ClCompile>
@@ -51,6 +48,39 @@
     </ClCompile>
     <ClCompile Include="src\PLCore\Container\FibonacciHeap.cpp">
       <Filter>PLCore\Container\Heap</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLMath\EulerAngles.cpp">
+      <Filter>PLMath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLMath\Vector4.cpp">
+      <Filter>PLMath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLMath\Graph.cpp">
+      <Filter>PLMath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLMath\GraphPath.cpp">
+      <Filter>PLMath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLMath\Matrix3x3.cpp">
+      <Filter>PLMath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLMath\Matrix3x4.cpp">
+      <Filter>PLMath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLMath\Matrix4x4.cpp">
+      <Filter>PLMath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLMath\Quaternion.cpp">
+      <Filter>PLMath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLMath\Vector2.cpp">
+      <Filter>PLMath</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCore\Container\HashMap.cpp">
+      <Filter>PLCore\Container\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCore\Container\SimpleMap.cpp">
+      <Filter>PLCore\Container\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

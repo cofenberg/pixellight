@@ -3,7 +3,6 @@
 //[-------------------------------------------------------]
 #include <UnitTest++/UnitTest++.h>
 #include <PLCore/Container/List.h>
-#include <PLCore/Container/Container.h>
 
 #include "ContainerTests.h"
 
@@ -28,21 +27,18 @@ SUITE(List_PrimitiveInt) {
 			Lst.Add(2);
 			Lst.Add(3);
 			Lst.Add(4);
-
-			TestLst.Add(3);
-			TestLst.Add(2);
-			TestLst.Add(1);
-			TestLst.Add(0);
 		}
 		~ConstructTestList() {
 			/* some teardown */
 		}
 
 		// Container for testing
-		List<int> Lst, EmptyLst, TestLst;
+		List<int> Lst;
 	};
 
 	TEST_FIXTURE(ConstructTestList, DerivedContainerFunctions) {
-		CheckDerivedContainerFunctions(Lst);
+		CheckDerivedContainerFunctions<int>(Lst);
 	}
+
+	// no more tests needed, i think it's all covered by DerivedContainerFunction-Test
 }

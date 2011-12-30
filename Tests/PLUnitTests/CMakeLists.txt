@@ -31,18 +31,36 @@ define_project(PLUnitTests NOSUFFIX)
 add_sources(
 	src/UnitTests.cpp
 	# PLCore
-	src/PLCore/String.cpp
+	# Application
 	src/PLCore/Application/ApplicationContext.cpp
 	src/PLCore/Application/CoreApplication.cpp
+	# Container
 	src/PLCore/Container/Array.cpp
 	src/PLCore/Container/ContainerTests.h
-	src/PLCore/Container/FastPool.cpp
-	src/PLCore/Container/HeapTests.h
 	src/PLCore/Container/List.cpp
-	src/PLCore/Container/MapTests.h
 	src/PLCore/Container/Pool.cpp
+	# Heap
+	src/PLCore/Container/BinaryHeap.cpp
+	src/PLCore/Container/BinominalHeap.cpp
+	src/PLCore/Container/FibonacciHeap.cpp
+	src/PLCore/Container/HeapTests.h
+	# Map
+	src/PLCore/Container/HashMap.cpp
+	src/PLCore/Container/MapTests.h
+	src/PLCore/Container/SimpleMap.cpp
 	# PLMath
+	src/PLMath/EulerAngles.cpp
+	src/PLMath/Graph.cpp
+	src/PLMath/GraphPath.cpp
+	src/PLMath/Matrix3x3.cpp
+	src/PLMath/Matrix3x4.cpp
+	src/PLMath/Matrix4x4.cpp
+	src/PLMath/Quaternion.cpp
+	src/PLMath/Vector2.cpp
 	src/PLMath/Vector3.cpp
+	src/PLMath/Vector4.cpp
+	# general
+	src/PLCore/String.cpp
 	# UnitTest++ AddIns
 	src/UnitTest++AddIns/MyTestReporter.cpp
 	src/UnitTest++AddIns/MyMobileTestReporter.cpp
@@ -66,6 +84,7 @@ add_include_directories(
 	include
 	${UNITTESTPP_INCLUDE_DIRS}
 	${CMAKE_SOURCE_DIR}/Base/PLCore/include
+	${CMAKE_SOURCE_DIR}/Base/PLMath/include
 )
 
 ##################################################
@@ -81,6 +100,7 @@ add_link_directories(
 add_libs(
 	${UNITTESTPP_LIBRARIES}
 	PLCore
+	PLMath
 )
 
 ##################################################
