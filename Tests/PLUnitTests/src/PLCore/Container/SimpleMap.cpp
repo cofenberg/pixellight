@@ -27,18 +27,13 @@ SUITE(SimpleMap_Int_Int) {
 			SimMap.Add(2, 2);
 			SimMap.Add(3, 3);
 			SimMap.Add(4, 4);
-
-			TestSimMap.Add(3, 3);
-			TestSimMap.Add(2, 2);
-			TestSimMap.Add(1, 1);
-			TestSimMap.Add(0, 0);
 		}
 		~ConstructTestSimpleMap() {
 			/* some teardown */
 		}
 
 		// Container for testing
-		SimpleMap<int, int> SimMap, EmptySimMap, TestSimMap;
+		SimpleMap<int, int> SimMap;
 	};
 
 	TEST_FIXTURE(ConstructTestSimpleMap, DerivedMapFunctions) {

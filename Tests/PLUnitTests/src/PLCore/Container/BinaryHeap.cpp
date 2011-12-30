@@ -27,21 +27,16 @@ SUITE(BinaryHeap_Int_Int) {
 			byHeap.Add(2, 2);
 			byHeap.Add(3, 3);
 			byHeap.Add(4, 4);
-
-			TestbyHeap.Add(3, 3);
-			TestbyHeap.Add(2, 2);
-			TestbyHeap.Add(1, 1);
-			TestbyHeap.Add(0, 0);
 		}
 		~ConstructTestBinaryHeap() {
 			/* some teardown */
 		}
 
 		// Container for testing
-		BinaryHeap<int, int> byHeap, EmptybyHeap, TestbyHeap;
+		BinaryHeap<int, int> byHeap;
 	};
 
 	TEST_FIXTURE(ConstructTestBinaryHeap, DerivedContainerFunctions) {
-		CheckDerivedHeapFunctions(byHeap);
+		CheckDerivedHeapFunctions<int,int>(byHeap);
 	}
 }

@@ -27,21 +27,16 @@ SUITE(BinominalHeap_Int_Int) {
 			biHeap.Add(2, 2);
 			biHeap.Add(3, 3);
 			biHeap.Add(4, 4);
-
-			TestbiHeap.Add(3, 3);
-			TestbiHeap.Add(2, 2);
-			TestbiHeap.Add(1, 1);
-			TestbiHeap.Add(0, 0);
 		}
 		~ConstructTestBinominalHeap() {
 			/* some teardown */
 		}
 
 		// Container for testing
-		BinominalHeap<int, int> biHeap, EmptybiHeap, TestbiHeap;
+		BinominalHeap<int, int> biHeap;
 	};
 
 	TEST_FIXTURE(ConstructTestBinominalHeap, DerivedContainerFunctions) {
-		CheckDerivedHeapFunctions(biHeap);
+		CheckDerivedHeapFunctions<int,int>(biHeap);
 	}
 }

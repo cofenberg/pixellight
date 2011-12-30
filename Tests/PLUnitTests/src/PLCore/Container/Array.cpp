@@ -28,11 +28,6 @@ SUITE(Array_PrimitiveInt) {
 			Arr.Add(3);
 			Arr.Add(4);
 
-			TestArr.Add(3);
-			TestArr.Add(2);
-			TestArr.Add(1);
-			TestArr.Add(0);
-
 			HelperArr.Add(1);
 			HelperArr.Add(3);
 			HelperArr.Add(6);
@@ -43,7 +38,7 @@ SUITE(Array_PrimitiveInt) {
 		}
 
 		// Container for testing
-		Array<int> EmptyArr, Arr, TestArr, HelperArr;
+		Array<int> Arr, HelperArr;
 	};
 
 	TEST_FIXTURE(ConstructTestArray, DerivedContainerFunctions) {

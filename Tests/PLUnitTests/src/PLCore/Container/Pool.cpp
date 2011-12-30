@@ -27,18 +27,13 @@ SUITE(Pool_PrimitiveInt) {
 			cPool.Add(2);
 			cPool.Add(3);
 			cPool.Add(4);
-
-			TestPool.Add(3);
-			TestPool.Add(2);
-			TestPool.Add(1);
-			TestPool.Add(0);
 		}
 		~ConstructTestPool() {
 			/* some teardown */
 		}
 
 		// Container for testing
-		Pool<int> cPool, EmptyPool, TestPool;
+		Pool<int> cPool;
 	};
 
 	TEST_FIXTURE(ConstructTestPool, DerivedContainerFunctions) {
