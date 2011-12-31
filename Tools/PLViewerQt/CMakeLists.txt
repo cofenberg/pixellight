@@ -40,7 +40,7 @@ QT4_WRAP_CPP(MOC_SRCS ${INC_FILES})
 ## Source files
 ##################################################
 add_sources(
-	src/Application.cpp
+	src/ApplicationQt.cpp
 	src/Main.cpp
 	src/Gui.cpp
 	../PLViewer/src/Application.cpp	# Reused
