@@ -1,3 +1,16 @@
+>> 31.12.2011
+[CO]
+- Removed "PLViewerStandalone"-variation, while still maintaining the feature it introduced. This means that in the future I also no longer have to explain what
+  "PLViewerStandalone" is for (see diary entry "21.08.2010"). "PLViewerStandalone" was just "PLViewer" compiled with a set "STANDALONE" preprocessor definition
+  resulting that the log and configuration file are in the same directory as this executable instead of within the users directory were applications nowadays have
+  to put those stuff into.
+  -> In case the file "PLViewer.cfg" is in the same directory as the executable, or within one directory "above" (e.g. because there are "x86" and "x64" versions)
+     run this application in "standalone-mode"
+  -> When shipping something by using PLViewer, experience tells that there's always such a file provided to set the desired settings, so, this is no drawback
+     and this enables us to provide just one version of this executable
+
+
+
 >> 29.12.2011
 [CO]
 - Started "PLViewerQt"-project with the goal to provide a more sophisticated generic PixelLight viewer application. PLViewer will not be removed because a

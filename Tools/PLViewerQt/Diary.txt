@@ -1,3 +1,9 @@
+>> 31.12.2011
+[CO]
+- Removed "PLViewerQtStandalone"-variation, see "PLViewer" diary for details
+
+
+
 >> 30.12.2011
 [CO]
 - Added a menu bar entry which makes it possible to select the currently used camera

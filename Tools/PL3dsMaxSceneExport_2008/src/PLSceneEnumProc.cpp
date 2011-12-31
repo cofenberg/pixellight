@@ -489,15 +489,11 @@ void PLSceneEnumProc::Publish(const std::string &sTargetDirectory) const
 			}
 		}
 
-		// Copy 'PLViewerStandalone.exe'
+		// Copy 'PLViewer.exe'
 		std::string sViewer = PLTools::GetPLViewerFilename();
 		if (sViewer.length()) {
-			// Replace "PLViewer.exe" through "PLViewerStandalone.exe"
-			sViewer.erase(sViewer.length() - strlen("PLViewer.exe"));
-			sViewer.append("PLViewerStandalone.exe");
-
 			// Copy
-			CopyFile(sViewer.c_str(), (sTargetDirectory+"\\"+"PLViewerStandalone.exe").c_str(), false);
+			CopyFile(sViewer.c_str(), (sTargetDirectory+"\\"+"PLViewer.exe").c_str(), false);
 		}
 
 		{ // Copy VC2010 redistributable files
@@ -514,8 +510,8 @@ void PLSceneEnumProc::Publish(const std::string &sTargetDirectory) const
 			}
 		}
 
-		{ // Create the 'PLViewerStandalone.cfg' file
-			const std::string sAbsFilename = sTargetDirectory + "\\..\\" + "PLViewerStandalone.cfg";
+		{ // Create the 'PLViewer.cfg' file
+			const std::string sAbsFilename = sTargetDirectory + "\\..\\" + "PLViewer.cfg";
 
 			// Create XML document
 			XmlDocument cDocument;

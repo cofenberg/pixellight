@@ -24,10 +24,11 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
-#include <PLCore/File/Url.h>
+#include <PLCore/File/File.h>
 #include <PLCore/System/System.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include <PLCore/Script/ScriptManager.h>
+#include <PLCore/Frontend/FrontendContext.h>
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Button.h>
 #include <PLScene/Scene/SceneContainer.h>
@@ -71,13 +72,22 @@ Application::Application(Frontend &cFrontend) : ScriptApplication(cFrontend),
 	SlotOnControl(this),
 	m_pGui(nullptr)
 {
-	// Set no multiuser if standalone application
-	#ifdef STANDALONE
-		SetMultiUser(false);
-		SetName("PLViewerQtStandalone");
-	#else
-		SetName("PLViewerQt");
-	#endif
+	// Set application name
+	SetName("PLViewerQt");
+
+	{ // Set no multi-user if standalone application
+		// -> In case the file "PLViewer.cfg" is in the same directory as the executable, or within one directory "above" (e.g. because there are "x86" and "x64" versions)
+		//    run this application in "standalone-mode"
+		// -> When shipping something by using PLViewer, experience tells that there's always such a file provided to set the desired settings, so, this is no drawback
+		//    and this enables us to provide just one version of this executable
+		const String sDirectory = cFrontend.GetContext().GetAppDirectory() + '/';
+		const String sFilename  = GetName() + ".cfg";
+		if (File(sDirectory + sFilename).IsFile() ||															// Windows example: "C:\MyApplication\PLViewer.cfg"
+			File(sDirectory + System::GetInstance()->GetPlatformArchitecture() + '/' + sFilename).IsFile()) {	// Windows example: "C:\MyApplication\x86\PLViewer.cfg"
+			// The configuration file exists, so run this application in standalone mode (e.g. log and configuration will not be written into the user directory)
+			SetMultiUser(false);
+		}
+	}
 
 	// This application accepts all the standard parameters that are defined in the application
 	// base class (such as --help etc.). The last parameter however is the filename to load, so add that.
