@@ -157,13 +157,11 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 
 			if (bRet) {
 				PLGraphics::ImageBuffer *buf = cImage.GetBuffer();
-				if (buf->HasCompressedData())
-					buf->Decompress();
 
-				if (buf->HasData()) {
+				if (buf->HasAnyData()) {
 					const PLCore::uint8 *data = buf->GetData();
 					QImage img1((const uchar*)data, buf->GetSize().width, buf->GetSize().height,QImage::Format_ARGB32);
-					return img1.scaled(24,24, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+					return img1.scaled(24,24, Qt::KeepAspectRatio, Qt::SmoothTransformation).rgbSwapped();
 				}
 			}
 			return img;

@@ -1,3 +1,12 @@
+>> 31.12.2011
+[CO]
+PLFrontendQt:
+- "DataModels::SceneGraphTreeModel::GetQImage()": For some reason, "QImage" appears to be BGR instead of RGB although the documentation states otherwise
+  (maybe a little/big endian thing?). Double checked "PLGraphics::Image" to ensure it's no bug, and I can't imagine that it's a Qt bug either. Now the icons
+  look correct.
+
+
+
 >> 30.12.2011
 [CO]
 PLFrontendQt:
