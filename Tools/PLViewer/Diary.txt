@@ -8,13 +8,54 @@
      run this application in "standalone-mode"
   -> When shipping something by using PLViewer, experience tells that there's always such a file provided to set the desired settings, so, this is no drawback
      and this enables us to provide just one version of this executable
+PLViewerQt:
+- Removed "PLViewerQtStandalone"-variation
+- "PLViewerQt" is now reusing as much as possible from "PLViewer" and is "just" adding a lightweight GUI-layer
+
+
+
+>> 30.12.2011
+[CO]
+PLViewerQt:
+- Added a menu bar entry which makes it possible to select the currently used camera
+- Added a menu bar entry which makes it possible to create new dockable widgets. This is currently still under construction, but shows that the RTTI dock
+  widget concept is working quite well. See PLFrontendQt entry within the PLCore diary for details.
 
 
 
 >> 29.12.2011
 [CO]
 - Started "PLViewerQt"-project with the goal to provide a more sophisticated generic PixelLight viewer application. PLViewer will not be removed because a
-  minimalistic PixelLight viewer supporting scenes and scripts is still useful. For more details please have a look into the "PLViewerQt"-project diary.
+  minimalistic PixelLight viewer supporting scenes and scripts is still useful.
+PLViewerQt:
+- Started "PLViewerQt"-project with the goal to provide a more sophisticated generic PixelLight viewer application. PLViewer will not be removed because a
+  minimalistic PixelLight viewer supporting scenes and scripts is still useful.
+  Since the first public release of PixelLight there are the following points on the roadmap at http://www.pixellight.org/site/index.php/page/20.html
+  - "Make PLViewer a more universal viewer also capable of viewing all kind of data (e.g. texture and meshes)"
+  - "Create a nice UI for PLViewer (ingame GUI)"
+  While those are quite important points, no one realized them... because this will be useful for my Master Thesis I'll now start the project instead of
+  writing an own GUI for my Master Thesis. Over a year ago it was planned to create the GUI by using PLGui, which would have been cool... sadly since then
+  no one had worked on PLGui. Although it has a really good design, PLGui is currently in no shape to be used in a more GUI intensive project without
+  spending days in just implementing general GUI features. This approach was taken in some other projects, the results were good, but it was time consuming
+  to archive the result. Right now I can't afford to spend days on just working on reimplementing GUI features e.g. Qt offers, and still having only poor and
+  buggy result and issues across multiple platforms.
+  So, the only reasonable option left appears to be using Qt for a more sophisticated generic PixelLight viewer application. Stephan Wezel already
+  added "PLFrontendQt" which is a Qt<->PL adapter project. This project already offers several generic GUI elements like an RTTI inspector. I'am going to
+  use "PLFrontendQt" for "PLViewerQt" and put everything reasonable in "PLFrontendQt" so that "PLViewerQt" can be as compact as possible, while still offering
+  advanced features.
+  On "10.08.2011" Stephan and I started "PLEditor" because there were questions from the community when such an editor will come. Goal was to make a start and
+  motivate other people to jump onto the editor train. While people are interested in such a tool, it appears that no one is interested in helping to realize
+  it. Stephan and I can't create a descend editor on our own while working on such a mammoth project as PixelLight itself. There are now some new PixelLight team
+  members, but everybody has only a limited amount of time and they are still in the processes of getting experienced with the technology. When "PLViewerQt" is
+  up and running, maybe it will show other persons how cool such an editor would be and that it's nothing overcomplicated from a programmers point of view... a
+  lot of PixelLight implementation details are far more complex.
+  Enough project opening speech. The goal is simple: Provide a generic PixelLight viewer with rudimentary edit features via GUI so it's for example possible to
+  manipulate RTTI attributes of a scene node and be able to see the effect on the screen at once. Goal isn't to create a fully featured editor - that's what
+  the editor project is for. I'am trying to keep the "core" of this viewer as close possible the viewer not using Qt to make it possible to see the Qt relevant part
+  at once. Meaning I'am e.g. not using "main" etc. as usually done within Qt based applications.
+- Started the GUI implementation
+- Implemented "Gui::QtSlotLoad()" by using "PLFrontendQt::ConstructFileFilter" to automatically fill the file filters with the supported file formats
+- Ensured that the new "PLViewerQt" is compiling and running under Linux as well
 
 
 

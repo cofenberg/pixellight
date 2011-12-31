@@ -8,14 +8,11 @@
     <Filter Include="GeneratedQtFiles">
       <UniqueIdentifier>{65ee1015-e8fc-44d9-bcd4-274af94da1c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="PLViewer">
+      <UniqueIdentifier>{5d1a3f2d-b198-4e3e-bd81-876c50fee476}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Application.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Config.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -25,27 +22,42 @@
     <ClCompile Include="build\GeneratedQtFiles\moc_Gui.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
+    <ClCompile Include="src\ApplicationQt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PLViewer\src\Config.cpp">
+      <Filter>PLViewer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PLViewer\src\Application.cpp">
+      <Filter>PLViewer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Application.h">
+    <ClInclude Include="src\ApplicationQt.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Config.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="..\PLViewer\src\Config.h">
+      <Filter>PLViewer</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="..\PLViewer\src\Application.h">
+      <Filter>PLViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PLViewer\resource.h">
+      <Filter>PLViewer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
-    <None Include="..\Diary.txt" />
-    <None Include="..\..\PixelLight\PL.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="PLViewerQt.rc" />
+    <None Include="..\PLViewer\Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="src\Gui.h">
       <Filter>Source Files</Filter>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\PLViewer\PLViewer.rc">
+      <Filter>PLViewer</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

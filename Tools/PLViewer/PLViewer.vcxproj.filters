@@ -29,7 +29,6 @@
   <ItemGroup>
     <None Include="CMakeLists.txt" />
     <None Include="..\Diary.txt" />
-    <None Include="..\..\PixelLight\PL.ico" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="PLViewer.rc" />

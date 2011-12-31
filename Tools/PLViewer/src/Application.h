@@ -100,9 +100,9 @@ class Application : public PLEngine::ScriptApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		/**
 		*  @brief
 		*    Called when a control event has occurred
@@ -123,9 +123,9 @@ class Application : public PLEngine::ScriptApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLCore::CoreApplication functions     ]
+	//[ Protected virtual PLCore::CoreApplication functions   ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		virtual void OnInitLog() override;
 		virtual void OnInit() override;
 

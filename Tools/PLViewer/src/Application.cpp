@@ -70,18 +70,14 @@ const String Application::DefaultFilename = "";
 Application::Application(Frontend &cFrontend) : ScriptApplication(cFrontend),
 	SlotOnControl(this)
 {
-	// Set application name
-	SetName("PLViewer");
-
 	{ // Set no multi-user if standalone application
 		// -> In case the file "PLViewer.cfg" is in the same directory as the executable, or within one directory "above" (e.g. because there are "x86" and "x64" versions)
 		//    run this application in "standalone-mode"
 		// -> When shipping something by using PLViewer, experience tells that there's always such a file provided to set the desired settings, so, this is no drawback
 		//    and this enables us to provide just one version of this executable
 		const String sDirectory = cFrontend.GetContext().GetAppDirectory() + '/';
-		const String sFilename  = GetName() + ".cfg";
-		if (File(sDirectory + sFilename).IsFile() ||															// Windows example: "C:\MyApplication\PLViewer.cfg"
-			File(sDirectory + System::GetInstance()->GetPlatformArchitecture() + '/' + sFilename).IsFile()) {	// Windows example: "C:\MyApplication\x86\PLViewer.cfg"
+		if (File(sDirectory + GetConfigName()).IsFile() ||															// Windows example: "C:\MyApplication\PLViewer.cfg"
+			File(sDirectory + System::GetInstance()->GetPlatformArchitecture() + '/' + GetConfigName()).IsFile()) {	// Windows example: "C:\MyApplication\x86\PLViewer.cfg"
 			// The configuration file exists, so run this application in standalone mode (e.g. log and configuration will not be written into the user directory)
 			SetMultiUser(false);
 		}
@@ -164,7 +160,7 @@ bool Application::LoadResource(const String &sFilename)
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
 *  @brief
@@ -203,7 +199,7 @@ void Application::SetStateText(const String &sText)
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLCore::CoreApplication functions     ]
+//[ Protected virtual PLCore::CoreApplication functions   ]
 //[-------------------------------------------------------]
 void Application::OnInitLog()
 {
