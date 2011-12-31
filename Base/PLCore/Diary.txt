@@ -6,6 +6,16 @@ PLFrontendQt:
   look correct.
 - Added "DockWidgetSceneRenderer"
 - "DockWidget": Delete the dock widget instead of hiding it when someone is closing it
+- "FrontendMainWindow::mousePressEvent(QMouseEvent *)": [HACK] As soon as there's a Qt dock widget there are focus issues?
+  -> Central widget has the focus, click in dock widget, click back in central widget and no focus change?
+     Even when destroying the dock widget the focus is now completely messed up?
+  -> When adding "setFocus()", all those issues are gone... but why is there such an issue in the first
+     place? I was unable to find anything in the Qt documentation and other approaches didn't work either. :/
+  -> Spend some hours in trying to figure out what's going on, but I finally have to go on and so this current solution must do the job until someone else has
+     a better solution or an explanation for this behaviour. Can be tested in "PLViewerQt".
+- Another funny Qt dock widget behaviour: Central widget has the focus, moving the mouse to the docked dock widget and dragging it out so that it is floating and
+  while doing so the central widget has still the focus, when stopping the action the focus jumps to the dock widget. Why hasn't the dock widget the focus at
+  once when clicking with the mouse onto it in order to start the floating step? I'am starting to remember why I don't like to work with GUI stuff. :/
 
 
 

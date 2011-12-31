@@ -137,6 +137,16 @@ void FrontendMainWindow::timerEvent(QTimerEvent *pQTimerEvent)
 //[-------------------------------------------------------]
 //[ Protected virtual QWidget functions                   ]
 //[-------------------------------------------------------]
+void FrontendMainWindow::mousePressEvent(QMouseEvent *)
+{
+	// [HACK] As soon as there's a Qt dock widget there are focus issues?
+	// -> Central widget has the focus, click in dock widget, click back in central widget and no focus change?
+	//    Even when destroying the dock widget the focus is now completely messed up?
+	// -> When adding this single line, all those issues are gone... but why is there such an issue in the first
+	//    place? I was unable to find anything in the Qt documentation and other approaches didn't work either. :/
+	setFocus();
+}
+
 void FrontendMainWindow::keyPressEvent(QKeyEvent *pQKeyEvent)
 {
 	// Is it allowed to toggle the fullscreen mode using hotkeys? If so, toggle fullscreen right now? (Alt-Return or AltGr-Return)
