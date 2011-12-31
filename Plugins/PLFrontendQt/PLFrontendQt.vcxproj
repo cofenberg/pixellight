@@ -309,6 +309,7 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
     <ClCompile Include="src\DockWidget\DockWidgetScene.cpp" />
     <ClCompile Include="src\DockWidget\DockWidgetSceneGraph.cpp" />
     <ClCompile Include="src\DockWidget\DockWidgetSceneNode.cpp" />
+    <ClCompile Include="src\DockWidget\DockWidgetSceneRenderer.cpp" />
     <ClCompile Include="src\External\qtcolorbutton.cpp" />
     <ClCompile Include="src\Frontend.cpp" />
     <ClCompile Include="src\FrontendMainWindow.cpp" />
@@ -635,6 +636,7 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetScene.h" />
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneGraph.h" />
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneNode.h" />
+    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneRenderer.h" />
     <ClInclude Include="include\PLFrontendQt\Frontend.h" />
     <ClInclude Include="include\PLFrontendQt\FrontendMainWindow.h" />
     <ClInclude Include="include\PLFrontendQt\FrontendRenderWindow.h" />

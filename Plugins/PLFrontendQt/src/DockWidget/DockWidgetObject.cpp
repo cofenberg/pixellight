@@ -28,8 +28,8 @@
 #include <QtGui/qmainwindow.h>
 #include <PLCore/Base/Class.h>
 #include <PLCore/Application/CoreApplication.h>
-#include <PLFrontendQt/QtStringAdapter.h>
-#include <PLFrontendQt/DataModels/PLIntrospectionModel.h>
+#include "PLFrontendQt/QtStringAdapter.h"
+#include "PLFrontendQt/DataModels/PLIntrospectionModel.h"
 #include "PLFrontendQt/DockWidget/DockWidgetObject.h"
 
 

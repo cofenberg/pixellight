@@ -28,8 +28,8 @@
 #include <QtGui/qmainwindow.h>
 #include <PLCore/Base/Class.h>
 #include <PLEngine/Application/EngineApplication.h>
-#include <PLFrontendQt/QtStringAdapter.h>
-#include <PLFrontendQt/DataModels/SceneNodeInfoModel.h>
+#include "PLFrontendQt/QtStringAdapter.h"
+#include "PLFrontendQt/DataModels/SceneNodeInfoModel.h"
 #include "PLFrontendQt/DockWidget/DockWidgetSceneNode.h"
 
 

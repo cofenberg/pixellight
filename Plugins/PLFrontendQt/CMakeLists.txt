@@ -131,6 +131,7 @@ add_sources(
 	src/DockWidget/DockWidgetScene.cpp
 	src/DockWidget/DockWidgetSceneNode.cpp
 	src/DockWidget/DockWidgetSceneGraph.cpp
+	src/DockWidget/DockWidgetSceneRenderer.cpp
 	${UI_SRCS}	# Add source produced by uic
 	${MOC_SRCS}	# Add source produced by moc
 	${QRC_SRCS}	# Add sources produced by rcc

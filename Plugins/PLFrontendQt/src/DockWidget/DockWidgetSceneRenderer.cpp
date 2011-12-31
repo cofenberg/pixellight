@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: DockWidgetSceneGraph.cpp                       *
+ *  File: DockWidgetSceneRenderer.cpp                    *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -27,10 +27,11 @@
 #include <QtGui/qdockwidget.h>
 #include <QtGui/qmainwindow.h>
 #include <PLCore/Base/Class.h>
+#include <PLScene/Compositing/SceneRenderer.h>
 #include <PLEngine/Application/EngineApplication.h>
 #include "PLFrontendQt/QtStringAdapter.h"
-#include "PLFrontendQt/DataModels/SceneGraphTreeModel.h"
-#include "PLFrontendQt/DockWidget/DockWidgetSceneGraph.h"
+#include "PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererDataModel.h"
+#include "PLFrontendQt/DockWidget/DockWidgetSceneRenderer.h"
 
 
 //[-------------------------------------------------------]
@@ -43,7 +44,7 @@ namespace PLFrontendQt {
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
-pl_implement_class(DockWidgetSceneGraph)
+pl_implement_class(DockWidgetSceneRenderer)
 
 
 //[-------------------------------------------------------]
@@ -53,7 +54,7 @@ pl_implement_class(DockWidgetSceneGraph)
 *  @brief
 *    Constructor
 */
-DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow) : DockWidgetScene(pQMainWindow)
+DockWidgetSceneRenderer::DockWidgetSceneRenderer(QMainWindow *pQMainWindow) : DockWidgetScene(pQMainWindow)
 {
 	// Get encapsulated Qt dock widget
 	QDockWidget *pQDockWidget = GetQDockWidget();
@@ -61,24 +62,24 @@ DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow) : DockWidg
 		// Create tree view and set scene graph model
 		QTreeView *pQTreeView = new QTreeView();
 		pQDockWidget->setWidget(pQTreeView);
-		DataModels::SceneGraphTreeModel *pSceneGraphTreeModel = new DataModels::SceneGraphTreeModel(pQDockWidget);
-		pQTreeView->setModel(pSceneGraphTreeModel);
+		DataModels::SceneRendererDataModel::SceneRendererDataModel *pSceneRendererDataModel = new DataModels::SceneRendererDataModel::SceneRendererDataModel(pQDockWidget);
+		pQTreeView->setModel(pSceneRendererDataModel);
 		pQTreeView->expandToDepth(0);
 
-		// Set a default start node to have a decent standard behaviour
-		PLScene::SceneNode *pSceneNode = nullptr;
+		// Set a default scene renderer to have a decent standard behaviour
+		PLScene::SceneRenderer *pSceneRenderer = nullptr;
 		{
 			CoreApplication *pApplication = CoreApplication::GetApplication();
 			if (pApplication && pApplication->IsInstanceOf("PLEngine::EngineApplication"))
-				pSceneNode = reinterpret_cast<PLScene::SceneNode*>(static_cast<PLEngine::EngineApplication*>(pApplication)->GetScene());
-			pSceneGraphTreeModel->SetStartNode(pSceneNode, true);
+				pSceneRenderer = static_cast<PLEngine::EngineApplication*>(pApplication)->GetSceneRendererTool().GetSceneRenderer();
+			pSceneRendererDataModel->SetSceneRenderer(pSceneRenderer);
 		}
 
 		// Set window title
 		QString sQStringWindowTitle = pQDockWidget->tr(GetClass()->GetProperties().Get("Title"));
-		if (pSceneNode) {
+		if (pSceneRenderer) {
 			sQStringWindowTitle += ": ";
-			sQStringWindowTitle += QtStringAdapter::PLToQt('\"' + pSceneNode->GetAbsoluteName() + '\"');	// Put it into quotes to make it possible to see e.g. trailing spaces
+			sQStringWindowTitle += QtStringAdapter::PLToQt('\"' + pSceneRenderer->GetName() + '\"');	// Put it into quotes to make it possible to see e.g. trailing spaces
 		}
 		pQDockWidget->setWindowTitle(sQStringWindowTitle);
 
@@ -91,7 +92,7 @@ DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow) : DockWidg
 *  @brief
 *    Destructor
 */
-DockWidgetSceneGraph::~DockWidgetSceneGraph()
+DockWidgetSceneRenderer::~DockWidgetSceneRenderer()
 {
 }
 
