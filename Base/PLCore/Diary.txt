@@ -5,6 +5,7 @@ PLFrontendQt:
   (maybe a little/big endian thing?). Double checked "PLGraphics::Image" to ensure it's no bug, and I can't imagine that it's a Qt bug either. Now the icons
   look correct.
 - Added "DockWidgetSceneRenderer"
+- "DockWidget": Delete the dock widget instead of hiding it when someone is closing it
 
 
 
