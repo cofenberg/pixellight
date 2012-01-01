@@ -84,7 +84,7 @@ void SNMEgoLookController::OnActivate(bool bActivate)
 		// Connect event handler
 		cSceneNode.GetTransform().EventRotation.Connect(SlotOnRotation);
 
-		// Ensure our Euler angles are representing the current scene node rotation
+		// Ensure our Euler angles are representing the current scene node rotation (synchronization, no logic update)
 		OnRotation();
 	} else {
 		// Disconnect event handler

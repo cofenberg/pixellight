@@ -143,6 +143,9 @@ void SNMPositionPath::OnActivate(bool bActivate)
 		SceneContext *pSceneContext = GetSceneContext();
 		if (pSceneContext)
 			pSceneContext->EventUpdate.Connect(EventHandlerUpdate);
+
+		// Make a first update to ensure everything is up-to-date when we're going active (synchronization and logic update)
+		OnUpdate();
 	} else {
 		// Disconnect event handlers
 		cSceneNode.SignalDrawDebug.Disconnect(EventHandlerDrawDebug);

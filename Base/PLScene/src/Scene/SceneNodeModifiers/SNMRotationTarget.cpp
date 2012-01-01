@@ -93,6 +93,9 @@ void SNMRotationTarget::OnActivate(bool bActivate)
 		SceneContext *pSceneContext = GetSceneContext();
 		if (pSceneContext)
 			pSceneContext->EventUpdate.Connect(EventHandlerPositionUpdate);
+
+		// Make a first update to ensure everything is up-to-date when we're going active (synchronization, no logic update)
+		OnPositionUpdate();
 	} else {
 		// Disconnect event handlers
 		cSceneNode.SignalDrawDebug.Disconnect(EventHandlerDrawDebug);

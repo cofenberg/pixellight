@@ -206,10 +206,14 @@ Source *SNMSound::GetSoundSource() const
 void SNMSound::OnActivate(bool bActivate)
 {
 	// Connect/disconnect event handler
-	if (bActivate)
+	if (bActivate) {
 		GetSceneNode().GetTransform().EventPosition.Connect(SlotOnPosition);
-	else
+
+		// Make a first update to ensure the position is up-to-date when we're going active (synchronization, no logic update)
+		OnPosition();
+	} else {
 		GetSceneNode().GetTransform().EventPosition.Disconnect(SlotOnPosition);
+	}
 
 	// [TODO] Start/stop sound playback
 }

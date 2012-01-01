@@ -83,6 +83,9 @@ void SNMMeshUpdate::OnActivate(bool bActivate)
 		if (bActivate) {
 			GetSceneNode().SignalAddedToVisibilityTree.Connect(EventHandlerAddedToVisibilityTree);
 			pSceneContext->EventUpdate.Connect(EventHandlerUpdate);
+
+			// Make a first update to ensure everything is up-to-date when we're going active (synchronization and logic update)
+			OnUpdate();
 		} else {
 			GetSceneNode().SignalAddedToVisibilityTree.Disconnect(EventHandlerAddedToVisibilityTree);
 			pSceneContext->EventUpdate.Disconnect(EventHandlerUpdate);

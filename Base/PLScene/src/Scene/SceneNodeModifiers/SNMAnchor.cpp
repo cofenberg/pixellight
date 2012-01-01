@@ -110,6 +110,9 @@ void SNMAnchor::OnActivate(bool bActivate)
 		SceneContext *pSceneContext = GetSceneContext();
 		if (pSceneContext)
 			pSceneContext->EventUpdate.Connect(SlotOnPositionRotationUpdate);
+
+		// Make a first update to ensure position and rotation are up-to-date when we're going active (synchronization, no logic update)
+		OnPositionRotationUpdate();
 	} else {
 		// Disconnect event handlers
 		cSceneNode.SignalContainer.Disconnect(SlotOnContainer);

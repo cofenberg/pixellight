@@ -158,6 +158,9 @@ void SNMOrbiting::OnActivate(bool bActivate)
 		SceneContext *pSceneContext = GetSceneContext();
 		if (pSceneContext)
 			pSceneContext->EventUpdate.Connect(EventHandlerPositionRotationUpdate);
+
+		// Make a first update to ensure position and rotation are up-to-date when we're going active (synchronization, no logic update)
+		OnPositionRotationUpdate();
 	} else {
 		// Disconnect event handlers
 		cSceneNode.SignalDrawDebug.Disconnect(EventHandlerDrawDebug);

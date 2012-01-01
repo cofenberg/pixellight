@@ -211,10 +211,14 @@ void SCSound::OnActivate(bool bActivate)
 	// Connect/disconnect event handler
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
-		if (bActivate)
+		if (bActivate) {
 			pSceneContext->EventUpdate.Connect(SlotOnUpdate);
-		else
+
+			// Make a first update to ensure everything is up-to-date when we're going active (synchronization and logic update)
+			OnUpdate();
+		} else {
 			pSceneContext->EventUpdate.Disconnect(SlotOnUpdate);
+		}
 	}
 }
 
