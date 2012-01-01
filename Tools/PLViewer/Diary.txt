@@ -1,3 +1,9 @@
+>> 01.01.2012
+[CO]
+- Show the user a native filename within the GUI
+
+
+
 >> 31.12.2011
 [CO]
 - Removed "PLViewerStandalone"-variation, while still maintaining the feature it introduced. This means that in the future I also no longer have to explain what

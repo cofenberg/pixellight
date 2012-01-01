@@ -151,8 +151,8 @@ bool Application::LoadResource(const String &sFilename)
 		PL_LOG(Error, "Failed to load the resource \"" + sFilename + "\" because the file has no extension")
 	}
 
-	// Set the state text
-	SetStateText(bResult ? sFilename : ("Failed to load \"" + sFilename + "\" (see log for details)"));
+	// Set the state text, show the user a native filename within the GUI
+	SetStateText(bResult ? Url(sFilename).GetNativePath() : ("Failed to load \"" + Url(sFilename).GetNativePath() + "\" (see log for details)"));
 
 	// Done
 	return bResult;
