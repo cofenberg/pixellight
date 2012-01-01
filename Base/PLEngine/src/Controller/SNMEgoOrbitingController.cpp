@@ -105,7 +105,7 @@ void SNMEgoOrbitingController::OnUpdate()
 		// mouse button is currently pressed (so we don't look around the every time when moving the mouse to, for instance, move
 		// the mouse cursor to an ingame GUI widget). Because it's REALLY comfortable to use the space mouse, I added this hack so
 		// the space mouse (provides us with absolute values!) can be used as expected during the last steps of the input system refactoring.
-		const bool bSpaceMouseRotationHack = (!m_pController->RotX.IsValueRelative() || !m_pController->RotY.IsValueRelative());
+		const bool bSpaceMouseRotationHack = (!m_pController->RotX.IsValueRelative() && !m_pController->RotY.IsValueRelative());
 		const bool bSpaceMouseZoomHack     = (!m_pController->ZoomAxis.IsValueRelative());
 
 		// Get the current speed
@@ -184,7 +184,7 @@ void SNMEgoOrbitingController::OnUpdate()
 			}
 		} else {
 			// [HACK][TODO](See above)
-			if (!m_pController->PanX.IsValueRelative() || !m_pController->PanY.IsValueRelative()) {
+			if (!m_pController->PanX.IsValueRelative() && !m_pController->PanY.IsValueRelative()) {
 				float fX = m_pController->PanX.GetValue();
 				float fY = m_pController->PanY.GetValue();
 				if (fX || fY) {
