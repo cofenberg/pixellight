@@ -31,7 +31,9 @@ PL_WARNING_PUSH
 	#include <QtGui/qstatusbar.h>
 	#include <QtGui/qfiledialog.h>
 PL_WARNING_POP
+#include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
+#include <PLCore/System/System.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SceneQueries/SQByClassName.h>
 #include <PLFrontendQt/Frontend.h>
@@ -123,40 +125,52 @@ void Gui::SetStateText(const String &sText)
 */
 void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 {
-	{ // Setup the file menu
-		QMenu *pQMenu = cQMainWindow.menuBar()->addMenu(cQMainWindow.tr("&File"));
+	{ // Menu bar
+		{ // Setup the file menu
+			QMenu *pQMenu = cQMainWindow.menuBar()->addMenu(cQMainWindow.tr("&File"));
 
-		{ // Setup the load action
-			QAction *pQAction = new QAction(cQMainWindow.tr("L&oad"), &cQMainWindow);
-			connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotLoad()));
-			pQAction->setShortcut(cQMainWindow.tr("Ctrl+L"));
-			pQMenu->addAction(pQAction);
+			{ // Setup the load action
+				QAction *pQAction = new QAction(cQMainWindow.tr("L&oad"), &cQMainWindow);
+				connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotLoad()));
+				pQAction->setShortcut(cQMainWindow.tr("Ctrl+L"));
+				pQMenu->addAction(pQAction);
+			}
+
+			// Add a separator
+			pQMenu->addSeparator();
+
+			{ // Setup the exit action
+				QAction *pQAction = new QAction(cQMainWindow.tr("E&xit"), &cQMainWindow);
+				pQAction->setShortcuts(QKeySequence::Quit);
+				connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotExit()));
+				pQAction->setShortcut(cQMainWindow.tr("Ctrl+Q"));
+				pQMenu->addAction(pQAction);
+			}
 		}
 
-		// Add a separator
-		pQMenu->addSeparator();
+		{ // Setup the camera menu
+			m_pQMenuCamera = cQMainWindow.menuBar()->addMenu(cQMainWindow.tr("&Camera"));
+			connect(m_pQMenuCamera, SIGNAL(aboutToShow()), this, SLOT(QtSlotMenuCameraAboutToShow()));
 
-		{ // Setup the exit action
-			QAction *pQAction = new QAction(cQMainWindow.tr("E&xit"), &cQMainWindow);
-			pQAction->setShortcuts(QKeySequence::Quit);
-			connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotExit()));
-			pQAction->setShortcut(cQMainWindow.tr("Ctrl+Q"));
-			pQMenu->addAction(pQAction);
+			// Menu is filled when it's about to show
 		}
-	}
 
-	{ // Setup the camera menu
-		m_pQMenuCamera = cQMainWindow.menuBar()->addMenu(cQMainWindow.tr("&Camera"));
-		connect(m_pQMenuCamera, SIGNAL(aboutToShow()), this, SLOT(QtSlotMenuCameraAboutToShow()));
+		{ // Setup the window menu
+			m_pQMenuWindow = cQMainWindow.menuBar()->addMenu(cQMainWindow.tr("&Window"));
+			connect(m_pQMenuWindow, SIGNAL(aboutToShow()), this, SLOT(QtSlotMenuWindowAboutToShow()));
 
-		// Menu is filled when it's about to show
-	}
+			// Menu is filled when it's about to show
+		}
 
-	{ // Setup the window menu
-		m_pQMenuWindow = cQMainWindow.menuBar()->addMenu(cQMainWindow.tr("&Window"));
-		connect(m_pQMenuWindow, SIGNAL(aboutToShow()), this, SLOT(QtSlotMenuWindowAboutToShow()));
+		{ // Setup the tools menu
+			QMenu *pQMenu = cQMainWindow.menuBar()->addMenu(cQMainWindow.tr("&Tools"));
 
-		// Menu is filled when it's about to show
+			{ // Setup the log action
+				QAction *pQAction = new QAction(cQMainWindow.tr("Open log file"), &cQMainWindow);
+				connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotOpenLogFile()));
+				pQMenu->addAction(pQAction);
+			}
+		}
 	}
 
 	{ // Status bar
@@ -330,4 +344,11 @@ void Gui::QtSlotSelectedWindow(QAction *pQAction)
 			DockWidget *pDockWidget = reinterpret_cast<DockWidget*>(pClass->Create(Params<Object*, QWidget*>(pFrontendMainWindow)));
 		}
 	}
+}
+
+void Gui::QtSlotOpenLogFile()
+{
+	// Use "PLCore::System::Execute()" to open the log file which is usually a simple text file
+	// -> "QDesktopServices::openUrl(QtStringAdapter::PLToQt(Log::GetInstance()->GetFilename()));" didn't work for me
+	System::GetInstance()->Execute(Log::GetInstance()->GetFilename(), "");
 }
