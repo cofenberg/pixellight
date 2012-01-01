@@ -246,6 +246,12 @@ void Gui::QtSlotLoad()
 	String sFileFilter = ConstructFileFilter::ByLoadableType(QtStringAdapter::QtToPL(tr("Scene")), "Scene");
 	sFileFilter += ";;";
 	sFileFilter += ConstructFileFilter::ByScriptLanguages(QtStringAdapter::QtToPL(tr("Script")));
+	sFileFilter += ";;";
+	sFileFilter += ConstructFileFilter::ByLoadableType(QtStringAdapter::QtToPL(tr("Mesh")), "Mesh");
+	sFileFilter += ";;";
+	sFileFilter += ConstructFileFilter::ByLoadableType(QtStringAdapter::QtToPL(tr("Material")), "Material");
+	sFileFilter += ";;";
+	sFileFilter += ConstructFileFilter::ByLoadableType(QtStringAdapter::QtToPL(tr("Image")), "Image");
 
 	// Open a file dialog were the user can choose a filename
 	const QString sQFilename = QFileDialog::getOpenFileName(GetFrontendMainWindow(), "", "", QtStringAdapter::PLToQt(sFileFilter));

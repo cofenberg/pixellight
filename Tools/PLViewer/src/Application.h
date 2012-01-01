@@ -86,9 +86,12 @@ class Application : public PLEngine::ScriptApplication {
 		*/
 		virtual ~Application();
 
+		//[-------------------------------------------------------]
+		//[ Resource loading                                      ]
+		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    Loads a resource
+		*    Loads a resource which type has to be evaluated internally
 		*
 		*  @param[in] sFilename
 		*    Filename of the resource to load
@@ -97,6 +100,30 @@ class Application : public PLEngine::ScriptApplication {
 		*    'true' if all went fine, else 'false'
 		*/
 		bool LoadResource(const PLCore::String &sFilename);
+
+		/**
+		*  @brief
+		*    Loads a mesh
+		*
+		*  @param[in] sFilename
+		*    Filename of the mesh to load, must be a mesh
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		bool LoadMesh(const PLCore::String &sFilename);
+
+		/**
+		*  @brief
+		*    Loads a material/image
+		*
+		*  @param[in] sFilename
+		*    Filename of the material/image to load, must be a material/image
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		bool LoadMaterialImage(const PLCore::String &sFilename);
 
 
 	//[-------------------------------------------------------]

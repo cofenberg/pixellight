@@ -1,4 +1,5 @@
 Changes in PixelLight 0.9.11-R1 (not yet released)
+- Feature: Beside "Scene" and "Script", "PLViewer" is now also able to load in "Mesh", "Material" and "Image" (= texture)
 - Feature: Added Qt based PixelLight viewer which is similar to the minimalistic PLViewer, but more advanced
 - Feature: "PLRenderer::VertexBuffer": Added support for the "half" data type (16 bit floating point)
 - Feature: "PLRenderer::VertexBuffer": Added generic comfort methods "GetFloat()" and "SetFloat()"

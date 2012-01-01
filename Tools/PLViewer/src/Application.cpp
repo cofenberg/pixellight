@@ -26,6 +26,7 @@
 #include <PLCore/Log/Log.h>
 #include <PLCore/File/File.h>
 #include <PLCore/System/System.h>
+#include <PLCore/Tools/LoadableType.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include <PLCore/Script/ScriptManager.h>
 #include <PLCore/Frontend/FrontendContext.h>
@@ -99,11 +100,14 @@ Application::~Application()
 
 /**
 *  @brief
-*    Loads a resource
+*    Loads a resource which type has to be evaluated internally
 */
 bool Application::LoadResource(const String &sFilename)
 {
 	bool bResult = false;	// Error by default
+
+	// Clear the scene, after calling this method the scene is empty
+	ClearScene();
 
 	// Get file extension
 	const String sExtension = Url(sFilename).GetExtension();
@@ -118,6 +122,12 @@ bool Application::LoadResource(const String &sFilename)
 			// Set the current directory of the application
 			System::GetInstance()->SetCurrentDir("file://" + ((nIndex >= 0) ? sDirectory.GetSubstring(0, nIndex) : sDirectory) + '/');
 		}
+
+		// The viewer supports loading in multiple resource types, but scenes and scripts are
+		// the most important because most powerful ones, so give them the highest priority.
+		// -> It would be possible to implement support for scripting so that e.g. a Lua script
+		//    can be used to decide how to process a resource. But this viewer should be able to
+		//    work without external data and should be kept as simple as possible, so we stick to C++.
 
 		// Is the given filename a supported scene?
 		if (LoadableManager::GetInstance()->IsFormatLoadSupported(sExtension, "Scene")) {
@@ -141,10 +151,51 @@ bool Application::LoadResource(const String &sFilename)
 				PL_LOG(Error, "Failed to load the script \"" + sFilename + '\"')
 			}
 
-		// Unknown file-type
+		// Ask the loadable system for the resource type
 		} else {
-			// Write an error message into the log
-			PL_LOG(Error, "Failed to load the resource \"" + sFilename + "\" because the file-type is unknown")
+			// Get loadable type
+			LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByExtension(sExtension);
+			if (pLoadableType) {
+				// Mesh
+				if (pLoadableType->GetName() == "Mesh") {
+					// Load the mesh
+					if (LoadMesh(sFilename)) {
+						// Done, get us out of here right now!
+						bResult = true;
+					} else {
+						// Write an error message into the log
+						PL_LOG(Error, "Failed to load the mesh \"" + sFilename + '\"')
+					}
+
+				// Material
+				} else if (pLoadableType->GetName() == "Material") {
+					// Load the material
+					if (LoadMaterialImage(sFilename)) {
+						// Done, get us out of here right now!
+						bResult = true;
+					} else {
+						// Write an error message into the log
+						PL_LOG(Error, "Failed to load the material \"" + sFilename + '\"')
+					}
+
+				// Image
+				} else if (pLoadableType->GetName() == "Image") {
+					// Load the image
+					if (LoadMaterialImage(sFilename)) {
+						// Done, get us out of here right now!
+						bResult = true;
+					} else {
+						// Write an error message into the log
+						PL_LOG(Error, "Failed to load the image \"" + sFilename + '\"')
+					}
+				}
+			}
+
+			// Unknown file-type?
+			if (!bResult) {
+				// Write an error message into the log
+				PL_LOG(Error, "Failed to load the resource \"" + sFilename + "\" because the file-type is unknown")
+			}
 		}
 	} else {
 		// Write an error message into the log
@@ -156,6 +207,52 @@ bool Application::LoadResource(const String &sFilename)
 
 	// Done
 	return bResult;
+}
+
+/**
+*  @brief
+*    Loads a mesh
+*/
+bool Application::LoadMesh(const String &sFilename)
+{
+	// Get the scene container (the 'concrete scene')
+	SceneContainer *pSceneContainer = GetScene();
+	if (pSceneContainer) {
+		// Create a mesh scene node
+		SceneNode *pPrimarySceneNode = pSceneContainer->Create("PLScene::SNMesh", "Mesh", "Mesh=\"" + sFilename + "\"");
+
+		// Configure a generic scene
+		ConfigureGenericScene(*pSceneContainer, pPrimarySceneNode);
+
+		// Done
+		return true;
+	}
+
+	// Error!
+	return false;
+}
+
+/**
+*  @brief
+*    Loads a material/image
+*/
+bool Application::LoadMaterialImage(const String &sFilename)
+{
+	// Get the scene container (the 'concrete scene')
+	SceneContainer *pSceneContainer = GetScene();
+	if (pSceneContainer) {
+		// Create a scene node representing a simple box with the given material/image as skin
+		SceneNode *pPrimarySceneNode = pSceneContainer->Create("PLScene::SNMesh", "Mesh", "Mesh=\"Default\" Skin=\"" + sFilename + "\"");
+
+		// Configure a generic scene
+		ConfigureGenericScene(*pSceneContainer, pPrimarySceneNode);
+
+		// Done
+		return true;
+	}
+
+	// Error!
+	return false;
 }
 
 
