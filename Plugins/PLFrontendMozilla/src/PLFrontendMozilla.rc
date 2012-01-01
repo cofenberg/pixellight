@@ -51,7 +51,7 @@ BEGIN
             VALUE "FileOpenName", "nppl3d\0"
             VALUE "FileVersion", "1, 0, 0, 1\0"
             VALUE "InternalName", "nppl3d\0"
-            VALUE "LegalCopyright", "Copyright (C) 2002-2011 by The PixelLight Team\0"
+            VALUE "LegalCopyright", "Copyright (C) 2002-2012 by The PixelLight Team\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "MIMEType", "application/x-pixellight\0"
             VALUE "OriginalFilename", "nppl3d.dll\0"

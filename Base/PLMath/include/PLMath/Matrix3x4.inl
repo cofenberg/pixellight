@@ -2,7 +2,7 @@
  *  File: Matrix3x4.inl                                  *
  *      Matrix3x4 inline implementation
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *

@@ -8,7 +8,7 @@
  *      APIs. The information text is drawn using an own special scene node.
  *      If a command line parameter is provided, the given physics API is used automatically. (for instance 'PLPhysicsNewton::World')
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -37,7 +37,7 @@
 //[ Module definition                                     ]
 //[-------------------------------------------------------]
 pl_module_application("63PhysicsRagdoll", "Application63")
-	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
+	pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
 	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
 	pl_module_description("PixelLight ragdoll physics sample")
 pl_module_end

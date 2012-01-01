@@ -3,7 +3,7 @@
  *      PixelLight Sample 30 - Input
  *      Sample application showing how to use input devices with PLInput
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -32,7 +32,7 @@
 //[ Module definition                                     ]
 //[-------------------------------------------------------]
 pl_module_application_frontend("30Input", "Application30", "PLFrontendNull::Frontend")
-	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
+	pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
 	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
 	pl_module_description("PixelLight Sample 30 - Input")
 pl_module_end

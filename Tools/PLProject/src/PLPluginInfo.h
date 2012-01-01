@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: PLPluginInfo.h                                 *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -72,7 +72,7 @@ class PLPluginClassInfo;
 *       <Active>1</Active>
 *       <Delayed>1</Delayed>
 *       <Name>MyExample</Name>
-*       <Vendor>Copyright (C) 2002-2011 by The PixelLight Team</Vendor>
+*       <Vendor>Copyright (C) 2002-2012 by The PixelLight Team</Vendor>
 *       <License>GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version</License>
 *       <Description>Example Plugin Module Description</Description>
 *       <Platform Name="Win32">

@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: PLScene.cpp                                    *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -323,7 +323,7 @@ void PLScene::WriteToXMLDocument(XmlDocument &cDocument)
 		pContainerElement->SetAttribute("Name",  "AboutInformation");
 
 		// First at all, write down some general information
-		std::string sValue = "3ds Max ((<RELEASE>).(<API_NUM>).(<SDK_REV>).(<SDK_NUMREV>), running version: " + sRunning3dsMaxVersion + ", exporter build for version: " + sBuild3dsMaxVersion + ") scene exporter plugin (version 0.8.6, build: date: " + __DATE__ + "  time: " + __TIME__ + ") Copyright (C) 2002-2011 by The PixelLight Team";
+		std::string sValue = "3ds Max ((<RELEASE>).(<API_NUM>).(<SDK_REV>).(<SDK_NUMREV>), running version: " + sRunning3dsMaxVersion + ", exporter build for version: " + sBuild3dsMaxVersion + ") scene exporter plugin (version 0.8.6, build: date: " + __DATE__ + "  time: " + __TIME__ + ") Copyright (C) 2002-2012 by The PixelLight Team";
 		XmlElement *pNodeElement = new XmlElement("Node");
 		pNodeElement->SetAttribute("Class", "PLScene::SNKeyValue");
 		pNodeElement->SetAttribute("Name",  "CreatedWithKey");

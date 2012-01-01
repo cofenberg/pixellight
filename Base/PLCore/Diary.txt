@@ -964,7 +964,7 @@ PLFrontend:
   name, again... but it's only required once within a project and therefore a speaking name is fine) and when using it, the main C++ file usually looks like this:
     #include <PLFrontend/FrontendMain.h>
     pl_module_application_frontend("50RendererTriangle", "Application", "PLFrontendPLGui::Frontend")
-        pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
+        pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
         pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
         pl_module_description("PixelLight triangle sample")
     pl_module_end
