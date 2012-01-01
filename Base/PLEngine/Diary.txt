@@ -1,3 +1,9 @@
+>> 01.01.2012
+[CO]
+- "EngineApplication::OnLoadProgress()": Made the method protected and virtual because derived classes may want to reuse it
+
+
+
 >> 29.12.2011
 [CO]
 - "EngineApplication::OnCreateScene()": Minor change in the created default scene so one can see something at once

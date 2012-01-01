@@ -438,6 +438,18 @@ class EngineApplication : public PLScene::SceneApplication {
 		*/
 		PL_API virtual void OnInputControllerFound(PLInput::Controller *pInputController, PLCore::String sInputSemantic);
 
+		/**
+		*  @brief
+		*    Called on load progress
+		*
+		*  @param[in] fLoadProgress
+		*    Load progress (0.0-1.0)
+		*
+		*  @note
+		*    - Calls "GetFrontend().RedrawAndPing()", but only if there's a load screen
+		*/
+		PL_API virtual void OnLoadProgress(float fLoadProgress);
+
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
@@ -471,15 +483,6 @@ class EngineApplication : public PLScene::SceneApplication {
 		*    Found scene node
 		*/
 		void OnSceneNode(PLScene::SceneQuery &cQuery, PLScene::SceneNode &cSceneNode);
-
-		/**
-		*  @brief
-		*    Called on load progress
-		*
-		*  @param[in] fLoadProgress
-		*    Load progress (0.0-1.0)
-		*/
-		void OnLoadProgress(float fLoadProgress);
 
 
 	//[-------------------------------------------------------]

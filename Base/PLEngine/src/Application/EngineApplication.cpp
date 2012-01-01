@@ -619,6 +619,19 @@ void EngineApplication::OnInputControllerFound(Controller *pInputController, Str
 	}
 }
 
+/**
+*  @brief
+*    Called on load progress
+*/
+void EngineApplication::OnLoadProgress(float fLoadProgress)
+{
+	// Call the 'update'-function so we can see the progress within the load screen
+	if (m_bHasLoadScreen) {
+		// Redraw & ping the frontend
+		GetFrontend().RedrawAndPing();
+	}
+}
+
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
@@ -661,19 +674,6 @@ void EngineApplication::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 	// Load screen scene node?
 	} else if (cSceneNode.IsInstanceOf("PLEngine::SNLoadScreenBase")) {
 		m_bHasLoadScreen = true;
-	}
-}
-
-/**
-*  @brief
-*    Called on load progress
-*/
-void EngineApplication::OnLoadProgress(float fLoadProgress)
-{
-	// Call the 'update'-function so we can see the progress within the load screen
-	if (m_bHasLoadScreen) {
-		// Redraw & ping the frontend
-		GetFrontend().RedrawAndPing();
 	}
 }
 
