@@ -65,6 +65,9 @@ MeshManager::MeshManager(Renderer &cRenderer) :
 		pMesh->SetName("Default");
 		pMesh->SetProtected(true);
 		SetStandard(pMesh);
+
+		// It's a good idea to give the default mesh tangent space vectors (tangent & binormal) so it can also be used for normal mapping
+		pMesh->CalculateTangentSpaceVectors();
 	}
 }
 
