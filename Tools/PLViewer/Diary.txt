@@ -2,6 +2,17 @@
 [CO]
 - Show the user a native filename within the GUI
 - Beside "Scene" and "Script", "PLViewer" is now also able to load in "Mesh", "Material" and "Image" (= texture)
+- "Application::LoadResource()": The resource loading is tricky, and every solution will end up in being a hack due to lack of information.
+  Within materials, meshes etc. there are usually relative paths provided, no absolute (not just true for PixelLight file formats).
+  Further, those paths are usually relative to a project root resulting e.g. within a default directory layout like
+  - Root
+    - Data
+      - Meshes
+      - Materials
+  For "normal" projects this is no issue because everything is usually relative to the root project directory...
+  ... but this viewer must be able to pick out e.g. a mesh out of nowhere and must still be able to locate the required
+  other resources like materials. So, in here, we can only work with heuristics... this can and will of course go from
+  time to time horribly wrong...
 PLViewerQt:
 - Redraw & ping the frontend so the GUI stays kind-of responsive while loading, but disable the Qt main window while loading so the user can't prank around within
   the GUI
