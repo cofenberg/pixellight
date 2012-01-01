@@ -187,6 +187,10 @@ void Application::OnControl(Control &cControl)
 	}
 }
 
+
+//[-------------------------------------------------------]
+//[ Protected virtual Application functions               ]
+//[-------------------------------------------------------]
 /**
 *  @brief
 *    Sets the state text

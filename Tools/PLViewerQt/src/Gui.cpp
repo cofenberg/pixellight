@@ -26,7 +26,9 @@
 #include <PLCore/PLCore.h>
 PL_WARNING_PUSH
 	PL_WARNING_DISABLE(4127)	// "warning C4127: conditional expression is constant"
+	#include <QtGui/qlabel.h>
 	#include <QtGui/qmenubar.h>
+	#include <QtGui/qstatusbar.h>
 	#include <QtGui/qfiledialog.h>
 PL_WARNING_POP
 #include <PLCore/Base/Class.h>
@@ -59,10 +61,13 @@ using namespace PLFrontendQt;
 Gui::Gui(Application &cApplication) :
 	EventHandlerCameraFound(&Gui::OnCameraFound, this),
 	m_pApplication(&cApplication),
+	// Menu bar
 	m_pQMenuCamera(nullptr),
 	m_pQActionGroupCamera(nullptr),
 	m_pQMenuWindow(nullptr),
-	m_pQActionGroupWindow(nullptr)
+	m_pQActionGroupWindow(nullptr),
+	// Status bar
+	m_pQLabelStatusBar(nullptr)
 {
 	// Get the Qt main window
 	FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
@@ -95,6 +100,17 @@ FrontendMainWindow *Gui::GetFrontendMainWindow() const
 
 	// Error!
 	return nullptr;
+}
+
+/**
+*  @brief
+*    Sets the state text
+*/
+void Gui::SetStateText(const String &sText)
+{
+	// Update the Qt label shown in the status bar of the Qt main window
+	if (m_pQLabelStatusBar)
+		m_pQLabelStatusBar->setText(QtStringAdapter::PLToQt(sText));
 }
 
 
@@ -141,6 +157,14 @@ void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 		connect(m_pQMenuWindow, SIGNAL(aboutToShow()), this, SLOT(QtSlotMenuWindowAboutToShow()));
 
 		// Menu is filled when it's about to show
+	}
+
+	{ // Status bar
+		// Create the Qt label shown in the status bar of the Qt main window
+		m_pQLabelStatusBar = new QLabel();
+
+		// Set Qt main window status bar
+		cQMainWindow.statusBar()->addWidget(m_pQLabelStatusBar);
 	}
 }
 

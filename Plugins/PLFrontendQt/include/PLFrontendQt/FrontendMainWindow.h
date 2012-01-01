@@ -28,7 +28,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <QtGui/qmainwindow.h>
+#include <PLCore/PLCore.h>	// For "override"
+PL_WARNING_PUSH
+	PL_WARNING_DISABLE(4127)	// "warning C4127: conditional expression is constant"
+	#include <QtGui/qmainwindow.h>
+PL_WARNING_POP
 
 
 //[-------------------------------------------------------]

@@ -1,6 +1,10 @@
 >> 01.01.2012
 [CO]
 - Show the user a native filename within the GUI
+PLViewerQt:
+- Redraw & ping the frontend so the GUI stays kind-of responsive while loading, but disable the Qt main window while loading so the user can't prank around within
+  the GUI
+- Show the user some loading progress
 
 
 

@@ -23,6 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Math.h>
+#include <PLFrontendQt/FrontendMainWindow.h>
 #include "Gui.h"
 #include "ApplicationQt.h"
 
@@ -47,7 +49,8 @@ pl_implement_class(ApplicationQt)
 *    Constructor
 */
 ApplicationQt::ApplicationQt(Frontend &cFrontend) : Application(cFrontend),
-	m_pGui(nullptr)
+	m_pGui(nullptr),
+	m_fLoadProgress(0.0f)
 {
 }
 
@@ -81,4 +84,74 @@ void ApplicationQt::OnDeInit()
 
 	// Call base implementation
 	Application::OnInit();
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual EngineApplication functions            ]
+//[-------------------------------------------------------]
+bool ApplicationQt::LoadScene(const String &sFilename)
+{
+	// Get the Qt main window
+	PLFrontendQt::FrontendMainWindow *pFrontendMainWindow = m_pGui ? m_pGui->GetFrontendMainWindow() : nullptr;
+
+	// Disable the Qt main window while loading so the user can't prank around within the GUI
+	if (pFrontendMainWindow)
+		pFrontendMainWindow->setEnabled(false);
+
+	// Reset the current load progress and ensure everything is up-to-date when we start to load
+	m_fLoadProgress = -0.42f;	// So "OnLoadProgress()" is forced to update
+	OnLoadProgress(0.0f);
+
+	// Call base implementation
+	const bool bResult = Application::LoadScene(sFilename);
+
+	// Enable the Qt main window when loading is done
+	if (pFrontendMainWindow)
+		pFrontendMainWindow->setEnabled(true);
+
+	// Done
+	return bResult;
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLEngine::EngineApplication functions ]
+//[-------------------------------------------------------]
+void ApplicationQt::OnLoadProgress(float fLoadProgress)
+{
+	// Time for an update? (we don't want to redraw & ping the frontend each time a single tiny scene node was loaded *performance*)
+	if ((fLoadProgress - m_fLoadProgress) >= 0.01f) {
+		// Update the current load progress
+		m_fLoadProgress = fLoadProgress;
+
+		// Is there an GUI instance?
+		if (m_pGui) {
+			// Ensure the loading process looks always reasonable to the user
+			fLoadProgress = PLMath::Math::ClampToInterval(fLoadProgress, 0.0f, 1.0f);
+
+			// Let the GUI handle the information presentation of the current load progress (in percentage)
+			// -> When zero percentage, present another text because for instance loading a XML document may take a moment
+			m_pGui->SetStateText(fLoadProgress ? String::Format("Loading... %.0f%%", fLoadProgress*100.0f) : "Prepare loading...");
+		}
+
+		// Redraw & ping the frontend so the GUI stays kind-of responsive while loading
+		GetFrontend().RedrawAndPing();
+	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual Application functions               ]
+//[-------------------------------------------------------]
+void ApplicationQt::SetStateText(const String &sText)
+{
+	// Is there an GUI instance?
+	if (m_pGui) {
+		// Let the GUI handle the information presentation
+		m_pGui->SetStateText(sText);
+	} else {
+		// Call base implementation
+		Application::SetStateText(sText);
+	}
 }

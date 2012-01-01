@@ -85,10 +85,32 @@ class ApplicationQt : public Application {
 
 
 	//[-------------------------------------------------------]
+	//[ Public virtual EngineApplication functions            ]
+	//[-------------------------------------------------------]
+	public:
+		virtual bool LoadScene(const PLCore::String &sFilename) override;
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLEngine::EngineApplication functions ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void OnLoadProgress(float fLoadProgress) override;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual Application functions               ]
+	//[-------------------------------------------------------]
+	protected:
+		virtual void SetStateText(const PLCore::String &sText) override;
+
+
+	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Gui *m_pGui;	/**< GUI, can be a null pointer */
+		Gui  *m_pGui;			/**< GUI, can be a null pointer */
+		float m_fLoadProgress;	/**< Current load progress (0.0-1.0) */
 
 
 };

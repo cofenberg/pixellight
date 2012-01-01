@@ -83,7 +83,7 @@ DockWidgetSceneNode::DockWidgetSceneNode(QMainWindow *pQMainWindow) : DockWidget
 		pQDockWidget->setWindowTitle(sQStringWindowTitle);
 
 		// Add the created Qt dock widget to the given Qt main window
-		pQMainWindow->addDockWidget(Qt::LeftDockWidgetArea, pQDockWidget);
+		pQMainWindow->addDockWidget(Qt::BottomDockWidgetArea, pQDockWidget);
 	}
 }
 

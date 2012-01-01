@@ -112,14 +112,22 @@ class Application : public PLEngine::ScriptApplication {
 		*/
 		void OnControl(PLInput::Control &cControl);
 
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual Application functions               ]
+	//[-------------------------------------------------------]
+	protected:
 		/**
 		*  @brief
 		*    Sets the state text
 		*
 		*  @param[in] sText
 		*    State text
+		*
+		*  @note
+		*    - The default implementation is misusing the frontend title to communicate with the user
 		*/
-		void SetStateText(const PLCore::String &sText);
+		virtual void SetStateText(const PLCore::String &sText);
 
 
 	//[-------------------------------------------------------]

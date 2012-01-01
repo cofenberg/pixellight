@@ -37,6 +37,7 @@
 //[-------------------------------------------------------]
 QT_BEGIN_NAMESPACE
 class QMenu;
+class QLabel;
 class QAction;
 class QMainWindow;
 class QActionGroup;
@@ -95,6 +96,15 @@ class Gui : public QObject {
 		*    Frontend main window, can be a null pointer
 		*/
 		PLFrontendQt::FrontendMainWindow *GetFrontendMainWindow() const;
+
+		/**
+		*  @brief
+		*    Sets the state text
+		*
+		*  @param[in] sText
+		*    State text
+		*/
+		void SetStateText(const PLCore::String &sText);
 
 
 	//[-------------------------------------------------------]
@@ -157,10 +167,13 @@ class Gui : public QObject {
 	//[-------------------------------------------------------]
 	private:
 		Application	 *m_pApplication;			/**< Owner application, always valid */
+		// Menu bar
 		QMenu		 *m_pQMenuCamera;			/**< Camera Qt menu, can be a null pointer */
 		QActionGroup *m_pQActionGroupCamera;	/**< Camera Qt action group, can be a null pointer */
 		QMenu		 *m_pQMenuWindow;			/**< Window Qt menu, can be a null pointer */
 		QActionGroup *m_pQActionGroupWindow;	/**< Window Qt action group, can be a null pointer */
+		// Status bar
+		QLabel		 *m_pQLabelStatusBar;		/**< Qt label shown in the status bar of the Qt main window, can be a null pointer */
 
 
 };
