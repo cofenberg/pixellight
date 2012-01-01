@@ -52,6 +52,7 @@ add_sources(
 	src/PLMath/EulerAngles.cpp
 	src/PLMath/Graph.cpp
 	src/PLMath/GraphPath.cpp
+	src/PLMath/Math.cpp
 	src/PLMath/Matrix3x3.cpp
 	src/PLMath/Matrix3x4.cpp
 	src/PLMath/Matrix4x4.cpp
