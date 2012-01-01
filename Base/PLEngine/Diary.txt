@@ -1,6 +1,7 @@
 >> 01.01.2012
 [CO]
 - "EngineApplication::OnLoadProgress()": Made the method protected and virtual because derived classes may want to reuse it
+- Added "EngineApplication::ConfigureGenericScene()" derived applications can use in order to create simple default scenes
 
 
 
