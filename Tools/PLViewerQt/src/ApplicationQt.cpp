@@ -65,12 +65,27 @@ ApplicationQt::~ApplicationQt()
 
 
 //[-------------------------------------------------------]
+//[ Protected virtual PLCore::AbstractFrontend functions  ]
+//[-------------------------------------------------------]
+void ApplicationQt::OnUpdate()
+{
+	// Update the GUI
+	if (m_pGui)
+		m_pGui->Update();
+
+	// Call base implementation
+	Application::OnUpdate();
+}
+
+
+//[-------------------------------------------------------]
 //[ Private virtual PLCore::CoreApplication functions     ]
 //[-------------------------------------------------------]
 void ApplicationQt::OnInit()
 {
 	// Initialize the GUI (no "m_pGui" security checks required, the application lifecycle is guaranteed)
 	m_pGui = new Gui(*this);
+	m_pGui->SetEnabled(true);
 
 	// Call base implementation
 	Application::OnInit();
@@ -92,12 +107,9 @@ void ApplicationQt::OnDeInit()
 //[-------------------------------------------------------]
 bool ApplicationQt::LoadScene(const String &sFilename)
 {
-	// Get the Qt main window
-	PLFrontendQt::FrontendMainWindow *pFrontendMainWindow = m_pGui ? m_pGui->GetFrontendMainWindow() : nullptr;
-
-	// Disable the Qt main window while loading so the user can't prank around within the GUI
-	if (pFrontendMainWindow)
-		pFrontendMainWindow->setEnabled(false);
+	// Disable the GUI window while loading so the user can't prank around
+	if (m_pGui)
+		m_pGui->SetEnabled(false);
 
 	// Reset the current load progress and ensure everything is up-to-date when we start to load
 	m_fLoadProgress = -0.42f;	// So "OnLoadProgress()" is forced to update
@@ -107,8 +119,8 @@ bool ApplicationQt::LoadScene(const String &sFilename)
 	const bool bResult = Application::LoadScene(sFilename);
 
 	// Enable the Qt main window when loading is done
-	if (pFrontendMainWindow)
-		pFrontendMainWindow->setEnabled(true);
+	if (m_pGui)
+		m_pGui->SetEnabled(true);
 
 	// Done
 	return bResult;

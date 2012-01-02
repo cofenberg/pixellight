@@ -49,6 +49,7 @@ namespace PLScene {
 namespace PLFrontendQt {
 	class FrontendMainWindow;
 }
+class GuiPicking;
 class Application;
 
 
@@ -90,6 +91,15 @@ class Gui : public QObject {
 
 		/**
 		*  @brief
+		*    Returns the owner application
+		*
+		*  @return
+		*    The owner application
+		*/
+		Application &GetApplication() const;
+
+		/**
+		*  @brief
 		*    Get frontend main window
 		*
 		*  @return
@@ -99,12 +109,37 @@ class Gui : public QObject {
 
 		/**
 		*  @brief
+		*    Sets whether or not the GUI is currently enabled
+		*
+		*  @param[in] bEnabled
+		*    'true' to enable the GUI, else 'false'
+		*/
+		void SetEnabled(bool bEnabled);
+
+		/**
+		*  @brief
 		*    Sets the state text
 		*
 		*  @param[in] sText
 		*    State text
 		*/
 		void SetStateText(const PLCore::String &sText);
+
+		/**
+		*  @brief
+		*    Updates the GUI
+		*
+		*  @note
+		*    - Performs work which has to be done every frame, but this work is kept to a minimum
+		*/
+		void Update();
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual QObject methods                        ]
+	//[-------------------------------------------------------]
+	public:
+		virtual bool eventFilter(QObject *pQObject, QEvent *pQEvent);
 
 
 	//[-------------------------------------------------------]
@@ -168,6 +203,7 @@ class Gui : public QObject {
 	//[-------------------------------------------------------]
 	private:
 		Application	 *m_pApplication;			/**< Owner application, always valid */
+		GuiPicking   *m_pGuiPicking;			/**< GUI picking component instance, can be a null pointer */
 		// Menu bar
 		QMenu		 *m_pQMenuCamera;			/**< Camera Qt menu, can be a null pointer */
 		QActionGroup *m_pQActionGroupCamera;	/**< Camera Qt action group, can be a null pointer */

@@ -43,6 +43,7 @@ add_sources(
 	src/ApplicationQt.cpp
 	src/Main.cpp
 	src/Gui.cpp
+	src/GuiPicking.cpp
 	../PLViewer/src/Application.cpp	# Reused
 	../PLViewer/src/Config.cpp		# Reused
 	${UI_SRCS}	# Add source produced by uic

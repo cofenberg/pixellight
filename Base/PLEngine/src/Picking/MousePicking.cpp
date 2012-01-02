@@ -85,16 +85,19 @@ SNCamera *MousePicking::GetCamera() const
 */
 void MousePicking::SetCamera(SNCamera *pCamera)
 {
-	// Disconnect event handler
-	if (m_pCamera)
-		m_pCamera->SignalDestroy.Disconnect(EventHandlerCameraDestroy);
+	// New camera?
+	if (m_pCamera != pCamera) {
+		// Disconnect event handler
+		if (m_pCamera)
+			m_pCamera->SignalDestroy.Disconnect(EventHandlerCameraDestroy);
 
-	// Set new camera
-	m_pCamera = pCamera;
+		// Set new camera
+		m_pCamera = pCamera;
 
-	// Connect event handler
-	if (m_pCamera)
-		m_pCamera->SignalDestroy.Connect(EventHandlerCameraDestroy);
+		// Connect event handler
+		if (m_pCamera)
+			m_pCamera->SignalDestroy.Connect(EventHandlerCameraDestroy);
+	}
 }
 
 /**

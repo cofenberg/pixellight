@@ -31,6 +31,9 @@
     <ClCompile Include="..\PLViewer\src\Application.cpp">
       <Filter>PLViewer</Filter>
     </ClCompile>
+    <ClCompile Include="src\GuiPicking.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ApplicationQt.h">
@@ -44,6 +47,9 @@
     </ClInclude>
     <ClInclude Include="..\PLViewer\resource.h">
       <Filter>PLViewer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GuiPicking.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

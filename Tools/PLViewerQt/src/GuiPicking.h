@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ApplicationQt.h                                *
+ *  File: GuiPicking.h                                   *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,20 +20,24 @@
 \*********************************************************/
 
 
-#ifndef __PLVIEWERQT_APPLICATIONQT_H__
-#define __PLVIEWERQT_APPLICATIONQT_H__
+#ifndef __PLVIEWERQT_PICKING_H__
+#define __PLVIEWERQT_PICKING_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <Application.h>	// Reused from "PLViewer"
+#include <PLScene/Scene/SceneNodeHandler.h>
+#include <PLEngine/Picking/MousePicking.h>
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+QT_BEGIN_NAMESPACE
+class QLabel;
+QT_END_NAMESPACE
 class Gui;
 
 
@@ -42,18 +46,9 @@ class Gui;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    PLViewer application class with an added lightweight Qt GUI-layer
+*    Picking application component
 */
-class ApplicationQt : public Application {
-
-
-	//[-------------------------------------------------------]
-	//[ RTTI interface                                        ]
-	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, ApplicationQt, "", Application, "PLViewer application class with an added lightweight Qt GUI-layer")
-		// Constructors
-		pl_constructor_1(ParameterConstructor,	PLCore::Frontend&,	"Parameter constructor. Frontend this application instance is running in as first parameter.",	"")
-	pl_class_end
+class GuiPicking : public PLEngine::MousePicking {
 
 
 	//[-------------------------------------------------------]
@@ -64,63 +59,79 @@ class ApplicationQt : public Application {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] cFrontend
-		*    Frontend this application instance is running in
+		*  @param[in] cGui
+		*    Owner GUI
 		*/
-		ApplicationQt(PLCore::Frontend &cFrontend);
+		GuiPicking(Gui &cGui);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~ApplicationQt();
+		virtual ~GuiPicking();
+
+		/**
+		*  @brief
+		*    Performs the informativ picking
+		*
+		*   @remarks
+		*     The purpose of this method is to provide the user with an information what's currently under the mouse
+		*     cursor. So, this method should be called continually without the need to "click on the object". This
+		*     method is allowed decide whether or not to internal state.
+		*
+		*  @return
+		*    Picked scene node, can be a null pointer
+		*
+		*  @see
+		*    - "PerformPicking()"
+		*/
+		PLScene::SceneNode *PerformInformativPicking();
+
+		/**
+		*  @brief
+		*    Performs picking
+		*
+		*  @return
+		*    Picked scene node, can be a null pointer
+		*
+		*  @note
+		*    - Also updates the Qt label shown in the status bar of the Qt main window
+		*/
+		PLScene::SceneNode *PerformPicking();
 
 
 	//[-------------------------------------------------------]
-	//[ Protected virtual PLCore::AbstractFrontend functions  ]
-	//[-------------------------------------------------------]
-	protected:
-		virtual void OnUpdate() override;
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual PLCore::CoreApplication functions     ]
+	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnInit() override;
-		virtual void OnDeInit() override;
+		/**
+		*  @brief
+		*    Set the text of the Qt label shown in the status bar of the Qt main window
+		*
+		*  @param[in] sText
+		*    Text to be set
+		*/
+		void SetLabelStatusBarText(const PLCore::String &sText);
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual EngineApplication functions            ]
-	//[-------------------------------------------------------]
-	public:
-		virtual bool LoadScene(const PLCore::String &sFilename) override;
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual PLEngine::EngineApplication functions ]
+	//[ Private virtual PLEngine::Picking functions           ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnLoadProgress(float fLoadProgress) override;
-
-
-	//[-------------------------------------------------------]
-	//[ Protected virtual Application functions               ]
-	//[-------------------------------------------------------]
-	protected:
-		virtual void SetStateText(const PLCore::String &sText) override;
+		virtual bool OnPickingCandidate(PLScene::SceneNode &cSceneNode) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Gui  *m_pGui;			/**< GUI, can be a null pointer */
-		float m_fLoadProgress;	/**< Current load progress (0.0-1.0) */
+		Gui						   *m_pGui;								/**< Owner GUI, always valid! */
+		PLCore::uint64				m_nLastPickingTime;					/**< Last picking time */
+		PLScene::SceneNodeHandler	m_cCurrentPickedSceneNodeHandler;	/**< Currently picked scene node */
+		QLabel					   *m_pQLabelStatusBar;					/**< Qt label shown in the status bar of the Qt main window, can be a null pointer */
 
 
 };
 
 
-#endif // __PLVIEWERQT_APPLICATIONQT_H__
+#endif // __PLVIEWERQT_PICKING_H__

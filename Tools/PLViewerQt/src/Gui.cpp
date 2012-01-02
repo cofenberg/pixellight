@@ -26,6 +26,7 @@
 #include <PLCore/PLCore.h>
 PL_WARNING_PUSH
 	PL_WARNING_DISABLE(4127)	// "warning C4127: conditional expression is constant"
+	#include <QtGui/qevent.h>
 	#include <QtGui/qlabel.h>
 	#include <QtGui/qmenubar.h>
 	#include <QtGui/qstatusbar.h>
@@ -42,6 +43,7 @@ PL_WARNING_POP
 #include <PLFrontendQt/ConstructFileFilter.h>
 #include <PLFrontendQt/DockWidget/DockWidget.h>
 #include "Application.h"
+#include "GuiPicking.h"
 #include "Gui.h"
 
 
@@ -63,6 +65,7 @@ using namespace PLFrontendQt;
 Gui::Gui(Application &cApplication) :
 	EventHandlerCameraFound(&Gui::OnCameraFound, this),
 	m_pApplication(&cApplication),
+	m_pGuiPicking(nullptr),
 	// Menu bar
 	m_pQMenuCamera(nullptr),
 	m_pQActionGroupCamera(nullptr),
@@ -85,6 +88,18 @@ Gui::Gui(Application &cApplication) :
 */
 Gui::~Gui()
 {
+	// Destroy the GUI picking instance
+	if (m_pGuiPicking)
+		delete m_pGuiPicking;
+}
+
+/**
+*  @brief
+*    Returns the owner application
+*/
+Application &Gui::GetApplication() const
+{
+	return *m_pApplication;
 }
 
 /**
@@ -106,6 +121,29 @@ FrontendMainWindow *Gui::GetFrontendMainWindow() const
 
 /**
 *  @brief
+*    Sets whether or not the GUI is currently enabled
+*/
+void Gui::SetEnabled(bool bEnabled)
+{
+	// Get the Qt main window
+	FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
+	if (pFrontendMainWindow)
+		pFrontendMainWindow->setEnabled(bEnabled);
+
+	// Create/destroy the GUI picking
+	if (bEnabled) {
+		if (!m_pGuiPicking)
+			m_pGuiPicking = new GuiPicking(*this);
+	} else {
+		if (m_pGuiPicking) {
+			delete m_pGuiPicking;
+			m_pGuiPicking = nullptr;
+		}
+	}
+}
+
+/**
+*  @brief
 *    Sets the state text
 */
 void Gui::SetStateText(const String &sText)
@@ -113,6 +151,58 @@ void Gui::SetStateText(const String &sText)
 	// Update the Qt label shown in the status bar of the Qt main window
 	if (m_pQLabelStatusBar)
 		m_pQLabelStatusBar->setText(QtStringAdapter::PLToQt(sText));
+}
+
+/**
+*  @brief
+*    Updates the GUI
+*/
+void Gui::Update()
+{
+	// Perform the informativ picking
+	if (m_pGuiPicking)
+		m_pGuiPicking->PerformInformativPicking();
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual QObject methods                        ]
+//[-------------------------------------------------------]
+bool Gui::eventFilter(QObject *pQObject, QEvent *pQEvent)
+{
+	// Handle Qt main window events
+	if (pQObject == GetFrontendMainWindow()) {
+		// Mouse button double click (QMouseEvent)
+		if (pQEvent->type() == QEvent::MouseButtonDblClick) {
+			// Cast the received event to QMouseEvent
+			QMouseEvent *pQMouseEvent = static_cast<QMouseEvent*>(pQEvent);
+
+			// Left mouse button?
+			if (pQMouseEvent->button() == Qt::LeftButton) {
+				// Perform picking
+				if (m_pGuiPicking) {
+					SceneNode *pSceneNode = m_pGuiPicking->PerformPicking();
+					if (pSceneNode) {
+						// [TODO] Currently we just toggle the scene node debug mode to see some action
+						// Toggle the debug mode of the picked scene node
+						if (pSceneNode->GetDebugFlags() & SceneNode::DebugEnabled) {
+							// Disable debug mode
+							pSceneNode->SetDebugFlags(pSceneNode->GetDebugFlags() & ~SceneNode::DebugEnabled);
+						} else {
+							// Enable debug mode
+							pSceneNode->SetDebugFlags(pSceneNode->GetDebugFlags() |SceneNode::DebugEnabled);
+						}
+					}
+
+					// Done - filter the event out, i.e. stop it being handled further
+					return true;
+				}
+			}
+		}
+	}
+
+	// Pass the event on to the parent class
+	return QObject::eventFilter(pQObject, pQEvent);
 }
 
 
@@ -125,6 +215,9 @@ void Gui::SetStateText(const String &sText)
 */
 void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 {
+	// This Qt object should receive events from the Qt main window
+	cQMainWindow.installEventFilter(this);
+
 	{ // Menu bar
 		{ // Setup the file menu
 			QMenu *pQMenu = cQMainWindow.menuBar()->addMenu(cQMainWindow.tr("&File"));
@@ -174,10 +267,8 @@ void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 	}
 
 	{ // Status bar
-		// Create the Qt label shown in the status bar of the Qt main window
+		// Create the Qt label shown in the status bar of the Qt main window and add it to Qt main window status bar
 		m_pQLabelStatusBar = new QLabel();
-
-		// Set Qt main window status bar
 		cQMainWindow.statusBar()->addWidget(m_pQLabelStatusBar);
 	}
 }
