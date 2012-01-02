@@ -1,3 +1,9 @@
+>> 02.01.2012
+[CO]
+- Finally implemented "SRPBackgroundColorGradient" which can be used for a simple color gradient background
+
+
+
 >> 11.11.2011
 [CO]
 - Updated x64 Visual Studio project settings
