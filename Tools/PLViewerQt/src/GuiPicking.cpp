@@ -105,12 +105,10 @@ SceneNode *GuiPicking::PerformPicking()
 	// Set the camera used for picking
 	SetCamera(m_pGui->GetApplication().GetCamera());
 
-	// Use the previous result as currently picked scene node
-	SceneNode *pPickedSceneNode = m_cCurrentPickedSceneNodeHandler.GetElement();
-
 	// Perform picking - "PerformMousePicking()" is using the current mouse position inside the main window
 	// and the currently used camera in order to find the scene node under the mouse cursor
 	PickingResult cPickingResult;
+	SceneNode *pPickedSceneNode = nullptr;
 	if (PerformMousePicking(cPickingResult))
 		pPickedSceneNode = cPickingResult.GetSceneNode();
 
