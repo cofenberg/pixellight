@@ -81,10 +81,10 @@ class SNMDrawRectangle : public SNMDraw {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMDrawRectangle, "PLScene", PLScene::SNMDraw, "Scene node modifier class drawing a 2D rectangle around the owner scene node")
 		// Attributes
-		pl_attribute(Width,	float,					1.0f,										ReadWrite,	DirectValue,	"Rectangle width (if supported by the the used renderer API, if not may have no effect)",	"Min='1.0'")
-		pl_attribute(Color,	PLGraphics::Color4,		PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Rectangle color (r/g/b/a)",																"")
+		pl_attribute(Width,	float,					1.0f,						ReadWrite,	DirectValue,	"Rectangle width (if supported by the the used renderer API, if not may have no effect)",	"Min='1.0'")
+		pl_attribute(Color,	PLGraphics::Color4,		PLGraphics::Color4::White,	ReadWrite,	DirectValue,	"Rectangle color (r/g/b/a)",																"")
 			// Overwritten SceneNodeModifier attributes
-		pl_attribute(Flags,	pl_flag_type(EFlags),	0,											ReadWrite,	GetSet,			"Flags",																					"")
+		pl_attribute(Flags,	pl_flag_type(EFlags),	0,							ReadWrite,	GetSet,			"Flags",																					"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 		// Slots

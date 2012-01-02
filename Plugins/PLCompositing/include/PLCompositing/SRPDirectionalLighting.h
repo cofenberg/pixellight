@@ -123,11 +123,11 @@ class SRPDirectionalLighting : public PLScene::SceneRendererPass {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPDirectionalLighting, "PLCompositing", PLScene::SceneRendererPass, "Abstract directional lighting scene renderer pass")
 		// Attributes
-		pl_attribute(AmbientColor,		PLGraphics::Color3,					PLGraphics::Color3(1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Ambient color",				"")
-		pl_attribute(LightingIntensity,	float,								1.0f,									ReadWrite,	DirectValue,	"General lighting intensity",	"")
-		pl_attribute(TextureFiltering,	pl_enum_type(ETextureFiltering),	Anisotropic8,							ReadWrite,	DirectValue,	"Texture filtering",			"")
+		pl_attribute(AmbientColor,		PLGraphics::Color3,					PLGraphics::Color3::White,	ReadWrite,	DirectValue,	"Ambient color",				"")
+		pl_attribute(LightingIntensity,	float,								1.0f,						ReadWrite,	DirectValue,	"General lighting intensity",	"")
+		pl_attribute(TextureFiltering,	pl_enum_type(ETextureFiltering),	Anisotropic8,				ReadWrite,	DirectValue,	"Texture filtering",			"")
 			// Overwritten PLScene::SceneRendererPass attributes
-		pl_attribute(Flags,				pl_flag_type(EFlags),				0,										ReadWrite,	GetSet,			"Flags",						"")
+		pl_attribute(Flags,				pl_flag_type(EFlags),				0,							ReadWrite,	GetSet,			"Flags",						"")
 	pl_class_end
 
 

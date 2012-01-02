@@ -455,8 +455,7 @@ const Statistics &RendererBackend::GetStatistics() const
 const Vector2 &RendererBackend::GetTexelToPixelOffset() const
 {
 	// It looks like that most renderer APIs don't have a texel offset, so this is probably the most useful default implementation
-	static const Vector2 vTexelOffset(0.0f, 0.0f);
-	return vTexelOffset;
+	return Vector2::Zero;
 }
 
 void RendererBackend::Update()

@@ -61,8 +61,8 @@ class SNMEgoOrbitingController : public SNMOrbitingController {
 	//[-------------------------------------------------------]
 	pl_class(PL_RTTI_EXPORT, SNMEgoOrbitingController, "PLEngine", PLEngine::SNMOrbitingController, "Scene node modifier class rotating a scene node towards a target scene node using an input controller with 3D restriction")
 		// Attributes
-		pl_attribute(UpVector,		PLMath::Vector3,	PLMath::Vector3(0.0f, 1.0f, 0.0f),	ReadWrite,	DirectValue,	"Up vector",																											"")
-		pl_attribute(RollFactor,	float,				0.25f,								ReadWrite,	DirectValue,	"Roll factor. If there's an absolute z-axis (e.g. when using a 3D mouse), apply roll -> looks & feels more natural.",	"")
+		pl_attribute(UpVector,		PLMath::Vector3,	PLMath::Vector3::UnitY,	ReadWrite,	DirectValue,	"Up vector",																											"")
+		pl_attribute(RollFactor,	float,				0.25f,					ReadWrite,	DirectValue,	"Roll factor. If there's an absolute z-axis (e.g. when using a 3D mouse), apply roll -> looks & feels more natural.",	"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 		// Slots

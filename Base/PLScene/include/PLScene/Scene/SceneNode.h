@@ -194,15 +194,15 @@ class SceneNode : public PLCore::Object, public PLCore::Element<SceneNode> {
 			pl_property("Icon",	"Data/Textures/IconSceneNode.dds")
 		pl_properties_end
 		// Attributes
-		pl_attribute(Flags,				pl_flag_type(EFlags),		0,									ReadWrite,	GetSet,			"Flags",																															"")
-		pl_attribute(DebugFlags,		pl_flag_type(EDebugFlags),	0,									ReadWrite,	GetSet,			"Debug flags",																														"")
-		pl_attribute(Position,			PLMath::Vector3,			PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Position",																															"")
-		pl_attribute(Rotation,			PLMath::Vector3,			PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Rotation as Euler angles in degree, [0, 360]",																						"Inc=1")
-		pl_attribute(Scale,				PLMath::Vector3,			PLMath::Vector3(1.0f, 1.0f, 1.0f),	ReadWrite,	GetSet,			"Scale",																															"")
-		pl_attribute(MaxDrawDistance,	float,						0.0f,								ReadWrite,	DirectValue,	"Maximum draw distance of the scene node to the camera, if 0 do always draw, if negative, do always draw this node before other",	"")
-		pl_attribute(AABBMin,			PLMath::Vector3,			PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Minimum position of the 'scene node space' axis aligned bounding box",																"")
-		pl_attribute(AABBMax,			PLMath::Vector3,			PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Maximum position of the 'scene node space' axis aligned bounding box",																"")
-		pl_attribute(Name,				PLCore::String,				"",									ReadWrite,	GetSet,			"Optional scene node name. If not defined, a name is chosen automatically",															"")
+		pl_attribute(Flags,				pl_flag_type(EFlags),		0,						ReadWrite,	GetSet,			"Flags",																															"")
+		pl_attribute(DebugFlags,		pl_flag_type(EDebugFlags),	0,						ReadWrite,	GetSet,			"Debug flags",																														"")
+		pl_attribute(Position,			PLMath::Vector3,			PLMath::Vector3::Zero,	ReadWrite,	GetSet,			"Position",																															"")
+		pl_attribute(Rotation,			PLMath::Vector3,			PLMath::Vector3::Zero,	ReadWrite,	GetSet,			"Rotation as Euler angles in degree, [0, 360]",																						"Inc=1")
+		pl_attribute(Scale,				PLMath::Vector3,			PLMath::Vector3::One,	ReadWrite,	GetSet,			"Scale",																															"")
+		pl_attribute(MaxDrawDistance,	float,						0.0f,					ReadWrite,	DirectValue,	"Maximum draw distance of the scene node to the camera, if 0 do always draw, if negative, do always draw this node before other",	"")
+		pl_attribute(AABBMin,			PLMath::Vector3,			PLMath::Vector3::Zero,	ReadWrite,	GetSet,			"Minimum position of the 'scene node space' axis aligned bounding box",																"")
+		pl_attribute(AABBMax,			PLMath::Vector3,			PLMath::Vector3::Zero,	ReadWrite,	GetSet,			"Maximum position of the 'scene node space' axis aligned bounding box",																"")
+		pl_attribute(Name,				PLCore::String,				"",						ReadWrite,	GetSet,			"Optional scene node name. If not defined, a name is chosen automatically",															"")
 		#ifdef PLSCENE_EXPORTS	// The following is only required when compiling PLScene
 			// Methods
 			pl_method_0(GetContainer,				pl_ret_type(SceneContainer*),														"Returns the scene container the scene node is in or a null pointer if this is the root node.",																																																										"")

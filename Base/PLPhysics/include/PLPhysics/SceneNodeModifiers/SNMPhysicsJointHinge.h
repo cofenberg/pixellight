@@ -53,8 +53,8 @@ class SNMPhysicsJointHinge : public SNMPhysicsJoint {
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsJointHinge, "PLPhysics", PLPhysics::SNMPhysicsJoint, "Physics hinge joint scene node modifier")
 		// Attributes
-		pl_attribute(PivotPoint,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"Origin of the hinge in local space",																									"")
-		pl_attribute(PinDir,		PLMath::Vector3,	PLMath::Vector3(0.0f, 1.0f, 0.0f),	ReadWrite,	GetSet,	"The line of action of the hinge in scene container space if the 'LocalPinDirection'-flag is not set, else in local scene node space",	"")
+		pl_attribute(PivotPoint,	PLMath::Vector3,	PLMath::Vector3::Zero,	ReadWrite,	GetSet,	"Origin of the hinge in local space",																									"")
+		pl_attribute(PinDir,		PLMath::Vector3,	PLMath::Vector3::UnitY,	ReadWrite,	GetSet,	"The line of action of the hinge in scene container space if the 'LocalPinDirection'-flag is not set, else in local scene node space",	"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

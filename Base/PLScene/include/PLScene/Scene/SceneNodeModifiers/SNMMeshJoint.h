@@ -85,16 +85,16 @@ class SNMMeshJoint : public SNMMesh {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMMeshJoint, "PLScene", PLScene::SNMMesh, "Mesh scene node joint modifier class")
 		// Attributes
-		pl_attribute(Name,				PLCore::String,			"",									ReadWrite,	GetSet,			"Name of the joint to modify",															"")
-		pl_attribute(Rotation,			PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Joint rotation in degree (joint space)",												"")
-		pl_attribute(RotationFrom,		PLCore::String,			"",									ReadWrite,	DirectValue,	"Name of the scene node to take the rotation from (transformed into joint space)",		"")
-		pl_attribute(Min,				PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Minimum joint rotation in in degree, if min = max -> no limitation, per component",	"")
-		pl_attribute(Max,				PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,			"Maximum joint rotation in in degree, if min = max -> no limitation, per component",	"")
-		pl_attribute(Speed,				float,					5.0f,								ReadWrite,	DirectValue,	"Rotation speed",																		"")
-		pl_attribute(MaxDifference,		float,					50.0f,								ReadWrite,	DirectValue,	"Maximum rotation difference in degree, use it to void TO fast rotations",				"")
-		pl_attribute(FallbackRotation,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Rotation that is used if the target is 'out of rotation range'",						"")
+		pl_attribute(Name,				PLCore::String,			"",						ReadWrite,	GetSet,			"Name of the joint to modify",															"")
+		pl_attribute(Rotation,			PLMath::Vector3,		PLMath::Vector3::Zero,	ReadWrite,	GetSet,			"Joint rotation in degree (joint space)",												"")
+		pl_attribute(RotationFrom,		PLCore::String,			"",						ReadWrite,	DirectValue,	"Name of the scene node to take the rotation from (transformed into joint space)",		"")
+		pl_attribute(Min,				PLMath::Vector3,		PLMath::Vector3::Zero,	ReadWrite,	GetSet,			"Minimum joint rotation in in degree, if min = max -> no limitation, per component",	"")
+		pl_attribute(Max,				PLMath::Vector3,		PLMath::Vector3::Zero,	ReadWrite,	GetSet,			"Maximum joint rotation in in degree, if min = max -> no limitation, per component",	"")
+		pl_attribute(Speed,				float,					5.0f,					ReadWrite,	DirectValue,	"Rotation speed",																		"")
+		pl_attribute(MaxDifference,		float,					50.0f,					ReadWrite,	DirectValue,	"Maximum rotation difference in degree, use it to void TO fast rotations",				"")
+		pl_attribute(FallbackRotation,	PLMath::Vector3,		PLMath::Vector3::Zero,	ReadWrite,	DirectValue,	"Rotation that is used if the target is 'out of rotation range'",						"")
 			// Overwritten SceneNodeModifier attributes
-		pl_attribute(Flags,				pl_flag_type(EFlags),	0,									ReadWrite,	GetSet,			"Flags",																				"")
+		pl_attribute(Flags,				pl_flag_type(EFlags),	0,						ReadWrite,	GetSet,			"Flags",																				"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 		// Slots

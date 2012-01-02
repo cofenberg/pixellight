@@ -102,12 +102,12 @@ class SNLoadScreen : public SNLoadScreenBase {
 		pl_attribute(ImageY,		float,						0.133f,											ReadWrite,	DirectValue,	"Image y position 'screen space' between 0.0 and 1.0",	"")
 		pl_attribute(ImageWidth,	float,						0.64f,											ReadWrite,	DirectValue,	"Image width 'screen space' between 0.0 and 1.0",		"")
 		pl_attribute(ImageHeight,	float,						0.853f,											ReadWrite,	DirectValue,	"Image height 'screen space' between 0.0 and 1.0",		"")
-		pl_attribute(ImageColor,	PLGraphics::Color4,			PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),		ReadWrite,	DirectValue,	"Image color",											"")
+		pl_attribute(ImageColor,	PLGraphics::Color4,			PLGraphics::Color4::White,						ReadWrite,	DirectValue,	"Image color",											"")
 		pl_attribute(BarX,			float,						0.025f,											ReadWrite,	DirectValue,	"Bar x position 'screen space' between 0.0 and 1.0",	"")
 		pl_attribute(BarY,			float,						0.083f,											ReadWrite,	DirectValue,	"Bar y position 'screen space' between 0.0 and 1.0",	"")
 		pl_attribute(BarWidth,		float,						0.95f,											ReadWrite,	DirectValue,	"Bar width 'screen space' between 0.0 and 1.0",			"")
 		pl_attribute(BarHeight,		float,						0.066f,											ReadWrite,	DirectValue,	"Bar height 'screen space' between 0.0 and 1.0",		"")
-		pl_attribute(BarColor,		PLGraphics::Color4,			PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),		ReadWrite,	DirectValue,	"Bar color",											"")
+		pl_attribute(BarColor,		PLGraphics::Color4,			PLGraphics::Color4::White,						ReadWrite,	DirectValue,	"Bar color",											"")
 			// Overwritten SceneNode attributes
 		pl_attribute(Flags,			pl_flag_type(EFlags),		NoCulling,										ReadWrite,	GetSet,			"Flags",												"")
 		// Constructors

@@ -54,7 +54,7 @@ class SNMPhysicsTorque : public SNMPhysics {
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsTorque, "PLPhysics", PLPhysics::SNMPhysics, "Physics scene node modifier adding a torque to the first found physics body of the owner scene node")
 		// Attributes
-		pl_attribute(Torque,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Torque to add",	"")
+		pl_attribute(Torque,	PLMath::Vector3,	PLMath::Vector3::Zero,	ReadWrite,	DirectValue,	"Torque to add",	"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

@@ -90,7 +90,7 @@ void SPTexturePreview::OnPaint(Surface &cSurface)
 			// Draw image (we have to flip the result upside-down...)
 			SamplerStates cSamplerStates;
 			cDrawHelpers.DrawImage(*pTexture->GetTextureBuffer(), cSamplerStates, Vector2(m_vCameraPosition.x-m_vCameraPosition.z, m_vCameraPosition.y-m_vCameraPosition.z), Vector2(m_vCameraPosition.z*2, m_vCameraPosition.z*2),
-								   Color4::White, 1.0f, Vector2(1.0f, 1.0f), Vector2(-1.0f, -1.0f));
+								   Color4::White, 1.0f, Vector2::One, Vector2::NegativeOne);
 
 
 		// End 2D mode

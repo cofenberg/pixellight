@@ -59,8 +59,8 @@ class SNMRotationFixRoll : public SNMTransform {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMRotationFixRoll, "PLScene", PLScene::SNMTransform, "Scene node modifier class 'correcting' the rotation of a scene node")
 		// Attributes
-		pl_attribute(UpVector,	PLMath::Vector3,	PLMath::Vector3(0.0f, 1.0f, 0.0f),	ReadWrite,	DirectValue,	"Up vector",															"")
-		pl_attribute(Speed,		float,				5.0f,								ReadWrite,	DirectValue,	"Fix roll speed, if <=0 rotation is fixed at once and not 'smoothly'",	"Min='0.0'")
+		pl_attribute(UpVector,	PLMath::Vector3,	PLMath::Vector3::UnitY,	ReadWrite,	DirectValue,	"Up vector",															"")
+		pl_attribute(Speed,		float,				5.0f,					ReadWrite,	DirectValue,	"Fix roll speed, if <=0 rotation is fixed at once and not 'smoothly'",	"Min='0.0'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

@@ -86,7 +86,7 @@ class SNMLightRandomAnimation : public SceneNodeModifier {
 		pl_attribute(Speed,		float,					2.0f,									ReadWrite,	DirectValue,	"Animation speed",	"")
 		pl_attribute(Radius,	float,					0.5f,									ReadWrite,	DirectValue,	"Animation radius",	"")
 		pl_attribute(FixColor,	PLGraphics::Color3,		PLGraphics::Color3(0.5f, 0.5f, 0.5f),	ReadWrite,	DirectValue,	"Fix color",		"")
-		pl_attribute(Color,		PLGraphics::Color3,		PLGraphics::Color3(1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Color to apply",	"")
+		pl_attribute(Color,		PLGraphics::Color3,		PLGraphics::Color3::White,				ReadWrite,	DirectValue,	"Color to apply",	"")
 			// Overwritten SceneNodeModifier attributes
 		pl_attribute(Flags,		pl_flag_type(EFlags),	0,										ReadWrite,	GetSet,			"Flags",			"")
 		// Constructors

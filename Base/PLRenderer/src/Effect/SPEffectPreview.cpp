@@ -99,7 +99,7 @@ void SPEffectPreview::OnPaint(Surface &cSurface)
 					if (pTextureBuffer) {
 						cRenderer.SetRenderState(RenderState::CullMode, Cull::None);
 						cDrawHelpers.DrawImage(*pTextureBuffer, cSamplerStates, Vector2(m_vCameraPosition.x-m_vCameraPosition.z, m_vCameraPosition.y-m_vCameraPosition.z), Vector2(m_vCameraPosition.z*2, m_vCameraPosition.z*2), pEffectPass->GetColor(),
-											   1.0f, Vector2(1.0f, 1.0f), Vector2(-1.0f, -1.0f));
+											   1.0f, Vector2::One, Vector2::NegativeOne);
 					}
 				}
 

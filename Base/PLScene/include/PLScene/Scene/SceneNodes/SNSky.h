@@ -99,11 +99,11 @@ class SkyLayer : public PLCore::Object, public PLCore::Element<SkyLayer> {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SkyLayer, "PLScene", PLCore::Object, "Sky layer")
 		// Attributes
-		pl_attribute(Type,		pl_enum_type(EType),	Unknown,							ReadWrite,	GetSet,	"Sky layer type",															"")
-		pl_attribute(Position,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"Sky layer position",														"")
-		pl_attribute(Rotation,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"Sky layer rotation",														"")
-		pl_attribute(Scale,		PLMath::Vector3,		PLMath::Vector3(1.0f, 1.0f, 1.0f),	ReadWrite,	GetSet,	"Sky layer scale",															"")
-		pl_attribute(Name,		PLCore::String,			"",									ReadWrite,	GetSet,	"Optional sky layer name. If not defined, a name is chosen automatically.",	"")
+		pl_attribute(Type,		pl_enum_type(EType),	Unknown,				ReadWrite,	GetSet,	"Sky layer type",															"")
+		pl_attribute(Position,	PLMath::Vector3,		PLMath::Vector3::Zero,	ReadWrite,	GetSet,	"Sky layer position",														"")
+		pl_attribute(Rotation,	PLMath::Vector3,		PLMath::Vector3::Zero,	ReadWrite,	GetSet,	"Sky layer rotation",														"")
+		pl_attribute(Scale,		PLMath::Vector3,		PLMath::Vector3::One,	ReadWrite,	GetSet,	"Sky layer scale",															"")
+		pl_attribute(Name,		PLCore::String,			"",						ReadWrite,	GetSet,	"Optional sky layer name. If not defined, a name is chosen automatically.",	"")
 	pl_class_end
 
 

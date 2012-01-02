@@ -53,8 +53,8 @@ class MeshCreatorBezierPatch : public MeshCreator {
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, MeshCreatorBezierPatch, "PLMesh", PLMesh::MeshCreator, "Bezier batch mesh creator class")
 		// Attributes
-		pl_attribute(Offset,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Offset to center",		"")
-		pl_attribute(Divisions,	PLCore::uint32,		10,									ReadWrite,	DirectValue,	"Number of divisions",	"")
+		pl_attribute(Offset,	PLMath::Vector3,	PLMath::Vector3::Zero,	ReadWrite,	DirectValue,	"Offset to center",		"")
+		pl_attribute(Divisions,	PLCore::uint32,		10,						ReadWrite,	DirectValue,	"Number of divisions",	"")
 
 		/*
 		// [TODO] New RTTI usage

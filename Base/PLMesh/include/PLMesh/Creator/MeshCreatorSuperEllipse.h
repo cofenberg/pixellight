@@ -65,10 +65,10 @@ class MeshCreatorSuperEllipse : public MeshCreator {
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, MeshCreatorSuperEllipse, "PLMesh", PLMesh::MeshCreator, "Super ellipse mesh creator class")
 		// Attributes
-		pl_attribute(Power1,	float,				0.5f,								ReadWrite,	DirectValue,	"Control parameter 1",	"")
-		pl_attribute(Power2,	float,				0.1f,								ReadWrite,	DirectValue,	"Control parameter 2",	"")
-		pl_attribute(Detail,	PLCore::uint32,		10,									ReadWrite,	DirectValue,	"Detail",				"")
-		pl_attribute(Offset,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Offset to center",		"")
+		pl_attribute(Power1,	float,				0.5f,					ReadWrite,	DirectValue,	"Control parameter 1",	"")
+		pl_attribute(Power2,	float,				0.1f,					ReadWrite,	DirectValue,	"Control parameter 2",	"")
+		pl_attribute(Detail,	PLCore::uint32,		10,						ReadWrite,	DirectValue,	"Detail",				"")
+		pl_attribute(Offset,	PLMath::Vector3,	PLMath::Vector3::Zero,	ReadWrite,	DirectValue,	"Offset to center",		"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
