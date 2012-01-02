@@ -237,6 +237,11 @@ bool Application::LoadResource(const String &sFilename)
 	// Set the state text, show the user a native filename within the GUI
 	SetStateText(bResult ? Url(sFilename).GetNativePath() : ("Failed to load \"" + Url(sFilename).GetNativePath() + "\" (see log for details)"));
 
+	// Activated color gradient background within the scene renderer, or at least try it
+	// -> The standard scene renderer compositions of PixelLight within "Standard.zip" always have an inactive "PLCompositing::SRPBackgroundColorGradient"-instance
+	// -> By using a color gradient background, also completely black/gray/white etc. meshes can be seen which is a good thing as a default setting within this viewer
+	GetSceneRendererTool().SetPassAttribute("BackgroundColorGradient", "Flags", "");
+
 	// Done
 	return bResult;
 }
@@ -381,6 +386,9 @@ void Application::OnInit()
 	} else {
 		// Set the state text
 		SetStateText("Nothing loaded");
+
+		// Activated color gradient background within the scene renderer, or at least try it
+		GetSceneRendererTool().SetPassAttribute("BackgroundColorGradient", "Flags", "");
 	}
 }
 

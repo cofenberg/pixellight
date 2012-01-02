@@ -1,3 +1,11 @@
+>> 02.01.2012
+[CO]
+- When loading a resource, the viewer now tries to activate the color gradient background within the scene renderer
+  -> The standard scene renderer compositions of PixelLight within "Standard.zip" always have an inactive "PLCompositing::SRPBackgroundColorGradient"-instance
+  -> By using a color gradient background, also completely black/gray/white etc. meshes can be seen which is a good thing as a default setting within this viewer
+
+
+
 >> 01.01.2012
 [CO]
 - Show the user a native filename within the GUI
