@@ -568,6 +568,222 @@ void DrawHelpersBackendShaders::DrawQuad(const Color4 &cColor, const Vector3 &vV
 	}
 }
 
+void DrawHelpersBackendShaders::DrawGradientQuad(const Color4 &cColor1, const Color4 &cColor2, float fAngle, const Vector2 &vPos, const Vector2 &vSize)
+{
+	// Create vertex buffer
+	if (CreateTempBuffes()) {
+		// Setup the vertex buffer
+		if (m_pTempVertexBuffer->Lock(Lock::WriteOnly)) {
+			// For color calculation
+			Color4 cColor;
+			const float fSin     = Math::Sin(fAngle);
+			const float fCos     = Math::Cos(fAngle);
+			const float fScale   = 1.0f/(Math::Abs(fSin)+Math::Abs(fCos));
+
+			// Vertex 0
+			float *pfVertex = static_cast<float*>(m_pTempVertexBuffer->GetData(0, VertexBuffer::Position));
+			pfVertex[0] = vPos.x;
+			pfVertex[1] = vPos.y + vSize.y;
+			pfVertex[2] = m_fZValue2D;
+			{ // Calculate color
+				cColor = 0.0f;
+				// Horizontal color influence
+				if (fCos > 0.0f)
+					cColor += cColor1* fCos;
+				if (fCos < 0.0f)
+					cColor += cColor2*-fCos;
+				// Vertical color influence
+				if (fSin > 0.0f)
+					cColor = (cColor2* fSin + cColor)*fScale;
+				if (fSin < 0.0f)
+					cColor = (cColor1*-fSin + cColor)*fScale;
+				cColor.Saturate();
+			}
+			m_pTempVertexBuffer->SetColor(0, cColor);
+
+			// Vertex 1
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(1, VertexBuffer::Position));
+			pfVertex[0] = vPos.x + vSize.x;
+			pfVertex[1] = vPos.y + vSize.y;
+			pfVertex[2] = m_fZValue2D;
+			{ // Calculate color
+				cColor = 0.0f;
+				// Horizontal color influence
+				if (fCos > 0.0f)
+					cColor += cColor2* fCos;
+				if (fCos < 0.0f)
+					cColor += cColor1*-fCos;
+				// Vertical color influence
+				if (fSin > 0.0f)
+					cColor = (cColor2* fSin + cColor)*fScale;
+				if (fSin < 0.0f)
+					cColor = (cColor1*-fSin + cColor)*fScale;
+				cColor.Saturate();
+			}
+			m_pTempVertexBuffer->SetColor(1, cColor);
+
+			// Vertex 2
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(2, VertexBuffer::Position));
+			pfVertex[0] = vPos.x;
+			pfVertex[1] = vPos.y;
+			pfVertex[2] = m_fZValue2D;
+			{ // Calculate color
+				cColor = 0.0f;
+				// Horizontal color influence
+				if (fCos > 0.0f)
+					cColor += cColor1* fCos;
+				if (fCos < 0.0f)
+					cColor += cColor2*-fCos;
+				// Vertical color influence
+				if (fSin > 0.0f)
+					cColor = (cColor1* fSin + cColor)*fScale;
+				if (fSin < 0.0f)
+					cColor = (cColor2*-fSin + cColor)*fScale;
+				cColor.Saturate();
+			}
+			m_pTempVertexBuffer->SetColor(2, cColor);
+
+			// Vertex 3
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(3, VertexBuffer::Position));
+			pfVertex[0] = vPos.x + vSize.x;
+			pfVertex[1] = vPos.y;
+			pfVertex[2] = m_fZValue2D;
+			{ // Calculate color
+				cColor = 0.0f;
+				// Horizontal color influence
+				if (fCos > 0.0f)
+					cColor += cColor2* fCos;
+				if (fCos < 0.0f)
+					cColor += cColor1*-fCos;
+				// Vertical color influence
+				if (fSin > 0.0f)
+					cColor = (cColor1* fSin + cColor)*fScale;
+				if (fSin < 0.0f)
+					cColor = (cColor2*-fSin + cColor)*fScale;
+				cColor.Saturate();
+			}
+			m_pTempVertexBuffer->SetColor(3, cColor);
+
+			// Unlock the vertex buffer
+			m_pTempVertexBuffer->Unlock();
+		}
+
+		// Use the primitive GPU program
+		if (UsePrimitiveProgram(*m_pTempVertexBuffer, Color4::Null, m_mObjectSpaceToClipSpace)) {
+			// Draw quad
+			m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+		}
+	}
+}
+
+void DrawHelpersBackendShaders::DrawGradientQuad(const Color4 &cColor1, const Color4 &cColor2, float fAngle, const Vector3 &vV1, const Vector3 &vV2, const Vector3 &vV3, const Vector3 &vV4, const Matrix4x4 &mObjectSpaceToClipSpace)
+{
+	// Create vertex buffer
+	if (CreateTempBuffes()) {
+		// Setup the vertex buffer
+		if (m_pTempVertexBuffer->Lock(Lock::WriteOnly)) {
+			// For color calculation
+			Color4 cColor;
+			const float fSin     = Math::Sin(fAngle);
+			const float fCos     = Math::Cos(fAngle);
+			const float fScale   = 1.0f/(Math::Abs(fSin)+Math::Abs(fCos));
+
+			// Vertex 0
+			float *pfVertex = static_cast<float*>(m_pTempVertexBuffer->GetData(0, VertexBuffer::Position));
+			pfVertex[0] = vV1.x;
+			pfVertex[1] = vV1.y;
+			pfVertex[2] = vV1.z;
+			{ // Calculate color
+				cColor = 0.0f;
+				// Horizontal color influence
+				if (fCos > 0.0f)
+					cColor += cColor1* fCos;
+				if (fCos < 0.0f)
+					cColor += cColor2*-fCos;
+				// Vertical color influence
+				if (fSin > 0.0f)
+					cColor = (cColor2* fSin + cColor)*fScale;
+				if (fSin < 0.0f)
+					cColor = (cColor1*-fSin + cColor)*fScale;
+				cColor.Saturate();
+			}
+			m_pTempVertexBuffer->SetColor(0, cColor);
+
+			// Vertex 1
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(1, VertexBuffer::Position));
+			pfVertex[0] = vV2.x;
+			pfVertex[1] = vV2.y;
+			pfVertex[2] = vV2.z;
+			{ // Calculate color
+				cColor = 0.0f;
+				// Horizontal color influence
+				if (fCos > 0.0f)
+					cColor += cColor2* fCos;
+				if (fCos < 0.0f)
+					cColor += cColor1*-fCos;
+				// Vertical color influence
+				if (fSin > 0.0f)
+					cColor = (cColor2* fSin + cColor)*fScale;
+				if (fSin < 0.0f)
+					cColor = (cColor1*-fSin + cColor)*fScale;
+				cColor.Saturate();
+			}
+			m_pTempVertexBuffer->SetColor(1, cColor);
+
+			// Vertex 2
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(2, VertexBuffer::Position));
+			pfVertex[0] = vV3.x;
+			pfVertex[1] = vV3.y;
+			pfVertex[2] = vV3.z;
+			{ // Calculate color
+				cColor = 0.0f;
+				// Horizontal color influence
+				if (fCos > 0.0f)
+					cColor += cColor1* fCos;
+				if (fCos < 0.0f)
+					cColor += cColor2*-fCos;
+				// Vertical color influence
+				if (fSin > 0.0f)
+					cColor = (cColor1* fSin + cColor)*fScale;
+				if (fSin < 0.0f)
+					cColor = (cColor2*-fSin + cColor)*fScale;
+				cColor.Saturate();
+			}
+			m_pTempVertexBuffer->SetColor(2, cColor);
+
+			// Vertex 3
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(3, VertexBuffer::Position));
+			pfVertex[0] = vV4.x;
+			pfVertex[1] = vV4.y;
+			pfVertex[2] = vV4.z;
+			{ // Calculate color
+				cColor = 0.0f;
+				// Horizontal color influence
+				if (fCos > 0.0f)
+					cColor += cColor2* fCos;
+				if (fCos < 0.0f)
+					cColor += cColor1*-fCos;
+				// Vertical color influence
+				if (fSin > 0.0f)
+					cColor = (cColor1* fSin + cColor)*fScale;
+				if (fSin < 0.0f)
+					cColor = (cColor2*-fSin + cColor)*fScale;
+				cColor.Saturate();
+			}
+			m_pTempVertexBuffer->SetColor(3, cColor);
+
+			// Unlock the vertex buffer
+			m_pTempVertexBuffer->Unlock();
+		}
+
+		// Use the primitive GPU program
+		if (UsePrimitiveProgram(*m_pTempVertexBuffer, Color4::Null, mObjectSpaceToClipSpace)) {
+			// Draw quad
+			m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+		}
+	}
+}
+
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
@@ -638,6 +854,8 @@ ProgramGenerator::GeneratedProgram *DrawHelpersBackendShaders::GetAndSetGenerate
 				pGeneratedProgramUserData->pVertexPosition					= pProgram->GetAttribute(sVertexPosition);
 				static const String sVertexTextureCoordinate = "VertexTextureCoordinate";
 				pGeneratedProgramUserData->pVertexTextureCoordinate			= pProgram->GetAttribute(sVertexTextureCoordinate);
+				static const String sVertexColor = "VertexColor";
+				pGeneratedProgramUserData->pVertexColor						= pProgram->GetAttribute(sVertexColor);
 				// Vertex shader uniforms
 				static const String sObjectSpaceToClipSpaceMatrix = "ObjectSpaceToClipSpaceMatrix";
 				pGeneratedProgramUserData->pObjectSpaceToClipSpaceMatrix	= pProgram->GetUniform(sObjectSpaceToClipSpaceMatrix);
@@ -723,6 +941,11 @@ bool DrawHelpersBackendShaders::UsePrimitiveProgram(VertexBuffer &cVertexBuffer,
 {
 	// Set the program flags
 	m_cProgramFlags.Reset();
+	if (cColor == Color4::Null) {
+		// Use vertex color
+		PL_ADD_VS_FLAG(m_cProgramFlags, VS_VERTEXCOLOR)
+		PL_ADD_FS_FLAG(m_cProgramFlags, FS_VERTEXCOLOR)
+	}
 	if (fPointSize)
 		PL_ADD_VS_FLAG(m_cProgramFlags, VS_POINTSIZE)
 
@@ -734,6 +957,8 @@ bool DrawHelpersBackendShaders::UsePrimitiveProgram(VertexBuffer &cVertexBuffer,
 		// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
 		if (pGeneratedProgramUserData->pVertexPosition)
 			pGeneratedProgramUserData->pVertexPosition->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Position);
+		if (pGeneratedProgramUserData->pVertexColor)
+			pGeneratedProgramUserData->pVertexColor->Set(&cVertexBuffer, PLRenderer::VertexBuffer::Color);
 
 		// Set program uniforms
 		if (pGeneratedProgramUserData->pObjectSpaceToClipSpaceMatrix)

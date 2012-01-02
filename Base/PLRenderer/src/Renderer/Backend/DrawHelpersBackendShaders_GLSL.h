@@ -28,6 +28,10 @@ attribute mediump vec3 VertexPosition;					// Object space vertex position input
 	attribute mediump vec2 VertexTextureCoordinate;		// Vertex texture coordinate input\n\
 	varying   mediump vec2 VertexTextureCoordinateVS;	// Vertex texture coordinate output\n\
 #endif\n\
+#ifdef VS_VERTEXCOLOR\n\
+	attribute mediump vec4 VertexColor;					// Vertex color input\n\
+	varying   mediump vec4 VertexColorVS;				// Vertex color output\n\
+#endif\n\
 \n\
 // Uniforms\n\
 uniform mediump mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix\n\
@@ -49,6 +53,11 @@ void main()\n\
 		VertexTextureCoordinateVS = (TextureMatrix*vec4(VertexTextureCoordinate, 1, 1)).xy;\n\
 	#endif\n\
 \n\
+	#ifdef VS_VERTEXCOLOR\n\
+		// Pass through the color\n\
+		VertexColorVS = VertexColor;\n\
+	#endif\n\
+\n\
 	#ifdef VS_POINTSIZE\n\
 		// Write the point size\n\
 		gl_PointSize = PointSize;\n\
@@ -62,9 +71,14 @@ static const PLCore::String sFragmentShaderSourceCodeGLSL = "\
 #ifdef FS_DIFFUSEMAP\n\
 	varying mediump vec2 VertexTextureCoordinateVS;	// Vertex texture coordinate input from vertex shader\n\
 #endif\n\
+#ifdef FS_VERTEXCOLOR\n\
+	varying mediump vec4 VertexColorVS;				// Vertex color input from vertex shader\n\
+#endif\n\
 \n\
 // Uniforms\n\
-uniform lowp vec4 Color;						// Color\n\
+#ifndef FS_VERTEXCOLOR\n\
+	uniform lowp vec4 Color;					// Color\n\
+#endif\n\
 #ifdef FS_DIFFUSEMAP\n\
 	#ifdef FS_DIFFUSEMAP2D\n\
 		uniform lowp sampler2D DiffuseMap;		// 2D diffuse map\n\
@@ -92,8 +106,16 @@ void main()\n\
 	#endif\n\
 \n\
 	// Still here? Then apply the given color...\n\
-	gl_FragColor = diffuseColor*Color;\n\
+	#ifdef FS_VERTEXCOLOR\n\
+		gl_FragColor = diffuseColor*VertexColorVS;\n\
+	#else\n\
+		gl_FragColor = diffuseColor*Color;\n\
+	#endif\n\
 #else\n\
-	gl_FragColor = Color;\n\
+	#ifdef FS_VERTEXCOLOR\n\
+		gl_FragColor = VertexColorVS;\n\
+	#else\n\
+		gl_FragColor = Color;\n\
+	#endif\n\
 #endif\n\
 }";

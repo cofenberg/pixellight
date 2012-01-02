@@ -763,6 +763,254 @@ void DrawHelpersBackendFixedFunctions::DrawQuad(const Color4 &cColor, const Vect
 	}
 }
 
+void DrawHelpersBackendFixedFunctions::DrawGradientQuad(const Color4 &cColor1, const Color4 &cColor2, float fAngle, const Vector2 &vPos, const Vector2 &vSize)
+{
+	// Create vertex buffer
+	if (CreateTempBuffes()) {
+		// Setup the vertex buffer
+		if (m_pTempVertexBuffer->Lock(Lock::WriteOnly)) {
+			// For color calculation
+			Color4 cColor;
+			const float fSin     = Math::Sin(fAngle);
+			const float fCos     = Math::Cos(fAngle);
+			const float fScale   = 1.0f/(Math::Abs(fSin)+Math::Abs(fCos));
+
+			// Vertex 0
+			float *pfVertex = static_cast<float*>(m_pTempVertexBuffer->GetData(0, VertexBuffer::Position));
+			pfVertex[0] = vPos.x;
+			pfVertex[1] = vPos.y + vSize.y;
+			pfVertex[2] = m_fZValue2D;
+			{ // Calculate color
+				cColor = 0.0f;
+				// Horizontal color influence
+				if (fCos > 0.0f)
+					cColor += cColor1* fCos;
+				if (fCos < 0.0f)
+					cColor += cColor2*-fCos;
+				// Vertical color influence
+				if (fSin > 0.0f)
+					cColor = (cColor2* fSin + cColor)*fScale;
+				if (fSin < 0.0f)
+					cColor = (cColor1*-fSin + cColor)*fScale;
+				cColor.Saturate();
+			}
+			m_pTempVertexBuffer->SetColor(0, cColor);
+
+			// Vertex 1
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(1, VertexBuffer::Position));
+			pfVertex[0] = vPos.x + vSize.x;
+			pfVertex[1] = vPos.y + vSize.y;
+			pfVertex[2] = m_fZValue2D;
+			{ // Calculate color
+				cColor = 0.0f;
+				// Horizontal color influence
+				if (fCos > 0.0f)
+					cColor += cColor2* fCos;
+				if (fCos < 0.0f)
+					cColor += cColor1*-fCos;
+				// Vertical color influence
+				if (fSin > 0.0f)
+					cColor = (cColor2* fSin + cColor)*fScale;
+				if (fSin < 0.0f)
+					cColor = (cColor1*-fSin + cColor)*fScale;
+				cColor.Saturate();
+			}
+			m_pTempVertexBuffer->SetColor(1, cColor);
+
+			// Vertex 2
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(2, VertexBuffer::Position));
+			pfVertex[0] = vPos.x;
+			pfVertex[1] = vPos.y;
+			pfVertex[2] = m_fZValue2D;
+			{ // Calculate color
+				cColor = 0.0f;
+				// Horizontal color influence
+				if (fCos > 0.0f)
+					cColor += cColor1* fCos;
+				if (fCos < 0.0f)
+					cColor += cColor2*-fCos;
+				// Vertical color influence
+				if (fSin > 0.0f)
+					cColor = (cColor1* fSin + cColor)*fScale;
+				if (fSin < 0.0f)
+					cColor = (cColor2*-fSin + cColor)*fScale;
+				cColor.Saturate();
+			}
+			m_pTempVertexBuffer->SetColor(2, cColor);
+
+			// Vertex 3
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(3, VertexBuffer::Position));
+			pfVertex[0] = vPos.x + vSize.x;
+			pfVertex[1] = vPos.y;
+			pfVertex[2] = m_fZValue2D;
+			{ // Calculate color
+				cColor = 0.0f;
+				// Horizontal color influence
+				if (fCos > 0.0f)
+					cColor += cColor2* fCos;
+				if (fCos < 0.0f)
+					cColor += cColor1*-fCos;
+				// Vertical color influence
+				if (fSin > 0.0f)
+					cColor = (cColor1* fSin + cColor)*fScale;
+				if (fSin < 0.0f)
+					cColor = (cColor2*-fSin + cColor)*fScale;
+				cColor.Saturate();
+			}
+			m_pTempVertexBuffer->SetColor(3, cColor);
+
+			// Unlock the vertex buffer
+			m_pTempVertexBuffer->Unlock();
+		}
+
+		// Fixed functions
+		FixedFunctions *pFixedFunctions = m_pRenderer->GetFixedFunctions();
+		if (pFixedFunctions) {
+			// Backup world matrix
+			const Matrix4x4 mWorldBackup = pFixedFunctions->GetTransformState(FixedFunctions::Transform::World);
+
+			// Set world matrix to identity
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, Matrix4x4::Identity);
+
+			// Set vertex buffer
+			pFixedFunctions->SetVertexBuffer(m_pTempVertexBuffer);
+
+			// Draw quad
+			m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+
+			// Restore world matrix
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mWorldBackup);
+		}
+	}
+}
+
+void DrawHelpersBackendFixedFunctions::DrawGradientQuad(const Color4 &cColor1, const Color4 &cColor2, float fAngle, const Vector3 &vV1, const Vector3 &vV2, const Vector3 &vV3, const Vector3 &vV4, const Matrix4x4 &mObjectSpaceToClipSpace)
+{
+	// Create vertex buffer
+	if (CreateTempBuffes()) {
+		// Setup the vertex buffer
+		if (m_pTempVertexBuffer->Lock(Lock::WriteOnly)) {
+			// For color calculation
+			Color4 cColor;
+			const float fSin     = Math::Sin(fAngle);
+			const float fCos     = Math::Cos(fAngle);
+			const float fScale   = 1.0f/(Math::Abs(fSin)+Math::Abs(fCos));
+
+			// Vertex 0
+			float *pfVertex = static_cast<float*>(m_pTempVertexBuffer->GetData(0, VertexBuffer::Position));
+			pfVertex[0] = vV1.x;
+			pfVertex[1] = vV1.y;
+			pfVertex[2] = vV1.z;
+			{ // Calculate color
+				cColor = 0.0f;
+				// Horizontal color influence
+				if (fCos > 0.0f)
+					cColor += cColor1* fCos;
+				if (fCos < 0.0f)
+					cColor += cColor2*-fCos;
+				// Vertical color influence
+				if (fSin > 0.0f)
+					cColor = (cColor2* fSin + cColor)*fScale;
+				if (fSin < 0.0f)
+					cColor = (cColor1*-fSin + cColor)*fScale;
+				cColor.Saturate();
+			}
+			m_pTempVertexBuffer->SetColor(0, cColor);
+
+			// Vertex 1
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(1, VertexBuffer::Position));
+			pfVertex[0] = vV2.x;
+			pfVertex[1] = vV2.y;
+			pfVertex[2] = vV2.z;
+			{ // Calculate color
+				cColor = 0.0f;
+				// Horizontal color influence
+				if (fCos > 0.0f)
+					cColor += cColor2* fCos;
+				if (fCos < 0.0f)
+					cColor += cColor1*-fCos;
+				// Vertical color influence
+				if (fSin > 0.0f)
+					cColor = (cColor2* fSin + cColor)*fScale;
+				if (fSin < 0.0f)
+					cColor = (cColor1*-fSin + cColor)*fScale;
+				cColor.Saturate();
+			}
+			m_pTempVertexBuffer->SetColor(1, cColor);
+
+			// Vertex 2
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(2, VertexBuffer::Position));
+			pfVertex[0] = vV3.x;
+			pfVertex[1] = vV3.y;
+			pfVertex[2] = vV3.z;
+			{ // Calculate color
+				cColor = 0.0f;
+				// Horizontal color influence
+				if (fCos > 0.0f)
+					cColor += cColor1* fCos;
+				if (fCos < 0.0f)
+					cColor += cColor2*-fCos;
+				// Vertical color influence
+				if (fSin > 0.0f)
+					cColor = (cColor1* fSin + cColor)*fScale;
+				if (fSin < 0.0f)
+					cColor = (cColor2*-fSin + cColor)*fScale;
+				cColor.Saturate();
+			}
+			m_pTempVertexBuffer->SetColor(2, cColor);
+
+			// Vertex 3
+			pfVertex	= static_cast<float*>(m_pTempVertexBuffer->GetData(3, VertexBuffer::Position));
+			pfVertex[0] = vV4.x;
+			pfVertex[1] = vV4.y;
+			pfVertex[2] = vV4.z;
+			{ // Calculate color
+				cColor = 0.0f;
+				// Horizontal color influence
+				if (fCos > 0.0f)
+					cColor += cColor2* fCos;
+				if (fCos < 0.0f)
+					cColor += cColor1*-fCos;
+				// Vertical color influence
+				if (fSin > 0.0f)
+					cColor = (cColor1* fSin + cColor)*fScale;
+				if (fSin < 0.0f)
+					cColor = (cColor2*-fSin + cColor)*fScale;
+				cColor.Saturate();
+			}
+			m_pTempVertexBuffer->SetColor(3, cColor);
+
+			// Unlock the vertex buffer
+			m_pTempVertexBuffer->Unlock();
+		}
+
+		// Fixed functions
+		FixedFunctions *pFixedFunctions = m_pRenderer->GetFixedFunctions();
+		if (pFixedFunctions) {
+			// Backup matrices
+			const Matrix4x4 mProjectionBackup = pFixedFunctions->GetTransformState(FixedFunctions::Transform::Projection);
+			const Matrix4x4 mViewBackup       = pFixedFunctions->GetTransformState(FixedFunctions::Transform::View);
+			const Matrix4x4 mWorldBackup      = pFixedFunctions->GetTransformState(FixedFunctions::Transform::World);
+
+			// Set transform - we just receive one final matrix from the user, so set projection and view to identity, and world to the given matrix
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, Matrix4x4::Identity);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       Matrix4x4::Identity);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World,      mObjectSpaceToClipSpace);
+
+			// Set vertex buffer
+			pFixedFunctions->SetVertexBuffer(m_pTempVertexBuffer);
+
+			// Draw quad
+			m_pRenderer->DrawPrimitives(Primitive::TriangleStrip, 0, 4);
+
+			// Restore matrices
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, mProjectionBackup);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       mViewBackup);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World,      mWorldBackup);
+		}
+	}
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

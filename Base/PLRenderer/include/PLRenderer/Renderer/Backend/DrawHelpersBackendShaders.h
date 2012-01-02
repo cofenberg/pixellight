@@ -96,6 +96,8 @@ class DrawHelpersBackendShaders : public DrawHelpersBackend {
 		PLRENDERER_API virtual void DrawTriangle(const PLGraphics::Color4 &cColor, const PLMath::Vector3 &vV1, const PLMath::Vector3 &vV2, const PLMath::Vector3 &vV3, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace, float fWidth = 0.0f) override;
 		PLRENDERER_API virtual void DrawQuad(const PLGraphics::Color4 &cColor, const PLMath::Vector2 &vPos, const PLMath::Vector2 &vSize, float fWidth = 0.0f) override;
 		PLRENDERER_API virtual void DrawQuad(const PLGraphics::Color4 &cColor, const PLMath::Vector3 &vV1, const PLMath::Vector3 &vV2, const PLMath::Vector3 &vV3, const PLMath::Vector3 &vV4, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace, float fWidth = 0.0f) override;
+		PLRENDERER_API virtual void DrawGradientQuad(const PLGraphics::Color4 &cColor1, const PLGraphics::Color4 &cColor2, float fAngle, const PLMath::Vector2 &vPos, const PLMath::Vector2 &vSize) override;
+		PLRENDERER_API virtual void DrawGradientQuad(const PLGraphics::Color4 &cColor1, const PLGraphics::Color4 &cColor2, float fAngle, const PLMath::Vector3 &vV1, const PLMath::Vector3 &vV2, const PLMath::Vector3 &vV3, const PLMath::Vector3 &vV4, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace) override;
 
 
 	//[-------------------------------------------------------]
@@ -154,7 +156,7 @@ class DrawHelpersBackendShaders : public DrawHelpersBackend {
 		*  @param[in] cVertexBuffer
 		*    Vertex buffer to use
 		*  @param[in] cColor
-		*    Color to use
+		*    Color to use, if "PLGraphics::Color4::Null" vertex color will be used
 		*  @param[in] mObjectSpaceToClipSpace
 		*    Object space to clip space matrix
 		*  @param[in] fPointSize
@@ -175,8 +177,9 @@ class DrawHelpersBackendShaders : public DrawHelpersBackend {
 		*    Vertex shader flags, flag names become to source code definitions
 		*/
 		enum EVertexShaderFlags {
-			VS_TEXCOORD0 = 1<<0,	/**< Use texture coordinate 0 */
-			VS_POINTSIZE = 1<<1		/**< Use point size */
+			VS_TEXCOORD0   = 1<<0,	/**< Use texture coordinate 0 */
+			VS_VERTEXCOLOR = 1<<1,	/**< Use vertex color */
+			VS_POINTSIZE   = 1<<2	/**< Use point size */
 		};
 
 		/**
@@ -186,7 +189,8 @@ class DrawHelpersBackendShaders : public DrawHelpersBackend {
 		enum EFragmentShaderFlags {
 			FS_DIFFUSEMAP		= 1<<0,	/**< Take diffuse map into account */
 				FS_DIFFUSEMAP2D = 1<<1,	/**< If this is set, the diffuse map is a 2D texture, else it's a rectangle texture */
-				FS_ALPHATEST	= 1<<2	/**< Use alpha test to discard fragments (FS_DIFFUSEMAP should be defined!) */
+				FS_ALPHATEST	= 1<<2,	/**< Use alpha test to discard fragments (FS_DIFFUSEMAP should be defined!) */
+			FS_VERTEXCOLOR      = 1<<3	/**< Use vertex color */
 		};
 
 		/**
@@ -197,6 +201,7 @@ class DrawHelpersBackendShaders : public DrawHelpersBackend {
 			// Vertex shader attributes
 			ProgramAttribute *pVertexPosition;
 			ProgramAttribute *pVertexTextureCoordinate;
+			ProgramAttribute *pVertexColor;
 			// Vertex shader uniforms
 			ProgramUniform *pObjectSpaceToClipSpaceMatrix;
 			ProgramUniform *pTextureMatrix;
