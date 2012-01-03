@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: TreeItemBase.cpp                               *
+ *  File: HeaderTreeItem.cpp                             *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLFrontendQt/DataModels/TreeItemBase.h"
+#include "PLFrontendQt/DataModels/HeaderTreeItem.h"
 
 
 //[-------------------------------------------------------]
@@ -33,51 +33,22 @@ namespace PLFrontendQt {
 namespace DataModels {
 
 
-TreeItemBase::TreeItemBase(QObject *parent) : QObject(parent)
+HeaderTreeItem::HeaderTreeItem(QObject* parent) : TreeItemBase(parent)
 {
 }
 
-TreeItemBase::TreeItemBase(int columnCount, QObject *parent) : QObject(parent), m_columnCount(columnCount)
+void HeaderTreeItem::setHeaderItems(const QStringList &headerItems)
 {
-	setParent(parent);
-	for (int i=0; i<columnCount; i++)
-		m_flagsMap.insert(i, Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+	m_headerItems = headerItems;
+	SetColumnCount(m_headerItems.count());
 }
 
-int TreeItemBase::columnCount() const
+QVariant HeaderTreeItem::data(const int column, const int role)
 {
-	return m_columnCount;
-}
-
-int TreeItemBase::row() const
-{
-	return parent()->children().indexOf(const_cast<TreeItemBase*>(this));
-}
-
-Qt::ItemFlags TreeItemBase::flags(const int column) const
-{
-	return m_flagsMap.contains(column) ? m_flagsMap[column] : Qt::ItemIsEnabled;
-}
-
-void TreeItemBase::SetFlags(const int column, const Qt::ItemFlags flags)
-{
-	if (m_flagsMap.contains(column))
-		m_flagsMap[column] |= flags;
-	else
-		m_flagsMap[column] = flags;
-}
-
-void TreeItemBase::RemoveFlags(const int column, const Qt::ItemFlags flags)
-{
-	if (m_flagsMap.contains(column))
-		m_flagsMap[column] &= ~flags;
-	else
-		m_flagsMap[column] = Qt::NoItemFlags;
-}
-
-void TreeItemBase::SetColumnCount(const int columnCount)
-{
-	m_columnCount = columnCount;
+	if (role != Qt::DisplayRole && column >= m_headerItems.count())
+		return QVariant();
+	
+	return m_headerItems[column];
 }
 
 

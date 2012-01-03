@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: TreeItemBase.cpp                               *
+ *  File: HeaderTreeItem.h                               *
  *
  *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,10 +20,15 @@
 \*********************************************************/
 
 
+#ifndef __PLFRONTENDQT_HEADERTREEITEM_H__
+#define __PLFRONTENDQT_HEADERTREEITEM_H__
+
+
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLFrontendQt/DataModels/TreeItemBase.h"
+#include <QStringList>
 
 
 //[-------------------------------------------------------]
@@ -33,52 +38,38 @@ namespace PLFrontendQt {
 namespace DataModels {
 
 
-TreeItemBase::TreeItemBase(QObject *parent) : QObject(parent)
-{
-}
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Header tree item
+*/
+class PLFRONTENDQT_API HeaderTreeItem : public TreeItemBase {
 
-TreeItemBase::TreeItemBase(int columnCount, QObject *parent) : QObject(parent), m_columnCount(columnCount)
-{
-	setParent(parent);
-	for (int i=0; i<columnCount; i++)
-		m_flagsMap.insert(i, Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-}
 
-int TreeItemBase::columnCount() const
-{
-	return m_columnCount;
-}
+	//[-------------------------------------------------------]
+	//[ Qt definitions (MOC)                                  ]
+	//[-------------------------------------------------------]
+	Q_OBJECT	// All files using the Q_OBJECT macro need to be compiled using the Meta-Object Compiler (MOC) of Qt, else slots won't work!
+				// (VisualStudio: Header file -> Right click -> Properties -> "Custom Build Tool")
 
-int TreeItemBase::row() const
-{
-	return parent()->children().indexOf(const_cast<TreeItemBase*>(this));
-}
 
-Qt::ItemFlags TreeItemBase::flags(const int column) const
-{
-	return m_flagsMap.contains(column) ? m_flagsMap[column] : Qt::ItemIsEnabled;
-}
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		explicit HeaderTreeItem(QObject* parent = nullptr);
+		void setHeaderItems(const QStringList &headerItems);
+		virtual QVariant data(const int column, const int role);
 
-void TreeItemBase::SetFlags(const int column, const Qt::ItemFlags flags)
-{
-	if (m_flagsMap.contains(column))
-		m_flagsMap[column] |= flags;
-	else
-		m_flagsMap[column] = flags;
-}
 
-void TreeItemBase::RemoveFlags(const int column, const Qt::ItemFlags flags)
-{
-	if (m_flagsMap.contains(column))
-		m_flagsMap[column] &= ~flags;
-	else
-		m_flagsMap[column] = Qt::NoItemFlags;
-}
-
-void TreeItemBase::SetColumnCount(const int columnCount)
-{
-	m_columnCount = columnCount;
-}
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		QStringList m_headerItems;
+};
 
 
 //[-------------------------------------------------------]
@@ -86,3 +77,6 @@ void TreeItemBase::SetColumnCount(const int columnCount)
 //[-------------------------------------------------------]
 } // DataModels
 } // PLFrontendQt
+
+
+#endif // __PLFRONTENDQT_HEADERTREEITEM_H__
