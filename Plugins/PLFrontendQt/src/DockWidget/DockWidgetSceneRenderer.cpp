@@ -54,7 +54,7 @@ pl_implement_class(DockWidgetSceneRenderer)
 *  @brief
 *    Constructor
 */
-DockWidgetSceneRenderer::DockWidgetSceneRenderer(QMainWindow *pQMainWindow) : DockWidgetScene(pQMainWindow)
+DockWidgetSceneRenderer::DockWidgetSceneRenderer(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidgetScene(pQMainWindow, pDockWidgetManager)
 {
 	// Get encapsulated Qt dock widget
 	QDockWidget *pQDockWidget = GetQDockWidget();

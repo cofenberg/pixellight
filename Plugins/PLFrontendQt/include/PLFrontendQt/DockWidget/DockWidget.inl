@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: DockWidgetScene.cpp                            *
+ *  File: DockWidget.inl                                 *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -21,40 +21,30 @@
 
 
 //[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include "PLFrontendQt/DockWidget/DockWidgetScene.h"
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLFrontendQt {
 
 
 //[-------------------------------------------------------]
-//[ RTTI interface                                        ]
-//[-------------------------------------------------------]
-pl_implement_class(DockWidgetScene)
-
-
-//[-------------------------------------------------------]
-//[ Protected functions                                   ]
+//[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
+*    Returns the pointer to the dock widget manager this dock widget is registered to
 */
-DockWidgetScene::DockWidgetScene(QWidget *pQWidgetParent, DockWidgetManager *pDockWidgetManager) : DockWidget(pQWidgetParent, pDockWidgetManager)
+DockWidgetManager *DockWidget::GetDockWidgetManager() const
 {
+	return m_pDockWidgetManager;
 }
 
 /**
 *  @brief
-*    Destructor
+*    Returns the encapsulated Qt dock widget
 */
-DockWidgetScene::~DockWidgetScene()
+QDockWidget *DockWidget::GetQDockWidget() const
 {
+	return reinterpret_cast<QDockWidget*>(m_pQDockWidget);
 }
 
 

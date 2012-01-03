@@ -40,6 +40,7 @@ class QWidget;
 class QDockWidget;
 QT_END_NAMESPACE
 namespace PLFrontendQt {
+	class DockWidgetManager;
 	class InternalQDockWidget;
 }
 
@@ -85,6 +86,7 @@ class DockWidget : public PLCore::Object {
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
+	friend class DockWidgetManager;
 	friend class InternalQDockWidget;
 
 
@@ -105,12 +107,39 @@ class DockWidget : public PLCore::Object {
 	public:
 		/**
 		*  @brief
+		*    Destructor
+		*/
+		PLFRONTENDQT_API virtual ~DockWidget();
+
+		/**
+		*  @brief
+		*    Returns the pointer to the dock widget manager this dock widget is registered to
+		*
+		*  @return
+		*    The pointer to the dock widget manager this dock widget is registered to, can be a null pointer
+		*/
+		inline DockWidgetManager *GetDockWidgetManager() const;
+
+		/**
+		*  @brief
 		*    Returns the encapsulated Qt dock widget
 		*
 		*  @return
 		*    The encapsulated Qt dock widget, can be a null pointer
 		*/
-		PLFRONTENDQT_API QDockWidget *GetQDockWidget() const;
+		inline QDockWidget *GetQDockWidget() const;
+
+		/**
+		*  @brief
+		*    Returns whether or not the encapsulated Qt dock widget is currently visible
+		*
+		*  @return
+		*    'true' if the encapsulated Qt dock widget is currently visible, else 'false'
+		*
+		*  @note
+		*    - Comfort method, you can also use the "QDockWidget"-instance directly
+		*/
+		PLFRONTENDQT_API bool IsQDockWidgetVisible() const;
 
 
 	//[-------------------------------------------------------]
@@ -122,22 +151,19 @@ class DockWidget : public PLCore::Object {
 		*    Constructor
 		*
 		*  @param[in] pQWidgetParent
-		*    Pointer to parent Qt widget as parameter, can be a null pointer (in this case you're responsible for destroying this instance)
+		*    Pointer to parent Qt widget, can be a null pointer (in this case you're responsible for destroying this instance)
+		*  @param[in] pDockWidgetManager
+		*    Optional pointer to the dock widget manager this dock widget should be registered to, can be a null pointer
 		*/
-		PLFRONTENDQT_API DockWidget(QWidget *pQWidgetParent);
-
-		/**
-		*  @brief
-		*    Destructor
-		*/
-		PLFRONTENDQT_API virtual ~DockWidget();
+		PLFRONTENDQT_API DockWidget(QWidget *pQWidgetParent, DockWidgetManager *pDockWidgetManager = nullptr);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		InternalQDockWidget	*m_pQDockWidget;	/**< Qt dock widget, can be a null pointer */
+		InternalQDockWidget	*m_pQDockWidget;		/**< Qt dock widget, can be a null pointer */
+		DockWidgetManager   *m_pDockWidgetManager;	/**< Optional pointer to the dock widget manager this dock widget should be registered to, can be a null pointer */
 
 
 };
@@ -147,6 +173,12 @@ class DockWidget : public PLCore::Object {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLFrontendQt
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLFrontendQt/DockWidget/DockWidget.inl"
 
 
 #endif // __PLFRONTENDQT_DOCKWIDGET_H__

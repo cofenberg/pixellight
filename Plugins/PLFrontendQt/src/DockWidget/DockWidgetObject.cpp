@@ -53,7 +53,7 @@ pl_implement_class(DockWidgetObject)
 *  @brief
 *    Constructor
 */
-DockWidgetObject::DockWidgetObject(QMainWindow *pQMainWindow) : DockWidget(pQMainWindow)
+DockWidgetObject::DockWidgetObject(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidget(pQMainWindow, pDockWidgetManager)
 {
 	// Get encapsulated Qt dock widget
 	QDockWidget *pQDockWidget = GetQDockWidget();

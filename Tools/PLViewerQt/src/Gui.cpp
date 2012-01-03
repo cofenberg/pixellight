@@ -42,6 +42,7 @@ PL_WARNING_POP
 #include <PLFrontendQt/FrontendMainWindow.h>
 #include <PLFrontendQt/ConstructFileFilter.h>
 #include <PLFrontendQt/DockWidget/DockWidget.h>
+#include <PLFrontendQt/DockWidget/DockWidgetManager.h>
 #include "Application.h"
 #include "GuiPicking.h"
 #include "Gui.h"
@@ -315,6 +316,13 @@ void Gui::FillMenuWindowRec(QMenu &cQMenu, const String &sBaseClass)
 			m_pQActionGroupWindow->addAction(pQAction);
 
 			// One can also derive from classes which can be instanced, but by convention this should not be done for RTTI dock widgets
+
+			// Get the Qt main window
+			FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
+
+			// Is there currently an instance of this dock widget already visible?
+			DockWidget *pDockWidget = pFrontendMainWindow ? pFrontendMainWindow->GetDockWidgetManager().GetFirstDockWidget(pClass->GetClassName()) : nullptr;
+			pQAction->setChecked(pDockWidget ? pDockWidget->IsQDockWidgetVisible() : false);
 		} else {
 			// Abstract class
 
@@ -431,15 +439,8 @@ void Gui::QtSlotSelectedWindow(QAction *pQAction)
 	// Get the Qt main window
 	FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
 	if (pFrontendMainWindow) {
-		// Get the chosen dock widget RTTI class...
-		const Class *pClass = ClassManager::GetInstance()->GetClass(QtStringAdapter::QtToPL(pQAction->data().toString()));
-		if (pClass) {
-			// [TODO] Avoid instancing a RTTI dock widget which is currently just hidden
-			// [TODO] Avoid instancing one RTTI dock widget multiple times
-
-			// ... and create an instance of it
-			DockWidget *pDockWidget = reinterpret_cast<DockWidget*>(pClass->Create(Params<Object*, QWidget*>(pFrontendMainWindow)));
-		}
+		// Show the requested dock widget
+		pFrontendMainWindow->GetDockWidgetManager().ShowDockWidget(QtStringAdapter::QtToPL(pQAction->data().toString()));
 	}
 }
 

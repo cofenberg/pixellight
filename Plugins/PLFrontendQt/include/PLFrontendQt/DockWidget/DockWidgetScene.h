@@ -32,14 +32,6 @@
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-QT_BEGIN_NAMESPACE
-class QMainWindow;
-QT_END_NAMESPACE
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLFrontendQt {
@@ -74,10 +66,12 @@ class DockWidgetScene : public DockWidget {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] pQMainWindow
-		*    Pointer to Qt main window, can be a null pointer (in this case you're responsible for destroying this instance)
+		*  @param[in] pQWidgetParent
+		*    Pointer to parent Qt widget, can be a null pointer (in this case you're responsible for destroying this instance)
+		*  @param[in] pDockWidgetManager
+		*    Optional pointer to the dock widget manager this dock widget should be registered to, can be a null pointer
 		*/
-		PLFRONTENDQT_API DockWidgetScene(QMainWindow *pQMainWindow);
+		PLFRONTENDQT_API DockWidgetScene(QWidget *pQWidgetParent, DockWidgetManager *pDockWidgetManager = nullptr);
 
 		/**
 		*  @brief

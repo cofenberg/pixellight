@@ -126,6 +126,7 @@ add_sources(
 	src/DataModels/SceneRendererDataModel/SceneRendererPassTreeItem.cpp
 	src/DataModels/SceneRendererDataModel/SceneRendererHeaderTreeItem.cpp
 	src/External/qtcolorbutton.cpp
+	src/DockWidget/DockWidgetManager.cpp
 	src/DockWidget/DockWidget.cpp
 	src/DockWidget/DockWidgetObject.cpp
 	src/DockWidget/DockWidgetScene.cpp

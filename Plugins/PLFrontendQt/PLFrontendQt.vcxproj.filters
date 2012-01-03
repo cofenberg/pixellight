@@ -172,6 +172,9 @@
     <ClCompile Include="src\DockWidget\DockWidgetSceneRenderer.cpp">
       <Filter>DockWidget</Filter>
     </ClCompile>
+    <ClCompile Include="src\DockWidget\DockWidgetManager.cpp">
+      <Filter>DockWidget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarTreeItemsFactory.h">
@@ -187,12 +190,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLFrontendQt\PLFrontendQt.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLFrontendQt\PLFrontendQtLinux.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLFrontendQt\PLFrontendQtWindows.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLFrontendQt\QtStringAdapter.h">
@@ -225,10 +222,19 @@
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneRenderer.h">
       <Filter>DockWidget</Filter>
     </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetManager.h">
+      <Filter>DockWidget</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Base\PLCore\Diary.txt" />
     <None Include="CMakeLists.txt" />
+    <None Include="include\PLFrontendQt\DockWidget\DockWidgetManager.inl">
+      <Filter>DockWidget</Filter>
+    </None>
+    <None Include="include\PLFrontendQt\DockWidget\DockWidget.inl">
+      <Filter>DockWidget</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="DataModels">

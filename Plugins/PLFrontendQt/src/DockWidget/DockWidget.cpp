@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <QtGui/qdockwidget.h>
+#include "PLFrontendQt/DockWidget/DockWidgetManager.h"
 #include "PLFrontendQt/DockWidget/DockWidget.h"
 
 
@@ -96,11 +97,26 @@ class InternalQDockWidget : public QDockWidget {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the encapsulated Qt dock widget
+*    Destructor
 */
-QDockWidget *DockWidget::GetQDockWidget() const
+DockWidget::~DockWidget()
 {
-	return m_pQDockWidget;
+	// If there's a dock widget manager provided, unregister this dock widget
+	if (m_pDockWidgetManager)
+		m_pDockWidgetManager->UnregisterDockWidget(*this);
+
+	// Destroy the encapsulated Qt dock widget, if it still exists
+	if (m_pQDockWidget)
+		delete m_pQDockWidget;
+}
+
+/**
+*  @brief
+*    Returns whether or not the encapsulated Qt dock widget is currently visible
+*/
+bool DockWidget::IsQDockWidgetVisible() const
+{
+	return m_pQDockWidget ? m_pQDockWidget->isVisible() : false;
 }
 
 
@@ -111,20 +127,13 @@ QDockWidget *DockWidget::GetQDockWidget() const
 *  @brief
 *    Constructor
 */
-DockWidget::DockWidget(QWidget *pQWidgetParent) :
-	m_pQDockWidget(new InternalQDockWidget(*this, pQWidgetParent))
+DockWidget::DockWidget(QWidget *pQWidgetParent, DockWidgetManager *pDockWidgetManager) :
+	m_pQDockWidget(new InternalQDockWidget(*this, pQWidgetParent)),
+	m_pDockWidgetManager(pDockWidgetManager)
 {
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-DockWidget::~DockWidget()
-{
-	// Destroy the encapsulated Qt dock widget, if it still exists
-	if (m_pQDockWidget)
-		delete m_pQDockWidget;
+	// If there's a dock widget manager provided, register this dock widget
+	if (m_pDockWidgetManager)
+		m_pDockWidgetManager->RegisterDockWidget(*this);
 }
 
 

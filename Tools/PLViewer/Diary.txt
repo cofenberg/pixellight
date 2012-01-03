@@ -1,3 +1,11 @@
+>> 03.01.2012
+[CO]
+PLViewerQt:
+- Is using the new "PLFrontendQt::DockWidgetManager" to do the RTTI dock widget handling. In this viewer, only one instance of a RTTI dock widget is visible at
+  the same time.
+
+
+
 >> 02.01.2012
 [CO]
 - When loading a resource, the viewer now tries to activate the color gradient background within the scene renderer

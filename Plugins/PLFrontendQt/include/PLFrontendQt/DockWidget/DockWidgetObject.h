@@ -67,7 +67,7 @@ class DockWidgetObject : public DockWidget {
 			pl_property("Title", "Object")
 		pl_properties_end
 		// Constructors
-		pl_constructor_1(DefaultConstructor,	QMainWindow*,	"Constructor with a pointer to the Qt main window as parameter",	"")
+		pl_constructor_2(DefaultConstructor,	QMainWindow*,	DockWidgetManager*,	"Constructor with a pointer to the Qt main window as first parameter, pointer to the dock widget manager this dock widget should be registered to as second parameter",	"")
 	pl_class_end
 
 
@@ -81,8 +81,10 @@ class DockWidgetObject : public DockWidget {
 		*
 		*  @param[in] pQMainWindow
 		*    Pointer to Qt main window, can be a null pointer (in this case you're responsible for destroying this instance)
+		*  @param[in] pDockWidgetManager
+		*    Optional pointer to the dock widget manager this dock widget should be registered to, can be a null pointer
 		*/
-		PLFRONTENDQT_API DockWidgetObject(QMainWindow *pQMainWindow);
+		PLFRONTENDQT_API DockWidgetObject(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager = nullptr);
 
 		/**
 		*  @brief

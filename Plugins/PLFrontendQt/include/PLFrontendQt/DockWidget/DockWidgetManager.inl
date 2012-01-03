@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: DockWidgetScene.cpp                            *
+ *  File: DockWidgetManager.inl                          *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -21,40 +21,32 @@
 
 
 //[-------------------------------------------------------]
-//[ Includes                                              ]
-//[-------------------------------------------------------]
-#include "PLFrontendQt/DockWidget/DockWidgetScene.h"
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLFrontendQt {
 
 
 //[-------------------------------------------------------]
-//[ RTTI interface                                        ]
-//[-------------------------------------------------------]
-pl_implement_class(DockWidgetScene)
-
-
-//[-------------------------------------------------------]
-//[ Protected functions                                   ]
+//[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
+*    Registers the given dock widget within this dock widget manager
 */
-DockWidgetScene::DockWidgetScene(QWidget *pQWidgetParent, DockWidgetManager *pDockWidgetManager) : DockWidget(pQWidgetParent, pDockWidgetManager)
+void DockWidgetManager::RegisterDockWidget(DockWidget &cDockWidget)
 {
+	// Add the given dock widget to the list of registered dock widgets
+	m_lstDockWidgets.Add(&cDockWidget);
 }
 
 /**
 *  @brief
-*    Destructor
+*    Unregisters the given dock widget within this dock widget manager
 */
-DockWidgetScene::~DockWidgetScene()
+void DockWidgetManager::UnregisterDockWidget(DockWidget &cDockWidget)
 {
+	// Remove the given dock widget from the list of registered dock widgets
+	m_lstDockWidgets.Remove(&cDockWidget);
 }
 
 

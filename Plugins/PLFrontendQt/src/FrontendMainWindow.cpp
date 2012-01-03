@@ -36,6 +36,7 @@
 #include "PLFrontendQt/Frontend.h"
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/FrontendRenderWindow.h"
+#include "PLFrontendQt/DockWidget/DockWidgetManager.h"
 #include "PLFrontendQt/FrontendMainWindow.h"
 
 
@@ -43,6 +44,24 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLFrontendQt {
+
+
+//[-------------------------------------------------------]
+//[ Public functions                                      ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Returns the dock widget manager of this main window
+*/
+DockWidgetManager &FrontendMainWindow::GetDockWidgetManager()
+{
+	// If required, create the dock widget manager of this main window right now
+	if (!m_pDockWidgetManager)
+		m_pDockWidgetManager = new DockWidgetManager(this);
+
+	// Return the dock widget manager of this main window
+	return *m_pDockWidgetManager;
+}
 
 
 //[-------------------------------------------------------]
@@ -55,7 +74,8 @@ namespace PLFrontendQt {
 FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) :
 	m_pFrontendQt(&cFrontendQt),
 	m_bVisible(false),
-	m_nWindowRedrawTimerID(startTimer(10))	// An interval of 10 milliseconds should be enough
+	m_nWindowRedrawTimerID(startTimer(10)),	// An interval of 10 milliseconds should be enough
+	m_pDockWidgetManager(nullptr)
 {
 	// Tell the frontend about this instance at once because it may already be required during frontend life cycle initialization
 	m_pFrontendQt->SetMainWindow(this);
@@ -89,6 +109,10 @@ FrontendMainWindow::~FrontendMainWindow()
 	// Stop window redraw timer
 	if (m_nWindowRedrawTimerID)
 		killTimer(m_nWindowRedrawTimerID);
+
+	// Destroy the dock widget manager of this main window, if there's one
+	if (m_pDockWidgetManager)
+		delete m_pDockWidgetManager;
 }
 
 /**
