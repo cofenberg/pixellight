@@ -178,6 +178,24 @@
     <ClCompile Include="build\GeneratedQtFiles\moc_DockWidgetSceneGraph.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
+    <ClCompile Include="src\DataModels\RTTIInfoModels\ClassInfoModel.cpp">
+      <Filter>DataModels\RTTIInfoModels</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DataModels\RTTIInfoModels\ClassListModel.cpp">
+      <Filter>DataModels\RTTIInfoModels</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DataModels\HeaderTreeItem.cpp">
+      <Filter>DataModels</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_ClassListModel.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_HeaderTreeItem.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_ClassInfoModel.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarTreeItemsFactory.h">
@@ -261,6 +279,9 @@
     <Filter Include="DockWidget">
       <UniqueIdentifier>{be095273-8a1e-46af-b13d-7fe5d0f9c92b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DataModels\RTTIInfoModels">
+      <UniqueIdentifier>{fd3b60b7-c9c0-4438-9a61-cbf31ed6465c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\PLFrontendQt\External\qtcolorbutton.h">
@@ -337,6 +358,15 @@
     </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\DockWidget\DockWidgetSceneGraph.h">
       <Filter>DockWidget</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\HeaderTreeItem.h">
+      <Filter>DataModels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\RTTIInfoModels\ClassInfoModel.h">
+      <Filter>DataModels\RTTIInfoModels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\RTTIInfoModels\ClassListModel.h">
+      <Filter>DataModels\RTTIInfoModels</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

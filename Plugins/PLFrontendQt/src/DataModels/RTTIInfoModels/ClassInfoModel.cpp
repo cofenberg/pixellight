@@ -1,7 +1,7 @@
 #include "PLFrontendQt/DataModels/RTTIInfoModels/ClassInfoModel.h"
 #include <PLFrontendQt/DataModels/TreeItemBase.h>
 #include "PLFrontendQt/DataModels/HeaderTreeItem.h"
-#include <QStringList>
+#include <QtCore//QStringList>
 #include <PLCore/Base/Class.h>
 #include <PLCore/Base/Var/VarDesc.h>
 #include <PLCore/Base/Event/EventDesc.h>

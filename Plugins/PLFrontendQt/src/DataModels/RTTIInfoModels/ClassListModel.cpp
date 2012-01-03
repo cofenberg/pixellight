@@ -1,6 +1,6 @@
 #include "PLFrontendQt/DataModels/RTTIInfoModels/ClassListModel.h"
 #include "PLFrontendQt/DataModels/HeaderTreeItem.h"
-#include <QStringList>
+#include <QtCore/QStringList>
 
 #include <PLCore/Container/List.h>
 #include <PLCore/Base/ClassManager.h>

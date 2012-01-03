@@ -28,7 +28,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLFrontendQt/DataModels/TreeItemBase.h"
-#include <QStringList>
+#include <QtCore/QStringList>
 
 
 //[-------------------------------------------------------]
