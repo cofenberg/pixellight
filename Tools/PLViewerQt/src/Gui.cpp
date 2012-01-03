@@ -428,17 +428,39 @@ void Gui::QtSlotMenuWindowAboutToShow()
 {
 	// Window Qt menu there?
 	if (m_pQMenuWindow) {
+		// Get the Qt main window
+		FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
+
 		// Clear the previous content - this is not performance critical so there's no reason to implement a
 		// more complex solution like e.g. updating the menu entries as soon as there's a change within the scene
 		m_pQMenuWindow->clear();
 		if (m_pQActionGroupWindow)
 			delete m_pQActionGroupWindow;
-		m_pQActionGroupWindow = new QActionGroup(GetFrontendMainWindow());
+		m_pQActionGroupWindow = new QActionGroup(pFrontendMainWindow);
 		m_pQActionGroupWindow->setExclusive(false);
 		connect(m_pQActionGroupWindow, SIGNAL(selected(QAction*)), this, SLOT(QtSlotSelectedWindow(QAction*)));
 
+		{ // Setup the hide all action
+			QAction *pQAction = new QAction(tr("Hide all"), pFrontendMainWindow);
+			connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredWindowHideAll()));
+			m_pQMenuWindow->addAction(pQAction);
+		}
+
+		// Add a separator
+		m_pQMenuWindow->addSeparator();
+
 		// Automatically fill the Qt window menu by using RTTI information
 		FillMenuWindowRec(*m_pQMenuWindow, "PLFrontendQt::DockWidget");
+	}
+}
+
+void Gui::QtSlotTriggeredWindowHideAll()
+{
+	// Get the Qt main window
+	FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
+	if (pFrontendMainWindow) {
+		// All registered dock widgets
+		pFrontendMainWindow->GetDockWidgetManager().HideDockWidgets();
 	}
 }
 

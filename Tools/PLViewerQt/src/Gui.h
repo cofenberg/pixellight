@@ -187,6 +187,7 @@ class Gui : public QObject {
 		void QtSlotMenuCameraAboutToShow();
 		void QtSlotSelectedCamera(QAction *);
 		void QtSlotMenuWindowAboutToShow();
+		void QtSlotTriggeredWindowHideAll();
 		void QtSlotSelectedWindow(QAction *);
 		void QtSlotOpenLogFile();
 
