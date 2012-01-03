@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SNMOrbiting.h                                  *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -71,13 +71,13 @@ class SNMOrbiting : public SceneNodeModifier {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMOrbiting, "PLScene", PLScene::SceneNodeModifier, "Scene node modifier class for orbiting around a target scene node")
 		// Attributes
-		pl_attribute(Target,		PLCore::String,		"",									ReadWrite,	DirectValue,	"Target scene node to 'look at', if empty nothing happens",								"")
-		pl_attribute(MinDistance,	float,				0.0f,								ReadWrite,	GetSet,			"Minimum distance to the target, negative = no minimum, always <= 'MaxDistance'",		"")
-		pl_attribute(MaxDistance,	float,				-1.0f,								ReadWrite,	GetSet,			"Maximum distance to the target, negative = no maximum, always >= 'MinDistance'",		"")
-		pl_attribute(Distance,		float,				-1.0f,								ReadWrite,	GetSet,			"Distance to the target, negative = not initialized yet",								"")
-		pl_attribute(Offset,		PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Target scene node position offset (same scene container space as target scene node)",	"")
-		pl_attribute(UpVector,		PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Up vector (null vector for no limitation)",											"")
-		pl_attribute(Pan,			PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Pan",																					"")
+		pl_attribute(Target,		PLCore::String,		"",						ReadWrite,	DirectValue,	"Target scene node to 'look at', if empty nothing happens",								"")
+		pl_attribute(MinDistance,	float,				0.0f,					ReadWrite,	GetSet,			"Minimum distance to the target, negative = no minimum, always <= 'MaxDistance'",		"")
+		pl_attribute(MaxDistance,	float,				-1.0f,					ReadWrite,	GetSet,			"Maximum distance to the target, negative = no maximum, always >= 'MinDistance'",		"")
+		pl_attribute(Distance,		float,				-1.0f,					ReadWrite,	GetSet,			"Distance to the target, negative = not initialized yet",								"")
+		pl_attribute(Offset,		PLMath::Vector3,	PLMath::Vector3::Zero,	ReadWrite,	DirectValue,	"Target scene node position offset (same scene container space as target scene node)",	"")
+		pl_attribute(UpVector,		PLMath::Vector3,	PLMath::Vector3::Zero,	ReadWrite,	DirectValue,	"Up vector (null vector for no limitation)",											"")
+		pl_attribute(Pan,			PLMath::Vector3,	PLMath::Vector3::Zero,	ReadWrite,	DirectValue,	"Pan",																					"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

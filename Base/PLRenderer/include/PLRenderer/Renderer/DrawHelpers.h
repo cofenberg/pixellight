@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: DrawHelpers.h                                  *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -469,6 +469,52 @@ class DrawHelpers {
 		*    - DrawTriangle()
 		*/
 		virtual void DrawQuad(const PLGraphics::Color4 &cColor, const PLMath::Vector3 &vV1, const PLMath::Vector3 &vV2, const PLMath::Vector3 &vV3, const PLMath::Vector3 &vV4, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace, float fWidth = 0.0f) = 0;
+
+		/**
+		*  @brief
+		*    Draws a gradient colored 2D quad
+		*
+		*  @param[in] cColor1
+		*    First color to use
+		*  @param[in] cColor2
+		*    Second color to use
+		*  @param[in] fAngle
+		*    Clockwise angle (in randian) of the gradient color. 0° means from left to right.
+		*  @param[in] vPos
+		*    2D position
+		*  @param[in] vSize
+		*    2D size
+		*
+		*  @see
+		*    - DrawTriangle()
+		*/
+		virtual void DrawGradientQuad(const PLGraphics::Color4 &cColor1, const PLGraphics::Color4 &cColor2, float fAngle, const PLMath::Vector2 &vPos, const PLMath::Vector2 &vSize) = 0;
+
+		/**
+		*  @brief
+		*    Draws a gradient colored quad using given 3D positions
+		*
+		*  @param[in] cColor1
+		*    First color to use
+		*  @param[in] cColor2
+		*    Second color to use
+		*  @param[in] fAngle
+		*    Clockwise angle (in randian) of the gradient color. 0° means from left to right.
+		*  @param[in] vV1
+		*    Object space quad vertex 1
+		*  @param[in] vV2
+		*    Object space quad vertex 2
+		*  @param[in] vV3
+		*    Object space quad vertex 3
+		*  @param[in] vV4
+		*    Object space quad vertex 4
+		*  @param[in] mObjectSpaceToClipSpace
+		*    Object space to clip space matrix
+		*
+		*  @see
+		*    - DrawTriangle()
+		*/
+		virtual void DrawGradientQuad(const PLGraphics::Color4 &cColor1, const PLGraphics::Color4 &cColor2, float fAngle, const PLMath::Vector3 &vV1, const PLMath::Vector3 &vV2, const PLMath::Vector3 &vV3, const PLMath::Vector3 &vV4, const PLMath::Matrix4x4 &mObjectSpaceToClipSpace) = 0;
 
 		/**
 		*  @brief

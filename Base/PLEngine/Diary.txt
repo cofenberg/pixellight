@@ -1,3 +1,13 @@
+>> 01.01.2012
+[CO]
+- "EngineApplication::OnLoadProgress()": Made the method protected and virtual because derived classes may want to reuse it
+- Added "EngineApplication::ConfigureGenericScene()" derived applications can use in order to create simple default scenes
+- "SNMEgoLookController" & "SNMLookController" & "SNMOrbitingController" & "SNMEgoOrbitingController": "OnUpdate()": Minor change within the current
+  input hack to make the behaviour better. I hope there will come the day were I (or someone else with the required knowledge and experience to handle
+  it properly) finally have time to look into this issue, but right now there's more important work to be done. (as usual :/)
+
+
+
 >> 29.12.2011
 [CO]
 - "EngineApplication::OnCreateScene()": Minor change in the created default scene so one can see something at once

@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SNMPostProcessLayer.h                          *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -56,10 +56,10 @@ class SNMPostProcessLayer : public PLCompositing::SNMPostProcess {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNMPostProcessLayer, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		// Attributes
-		pl_attribute(LayerMap,	PLCore::String,		"Data/Textures/PostProcess/Spot.dds",		ReadWrite,	DirectValue,	"Filename of the layer map to use",		"Type='Image'")
-		pl_attribute(Blend,		PLGraphics::Color4,	PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Blend factor",							"")
+		pl_attribute(LayerMap,	PLCore::String,		"Data/Textures/PostProcess/Spot.dds",	ReadWrite,	DirectValue,	"Filename of the layer map to use",		"Type='Image'")
+		pl_attribute(Blend,		PLGraphics::Color4,	PLGraphics::Color4::White,				ReadWrite,	DirectValue,	"Blend factor",							"")
 			// Overloaded SNMPostProcess attributes
-		pl_attribute(Filename,	PLCore::String,		"Data/PostProcesses/Layer.pp",				ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
+		pl_attribute(Filename,	PLCore::String,		"Data/PostProcesses/Layer.pp",			ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

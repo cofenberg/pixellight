@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SNMPhysicsBodyEllipsoid.h                      *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -70,7 +70,7 @@ class SNMPhysicsBodyEllipsoid : public SNMPhysicsBody {
 	//[-------------------------------------------------------]
 	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsBodyEllipsoid, "PLPhysics", PLPhysics::SNMPhysicsBody, "Physics ellipsoid body scene node modifier")
 		// Attributes
-		pl_attribute(Radius,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	GetSet,	"Ellipsoid radius along each axis, if null, a ellipsoid 'inside' the axis align bounding box in 'scene node space' is used as default",	"Min='0.0 0.0 0.0'")
+		pl_attribute(Radius,	PLMath::Vector3,	PLMath::Vector3::Zero,	ReadWrite,	GetSet,	"Ellipsoid radius along each axis, if null, a ellipsoid 'inside' the axis align bounding box in 'scene node space' is used as default",	"Min='0.0 0.0 0.0'")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 		// Slots

@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SNMPostProcessCombineMultiplicate.h            *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -56,7 +56,7 @@ class SNMPostProcessCombineMultiplicate : public PLCompositing::SNMPostProcess {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, SNMPostProcessCombineMultiplicate, "PLPostProcessEffects", PLCompositing::SNMPostProcess, "")
 		// Attributes
-		pl_attribute(Scale,		PLMath::Vector2,	PLMath::Vector2(1.0f, 1.0f),					ReadWrite,	DirectValue,	"Scale",								"")
+		pl_attribute(Scale,		PLMath::Vector2,	PLMath::Vector2::One,							ReadWrite,	DirectValue,	"Scale",								"")
 			// Overloaded SNMPostProcess attributes
 		pl_attribute(Filename,	PLCore::String,		"Data/PostProcesses/CombineMultiplicate.pp",	ReadWrite,	ModifyAttr,		"Filename of the post process to use",	"Type='PostProcess'")
 		// Constructors

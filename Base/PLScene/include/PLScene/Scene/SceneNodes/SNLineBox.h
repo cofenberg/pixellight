@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SNLineBox.h                                    *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -72,12 +72,12 @@ class SNLineBox : public SceneNode {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNLineBox, "PLScene", PLScene::SceneNode, "Line box scene node")
 		// Attributes
-		pl_attribute(StartPosition,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),			ReadWrite,	GetSet,			"Line box start position (relative to this node)",				"")
-		pl_attribute(EndPosition,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 1.0f),			ReadWrite,	GetSet,			"Line box end position (relative to this node)",				"")
-		pl_attribute(Width,			float,					1.0f,										ReadWrite,	DirectValue,	"Line box width (if supported by the the used renderer API)",	"Min='1.0'")
-		pl_attribute(Color,			PLGraphics::Color4,		PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Line box color (r/g/b/a)",										"")
+		pl_attribute(StartPosition,	PLMath::Vector3,		PLMath::Vector3::Zero,		ReadWrite,	GetSet,			"Line box start position (relative to this node)",				"")
+		pl_attribute(EndPosition,	PLMath::Vector3,		PLMath::Vector3::UnitZ,		ReadWrite,	GetSet,			"Line box end position (relative to this node)",				"")
+		pl_attribute(Width,			float,					1.0f,						ReadWrite,	DirectValue,	"Line box width (if supported by the the used renderer API)",	"Min='1.0'")
+		pl_attribute(Color,			PLGraphics::Color4,		PLGraphics::Color4::White,	ReadWrite,	DirectValue,	"Line box color (r/g/b/a)",										"")
 			// Overwritten SceneNode attributes
-		pl_attribute(Flags,			pl_flag_type(EFlags),	0,											ReadWrite,	GetSet,			"Flags",														"")
+		pl_attribute(Flags,			pl_flag_type(EFlags),	0,							ReadWrite,	GetSet,			"Flags",														"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

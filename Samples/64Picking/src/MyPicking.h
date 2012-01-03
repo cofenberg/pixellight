@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: MyPicking.h                                    *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -85,7 +85,7 @@ class MyPicking : public PLEngine::MousePicking {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Application64		   *m_pApplication;						/**< Owner application, always valid! */
+		Application64			   *m_pApplication;						/**< Owner application, always valid! */
 		PLCore::uint64				m_nLastPickingTime;					/**< Last picking time */
 		PLScene::SceneNodeHandler	m_cCurrentPickedSceneNodeHandler;	/**< Currently picked scene node */
 

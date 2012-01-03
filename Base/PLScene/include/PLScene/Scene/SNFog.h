@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SNFog.h                                        *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -53,7 +53,7 @@ class SNFog : public SceneNode {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNFog, "PLScene", PLScene::SceneNode, "Abstract fog scene node base class")
 		// Attributes
-		pl_attribute(Color,	PLGraphics::Color3,	PLGraphics::Color3(1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Fog color (r/g/b)",	"")
+		pl_attribute(Color,	PLGraphics::Color3,	PLGraphics::Color3::White,	ReadWrite,	DirectValue,	"Fog color (r/g/b)",	"")
 	pl_class_end
 
 

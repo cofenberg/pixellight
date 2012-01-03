@@ -3,7 +3,7 @@
  *      PixelLight Sample 81 - Qt
  *      Simple scene application using PLFrontendQt
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -35,7 +35,7 @@
 //[ Module definition                                     ]
 //[-------------------------------------------------------]
 pl_module("81QtScene")
-	pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
+	pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
 	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
 	pl_module_description("PixelLight Qt 81 - Scene")
 pl_module_end

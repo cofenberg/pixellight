@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: MeshCreatorPartialDisk.h                       *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -53,13 +53,13 @@ class MeshCreatorPartialDisk : public MeshCreator {
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, MeshCreatorPartialDisk, "PLMesh", PLMesh::MeshCreator, "Partial disk mesh creator class")
 		// Attributes
-		pl_attribute(InnerRadius,	float,				0.0f,								ReadWrite,	DirectValue,	"Inner radius of the partial disk (can be zero)",											"")
-		pl_attribute(OuterRadius,	float,				0.5f,								ReadWrite,	DirectValue,	"Outer radius of the partial disk",															"")
-		pl_attribute(Slices,		PLCore::uint32,		20,									ReadWrite,	DirectValue,	"Number of subdivisions around the z-axis",													"")
-		pl_attribute(Loops,			PLCore::uint32,		1,									ReadWrite,	DirectValue,	"Number of concentric rings about the origin into which the partial disk is subdivided",	"")
-		pl_attribute(StartAngle,	float,				0.0f,								ReadWrite,	DirectValue,	"Starting angle, in degrees, of the disk portion",											"")
-		pl_attribute(SweepAngle,	float,				280.0f,								ReadWrite,	DirectValue,	"Sweep angle, in degrees, of the disk portion",												"")
-		pl_attribute(Offset,		PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Offset to center",																			"")
+		pl_attribute(InnerRadius,	float,				0.0f,					ReadWrite,	DirectValue,	"Inner radius of the partial disk (can be zero)",											"")
+		pl_attribute(OuterRadius,	float,				0.5f,					ReadWrite,	DirectValue,	"Outer radius of the partial disk",															"")
+		pl_attribute(Slices,		PLCore::uint32,		20,						ReadWrite,	DirectValue,	"Number of subdivisions around the z-axis",													"")
+		pl_attribute(Loops,			PLCore::uint32,		1,						ReadWrite,	DirectValue,	"Number of concentric rings about the origin into which the partial disk is subdivided",	"")
+		pl_attribute(StartAngle,	float,				0.0f,					ReadWrite,	DirectValue,	"Starting angle, in degrees, of the disk portion",											"")
+		pl_attribute(SweepAngle,	float,				280.0f,					ReadWrite,	DirectValue,	"Sweep angle, in degrees, of the disk portion",												"")
+		pl_attribute(Offset,		PLMath::Vector3,	PLMath::Vector3::Zero,	ReadWrite,	DirectValue,	"Offset to center",																			"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

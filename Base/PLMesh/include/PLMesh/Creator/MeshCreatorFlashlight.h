@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: MeshCreatorFlashlight.h                        *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -53,8 +53,8 @@ class MeshCreatorFlashlight : public MeshCreator {
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, MeshCreatorFlashlight, "PLMesh", PLMesh::MeshCreator, "Flashlight mesh creator class")
 		// Attributes
-		pl_attribute(Detail,	PLCore::uint32,		16,									ReadWrite,	DirectValue,	"Detail level",		"")
-		pl_attribute(Offset,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Offset to center",	"")
+		pl_attribute(Detail,	PLCore::uint32,		16,						ReadWrite,	DirectValue,	"Detail level",		"")
+		pl_attribute(Offset,	PLMath::Vector3,	PLMath::Vector3::Zero,	ReadWrite,	DirectValue,	"Offset to center",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

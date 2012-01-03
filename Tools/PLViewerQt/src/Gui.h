@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: Gui.h                                          *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -36,10 +36,11 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 QT_BEGIN_NAMESPACE
-class QMenu;
-class QAction;
-class QMainWindow;
-class QActionGroup;
+	class QMenu;
+	class QLabel;
+	class QAction;
+	class QMainWindow;
+	class QActionGroup;
 QT_END_NAMESPACE
 namespace PLScene {
 	class SceneNode;
@@ -48,6 +49,7 @@ namespace PLScene {
 namespace PLFrontendQt {
 	class FrontendMainWindow;
 }
+class GuiPicking;
 class Application;
 
 
@@ -89,12 +91,55 @@ class Gui : public QObject {
 
 		/**
 		*  @brief
+		*    Returns the owner application
+		*
+		*  @return
+		*    The owner application
+		*/
+		Application &GetApplication() const;
+
+		/**
+		*  @brief
 		*    Get frontend main window
 		*
 		*  @return
 		*    Frontend main window, can be a null pointer
 		*/
 		PLFrontendQt::FrontendMainWindow *GetFrontendMainWindow() const;
+
+		/**
+		*  @brief
+		*    Sets whether or not the GUI is currently enabled
+		*
+		*  @param[in] bEnabled
+		*    'true' to enable the GUI, else 'false'
+		*/
+		void SetEnabled(bool bEnabled);
+
+		/**
+		*  @brief
+		*    Sets the state text
+		*
+		*  @param[in] sText
+		*    State text
+		*/
+		void SetStateText(const PLCore::String &sText);
+
+		/**
+		*  @brief
+		*    Updates the GUI
+		*
+		*  @note
+		*    - Performs work which has to be done every frame, but this work is kept to a minimum
+		*/
+		void Update();
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual QObject methods                        ]
+	//[-------------------------------------------------------]
+	public:
+		virtual bool eventFilter(QObject *pQObject, QEvent *pQEvent);
 
 
 	//[-------------------------------------------------------]
@@ -121,15 +166,33 @@ class Gui : public QObject {
 		*/
 		void OnCameraFound(PLScene::SceneQuery &cQuery, PLScene::SceneNode &cSceneNode);
 
+		/**
+		*  @brief
+		*    Fills the window menu recursivity
+		*
+		*  @param[in] cQMenu
+		*    Current Qt menu to fill
+		*  @param[in] sBaseClass
+		*    Name of the currently used RTTI base class
+		*
+		*  @return
+		*    Number of checked items
+		*/
+		PLCore::uint32 FillMenuWindowRec(QMenu &cQMenu, const PLCore::String &sBaseClass);
+
 
 	//[-------------------------------------------------------]
 	//[ Private Qt slots (MOC)                                ]
 	//[-------------------------------------------------------]
 	private slots:
-		void QtSlotLoad();
-		void QtSlotExit();
-		void QtSlotMenuCameraAboutToShow();
+		void QtSlotTriggeredLoad();
+		void QtSlotTriggeredExit();
+		void QtSlotAboutToShowMenuCamera();
 		void QtSlotSelectedCamera(QAction *);
+		void QtSlotAboutToShowMenuWindow();
+		void QtSlotTriggeredWindowHideAll();
+		void QtSlotSelectedWindow(QAction *);
+		void QtSlotTriggeredOpenLogFile();
 
 
 	//[-------------------------------------------------------]
@@ -144,8 +207,14 @@ class Gui : public QObject {
 	//[-------------------------------------------------------]
 	private:
 		Application	 *m_pApplication;			/**< Owner application, always valid */
+		GuiPicking	 *m_pGuiPicking;			/**< GUI picking component instance, can be a null pointer */
+		// Menu bar
 		QMenu		 *m_pQMenuCamera;			/**< Camera Qt menu, can be a null pointer */
 		QActionGroup *m_pQActionGroupCamera;	/**< Camera Qt action group, can be a null pointer */
+		QMenu		 *m_pQMenuWindow;			/**< Window Qt menu, can be a null pointer */
+		QActionGroup *m_pQActionGroupWindow;	/**< Window Qt action group, can be a null pointer */
+		// Status bar
+		QLabel		 *m_pQLabelStatusBar;		/**< Qt label shown in the status bar of the Qt main window, can be a null pointer */
 
 
 };

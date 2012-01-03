@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SPMaterialPreview.cpp                          *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -94,7 +94,7 @@ void SPMaterialPreview::OnPaint(Surface &cSurface)
 				if (pTextureBuffer) {
 					cRenderer.SetRenderState(RenderState::CullMode, Cull::None);
 					cDrawHelpers.DrawImage(*pTextureBuffer, cSamplerStates, Vector2(m_vCameraPosition.x-m_vCameraPosition.z, m_vCameraPosition.y-m_vCameraPosition.z), Vector2(m_vCameraPosition.z*2, m_vCameraPosition.z*2),
-										   Color4::White, 1.0f, Vector2(1.0f, 1.0f), Vector2(-1.0f, -1.0f));
+										   Color4::White, 1.0f, Vector2::One, Vector2::NegativeOne);
 				}
 			}
 

@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: MeshCreatorTorus.h                             *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -56,11 +56,11 @@ class MeshCreatorTorus : public MeshCreator {
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, MeshCreatorTorus, "PLMesh", PLMesh::MeshCreator, "Torus mesh creator class")
 		// Attributes
-		pl_attribute(Radius,	float,				0.5f,								ReadWrite,	DirectValue,	"Torus radius",		"")
-		pl_attribute(Width,		float,				0.2f,								ReadWrite,	DirectValue,	"Torus width",		"")
-		pl_attribute(Sides,		PLCore::uint32,		20,									ReadWrite,	DirectValue,	"Number of sides",	"")
-		pl_attribute(Rings,		PLCore::uint32,		20,									ReadWrite,	DirectValue,	"Number of rings",	"")
-		pl_attribute(Offset,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Offset to center",	"")
+		pl_attribute(Radius,	float,				0.5f,					ReadWrite,	DirectValue,	"Torus radius",		"")
+		pl_attribute(Width,		float,				0.2f,					ReadWrite,	DirectValue,	"Torus width",		"")
+		pl_attribute(Sides,		PLCore::uint32,		20,						ReadWrite,	DirectValue,	"Number of sides",	"")
+		pl_attribute(Rings,		PLCore::uint32,		20,						ReadWrite,	DirectValue,	"Number of rings",	"")
+		pl_attribute(Offset,	PLMath::Vector3,	PLMath::Vector3::Zero,	ReadWrite,	DirectValue,	"Offset to center",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

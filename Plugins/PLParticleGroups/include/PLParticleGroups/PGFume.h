@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: PGFume.h                                       *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -67,16 +67,16 @@ class PGFume : public SNParticleGroup {
 	//[-------------------------------------------------------]
 	pl_class(PLPG_RTTI_EXPORT, PGFume, "PLParticleGroups", PLParticleGroups::SNParticleGroup, "Fume particle group")
 		// Attributes
-		pl_attribute(Size,						float,				2.0f,										ReadWrite,	DirectValue,	"Size",												"Min='0.0001'")
-		pl_attribute(SizeTimeScale,				float,				1.0f,										ReadWrite,	DirectValue,	"Size time scale",									"")
-		pl_attribute(Energie,					float,				1.0f,										ReadWrite,	DirectValue,	"Color",											"")
-		pl_attribute(Color,						PLGraphics::Color4,	PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Energy",											"")
-		pl_attribute(PositionScale,				float,				1.0f,										ReadWrite,	DirectValue,	"Position scale",									"")
+		pl_attribute(Size,						float,				2.0f,						ReadWrite,	DirectValue,	"Size",												"Min='0.0001'")
+		pl_attribute(SizeTimeScale,				float,				1.0f,						ReadWrite,	DirectValue,	"Size time scale",									"")
+		pl_attribute(Energie,					float,				1.0f,						ReadWrite,	DirectValue,	"Color",											"")
+		pl_attribute(Color,						PLGraphics::Color4,	PLGraphics::Color4::White,	ReadWrite,	DirectValue,	"Energy",											"")
+		pl_attribute(PositionScale,				float,				1.0f,						ReadWrite,	DirectValue,	"Position scale",									"")
 			// Overwritten SNParticleGroup attributes
-		pl_attribute(Material,					PLCore::String,		"Data/Effects/PGFume.plfx",					ReadWrite,	GetSet,			"Particle group material",							"Type='Material Effect Image TextureAni'")
-		pl_attribute(Particles,					PLCore::uint32,		20,											ReadWrite,	GetSet,			"Number of particles",								"Min=1")
-		pl_attribute(TextureAnimationColumns,	PLCore::uint32,		4,											ReadWrite,	GetSet,			"Number of animation frame columns in the texture",	"")
-		pl_attribute(TextureAnimationRows,		PLCore::uint32,		4,											ReadWrite,	GetSet,			"Number of animation frame rows in the texture",	"")
+		pl_attribute(Material,					PLCore::String,		"Data/Effects/PGFume.plfx",	ReadWrite,	GetSet,			"Particle group material",							"Type='Material Effect Image TextureAni'")
+		pl_attribute(Particles,					PLCore::uint32,		20,							ReadWrite,	GetSet,			"Number of particles",								"Min=1")
+		pl_attribute(TextureAnimationColumns,	PLCore::uint32,		4,							ReadWrite,	GetSet,			"Number of animation frame columns in the texture",	"")
+		pl_attribute(TextureAnimationRows,		PLCore::uint32,		4,							ReadWrite,	GetSet,			"Number of animation frame rows in the texture",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SNParticleGroup.h                              *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -102,13 +102,13 @@ class SNParticleGroup : public PLScene::SceneNode {
 			pl_property("Icon",	"Data/Textures/IconParticles.dds")
 		pl_properties_end
 		// Attributes
-		pl_attribute(Material,					PLCore::String,			"Data/Effects/DefaultParticle.plfx",		ReadWrite,	GetSet,			"Particle group material",							"Type='Material Effect Image TextureAni'")
-		pl_attribute(GlobalColor,				PLGraphics::Color4,		PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Global particle color",							"")
-		pl_attribute(Particles,					PLCore::uint32,			10,											ReadWrite,	GetSet,			"Number of particles",								"Min=1")
-		pl_attribute(TextureAnimationColumns,	PLCore::uint32,			1,											ReadWrite,	GetSet,			"Number of animation frame columns in the texture",	"")
-		pl_attribute(TextureAnimationRows,		PLCore::uint32,			1,											ReadWrite,	GetSet,			"Number of animation frame rows in the texture",	"")
+		pl_attribute(Material,					PLCore::String,			"Data/Effects/DefaultParticle.plfx",	ReadWrite,	GetSet,			"Particle group material",							"Type='Material Effect Image TextureAni'")
+		pl_attribute(GlobalColor,				PLGraphics::Color4,		PLGraphics::Color4::White,				ReadWrite,	DirectValue,	"Global particle color",							"")
+		pl_attribute(Particles,					PLCore::uint32,			10,										ReadWrite,	GetSet,			"Number of particles",								"Min=1")
+		pl_attribute(TextureAnimationColumns,	PLCore::uint32,			1,										ReadWrite,	GetSet,			"Number of animation frame columns in the texture",	"")
+		pl_attribute(TextureAnimationRows,		PLCore::uint32,			1,										ReadWrite,	GetSet,			"Number of animation frame rows in the texture",	"")
 			// Overwritten PLScene::SceneNode attributes
-		pl_attribute(Flags,						pl_flag_type(EFlags),	0,											ReadWrite,	GetSet,			"Flags",											"")
+		pl_attribute(Flags,						pl_flag_type(EFlags),	0,										ReadWrite,	GetSet,			"Flags",											"")
 	pl_class_end
 
 

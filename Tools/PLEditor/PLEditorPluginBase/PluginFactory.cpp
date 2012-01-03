@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: PluginFactory.cpp                              *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -44,7 +44,7 @@ QString PluginFactory::getName() const
 
 QString PluginFactory::getVendor() const
 {
-	return "Copyright (C) 2002-2011 by The PixelLight Team";
+	return "Copyright (C) 2002-2012 by The PixelLight Team";
 }
 
 QString PluginFactory::getLicense() const

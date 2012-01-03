@@ -2,7 +2,7 @@
  *  File: PLPhysicsNullLinux.h                           *
  *      Linux definitions for the PL null physics plugin
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *

@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SNLight.h                                      *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -81,12 +81,12 @@ class SNLight : public SceneNode {
 			pl_property("Icon",	"Data/Textures/IconLight.dds")
 		pl_properties_end
 		// Attributes
-		pl_attribute(Color,				PLGraphics::Color3,		PLGraphics::Color3(1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Light color (r/g/b)",	"")
-		pl_attribute(CoronaSize,		float,					0.2f,									ReadWrite,	DirectValue,	"Corona size",			"")
-		pl_attribute(FlareSize,			float,					0.1f,									ReadWrite,	DirectValue,	"Lens flare size",		"")
-		pl_attribute(ScreenBrighten,	float,					0.3f,									ReadWrite,	DirectValue,	"Screen brighten",		"")
+		pl_attribute(Color,				PLGraphics::Color3,		PLGraphics::Color3::White,	ReadWrite,	DirectValue,	"Light color (r/g/b)",	"")
+		pl_attribute(CoronaSize,		float,					0.2f,						ReadWrite,	DirectValue,	"Corona size",			"")
+		pl_attribute(FlareSize,			float,					0.1f,						ReadWrite,	DirectValue,	"Lens flare size",		"")
+		pl_attribute(ScreenBrighten,	float,					0.3f,						ReadWrite,	DirectValue,	"Screen brighten",		"")
 			// Overwritten SceneNode attributes
-		pl_attribute(Flags,				pl_flag_type(EFlags),	0,										ReadWrite,	GetSet,			"Flags",				"")
+		pl_attribute(Flags,				pl_flag_type(EFlags),	0,							ReadWrite,	GetSet,			"Flags",				"")
 		#ifdef PLSCENE_EXPORTS	// The following is only required when compiling PLScene
 			// Methods
 			pl_method_0(IsRenderLight,			pl_ret_type(bool),	"Returns whether this is a render light or not. Returns 'true' if this is a render light, else 'false'.",																		"")

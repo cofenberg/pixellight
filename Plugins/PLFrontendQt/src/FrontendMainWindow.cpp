@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: FrontendMainWindow.cpp                         *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -36,6 +36,7 @@
 #include "PLFrontendQt/Frontend.h"
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/FrontendRenderWindow.h"
+#include "PLFrontendQt/DockWidget/DockWidgetManager.h"
 #include "PLFrontendQt/FrontendMainWindow.h"
 
 
@@ -43,6 +44,24 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLFrontendQt {
+
+
+//[-------------------------------------------------------]
+//[ Public functions                                      ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Returns the dock widget manager of this main window
+*/
+DockWidgetManager &FrontendMainWindow::GetDockWidgetManager()
+{
+	// If required, create the dock widget manager of this main window right now
+	if (!m_pDockWidgetManager)
+		m_pDockWidgetManager = new DockWidgetManager(this);
+
+	// Return the dock widget manager of this main window
+	return *m_pDockWidgetManager;
+}
 
 
 //[-------------------------------------------------------]
@@ -55,7 +74,8 @@ namespace PLFrontendQt {
 FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) :
 	m_pFrontendQt(&cFrontendQt),
 	m_bVisible(false),
-	m_nWindowRedrawTimerID(startTimer(10))	// An interval of 10 milliseconds should be enough
+	m_nWindowRedrawTimerID(startTimer(10)),	// An interval of 10 milliseconds should be enough
+	m_pDockWidgetManager(nullptr)
 {
 	// Tell the frontend about this instance at once because it may already be required during frontend life cycle initialization
 	m_pFrontendQt->SetMainWindow(this);
@@ -89,6 +109,10 @@ FrontendMainWindow::~FrontendMainWindow()
 	// Stop window redraw timer
 	if (m_nWindowRedrawTimerID)
 		killTimer(m_nWindowRedrawTimerID);
+
+	// Destroy the dock widget manager of this main window, if there's one
+	if (m_pDockWidgetManager)
+		delete m_pDockWidgetManager;
 }
 
 /**
@@ -137,6 +161,16 @@ void FrontendMainWindow::timerEvent(QTimerEvent *pQTimerEvent)
 //[-------------------------------------------------------]
 //[ Protected virtual QWidget functions                   ]
 //[-------------------------------------------------------]
+void FrontendMainWindow::mousePressEvent(QMouseEvent *)
+{
+	// [HACK] As soon as there's a Qt dock widget there are focus issues?
+	// -> Central widget has the focus, click in dock widget, click back in central widget and no focus change?
+	//    Even when destroying the dock widget the focus is now completely messed up?
+	// -> When adding this single line, all those issues are gone... but why is there such an issue in the first
+	//    place? I was unable to find anything in the Qt documentation and other approaches didn't work either. :/
+	setFocus();
+}
+
 void FrontendMainWindow::keyPressEvent(QKeyEvent *pQKeyEvent)
 {
 	// Is it allowed to toggle the fullscreen mode using hotkeys? If so, toggle fullscreen right now? (Alt-Return or AltGr-Return)

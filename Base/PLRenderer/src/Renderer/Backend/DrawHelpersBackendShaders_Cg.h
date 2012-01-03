@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: DrawHelpersBackendShaders_Cg.cpp               *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -28,6 +28,9 @@ struct VS_OUTPUT {\n\
 	#ifdef VS_TEXCOORD0\n\
 		float2 TexCoord : TEXCOORD0;	// Vertex texture coordinate\n\
 	#endif\n\
+	#ifdef VS_VERTEXCOLOR\n\
+		float4 Color : COLOR0;			// Vertex color\n\
+	#endif\n\
 };\n\
 \n\
 // Programs\n\
@@ -35,6 +38,9 @@ VS_OUTPUT main(float3 VertexPosition : POSITION			// Object space vertex positio
 	#ifdef VS_TEXCOORD0\n\
 		, float2 VertexTextureCoordinate : TEXCOORD0	// Vertex texture coordinate input\n\
 		, uniform float4x4 TextureMatrix				// Texture matrix\n\
+	#endif\n\
+	#ifdef VS_VERTEXCOLOR\n\
+		, float4 VertexColor : COLOR0					// Vertex color input\n\
 	#endif\n\
 	, uniform float4x4 ObjectSpaceToClipSpaceMatrix		// Object space to clip space matrix\n\
 )\n\
@@ -47,6 +53,11 @@ VS_OUTPUT main(float3 VertexPosition : POSITION			// Object space vertex positio
 #ifdef VS_TEXCOORD0\n\
 	// Pass through the texture coordinate\n\
 	Out.TexCoord = mul(TextureMatrix, float4(VertexTextureCoordinate, 1, 1)).xy;\n\
+#endif\n\
+\n\
+#ifdef VS_VERTEXCOLOR\n\
+	// Pass through the color\n\
+	Out.Color = VertexColor;\n\
 #endif\n\
 \n\
 	// Done\n\
@@ -62,6 +73,9 @@ struct VS_OUTPUT {\n\
 	#ifdef FS_DIFFUSEMAP\n\
 		float2 TexCoord : TEXCOORD0;	// Vertex texture coordinate\n\
 	#endif\n\
+	#ifdef FS_VERTEXCOLOR\n\
+		float4 Color : COLOR0;			// Vertex color\n\
+	#endif\n\
 };\n\
 \n\
 // Fragment output\n\
@@ -71,7 +85,9 @@ struct FS_OUTPUT {\n\
 \n\
 // Programs\n\
 FS_OUTPUT main(VS_OUTPUT In						// Vertex shader or geometry shader output as fragment shader input\n\
-	, uniform float4 Color						// Color\n\
+	#ifndef FS_VERTEXCOLOR\n\
+		, uniform float4 Color					// Color\n\
+	#endif\n\
 	#ifdef FS_DIFFUSEMAP\n\
 		#ifdef FS_DIFFUSEMAP2D\n\
 			, uniform sampler2D DiffuseMap		// 2D diffuse map\n\
@@ -99,9 +115,17 @@ FS_OUTPUT main(VS_OUTPUT In						// Vertex shader or geometry shader output as f
 	#endif\n\
 \n\
 	// Still here? Then apply the given color...\n\
-	Out.Color0 *= Color;\n\
+	#ifdef FS_VERTEXCOLOR\n\
+		Out.Color0 *= In.Color;\n\
+	#else\n\
+		Out.Color0 *= Color;\n\
+	#endif\n\
 #else\n\
-	Out.Color0 = Color;\n\
+	#ifdef FS_VERTEXCOLOR\n\
+		Out.Color0 = In.Color;\n\
+	#else\n\
+		Out.Color0 = Color;\n\
+	#endif\n\
 #endif\n\
 \n\
 	// Done\n\

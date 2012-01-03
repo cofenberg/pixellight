@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SNLine.h                                       *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -74,12 +74,12 @@ class SNLine : public SceneNode {
 		// Constructors
 		pl_constructor_0(DefaultConstructor, "Default constructor", "")
 		// Attributes
-		pl_attribute(StartPosition,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 0.0f),			ReadWrite,	GetSet,			"Line start position (relative to this node)",				"")
-		pl_attribute(EndPosition,	PLMath::Vector3,		PLMath::Vector3(0.0f, 0.0f, 1.0f),			ReadWrite,	GetSet,			"Line end position (relative to this node)",				"")
-		pl_attribute(Width,			float,					1.0f,										ReadWrite,	DirectValue,	"Line width (if supported by the the used renderer API)",	"Min='1.0'")
-		pl_attribute(Color,			PLGraphics::Color4,		PLGraphics::Color4(1.0f, 1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Line color (r/g/b/a)",										"")
+		pl_attribute(StartPosition,	PLMath::Vector3,		PLMath::Vector3::Zero,		ReadWrite,	GetSet,			"Line start position (relative to this node)",				"")
+		pl_attribute(EndPosition,	PLMath::Vector3,		PLMath::Vector3::UnitZ,		ReadWrite,	GetSet,			"Line end position (relative to this node)",				"")
+		pl_attribute(Width,			float,					1.0f,						ReadWrite,	DirectValue,	"Line width (if supported by the the used renderer API)",	"Min='1.0'")
+		pl_attribute(Color,			PLGraphics::Color4,		PLGraphics::Color4::White,	ReadWrite,	DirectValue,	"Line color (r/g/b/a)",										"")
 			// Overwritten SceneNode attributes
-		pl_attribute(Flags,			pl_flag_type(EFlags),	0,											ReadWrite,	GetSet,			"Flags",													"")
+		pl_attribute(Flags,			pl_flag_type(EFlags),	0,							ReadWrite,	GetSet,			"Flags",													"")
 	pl_class_end
 
 

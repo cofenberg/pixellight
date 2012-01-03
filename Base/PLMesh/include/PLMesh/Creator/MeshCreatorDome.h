@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: MeshCreatorDome.h                              *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -53,12 +53,12 @@ class MeshCreatorDome : public MeshCreator {
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, MeshCreatorDome, "PLMesh", PLMesh::MeshCreator, "Dome mesh creator class")
 		// Attributes
-		pl_attribute(Radius,	float,				0.5f,								ReadWrite,	DirectValue,	"Dome radius",		"")
-		pl_attribute(DTheta,	float,				10.0f,								ReadWrite,	DirectValue,	"Number of slices",	"")
-		pl_attribute(DPhi,		float,				10.0f,								ReadWrite,	DirectValue,	"Number of rings",	"")
-		pl_attribute(HTile,		float,				1.0f,								ReadWrite,	DirectValue,	"Size of a slice",	"")
-		pl_attribute(VTile,		float,				1.0f,								ReadWrite,	DirectValue,	"Size of a ring",	"")
-		pl_attribute(Offset,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Offset to center",	"")
+		pl_attribute(Radius,	float,				0.5f,					ReadWrite,	DirectValue,	"Dome radius",		"")
+		pl_attribute(DTheta,	float,				10.0f,					ReadWrite,	DirectValue,	"Number of slices",	"")
+		pl_attribute(DPhi,		float,				10.0f,					ReadWrite,	DirectValue,	"Number of rings",	"")
+		pl_attribute(HTile,		float,				1.0f,					ReadWrite,	DirectValue,	"Size of a slice",	"")
+		pl_attribute(VTile,		float,				1.0f,					ReadWrite,	DirectValue,	"Size of a ring",	"")
+		pl_attribute(Offset,	PLMath::Vector3,	PLMath::Vector3::Zero,	ReadWrite,	DirectValue,	"Offset to center",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

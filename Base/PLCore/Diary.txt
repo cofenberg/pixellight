@@ -1,7 +1,72 @@
+>> 03.01.2012
+[CO]
+PLFrontendQt:
+- Added project description
+- Added PixelLight RTTI dock widget manager
+- "DockWidget": By default, when someone is closing the dock widget Qt hides instead of deletes it
+  -> We could write
+         setAttribute(Qt::WA_DeleteOnClose);	// Delete the dock widget instead of hiding it when someone is closing it
+     to change this behaviour, but when "reopening" the previously made changes to the widget layout would be gone and
+     we don't want this. So, long story short conclusion, don't change the default behaviour in here.
+- "DockWidgetManager": Implemented dock widget broadcast by mirroring the "PLCore::Object"-interface. This is a quite universal way for a communication
+  with and between the dock widgets... and e.g. scripts like Lua can participate in the communication...
+- Dock widgets: Added first broadcast "SelectSceneNode": A RTTI method which is called when a scene node is selected
+- "DockWidget": Added the same communication interface as in "DockWidgetManager", but the emitting dock widget is excluded and one does not have to make
+  a dock widget manager test in order to broadcast something. This communication infrastructure is important, so, it has to be as easy to use and robust as
+  possible.
+
+
+
+>> 31.12.2011
+[CO]
+PLFrontendQt:
+- "DataModels::SceneGraphTreeModel::GetQImage()": For some reason, "QImage" appears to be BGR instead of RGB although the documentation states otherwise
+  (maybe a little/big endian thing?). Double checked "PLGraphics::Image" to ensure it's no bug, and I can't imagine that it's a Qt bug either. Now the icons
+  look correct.
+- Added "DockWidgetSceneRenderer"
+- "DockWidget": Delete the dock widget instead of hiding it when someone is closing it
+- "FrontendMainWindow::mousePressEvent(QMouseEvent *)": [HACK] As soon as there's a Qt dock widget there are focus issues?
+  -> Central widget has the focus, click in dock widget, click back in central widget and no focus change?
+     Even when destroying the dock widget the focus is now completely messed up?
+  -> When adding "setFocus()", all those issues are gone... but why is there such an issue in the first
+     place? I was unable to find anything in the Qt documentation and other approaches didn't work either. :/
+  -> Spend some hours in trying to figure out what's going on, but I finally have to go on and so this current solution must do the job until someone else has
+     a better solution or an explanation for this behaviour. Can be tested in "PLViewerQt".
+- Another funny Qt dock widget behaviour: Central widget has the focus, moving the mouse to the docked dock widget and dragging it out so that it is floating and
+  while doing so the central widget has still the focus, when stopping the action the focus jumps to the dock widget. Why hasn't the dock widget the focus at
+  once when clicking with the mouse onto it in order to start the floating step? I'am starting to remember why I don't like to work with GUI stuff. :/
+
+
+
+>> 30.12.2011
+[CO]
+PLFrontendQt:
+- Added abstract PixelLight RTTI class "DockWidget" encapsulating a Qt dock widget. While PLFrontendQt already offers several basic building blocks one can use
+  within a Qt project, the goal of those RTTI dock widgets is to provide something high level. One can imagine those guys as ready-to-be-used components which
+  just need to be instanced to add new dockable features to a Qt main window. A RTTI dock widget has to be as simple as possible in it's usage and e.g. has to
+  provide a decent default behaviour. That's why I talked about "high level", they take away a certain amount of freedom, but give you something to see usable
+  results at once in a generic way. By writing e.g.
+    const PLCore::Class *pClass = PLCore::ClassManager::GetInstance()->GetClass("PLFrontendQt::DockWidgetSceneGraph");
+    if (pClass)
+        pClass->Create(PLCore::Params<PLCore::Object*, QWidget*>(pQtMainWindow)));
+  one has at once a new dock widget within the Qt main window which can be used to work with the default application scene graph. Due to the PixelLight RTTI
+  new RTTI dock widgets can be added easily and then e.g. automatically be used within PLViewerQt. For example, within my master thesis I'am going to need
+  special GUI elements to e.g. manipulate transfer function. Now, all I have to do is implementing such a new RTTI dock widget and I'am ready-to-go within
+  PLViewerQt... and can also reuse those new RTTI dock widgets in other applications as well... :D
+  I'am sure that in the end some RTTI dock widgets have to interact with each other. Similar to the intends of Android. Shouldn't be a problem by using the
+  PixelLight RTTI, but that's for the next implementation step. For now it was only important to have the fundamental idea up and running to see whether or not it can work.
+  Right now it looks like it's working pretty well without being complex... the PixelLight RTTI and Qt are doing all the hard work as well as the basic building
+  blocks Stephan Wezel already wrote.
+- Added "DockWidgetObject", "DockWidgetScene", "DockWidgetSceneNode" and "DockWidgetSceneGraph" dock widget RTTI classes to have something to start with. Currently
+  the interface is quite basic and will be enhanced. I'am sure a lot more of those fellows will follow over time.
+
+
+
 >> 30.12.2011
 [SW]
 PLFrontendQt:
 - When setting the start SceneNode for the SceneGraphTreeModel the user can now specify if the start node should be hidden. The same parameter is also added to QPLDebugDialog::SetContext
+
 
 
 >> 29.12.2011
@@ -918,7 +983,7 @@ PLFrontend:
   name, again... but it's only required once within a project and therefore a speaking name is fine) and when using it, the main C++ file usually looks like this:
     #include <PLFrontend/FrontendMain.h>
     pl_module_application_frontend("50RendererTriangle", "Application", "PLFrontendPLGui::Frontend")
-        pl_module_vendor("Copyright (C) 2002-2011 by The PixelLight Team")
+        pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
         pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
         pl_module_description("PixelLight triangle sample")
     pl_module_end

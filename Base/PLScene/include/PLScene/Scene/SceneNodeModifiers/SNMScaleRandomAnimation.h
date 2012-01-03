@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SNMScaleRandomAnimation.h                      *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -57,9 +57,9 @@ class SNMScaleRandomAnimation : public PLScene::SNMTransform {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMScaleRandomAnimation, "PLScene", PLScene::SNMTransform, "Random scale animation scene node modifier class")
 		// Attributes
-		pl_attribute(Speed,		float,				1.0f,								ReadWrite,	DirectValue,	"Animation speed",											"")
-		pl_attribute(Radius,	float,				0.5f,								ReadWrite,	DirectValue,	"Animation radius",											"")
-		pl_attribute(FixScale,	PLMath::Vector3,	PLMath::Vector3(1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Scale, if default, the initial scene node scale is used",	"")
+		pl_attribute(Speed,		float,				1.0f,					ReadWrite,	DirectValue,	"Animation speed",											"")
+		pl_attribute(Radius,	float,				0.5f,					ReadWrite,	DirectValue,	"Animation radius",											"")
+		pl_attribute(FixScale,	PLMath::Vector3,	PLMath::Vector3::One,	ReadWrite,	DirectValue,	"Scale, if default, the initial scene node scale is used",	"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

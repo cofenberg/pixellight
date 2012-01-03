@@ -1,3 +1,10 @@
+>> 01.01.2012
+[CO]
+- "MeshManager::MeshManager()": It's a good idea to give the default mesh tangent space vectors (tangent & binormal) so it can also be used for normal mapping
+  ... by the way, WOW! some time has past since the last entry within this diary...
+
+
+
 /*********************************************************\
  *  The entries below are in German only
 \*********************************************************/

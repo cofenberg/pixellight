@@ -1,7 +1,7 @@
 #*********************************************************#
 #*  File: CMakeLists.txt                                 *
 #*
-#*  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+#*  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
 #*
 #*  This file is part of PixelLight.
 #*
@@ -33,35 +33,19 @@ SET(INC_FILES
 	src/Gui.h
 )
 
-# Qt .ui files
-SET(UI_FILES
-# [TODO] Currently unused, remove later if still unused
-#	src/MainWindow.ui
-)
-
-# Qt .qrc files
-SET(QRC_FILES
-# [TODO] Currently unused, remove later if still unused
-#	res/qtresources.qrc
-)
-
-# Run uic on .ui files
-QT4_WRAP_UI(UI_SRCS ${UI_FILES})
-
 # Run moc
 QT4_WRAP_CPP(MOC_SRCS ${INC_FILES})
-
-# Run rcc
-QT4_ADD_RESOURCES(QRC_SRCS ${QRC_FILES})
 
 ##################################################
 ## Source files
 ##################################################
 add_sources(
-	src/Application.cpp
-	src/Config.cpp
+	src/ApplicationQt.cpp
 	src/Main.cpp
 	src/Gui.cpp
+	src/GuiPicking.cpp
+	../PLViewer/src/Application.cpp	# Reused
+	../PLViewer/src/Config.cpp		# Reused
 	${UI_SRCS}	# Add source produced by uic
 	${MOC_SRCS}	# Add source produced by moc
 	${QRC_SRCS}	# Add sources produced by rcc
@@ -71,7 +55,7 @@ if(WIN32)
 	## Win32
 	##################################################
 	add_sources(
-		PLViewerQt.rc
+		../PLViewer/src/PLViewerQt.rc	# Reused
 	)
 endif()
 
@@ -88,6 +72,7 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLScene/include
 	${CMAKE_SOURCE_DIR}/Base/PLEngine/include
 	${CMAKE_SOURCE_DIR}/Plugins/PLFrontendQt/include
+	../PLViewer/src/
 
 	# We need the following to be able to include headers produced by uic in our code
 	# (CMAKE_CURRENT_BINARY_DIR holds a path to the build directory of the current project, while INCLUDE_DIRECTORIES() works just like INCLUDEPATH from qmake)
@@ -191,36 +176,6 @@ add_dependencies(Tools                        ${CMAKETOOLS_CURRENT_TARGET})
 ##################################################
 
 # Executable
-add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} ${PL_TOOLS_BIN_DIR}
-)
-
-##################################################
-## Install
-##################################################
-
-# Executable
-install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
-	DESTINATION ${PL_INSTALL_TOOLS_BIN}	COMPONENT SDK
-)
-
-##################################################
-## Build standalone executable
-##################################################
-add_compile_defs(STANDALONE)
-build_executable(${CMAKETOOLS_CURRENT_TARGET}Standalone WIN32)
-
-##################################################
-## Dependencies
-##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_PROJECT}Standalone	External-Qt PLCore PLMath PLGraphics PLInput PLRenderer PLMesh PLScene PLEngine PLFrontendQt)
-add_dependencies(Base										${CMAKETOOLS_CURRENT_TARGET})
-
-##################################################
-## Post-Build
-##################################################
-
-# Standalone executable
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} ${PL_TOOLS_BIN_DIR}
 )

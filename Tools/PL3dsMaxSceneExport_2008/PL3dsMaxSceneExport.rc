@@ -145,7 +145,7 @@ BEGIN
             VALUE "FileDescription", "PL3dsMaxSceneExport"
             VALUE "FileVersion", "0.8.6"
             VALUE "InternalName", "PL3dsMaxSceneExport"
-            VALUE "LegalCopyright", "Copyright (C) 2002-2011 by The PixelLight Team"
+            VALUE "LegalCopyright", "Copyright (C) 2002-2012 by The PixelLight Team"
             VALUE "OriginalFilename", "PL3dsMaxSceneExport.rc"
             VALUE "ProductName", "PL3dsMaxSceneExport"
             VALUE "ProductVersion", "0.8.6"

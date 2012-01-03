@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SNMEgoLookController.cpp                       *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -84,7 +84,7 @@ void SNMEgoLookController::OnActivate(bool bActivate)
 		// Connect event handler
 		cSceneNode.GetTransform().EventRotation.Connect(SlotOnRotation);
 
-		// Ensure our Euler angles are representing the current scene node rotation
+		// Ensure our Euler angles are representing the current scene node rotation (synchronization, no logic update)
 		OnRotation();
 	} else {
 		// Disconnect event handler
@@ -103,7 +103,7 @@ void SNMEgoLookController::OnUpdate()
 	// mouse button is currently pressed (so we don't look around the every time when moving the mouse to, for instance, move
 	// the mouse cursor to an ingame GUI widget). Because it's REALLY comfortable to use the space mouse, I added this hack so
 	// the space mouse (provides us with absolute values!) can be used as expected during the last steps of the input system refactoring.
-	const bool bSpaceMouseRotationHack = ((GetFlags() & UseRotationKey) && (!m_pController->RotX.IsValueRelative() || !m_pController->RotY.IsValueRelative()));
+	const bool bSpaceMouseRotationHack = ((GetFlags() & UseRotationKey) && (!m_pController->RotX.IsValueRelative() && !m_pController->RotY.IsValueRelative()));
 
 	// Check if input is active and whether or not the rotation key required and pressed
 	if (m_pController->GetActive() && (!(GetFlags() & UseRotationKey) || m_pController->Rotate.IsPressed() || bSpaceMouseRotationHack)) {

@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SNMPhysicsBodyTerrain.h                        *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -56,7 +56,7 @@ class SNMPhysicsBodyTerrain : public SNMPhysicsBody {
 			pl_property("SceneNodeClass",	"PLScene::SNTerrain")
 		pl_properties_end
 		// Attributes
-		pl_attribute(Scale,	PLMath::Vector3,	PLMath::Vector3(1.0f, 1.0f, 1.0f),	ReadWrite,	GetSet,	"Height field scale",	"")
+		pl_attribute(Scale,	PLMath::Vector3,	PLMath::Vector3::One,	ReadWrite,	GetSet,	"Height field scale",	"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

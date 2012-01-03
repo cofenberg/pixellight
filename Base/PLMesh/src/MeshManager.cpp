@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: MeshManager.cpp                                *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -65,6 +65,9 @@ MeshManager::MeshManager(Renderer &cRenderer) :
 		pMesh->SetName("Default");
 		pMesh->SetProtected(true);
 		SetStandard(pMesh);
+
+		// It's a good idea to give the default mesh tangent space vectors (tangent & binormal) so it can also be used for normal mapping
+		pMesh->CalculateTangentSpaceVectors();
 	}
 }
 

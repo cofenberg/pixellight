@@ -1,7 +1,7 @@
 #*********************************************************#
 #*  File: CMakeLists.txt                                 *
 #*
-#*  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+#*  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
 #*
 #*  This file is part of PixelLight.
 #*
@@ -76,6 +76,7 @@ SET(INC_FILES
 	include/PLFrontendQt/DataModels/RTTIInfoModels/ClassListModel.h
 	include/PLFrontendQt/DataModels/RTTIInfoModels/ClassInfoModel.h
 	include/PLFrontendQt/External/qtcolorbutton.h
+	include/PLFrontendQt/DockWidget/DockWidgetSceneGraph.h
 )
 
 # Qt .ui files
@@ -132,6 +133,13 @@ add_sources(
 	src/DataModels/RTTIInfoModels/ClassListModel.cpp
 	src/DataModels/RTTIInfoModels/ClassInfoModel.cpp
 	src/External/qtcolorbutton.cpp
+	src/DockWidget/DockWidgetManager.cpp
+	src/DockWidget/DockWidget.cpp
+	src/DockWidget/DockWidgetObject.cpp
+	src/DockWidget/DockWidgetScene.cpp
+	src/DockWidget/DockWidgetSceneNode.cpp
+	src/DockWidget/DockWidgetSceneGraph.cpp
+	src/DockWidget/DockWidgetSceneRenderer.cpp
 	${UI_SRCS}	# Add source produced by uic
 	${MOC_SRCS}	# Add source produced by moc
 	${QRC_SRCS}	# Add sources produced by rcc

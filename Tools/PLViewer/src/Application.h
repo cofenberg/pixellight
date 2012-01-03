@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: Application.h                                  *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -86,9 +86,12 @@ class Application : public PLEngine::ScriptApplication {
 		*/
 		virtual ~Application();
 
+		//[-------------------------------------------------------]
+		//[ Resource loading                                      ]
+		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    Loads a resource
+		*    Loads a resource which type has to be evaluated internally
 		*
 		*  @param[in] sFilename
 		*    Filename of the resource to load
@@ -98,11 +101,35 @@ class Application : public PLEngine::ScriptApplication {
 		*/
 		bool LoadResource(const PLCore::String &sFilename);
 
+		/**
+		*  @brief
+		*    Loads a mesh
+		*
+		*  @param[in] sFilename
+		*    Filename of the mesh to load, must be a mesh
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		bool LoadMesh(const PLCore::String &sFilename);
+
+		/**
+		*  @brief
+		*    Loads a material/image
+		*
+		*  @param[in] sFilename
+		*    Filename of the material/image to load, must be a material/image
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		bool LoadMaterialImage(const PLCore::String &sFilename);
+
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		/**
 		*  @brief
 		*    Called when a control event has occurred
@@ -112,20 +139,28 @@ class Application : public PLEngine::ScriptApplication {
 		*/
 		void OnControl(PLInput::Control &cControl);
 
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual Application functions               ]
+	//[-------------------------------------------------------]
+	protected:
 		/**
 		*  @brief
 		*    Sets the state text
 		*
 		*  @param[in] sText
 		*    State text
+		*
+		*  @note
+		*    - The default implementation is misusing the frontend title to communicate with the user
 		*/
-		void SetStateText(const PLCore::String &sText);
+		virtual void SetStateText(const PLCore::String &sText);
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLCore::CoreApplication functions     ]
+	//[ Protected virtual PLCore::CoreApplication functions   ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		virtual void OnInitLog() override;
 		virtual void OnInit() override;
 

@@ -3,7 +3,7 @@
     <Active>1</Active>
     <Delayed>1</Delayed>
     <Name>PLRendererOpenGL</Name>
-    <Vendor>Copyright (C) 2002-2011 by The PixelLight Team</Vendor>
+    <Vendor>Copyright (C) 2002-2012 by The PixelLight Team</Vendor>
     <License>GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version</License>
     <Description>OpenGL 1.1 + extensions (http://www.opengl.org/) renderer implementation using FreeType for font support</Description>
     <Platform Name="Windows" BitArchitecture="32">

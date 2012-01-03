@@ -1,7 +1,7 @@
 #*********************************************************#
 #*  File: CMakeLists.txt                                 *
 #*
-#*  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+#*  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
 #*
 #*  This file is part of PixelLight.
 #*
@@ -52,6 +52,7 @@ add_sources(
 	src/PLMath/EulerAngles.cpp
 	src/PLMath/Graph.cpp
 	src/PLMath/GraphPath.cpp
+	src/PLMath/Math.cpp
 	src/PLMath/Matrix3x3.cpp
 	src/PLMath/Matrix3x4.cpp
 	src/PLMath/Matrix4x4.cpp

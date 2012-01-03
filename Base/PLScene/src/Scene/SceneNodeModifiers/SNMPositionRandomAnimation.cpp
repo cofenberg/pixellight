@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SNMPositionRandomAnimation.cpp                 *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -77,10 +77,14 @@ void SNMPositionRandomAnimation::OnActivate(bool bActivate)
 	// Connect/disconnect event handler
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
-		if (bActivate)
+		if (bActivate) {
 			pSceneContext->EventUpdate.Connect(EventHandlerUpdate);
-		else
+
+			// Make a first update to ensure everything is up-to-date when we're going active (synchronization and logic update)
+			OnUpdate();
+		} else {
 			pSceneContext->EventUpdate.Disconnect(EventHandlerUpdate);
+		}
 	}
 }
 

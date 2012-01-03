@@ -82,6 +82,9 @@
     <ClCompile Include="src\PLCore\Container\SimpleMap.cpp">
       <Filter>PLCore\Container\Map</Filter>
     </ClCompile>
+    <ClCompile Include="src\PLMath\Math.cpp">
+      <Filter>PLMath</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\UnitTest++AddIns\RunAllTests.h">

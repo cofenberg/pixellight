@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SceneGraphTreeModel.cpp                        *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -157,13 +157,11 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 
 			if (bRet) {
 				PLGraphics::ImageBuffer *buf = cImage.GetBuffer();
-				if (buf->HasCompressedData())
-					buf->Decompress();
 
-				if (buf->HasData()) {
+				if (buf->HasAnyData()) {
 					const PLCore::uint8 *data = buf->GetData();
 					QImage img1((const uchar*)data, buf->GetSize().width, buf->GetSize().height,QImage::Format_ARGB32);
-					return img1.scaled(24,24, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+					return img1.scaled(24,24, Qt::KeepAspectRatio, Qt::SmoothTransformation).rgbSwapped();
 				}
 			}
 			return img;
@@ -233,13 +231,13 @@ void SceneGraphTreeModel::SetStartNode(PLScene::SceneNode* nodeObj, bool hideSta
 	endResetModel();
 }
 
-PLScene::SceneNode *SceneGraphTreeModel::GetSceneNodeFromIndex(QModelIndex &index)
+PLScene::SceneNode *SceneGraphTreeModel::GetSceneNodeFromIndex(const QModelIndex &index)
 {
 	SceneGraphNodeTreeItemBase *treeItem = GetSceneTreeItemFromIndex(index);
 	return (treeItem && treeItem->IsSceneNode()) ? (PLScene::SceneNode*)treeItem->GetObject() : nullptr;
 }
 
-SceneGraphNodeTreeItemBase *SceneGraphTreeModel::GetSceneTreeItemFromIndex(QModelIndex &index)
+SceneGraphNodeTreeItemBase *SceneGraphTreeModel::GetSceneTreeItemFromIndex(const QModelIndex &index)
 {
 	return (!index.isValid() || index.model() != this) ? nullptr : (SceneGraphNodeTreeItemBase*)GetTreeItemFromIndex(index);
 }

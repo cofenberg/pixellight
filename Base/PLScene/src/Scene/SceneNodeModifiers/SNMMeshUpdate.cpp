@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SNMMeshUpdate.cpp                              *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -83,6 +83,9 @@ void SNMMeshUpdate::OnActivate(bool bActivate)
 		if (bActivate) {
 			GetSceneNode().SignalAddedToVisibilityTree.Connect(EventHandlerAddedToVisibilityTree);
 			pSceneContext->EventUpdate.Connect(EventHandlerUpdate);
+
+			// Make a first update to ensure everything is up-to-date when we're going active (synchronization and logic update)
+			OnUpdate();
 		} else {
 			GetSceneNode().SignalAddedToVisibilityTree.Disconnect(EventHandlerAddedToVisibilityTree);
 			pSceneContext->EventUpdate.Disconnect(EventHandlerUpdate);

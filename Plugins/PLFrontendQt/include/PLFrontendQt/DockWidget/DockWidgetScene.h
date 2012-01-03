@@ -1,7 +1,7 @@
 /*********************************************************\
- *  File: Config.h                                       *
+ *  File: DockWidgetScene.h                              *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -20,15 +20,21 @@
 \*********************************************************/
 
 
-#ifndef __CONFIG_H__
-#define __CONFIG_H__
+#ifndef __PLFRONTENDQT_DOCKWIDGET_SCENE_H__
+#define __PLFRONTENDQT_DOCKWIDGET_SCENE_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Config/Config.h>
+#include "PLFrontendQt/DockWidget/DockWidget.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+namespace PLFrontendQt {
 
 
 //[-------------------------------------------------------]
@@ -36,40 +42,51 @@
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    PLViewerQt configuration classes
+*    Abstract scene Qt dock widget base class
 */
-class PLViewerQtConfig : public PLCore::ConfigGroup {
+class DockWidgetScene : public DockWidget {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, PLViewerQtConfig, "", PLCore::ConfigGroup, "PLViewerQt general configuration classes")
-		// Attributes
-		pl_attribute(DefaultFilename,	PLCore::String,	"",	ReadWrite,	DirectValue,	"Default resource (e.g. scene or script)",	"")
-		// Constructors
-		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+	pl_class(PLFRONTENDQT_RTTI_EXPORT, DockWidgetScene, "PLFrontendQt", PLFrontendQt::DockWidget, "Abstract scene Qt dock widget base class")
+		// Properties
+		pl_properties
+			pl_property("Title", "Scene")
+		pl_properties_end
 	pl_class_end
 
 
 	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
-	public:
+	protected:
 		/**
 		*  @brief
-		*    Default constructor
+		*    Constructor
+		*
+		*  @param[in] pQWidgetParent
+		*    Pointer to parent Qt widget, can be a null pointer (in this case you're responsible for destroying this instance)
+		*  @param[in] pDockWidgetManager
+		*    Optional pointer to the dock widget manager this dock widget should be registered to, can be a null pointer
 		*/
-		PLViewerQtConfig();
+		PLFRONTENDQT_API DockWidgetScene(QWidget *pQWidgetParent, DockWidgetManager *pDockWidgetManager = nullptr);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~PLViewerQtConfig();
+		PLFRONTENDQT_API virtual ~DockWidgetScene();
 
 
 };
 
 
-#endif // __CONFIG_H__
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLFrontendQt
+
+
+#endif // __PLFRONTENDQT_DOCKWIDGET_SCENE_H__

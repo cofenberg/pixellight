@@ -1,7 +1,7 @@
 /*********************************************************\
- *  File: Application.h                                  *
+ *  File: ApplicationQt.h                                *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -20,23 +20,20 @@
 \*********************************************************/
 
 
-#ifndef __PLVIEWERQT_APPLICATION_H__
-#define __PLVIEWERQT_APPLICATION_H__
+#ifndef __PLVIEWERQT_APPLICATIONQT_H__
+#define __PLVIEWERQT_APPLICATIONQT_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLEngine/Application/ScriptApplication.h>
+#include <Application.h>	// Reused from "PLViewer"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLInput {
-	class Control;
-}
 class Gui;
 
 
@@ -45,27 +42,18 @@ class Gui;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Application class
+*    PLViewer application class with an added lightweight Qt GUI-layer
 */
-class Application : public PLEngine::ScriptApplication {
+class ApplicationQt : public Application {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, Application, "", PLEngine::ScriptApplication, "Application class")
+	pl_class(pl_rtti_export, ApplicationQt, "", Application, "PLViewer application class with an added lightweight Qt GUI-layer")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	PLCore::Frontend&,	"Parameter constructor. Frontend this application instance is running in as first parameter.",	"")
-		// Slots
-		pl_slot_1(OnControl,	PLInput::Control&,	"Called when a control event has occurred, occurred control as first parameter",	"")
 	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public static data                                    ]
-	//[-------------------------------------------------------]
-	public:
-		static const PLCore::String DefaultFilename;	/**< The used default resource loaded at start, if empty a file dialog will appear */
 
 
 	//[-------------------------------------------------------]
@@ -79,81 +67,60 @@ class Application : public PLEngine::ScriptApplication {
 		*  @param[in] cFrontend
 		*    Frontend this application instance is running in
 		*/
-		Application(PLCore::Frontend &cFrontend);
+		ApplicationQt(PLCore::Frontend &cFrontend);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~Application();
-
-		/**
-		*  @brief
-		*    Loads a resource
-		*
-		*  @param[in] sFilename
-		*    Filename of the resource to load
-		*
-		*  @return
-		*    'true' if all went fine, else 'false'
-		*/
-		bool LoadResource(const PLCore::String &sFilename);
-
-
-	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Called when a control event has occurred
-		*
-		*  @param[in] cControl
-		*    Occurred control
-		*/
-		void OnControl(PLInput::Control &cControl);
-
-		/**
-		*  @brief
-		*    Sets the state text
-		*
-		*  @param[in] sText
-		*    State text
-		*/
-		void SetStateText(const PLCore::String &sText);
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual PLCore::CoreApplication functions     ]
-	//[-------------------------------------------------------]
-	private:
-		virtual void OnInitLog() override;
-		virtual void OnInit() override;
-		virtual void OnDeInit() override;
+		virtual ~ApplicationQt();
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLCore::AbstractFrontend functions  ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void OnDrop(const PLCore::Container<PLCore::String> &lstFiles) override;
+		virtual void OnUpdate() override;
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLCore::CoreApplication functions     ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void OnInit() override;
+		virtual void OnDeInit() override;
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual EngineApplication functions            ]
+	//[-------------------------------------------------------]
+	public:
+		virtual bool LoadScene(const PLCore::String &sFilename) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLEngine::EngineApplication functions ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void OnCreateInputController() override;
+		virtual void OnLoadProgress(float fLoadProgress) override;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected virtual Application functions               ]
+	//[-------------------------------------------------------]
+	protected:
+		virtual void SetStateText(const PLCore::String &sText) override;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Gui *m_pGui;	/**< GUI, can be a null pointer */
+		Gui  *m_pGui;			/**< GUI, can be a null pointer */
+		float m_fLoadProgress;	/**< Current load progress (0.0-1.0) */
 
 
 };
 
 
-#endif // __PLVIEWERQT_APPLICATION_H__
+#endif // __PLVIEWERQT_APPLICATIONQT_H__

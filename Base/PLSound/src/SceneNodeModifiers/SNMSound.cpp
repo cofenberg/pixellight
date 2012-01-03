@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SNMSound.cpp                                   *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -206,10 +206,14 @@ Source *SNMSound::GetSoundSource() const
 void SNMSound::OnActivate(bool bActivate)
 {
 	// Connect/disconnect event handler
-	if (bActivate)
+	if (bActivate) {
 		GetSceneNode().GetTransform().EventPosition.Connect(SlotOnPosition);
-	else
+
+		// Make a first update to ensure the position is up-to-date when we're going active (synchronization, no logic update)
+		OnPosition();
+	} else {
 		GetSceneNode().GetTransform().EventPosition.Disconnect(SlotOnPosition);
+	}
 
 	// [TODO] Start/stop sound playback
 }

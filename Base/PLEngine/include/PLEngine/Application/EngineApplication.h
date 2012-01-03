@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: EngineApplication.h                            *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -438,6 +438,41 @@ class EngineApplication : public PLScene::SceneApplication {
 		*/
 		PL_API virtual void OnInputControllerFound(PLInput::Controller *pInputController, PLCore::String sInputSemantic);
 
+		/**
+		*  @brief
+		*    Called on load progress
+		*
+		*  @param[in] fLoadProgress
+		*    Load progress (0.0-1.0)
+		*
+		*  @note
+		*    - Calls "GetFrontend().RedrawAndPing()", but only if there's a load screen
+		*/
+		PL_API virtual void OnLoadProgress(float fLoadProgress);
+
+
+	//[-------------------------------------------------------]
+	//[ Protected functions                                   ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Configures a generic scene
+		*
+		*  @param[in] cSceneContainer
+		*    The scene container to add the new scene nodes to
+		*  @param[in] pPrimarySceneNode
+		*    Primary scene node, for example representing the loaded mesh or a box with the loaded material etc., can be a null pointer
+		*
+		*  @note
+		*    - Comfort method
+		*    - Adds a directional light source scene node named "Light"
+		*    - Adds a free camera scene node named "Camera"
+		*    - If primary scene node given, adds an orbiter camera scene node named "OrbiterCamera"
+		*    - Makes the orbiting camera to the currently used application camera, if there's no orbiting camera then the free camera will be used instead
+		*/
+		PL_API void ConfigureGenericScene(PLScene::SceneContainer &cSceneContainer, PLScene::SceneNode *pPrimarySceneNode);
+
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
@@ -471,15 +506,6 @@ class EngineApplication : public PLScene::SceneApplication {
 		*    Found scene node
 		*/
 		void OnSceneNode(PLScene::SceneQuery &cQuery, PLScene::SceneNode &cSceneNode);
-
-		/**
-		*  @brief
-		*    Called on load progress
-		*
-		*  @param[in] fLoadProgress
-		*    Load progress (0.0-1.0)
-		*/
-		void OnLoadProgress(float fLoadProgress);
 
 
 	//[-------------------------------------------------------]

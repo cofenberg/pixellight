@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SNMPositionLinearAnimation.h                   *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -79,9 +79,9 @@ class SNMPositionLinearAnimation : public SNMTransform {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMPositionLinearAnimation, "PLScene", PLScene::SNMTransform, "Linear position animation scene node modifier class")
 		// Attributes
-		pl_attribute(AutoVector,	pl_enum_type(EAutoVector),	None,								ReadWrite,	DirectValue,	"Automatic vector type",	"")
-		pl_attribute(Vector,		PLMath::Vector3,			PLMath::Vector3(1.0f, 1.0f, 1.0f),	ReadWrite,	DirectValue,	"Movement vector",			"")
-		pl_attribute(Speed,			float,						1.0f,								ReadWrite,	DirectValue,	"Movement speed",			"")
+		pl_attribute(AutoVector,	pl_enum_type(EAutoVector),	None,					ReadWrite,	DirectValue,	"Automatic vector type",	"")
+		pl_attribute(Vector,		PLMath::Vector3,			PLMath::Vector3::One,	ReadWrite,	DirectValue,	"Movement vector",			"")
+		pl_attribute(Speed,			float,						1.0f,					ReadWrite,	DirectValue,	"Movement speed",			"")
 		// Constructors
 		pl_constructor_1(ParameterConstructor,	SceneNode&,	"Parameter constructor",	"")
 	pl_class_end

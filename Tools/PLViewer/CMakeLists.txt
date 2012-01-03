@@ -1,7 +1,7 @@
 #*********************************************************#
 #*  File: CMakeLists.txt                                 *
 #*
-#*  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+#*  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
 #*
 #*  This file is part of PixelLight.
 #*
@@ -151,36 +151,6 @@ add_dependencies(Tools                        ${CMAKETOOLS_CURRENT_TARGET})
 ##################################################
 
 # Executable
-add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} ${PL_TOOLS_BIN_DIR}
-)
-
-##################################################
-## Install
-##################################################
-
-# Executable
-install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
-	DESTINATION ${PL_INSTALL_TOOLS_BIN}	COMPONENT SDK
-)
-
-##################################################
-## Build standalone executable
-##################################################
-add_compile_defs(STANDALONE)
-build_executable(${CMAKETOOLS_CURRENT_TARGET}Standalone WIN32)
-
-##################################################
-## Dependencies
-##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_PROJECT}Standalone	PLCore PLMath PLGraphics PLInput PLRenderer PLMesh PLScene PLEngine)
-add_dependencies(Base										${CMAKETOOLS_CURRENT_TARGET})
-
-##################################################
-## Post-Build
-##################################################
-
-# Standalone executable
 add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} ${PL_TOOLS_BIN_DIR}
 )

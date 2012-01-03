@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SceneGraphTreeModel.h                          *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -85,8 +85,8 @@ class PLFRONTENDQT_API SceneGraphTreeModel : public TreeModelBase {
 		*    specifies if the start node be hidden
 		*/
 		void SetStartNode(PLScene::SceneNode *nodeObj, bool hideStartNode = false);
-		PLScene::SceneNode *GetSceneNodeFromIndex(QModelIndex &index);
-		SceneGraphNodeTreeItemBase *GetSceneTreeItemFromIndex(QModelIndex &index);
+		PLScene::SceneNode *GetSceneNodeFromIndex(const QModelIndex &index);
+		SceneGraphNodeTreeItemBase *GetSceneTreeItemFromIndex(const QModelIndex &index);
 
 
 };

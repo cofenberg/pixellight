@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: MeshCreatorCylinder.h                          *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -53,12 +53,12 @@ class MeshCreatorCylinder : public MeshCreator {
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, MeshCreatorCylinder, "PLMesh", PLMesh::MeshCreator, "Cylinder mesh creator class")
 		// Attributes
-		pl_attribute(BaseRadius,	float,				0.5f,								ReadWrite,	DirectValue,	"The radius of the cylinder at z = 0",			"")
-		pl_attribute(TopRadius,		float,				0.5f,								ReadWrite,	DirectValue,	"The radius of the cylinder at z = height",		"")
-		pl_attribute(Height,		float,				1.0f,								ReadWrite,	DirectValue,	"The height of the cylinder",					"")
-		pl_attribute(Slices,		PLCore::uint32,		20,									ReadWrite,	DirectValue,	"The number of subdivisions around the z-axis",	"")
-		pl_attribute(Offset,		PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Offset to center",								"")
-		pl_attribute(Closed,		bool,				true,								ReadWrite,	DirectValue,	"Shall the shape be closed on all sides?",		"")
+		pl_attribute(BaseRadius,	float,				0.5f,					ReadWrite,	DirectValue,	"The radius of the cylinder at z = 0",			"")
+		pl_attribute(TopRadius,		float,				0.5f,					ReadWrite,	DirectValue,	"The radius of the cylinder at z = height",		"")
+		pl_attribute(Height,		float,				1.0f,					ReadWrite,	DirectValue,	"The height of the cylinder",					"")
+		pl_attribute(Slices,		PLCore::uint32,		20,						ReadWrite,	DirectValue,	"The number of subdivisions around the z-axis",	"")
+		pl_attribute(Offset,		PLMath::Vector3,	PLMath::Vector3::Zero,	ReadWrite,	DirectValue,	"Offset to center",								"")
+		pl_attribute(Closed,		bool,				true,					ReadWrite,	DirectValue,	"Shall the shape be closed on all sides?",		"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

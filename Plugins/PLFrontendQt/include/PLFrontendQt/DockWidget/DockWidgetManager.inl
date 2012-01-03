@@ -1,7 +1,7 @@
 /*********************************************************\
- *  File: Config.cpp                                     *
+ *  File: DockWidgetManager.inl                          *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -21,33 +21,36 @@
 
 
 //[-------------------------------------------------------]
-//[ Includes                                              ]
+//[ Namespace                                             ]
 //[-------------------------------------------------------]
-#include "Config.h"
+namespace PLFrontendQt {
 
 
 //[-------------------------------------------------------]
-//[ RTTI interface                                        ]
-//[-------------------------------------------------------]
-pl_implement_class(PLViewerQtConfig)
-
-
-//[-------------------------------------------------------]
-//[ Public functions                                      ]
+//[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Default constructor
+*    Registers the given dock widget within this dock widget manager
 */
-PLViewerQtConfig::PLViewerQtConfig() :
-	DefaultFilename(this)
+void DockWidgetManager::RegisterDockWidget(DockWidget &cDockWidget)
 {
+	// Add the given dock widget to the list of registered dock widgets
+	m_lstDockWidgets.Add(&cDockWidget);
 }
 
 /**
 *  @brief
-*    Destructor
+*    Unregisters the given dock widget within this dock widget manager
 */
-PLViewerQtConfig::~PLViewerQtConfig()
+void DockWidgetManager::UnregisterDockWidget(DockWidget &cDockWidget)
 {
+	// Remove the given dock widget from the list of registered dock widgets
+	m_lstDockWidgets.Remove(&cDockWidget);
 }
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+} // PLFrontendQt

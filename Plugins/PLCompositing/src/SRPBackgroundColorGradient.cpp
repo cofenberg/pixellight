@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: SRPBackgroundColorGradient.cpp                 *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -23,12 +23,19 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Math.h>
+#include <PLRenderer/RendererContext.h>
+#include <PLRenderer/Renderer/DrawHelpers.h>
+#include <PLRenderer/Effect/EffectManager.h>
 #include "PLCompositing/SRPBackgroundColorGradient.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLMath;
+using namespace PLRenderer;
+using namespace PLScene;
 namespace PLCompositing {
 
 
@@ -39,13 +46,18 @@ pl_implement_class(SRPBackgroundColorGradient)
 
 
 //[-------------------------------------------------------]
-//[ Protected functions                                   ]
+//[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Default constructor
 */
-SRPBackgroundColorGradient::SRPBackgroundColorGradient()
+SRPBackgroundColorGradient::SRPBackgroundColorGradient() :
+	Color1(this),
+	Color2(this),
+	Angle(this),
+	Position(this),
+	Size(this)
 {
 }
 
@@ -55,6 +67,28 @@ SRPBackgroundColorGradient::SRPBackgroundColorGradient()
 */
 SRPBackgroundColorGradient::~SRPBackgroundColorGradient()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Private virtual PLScene::SceneRendererPass functions  ]
+//[-------------------------------------------------------]
+void SRPBackgroundColorGradient::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
+{
+	// Setup renderer states
+	cRenderer.GetRendererContext().GetEffectManager().Use();
+	cRenderer.SetRenderState(RenderState::ZEnable,			 false);
+	cRenderer.SetRenderState(RenderState::ZWriteEnable,		 false);
+
+	// Begin 2D mode
+	DrawHelpers &cDrawHelpers = cRenderer.GetDrawHelpers();
+	cDrawHelpers.Begin2DMode();
+
+		// Draw the gradient guad, use degree instead of radian in here because humans tend to be able to imagine degree much better than radian
+		cDrawHelpers.DrawGradientQuad(Color1.Get(), Color2.Get(), static_cast<float>(Angle.Get()*Math::DegToRad), Position.Get(), Size.Get());
+
+	// End 2D mode
+	cDrawHelpers.End2DMode();
 }
 
 

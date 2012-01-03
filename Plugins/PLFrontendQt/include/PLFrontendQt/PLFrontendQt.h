@@ -2,7 +2,7 @@
  *  File: PLFrontendQt.h                                 *
  *      Main header file of this project
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -26,7 +26,20 @@
 *
 *  @section intro_sec Introduction
 *
-*  This is the PLFrontendQt reference.
+*  This is the PLFrontendQt reference. The PLFrontendQt adapter project fulfils multiple purposes.
+*
+*  There are generic helpers like the static adapter class for mapping Qt strings to PixelLight
+*  strings and vice versa. By using those helpers as well as provided data models and so on it's
+*  possible to add PixelLight functionality into Qt applications. In other words: Qt is the master,
+*  PixelLight is the slave.
+*
+*  On the other hand this project also supports the other way around were PixelLight is the master
+*  and Qt the slave. This is accomplished by adding an "PLCore::FrontendImpl"-implementation using
+*  Qt. Internally Qt has the main loop, but due to the frontend approach this is nothing the user
+*  has to care about. One is just using PixelLight. When using "PLFrontend::Frontend" as PixelLight
+*  frontend, it's possible to access Qt functionality easily to add a GUI. Additionally, there are
+*  advanced features like the RTTI dock widgets making it possible to add new dock widgets to the
+*  main window in an universal way, even by implementing them in seperate plugins.
 */
 
 
@@ -36,16 +49,27 @@
 
 
 //[-------------------------------------------------------]
-//[ OS definitions                                        ]
+//[ Includes                                              ]
 //[-------------------------------------------------------]
-// Windows platform
-#ifdef WIN32
-	#include "PLFrontendQt/PLFrontendQtWindows.h"
-#endif
+#include <QtCore/qglobal.h>
+#include <PLCore/PLCore.h>
 
-// Linux platform
-#ifdef LINUX
-	#include "PLFrontendQt/PLFrontendQtLinux.h"
+
+//[-------------------------------------------------------]
+//[ Import/Export                                         ]
+//[-------------------------------------------------------]
+#ifdef PLFRONTENDQT_EXPORTS
+	// To export classes, methods and variables
+	#define PLFRONTENDQT_API			PL_GENERIC_API_EXPORT
+
+	// To export RTTI elements
+	#define PLFRONTENDQT_RTTI_EXPORT	PL_GENERIC_RTTI_EXPORT
+#else
+	// To import classes, methods and variables
+	#define PLFRONTENDQT_API			PL_GENERIC_API_IMPORT
+
+	// To import RTTI elements
+	#define PLFRONTENDQT_RTTI_EXPORT	PL_GENERIC_RTTI_IMPORT
 #endif
 
 

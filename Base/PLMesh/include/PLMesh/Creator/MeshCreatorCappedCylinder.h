@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: MeshCreatorCappedCylinder.h                    *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -53,10 +53,10 @@ class MeshCreatorCappedCylinder : public MeshCreator {
 	//[-------------------------------------------------------]
 	pl_class(PLMESH_RTTI_EXPORT, MeshCreatorCappedCylinder, "PLMesh", PLMesh::MeshCreator, "Capped cylinder mesh creator class aligned along the x axis")
 		// Attributes
-		pl_attribute(Length,	float,				1.0f,								ReadWrite,	DirectValue,	"The length of the capped cylinder",	"")
-		pl_attribute(Radius,	float,				0.5f,								ReadWrite,	DirectValue,	"The height of the cylinder",			"")
-		pl_attribute(Quality,	PLCore::uint32,		3,									ReadWrite,	DirectValue,	"The quality/tesselation",				"")
-		pl_attribute(Offset,	PLMath::Vector3,	PLMath::Vector3(0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Offset to center",						"")
+		pl_attribute(Length,	float,				1.0f,					ReadWrite,	DirectValue,	"The length of the capped cylinder",	"")
+		pl_attribute(Radius,	float,				0.5f,					ReadWrite,	DirectValue,	"The height of the cylinder",			"")
+		pl_attribute(Quality,	PLCore::uint32,		3,						ReadWrite,	DirectValue,	"The quality/tesselation",				"")
+		pl_attribute(Offset,	PLMath::Vector3,	PLMath::Vector3::Zero,	ReadWrite,	DirectValue,	"Offset to center",						"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

@@ -1,3 +1,10 @@
+>> 01.01.2012
+[CO]
+- "SNMOrbiting::OnActivate()": Make a first update to ensure position and rotation are up-to-date when we're going active. Also reviewed the other "OnActivate()"
+  implementations.
+
+
+
 >> 18.12.2011
 [CO]
 - "SNMOrbiting": Changed the default value of "MinDistance" from "-1.0f" (no limit) to "0.0f". This looks like a better default behaviour because usually, when

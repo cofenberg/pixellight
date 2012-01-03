@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: FrontendMainWindow.h                           *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -28,7 +28,12 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <QtGui/qmainwindow.h>
+#include <PLCore/PLCore.h>	// For "override"
+PL_WARNING_PUSH
+	PL_WARNING_DISABLE(4127)	// "warning C4127: conditional expression is constant"
+	#include <QtGui/qmainwindow.h>
+PL_WARNING_POP
+#include "PLFrontendQt/PLFrontendQt.h"
 
 
 //[-------------------------------------------------------]
@@ -41,6 +46,7 @@ namespace PLFrontendQt {
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class Frontend;
+class DockWidgetManager;
 
 
 //[-------------------------------------------------------]
@@ -57,6 +63,20 @@ class FrontendMainWindow : public QMainWindow {
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class Frontend;
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Returns the dock widget manager of this main window
+		*
+		*  @return
+		*    The dock widget manager of this main window
+		*/
+		PLFRONTENDQT_API DockWidgetManager &GetDockWidgetManager();
 
 
 	//[-------------------------------------------------------]
@@ -96,6 +116,7 @@ class FrontendMainWindow : public QMainWindow {
 	//[ Protected virtual QWidget functions                   ]
 	//[-------------------------------------------------------]
 	protected:
+		virtual void mousePressEvent(QMouseEvent *) override;
 		virtual void keyPressEvent(QKeyEvent *) override;
 		virtual void focusInEvent(QFocusEvent *) override;
 		virtual void focusOutEvent(QFocusEvent *) override;
@@ -112,9 +133,10 @@ class FrontendMainWindow : public QMainWindow {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Frontend *m_pFrontendQt;			/**< Owner frontend implementation, always valid! */
-		bool	  m_bVisible;				/**< Was the widget made visible? (independent of the real Qt widget visibility state) */
-		int		  m_nWindowRedrawTimerID;	/**< Window redraw timer */
+		Frontend		  *m_pFrontendQt;			/**< Owner frontend implementation, always valid! */
+		bool			   m_bVisible;				/**< Was the widget made visible? (independent of the real Qt widget visibility state) */
+		int				   m_nWindowRedrawTimerID;	/**< Window redraw timer */
+		DockWidgetManager *m_pDockWidgetManager;	/**< Dock widget manager of this main window, can be a null pointer */
 
 
 };
