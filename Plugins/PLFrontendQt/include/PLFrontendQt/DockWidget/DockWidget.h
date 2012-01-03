@@ -36,8 +36,8 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 QT_BEGIN_NAMESPACE
-class QWidget;
-class QDockWidget;
+	class QWidget;
+	class QDockWidget;
 QT_END_NAMESPACE
 namespace PLFrontendQt {
 	class DockWidgetManager;

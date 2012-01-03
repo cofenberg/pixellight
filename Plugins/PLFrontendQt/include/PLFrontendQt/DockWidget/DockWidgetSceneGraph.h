@@ -36,8 +36,8 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 QT_BEGIN_NAMESPACE
-class QMainWindow;
-class QModelIndex;
+	class QMainWindow;
+	class QModelIndex;
 QT_END_NAMESPACE
 namespace PLScene {
 	class SceneNode;

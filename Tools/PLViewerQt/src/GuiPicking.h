@@ -36,7 +36,7 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 QT_BEGIN_NAMESPACE
-class QLabel;
+	class QLabel;
 QT_END_NAMESPACE
 class Gui;
 
