@@ -1,7 +1,7 @@
 /*********************************************************\
- *  File: TreeItemBase.h                                 *
+ *  File: ClassListModel.h                               *
  *
- *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -20,19 +20,23 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTENDQT_TREEITEMBASE_H__
-#define __PLFRONTENDQT_TREEITEMBASE_H__
-#pragma once
+#ifndef __PLFRONTENDQT_PERMODULECLASSLISTMODEL_H__
+#define __PLFRONTENDQT_PERMODULECLASSLISTMODEL_H__
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <QtCore/QMap>
-#include <QtCore/QObject>
-#include <QtCore/QModelIndex>
-#include <PLCore/PLCore.h>	// Only needed for compilers which doesn't have nullptr as a builtin type
-#include "PLFrontendQt/PLFrontendQt.h"
+#include "PLFrontendQt/DataModels/TreeModelBase.h"
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLCore {
+	class Module;
+	class Class;
+}
 
 
 //[-------------------------------------------------------]
@@ -40,6 +44,20 @@
 //[-------------------------------------------------------]
 namespace PLFrontendQt {
 namespace DataModels {
+namespace SceneRendererDataModel {
+
+
+enum ClassListModelRoles
+{
+	ClassListNameRole = Qt::UserRole+1,
+	ClassListDescriptionRole,
+	ClassListItemType,
+	ClassNamespaceRole,
+	ClassFullNameRole,
+	ClassBaseClassRole,
+	ModuleVendorRole,
+	ModuleLicenseRole
+};
 
 
 //[-------------------------------------------------------]
@@ -47,9 +65,9 @@ namespace DataModels {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Tree item base
+*    RTTI class list data model
 */
-class PLFRONTENDQT_API TreeItemBase : public QObject {
+class PLFRONTENDQT_API ClassListModel : public TreeModelBase {
 
 
 	//[-------------------------------------------------------]
@@ -63,42 +81,26 @@ class PLFRONTENDQT_API TreeItemBase : public QObject {
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		explicit TreeItemBase(QObject *parent = nullptr);
-		TreeItemBase(int columnCount, QObject *parent = nullptr);
-		virtual ~TreeItemBase(){}
-
-		int columnCount() const;
-		int row() const;
-		virtual QVariant data(const int column, const int role) = 0;
-		virtual bool setData(const int column, const QVariant &value, const int role) { return false; };
-		Qt::ItemFlags flags( const int column) const;
+		explicit ClassListModel(bool hierarchical = false, QObject* parent = nullptr);
+		virtual ~ClassListModel();
 
 
 	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
-	//[-------------------------------------------------------]
-	protected:
-		void SetFlags(const int column, const Qt::ItemFlags flags);
-		void RemoveFlags(const int column, const Qt::ItemFlags flags);
-		void SetColumnCount(const int columnCount);
-
-
-	//[-------------------------------------------------------]
-	//[ Private data                                          ]
+	//[ Private methods                                       ]
 	//[-------------------------------------------------------]
 	private:
-		QMap<int, Qt::ItemFlags>	m_flagsMap;
-		int							m_columnCount;
-
-
+		void SetupModel(bool hierarchical);
+		void CreateClassItemsFromModule(const PLCore::Module &moduleItem, QObject* parent);
+		void CreateHierarchicalClassItems(const PLCore::Class &baseClass, QObject* parent);
 };
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+} // SceneRendererDataModel
 } // DataModels
 } // PLFrontendQt
 
 
-#endif // __PLFRONTENDQT_TREEITEMBASE_H__
+#endif // __PLFRONTENDQT_PERMODULECLASSLISTMODEL_H__

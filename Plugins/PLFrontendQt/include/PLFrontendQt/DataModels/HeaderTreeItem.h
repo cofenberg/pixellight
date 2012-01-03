@@ -1,7 +1,7 @@
 /*********************************************************\
- *  File: TreeItemBase.h                                 *
+ *  File: HeaderTreeItem.h                               *
  *
- *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -20,19 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTENDQT_TREEITEMBASE_H__
-#define __PLFRONTENDQT_TREEITEMBASE_H__
-#pragma once
+#ifndef __PLFRONTENDQT_HEADERTREEITEM_H__
+#define __PLFRONTENDQT_HEADERTREEITEM_H__
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <QtCore/QMap>
-#include <QtCore/QObject>
-#include <QtCore/QModelIndex>
-#include <PLCore/PLCore.h>	// Only needed for compilers which doesn't have nullptr as a builtin type
-#include "PLFrontendQt/PLFrontendQt.h"
+#include "PLFrontendQt/DataModels/TreeItemBase.h"
+#include <QStringList>
 
 
 //[-------------------------------------------------------]
@@ -47,9 +43,9 @@ namespace DataModels {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Tree item base
+*    Header tree item
 */
-class PLFRONTENDQT_API TreeItemBase : public QObject {
+class PLFRONTENDQT_API HeaderTreeItem : public TreeItemBase {
 
 
 	//[-------------------------------------------------------]
@@ -63,34 +59,16 @@ class PLFRONTENDQT_API TreeItemBase : public QObject {
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		explicit TreeItemBase(QObject *parent = nullptr);
-		TreeItemBase(int columnCount, QObject *parent = nullptr);
-		virtual ~TreeItemBase(){}
-
-		int columnCount() const;
-		int row() const;
-		virtual QVariant data(const int column, const int role) = 0;
-		virtual bool setData(const int column, const QVariant &value, const int role) { return false; };
-		Qt::ItemFlags flags( const int column) const;
-
-
-	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
-	//[-------------------------------------------------------]
-	protected:
-		void SetFlags(const int column, const Qt::ItemFlags flags);
-		void RemoveFlags(const int column, const Qt::ItemFlags flags);
-		void SetColumnCount(const int columnCount);
+		explicit HeaderTreeItem(QObject* parent = nullptr);
+		void setHeaderItems(const QStringList &headerItems);
+		virtual QVariant data(const int column, const int role);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		QMap<int, Qt::ItemFlags>	m_flagsMap;
-		int							m_columnCount;
-
-
+		QStringList m_headerItems;
 };
 
 
@@ -101,4 +79,4 @@ class PLFRONTENDQT_API TreeItemBase : public QObject {
 } // PLFrontendQt
 
 
-#endif // __PLFRONTENDQT_TREEITEMBASE_H__
+#endif // __PLFRONTENDQT_HEADERTREEITEM_H__

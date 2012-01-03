@@ -126,6 +126,10 @@ void Application::SetUpdateInterval(int msec)
 	if (m_TimerId != 0)
 		killTimer(m_TimerId);
 	m_updateInterval = msec;
+	
+	if (msec == -1)
+		return;
+	
 	m_TimerId = startTimer(msec);
 }
 
