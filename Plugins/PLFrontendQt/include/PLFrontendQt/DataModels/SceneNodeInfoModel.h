@@ -69,6 +69,7 @@ class PLFRONTENDQT_API SceneNodeInfoModel : public PLIntrospectionModel {
 	//[-------------------------------------------------------]
 	public:
 		explicit SceneNodeInfoModel(QObject *parent = nullptr);
+		PLScene::SceneNode *GetSceneNode() const;
 		void SetSceneNode(PLScene::SceneNode *nodeObj);
 		void SetSceneNodeModifier(PLScene::SceneNodeModifier *nodeObj);
 

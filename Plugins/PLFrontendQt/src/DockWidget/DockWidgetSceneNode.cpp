@@ -55,6 +55,7 @@ pl_implement_class(DockWidgetSceneNode)
 *    Constructor
 */
 DockWidgetSceneNode::DockWidgetSceneNode(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidgetScene(pQMainWindow, pDockWidgetManager),
+	SlotOnDestroy(this),
 	m_pSceneNodeInfoModel(nullptr)
 {
 	// Get encapsulated Qt dock widget
@@ -97,21 +98,44 @@ void DockWidgetSceneNode::SelectSceneNode(SceneNode *pSceneNode)
 {
 	// Is there a scene node info model instance?
 	if (m_pSceneNodeInfoModel) {
+		// Disconnect event handler
+		if (m_pSceneNodeInfoModel->GetSceneNode())
+			m_pSceneNodeInfoModel->GetSceneNode()->SignalDestroy.Disconnect(SlotOnDestroy);
+
 		// Set scene node
 		m_pSceneNodeInfoModel->SetSceneNode(pSceneNode);
-	}
 
-	// Get encapsulated Qt dock widget
-	QDockWidget *pQDockWidget = GetQDockWidget();
-	if (pQDockWidget) {
-		// Set window title
-		QString sQStringWindowTitle = pQDockWidget->tr(GetClass()->GetProperties().Get("Title"));
-		if (pSceneNode) { 
-			sQStringWindowTitle += ": ";
-			sQStringWindowTitle += QtStringAdapter::PLToQt('\"' + pSceneNode->GetAbsoluteName() + '\"');	// Put it into quotes to make it possible to see e.g. trailing spaces
+		// Connect event handler
+		if (pSceneNode)
+			pSceneNode->SignalDestroy.Connect(SlotOnDestroy);
+
+		// Get encapsulated Qt dock widget
+		QDockWidget *pQDockWidget = GetQDockWidget();
+		if (pQDockWidget) {
+			// Set window title
+			QString sQStringWindowTitle = pQDockWidget->tr(GetClass()->GetProperties().Get("Title"));
+			if (pSceneNode) { 
+				sQStringWindowTitle += ": ";
+				sQStringWindowTitle += QtStringAdapter::PLToQt('\"' + pSceneNode->GetAbsoluteName() + '\"');	// Put it into quotes to make it possible to see e.g. trailing spaces
+			}
+			pQDockWidget->setWindowTitle(sQStringWindowTitle);
 		}
-		pQDockWidget->setWindowTitle(sQStringWindowTitle);
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when the scene node assigned with this dock widget was destroyed
+*/
+void DockWidgetSceneNode::OnDestroy()
+{
+	// Argh! Mayday! We lost our scene node!
+	// -> Now no scene node is currently selected
+	SelectSceneNode(nullptr);
 }
 
 

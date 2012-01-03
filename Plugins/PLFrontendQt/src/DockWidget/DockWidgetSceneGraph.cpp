@@ -56,6 +56,7 @@ pl_implement_class(DockWidgetSceneGraph)
 *    Constructor
 */
 DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidgetScene(pQMainWindow, pDockWidgetManager),
+	SlotOnDestroy(this),
 	m_pSceneGraphTreeModel(nullptr)
 {
 	// Get encapsulated Qt dock widget
@@ -77,6 +78,10 @@ DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidget
 				pSceneNode = reinterpret_cast<SceneNode*>(static_cast<PLEngine::EngineApplication*>(pApplication)->GetScene());
 			m_pSceneGraphTreeModel->SetStartNode(pSceneNode, true);
 		}
+
+		// Connect event handler
+		if (pSceneNode)
+			pSceneNode->SignalDestroy.Connect(SlotOnDestroy);
 
 		// Set window title
 		QString sQStringWindowTitle = pQDockWidget->tr(GetClass()->GetProperties().Get("Title"));
@@ -106,6 +111,20 @@ DockWidgetSceneGraph::~DockWidgetSceneGraph()
 void DockWidgetSceneGraph::SelectSceneNode(SceneNode *pSceneNode)
 {
 	// [TODO] Select the given scene node within the scene graph tree view
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when the scene node assigned with this dock widget was destroyed
+*/
+void DockWidgetSceneGraph::OnDestroy()
+{
+	// Argh! Mayday! We lost our start scene node!
+	m_pSceneGraphTreeModel->SetStartNode(nullptr, true);
 }
 
 

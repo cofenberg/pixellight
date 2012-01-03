@@ -82,6 +82,8 @@ class DockWidgetSceneNode : public DockWidgetScene {
 		#endif
 		// Constructors
 		pl_constructor_2(DefaultConstructor,	QMainWindow*,	DockWidgetManager*,	"Constructor with a pointer to the Qt main window as first parameter, pointer to the dock widget manager this dock widget should be registered to as second parameter",	"")
+		// Slots
+		pl_slot_0(OnDestroy,	"Called when the scene node assigned with this dock widget was destroyed",	"")
 	pl_class_end
 
 
@@ -114,6 +116,17 @@ class DockWidgetSceneNode : public DockWidgetScene {
 		*    Scene node to select, can be a null pointer
 		*/
 		PLFRONTENDQT_API void SelectSceneNode(PLScene::SceneNode *pSceneNode);
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Called when the scene node assigned with this dock widget was destroyed
+		*/
+		void OnDestroy();
 
 
 	//[-------------------------------------------------------]

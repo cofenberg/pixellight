@@ -51,6 +51,11 @@ void SetSelected(PLScene::SceneNode *node, bool selected)
 	node->SetDebugFlags(flagValue);
 }
 
+PLScene::SceneNode *SceneNodeInfoModel::GetSceneNode() const
+{
+	return m_curNode;
+}
+
 void SceneNodeInfoModel::SetSceneNode(PLScene::SceneNode *nodeObj)
 {
 	if (m_curNode != nodeObj) {

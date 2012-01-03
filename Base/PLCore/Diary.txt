@@ -14,6 +14,7 @@ PLFrontendQt:
 - "DockWidget": Added the same communication interface as in "DockWidgetManager", but the emitting dock widget is excluded and one does not have to make
   a dock widget manager test in order to broadcast something. This communication infrastructure is important, so, it has to be as easy to use and robust as
   possible.
+- "DockWidgetSceneGraph" & "DockWidgetSceneNode" must take into account that the used scene node can be destroyed at any time
 
 
 
