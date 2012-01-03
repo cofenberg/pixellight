@@ -132,7 +132,7 @@ bool DockWidget::IsQDockWidgetVisible() const
 *    Constructor
 */
 DockWidget::DockWidget(QWidget *pQWidgetParent, DockWidgetManager *pDockWidgetManager) :
-	m_pQDockWidget(new InternalQDockWidget(*this, pQWidgetParent)),
+	m_pQDockWidget(pQWidgetParent ? new InternalQDockWidget(*this, pQWidgetParent) : nullptr),
 	m_pDockWidgetManager(pDockWidgetManager)
 {
 	// If there's a dock widget manager provided, register this dock widget

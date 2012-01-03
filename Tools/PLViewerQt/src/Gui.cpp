@@ -57,13 +57,19 @@ using namespace PLFrontendQt;
 
 
 //[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_implement_class(Gui)
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Constructor
 */
-Gui::Gui(Application &cApplication) :
+Gui::Gui(Application &cApplication) : DockWidget(nullptr, (cApplication.GetFrontend().GetImpl() && static_cast<PLFrontendQt::Frontend*>(cApplication.GetFrontend().GetImpl())->GetMainWindow()) ? &static_cast<PLFrontendQt::Frontend*>(cApplication.GetFrontend().GetImpl())->GetMainWindow()->GetDockWidgetManager() : nullptr),
 	EventHandlerCameraFound(&Gui::OnCameraFound, this),
 	m_pApplication(&cApplication),
 	m_pGuiPicking(nullptr),
@@ -165,6 +171,26 @@ void Gui::Update()
 		m_pGuiPicking->PerformInformativPicking();
 }
 
+/**
+*  @brief
+*    Selects the given scene node
+*/
+void Gui::SelectSceneNode(SceneNode *pSceneNode)
+{
+	// Scene node picked?
+	if (pSceneNode) {
+		// [TODO] Currently we just toggle the scene node debug mode to see some action
+		// Toggle the debug mode of the picked scene node
+		if (pSceneNode->GetDebugFlags() & SceneNode::DebugEnabled) {
+			// Disable debug mode
+			pSceneNode->SetDebugFlags(pSceneNode->GetDebugFlags() & ~SceneNode::DebugEnabled);
+		} else {
+			// Enable debug mode
+			pSceneNode->SetDebugFlags(pSceneNode->GetDebugFlags() |SceneNode::DebugEnabled);
+		}
+	}
+}
+
 
 //[-------------------------------------------------------]
 //[ Public virtual QObject methods                        ]
@@ -175,7 +201,7 @@ bool Gui::eventFilter(QObject *pQObject, QEvent *pQEvent)
 	FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
 
 	// Handle Qt main window events
-	if (pQObject == pFrontendMainWindow) {
+	if (pQObject == GetFrontendMainWindow()) {
 		// Mouse button double click (QMouseEvent)
 		if (pQEvent->type() == QEvent::MouseButtonDblClick) {
 			// Cast the received event to QMouseEvent
@@ -187,21 +213,8 @@ bool Gui::eventFilter(QObject *pQObject, QEvent *pQEvent)
 				if (m_pGuiPicking) {
 					SceneNode *pSceneNode = m_pGuiPicking->PerformPicking();
 
-					// Perform a dock widget manager broadcast
+					// Perform a dock widget manager broadcast (this dock widget will also receive the broadcast)
 					pFrontendMainWindow->GetDockWidgetManager().CallDockWidgetsMethod("SelectSceneNode", Params<void, SceneNode*>(pSceneNode));
-
-					// Scene node picked?
-					if (pSceneNode) {
-						// [TODO] Currently we just toggle the scene node debug mode to see some action
-						// Toggle the debug mode of the picked scene node
-						if (pSceneNode->GetDebugFlags() & SceneNode::DebugEnabled) {
-							// Disable debug mode
-							pSceneNode->SetDebugFlags(pSceneNode->GetDebugFlags() & ~SceneNode::DebugEnabled);
-						} else {
-							// Enable debug mode
-							pSceneNode->SetDebugFlags(pSceneNode->GetDebugFlags() |SceneNode::DebugEnabled);
-						}
-					}
 
 					// Done - filter the event out, i.e. stop it being handled further
 					return true;
@@ -340,13 +353,16 @@ uint32 Gui::FillMenuWindowRec(QMenu &cQMenu, const String &sBaseClass)
 				pQAction->setChecked(false);
 			}
 		} else {
-			// Abstract class
+			// Abstract class will result in a sub-menu, but only if at least one none abstract class is derived from it
+			List<const Class*> lstDerivedClasses;
+			ClassManager::GetInstance()->GetClasses(lstDerivedClasses, pClass->GetClassName(), Recursive, NoBase, NoAbstract);
+			if (lstDerivedClasses.GetNumOfElements()) {
+				// Add sub-menu
+				QMenu *pQMenuSub = cQMenu.addMenu(tr(pClass->GetProperties().Get("Title")));
 
-			// Add sub-menu
-			QMenu *pQMenuSub = cQMenu.addMenu(tr(pClass->GetProperties().Get("Title")));
-
-			// Automatically fill the Qt window menu by using RTTI information
-			nCheckedItems += FillMenuWindowRec(*pQMenuSub, pClass->GetClassName());
+				// Automatically fill the Qt window menu by using RTTI information
+				nCheckedItems += FillMenuWindowRec(*pQMenuSub, pClass->GetClassName());
+			}
 		}
 	}
 
