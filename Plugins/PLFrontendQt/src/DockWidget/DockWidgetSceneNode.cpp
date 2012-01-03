@@ -37,6 +37,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
+using namespace PLScene;
 namespace PLFrontendQt {
 
 
@@ -53,7 +54,8 @@ pl_implement_class(DockWidgetSceneNode)
 *  @brief
 *    Constructor
 */
-DockWidgetSceneNode::DockWidgetSceneNode(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidgetScene(pQMainWindow, pDockWidgetManager)
+DockWidgetSceneNode::DockWidgetSceneNode(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidgetScene(pQMainWindow, pDockWidgetManager),
+	m_pSceneNodeInfoModel(nullptr)
 {
 	// Get encapsulated Qt dock widget
 	QDockWidget *pQDockWidget = GetQDockWidget();
@@ -61,26 +63,18 @@ DockWidgetSceneNode::DockWidgetSceneNode(QMainWindow *pQMainWindow, DockWidgetMa
 		// Create tree view and set scene graph model
 		QTreeView *pQTreeView = new QTreeView();
 		pQDockWidget->setWidget(pQTreeView);
-		DataModels::SceneNodeInfoModel *pSceneNodeInfoModel = new DataModels::SceneNodeInfoModel(pQDockWidget);
-		pQTreeView->setModel(pSceneNodeInfoModel);
+		m_pSceneNodeInfoModel = new DataModels::SceneNodeInfoModel(pQDockWidget);
+		pQTreeView->setModel(m_pSceneNodeInfoModel);
 		pQTreeView->expandToDepth(0);
 
 		// Set a default start node to have a decent standard behaviour
-		PLScene::SceneNode *pSceneNode = nullptr;
+		SceneNode *pSceneNode = nullptr;
 		{
 			CoreApplication *pApplication = CoreApplication::GetApplication();
 			if (pApplication && pApplication->IsInstanceOf("PLEngine::EngineApplication"))
-				pSceneNode = reinterpret_cast<PLScene::SceneNode*>(static_cast<PLEngine::EngineApplication*>(pApplication)->GetScene());
-			pSceneNodeInfoModel->SetSceneNode(pSceneNode);
+				pSceneNode = reinterpret_cast<SceneNode*>(static_cast<PLEngine::EngineApplication*>(pApplication)->GetScene());
+			SelectSceneNode(pSceneNode);
 		}
-
-		// Set window title
-		QString sQStringWindowTitle = pQDockWidget->tr(GetClass()->GetProperties().Get("Title"));
-		if (pSceneNode) {
-			sQStringWindowTitle += ": ";
-			sQStringWindowTitle += QtStringAdapter::PLToQt('\"' + pSceneNode->GetAbsoluteName() + '\"');	// Put it into quotes to make it possible to see e.g. trailing spaces
-		}
-		pQDockWidget->setWindowTitle(sQStringWindowTitle);
 
 		// Add the created Qt dock widget to the given Qt main window
 		pQMainWindow->addDockWidget(Qt::BottomDockWidgetArea, pQDockWidget);
@@ -93,6 +87,31 @@ DockWidgetSceneNode::DockWidgetSceneNode(QMainWindow *pQMainWindow, DockWidgetMa
 */
 DockWidgetSceneNode::~DockWidgetSceneNode()
 {
+}
+
+/**
+*  @brief
+*    Selects the given scene node
+*/
+void DockWidgetSceneNode::SelectSceneNode(SceneNode *pSceneNode)
+{
+	// Is there a scene node info model instance?
+	if (m_pSceneNodeInfoModel) {
+		// Set scene node
+		m_pSceneNodeInfoModel->SetSceneNode(pSceneNode);
+	}
+
+	// Get encapsulated Qt dock widget
+	QDockWidget *pQDockWidget = GetQDockWidget();
+	if (pQDockWidget) {
+		// Set window title
+		QString sQStringWindowTitle = pQDockWidget->tr(GetClass()->GetProperties().Get("Title"));
+		if (pSceneNode) { 
+			sQStringWindowTitle += ": ";
+			sQStringWindowTitle += QtStringAdapter::PLToQt('\"' + pSceneNode->GetAbsoluteName() + '\"');	// Put it into quotes to make it possible to see e.g. trailing spaces
+		}
+		pQDockWidget->setWindowTitle(sQStringWindowTitle);
+	}
 }
 
 

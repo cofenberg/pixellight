@@ -37,6 +37,14 @@
 QT_BEGIN_NAMESPACE
 class QMainWindow;
 QT_END_NAMESPACE
+namespace PLScene {
+	class SceneNode;
+}
+namespace PLFrontendQt {
+	namespace DataModels {
+		class SceneNodeInfoModel;
+	}
+}
 
 
 //[-------------------------------------------------------]
@@ -68,6 +76,10 @@ class DockWidgetSceneNode : public DockWidgetScene {
 		pl_properties
 			pl_property("Title", "Scene node")
 		pl_properties_end
+		#ifdef PLFRONTENDQT_EXPORTS	// The following is only required when compiling PLFrontendQt
+			// Methods
+			pl_method_1(SelectSceneNode,	pl_ret_type(void),	PLScene::SceneNode*,	"Selects the given scene node. Scene node to select as first parameter.",	"")
+		#endif
 		// Constructors
 		pl_constructor_2(DefaultConstructor,	QMainWindow*,	DockWidgetManager*,	"Constructor with a pointer to the Qt main window as first parameter, pointer to the dock widget manager this dock widget should be registered to as second parameter",	"")
 	pl_class_end
@@ -93,6 +105,22 @@ class DockWidgetSceneNode : public DockWidgetScene {
 		*    Destructor
 		*/
 		PLFRONTENDQT_API virtual ~DockWidgetSceneNode();
+
+		/**
+		*  @brief
+		*    Selects the given scene node
+		*
+		*  @param[in] pSceneNode
+		*    Scene node to select, can be a null pointer
+		*/
+		PLFRONTENDQT_API void SelectSceneNode(PLScene::SceneNode *pSceneNode);
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		DataModels::SceneNodeInfoModel *m_pSceneNodeInfoModel;	/**< Scene node info model, can be a null pointer */
 
 
 };

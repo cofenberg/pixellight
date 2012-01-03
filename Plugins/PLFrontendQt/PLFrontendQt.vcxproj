@@ -264,6 +264,7 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="build\GeneratedQtFiles\moc_Application.cpp" />
+    <ClCompile Include="build\GeneratedQtFiles\moc_DockWidgetSceneGraph.cpp" />
     <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarColorTreeItem.cpp" />
     <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarFlagsTreeItem.cpp" />
     <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarFloatTreeItem.cpp" />
@@ -636,7 +637,24 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetManager.h" />
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetObject.h" />
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetScene.h" />
-    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneGraph.h" />
+    <CustomBuild Include="include\PLFrontendQt\DockWidget\DockWidgetSceneGraph.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build\GeneratedQtFiles\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build\GeneratedQtFiles\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../External/_Windows_x86_64/Qt/bin/moc.exe</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build\GeneratedQtFiles\moc_%(Filename).cpp</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"../../External/_Windows_x86_64/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"../../External/_Windows_x86_64/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build\GeneratedQtFiles\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../External/_Windows_x86_64/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneNode.h" />
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneRenderer.h" />
     <ClInclude Include="include\PLFrontendQt\Frontend.h" />

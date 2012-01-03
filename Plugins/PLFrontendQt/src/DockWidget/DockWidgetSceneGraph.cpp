@@ -30,6 +30,7 @@
 #include <PLEngine/Application/EngineApplication.h>
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/DataModels/SceneGraphTreeModel.h"
+#include "PLFrontendQt/DockWidget/DockWidgetManager.h"
 #include "PLFrontendQt/DockWidget/DockWidgetSceneGraph.h"
 
 
@@ -37,6 +38,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
+using namespace PLScene;
 namespace PLFrontendQt {
 
 
@@ -53,25 +55,27 @@ pl_implement_class(DockWidgetSceneGraph)
 *  @brief
 *    Constructor
 */
-DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidgetScene(pQMainWindow, pDockWidgetManager)
+DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidgetScene(pQMainWindow, pDockWidgetManager),
+	m_pSceneGraphTreeModel(nullptr)
 {
 	// Get encapsulated Qt dock widget
 	QDockWidget *pQDockWidget = GetQDockWidget();
 	if (pQDockWidget) {
 		// Create tree view and set scene graph model
 		QTreeView *pQTreeView = new QTreeView();
+		connect(pQTreeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(QtSlotTreeViewClicked(const QModelIndex&)));
 		pQDockWidget->setWidget(pQTreeView);
-		DataModels::SceneGraphTreeModel *pSceneGraphTreeModel = new DataModels::SceneGraphTreeModel(pQDockWidget);
-		pQTreeView->setModel(pSceneGraphTreeModel);
+		m_pSceneGraphTreeModel = new DataModels::SceneGraphTreeModel(pQDockWidget);
+		pQTreeView->setModel(m_pSceneGraphTreeModel);
 		pQTreeView->expandToDepth(0);
 
 		// Set a default start node to have a decent standard behaviour
-		PLScene::SceneNode *pSceneNode = nullptr;
+		SceneNode *pSceneNode = nullptr;
 		{
 			CoreApplication *pApplication = CoreApplication::GetApplication();
 			if (pApplication && pApplication->IsInstanceOf("PLEngine::EngineApplication"))
-				pSceneNode = reinterpret_cast<PLScene::SceneNode*>(static_cast<PLEngine::EngineApplication*>(pApplication)->GetScene());
-			pSceneGraphTreeModel->SetStartNode(pSceneNode, true);
+				pSceneNode = reinterpret_cast<SceneNode*>(static_cast<PLEngine::EngineApplication*>(pApplication)->GetScene());
+			m_pSceneGraphTreeModel->SetStartNode(pSceneNode, true);
 		}
 
 		// Set window title
@@ -93,6 +97,35 @@ DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidget
 */
 DockWidgetSceneGraph::~DockWidgetSceneGraph()
 {
+}
+
+/**
+*  @brief
+*    Selects the given scene node
+*/
+void DockWidgetSceneGraph::SelectSceneNode(SceneNode *pSceneNode)
+{
+	// [TODO] Select the given scene node within the scene graph tree view
+}
+
+
+//[-------------------------------------------------------]
+//[ Private Qt slots (MOC)                                ]
+//[-------------------------------------------------------]
+void DockWidgetSceneGraph::QtSlotTreeViewClicked(const QModelIndex &cQModelIndex)
+{
+	// Is there a scene graph tree model instance?
+	if (m_pSceneGraphTreeModel) {
+		// If there's a dock widget manager provided, perform a dock widget manager broadcast
+		DockWidgetManager *pDockWidgetManager = GetDockWidgetManager();
+		if (pDockWidgetManager) {
+			// Get selected scene node
+			SceneNode *pSceneNode = m_pSceneGraphTreeModel->GetSceneNodeFromIndex(cQModelIndex);
+
+			// Perform a dock widget manager broadcast
+			pDockWidgetManager->CallDockWidgetsMethod("SelectSceneNode", Params<void, SceneNode*>(pSceneNode));
+		}
+	}
 }
 
 

@@ -73,6 +73,7 @@ SET(INC_FILES
 	include/PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererPassTreeItem.h
 	include/PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererHeaderTreeItem.h
 	include/PLFrontendQt/External/qtcolorbutton.h
+	include/PLFrontendQt/DockWidget/DockWidgetSceneGraph.h
 )
 
 # Qt .ui files

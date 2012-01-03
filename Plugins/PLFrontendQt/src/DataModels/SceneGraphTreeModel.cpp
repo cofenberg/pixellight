@@ -231,13 +231,13 @@ void SceneGraphTreeModel::SetStartNode(PLScene::SceneNode* nodeObj, bool hideSta
 	endResetModel();
 }
 
-PLScene::SceneNode *SceneGraphTreeModel::GetSceneNodeFromIndex(QModelIndex &index)
+PLScene::SceneNode *SceneGraphTreeModel::GetSceneNodeFromIndex(const QModelIndex &index)
 {
 	SceneGraphNodeTreeItemBase *treeItem = GetSceneTreeItemFromIndex(index);
 	return (treeItem && treeItem->IsSceneNode()) ? (PLScene::SceneNode*)treeItem->GetObject() : nullptr;
 }
 
-SceneGraphNodeTreeItemBase *SceneGraphTreeModel::GetSceneTreeItemFromIndex(QModelIndex &index)
+SceneGraphNodeTreeItemBase *SceneGraphTreeModel::GetSceneTreeItemFromIndex(const QModelIndex &index)
 {
 	return (!index.isValid() || index.model() != this) ? nullptr : (SceneGraphNodeTreeItemBase*)GetTreeItemFromIndex(index);
 }

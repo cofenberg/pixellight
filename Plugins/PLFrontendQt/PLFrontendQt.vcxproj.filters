@@ -175,6 +175,9 @@
     <ClCompile Include="src\DockWidget\DockWidgetManager.cpp">
       <Filter>DockWidget</Filter>
     </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_DockWidgetSceneGraph.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarTreeItemsFactory.h">
@@ -205,9 +208,6 @@
       <Filter>GeneratedQtFiles</Filter>
     </ClInclude>
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidget.h">
-      <Filter>DockWidget</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneGraph.h">
       <Filter>DockWidget</Filter>
     </ClInclude>
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetObject.h">
@@ -334,6 +334,9 @@
     </CustomBuild>
     <CustomBuild Include="ressources\ressources.qrc">
       <Filter>Resources</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DockWidget\DockWidgetSceneGraph.h">
+      <Filter>DockWidget</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

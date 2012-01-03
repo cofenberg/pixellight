@@ -171,8 +171,11 @@ void Gui::Update()
 //[-------------------------------------------------------]
 bool Gui::eventFilter(QObject *pQObject, QEvent *pQEvent)
 {
+	// Get the Qt main window
+	FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
+
 	// Handle Qt main window events
-	if (pQObject == GetFrontendMainWindow()) {
+	if (pQObject == pFrontendMainWindow) {
 		// Mouse button double click (QMouseEvent)
 		if (pQEvent->type() == QEvent::MouseButtonDblClick) {
 			// Cast the received event to QMouseEvent
@@ -183,6 +186,11 @@ bool Gui::eventFilter(QObject *pQObject, QEvent *pQEvent)
 				// Perform picking
 				if (m_pGuiPicking) {
 					SceneNode *pSceneNode = m_pGuiPicking->PerformPicking();
+
+					// Perform a dock widget manager broadcast
+					pFrontendMainWindow->GetDockWidgetManager().CallDockWidgetsMethod("SelectSceneNode", Params<void, SceneNode*>(pSceneNode));
+
+					// Scene node picked?
 					if (pSceneNode) {
 						// [TODO] Currently we just toggle the scene node debug mode to see some action
 						// Toggle the debug mode of the picked scene node

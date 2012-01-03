@@ -10,6 +10,7 @@ PLFrontendQt:
      we don't want this. So, long story short conclusion, don't change the default behaviour in here.
 - "DockWidgetManager": Implemented dock widget broadcast by mirroring the "PLCore::Object"-interface. This is a quite universal way for a communication
   with and between the dock widgets... and e.g. scripts like Lua can participate in the communication...
+- Dock widgets: Added first broadcast "SelectSceneNode": A RTTI method which is called when a scene node is selected
 
 
 
