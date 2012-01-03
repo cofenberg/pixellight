@@ -59,6 +59,7 @@ SET(INC_FILES
 	include/PLFrontendQt/QPLInputHandler.h
 	include/PLFrontendQt/DataModels/TreeItemBase.h
 	include/PLFrontendQt/DataModels/TreeModelBase.h
+	include/PLFrontendQt/DataModels/HeaderTreeItem.h
 	include/PLFrontendQt/DataModels/SceneNodeInfoModel.h
 	include/PLFrontendQt/DataModels/SceneGraphTreeModel.h
 	include/PLFrontendQt/DataModels/PLIntrospectionModel.h
@@ -72,6 +73,8 @@ SET(INC_FILES
 	include/PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererDataModel.h
 	include/PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererPassTreeItem.h
 	include/PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererHeaderTreeItem.h
+	include/PLFrontendQt/DataModels/RTTIInfoModels/ClassListModel.h
+	include/PLFrontendQt/DataModels/RTTIInfoModels/ClassInfoModel.h
 	include/PLFrontendQt/External/qtcolorbutton.h
 )
 
@@ -111,6 +114,7 @@ add_sources(
 	src/QPLDebugDialog.cpp
 	src/DataModels/TreeItemBase.cpp
 	src/DataModels/TreeModelBase.cpp
+	src/DataModels/HeaderTreeItem.cpp
 	src/DataModels/SceneNodeInfoModel.cpp
 	src/DataModels/SceneGraphTreeModel.cpp
 	src/DataModels/PLIntrospectionModel.cpp
@@ -125,6 +129,8 @@ add_sources(
 	src/DataModels/SceneRendererDataModel/SceneRendererDataModel.cpp
 	src/DataModels/SceneRendererDataModel/SceneRendererPassTreeItem.cpp
 	src/DataModels/SceneRendererDataModel/SceneRendererHeaderTreeItem.cpp
+	src/DataModels/RTTIInfoModels/ClassListModel.cpp
+	src/DataModels/RTTIInfoModels/ClassInfoModel.cpp
 	src/External/qtcolorbutton.cpp
 	${UI_SRCS}	# Add source produced by uic
 	${MOC_SRCS}	# Add source produced by moc

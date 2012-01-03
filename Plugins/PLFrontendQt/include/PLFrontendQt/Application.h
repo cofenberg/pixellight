@@ -181,6 +181,7 @@ class PLFRONTENDQT_API Application : public QApplication {
 		*
 		* @param[in] msec
 		*   update interval in milliseconds.
+		*   A value of -1 disables the update completely
 		*   A value of 0 will create an update timer which will fire every time when no none system events needs to be processed.
 		*   Note:
 		*           If the interval is set to zero then the CPU usage (one core) of the application will go virtually to nearly 100%. Because this is similar to an endless loop.

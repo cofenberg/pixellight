@@ -65,6 +65,7 @@ class PLFRONTENDQT_API TreeItemBase : public QObject {
 	public:
 		explicit TreeItemBase(QObject *parent = nullptr);
 		TreeItemBase(int columnCount, QObject *parent = nullptr);
+		virtual ~TreeItemBase(){}
 
 		int columnCount() const;
 		int row() const;
@@ -79,6 +80,7 @@ class PLFRONTENDQT_API TreeItemBase : public QObject {
 	protected:
 		void SetFlags(const int column, const Qt::ItemFlags flags);
 		void RemoveFlags(const int column, const Qt::ItemFlags flags);
+		void SetColumnCount(const int columnCount);
 
 
 	//[-------------------------------------------------------]
