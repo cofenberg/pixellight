@@ -174,8 +174,11 @@ class Gui : public QObject {
 		*    Current Qt menu to fill
 		*  @param[in] sBaseClass
 		*    Name of the currently used RTTI base class
+		*
+		*  @return
+		*    Number of checked items
 		*/
-		void FillMenuWindowRec(QMenu &cQMenu, const PLCore::String &sBaseClass);
+		PLCore::uint32 FillMenuWindowRec(QMenu &cQMenu, const PLCore::String &sBaseClass);
 
 
 	//[-------------------------------------------------------]

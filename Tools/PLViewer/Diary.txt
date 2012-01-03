@@ -4,7 +4,7 @@ PLViewerQt:
 - Is using the new "PLFrontendQt::DockWidgetManager" to do the RTTI dock widget handling. In this viewer, only one instance of a RTTI dock widget is visible at
   the same time.
 - Added first broadcast "SelectSceneNode": A RTTI method which is called when a scene node is selected
-- Added "Window -> Hide all"
+- Added "Window -> Hide all", is disabled if there's currently nothing to hide
 
 
 

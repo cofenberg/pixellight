@@ -303,8 +303,11 @@ void Gui::OnCameraFound(SceneQuery &cQuery, SceneNode &cSceneNode)
 *  @brief
 *    Fills the window menu recursivity
 */
-void Gui::FillMenuWindowRec(QMenu &cQMenu, const String &sBaseClass)
+uint32 Gui::FillMenuWindowRec(QMenu &cQMenu, const String &sBaseClass)
 {
+	// Number of checked items
+	uint32 nCheckedItems = 0;
+
 	// Get a list of RTTI classes derived from the current base class
 	List<const Class*> lstClasses;
 	ClassManager::GetInstance()->GetClasses(lstClasses, sBaseClass, NonRecursive, NoBase, IncludeAbstract);
@@ -330,7 +333,12 @@ void Gui::FillMenuWindowRec(QMenu &cQMenu, const String &sBaseClass)
 
 			// Is there currently an instance of this dock widget already visible?
 			DockWidget *pDockWidget = pFrontendMainWindow ? pFrontendMainWindow->GetDockWidgetManager().GetFirstDockWidget(pClass->GetClassName()) : nullptr;
-			pQAction->setChecked(pDockWidget ? pDockWidget->IsQDockWidgetVisible() : false);
+			if (pDockWidget && pDockWidget->IsQDockWidgetVisible()) {
+				pQAction->setChecked(true);
+				nCheckedItems++;
+			} else {
+				pQAction->setChecked(false);
+			}
 		} else {
 			// Abstract class
 
@@ -338,9 +346,12 @@ void Gui::FillMenuWindowRec(QMenu &cQMenu, const String &sBaseClass)
 			QMenu *pQMenuSub = cQMenu.addMenu(tr(pClass->GetProperties().Get("Title")));
 
 			// Automatically fill the Qt window menu by using RTTI information
-			FillMenuWindowRec(*pQMenuSub, pClass->GetClassName());
+			nCheckedItems += FillMenuWindowRec(*pQMenuSub, pClass->GetClassName());
 		}
 	}
+
+	// Return the number of checked items
+	return nCheckedItems;
 }
 
 
@@ -440,17 +451,17 @@ void Gui::QtSlotAboutToShowMenuWindow()
 		m_pQActionGroupWindow->setExclusive(false);
 		connect(m_pQActionGroupWindow, SIGNAL(selected(QAction*)), this, SLOT(QtSlotSelectedWindow(QAction*)));
 
-		{ // Setup the hide all action
-			QAction *pQAction = new QAction(tr("Hide all"), pFrontendMainWindow);
-			connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredWindowHideAll()));
-			m_pQMenuWindow->addAction(pQAction);
-		}
+		// Setup the hide all action
+		QAction *pQActionHideAll = new QAction(tr("Hide all"), pFrontendMainWindow);
+		connect(pQActionHideAll, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredWindowHideAll()));
+		m_pQMenuWindow->addAction(pQActionHideAll);
 
 		// Add a separator
 		m_pQMenuWindow->addSeparator();
 
 		// Automatically fill the Qt window menu by using RTTI information
-		FillMenuWindowRec(*m_pQMenuWindow, "PLFrontendQt::DockWidget");
+		if (!FillMenuWindowRec(*m_pQMenuWindow, "PLFrontendQt::DockWidget"))
+			pQActionHideAll->setEnabled(false);	// Disable "Hide all" menu entry if there's currently nothing to hide
 	}
 }
 
