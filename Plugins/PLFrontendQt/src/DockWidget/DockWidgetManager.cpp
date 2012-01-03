@@ -130,13 +130,123 @@ void DockWidgetManager::HideDockWidgets()
 
 /**
 *  @brief
-*    Destroys all registered dock widgets
+*    Destroys all registered dock widgets (dock widget broadcast)
 */
 void DockWidgetManager::DestroyDockWidgets()
 {
 	// Destroy one dock widget after another, each one will unregister it from this dock widget manager
 	while (m_lstDockWidgets.GetNumOfElements())
 		delete m_lstDockWidgets[0];
+}
+
+/**
+*  @brief
+*    Set dock widgets attribute value by using a given string value (dock widget broadcast)
+*/
+void DockWidgetManager::SetDockWidgetsAttribute(const String &sName, const String &sValue)
+{
+	for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
+		m_lstDockWidgets[i]->SetAttribute(sName, sValue);
+}
+
+/**
+*  @brief
+*    Set dock widgets attribute value by using a given dynamic variable reference (dock widget broadcast)
+*/
+void DockWidgetManager::SetDockWidgetsAttribute(const String &sName, const DynVar &cVar)
+{
+	for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
+		m_lstDockWidgets[i]->SetAttribute(sName, cVar);
+}
+
+/**
+*  @brief
+*    Set dock widgets attribute value by using a given dynamic variable pointer (dock widget broadcast)
+*/
+void DockWidgetManager::SetDockWidgetsAttribute(const String &sName, const DynVar *pVar)
+{
+	for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
+		m_lstDockWidgets[i]->SetAttribute(sName, pVar);
+}
+
+/**
+*  @brief
+*    Set dock widgets attribute to it's default value (dock widget broadcast)
+*/
+void DockWidgetManager::SetDockWidgetsAttributeDefault(const String &sName)
+{
+	for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
+		m_lstDockWidgets[i]->SetAttributeDefault(sName);
+}
+
+/**
+*  @brief
+*    Call dock widgets method with given dynamic parameters (dock widget broadcast)
+*/
+void DockWidgetManager::CallDockWidgetsMethod(const String &sName, DynParams &cParams)
+{
+	for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
+		m_lstDockWidgets[i]->CallMethod(sName, cParams);
+}
+
+/**
+*  @brief
+*    Call dock widgets method with given constant dynamic parameters (dock widget broadcast)
+*/
+void DockWidgetManager::CallDockWidgetsMethod(const String &sName, const DynParams &cParams)
+{
+	for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
+		m_lstDockWidgets[i]->CallMethod(sName, cParams);
+}
+
+/**
+*  @brief
+*    Call dock widgets method with parameters given as string (dock widget broadcast)
+*/
+void DockWidgetManager::CallDockWidgetsMethod(const String &sName, const String &sParams)
+{
+	for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
+		m_lstDockWidgets[i]->CallMethod(sName, sParams);
+}
+
+/**
+*  @brief
+*    Call dock widgets method with parameters given as XML element (dock widget broadcast)
+*/
+void DockWidgetManager::CallDockWidgetsMethod(const String &sName, const XmlElement &cElement)
+{
+	for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
+		m_lstDockWidgets[i]->CallMethod(sName, cElement);
+}
+
+/**
+*  @brief
+*    Set multiple dock widgets attribute values as a string at once (dock widget broadcast)
+*/
+void DockWidgetManager::SetDockWidgetsValues(const String &sVars)
+{
+	for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
+		m_lstDockWidgets[i]->SetValues(sVars);
+}
+
+/**
+*  @brief
+*    Set dock widgets attribute values from XML (dock widget broadcast)
+*/
+void DockWidgetManager::SetDockWidgetsValuesXml(const XmlElement &cElement)
+{
+	for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
+		m_lstDockWidgets[i]->SetValuesXml(cElement);
+}
+
+/**
+*  @brief
+*    Set all dock widgets attributes to default (dock widget broadcast)
+*/
+void DockWidgetManager::SetDockWidgetsDefaultValues()
+{
+	for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
+		m_lstDockWidgets[i]->SetDefaultValues();
 }
 
 

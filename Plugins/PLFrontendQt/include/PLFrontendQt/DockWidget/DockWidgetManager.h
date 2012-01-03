@@ -72,6 +72,14 @@ class DockWidgetManager : public PLCore::Object {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLFRONTENDQT_RTTI_EXPORT, DockWidgetManager, "PLFrontendQt", PLCore::Object, "PixelLight RTTI dock widget manager")
+		#ifdef PLFRONTENDQT_EXPORTS	// The following is only required when compiling PLFrontendQt
+			// Methods
+			pl_method_2(SetDockWidgetsAttribute,		pl_ret_type(void),	const PLCore::String&,	const PLCore::String&,	"Set dock widgets attribute value (dock widget broadcast). Attribute name as first parameter, attribute value as second parameter.",															"")
+			pl_method_1(SetDockWidgetsAttributeDefault,	pl_ret_type(void),	const PLCore::String&,							"Set dock widgets attribute to it's default value (dock widget broadcast). Attribute name as first parameter.",																					"")
+			pl_method_2(CallDockWidgetsMethod,			pl_ret_type(void),	const PLCore::String&,	const PLCore::String&,	"Call dock widgets method (dock widget broadcast). Method name as first parameter, parameters as string (e.g. \"Param0='x' Param1='y'\") as second parameter.",									"")
+			pl_method_1(SetDockWidgetsValues,			pl_ret_type(void),	const PLCore::String&,							"Set multiple dock widgets attribute values as a string at once (dock widget broadcast). String containing attributes and values as first parameter (e.g. \"Name='Bob' Position='1 2 3'\").",	"")
+			pl_method_0(SetDockWidgetsDefaultValues,	pl_ret_type(void),													"Set all dock widgets attributes to default (dock widget broadcast).",																															"")
+		#endif
 	pl_class_end
 
 
@@ -97,6 +105,9 @@ class DockWidgetManager : public PLCore::Object {
 		*/
 		PLFRONTENDQT_API virtual ~DockWidgetManager();
 
+		//[-------------------------------------------------------]
+		//[ Management                                            ]
+		//[-------------------------------------------------------]
 		/**
 		*  @brief
 		*    Shows a dock widget
@@ -137,6 +148,160 @@ class DockWidgetManager : public PLCore::Object {
 		*    Destroys all registered dock widgets
 		*/
 		PLFRONTENDQT_API void DestroyDockWidgets();
+
+		//[-------------------------------------------------------]
+		//[ Communication - Direct access functions               ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Set dock widgets attribute value by using a given string value (dock widget broadcast)
+		*
+		*  @param[in] sName
+		*    Attribute name
+		*  @param[in] sValue
+		*    Attribute value as string
+		*
+		*  @remarks
+		*    Similar to the "PLCore::Object::SetAttribute()"-method but iterates over all registered
+		*    dock widgets and calls the "SetAttribute()"-method of each RTTI dock widget class instance.
+		*/
+		PLFRONTENDQT_API void SetDockWidgetsAttribute(const PLCore::String &sName, const PLCore::String &sValue);
+
+		/**
+		*  @brief
+		*    Set dock widgets attribute value by using a given dynamic variable reference (dock widget broadcast)
+		*
+		*  @param[in] sName
+		*    Attribute name
+		*  @param[in] cVar
+		*    Attribute value as dynamic variable reference
+		*
+		*  @see
+		*    - "void SetDockWidgetsAttribute(const PLCore::String &sName, const PLCore::String &sValue)"
+		*/
+		PLFRONTENDQT_API void SetDockWidgetsAttribute(const PLCore::String &sName, const PLCore::DynVar &cVar);
+
+		/**
+		*  @brief
+		*    Set dock widgets attribute value by using a given dynamic variable pointer (dock widget broadcast)
+		*
+		*  @param[in] sName
+		*    Attribute name
+		*  @param[in] pVar
+		*    Attribute value as dynamic variable pointer, in case of a null pointer, nothing happens at all
+		*
+		*  @see
+		*    - "void SetDockWidgetsAttribute(const PLCore::String &sName, const PLCore::String &sValue)"
+		*/
+		PLFRONTENDQT_API void SetDockWidgetsAttribute(const PLCore::String &sName, const PLCore::DynVar *pVar);
+
+		/**
+		*  @brief
+		*    Set dock widgets attribute to it's default value (dock widget broadcast)
+		*
+		*  @param[in] sName
+		*    Attribute name
+		*
+		*  @remarks
+		*    Similar to the "PLCore::Object::SetAttributeDefault()"-method but iterates over all registered
+		*    dock widgets and calls the "SetAttributeDefault()"-method of each RTTI dock widget class instance.
+		*/
+		PLFRONTENDQT_API void SetDockWidgetsAttributeDefault(const PLCore::String &sName);
+
+		/**
+		*  @brief
+		*    Call dock widgets method with given dynamic parameters (dock widget broadcast)
+		*
+		*  @param[in] sName
+		*    Method name
+		*  @param[in] cParams
+		*    Dynamic parameters
+		*
+		*  @remarks
+		*    Similar to the "PLCore::Object::CallMethod()"-method but iterates over all registered
+		*    dock widgets and calls the "CallMethod()"-method of each RTTI dock widget class instance.
+		*/
+		PLFRONTENDQT_API void CallDockWidgetsMethod(const PLCore::String &sName, PLCore::DynParams &cParams);
+
+		/**
+		*  @brief
+		*    Call dock widgets method with given constant dynamic parameters (dock widget broadcast)
+		*
+		*  @param[in] sName
+		*    Method name
+		*  @param[in] cParams
+		*    Constant dynamic parameters
+		*
+		*  @see
+		*    - "void CallDockWidgetsMethod(const PLCore::String &sName, PLCore::DynParams &cParams)"
+		*/
+		PLFRONTENDQT_API void CallDockWidgetsMethod(const PLCore::String &sName, const PLCore::DynParams &cParams);
+
+		/**
+		*  @brief
+		*    Call dock widgets method with parameters given as string (dock widget broadcast)
+		*
+		*  @param[in] sName
+		*    Method name
+		*  @param[in] sParams
+		*    Parameters as string
+		*
+		*  @see
+		*    - "void CallDockWidgetsMethod(const PLCore::String &sName, PLCore::DynParams &cParams)"
+		*/
+		PLFRONTENDQT_API void CallDockWidgetsMethod(const PLCore::String &sName, const PLCore::String &sParams);
+
+		/**
+		*  @brief
+		*    Call dock widgets method with parameters given as XML element (dock widget broadcast)
+		*
+		*  @param[in] sName
+		*    Method name
+		*  @param[in] cElement
+		*    Parameters as XML element
+		*
+		*  @see
+		*    - "void CallDockWidgetsMethod(const PLCore::String &sName, PLCore::DynParams &cParams)"
+		*/
+		PLFRONTENDQT_API void CallDockWidgetsMethod(const PLCore::String &sName, const PLCore::XmlElement &cElement);
+
+		//[-------------------------------------------------------]
+		//[ Communication - Object state functions                ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Set multiple dock widgets attribute values as a string at once (dock widget broadcast)
+		*
+		*  @param[in] sString
+		*    String containing attributes and values (e.g. \"Name='Bob' Position='1 2 3'\")
+		*
+		*  @remarks
+		*    Similar to the "PLCore::Object::SetValues()"-method but iterates over all registered
+		*    dock widgets and calls the "SetValues()"-method of each RTTI dock widget class instance.
+		*/
+		PLFRONTENDQT_API void SetDockWidgetsValues(const PLCore::String &sVars);
+
+		/**
+		*  @brief
+		*    Set dock widgets attribute values from XML (dock widget broadcast)
+		*
+		*  @param[out] cElement
+		*    XML element
+		*
+		*  @see
+		*    - "void SetDockWidgetsValues(const PLCore::String &sVars)"
+		*/
+		PLFRONTENDQT_API void SetDockWidgetsValuesXml(const PLCore::XmlElement &cElement);
+
+		/**
+		*  @brief
+		*    Set all dock widgets attributes to default (dock widget broadcast)
+		*
+		*  @remarks
+		*    Similar to the "PLCore::Object::SetDefaultValues()"-method but iterates over all registered
+		*    dock widgets and calls the "SetDefaultValues()"-method of each RTTI dock widget class instance.
+		*/
+		PLFRONTENDQT_API void SetDockWidgetsDefaultValues();
 
 
 	//[-------------------------------------------------------]
