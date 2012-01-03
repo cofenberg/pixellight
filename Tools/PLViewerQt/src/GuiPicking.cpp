@@ -46,13 +46,19 @@ using namespace PLEngine;
 
 
 //[-------------------------------------------------------]
+//[ RTTI interface                                        ]
+//[-------------------------------------------------------]
+pl_implement_class(GuiPicking)
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Constructor
 */
-GuiPicking::GuiPicking(Gui &cGui) : MousePicking(cGui.GetApplication().GetFrontend()),
+GuiPicking::GuiPicking(Gui &cGui) : DockWidget(nullptr, cGui.GetFrontendMainWindow() ? &cGui.GetFrontendMainWindow()->GetDockWidgetManager() : nullptr), MousePicking(cGui.GetApplication().GetFrontend()),
 	m_pGui(&cGui),
 	m_nLastPickingTime(Timing::GetInstance()->GetPastTime()),
 	m_pQLabelStatusBar(new QLabel())
@@ -123,6 +129,30 @@ SceneNode *GuiPicking::PerformPicking()
 
 	// Done
 	return pPickedSceneNode;
+}
+
+/**
+*  @brief
+*    Selects the given scene node
+*/
+void GuiPicking::SelectSceneNode(SceneNode *pSceneNode)
+{
+	// Get the previously selected scene node
+	SceneNode *pPreviousSceneNode = m_cCurrentSelectedSceneNodeHandler.GetElement();
+
+	// State change?
+	if (pPreviousSceneNode != pSceneNode) {
+		// Disable debug mode of the previous scene node, if there's one
+		if (pPreviousSceneNode)
+			pPreviousSceneNode->SetDebugFlags(pPreviousSceneNode->GetDebugFlags() & ~SceneNode::DebugEnabled);
+
+		// Enable debug mode of the current scene node, if there's one
+		if (pSceneNode)
+			pSceneNode->SetDebugFlags(pSceneNode->GetDebugFlags() |SceneNode::DebugEnabled);
+
+		// Backup the current scene node
+		m_cCurrentSelectedSceneNodeHandler.SetElement(pSceneNode);
+	}
 }
 
 

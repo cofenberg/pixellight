@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLScene/Scene/SceneNodeHandler.h>
 #include <PLEngine/Picking/MousePicking.h>
+#include <PLFrontendQt/DockWidget/DockWidget.h>
 
 
 //[-------------------------------------------------------]
@@ -46,9 +47,21 @@ class Gui;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Picking application component
+*    Picking & selection application component
+*
+*  @note
+*    - This class is also derived from "PLFrontendQt::DockWidget" to be able to spy on the dock widget communication
 */
-class GuiPicking : public PLEngine::MousePicking {
+class GuiPicking : public PLFrontendQt::DockWidget, public PLEngine::MousePicking {
+
+
+	//[-------------------------------------------------------]
+	//[ RTTI interface                                        ]
+	//[-------------------------------------------------------]
+	pl_class(pl_rtti_export, GuiPicking, "", PLFrontendQt::DockWidget, "Picking & selection application component")
+		// Methods
+		pl_method_1(SelectSceneNode,	pl_ret_type(void),	PLScene::SceneNode*,	"Selects the given scene node. Scene node to select as first parameter.",	"")
+	pl_class_end
 
 
 	//[-------------------------------------------------------]
@@ -99,6 +112,15 @@ class GuiPicking : public PLEngine::MousePicking {
 		*/
 		PLScene::SceneNode *PerformPicking();
 
+		/**
+		*  @brief
+		*    Selects the given scene node
+		*
+		*  @param[in] pSceneNode
+		*    Scene node to select, can be a null pointer
+		*/
+		void SelectSceneNode(PLScene::SceneNode *pSceneNode);
+
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
@@ -128,6 +150,7 @@ class GuiPicking : public PLEngine::MousePicking {
 		Gui						   *m_pGui;								/**< Owner GUI, always valid! */
 		PLCore::uint64				m_nLastPickingTime;					/**< Last picking time */
 		PLScene::SceneNodeHandler	m_cCurrentPickedSceneNodeHandler;	/**< Currently picked scene node */
+		PLScene::SceneNodeHandler   m_cCurrentSelectedSceneNodeHandler;	/**< Scene node handler referencing the scene node which is currently the center of the attention */
 		QLabel					   *m_pQLabelStatusBar;					/**< Qt label shown in the status bar of the Qt main window, can be a null pointer */
 
 

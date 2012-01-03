@@ -57,19 +57,13 @@ using namespace PLFrontendQt;
 
 
 //[-------------------------------------------------------]
-//[ RTTI interface                                        ]
-//[-------------------------------------------------------]
-pl_implement_class(Gui)
-
-
-//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Constructor
 */
-Gui::Gui(Application &cApplication) : DockWidget(nullptr, (cApplication.GetFrontend().GetImpl() && static_cast<PLFrontendQt::Frontend*>(cApplication.GetFrontend().GetImpl())->GetMainWindow()) ? &static_cast<PLFrontendQt::Frontend*>(cApplication.GetFrontend().GetImpl())->GetMainWindow()->GetDockWidgetManager() : nullptr),
+Gui::Gui(Application &cApplication) :
 	EventHandlerCameraFound(&Gui::OnCameraFound, this),
 	m_pApplication(&cApplication),
 	m_pGuiPicking(nullptr),
@@ -171,26 +165,6 @@ void Gui::Update()
 		m_pGuiPicking->PerformInformativPicking();
 }
 
-/**
-*  @brief
-*    Selects the given scene node
-*/
-void Gui::SelectSceneNode(SceneNode *pSceneNode)
-{
-	// Scene node picked?
-	if (pSceneNode) {
-		// [TODO] Currently we just toggle the scene node debug mode to see some action
-		// Toggle the debug mode of the picked scene node
-		if (pSceneNode->GetDebugFlags() & SceneNode::DebugEnabled) {
-			// Disable debug mode
-			pSceneNode->SetDebugFlags(pSceneNode->GetDebugFlags() & ~SceneNode::DebugEnabled);
-		} else {
-			// Enable debug mode
-			pSceneNode->SetDebugFlags(pSceneNode->GetDebugFlags() |SceneNode::DebugEnabled);
-		}
-	}
-}
-
 
 //[-------------------------------------------------------]
 //[ Public virtual QObject methods                        ]
@@ -213,7 +187,7 @@ bool Gui::eventFilter(QObject *pQObject, QEvent *pQEvent)
 				if (m_pGuiPicking) {
 					SceneNode *pSceneNode = m_pGuiPicking->PerformPicking();
 
-					// Perform a dock widget manager broadcast (this dock widget will also receive the broadcast)
+					// Perform a dock widget manager broadcast
 					pFrontendMainWindow->GetDockWidgetManager().CallDockWidgetsMethod("SelectSceneNode", Params<void, SceneNode*>(pSceneNode));
 
 					// Done - filter the event out, i.e. stop it being handled further

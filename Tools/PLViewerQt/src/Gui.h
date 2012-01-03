@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <QtCore/qobject.h>
-#include <PLFrontendQt/DockWidget/DockWidget.h>
+#include <PLCore/Base/Event/EventHandler.h>
 
 
 //[-------------------------------------------------------]
@@ -59,11 +59,8 @@ class Application;
 /**
 *  @brief
 *    Gui class
-*
-*  @note
-*    - This class is also derived from "PLFrontendQt::DockWidget" to be able to spy on the dock widget communication
 */
-class Gui : public QObject, public PLFrontendQt::DockWidget {
+class Gui : public QObject {
 
 
 	//[-------------------------------------------------------]
@@ -71,15 +68,6 @@ class Gui : public QObject, public PLFrontendQt::DockWidget {
 	//[-------------------------------------------------------]
 	Q_OBJECT	// All files using the Q_OBJECT macro need to be compiled using the Meta-Object Compiler (MOC) of Qt, else slots won't work!
 				// (VisualStudio: Header file -> Right click -> Properties -> "Custom Build Tool")
-
-
-	//[-------------------------------------------------------]
-	//[ RTTI interface                                        ]
-	//[-------------------------------------------------------]
-	pl_class(pl_rtti_export, Gui, "", PLFrontendQt::DockWidget, "Gui class")
-		// Methods
-		pl_method_1(SelectSceneNode,	pl_ret_type(void),	PLScene::SceneNode*,	"Selects the given scene node. Scene node to select as first parameter.",	"")
-	pl_class_end
 
 
 	//[-------------------------------------------------------]
@@ -145,15 +133,6 @@ class Gui : public QObject, public PLFrontendQt::DockWidget {
 		*    - Performs work which has to be done every frame, but this work is kept to a minimum
 		*/
 		void Update();
-
-		/**
-		*  @brief
-		*    Selects the given scene node
-		*
-		*  @param[in] pSceneNode
-		*    Scene node to select, can be a null pointer
-		*/
-		void SelectSceneNode(PLScene::SceneNode *pSceneNode);
 
 
 	//[-------------------------------------------------------]
@@ -228,7 +207,7 @@ class Gui : public QObject, public PLFrontendQt::DockWidget {
 	//[-------------------------------------------------------]
 	private:
 		Application	 *m_pApplication;			/**< Owner application, always valid */
-		GuiPicking   *m_pGuiPicking;			/**< GUI picking component instance, can be a null pointer */
+		GuiPicking	 *m_pGuiPicking;			/**< GUI picking component instance, can be a null pointer */
 		// Menu bar
 		QMenu		 *m_pQMenuCamera;			/**< Camera Qt menu, can be a null pointer */
 		QActionGroup *m_pQActionGroupCamera;	/**< Camera Qt action group, can be a null pointer */
