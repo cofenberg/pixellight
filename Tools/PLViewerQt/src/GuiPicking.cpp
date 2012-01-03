@@ -155,6 +155,15 @@ void GuiPicking::SelectSceneNode(SceneNode *pSceneNode)
 	}
 }
 
+/**
+*  @brief
+*    Returns the currently selected scene node
+*/
+SceneNode *GuiPicking::GetSelectedSceneNode() const
+{
+	return m_cCurrentSelectedSceneNodeHandler.GetElement();
+}
+
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]

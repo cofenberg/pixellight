@@ -121,6 +121,15 @@ class GuiPicking : public PLFrontendQt::DockWidget, public PLEngine::MousePickin
 		*/
 		void SelectSceneNode(PLScene::SceneNode *pSceneNode);
 
+		/**
+		*  @brief
+		*    Returns the currently selected scene node
+		*
+		*  @return
+		*    The currently selected scene node, can be a null pointer
+		*/
+		PLScene::SceneNode *GetSelectedSceneNode() const;
+
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]

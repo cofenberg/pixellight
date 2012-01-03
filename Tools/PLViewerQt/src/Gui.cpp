@@ -470,8 +470,21 @@ void Gui::QtSlotSelectedWindow(QAction *pQAction)
 	// Get the Qt main window
 	FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
 	if (pFrontendMainWindow) {
+		// Get the RTTI dock widget class name
+		const String sClassName = QtStringAdapter::QtToPL(pQAction->data().toString());
+
+		// Get the first dock widget instance which is an instance of the given class
+		DockWidget *pFirstDockWidget = pFrontendMainWindow->GetDockWidgetManager().GetFirstDockWidget(sClassName);
+
 		// Show the requested dock widget
-		pFrontendMainWindow->GetDockWidgetManager().ShowDockWidget(QtStringAdapter::QtToPL(pQAction->data().toString()));
+		DockWidget *pDockWidget = pFrontendMainWindow->GetDockWidgetManager().ShowDockWidget(sClassName);
+		if (pDockWidget != pFirstDockWidget) {
+			// A new dock widget has come to life
+
+			// Wellcome our new friend by telling him about the currently selected scene node, he may be interested in it
+			if (m_pGuiPicking)
+				pDockWidget->CallMethod("SelectSceneNode", Params<void, SceneNode*>(m_pGuiPicking->GetSelectedSceneNode()));
+		}
 	}
 }
 

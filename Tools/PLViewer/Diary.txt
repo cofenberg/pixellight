@@ -6,6 +6,7 @@ PLViewerQt:
 - Added first broadcast "SelectSceneNode": A RTTI method which is called when a scene node is selected
 - Added "Window -> Hide all", is disabled if there's currently nothing to hide
 - "Gui": This class is now also derived from "PLFrontendQt::DockWidget" to be able to spy on the dock widget communication
+- "Gui::QtSlotSelectedWindow()": In case a new dock widget has come to life, it may probably want to know about the currently selected scene node
 
 
 
