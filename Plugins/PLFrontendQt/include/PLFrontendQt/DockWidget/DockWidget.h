@@ -157,6 +157,160 @@ class DockWidget : public PLCore::Object {
 		*/
 		PLFRONTENDQT_API DockWidget(QWidget *pQWidgetParent, DockWidgetManager *pDockWidgetManager = nullptr);
 
+		//[-------------------------------------------------------]
+		//[ Communication - Direct access functions               ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Set dock widgets attribute value by using a given string value (dock widget broadcast, excludes the emitting dock widget)
+		*
+		*  @param[in] sName
+		*    Attribute name
+		*  @param[in] sValue
+		*    Attribute value as string
+		*
+		*  @remarks
+		*    Similar to the "PLCore::Object::SetAttribute()"-method but iterates over all registered
+		*    dock widgets and calls the "SetAttribute()"-method of each RTTI dock widget class instance.
+		*/
+		PLFRONTENDQT_API void SetDockWidgetsAttribute(const PLCore::String &sName, const PLCore::String &sValue);
+
+		/**
+		*  @brief
+		*    Set dock widgets attribute value by using a given dynamic variable reference (dock widget broadcast, excludes the emitting dock widget)
+		*
+		*  @param[in] sName
+		*    Attribute name
+		*  @param[in] cVar
+		*    Attribute value as dynamic variable reference
+		*
+		*  @see
+		*    - "void SetDockWidgetsAttribute(const PLCore::String &sName, const PLCore::String &sValue)"
+		*/
+		PLFRONTENDQT_API void SetDockWidgetsAttribute(const PLCore::String &sName, const PLCore::DynVar &cVar);
+
+		/**
+		*  @brief
+		*    Set dock widgets attribute value by using a given dynamic variable pointer (dock widget broadcast, excludes the emitting dock widget)
+		*
+		*  @param[in] sName
+		*    Attribute name
+		*  @param[in] pVar
+		*    Attribute value as dynamic variable pointer, in case of a null pointer, nothing happens at all
+		*
+		*  @see
+		*    - "void SetDockWidgetsAttribute(const PLCore::String &sName, const PLCore::String &sValue)"
+		*/
+		PLFRONTENDQT_API void SetDockWidgetsAttribute(const PLCore::String &sName, const PLCore::DynVar *pVar);
+
+		/**
+		*  @brief
+		*    Set dock widgets attribute to it's default value (dock widget broadcast, excludes the emitting dock widget)
+		*
+		*  @param[in] sName
+		*    Attribute name
+		*
+		*  @remarks
+		*    Similar to the "PLCore::Object::SetAttributeDefault()"-method but iterates over all registered
+		*    dock widgets and calls the "SetAttributeDefault()"-method of each RTTI dock widget class instance.
+		*/
+		PLFRONTENDQT_API void SetDockWidgetsAttributeDefault(const PLCore::String &sName);
+
+		/**
+		*  @brief
+		*    Call dock widgets method with given dynamic parameters (dock widget broadcast, excludes the emitting dock widget)
+		*
+		*  @param[in] sName
+		*    Method name
+		*  @param[in] cParams
+		*    Dynamic parameters
+		*
+		*  @remarks
+		*    Similar to the "PLCore::Object::CallMethod()"-method but iterates over all registered
+		*    dock widgets and calls the "CallMethod()"-method of each RTTI dock widget class instance.
+		*/
+		PLFRONTENDQT_API void CallDockWidgetsMethod(const PLCore::String &sName, PLCore::DynParams &cParams);
+
+		/**
+		*  @brief
+		*    Call dock widgets method with given constant dynamic parameters (dock widget broadcast, excludes the emitting dock widget)
+		*
+		*  @param[in] sName
+		*    Method name
+		*  @param[in] cParams
+		*    Constant dynamic parameters
+		*
+		*  @see
+		*    - "void CallDockWidgetsMethod(const PLCore::String &sName, PLCore::DynParams &cParams)"
+		*/
+		PLFRONTENDQT_API void CallDockWidgetsMethod(const PLCore::String &sName, const PLCore::DynParams &cParams);
+
+		/**
+		*  @brief
+		*    Call dock widgets method with parameters given as string (dock widget broadcast, excludes the emitting dock widget)
+		*
+		*  @param[in] sName
+		*    Method name
+		*  @param[in] sParams
+		*    Parameters as string
+		*
+		*  @see
+		*    - "void CallDockWidgetsMethod(const PLCore::String &sName, PLCore::DynParams &cParams)"
+		*/
+		PLFRONTENDQT_API void CallDockWidgetsMethod(const PLCore::String &sName, const PLCore::String &sParams);
+
+		/**
+		*  @brief
+		*    Call dock widgets method with parameters given as XML element (dock widget broadcast, excludes the emitting dock widget)
+		*
+		*  @param[in] sName
+		*    Method name
+		*  @param[in] cElement
+		*    Parameters as XML element
+		*
+		*  @see
+		*    - "void CallDockWidgetsMethod(const PLCore::String &sName, PLCore::DynParams &cParams)"
+		*/
+		PLFRONTENDQT_API void CallDockWidgetsMethod(const PLCore::String &sName, const PLCore::XmlElement &cElement);
+
+		//[-------------------------------------------------------]
+		//[ Communication - Object state functions                ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Set multiple dock widgets attribute values as a string at once (dock widget broadcast, excludes the emitting dock widget)
+		*
+		*  @param[in] sString
+		*    String containing attributes and values (e.g. \"Name='Bob' Position='1 2 3'\")
+		*
+		*  @remarks
+		*    Similar to the "PLCore::Object::SetValues()"-method but iterates over all registered
+		*    dock widgets and calls the "SetValues()"-method of each RTTI dock widget class instance.
+		*/
+		PLFRONTENDQT_API void SetDockWidgetsValues(const PLCore::String &sVars);
+
+		/**
+		*  @brief
+		*    Set dock widgets attribute values from XML (dock widget broadcast, excludes the emitting dock widget)
+		*
+		*  @param[out] cElement
+		*    XML element
+		*
+		*  @see
+		*    - "void SetDockWidgetsValues(const PLCore::String &sVars)"
+		*/
+		PLFRONTENDQT_API void SetDockWidgetsValuesXml(const PLCore::XmlElement &cElement);
+
+		/**
+		*  @brief
+		*    Set all dock widgets attributes to default (dock widget broadcast, excludes the emitting dock widget)
+		*
+		*  @remarks
+		*    Similar to the "PLCore::Object::SetDefaultValues()"-method but iterates over all registered
+		*    dock widgets and calls the "SetDefaultValues()"-method of each RTTI dock widget class instance.
+		*/
+		PLFRONTENDQT_API void SetDockWidgetsDefaultValues();
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]

@@ -116,15 +116,11 @@ void DockWidgetSceneGraph::QtSlotTreeViewClicked(const QModelIndex &cQModelIndex
 {
 	// Is there a scene graph tree model instance?
 	if (m_pSceneGraphTreeModel) {
-		// If there's a dock widget manager provided, perform a dock widget manager broadcast
-		DockWidgetManager *pDockWidgetManager = GetDockWidgetManager();
-		if (pDockWidgetManager) {
-			// Get selected scene node
-			SceneNode *pSceneNode = m_pSceneGraphTreeModel->GetSceneNodeFromIndex(cQModelIndex);
+		// Get selected scene node
+		SceneNode *pSceneNode = m_pSceneGraphTreeModel->GetSceneNodeFromIndex(cQModelIndex);
 
-			// Perform a dock widget manager broadcast
-			pDockWidgetManager->CallDockWidgetsMethod("SelectSceneNode", Params<void, SceneNode*>(pSceneNode));
-		}
+		// Perform a dock widget manager broadcast (excludes this emitting dock widget)
+		CallDockWidgetsMethod("SelectSceneNode", Params<void, SceneNode*>(pSceneNode));
 	}
 }
 

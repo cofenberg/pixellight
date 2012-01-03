@@ -11,6 +11,9 @@ PLFrontendQt:
 - "DockWidgetManager": Implemented dock widget broadcast by mirroring the "PLCore::Object"-interface. This is a quite universal way for a communication
   with and between the dock widgets... and e.g. scripts like Lua can participate in the communication...
 - Dock widgets: Added first broadcast "SelectSceneNode": A RTTI method which is called when a scene node is selected
+- "DockWidget": Added the same communication interface as in "DockWidgetManager", but the emitting dock widget is excluded and one does not have to make
+  a dock widget manager test in order to broadcast something. This communication infrastructure is important, so, it has to be as easy to use and robust as
+  possible.
 
 
 

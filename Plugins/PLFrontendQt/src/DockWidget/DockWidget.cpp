@@ -31,6 +31,7 @@
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
+using namespace PLCore;
 namespace PLFrontendQt {
 
 
@@ -137,6 +138,237 @@ DockWidget::DockWidget(QWidget *pQWidgetParent, DockWidgetManager *pDockWidgetMa
 	// If there's a dock widget manager provided, register this dock widget
 	if (m_pDockWidgetManager)
 		m_pDockWidgetManager->RegisterDockWidget(*this);
+}
+
+/**
+*  @brief
+*    Set dock widgets attribute value by using a given string value (dock widget broadcast, excludes the emitting dock widget)
+*/
+void DockWidget::SetDockWidgetsAttribute(const String &sName, const String &sValue)
+{
+	// If there's a dock widget manager provided, perform a dock widget manager broadcast
+	if (m_pDockWidgetManager) {
+		// Get list of registered dock widgets
+		const Array<DockWidget*> &lstDockWidgets = m_pDockWidgetManager->m_lstDockWidgets;
+
+		// Perform broadcast, but exclude this emitting dock widget
+		for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
+			// Get the current dock widget, do the exclude test and broadcast
+			DockWidget *pDockWidget = lstDockWidgets[i];
+			if (pDockWidget != this)
+				pDockWidget->SetAttribute(sName, sValue);
+		}
+	}
+}
+
+/**
+*  @brief
+*    Set dock widgets attribute value by using a given dynamic variable reference (dock widget broadcast, excludes the emitting dock widget)
+*/
+void DockWidget::SetDockWidgetsAttribute(const String &sName, const DynVar &cVar)
+{
+	// If there's a dock widget manager provided, perform a dock widget manager broadcast
+	if (m_pDockWidgetManager) {
+		// Get list of registered dock widgets
+		const Array<DockWidget*> &lstDockWidgets = m_pDockWidgetManager->m_lstDockWidgets;
+
+		// Perform broadcast, but exclude this emitting dock widget
+		for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
+			// Get the current dock widget, do the exclude test and broadcast
+			DockWidget *pDockWidget = lstDockWidgets[i];
+			if (pDockWidget != this)
+				pDockWidget->SetAttribute(sName, cVar);
+		}
+	}
+}
+
+/**
+*  @brief
+*    Set dock widgets attribute value by using a given dynamic variable pointer (dock widget broadcast, excludes the emitting dock widget)
+*/
+void DockWidget::SetDockWidgetsAttribute(const String &sName, const DynVar *pVar)
+{
+	// If there's a dock widget manager provided, perform a dock widget manager broadcast
+	if (m_pDockWidgetManager) {
+		// Get list of registered dock widgets
+		const Array<DockWidget*> &lstDockWidgets = m_pDockWidgetManager->m_lstDockWidgets;
+
+		// Perform broadcast, but exclude this emitting dock widget
+		for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
+			// Get the current dock widget, do the exclude test and broadcast
+			DockWidget *pDockWidget = lstDockWidgets[i];
+			if (pDockWidget != this)
+				pDockWidget->SetAttribute(sName, pVar);
+		}
+	}
+}
+
+/**
+*  @brief
+*    Set dock widgets attribute to it's default value (dock widget broadcast, excludes the emitting dock widget)
+*/
+void DockWidget::SetDockWidgetsAttributeDefault(const String &sName)
+{
+	// If there's a dock widget manager provided, perform a dock widget manager broadcast
+	if (m_pDockWidgetManager) {
+		// Get list of registered dock widgets
+		const Array<DockWidget*> &lstDockWidgets = m_pDockWidgetManager->m_lstDockWidgets;
+
+		// Perform broadcast, but exclude this emitting dock widget
+		for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
+			// Get the current dock widget, do the exclude test and broadcast
+			DockWidget *pDockWidget = lstDockWidgets[i];
+			if (pDockWidget != this)
+				pDockWidget->SetAttributeDefault(sName);
+		}
+	}
+}
+
+/**
+*  @brief
+*    Call dock widgets method with given dynamic parameters (dock widget broadcast, excludes the emitting dock widget)
+*/
+void DockWidget::CallDockWidgetsMethod(const String &sName, DynParams &cParams)
+{
+	// If there's a dock widget manager provided, perform a dock widget manager broadcast
+	if (m_pDockWidgetManager) {
+		// Get list of registered dock widgets
+		const Array<DockWidget*> &lstDockWidgets = m_pDockWidgetManager->m_lstDockWidgets;
+
+		// Perform broadcast, but exclude this emitting dock widget
+		for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
+			// Get the current dock widget, do the exclude test and broadcast
+			DockWidget *pDockWidget = lstDockWidgets[i];
+			if (pDockWidget != this)
+				pDockWidget->CallMethod(sName, cParams);
+		}
+	}
+}
+
+/**
+*  @brief
+*    Call dock widgets method with given constant dynamic parameters (dock widget broadcast, excludes the emitting dock widget)
+*/
+void DockWidget::CallDockWidgetsMethod(const String &sName, const DynParams &cParams)
+{
+	// If there's a dock widget manager provided, perform a dock widget manager broadcast
+	if (m_pDockWidgetManager) {
+		// Get list of registered dock widgets
+		const Array<DockWidget*> &lstDockWidgets = m_pDockWidgetManager->m_lstDockWidgets;
+
+		// Perform broadcast, but exclude this emitting dock widget
+		for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
+			// Get the current dock widget, do the exclude test and broadcast
+			DockWidget *pDockWidget = lstDockWidgets[i];
+			if (pDockWidget != this)
+				pDockWidget->CallMethod(sName, cParams);
+		}
+	}
+}
+
+/**
+*  @brief
+*    Call dock widgets method with parameters given as string (dock widget broadcast, excludes the emitting dock widget)
+*/
+void DockWidget::CallDockWidgetsMethod(const String &sName, const String &sParams)
+{
+	// If there's a dock widget manager provided, perform a dock widget manager broadcast
+	if (m_pDockWidgetManager) {
+		// Get list of registered dock widgets
+		const Array<DockWidget*> &lstDockWidgets = m_pDockWidgetManager->m_lstDockWidgets;
+
+		// Perform broadcast, but exclude this emitting dock widget
+		for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
+			// Get the current dock widget, do the exclude test and broadcast
+			DockWidget *pDockWidget = lstDockWidgets[i];
+			if (pDockWidget != this)
+				pDockWidget->CallMethod(sName, sParams);
+		}
+	}
+}
+
+/**
+*  @brief
+*    Call dock widgets method with parameters given as XML element (dock widget broadcast, excludes the emitting dock widget)
+*/
+void DockWidget::CallDockWidgetsMethod(const String &sName, const XmlElement &cElement)
+{
+	// If there's a dock widget manager provided, perform a dock widget manager broadcast
+	if (m_pDockWidgetManager) {
+		// Get list of registered dock widgets
+		const Array<DockWidget*> &lstDockWidgets = m_pDockWidgetManager->m_lstDockWidgets;
+
+		// Perform broadcast, but exclude this emitting dock widget
+		for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
+			// Get the current dock widget, do the exclude test and broadcast
+			DockWidget *pDockWidget = lstDockWidgets[i];
+			if (pDockWidget != this)
+				pDockWidget->CallMethod(sName, cElement);
+		}
+	}
+}
+
+/**
+*  @brief
+*    Set multiple dock widgets attribute values as a string at once (dock widget broadcast, excludes the emitting dock widget)
+*/
+void DockWidget::SetDockWidgetsValues(const String &sVars)
+{
+	// If there's a dock widget manager provided, perform a dock widget manager broadcast
+	if (m_pDockWidgetManager) {
+		// Get list of registered dock widgets
+		const Array<DockWidget*> &lstDockWidgets = m_pDockWidgetManager->m_lstDockWidgets;
+
+		// Perform broadcast, but exclude this emitting dock widget
+		for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
+			// Get the current dock widget, do the exclude test and broadcast
+			DockWidget *pDockWidget = lstDockWidgets[i];
+			if (pDockWidget != this)
+				pDockWidget->SetValues(sVars);
+		}
+	}
+}
+
+/**
+*  @brief
+*    Set dock widgets attribute values from XML (dock widget broadcast, excludes the emitting dock widget)
+*/
+void DockWidget::SetDockWidgetsValuesXml(const XmlElement &cElement)
+{
+	// If there's a dock widget manager provided, perform a dock widget manager broadcast
+	if (m_pDockWidgetManager) {
+		// Get list of registered dock widgets
+		const Array<DockWidget*> &lstDockWidgets = m_pDockWidgetManager->m_lstDockWidgets;
+
+		// Perform broadcast, but exclude this emitting dock widget
+		for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
+			// Get the current dock widget, do the exclude test and broadcast
+			DockWidget *pDockWidget = lstDockWidgets[i];
+			if (pDockWidget != this)
+				pDockWidget->SetValuesXml(cElement);
+		}
+	}
+}
+
+/**
+*  @brief
+*    Set all dock widgets attributes to default (dock widget broadcast, excludes the emitting dock widget)
+*/
+void DockWidget::SetDockWidgetsDefaultValues()
+{
+	// If there's a dock widget manager provided, perform a dock widget manager broadcast
+	if (m_pDockWidgetManager) {
+		// Get list of registered dock widgets
+		const Array<DockWidget*> &lstDockWidgets = m_pDockWidgetManager->m_lstDockWidgets;
+
+		// Perform broadcast, but exclude this emitting dock widget
+		for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
+			// Get the current dock widget, do the exclude test and broadcast
+			DockWidget *pDockWidget = lstDockWidgets[i];
+			if (pDockWidget != this)
+				pDockWidget->SetDefaultValues();
+		}
+	}
 }
 
 
