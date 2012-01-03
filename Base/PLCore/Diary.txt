@@ -3,6 +3,11 @@
 PLFrontendQt:
 - Added project description
 - Added PixelLight RTTI dock widget manager
+- "DockWidget": By default, when someone is closing the dock widget Qt hides instead of deletes it
+  -> We could write
+         setAttribute(Qt::WA_DeleteOnClose);	// Delete the dock widget instead of hiding it when someone is closing it
+     to change this behaviour, but when "reopening" the previously made changes to the widget layout would be gone and
+     we don't want this. So, long story short conclusion, don't change the default behaviour in here.
 
 
 

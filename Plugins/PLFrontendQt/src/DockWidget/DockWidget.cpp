@@ -66,8 +66,11 @@ class InternalQDockWidget : public QDockWidget {
 		InternalQDockWidget(DockWidget &cDockWidget, QWidget *pQWidgetParent) : QDockWidget(pQWidgetParent),
 			m_pDockWidget(&cDockWidget)
 		{
-			// Delete the dock widget instead of hiding it when someone is closing it
-			setAttribute(Qt::WA_DeleteOnClose);
+			// By default, when someone is closing the dock widget Qt hides instead of deletes it
+			// -> We could write
+			//        setAttribute(Qt::WA_DeleteOnClose);	// Delete the dock widget instead of hiding it when someone is closing it
+			//    to change this behaviour, but when "reopening" the previously made changes to the widget layout would be gone and
+			//    we don't want this. So, long story short conclusion, don't change the default behaviour in here.
 		}
 
 		/**
