@@ -220,12 +220,12 @@ void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 
 	{ // Menu bar
 		{ // Setup the file menu
-			QMenu *pQMenu = cQMainWindow.menuBar()->addMenu(cQMainWindow.tr("&File"));
+			QMenu *pQMenu = cQMainWindow.menuBar()->addMenu(tr("&File"));
 
 			{ // Setup the load action
-				QAction *pQAction = new QAction(cQMainWindow.tr("L&oad"), &cQMainWindow);
+				QAction *pQAction = new QAction(tr("L&oad"), &cQMainWindow);
 				connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotLoad()));
-				pQAction->setShortcut(cQMainWindow.tr("Ctrl+L"));
+				pQAction->setShortcut(tr("Ctrl+L"));
 				pQMenu->addAction(pQAction);
 			}
 
@@ -233,33 +233,33 @@ void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 			pQMenu->addSeparator();
 
 			{ // Setup the exit action
-				QAction *pQAction = new QAction(cQMainWindow.tr("E&xit"), &cQMainWindow);
+				QAction *pQAction = new QAction(tr("E&xit"), &cQMainWindow);
 				pQAction->setShortcuts(QKeySequence::Quit);
 				connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotExit()));
-				pQAction->setShortcut(cQMainWindow.tr("Ctrl+Q"));
+				pQAction->setShortcut(tr("Ctrl+Q"));
 				pQMenu->addAction(pQAction);
 			}
 		}
 
 		{ // Setup the camera menu
-			m_pQMenuCamera = cQMainWindow.menuBar()->addMenu(cQMainWindow.tr("&Camera"));
+			m_pQMenuCamera = cQMainWindow.menuBar()->addMenu(tr("&Camera"));
 			connect(m_pQMenuCamera, SIGNAL(aboutToShow()), this, SLOT(QtSlotMenuCameraAboutToShow()));
 
 			// Menu is filled when it's about to show
 		}
 
 		{ // Setup the window menu
-			m_pQMenuWindow = cQMainWindow.menuBar()->addMenu(cQMainWindow.tr("&Window"));
+			m_pQMenuWindow = cQMainWindow.menuBar()->addMenu(tr("&Window"));
 			connect(m_pQMenuWindow, SIGNAL(aboutToShow()), this, SLOT(QtSlotMenuWindowAboutToShow()));
 
 			// Menu is filled when it's about to show
 		}
 
 		{ // Setup the tools menu
-			QMenu *pQMenu = cQMainWindow.menuBar()->addMenu(cQMainWindow.tr("&Tools"));
+			QMenu *pQMenu = cQMainWindow.menuBar()->addMenu(tr("&Tools"));
 
 			{ // Setup the log action
-				QAction *pQAction = new QAction(cQMainWindow.tr("Open log file"), &cQMainWindow);
+				QAction *pQAction = new QAction(tr("Open log file"), &cQMainWindow);
 				connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotOpenLogFile()));
 				pQMenu->addAction(pQAction);
 			}
