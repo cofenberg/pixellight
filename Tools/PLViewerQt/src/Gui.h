@@ -182,14 +182,14 @@ class Gui : public QObject {
 	//[ Private Qt slots (MOC)                                ]
 	//[-------------------------------------------------------]
 	private slots:
-		void QtSlotLoad();
-		void QtSlotExit();
-		void QtSlotMenuCameraAboutToShow();
+		void QtSlotTriggeredLoad();
+		void QtSlotTriggeredExit();
+		void QtSlotAboutToShowMenuCamera();
 		void QtSlotSelectedCamera(QAction *);
-		void QtSlotMenuWindowAboutToShow();
+		void QtSlotAboutToShowMenuWindow();
 		void QtSlotTriggeredWindowHideAll();
 		void QtSlotSelectedWindow(QAction *);
-		void QtSlotOpenLogFile();
+		void QtSlotTriggeredOpenLogFile();
 
 
 	//[-------------------------------------------------------]

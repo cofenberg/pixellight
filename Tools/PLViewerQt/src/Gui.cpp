@@ -233,7 +233,7 @@ void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 
 			{ // Setup the load action
 				QAction *pQAction = new QAction(tr("L&oad"), &cQMainWindow);
-				connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotLoad()));
+				connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredLoad()));
 				pQAction->setShortcut(tr("Ctrl+L"));
 				pQMenu->addAction(pQAction);
 			}
@@ -244,7 +244,7 @@ void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 			{ // Setup the exit action
 				QAction *pQAction = new QAction(tr("E&xit"), &cQMainWindow);
 				pQAction->setShortcuts(QKeySequence::Quit);
-				connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotExit()));
+				connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredExit()));
 				pQAction->setShortcut(tr("Ctrl+Q"));
 				pQMenu->addAction(pQAction);
 			}
@@ -252,14 +252,14 @@ void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 
 		{ // Setup the camera menu
 			m_pQMenuCamera = cQMainWindow.menuBar()->addMenu(tr("&Camera"));
-			connect(m_pQMenuCamera, SIGNAL(aboutToShow()), this, SLOT(QtSlotMenuCameraAboutToShow()));
+			connect(m_pQMenuCamera, SIGNAL(aboutToShow()), this, SLOT(QtSlotAboutToShowMenuCamera()));
 
 			// Menu is filled when it's about to show
 		}
 
 		{ // Setup the window menu
 			m_pQMenuWindow = cQMainWindow.menuBar()->addMenu(tr("&Window"));
-			connect(m_pQMenuWindow, SIGNAL(aboutToShow()), this, SLOT(QtSlotMenuWindowAboutToShow()));
+			connect(m_pQMenuWindow, SIGNAL(aboutToShow()), this, SLOT(QtSlotAboutToShowMenuWindow()));
 
 			// Menu is filled when it's about to show
 		}
@@ -269,7 +269,7 @@ void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 
 			{ // Setup the log action
 				QAction *pQAction = new QAction(tr("Open log file"), &cQMainWindow);
-				connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotOpenLogFile()));
+				connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredOpenLogFile()));
 				pQMenu->addAction(pQAction);
 			}
 		}
@@ -347,7 +347,7 @@ void Gui::FillMenuWindowRec(QMenu &cQMenu, const String &sBaseClass)
 //[-------------------------------------------------------]
 //[ Private Qt slots (MOC)                                ]
 //[-------------------------------------------------------]
-void Gui::QtSlotLoad()
+void Gui::QtSlotTriggeredLoad()
 {
 	// Fill the file filter (filter example: "Scene (*.scene *.SCENE);;Script (*.lua *.LUA)")
 	String sFileFilter = ConstructFileFilter::ByLoadableType(QtStringAdapter::QtToPL(tr("Scene")), "Scene");
@@ -368,13 +368,13 @@ void Gui::QtSlotLoad()
 		m_pApplication->LoadResource(QtStringAdapter::QtToPL(sQFilename));
 }
 
-void Gui::QtSlotExit()
+void Gui::QtSlotTriggeredExit()
 {
 	// Shut down the application
 	m_pApplication->Exit(0);
 }
 
-void Gui::QtSlotMenuCameraAboutToShow()
+void Gui::QtSlotAboutToShowMenuCamera()
 {
 	// Camera Qt menu there?
 	if (m_pQMenuCamera) {
@@ -424,7 +424,7 @@ void Gui::QtSlotSelectedCamera(QAction *pQAction)
 	}
 }
 
-void Gui::QtSlotMenuWindowAboutToShow()
+void Gui::QtSlotAboutToShowMenuWindow()
 {
 	// Window Qt menu there?
 	if (m_pQMenuWindow) {
@@ -474,7 +474,7 @@ void Gui::QtSlotSelectedWindow(QAction *pQAction)
 	}
 }
 
-void Gui::QtSlotOpenLogFile()
+void Gui::QtSlotTriggeredOpenLogFile()
 {
 	// Use "PLCore::System::Execute()" to open the log file which is usually a simple text file
 	// -> "QDesktopServices::openUrl(QtStringAdapter::PLToQt(Log::GetInstance()->GetFilename()));" didn't work for me
