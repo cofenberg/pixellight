@@ -115,7 +115,7 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 
 
 	private:
-		PLScene::SceneNodeModifier *m_nodeObj;
+		PLScene::SceneNodeModifier *m_nodeObj;	// Can be a null pointer
 		QString						m_nodeName;
 		QBrush						m_textColor;
 
@@ -129,8 +129,12 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 
 	public:
 		SceneGraphNodeTreeItem(PLScene::SceneNode *nodeObj, QObject *parent = nullptr) : SceneGraphNodeTreeItemBase(parent),
-			m_nodeObj(nodeObj)
+			m_nodeObj(nodeObj),
+			EventHandlerOnDestroy(&SceneGraphNodeTreeItem::OnDestroy, this)
 		{
+			// Connect event handler
+			m_nodeObj->SignalDestroy.Connect(EventHandlerOnDestroy);
+
 			if (m_nodeObj->IsContainer()) {
 				PLScene::SceneContainer *container = (PLScene::SceneContainer*)m_nodeObj;
 				CreateSceneGraphItemsFromContainer(container, this);
@@ -175,7 +179,7 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 			if (role != Qt::DisplayRole)
 				return QVariant();
 
-			if (column == 0)
+			if (column == 0 && m_nodeObj)
 				return QtStringAdapter::PLToQt(m_nodeObj->GetName().GetUTF8());
 
 			return QVariant();
@@ -196,10 +200,25 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 			return m_nodeObj;
 		}
 
+	private:
+		/**
+		*  @brief
+		*    Called when the scene node assigned with this item was destroyed
+		*/
+		void OnDestroy()
+		{
+			// Argh! Mayday! We lost our scene node!
+			m_nodeObj = nullptr;
+
+			// [TODO] Review this situation when the scene node get's killed, update the tree view. Maybe we don't need
+			// to have an own event handler for each and every tree item and a single one for the whole tree is enough.
+			// (maybe we just need to know that an item is now invalid due to removal, then rebuild the tree?)
+		}
 
 	private:
-		PLScene::SceneNode	*m_nodeObj;
-		QPixmap				 m_Icon;
+		PLScene::SceneNode	   *m_nodeObj;	// Can be a null pointer
+		QPixmap				    m_Icon;
+		PLCore::EventHandler<>  EventHandlerOnDestroy;
 
 
 };
@@ -234,7 +253,7 @@ void SceneGraphTreeModel::SetStartNode(PLScene::SceneNode* nodeObj, bool hideSta
 PLScene::SceneNode *SceneGraphTreeModel::GetSceneNodeFromIndex(const QModelIndex &index)
 {
 	SceneGraphNodeTreeItemBase *treeItem = GetSceneTreeItemFromIndex(index);
-	return (treeItem && treeItem->IsSceneNode()) ? (PLScene::SceneNode*)treeItem->GetObject() : nullptr;
+	return (treeItem && treeItem->IsSceneNode() && treeItem->GetObject()) ? (PLScene::SceneNode*)treeItem->GetObject() : nullptr;
 }
 
 SceneGraphNodeTreeItemBase *SceneGraphTreeModel::GetSceneTreeItemFromIndex(const QModelIndex &index)

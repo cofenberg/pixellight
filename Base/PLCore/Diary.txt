@@ -15,6 +15,12 @@ PLFrontendQt:
   a dock widget manager test in order to broadcast something. This communication infrastructure is important, so, it has to be as easy to use and robust as
   possible.
 - "DockWidgetSceneGraph" & "DockWidgetSceneNode" must take into account that the used scene node can be destroyed at any time
+- "SceneGraphNodeTreeItem" (within "SceneGraphTreeModel.cpp"): We must take into account that the used scene node can be destroyed at any time. For now
+  I tried to make as few changes as possible to remove the crash in this situation. Added the following comment within "SceneGraphNodeTreeItem::OnDestroy()":
+      "Review this situation when the scene node get's killed, update the tree view. Maybe we don't need
+       to have an own event handler for each and every tree item and a single one for the whole tree is enough.
+       (maybe we just need to know that an item is now invalid due to removal, then rebuild the tree?)"
+  so it can be seen what's going on. Currently this results in empty tree view entries, but better than a crash because we can see what happend.
 
 
 
