@@ -221,6 +221,12 @@ String SystemLinux::GetExecutableFilename() const
 	return "";
 }
 
+String SystemLinux::GetModuleFilenameByMemoryAddress(const void *pMemoryAddress) const
+{
+	// [TODO] Check whether or not a solution on Linux is possible, if so, implement me
+	return "";
+}
+
 String SystemLinux::GetEnvironmentVariable(const String &sName) const
 {
 	return String::FromUTF8(getenv(sName));

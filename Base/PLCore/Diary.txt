@@ -3,6 +3,8 @@
 - "ClassManager": Renamed "GetModule()" into "GetModuleByID()"
 - "ClassManager": Added "GetModuleByName()"
 - "Module::GetFilename()" now returns a native style path, documented this behaviour
+- Added "System::GetModuleFilenameByMemoryAddress()": We give this method a pointer to a memory address located in a certain shared library
+  or executable, and we want to know the absolute filename of this shared library or executable.
 PLFrontendQt:
 - Review of "ClassInfoModel", "ClassListModel", "HeaderTreeItem": Only the usual code combing to enable my eyes to locate code faster by jumping to usual places,
   no change in functionality

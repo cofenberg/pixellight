@@ -157,6 +157,16 @@ inline String System::GetExecutableFilename() const
 
 /**
 *  @brief
+*    Returns the absolute filename of the shared library or executable a given memory address is located in
+*/
+inline String System::GetModuleFilenameByMemoryAddress(const void *pMemoryAddress) const
+{
+	// Call system function
+	return m_pSystemImpl->GetModuleFilenameByMemoryAddress(pMemoryAddress);
+}
+
+/**
+*  @brief
 *    Reads an environment variable
 */
 inline String System::GetEnvironmentVariable(const String &sName) const

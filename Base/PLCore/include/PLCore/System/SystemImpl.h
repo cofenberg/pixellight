@@ -197,6 +197,23 @@ class SystemImpl {
 
 		/**
 		*  @brief
+		*    Returns the absolute filename of the shared library or executable a given memory address is located in
+		*
+		*  @param[in] pMemoryAddress
+		*    Memory address ("memory anchor") inside the shared library or executable from which the absolute filename
+		*    should be returned from, can be a null pointer in which case the result will be an empty string
+		*
+		*  @return
+		*    Absolute filename of the shared library or executable the given memory address is located in (native path style),
+		*    or an empty string in case it was impossible to determine the filename
+		*
+		*  @note
+		*    - Result example on Windows: 'C:\MyApplication\PLCore.dll' or 'C:\MyApplication\Test.exe'
+		*/
+		virtual String GetModuleFilenameByMemoryAddress(const void *pMemoryAddress) const = 0;
+
+		/**
+		*  @brief
 		*    Reads an environment variable
 		*
 		*  @param[in] sName

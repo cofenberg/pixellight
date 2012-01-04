@@ -116,6 +116,7 @@ class SystemLinux : public SystemImpl {
 		virtual String GetUserDataDir() const override;
 		virtual String GetDataDirName(const String &sName) const override;
 		virtual String GetExecutableFilename() const override;
+		virtual String GetModuleFilenameByMemoryAddress(const void *pMemoryAddress) const override;
 		virtual String GetEnvironmentVariable(const String &sName) const override;
 		virtual bool SetEnvironmentVariable(const String &sName, const String &sValue) const override;
 		virtual void DeleteEnvironmentVariable(const String &sName) const override;

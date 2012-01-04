@@ -516,6 +516,21 @@ String SystemWindows::GetExecutableFilename() const
 	}
 }
 
+String SystemWindows::GetModuleFilenameByMemoryAddress(const void *pMemoryAddress) const
+{
+	// "::GetModuleHandle(nullptr)" returns the instance of the calling process, so we can't use this in here
+
+	// Get filename
+	MEMORY_BASIC_INFORMATION sMemoryBasicInformation;
+	wchar_t szModule[MAX_PATH];
+	szModule[0] = L'\0';
+	::VirtualQuery(pMemoryAddress, &sMemoryBasicInformation, sizeof(MEMORY_BASIC_INFORMATION));
+	::GetModuleFileName(static_cast<HMODULE>(sMemoryBasicInformation.AllocationBase), szModule, MAX_PATH);
+
+	// Done
+	return szModule;
+}
+
 String SystemWindows::GetEnvironmentVariable(const String &sName) const
 {
 	// Get size of buffer to receive variable value
