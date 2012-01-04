@@ -31,6 +31,7 @@
 #include <sched.h>
 #include <locale.h>
 #include <sys/time.h>
+#include <dlfcn.h>
 #include "PLCore/String/RegEx.h"
 #include "PLCore/File/File.h"
 #include "PLCore/System/SystemLinux.h"
@@ -223,7 +224,10 @@ String SystemLinux::GetExecutableFilename() const
 
 String SystemLinux::GetModuleFilenameByMemoryAddress(const void *pMemoryAddress) const
 {
-	// [TODO] Check whether or not a solution on Linux is possible, if so, implement me
+	Dl_info dl_info;
+	// dladdr is a glibc extension to the dlfcn function set.
+    if(dladdr((void *)pMemoryAddress, &dl_info))
+		return String::FromUTF8(dl_info.dli_fname);
 	return "";
 }
 
