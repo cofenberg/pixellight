@@ -56,10 +56,10 @@ RTTIBrowserWidget::RTTIBrowserWidget(QWidget *parent, Qt::WindowFlags f) : QWidg
 	splitter->addWidget(m_ptabWidget);
 
 	m_pModuleClassListModel = new ClassListModel(false, this);
-	CreateTabView(tr("per Module"), m_pModuleClassListModel);
+	CreateTabView(tr("Module View"), m_pModuleClassListModel);
 
 	m_pHierarchicalClassListModel = new ClassListModel(true, this);
-	CreateTabView(tr("Hierarchical"), m_pHierarchicalClassListModel);
+	CreateTabView(tr("Class View"), m_pHierarchicalClassListModel)->expandToDepth(0);	// Everything is derived from "PLCore::Object", expand this level by default
 
 	m_pClassInfoWidget = new ClassInfoWidget(splitter);
 	splitter->addWidget(m_pClassInfoWidget);
@@ -74,7 +74,7 @@ RTTIBrowserWidget::~RTTIBrowserWidget()
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
-void RTTIBrowserWidget::CreateTabView(const QString &tabName, QAbstractItemModel *model)
+QTreeView *RTTIBrowserWidget::CreateTabView(const QString &tabName, QAbstractItemModel *model)
 {
 	QTreeView *tree = new QTreeView(this);
 	QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
@@ -85,6 +85,7 @@ void RTTIBrowserWidget::CreateTabView(const QString &tabName, QAbstractItemModel
 	tree->setModel(proxyModel);
 	m_ptabWidget->addTab(tree, tabName);
 	connect(tree, SIGNAL(activated(const QModelIndex&)), this, SLOT(OnTreeItemActivated(const QModelIndex&)));
+	return tree;
 }
 
 RTTIBrowserWidget::RTTIBrowserWidget(const RTTIBrowserWidget &)
@@ -105,7 +106,7 @@ void RTTIBrowserWidget::OnTreeItemActivated(const QModelIndex &index)
 	bool isModule = index.data(ClassListModel::ClassListItemType).toBool();
 	m_pClassInfoWidget->setVisible(!isModule);
 	if (!isModule)
-		m_pClassInfoWidget->SetClassItem(index.data(ClassListModel::ClassFullNameRole).toString());
+		m_pClassInfoWidget->SetClassItem(index.data(ClassListModel::ClassNameRole).toString());
 }
 
 

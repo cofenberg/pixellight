@@ -52,7 +52,6 @@ enum ClassInfoItemRoles {
 	NameRole = Qt::UserRole+1,
 	NamespaceRole,
 	DescriptionRole,
-	FullNameRole,
 	BaseClassRole
 };
 
@@ -92,13 +91,12 @@ class ClassListItem : public TreeItemBase {
 		explicit ClassListItem(const Class *pClass, ClassInfoItemRoles displayRole = NameRole, QObject *parent = nullptr) : TreeItemBase(1, parent) , m_pClass(pClass), m_cDisplayRole(displayRole)
 		{
 			QString tooltipTemplate = tr("<table>"
-									"<tr><td bgcolor=#00ff00 colspan=\"2\">Class Info</td></tr>"
+									"<tr><td bgcolor=#00ff00 colspan=\"2\">Class Information</td></tr>"
 									"<tr><td>Name:</td><td><ClassName></td></tr>"
-									"<tr><td>Fullname:</td><td><FullClassName></td></tr>"
 									"<tr><td>Description:</td><td><ClassDesc></td></tr>"
 									"</table>");
 
-			m_sTooltip = tooltipTemplate.replace("<ClassName>", QtStringAdapter::PLToQt(pClass->GetName())).replace("<ClassDesc>", QtStringAdapter::PLToQt(pClass->GetDescription())).replace("<FullClassName>", QtStringAdapter::PLToQt(pClass->GetClassName()));
+			m_sTooltip = tooltipTemplate.replace("<ClassName>", QtStringAdapter::PLToQt(pClass->GetClassName())).replace("<ClassDesc>", QtStringAdapter::PLToQt(pClass->GetDescription())).replace("<FullClassName>", QtStringAdapter::PLToQt(pClass->GetClassName()));
 		}
 
 		virtual QVariant data(const int column, const int role)
@@ -127,11 +125,8 @@ class ClassListItem : public TreeItemBase {
 		QVariant GetDataForClassListItemRole(ClassInfoItemRoles role)
 		{
 			switch (role) {
-				case FullNameRole:
-					return "FullName: " + QtStringAdapter::PLToQt(m_pClass->GetClassName());
-
 				case NameRole:
-					return "Name: " + QtStringAdapter::PLToQt(m_pClass->GetName());
+					return "Name: " + QtStringAdapter::PLToQt(m_pClass->GetClassName());
 
 				case NamespaceRole:
 					return "Namespace: " + QtStringAdapter::PLToQt(m_pClass->GetNamespace());

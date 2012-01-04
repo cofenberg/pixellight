@@ -7,6 +7,14 @@ PLFrontendQt:
     "warning C4482: nonstandard extension used: enum 'PLCore::EMemberType' used in qualified name"
 - Added "ClassInfoWidget" & "RTTIBrowserWidget" from an RTTI browser example Stephan Wezel gave me, those are reusable GUI building blocks
 - Added "DockWidgetRTTIBrowser" which is just a tiny helper class making it possible to create an RTTI browser dock widget instance at once
+    -> WOW, Stephans RTTI browser works like a charm. By using it, it's finally possible (again) to browse through the RTTI in order to see which classes,
+       attributes etc. are available. This information is quite useful when manipulating scene files within a text editor, adding user properties within 3ds Max,
+       writing scripts... it's a kind of interactive realtime documentation. :D
+- RTTI browser: Best to show and work only with class names including namespaces (unique names, this way we also don't have to explain to the user
+  technical stuff when to use a namespace and when not, for the user it's just a name :)
+- RTTI browser: Everything is derived from "PLCore::Object", expand this level by default when showing the class hierarchy
+- "DockWidgetSceneGraph": Send broadcast when double clicked, not clicked. Same behaviour as in RTTI browser or PLViewerQt 3D viewport.
+- General GUI titles: It's probably common to use something like "Scene Graph" instead of "Scene graph"
 
 
 

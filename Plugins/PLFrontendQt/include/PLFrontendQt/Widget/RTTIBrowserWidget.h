@@ -35,6 +35,7 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 QT_BEGIN_NAMESPACE
+	class QTreeView;
 	class QTabWidget;
 	class QModelIndex;
 	class QAbstractItemModel;
@@ -84,7 +85,7 @@ class RTTIBrowserWidget : public QWidget {
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
-		void CreateTabView(const QString &tabName, QAbstractItemModel *model);
+		QTreeView *CreateTabView(const QString &tabName, QAbstractItemModel *model);
 		RTTIBrowserWidget(const RTTIBrowserWidget &);
 		RTTIBrowserWidget &operator =(const RTTIBrowserWidget &);
 

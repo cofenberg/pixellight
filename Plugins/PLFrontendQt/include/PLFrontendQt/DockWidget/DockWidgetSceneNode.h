@@ -74,7 +74,7 @@ class DockWidgetSceneNode : public DockWidgetScene {
 	pl_class(PLFRONTENDQT_RTTI_EXPORT, DockWidgetSceneNode, "PLFrontendQt", PLFrontendQt::DockWidgetScene, "Scene node Qt dock widget class")
 		// Properties
 		pl_properties
-			pl_property("Title", "Scene node")
+			pl_property("Title", "Scene Node")
 		pl_properties_end
 		#ifdef PLFRONTENDQT_EXPORTS	// The following is only required when compiling PLFrontendQt
 			// Methods

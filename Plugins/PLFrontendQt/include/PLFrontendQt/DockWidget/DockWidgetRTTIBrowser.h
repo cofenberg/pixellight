@@ -61,7 +61,7 @@ class DockWidgetRTTIBrowser : public DockWidget {
 	pl_class(PLFRONTENDQT_RTTI_EXPORT, DockWidgetRTTIBrowser, "PLFrontendQt", PLFrontendQt::DockWidget, "RTTI browser Qt dock widget class")
 		// Properties
 		pl_properties
-			pl_property("Title", "RTTI browser")
+			pl_property("Title", "RTTI Browser")
 		pl_properties_end
 		// Constructors
 		pl_constructor_2(DefaultConstructor,	QMainWindow*,	DockWidgetManager*,	"Constructor with a pointer to the Qt main window as first parameter, pointer to the dock widget manager this dock widget should be registered to as second parameter",	"")

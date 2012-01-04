@@ -82,7 +82,7 @@ class DockWidgetSceneGraph : public QObject, public DockWidgetScene {
 	pl_class(PLFRONTENDQT_RTTI_EXPORT, DockWidgetSceneGraph, "PLFrontendQt", PLFrontendQt::DockWidgetScene, "Scene graph Qt dock widget class")
 		// Properties
 		pl_properties
-			pl_property("Title", "Scene graph")
+			pl_property("Title", "Scene Graph")
 		pl_properties_end
 		#ifdef PLFRONTENDQT_EXPORTS	// The following is only required when compiling PLFrontendQt
 			// Methods
@@ -141,7 +141,7 @@ class DockWidgetSceneGraph : public QObject, public DockWidgetScene {
 	//[ Private Qt slots (MOC)                                ]
 	//[-------------------------------------------------------]
 	private slots:
-		void QtSlotTreeViewClicked(const QModelIndex &cQModelIndex);
+		void QtSlotTreeViewDoubleClicked(const QModelIndex &cQModelIndex);
 
 
 	//[-------------------------------------------------------]

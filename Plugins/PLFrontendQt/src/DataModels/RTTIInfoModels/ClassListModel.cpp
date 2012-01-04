@@ -97,7 +97,7 @@ class ModuleInfoTreeItem : public ClassListInfoTreeItemBase {
 			m_sLicense(QtStringAdapter::PLToQt(moduleItem.GetLicense()))
 		{
 			SetTooltipText(tr("<table>"
-							"<tr><td bgcolor=#00ff00 colspan=\"2\">Module Info</td></tr>"
+							"<tr><td bgcolor=#00ff00 colspan=\"2\">Module Information</td></tr>"
 							"<tr><td>Name: </td><td>%1</td></tr>"
 							"<tr><td>Description: </td><td>%2</td></tr>"
 							"<tr><td>Vendor: </td><td>%3</td></tr>"
@@ -128,18 +128,16 @@ class ClassInfoTreeItem : public ClassListInfoTreeItemBase {
 
 
 	public:
-		ClassInfoTreeItem(const Class &classItem, QObject *parent = nullptr) : ClassListInfoTreeItemBase(false, QtStringAdapter::PLToQt(classItem.GetName()), QtStringAdapter::PLToQt(classItem.GetDescription()), parent),
+		ClassInfoTreeItem(const Class &classItem, QObject *parent = nullptr) : ClassListInfoTreeItemBase(false, QtStringAdapter::PLToQt(classItem.GetClassName()), QtStringAdapter::PLToQt(classItem.GetDescription()), parent),
 			m_sBaseClass(QtStringAdapter::PLToQt(classItem.GetBaseClassName())),
-			m_sFulleName(QtStringAdapter::PLToQt(classItem.GetClassName())),
-			m_sNamespace(QtStringAdapter::PLToQt(classItem.GetNamespace()))
+			m_sName(QtStringAdapter::PLToQt(classItem.GetClassName()))
 		{
 			SetTooltipText(tr("<table>"
-							"<tr><td bgcolor=#00ff00 colspan=\"2\">Class Info</td></tr>"
+							"<tr><td bgcolor=#00ff00 colspan=\"2\">Class Information</td></tr>"
 							"<tr><td>Name: </td><td>%1</td></tr>"
-							"<tr><td>Fullname: </td><td>%2</td></tr>"
-							"<tr><td>Description: </td><td>%3</td></tr>"
-							"<tr><td>Base class: </td><td>%4</td></tr>"
-							"</table>").arg(m_sName, m_sFulleName, m_sDescription, m_sBaseClass));
+							"<tr><td>Description: </td><td>%2</td></tr>"
+							"<tr><td>Base class: </td><td>%3</td></tr>"
+							"</table>").arg(m_sName, m_sDescription, m_sBaseClass));
 		}
 
 		virtual QVariant data(const int column, const int role)
@@ -148,18 +146,15 @@ class ClassInfoTreeItem : public ClassListInfoTreeItemBase {
 				return QVariant();
 			else if (role == ClassListModel::ClassBaseClassRole)
 				return m_sBaseClass;
-			else if (role == ClassListModel::ClassFullNameRole)
-				return m_sFulleName;
-			else if (role == ClassListModel::ClassNamespaceRole)
-				return m_sNamespace;
+			else if (role == ClassListModel::ClassNameRole)
+				return m_sName;
 			return ClassListInfoTreeItemBase::data(column, role);
 		}
 
 
 	private:
 		QString m_sBaseClass;
-		QString m_sFulleName;
-		QString m_sNamespace;
+		QString m_sName;
 
 
 };

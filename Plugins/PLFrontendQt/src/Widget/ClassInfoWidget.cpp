@@ -80,12 +80,13 @@ ClassInfoWidget::ClassInfoWidget(QWidget *parent, Qt::WindowFlags f): QWidget(pa
 	QTabWidget *tabWidget = new QTabWidget(this);
 	layout()->addWidget(tabWidget);
 
-	AddElementTab(ClassAttributes, *tabWidget);
-	AddElementTab(ClassSlots, *tabWidget);
-	AddElementTab(ClassSignals, *tabWidget);
+	// Same order as described within the "PixelLightConventions"-document
 	AddElementTab(ClassProperties, *tabWidget);
+	AddElementTab(ClassAttributes, *tabWidget);
 	AddElementTab(ClassConstructors, *tabWidget);
 	AddElementTab(ClassMethods, *tabWidget);
+	AddElementTab(ClassSignals, *tabWidget);
+	AddElementTab(ClassSlots, *tabWidget);
 }
 
 ClassInfoWidget:: ~ClassInfoWidget()
@@ -101,12 +102,13 @@ void ClassInfoWidget::SetClassItem(const QString &className)
 	m_pClassNameLabel->setText(className);
 	m_pDescriptionLabel->setText(pClass ? QtStringAdapter::PLToQt(pClass->GetDescription()) : "");
 
-	SetIndexForType(ClassAttributes);
-	SetIndexForType(ClassSlots);
-	SetIndexForType(ClassSignals);
+	// Same order as described within the "PixelLightConventions"-document
 	SetIndexForType(ClassProperties);
+	SetIndexForType(ClassAttributes);
 	SetIndexForType(ClassConstructors);
 	SetIndexForType(ClassMethods);
+	SetIndexForType(ClassSignals);
+	SetIndexForType(ClassSlots);
 }
 
 ClassInfoWidget::ClassInfoWidget(const ClassInfoWidget &)

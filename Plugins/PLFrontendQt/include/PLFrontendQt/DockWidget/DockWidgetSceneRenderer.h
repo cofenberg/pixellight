@@ -66,7 +66,7 @@ class DockWidgetSceneRenderer : public DockWidgetScene {
 	pl_class(PLFRONTENDQT_RTTI_EXPORT, DockWidgetSceneRenderer, "PLFrontendQt", PLFrontendQt::DockWidgetScene, "Scene renderer Qt dock widget class")
 		// Properties
 		pl_properties
-			pl_property("Title", "Scene renderer")
+			pl_property("Title", "Scene Renderer")
 		pl_properties_end
 		// Constructors
 		pl_constructor_2(DefaultConstructor,	QMainWindow*,	DockWidgetManager*,	"Constructor with a pointer to the Qt main window as first parameter, pointer to the dock widget manager this dock widget should be registered to as second parameter",	"")

@@ -64,7 +64,7 @@ DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidget
 	if (pQDockWidget) {
 		// Create tree view and set scene graph model
 		QTreeView *pQTreeView = new QTreeView();
-		connect(pQTreeView, SIGNAL(clicked(const QModelIndex&)), this, SLOT(QtSlotTreeViewClicked(const QModelIndex&)));
+		connect(pQTreeView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(QtSlotTreeViewDoubleClicked(const QModelIndex&)));
 		pQDockWidget->setWidget(pQTreeView);
 		m_pSceneGraphTreeModel = new DataModels::SceneGraphTreeModel(pQDockWidget);
 		pQTreeView->setModel(m_pSceneGraphTreeModel);
@@ -131,7 +131,7 @@ void DockWidgetSceneGraph::OnDestroy()
 //[-------------------------------------------------------]
 //[ Private Qt slots (MOC)                                ]
 //[-------------------------------------------------------]
-void DockWidgetSceneGraph::QtSlotTreeViewClicked(const QModelIndex &cQModelIndex)
+void DockWidgetSceneGraph::QtSlotTreeViewDoubleClicked(const QModelIndex &cQModelIndex)
 {
 	// Is there a scene graph tree model instance?
 	if (m_pSceneGraphTreeModel) {
