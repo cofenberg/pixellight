@@ -1,3 +1,9 @@
+>> 04.01.2012
+[CO]
+- "PixelLightScript"-document, "Introduction"-chapter: Added information how to find out which RTTI classes, attributes and so on are available
+
+
+
 >> 22.12.2011
 [CO]
 - "PixelLight3dsMaxSceneExport"-document: Updated a few RTTI class names like "PLEngine::SNPointLight"->"PLScene::SNPointLight", the "PLEngine"/"PLScene"
