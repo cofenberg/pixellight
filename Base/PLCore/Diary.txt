@@ -2,6 +2,10 @@
 [SW]
 - Implemented linux part of System::GetModuleFilenameByMemoryAddress(). It is using the glibc extension dladdr. On a short search it seems that this method
   exists also under Android 2.2 and up and Mac OS X 10.3 and up. Due lack of devel environment for those platform i can't check if this is true
+- PLFrontendQt: moved the ClassInfoItemRoles enum back to the header
+    The ClassInfoWidget now hides tabs for class items which are empty. And the Items in the tabs are now sorted.
+    Fixed adding items for Properties
+    Added MOdel items for Constructor and Methods (currently they return the signature given by the GetSignature Method for testing as tooltip)
 
 
 >> 04.01.2012

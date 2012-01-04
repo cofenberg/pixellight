@@ -82,7 +82,6 @@ QTreeView *RTTIBrowserWidget::CreateTabView(const QString &tabName, QAbstractIte
 	proxyModel->setSourceModel(model);
 	proxyModel->sort(0);
 	tree->setModel(proxyModel);
-	tree->setModel(proxyModel);
 	m_ptabWidget->addTab(tree, tabName);
 	connect(tree, SIGNAL(activated(const QModelIndex&)), this, SLOT(OnTreeItemActivated(const QModelIndex&)));
 	return tree;
