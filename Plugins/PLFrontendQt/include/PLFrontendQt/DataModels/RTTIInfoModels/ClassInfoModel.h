@@ -73,6 +73,18 @@ class PLFRONTENDQT_API ClassInfoModel : public TreeModelBase {
 
 
 	//[-------------------------------------------------------]
+	//[ Public definitions                                    ]
+	//[-------------------------------------------------------]
+	public:
+		enum ClassInfoItemRoles {
+			NameRole = Qt::UserRole+1,
+			NamespaceRole,
+			DescriptionRole,
+			BaseClassRole
+		};
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:

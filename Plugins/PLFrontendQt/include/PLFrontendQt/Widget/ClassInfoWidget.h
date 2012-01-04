@@ -101,6 +101,7 @@ class ClassInfoWidget : public QWidget {
 	private:
 		void AddElementTab(ClassElementTypes type, QTabWidget &tabWidget);
 		void SetIndexForType(ClassElementTypes type);
+		QString GetTabTitleForType(ClassElementTypes type);
 		ClassInfoWidget(const ClassInfoWidget &);
 		ClassInfoWidget &operator =(const ClassInfoWidget &);
 
@@ -109,10 +110,11 @@ class ClassInfoWidget : public QWidget {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		QLabel									   *m_pClassNameLabel;
-		QLabel									   *m_pDescriptionLabel;
-		QMap<int, QAbstractItemView*>			    m_cClassElements;
-		DataModels::RTTIInfoModels::ClassInfoModel *m_pInfoModel;
+		QLabel										*m_pClassNameLabel;
+		QLabel										*m_pDescriptionLabel;
+		QMap<int, QAbstractItemView*>				 m_cClassElements;
+		DataModels::RTTIInfoModels::ClassInfoModel	*m_pInfoModel;
+		QTabWidget									*m_pTabWidget;
 
 
 };

@@ -46,17 +46,6 @@ namespace RTTIInfoModels {
 
 
 //[-------------------------------------------------------]
-//[ Global definitions                                    ]
-//[-------------------------------------------------------]
-enum ClassInfoItemRoles {
-	NameRole = Qt::UserRole+1,
-	NamespaceRole,
-	DescriptionRole,
-	BaseClassRole
-};
-
-
-//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 class ClassInfoStringTreeItem : public TreeItemBase {
@@ -88,7 +77,7 @@ class ClassListItem : public TreeItemBase {
 
 
 	public:
-		explicit ClassListItem(const Class *pClass, ClassInfoItemRoles displayRole = NameRole, QObject *parent = nullptr) : TreeItemBase(1, parent) , m_pClass(pClass), m_cDisplayRole(displayRole)
+		explicit ClassListItem(const Class *pClass, ClassInfoModel::ClassInfoItemRoles displayRole = ClassInfoModel::NameRole, QObject *parent = nullptr) : TreeItemBase(1, parent) , m_pClass(pClass), m_cDisplayRole(displayRole)
 		{
 			QString tooltipTemplate = tr("<table>"
 									"<tr><td bgcolor=#00ff00 colspan=\"2\">Class Information</td></tr>"
@@ -106,11 +95,11 @@ class ClassListItem : public TreeItemBase {
 
 			if (role == Qt::ToolTipRole)
 				return m_sTooltip;
-			ClassInfoItemRoles itemRole = static_cast<ClassInfoItemRoles>(role);
+			ClassInfoModel::ClassInfoItemRoles itemRole = static_cast<ClassInfoModel::ClassInfoItemRoles>(role);
 			if (role == Qt::DisplayRole)
 				itemRole = m_cDisplayRole;
 			else if (role == Qt::ToolTipRole)
-				itemRole = DescriptionRole;
+				itemRole = ClassInfoModel::DescriptionRole;
 
 			return GetDataForClassListItemRole(itemRole);
 		}
@@ -122,16 +111,16 @@ class ClassListItem : public TreeItemBase {
 
 
 	private:
-		QVariant GetDataForClassListItemRole(ClassInfoItemRoles role)
+		QVariant GetDataForClassListItemRole(ClassInfoModel::ClassInfoItemRoles role)
 		{
 			switch (role) {
-				case NameRole:
+				case ClassInfoModel::NameRole:
 					return "Name: " + QtStringAdapter::PLToQt(m_pClass->GetClassName());
 
-				case NamespaceRole:
+				case ClassInfoModel::NamespaceRole:
 					return "Namespace: " + QtStringAdapter::PLToQt(m_pClass->GetNamespace());
 
-				case DescriptionRole:
+				case ClassInfoModel::DescriptionRole:
 					return "Description: " + QtStringAdapter::PLToQt(m_pClass->GetDescription());
 
 				default:
@@ -142,7 +131,7 @@ class ClassListItem : public TreeItemBase {
 
 	private:
 		const Class *m_pClass;
-		const ClassInfoItemRoles m_cDisplayRole;
+		const ClassInfoModel::ClassInfoItemRoles m_cDisplayRole;
 		QString m_sTooltip;
 
 
@@ -264,6 +253,58 @@ class ClassInfoMemberDescTreeItem : public TreeItemBase {
 
 };
 
+class ClassInfoConstructorDescTreeItem : public ClassInfoMemberDescTreeItem {
+
+
+	public:
+		ClassInfoConstructorDescTreeItem(const ConstructorDesc &cMemberDesc, QObject *parent = nullptr) : ClassInfoMemberDescTreeItem(cMemberDesc, parent),
+			m_sSignature(QtStringAdapter::PLToQt(cMemberDesc.GetSignature()))
+		{
+		}
+
+		virtual QVariant data(const int column, const int role)
+		{
+			if (role == Qt::ToolTipRole) {
+				if (column == 0)
+					return m_sSignature;
+			}
+			
+			return ClassInfoMemberDescTreeItem::data(column, role);
+		}
+
+
+	private:
+		QString m_sSignature;
+
+
+};
+
+class ClassInfoMethodDescTreeItem : public ClassInfoMemberDescTreeItem {
+
+
+	public:
+		ClassInfoMethodDescTreeItem(const FuncDesc &cMemberDesc, QObject *parent = nullptr) : ClassInfoMemberDescTreeItem(cMemberDesc, parent),
+			m_sSignature(QtStringAdapter::PLToQt(cMemberDesc.GetSignature()))
+		{
+		}
+
+		virtual QVariant data(const int column, const int role)
+		{
+			if (role == Qt::ToolTipRole) {
+				if (column == 0)
+					return m_sSignature;
+			}
+			
+			return ClassInfoMemberDescTreeItem::data(column, role);
+		}
+
+
+	private:
+		QString m_sSignature;
+
+
+};
+
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
@@ -322,16 +363,16 @@ void ClassInfoModel::SetClassItem(const Class &cClass)
 	}
 
 	// Add slots
-	const List<EventHandlerDesc*> &cSignals = cClass.GetSlots();
-	for (uint32 i=0; i<cSignals.GetNumOfElements(); ++i) {
-		MemberDesc *pVarDesc = cSignals[i];
-		new ClassInfoMemberDescTreeItem(*pVarDesc, m_pSignalsCategory);
+	const List<EventHandlerDesc*> &cSlots = cClass.GetSlots();
+	for (uint32 i=0; i<cSlots.GetNumOfElements(); ++i) {
+		MemberDesc *pVarDesc = cSlots[i];
+		new ClassInfoMemberDescTreeItem(*pVarDesc, m_pSlotsCategory);
 	}
 
 	// Add signals
-	const List<EventDesc*> &cSlots = cClass.GetSignals();
-	for (uint32 i=0; i<cSlots.GetNumOfElements(); ++i) {
-		MemberDesc *pVarDesc = cSlots[i];
+	const List<EventDesc*> &cSignals = cClass.GetSignals();
+	for (uint32 i=0; i<cSignals.GetNumOfElements(); ++i) {
+		MemberDesc *pVarDesc = cSignals[i];
 		new ClassInfoMemberDescTreeItem(*pVarDesc, m_pSignalsCategory);
 	}
 
@@ -339,7 +380,7 @@ void ClassInfoModel::SetClassItem(const Class &cClass)
 	const HashMap<String, String> &cProps = cClass.GetProperties();
 	Iterator<String> cIterator = cProps.GetKeyIterator();
 	while (cIterator.HasNext()) {
-		const String sName = cIterator.Next();
+		const String sName  = cIterator.Next();
 		new ClassInfoStringTreeItem(QtStringAdapter::PLToQt(sName), m_pPropertiesCategory);
 	}
 
@@ -347,14 +388,14 @@ void ClassInfoModel::SetClassItem(const Class &cClass)
 	const List<ConstructorDesc*> &cConstructors = cClass.GetConstructors();
 	for (uint32 i=0; i<cConstructors.GetNumOfElements(); ++i) {
 		ConstructorDesc *pVarDesc = cConstructors[i];
-		new ClassInfoMemberDescTreeItem(*pVarDesc, m_pConstructorsCategory);
+		new ClassInfoConstructorDescTreeItem(*pVarDesc, m_pConstructorsCategory);
 	}
 
 	// Add methods
 	const List<FuncDesc*> &cMethods = cClass.GetMethods();
 	for (uint32 i=0; i<cMethods.GetNumOfElements(); ++i) {
 		FuncDesc *pVarDesc = cMethods[i];
-		new ClassInfoMemberDescTreeItem(*pVarDesc, m_pMethodsCategory);
+		new ClassInfoMethodDescTreeItem(*pVarDesc, m_pMethodsCategory);
 	}
 
 	endResetModel();
