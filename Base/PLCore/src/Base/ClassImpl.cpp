@@ -74,7 +74,7 @@ ClassImpl::~ClassImpl()
 const Module *ClassImpl::GetModule() const
 {
 	// Return module from class manager
-	return ClassManager::GetInstance()->GetModule(m_nModuleID);
+	return ClassManager::GetInstance()->GetModuleByID(m_nModuleID);
 }
 
 /**

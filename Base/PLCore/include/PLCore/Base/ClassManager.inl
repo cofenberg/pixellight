@@ -43,7 +43,7 @@ inline const List<const Module*> &ClassManager::GetModules() const
 *  @brief
 *    Get module by ID
 */
-inline const Module *ClassManager::GetModule(uint32 nModuleID) const
+inline const Module *ClassManager::GetModuleByID(uint32 nModuleID) const
 {
 	// Get module with given ID (can be a null pointer)
 	return m_mapModules.Get(nModuleID);

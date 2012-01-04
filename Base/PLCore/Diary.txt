@@ -1,5 +1,6 @@
 >> 04.01.2012
 [CO]
+- "ClassManager": Renamed "GetModule()" into "GetModuleByID()"
 PLFrontendQt:
 - Review of "ClassInfoModel", "ClassListModel", "HeaderTreeItem": Only the usual code combing to enable my eyes to locate code faster by jumping to usual places,
   no change in functionality

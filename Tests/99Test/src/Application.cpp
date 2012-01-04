@@ -153,7 +153,7 @@ void Application::TestModules()
 
 	// Get current module
 	System::GetInstance()->GetConsole().Print("Current module:\n");
-	const PLCore::Module *pModule = PLCore::ClassManager::GetInstance()->GetModule(pl_current_module_id());
+	const PLCore::Module *pModule = PLCore::ClassManager::GetInstance()->GetModuleByID(pl_current_module_id());
 	System::GetInstance()->GetConsole().Print("- " + pModule->GetName() + '\n');
 	System::GetInstance()->GetConsole().Print("  - Description: " + pModule->GetDescription() + '\n');
 	System::GetInstance()->GetConsole().Print("  - Vendor:      " + pModule->GetVendor() + '\n');

@@ -115,7 +115,7 @@ class ClassManager : public Singleton<ClassManager> {
 		*  @return
 		*    Pointer to module (do not destroy the returned instance, can be a null pointer)
 		*/
-		inline const Module *GetModule(uint32 nModuleID) const;
+		inline const Module *GetModuleByID(uint32 nModuleID) const;
 
 		/**
 		*  @brief
