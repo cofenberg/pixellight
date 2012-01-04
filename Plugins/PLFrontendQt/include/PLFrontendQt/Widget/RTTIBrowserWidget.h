@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <QtGui/QWidget>
+#include "PLFrontendQt/PLFrontendQt.h"
 
 
 //[-------------------------------------------------------]
@@ -63,7 +64,7 @@ namespace PLFrontendQt {
 *  @brief
 *    RTTI browser widget
 */
-class RTTIBrowserWidget : public QWidget {
+class PLFRONTENDQT_API RTTIBrowserWidget : public QWidget {
 
 
 	//[-------------------------------------------------------]
