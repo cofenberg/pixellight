@@ -23,6 +23,7 @@
   -> Currently, the Linux implementation just returns a null pointer (nothing highly dramatical, I have no time to check this on another platform)
 - "Frontend": Renamed "SetPositionSize()" into "SetWindowPositionSize()" to make clear that this is about the window, not the client area we're usually
   interested in
+- "Frontend": Added "GetWindowPositionSize()", the counterpart of "SetWindowPositionSize()"
 PLFrontendQt:
 - Review of "ClassInfoModel", "ClassListModel", "HeaderTreeItem": Only the usual code combing to enable my eyes to locate code faster by jumping to usual places,
   no change in functionality

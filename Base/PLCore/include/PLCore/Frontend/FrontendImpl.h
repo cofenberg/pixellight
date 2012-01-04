@@ -278,6 +278,29 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 
 		/**
 		*  @brief
+		*    Returns frontend window position and size
+		*
+		*  @param[out] nX
+		*    Receives the x position of the frontend window (in screen coordinates)
+		*  @param[out] nY
+		*    Receives the y position of the frontend window (in screen coordinates)
+		*  @param[out] nWidth
+		*    Receives the width of the frontend window
+		*  @param[out] nHeight
+		*    Receives the height of the frontend window
+		*
+		*  @remarks
+		*    The primary argument to allow the user to request a frontend window position and size change is,
+		*    that it should be possible to restore the frontend window position and size of a previous session
+		*    (may be important for the usability). Do not misuse this method to frequently manipulate
+		*    the frontend window appearance. Please note that, as for all other frontend methods, this is only
+		*    considered to be a request. A frontend implementation may deny the request in general or
+		*    just improper settings (e.g. a too small size, position outside the visible screen etc.).
+		*/
+		virtual void GetWindowPositionSize(int &nX, int &nY, uint32 &nWidth, uint32 &nHeight) const = 0;
+
+		/**
+		*  @brief
 		*    Set frontend window position and size
 		*
 		*  @param[in] nX
@@ -289,13 +312,8 @@ class FrontendImpl : public Object, protected AbstractLifecycle, protected Abstr
 		*  @param[in] nHeight
 		*    Height of the frontend window
 		*
-		*  @remarks
-		*    The primary argument to allow the user to request a frontend window position and size change is,
-		*    that it should be possible to restore the frontend window position and size of a previous session
-		*    (may be important for the usability). Do not misuse this method to frequently manipulate
-		*    the frontend window appearance. Please note that, as for all other frontend methods, this is only
-		*    considered to be a request. A frontend implementation may deny the request in general or
-		*    just improper settings (e.g. a too small size, position outside the visible screen etc.).
+		*  @see
+		*    - "GetWindowPositionSize"()
 		*/
 		virtual void SetWindowPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight) = 0;
 

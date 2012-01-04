@@ -227,6 +227,19 @@ uint32 Frontend::GetHeight() const
 	return qQWidget ? qQWidget->size().height() : 0;
 }
 
+void Frontend::GetWindowPositionSize(int &nX, int &nY, uint32 &nWidth, uint32 &nHeight) const
+{
+	if (m_pMainWindow) {
+		nX      = m_pMainWindow->pos().x();
+		nY      = m_pMainWindow->pos().y();
+		nWidth  = m_pMainWindow->size().width();
+		nHeight = m_pMainWindow->size().height();
+	} else {
+		// Set known default values
+		nX = nY = nWidth = nHeight = 0;
+	}
+}
+
 void Frontend::SetWindowPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
 	if (m_pMainWindow) {

@@ -79,11 +79,17 @@ FrontendApplication::~FrontendApplication()
 */
 void FrontendApplication::OnStop()
 {
-	// Write down display mode information
-	GetConfig().SetVar("PLCore::FrontendConfig", "X",      String(GetFrontend().GetX()));
-	GetConfig().SetVar("PLCore::FrontendConfig", "Y",      String(GetFrontend().GetY()));
-	GetConfig().SetVar("PLCore::FrontendConfig", "Width",  String(GetFrontend().GetWidth()));
-	GetConfig().SetVar("PLCore::FrontendConfig", "Height", String(GetFrontend().GetHeight()));
+	{ // Write down display mode information
+		int nX = 0;
+		int nY = 0;
+		uint32 nWidth = 0;
+		uint32 nHeight = 0;
+		GetFrontend().GetWindowPositionSize(nX, nY, nWidth, nHeight);
+		GetConfig().SetVar("PLCore::FrontendConfig", "X",      String(nX));
+		GetConfig().SetVar("PLCore::FrontendConfig", "Y",      String(nY));
+		GetConfig().SetVar("PLCore::FrontendConfig", "Width",  String(nWidth));
+		GetConfig().SetVar("PLCore::FrontendConfig", "Height", String(nHeight));
+	}
 
 	// Call base implementation
 	CoreApplication::OnStop();

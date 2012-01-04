@@ -244,6 +244,15 @@ uint32 Frontend::GetHeight() const
 	return (m_pMainWindow && m_pMainWindow->GetContentWidget()) ? m_pMainWindow->GetContentWidget()->GetSize().y : 0;
 }
 
+void Frontend::GetWindowPositionSize(int &nX, int &nY, uint32 &nWidth, uint32 &nHeight) const
+{
+	// Nothing special in here
+	nX      = GetX();
+	nY      = GetY();
+	nWidth  = GetWidth();
+	nHeight = GetHeight();
+}
+
 void Frontend::SetWindowPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
 	if (m_pMainWindow && m_pMainWindow->GetContentWidget()) {

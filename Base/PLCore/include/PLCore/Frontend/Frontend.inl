@@ -157,6 +157,16 @@ inline uint32 Frontend::GetHeight() const
 
 /**
 *  @brief
+*    Returns frontend window position and size
+*/
+inline void Frontend::GetWindowPositionSize(int &nX, int &nY, uint32 &nWidth, uint32 &nHeight) const
+{
+	// Call backend
+	m_pFrontendImpl->GetWindowPositionSize(nX, nY, nWidth, nHeight);
+}
+
+/**
+*  @brief
 *    Set frontend window position and size
 */
 inline void Frontend::SetWindowPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)

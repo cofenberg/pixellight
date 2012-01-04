@@ -169,6 +169,14 @@ uint32 Frontend::GetHeight() const
 	return 0;
 }
 
+void Frontend::GetWindowPositionSize(int &nX, int &nY, uint32 &nWidth, uint32 &nHeight) const
+{
+	// There's no window
+
+	// Set known default values
+	nX = nY = nWidth = nHeight = 0;
+}
+
 void Frontend::SetWindowPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
 	// There's no window

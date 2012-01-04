@@ -108,6 +108,14 @@ PLCore::uint32 PixelLightCtrl::GetHeight() const
 	return sRect.bottom;
 }
 
+void PixelLightCtrl::GetWindowPositionSize(int &nX, int &nY, PLCore::uint32 &nWidth, PLCore::uint32 &nHeight) const
+{
+	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
+
+	// Set known default values
+	nX = nY = nWidth = nHeight = 0;
+}
+
 void PixelLightCtrl::SetWindowPositionSize(int nX, int nY, PLCore::uint32 nWidth, PLCore::uint32 nHeight)
 {
 	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
