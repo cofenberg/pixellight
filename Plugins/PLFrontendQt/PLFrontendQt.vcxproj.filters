@@ -196,6 +196,21 @@
     <ClCompile Include="build\GeneratedQtFiles\moc_ClassInfoModel.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
+    <ClCompile Include="src\Widget\ClassInfoWidget.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_ClassInfoWidget.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DockWidget\DockWidgetRTTIBrowser.cpp">
+      <Filter>DockWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Widget\RTTIBrowserWidget.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_RTTIBrowserWidget.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarTreeItemsFactory.h">
@@ -243,6 +258,9 @@
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetManager.h">
       <Filter>DockWidget</Filter>
     </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetRTTIBrowser.h">
+      <Filter>DockWidget</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Base\PLCore\Diary.txt" />
@@ -281,6 +299,9 @@
     </Filter>
     <Filter Include="DataModels\RTTIInfoModels">
       <UniqueIdentifier>{fd3b60b7-c9c0-4438-9a61-cbf31ed6465c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Widget">
+      <UniqueIdentifier>{6c961231-d69a-4020-ae4f-001e9adca1a4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -367,6 +388,12 @@
     </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\DataModels\RTTIInfoModels\ClassListModel.h">
       <Filter>DataModels\RTTIInfoModels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\Widget\ClassInfoWidget.h">
+      <Filter>Widget</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\Widget\RTTIBrowserWidget.h">
+      <Filter>Widget</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

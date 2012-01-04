@@ -5,6 +5,7 @@ PLFrontendQt:
   no change in functionality
 - "ClassInfoModel", "ClassListModel": Fixed Visual Studio 2010 compiler warnings like
     "warning C4482: nonstandard extension used: enum 'PLCore::EMemberType' used in qualified name"
+- Added "ClassInfoWidget" & "RTTIBrowserWidget" from an RTTI browser example Stephan Wezel gave me, those are reusable GUI building blocks
 
 
 
