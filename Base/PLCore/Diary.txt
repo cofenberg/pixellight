@@ -5,6 +5,11 @@
 - "Module::GetFilename()" now returns a native style path, documented this behaviour
 - Added "System::GetModuleFilenameByMemoryAddress()": We give this method a pointer to a memory address located in a certain shared library
   or executable, and we want to know the absolute filename of this shared library or executable.
+- "ClassManager::RegisterModule()": Changed signatur parameter "uint32 nModuleID" into "const uint32 *pnModuleID". This way we have the module
+  ID as well as a memory address inside the shared library or executable the module is implemented ("memory anchor"). We can now use this memory
+  address together with the new "System::GetModuleFilenameByMemoryAddress()" to get the module filename.
+  -> At least on Windows, "Module::GetFilename()" no longer returns an empty string for modules directly loaded at program start by the operation system
+  -> Currently, the Linux implementation just returns a null pointer (nothing highly dramatical, I have no time to check this on another platform)
 PLFrontendQt:
 - Review of "ClassInfoModel", "ClassListModel", "HeaderTreeItem": Only the usual code combing to enable my eyes to locate code faster by jumping to usual places,
   no change in functionality

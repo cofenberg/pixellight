@@ -128,7 +128,11 @@ template <typename T> uint32 ModuleID<T>::GetModuleID()
 
 template <typename T> void ModuleID<T>::RegisterModule(const String &sName, const String &sVendor, const String &sLicense, const String &sDescription)
 {
-	ClassManager::GetInstance()->RegisterModule(GetModuleID(), sName, sVendor, sLicense, sDescription);
+	// Ensure we have a valid module ID
+	GetModuleID();
+
+	// Register module, and provide a pointer to our static module ID variable ("memory anchor")
+	ClassManager::GetInstance()->RegisterModule(&m_nModuleID, sName, sVendor, sLicense, sDescription);
 }
 
 // Module ID

@@ -224,7 +224,7 @@ const PLCore::uint32 nModuleID = pl_current_module_id();
 // Get RTTI module instance
 const PLCore::Module *pModule = PLCore::ClassManager::GetInstance()->GetModuleByID(nModuleID);
 if (pModule != nullptr) {
-	// Get the absolute filename of the module [TODO] Currently an empty string is returned
+	// Get the absolute filename of the module
 	const PLCore::String sAbsModuleFilename = pModule->GetFilename();
 
 	// Get the absolute filename of the directory the module is in

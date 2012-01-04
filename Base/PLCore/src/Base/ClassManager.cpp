@@ -581,13 +581,16 @@ void ClassManager::LoadModuleDelayed(const XmlElement &cPluginElement, const Str
 *  @brief
 *    Register module
 */
-void ClassManager::RegisterModule(uint32 nModuleID, const String &sName, const String &sVendor, const String &sLicense, const String &sDescription)
+void ClassManager::RegisterModule(const uint32 *pnModuleID, const String &sName, const String &sVendor, const String &sLicense, const String &sDescription)
 {
 	// Get module
-	Module *pModule = CreateModule(nModuleID);
+	Module *pModule = CreateModule(*pnModuleID);	// "pnModuleID" is guaranteed to be valid
 	if (pModule) {
 		// Set module info
 		pModule->SetModuleInfo(sName, sVendor, sLicense, sDescription);
+
+		// Set module filename, or at least try it
+		pModule->m_sFilename = System::GetInstance()->GetModuleFilenameByMemoryAddress(pnModuleID);
 
 		// Module has been registered (emit event)
 		EventModuleLoaded(pModule);

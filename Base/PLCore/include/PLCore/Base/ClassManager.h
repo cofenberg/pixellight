@@ -331,8 +331,8 @@ class ClassManager : public Singleton<ClassManager> {
 		*  @brief
 		*    Register module
 		*
-		*  @param[in] nModuleID
-		*    Module ID
+		*  @param[in] pnModuleID
+		*    Pointer to a static module ID variable inside the shared library or executable the module is implemented in, always valid ("memory anchor")
 		*  @param[in] sName
 		*    Module name
 		*  @param[in] sVendor
@@ -342,7 +342,7 @@ class ClassManager : public Singleton<ClassManager> {
 		*  @param[in] sDescription
 		*    Module description
 		*/
-		PLCORE_API void RegisterModule(uint32 nModuleID, const String &sName, const String &sVendor, const String &sLicense, const String &sDescription);
+		PLCORE_API void RegisterModule(const uint32 *pnModuleID, const String &sName, const String &sVendor, const String &sLicense, const String &sDescription);
 
 		/**
 		*  @brief
