@@ -129,7 +129,7 @@ class Frontend : public PLCore::FrontendImpl {
 		virtual int GetY() const override;
 		virtual PLCore::uint32 GetWidth() const override;
 		virtual PLCore::uint32 GetHeight() const override;
-		virtual void SetPositionSize(int nX, int nY, PLCore::uint32 nWidth, PLCore::uint32 nHeight) override;
+		virtual void SetWindowPositionSize(int nX, int nY, PLCore::uint32 nWidth, PLCore::uint32 nHeight) override;
 		virtual bool GetToggleFullscreenMode() const override;
 		virtual void SetToggleFullscreenMode(bool bToggleFullscreenMode) override;
 		virtual bool GetFullscreenAltTab() const override;

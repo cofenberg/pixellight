@@ -190,7 +190,7 @@ class OSWindow {
 		*    considered to be a request. A frontend implementation may deny the request in general or
 		*    just improper settings (e.g. a too small size, position outside the visible screen etc.).
 		*/
-		virtual void SetPositionSize(int nX, int nY, PLCore::uint32 nWidth, PLCore::uint32 nHeight) = 0;
+		virtual void SetWindowPositionSize(int nX, int nY, PLCore::uint32 nWidth, PLCore::uint32 nHeight) = 0;
 
 		//[-------------------------------------------------------]
 		//[ Fullscreen                                            ]

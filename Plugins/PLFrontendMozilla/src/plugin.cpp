@@ -300,7 +300,7 @@ PLCore::uint32 nsPluginInstance::GetHeight() const
 	return sRect.bottom;
 }
 
-void nsPluginInstance::SetPositionSize(int nX, int nY, PLCore::uint32 nWidth, PLCore::uint32 nHeight)
+void nsPluginInstance::SetWindowPositionSize(int nX, int nY, PLCore::uint32 nWidth, PLCore::uint32 nHeight)
 {
 	// Ignore - This frontend implementation is run and controlled by another application this frontend is embedded into
 }

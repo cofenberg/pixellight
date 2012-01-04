@@ -169,7 +169,7 @@ uint32 Frontend::GetHeight() const
 	return 0;
 }
 
-void Frontend::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
+void Frontend::SetWindowPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
 	// There's no window
 }

@@ -509,7 +509,7 @@ uint32 OSWindowWindows::GetHeight() const
 	}
 }
 
-void OSWindowWindows::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
+void OSWindowWindows::SetWindowPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
 	if (m_hWnd) {
 		// Correct frontend position and size settings

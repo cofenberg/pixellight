@@ -427,7 +427,7 @@ uint32 OSWindowLinux::GetHeight() const
 	}
 }
 
-void OSWindowLinux::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
+void OSWindowLinux::SetWindowPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
 	if (m_nNativeWindowHandle) {
 		{ // Correct frontend position and size settings

@@ -227,7 +227,7 @@ uint32 Frontend::GetHeight() const
 	return qQWidget ? qQWidget->size().height() : 0;
 }
 
-void Frontend::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
+void Frontend::SetWindowPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
 	if (m_pMainWindow) {
 		// Correct frontend position and size settings

@@ -244,7 +244,7 @@ uint32 Frontend::GetHeight() const
 	return (m_pMainWindow && m_pMainWindow->GetContentWidget()) ? m_pMainWindow->GetContentWidget()->GetSize().y : 0;
 }
 
-void Frontend::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
+void Frontend::SetWindowPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
 	if (m_pMainWindow && m_pMainWindow->GetContentWidget()) {
 		// Get the default screen (never a null pointer)

@@ -157,12 +157,12 @@ inline uint32 Frontend::GetHeight() const
 
 /**
 *  @brief
-*    Set frontend position and size
+*    Set frontend window position and size
 */
-inline void Frontend::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
+inline void Frontend::SetWindowPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
 	// Call backend
-	m_pFrontendImpl->SetPositionSize(nX, nY, nWidth, nHeight);
+	m_pFrontendImpl->SetWindowPositionSize(nX, nY, nWidth, nHeight);
 }
 
 /**

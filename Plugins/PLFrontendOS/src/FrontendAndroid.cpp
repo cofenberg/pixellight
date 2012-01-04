@@ -522,7 +522,7 @@ uint32 FrontendAndroid::GetHeight() const
 	return m_pAndroidApp->contentRect.bottom - m_pAndroidApp->contentRect.top;
 }
 
-void FrontendAndroid::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
+void FrontendAndroid::SetWindowPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
 	// That's nothing we have control in here
 }

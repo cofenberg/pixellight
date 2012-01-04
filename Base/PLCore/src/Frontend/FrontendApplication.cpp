@@ -150,11 +150,11 @@ void FrontendApplication::OnInitConfig()
 	// Call base implementation
 	CoreApplication::OnInitConfig();
 
-	// Read frontend configuration and set frontend position and size of the previous session
-	GetFrontend().SetPositionSize(GetConfig().GetVarInt("PLCore::FrontendConfig", "X"),
-								  GetConfig().GetVarInt("PLCore::FrontendConfig", "Y"),
-								  GetConfig().GetVarInt("PLCore::FrontendConfig", "Width"),
-								  GetConfig().GetVarInt("PLCore::FrontendConfig", "Height"));
+	// Read frontend configuration and set frontend window position and size of the previous session
+	GetFrontend().SetWindowPositionSize(GetConfig().GetVarInt("PLCore::FrontendConfig", "X"),
+										GetConfig().GetVarInt("PLCore::FrontendConfig", "Y"),
+										GetConfig().GetVarInt("PLCore::FrontendConfig", "Width"),
+										GetConfig().GetVarInt("PLCore::FrontendConfig", "Height"));
 }
 
 /**

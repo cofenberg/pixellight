@@ -141,7 +141,7 @@ uint32 OSWindowMacOSX::GetHeight() const
 	return 0;
 }
 
-void OSWindowMacOSX::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
+void OSWindowMacOSX::SetWindowPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
 	// [TODO] Implement me
 }

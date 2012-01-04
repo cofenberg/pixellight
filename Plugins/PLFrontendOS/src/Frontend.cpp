@@ -181,11 +181,11 @@ uint32 Frontend::GetHeight() const
 	return m_pOSWindow ? m_pOSWindow->GetHeight() : 0;
 }
 
-void Frontend::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
+void Frontend::SetWindowPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
 	// Query the OS window implementation
 	if (m_pOSWindow)
-		m_pOSWindow->SetPositionSize(nX, nY, nWidth, nHeight);
+		m_pOSWindow->SetWindowPositionSize(nX, nY, nWidth, nHeight);
 }
 
 bool Frontend::GetToggleFullscreenMode() const
