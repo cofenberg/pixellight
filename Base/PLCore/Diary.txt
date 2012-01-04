@@ -3,6 +3,8 @@
 PLFrontendQt:
 - Review of "ClassInfoModel", "ClassListModel", "HeaderTreeItem": Only the usual code combing to enable my eyes to locate code faster by jumping to usual places,
   no change in functionality
+- "ClassInfoModel", "ClassListModel": Fixed Visual Studio 2010 compiler warnings like
+    "warning C4482: nonstandard extension used: enum 'PLCore::EMemberType' used in qualified name"
 
 
 

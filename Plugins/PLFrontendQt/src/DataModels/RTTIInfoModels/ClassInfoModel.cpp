@@ -89,7 +89,7 @@ class ClassListItem : public TreeItemBase {
 
 
 	public:
-		explicit ClassListItem(const Class *pClass, ClassInfoItemRoles displayRole = ClassInfoItemRoles::NameRole, QObject *parent = nullptr) : TreeItemBase(1, parent) , m_pClass(pClass), m_cDisplayRole(displayRole)
+		explicit ClassListItem(const Class *pClass, ClassInfoItemRoles displayRole = NameRole, QObject *parent = nullptr) : TreeItemBase(1, parent) , m_pClass(pClass), m_cDisplayRole(displayRole)
 		{
 			QString tooltipTemplate = tr("<table>"
 									"<tr><td bgcolor=#00ff00 colspan=\"2\">Class Info</td></tr>"
@@ -112,7 +112,7 @@ class ClassListItem : public TreeItemBase {
 			if (role == Qt::DisplayRole)
 				itemRole = m_cDisplayRole;
 			else if (role == Qt::ToolTipRole)
-				itemRole = ClassInfoItemRoles::DescriptionRole;
+				itemRole = DescriptionRole;
 
 			return GetDataForClassListItemRole(itemRole);
 		}
@@ -127,16 +127,16 @@ class ClassListItem : public TreeItemBase {
 		QVariant GetDataForClassListItemRole(ClassInfoItemRoles role)
 		{
 			switch (role) {
-				case ClassInfoItemRoles::FullNameRole:
+				case FullNameRole:
 					return "FullName: " + QtStringAdapter::PLToQt(m_pClass->GetClassName());
 
-				case ClassInfoItemRoles::NameRole:
+				case NameRole:
 					return "Name: " + QtStringAdapter::PLToQt(m_pClass->GetName());
 
-				case ClassInfoItemRoles::NamespaceRole:
+				case NamespaceRole:
 					return "Namespace: " + QtStringAdapter::PLToQt(m_pClass->GetNamespace());
 
-				case ClassInfoItemRoles::DescriptionRole:
+				case DescriptionRole:
 					return "Description: " + QtStringAdapter::PLToQt(m_pClass->GetDescription());
 
 				default:
@@ -240,19 +240,19 @@ class ClassInfoMemberDescTreeItem : public TreeItemBase {
 		QString GetMemberTypeString(EMemberType memberType)
 		{
 			switch (memberType) {
-				case EMemberType::MemberAttribute:
+				case MemberAttribute:
 					return tr("Attribute");
 
-				case EMemberType::MemberConstructor:
+				case MemberConstructor:
 					return tr("Constructor");
 
-				case EMemberType::MemberEvent:
+				case MemberEvent:
 					return tr("Signal");
 
-				case EMemberType::MemberEventHandler:
+				case MemberEventHandler:
 					return tr("Slot");
 
-				case EMemberType::MemberMethod:
+				case MemberMethod:
 					return tr("Method");
 
 				default:
@@ -316,8 +316,8 @@ void ClassInfoModel::SetClassItem(const Class &cClass)
 	DeleteChilds(m_pMethodsCategory);
 
 	// Add common information items
-	new ClassListItem(pClass, ClassInfoItemRoles::NameRole, m_pCommonCategory);
-	new ClassListItem(pClass, ClassInfoItemRoles::DescriptionRole, m_pCommonCategory);
+	new ClassListItem(pClass, NameRole, m_pCommonCategory);
+	new ClassListItem(pClass, DescriptionRole, m_pCommonCategory);
 
 	// Add attributes
 	const List<VarDesc*> &attr = cClass.GetAttributes();

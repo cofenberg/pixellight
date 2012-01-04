@@ -62,11 +62,11 @@ class ClassListInfoTreeItemBase : public TreeItemBase {
 				return QVariant();
 			if (role == Qt::ToolTipRole)
 				return m_sTooltip;
-			else if (role == Qt::DisplayRole || (role == ClassListModel::ClassListModelRoles::ClassListNameRole))
+			else if (role == Qt::DisplayRole || (role == ClassListModel::ClassListNameRole))
 				return m_sName;
-			else if (role == ClassListModel::ClassListModelRoles::ClassListDescriptionRole)
+			else if (role == ClassListModel::ClassListDescriptionRole)
 				return m_sDescription;
-			else if (role == ClassListModel::ClassListModelRoles::ClassListItemType)
+			else if (role == ClassListModel::ClassListItemType)
 				return m_isModule;
 			return QVariant();
 		}
@@ -109,9 +109,9 @@ class ModuleInfoTreeItem : public ClassListInfoTreeItemBase {
 		{
 			if (column > 0)
 				return QVariant();
-			else if (role == ClassListModel::ClassListModelRoles::ModuleVendorRole)
+			else if (role == ClassListModel::ModuleVendorRole)
 				return m_sVendor;
-			else if (role == ClassListModel::ClassListModelRoles::ModuleLicenseRole)
+			else if (role == ClassListModel::ModuleLicenseRole)
 				return m_sLicense;
 			return ClassListInfoTreeItemBase::data(column, role);
 		}
@@ -146,11 +146,11 @@ class ClassInfoTreeItem : public ClassListInfoTreeItemBase {
 		{
 			if (column > 0)
 				return QVariant();
-			else if (role == ClassListModel::ClassListModelRoles::ClassBaseClassRole)
+			else if (role == ClassListModel::ClassBaseClassRole)
 				return m_sBaseClass;
-			else if (role == ClassListModel::ClassListModelRoles::ClassFullNameRole)
+			else if (role == ClassListModel::ClassFullNameRole)
 				return m_sFulleName;
-			else if (role == ClassListModel::ClassListModelRoles::ClassNamespaceRole)
+			else if (role == ClassListModel::ClassNamespaceRole)
 				return m_sNamespace;
 			return ClassListInfoTreeItemBase::data(column, role);
 		}
