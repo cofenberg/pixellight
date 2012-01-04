@@ -339,8 +339,8 @@ void ClassInfoModel::SetClassItem(const Class &cClass)
 	const HashMap<String, String> &cProps = cClass.GetProperties();
 	Iterator<String> cIterator = cProps.GetKeyIterator();
 	while (cIterator.HasNext()) {
-		const String sName  = cIterator.Next();
-		ClassInfoStringTreeItem(QtStringAdapter::PLToQt(sName), m_pPropertiesCategory);
+		const String sName = cIterator.Next();
+		new ClassInfoStringTreeItem(QtStringAdapter::PLToQt(sName), m_pPropertiesCategory);
 	}
 
 	// Add constructors
