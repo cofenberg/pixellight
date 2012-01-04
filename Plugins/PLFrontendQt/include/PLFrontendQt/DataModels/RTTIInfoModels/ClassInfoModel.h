@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: ClassInfoModel.h                               *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -27,16 +27,23 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLFrontendQt/DataModels/TreeModelBase.h>
 #include <PLCore/Container/List.h>
+#include "PLFrontendQt/DataModels/TreeModelBase.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
-//[-------------------------------------------------------
+//[-------------------------------------------------------]
 namespace PLCore {
 	class Class;
 	class MemberDesc;
+}
+namespace PLFrontendQt {
+	namespace DataModels {
+		namespace RTTIInfoModels {
+			class ClassInfoCategoryTreeItem;
+		}
+	}
 }
 
 
@@ -46,22 +53,6 @@ namespace PLCore {
 namespace PLFrontendQt {
 namespace DataModels {
 namespace RTTIInfoModels {
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------
-class ClassInfoCategoryTreeItem;
-
-
-enum ClassInfoItemRoles
-{
-	NameRole = Qt::UserRole+1,
-	NamespaceRole,
-	DescriptionRole,
-	FullNameRole,
-	BaseClassRole
-};
 
 
 //[-------------------------------------------------------]
@@ -85,21 +76,20 @@ class PLFRONTENDQT_API ClassInfoModel : public TreeModelBase {
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		explicit ClassInfoModel(QObject* parent = nullptr);
+		explicit ClassInfoModel(QObject *parent = nullptr);
 		virtual ~ClassInfoModel();
-		
-		void SetClassItem(const PLCore::Class& cClass);
+		void SetClassItem(const PLCore::Class &cClass);
 
 
 	//[-------------------------------------------------------]
-	//[ Private methods                                       ]
+	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
 		void DeleteChilds(ClassInfoCategoryTreeItem *pCategoryItem);
 
 
 	//[-------------------------------------------------------]
-	//[ Private member                                        ]
+	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
 		ClassInfoCategoryTreeItem *m_pCommonCategory;
@@ -109,6 +99,8 @@ class PLFRONTENDQT_API ClassInfoModel : public TreeModelBase {
 		ClassInfoCategoryTreeItem *m_pPropertiesCategory;
 		ClassInfoCategoryTreeItem *m_pConstructorsCategory;
 		ClassInfoCategoryTreeItem *m_pMethodsCategory;
+
+
 };
 
 

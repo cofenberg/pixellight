@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: HeaderTreeItem.h                               *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -27,8 +27,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLFrontendQt/DataModels/TreeItemBase.h"
 #include <QtCore/QStringList>
+#include "PLFrontendQt/DataModels/TreeItemBase.h"
 
 
 //[-------------------------------------------------------]
@@ -59,7 +59,7 @@ class PLFRONTENDQT_API HeaderTreeItem : public TreeItemBase {
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		explicit HeaderTreeItem(QObject* parent = nullptr);
+		explicit HeaderTreeItem(QObject *parent = nullptr);
 		void setHeaderItems(const QStringList &headerItems);
 		virtual QVariant data(const int column, const int role);
 
@@ -69,6 +69,8 @@ class PLFRONTENDQT_API HeaderTreeItem : public TreeItemBase {
 	//[-------------------------------------------------------]
 	private:
 		QStringList m_headerItems;
+
+
 };
 
 

@@ -1,7 +1,16 @@
+>> 04.01.2012
+[CO]
+PLFrontendQt:
+- Review of "ClassInfoModel", "ClassListModel", "HeaderTreeItem": Only the usual code combing to enable my eyes to locate code faster by jumping to usual places,
+  no change in functionality
+
+
+
 >> 03.01.2012
 [SW]
 PLFrontendQt:
 - Added models for RTTI "browsing"
+
 
 
 >> 03.01.2012

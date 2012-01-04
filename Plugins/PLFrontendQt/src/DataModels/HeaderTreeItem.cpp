@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: HeaderTreeItem.cpp                             *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -33,7 +33,7 @@ namespace PLFrontendQt {
 namespace DataModels {
 
 
-HeaderTreeItem::HeaderTreeItem(QObject* parent) : TreeItemBase(parent)
+HeaderTreeItem::HeaderTreeItem(QObject *parent) : TreeItemBase(parent)
 {
 }
 
@@ -47,7 +47,7 @@ QVariant HeaderTreeItem::data(const int column, const int role)
 {
 	if (role != Qt::DisplayRole && column >= m_headerItems.count())
 		return QVariant();
-	
+
 	return m_headerItems[column];
 }
 

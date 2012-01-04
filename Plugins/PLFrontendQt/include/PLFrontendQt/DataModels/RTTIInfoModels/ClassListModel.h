@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: ClassListModel.h                               *
  *
- *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -47,19 +47,6 @@ namespace DataModels {
 namespace RTTIInfoModels {
 
 
-enum ClassListModelRoles
-{
-	ClassListNameRole = Qt::UserRole+1,
-	ClassListDescriptionRole,
-	ClassListItemType,
-	ClassNamespaceRole,
-	ClassFullNameRole,
-	ClassBaseClassRole,
-	ModuleVendorRole,
-	ModuleLicenseRole
-};
-
-
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
@@ -78,20 +65,38 @@ class PLFRONTENDQT_API ClassListModel : public TreeModelBase {
 
 
 	//[-------------------------------------------------------]
+	//[ Public definitions                                    ]
+	//[-------------------------------------------------------]
+	public:
+		enum ClassListModelRoles {
+			ClassListNameRole = Qt::UserRole+1,
+			ClassListDescriptionRole,
+			ClassListItemType,
+			ClassNamespaceRole,
+			ClassFullNameRole,
+			ClassBaseClassRole,
+			ModuleVendorRole,
+			ModuleLicenseRole
+		};
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		explicit ClassListModel(bool hierarchical = false, QObject* parent = nullptr);
+		explicit ClassListModel(bool hierarchical = false, QObject *parent = nullptr);
 		virtual ~ClassListModel();
 
 
 	//[-------------------------------------------------------]
-	//[ Private methods                                       ]
+	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
 		void SetupModel(bool hierarchical);
-		void CreateClassItemsFromModule(const PLCore::Module &moduleItem, QObject* parent);
-		void CreateHierarchicalClassItems(const PLCore::Class &baseClass, QObject* parent);
+		void CreateClassItemsFromModule(const PLCore::Module &moduleItem, QObject *parent);
+		void CreateHierarchicalClassItems(const PLCore::Class &baseClass, QObject *parent);
+
+
 };
 
 
