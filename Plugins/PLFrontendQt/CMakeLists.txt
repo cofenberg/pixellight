@@ -139,6 +139,7 @@ add_sources(
 	src/Widget/RTTIBrowserWidget.cpp
 	src/DockWidget/DockWidgetManager.cpp
 	src/DockWidget/DockWidget.cpp
+	src/DockWidget/DockWidgetRTTIBrowser.cpp
 	src/DockWidget/DockWidgetObject.cpp
 	src/DockWidget/DockWidgetScene.cpp
 	src/DockWidget/DockWidgetSceneNode.cpp
