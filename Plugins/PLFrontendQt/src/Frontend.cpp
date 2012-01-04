@@ -151,7 +151,7 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 handle Frontend::GetNativeWindowHandle() const
 {
 	if (m_pMainWindow) {
-		// Get the central widget
+		// Get the central widget of the Qt main window (don't use "GetCentralWidget()" in here)
 		QWidget *pCentralWidget = m_pMainWindow->centralWidget();
 
 		// Get window system identifier of the widget
@@ -201,26 +201,30 @@ void Frontend::SetTitle(const String &sTitle)
 
 int Frontend::GetX() const
 {
-	// Query the main window
-	return m_pMainWindow ? m_pMainWindow->pos().x() : 0;
+	// Query the central widget of the Qt main window
+	QWidget *qQWidget = GetCentralWidget();
+	return qQWidget ? qQWidget->pos().x() : 0;
 }
 
 int Frontend::GetY() const
 {
-	// Query the main window
-	return m_pMainWindow ? m_pMainWindow->pos().y() : 0;
+	// Query the central widget of the Qt main window
+	QWidget *qQWidget = GetCentralWidget();
+	return qQWidget ? qQWidget->pos().y() : 0;
 }
 
 uint32 Frontend::GetWidth() const
 {
-	// Query the main window
-	return m_pMainWindow ? m_pMainWindow->size().width() : 0;
+	// Query the central widget of the Qt main window
+	QWidget *qQWidget = GetCentralWidget();
+	return qQWidget ? qQWidget->size().width() : 0;
 }
 
 uint32 Frontend::GetHeight() const
 {
-	// Query the main window
-	return m_pMainWindow ? m_pMainWindow->size().height() : 0;
+	// Query the central widget of the Qt main window
+	QWidget *qQWidget = GetCentralWidget();
+	return qQWidget ? qQWidget->size().height() : 0;
 }
 
 void Frontend::SetPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
@@ -310,17 +314,23 @@ void Frontend::RefreshFullscreen()
 
 bool Frontend::IsMouseOver() const
 {
-	return m_pMainWindow ? m_pMainWindow->underMouse() : false;
+	// Query the central widget of the Qt main window
+	QWidget *qQWidget = GetCentralWidget();
+	return qQWidget ? qQWidget->underMouse() : false;
 }
 
 int Frontend::GetMousePositionX() const
 {
-	return (m_pMainWindow && m_pMainWindow->underMouse()) ? m_pMainWindow->mapFromGlobal(QCursor::pos()).x() : -1;
+	// Query the central widget of the Qt main window
+	QWidget *qQWidget = GetCentralWidget();
+	return (qQWidget && qQWidget->underMouse()) ? qQWidget->mapFromGlobal(QCursor::pos()).x() : -1;
 }
 
 int Frontend::GetMousePositionY() const
 {
-	return (m_pMainWindow && m_pMainWindow->underMouse()) ? m_pMainWindow->mapFromGlobal(QCursor::pos()).y() : -1;
+	// Query the central widget of the Qt main window
+	QWidget *qQWidget = GetCentralWidget();
+	return (qQWidget && qQWidget->underMouse()) ? qQWidget->mapFromGlobal(QCursor::pos()).y() : -1;
 }
 
 bool Frontend::IsMouseVisible() const
@@ -349,6 +359,33 @@ void Frontend::SetMouseVisible(bool bVisible)
 void Frontend::SetTrapMouse(bool bTrap)
 {
 	// [TODO] Implement me
+}
+
+
+//[-------------------------------------------------------]
+//[ Private data                                          ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Returns the central widget of the Qt main window
+*/
+QWidget *Frontend::GetCentralWidget() const
+{
+	QWidget *pQWidget = nullptr;
+
+	// Is there a Qt main window?
+	if (m_pMainWindow) {
+		// Get the central widget, if there's one
+		pQWidget = m_pMainWindow->centralWidget();
+
+		// In case there's no central widget, use the Qt main window instead
+		// so that we can return at least "something" which may do the job as well
+		if (!pQWidget)
+			pQWidget = m_pMainWindow;
+	}
+
+	// Done
+	return pQWidget;
 }
 
 

@@ -144,6 +144,24 @@ class Frontend : public PLCore::FrontendImpl {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
+		/**
+		*  @brief
+		*    Returns the central widget of the Qt main window
+		*
+		*  @return
+		*    The central widget of the Qt main window, can be a null pointer
+		*
+		*  @note
+		*    - The frontend interface is primarly concerned about the client part and
+		*      not on the GUI stuff around it, so this central widget is especially important
+		*/
+		QWidget *GetCentralWidget() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
 		FrontendMainWindow *m_pMainWindow;				/**< Main window of the application (can be a null pointer) */
 		bool				m_bToggleFullscreenMode;	/**< Is it allowed to toggle the fullscreen mode using hotkeys? */
 		bool				m_bFullscreenAltTab;		/**< Is it allowed to use Alt-Tab within fullscreen mode? */

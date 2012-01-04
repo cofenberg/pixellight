@@ -37,6 +37,9 @@ PLFrontendQt:
 - "DockWidgetSceneGraph": Send broadcast when double clicked, not clicked. Same behaviour as in RTTI browser or PLViewerQt 3D viewport.
 - General GUI titles: It's probably common to use something like "Scene Graph" instead of "Scene graph"
 - RTTI browser: Module view: Added module filename within the tooltip (important information so one can see exactly where this modules comes from)
+- "Frontend": Methods like "GetMousePositionX()" are now using the central widget of the Qt main window instead of the Qt main window itself. This way there are
+  no issues when adding dock widgets to the Qt main window because the frontend itself is only concerned about the central widget and is not interested in the
+  GUI stuff around it.
 
 
 
