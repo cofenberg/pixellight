@@ -4,6 +4,7 @@
   exists also under Android 2.2 and up and Mac OS X 10.3 and up. Due lack of devel environment for those platform i can't check if this is true
 
 
+
 >> 04.01.2012
 [CO]
 - "ClassManager": Renamed "GetModule()" into "GetModuleByID()"

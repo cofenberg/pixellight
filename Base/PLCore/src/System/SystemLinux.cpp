@@ -224,10 +224,15 @@ String SystemLinux::GetExecutableFilename() const
 
 String SystemLinux::GetModuleFilenameByMemoryAddress(const void *pMemoryAddress) const
 {
-	Dl_info dl_info;
-	// dladdr is a glibc extension to the dlfcn function set.
-    if(dladdr((void *)pMemoryAddress, &dl_info))
-		return String::FromUTF8(dl_info.dli_fname);
+	// Our method documentation states: "can be a null pointer in which case the result will be an empty string"
+	if (pMemoryAddress) {
+		// dladdr is a glibc extension to the dlfcn function set
+		Dl_info dl_info;
+		if (dladdr((void *)pMemoryAddress, &dl_info))
+			return String::FromUTF8(dl_info.dli_fname);
+	}
+
+	// No filename found
 	return "";
 }
 
