@@ -94,7 +94,8 @@ class ModuleInfoTreeItem : public ClassListInfoTreeItemBase {
 	public:
 		ModuleInfoTreeItem(const Module &moduleItem, QObject *parent = nullptr) : ClassListInfoTreeItemBase(true, QtStringAdapter::PLToQt(moduleItem.GetName()), QtStringAdapter::PLToQt(moduleItem.GetDescription()), parent),
 			m_sVendor(QtStringAdapter::PLToQt(moduleItem.GetVendor())),
-			m_sLicense(QtStringAdapter::PLToQt(moduleItem.GetLicense()))
+			m_sLicense(QtStringAdapter::PLToQt(moduleItem.GetLicense())),
+			m_sFilename(QtStringAdapter::PLToQt(moduleItem.GetFilename()))
 		{
 			SetTooltipText(tr("<table>"
 							"<tr><td bgcolor=#00ff00 colspan=\"2\">Module Information</td></tr>"
@@ -102,7 +103,8 @@ class ModuleInfoTreeItem : public ClassListInfoTreeItemBase {
 							"<tr><td>Description: </td><td>%2</td></tr>"
 							"<tr><td>Vendor: </td><td>%3</td></tr>"
 							"<tr><td>License: </td><td>%4</td></tr>"
-							"</table>").arg(m_sName, m_sDescription, m_sVendor, m_sLicense));
+							"<tr><td>Filename: </td><td>%5</td></tr>"
+							"</table>").arg(m_sName, m_sDescription, m_sVendor, m_sLicense, m_sFilename));
 		}
 
 		virtual QVariant data(const int column, const int role)
@@ -113,6 +115,8 @@ class ModuleInfoTreeItem : public ClassListInfoTreeItemBase {
 				return m_sVendor;
 			else if (role == ClassListModel::ModuleLicenseRole)
 				return m_sLicense;
+			else if (role == ClassListModel::ModuleFilenameRole)
+				return m_sFilename;
 			return ClassListInfoTreeItemBase::data(column, role);
 		}
 
@@ -120,6 +124,7 @@ class ModuleInfoTreeItem : public ClassListInfoTreeItemBase {
 	private:
 		QString m_sVendor;
 		QString m_sLicense;
+		QString m_sFilename;
 
 
 };

@@ -75,7 +75,8 @@ class PLFRONTENDQT_API ClassListModel : public TreeModelBase {
 			ClassNameRole,
 			ClassBaseClassRole,
 			ModuleVendorRole,
-			ModuleLicenseRole
+			ModuleLicenseRole,
+			ModuleFilenameRole
 		};
 
 

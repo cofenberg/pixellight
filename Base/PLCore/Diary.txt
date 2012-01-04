@@ -17,6 +17,7 @@ PLFrontendQt:
 - RTTI browser: Everything is derived from "PLCore::Object", expand this level by default when showing the class hierarchy
 - "DockWidgetSceneGraph": Send broadcast when double clicked, not clicked. Same behaviour as in RTTI browser or PLViewerQt 3D viewport.
 - General GUI titles: It's probably common to use something like "Scene Graph" instead of "Scene graph"
+- RTTI browser: Module view: Added module filename within the tooltip (important information so one can see exactly where this modules comes from)
 
 
 
