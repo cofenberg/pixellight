@@ -61,7 +61,7 @@ inline DynLib *Module::GetDynLib() const
 
 /**
 *  @brief
-*    Get absolute filename of dynamic library that contains the plugin
+*    Get absolute filename of dynamic library or executable that contains the plugin
 */
 inline String Module::GetFilename() const
 {

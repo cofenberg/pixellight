@@ -832,8 +832,8 @@ bool ClassManager::LoadPluginV1(const Url &cUrl, const XmlElement &cPluginElemen
 								// If we don't use this variable, we may receive a "conditional expression is constant"-warning (4127) from VC
 								bool bDebugMode = PLCORE_IS_DEBUGMODE;
 								if ((bDebugMode && sType == "Debug") || (!bDebugMode && sType == "Release")) {
-									// Get absolute filename
-									const String sAbsFilename = Url(sValue).IsAbsolute() ? sValue : cUrl.CutFilename() + sValue;
+									// Get absolute filename (native path style)
+									const String sAbsFilename = Url(Url(sValue).IsAbsolute() ? sValue : cUrl.CutFilename() + sValue).GetNativePath();
 
 									// Check if that library is already loaded
 									bool bLibAlreadyLoaded = false;

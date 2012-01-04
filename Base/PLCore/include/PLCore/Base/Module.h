@@ -105,13 +105,10 @@ class Module {
 
 		/**
 		*  @brief
-		*    Get absolute filename of dynamic library that contains the plugin
+		*    Get absolute filename of dynamic library or executable that contains the plugin
 		*
 		*  @return
-		*    Absolute filename of dynamic library (can be empty, if the module is not a plugin)
-		*
-		*  @remarks
-		*    This function will only return an absolute filename, if the module is a plugin
+		*    Absolute filename of dynamic library or executable that contains the plugin (native path style, can be empty in case it was impossible to determine the filename)
 		*/
 		inline String GetFilename() const;
 
@@ -227,7 +224,7 @@ class Module {
 		uint32			   m_nModuleID;		/**< Module ID */
 		bool			   m_bPlugin;		/**< Is module a plugin? */
 		DynLib			  *m_pDynLib;		/**< Plugin library (can be a null pointer, has the ownership over the dynamic library instance) */
-		String			   m_sFilename;		/**< Absolute plugin filename (can be empty) */
+		String			   m_sFilename;		/**< Absolute absolute filename of dynamic library or executable that contains the plugin (native path style, can be empty in case it was impossible to determine the filename) */
 		String			   m_sName;			/**< Name of module */
 		String			   m_sVendor;		/**< Vendor of module */
 		String			   m_sLicense;		/**< License of module */
