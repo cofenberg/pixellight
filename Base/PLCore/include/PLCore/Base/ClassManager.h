@@ -119,6 +119,22 @@ class ClassManager : public Singleton<ClassManager> {
 
 		/**
 		*  @brief
+		*    Get module by name
+		*
+		*  @param[in] sModuleName
+		*    Module name
+		*
+		*  @return
+		*    Pointer to module (do not destroy the returned instance, can be a null pointer)
+		*
+		*  @note
+		*    - Whenever possible use "GetModuleByID()" instead of "GetModuleByName()" because
+		*      unlike the module name, the module ID is guaranteed do be unique
+		*/
+		PLCORE_API const Module *GetModuleByName(const String &sModuleName) const;
+
+		/**
+		*  @brief
 		*    Load a module
 		*
 		*  @param[in] sAbsFilename

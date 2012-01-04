@@ -82,6 +82,24 @@ bool ClassManager::HasInstance()
 //[-------------------------------------------------------]
 /**
 *  @brief
+*    Get module by name
+*/
+const Module *ClassManager::GetModuleByName(const String &sModuleName) const
+{
+	// Have a look into our module list
+	Iterator<const Module*> cIterator = m_lstModules.GetIterator();
+	while (cIterator.HasNext()) {
+		const Module *pModule = cIterator.Next();
+		if (pModule->GetName() == sModuleName)
+			return pModule;
+	}
+
+	// Module not found
+	return nullptr;
+}
+
+/**
+*  @brief
 *    Load a module
 */
 const Module *ClassManager::LoadModule(const String &sAbsFilename, bool bForceBuildTypeMatch)
