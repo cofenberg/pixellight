@@ -54,7 +54,7 @@ pl_implement_class(DockWidgetObject)
 *    Constructor
 */
 DockWidgetObject::DockWidgetObject(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidget(pQMainWindow, pDockWidgetManager),
-	SlotOnDestroy(this),
+	SlotOnDestroyed(this),
 	m_pPLIntrospectionModel(nullptr),
 	m_pObject(nullptr)
 {
@@ -91,73 +91,76 @@ DockWidgetObject::~DockWidgetObject()
 */
 void DockWidgetObject::SelectObject(Object *pObject)
 {
-	// TODO] Disconnect event handler
-//	if (m_pObject)
-//		m_pObject->SignalDestroy.Disconnect(SlotOnDestroy);
+	// State change?
+	if (m_pObject != pObject) {
+		// Disconnect event handler
+		if (m_pObject)
+			m_pObject->SignalDestroyed.Disconnect(SlotOnDestroyed);
 
-	// Backup the given object pointer
-	m_pObject = pObject;
+		// Backup the given object pointer
+		m_pObject = pObject;
 
-	// [TODO] Connect event handler
-//	if (m_pObject)
-//		m_pObject->SignalDestroy.Connect(SlotOnDestroy);
+		// Connect event handler
+		if (m_pObject)
+			m_pObject->SignalDestroyed.Connect(SlotOnDestroyed);
 
-	// Is there a PL introspection model instance?
-	if (m_pPLIntrospectionModel) {
-		// Set object
-		m_pPLIntrospectionModel->SetObject(m_pObject);
+		// Is there a PL introspection model instance?
+		if (m_pPLIntrospectionModel) {
+			// Set object
+			m_pPLIntrospectionModel->SetObject(m_pObject);
 
-		// Get encapsulated Qt dock widget and set a decent window title
-		QDockWidget *pQDockWidget = GetQDockWidget();
-		if (pQDockWidget) {
-			// Set window title
-			QString sQStringWindowTitle = pQDockWidget->tr(GetClass()->GetProperties().Get("Title"));
-			if (m_pObject) { 
-				// Append class name
-				sQStringWindowTitle += ": ";
-				sQStringWindowTitle += QtStringAdapter::PLToQt('\"' + m_pObject->GetClass()->GetClassName() + '\"');	// Put it into quotes to make it possible to see e.g. trailing spaces
+			// Get encapsulated Qt dock widget and set a decent window title
+			QDockWidget *pQDockWidget = GetQDockWidget();
+			if (pQDockWidget) {
+				// Set window title
+				QString sQStringWindowTitle = pQDockWidget->tr(GetClass()->GetProperties().Get("Title"));
+				if (m_pObject) { 
+					// Append class name
+					sQStringWindowTitle += ": ";
+					sQStringWindowTitle += QtStringAdapter::PLToQt('\"' + m_pObject->GetClass()->GetClassName() + '\"');	// Put it into quotes to make it possible to see e.g. trailing spaces
 
-				// An "PLCore::Object" itself has no "name", we could show the memory address but this wouldn't be that useful to the user
-				// -> Try "GetAbsoluteName()"-method to get an absolute name
-				// -> In case there's no name, check whether there's an name attribute
-				// -> In case there's still no name, check whether or not there's an filename attribute
-				String sName;
-				{ // Try "GetAbsoluteName()"-method to get an absolute name
-					// Get the typed dynamic parameters
-					Params<String> cParams;
+					// An "PLCore::Object" itself has no "name", we could show the memory address but this wouldn't be that useful to the user
+					// -> Try "GetAbsoluteName()"-method to get an absolute name
+					// -> In case there's no name, check whether there's an name attribute
+					// -> In case there's still no name, check whether or not there's an filename attribute
+					String sName;
+					{ // Try "GetAbsoluteName()"-method to get an absolute name
+						// Get the typed dynamic parameters
+						Params<String> cParams;
 
-					// Call the RTTI method
-					m_pObject->CallMethod("GetAbsoluteName", cParams);
+						// Call the RTTI method
+						m_pObject->CallMethod("GetAbsoluteName", cParams);
 
-					// Get the result
-					sName = cParams.Return;
-					if (sName.GetLength())
-						sName = "Name = \"" + sName + '\"';	// Put it into quotes to make it possible to see e.g. trailing spaces
-				}
+						// Get the result
+						sName = cParams.Return;
+						if (sName.GetLength())
+							sName = "Name = \"" + sName + '\"';	// Put it into quotes to make it possible to see e.g. trailing spaces
+					}
 
-				// Do we already have a name?
-				if (!sName.GetLength()) {
-					// Check whether there's an name attribute
-					DynVar *pDynVar = m_pObject->GetAttribute("Name");
-					if (pDynVar)
-						sName = "Name = \"" + pDynVar->GetString() + '\"';	// Put it into quotes to make it possible to see e.g. trailing spaces
-
-					// In case there's still no name, check whether or not there's an filename attribute
+					// Do we already have a name?
 					if (!sName.GetLength()) {
-						DynVar *pDynVar = m_pObject->GetAttribute("Filename");
+						// Check whether there's an name attribute
+						DynVar *pDynVar = m_pObject->GetAttribute("Name");
 						if (pDynVar)
-							sName = "Filename = \"" + pDynVar->GetString() + '\"';	// Put it into quotes to make it possible to see e.g. trailing spaces
+							sName = "Name = \"" + pDynVar->GetString() + '\"';	// Put it into quotes to make it possible to see e.g. trailing spaces
+
+						// In case there's still no name, check whether or not there's an filename attribute
+						if (!sName.GetLength()) {
+							DynVar *pDynVar = m_pObject->GetAttribute("Filename");
+							if (pDynVar)
+								sName = "Filename = \"" + pDynVar->GetString() + '\"';	// Put it into quotes to make it possible to see e.g. trailing spaces
+						}
+					}
+
+					// Use the name, if we have one
+					if (sName.GetLength()) {
+						// We have a representable name, show it to the user
+						sQStringWindowTitle += ": ";
+						sQStringWindowTitle += QtStringAdapter::PLToQt(sName);
 					}
 				}
-
-				// Use the name, if we have one
-				if (sName.GetLength()) {
-					// We have a representable name, show it to the user
-					sQStringWindowTitle += ": ";
-					sQStringWindowTitle += QtStringAdapter::PLToQt(sName);
-				}
+				pQDockWidget->setWindowTitle(sQStringWindowTitle);
 			}
-			pQDockWidget->setWindowTitle(sQStringWindowTitle);
 		}
 	}
 }
@@ -170,7 +173,7 @@ void DockWidgetObject::SelectObject(Object *pObject)
 *  @brief
 *    Called when the object assigned with this dock widget was destroyed
 */
-void DockWidgetObject::OnDestroy()
+void DockWidgetObject::OnDestroyed()
 {
 	// Argh! Mayday! We lost our object!
 	// -> Now no object is currently selected

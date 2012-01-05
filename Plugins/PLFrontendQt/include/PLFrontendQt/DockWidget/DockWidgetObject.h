@@ -78,7 +78,7 @@ class DockWidgetObject : public DockWidget {
 		// Constructors
 		pl_constructor_2(DefaultConstructor,	QMainWindow*,	DockWidgetManager*,	"Constructor with a pointer to the Qt main window as first parameter, pointer to the dock widget manager this dock widget should be registered to as second parameter",	"")
 		// Slots
-		pl_slot_0(OnDestroy,	"Called when the object assigned with this dock widget was destroyed",	"")
+		pl_slot_0(OnDestroyed,	"Called when the object assigned with this dock widget was destroyed",	"")
 	pl_class_end
 
 
@@ -121,7 +121,7 @@ class DockWidgetObject : public DockWidget {
 		*  @brief
 		*    Called when the object assigned with this dock widget was destroyed
 		*/
-		void OnDestroy();
+		void OnDestroyed();
 
 
 	//[-------------------------------------------------------]
