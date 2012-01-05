@@ -74,6 +74,13 @@ class SceneRenderer : public PLCore::Resource<SceneRenderer>, public PLCore::Ele
 
 
 	//[-------------------------------------------------------]
+	//[ Public events                                         ]
+	//[-------------------------------------------------------]
+	public:
+		PLCore::Event<> EventDestroyed;	/**< Scene renderer destroyed event. When this event is emitted the scene renderer is already in the destruction phase and parts may already be invalid. Best to e.g. only update our scene renderer pointer. */
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:

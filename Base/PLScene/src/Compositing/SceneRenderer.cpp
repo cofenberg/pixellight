@@ -105,6 +105,8 @@ SceneRenderer::SceneRenderer(SceneRendererManager &cManager, const String &sName
 */
 SceneRenderer::~SceneRenderer()
 {
+	// Emit scene renderer destroyed event
+	EventDestroyed();
 }
 
 

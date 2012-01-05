@@ -1,3 +1,9 @@
+>> 05.01.2012
+[CO]
+- "SceneRenderer": Added "EventDestroyed"-event
+
+
+
 >> 01.01.2012
 [CO]
 - "SNMOrbiting::OnActivate()": Make a first update to ensure position and rotation are up-to-date when we're going active. Also reviewed the other "OnActivate()"
