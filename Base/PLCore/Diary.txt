@@ -26,6 +26,7 @@ PLFrontendQt:
 - "DockWidgetObject" is now using the new "PLCore::Object::SignalDestroyed"-signal
 - "DockWidgetSceneRenderer" is now using the new "PLScene::SceneRenderer::EventDestroyed"-event
 - "DockWidgetSceneRenderer": When the encapsulated Qt dock widget gets shown, there's a scene renderer refresh when required
+- "DockWidgetManager::ShowDockWidget()": "pQDockWidget->raise();" was missing, now the Qt dock widget comes into foreground as indented
 
 
 

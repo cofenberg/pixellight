@@ -78,7 +78,8 @@ DockWidget *DockWidgetManager::ShowDockWidget(const String &sClassName)
 		QDockWidget *pQDockWidget = pDockWidget->GetQDockWidget();
 		if (pQDockWidget) {
 			pQDockWidget->show();
-			pQDockWidget->setFocus();
+			pQDockWidget->activateWindow();
+			pQDockWidget->raise();
 		}
 	} else {
 		// Get the chosen dock widget RTTI class...
