@@ -56,7 +56,7 @@ class ClassListInfoTreeItemBase : public TreeItemBase {
 		{
 		}
 
-		virtual QVariant data(const int column, const int role)
+		virtual QVariant data(const int column, const int role) override
 		{
 			if (column > 0)
 				return QVariant();
@@ -107,7 +107,7 @@ class ModuleInfoTreeItem : public ClassListInfoTreeItemBase {
 							"</table>").arg(m_sName, m_sDescription, m_sVendor, m_sLicense, m_sFilename));
 		}
 
-		virtual QVariant data(const int column, const int role)
+		virtual QVariant data(const int column, const int role) override
 		{
 			if (column > 0)
 				return QVariant();
@@ -145,7 +145,7 @@ class ClassInfoTreeItem : public ClassListInfoTreeItemBase {
 							"</table>").arg(m_sName, m_sDescription, m_sBaseClass));
 		}
 
-		virtual QVariant data(const int column, const int role)
+		virtual QVariant data(const int column, const int role) override
 		{
 			if (column > 0)
 				return QVariant();

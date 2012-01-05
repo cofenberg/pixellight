@@ -47,7 +47,7 @@ class AttributeInfoHeaderTreeItem : public TreeItemBase {
 		{
 		}
 
-		virtual QVariant data(const int column, const int role)
+		virtual QVariant data(const int column, const int role) override
 		{
 			if (role == Qt::DisplayRole) {
 				if (column == 0)

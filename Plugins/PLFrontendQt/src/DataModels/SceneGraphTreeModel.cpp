@@ -52,7 +52,7 @@ class SceneGraphHeaderTreeItem : public SceneGraphNodeTreeItemBase {
 		{
 		}
 
-		virtual QVariant data(const int column, const int role)
+		virtual QVariant data(const int column, const int role) override
 		{
 			if (column == 0)
 				return "Node Name";
@@ -88,7 +88,7 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 		{
 		}
 
-		virtual QVariant data(const int column, const int role)
+		virtual QVariant data(const int column, const int role) override
 		{
 			if (column == 0) {
 				if (role == Qt::DisplayRole || role == Qt::ToolTipRole)
@@ -171,7 +171,7 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 			return img;
 		}
 
-		virtual QVariant data(const int column, const int role)
+		virtual QVariant data(const int column, const int role) override
 		{
 			if (role == Qt::DecorationRole)
 				return m_Icon;

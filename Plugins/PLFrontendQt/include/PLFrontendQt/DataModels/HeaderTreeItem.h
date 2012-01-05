@@ -61,7 +61,7 @@ class PLFRONTENDQT_API HeaderTreeItem : public TreeItemBase {
 	public:
 		explicit HeaderTreeItem(QObject *parent = nullptr);
 		void setHeaderItems(const QStringList &headerItems);
-		virtual QVariant data(const int column, const int role);
+		virtual QVariant data(const int column, const int role) override;
 
 
 	//[-------------------------------------------------------]

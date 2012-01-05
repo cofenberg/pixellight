@@ -56,7 +56,7 @@ class ClassInfoStringTreeItem : public TreeItemBase {
 		{
 		}
 
-		virtual QVariant data(const int column, const int role)
+		virtual QVariant data(const int column, const int role) override
 		{
 			if (role == Qt::DisplayRole) {
 				if (column == 0)
@@ -88,7 +88,7 @@ class ClassListItem : public TreeItemBase {
 			m_sTooltip = tooltipTemplate.replace("<ClassName>", QtStringAdapter::PLToQt(pClass->GetClassName())).replace("<ClassDesc>", QtStringAdapter::PLToQt(pClass->GetDescription())).replace("<FullClassName>", QtStringAdapter::PLToQt(pClass->GetClassName()));
 		}
 
-		virtual QVariant data(const int column, const int role)
+		virtual QVariant data(const int column, const int role) override
 		{
 			if (column != 0 || !m_pClass)
 				return QVariant();
@@ -145,7 +145,7 @@ class ClassInfoCategoryTreeItem : public TreeItemBase {
 		{
 		}
 
-		virtual QVariant data(const int column, const int role)
+		virtual QVariant data(const int column, const int role) override
 		{
 			if (role == Qt::DisplayRole) {
 				if (column == 0)
@@ -173,7 +173,7 @@ class ClassInfoAttributeTreeItem : public TreeItemBase {
 		{
 		}
 
-		virtual QVariant data(const int column, const int role)
+		virtual QVariant data(const int column, const int role) override
 		{
 			if (role == Qt::DisplayRole || role == Qt::ToolTipRole) {
 				if (column == 0)
@@ -207,7 +207,7 @@ class ClassInfoMemberDescTreeItem : public TreeItemBase {
 		{
 		}
 
-		virtual QVariant data(const int column, const int role)
+		virtual QVariant data(const int column, const int role) override
 		{
 			if (role == Qt::DisplayRole || role == Qt::ToolTipRole) {
 				if (column == 0)
@@ -262,7 +262,7 @@ class ClassInfoConstructorDescTreeItem : public ClassInfoMemberDescTreeItem {
 		{
 		}
 
-		virtual QVariant data(const int column, const int role)
+		virtual QVariant data(const int column, const int role) override
 		{
 			if (role == Qt::ToolTipRole) {
 				if (column == 0)
@@ -288,7 +288,7 @@ class ClassInfoMethodDescTreeItem : public ClassInfoMemberDescTreeItem {
 		{
 		}
 
-		virtual QVariant data(const int column, const int role)
+		virtual QVariant data(const int column, const int role) override
 		{
 			if (role == Qt::ToolTipRole) {
 				if (column == 0)
