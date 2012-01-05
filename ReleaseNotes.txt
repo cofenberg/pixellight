@@ -1,6 +1,8 @@
 Changes in PixelLight 0.9.11-R1 (not yet released)
 - Feature: Beside "Scene" and "Script", "PLViewer" is now also able to load in "Mesh", "Material" and "Image" (= texture)
-- Feature: Added Qt based PixelLight viewer which is similar to the minimalistic PLViewer, but more advanced
+- Feature: Within the PLFrontendQt adapter project, there's now an interactive realtime RTTI browsing GUI
+- Feature: Within the PLFrontendQt adapter project, there are now dock widgets which can be instanced and used via the PixelLight RTTI system
+- Feature: Added Qt based PixelLight viewer named PLViewerQt which is similar to the minimalistic PLViewer, but more advanced and with support for the PLFrontendQt dock widgets
 - Feature: "PLRenderer::VertexBuffer": Added support for the "half" data type (16 bit floating point)
 - Feature: "PLRenderer::VertexBuffer": Added generic comfort methods "GetFloat()" and "SetFloat()"
 - Feature: Implemented "PLCompositing::SRPBackgroundColorGradient" which can be used for a simple color gradient background
