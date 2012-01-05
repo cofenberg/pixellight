@@ -69,6 +69,7 @@ class PLFRONTENDQT_API SceneRendererDataModel : public TreeModelBase {
 	//[-------------------------------------------------------]
 	public:
 		explicit SceneRendererDataModel(QObject *parent = nullptr);
+		PLScene::SceneRenderer *GetSceneRenderer() const;
 		void SetSceneRenderer(PLScene::SceneRenderer *nodeObj);
 
 

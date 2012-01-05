@@ -38,6 +38,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
+using namespace PLScene;
 namespace PLFrontendQt {
 
 
@@ -54,7 +55,9 @@ pl_implement_class(DockWidgetSceneRenderer)
 *  @brief
 *    Constructor
 */
-DockWidgetSceneRenderer::DockWidgetSceneRenderer(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidgetScene(pQMainWindow, pDockWidgetManager)
+DockWidgetSceneRenderer::DockWidgetSceneRenderer(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidgetScene(pQMainWindow, pDockWidgetManager),
+	SlotOnDestroyed(this),
+	m_pSceneRendererDataModel(nullptr)
 {
 	// Get encapsulated Qt dock widget
 	QDockWidget *pQDockWidget = GetQDockWidget();
@@ -62,17 +65,17 @@ DockWidgetSceneRenderer::DockWidgetSceneRenderer(QMainWindow *pQMainWindow, Dock
 		// Create tree view and set scene graph model
 		QTreeView *pQTreeView = new QTreeView();
 		pQDockWidget->setWidget(pQTreeView);
-		DataModels::SceneRendererDataModel::SceneRendererDataModel *pSceneRendererDataModel = new DataModels::SceneRendererDataModel::SceneRendererDataModel(pQDockWidget);
-		pQTreeView->setModel(pSceneRendererDataModel);
+		m_pSceneRendererDataModel = new DataModels::SceneRendererDataModel::SceneRendererDataModel(pQDockWidget);
+		pQTreeView->setModel(m_pSceneRendererDataModel);
 		pQTreeView->expandToDepth(0);
 
 		// Set a default scene renderer to have a decent standard behaviour
-		PLScene::SceneRenderer *pSceneRenderer = nullptr;
+		SceneRenderer *pSceneRenderer = nullptr;
 		{
 			CoreApplication *pApplication = CoreApplication::GetApplication();
 			if (pApplication && pApplication->IsInstanceOf("PLEngine::EngineApplication"))
 				pSceneRenderer = static_cast<PLEngine::EngineApplication*>(pApplication)->GetSceneRendererTool().GetSceneRenderer();
-			pSceneRendererDataModel->SetSceneRenderer(pSceneRenderer);
+			SelectSceneRenderer(pSceneRenderer);
 		}
 
 		// Set window title
@@ -94,6 +97,48 @@ DockWidgetSceneRenderer::DockWidgetSceneRenderer(QMainWindow *pQMainWindow, Dock
 */
 DockWidgetSceneRenderer::~DockWidgetSceneRenderer()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when the scene renderer assigned with this dock widget was destroyed
+*/
+void DockWidgetSceneRenderer::OnDestroyed()
+{
+	// Argh! Mayday! We lost our scene renderer!
+	// -> Now no scene renderer is currently selected
+	SelectSceneRenderer(nullptr);
+}
+
+/**
+*  @brief
+*    Selects the given scene renderer
+*/
+void DockWidgetSceneRenderer::SelectSceneRenderer(SceneRenderer *pSceneRenderer)
+{
+	// Is there a scene renderer model instance?
+	if (m_pSceneRendererDataModel) {
+		// Get the currently assigned scene renderer
+		SceneRenderer *pCurrentSceneRenderer = m_pSceneRendererDataModel->GetSceneRenderer();
+
+		// State change?
+		if (pCurrentSceneRenderer != pSceneRenderer) {
+			// Disconnect event handler
+			if (pCurrentSceneRenderer)
+				pCurrentSceneRenderer->EventDestroyed.Disconnect(SlotOnDestroyed);
+
+			// Assign new scene renderer
+			m_pSceneRendererDataModel->SetSceneRenderer(pSceneRenderer);
+
+			// Connect event handler
+			if (pSceneRenderer)
+				pSceneRenderer->EventDestroyed.Connect(SlotOnDestroyed);
+		}
+	}
 }
 
 

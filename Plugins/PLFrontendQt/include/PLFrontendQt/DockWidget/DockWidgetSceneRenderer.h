@@ -37,6 +37,13 @@
 QT_BEGIN_NAMESPACE
 	class QMainWindow;
 QT_END_NAMESPACE
+namespace PLFrontendQt {
+	namespace DataModels {
+		namespace SceneRendererDataModel {
+			class SceneRendererDataModel;
+		}
+	}
+}
 
 
 //[-------------------------------------------------------]
@@ -70,6 +77,8 @@ class DockWidgetSceneRenderer : public DockWidgetScene {
 		pl_properties_end
 		// Constructors
 		pl_constructor_2(DefaultConstructor,	QMainWindow*,	DockWidgetManager*,	"Constructor with a pointer to the Qt main window as first parameter, pointer to the dock widget manager this dock widget should be registered to as second parameter",	"")
+		// Slots
+		pl_slot_0(OnDestroyed,	"Called when the scene renderer assigned with this dock widget was destroyed",	"")
 	pl_class_end
 
 
@@ -93,6 +102,33 @@ class DockWidgetSceneRenderer : public DockWidgetScene {
 		*    Destructor
 		*/
 		PLFRONTENDQT_API virtual ~DockWidgetSceneRenderer();
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Called when the scene renderer assigned with this dock widget was destroyed
+		*/
+		void OnDestroyed();
+
+		/**
+		*  @brief
+		*    Selects the given scene renderer
+		*
+		*  @param[in] pSceneRenderer
+		*    Scene renderer to select, can be a null pointer
+		*/
+		void SelectSceneRenderer(PLScene::SceneRenderer *pSceneRenderer);
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		DataModels::SceneRendererDataModel::SceneRendererDataModel *m_pSceneRendererDataModel;	/**< Scene renderer data model, can be a null pointer */
 
 
 };

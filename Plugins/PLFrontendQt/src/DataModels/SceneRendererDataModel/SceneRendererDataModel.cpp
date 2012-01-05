@@ -47,7 +47,12 @@ SceneRendererDataModel::SceneRendererDataModel(QObject *parent): TreeModelBase(n
 {
 }
 
-void SceneRendererDataModel::SetSceneRenderer(PLScene::SceneRenderer *nodeObj)
+SceneRenderer *SceneRendererDataModel::GetSceneRenderer() const
+{
+	return m_pSceneRenderer;
+}
+
+void SceneRendererDataModel::SetSceneRenderer(SceneRenderer *nodeObj)
 {
 	if (m_pSceneRenderer != nodeObj) {
 		m_pSceneRenderer = nodeObj;
