@@ -18,6 +18,9 @@
       }
     - This way, the "PLCore::Object"-instance would not have gained 8 bytes more weight... but I assume the runtime overhead would have run faster out of control as I could have
       sayed "bad idea".
+- Fixed invalid cast within
+  SimpleList<ValueType>::SimpleList(const Container<ValueType> &lstSource, uint32 nStart, uint32 nCount)
+  -> GCC found it
 PLFrontendQt:
 - Replaced the "SelectSceneNode" broadcast by the more generic "SelectObject"
 - "DockWidgetSceneGraph::QtSlotTreeViewDoubleClicked()" now also reacts on selected scene node modifier

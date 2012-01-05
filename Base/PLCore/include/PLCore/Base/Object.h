@@ -35,22 +35,20 @@
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLCore {
-	class Class;
-	class DynVar;
-	class DynEvent;
-	class DynEventHandler;
-	class DynConstructor;
-	class DynParams;
-}
-
-
-//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class Class;
+class DynVar;
+class DynEvent;
+class DynEventHandler;
+class DynConstructor;
+class DynParams;
 
 
 //[-------------------------------------------------------]

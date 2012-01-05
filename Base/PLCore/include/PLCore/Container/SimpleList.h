@@ -164,6 +164,22 @@ class SimpleList {
 
 		/**
 		*  @brief
+		*    Makes this container to a copy of another container
+		*
+		*  @param[in] lstContainer
+		*    Container to copy from
+		*  @param[in] nStart
+		*    Index the copy operation should start
+		*  @param[in] nCount
+		*    Number of elements to copy, if 0 copy all elements of lstContainer behind nStart
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		bool Copy(const SimpleList<ValueType> &lstContainer, uint32 nStart = 0, uint32 nCount = 0);
+
+		/**
+		*  @brief
 		*    Copy operator
 		*
 		*  @param[in] lstSource
