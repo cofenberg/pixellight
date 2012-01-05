@@ -256,6 +256,12 @@ PLScene::SceneNode *SceneGraphTreeModel::GetSceneNodeFromIndex(const QModelIndex
 	return (treeItem && treeItem->IsSceneNode() && treeItem->GetObject()) ? (PLScene::SceneNode*)treeItem->GetObject() : nullptr;
 }
 
+PLScene::SceneNodeModifier *SceneGraphTreeModel::GetSceneNodeModifierFromIndex(const QModelIndex &index)
+{
+	SceneGraphNodeTreeItemBase *treeItem = GetSceneTreeItemFromIndex(index);
+	return (treeItem && treeItem->IsSceneNodeModifier() && treeItem->GetObject()) ? (PLScene::SceneNodeModifier*)treeItem->GetObject() : nullptr;
+}
+
 SceneGraphNodeTreeItemBase *SceneGraphTreeModel::GetSceneTreeItemFromIndex(const QModelIndex &index)
 {
 	return (!index.isValid() || index.model() != this) ? nullptr : (SceneGraphNodeTreeItemBase*)GetTreeItemFromIndex(index);

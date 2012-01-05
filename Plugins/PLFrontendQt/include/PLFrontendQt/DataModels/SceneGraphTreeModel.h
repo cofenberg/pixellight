@@ -36,6 +36,7 @@
 //[-------------------------------------------------------]
 namespace PLScene {
 	class SceneNode;
+	class SceneNodeModifier;
 }
 namespace PLFrontendQt {
 	namespace DataModels {
@@ -86,6 +87,7 @@ class PLFRONTENDQT_API SceneGraphTreeModel : public TreeModelBase {
 		*/
 		void SetStartNode(PLScene::SceneNode *nodeObj, bool hideStartNode = false);
 		PLScene::SceneNode *GetSceneNodeFromIndex(const QModelIndex &index);
+		PLScene::SceneNodeModifier *GetSceneNodeModifierFromIndex(const QModelIndex &index);
 		SceneGraphNodeTreeItemBase *GetSceneTreeItemFromIndex(const QModelIndex &index);
 
 
