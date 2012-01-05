@@ -48,19 +48,29 @@ namespace RTTIInfoModels {
 //[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
-class ClassInfoStringTreeItem : public TreeItemBase {
+class ClassInfoPropertyTreeItem : public TreeItemBase {
 
 
 	public:
-		ClassInfoStringTreeItem(const QString &displayText, QObject *parent = nullptr) : TreeItemBase(1, parent), m_displayText(displayText)
+		ClassInfoPropertyTreeItem(const QString &propertyName, const QString &propertyValue, QObject *parent = nullptr) : TreeItemBase(1, parent), m_sPropertyName(propertyName), m_sPropertyValue(propertyValue)
 		{
+			m_sToolTipText = tr("<table>"
+							"<tr><td bgcolor=#00ff00 colspan=\"2\">Property Information</td></tr>"
+							"<tr><td>Name: </td><td>%1</td></tr>"
+							"<tr><td>Value: </td><td>%2</td></tr>"
+							"</table>").arg(m_sPropertyName, m_sPropertyValue);
 		}
 
 		virtual QVariant data(const int column, const int role) override
 		{
+			if (column > 0)
+				return QVariant();
+			
 			if (role == Qt::DisplayRole) {
-				if (column == 0)
-					return m_displayText;
+				return m_sPropertyName;
+			}
+			else if (role == Qt::ToolTipRole) {
+				return m_sToolTipText;
 			}
 
 			return QVariant();
@@ -68,7 +78,9 @@ class ClassInfoStringTreeItem : public TreeItemBase {
 
 
 	private:
-		QString m_displayText;
+		QString m_sPropertyName;
+		QString m_sPropertyValue;
+		QString m_sToolTipText;
 
 
 };
@@ -312,7 +324,8 @@ void ClassInfoModel::SetClassItem(const Class &cClass)
 	Iterator<String> cIterator = cProps.GetKeyIterator();
 	while (cIterator.HasNext()) {
 		const String sName  = cIterator.Next();
-		new ClassInfoStringTreeItem(QtStringAdapter::PLToQt(sName), m_pPropertiesCategory);
+		const String sValue = cProps.Get(sName);
+		new ClassInfoPropertyTreeItem(QtStringAdapter::PLToQt(sName), QtStringAdapter::PLToQt(sValue), m_pPropertiesCategory);
 	}
 
 	// Add constructors
