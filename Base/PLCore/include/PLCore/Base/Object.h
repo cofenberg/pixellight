@@ -123,6 +123,8 @@ class Object : public ObjectBase {
 			pl_method_0(ToString,				pl_ret_type(String),									"Get the object as string. Returns string representation of object.",																																	"")
 			pl_method_1(FromString,				pl_ret_type(void),		const String&,					"Set the object from string. String representation of object as first parameter.",																														"")
 		#endif
+		// Signals
+		pl_signal_0(SignalDestroyed,	"Object destroyed signal. When this signal is emitted the object is already in the destruction phase and parts may already be invalid. Best to e.g. only update our object pointer.",	"")
 	pl_class_end
 
 

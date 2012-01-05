@@ -233,19 +233,19 @@ class SceneNode : public PLCore::Object, public PLCore::Element<SceneNode> {
 			pl_method_0(GetInputController,			pl_ret_type(PLInput::Controller*),													"Get the input controller. Returns the input controller (can be a null pointer).",																																																													"")
 		#endif
 		// Signals
-		pl_signal_0(SignalDestroy,															"Scene node destruction signal",																											"")
-		pl_signal_0(SignalActive,															"Scene node active state change signal",																									"")
-		pl_signal_0(SignalVisible,															"Scene node visible state change signal",																									"")
-		pl_signal_0(SignalContainer,														"Scene node parent container change signal",																								"")
-		pl_signal_0(SignalAABoundingBox,													"Scene node axis aligned bounding box change signal",																						"")
-		pl_signal_0(SignalInit,																"Scene node initialization signal",																											"")
-		pl_signal_0(SignalDeInit,															"Scene node de-initialization change signal",																								"")
-		pl_signal_1(SignalAddedToVisibilityTree,	VisNode&,								"Scene node was added to a visibility tree signal. Visibility node representing this scene node within the visibility tree as parameter.",	"")
-		pl_signal_2(SignalDrawPre,					PLRenderer::Renderer&, const VisNode*,	"Scene node pre-draw signal. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter.",			"")
-		pl_signal_2(SignalDrawSolid,				PLRenderer::Renderer&, const VisNode*,	"Scene node solid-draw signal. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter.",			"")
-		pl_signal_2(SignalDrawTransparent,			PLRenderer::Renderer&, const VisNode*,	"Scene node transparent-draw signal. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter.",	"")
-		pl_signal_2(SignalDrawDebug,				PLRenderer::Renderer&, const VisNode*,	"Scene node debug-draw signal. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter.",			"")
-		pl_signal_2(SignalDrawPost,					PLRenderer::Renderer&, const VisNode*,	"Scene node post-draw signal. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter.",			"")
+		pl_signal_0(SignalDestroy,															"Scene node destruction signal. Unlike \"PLCore::Object::SignalDestroyed\", the scene node is still intact at the point the signal is emitted.","")
+		pl_signal_0(SignalActive,															"Scene node active state change signal",																										"")
+		pl_signal_0(SignalVisible,															"Scene node visible state change signal",																										"")
+		pl_signal_0(SignalContainer,														"Scene node parent container change signal",																									"")
+		pl_signal_0(SignalAABoundingBox,													"Scene node axis aligned bounding box change signal",																							"")
+		pl_signal_0(SignalInit,																"Scene node initialization signal",																												"")
+		pl_signal_0(SignalDeInit,															"Scene node de-initialization change signal",																									"")
+		pl_signal_1(SignalAddedToVisibilityTree,	VisNode&,								"Scene node was added to a visibility tree signal. Visibility node representing this scene node within the visibility tree as parameter.",		"")
+		pl_signal_2(SignalDrawPre,					PLRenderer::Renderer&, const VisNode*,	"Scene node pre-draw signal. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter.",				"")
+		pl_signal_2(SignalDrawSolid,				PLRenderer::Renderer&, const VisNode*,	"Scene node solid-draw signal. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter.",				"")
+		pl_signal_2(SignalDrawTransparent,			PLRenderer::Renderer&, const VisNode*,	"Scene node transparent-draw signal. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter.",		"")
+		pl_signal_2(SignalDrawDebug,				PLRenderer::Renderer&, const VisNode*,	"Scene node debug-draw signal. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter.",				"")
+		pl_signal_2(SignalDrawPost,					PLRenderer::Renderer&, const VisNode*,	"Scene node post-draw signal. Used renderer and current visibility node of the scene node (can be a null pointer) as parameter.",				"")
 	pl_class_end
 
 

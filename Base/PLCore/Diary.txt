@@ -1,5 +1,23 @@
 >> 05.01.2012
 [CO]
+- Added "Object::SignalDestroyed"-signal which is emitted when the object is destroyed. This means 8 additional bytes per "PLCore::Object"-instance on a 32 bit machine,
+  but I was unable to think of any other decent way for this. There are situations were one needs to know when an RTTI object has been killed. An example for such a
+  situation is "PLFrontendQt::DockWidgetObject" were the GUI has to be informed about the murder of it's fosterling.
+  -> At first I tried the following solution:
+    - Within "ClassManager" added
+          Event<const Object*> EventObjectCreated;    /**< An object has been created (do not destroy the given instance), if you have another option, don't use this event to get this information in order to keep the internal overhead to a minimum */
+          Event<const Object*> EventObjectDestroyed;  /**< An object has been destroyed (the object may already be invalid, do not destroy the given instance), if you have another option, don't use this event to get this information in order to keep the internal overhead to a minimum */
+    - Within "Object" constructor/destructor added
+      Object::Object()
+      {
+          ClassManager::GetInstance()->EventObjectCreated(this);
+      }
+      Object::~Object()
+      {
+          ClassManager::GetInstance()->EventObjectDestroyed(this);
+      }
+    - This way, the "PLCore::Object"-instance would not have gained 8 bytes more weight... but I assume the runtime overhead would have run faster out of control as I could have
+      sayed "bad idea".
 PLFrontendQt:
 - Replaced the "SelectSceneNode" broadcast by the more generic "SelectObject"
 - "DockWidgetSceneGraph::QtSlotTreeViewDoubleClicked()" now also reacts on selected scene node modifier

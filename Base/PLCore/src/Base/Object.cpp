@@ -96,6 +96,8 @@ Object::Object()
 */
 Object::~Object()
 {
+	// Emit object destroyed signal
+	SignalDestroyed();
 }
 
 /**

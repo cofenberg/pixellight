@@ -33,6 +33,12 @@ Write \emph{<RTTI object>:ToString()} in order to get the object as string. Retu
 Write \emph{<RTTI object>:FromString(<string>)} in order to set the object from string. String representation of object as first parameter.
 
 
+\subsection{Signals}
+
+\paragraph{SignalDestroyed}
+Object destroyed signal. When this signal is emitted the object is already in the destruction phase and parts may already be invalid. Best to e.g. only update our object pointer.
+
+
 
 
 \section{PLCore::CoreApplication Class}

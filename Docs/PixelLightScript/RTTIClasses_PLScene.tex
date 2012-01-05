@@ -132,7 +132,7 @@ Write \emph{<RTTI object>:GetInputController()} in order to get the input contro
 \subsection{Signals}
 
 \paragraph{SignalDestroy}
-Scene node destruction signal.
+Scene node destruction signal. Unlike \emph{PLCore::Object::SignalDestroyed}, the scene node is still intact at the point the signal is emitted.
 
 \paragraph{SignalActive}
 Scene node active state change signal.
