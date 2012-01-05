@@ -172,6 +172,9 @@ Flags.
 \paragraph{<RTTI object> GetSceneNode()}
 Write \emph{<RTTI object>:GetSceneNode()} in order to get the owner scene node.
 
+\paragraph{<string> GetAbsoluteName()}
+Write \emph{<RTTI object>:GetAbsoluteName()} in order to get an unique absolute name for the scene node modifier. The name is constructed by using \emph{<absolute owner scene node name>:<scene node modifier class name>.<zero based index>} (for instance \emph{Root.MyScene.MyNode:SNMRotationLinearAnimation.0}). Do not use this method on a regular basis.
+
 \paragraph{<bool> IsActive()}
 Write \emph{<RTTI object>:IsActive()} in order to check whether the scene node modifier is active or not. Returns \emph{true} if the scene node modifier is active, else \emph{false}.
 

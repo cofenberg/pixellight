@@ -88,6 +88,34 @@ String SceneNodeModifier::GetSceneNodeClass() const
 
 /**
 *  @brief
+*    Returns an unique absolute name for the scene node modifier
+*/
+String SceneNodeModifier::GetAbsoluteName() const
+{
+	// Get the scene node modifier class name
+	const Class *pClass = GetClass();
+	const String sClass = pClass ? pClass->GetClassName() : "";
+	if (sClass.GetLength()) {
+		// Find a decend scene node modifier index
+		int nIndex = -1;
+		SceneNodeModifier *pFoundSceneNodeModifier = nullptr;
+		do {
+			nIndex++;
+			pFoundSceneNodeModifier = m_pSceneNode->GetModifier(sClass, static_cast<uint32>(nIndex));
+		} while (pFoundSceneNodeModifier && pFoundSceneNodeModifier != this);
+
+		// Return an constructed unique absolute name for the scene node modifier
+		return m_pSceneNode->GetAbsoluteName() + ':' + sClass + '.' + nIndex;
+	} else {
+		// This should never ever happen... but anyway, deal with it...
+
+		// Return a constructed unique absolute name for the scene node modifier
+		return m_pSceneNode->GetAbsoluteName() + ":?.42";	// ... as good as any fallback name...
+	}
+}
+
+/**
+*  @brief
 *    Is the scene node modifier active?
 */
 bool SceneNodeModifier::IsActive() const

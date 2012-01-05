@@ -1,6 +1,7 @@
 >> 05.01.2012
 [CO]
 - "SceneRenderer": Added "EventDestroyed"-event
+- Added "SceneNodeModifier::GetAbsoluteName()"
 
 
 

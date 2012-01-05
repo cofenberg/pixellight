@@ -94,10 +94,11 @@ class SceneNodeModifier : public PLCore::Object {
 		pl_attribute(Flags,	pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,	"Flags",	"")
 		#ifdef PLSCENE_EXPORTS	// The following is only required when compiling PLScene
 			// Methods
-			pl_method_0(GetSceneNode,		pl_ret_type(SceneNode&),					"Returns the owner scene node.",																																					"")
-			pl_method_0(IsActive,			pl_ret_type(bool),							"Returns whether the scene node modifier is active or not. Returns 'true' if the scene node modifier is active, else 'false'.",														"")
-			pl_method_1(SetActive,			pl_ret_type(void),					bool,	"Sets whether the scene node modifier is active or not. 'true' as first parameter if the scene node modifier should be active, else 'false' (sets/unsets the 'Inactive'-flag).",	"")
-			pl_method_0(GetInputController,	pl_ret_type(PLInput::Controller*),			"Get the input controller. Returns the input controller (can be a null pointer).",																									"")
+			pl_method_0(GetSceneNode,		pl_ret_type(SceneNode&),					"Returns the owner scene node.",																																																													"")
+			pl_method_0(GetAbsoluteName,	pl_ret_type(PLCore::String),				"Constructs an unique absolute name for the scene node modifier by using \"<absolute owner scene node name>:<scene node modifier class name>.<zero based index>\" (for instance 'Root.MyScene.MyNode:SNMRotationLinearAnimation.0'). Do not use this method on a regular basis.",	"")
+			pl_method_0(IsActive,			pl_ret_type(bool),							"Returns whether the scene node modifier is active or not. Returns 'true' if the scene node modifier is active, else 'false'.",																																						"")
+			pl_method_1(SetActive,			pl_ret_type(void),					bool,	"Sets whether the scene node modifier is active or not. 'true' as first parameter if the scene node modifier should be active, else 'false' (sets/unsets the 'Inactive'-flag).",																									"")
+			pl_method_0(GetInputController,	pl_ret_type(PLInput::Controller*),			"Get the input controller. Returns the input controller (can be a null pointer).",																																																	"")
 		#endif
 	pl_class_end
 
@@ -140,6 +141,21 @@ class SceneNodeModifier : public PLCore::Object {
 		*    The scene node class this modifier operates on
 		*/
 		PLS_API PLCore::String GetSceneNodeClass() const;
+
+		/**
+		*  @brief
+		*    Returns an unique absolute name for the scene node modifier
+		*
+		*  @return
+		*    An unique absolute name for the scene node modifier
+		*
+		*  @remarks
+		*    Constructs an unique absolute name for the scene node modifier by using
+		*    "<absolute owner scene node name>:<scene node modifier class name>.<zero based index>"
+		*    (for instance 'Root.MyScene.MyNode:SNMRotationLinearAnimation.0'). Do not use this
+		*    method on a regular basis.
+		*/
+		PLS_API PLCore::String GetAbsoluteName() const;
 
 		/**
 		*  @brief
