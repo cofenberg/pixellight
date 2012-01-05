@@ -61,6 +61,12 @@ String SystemMacOSX::GetPlatform() const
 	return sString;
 }
 
+String SystemMacOSX::GetModuleFilenameByMemoryAddress(const void *pMemoryAddress) const
+{
+	// [TODO] Test whether or not the Linux implementaton works (compiles and runs correctly) for Mac OS X as well
+	return "";
+}
+
 String SystemMacOSX::GetSharedLibraryExtension() const
 {
 	static const String sString = "dylib";
