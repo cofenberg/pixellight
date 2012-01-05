@@ -138,16 +138,24 @@ bool Picking::PerformPicking(PickingResult &cPickingResult, SceneNode &cSceneNod
 void Picking::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 {
 	// First at all, call the picking filter function
-	if (m_pPickingResult->m_pSceneContainer && OnPickingCandidate(cSceneNode) && cSceneNode.GetMeshHandler()) {
-		// We KNOW that it's a SQLine!
-		SQLine &cLineQuery = static_cast<SQLine&>(cQuery);
+	if (m_pPickingResult->m_pSceneContainer && OnPickingCandidate(cSceneNode)) {
+		// Is there a mesh handler with a mesh?
+		if (cSceneNode.GetMeshHandler() && cSceneNode.GetMeshHandler()->GetMesh()) {
+			// We KNOW that it's a SQLine!
+			SQLine &cLineQuery = static_cast<SQLine&>(cQuery);
 
-		// Get line start/end position in node space
-		const Vector3 vLineStartPos = cSceneNode.GetTransform().GetInverseMatrix()*cLineQuery.GetLine().vStart;
-		const Vector3 vLineEndPos   = cSceneNode.GetTransform().GetInverseMatrix()*cLineQuery.GetLine().vEnd;
+			// Get line start/end position in node space
+			const Vector3 vLineStartPos = cSceneNode.GetTransform().GetInverseMatrix()*cLineQuery.GetLine().vStart;
+			const Vector3 vLineEndPos   = cSceneNode.GetTransform().GetInverseMatrix()*cLineQuery.GetLine().vEnd;
 
-		// Perform mesh intersection
-		MeshIntersection(cSceneNode, vLineStartPos, vLineEndPos, nullptr);
+			// Perform mesh intersection
+			MeshIntersection(cSceneNode, vLineStartPos, vLineEndPos, nullptr);
+		} else {
+			// There's no mesh we can use for an intersection test
+
+			// [TODO] Currently it's impossible to pick something which does not have a polygonal mesh, think
+			//        of a way to handle this case properly, especially when dealing with overlapping scene nodes
+		}
 	}
 }
 
