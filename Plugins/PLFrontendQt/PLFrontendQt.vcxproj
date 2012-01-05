@@ -319,7 +319,6 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
     <ClCompile Include="src\DockWidget\DockWidgetRTTIBrowser.cpp" />
     <ClCompile Include="src\DockWidget\DockWidgetScene.cpp" />
     <ClCompile Include="src\DockWidget\DockWidgetSceneGraph.cpp" />
-    <ClCompile Include="src\DockWidget\DockWidgetSceneNode.cpp" />
     <ClCompile Include="src\DockWidget\DockWidgetSceneRenderer.cpp" />
     <ClCompile Include="src\External\qtcolorbutton.cpp" />
     <ClCompile Include="src\Frontend.cpp" />
@@ -757,7 +756,6 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build\GeneratedQtFiles\moc_%(Filename).cpp</Outputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../External/_Windows_x86_64/Qt/bin/moc.exe</AdditionalInputs>
     </CustomBuild>
-    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneNode.h" />
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneRenderer.h" />
     <ClInclude Include="include\PLFrontendQt\Frontend.h" />
     <ClInclude Include="include\PLFrontendQt\FrontendMainWindow.h" />

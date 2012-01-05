@@ -142,7 +142,6 @@ add_sources(
 	src/DockWidget/DockWidgetRTTIBrowser.cpp
 	src/DockWidget/DockWidgetObject.cpp
 	src/DockWidget/DockWidgetScene.cpp
-	src/DockWidget/DockWidgetSceneNode.cpp
 	src/DockWidget/DockWidgetSceneGraph.cpp
 	src/DockWidget/DockWidgetSceneRenderer.cpp
 	${UI_SRCS}	# Add source produced by uic

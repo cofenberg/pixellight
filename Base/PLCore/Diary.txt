@@ -4,6 +4,7 @@ PLFrontendQt:
 - Replaced the "SelectSceneNode" broadcast by the more generic "SelectObject"
 - "DockWidgetSceneGraph::QtSlotTreeViewDoubleClicked()" now also reacts on selected scene node modifier
 - "DockWidgetObject" supports now the generic "SelectObject" broadcast
+- Removed "DockWidgetSceneNode" because there's currently no difference to the more generic "DockWidgetObject"
 
 
 

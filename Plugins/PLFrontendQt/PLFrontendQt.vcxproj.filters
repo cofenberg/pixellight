@@ -163,9 +163,6 @@
     <ClCompile Include="src\DockWidget\DockWidgetObject.cpp">
       <Filter>DockWidget</Filter>
     </ClCompile>
-    <ClCompile Include="src\DockWidget\DockWidgetSceneNode.cpp">
-      <Filter>DockWidget</Filter>
-    </ClCompile>
     <ClCompile Include="src\DockWidget\DockWidgetScene.cpp">
       <Filter>DockWidget</Filter>
     </ClCompile>
@@ -244,9 +241,6 @@
       <Filter>DockWidget</Filter>
     </ClInclude>
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetObject.h">
-      <Filter>DockWidget</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneNode.h">
       <Filter>DockWidget</Filter>
     </ClInclude>
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetScene.h">
