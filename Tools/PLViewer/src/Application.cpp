@@ -32,8 +32,10 @@
 #include <PLCore/Frontend/FrontendContext.h>
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Button.h>
+#include <PLMesh/MeshHandler.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SPScene.h>
+#include <PLScene/Scene/SceneNodes/SNMesh.h>
 #include "Application.h"
 
 
@@ -257,6 +259,15 @@ bool Application::LoadMesh(const String &sFilename)
 	if (pSceneContainer) {
 		// Create a mesh scene node
 		SceneNode *pPrimarySceneNode = pSceneContainer->Create("PLScene::SNMesh", "Mesh", "Mesh=\"" + sFilename + "\"");
+
+		// Security check for better usability: Has the scene node a mesh with at least one material?
+		// -> If not the scene node mesh may not be visible and the user may wonder what's going on, so, in this case enable scene node debug mode
+		if (pPrimarySceneNode && pPrimarySceneNode->GetMeshHandler() && !pPrimarySceneNode->GetMeshHandler()->GetNumOfMaterials()) {
+			PL_LOG(Warning, "Mesh viewer: The mesh \"" + sFilename + "\" has no materials")
+
+			// Switch the mesh scene node into wireframe debug mode so that the user can see what's going on
+			pPrimarySceneNode->SetDebugFlags(SceneNode::DebugEnabled | SceneNode::DebugNoLocalCoordinateAxis | SceneNode::DebugNoName | SceneNode::DebugNoAABBox | SNMesh:: DebugShowWireframe);
+		}
 
 		// Configure a generic scene
 		ConfigureGenericScene(*pSceneContainer, pPrimarySceneNode);

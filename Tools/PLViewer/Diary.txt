@@ -1,5 +1,7 @@
 >> 05.01.2012
 [CO]
+- Usability improvement: It's possible that a mesh has no materials at all. In this case the mesh is not visible... this may lead to confusion when loading
+  such a mesh within the viewer. In case the viewer detects that such a mesh is used, at least wireframes will now be shown so one can see what's going on.
 PLViewerQt:
 - Replaced the "SelectSceneNode" broadcast by the more generic "SelectObject"
 - Added help menu bar entry
