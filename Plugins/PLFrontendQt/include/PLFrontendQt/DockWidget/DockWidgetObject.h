@@ -37,6 +37,11 @@
 QT_BEGIN_NAMESPACE
 	class QMainWindow;
 QT_END_NAMESPACE
+namespace PLFrontendQt {
+	namespace DataModels {
+		class PLIntrospectionModel;
+	}
+}
 
 
 //[-------------------------------------------------------]
@@ -66,8 +71,14 @@ class DockWidgetObject : public DockWidget {
 		pl_properties
 			pl_property("Title", "Object")
 		pl_properties_end
+		#ifdef PLFRONTENDQT_EXPORTS	// The following is only required when compiling PLFrontendQt
+			// Methods
+			pl_method_1(SelectObject,	pl_ret_type(void),	PLCore::Object*,	"Selects the given object. Object to select as first parameter.",	"")
+		#endif
 		// Constructors
 		pl_constructor_2(DefaultConstructor,	QMainWindow*,	DockWidgetManager*,	"Constructor with a pointer to the Qt main window as first parameter, pointer to the dock widget manager this dock widget should be registered to as second parameter",	"")
+		// Slots
+		pl_slot_0(OnDestroy,	"Called when the object assigned with this dock widget was destroyed",	"")
 	pl_class_end
 
 
@@ -91,6 +102,34 @@ class DockWidgetObject : public DockWidget {
 		*    Destructor
 		*/
 		PLFRONTENDQT_API virtual ~DockWidgetObject();
+
+		/**
+		*  @brief
+		*    Selects the given object
+		*
+		*  @param[in] pObject
+		*    Object to select, can be a null pointer
+		*/
+		PLFRONTENDQT_API void SelectObject(PLCore::Object *pObject);
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Called when the object assigned with this dock widget was destroyed
+		*/
+		void OnDestroy();
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		DataModels::PLIntrospectionModel *m_pPLIntrospectionModel;	/**< PL introspection model, can be a null pointer */
+		PLCore::Object					 *m_pObject;				/**< Object assigned with this dock widget, can be a null pointer */
 
 
 };
