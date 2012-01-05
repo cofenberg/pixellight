@@ -193,6 +193,7 @@ class Gui : public QObject {
 		void QtSlotTriggeredWindowHideAll();
 		void QtSlotSelectedWindow(QAction *);
 		void QtSlotTriggeredOpenLogFile();
+		void QtSlotTriggeredOpenPixelLightWebsite();
 
 
 	//[-------------------------------------------------------]

@@ -26,11 +26,13 @@
 #include <PLCore/PLCore.h>
 PL_WARNING_PUSH
 	PL_WARNING_DISABLE(4127)	// "warning C4127: conditional expression is constant"
+	#include <QtCore/qurl.h>
 	#include <QtGui/qevent.h>
 	#include <QtGui/qlabel.h>
 	#include <QtGui/qmenubar.h>
 	#include <QtGui/qstatusbar.h>
 	#include <QtGui/qfiledialog.h>
+	#include <QtGui/qdesktopservices.h>
 PL_WARNING_POP
 #include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
@@ -260,6 +262,16 @@ void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 				pQMenu->addAction(pQAction);
 			}
 		}
+
+		{ // Setup the help menu
+			QMenu *pQMenu = cQMainWindow.menuBar()->addMenu(tr("&Help"));
+
+			{ // Setup the open PixelLight website action
+				QAction *pQAction = new QAction(tr("Open PixelLight Website"), &cQMainWindow);
+				connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredOpenPixelLightWebsite()));
+				pQMenu->addAction(pQAction);
+			}
+		}
 	}
 
 	{ // Status bar
@@ -444,6 +456,7 @@ void Gui::QtSlotAboutToShowMenuWindow()
 		// Setup the hide all action
 		QAction *pQActionHideAll = new QAction(tr("Hide all"), pFrontendMainWindow);
 		connect(pQActionHideAll, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredWindowHideAll()));
+		pQActionHideAll->setShortcut(tr("Ctrl+H"));
 		m_pQMenuWindow->addAction(pQActionHideAll);
 
 		// Add a separator
@@ -493,4 +506,9 @@ void Gui::QtSlotTriggeredOpenLogFile()
 	// Use "PLCore::System::Execute()" to open the log file which is usually a simple text file
 	// -> "QDesktopServices::openUrl(QtStringAdapter::PLToQt(Log::GetInstance()->GetFilename()));" didn't work for me
 	System::GetInstance()->Execute(Log::GetInstance()->GetFilename(), "");
+}
+
+void Gui::QtSlotTriggeredOpenPixelLightWebsite()
+{
+	QDesktopServices::openUrl(QUrl("http://www.pixellight.org"));
 }

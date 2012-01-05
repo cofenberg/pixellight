@@ -2,6 +2,7 @@
 [CO]
 PLViewerQt:
 - Replaced the "SelectSceneNode" broadcast by the more generic "SelectObject"
+- Added help menu bar entry
 
 
 
