@@ -131,15 +131,6 @@ inline String::EFormat String::GetFormat() const
 
 /**
 *  @brief
-*    Returns the number of bytes the string is using
-*/
-inline uint32 String::GetNumOfBytes() const
-{
-	return m_pStringBuffer ? m_pStringBuffer->GetNumOfBytes() : 0;
-}
-
-/**
-*  @brief
 *    Get a ASCII character of the string
 */
 inline char String::operator [](uint32 nIndex) const

@@ -197,11 +197,11 @@ void StringTest::Test()
 	StartTask("GetNumOfBytes()");
 	bResult = true;
 	sString = "";
-	if (sString.GetNumOfBytes()) bResult = false;
+	if (sString.GetNumOfBytes(String::ASCII)) bResult = false;
 	sString = "1234";
-	if (sString.GetNumOfBytes() != 4) bResult = false;
+	if (sString.GetNumOfBytes(String::ASCII) != 4) bResult = false;
 	sString = L"\u65e5\u672c\u8a9e";
-	if (sString.GetNumOfBytes() != 3*sizeof(wchar_t)) bResult = false;
+	if (sString.GetNumOfBytes(String::Unicode) != 3*sizeof(wchar_t)) bResult = false;
 	EndTask(bResult);
 
 	// [](uint32 nIndex)

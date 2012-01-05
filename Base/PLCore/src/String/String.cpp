@@ -434,6 +434,30 @@ String::String(StringBuffer *pStringBuffer)
 
 /**
 *  @brief
+*    Returns the number of bytes the string is using in a specified format (ASCII, Unicode, UTF8)
+*/
+uint32 String::GetNumOfBytes(EFormat nFormat) const
+{
+	// Is there a string buffer?
+	if (m_pStringBuffer) {
+		switch (nFormat) {
+			case ASCII:
+				return m_pStringBuffer->GetASCII()->GetNumOfBytes();
+
+			case Unicode:
+				return m_pStringBuffer->GetUnicode()->GetNumOfBytes();
+
+			case UTF8:
+				return m_pStringBuffer->GetUTF8()->GetNumOfBytes();
+		}
+	}
+
+	// Empty string
+	return 0;
+}
+
+/**
+*  @brief
 *    Copy operator
 */
 String &String::operator =(const char *pszString)

@@ -147,7 +147,7 @@ void TrayIconWidgetLinux::ShowNotification(const String &sTitle, const String &s
 	nID++;
 
 	// Get text size in bytes
-	long nSize = sText.GetNumOfBytes();
+	long nSize = sText.GetNumOfBytes(String::UTF8);
 
 	// Start tray message
 	SendSysTrayMessage(static_cast<WidgetLinux*>(m_pWidgetImpl)->m_nNativeWindowHandle, SYSTEM_TRAY_BEGIN_MESSAGE, 0, nSize, nID);

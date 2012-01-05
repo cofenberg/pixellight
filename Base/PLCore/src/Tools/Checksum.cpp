@@ -64,9 +64,9 @@ String Checksum::Get(const String &sString)
 {
 	// Get the checksum
 	if (sString.GetFormat() == String::Unicode)
-		Update(reinterpret_cast<const uint8*>(sString.GetUnicode()), sString.GetNumOfBytes());
+		Update(reinterpret_cast<const uint8*>(sString.GetUnicode()), sString.GetNumOfBytes(String::Unicode));
 	else
-		Update(reinterpret_cast<const uint8*>(sString.GetASCII()),   sString.GetNumOfBytes());
+		Update(reinterpret_cast<const uint8*>(sString.GetASCII()),   sString.GetNumOfBytes(String::ASCII));
 	String sChecksum = Final();
 
 	// Return the checksum

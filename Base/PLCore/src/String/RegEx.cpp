@@ -188,14 +188,14 @@ bool RegEx::Match(const String &sSubject, uint32 nPosition)
 			// Match pattern
 			int nMatches[VecSize];
 			int nMatchCount = pcre_exec(
-								m_pPCRE,					// PCRE expression
-								m_pExtra,					// Extra data
-								sSubject.GetUTF8(),			// Subject string
-								sSubject.GetNumOfBytes(),	// Subject length in bytes
-								nPosition,					// Start at byte position
-								0,							// Default options
-								nMatches,					// Output vector with offsets in bytes
-								VecSize						// Size of output vector
+								m_pPCRE,								// PCRE expression
+								m_pExtra,								// Extra data
+								sSubject.GetUTF8(),						// Subject string
+								sSubject.GetNumOfBytes(String::UTF8),	// Subject length in bytes
+								nPosition,								// Start at byte position
+								0,										// Default options
+								nMatches,								// Output vector with offsets in bytes
+								VecSize									// Size of output vector
 							  );
 
 			// Output vector too small?
@@ -255,14 +255,14 @@ bool RegEx::Match(const String &sSubject, uint32 nPosition)
 			// Match pattern
 			int nMatches[VecSize];
 			int nMatchCount = pcre_exec(
-								m_pPCRE,					// PCRE expression
-								m_pExtra,					// Extra data
-								sSubject.GetASCII(),		// Subject string
-								sSubject.GetNumOfBytes(),	// Subject length in bytes
-								nPosition,					// Start at byte position
-								0,							// Default options
-								nMatches,					// Output vector with offsets in bytes
-								VecSize						// Size of output vector
+								m_pPCRE,								// PCRE expression
+								m_pExtra,								// Extra data
+								sSubject.GetASCII(),					// Subject string
+								sSubject.GetNumOfBytes(String::ASCII),	// Subject length in bytes
+								nPosition,								// Start at byte position
+								0,										// Default options
+								nMatches,								// Output vector with offsets in bytes
+								VecSize									// Size of output vector
 							  );
 
 			// Output vector too small?

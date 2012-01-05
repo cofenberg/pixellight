@@ -175,6 +175,9 @@ StringBufferASCII *StringBufferUnicode::GetASCII()
 
 			// We need to convert the given Unicode string into an ASCII one
 			wcstombs(m_pASCII->m_pszString, m_pszString, m_nLength + 1);
+
+			// Set the correct string length
+			m_pASCII->m_nLength = m_nLength;
 		}
 	}
 

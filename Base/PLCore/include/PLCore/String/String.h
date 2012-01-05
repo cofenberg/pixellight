@@ -263,18 +263,15 @@ class String {
 
 		/**
 		*  @brief
-		*    Returns the number of bytes the string is using
+		*    Returns the number of bytes the string is using in a specified format (ASCII, Unicode, UTF8)
+		*
+		*  @param[in] nFormat
+		*    The internal string format
 		*
 		*  @return
-		*    The number of bytes the string is using (excluding the terminating zero)
-		*
-		*  @remarks
-		*    This method works on the internal primary string buffer instance. Use "GetFormat()" to check the
-		*    string type used to determine the number of bytes. Note that the number of bytes a string is using is
-		*    NOT always equal to the length of it! For a pure ASCII string the number of bytes is always equal
-		*    to it's length. 
+		*    The number of bytes the string is using in the specified format (excluding the terminating zero)
 		*/
-		inline uint32 GetNumOfBytes() const;
+		PLCORE_API uint32 GetNumOfBytes(EFormat nFormat) const;
 
 		/**
 		*  @brief

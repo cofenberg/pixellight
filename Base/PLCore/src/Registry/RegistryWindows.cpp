@@ -381,7 +381,7 @@ bool RegistryWindows::SetValueString(const String &sName, const String &sValue)
 	if (m_hKey) {
 		// Set value
 		const String sValueW = sValue.GetUnicode();
-		if (RegSetValueExW(m_hKey, sName.GetUnicode(), 0, REG_SZ, reinterpret_cast<const BYTE*>(sValueW.GetUnicode()), sValueW.GetNumOfBytes()) == ERROR_SUCCESS)
+		if (RegSetValueExW(m_hKey, sName.GetUnicode(), 0, REG_SZ, reinterpret_cast<const BYTE*>(sValueW.GetUnicode()), sValueW.GetNumOfBytes(String::Unicode)) == ERROR_SUCCESS)
 			return true; // Done
 	}
 

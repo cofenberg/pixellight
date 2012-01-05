@@ -3,6 +3,7 @@
 - PLFrontendQt: the items in the ClassInfoModel now shows a proper Tooltip
 
 
+
 >> 05.01.2012
 [CO]
 - Added "Object::SignalDestroyed"-signal which is emitted when the object is destroyed. This means 8 additional bytes per "PLCore::Object"-instance on a 32 bit machine,
@@ -26,6 +27,8 @@
 - Fixed invalid cast within
   SimpleList<ValueType>::SimpleList(const Container<ValueType> &lstSource, uint32 nStart, uint32 nCount)
   -> GCC found it
+- When using "StringBuffer::GetNumOfBytes()" one has now to specify the internal string format. The previous approach was highly dangerous leading in worst case
+  bug combination within a buffer overflow.
 PLFrontendQt:
 - Replaced the "SelectSceneNode" broadcast by the more generic "SelectObject"
 - "DockWidgetSceneGraph::QtSlotTreeViewDoubleClicked()" now also reacts on selected scene node modifier
