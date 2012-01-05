@@ -89,6 +89,14 @@ String SystemAndroid::GetPlatform() const
 	return sString;
 }
 
+String SystemAndroid::GetModuleFilenameByMemoryAddress(const void *pMemoryAddress) const
+{
+	// [TODO] Test whether or not the Linux implementaton works (compiles and runs correctly) for Android as well
+	// -> Compiled when using the Android NDK, but when running it on the device it freezed while loading
+	//    the "PLCore.so" shared library. Check this in detail.
+	return "";
+}
+
 const Console &SystemAndroid::GetConsole() const
 {
 	return g_bConsoleToKernelLog ? m_cConsole : SystemLinux::m_cConsole;
