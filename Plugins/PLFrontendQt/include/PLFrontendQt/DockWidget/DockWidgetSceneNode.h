@@ -78,7 +78,7 @@ class DockWidgetSceneNode : public DockWidgetScene {
 		pl_properties_end
 		#ifdef PLFRONTENDQT_EXPORTS	// The following is only required when compiling PLFrontendQt
 			// Methods
-			pl_method_1(SelectSceneNode,	pl_ret_type(void),	PLScene::SceneNode*,	"Selects the given scene node. Scene node to select as first parameter.",	"")
+			pl_method_1(SelectObject,	pl_ret_type(void),	PLCore::Object*,	"Selects the given object. Object to select as first parameter.",	"")
 		#endif
 		// Constructors
 		pl_constructor_2(DefaultConstructor,	QMainWindow*,	DockWidgetManager*,	"Constructor with a pointer to the Qt main window as first parameter, pointer to the dock widget manager this dock widget should be registered to as second parameter",	"")
@@ -110,12 +110,12 @@ class DockWidgetSceneNode : public DockWidgetScene {
 
 		/**
 		*  @brief
-		*    Selects the given scene node
+		*    Selects the given object
 		*
-		*  @param[in] pSceneNode
-		*    Scene node to select, can be a null pointer
+		*  @param[in] pObject
+		*    Object to select, can be a null pointer
 		*/
-		PLFRONTENDQT_API void SelectSceneNode(PLScene::SceneNode *pSceneNode);
+		PLFRONTENDQT_API void SelectObject(PLCore::Object *pObject);
 
 
 	//[-------------------------------------------------------]

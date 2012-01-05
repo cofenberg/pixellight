@@ -106,11 +106,17 @@ DockWidgetSceneGraph::~DockWidgetSceneGraph()
 
 /**
 *  @brief
-*    Selects the given scene node
+*    Selects the given object
 */
-void DockWidgetSceneGraph::SelectSceneNode(SceneNode *pSceneNode)
+void DockWidgetSceneGraph::SelectObject(Object *pObject)
 {
-	// [TODO] Select the given scene node within the scene graph tree view
+	// We only know "PLScene::SceneNode"
+	SceneNode *pSceneNode = nullptr;
+	if (pObject && pObject->IsInstanceOf("PLScene::SceneNode"))
+		pSceneNode = static_cast<SceneNode*>(pObject);
+	if (pSceneNode) {
+		// [TODO] Select the given scene node within the scene graph tree view
+	}
 }
 
 
@@ -139,7 +145,7 @@ void DockWidgetSceneGraph::QtSlotTreeViewDoubleClicked(const QModelIndex &cQMode
 		SceneNode *pSceneNode = m_pSceneGraphTreeModel->GetSceneNodeFromIndex(cQModelIndex);
 
 		// Perform a dock widget manager broadcast (excludes this emitting dock widget)
-		CallDockWidgetsMethod("SelectSceneNode", Params<void, SceneNode*>(pSceneNode));
+		CallDockWidgetsMethod("SelectObject", Params<void, Object*>(pSceneNode));
 	}
 }
 

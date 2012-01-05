@@ -1,3 +1,10 @@
+>> 05.01.2012
+[CO]
+PLViewerQt:
+- Replaced the "SelectSceneNode" broadcast by the more generic "SelectObject"
+
+
+
 >> 03.01.2012
 [CO]
 PLViewerQt:

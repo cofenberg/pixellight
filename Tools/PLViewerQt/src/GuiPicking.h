@@ -60,7 +60,7 @@ class GuiPicking : public PLFrontendQt::DockWidget, public PLEngine::MousePickin
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, GuiPicking, "", PLFrontendQt::DockWidget, "Picking & selection application component")
 		// Methods
-		pl_method_1(SelectSceneNode,	pl_ret_type(void),	PLScene::SceneNode*,	"Selects the given scene node. Scene node to select as first parameter.",	"")
+		pl_method_1(SelectObject,	pl_ret_type(void),	PLCore::Object*,	"Selects the given object. Object to select as first parameter.",	"")
 	pl_class_end
 
 
@@ -114,12 +114,12 @@ class GuiPicking : public PLFrontendQt::DockWidget, public PLEngine::MousePickin
 
 		/**
 		*  @brief
-		*    Selects the given scene node
+		*    Selects the given object
 		*
-		*  @param[in] pSceneNode
-		*    Scene node to select, can be a null pointer
+		*  @param[in] pObject
+		*    Object to select, can be a null pointer
 		*/
-		void SelectSceneNode(PLScene::SceneNode *pSceneNode);
+		void SelectObject(PLCore::Object *pObject);
 
 		/**
 		*  @brief

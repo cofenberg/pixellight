@@ -74,7 +74,7 @@ DockWidgetSceneNode::DockWidgetSceneNode(QMainWindow *pQMainWindow, DockWidgetMa
 			CoreApplication *pApplication = CoreApplication::GetApplication();
 			if (pApplication && pApplication->IsInstanceOf("PLEngine::EngineApplication"))
 				pSceneNode = reinterpret_cast<SceneNode*>(static_cast<PLEngine::EngineApplication*>(pApplication)->GetScene());
-			SelectSceneNode(pSceneNode);
+			SelectObject(pSceneNode);
 		}
 
 		// Add the created Qt dock widget to the given Qt main window
@@ -92,12 +92,17 @@ DockWidgetSceneNode::~DockWidgetSceneNode()
 
 /**
 *  @brief
-*    Selects the given scene node
+*    Selects the given object
 */
-void DockWidgetSceneNode::SelectSceneNode(SceneNode *pSceneNode)
+void DockWidgetSceneNode::SelectObject(Object *pObject)
 {
 	// Is there a scene node info model instance?
 	if (m_pSceneNodeInfoModel) {
+		// We only know "PLScene::SceneNode"
+		SceneNode *pSceneNode = nullptr;
+		if (pObject && pObject->IsInstanceOf("PLScene::SceneNode"))
+			pSceneNode = static_cast<SceneNode*>(pObject);
+
 		// Disconnect event handler
 		if (m_pSceneNodeInfoModel->GetSceneNode())
 			m_pSceneNodeInfoModel->GetSceneNode()->SignalDestroy.Disconnect(SlotOnDestroy);
@@ -134,8 +139,8 @@ void DockWidgetSceneNode::SelectSceneNode(SceneNode *pSceneNode)
 void DockWidgetSceneNode::OnDestroy()
 {
 	// Argh! Mayday! We lost our scene node!
-	// -> Now no scene node is currently selected
-	SelectSceneNode(nullptr);
+	// -> Now no object is currently selected
+	SelectObject(nullptr);
 }
 
 

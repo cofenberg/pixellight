@@ -133,10 +133,15 @@ SceneNode *GuiPicking::PerformPicking()
 
 /**
 *  @brief
-*    Selects the given scene node
+*    Selects the given object
 */
-void GuiPicking::SelectSceneNode(SceneNode *pSceneNode)
+void GuiPicking::SelectObject(Object *pObject)
 {
+	// We only know "PLScene::SceneNode"
+	SceneNode *pSceneNode = nullptr;
+	if (pObject && pObject->IsInstanceOf("PLScene::SceneNode"))
+		pSceneNode = static_cast<SceneNode*>(pObject);
+
 	// Get the previously selected scene node
 	SceneNode *pPreviousSceneNode = m_cCurrentSelectedSceneNodeHandler.GetElement();
 

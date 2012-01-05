@@ -188,7 +188,7 @@ bool Gui::eventFilter(QObject *pQObject, QEvent *pQEvent)
 					SceneNode *pSceneNode = m_pGuiPicking->PerformPicking();
 
 					// Perform a dock widget manager broadcast
-					pFrontendMainWindow->GetDockWidgetManager().CallDockWidgetsMethod("SelectSceneNode", Params<void, SceneNode*>(pSceneNode));
+					pFrontendMainWindow->GetDockWidgetManager().CallDockWidgetsMethod("SelectObject", Params<void, Object*>(pSceneNode));
 
 					// Done - filter the event out, i.e. stop it being handled further
 					return true;
@@ -483,7 +483,7 @@ void Gui::QtSlotSelectedWindow(QAction *pQAction)
 
 			// Wellcome our new friend by telling him about the currently selected scene node, he may be interested in it
 			if (m_pGuiPicking)
-				pDockWidget->CallMethod("SelectSceneNode", Params<void, SceneNode*>(m_pGuiPicking->GetSelectedSceneNode()));
+				pDockWidget->CallMethod("SelectObject", Params<void, Object*>(m_pGuiPicking->GetSelectedSceneNode()));
 		}
 	}
 }
