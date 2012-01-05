@@ -208,6 +208,9 @@
     <ClCompile Include="build\GeneratedQtFiles\moc_RTTIBrowserWidget.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_DockWidgetSceneRenderer.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarTreeItemsFactory.h">
@@ -244,9 +247,6 @@
       <Filter>DockWidget</Filter>
     </ClInclude>
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetScene.h">
-      <Filter>DockWidget</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneRenderer.h">
       <Filter>DockWidget</Filter>
     </ClInclude>
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetManager.h">
@@ -388,6 +388,9 @@
     </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\Widget\RTTIBrowserWidget.h">
       <Filter>Widget</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DockWidget\DockWidgetSceneRenderer.h">
+      <Filter>DockWidget</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

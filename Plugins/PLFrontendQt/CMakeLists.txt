@@ -79,6 +79,7 @@ SET(INC_FILES
 	include/PLFrontendQt/Widget/ClassInfoWidget.h
 	include/PLFrontendQt/Widget/RTTIBrowserWidget.h
 	include/PLFrontendQt/DockWidget/DockWidgetSceneGraph.h
+	include/PLFrontendQt/DockWidget/DockWidgetSceneRenderer.h
 )
 
 # Qt .ui files

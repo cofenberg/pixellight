@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <QtGui/qevent.h>
 #include <QtGui/qtreeview.h>
 #include <QtGui/qdockwidget.h>
 #include <QtGui/qmainwindow.h>
@@ -69,25 +70,11 @@ DockWidgetSceneRenderer::DockWidgetSceneRenderer(QMainWindow *pQMainWindow, Dock
 		pQTreeView->setModel(m_pSceneRendererDataModel);
 		pQTreeView->expandToDepth(0);
 
-		// Set a default scene renderer to have a decent standard behaviour
-		SceneRenderer *pSceneRenderer = nullptr;
-		{
-			CoreApplication *pApplication = CoreApplication::GetApplication();
-			if (pApplication && pApplication->IsInstanceOf("PLEngine::EngineApplication"))
-				pSceneRenderer = static_cast<PLEngine::EngineApplication*>(pApplication)->GetSceneRendererTool().GetSceneRenderer();
-			SelectSceneRenderer(pSceneRenderer);
-		}
-
-		// Set window title
-		QString sQStringWindowTitle = pQDockWidget->tr(GetClass()->GetProperties().Get("Title"));
-		if (pSceneRenderer) {
-			sQStringWindowTitle += ": ";
-			sQStringWindowTitle += QtStringAdapter::PLToQt('\"' + pSceneRenderer->GetName() + '\"');	// Put it into quotes to make it possible to see e.g. trailing spaces
-		}
-		pQDockWidget->setWindowTitle(sQStringWindowTitle);
-
 		// Add the created Qt dock widget to the given Qt main window
 		pQMainWindow->addDockWidget(Qt::BottomDockWidgetArea, pQDockWidget);
+
+		// This Qt object should receive events from the encapsulated Qt dock widget
+		pQDockWidget->installEventFilter(this);
 	}
 }
 
@@ -97,6 +84,46 @@ DockWidgetSceneRenderer::DockWidgetSceneRenderer(QMainWindow *pQMainWindow, Dock
 */
 DockWidgetSceneRenderer::~DockWidgetSceneRenderer()
 {
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual QObject methods                        ]
+//[-------------------------------------------------------]
+bool DockWidgetSceneRenderer::eventFilter(QObject *pQObject, QEvent *pQEvent)
+{
+	// Widget is shown (do only take it into account if there's a valid scene renderer model instance)
+	if (m_pSceneRendererDataModel && pQEvent->type() == QEvent::Show) {
+		// Get encapsulated Qt dock widget
+		QDockWidget *pQDockWidget = GetQDockWidget();
+		if (pQObject == GetQDockWidget()) {
+			// The encapsulated Qt dock widget is shown, ensure that we have a scene renderer
+			if (!m_pSceneRendererDataModel->GetSceneRenderer()) {
+				// Set a default scene renderer to have a decent standard behaviour
+				SceneRenderer *pSceneRenderer = nullptr;
+				{
+					CoreApplication *pApplication = CoreApplication::GetApplication();
+					if (pApplication && pApplication->IsInstanceOf("PLEngine::EngineApplication"))
+						pSceneRenderer = static_cast<PLEngine::EngineApplication*>(pApplication)->GetSceneRendererTool().GetSceneRenderer();
+					SelectSceneRenderer(pSceneRenderer);
+				}
+
+				// Set window title
+				QString sQStringWindowTitle = pQDockWidget->tr(GetClass()->GetProperties().Get("Title"));
+				if (pSceneRenderer) {
+					sQStringWindowTitle += ": ";
+					sQStringWindowTitle += QtStringAdapter::PLToQt('\"' + pSceneRenderer->GetName() + '\"');	// Put it into quotes to make it possible to see e.g. trailing spaces
+				}
+				pQDockWidget->setWindowTitle(sQStringWindowTitle);
+			}
+
+			// Done - filter the event out, i.e. stop it being handled further
+			return true;
+		}
+	}
+
+	// Pass the event on to the parent class
+	return QObject::eventFilter(pQObject, pQEvent);
 }
 
 
@@ -112,6 +139,11 @@ void DockWidgetSceneRenderer::OnDestroyed()
 	// Argh! Mayday! We lost our scene renderer!
 	// -> Now no scene renderer is currently selected
 	SelectSceneRenderer(nullptr);
+
+	// Get encapsulated Qt dock widget and hide it, it will get refreshed automatically when the encapsulated Qt dock widget is shown again
+	QDockWidget *pQDockWidget = GetQDockWidget();
+	if (pQDockWidget)
+		pQDockWidget->hide();
 }
 
 /**

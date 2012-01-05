@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <QtCore/qobject.h>
 #include "PLFrontendQt/DockWidget/DockWidgetScene.h"
 
 
@@ -37,6 +38,9 @@
 QT_BEGIN_NAMESPACE
 	class QMainWindow;
 QT_END_NAMESPACE
+namespace PLScene {
+	class SceneRenderer;
+}
 namespace PLFrontendQt {
 	namespace DataModels {
 		namespace SceneRendererDataModel {
@@ -64,7 +68,14 @@ namespace PLFrontendQt {
 *    - By default, the "PLEngine::EngineApplication::GetSceneRendererTool()::GetSceneRenderer()" scene renderer is
 *      used, but only if "PLCore::CoreApplication::GetApplication()" is an "PLEngine::EngineApplication"-instance
 */
-class DockWidgetSceneRenderer : public DockWidgetScene {
+class DockWidgetSceneRenderer : public QObject, public DockWidgetScene {
+
+
+	//[-------------------------------------------------------]
+	//[ Qt definitions (MOC)                                  ]
+	//[-------------------------------------------------------]
+	Q_OBJECT	// All files using the Q_OBJECT macro need to be compiled using the Meta-Object Compiler (MOC) of Qt, else slots won't work!
+				// (VisualStudio: Header file -> Right click -> Properties -> "Custom Build Tool")
 
 
 	//[-------------------------------------------------------]
@@ -102,6 +113,13 @@ class DockWidgetSceneRenderer : public DockWidgetScene {
 		*    Destructor
 		*/
 		PLFRONTENDQT_API virtual ~DockWidgetSceneRenderer();
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual QObject methods                        ]
+	//[-------------------------------------------------------]
+	public:
+		virtual bool eventFilter(QObject *pQObject, QEvent *pQEvent);
 
 
 	//[-------------------------------------------------------]
