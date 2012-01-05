@@ -1,4 +1,10 @@
 >> 05.01.2012
+[SW]
+- PLFrontendQt: the items in the ClassInfoModel now shows a proper Tooltip
+    (except for properties they are only a key value pair and i doubt that the default value is interresting in this case)
+
+
+>> 05.01.2012
 [CO]
 - Added "Object::SignalDestroyed"-signal which is emitted when the object is destroyed. This means 8 additional bytes per "PLCore::Object"-instance on a 32 bit machine,
   but I was unable to think of any other decent way for this. There are situations were one needs to know when an RTTI object has been killed. An example for such a

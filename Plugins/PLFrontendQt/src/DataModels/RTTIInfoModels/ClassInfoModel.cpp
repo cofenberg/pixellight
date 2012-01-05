@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <QtCore//QStringList>
+#include <QtCore/QStringList>
 #include <PLCore/Base/Class.h>
 #include <PLCore/Base/Var/VarDesc.h>
 #include <PLCore/Base/Event/EventDesc.h>
@@ -31,7 +31,7 @@
 #include <PLCore/Base/Func/FuncDesc.h>
 #include <PLCore/Base/Func/ConstructorDesc.h>
 #include "PLFrontendQt/QtStringAdapter.h"
-#include <PLFrontendQt/DataModels/TreeItemBase.h>
+#include "PLFrontendQt/DataModels/TreeItemBase.h"
 #include "PLFrontendQt/DataModels/HeaderTreeItem.h"
 #include "PLFrontendQt/DataModels/RTTIInfoModels/ClassInfoModel.h"
 
@@ -162,149 +162,80 @@ class ClassInfoCategoryTreeItem : public TreeItemBase {
 
 };
 
-class ClassInfoAttributeTreeItem : public TreeItemBase {
+template<class T>
+class ClassInfoTreeItemBase : public TreeItemBase {
 
 
 	public:
-		ClassInfoAttributeTreeItem(const VarDesc &cVarDesc, QObject *parent = nullptr) : TreeItemBase(3, parent),
+		ClassInfoTreeItemBase(const T &cVarDesc, QObject *parent = nullptr) : TreeItemBase(1, parent),
 			m_sName(QtStringAdapter::PLToQt(cVarDesc.GetName())),
-			m_sTypeName(QtStringAdapter::PLToQt(cVarDesc.GetTypeName())),
 			m_sDescription(QtStringAdapter::PLToQt(cVarDesc.GetDescription()))
 		{
 		}
 
 		virtual QVariant data(const int column, const int role) override
 		{
-			if (role == Qt::DisplayRole || role == Qt::ToolTipRole) {
-				if (column == 0)
-					return m_sName;
-				else if (column == 1)
-					return m_sTypeName;
-				else if (column == 2)
-					return m_sDescription;
-			}
-
-			return QVariant();
-		}
-
-
-	private:
-		QString m_sName;
-		QString m_sTypeName;
-		QString m_sDescription;
-
-
-};
-
-class ClassInfoMemberDescTreeItem : public TreeItemBase {
-
-
-	public:
-		ClassInfoMemberDescTreeItem(const MemberDesc &cMemberDesc, QObject *parent = nullptr) : TreeItemBase(2, parent),
-			m_sName(QtStringAdapter::PLToQt(cMemberDesc.GetName())),
-			m_sDescription(QtStringAdapter::PLToQt(cMemberDesc.GetDescription())),
-			m_sMemberType(GetMemberTypeString(cMemberDesc.GetMemberType()))
-		{
-		}
-
-		virtual QVariant data(const int column, const int role) override
-		{
-			if (role == Qt::DisplayRole || role == Qt::ToolTipRole) {
-				if (column == 0)
-					return m_sName;
-				else if (column == 1)
-					return m_sDescription;
-			}
+			if (column > 0)
+				return QVariant();
 			
+			if (role == Qt::DisplayRole) {
+				return m_sName;
+			}
+			else if( role == Qt::ToolTipRole) {
+				return m_sToolTip;
+			}
+
 			return QVariant();
 		}
 
-
-	private:
-		QString GetMemberTypeString(EMemberType memberType)
+	protected:
+		void SetToolTipText(const QString &toolTipText)
 		{
-			switch (memberType) {
-				case MemberAttribute:
-					return tr("Attribute");
-
-				case MemberConstructor:
-					return tr("Constructor");
-
-				case MemberEvent:
-					return tr("Signal");
-
-				case MemberEventHandler:
-					return tr("Slot");
-
-				case MemberMethod:
-					return tr("Method");
-
-				default:
-					return QString();
-			}
+			m_sToolTip = toolTipText;
 		}
 
-
-	private:
+	protected:
 		QString m_sName;
 		QString m_sDescription;
-		QString m_sMemberType;
-
-
+		QString m_sToolTip;
 };
 
-class ClassInfoConstructorDescTreeItem : public ClassInfoMemberDescTreeItem {
+class ClassInfoAttributeTreeItem : public ClassInfoTreeItemBase<VarDesc> {
 
 
 	public:
-		ClassInfoConstructorDescTreeItem(const ConstructorDesc &cMemberDesc, QObject *parent = nullptr) : ClassInfoMemberDescTreeItem(cMemberDesc, parent),
+		ClassInfoAttributeTreeItem(const VarDesc &cVarDesc, QObject *parent = nullptr) : ClassInfoTreeItemBase(cVarDesc, parent)
+		{
+			SetToolTipText(tr("<table>"
+							"<tr><td bgcolor=#00ff00 colspan=\"2\">Attribute Information</td></tr>"
+							"<tr><td>Name: </td><td>%1</td></tr>"
+							"<tr><td>Description: </td><td>%2</td></tr>"
+							"</table>").arg(m_sName, m_sDescription));
+		}
+};
+
+template<class T>
+class ClassInfoMemberWithSignatureDescTreeItem : public ClassInfoTreeItemBase<MemberDesc> {
+
+
+	public:
+		ClassInfoMemberWithSignatureDescTreeItem(const QString tooltipTitle, const T &cMemberDesc, QObject *parent = nullptr) :
+			ClassInfoTreeItemBase(cMemberDesc, parent),
 			m_sSignature(QtStringAdapter::PLToQt(cMemberDesc.GetSignature()))
 		{
+			SetToolTipText(tr("<table>"
+							"<tr><td bgcolor=#00ff00 colspan=\"2\">%1 Information</td></tr>"
+							"<tr><td>Name: </td><td>%2</td></tr>"
+							"<tr><td>Description: </td><td>%3</td></tr>"
+							"<tr><td>Signature: </td><td>%4</td></tr>"
+							"</table>").arg(tooltipTitle, m_sName, m_sDescription, m_sSignature));
 		}
-
-		virtual QVariant data(const int column, const int role) override
-		{
-			if (role == Qt::ToolTipRole) {
-				if (column == 0)
-					return m_sSignature;
-			}
-			
-			return ClassInfoMemberDescTreeItem::data(column, role);
-		}
-
 
 	private:
 		QString m_sSignature;
 
 
 };
-
-class ClassInfoMethodDescTreeItem : public ClassInfoMemberDescTreeItem {
-
-
-	public:
-		ClassInfoMethodDescTreeItem(const FuncDesc &cMemberDesc, QObject *parent = nullptr) : ClassInfoMemberDescTreeItem(cMemberDesc, parent),
-			m_sSignature(QtStringAdapter::PLToQt(cMemberDesc.GetSignature()))
-		{
-		}
-
-		virtual QVariant data(const int column, const int role) override
-		{
-			if (role == Qt::ToolTipRole) {
-				if (column == 0)
-					return m_sSignature;
-			}
-			
-			return ClassInfoMemberDescTreeItem::data(column, role);
-		}
-
-
-	private:
-		QString m_sSignature;
-
-
-};
-
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
@@ -365,15 +296,15 @@ void ClassInfoModel::SetClassItem(const Class &cClass)
 	// Add slots
 	const List<EventHandlerDesc*> &cSlots = cClass.GetSlots();
 	for (uint32 i=0; i<cSlots.GetNumOfElements(); ++i) {
-		MemberDesc *pVarDesc = cSlots[i];
-		new ClassInfoMemberDescTreeItem(*pVarDesc, m_pSlotsCategory);
+		EventHandlerDesc *pVarDesc = cSlots[i];
+		new ClassInfoMemberWithSignatureDescTreeItem<EventHandlerDesc>(tr("Slot"), *pVarDesc, m_pSlotsCategory);
 	}
 
 	// Add signals
 	const List<EventDesc*> &cSignals = cClass.GetSignals();
 	for (uint32 i=0; i<cSignals.GetNumOfElements(); ++i) {
-		MemberDesc *pVarDesc = cSignals[i];
-		new ClassInfoMemberDescTreeItem(*pVarDesc, m_pSignalsCategory);
+		EventDesc *pVarDesc = cSignals[i];
+		new ClassInfoMemberWithSignatureDescTreeItem<EventDesc>(tr("Signal"), *pVarDesc, m_pSignalsCategory);
 	}
 
 	// Add properties
@@ -388,14 +319,14 @@ void ClassInfoModel::SetClassItem(const Class &cClass)
 	const List<ConstructorDesc*> &cConstructors = cClass.GetConstructors();
 	for (uint32 i=0; i<cConstructors.GetNumOfElements(); ++i) {
 		ConstructorDesc *pVarDesc = cConstructors[i];
-		new ClassInfoConstructorDescTreeItem(*pVarDesc, m_pConstructorsCategory);
+		new ClassInfoMemberWithSignatureDescTreeItem<ConstructorDesc>(tr("Constructor"), *pVarDesc, m_pConstructorsCategory);
 	}
 
 	// Add methods
 	const List<FuncDesc*> &cMethods = cClass.GetMethods();
 	for (uint32 i=0; i<cMethods.GetNumOfElements(); ++i) {
 		FuncDesc *pVarDesc = cMethods[i];
-		new ClassInfoMethodDescTreeItem(*pVarDesc, m_pMethodsCategory);
+		new ClassInfoMemberWithSignatureDescTreeItem<FuncDesc>(tr("Method"), *pVarDesc, m_pMethodsCategory);
 	}
 
 	endResetModel();
