@@ -27,13 +27,26 @@ namespace PLFrontendQt {
 
 
 //[-------------------------------------------------------]
+//[ Public functions                                      ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Returns the list of registered dock widgets
+*/
+inline const PLCore::Array<DockWidget*> &DockWidgetManager::GetDockWidgets() const
+{
+	return m_lstDockWidgets;
+}
+
+
+//[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Registers the given dock widget within this dock widget manager
 */
-void DockWidgetManager::RegisterDockWidget(DockWidget &cDockWidget)
+inline void DockWidgetManager::RegisterDockWidget(DockWidget &cDockWidget)
 {
 	// Add the given dock widget to the list of registered dock widgets
 	m_lstDockWidgets.Add(&cDockWidget);
@@ -43,7 +56,7 @@ void DockWidgetManager::RegisterDockWidget(DockWidget &cDockWidget)
 *  @brief
 *    Unregisters the given dock widget within this dock widget manager
 */
-void DockWidgetManager::UnregisterDockWidget(DockWidget &cDockWidget)
+inline void DockWidgetManager::UnregisterDockWidget(DockWidget &cDockWidget)
 {
 	// Remove the given dock widget from the list of registered dock widgets
 	m_lstDockWidgets.Remove(&cDockWidget);

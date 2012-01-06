@@ -116,6 +116,22 @@ DockWidget::~DockWidget()
 
 /**
 *  @brief
+*    Returns a list of dock widgets registered within the same dock widget manager this dock widget is in
+*/
+const Array<DockWidget*> &DockWidget::GetFellowDockWidgets() const
+{
+	// If there's a dock widget manager provided, return it's dock widget list
+	if (m_pDockWidgetManager) {
+		return m_pDockWidgetManager->GetDockWidgets();
+	} else {
+		// We need to return anything decent (we don't want to return a pointer, because the user would have to check for a null pointer which is annoying)
+		static const Array<DockWidget*> lstEmpty;
+		return lstEmpty;
+	}
+}
+
+/**
+*  @brief
 *    Returns whether or not the encapsulated Qt dock widget is currently visible
 */
 bool DockWidget::IsQDockWidgetVisible() const

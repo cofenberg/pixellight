@@ -86,7 +86,8 @@ class DockWidgetSceneGraph : public QObject, public DockWidgetScene {
 		pl_properties_end
 		#ifdef PLFRONTENDQT_EXPORTS	// The following is only required when compiling PLFrontendQt
 			// Methods
-			pl_method_1(SelectObject,	pl_ret_type(void),	PLCore::Object*,	"Selects the given object. Object to select as first parameter.",	"")
+			pl_method_0(GetSelectedObject,	pl_ret_type(PLCore::Object*),						"Returns the currently selected object, can be a null pointer.",	"")
+			pl_method_1(SelectObject,		pl_ret_type(void),				PLCore::Object*,	"Selects the given object. Object to select as first parameter.",	"")
 		#endif
 		// Constructors
 		pl_constructor_2(DefaultConstructor,	QMainWindow*,	DockWidgetManager*,	"Constructor with a pointer to the Qt main window as first parameter, pointer to the dock widget manager this dock widget should be registered to as second parameter",	"")
@@ -115,6 +116,15 @@ class DockWidgetSceneGraph : public QObject, public DockWidgetScene {
 		*    Destructor
 		*/
 		PLFRONTENDQT_API virtual ~DockWidgetSceneGraph();
+
+		/**
+		*  @brief
+		*    Returns the currently selected object
+		*
+		*  @return
+		*    The currently selected object, can be a null pointer
+		*/
+		PLFRONTENDQT_API PLCore::Object *GetSelectedObject() const;
 
 		/**
 		*  @brief

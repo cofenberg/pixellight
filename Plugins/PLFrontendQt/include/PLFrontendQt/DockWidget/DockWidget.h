@@ -122,6 +122,16 @@ class DockWidget : public PLCore::Object {
 
 		/**
 		*  @brief
+		*    Returns a list of dock widgets registered within the same dock widget manager this dock widget is in
+		*
+		*  @return
+		*    A list of dock widgets registered within the same dock widget manager this dock widget is in,
+		*    empty list if there's no dock widget manager
+		*/
+		PLFRONTENDQT_API const PLCore::Array<DockWidget*> &GetFellowDockWidgets() const;
+
+		/**
+		*  @brief
 		*    Returns the encapsulated Qt dock widget
 		*
 		*  @return
