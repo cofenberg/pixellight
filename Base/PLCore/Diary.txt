@@ -1,3 +1,9 @@
+>> 06.01.2012
+[CO]
+- "RegEx::Match()": Added early escape test: In case we try matching when we are already at the end of the string, we know the result without doing any matches
+
+
+
 >> 05.01.2012
 [SW]
 - PLFrontendQt: the items in the ClassInfoModel now shows a proper Tooltip

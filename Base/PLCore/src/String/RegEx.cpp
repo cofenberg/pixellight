@@ -183,140 +183,143 @@ bool RegEx::Match(const String &sSubject, uint32 nPosition)
 		// Clear results of last operation
 		ClearResults();
 
-		// Use ASCII or UTF8 encoding?
-		if (m_nFlags & EncodingUTF8) {
-			// Match pattern
-			int nMatches[VecSize];
-			int nMatchCount = pcre_exec(
-								m_pPCRE,								// PCRE expression
-								m_pExtra,								// Extra data
-								sSubject.GetUTF8(),						// Subject string
-								sSubject.GetNumOfBytes(String::UTF8),	// Subject length in bytes
-								nPosition,								// Start at byte position
-								0,										// Default options
-								nMatches,								// Output vector with offsets in bytes
-								VecSize									// Size of output vector
-							  );
+		// Early escape test: In case we try matching when we are already at the end of the string, we know the result without doing any matches
+		if (nPosition < sSubject.GetLength()) {
+			// Use ASCII or UTF8 encoding?
+			if (m_nFlags & EncodingUTF8) {
+				// Match pattern
+				int nMatches[VecSize];
+				int nMatchCount = pcre_exec(
+									m_pPCRE,								// PCRE expression
+									m_pExtra,								// Extra data
+									sSubject.GetUTF8(),						// Subject string
+									sSubject.GetNumOfBytes(String::UTF8),	// Subject length in bytes
+									nPosition,								// Start at byte position
+									0,										// Default options
+									nMatches,								// Output vector with offsets in bytes
+									VecSize									// Size of output vector
+									);
 
-			// Output vector too small?
-			if (nMatchCount == 0) {
-				// Allocate big enough output vector and retry
-				// [TODO]
-				nMatchCount = MaxGroups;
-			}
-
-			// Check result
-			if (nMatchCount > 0) {
-				// Save new byte byte position within the string
-				m_nPosition = nMatches[1];
-
-				// Get pointer to subject string
-				const char *pszSubject = sSubject.GetUTF8();
-
-				// Save matching substrings by index
-				m_lstGroups.Resize(nMatchCount-1);
-				for (int i=1; i<nMatchCount; i++)
-					m_lstGroups[i-1].Copy(&pszSubject[nMatches[i*2]], nMatches[i*2+1] - nMatches[i*2]);
-
-				// Get named groups
-				int nNameCount;
-				pcre_fullinfo(m_pPCRE, m_pExtra, PCRE_INFO_NAMECOUNT, &nNameCount);
-				const char *pszNameTable;
-				pcre_fullinfo(m_pPCRE, m_pExtra, PCRE_INFO_NAMETABLE, &pszNameTable);
-				int nNameEntrySize;
-				pcre_fullinfo(m_pPCRE, m_pExtra, PCRE_INFO_NAMEENTRYSIZE, &nNameEntrySize);
-
-				// Return matching substrings by name
-				for (int i=0; i<nNameCount; i++) {
-					// Get pointer to current entry
-					const char *pszEntry = &pszNameTable[i*nNameEntrySize];
-
-					// Get number
-					const int nNum = (pszEntry[0] << 8) | pszEntry[1];
-
-					// Get name
-					const String sName = String::FromUTF8(&pszEntry[2]);
-
-					// Get substring
-					const int nIndex0 = nMatches[nNum*2];
-					const int nIndex1 = nMatches[nNum*2+1];
-
-					// Add name->substring to map
-					if (nIndex0 >= 0 && nIndex1 >= 0)
-						m_mapGroups.Add(sName, String::FromUTF8(&pszSubject[nIndex0], 0, nIndex1 - nIndex0));
-					else
-						m_mapGroups.Add(sName, "");
+				// Output vector too small?
+				if (nMatchCount == 0) {
+					// Allocate big enough output vector and retry
+					// [TODO]
+					nMatchCount = MaxGroups;
 				}
 
-				// Done
-				return true;
-			}
-		} else {
-			// Match pattern
-			int nMatches[VecSize];
-			int nMatchCount = pcre_exec(
-								m_pPCRE,								// PCRE expression
-								m_pExtra,								// Extra data
-								sSubject.GetASCII(),					// Subject string
-								sSubject.GetNumOfBytes(String::ASCII),	// Subject length in bytes
-								nPosition,								// Start at byte position
-								0,										// Default options
-								nMatches,								// Output vector with offsets in bytes
-								VecSize									// Size of output vector
-							  );
+				// Check result
+				if (nMatchCount > 0) {
+					// Save new byte byte position within the string
+					m_nPosition = nMatches[1];
 
-			// Output vector too small?
-			if (nMatchCount == 0) {
-				// Allocate big enough output vector and retry
-				// [TODO]
-				nMatchCount = MaxGroups;
-			}
+					// Get pointer to subject string
+					const char *pszSubject = sSubject.GetUTF8();
 
-			// Check result
-			if (nMatchCount > 0) {
-				// Save new byte position within the string
-				m_nPosition = nMatches[1];
+					// Save matching substrings by index
+					m_lstGroups.Resize(nMatchCount-1);
+					for (int i=1; i<nMatchCount; i++)
+						m_lstGroups[i-1].Copy(&pszSubject[nMatches[i*2]], nMatches[i*2+1] - nMatches[i*2]);
 
-				// Get pointer to subject string
-				const char *pszSubject = sSubject.GetASCII();
+					// Get named groups
+					int nNameCount;
+					pcre_fullinfo(m_pPCRE, m_pExtra, PCRE_INFO_NAMECOUNT, &nNameCount);
+					const char *pszNameTable;
+					pcre_fullinfo(m_pPCRE, m_pExtra, PCRE_INFO_NAMETABLE, &pszNameTable);
+					int nNameEntrySize;
+					pcre_fullinfo(m_pPCRE, m_pExtra, PCRE_INFO_NAMEENTRYSIZE, &nNameEntrySize);
 
-				// Save matching substrings by index
-				m_lstGroups.Resize(nMatchCount-1);
-				for (int i=1; i<nMatchCount; i++)
-					m_lstGroups[i-1].Copy(&pszSubject[nMatches[i*2]], nMatches[i*2+1] - nMatches[i*2]);
+					// Return matching substrings by name
+					for (int i=0; i<nNameCount; i++) {
+						// Get pointer to current entry
+						const char *pszEntry = &pszNameTable[i*nNameEntrySize];
 
-				// Get named groups
-				int nNameCount;
-				pcre_fullinfo(m_pPCRE, m_pExtra, PCRE_INFO_NAMECOUNT, &nNameCount);
-				const char *pszNameTable;
-				pcre_fullinfo(m_pPCRE, m_pExtra, PCRE_INFO_NAMETABLE, &pszNameTable);
-				int nNameEntrySize;
-				pcre_fullinfo(m_pPCRE, m_pExtra, PCRE_INFO_NAMEENTRYSIZE, &nNameEntrySize);
+						// Get number
+						const int nNum = (pszEntry[0] << 8) | pszEntry[1];
 
-				// Return matching substrings by name
-				for (int i=0; i<nNameCount; i++) {
-					// Get pointer to current entry
-					const char *pszEntry = &pszNameTable[i*nNameEntrySize];
+						// Get name
+						const String sName = String::FromUTF8(&pszEntry[2]);
 
-					// Get number
-					const int nNum = (pszEntry[0] << 8) | pszEntry[1];
+						// Get substring
+						const int nIndex0 = nMatches[nNum*2];
+						const int nIndex1 = nMatches[nNum*2+1];
 
-					// Get name
-					const String sName = &pszEntry[2];
+						// Add name->substring to map
+						if (nIndex0 >= 0 && nIndex1 >= 0)
+							m_mapGroups.Add(sName, String::FromUTF8(&pszSubject[nIndex0], 0, nIndex1 - nIndex0));
+						else
+							m_mapGroups.Add(sName, "");
+					}
 
-					// Get substring
-					const int nIndex0 = nMatches[nNum*2];
-					const int nIndex1 = nMatches[nNum*2+1];
+					// Done
+					return true;
+				}
+			} else {
+				// Match pattern
+				int nMatches[VecSize];
+				int nMatchCount = pcre_exec(
+									m_pPCRE,								// PCRE expression
+									m_pExtra,								// Extra data
+									sSubject.GetASCII(),					// Subject string
+									sSubject.GetNumOfBytes(String::ASCII),	// Subject length in bytes
+									nPosition,								// Start at byte position
+									0,										// Default options
+									nMatches,								// Output vector with offsets in bytes
+									VecSize									// Size of output vector
+									);
 
-					// Add name->substring to map
-					if (nIndex0 >= 0 && nIndex1 >= 0)
-						m_mapGroups.Add(sName, String(&pszSubject[nIndex0], true, nIndex1 - nIndex0));
-					else
-						m_mapGroups.Add(sName, "");
+				// Output vector too small?
+				if (nMatchCount == 0) {
+					// Allocate big enough output vector and retry
+					// [TODO]
+					nMatchCount = MaxGroups;
 				}
 
-				// Done
-				return true;
+				// Check result
+				if (nMatchCount > 0) {
+					// Save new byte position within the string
+					m_nPosition = nMatches[1];
+
+					// Get pointer to subject string
+					const char *pszSubject = sSubject.GetASCII();
+
+					// Save matching substrings by index
+					m_lstGroups.Resize(nMatchCount-1);
+					for (int i=1; i<nMatchCount; i++)
+						m_lstGroups[i-1].Copy(&pszSubject[nMatches[i*2]], nMatches[i*2+1] - nMatches[i*2]);
+
+					// Get named groups
+					int nNameCount;
+					pcre_fullinfo(m_pPCRE, m_pExtra, PCRE_INFO_NAMECOUNT, &nNameCount);
+					const char *pszNameTable;
+					pcre_fullinfo(m_pPCRE, m_pExtra, PCRE_INFO_NAMETABLE, &pszNameTable);
+					int nNameEntrySize;
+					pcre_fullinfo(m_pPCRE, m_pExtra, PCRE_INFO_NAMEENTRYSIZE, &nNameEntrySize);
+
+					// Return matching substrings by name
+					for (int i=0; i<nNameCount; i++) {
+						// Get pointer to current entry
+						const char *pszEntry = &pszNameTable[i*nNameEntrySize];
+
+						// Get number
+						const int nNum = (pszEntry[0] << 8) | pszEntry[1];
+
+						// Get name
+						const String sName = &pszEntry[2];
+
+						// Get substring
+						const int nIndex0 = nMatches[nNum*2];
+						const int nIndex1 = nMatches[nNum*2+1];
+
+						// Add name->substring to map
+						if (nIndex0 >= 0 && nIndex1 >= 0)
+							m_mapGroups.Add(sName, String(&pszSubject[nIndex0], true, nIndex1 - nIndex0));
+						else
+							m_mapGroups.Add(sName, "");
+					}
+
+					// Done
+					return true;
+				}
 			}
 		}
 	}
