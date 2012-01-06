@@ -391,6 +391,18 @@
     <ClCompile Include="src\Application\SceneApplication.cpp">
       <Filter>Application</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scene\SceneNodeModifiers\SNMTransformGizmoRotation.cpp">
+      <Filter>Scene\SceneNodeModifiers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\SceneNodeModifiers\SNMTransformGizmoScale.cpp">
+      <Filter>Scene\SceneNodeModifiers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\SceneNodeModifiers\SNMTransformGizmo.cpp">
+      <Filter>Scene\SceneNodeModifiers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\SceneNodeModifiers\SNMTransformGizmoPosition.cpp">
+      <Filter>Scene\SceneNodeModifiers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLScene\PLScene.h">
@@ -743,6 +755,18 @@
     </ClInclude>
     <ClInclude Include="include\PLScene\Application\SceneApplication.h">
       <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMTransformGizmo.h">
+      <Filter>Scene\SceneNodeModifiers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMTransformGizmoPosition.h">
+      <Filter>Scene\SceneNodeModifiers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMTransformGizmoRotation.h">
+      <Filter>Scene\SceneNodeModifiers</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMTransformGizmoScale.h">
+      <Filter>Scene\SceneNodeModifiers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

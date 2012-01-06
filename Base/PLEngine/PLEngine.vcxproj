@@ -276,6 +276,9 @@ copy build\release_x64\PLEngine.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\Controller\SNMOrbitingController.cpp" />
     <ClCompile Include="src\Controller\SNMPhysicsCharacter.cpp" />
     <ClCompile Include="src\Controller\SNMPhysicsCharacterController.cpp" />
+    <ClCompile Include="src\Controller\SNMTransformGizmoPositionController.cpp" />
+    <ClCompile Include="src\Controller\SNMTransformGizmoRotationController.cpp" />
+    <ClCompile Include="src\Controller\SNMTransformGizmoScaleController.cpp" />
     <ClCompile Include="src\Controller\SNPhysicsMouseInteraction.cpp" />
     <ClCompile Include="src\PLEngine.cpp" />
     <ClCompile Include="src\Picking\MousePicking.cpp" />
@@ -315,6 +318,9 @@ copy build\release_x64\PLEngine.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLEngine\Controller\SNMOrbitingController.h" />
     <ClInclude Include="include\PLEngine\Controller\SNMPhysicsCharacter.h" />
     <ClInclude Include="include\PLEngine\Controller\SNMPhysicsCharacterController.h" />
+    <ClInclude Include="include\PLEngine\Controller\SNMTransformGizmoPositionController.h" />
+    <ClInclude Include="include\PLEngine\Controller\SNMTransformGizmoRotationController.h" />
+    <ClInclude Include="include\PLEngine\Controller\SNMTransformGizmoScaleController.h" />
     <ClInclude Include="include\PLEngine\Controller\SNPhysicsMouseInteraction.h" />
     <ClInclude Include="include\PLEngine\PLEngine.h" />
     <ClInclude Include="include\PLEngine\Picking\MousePicking.h" />

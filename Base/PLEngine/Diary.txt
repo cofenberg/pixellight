@@ -1,3 +1,10 @@
+>> 06.01.2012
+[CO]
+- Reintegrated transform gizmo scene node modifiers which were removed on 27.06.2010 (see PLScene diary) because they were out-of-date.
+  The refactoring is not finished yet. Visual & axis picking is already working.
+
+
+
 >> 01.01.2012
 [CO]
 - "EngineApplication::OnLoadProgress()": Made the method protected and virtual because derived classes may want to reuse it

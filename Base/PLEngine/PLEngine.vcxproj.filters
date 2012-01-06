@@ -138,6 +138,15 @@
     <ClCompile Include="src\Controller\SNMEgoOrbitingController.cpp">
       <Filter>Controller</Filter>
     </ClCompile>
+    <ClCompile Include="src\Controller\SNMTransformGizmoRotationController.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controller\SNMTransformGizmoScaleController.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Controller\SNMTransformGizmoPositionController.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLEngine\Application\EngineApplication.h">
@@ -249,6 +258,15 @@
       <Filter>Controller</Filter>
     </ClInclude>
     <ClInclude Include="include\PLEngine\Controller\SNMEgoOrbitingController.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Controller\SNMTransformGizmoRotationController.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Controller\SNMTransformGizmoScaleController.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\Controller\SNMTransformGizmoPositionController.h">
       <Filter>Controller</Filter>
     </ClInclude>
   </ItemGroup>

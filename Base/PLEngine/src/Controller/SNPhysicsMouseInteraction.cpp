@@ -26,7 +26,6 @@
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/Frontend/Frontend.h>
 #include <PLCore/Frontend/FrontendApplication.h>
-#include <PLCore/Application/CoreApplication.h>
 #include <PLInput/Input/InputManager.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/SurfaceWindow.h>
