@@ -1,5 +1,6 @@
 <!DOCTYPE RCC><RCC version="1.0">
  <qresource>
      <file>pl_icon.png</file>
+	 <file>cleartext.png</file>
  </qresource>
  </RCC>
