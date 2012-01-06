@@ -72,7 +72,7 @@ class PLFRONTENDQT_API ClassListModel : public TreeModelBase {
 			ClassListNameRole = Qt::UserRole+1,
 			ClassListDescriptionRole,
 			ClassListItemType,
-			ClassNameRole,
+			ClassNameWithoutNamespaceRole,
 			ClassBaseClassRole,
 			ModuleVendorRole,
 			ModuleLicenseRole,

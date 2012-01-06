@@ -41,7 +41,7 @@ if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
 	##################################################
-	find_package(Qt4 REQUIRED)
+	find_package(Qt4 4.7 REQUIRED)
 	include(${QT_USE_FILE})
 
 	# The find module from cmake itself doesn't add the XXX_LIBRARIES variable and XXX_INCLUDE_DIR variable to the cache, which is the correct behaviour.

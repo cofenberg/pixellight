@@ -24,13 +24,13 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <QtGui/QSplitter>
-#include <QtGui/QTreeView>
 #include <QtGui/QTabWidget>
 #include <QtGui/QVBoxLayout>
-#include <QtGui/QSortFilterProxyModel>
 #include "PLFrontendQt/DataModels/RTTIInfoModels/ClassListModel.h"
 #include "PLFrontendQt/Widget/ClassInfoWidget.h"
 #include "PLFrontendQt/Widget/RTTIBrowserWidget.h"
+#include "PLFrontendQt/Widget/ClassListWidget.h"
+#include "PLFrontendQt/External/filterwidget.h"
 
 
 //[-------------------------------------------------------]
@@ -50,16 +50,17 @@ RTTIBrowserWidget::RTTIBrowserWidget(QWidget *parent, Qt::WindowFlags f) : QWidg
 	QSplitter *splitter = new QSplitter(this);
 	splitter->setOrientation(Qt::Horizontal);
 	layout()->addWidget(splitter);
+	
 
 	m_ptabWidget = new QTabWidget(this);
 
 	splitter->addWidget(m_ptabWidget);
 
-	m_pModuleClassListModel = new ClassListModel(false, this);
-	CreateTabView(tr("Module View"), m_pModuleClassListModel);
+	m_pModuleClassListWidget = new ClassListWidget(ClassListWidget::ModuleView, this);
+	CreateTabView(tr("Module View"), m_pModuleClassListWidget);
 
-	m_pHierarchicalClassListModel = new ClassListModel(true, this);
-	CreateTabView(tr("Class View"), m_pHierarchicalClassListModel)->expandToDepth(0);	// Everything is derived from "PLCore::Object", expand this level by default
+	m_pHierarchicalClassListWidget = new ClassListWidget(ClassListWidget::HierachicalView, this);
+	CreateTabView(tr("Class View"), m_pHierarchicalClassListWidget);
 
 	m_pClassInfoWidget = new ClassInfoWidget(splitter);
 	splitter->addWidget(m_pClassInfoWidget);
@@ -74,17 +75,10 @@ RTTIBrowserWidget::~RTTIBrowserWidget()
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
-QTreeView *RTTIBrowserWidget::CreateTabView(const QString &tabName, QAbstractItemModel *model)
+void RTTIBrowserWidget::CreateTabView(const QString &tabName, ClassListWidget *widget)
 {
-	QTreeView *tree = new QTreeView(this);
-	QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
-	proxyModel->setDynamicSortFilter(true);
-	proxyModel->setSourceModel(model);
-	proxyModel->sort(0);
-	tree->setModel(proxyModel);
-	m_ptabWidget->addTab(tree, tabName);
-	connect(tree, SIGNAL(activated(const QModelIndex&)), this, SLOT(OnTreeItemActivated(const QModelIndex&)));
-	return tree;
+	m_ptabWidget->addTab(widget, tabName);
+	connect(widget, SIGNAL(activated(const QModelIndex&)), this, SLOT(OnTreeItemActivated(const QModelIndex&)));
 }
 
 RTTIBrowserWidget::RTTIBrowserWidget(const RTTIBrowserWidget &)
@@ -105,7 +99,7 @@ void RTTIBrowserWidget::OnTreeItemActivated(const QModelIndex &index)
 	bool isModule = index.data(ClassListModel::ClassListItemType).toBool();
 	m_pClassInfoWidget->setVisible(!isModule);
 	if (!isModule)
-		m_pClassInfoWidget->SetClassItem(index.data(ClassListModel::ClassNameRole).toString());
+		m_pClassInfoWidget->SetClassItem(index.data(ClassListModel::ClassListNameRole).toString());
 }
 
 
