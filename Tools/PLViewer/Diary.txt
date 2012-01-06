@@ -1,3 +1,12 @@
+>> 06.01.2012
+[CO]
+PLViewerQt:
+- "Gui::QtSlotSelectedWindow()": There's no longer need to tell new instanced RTTI dock widgets about current states they might be interested in. They
+  are autonomously communicating with each other and asking their fellows for required information. This way we can add new features without e.g. touching
+  PLViewerQt.
+
+
+
 >> 05.01.2012
 [CO]
 - Usability improvement: It's possible that a mesh has no materials at all. In this case the mesh is not visible... this may lead to confusion when loading

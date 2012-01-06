@@ -149,6 +149,15 @@ class DockWidgetManager : public PLCore::Object {
 		*/
 		PLFRONTENDQT_API void DestroyDockWidgets();
 
+		/**
+		*  @brief
+		*    Returns the list of registered dock widgets
+		*
+		*  @return
+		*    The list of registered dock widgets
+		*/
+		inline const PLCore::Array<DockWidget*> &GetDockWidgets() const;
+
 		//[-------------------------------------------------------]
 		//[ Communication - Direct access functions               ]
 		//[-------------------------------------------------------]

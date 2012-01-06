@@ -33,7 +33,7 @@ namespace PLFrontendQt {
 *  @brief
 *    Returns the pointer to the dock widget manager this dock widget is registered to
 */
-DockWidgetManager *DockWidget::GetDockWidgetManager() const
+inline DockWidgetManager *DockWidget::GetDockWidgetManager() const
 {
 	return m_pDockWidgetManager;
 }
@@ -42,7 +42,7 @@ DockWidgetManager *DockWidget::GetDockWidgetManager() const
 *  @brief
 *    Returns the encapsulated Qt dock widget
 */
-QDockWidget *DockWidget::GetQDockWidget() const
+inline QDockWidget *DockWidget::GetQDockWidget() const
 {
 	return reinterpret_cast<QDockWidget*>(m_pQDockWidget);
 }

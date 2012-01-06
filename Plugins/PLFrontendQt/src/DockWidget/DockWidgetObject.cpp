@@ -27,7 +27,6 @@
 #include <QtGui/qdockwidget.h>
 #include <QtGui/qmainwindow.h>
 #include <PLCore/Base/Class.h>
-#include <PLCore/Application/CoreApplication.h>
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/DataModels/PLIntrospectionModel.h"
 #include "PLFrontendQt/DockWidget/DockWidgetObject.h"
@@ -68,12 +67,30 @@ DockWidgetObject::DockWidgetObject(QMainWindow *pQMainWindow, DockWidgetManager 
 		pQTreeView->setModel(m_pPLIntrospectionModel);
 		pQTreeView->expandToDepth(0);
 
-		// Set a default object to have a decent standard behaviour
-		CoreApplication *pCoreApplication = CoreApplication::GetApplication();
-		SelectObject(pCoreApplication);
-
 		// Add the created Qt dock widget to the given Qt main window
 		pQMainWindow->addDockWidget(Qt::BottomDockWidgetArea, pQDockWidget);
+
+		{ // Ask the RTTI dock widget fellows whether or not someone knows which is the currently selected object
+			// Get a list of dock widgets registered within the same dock widget manager this dock widget is in
+			const Array<DockWidget*> &lstDockWidgets = GetFellowDockWidgets();
+			Object *pObject = nullptr;
+			for (uint32 i=0; i<lstDockWidgets.GetNumOfElements() && !pObject; i++) {
+				// Get the dock widget, and ignore our own ego
+				DockWidget *pDockWidget = lstDockWidgets[i];
+				if (pDockWidget != this) {
+					// Get the typed dynamic parameters
+					Params<Object*> cParams;
+
+					// Call the RTTI method
+					pDockWidget->CallMethod("GetSelectedObject", cParams);
+
+					// Get the result, we're interested in any object
+					pObject = cParams.Return;
+					if (pObject)
+						SelectObject(pObject);
+				}
+			}
+		}
 	}
 }
 
@@ -83,6 +100,15 @@ DockWidgetObject::DockWidgetObject(QMainWindow *pQMainWindow, DockWidgetManager 
 */
 DockWidgetObject::~DockWidgetObject()
 {
+}
+
+/**
+*  @brief
+*    Returns the currently selected object
+*/
+Object *DockWidgetObject::GetSelectedObject() const
+{
+	return m_pObject;
 }
 
 /**

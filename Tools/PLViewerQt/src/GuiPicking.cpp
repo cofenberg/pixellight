@@ -133,6 +133,15 @@ SceneNode *GuiPicking::PerformPicking()
 
 /**
 *  @brief
+*    Returns the currently selected object
+*/
+Object *GuiPicking::GetSelectedObject() const
+{
+	return m_cCurrentSelectedSceneNodeHandler.GetElement();
+}
+
+/**
+*  @brief
 *    Selects the given object
 */
 void GuiPicking::SelectObject(Object *pObject)
@@ -158,15 +167,6 @@ void GuiPicking::SelectObject(Object *pObject)
 		// Backup the current scene node
 		m_cCurrentSelectedSceneNodeHandler.SetElement(pSceneNode);
 	}
-}
-
-/**
-*  @brief
-*    Returns the currently selected scene node
-*/
-SceneNode *GuiPicking::GetSelectedSceneNode() const
-{
-	return m_cCurrentSelectedSceneNodeHandler.GetElement();
 }
 
 
