@@ -1,3 +1,9 @@
+>> 06.01.2012
+[SW]
+- specify minimal Qt version when using system libraries. PLFrontendQt depends on Qt 4.7 or higher
+
+
+
 >> 05.11.2011
 [CO]
 - Integrated "UnitTest++" unit test framework into the build system (there's already someone writing concrete unit tests)

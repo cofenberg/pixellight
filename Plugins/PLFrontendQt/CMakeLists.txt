@@ -75,8 +75,11 @@ SET(INC_FILES
 	include/PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererHeaderTreeItem.h
 	include/PLFrontendQt/DataModels/RTTIInfoModels/ClassListModel.h
 	include/PLFrontendQt/DataModels/RTTIInfoModels/ClassInfoModel.h
+	include/PLFrontendQt/DataModels/RTTIInfoModels/ClassListSortAndFilterModel.h
 	include/PLFrontendQt/External/qtcolorbutton.h
+	include/PLFrontendQt/External/filterwidget.h
 	include/PLFrontendQt/Widget/ClassInfoWidget.h
+	include/PLFrontendQt/Widget/ClassListWidget.h
 	include/PLFrontendQt/Widget/RTTIBrowserWidget.h
 	include/PLFrontendQt/DockWidget/DockWidgetSceneGraph.h
 	include/PLFrontendQt/DockWidget/DockWidgetSceneRenderer.h
@@ -135,8 +138,11 @@ add_sources(
 	src/DataModels/SceneRendererDataModel/SceneRendererHeaderTreeItem.cpp
 	src/DataModels/RTTIInfoModels/ClassListModel.cpp
 	src/DataModels/RTTIInfoModels/ClassInfoModel.cpp
+	src/DataModels/RTTIInfoModels/ClassListSortAndFilterModel.cpp
 	src/External/qtcolorbutton.cpp
+	src/External/filterwidget.cpp
 	src/Widget/ClassInfoWidget.cpp
+	src/Widget/ClassListWidget.cpp
 	src/Widget/RTTIBrowserWidget.cpp
 	src/DockWidget/DockWidgetManager.cpp
 	src/DockWidget/DockWidget.cpp

@@ -42,11 +42,7 @@ QT_BEGIN_NAMESPACE
 	class QAbstractItemModel;
 QT_END_NAMESPACE
 namespace PLFrontendQt {
-	namespace DataModels {
-		namespace RTTIInfoModels {
-			class ClassListModel;
-		}
-	}
+	class ClassListWidget;
 	class ClassInfoWidget;
 }
 
@@ -86,7 +82,7 @@ class PLFRONTENDQT_API RTTIBrowserWidget : public QWidget {
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
-		QTreeView *CreateTabView(const QString &tabName, QAbstractItemModel *model);
+		void CreateTabView(const QString &tabName, ClassListWidget *widget);
 		RTTIBrowserWidget(const RTTIBrowserWidget &);
 		RTTIBrowserWidget &operator =(const RTTIBrowserWidget &);
 
@@ -102,10 +98,10 @@ class PLFRONTENDQT_API RTTIBrowserWidget : public QWidget {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		DataModels::RTTIInfoModels::ClassListModel *m_pModuleClassListModel;
-		DataModels::RTTIInfoModels::ClassListModel *m_pHierarchicalClassListModel;
-		ClassInfoWidget							   *m_pClassInfoWidget;
-		QTabWidget								   *m_ptabWidget;
+		ClassListWidget		*m_pModuleClassListWidget;
+		ClassListWidget		*m_pHierarchicalClassListWidget;
+		ClassInfoWidget		*m_pClassInfoWidget;
+		QTabWidget			*m_ptabWidget;
 
 
 };

@@ -135,7 +135,7 @@ class ClassInfoTreeItem : public ClassListInfoTreeItemBase {
 	public:
 		ClassInfoTreeItem(const Class &classItem, QObject *parent = nullptr) : ClassListInfoTreeItemBase(false, QtStringAdapter::PLToQt(classItem.GetClassName()), QtStringAdapter::PLToQt(classItem.GetDescription()), parent),
 			m_sBaseClass(QtStringAdapter::PLToQt(classItem.GetBaseClassName())),
-			m_sName(QtStringAdapter::PLToQt(classItem.GetClassName()))
+			m_sNameWithoutNameSpace(QtStringAdapter::PLToQt(classItem.GetName()))
 		{
 			SetTooltipText(tr("<table>"
 							"<tr><td bgcolor=#00ff00 colspan=\"2\">Class Information</td></tr>"
@@ -151,15 +151,15 @@ class ClassInfoTreeItem : public ClassListInfoTreeItemBase {
 				return QVariant();
 			else if (role == ClassListModel::ClassBaseClassRole)
 				return m_sBaseClass;
-			else if (role == ClassListModel::ClassNameRole)
-				return m_sName;
+			else if (role == ClassListModel::ClassNameWithoutNamespaceRole)
+				return m_sNameWithoutNameSpace;
 			return ClassListInfoTreeItemBase::data(column, role);
 		}
 
 
 	private:
 		QString m_sBaseClass;
-		QString m_sName;
+		QString m_sNameWithoutNameSpace;
 
 
 };
