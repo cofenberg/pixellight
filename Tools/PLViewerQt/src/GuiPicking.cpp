@@ -23,13 +23,15 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Timing.h>
-#include <PLEngine/Picking/PickingResult.h>
+#include <PLCore/PLCore.h>
 PL_WARNING_PUSH
 	PL_WARNING_DISABLE(4127)	// "warning C4127: conditional expression is constant"
 	#include <QtGui/qlabel.h>
 	#include <QtGui/qstatusbar.h>
 PL_WARNING_POP
+#include <PLCore/Tools/Timing.h>
+#include <PLScene/Scene/SceneNodeModifier.h>
+#include <PLEngine/Picking/PickingResult.h>
 #include <PLFrontendQt/QtStringAdapter.h>
 #include <PLFrontendQt/FrontendMainWindow.h>
 #include "Gui.h"
@@ -146,10 +148,19 @@ Object *GuiPicking::GetSelectedObject() const
 */
 void GuiPicking::SelectObject(Object *pObject)
 {
-	// We only know "PLScene::SceneNode"
+	// We only know "PLScene::SceneNode" and "PLScene::SceneNodeModifier"
 	SceneNode *pSceneNode = nullptr;
-	if (pObject && pObject->IsInstanceOf("PLScene::SceneNode"))
-		pSceneNode = static_cast<SceneNode*>(pObject);
+	if (pObject) {
+		// Is it an "PLScene::SceneNode"-instance?
+		if (pObject->IsInstanceOf("PLScene::SceneNode")) {
+			pSceneNode = static_cast<SceneNode*>(pObject);
+
+		// Is it an "PLScene::SceneNodeModifier"-instance?
+		} else if (pObject->IsInstanceOf("PLScene::SceneNodeModifier")) {
+			// Select the owner scene node of this scene node modifer
+			pSceneNode = &static_cast<SceneNodeModifier*>(pObject)->GetSceneNode();
+		}
+	}
 
 	// Get the previously selected scene node
 	SceneNode *pPreviousSceneNode = m_cCurrentSelectedSceneNodeHandler.GetElement();
