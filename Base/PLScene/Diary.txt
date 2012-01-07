@@ -1,3 +1,10 @@
+>> 07.01.2012
+[CO]
+- Bugfix: When "SceneNodeModifier::SetFlags()" is called (e.g. through the RTTI) we have to reevaluate the active state of this scene node modifier
+ (similar procedure as in "SceneNode::SetFlags()")
+
+
+
 >> 06.01.2012
 [CO]
 - Reintegrated transform gizmo scene node modifiers which were removed on 27.06.2010 because they were out-of-date.

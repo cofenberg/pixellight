@@ -50,7 +50,18 @@ uint32 SceneNodeModifier::GetFlags() const
 
 void SceneNodeModifier::SetFlags(uint32 nValue)
 {
-	m_nFlags = nValue;
+	// We now have to reevaluate the active state of this scene node modifier (similar procedure as in "SceneNode::SetFlags()")
+	// -> But don't call "SetActive(!(nValue & Inactive));" in here or we will end up in an endless recursion
+	if ((m_nFlags & Inactive) != (nValue & nValue)) {
+		// Set new flags
+		m_nFlags = nValue;
+
+		// Call the "OnActivate()"-method, please note that we also have to take the global active state of the owner scene node into account
+		OnActivate(!(m_nFlags & Inactive) && m_pSceneNode->EvaluateGlobalActiveState());
+	} else {
+		// Set the new flags
+		m_nFlags = nValue;
+	}
 }
 
 
