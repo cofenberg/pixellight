@@ -65,6 +65,10 @@ add_sources(
 	src/Scene/SceneNodes/SNMesh.cpp
 	src/Scene/SceneNodeModifiers/SNMAnchor.cpp
 	src/Scene/SceneNodeModifiers/SNMTransform.cpp
+	src/Scene/SceneNodeModifiers/SNMTransformGizmo.cpp
+	src/Scene/SceneNodeModifiers/SNMTransformGizmoPosition.cpp
+	src/Scene/SceneNodeModifiers/SNMTransformGizmoRotation.cpp
+	src/Scene/SceneNodeModifiers/SNMTransformGizmoScale.cpp
 	src/Scene/SceneNodeModifiers/SNMPositionPath.cpp
 	src/Scene/SceneNodeModifiers/SNMPositionMoveToTarget.cpp
 	src/Scene/SceneNodeModifiers/SNMPositionLinearAnimation.cpp

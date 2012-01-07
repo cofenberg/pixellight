@@ -262,6 +262,10 @@ copy build\release_x64\PLScene.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\Scene\SceneNode.cpp" />
     <ClCompile Include="src\Scene\SceneNodeHandler.cpp" />
     <ClCompile Include="src\Scene\SceneNodeModifier.cpp" />
+    <ClCompile Include="src\Scene\SceneNodeModifiers\SNMTransformGizmo.cpp" />
+    <ClCompile Include="src\Scene\SceneNodeModifiers\SNMTransformGizmoPosition.cpp" />
+    <ClCompile Include="src\Scene\SceneNodeModifiers\SNMTransformGizmoRotation.cpp" />
+    <ClCompile Include="src\Scene\SceneNodeModifiers\SNMTransformGizmoScale.cpp" />
     <ClCompile Include="src\Scene\SceneQuery.cpp" />
     <ClCompile Include="src\Scene\SceneQueryHandler.cpp" />
     <ClCompile Include="src\Scene\SceneQueryManager.cpp" />
@@ -381,6 +385,10 @@ copy build\release_x64\PLScene.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLScene\Scene\SceneNode.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodeHandler.h" />
     <ClInclude Include="include\PLScene\Scene\SceneNodeModifier.h" />
+    <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMTransformGizmo.h" />
+    <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMTransformGizmoPosition.h" />
+    <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMTransformGizmoRotation.h" />
+    <ClInclude Include="include\PLScene\Scene\SceneNodeModifiers\SNMTransformGizmoScale.h" />
     <ClInclude Include="include\PLScene\Scene\SceneQuery.h" />
     <ClInclude Include="include\PLScene\Scene\SceneQueryHandler.h" />
     <ClInclude Include="include\PLScene\Scene\SceneQueryManager.h" />

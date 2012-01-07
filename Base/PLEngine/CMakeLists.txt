@@ -50,6 +50,9 @@ add_sources(
 	src/Controller/OrbitingController.cpp
 	src/Controller/SNMCameraZoomController.cpp
 	src/Controller/CameraZoomController.cpp
+	src/Controller/SNMTransformGizmoPositionController.cpp
+	src/Controller/SNMTransformGizmoRotationController.cpp
+	src/Controller/SNMTransformGizmoScaleController.cpp
 	src/Tools/Screenshot.cpp
 	src/Tools/SceneRendererTool.cpp
 	src/Tools/Camcorder.cpp

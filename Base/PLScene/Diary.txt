@@ -1,3 +1,20 @@
+>> 07.01.2012
+[CO]
+- Bugfix: When "SceneNodeModifier::SetFlags()" is called (e.g. through the RTTI) we have to reevaluate the active state of this scene node modifier
+ (similar procedure as in "SceneNode::SetFlags()")
+- Reviewed "SceneNodeModifier::SetActive()" (last changed: 27.11.2011) which is setting "Flags": "Flags" is an RTTI get/set attribute calling the virtual
+  method "SetFlags()". If required, "SetFlags()" calls "OnActivate()", so, don't call "OnActivate()" within "SetActive()" or it will be called twice. Nothing
+  dramatical, but not nice either. I hope this finally settles this tricky Flags/Active/OnActivate issue.
+
+
+
+>> 06.01.2012
+[CO]
+- Reintegrated transform gizmo scene node modifiers which were removed on 27.06.2010 because they were out-of-date.
+  The refactoring is not finished yet. Visual & axis picking is already working.
+
+
+
 >> 05.01.2012
 [CO]
 - "SceneRenderer": Added "EventDestroyed"-event

@@ -1,3 +1,11 @@
+>> 07.01.2012
+[CO]
+PLViewerQt:
+- In case a scene node modifier is selected, the owner scene node of this object will be the currently selected object within the viewer and therefore
+  will also be within debug mode
+
+
+
 >> 06.01.2012
 [CO]
 PLViewerQt:
