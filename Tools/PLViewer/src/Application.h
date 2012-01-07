@@ -111,11 +111,15 @@ class Application : public PLEngine::ScriptApplication {
 		*
 		*  @param[in] sFilename
 		*    Filename of the resource to load
+		*  @param[in] sType
+		*    Loadable type ("Image", "Mesh" and so on) of the given resource, in case of an empty
+		*    string the filename extension will be used to try to figure out the loadable type automatically
+		*    (may not always work as expected because there are multiple loadable types with the same filename extension)
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		virtual bool LoadResource(const PLCore::String &sFilename);
+		virtual bool LoadResource(const PLCore::String &sFilename, const PLCore::String &sType = "");
 
 		/**
 		*  @brief

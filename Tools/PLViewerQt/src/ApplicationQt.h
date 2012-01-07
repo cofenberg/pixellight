@@ -115,7 +115,7 @@ class ApplicationQt : public Application {
 	//[ Protected virtual Application functions               ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual bool LoadResource(const PLCore::String &sFilename) override;
+		virtual bool LoadResource(const PLCore::String &sFilename, const PLCore::String &sType = "") override;
 		virtual void SetStateText(const PLCore::String &sText) override;
 
 

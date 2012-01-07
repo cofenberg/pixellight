@@ -8,6 +8,7 @@ PLViewerQt:
   will also be within debug mode
 - Enable/disable the GUI for resource loading in general
 - When loading a resource in general, give the user a hint what's currently going on
+- Is now providing, when possible, "Application::LoadResource()" with a loadable type so that the method does not need to guess the loadable type itself
 
 
 

@@ -372,8 +372,11 @@ uint32 Gui::FillMenuWindowRec(QMenu &cQMenu, const String &sBaseClass)
 //[-------------------------------------------------------]
 void Gui::QtSlotTriggeredLoad()
 {
-	// Fill the file filter (filter example: "Scene (*.scene *.SCENE);;Script (*.lua *.LUA)")
-	String sFileFilter = ConstructFileFilter::ByLoadableType(QtStringAdapter::QtToPL(tr("Scene")), "Scene");
+	// Fill the file filter (filter example: "All Files (*);;Scene (*.scene *.SCENE);;Script (*.lua *.LUA)")
+	const String sAllFiles = QtStringAdapter::QtToPL(tr("All Files"));
+	String sFileFilter = sAllFiles + " (*)";
+	sFileFilter += ";;";
+	sFileFilter += ConstructFileFilter::ByLoadableType(QtStringAdapter::QtToPL(tr("Scene")), "Scene");
 	sFileFilter += ";;";
 	sFileFilter += ConstructFileFilter::ByScriptLanguages(QtStringAdapter::QtToPL(tr("Script")));
 
@@ -401,11 +404,21 @@ void Gui::QtSlotTriggeredLoad()
 	}
 
 	// Open a file dialog were the user can choose a filename
-	const QString sQFilename = QFileDialog::getOpenFileName(GetFrontendMainWindow(), "", "", QtStringAdapter::PLToQt(sFileFilter));
+	QString sQSelectedFilter;
+	const QString sQFilename = QFileDialog::getOpenFileName(GetFrontendMainWindow(), "", "", QtStringAdapter::PLToQt(sFileFilter), &sQSelectedFilter);
 
 	// Filename chosen?
-	if (sQFilename.length())
-		m_pApplication->LoadResource(QtStringAdapter::QtToPL(sQFilename));
+	if (sQFilename.length()) {
+		// Get the loadable type
+		String sType;
+		String sSelectedFilter = QtStringAdapter::QtToPL(sQSelectedFilter);
+		const int nIndex = sSelectedFilter.IndexOf(" (");
+		if (nIndex > -1)
+			sType = sSelectedFilter.GetSubstring(0, nIndex);
+
+		// Load the resource
+		m_pApplication->LoadResource(QtStringAdapter::QtToPL(sQFilename), (sType != sAllFiles) ? sType : "");
+	}
 }
 
 void Gui::QtSlotTriggeredExit()

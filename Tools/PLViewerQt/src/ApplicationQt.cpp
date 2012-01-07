@@ -163,7 +163,7 @@ void ApplicationQt::OnLoadProgress(float fLoadProgress)
 //[-------------------------------------------------------]
 //[ Protected virtual Application functions               ]
 //[-------------------------------------------------------]
-bool ApplicationQt::LoadResource(const String &sFilename)
+bool ApplicationQt::LoadResource(const String &sFilename, const String &sType)
 {
 	// Disable the GUI window while loading so the user can't prank around
 	if (m_pGui) {
@@ -174,7 +174,7 @@ bool ApplicationQt::LoadResource(const String &sFilename)
 	}
 
 	// Call base implementation
-	const bool bResult = Application::LoadResource(sFilename);
+	const bool bResult = Application::LoadResource(sFilename, sType);
 
 	// Enable the Qt main window when loading is done
 	if (m_pGui)

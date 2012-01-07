@@ -135,7 +135,7 @@ void Application::OnControl(Control &cControl)
 *  @brief
 *    Loads a resource which type has to be evaluated internally
 */
-bool Application::LoadResource(const String &sFilename)
+bool Application::LoadResource(const String &sFilename, const String &sType)
 {
 	bool bResult = false;	// Error by default
 
@@ -144,7 +144,7 @@ bool Application::LoadResource(const String &sFilename)
 
 	// Get file extension
 	const String sExtension = Url(sFilename).GetExtension();
-	if (sExtension.GetLength()) {
+	if (sExtension.GetLength() || sType.GetLength()) {
 		{ // Make the directory of the scene to load in to the current directory
 
 			// Ok, the next thing is tricky, and every solution will end up in being a hack due to lack of information.
@@ -193,9 +193,10 @@ bool Application::LoadResource(const String &sFilename)
 		// -> It would be possible to implement support for scripting so that e.g. a Lua script
 		//    can be used to decide how to process a resource. But this viewer should be able to
 		//    work without external data and should be kept as simple as possible, so we stick to C++.
+		// -> Prefere the given loadable type over the filename extension
 
 		// Is the given filename a supported scene?
-		if (LoadableManager::GetInstance()->IsFormatLoadSupported(sExtension, "Scene")) {
+		if (sType == "Scene" || (!sType.GetLength() && LoadableManager::GetInstance()->IsFormatLoadSupported(sExtension, "Scene"))) {
 			// Is the given resource a scene?
 			if (LoadScene(sFilename)) {
 				// Done
@@ -219,7 +220,7 @@ bool Application::LoadResource(const String &sFilename)
 		// Ask the loadable system for the resource type
 		} else {
 			// Get loadable type
-			LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByExtension(sExtension);
+			LoadableType *pLoadableType = sType.GetLength() ? LoadableManager::GetInstance()->GetTypeByName(sType) : LoadableManager::GetInstance()->GetTypeByExtension(sExtension);
 			if (pLoadableType) {
 				// Get the scene container (the 'concrete scene')
 				SceneContainer *pSceneContainer = GetScene();
