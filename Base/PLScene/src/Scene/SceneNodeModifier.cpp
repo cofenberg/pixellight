@@ -150,10 +150,9 @@ void SceneNodeModifier::SetActive(bool bActive)
 			nNewFlags |=  Inactive;
 
 		// Set new flags
+		// -> "Flags" is an RTTI get/set attribute calling the virtual method "SetFlags()"
+		// -> If required, "SetFlags()" calls "OnActivate()"
 		Flags = nNewFlags;
-
-		// Call the "OnActivate()"-method, please note that we also have to take the global active state of the owner scene node into account
-		OnActivate(!(m_nFlags & Inactive) && m_pSceneNode->EvaluateGlobalActiveState());
 	}
 }
 
