@@ -28,7 +28,6 @@
 #include <QtGui/qmainwindow.h>
 #include <PLCore/Base/Class.h>
 #include <PLScene/Scene/SceneContainer.h>
-#include <PLEngine/Application/EngineApplication.h>
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/DataModels/SceneGraphTreeModel.h"
 #include "PLFrontendQt/DockWidget/DockWidgetManager.h"
@@ -77,15 +76,28 @@ DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidget
 		// Add the created Qt dock widget to the given Qt main window
 		pQMainWindow->addDockWidget(Qt::LeftDockWidgetArea, pQDockWidget);
 
-		{ // Set a default start node to have a decent standard behaviour
-			CoreApplication *pApplication = CoreApplication::GetApplication();
-			if (pApplication && pApplication->IsInstanceOf("PLEngine::EngineApplication"))
-				SetSceneContainer(static_cast<PLEngine::EngineApplication*>(pApplication)->GetScene());
+		// Get a list of dock widgets registered within the same dock widget manager this dock widget is in
+		const Array<DockWidget*> &lstDockWidgets = GetFellowDockWidgets();
+
+		// Ask the RTTI dock widget fellows whether or not someone knows which is the currently used scene container
+		for (uint32 i=0; i<lstDockWidgets.GetNumOfElements() && !m_pSceneContainer; i++) {
+			// Get the dock widget, and ignore our own ego
+			DockWidget *pDockWidget = lstDockWidgets[i];
+			if (pDockWidget != this) {
+				// Get the typed dynamic parameters
+				Params<SceneContainer*> cParams;
+
+				// Call the RTTI method
+				pDockWidget->CallMethod("GetSceneContainer", cParams);
+
+				// Get the result
+				if (cParams.Return)
+					SetSceneContainer(cParams.Return);
+			}
 		}
 
 		{ // Ask the RTTI dock widget fellows whether or not someone knows which is the currently selected scene node or scene node modifier
 			// Get a list of dock widgets registered within the same dock widget manager this dock widget is in
-			const Array<DockWidget*> &lstDockWidgets = GetFellowDockWidgets();
 			Object *pObject = nullptr;
 			for (uint32 i=0; i<lstDockWidgets.GetNumOfElements() && !pObject; i++) {
 				// Get the dock widget, and ignore our own ego
@@ -120,6 +132,15 @@ DockWidgetSceneGraph::~DockWidgetSceneGraph()
 {
 	// Destroy the QObject instance for Qt's signal/slot mechanisms
 	delete m_pDockWidgetSceneGraphQObject;
+}
+
+/**
+*  @brief
+*    Returns the used scene container
+*/
+SceneContainer *DockWidgetSceneGraph::GetSceneContainer() const
+{
+	return m_pSceneContainer;
 }
 
 /**

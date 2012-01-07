@@ -138,11 +138,11 @@ if(NOT CMAKE_BUILD_TYPE MATCHES Debug)
 	)
 else()
 	##################################################
-	## Debug 
+	## Debug
 	##################################################
 	set(LINUX_COMPILE_FLAGS
 		${LINUX_COMPILE_FLAGS}
-		-ggdb												# Use gdb debugger
+		-ggdb							# Use gdb debugger
 	)
 endif()
 

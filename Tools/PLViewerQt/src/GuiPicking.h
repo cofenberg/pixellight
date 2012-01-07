@@ -60,8 +60,9 @@ class GuiPicking : public PLFrontendQt::DockWidget, public PLEngine::MousePickin
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, GuiPicking, "", PLFrontendQt::DockWidget, "Picking & selection application component")
 		// Methods
-		pl_method_0(GetSelectedObject,	pl_ret_type(PLCore::Object*),						"Returns the currently selected object, can be a null pointer.",	"")
-		pl_method_1(SelectObject,		pl_ret_type(void),				PLCore::Object*,	"Selects the given object. Object to select as first parameter.",	"")
+		pl_method_0(GetSceneContainer,	pl_ret_type(PLScene::SceneContainer*),						"Returns the used scene container, can be a null pointer.",			"")
+		pl_method_0(GetSelectedObject,	pl_ret_type(PLCore::Object*),								"Returns the currently selected object, can be a null pointer.",	"")
+		pl_method_1(SelectObject,		pl_ret_type(void),						PLCore::Object*,	"Selects the given object. Object to select as first parameter.",	"")
 	pl_class_end
 
 
@@ -112,6 +113,15 @@ class GuiPicking : public PLFrontendQt::DockWidget, public PLEngine::MousePickin
 		*    - Also updates the Qt label shown in the status bar of the Qt main window
 		*/
 		PLScene::SceneNode *PerformPicking();
+
+		/**
+		*  @brief
+		*    Returns the used scene container
+		*
+		*  @return
+		*    The used scene container, can be a null pointer
+		*/
+		PLScene::SceneContainer *GetSceneContainer() const;
 
 		/**
 		*  @brief

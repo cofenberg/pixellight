@@ -135,6 +135,15 @@ SceneNode *GuiPicking::PerformPicking()
 
 /**
 *  @brief
+*    Returns the used scene container
+*/
+SceneContainer *GuiPicking::GetSceneContainer() const
+{
+	return m_pGui->GetApplication().GetScene();
+}
+
+/**
+*  @brief
 *    Returns the currently selected object
 */
 Object *GuiPicking::GetSelectedObject() const
