@@ -1647,7 +1647,7 @@ class FuncGenFunPtr<R> : public Func<R> {
 		virtual _R operator ()() override {
 			if (m_pFunc) {
 				// Get typed params
-				Params<R> cParams();
+				Params<R> cParams;
 
 				// Make the generic function call
 				(*m_pFunc)(cParams, m_pUserData);

@@ -107,7 +107,6 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
 	##################################################
 	set(LINUX_COMPILE_FLAGS
 		${LINUX_COMPILE_FLAGS}
-		-ggdb												# Use gdb debugger
 		-g3													# Debug level 3
 	)
 endif()
