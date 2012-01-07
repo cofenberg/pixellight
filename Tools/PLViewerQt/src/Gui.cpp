@@ -138,16 +138,16 @@ void Gui::SetEnabled(bool bEnabled)
 
 			// Perform a dock widget manager broadcast
 			pFrontendMainWindow->GetDockWidgetManager().CallDockWidgetsMethod("SetSceneContainer", Params<void, SceneContainer*>(bEnabled ? m_pApplication->GetScene() : nullptr));
+		}
 
-			// Create/destroy the GUI picking
-			if (bEnabled) {
-				if (!m_pGuiPicking)
-					m_pGuiPicking = new GuiPicking(*this);
-			} else {
-				if (m_pGuiPicking) {
-					delete m_pGuiPicking;
-					m_pGuiPicking = nullptr;
-				}
+		// Create/destroy the GUI picking
+		if (bEnabled) {
+			if (!m_pGuiPicking)
+				m_pGuiPicking = new GuiPicking(*this);
+		} else {
+			if (m_pGuiPicking) {
+				delete m_pGuiPicking;
+				m_pGuiPicking = nullptr;
 			}
 		}
 	}
