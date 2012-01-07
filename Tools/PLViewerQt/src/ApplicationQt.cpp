@@ -148,11 +148,14 @@ void ApplicationQt::OnLoadProgress(float fLoadProgress)
 
 			// Let the GUI handle the information presentation of the current load progress (in percentage)
 			// -> When zero percentage, present another text because for instance loading a XML document may take a moment
-			m_pGui->SetStateText(fLoadProgress ? String::Format("Loading... %.0f%%", fLoadProgress*100.0f) : "Prepare loading...");
-		}
+			SetStateText(fLoadProgress ? String::Format("Loading... %.0f%%", fLoadProgress*100.0f) : "Prepare loading...");
 
-		// Redraw & ping the frontend so the GUI stays kind-of responsive while loading
-		GetFrontend().RedrawAndPing();
+			// Redraw the frontend so the GUI stays kind-of responsive while loading, the "Ping" is done within "SetStateText()" above
+			GetFrontend().Redraw();
+		} else {
+			// Redraw & ping the frontend so the GUI stays kind-of responsive while loading
+			GetFrontend().RedrawAndPing();
+		}
 	}
 }
 
@@ -163,8 +166,12 @@ void ApplicationQt::OnLoadProgress(float fLoadProgress)
 bool ApplicationQt::LoadResource(const String &sFilename)
 {
 	// Disable the GUI window while loading so the user can't prank around
-	if (m_pGui)
+	if (m_pGui) {
 		m_pGui->SetEnabled(false);
+
+		// Give the user a hint what's currently going on
+		SetStateText("Loading resource \"" + sFilename + '\"');
+	}
 
 	// Call base implementation
 	const bool bResult = Application::LoadResource(sFilename);
@@ -187,4 +194,7 @@ void ApplicationQt::SetStateText(const String &sText)
 		// Call base implementation
 		Application::SetStateText(sText);
 	}
+
+	// Ping the frontend so the GUI shows the important state text as soon as possible
+	GetFrontend().Ping();
 }
