@@ -1,5 +1,8 @@
 >> 07.01.2012
 [CO]
+- PLViewer & PLViewerQt are now using the new "PLEngine::SceneCreatorLoadableType::GetLoadableTypes()" and "SceneCreatorLoadableType::ConfigureSceneByLoadableType()".
+  This means that when e.g. a plugin introduced a totally new loadable type (as I'am doing it within my master thesis: "Volume"-type) it can automatically be used within
+  the viewer without touching it's source code.
 PLViewerQt:
 - In case a scene node modifier is selected, the owner scene node of this object will be the currently selected object within the viewer and therefore
   will also be within debug mode

@@ -452,29 +452,6 @@ class EngineApplication : public PLScene::SceneApplication {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
-	//[-------------------------------------------------------]
-	protected:
-		/**
-		*  @brief
-		*    Configures a generic scene
-		*
-		*  @param[in] cSceneContainer
-		*    The scene container to add the new scene nodes to
-		*  @param[in] pPrimarySceneNode
-		*    Primary scene node, for example representing the loaded mesh or a box with the loaded material etc., can be a null pointer
-		*
-		*  @note
-		*    - Comfort method
-		*    - Adds a directional light source scene node named "Light"
-		*    - Adds a free camera scene node named "Camera"
-		*    - If primary scene node given, adds an orbiter camera scene node named "OrbiterCamera"
-		*    - Makes the orbiting camera to the currently used application camera, if there's no orbiting camera then the free camera will be used instead
-		*/
-		PL_API void ConfigureGenericScene(PLScene::SceneContainer &cSceneContainer, PLScene::SceneNode *pPrimarySceneNode);
-
-
-	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:

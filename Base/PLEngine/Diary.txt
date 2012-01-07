@@ -1,3 +1,11 @@
+>> 07.01.2012
+[CO]
+- We already have e.g. "PLMesh::MeshCreator" automatically creating produral meshes, PLViewer shows that it's time for a scene creator. At first I wanted to
+  put it into the PLScene project, but it feels more right within the kind-of-toolset PLEngine project.
+- Moved "EngineApplication::ConfigureGenericScene()" into "SceneCreator::ConfigureGenericScene()"
+
+
+
 >> 06.01.2012
 [CO]
 - Reintegrated transform gizmo scene node modifiers which were removed on 27.06.2010 (see PLScene diary) because they were out-of-date.

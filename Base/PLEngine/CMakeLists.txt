@@ -68,6 +68,12 @@ add_sources(
 	src/Compositing/Console/SNConsole.cpp
 	src/Compositing/Console/ConsoleCommand.cpp
 	src/Compositing/Console/ConsoleDefaultCommands.cpp
+	src/SceneCreator/SceneCreator.cpp
+	src/SceneCreator/SceneCreatorDefault.cpp
+	src/SceneCreator/SceneCreatorLoadableType.cpp
+	src/SceneCreator/SceneCreatorLoadableTypeImage.cpp
+	src/SceneCreator/SceneCreatorLoadableTypeMaterial.cpp
+	src/SceneCreator/SceneCreatorLoadableTypeMesh.cpp
 	src/PLEngine.cpp
 )
 

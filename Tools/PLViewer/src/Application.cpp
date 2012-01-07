@@ -32,10 +32,8 @@
 #include <PLCore/Frontend/FrontendContext.h>
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Button.h>
-#include <PLMesh/MeshHandler.h>
-#include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SPScene.h>
-#include <PLScene/Scene/SceneNodes/SNMesh.h>
+#include <PLEngine/SceneCreator/SceneCreatorLoadableType.h>
 #include "Application.h"
 
 
@@ -98,61 +96,6 @@ Application::Application(Frontend &cFrontend) : ScriptApplication(cFrontend),
 */
 Application::~Application()
 {
-}
-
-/**
-*  @brief
-*    Loads a mesh
-*/
-bool Application::LoadMesh(const String &sFilename)
-{
-	// Get the scene container (the 'concrete scene')
-	SceneContainer *pSceneContainer = GetScene();
-	if (pSceneContainer) {
-		// Create a mesh scene node
-		SceneNode *pPrimarySceneNode = pSceneContainer->Create("PLScene::SNMesh", "Mesh", "Mesh=\"" + sFilename + "\"");
-
-		// Security check for better usability: Has the scene node a mesh with at least one material?
-		// -> If not the scene node mesh may not be visible and the user may wonder what's going on, so, in this case enable scene node debug mode
-		if (pPrimarySceneNode && pPrimarySceneNode->GetMeshHandler() && !pPrimarySceneNode->GetMeshHandler()->GetNumOfMaterials()) {
-			PL_LOG(Warning, "Mesh viewer: The mesh \"" + sFilename + "\" has no materials")
-
-			// Switch the mesh scene node into wireframe debug mode so that the user can see what's going on
-			pPrimarySceneNode->SetDebugFlags(SceneNode::DebugEnabled | SceneNode::DebugNoLocalCoordinateAxis | SceneNode::DebugNoName | SceneNode::DebugNoAABBox | SNMesh:: DebugShowWireframe);
-		}
-
-		// Configure a generic scene
-		ConfigureGenericScene(*pSceneContainer, pPrimarySceneNode);
-
-		// Done
-		return true;
-	}
-
-	// Error!
-	return false;
-}
-
-/**
-*  @brief
-*    Loads a material/image
-*/
-bool Application::LoadMaterialImage(const String &sFilename)
-{
-	// Get the scene container (the 'concrete scene')
-	SceneContainer *pSceneContainer = GetScene();
-	if (pSceneContainer) {
-		// Create a scene node representing a simple box with the given material/image as skin
-		SceneNode *pPrimarySceneNode = pSceneContainer->Create("PLScene::SNMesh", "Mesh", "Mesh=\"Default\" Skin=\"" + sFilename + "\"");
-
-		// Configure a generic scene
-		ConfigureGenericScene(*pSceneContainer, pPrimarySceneNode);
-
-		// Done
-		return true;
-	}
-
-	// Error!
-	return false;
 }
 
 
@@ -255,7 +198,7 @@ bool Application::LoadResource(const String &sFilename)
 		if (LoadableManager::GetInstance()->IsFormatLoadSupported(sExtension, "Scene")) {
 			// Is the given resource a scene?
 			if (LoadScene(sFilename)) {
-				// Done, get us out of here right now!
+				// Done
 				bResult = true;
 			} else {
 				// Write an error message into the log
@@ -266,7 +209,7 @@ bool Application::LoadResource(const String &sFilename)
 		} else if (ScriptManager::GetInstance()->GetScriptLanguageByExtension(sExtension).GetLength()) {
 			// Load the script
 			if (LoadScript(sFilename)) {
-				// Done, get us out of here right now!
+				// Done
 				bResult = true;
 			} else {
 				// Write an error message into the log
@@ -278,38 +221,13 @@ bool Application::LoadResource(const String &sFilename)
 			// Get loadable type
 			LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByExtension(sExtension);
 			if (pLoadableType) {
-				// Mesh
-				if (pLoadableType->GetName() == "Mesh") {
-					// Load the mesh
-					if (LoadMesh(sFilename)) {
-						// Done, get us out of here right now!
-						bResult = true;
-					} else {
-						// Write an error message into the log
-						PL_LOG(Error, "Failed to load the mesh \"" + sFilename + '\"')
-					}
+				// Get the scene container (the 'concrete scene')
+				SceneContainer *pSceneContainer = GetScene();
+				if (pSceneContainer) {
+					SetCamera(SceneCreatorLoadableType::ConfigureSceneByLoadableType(*pSceneContainer, pLoadableType->GetName(), sFilename));
 
-				// Material
-				} else if (pLoadableType->GetName() == "Material") {
-					// Load the material
-					if (LoadMaterialImage(sFilename)) {
-						// Done, get us out of here right now!
-						bResult = true;
-					} else {
-						// Write an error message into the log
-						PL_LOG(Error, "Failed to load the material \"" + sFilename + '\"')
-					}
-
-				// Image
-				} else if (pLoadableType->GetName() == "Image") {
-					// Load the image
-					if (LoadMaterialImage(sFilename)) {
-						// Done, get us out of here right now!
-						bResult = true;
-					} else {
-						// Write an error message into the log
-						PL_LOG(Error, "Failed to load the image \"" + sFilename + '\"')
-					}
+					// Done
+					bResult = true;
 				}
 			}
 

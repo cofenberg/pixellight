@@ -36,6 +36,7 @@
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Compositing/SceneRenderer.h>
 #include <PLScene/Scene/SceneNodes/SNKeyValue.h>
+#include "PLEngine/SceneCreator/SceneCreator.h"
 #include "PLEngine/Compositing/Console/ConsoleCommand.h"
 #include "PLEngine/Compositing/Console/SNConsoleBase.h"
 #include "PLEngine/Application/EngineApplication.h"
@@ -571,11 +572,8 @@ void EngineApplication::OnCreateScene(SceneContainer &cContainer)
 		pSPScene->SetSceneContainer(&cContainer);
 	}
 
-	// Create a scene node representing a simple box
-	SceneNode *pPrimarySceneNode = cContainer.Create("PLScene::SNMesh", "Box", "Mesh=\"Default\"");
-
-	// Configure a generic scene
-	ConfigureGenericScene(cContainer, pPrimarySceneNode);
+	// Configure scene and set the currently used application camera
+	SetCamera(SceneCreator::ConfigureScene(cContainer, "PLEngine::SceneCreatorDefault"));
 
 	// Set scene container
 	SetScene(&cContainer);
@@ -621,52 +619,6 @@ void EngineApplication::OnLoadProgress(float fLoadProgress)
 		// Redraw & ping the frontend
 		GetFrontend().RedrawAndPing();
 	}
-}
-
-
-//[-------------------------------------------------------]
-//[ Protected functions                                   ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Configures a generic scene
-*/
-void EngineApplication::ConfigureGenericScene(SceneContainer &cSceneContainer, SceneNode *pPrimarySceneNode)
-{
-	// Add a directional light source scene node named "Light"
-	cSceneContainer.Create("PLScene::SNDirectionalLight", "Light", "Rotation=\"45 0 0\"");
-
-	// Add a free camera scene node named "Camera"
-	SceneNode *pFreeCamera = cSceneContainer.Create("PLScene::SNCamera", "Camera");
-	if (pFreeCamera) {
-		// Add a controller modifier so we can look around the camera by using a default control
-		pFreeCamera->AddModifier("PLEngine::SNMEgoLookController");
-
-		// Add a controller modifier so we can move around the camera by using a default control
-		pFreeCamera->AddModifier("PLEngine::SNMMoveController");
-	}
-
-	// If primary scene node given, add an orbiter camera scene node named "OrbiterCamera"
-	SceneNode *pOrbitingCamera = pPrimarySceneNode ? cSceneContainer.Create("PLScene::SNCamera", "OrbiterCamera") : nullptr;
-	if (pOrbitingCamera) {
-		// Get the axis align bounding box (in 'scene node space') from the primary scene node
-		const AABoundingBox &cAABoundingBox = pPrimarySceneNode->GetAABoundingBox();
-
-		// Get orbiting distance, use the axis align bounding box (in 'scene node space') from the primary scene node as hint
-		const float fDistance = cAABoundingBox.GetLongestAxisLength()*2;
-
-		// Calculate the orbiting offset, use the axis align bounding box (in 'scene node space') from the primary scene node as hint
-		const Vector3 vOffset = cAABoundingBox.GetCenter();
-
-		// Add a controller modifier so we can orbiting around the camera by using a default control
-		pOrbitingCamera->AddModifier("PLEngine::SNMEgoOrbitingController", "Target=\"" + pPrimarySceneNode->GetAbsoluteName() + "\" Distance=\"" + fDistance + "\" Offset=\"" + vOffset.ToString() + '\"');
-
-		// Give the free camera the same position and rotation as used for the orbiting camera
-		pFreeCamera->GetTransform() = pOrbitingCamera->GetTransform();
-	}
-
-	// Set the currently used application camera
-	SetCamera(reinterpret_cast<SNCamera*>(pOrbitingCamera ? pOrbitingCamera : pFreeCamera));
 }
 
 

@@ -39,6 +39,7 @@ PL_WARNING_POP
 #include <PLCore/System/System.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SceneQueries/SQByClassName.h>
+#include <PLEngine/SceneCreator/SceneCreatorLoadableType.h>
 #include <PLFrontendQt/Frontend.h>
 #include <PLFrontendQt/QtStringAdapter.h>
 #include <PLFrontendQt/FrontendMainWindow.h>
@@ -55,6 +56,7 @@ PL_WARNING_POP
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLScene;
+using namespace PLEngine;
 using namespace PLFrontendQt;
 
 
@@ -374,12 +376,29 @@ void Gui::QtSlotTriggeredLoad()
 	String sFileFilter = ConstructFileFilter::ByLoadableType(QtStringAdapter::QtToPL(tr("Scene")), "Scene");
 	sFileFilter += ";;";
 	sFileFilter += ConstructFileFilter::ByScriptLanguages(QtStringAdapter::QtToPL(tr("Script")));
-	sFileFilter += ";;";
-	sFileFilter += ConstructFileFilter::ByLoadableType(QtStringAdapter::QtToPL(tr("Mesh")), "Mesh");
-	sFileFilter += ";;";
-	sFileFilter += ConstructFileFilter::ByLoadableType(QtStringAdapter::QtToPL(tr("Material")), "Material");
-	sFileFilter += ";;";
-	sFileFilter += ConstructFileFilter::ByLoadableType(QtStringAdapter::QtToPL(tr("Image")), "Image");
+
+	{ // Fill the file filter - the highly dynamic part
+		// Get a list of loadable types were it's possible to use a scene creator in order to
+		// configure a scene, everything else is not interesting in this viewer
+		Array<String> lstLoadableTypes;
+		SceneCreatorLoadableType::GetLoadableTypes(lstLoadableTypes);
+
+		// Fill the file filter
+		if (lstLoadableTypes.GetNumOfElements()) {
+			sFileFilter += ";;";
+			for (uint32 i=0; i<lstLoadableTypes.GetNumOfElements(); i++) {
+				// Get the current loadable type...
+				const String &sType = lstLoadableTypes[i];
+
+				// ... and add it to the file filter
+				sFileFilter += ConstructFileFilter::ByLoadableType(QtStringAdapter::QtToPL(tr(sType)), sType);
+
+				// Will another file filter follow?
+				if (i < lstLoadableTypes.GetNumOfElements()-1)
+					sFileFilter += ";;";
+			}
+		}
+	}
 
 	// Open a file dialog were the user can choose a filename
 	const QString sQFilename = QFileDialog::getOpenFileName(GetFrontendMainWindow(), "", "", QtStringAdapter::PLToQt(sFileFilter));

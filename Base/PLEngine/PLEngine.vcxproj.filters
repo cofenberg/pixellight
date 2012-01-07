@@ -25,6 +25,9 @@
     <Filter Include="Controller">
       <UniqueIdentifier>{b3abfba4-9f6a-4349-b27c-764ed5268eb7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SceneCreator">
+      <UniqueIdentifier>{072ffccc-0084-4422-9802-49daee9cb1ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application\EngineApplication.cpp">
@@ -147,6 +150,24 @@
     <ClCompile Include="src\Controller\SNMTransformGizmoPositionController.cpp">
       <Filter>Controller</Filter>
     </ClCompile>
+    <ClCompile Include="src\SceneCreator\SceneCreatorLoadableType.cpp">
+      <Filter>SceneCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SceneCreator\SceneCreator.cpp">
+      <Filter>SceneCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SceneCreator\SceneCreatorDefault.cpp">
+      <Filter>SceneCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SceneCreator\SceneCreatorLoadableTypeMesh.cpp">
+      <Filter>SceneCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SceneCreator\SceneCreatorLoadableTypeMaterial.cpp">
+      <Filter>SceneCreator</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SceneCreator\SceneCreatorLoadableTypeImage.cpp">
+      <Filter>SceneCreator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLEngine\Application\EngineApplication.h">
@@ -268,6 +289,24 @@
     </ClInclude>
     <ClInclude Include="include\PLEngine\Controller\SNMTransformGizmoPositionController.h">
       <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\SceneCreator\SceneCreatorDefault.h">
+      <Filter>SceneCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\SceneCreator\SceneCreatorLoadableType.h">
+      <Filter>SceneCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\SceneCreator\SceneCreator.h">
+      <Filter>SceneCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\SceneCreator\SceneCreatorLoadableTypeMesh.h">
+      <Filter>SceneCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\SceneCreator\SceneCreatorLoadableTypeMaterial.h">
+      <Filter>SceneCreator</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLEngine\SceneCreator\SceneCreatorLoadableTypeImage.h">
+      <Filter>SceneCreator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

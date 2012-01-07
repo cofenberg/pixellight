@@ -284,6 +284,12 @@ copy build\release_x64\PLEngine.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\Picking\MousePicking.cpp" />
     <ClCompile Include="src\Picking\Picking.cpp" />
     <ClCompile Include="src\Picking\PickingResult.cpp" />
+    <ClCompile Include="src\SceneCreator\SceneCreator.cpp" />
+    <ClCompile Include="src\SceneCreator\SceneCreatorDefault.cpp" />
+    <ClCompile Include="src\SceneCreator\SceneCreatorLoadableType.cpp" />
+    <ClCompile Include="src\SceneCreator\SceneCreatorLoadableTypeImage.cpp" />
+    <ClCompile Include="src\SceneCreator\SceneCreatorLoadableTypeMaterial.cpp" />
+    <ClCompile Include="src\SceneCreator\SceneCreatorLoadableTypeMesh.cpp" />
     <ClCompile Include="src\Tools\Camcorder.cpp" />
     <ClCompile Include="src\Tools\CamcorderLoader.cpp" />
     <ClCompile Include="src\Tools\CamcorderLoaderPL.cpp" />
@@ -326,6 +332,12 @@ copy build\release_x64\PLEngine.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLEngine\Picking\MousePicking.h" />
     <ClInclude Include="include\PLEngine\Picking\Picking.h" />
     <ClInclude Include="include\PLEngine\Picking\PickingResult.h" />
+    <ClInclude Include="include\PLEngine\SceneCreator\SceneCreator.h" />
+    <ClInclude Include="include\PLEngine\SceneCreator\SceneCreatorDefault.h" />
+    <ClInclude Include="include\PLEngine\SceneCreator\SceneCreatorLoadableType.h" />
+    <ClInclude Include="include\PLEngine\SceneCreator\SceneCreatorLoadableTypeImage.h" />
+    <ClInclude Include="include\PLEngine\SceneCreator\SceneCreatorLoadableTypeMaterial.h" />
+    <ClInclude Include="include\PLEngine\SceneCreator\SceneCreatorLoadableTypeMesh.h" />
     <ClInclude Include="include\PLEngine\Tools\Camcorder.h" />
     <ClInclude Include="include\PLEngine\Tools\CamcorderLoader.h" />
     <ClInclude Include="include\PLEngine\Tools\CamcorderLoaderPL.h" />
