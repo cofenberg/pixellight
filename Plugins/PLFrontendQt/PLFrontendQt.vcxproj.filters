@@ -172,9 +172,6 @@
     <ClCompile Include="src\DockWidget\DockWidgetManager.cpp">
       <Filter>DockWidget</Filter>
     </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_DockWidgetSceneGraph.cpp">
-      <Filter>GeneratedQtFiles</Filter>
-    </ClCompile>
     <ClCompile Include="src\DataModels\RTTIInfoModels\ClassInfoModel.cpp">
       <Filter>DataModels\RTTIInfoModels</Filter>
     </ClCompile>
@@ -208,9 +205,6 @@
     <ClCompile Include="build\GeneratedQtFiles\moc_RTTIBrowserWidget.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_DockWidgetSceneRenderer.cpp">
-      <Filter>GeneratedQtFiles</Filter>
-    </ClCompile>
     <ClCompile Include="src\DataModels\RTTIInfoModels\ClassListSortAndFilterModel.cpp">
       <Filter>DataModels\RTTIInfoModels</Filter>
     </ClCompile>
@@ -227,6 +221,18 @@
       <Filter>Widget</Filter>
     </ClCompile>
     <ClCompile Include="build\GeneratedQtFiles\moc_ClassListWidget.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DockWidget\DockWidgetSceneGraphQObject.cpp">
+      <Filter>DockWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DockWidget\DockWidgetSceneRendererQObject.cpp">
+      <Filter>DockWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_DockWidgetSceneGraphQObject.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_DockWidgetSceneRendererQObject.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
   </ItemGroup>
@@ -271,6 +277,12 @@
       <Filter>DockWidget</Filter>
     </ClInclude>
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetRTTIBrowser.h">
+      <Filter>DockWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneRenderer.h">
+      <Filter>DockWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneGraph.h">
       <Filter>DockWidget</Filter>
     </ClInclude>
   </ItemGroup>
@@ -389,9 +401,6 @@
     <CustomBuild Include="ressources\ressources.qrc">
       <Filter>Resources</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DockWidget\DockWidgetSceneGraph.h">
-      <Filter>DockWidget</Filter>
-    </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\DataModels\HeaderTreeItem.h">
       <Filter>DataModels</Filter>
     </CustomBuild>
@@ -407,9 +416,6 @@
     <CustomBuild Include="include\PLFrontendQt\Widget\RTTIBrowserWidget.h">
       <Filter>Widget</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DockWidget\DockWidgetSceneRenderer.h">
-      <Filter>DockWidget</Filter>
-    </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\DataModels\RTTIInfoModels\ClassListSortAndFilterModel.h">
       <Filter>DataModels\RTTIInfoModels</Filter>
     </CustomBuild>
@@ -418,6 +424,12 @@
     </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\Widget\ClassListWidget.h">
       <Filter>Widget</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DockWidget\DockWidgetSceneRendererQObject.h">
+      <Filter>DockWidget</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DockWidget\DockWidgetSceneGraphQObject.h">
+      <Filter>DockWidget</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

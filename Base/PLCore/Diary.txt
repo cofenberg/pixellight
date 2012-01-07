@@ -1,3 +1,15 @@
+>> 07.01.2012
+[CO]
+- Sadly, it appears that Qt's signal/slot mechanisms can't be used without QObject/Q_OBJECT. But we don't want to do a multiple inheritance
+  like "class DockWidgetSceneGraph : public QObject, public DockWidgetScene" either because this can cause serious casting issues. Casting may
+  work in simple cases... but I just had one of those situations were I wondered for a second why my "DockWidgetSceneGraph" data was messy, tried
+  to remove the multiple inheritance at once and the issue was gone. So, we need to add another class just to be able to use Qt's signal/slot mechanisms.
+  We can't use an embedded class for this either because Qt's MOC doesn't like this. :/
+  -> Added "DockWidgetSceneGraphQObject" and "DockWidgetSceneRendererQObject"
+- "DockWidgetSceneGraph": Added "SetSceneContainer"-broadcast
+
+
+
 >> 06.01.2012
 [SW]
 - PLFrontendQt: Added ClassListWidget which adds an filter line on top of the data view.

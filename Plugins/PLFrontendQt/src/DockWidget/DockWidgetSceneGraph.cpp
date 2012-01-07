@@ -27,10 +27,12 @@
 #include <QtGui/qdockwidget.h>
 #include <QtGui/qmainwindow.h>
 #include <PLCore/Base/Class.h>
+#include <PLScene/Scene/SceneContainer.h>
 #include <PLEngine/Application/EngineApplication.h>
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/DataModels/SceneGraphTreeModel.h"
 #include "PLFrontendQt/DockWidget/DockWidgetManager.h"
+#include "PLFrontendQt/DockWidget/DockWidgetSceneGraphQObject.h"
 #include "PLFrontendQt/DockWidget/DockWidgetSceneGraph.h"
 
 
@@ -57,42 +59,29 @@ pl_implement_class(DockWidgetSceneGraph)
 */
 DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidgetScene(pQMainWindow, pDockWidgetManager),
 	SlotOnDestroy(this),
-	m_pSceneGraphTreeModel(nullptr)
+	m_pSceneGraphTreeModel(nullptr),
+	m_pSceneContainer(nullptr),
+	m_pDockWidgetSceneGraphQObject(new DockWidgetSceneGraphQObject(*this))
 {
 	// Get encapsulated Qt dock widget
 	QDockWidget *pQDockWidget = GetQDockWidget();
 	if (pQDockWidget) {
 		// Create tree view and set scene graph model
 		QTreeView *pQTreeView = new QTreeView();
-		connect(pQTreeView, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(QtSlotTreeViewDoubleClicked(const QModelIndex&)));
+		m_pDockWidgetSceneGraphQObject->connect(pQTreeView, SIGNAL(doubleClicked(const QModelIndex&)), m_pDockWidgetSceneGraphQObject, SLOT(QtSlotTreeViewDoubleClicked(const QModelIndex&)));
 		pQDockWidget->setWidget(pQTreeView);
 		m_pSceneGraphTreeModel = new DataModels::SceneGraphTreeModel(pQDockWidget);
 		pQTreeView->setModel(m_pSceneGraphTreeModel);
 		pQTreeView->expandToDepth(0);
 
-		// Set a default start node to have a decent standard behaviour
-		SceneNode *pSceneNode = nullptr;
-		{
-			CoreApplication *pApplication = CoreApplication::GetApplication();
-			if (pApplication && pApplication->IsInstanceOf("PLEngine::EngineApplication"))
-				pSceneNode = reinterpret_cast<SceneNode*>(static_cast<PLEngine::EngineApplication*>(pApplication)->GetScene());
-			m_pSceneGraphTreeModel->SetStartNode(pSceneNode, true);
-		}
-
-		// Connect event handler
-		if (pSceneNode)
-			pSceneNode->SignalDestroy.Connect(SlotOnDestroy);
-
-		// Set window title
-		QString sQStringWindowTitle = pQDockWidget->tr(GetClass()->GetProperties().Get("Title"));
-		if (pSceneNode) {
-			sQStringWindowTitle += ": ";
-			sQStringWindowTitle += QtStringAdapter::PLToQt('\"' + pSceneNode->GetAbsoluteName() + '\"');	// Put it into quotes to make it possible to see e.g. trailing spaces
-		}
-		pQDockWidget->setWindowTitle(sQStringWindowTitle);
-
 		// Add the created Qt dock widget to the given Qt main window
 		pQMainWindow->addDockWidget(Qt::LeftDockWidgetArea, pQDockWidget);
+
+		{ // Set a default start node to have a decent standard behaviour
+			CoreApplication *pApplication = CoreApplication::GetApplication();
+			if (pApplication && pApplication->IsInstanceOf("PLEngine::EngineApplication"))
+				SetSceneContainer(static_cast<PLEngine::EngineApplication*>(pApplication)->GetScene());
+		}
 
 		{ // Ask the RTTI dock widget fellows whether or not someone knows which is the currently selected scene node or scene node modifier
 			// Get a list of dock widgets registered within the same dock widget manager this dock widget is in
@@ -129,6 +118,44 @@ DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidget
 */
 DockWidgetSceneGraph::~DockWidgetSceneGraph()
 {
+	// Destroy the QObject instance for Qt's signal/slot mechanisms
+	delete m_pDockWidgetSceneGraphQObject;
+}
+
+/**
+*  @brief
+*    Sets the scene container to use
+*/
+void DockWidgetSceneGraph::SetSceneContainer(SceneContainer *pSceneContainer)
+{
+	// Is there a scene graph tree model instance?
+	if (m_pSceneGraphTreeModel) {
+		// Disconnect event handler
+		if (m_pSceneContainer)
+			m_pSceneContainer->SignalDestroy.Disconnect(SlotOnDestroy);
+
+		// Backup the given scene container pointer
+		m_pSceneContainer = pSceneContainer;
+
+		// Connect event handler
+		if (m_pSceneContainer)
+			m_pSceneContainer->SignalDestroy.Connect(SlotOnDestroy);
+
+		// Set the start scene node within the scene graph tree model instance
+		m_pSceneGraphTreeModel->SetStartNode(m_pSceneContainer, true);
+
+		// Get encapsulated Qt dock widget
+		QDockWidget *pQDockWidget = GetQDockWidget();
+		if (pQDockWidget) {
+			// Set window title
+			QString sQStringWindowTitle = pQDockWidget->tr(GetClass()->GetProperties().Get("Title"));
+			if (m_pSceneContainer) {
+				sQStringWindowTitle += ": ";
+				sQStringWindowTitle += QtStringAdapter::PLToQt('\"' + m_pSceneContainer->GetAbsoluteName() + '\"');	// Put it into quotes to make it possible to see e.g. trailing spaces
+			}
+			pQDockWidget->setWindowTitle(sQStringWindowTitle);
+		}
+	}
 }
 
 /**
@@ -162,32 +189,13 @@ void DockWidgetSceneGraph::SelectObject(Object *pObject)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Called when the scene node assigned with this dock widget was destroyed
+*    Called when the scene container assigned with this dock widget was destroyed
 */
 void DockWidgetSceneGraph::OnDestroy()
 {
-	// Argh! Mayday! We lost our start scene node!
-	m_pSceneGraphTreeModel->SetStartNode(nullptr, true);
-}
-
-
-//[-------------------------------------------------------]
-//[ Private Qt slots (MOC)                                ]
-//[-------------------------------------------------------]
-void DockWidgetSceneGraph::QtSlotTreeViewDoubleClicked(const QModelIndex &cQModelIndex)
-{
-	// Is there a scene graph tree model instance?
-	if (m_pSceneGraphTreeModel) {
-		// Get selected scene node
-		Object *pObject = m_pSceneGraphTreeModel->GetSceneNodeFromIndex(cQModelIndex);
-		if (!pObject) {
-			// Hm, maybe it's an selected scene node modifier?
-			pObject = reinterpret_cast<Object*>(m_pSceneGraphTreeModel->GetSceneNodeModifierFromIndex(cQModelIndex));
-		}
-
-		// Perform a dock widget manager broadcast (excludes this emitting dock widget)
-		CallDockWidgetsMethod("SelectObject", Params<void, Object*>(pObject));
-	}
+	// Argh! Mayday! We lost our scene container!
+	// -> Now no scene container is currently set
+	SetSceneContainer(nullptr);
 }
 
 

@@ -81,8 +81,8 @@ SET(INC_FILES
 	include/PLFrontendQt/Widget/ClassInfoWidget.h
 	include/PLFrontendQt/Widget/ClassListWidget.h
 	include/PLFrontendQt/Widget/RTTIBrowserWidget.h
-	include/PLFrontendQt/DockWidget/DockWidgetSceneGraph.h
-	include/PLFrontendQt/DockWidget/DockWidgetSceneRenderer.h
+	include/PLFrontendQt/DockWidget/DockWidgetSceneGraphQObject.h
+	include/PLFrontendQt/DockWidget/DockWidgetSceneRendererQObject.h
 )
 
 # Qt .ui files
@@ -150,7 +150,9 @@ add_sources(
 	src/DockWidget/DockWidgetObject.cpp
 	src/DockWidget/DockWidgetScene.cpp
 	src/DockWidget/DockWidgetSceneGraph.cpp
+	src/DockWidget/DockWidgetSceneGraphQObject.cpp
 	src/DockWidget/DockWidgetSceneRenderer.cpp
+	src/DockWidget/DockWidgetSceneRendererQObject.cpp
 	${UI_SRCS}	# Add source produced by uic
 	${MOC_SRCS}	# Add source produced by moc
 	${QRC_SRCS}	# Add sources produced by rcc

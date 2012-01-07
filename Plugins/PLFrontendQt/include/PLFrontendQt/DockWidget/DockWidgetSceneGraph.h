@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <QtCore/qobject.h>
 #include "PLFrontendQt/DockWidget/DockWidgetScene.h"
 
 
@@ -37,15 +36,16 @@
 //[-------------------------------------------------------]
 QT_BEGIN_NAMESPACE
 	class QMainWindow;
-	class QModelIndex;
 QT_END_NAMESPACE
 namespace PLScene {
 	class SceneNode;
+	class SceneContainer;
 }
 namespace PLFrontendQt {
 	namespace DataModels {
 		class SceneGraphTreeModel;
 	}
+	class DockWidgetSceneGraphQObject;
 }
 
 
@@ -66,14 +66,13 @@ namespace PLFrontendQt {
 *    - By default, the "PLEngine::EngineApplication::GetScene()" scene graph is used, but only
 *      if "PLCore::CoreApplication::GetApplication()" is an "PLEngine::EngineApplication"-instance
 */
-class DockWidgetSceneGraph : public QObject, public DockWidgetScene {
+class DockWidgetSceneGraph : public DockWidgetScene {
 
 
 	//[-------------------------------------------------------]
-	//[ Qt definitions (MOC)                                  ]
+	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	Q_OBJECT	// All files using the Q_OBJECT macro need to be compiled using the Meta-Object Compiler (MOC) of Qt, else slots won't work!
-				// (VisualStudio: Header file -> Right click -> Properties -> "Custom Build Tool")
+	friend class DockWidgetSceneGraphQObject;
 
 
 	//[-------------------------------------------------------]
@@ -86,13 +85,14 @@ class DockWidgetSceneGraph : public QObject, public DockWidgetScene {
 		pl_properties_end
 		#ifdef PLFRONTENDQT_EXPORTS	// The following is only required when compiling PLFrontendQt
 			// Methods
-			pl_method_0(GetSelectedObject,	pl_ret_type(PLCore::Object*),						"Returns the currently selected object, can be a null pointer.",	"")
-			pl_method_1(SelectObject,		pl_ret_type(void),				PLCore::Object*,	"Selects the given object. Object to select as first parameter.",	"")
+			pl_method_1(SetSceneContainer,	pl_ret_type(void),				PLScene::SceneContainer*,	"Sets the scene container to use. Scene container to use as first parameter.",	"")
+			pl_method_0(GetSelectedObject,	pl_ret_type(PLCore::Object*),								"Returns the currently selected object, can be a null pointer.",				"")
+			pl_method_1(SelectObject,		pl_ret_type(void),				PLCore::Object*,			"Selects the given object. Object to select as first parameter.",				"")
 		#endif
 		// Constructors
 		pl_constructor_2(DefaultConstructor,	QMainWindow*,	DockWidgetManager*,	"Constructor with a pointer to the Qt main window as first parameter, pointer to the dock widget manager this dock widget should be registered to as second parameter",	"")
 		// Slots
-		pl_slot_0(OnDestroy,	"Called when the scene node assigned with this dock widget was destroyed",	"")
+		pl_slot_0(OnDestroy,	"Called when the scene container assigned with this dock widget was destroyed",	"")
 	pl_class_end
 
 
@@ -119,6 +119,15 @@ class DockWidgetSceneGraph : public QObject, public DockWidgetScene {
 
 		/**
 		*  @brief
+		*    Sets the scene container to use
+		*
+		*  @param[in] pSceneContainer
+		*    Scene container to use, can be a null pointer
+		*/
+		PLFRONTENDQT_API void SetSceneContainer(PLScene::SceneContainer *pSceneContainer);
+
+		/**
+		*  @brief
 		*    Returns the currently selected object
 		*
 		*  @return
@@ -142,23 +151,18 @@ class DockWidgetSceneGraph : public QObject, public DockWidgetScene {
 	private:
 		/**
 		*  @brief
-		*    Called when the scene node assigned with this dock widget was destroyed
+		*    Called when the scene container assigned with this dock widget was destroyed
 		*/
 		void OnDestroy();
-
-
-	//[-------------------------------------------------------]
-	//[ Private Qt slots (MOC)                                ]
-	//[-------------------------------------------------------]
-	private slots:
-		void QtSlotTreeViewDoubleClicked(const QModelIndex &cQModelIndex);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		DataModels::SceneGraphTreeModel *m_pSceneGraphTreeModel;	/**< Scene graph tree model, can be a null pointer */
+		DataModels::SceneGraphTreeModel *m_pSceneGraphTreeModel;			/**< Scene graph tree model, can be a null pointer */
+		PLScene::SceneContainer			*m_pSceneContainer;					/**< Scene container assigned with this dock widget, can be a null pointer */
+		DockWidgetSceneGraphQObject		*m_pDockWidgetSceneGraphQObject;	/**< QObject instance for Qt's signal/slot mechanisms, always valid */
 
 
 };

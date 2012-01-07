@@ -28,7 +28,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <QtCore/qobject.h>
 #include "PLFrontendQt/DockWidget/DockWidgetScene.h"
 
 
@@ -47,6 +46,7 @@ namespace PLFrontendQt {
 			class SceneRendererDataModel;
 		}
 	}
+	class DockWidgetSceneRendererQObject;
 }
 
 
@@ -68,14 +68,13 @@ namespace PLFrontendQt {
 *    - By default, the "PLEngine::EngineApplication::GetSceneRendererTool()::GetSceneRenderer()" scene renderer is
 *      used, but only if "PLCore::CoreApplication::GetApplication()" is an "PLEngine::EngineApplication"-instance
 */
-class DockWidgetSceneRenderer : public QObject, public DockWidgetScene {
+class DockWidgetSceneRenderer : public DockWidgetScene {
 
 
 	//[-------------------------------------------------------]
-	//[ Qt definitions (MOC)                                  ]
+	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	Q_OBJECT	// All files using the Q_OBJECT macro need to be compiled using the Meta-Object Compiler (MOC) of Qt, else slots won't work!
-				// (VisualStudio: Header file -> Right click -> Properties -> "Custom Build Tool")
+	friend class DockWidgetSceneRendererQObject;
 
 
 	//[-------------------------------------------------------]
@@ -116,13 +115,6 @@ class DockWidgetSceneRenderer : public QObject, public DockWidgetScene {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual QObject methods                        ]
-	//[-------------------------------------------------------]
-	public:
-		virtual bool eventFilter(QObject *pQObject, QEvent *pQEvent);
-
-
-	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
@@ -146,7 +138,8 @@ class DockWidgetSceneRenderer : public QObject, public DockWidgetScene {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		DataModels::SceneRendererDataModel::SceneRendererDataModel *m_pSceneRendererDataModel;	/**< Scene renderer data model, can be a null pointer */
+		DataModels::SceneRendererDataModel::SceneRendererDataModel *m_pSceneRendererDataModel;			/**< Scene renderer data model, can be a null pointer */
+		DockWidgetSceneRendererQObject							   *m_pDockWidgetSceneRendererQObject;	/**< QObject instance for Qt's signal/slot mechanisms, always valid */
 
 
 };

@@ -130,8 +130,12 @@ void Gui::SetEnabled(bool bEnabled)
 {
 	// Get the Qt main window
 	FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
-	if (pFrontendMainWindow)
+	if (pFrontendMainWindow) {
 		pFrontendMainWindow->setEnabled(bEnabled);
+
+		// Perform a dock widget manager broadcast
+		pFrontendMainWindow->GetDockWidgetManager().CallDockWidgetsMethod("SetSceneContainer", Params<void, SceneContainer*>(bEnabled ? m_pApplication->GetScene() : nullptr));
+	}
 
 	// Create/destroy the GUI picking
 	if (bEnabled) {
