@@ -35,7 +35,7 @@ PL_WARNING_POP
 #include <PLFrontendQt/QtStringAdapter.h>
 #include <PLFrontendQt/FrontendMainWindow.h>
 #include "Gui.h"
-#include "Application.h"
+#include "ApplicationQt.h"
 #include "GuiPicking.h"
 
 

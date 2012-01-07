@@ -45,7 +45,7 @@ PL_WARNING_POP
 #include <PLFrontendQt/ConstructFileFilter.h>
 #include <PLFrontendQt/DockWidget/DockWidget.h>
 #include <PLFrontendQt/DockWidget/DockWidgetManager.h>
-#include "Application.h"
+#include "ApplicationQt.h"
 #include "GuiPicking.h"
 #include "Gui.h"
 
@@ -65,7 +65,7 @@ using namespace PLFrontendQt;
 *  @brief
 *    Constructor
 */
-Gui::Gui(Application &cApplication) :
+Gui::Gui(ApplicationQt &cApplication) :
 	EventHandlerCameraFound(&Gui::OnCameraFound, this),
 	m_pApplication(&cApplication),
 	m_pGuiPicking(nullptr),
@@ -100,7 +100,7 @@ Gui::~Gui()
 *  @brief
 *    Returns the owner application
 */
-Application &Gui::GetApplication() const
+ApplicationQt &Gui::GetApplication() const
 {
 	return *m_pApplication;
 }
@@ -131,20 +131,24 @@ void Gui::SetEnabled(bool bEnabled)
 	// Get the Qt main window
 	FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
 	if (pFrontendMainWindow) {
-		pFrontendMainWindow->setEnabled(bEnabled);
+		// State change?
+		if (pFrontendMainWindow->isEnabled() != bEnabled) {
+			// Set new enabled state of the Qt main window
+			pFrontendMainWindow->setEnabled(bEnabled);
 
-		// Perform a dock widget manager broadcast
-		pFrontendMainWindow->GetDockWidgetManager().CallDockWidgetsMethod("SetSceneContainer", Params<void, SceneContainer*>(bEnabled ? m_pApplication->GetScene() : nullptr));
-	}
+			// Perform a dock widget manager broadcast
+			pFrontendMainWindow->GetDockWidgetManager().CallDockWidgetsMethod("SetSceneContainer", Params<void, SceneContainer*>(bEnabled ? m_pApplication->GetScene() : nullptr));
 
-	// Create/destroy the GUI picking
-	if (bEnabled) {
-		if (!m_pGuiPicking)
-			m_pGuiPicking = new GuiPicking(*this);
-	} else {
-		if (m_pGuiPicking) {
-			delete m_pGuiPicking;
-			m_pGuiPicking = nullptr;
+			// Create/destroy the GUI picking
+			if (bEnabled) {
+				if (!m_pGuiPicking)
+					m_pGuiPicking = new GuiPicking(*this);
+			} else {
+				if (m_pGuiPicking) {
+					delete m_pGuiPicking;
+					m_pGuiPicking = nullptr;
+				}
+			}
 		}
 	}
 }

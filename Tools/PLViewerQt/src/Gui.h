@@ -50,7 +50,7 @@ namespace PLFrontendQt {
 	class FrontendMainWindow;
 }
 class GuiPicking;
-class Application;
+class ApplicationQt;
 
 
 //[-------------------------------------------------------]
@@ -81,7 +81,7 @@ class Gui : public QObject {
 		*  @param[in] cApplication
 		*    Owner application
 		*/
-		Gui(Application &cApplication);
+		Gui(ApplicationQt &cApplication);
 
 		/**
 		*  @brief
@@ -96,7 +96,7 @@ class Gui : public QObject {
 		*  @return
 		*    The owner application
 		*/
-		Application &GetApplication() const;
+		ApplicationQt &GetApplication() const;
 
 		/**
 		*  @brief
@@ -207,15 +207,15 @@ class Gui : public QObject {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Application	 *m_pApplication;			/**< Owner application, always valid */
-		GuiPicking	 *m_pGuiPicking;			/**< GUI picking component instance, can be a null pointer */
+		ApplicationQt *m_pApplication;			/**< Owner application, always valid */
+		GuiPicking	  *m_pGuiPicking;			/**< GUI picking component instance, can be a null pointer */
 		// Menu bar
-		QMenu		 *m_pQMenuCamera;			/**< Camera Qt menu, can be a null pointer */
-		QActionGroup *m_pQActionGroupCamera;	/**< Camera Qt action group, can be a null pointer */
-		QMenu		 *m_pQMenuWindow;			/**< Window Qt menu, can be a null pointer */
-		QActionGroup *m_pQActionGroupWindow;	/**< Window Qt action group, can be a null pointer */
+		QMenu		  *m_pQMenuCamera;			/**< Camera Qt menu, can be a null pointer */
+		QActionGroup  *m_pQActionGroupCamera;	/**< Camera Qt action group, can be a null pointer */
+		QMenu		  *m_pQMenuWindow;			/**< Window Qt menu, can be a null pointer */
+		QActionGroup  *m_pQActionGroupWindow;	/**< Window Qt action group, can be a null pointer */
 		// Status bar
-		QLabel		 *m_pQLabelStatusBar;		/**< Qt label shown in the status bar of the Qt main window, can be a null pointer */
+		QLabel		  *m_pQLabelStatusBar;		/**< Qt label shown in the status bar of the Qt main window, can be a null pointer */
 
 
 };

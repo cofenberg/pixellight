@@ -48,6 +48,12 @@ class ApplicationQt : public Application {
 
 
 	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class Gui;
+
+
+	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, ApplicationQt, "", Application, "PLViewer application class with an added lightweight Qt GUI-layer")
@@ -109,6 +115,7 @@ class ApplicationQt : public Application {
 	//[ Protected virtual Application functions               ]
 	//[-------------------------------------------------------]
 	protected:
+		virtual bool LoadResource(const PLCore::String &sFilename) override;
 		virtual void SetStateText(const PLCore::String &sText) override;
 
 

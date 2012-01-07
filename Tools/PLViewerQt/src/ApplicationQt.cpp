@@ -107,6 +107,10 @@ void ApplicationQt::OnDeInit()
 //[-------------------------------------------------------]
 bool ApplicationQt::LoadScene(const String &sFilename)
 {
+	// It's possible that someone is calling "LoadScene()" directly, so disabling the GUI just in "LoadResource()" is not sufficient
+	// -> Within the viewer, usually it's "LoadResource()" -> "LoadScene()"
+	// -> Disabling/enabling the GUI twice is no problem, "Gui::SetEnabled()" can handle it
+
 	// Disable the GUI window while loading so the user can't prank around
 	if (m_pGui)
 		m_pGui->SetEnabled(false);
@@ -156,6 +160,23 @@ void ApplicationQt::OnLoadProgress(float fLoadProgress)
 //[-------------------------------------------------------]
 //[ Protected virtual Application functions               ]
 //[-------------------------------------------------------]
+bool ApplicationQt::LoadResource(const String &sFilename)
+{
+	// Disable the GUI window while loading so the user can't prank around
+	if (m_pGui)
+		m_pGui->SetEnabled(false);
+
+	// Call base implementation
+	const bool bResult = Application::LoadResource(sFilename);
+
+	// Enable the Qt main window when loading is done
+	if (m_pGui)
+		m_pGui->SetEnabled(true);
+
+	// Done
+	return bResult;
+}
+
 void ApplicationQt::SetStateText(const String &sText)
 {
 	// Is there an GUI instance?

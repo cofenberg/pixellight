@@ -102,6 +102,94 @@ Application::~Application()
 
 /**
 *  @brief
+*    Loads a mesh
+*/
+bool Application::LoadMesh(const String &sFilename)
+{
+	// Get the scene container (the 'concrete scene')
+	SceneContainer *pSceneContainer = GetScene();
+	if (pSceneContainer) {
+		// Create a mesh scene node
+		SceneNode *pPrimarySceneNode = pSceneContainer->Create("PLScene::SNMesh", "Mesh", "Mesh=\"" + sFilename + "\"");
+
+		// Security check for better usability: Has the scene node a mesh with at least one material?
+		// -> If not the scene node mesh may not be visible and the user may wonder what's going on, so, in this case enable scene node debug mode
+		if (pPrimarySceneNode && pPrimarySceneNode->GetMeshHandler() && !pPrimarySceneNode->GetMeshHandler()->GetNumOfMaterials()) {
+			PL_LOG(Warning, "Mesh viewer: The mesh \"" + sFilename + "\" has no materials")
+
+			// Switch the mesh scene node into wireframe debug mode so that the user can see what's going on
+			pPrimarySceneNode->SetDebugFlags(SceneNode::DebugEnabled | SceneNode::DebugNoLocalCoordinateAxis | SceneNode::DebugNoName | SceneNode::DebugNoAABBox | SNMesh:: DebugShowWireframe);
+		}
+
+		// Configure a generic scene
+		ConfigureGenericScene(*pSceneContainer, pPrimarySceneNode);
+
+		// Done
+		return true;
+	}
+
+	// Error!
+	return false;
+}
+
+/**
+*  @brief
+*    Loads a material/image
+*/
+bool Application::LoadMaterialImage(const String &sFilename)
+{
+	// Get the scene container (the 'concrete scene')
+	SceneContainer *pSceneContainer = GetScene();
+	if (pSceneContainer) {
+		// Create a scene node representing a simple box with the given material/image as skin
+		SceneNode *pPrimarySceneNode = pSceneContainer->Create("PLScene::SNMesh", "Mesh", "Mesh=\"Default\" Skin=\"" + sFilename + "\"");
+
+		// Configure a generic scene
+		ConfigureGenericScene(*pSceneContainer, pPrimarySceneNode);
+
+		// Done
+		return true;
+	}
+
+	// Error!
+	return false;
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected functions                                   ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when a control event has occurred
+*/
+void Application::OnControl(Control &cControl)
+{
+	// Is it a button and was it just hit?
+	if (cControl.GetType() == ControlButton && reinterpret_cast<Button&>(cControl).IsHit()) {
+		// Check whether the escape key was pressed
+		if (cControl.GetName() == "KeyboardEscape") {
+			// Shut down the application
+			Exit(0);
+
+		// Make a screenshot from the current render target
+		} else if (cControl.GetName() == "KeyboardF12") {
+			GetScreenshotTool().SaveScreenshot();
+
+		// Toggle mouse cursor visibility
+		} else if (cControl.GetName() == "KeyboardM") {
+			// Toggle mouse cursor visibility
+			GetFrontend().SetMouseVisible(!GetFrontend().IsMouseVisible());
+		}
+	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected virtual Application functions               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
 *    Loads a resource which type has to be evaluated internally
 */
 bool Application::LoadResource(const String &sFilename)
@@ -248,94 +336,6 @@ bool Application::LoadResource(const String &sFilename)
 	return bResult;
 }
 
-/**
-*  @brief
-*    Loads a mesh
-*/
-bool Application::LoadMesh(const String &sFilename)
-{
-	// Get the scene container (the 'concrete scene')
-	SceneContainer *pSceneContainer = GetScene();
-	if (pSceneContainer) {
-		// Create a mesh scene node
-		SceneNode *pPrimarySceneNode = pSceneContainer->Create("PLScene::SNMesh", "Mesh", "Mesh=\"" + sFilename + "\"");
-
-		// Security check for better usability: Has the scene node a mesh with at least one material?
-		// -> If not the scene node mesh may not be visible and the user may wonder what's going on, so, in this case enable scene node debug mode
-		if (pPrimarySceneNode && pPrimarySceneNode->GetMeshHandler() && !pPrimarySceneNode->GetMeshHandler()->GetNumOfMaterials()) {
-			PL_LOG(Warning, "Mesh viewer: The mesh \"" + sFilename + "\" has no materials")
-
-			// Switch the mesh scene node into wireframe debug mode so that the user can see what's going on
-			pPrimarySceneNode->SetDebugFlags(SceneNode::DebugEnabled | SceneNode::DebugNoLocalCoordinateAxis | SceneNode::DebugNoName | SceneNode::DebugNoAABBox | SNMesh:: DebugShowWireframe);
-		}
-
-		// Configure a generic scene
-		ConfigureGenericScene(*pSceneContainer, pPrimarySceneNode);
-
-		// Done
-		return true;
-	}
-
-	// Error!
-	return false;
-}
-
-/**
-*  @brief
-*    Loads a material/image
-*/
-bool Application::LoadMaterialImage(const String &sFilename)
-{
-	// Get the scene container (the 'concrete scene')
-	SceneContainer *pSceneContainer = GetScene();
-	if (pSceneContainer) {
-		// Create a scene node representing a simple box with the given material/image as skin
-		SceneNode *pPrimarySceneNode = pSceneContainer->Create("PLScene::SNMesh", "Mesh", "Mesh=\"Default\" Skin=\"" + sFilename + "\"");
-
-		// Configure a generic scene
-		ConfigureGenericScene(*pSceneContainer, pPrimarySceneNode);
-
-		// Done
-		return true;
-	}
-
-	// Error!
-	return false;
-}
-
-
-//[-------------------------------------------------------]
-//[ Protected functions                                   ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Called when a control event has occurred
-*/
-void Application::OnControl(Control &cControl)
-{
-	// Is it a button and was it just hit?
-	if (cControl.GetType() == ControlButton && reinterpret_cast<Button&>(cControl).IsHit()) {
-		// Check whether the escape key was pressed
-		if (cControl.GetName() == "KeyboardEscape") {
-			// Shut down the application
-			Exit(0);
-
-		// Make a screenshot from the current render target
-		} else if (cControl.GetName() == "KeyboardF12") {
-			GetScreenshotTool().SaveScreenshot();
-
-		// Toggle mouse cursor visibility
-		} else if (cControl.GetName() == "KeyboardM") {
-			// Toggle mouse cursor visibility
-			GetFrontend().SetMouseVisible(!GetFrontend().IsMouseVisible());
-		}
-	}
-}
-
-
-//[-------------------------------------------------------]
-//[ Protected virtual Application functions               ]
-//[-------------------------------------------------------]
 /**
 *  @brief
 *    Sets the state text

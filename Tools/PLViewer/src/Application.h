@@ -91,18 +91,6 @@ class Application : public PLEngine::ScriptApplication {
 		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    Loads a resource which type has to be evaluated internally
-		*
-		*  @param[in] sFilename
-		*    Filename of the resource to load
-		*
-		*  @return
-		*    'true' if all went fine, else 'false'
-		*/
-		bool LoadResource(const PLCore::String &sFilename);
-
-		/**
-		*  @brief
 		*    Loads a mesh
 		*
 		*  @param[in] sFilename
@@ -144,6 +132,18 @@ class Application : public PLEngine::ScriptApplication {
 	//[ Protected virtual Application functions               ]
 	//[-------------------------------------------------------]
 	protected:
+		/**
+		*  @brief
+		*    Loads a resource which type has to be evaluated internally
+		*
+		*  @param[in] sFilename
+		*    Filename of the resource to load
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		virtual bool LoadResource(const PLCore::String &sFilename);
+
 		/**
 		*  @brief
 		*    Sets the state text
