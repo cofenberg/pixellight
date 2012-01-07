@@ -136,6 +136,14 @@ if(NOT CMAKE_BUILD_TYPE MATCHES Debug)
 		# The following flag usage is basing on information from http://developer.amd.com/documentation/articles/pages/Compiler-FlagDrivenPerformanceGains.aspx
 		-fomit-frame-pointer			# Don't keep the frame pointer in a register for functions that don't need one
 	)
+else()
+	##################################################
+	## Debug 
+	##################################################
+	set(LINUX_COMPILE_FLAGS
+		${LINUX_COMPILE_FLAGS}
+		-ggdb												# Use gdb debugger
+	)
 endif()
 
 
