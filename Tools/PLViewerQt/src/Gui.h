@@ -127,6 +127,22 @@ class Gui : public QObject {
 
 		/**
 		*  @brief
+		*    Opens a dialog in order to give the user a choice between multiple options
+		*
+		*  @param[in]  sTitle
+		*    Title
+		*  @param[in]  sText
+		*    Reason for input text
+		*  @param[in] lstOptions
+		*    Options, empty strings will be ignored
+		*
+		*  @return
+		*    The chosen option or empty string on abort
+		*/
+		PLCore::String InputDialog(const PLCore::String &sTitle, const PLCore::String &sText, const PLCore::Array<PLCore::String> &lstOptions) const;
+
+		/**
+		*  @brief
 		*    Updates the GUI
 		*
 		*  @note

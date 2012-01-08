@@ -32,6 +32,7 @@ PL_WARNING_PUSH
 	#include <QtGui/qmenubar.h>
 	#include <QtGui/qstatusbar.h>
 	#include <QtGui/qfiledialog.h>
+	#include <QtGui/qinputdialog.h>
 	#include <QtGui/qdesktopservices.h>
 PL_WARNING_POP
 #include <PLCore/Log/Log.h>
@@ -164,6 +165,35 @@ void Gui::SetStateText(const String &sText)
 	// Update the Qt label shown in the status bar of the Qt main window
 	if (m_pQLabelStatusBar)
 		m_pQLabelStatusBar->setText(QtStringAdapter::PLToQt(sText));
+}
+
+/**
+*  @brief
+*    Opens a dialog in order to give the user a choice between multiple options
+*/
+String Gui::InputDialog(const String &sTitle, const String &sText, const Array<String> &lstOptions) const
+{
+	// Construct Qt string list
+	QStringList cQStringList;
+	for (uint32 i=0; i<lstOptions.GetNumOfElements(); i++)
+		cQStringList << QtStringAdapter::PLToQt(lstOptions[i]);
+
+	// Create Qt input dialog
+	QInputDialog cQInputDialog(GetFrontendMainWindow(), Qt::Tool);
+	cQInputDialog.setWindowTitle(tr(sTitle));
+	cQInputDialog.setLabelText(tr(sText));
+	cQInputDialog.setComboBoxItems(cQStringList);
+
+	{ // Usability: Set dialog width so we can see the complete title at once and disable dialog resize
+		const int nWidth = cQInputDialog.fontMetrics().boundingRect(cQInputDialog.windowTitle()).width() + 80;
+		QSize cQSize = cQInputDialog.size();
+		if (cQSize.width() < nWidth)
+			cQSize.setWidth(nWidth);
+		cQInputDialog.setFixedSize(cQSize);
+	}
+
+	// Open Qt input dialog
+	return (cQInputDialog.exec() == QDialog::Accepted) ? QtStringAdapter::QtToPL(cQInputDialog.textValue()) : "";
 }
 
 /**
