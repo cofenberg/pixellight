@@ -14,6 +14,11 @@
   were both point to one and the same directory. This means that there's need for another method explicitly returning the directory the executable is in.
   -> Added "GetExecutableDirectory()"
 -> When writing the unit tests for this class, Jens Schmer noticed those confusing inconsistencies and partly missing documentation about path style etc.
+- "CoreApplication::OnInitPlugins()" & "FrontendApplication::OnInitPlugins()": There's no guarantee that the application executable directory is the same
+  as the application startup directory
+  -> If the application executable directory is not the same as the application startup directory, do also scan the application startup directory
+  -> This behaviour is quite useful because it allows development of plugins which can be tested within e.g. PLViewer without copying files around,
+     just set the current directory to your plugin directory when launching the viewer application
 PLFrontendQt:
 - "SceneGraphTreeModel": Do not show scene nodes or scene node modifiers with a set "Automatic"-flag within a GUI (yes, this all way planned over years *g*)
 
