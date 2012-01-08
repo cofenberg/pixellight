@@ -188,6 +188,9 @@ bool Application::LoadResource(const String &sFilename, const String &sType)
 			}
 		}
 
+		// Set default (and very basic) scene renderer
+		GetSceneRendererTool().SetSceneRenderer(GetScene(), DefaultSceneRenderer, DefaultSceneRenderer);
+
 		// The viewer supports loading in multiple resource types, but scenes and scripts are
 		// the most important because most powerful ones, so give them the highest priority.
 		// -> It would be possible to implement support for scripting so that e.g. a Lua script
@@ -225,6 +228,7 @@ bool Application::LoadResource(const String &sFilename, const String &sType)
 				// Get the scene container (the 'concrete scene')
 				SceneContainer *pSceneContainer = GetScene();
 				if (pSceneContainer) {
+					// Configure scene and set the preferred camera scene node
 					SetCamera(SceneCreatorLoadableType::ConfigureSceneByLoadableType(*pSceneContainer, pLoadableType->GetName(), sFilename));
 
 					// Done
