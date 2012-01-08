@@ -1,3 +1,9 @@
+>> 08.01.2012
+[CO]
+- "MeshHandler::FindTriangle()": Added cull parameter
+
+
+
 >> 01.01.2012
 [CO]
 - "MeshManager::MeshManager()": It's a good idea to give the default mesh tangent space vectors (tangent & binormal) so it can also be used for normal mapping
