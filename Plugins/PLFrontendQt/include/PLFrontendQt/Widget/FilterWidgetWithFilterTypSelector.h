@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SceneGraphTreeModel.h                          *
+ *  File: FilterWidgetWithFilterTypSelector.h            *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,36 +20,31 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTENDQT_SCENEGRAPHTREEMODEL_H__
-#define __PLFRONTENDQT_SCENEGRAPHTREEMODEL_H__
+#ifndef FILTERWIDGETWITHFILTERTYPSELECTOR_H
+#define FILTERWIDGETWITHFILTERTYPSELECTOR_H
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLFrontendQt/DataModels/TreeModelBase.h"
+#include <QtGui/QWidget>
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-namespace PLScene {
-	class SceneNode;
-	class SceneNodeModifier;
-}
-namespace PLFrontendQt {
-	namespace DataModels {
-		class SceneGraphNodeTreeItemBase;
-	}
-}
+QT_BEGIN_NAMESPACE
+class QToolButton;
+class QActionGroup;
+class QAction;
+QT_END_NAMESPACE
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLFrontendQt {
-namespace DataModels {
 
 
 //[-------------------------------------------------------]
@@ -57,9 +52,9 @@ namespace DataModels {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene graph tree model
+*    A widget with a filter line and a filter type selector
 */
-class PLFRONTENDQT_API SceneGraphTreeModel : public TreeModelBase {
+class FilterWidgetWithFilterTypSelector : public QWidget {
 
 
 	//[-------------------------------------------------------]
@@ -70,44 +65,41 @@ class PLFRONTENDQT_API SceneGraphTreeModel : public TreeModelBase {
 
 
 	//[-------------------------------------------------------]
-	//[ Public definitions                                    ]
-	//[-------------------------------------------------------]
-	public:
-		enum SceneGraphTreeModelRoles {
-			ClassNameRole = Qt::UserRole+1
-		};
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		explicit SceneGraphTreeModel(QObject *parent = nullptr);
-		
-		/**
-		*  @brief
-		*    Set the start scene node for this model
-		*
-		*  @param[in] nodeObj
-		*    the start scene node
-		* 
-		*  @param[in] hideStartNode
-		*    specifies if the start node be hidden
-		*/
-		void SetStartNode(PLScene::SceneNode *nodeObj, bool hideStartNode = false);
-		PLScene::SceneNode *GetSceneNodeFromIndex(const QModelIndex &index);
-		PLScene::SceneNodeModifier *GetSceneNodeModifierFromIndex(const QModelIndex &index);
-		SceneGraphNodeTreeItemBase *GetSceneTreeItemFromIndex(const QModelIndex &index);
+		explicit FilterWidgetWithFilterTypSelector(QWidget* parent = 0);
+		void AddFilterType(const QString& name, int filterId, bool initialChecked = false);
 
 
+	//[-------------------------------------------------------]
+	//[ Qt signals (MOC)                                      ]
+	//[-------------------------------------------------------]
+	signals:
+		void filterChanged(const QString &text);
+		void filterTypeChanged(int filterId);
+
+
+	//[-------------------------------------------------------]
+	//[ Private Qt slots (MOC)                                ]
+	//[-------------------------------------------------------]
+	private slots:
+		void filterTypeTriggerd(QAction * action);
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		QToolButton		*m_pfilterToolButton;
+		QActionGroup	*m_pActionGroup;
 };
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // DataModels
 } // PLFrontendQt
 
 
-#endif // __PLFRONTENDQT_SCENEGRAPHTREEMODEL_H__
+#endif // FILTERWIDGETWITHFILTERTYPSELECTOR_H

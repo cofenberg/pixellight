@@ -42,8 +42,8 @@ namespace PLFrontendQt {
 	namespace DataModels {
 		namespace RTTIInfoModels {
 			class ClassListModel;
-			class ClassListSortAndFilterModel;
 		}
+		class TreeSortAndFilterProxyModel;
 	}
 }
 
@@ -117,7 +117,7 @@ class ClassListWidget : public QWidget {
 	private:
 		bool													 m_bFirstLevelAlwaysExpanded;
 		DataModels::RTTIInfoModels::ClassListModel				*m_pClassListModel;
-		DataModels::RTTIInfoModels::ClassListSortAndFilterModel	*m_pSortAndFilterProxyModel;
+		DataModels::TreeSortAndFilterProxyModel					*m_pSortAndFilterProxyModel;
 		QTreeView												*m_pView;
 
 };

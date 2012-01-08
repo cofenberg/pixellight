@@ -83,7 +83,8 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 	public:
 		SceneGraphNodeModifierTreeItem(PLScene::SceneNodeModifier *nodeObj, QObject *parent = nullptr) : SceneGraphNodeTreeItemBase(parent),
 			m_nodeObj(nodeObj),
-			m_nodeName(nodeObj ? QtStringAdapter::PLToQt(m_nodeObj->GetClass()->GetName().GetUTF8()) : "null modifier"),
+			m_nodeName(nodeObj ? QtStringAdapter::PLToQt(m_nodeObj->GetClass()->GetName()) : "null modifier"),
+			m_nodeClassName(nodeObj ? QtStringAdapter::PLToQt(m_nodeObj->GetClass()->GetClassName()) : "null class"),
 			m_textColor(Qt::cyan)
 		{
 		}
@@ -93,6 +94,9 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 			if (column == 0) {
 				if (role == Qt::DisplayRole || role == Qt::ToolTipRole)
 					return m_nodeName;
+				else if(role == SceneGraphTreeModel::ClassNameRole) {
+					return m_nodeClassName;
+				}
 			}
 
 			return QVariant();
@@ -115,9 +119,10 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 
 
 	private:
-		PLScene::SceneNodeModifier *m_nodeObj;	// Can be a null pointer
-		QString						m_nodeName;
-		QBrush						m_textColor;
+		PLScene::SceneNodeModifier	*m_nodeObj;	// Can be a null pointer
+		QString						 m_nodeName;
+		QString						 m_nodeClassName;
+		QBrush						 m_textColor;
 
 
 };
@@ -175,12 +180,15 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 		{
 			if (role == Qt::DecorationRole)
 				return m_Icon;
-
-			if (role != Qt::DisplayRole)
+			
+			if (m_nodeObj == nullptr)
 				return QVariant();
 
-			if (column == 0 && m_nodeObj)
-				return QtStringAdapter::PLToQt(m_nodeObj->GetName().GetUTF8());
+			if (column == 0 && role == Qt::DisplayRole)
+				return QtStringAdapter::PLToQt(m_nodeObj->GetName());
+			else if(column == 0 && role == SceneGraphTreeModel::ClassNameRole) {
+				return QtStringAdapter::PLToQt(m_nodeObj->GetClass()->GetClassName());
+			}
 
 			return QVariant();
 		}

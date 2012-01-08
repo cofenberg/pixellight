@@ -78,6 +78,16 @@ class DockWidgetSceneGraphQObject : public QObject {
 
 
 	//[-------------------------------------------------------]
+	//[ Public definitions                                    ]
+	//[-------------------------------------------------------]
+	public:
+		enum FilterTypes {
+			BySceneNodeName,
+			ByClassName
+		};
+
+
+	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
@@ -102,6 +112,8 @@ class DockWidgetSceneGraphQObject : public QObject {
 	//[-------------------------------------------------------]
 	private slots:
 		void QtSlotTreeViewDoubleClicked(const QModelIndex &cQModelIndex);
+		void QtSlotFilterTypeChanged(int filterId);
+		void QtSlotFilterChanged(const QString &text);
 
 
 	//[-------------------------------------------------------]

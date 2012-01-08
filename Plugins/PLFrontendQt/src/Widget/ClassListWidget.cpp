@@ -26,7 +26,7 @@
 #include <QtGui/QTreeView>
 #include <QtGui/QVBoxLayout>
 #include "PLFrontendQt/DataModels/RTTIInfoModels/ClassListModel.h"
-#include "PLFrontendQt/DataModels/RTTIInfoModels/ClassListSortAndFilterModel.h"
+#include "PLFrontendQt/DataModels/TreeSortAndFilterProxyModel.h"
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/Widget/ClassListWidget.h"
 #include "PLFrontendQt/External/filterwidget.h"
@@ -37,6 +37,7 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 namespace PLFrontendQt {
+using namespace DataModels;
 using namespace DataModels::RTTIInfoModels;
 
 
@@ -60,7 +61,7 @@ ClassListWidget::ClassListWidget(ClassListType listType,QWidget *parent, Qt::Win
 	
 	// Setup the sort and filter proxy model
 	// The filtering is case insensitive
-	m_pSortAndFilterProxyModel = new ClassListSortAndFilterModel(this);
+	m_pSortAndFilterProxyModel = new TreeSortAndFilterProxyModel(this);
 	m_pSortAndFilterProxyModel->setSourceModel(m_pClassListModel);
 	m_pSortAndFilterProxyModel->setDynamicSortFilter(true);
 	m_pSortAndFilterProxyModel->setFilterCaseSensitivity(Qt::CaseInsensitive);

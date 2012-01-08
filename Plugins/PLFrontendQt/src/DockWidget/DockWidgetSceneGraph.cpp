@@ -23,16 +23,20 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <QtGui/qtreeview.h>
-#include <QtGui/qdockwidget.h>
-#include <QtGui/qmainwindow.h>
+#include <QtGui/QTreeView>
+#include <QtGui/QDockWidget>
+#include <QtGui/QMainWindow>
+#include <QtGui/QVBoxLayout>
 #include <PLCore/Base/Class.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/DataModels/SceneGraphTreeModel.h"
+#include "PLFrontendQt/DataModels/TreeSortAndFilterProxyModel.h"
 #include "PLFrontendQt/DockWidget/DockWidgetManager.h"
 #include "PLFrontendQt/DockWidget/DockWidgetSceneGraphQObject.h"
 #include "PLFrontendQt/DockWidget/DockWidgetSceneGraph.h"
+#include "PLFrontendQt/Widget/FilterWidgetWithFilterTypSelector.h"
+
 
 
 //[-------------------------------------------------------]
@@ -60,17 +64,34 @@ DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidget
 	SlotOnDestroy(this),
 	m_pSceneGraphTreeModel(nullptr),
 	m_pSceneContainer(nullptr),
-	m_pDockWidgetSceneGraphQObject(new DockWidgetSceneGraphQObject(*this))
+	m_pDockWidgetSceneGraphQObject(new DockWidgetSceneGraphQObject(*this)),
+	m_pSortAndFilterModel(nullptr)
 {
 	// Get encapsulated Qt dock widget
 	QDockWidget *pQDockWidget = GetQDockWidget();
 	if (pQDockWidget) {
 		// Create tree view and set scene graph model
-		QTreeView *pQTreeView = new QTreeView();
+		QTreeView *pQTreeView = new QTreeView(pQDockWidget);
 		m_pDockWidgetSceneGraphQObject->connect(pQTreeView, SIGNAL(doubleClicked(const QModelIndex&)), m_pDockWidgetSceneGraphQObject, SLOT(QtSlotTreeViewDoubleClicked(const QModelIndex&)));
-		pQDockWidget->setWidget(pQTreeView);
+		
+		FilterWidgetWithFilterTypSelector *pFilterWidget = new FilterWidgetWithFilterTypSelector(pQDockWidget);
+		pFilterWidget->AddFilterType(pQDockWidget->tr("by SceneNode Name"), DockWidgetSceneGraphQObject::BySceneNodeName, true);
+		pFilterWidget->AddFilterType(pQDockWidget->tr("by Class Name"), DockWidgetSceneGraphQObject::ByClassName);
+				
+		m_pDockWidgetSceneGraphQObject->connect(pFilterWidget, SIGNAL(filterTypeChanged(int)), m_pDockWidgetSceneGraphQObject, SLOT(QtSlotFilterTypeChanged(int)));
+		m_pDockWidgetSceneGraphQObject->connect(pFilterWidget, SIGNAL(filterChanged(const QString)), m_pDockWidgetSceneGraphQObject, SLOT(QtSlotFilterChanged(const QString)));
+		
+		QWidget *pHost = new QWidget(pQDockWidget);
+		pHost->setLayout(new QVBoxLayout);
+		pHost->layout()->addWidget(pFilterWidget);
+		pHost->layout()->addWidget(pQTreeView);
+		
+		pQDockWidget->setWidget(pHost);
 		m_pSceneGraphTreeModel = new DataModels::SceneGraphTreeModel(pQDockWidget);
-		pQTreeView->setModel(m_pSceneGraphTreeModel);
+		m_pSortAndFilterModel = new DataModels::TreeSortAndFilterProxyModel(pQDockWidget);
+		m_pSortAndFilterModel->setSourceModel(m_pSceneGraphTreeModel);
+		m_pSortAndFilterModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+		pQTreeView->setModel(m_pSortAndFilterModel);
 		pQTreeView->expandToDepth(0);
 
 		// Add the created Qt dock widget to the given Qt main window
