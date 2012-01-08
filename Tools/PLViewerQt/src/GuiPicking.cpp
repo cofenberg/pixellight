@@ -34,6 +34,7 @@ PL_WARNING_POP
 #include <PLEngine/Picking/PickingResult.h>
 #include <PLFrontendQt/QtStringAdapter.h>
 #include <PLFrontendQt/FrontendMainWindow.h>
+#include <PLFrontendQt/DockWidget/DockWidgetManager.h>
 #include "Gui.h"
 #include "ApplicationQt.h"
 #include "GuiPicking.h"
@@ -216,6 +217,13 @@ void GuiPicking::SelectObject(Object *pObject)
 			//	m_lstSceneNodeModifiers.Add(m_pSceneNode->AddModifier("PLEngine::SNMTransformGizmoScaleController", "Flags=\"Automatic\""));
 			}
 		}
+	}
+
+	// Usability: Show the "PLFrontendQt::DockWidgetObject" dock widget so we can view & edit RTTI attributes at once
+	if (m_pSceneNode) {
+		PLFrontendQt::DockWidgetManager *pDockWidgetManager = GetDockWidgetManager();
+		if (pDockWidgetManager)
+			pDockWidgetManager->ShowDockWidget( "PLFrontendQt::DockWidgetObject");
 	}
 }
 
