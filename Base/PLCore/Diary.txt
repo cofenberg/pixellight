@@ -21,6 +21,7 @@
      just set the current directory to your plugin directory when launching the viewer application
 PLFrontendQt:
 - "SceneGraphTreeModel": Do not show scene nodes or scene node modifiers with a set "Automatic"-flag within a GUI (yes, this all way planned over years *g*)
+- "DockWidgetSceneRenderer" & "DockWidgetObject": Usability: Resize the first tree view column given to the size of its contents
 
 
 

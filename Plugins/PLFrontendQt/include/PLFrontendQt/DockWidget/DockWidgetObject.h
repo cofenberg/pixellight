@@ -35,6 +35,7 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 QT_BEGIN_NAMESPACE
+	class QTreeView;
 	class QMainWindow;
 QT_END_NAMESPACE
 namespace PLFrontendQt {
@@ -138,6 +139,7 @@ class DockWidgetObject : public DockWidget {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
+		QTreeView						 *m_pQTreeView;				/**< Qt tree view instance, can be a null pointer */
 		DataModels::PLIntrospectionModel *m_pPLIntrospectionModel;	/**< PL introspection model, can be a null pointer */
 		PLCore::Object					 *m_pObject;				/**< Object assigned with this dock widget, can be a null pointer */
 
