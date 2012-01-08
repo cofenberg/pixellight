@@ -1,3 +1,10 @@
+>> 08.01.2012
+[CO]
+PLRendererOpenGLES2
+- "PLRendererOpenGLES2::TextureBuffer3D::TextureBuffer3D()": "glGenerateMipmap(GL_TEXTURE_2D)" -> "glGenerateMipmap(GL_TEXTURE_3D_OES)"
+
+
+
 >> 02.01.2012
 [CO]
 - Added "DrawHelpers::DrawGradientQuad()" which is similar to "DrawQuad()", but with a nice gradient color

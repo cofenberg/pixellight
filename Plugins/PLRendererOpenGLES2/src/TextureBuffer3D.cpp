@@ -127,7 +127,7 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 					// If compressed internal format, we would check whether all went fine - but OpenGL ES 2.0 provides no functionality for this :/
 
 					// Let OpenGL ES create the mipmap chain for us
-					glGenerateMipmap(GL_TEXTURE_2D);
+					glGenerateMipmap(GL_TEXTURE_3D_OES);
 
 					// Calculate the total number of bytes this texture buffer requires
 					for (uint32 nLevel=0; nLevel<=m_nNumOfMipmaps; nLevel++)
