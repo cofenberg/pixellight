@@ -5,6 +5,8 @@ PLViewerQt:
 - When a scene node is selected, position and rotation transform gizmos are added automatically and removed later on if no longer required
 - When loading a resource and it's not clear how to process it, open a dialog in order to give the user a choice between multiple options
 - Usability: When something gets selected show the "PLFrontendQt::DockWidgetObject" dock widget so we can view & edit RTTI attributes at once
+- Usability: When hiding all windows at once, do also unselect the current object (if one is selected)
+  -> A kind of "Disable edit mode and switch back to business as usual"
 
 
 

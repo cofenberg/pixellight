@@ -545,6 +545,11 @@ void Gui::QtSlotTriggeredWindowHideAll()
 	if (pFrontendMainWindow) {
 		// All registered dock widgets
 		pFrontendMainWindow->GetDockWidgetManager().HideDockWidgets();
+
+		// Usability: When hiding all windows at once, do also unselect the current object (if one is selected)
+		// -> A kind of "Disable edit mode and switch back to business as usual"
+		// -> Perform a dock widget manager broadcast
+		pFrontendMainWindow->GetDockWidgetManager().CallDockWidgetsMethod("SelectObject", Params<void, Object*>(nullptr));
 	}
 }
 
