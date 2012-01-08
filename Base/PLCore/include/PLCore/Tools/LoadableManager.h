@@ -202,7 +202,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*  @brief
 		*    Returns loaders by using a loadable extension
 		*
-		*  @param[in] sExtension
+		*  @param[in]  sExtension
 		*    Extension of loadable
 		*  @param[out] lstLoaders
 		*    Receives the list of matching loaders (list is not cleared before new entries are added), there can be multiple candidates
