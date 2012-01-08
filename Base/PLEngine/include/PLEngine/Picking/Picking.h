@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Event/EventHandler.h>
+#include <PLRenderer/Renderer/Types.h>
 #include "PLEngine/PLEngine.h"
 
 
@@ -95,11 +95,13 @@ class Picking {
 		*    Picking line start position within the given scene container
 		*  @param[in]  vLineEndPos
 		*    Picking line end position within the given scene container
+		*  @param[in]  nCull
+		*    Cull mode (see "PLRenderer::Cull")
 		*
 		*  @return
 		*    'true' if anything has been picked, else 'false'
 		*/
-		PL_API bool PerformPicking(PickingResult &cPickingResult, PLScene::SceneContainer &cContainer, const PLMath::Vector3 &vLineStartPos, const PLMath::Vector3 &vLineEndPos);
+		PL_API bool PerformPicking(PickingResult &cPickingResult, PLScene::SceneContainer &cContainer, const PLMath::Vector3 &vLineStartPos, const PLMath::Vector3 &vLineEndPos, PLRenderer::Cull::Enum nCull = PLRenderer::Cull::CCW);
 
 		/**
 		*  @brief
@@ -115,12 +117,14 @@ class Picking {
 		*    Picking line end position within the given scene node
 		*  @param[in]  plstGeometries
 		*    List of mesh geometry indices to use, if a null pointer all mesh geometries are used
+		*  @param[in]  nCull
+		*    Cull mode (see "PLRenderer::Cull")
 		*
 		*  @return
 		*    'true' if anything has been picked, else 'false'
 		*/
 		PL_API bool PerformPicking(PickingResult &cPickingResult, PLScene::SceneNode &cSceneNode, const PLMath::Vector3 &vLineStartPos, const PLMath::Vector3 &vLineEndPos,
-								   PLCore::Array<PLCore::uint32> *plstGeometries = nullptr);
+								   PLCore::Array<PLCore::uint32> *plstGeometries = nullptr, PLRenderer::Cull::Enum nCull = PLRenderer::Cull::CCW);
 
 
 	//[-------------------------------------------------------]
@@ -150,9 +154,11 @@ class Picking {
 		*    Picking line end position within the given scene node
 		*  @param[in]  plstGeometries
 		*    List of mesh geometry indices to use, if a null pointer all mesh geometries are used
+		*  @param[in]  nCull
+		*    Cull mode (see "PLRenderer::Cull")
 		*/
 		void MeshIntersection(PLScene::SceneNode &cSceneNode, const PLMath::Vector3 &vLineStartPos, const PLMath::Vector3 &vLineEndPos,
-							  PLCore::Array<PLCore::uint32> *plstGeometries = nullptr);
+							  PLCore::Array<PLCore::uint32> *plstGeometries = nullptr, PLRenderer::Cull::Enum nCull = PLRenderer::Cull::CCW);
 
 
 	//[-------------------------------------------------------]

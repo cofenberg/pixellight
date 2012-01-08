@@ -117,6 +117,8 @@ class MousePicking : public Picking {
 		*    Receives the picking result if all went fine
 		*  @param[in]  fMaxDistance
 		*    Maximum picking distance, if negative there's no maximum picking distance (in the same scene container the camera is in)
+		*  @param[in]  nCull
+		*    Cull mode (see "PLRenderer::Cull")
 		*
 		*  @return
 		*    'true' if anything has been picked, else 'false'
@@ -125,7 +127,7 @@ class MousePicking : public Picking {
 		*    - For performance reasons we recommend to always set a maximum picking distance
 		*    - The function will only work if a widget and camera is set ('SetWidget()' and 'GetCamera()')
 		*/
-		PL_API bool PerformMousePicking(PickingResult &cPickingResult, float fMaxDistance = -1.0f);
+		PL_API bool PerformMousePicking(PickingResult &cPickingResult, float fMaxDistance = -1.0f, PLRenderer::Cull::Enum nCull = PLRenderer::Cull::CCW);
 
 		/**
 		*  @brief
@@ -137,6 +139,8 @@ class MousePicking : public Picking {
 		*    Position of the mouse inside the widget the picking takes place
 		*  @param[in]  fMaxDistance
 		*    Maximum picking distance, if negative there's no maximum picking distance (in the same scene container the camera is in)
+		*  @param[in]  nCull
+		*    Cull mode (see "PLRenderer::Cull")
 		*
 		*  @return
 		*    'true' if anything has been picked, else 'false'
@@ -145,7 +149,7 @@ class MousePicking : public Picking {
 		*    - For performance reasons we recommend to always set a maximum picking distance
 		*    - The function will only work if a widget and camera is set ('SetWidget()' and 'GetCamera()')
 		*/
-		PL_API bool PerformMousePicking(PickingResult &cPickingResult, const PLMath::Vector2i &vMousePos, float fMaxDistance = -1.0f);
+		PL_API bool PerformMousePicking(PickingResult &cPickingResult, const PLMath::Vector2i &vMousePos, float fMaxDistance = -1.0f, PLRenderer::Cull::Enum nCull = PLRenderer::Cull::CCW);
 
 
 	//[-------------------------------------------------------]

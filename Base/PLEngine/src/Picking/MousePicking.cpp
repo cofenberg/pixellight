@@ -35,6 +35,7 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLMath;
+using namespace PLRenderer;
 using namespace PLScene;
 namespace PLEngine {
 
@@ -104,7 +105,7 @@ void MousePicking::SetCamera(SNCamera *pCamera)
 *  @brief
 *    Performs picking by using the current camera and current mouse position within the widget
 */
-bool MousePicking::PerformMousePicking(PickingResult &cPickingResult, float fMaxDistance)
+bool MousePicking::PerformMousePicking(PickingResult &cPickingResult, float fMaxDistance, Cull::Enum nCull)
 {
 	// Is there a camera?
 	if (m_pCamera) {
@@ -112,7 +113,7 @@ bool MousePicking::PerformMousePicking(PickingResult &cPickingResult, float fMax
 		const Vector2i vMousePos(m_pFrontend->GetMousePositionX(), m_pFrontend->GetMousePositionY());
 
 		// Return the picked scene node
-		return PerformMousePicking(cPickingResult, vMousePos, fMaxDistance);
+		return PerformMousePicking(cPickingResult, vMousePos, fMaxDistance, nCull);
 	}
 
 	// Error!
@@ -123,7 +124,7 @@ bool MousePicking::PerformMousePicking(PickingResult &cPickingResult, float fMax
 *  @brief
 *    Performs picking by using the current camera and the given mouse position
 */
-bool MousePicking::PerformMousePicking(PickingResult &cPickingResult, const Vector2i &vMousePos, float fMaxDistance)
+bool MousePicking::PerformMousePicking(PickingResult &cPickingResult, const Vector2i &vMousePos, float fMaxDistance, Cull::Enum nCull)
 {
 	// Don't do picking if mouse is outside the frontend - or there's no widget and/or camera at all
 	if (m_pCamera && m_pCamera->GetContainer() &&
@@ -151,7 +152,7 @@ bool MousePicking::PerformMousePicking(PickingResult &cPickingResult, const Vect
 			vLineEndPos = vLineStartPos + (vLineEndPos-vLineStartPos).Normalize()*fMaxDistance;
 
 		// Perform picking and return the result
-		return PerformPicking(cPickingResult, *m_pCamera->GetContainer(), vLineStartPos, vLineEndPos);
+		return PerformPicking(cPickingResult, *m_pCamera->GetContainer(), vLineStartPos, vLineEndPos, nCull);
 	}
 
 	// Error!
