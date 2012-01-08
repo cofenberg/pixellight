@@ -63,6 +63,8 @@ class GuiPicking : public PLFrontendQt::DockWidget, public PLEngine::MousePickin
 		pl_method_0(GetSceneContainer,	pl_ret_type(PLScene::SceneContainer*),						"Returns the used scene container, can be a null pointer.",			"")
 		pl_method_0(GetSelectedObject,	pl_ret_type(PLCore::Object*),								"Returns the currently selected object, can be a null pointer.",	"")
 		pl_method_1(SelectObject,		pl_ret_type(void),						PLCore::Object*,	"Selects the given object. Object to select as first parameter.",	"")
+		// Slots
+		pl_slot_0(OnDestroyed,	"Called when the scene node assigned with this dock widget was destroyed",	"")
 	pl_class_end
 
 
@@ -155,6 +157,12 @@ class GuiPicking : public PLFrontendQt::DockWidget, public PLEngine::MousePickin
 		*/
 		void SetLabelStatusBarText(const PLCore::String &sText);
 
+		/**
+		*  @brief
+		*    Called when the scene node assigned with this dock widget was destroyed
+		*/
+		void OnDestroyed();
+
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLEngine::Picking functions           ]
@@ -167,11 +175,12 @@ class GuiPicking : public PLFrontendQt::DockWidget, public PLEngine::MousePickin
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Gui						   *m_pGui;								/**< Owner GUI, always valid! */
-		PLCore::uint64				m_nLastPickingTime;					/**< Last picking time */
-		PLScene::SceneNodeHandler	m_cCurrentPickedSceneNodeHandler;	/**< Currently picked scene node */
-		PLScene::SceneNodeHandler   m_cCurrentSelectedSceneNodeHandler;	/**< Scene node handler referencing the scene node which is currently the center of the attention */
-		QLabel					   *m_pQLabelStatusBar;					/**< Qt label shown in the status bar of the Qt main window, can be a null pointer */
+		Gui										   *m_pGui;						/**< Owner GUI, always valid! */
+		PLCore::uint64							    m_nLastPickingTime;			/**< Last picking time */
+		PLScene::SceneNodeHandler				    m_cPickedSceneNodeHandler;	/**< Currently picked scene node (aka "mouse over") */
+		PLScene::SceneNode						   *m_pSceneNode;				/**< The scene node which is currently the center of the attention */
+		QLabel									   *m_pQLabelStatusBar;			/**< Qt label shown in the status bar of the Qt main window, can be a null pointer */
+		PLCore::Array<PLScene::SceneNodeModifier*>  m_lstSceneNodeModifiers;	/**< List of temporary scene node modifiers we added to the selected scene node */
 
 
 };

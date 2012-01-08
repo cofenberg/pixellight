@@ -205,12 +205,6 @@
     <ClCompile Include="build\GeneratedQtFiles\moc_RTTIBrowserWidget.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
-    <ClCompile Include="src\DataModels\RTTIInfoModels\ClassListSortAndFilterModel.cpp">
-      <Filter>DataModels\RTTIInfoModels</Filter>
-    </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_ClassListSortAndFilterModel.cpp">
-      <Filter>GeneratedQtFiles</Filter>
-    </ClCompile>
     <ClCompile Include="src\External\filterwidget.cpp">
       <Filter>External</Filter>
     </ClCompile>
@@ -233,6 +227,18 @@
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
     <ClCompile Include="build\GeneratedQtFiles\moc_DockWidgetSceneRendererQObject.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Widget\FilterWidgetWithFilterTypSelector.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_FilterWidgetWithFilterTypSelector.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DataModels\TreeSortAndFilterProxyModel.cpp">
+      <Filter>DataModels</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_TreeSortAndFilterProxyModel.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
   </ItemGroup>
@@ -416,9 +422,6 @@
     <CustomBuild Include="include\PLFrontendQt\Widget\RTTIBrowserWidget.h">
       <Filter>Widget</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DataModels\RTTIInfoModels\ClassListSortAndFilterModel.h">
-      <Filter>DataModels\RTTIInfoModels</Filter>
-    </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\External\filterwidget.h">
       <Filter>External</Filter>
     </CustomBuild>
@@ -430,6 +433,12 @@
     </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\DockWidget\DockWidgetSceneGraphQObject.h">
       <Filter>DockWidget</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\Widget\FilterWidgetWithFilterTypSelector.h">
+      <Filter>Widget</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\TreeSortAndFilterProxyModel.h">
+      <Filter>DataModels</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

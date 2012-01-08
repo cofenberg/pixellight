@@ -875,7 +875,8 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 							   const Vector3 &vLineEndPos,
 							   uint32 &nTriangle, uint32 *pnGeometry,
 							   Vector3 *pvCollisionPoint,
-							   Array<uint32> *plstGeometries) const
+							   Array<uint32> *plstGeometries,
+							   Cull::Enum nCull) const
 {
 	// Check pointers
 	if (m_pMesh && m_pCurrentVertexBuffer) {
@@ -893,6 +894,10 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 					if (pIndexBuffer && pIndexBuffer->Lock(Lock::ReadOnly)) {
 						// Calculate line direction
 						Vector3 vDirection = vLineEndPos-vLineStartPos;
+
+						// Get normalized line direction (required for culling)
+						Vector3 vNormalizedDirection = vDirection;
+						vNormalizedDirection.Normalize();
 
 						// Variables
 						Vector3 vIntersectionPointPos, vCollisionPoint, vV1, vV2, vV3, vN;
@@ -940,6 +945,16 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 													// Get face normal
 													vN.GetFaceNormal(vV1, vV2, vV3);
 
+													// Perform culling?
+													if (nCull != Cull::None) {
+														// Calculate the dot product between the two normailzed vectors
+														const float fDotProduct = vN.DotProduct(vNormalizedDirection);
+
+														// Perform culling
+														if ((nCull == Cull::CW && fDotProduct < 0.0f) || (nCull == Cull::CCW && fDotProduct > 0.0f))
+															continue;	// Use a simple "continue", not additional conditions
+													}
+
 													// Check triangle intersection
 													if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, &vIntersectionPointPos)) {
 														// Hit!
@@ -982,6 +997,16 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 
 													// Get face normal
 													vN.GetFaceNormal(vV1, vV2, vV3);
+
+													// Perform culling?
+													if (nCull != Cull::None) {
+														// Calculate the dot product between the two normailzed vectors
+														const float fDotProduct = vN.DotProduct(vNormalizedDirection);
+
+														// Perform culling
+														if ((nCull == Cull::CW && fDotProduct < 0.0f) || (nCull == Cull::CCW && fDotProduct > 0.0f))
+															continue;	// Use a simple "continue", not additional conditions
+													}
 
 													// Check triangle intersection
 													if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, &vIntersectionPointPos)) {
@@ -1026,6 +1051,16 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 													// Get face normal
 													vN.GetFaceNormal(vV1, vV2, vV3);
 
+													// Perform culling?
+													if (nCull != Cull::None) {
+														// Calculate the dot product between the two normailzed vectors
+														const float fDotProduct = vN.DotProduct(vNormalizedDirection);
+
+														// Perform culling
+														if ((nCull == Cull::CW && fDotProduct < 0.0f) || (nCull == Cull::CCW && fDotProduct > 0.0f))
+															continue;	// Use a simple "continue", not additional conditions
+													}
+
 													// Check triangle intersection
 													if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, &vIntersectionPointPos)) {
 														// Hit!
@@ -1065,6 +1100,16 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 
 												// Get face normal
 												vN.GetFaceNormal(vV1, vV2, vV3);
+
+												// Perform culling?
+												if (nCull != Cull::None) {
+													// Calculate the dot product between the two normailzed vectors
+													const float fDotProduct = vN.DotProduct(vNormalizedDirection);
+
+													// Perform culling
+													if ((nCull == Cull::CW && fDotProduct < 0.0f) || (nCull == Cull::CCW && fDotProduct > 0.0f))
+														continue;	// Use a simple "continue", not additional conditions
+												}
 
 												// Check triangle intersection
 												if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, &vIntersectionPointPos)) {
@@ -1124,6 +1169,16 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 												// Get face normal
 												vN.GetFaceNormal(vV1, vV2, vV3);
 
+												// Perform culling?
+												if (nCull != Cull::None) {
+													// Calculate the dot product between the two normailzed vectors
+													const float fDotProduct = vN.DotProduct(vNormalizedDirection);
+
+													// Perform culling
+													if ((nCull == Cull::CW && fDotProduct < 0.0f) || (nCull == Cull::CCW && fDotProduct > 0.0f))
+														continue;	// Use a simple "continue", not additional conditions
+												}
+
 												// Check triangle intersection
 												if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, &vIntersectionPointPos)) {
 													// Hit!
@@ -1166,6 +1221,16 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 
 												// Get face normal
 												vN.GetFaceNormal(vV1, vV2, vV3);
+
+												// Perform culling?
+												if (nCull != Cull::None) {
+													// Calculate the dot product between the two normailzed vectors
+													const float fDotProduct = vN.DotProduct(vNormalizedDirection);
+
+													// Perform culling
+													if ((nCull == Cull::CW && fDotProduct < 0.0f) || (nCull == Cull::CCW && fDotProduct > 0.0f))
+														continue;	// Use a simple "continue", not additional conditions
+												}
 
 												// Check triangle intersection
 												if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, &vIntersectionPointPos)) {
@@ -1210,6 +1275,16 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 												// Get face normal
 												vN.GetFaceNormal(vV1, vV2, vV3);
 
+												// Perform culling?
+												if (nCull != Cull::None) {
+													// Calculate the dot product between the two normailzed vectors
+													const float fDotProduct = vN.DotProduct(vNormalizedDirection);
+
+													// Perform culling
+													if ((nCull == Cull::CW && fDotProduct < 0.0f) || (nCull == Cull::CCW && fDotProduct > 0.0f))
+														continue;	// Use a simple "continue", not additional conditions
+												}
+
 												// Check triangle intersection
 												if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, &vIntersectionPointPos)) {
 													// Hit!
@@ -1249,6 +1324,16 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 
 											// Get face normal
 											vN.GetFaceNormal(vV1, vV2, vV3);
+
+											// Perform culling?
+											if (nCull != Cull::None) {
+												// Calculate the dot product between the two normailzed vectors
+												const float fDotProduct = vN.DotProduct(vNormalizedDirection);
+
+												// Perform culling
+												if ((nCull == Cull::CW && fDotProduct < 0.0f) || (nCull == Cull::CCW && fDotProduct > 0.0f))
+													continue;	// Use a simple "continue", not additional conditions
+											}
 
 											// Check triangle intersection
 											if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, &vIntersectionPointPos)) {

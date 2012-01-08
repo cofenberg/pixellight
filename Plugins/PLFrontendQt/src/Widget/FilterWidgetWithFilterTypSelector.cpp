@@ -24,9 +24,9 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLFrontendQt/Widget/FilterWidgetWithFilterTypSelector.h"
-#include <QHBoxLayout>
-#include <QToolButton>
-#include <QMenu>
+#include <QtGui/QHBoxLayout>
+#include <QtGui/QToolButton>
+#include <QtGui/QMenu>
 #include "PLFrontendQt/External/filterwidget.h"
 
 

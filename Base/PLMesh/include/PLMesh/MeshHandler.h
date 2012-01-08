@@ -33,6 +33,7 @@
 #include <PLCore/Container/ResourceManager.h>
 #include <PLCore/Container/ResourceHandler.h>
 #include <PLMath/Plane.h>
+#include <PLRenderer/Renderer/Types.h>
 #include "PLMesh/Mesh.h"
 
 
@@ -612,6 +613,8 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		*    Will receive the collision point if not a null pointer
 		*  @param[in]  plstGeometries
 		*    List of geometry indices to use, if a null pointer all geometries are used
+		*  @param[in]  nCull
+		*    Cull mode (see "PLRenderer::Cull")
 		*
 		*  @return
 		*    'true' if a triangle was found, else 'false'
@@ -622,7 +625,8 @@ class MeshHandler : public PLCore::ResourceHandler<Mesh> {
 		PLMESH_API bool FindTriangle(const PLMath::Vector3 &vLineStartPos,
 									 const PLMath::Vector3 &vLineEndPos,
 									 PLCore::uint32 &nTriangle, PLCore::uint32 *pnGeometry = nullptr,
-									 PLMath::Vector3 *pvCollisionPoint = nullptr, PLCore::Array<PLCore::uint32> *plstGeometries = nullptr) const;
+									 PLMath::Vector3 *pvCollisionPoint = nullptr, PLCore::Array<PLCore::uint32> *plstGeometries = nullptr,
+									 PLRenderer::Cull::Enum nCull = PLRenderer::Cull::CCW) const;
 
 		/**
 		*  @brief

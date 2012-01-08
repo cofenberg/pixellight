@@ -37,6 +37,7 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLMath;
+using namespace PLRenderer;
 using namespace PLMesh;
 using namespace PLScene;
 namespace PLEngine {
@@ -67,7 +68,7 @@ Picking::~Picking()
 *  @brief
 *    Performs picking by using the given line start and end positions
 */
-bool Picking::PerformPicking(PickingResult &cPickingResult, SceneContainer &cContainer, const Vector3 &vLineStartPos, const Vector3 &vLineEndPos)
+bool Picking::PerformPicking(PickingResult &cPickingResult, SceneContainer &cContainer, const Vector3 &vLineStartPos, const Vector3 &vLineEndPos, Cull::Enum nCull)
 {
 	// Initialize the picking result
 	m_pPickingResult = &cPickingResult;
@@ -84,6 +85,7 @@ bool Picking::PerformPicking(PickingResult &cPickingResult, SceneContainer &cCon
 	if (pQuery) {
 		pQuery->SignalSceneNode.Connect(EventHandlerSceneNode);
 		pQuery->GetLine().Set(vLineStartPos, vLineEndPos);
+		pQuery->SetCull(nCull);
 		pQuery->PerformQuery();
 		cContainer.DestroyQuery(*pQuery);
 	}
@@ -104,7 +106,7 @@ bool Picking::PerformPicking(PickingResult &cPickingResult, SceneContainer &cCon
 *    Performs picking using the mesh of the given scene node by using the given line start and end positions
 */
 bool Picking::PerformPicking(PickingResult &cPickingResult, SceneNode &cSceneNode, const Vector3 &vLineStartPos, const Vector3 &vLineEndPos,
-							 Array<uint32> *plstGeometries)
+							 Array<uint32> *plstGeometries, Cull::Enum nCull)
 {
 	// Initialize the picking result
 	m_pPickingResult = &cPickingResult;
@@ -117,7 +119,7 @@ bool Picking::PerformPicking(PickingResult &cPickingResult, SceneNode &cSceneNod
 	cPickingResult.m_fNearestSquaredDistance = -1.0f;
 
 	// Perform mesh intersection
-	MeshIntersection(cSceneNode, vLineStartPos, vLineEndPos, plstGeometries);
+	MeshIntersection(cSceneNode, vLineStartPos, vLineEndPos, plstGeometries, nCull);
 
 	// Ensure that the picking distance is not greater than the possible maximum
 	if ((vLineEndPos-vLineStartPos).GetSquaredLength() >= cPickingResult.m_fNearestSquaredDistance)
@@ -149,7 +151,7 @@ void Picking::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 			const Vector3 vLineEndPos   = cSceneNode.GetTransform().GetInverseMatrix()*cLineQuery.GetLine().vEnd;
 
 			// Perform mesh intersection
-			MeshIntersection(cSceneNode, vLineStartPos, vLineEndPos, nullptr);
+			MeshIntersection(cSceneNode, vLineStartPos, vLineEndPos, nullptr, cLineQuery.GetCull());
 		} else {
 			// There's no mesh we can use for an intersection test
 
@@ -164,7 +166,7 @@ void Picking::OnSceneNode(SceneQuery &cQuery, SceneNode &cSceneNode)
 *    Perform mesh intersection
 */
 void Picking::MeshIntersection(SceneNode &cSceneNode, const Vector3 &vLineStartPos, const Vector3 &vLineEndPos,
-							   Array<uint32> *plstGeometries)
+							   Array<uint32> *plstGeometries, Cull::Enum nCull)
 {
 	// First of all, check the intersection distance against the axis aligned bounding box of the scene node
 	float fIntersection;
@@ -204,7 +206,7 @@ void Picking::MeshIntersection(SceneNode &cSceneNode, const Vector3 &vLineStartP
 			// We ran out of possible early escape tests... now find intersection triangle - this may be quite slow...
 			Vector3 vCollisionPoint;
 			uint32 nTriangle, nGeometry;
-			if (pMeshHandler->FindTriangle(vLineStartPos, vLineEndPos, nTriangle, &nGeometry, &vCollisionPoint, plstGeometries)) {
+			if (pMeshHandler->FindTriangle(vLineStartPos, vLineEndPos, nTriangle, &nGeometry, &vCollisionPoint, plstGeometries, nCull)) {
 				// Lookout! If our start point is inside the axis aligned bounding box of the scene node, we need to take care of "backfiring"
 				if (fIntersection < 0) {
 					// Our start point is inside the axis aligned bounding box of the scene node

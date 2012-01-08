@@ -38,6 +38,7 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLMath;
+using namespace PLRenderer;
 namespace PLScene {
 
 
@@ -54,7 +55,8 @@ pl_implement_class(SQLine)
 *  @brief
 *    Default constructor
 */
-SQLine::SQLine()
+SQLine::SQLine() :
+	m_nCull(Cull::CCW)
 {
 }
 
@@ -73,6 +75,24 @@ SQLine::~SQLine()
 Line &SQLine::GetLine()
 {
 	return m_cLine;
+}
+
+/**
+*  @brief
+*    Returns the used cull mode
+*/
+Cull::Enum SQLine::GetCull() const
+{
+	return m_nCull;
+}
+
+/**
+*  @brief
+*    Sets the used cull mode
+*/
+void SQLine::SetCull(Cull::Enum nCull)
+{
+	m_nCull = nCull;
 }
 
 

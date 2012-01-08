@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLMath/Line.h>
+#include <PLRenderer/Renderer/Types.h>
 #include "PLScene/Scene/SceneQuery.h"
 
 
@@ -92,6 +93,30 @@ class SQLine : public SceneQuery {
 		*/
 		PLS_API PLMath::Line &GetLine();
 
+		/**
+		*  @brief
+		*    Returns the used cull mode
+		*
+		*  @return
+		*    The used cull mode (see "PLRenderer::Cull")
+		*
+		*   @note
+		*     - May not always be used, e.g. usually this is useful for mesh intersection tests
+		*/
+		PLS_API PLRenderer::Cull::Enum GetCull() const;
+
+		/**
+		*  @brief
+		*    Sets the used cull mode
+		*
+		*  @param[in] nCull
+		*    The used cull mode (see "PLRenderer::Cull")
+		*
+		*  @see
+		*    - "GetCull()"
+		*/
+		PLS_API void SetCull(PLRenderer::Cull::Enum nCull = PLRenderer::Cull::CCW);
+
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
@@ -114,7 +139,8 @@ class SQLine : public SceneQuery {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLMath::Line m_cLine;	/**< Line used for the query */
+		PLMath::Line		   m_cLine;	/**< Line used for the query */
+		PLRenderer::Cull::Enum m_nCull;	/**< The cull mode used for the query (see "PLRenderer::Cull") */
 
 
 	//[-------------------------------------------------------]

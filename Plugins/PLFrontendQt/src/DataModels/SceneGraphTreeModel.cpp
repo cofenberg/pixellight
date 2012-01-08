@@ -146,8 +146,15 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 			}
 
 			for(PLCore::uint32 i=0; i<m_nodeObj->GetNumOfModifiers(); i++) {
+				// Get the current scene node modifier
 				PLScene::SceneNodeModifier *node = m_nodeObj->GetModifier("", i);
-				new SceneGraphNodeModifierTreeItem(node, this);
+
+				// Add this scene node modifier as item, but only if it has no "Automatic"-flag set
+				// -> "This scene node modifier was created automatically during runtime and should
+				//     not be saved with the scene. Such scene nodes modifiers may also be hidden for
+				//     instance within a scene editor."
+				if (!(node->GetFlags() & PLScene::SceneNodeModifier::Automatic))
+					new SceneGraphNodeModifierTreeItem(node, this);
 			}
 
 			GetIconFromSceneNode();
@@ -234,8 +241,15 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 void CreateSceneGraphItemsFromContainer(PLScene::SceneContainer *pContainer, QObject *parent)
 {
 	for (PLCore::uint32 i=0; i<pContainer->GetNumOfElements(); i++) {
+		// Get the current scene node
 		PLScene::SceneNode *node = pContainer->GetByIndex(i);
-		new SceneGraphNodeTreeItem(node, parent);
+
+		// Add this scene node as item, but only if it has no "Automatic"-flag set
+		// -> "This scene node was created automatically during runtime and should
+		//     not be saved with the scene. Such scene nodes may also be hidden for
+		//     instance within a scene editor."
+		if (!(node->GetFlags() & PLScene::SceneNode::Automatic))
+			new SceneGraphNodeTreeItem(node, parent);
 	}
 }
 
