@@ -1,6 +1,8 @@
 >> 08.01.2012
 [CO]
 - "SQLine": Added cull parameter
+- "SceneCreator::ConfigureGenericScene()": Use "scene container space" instead of "scene node space" axis align bounding box to determine the orbiting offset,
+  this way scene node scale is taken into account as well
 
 
 
