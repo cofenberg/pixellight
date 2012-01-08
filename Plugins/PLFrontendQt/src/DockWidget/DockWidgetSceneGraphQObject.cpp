@@ -63,13 +63,16 @@ DockWidgetSceneGraphQObject::~DockWidgetSceneGraphQObject()
 void DockWidgetSceneGraphQObject::QtSlotTreeViewDoubleClicked(const QModelIndex &cQModelIndex)
 {
 	// Is there a scene graph tree model instance?
-	DataModels::SceneGraphTreeModel *pSceneGraphTreeMode = m_pDockWidgetSceneGraph->m_pSceneGraphTreeModel;
-	if (pSceneGraphTreeMode) {
+	DataModels::SceneGraphTreeModel *pSceneGraphTreeModel = m_pDockWidgetSceneGraph->m_pSceneGraphTreeModel;
+	DataModels::TreeSortAndFilterProxyModel *pFilterModel = m_pDockWidgetSceneGraph->m_pSortAndFilterModel;
+	if (pSceneGraphTreeModel && pFilterModel) {
+		
+		QModelIndex sourceIndex = pFilterModel->mapToSource(cQModelIndex);
 		// Get selected scene node
-		Object *pObject = reinterpret_cast<Object*>(pSceneGraphTreeMode->GetSceneNodeFromIndex(cQModelIndex));
+		Object *pObject = reinterpret_cast<Object*>(pSceneGraphTreeModel->GetSceneNodeFromIndex(sourceIndex));
 		if (!pObject) {
 			// Hm, maybe it's an selected scene node modifier?
-			pObject = reinterpret_cast<Object*>(pSceneGraphTreeMode->GetSceneNodeModifierFromIndex(cQModelIndex));
+			pObject = reinterpret_cast<Object*>(pSceneGraphTreeModel->GetSceneNodeModifierFromIndex(sourceIndex));
 		}
 
 		// Perform a dock widget manager broadcast (excludes this emitting dock widget)
