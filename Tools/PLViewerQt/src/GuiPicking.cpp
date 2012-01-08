@@ -61,8 +61,10 @@ pl_implement_class(GuiPicking)
 *    Constructor
 */
 GuiPicking::GuiPicking(Gui &cGui) : DockWidget(nullptr, cGui.GetFrontendMainWindow() ? &cGui.GetFrontendMainWindow()->GetDockWidgetManager() : nullptr), MousePicking(cGui.GetApplication().GetFrontend()),
+	SlotOnDestroyed(this),
 	m_pGui(&cGui),
 	m_nLastPickingTime(Timing::GetInstance()->GetPastTime()),
+	m_pSceneNode(nullptr),
 	m_pQLabelStatusBar(new QLabel())
 {
 	// Get the Qt main window
@@ -79,6 +81,9 @@ GuiPicking::GuiPicking(Gui &cGui) : DockWidget(nullptr, cGui.GetFrontendMainWind
 */
 GuiPicking::~GuiPicking()
 {
+	// Now no scene node is currently selected
+	SelectObject(nullptr);
+
 	// Destroy Qt label shown in the status bar of the Qt main window
 	delete m_pQLabelStatusBar;
 }
@@ -101,7 +106,7 @@ SceneNode *GuiPicking::PerformInformativPicking()
 	}
 
 	// Use the previous result as currently picked scene node
-	return m_cCurrentPickedSceneNodeHandler.GetElement();
+	return m_cPickedSceneNodeHandler.GetElement();
 }
 
 /**
@@ -121,9 +126,9 @@ SceneNode *GuiPicking::PerformPicking()
 		pPickedSceneNode = cPickingResult.GetSceneNode();
 
 	// Picked changed?
-	if (pPickedSceneNode != m_cCurrentPickedSceneNodeHandler.GetElement()) {
+	if (pPickedSceneNode != m_cPickedSceneNodeHandler.GetElement()) {
 		// Backup the currently picked scene node
-		m_cCurrentPickedSceneNodeHandler.SetElement(pPickedSceneNode);
+		m_cPickedSceneNodeHandler.SetElement(pPickedSceneNode);
 
 		// Update the Qt label shown in the status bar of the Qt main window
 		SetLabelStatusBarText(pPickedSceneNode ? pPickedSceneNode->GetAbsoluteName() : "");
@@ -148,7 +153,7 @@ SceneContainer *GuiPicking::GetSceneContainer() const
 */
 Object *GuiPicking::GetSelectedObject() const
 {
-	return m_cCurrentSelectedSceneNodeHandler.GetElement();
+	return m_pSceneNode;
 }
 
 /**
@@ -171,21 +176,46 @@ void GuiPicking::SelectObject(Object *pObject)
 		}
 	}
 
-	// Get the previously selected scene node
-	SceneNode *pPreviousSceneNode = m_cCurrentSelectedSceneNodeHandler.GetElement();
-
 	// State change?
-	if (pPreviousSceneNode != pSceneNode) {
+	if (m_pSceneNode != pSceneNode) {
 		// Disable debug mode of the previous scene node, if there's one
-		if (pPreviousSceneNode)
-			pPreviousSceneNode->SetDebugFlags(pPreviousSceneNode->GetDebugFlags() & ~SceneNode::DebugEnabled);
+		if (m_pSceneNode) {
+			m_pSceneNode->SetDebugFlags(m_pSceneNode->GetDebugFlags() & ~SceneNode::DebugEnabled);
+
+			// In case we added transform gizmos, remove them right now
+			for (uint32 i=0; i<m_lstSceneNodeModifiers.GetNumOfElements(); i++)
+				m_pSceneNode->RemoveModifierByReference(*m_lstSceneNodeModifiers[i]);
+			m_lstSceneNodeModifiers.Clear();
+		}
+
+		// Disconnect event handler
+		if (m_pSceneNode)
+			m_pSceneNode->SignalDestroyed.Disconnect(SlotOnDestroyed);
+
+		// Backup the given scene node pointer
+		m_pSceneNode = pSceneNode;
+
+		// Connect event handler
+		if (m_pSceneNode)
+			m_pSceneNode->SignalDestroyed.Connect(SlotOnDestroyed);
 
 		// Enable debug mode of the current scene node, if there's one
-		if (pSceneNode)
-			pSceneNode->SetDebugFlags(pSceneNode->GetDebugFlags() |SceneNode::DebugEnabled);
+		if (m_pSceneNode) {
+			m_pSceneNode->SetDebugFlags(m_pSceneNode->GetDebugFlags() | SceneNode::DebugEnabled);
 
-		// Backup the current scene node
-		m_cCurrentSelectedSceneNodeHandler.SetElement(pSceneNode);
+			// Add transform gizmos
+			// -> "m_lstSceneNodeModifiers.GetNumOfElements()" is just a security check and should not be required, but safe is safe
+			if (!m_lstSceneNodeModifiers.GetNumOfElements()) {
+				// Add position and rotation transform gizmos
+				// -> Both can be combined visually without issues
+				m_lstSceneNodeModifiers.Add(m_pSceneNode->AddModifier("PLEngine::SNMTransformGizmoPositionController", "Flags=\"Automatic\""));
+				m_lstSceneNodeModifiers.Add(m_pSceneNode->AddModifier("PLEngine::SNMTransformGizmoRotationController", "Flags=\"Automatic\""));
+
+				// Activating position and scale transform gizmos at the same time is confusing
+				// -> Being able to visually manipulate scale is not that important in here
+			//	m_lstSceneNodeModifiers.Add(m_pSceneNode->AddModifier("PLEngine::SNMTransformGizmoScaleController", "Flags=\"Automatic\""));
+			}
+		}
 	}
 }
 
@@ -201,6 +231,17 @@ void GuiPicking::SetLabelStatusBarText(const String &sText)
 {
 	// Update the Qt label shown in the status bar of the Qt main window
 	m_pQLabelStatusBar->setText(sText.GetLength() ? PLFrontendQt::QtStringAdapter::PLToQt("    Scene node: \"" + sText + "\" (double left click to select)") : "");
+}
+
+/**
+*  @brief
+*    Called when the scene node assigned with this dock widget was destroyed
+*/
+void GuiPicking::OnDestroyed()
+{
+	// Argh! Mayday! We lost our scene node!
+	// -> Now no scene node is currently selected
+	SelectObject(nullptr);
 }
 
 

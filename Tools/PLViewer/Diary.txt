@@ -1,3 +1,10 @@
+>> 08.01.2012
+[CO]
+PLViewerQt:
+- When a scene node is selected, position and rotation transform gizmos are added automatically and removed later on if no longer required
+
+
+
 >> 07.01.2012
 [CO]
 - PLViewer & PLViewerQt are now using the new "PLEngine::SceneCreatorLoadableType::GetLoadableTypes()" and "SceneCreatorLoadableType::ConfigureSceneByLoadableType()".
