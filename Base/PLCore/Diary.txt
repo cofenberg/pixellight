@@ -1,5 +1,5 @@
->> 07.01.2012
-[CO]
+>> 08.01.2012
+[SW]
 PLFrontendQt:
 - Added FilterWidgetWithFilterTypSelector
 - Added fallback icon für the filter type selector icon
