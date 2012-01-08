@@ -151,6 +151,17 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*/
 		inline LoadableType *GetTypeByExtension(const String &sExtension);
 
+		/**
+		*  @brief
+		*    Returns loadable types by using a loadable extension
+		*
+		*  @param[in]  sExtension
+		*    Extension of loadable
+		*  @param[out] lstTypes
+		*    Receives the list of matching loadable types (list is not cleared before new entries are added), there can be multiple candidates
+		*/
+		PLCORE_API void GetTypesByExtension(const String &sExtension, Array<LoadableType*> &lstTypes);
+
 		//[-------------------------------------------------------]
 		//[ Loaders                                               ]
 		//[-------------------------------------------------------]
@@ -186,6 +197,17 @@ class LoadableManager : public Singleton<LoadableManager> {
 		*    The requested loader (first found if there are multiple candidates), a null pointer on error
 		*/
 		inline Loader *GetLoaderByExtension(const String &sExtension);
+
+		/**
+		*  @brief
+		*    Returns loaders by using a loadable extension
+		*
+		*  @param[in] sExtension
+		*    Extension of loadable
+		*  @param[out] lstLoaders
+		*    Receives the list of matching loaders (list is not cleared before new entries are added), there can be multiple candidates
+		*/
+		PLCORE_API void GetLoadersByExtension(const String &sExtension, Array<Loader*> &lstLoaders);
 
 		//[-------------------------------------------------------]
 		//[ Formats                                               ]

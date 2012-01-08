@@ -1,5 +1,6 @@
 >> 08.01.2012
 [CO]
+- "LoadableManager": Added "GetTypesByExtension()" and "GetLoadersByExtension()"
 PLFrontendQt:
 - "SceneGraphTreeModel": Do not show scene nodes or scene node modifiers with a set "Automatic"-flag within a GUI (yes, this all way planned over years *g*)
 
