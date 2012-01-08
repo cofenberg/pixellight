@@ -2,6 +2,11 @@
 [CO]
 - "LoadableManager": Added "GetTypesByExtension()" and "GetLoadersByExtension()"
 - "LoadableType": Added "GetLoadersByExtension()"
+- Fixed confusing path style inconsistencies within "ApplicationContext"
+  -> "GetAppDirectory()": The documentation stated that this method returns "C:\MyApplication", while it was acutally "file://C:/MyApplication"
+      and e.g. "GetExecutableFilename()" returned a native path style
+  -> "ApplicationContext": "SetStartupDirectory()", "SetLogFilename()" and "SetConfigFilename()" have to ensure that native path style is stored internally
+     as the documentation states
 PLFrontendQt:
 - "SceneGraphTreeModel": Do not show scene nodes or scene node modifiers with a set "Automatic"-flag within a GUI (yes, this all way planned over years *g*)
 

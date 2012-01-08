@@ -70,11 +70,11 @@ ApplicationContext::~ApplicationContext()
 */
 void ApplicationContext::SetExecutableFilename(const String &sExecutableFilename)
 {
-	// Set absolute executable filename
-	m_sExecutableFilename = sExecutableFilename;
+	// Set absolute executable filename, ensure it's native path style
+	m_sExecutableFilename = Url(sExecutableFilename).GetNativePath();
 
 	// Save application directory, if there's no given executable filename, do nothing special in here
-	m_sAppDirectory = m_sExecutableFilename.GetLength() ? Url(Url(m_sExecutableFilename).CutFilename() + "../").Collapse().GetUrl() : "";
+	m_sAppDirectory = m_sExecutableFilename.GetLength() ? Url(Url(m_sExecutableFilename).CutFilename() + "../").Collapse().GetNativePath() : "";
 
 	// Remove the '/' at the end (due usage of the Url-class, we know there's a '/' at the end!)
 	m_sAppDirectory.Delete(m_sAppDirectory.GetLength() - 1);
@@ -82,6 +82,36 @@ void ApplicationContext::SetExecutableFilename(const String &sExecutableFilename
 	// No empty string, please (it should always be possible to add e.g. '/Data' without problems)
 	if (!m_sAppDirectory.GetLength())
 		m_sAppDirectory = '.';
+}
+
+/**
+*  @brief
+*    Set current directory when the application constructor was called
+*/
+void ApplicationContext::SetStartupDirectory(const String &sStartupDirectory)
+{
+	// Set startup directory, ensure it's native path style
+	m_sStartupDirectory = Url(sStartupDirectory).GetNativePath();
+}
+
+/**
+*  @brief
+*    Set log filename
+*/
+void ApplicationContext::SetLogFilename(const String &sLog)
+{
+	// Set log filename, ensure it's native path style
+	m_sLog = Url(sLog).GetNativePath();
+}
+
+/**
+*  @brief
+*    Set config filename
+*/
+void ApplicationContext::SetConfigFilename(const String &sConfig)
+{
+	// Set config filename, ensure it's native path style
+	m_sConfig = Url(sConfig).GetNativePath();
 }
 
 

@@ -84,16 +84,6 @@ inline String ApplicationContext::GetStartupDirectory() const
 
 /**
 *  @brief
-*    Set current directory when the application constructor was called
-*/
-inline void ApplicationContext::SetStartupDirectory(const String &sStartupDirectory)
-{
-	// Set startup directory
-	m_sStartupDirectory = sStartupDirectory;
-}
-
-/**
-*  @brief
 *    Get log filename
 */
 inline String ApplicationContext::GetLogFilename() const
@@ -104,32 +94,12 @@ inline String ApplicationContext::GetLogFilename() const
 
 /**
 *  @brief
-*    Set log filename
-*/
-inline void ApplicationContext::SetLogFilename(const String &sLog)
-{
-	// Set log filename
-	m_sLog = sLog;
-}
-
-/**
-*  @brief
 *    Get config filename
 */
 inline String ApplicationContext::GetConfigFilename() const
 {
 	// Return config filename
 	return m_sConfig;
-}
-
-/**
-*  @brief
-*    Set config filename
-*/
-inline void ApplicationContext::SetConfigFilename(const String &sConfig)
-{
-	// Set config filename
-	m_sConfig = sConfig;
 }
 
 

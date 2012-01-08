@@ -59,11 +59,11 @@ class ApplicationContext : public Object, public AbstractContext {
 	pl_class(PLCORE_RTTI_EXPORT, ApplicationContext, "PLCore", PLCore::Object, "Application context")
 		#ifdef PLCORE_EXPORTS	// The following is only required when compiling PLCore
 			// Methods
-			pl_method_0(GetExecutableFilename,	pl_ret_type(String),	"Get absolute path of application executable (e.g. on Windows: 'C:\MyApplication\Test.exe').",				"")
-			pl_method_0(GetAppDirectory,		pl_ret_type(String),	"Get directory of application executable (e.g. on Windows: 'C:\MyApplication').",							"")
-			pl_method_0(GetStartupDirectory,	pl_ret_type(String),	"Get current directory when the application constructor was called (e.g. on Windows: 'C:\MyApplication').",	"")
-			pl_method_0(GetLogFilename,			pl_ret_type(String),	"Get absolute path to log file, empty if log has not been opened.",											"")
-			pl_method_0(GetConfigFilename,		pl_ret_type(String),	"Get absolute path to config file, empty if no config is used.",											"")
+			pl_method_0(GetExecutableFilename,	pl_ret_type(String),	"Get absolute path of application executable (native path style, e.g. on Windows: 'C:\MyApplication\Test.exe').",				"")
+			pl_method_0(GetAppDirectory,		pl_ret_type(String),	"Get directory of application executable (native path style, e.g. on Windows: 'C:\MyApplication').",							"")
+			pl_method_0(GetStartupDirectory,	pl_ret_type(String),	"Get current directory when the application constructor was called (native path style, e.g. on Windows: 'C:\MyApplication').",	"")
+			pl_method_0(GetLogFilename,			pl_ret_type(String),	"Get absolute path to log file, empty if log has not been opened (native path style).",											"")
+			pl_method_0(GetConfigFilename,		pl_ret_type(String),	"Get absolute path to config file, empty if no config is used (native path style).",											"")
 		#endif
 	pl_class_end
 
@@ -93,7 +93,7 @@ class ApplicationContext : public Object, public AbstractContext {
 		*    Get absolute path of application executable
 		*
 		*  @return
-		*    Path to executable (e.g. on Windows: 'C:\MyApplication\Test.exe')
+		*    Path to executable (native path style, e.g. on Windows: 'C:\MyApplication\Test.exe')
 		*/
 		inline String GetExecutableFilename() const;
 
@@ -102,7 +102,7 @@ class ApplicationContext : public Object, public AbstractContext {
 		*    Set absolute path of application executable
 		*
 		*  @param[in] sExecutableFilename
-		*    Path to executable (e.g. on Windows: 'C:\MyApplication\Test.exe')
+		*    Path to executable (e.g. on Windows: 'C:\MyApplication\Test.exe', automatically converted internally to native path style)
 		*/
 		PLCORE_API void SetExecutableFilename(const String &sExecutableFilename);
 
@@ -129,11 +129,11 @@ class ApplicationContext : public Object, public AbstractContext {
 		*    Get directory of application executable
 		*
 		*  @return
-		*    Directory in which the application executable is (e.g. on Windows: 'C:\MyApplication')
+		*    Directory in which the application executable is (native path style, e.g. on Windows: 'C:\MyApplication')
 		*
 		*  @remarks
 		*    This is just a convenience function and is the same as using
-		*      Url(Url(GetExecutableFile()).CutFilename() + "../").Collapse().GetUrl()
+		*      Url(Url(GetExecutableFile()).CutFilename() + "../").Collapse().GetNativePath()
 		*/
 		inline String GetAppDirectory() const;
 
@@ -142,7 +142,7 @@ class ApplicationContext : public Object, public AbstractContext {
 		*    Get current directory when the application constructor was called
 		*
 		*  @return
-		*    Current directory that was set when the application constructor was called (e.g. on Windows: 'C:\MyApplication')
+		*    Current directory that was set when the application constructor was called (native path style, e.g. on Windows: 'C:\MyApplication')
 		*/
 		inline String GetStartupDirectory() const;
 
@@ -151,16 +151,16 @@ class ApplicationContext : public Object, public AbstractContext {
 		*    Set current directory when the application constructor was called
 		*
 		*  @param[in] sStartupDirectory
-		*    Current directory that was set when the application constructor was called
+		*    Current directory that was set when the application constructor was called (automatically converted internally to native path style)
 		*/
-		inline void SetStartupDirectory(const String &sStartupDirectory);
+		PLCORE_API void SetStartupDirectory(const String &sStartupDirectory);
 
 		/**
 		*  @brief
 		*    Get log filename
 		*
 		*  @return
-		*    Absolute path to log file, empty if log has not been opened
+		*    Absolute path to log file, empty if log has not been opened (native path style)
 		*/
 		inline String GetLogFilename() const;
 
@@ -169,16 +169,16 @@ class ApplicationContext : public Object, public AbstractContext {
 		*    Set log filename
 		*
 		*  @param[in] sLog
-		*    Absolute path to log file, empty if log has not been opened
+		*    Absolute path to log file, empty if log has not been opened (automatically converted internally to native path style)
 		*/
-		inline void SetLogFilename(const String &sLog);
+		PLCORE_API void SetLogFilename(const String &sLog);
 
 		/**
 		*  @brief
 		*    Get config filename
 		*
 		*  @return
-		*    Absolute path to config file, empty if no config is used
+		*    Absolute path to config file, empty if no config is used (native path style)
 		*/
 		inline String GetConfigFilename() const;
 
@@ -187,9 +187,9 @@ class ApplicationContext : public Object, public AbstractContext {
 		*    Set config filename
 		*
 		*  @param[in] sConfig
-		*    Absolute path to config file, empty if no config is used
+		*    Absolute path to config file, empty if no config is used (automatically converted internally to native path style)
 		*/
-		inline void SetConfigFilename(const String &sConfig);
+		PLCORE_API void SetConfigFilename(const String &sConfig);
 
 
 		//[-------------------------------------------------------]
