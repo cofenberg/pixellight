@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLFrontendQt/DataModels/SceneGraphTreeModel.h"
+#include "PLFrontendQt/DataModels/TreeSortAndFilterProxyModel.h"
 #include "PLFrontendQt/DockWidget/DockWidgetSceneGraph.h"
 #include "PLFrontendQt/DockWidget/DockWidgetSceneGraphQObject.h"
 
@@ -74,6 +75,19 @@ void DockWidgetSceneGraphQObject::QtSlotTreeViewDoubleClicked(const QModelIndex 
 		// Perform a dock widget manager broadcast (excludes this emitting dock widget)
 		m_pDockWidgetSceneGraph->CallDockWidgetsMethod("SelectObject", Params<void, Object*>(pObject));
 	}
+}
+
+void DockWidgetSceneGraphQObject::QtSlotFilterTypeChanged(int filterId)
+{
+	DataModels::TreeSortAndFilterProxyModel *pFilterModel = m_pDockWidgetSceneGraph->m_pSortAndFilterModel;
+	int role = filterId == ByClassName ? (int)DataModels::SceneGraphTreeModel::ClassNameRole : (int)Qt::DisplayRole;
+	pFilterModel->setFilterRole(role);
+}
+
+void DockWidgetSceneGraphQObject::QtSlotFilterChanged(const QString &text)
+{
+	DataModels::TreeSortAndFilterProxyModel *pFilterModel = m_pDockWidgetSceneGraph->m_pSortAndFilterModel;
+	pFilterModel->setFilterWildcard(text);
 }
 
 

@@ -44,6 +44,7 @@ namespace PLScene {
 namespace PLFrontendQt {
 	namespace DataModels {
 		class SceneGraphTreeModel;
+		class TreeSortAndFilterProxyModel;
 	}
 	class DockWidgetSceneGraphQObject;
 }
@@ -170,9 +171,10 @@ class DockWidgetSceneGraph : public DockWidgetScene {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		DataModels::SceneGraphTreeModel *m_pSceneGraphTreeModel;			/**< Scene graph tree model, can be a null pointer */
-		PLScene::SceneContainer			*m_pSceneContainer;					/**< Scene container assigned with this dock widget, can be a null pointer */
-		DockWidgetSceneGraphQObject		*m_pDockWidgetSceneGraphQObject;	/**< QObject instance for Qt's signal/slot mechanisms, always valid */
+		DataModels::SceneGraphTreeModel 		*m_pSceneGraphTreeModel;			/**< Scene graph tree model, can be a null pointer */
+		PLScene::SceneContainer					*m_pSceneContainer;					/**< Scene container assigned with this dock widget, can be a null pointer */
+		DockWidgetSceneGraphQObject				*m_pDockWidgetSceneGraphQObject;	/**< QObject instance for Qt's signal/slot mechanisms, always valid */
+		DataModels::TreeSortAndFilterProxyModel	*m_pSortAndFilterModel;				/**< sort and filter model, can be a null pointer */
 
 
 };

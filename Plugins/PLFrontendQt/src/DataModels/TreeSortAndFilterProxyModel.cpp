@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ClassListSortAndFilterModel.cpp                *
+ *  File: TreeSortAndFilterProxyModel.cpp                *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -30,7 +30,7 @@
 #include <PLCore/Base/ClassManager.h>
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/DataModels/HeaderTreeItem.h"
-#include "PLFrontendQt/DataModels/RTTIInfoModels/ClassListSortAndFilterModel.h"
+#include "PLFrontendQt/DataModels/TreeSortAndFilterProxyModel.h"
 
 
 //[-------------------------------------------------------]
@@ -38,17 +38,16 @@
 //[-------------------------------------------------------]
 namespace PLFrontendQt {
 namespace DataModels {
-namespace RTTIInfoModels {
 
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
-ClassListSortAndFilterModel::ClassListSortAndFilterModel(QObject *parent) : QSortFilterProxyModel(parent)
+TreeSortAndFilterProxyModel::TreeSortAndFilterProxyModel(QObject *parent) : QSortFilterProxyModel(parent)
 {
 }
 
-void ClassListSortAndFilterModel::setFilterString(const QString &filters)
+void TreeSortAndFilterProxyModel::setFilterString(const QString &filters)
 {
 	setFilterWildcard(filters);
 }
@@ -56,7 +55,7 @@ void ClassListSortAndFilterModel::setFilterString(const QString &filters)
 //[-------------------------------------------------------]
 //[ Protected functions                                   ]
 //[-------------------------------------------------------]
-bool ClassListSortAndFilterModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const 
+bool TreeSortAndFilterProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const 
 {
 	if (filterAcceptsRowItself(source_row, source_parent))
 		return true;
@@ -77,11 +76,11 @@ bool ClassListSortAndFilterModel::filterAcceptsRow(int source_row, const QModelI
 	return false;
 }
 
-bool ClassListSortAndFilterModel::filterAcceptsRowItself(int source_row, const QModelIndex &source_parent) const
+bool TreeSortAndFilterProxyModel::filterAcceptsRowItself(int source_row, const QModelIndex &source_parent) const
 {
 	return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
 }
-bool ClassListSortAndFilterModel::hasAcceptedChildren(int source_row, const QModelIndex &source_parent) const
+bool TreeSortAndFilterProxyModel::hasAcceptedChildren(int source_row, const QModelIndex &source_parent) const
 {
 	QModelIndex item = sourceModel()->index(source_row,0,source_parent);
 	if (!item.isValid()) {
@@ -107,6 +106,5 @@ bool ClassListSortAndFilterModel::hasAcceptedChildren(int source_row, const QMod
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // RTTIInfoModels
 } // DataModels
 } // PLFrontendQt

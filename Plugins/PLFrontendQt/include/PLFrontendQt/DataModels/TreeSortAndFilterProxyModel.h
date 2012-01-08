@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SceneGraphTreeModel.h                          *
+ *  File: TreeSortAndFilterProxyModel.h                  *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,29 +20,14 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTENDQT_SCENEGRAPHTREEMODEL_H__
-#define __PLFRONTENDQT_SCENEGRAPHTREEMODEL_H__
-#pragma once
+#ifndef __PLFRONTENDQT_TREESORTANDFILTERPROXYMODEL_H__
+#define __PLFRONTENDQT_TREESORTANDFILTERPROXYMODEL_H__
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLFrontendQt/DataModels/TreeModelBase.h"
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLScene {
-	class SceneNode;
-	class SceneNodeModifier;
-}
-namespace PLFrontendQt {
-	namespace DataModels {
-		class SceneGraphNodeTreeItemBase;
-	}
-}
+#include "QtGui/QSortFilterProxyModel"
 
 
 //[-------------------------------------------------------]
@@ -57,9 +42,9 @@ namespace DataModels {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene graph tree model
+*    Sort and filterproxy model for tree models
 */
-class PLFRONTENDQT_API SceneGraphTreeModel : public TreeModelBase {
+class TreeSortAndFilterProxyModel : public QSortFilterProxyModel {
 
 
 	//[-------------------------------------------------------]
@@ -70,34 +55,20 @@ class PLFRONTENDQT_API SceneGraphTreeModel : public TreeModelBase {
 
 
 	//[-------------------------------------------------------]
-	//[ Public definitions                                    ]
-	//[-------------------------------------------------------]
-	public:
-		enum SceneGraphTreeModelRoles {
-			ClassNameRole = Qt::UserRole+1
-		};
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		explicit SceneGraphTreeModel(QObject *parent = nullptr);
-		
-		/**
-		*  @brief
-		*    Set the start scene node for this model
-		*
-		*  @param[in] nodeObj
-		*    the start scene node
-		* 
-		*  @param[in] hideStartNode
-		*    specifies if the start node be hidden
-		*/
-		void SetStartNode(PLScene::SceneNode *nodeObj, bool hideStartNode = false);
-		PLScene::SceneNode *GetSceneNodeFromIndex(const QModelIndex &index);
-		PLScene::SceneNodeModifier *GetSceneNodeModifierFromIndex(const QModelIndex &index);
-		SceneGraphNodeTreeItemBase *GetSceneTreeItemFromIndex(const QModelIndex &index);
+		explicit TreeSortAndFilterProxyModel(QObject *parent = nullptr);
+		void setFilterString(const QString &filters);
+
+
+	//[-------------------------------------------------------]
+	//[ Protected functions                                   ]
+	//[-------------------------------------------------------]
+	protected:
+		virtual bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
+		bool filterAcceptsRowItself(int source_row, const QModelIndex &source_parent) const;
+		bool hasAcceptedChildren(int source_row, const QModelIndex &source_parent) const;
 
 
 };
@@ -110,4 +81,4 @@ class PLFRONTENDQT_API SceneGraphTreeModel : public TreeModelBase {
 } // PLFrontendQt
 
 
-#endif // __PLFRONTENDQT_SCENEGRAPHTREEMODEL_H__
+#endif // __PLFRONTENDQT_TREESORTANDFILTERPROXYMODEL_H__

@@ -5,6 +5,16 @@ PLFrontendQt:
 
 
 
+>> 08.01.2012
+[SW]
+PLFrontendQt:
+- Added FilterWidgetWithFilterTypSelector
+- Added fallback icon für the filter type selector icon
+- Renamed ClassListSortAndFilterModel to TreeSortAndFilterProxyModel, because this proxy model is useable for all Tree like models/views
+- In the DockWidgetSceneGraph the tree can now be filtered with the new FilterWidgetWithFilterTypSelector either bei SceneNode name oder class name
+
+
+
 >> 07.01.2012
 [CO]
 PLFrontendQt:

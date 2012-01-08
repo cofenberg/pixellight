@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ClassListSortAndFilterModel.h                  *
+ *  File: FilterWidgetWithFilterTypSelector.h            *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,27 +20,31 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTENDQT_CLASSLISTSORTANDFILTERMODEL_H__
-#define __PLFRONTENDQT_CLASSLISTSORTANDFILTERMODEL_H__
+#ifndef FILTERWIDGETWITHFILTERTYPSELECTOR_H
+#define FILTERWIDGETWITHFILTERTYPSELECTOR_H
+#pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "QtGui/QSortFilterProxyModel"
+#include <QtGui/QWidget>
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+QT_BEGIN_NAMESPACE
+class QToolButton;
+class QActionGroup;
+class QAction;
+QT_END_NAMESPACE
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLFrontendQt {
-namespace DataModels {
-namespace RTTIInfoModels {
 
 
 //[-------------------------------------------------------]
@@ -48,9 +52,9 @@ namespace RTTIInfoModels {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Sort and filterproxy model for the ClassList model
+*    A widget with a filter line and a filter type selector
 */
-class ClassListSortAndFilterModel : public QSortFilterProxyModel {
+class FilterWidgetWithFilterTypSelector : public QWidget {
 
 
 	//[-------------------------------------------------------]
@@ -64,28 +68,38 @@ class ClassListSortAndFilterModel : public QSortFilterProxyModel {
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		explicit ClassListSortAndFilterModel(QObject *parent = nullptr);
-		void setFilterString(const QString &filters);
+		explicit FilterWidgetWithFilterTypSelector(QWidget* parent = 0);
+		void AddFilterType(const QString& name, int filterId, bool initialChecked = false);
 
 
 	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
+	//[ Qt signals (MOC)                                      ]
 	//[-------------------------------------------------------]
-	protected:
-		virtual bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const;
-		bool filterAcceptsRowItself(int source_row, const QModelIndex &source_parent) const;
-		bool hasAcceptedChildren(int source_row, const QModelIndex &source_parent) const;
+	signals:
+		void filterChanged(const QString &text);
+		void filterTypeChanged(int filterId);
 
 
+	//[-------------------------------------------------------]
+	//[ Private Qt slots (MOC)                                ]
+	//[-------------------------------------------------------]
+	private slots:
+		void filterTypeTriggerd(QAction * action);
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		QToolButton		*m_pfilterToolButton;
+		QActionGroup	*m_pActionGroup;
 };
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // SceneRendererDataModel
-} // DataModels
 } // PLFrontendQt
 
 
-#endif // __PLFRONTENDQT_CLASSLISTSORTANDFILTERMODEL_H__
+#endif // FILTERWIDGETWITHFILTERTYPSELECTOR_H
