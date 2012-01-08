@@ -66,6 +66,16 @@ inline void ApplicationContext::SetArguments(const Array<String> &lstArguments)
 *  @brief
 *    Get directory of application executable
 */
+inline String ApplicationContext::GetExecutableDirectory() const
+{
+	// Return application executable directory
+	return m_sExecutableDirectory;
+}
+
+/**
+*  @brief
+*    Get directory of application
+*/
 inline String ApplicationContext::GetAppDirectory() const
 {
 	// Return application directory

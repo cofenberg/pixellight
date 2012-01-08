@@ -225,8 +225,8 @@ class FrontendApplication : public CoreApplication, protected AbstractFrontend {
 		*
 		*  @remarks
 		*    The default implementation does the following tasks:
-		*    - Scan for plugins in application directory non-recursively
-		*    - Scan for plugins in application directory "Plugins/" recursively
+		*    - Scan for plugins in application executable directory non-recursively
+		*    - Scan for plugins in application executable directory "Plugins/" recursively
 		*
 		*  @note
 		*    - Part of the application framework initialization function "OnStart()"

@@ -171,13 +171,13 @@ void FrontendApplication::OnInitPlugins()
 {
 	// The "Scan PL-runtime directory for compatible plugins and load them in"-part is job of a higher being
 
-	// Scan for plugins in the application directory, but not recursively, please. This is quite useful
-	// for shipping applications and putting all plugins inside the application root directory
+	// Scan for plugins in the application executable directory, but not recursively, please. This is
+	// quite useful for shipping applications and putting all plugins inside the application root directory
 	// (which is necessary due to VC manifest policy)
-	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory(), NonRecursive);
+	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetExecutableDirectory(), NonRecursive);
 
 	// Scan for plugins in "Plugins" directory (recursively)
-	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory() + "/Plugins/", Recursive);
+	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetExecutableDirectory() + "/Plugins/", Recursive);
 }
 
 /**

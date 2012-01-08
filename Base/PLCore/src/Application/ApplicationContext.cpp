@@ -73,10 +73,14 @@ void ApplicationContext::SetExecutableFilename(const String &sExecutableFilename
 	// Set absolute executable filename, ensure it's native path style
 	m_sExecutableFilename = Url(sExecutableFilename).GetNativePath();
 
+	// Save executable directory, if there's no given executable filename, do nothing special in here
+	m_sExecutableDirectory = m_sExecutableFilename.GetLength() ? Url(Url(m_sExecutableFilename).CutFilename()).Collapse().GetNativePath() : "";
+
 	// Save application directory, if there's no given executable filename, do nothing special in here
-	m_sAppDirectory = m_sExecutableFilename.GetLength() ? Url(Url(m_sExecutableFilename).CutFilename() + "../").Collapse().GetNativePath() : "";
+	m_sAppDirectory = m_sExecutableFilename.GetLength() ? Url(m_sExecutableDirectory + "../").Collapse().GetNativePath() : "";
 
 	// Remove the '/' at the end (due usage of the Url-class, we know there's a '/' at the end!)
+	m_sExecutableDirectory.Delete(m_sExecutableDirectory.GetLength() - 1);
 	m_sAppDirectory.Delete(m_sAppDirectory.GetLength() - 1);
 
 	// No empty string, please (it should always be possible to add e.g. '/Data' without problems)
