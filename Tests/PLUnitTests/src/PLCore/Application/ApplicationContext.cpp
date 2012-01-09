@@ -5,6 +5,7 @@
 #include <PLCore/Application/ApplicationContext.h>
 #include <PLCore/String/String.h>
 #include <PLCore/Container/Array.h>
+#include <PLCore/File/Url.h>
 
 using namespace PLCore;
 
@@ -39,10 +40,10 @@ SUITE(ApplicationContext) {
 		CHECK_EQUAL(sEmpty.GetASCII(), App.GetExecutableFilename().GetASCII());
 
 		// ExecutableDirectory is empty if no path was given
-		CHECK_EQUAL("", App.GetExecutableDirectory().GetASCII());
+		CHECK_EQUAL(Url("").GetNativePath().GetASCII(), App.GetExecutableDirectory().GetASCII());
 
 		// ApplicationDirectory defaults to "." if no name was given
-		CHECK_EQUAL(".", App.GetAppDirectory().GetASCII());
+		CHECK_EQUAL(Url(".").GetNativePath().GetASCII(), App.GetAppDirectory().GetASCII());
 	}
 
 	TEST(SetExecutableFilename_NormalString) {
@@ -51,10 +52,10 @@ SUITE(ApplicationContext) {
 		CHECK_EQUAL(sNormal.GetASCII(), App.GetExecutableFilename().GetASCII());
 
 		// ExecutableDirectory is empty if no path was given
-		CHECK_EQUAL("", App.GetExecutableDirectory().GetASCII());
+		CHECK_EQUAL(Url("").GetNativePath().GetASCII(), App.GetExecutableDirectory().GetASCII());
 
 		// ApplicationDirectory will be set to ".." if only a executable name was given
-		CHECK_EQUAL("..", App.GetAppDirectory().GetASCII());
+		CHECK_EQUAL(Url("..").GetNativePath().GetASCII(), App.GetAppDirectory().GetASCII());
 	}
 
 	TEST(SetExecutableFilename_LongName) {
@@ -63,14 +64,14 @@ SUITE(ApplicationContext) {
 		CHECK_EQUAL(sLong.GetASCII(), App.GetExecutableFilename().GetASCII());
 
 		// ExecutableDirectory is empty if no path was given
-		CHECK_EQUAL("", App.GetExecutableDirectory().GetASCII());
+		CHECK_EQUAL(Url("").GetNativePath().GetASCII(), App.GetExecutableDirectory().GetASCII());
 
 		// ApplicationDirectory will be set to ".." if only a executable name was given
-		CHECK_EQUAL("..", App.GetAppDirectory().GetASCII());
+		CHECK_EQUAL(Url("..").GetNativePath().GetASCII(), App.GetAppDirectory().GetASCII());
 	}
 
 	TEST(SetExecutableFilename_ShortValidFilePath) {
-		String sPath = "C:\\" + sEmpty;
+		String sPath = Url("C:\\").GetNativePath() + sEmpty;
 
 		// set valid path
 		App.SetExecutableFilename(sPath);
@@ -84,45 +85,45 @@ SUITE(ApplicationContext) {
 	}
 
 	TEST(SetExecutableFilename_AverageValidFilePath) {
-		String sPath = "C:\\TestPath\\" + sNormal;
+		String sPath = Url("C:\\TestPath\\").GetNativePath() + sNormal;
 
 		// set valid path
 		App.SetExecutableFilename(sPath);
 		CHECK_EQUAL(sPath.GetASCII(), App.GetExecutableFilename().GetASCII());
 
 		// ExecutableDirectory
-		CHECK_EQUAL("C:\\TestPath", App.GetExecutableDirectory().GetASCII());
+		CHECK_EQUAL(Url("C:\\TestPath").GetNativePath().GetASCII(), App.GetExecutableDirectory().GetASCII());
 
 		// ApplicationDirectory
 		CHECK_EQUAL("C:", App.GetAppDirectory().GetASCII());
 	}
 
 	TEST(SetExecutableFilename_LongValidFilePath) {
-		String sPath = "C:\\TestPathRoot\\TestPath\\" + sLong;
+		String sPath = Url("C:\\TestPathRoot\\TestPath\\").GetNativePath() + sLong;
 
 		// set valid path
 		App.SetExecutableFilename(sPath);
 		CHECK_EQUAL(sPath.GetASCII(), App.GetExecutableFilename().GetASCII());
 
 		// ExecutableDirectory
-		CHECK_EQUAL("C:\\TestPathRoot\\TestPath", App.GetExecutableDirectory().GetASCII());
+		CHECK_EQUAL(Url("C:\\TestPathRoot\\TestPath").GetNativePath().GetASCII(), App.GetExecutableDirectory().GetASCII());
 
 		// ApplicationDirectory
-		CHECK_EQUAL("C:\\TestPathRoot", App.GetAppDirectory().GetASCII());
+		CHECK_EQUAL(Url("C:\\TestPathRoot").GetNativePath().GetASCII(), App.GetAppDirectory().GetASCII());
 	}
 
 	TEST(SetExecutableFilename_NonValidFilePath) {
-		String sPath = "!§%&:\\TestPath\\\\" + sNormal;
+		String sPath = Url("!§%&:\\TestPath\\\\").GetNativePath().GetASCII() + sNormal;
 
 		// set nonValid path
 		App.SetExecutableFilename(sPath);
-		CHECK_EQUAL("TestPath\\" + sNormal, App.GetExecutableFilename().GetASCII());
+		CHECK_EQUAL(Url("TestPath\\" + sNormal).GetNativePath().GetASCII(), App.GetExecutableFilename().GetASCII());
 
 		// ExecutableDirectory
-		CHECK_EQUAL("TestPath", App.GetExecutableDirectory().GetASCII());
+		CHECK_EQUAL(Url("TestPath").GetNativePath().GetASCII(), App.GetExecutableDirectory().GetASCII());
 
 		// ApplicationDirectory defaults to '.' if path is not valid
-		CHECK_EQUAL(".", App.GetAppDirectory().GetASCII());
+		CHECK_EQUAL(Url(".").GetNativePath().GetASCII(), App.GetAppDirectory().GetASCII());
 	}
 
 	TEST(SetExecutableFilename_ValidHttpPath) {
@@ -133,10 +134,10 @@ SUITE(ApplicationContext) {
 		CHECK_EQUAL(sPath.GetASCII(), App.GetExecutableFilename().GetASCII());
 
 		// ExecutableDirectory
-		CHECK_EQUAL("http://TestDir", App.GetExecutableDirectory().GetASCII());
+		CHECK_EQUAL(Url("http://TestDir").GetNativePath().GetASCII(), App.GetExecutableDirectory().GetASCII());
 
 		// 
-		CHECK_EQUAL("http:", App.GetAppDirectory().GetASCII());
+		CHECK_EQUAL(Url("http:").GetNativePath().GetASCII(), App.GetAppDirectory().GetASCII());
 	}
 
 	TEST(SetArguments_NoElements) {
@@ -167,7 +168,7 @@ SUITE(ApplicationContext) {
 	}
 
 	TEST(SetStartupDirectory_ValidPath) {
-		String sPath = "C:\\" + sNormal;
+		String sPath = Url("C:\\").GetNativePath().GetASCII() + sNormal;
 
 		// set directory
 		App.SetStartupDirectory(sPath);
