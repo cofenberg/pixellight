@@ -1,5 +1,6 @@
 >> 12.01.2012
 [CO]
+- Added "Script::GetAssociatedFilenames()" and implemented the method within the Lua backend
 PLFrontendQt:
 - "FrontendMainWindow": Do only start the timer when the initialization phase is over
 - "FrontendMainWindow::~FrontendMainWindow()": Stop the timer at once, safe is safe

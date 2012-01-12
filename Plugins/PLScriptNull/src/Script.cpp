@@ -100,6 +100,11 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	return true;
 }
 
+void Script::GetAssociatedFilenames(Array<String> &lstFilenames)
+{
+	// Nothing to do in here
+}
+
 void Script::GetGlobalVariables(Array<String> &lstGlobalVariables, const String &sNamespace)
 {
 	// Nothing to do in here

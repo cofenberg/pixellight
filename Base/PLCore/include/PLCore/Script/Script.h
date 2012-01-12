@@ -218,6 +218,21 @@ class Script : public Object {
 		*/
 		virtual bool SetSourceCode(const String &sSourceCode) = 0;
 
+		/**
+		*  @brief
+		*    Returns a list of filenames associated with this script
+		*
+		*  @param[out] lstFilenames
+		*    Receives a list of filenames associated with this script (list is not cleared before adding new entries)
+		*
+		*  @remarks
+		*    For example Lua allows to use the keyword "require" to add the content of another script. This method
+		*    returns a list of the filenames of the files which are included within this script. One can use this
+		*    information to e.g. reload the script when the one of the associated files was changed, beside reloading
+		*    when just the original script file was changed.
+		*/
+		virtual void GetAssociatedFilenames(Array<String> &lstFilenames) = 0;
+
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]
 		//[-------------------------------------------------------]
