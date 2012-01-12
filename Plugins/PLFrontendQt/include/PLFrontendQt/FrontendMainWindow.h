@@ -78,6 +78,18 @@ class FrontendMainWindow : public QMainWindow {
 		*/
 		PLFRONTENDQT_API DockWidgetManager &GetDockWidgetManager();
 
+		/**
+		*  @brief
+		*    Sets the update interval
+		*
+		*  @param[in] nUpdateInterval
+		*    Update interval in milliseconds, "0" to disable updates
+		*
+		*  @note
+		*    - By default an update interval of 10 milliseconds resulting in 100 FPS is set
+		*/
+		PLFRONTENDQT_API void SetUpdateInterval(int nUpdateInterval = 100);
+
 
 	//[-------------------------------------------------------]
 	//[ Protected functions                                   ]
@@ -135,8 +147,10 @@ class FrontendMainWindow : public QMainWindow {
 	private:
 		Frontend		  *m_pFrontendQt;			/**< Owner frontend implementation, always valid! */
 		bool			   m_bVisible;				/**< Was the widget made visible? (independent of the real Qt widget visibility state) */
-		int				   m_nWindowRedrawTimerID;	/**< Window redraw timer, "0" means no timer */
+		int				   m_nUpdateInterval;		/**< Update interval in milliseconds */
+		int				   m_nUpdateTimerID;		/**< Update timer ID, "0" means no timer */
 		DockWidgetManager *m_pDockWidgetManager;	/**< Dock widget manager of this main window, can be a null pointer */
+		bool			   m_bInitialized;			/**< Is the frontend already initialized? */
 
 
 };

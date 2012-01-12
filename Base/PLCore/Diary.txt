@@ -3,6 +3,7 @@
 PLFrontendQt:
 - "FrontendMainWindow": Do only start the timer when the initialization phase is over
 - "FrontendMainWindow::~FrontendMainWindow()": Stop the timer at once, safe is safe
+- Added "FrontendMainWindow::SetUpdateInterval()"
 
 
 
