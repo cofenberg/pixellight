@@ -27,6 +27,7 @@
 PL_WARNING_PUSH
 	PL_WARNING_DISABLE(4127)	// "warning C4127: conditional expression is constant"
 	#include <QtCore/qurl.h>
+	#include <QtCore/qfilesystemwatcher.h>
 	#include <QtGui/qevent.h>
 	#include <QtGui/qlabel.h>
 	#include <QtGui/qmenubar.h>
@@ -36,6 +37,7 @@ PL_WARNING_PUSH
 	#include <QtGui/qdesktopservices.h>
 PL_WARNING_POP
 #include <PLCore/Log/Log.h>
+#include <PLCore/File/Url.h>
 #include <PLCore/Base/Class.h>
 #include <PLCore/System/System.h>
 #include <PLScene/Scene/SceneContainer.h>
@@ -72,8 +74,10 @@ Gui::Gui(ApplicationQt &cApplication) :
 	EventHandlerCameraFound(&Gui::OnCameraFound, this),
 	m_pApplication(&cApplication),
 	m_pGuiPicking(nullptr),
+	m_pQFileSystemWatcher(new QFileSystemWatcher()),
 	// Menu bar
 	m_pQActionReload(nullptr),
+	m_pQActionAutomaticReload(nullptr),
 	m_pQMenuCamera(nullptr),
 	m_pQActionGroupCamera(nullptr),
 	m_pQMenuWindow(nullptr),
@@ -81,6 +85,8 @@ Gui::Gui(ApplicationQt &cApplication) :
 	// Status bar
 	m_pQLabelStatusBar(nullptr)
 {
+	connect(m_pQFileSystemWatcher, SIGNAL(fileChanged(const QString&)), this, SLOT(QtSlotFileChanged(const QString&)));
+
 	// Get the Qt main window
 	FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
 	if (pFrontendMainWindow) {
@@ -98,6 +104,9 @@ Gui::~Gui()
 	// Destroy the GUI picking instance
 	if (m_pGuiPicking)
 		delete m_pGuiPicking;
+
+	// Destroy the Qt file system watcher instance
+	delete m_pQFileSystemWatcher;
 }
 
 /**
@@ -142,6 +151,9 @@ void Gui::SetEnabled(bool bEnabled)
 
 			// Perform a dock widget manager broadcast
 			pFrontendMainWindow->GetDockWidgetManager().CallDockWidgetsMethod("SetSceneContainer", Params<void, SceneContainer*>(bEnabled ? m_pApplication->GetScene() : nullptr));
+
+			// Remove all files from the Qt file system watcher instance
+			m_pQFileSystemWatcher->removePaths(m_pQFileSystemWatcher->files());
 		}
 
 		// Is the GUI enabled?
@@ -154,7 +166,12 @@ void Gui::SetEnabled(bool bEnabled)
 			pFrontendMainWindow->SetUpdateInterval(10);
 
 			// Update reload Qt action
-			m_pQActionReload->setEnabled(m_pApplication->GetResourceFilename().GetLength() != 0);
+			const String sResourceFilename = m_pApplication->GetResourceFilename();
+			m_pQActionReload->setEnabled(sResourceFilename.GetLength() != 0);
+
+			// Add files to the Qt file system watcher instance
+			if (sResourceFilename.GetLength() && m_pQActionAutomaticReload && m_pQActionAutomaticReload->isChecked())
+				m_pQFileSystemWatcher->addPath(QtStringAdapter::PLToQt(Url(sResourceFilename).GetNativePath()));
 		} else {
 			// Disable the timed update of the Qt main window
 			pFrontendMainWindow->SetUpdateInterval(0);
@@ -284,6 +301,14 @@ void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 				connect(m_pQActionReload, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredReload()));
 				m_pQActionReload->setShortcut(tr("F5"));
 				pQMenu->addAction(m_pQActionReload);
+			}
+
+			{ // Setup the automatic reload action
+				m_pQActionAutomaticReload = new QAction(tr("A&utomatic reload"), &cQMainWindow);
+				m_pQActionAutomaticReload->setCheckable(true);
+				m_pQActionAutomaticReload->setChecked(true);
+				connect(m_pQActionAutomaticReload, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredAutomaticReload()));
+				pQMenu->addAction(m_pQActionAutomaticReload);
 			}
 
 			// Add a separator
@@ -419,6 +444,11 @@ uint32 Gui::FillMenuWindowRec(QMenu &cQMenu, const String &sBaseClass)
 //[-------------------------------------------------------]
 //[ Private Qt slots (MOC)                                ]
 //[-------------------------------------------------------]
+void Gui::QtSlotFileChanged(const QString &path)
+{
+	m_pApplication->LoadResource(QtStringAdapter::QtToPL(path));
+}
+
 void Gui::QtSlotTriggeredLoad()
 {
 	// Fill the file filter (filter example: "All Files (*);;Scene (*.scene *.SCENE);;Script (*.lua *.LUA)")
@@ -475,6 +505,20 @@ void Gui::QtSlotTriggeredReload()
 	const String sResourceFilename = m_pApplication->GetResourceFilename();
 	if (sResourceFilename.GetLength())
 		m_pApplication->LoadResource(sResourceFilename);
+}
+
+void Gui::QtSlotTriggeredAutomaticReload()
+{
+	// Remove all files from the Qt file system watcher instance
+	m_pQFileSystemWatcher->removePaths(m_pQFileSystemWatcher->files());
+
+	// Update the Qt file system watcher instance
+	if (m_pQActionAutomaticReload && m_pQActionAutomaticReload->isChecked()) {
+		// Add files to the Qt file system watcher instance
+		const String sResourceFilename = m_pApplication->GetResourceFilename();
+		if (sResourceFilename.GetLength())
+			m_pQFileSystemWatcher->addPath(QtStringAdapter::PLToQt(Url(sResourceFilename).GetNativePath()));
+	}
 }
 
 void Gui::QtSlotTriggeredExit()

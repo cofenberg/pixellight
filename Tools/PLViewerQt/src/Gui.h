@@ -41,6 +41,7 @@ QT_BEGIN_NAMESPACE
 	class QAction;
 	class QMainWindow;
 	class QActionGroup;
+	class QFileSystemWatcher;
 QT_END_NAMESPACE
 namespace PLScene {
 	class SceneNode;
@@ -201,8 +202,10 @@ class Gui : public QObject {
 	//[ Private Qt slots (MOC)                                ]
 	//[-------------------------------------------------------]
 	private slots:
+		void QtSlotFileChanged(const QString &path);
 		void QtSlotTriggeredLoad();
 		void QtSlotTriggeredReload();
+		void QtSlotTriggeredAutomaticReload();
 		void QtSlotTriggeredExit();
 		void QtSlotAboutToShowMenuCamera();
 		void QtSlotSelectedCamera(QAction *);
@@ -224,16 +227,18 @@ class Gui : public QObject {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ApplicationQt *m_pApplication;			/**< Owner application, always valid */
-		GuiPicking	  *m_pGuiPicking;			/**< GUI picking component instance, can be a null pointer */
+		ApplicationQt		*m_pApplication;			/**< Owner application, always valid */
+		GuiPicking			*m_pGuiPicking;				/**< GUI picking component instance, can be a null pointer */
+		QFileSystemWatcher	*m_pQFileSystemWatcher;		/**< Qt file system watcher, always valid */
 		// Menu bar
-		QAction		  *m_pQActionReload;		/**< Reload Qt action, can be a null pointer */
-		QMenu		  *m_pQMenuCamera;			/**< Camera Qt menu, can be a null pointer */
-		QActionGroup  *m_pQActionGroupCamera;	/**< Camera Qt action group, can be a null pointer */
-		QMenu		  *m_pQMenuWindow;			/**< Window Qt menu, can be a null pointer */
-		QActionGroup  *m_pQActionGroupWindow;	/**< Window Qt action group, can be a null pointer */
+		QAction				*m_pQActionReload;			/**< Reload Qt action, can be a null pointer */
+		QAction				*m_pQActionAutomaticReload;	/**< Automatic reload Qt action, can be a null pointer */
+		QMenu				*m_pQMenuCamera;			/**< Camera Qt menu, can be a null pointer */
+		QActionGroup		*m_pQActionGroupCamera;		/**< Camera Qt action group, can be a null pointer */
+		QMenu				*m_pQMenuWindow;			/**< Window Qt menu, can be a null pointer */
+		QActionGroup		*m_pQActionGroupWindow;		/**< Window Qt action group, can be a null pointer */
 		// Status bar
-		QLabel		  *m_pQLabelStatusBar;		/**< Qt label shown in the status bar of the Qt main window, can be a null pointer */
+		QLabel				*m_pQLabelStatusBar;		/**< Qt label shown in the status bar of the Qt main window, can be a null pointer */
 
 
 };
