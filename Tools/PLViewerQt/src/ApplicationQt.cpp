@@ -101,7 +101,7 @@ void ApplicationQt::OnDeInit()
 	m_pGui = nullptr;
 
 	// Call base implementation
-	Application::OnInit();
+	Application::OnDeInit();
 }
 
 
