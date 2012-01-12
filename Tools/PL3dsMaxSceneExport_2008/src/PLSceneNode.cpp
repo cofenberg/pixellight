@@ -278,17 +278,13 @@ void PLSceneNode::WriteToFilePosRotScaleBoxFlags(PLCore::XmlElement &cNodeElemen
 	const Point3 vParentWorldSpaceCenter = GetContainer() ? GetContainer()->GetWorldSpaceCenter() : Point3(0.0f, 0.0f, 0.0f);
 
 	// Write down the position
-	const Point3 vPos = (GetType() != TypeScene && GetType() != TypeCell) ? m_vPos-vParentWorldSpaceCenter : static_cast<const PLSceneContainer*>(this)->GetWorldSpaceCenter();
-	if (vPos.x || vPos.y || vPos.z)
-		cNodeElement.SetAttribute("Position", PLCore::String::Format("%f %f %f", vPos.x, vPos.y, vPos.z));
+	PLTools::XmlElementSetAttributeWithDefault(cNodeElement, "Position", (GetType() != TypeScene && GetType() != TypeCell) ? m_vPos-vParentWorldSpaceCenter : static_cast<const PLSceneContainer*>(this)->GetWorldSpaceCenter(), Point3(0.0f, 0.0f, 0.0f));
 
 	// Write down the rotation
-	if (m_vRot.x || m_vRot.y || m_vRot.z)
-		cNodeElement.SetAttribute("Rotation", PLCore::String::Format("%f %f %f", m_vRot.x, m_vRot.y, m_vRot.z));
+	PLTools::XmlElementSetAttributeWithDefault(cNodeElement, "Rotation", m_vRot, Point3(0.0f, 0.0f, 0.0f));
 
 	// Write down the scale
-	if (m_vScale.x != 1.0f || m_vScale.y != 1.0f || m_vScale.z != 1.0f)
-		cNodeElement.SetAttribute("Scale", PLCore::String::Format("%f %f %f", m_vScale.x, m_vScale.y, m_vScale.z));
+	PLTools::XmlElementSetAttributeWithDefault(cNodeElement, "Scale", m_vScale, Point3(1.0f, 1.0f, 1.0f));
 
 	// Are there any flags?
 	if (m_sFlags.length()) {

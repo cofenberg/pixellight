@@ -2,6 +2,8 @@
 [CO]
 - Bugfix within "PLSceneMaterialStandard": The diffuse and specular default value test was wrong resulting that those colors were not always exported
   correctly
+- Added "PLTools::XmlElementSetAttributeWithDefault()" to make it easier and less error prone to write out values while ignoring values which are equal
+  to a given default value
 
 
 

@@ -79,22 +79,18 @@ void PLSceneCamera::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 
 	// [HACK] FOV... I multiplicate it with '0.74' so the result 'looks' similar to the one within
 	// the 3ds Max viewport...
-	float fFOV = RadToDeg(cCameraState.fov*0.74f);
-	if (fFOV != 45.0f)
-		pNodeElement->SetAttribute("FOV", String::Format("%f", fFOV));
+	PLTools::XmlElementSetAttributeWithDefault(*pNodeElement, "FOV", RadToDeg(cCameraState.fov*0.74f), 45.0f);
 
 	// [TODO] Do we want/need to export this aspect value?
 	// Aspect
-//	float fAspect = GetScene().GetMaxInterface().GetRendImageAspect();
-//	if (fAspect != 1.0f)
-//		pNodeElement->SetAttribute("Aspect", String::Format("%f", fAspect));
+//	PLTools::XmlElementSetAttributeWithDefault(*pNodeElement, "Aspect", GetScene().GetMaxInterface().GetRendImageAspect(), 1.0f);
 
 	// Export z-near and z-far settings?
 	if (cCameraState.manualClip) {
 		// ZNear (ignore 0 or PL default setting)
 		float fRange = cCameraState.hither;
 		if (fRange != 0.01f) {
-			pNodeElement->SetAttribute("ZNear", String::Format("%f", fRange));
+			PLTools::XmlElementSetAttributeWithDefault(*pNodeElement, "ZNear", fRange, 0.01f);
 
 			// 'Normally' the near plane should never ever be <=0! (crazy z-fighting!)
 			if (fRange <= 1.0000000e-006 && GetIGameNode())
@@ -103,8 +99,8 @@ void PLSceneCamera::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 
 		// ZFar (ignore 0 or PL default setting)
 		fRange = cCameraState.yon;
-		if (fRange && fRange != 1000.0f)
-			pNodeElement->SetAttribute("ZFar", String::Format("%f", fRange));
+		if (fRange)
+			PLTools::XmlElementSetAttributeWithDefault(*pNodeElement, "ZFar", fRange, 1000.0f);
 	}
 
 	// Write flexible variables

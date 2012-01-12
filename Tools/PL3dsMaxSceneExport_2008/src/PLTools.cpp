@@ -27,6 +27,13 @@
 #include <IGame/IGame.h>
 #include <PixelLight.h>
 #include <PLCore/PLCoreWindows.h>	// Depending on the used compiler, nullptr has to be defined by this header
+#include <PLCore/String/ParseTools.h>
+#if MAX_RELEASE < 13000
+	// The following is required for legacy 3ds Max versions 2008, 2009 and 2010
+	#undef GetFirstChild
+	#undef GetNextSibling
+#endif
+#include <PLCore/Xml/XmlElement.h>
 #include "PL3dsMaxSceneExport/PLSceneExportOptions.h"
 #include "PL3dsMaxSceneExport/PLTools.h"
 
@@ -93,6 +100,38 @@ std::string PLTools::ToLower(const std::string &sString)
 	std::string sLower = sString;
 	_strlwr(const_cast<char*>(sLower.c_str()));
 	return sLower;
+}
+
+void PLTools::XmlElementSetAttributeWithDefault(PLCore::XmlElement &cXmlElement, const PLCore::String &sName, float fValue, float fDefaultValue)
+{
+	// Is the given value equal to the given default value?
+	if (fValue != fDefaultValue) {
+		// Value to string
+		const PLCore::String sValue = PLCore::String::Format("%f", fValue);
+
+		// Due to rounding errors the string may now or may not contain the given default value, check for this
+		if (sValue.GetFloat() != fDefaultValue)
+			cXmlElement.SetAttribute(sName, sValue);
+	} else {
+		// The given value is equal to the default value -> nothing to do
+	}
+}
+
+void PLTools::XmlElementSetAttributeWithDefault(PLCore::XmlElement &cXmlElement, const PLCore::String &sName, const Point3 &cPoint, const Point3 &cDefault)
+{
+	// Is the given value equal to the given default value?
+	if (cPoint.x != cDefault.x || cPoint.y != cDefault.y || cPoint.z != cDefault.z) {
+		// Value to string
+		const PLCore::String sValue = PLCore::String::Format("%f %f %f", cPoint.x, cPoint.y, cPoint.z);
+
+		// Due to rounding errors the string may now or may not contain the given default value, check for this
+		float fValues[3] = { 0.0f, 0.0f, 0.0f };
+		PLCore::ParseTools::ParseFloatArray(sValue, fValues, 3);
+		if (fValues[0] != cDefault.x || fValues[1] != cDefault.y || fValues[2] != cDefault.z)
+			cXmlElement.SetAttribute(sName, sValue);
+	} else {
+		// The given value is equal to the default value -> nothing to do
+	}
 }
 
 /**

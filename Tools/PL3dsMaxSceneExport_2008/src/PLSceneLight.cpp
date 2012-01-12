@@ -183,8 +183,8 @@ void PLSceneLight::WriteToFile(XmlElement &cSceneElement, const std::string &sAp
 						pIGameProperty = cIGameLight.GetLightAttenEnd();
 						if (pIGameProperty) {
 							float fRange;
-							if (pIGameProperty->GetPropertyValue(fRange) && fRange != 1.0f)
-								pNodeElement->SetAttribute("Range", String::Format("%f", fRange));
+							if (pIGameProperty->GetPropertyValue(fRange))
+								PLTools::XmlElementSetAttributeWithDefault(*pNodeElement, "Range", fRange, 1.0f);
 						}
 
 						// Special spot light settings
@@ -193,16 +193,16 @@ void PLSceneLight::WriteToFile(XmlElement &cSceneElement, const std::string &sAp
 							pIGameProperty = cIGameLight.GetLightFallOff();
 							if (pIGameProperty) {
 								float fFallOff;
-								if (pIGameProperty->GetPropertyValue(fFallOff) && fFallOff != 45.0f)
-									pNodeElement->SetAttribute("OuterAngle", String::Format("%f", fFallOff));
+								if (pIGameProperty->GetPropertyValue(fFallOff))
+									PLTools::XmlElementSetAttributeWithDefault(*pNodeElement, "OuterAngle", fFallOff, 45.0f);
 							}
 
 							// InnerAngle
 							pIGameProperty = cIGameLight.GetLightHotSpot();
 							if (pIGameProperty) {
 								float fHotSpot;
-								if (pIGameProperty->GetPropertyValue(fHotSpot) && fHotSpot != 35.0f)
-									pNodeElement->SetAttribute("InnerAngle", String::Format("%f", fHotSpot));
+								if (pIGameProperty->GetPropertyValue(fHotSpot))
+									PLTools::XmlElementSetAttributeWithDefault(*pNodeElement, "InnerAngle", fHotSpot, 35.0f);
 							}
 
 							// ZNear ('near attenuation - start')
@@ -210,7 +210,7 @@ void PLSceneLight::WriteToFile(XmlElement &cSceneElement, const std::string &sAp
 							if (pIGameProperty) {
 								float fAttenStart;
 								if (pIGameProperty->GetPropertyValue(fAttenStart) && fAttenStart != 0.1f) {
-									pNodeElement->SetAttribute("ZNear", String::Format("%f", fAttenStart));
+									PLTools::XmlElementSetAttributeWithDefault(*pNodeElement, "ZNear", fAttenStart, 0.1f);
 
 									// 'Normally' the near plane should never ever be <=0! (crazy z-fighting!)
 									if (fAttenStart <= 1.0000000e-006 && GetIGameNode())
@@ -223,8 +223,8 @@ void PLSceneLight::WriteToFile(XmlElement &cSceneElement, const std::string &sAp
 								pIGameProperty = cIGameLight.GetLightAspectRatio();
 								if (pIGameProperty) {
 									float fAspectRatio;
-									if (pIGameProperty->GetPropertyValue(fAspectRatio) && fAspectRatio != 1.0f)
-										pNodeElement->SetAttribute("Aspect", String::Format("%f", fAspectRatio));
+									if (pIGameProperty->GetPropertyValue(fAspectRatio))
+										PLTools::XmlElementSetAttributeWithDefault(*pNodeElement, "Aspect", fAspectRatio, 1.0f);
 								}
 							}
 						}
