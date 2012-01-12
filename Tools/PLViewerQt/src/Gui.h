@@ -197,6 +197,12 @@ class Gui : public QObject {
 		*/
 		PLCore::uint32 FillMenuWindowRec(QMenu &cQMenu, const PLCore::String &sBaseClass);
 
+		/**
+		*  @brief
+		*    Resets and fills the Qt file system watcher instance
+		*/
+		void ResetAndFillQFileSystemWatcher();
+
 
 	//[-------------------------------------------------------]
 	//[ Private Qt slots (MOC)                                ]

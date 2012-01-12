@@ -39,6 +39,7 @@ PL_WARNING_POP
 #include <PLCore/Log/Log.h>
 #include <PLCore/File/Url.h>
 #include <PLCore/Base/Class.h>
+#include <PLCore/Script/Script.h>
 #include <PLCore/System/System.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SceneQueries/SQByClassName.h>
@@ -166,12 +167,10 @@ void Gui::SetEnabled(bool bEnabled)
 			pFrontendMainWindow->SetUpdateInterval(10);
 
 			// Update reload Qt action
-			const String sResourceFilename = m_pApplication->GetResourceFilename();
-			m_pQActionReload->setEnabled(sResourceFilename.GetLength() != 0);
+			m_pQActionReload->setEnabled(m_pApplication->GetResourceFilename().GetLength() != 0);
 
-			// Add files to the Qt file system watcher instance
-			if (sResourceFilename.GetLength() && m_pQActionAutomaticReload && m_pQActionAutomaticReload->isChecked())
-				m_pQFileSystemWatcher->addPath(QtStringAdapter::PLToQt(Url(sResourceFilename).GetNativePath()));
+			// Reset and fill the Qt file system watcher instance
+			ResetAndFillQFileSystemWatcher();
 		} else {
 			// Disable the timed update of the Qt main window
 			pFrontendMainWindow->SetUpdateInterval(0);
@@ -440,13 +439,49 @@ uint32 Gui::FillMenuWindowRec(QMenu &cQMenu, const String &sBaseClass)
 	return nCheckedItems;
 }
 
+/**
+*  @brief
+*    Resets and fills the Qt file system watcher instance
+*/
+void Gui::ResetAndFillQFileSystemWatcher()
+{
+	// Remove all files from the Qt file system watcher instance
+	m_pQFileSystemWatcher->removePaths(m_pQFileSystemWatcher->files());
+
+	// Update the Qt file system watcher instance
+	if (m_pQActionAutomaticReload && m_pQActionAutomaticReload->isChecked()) {
+		// Add files to the Qt file system watcher instance
+		const String sResourceFilename = m_pApplication->GetResourceFilename();
+		if (sResourceFilename.GetLength()) {
+			// Add the resource file itself
+			m_pQFileSystemWatcher->addPath(QtStringAdapter::PLToQt(Url(sResourceFilename).GetNativePath()));
+
+			// In case the resource is a script, do also take the associated filenames into account
+			Script *pScript = m_pApplication->GetScript();
+			if (pScript) {
+				// Get a list of associated filenames
+				Array<String> lstFilenames;
+				pScript->GetAssociatedFilenames(lstFilenames);
+
+				// Add the filenames to the Qt file system watcher instance
+				for (uint32 i=0; i<lstFilenames.GetNumOfElements(); i++)
+					m_pQFileSystemWatcher->addPath(QtStringAdapter::PLToQt(Url(lstFilenames[i]).GetNativePath()));
+			}
+		}
+	}
+}
+
 
 //[-------------------------------------------------------]
 //[ Private Qt slots (MOC)                                ]
 //[-------------------------------------------------------]
 void Gui::QtSlotFileChanged(const QString &path)
 {
-	m_pApplication->LoadResource(QtStringAdapter::QtToPL(path));
+	// Reload the resource, not the provided file
+	// -> In case of scripts, the main script may be "Main.lua" but the included "Application.lua" may have just been changed
+	const String sResourceFilename = m_pApplication->GetResourceFilename();
+	if (sResourceFilename.GetLength())
+		m_pApplication->LoadResource(sResourceFilename);
 }
 
 void Gui::QtSlotTriggeredLoad()
@@ -509,16 +544,8 @@ void Gui::QtSlotTriggeredReload()
 
 void Gui::QtSlotTriggeredAutomaticReload()
 {
-	// Remove all files from the Qt file system watcher instance
-	m_pQFileSystemWatcher->removePaths(m_pQFileSystemWatcher->files());
-
-	// Update the Qt file system watcher instance
-	if (m_pQActionAutomaticReload && m_pQActionAutomaticReload->isChecked()) {
-		// Add files to the Qt file system watcher instance
-		const String sResourceFilename = m_pApplication->GetResourceFilename();
-		if (sResourceFilename.GetLength())
-			m_pQFileSystemWatcher->addPath(QtStringAdapter::PLToQt(Url(sResourceFilename).GetNativePath()));
-	}
+	// Reset and fill the Qt file system watcher instance
+	ResetAndFillQFileSystemWatcher();
 }
 
 void Gui::QtSlotTriggeredExit()

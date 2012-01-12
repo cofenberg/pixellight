@@ -165,6 +165,15 @@ class ScriptApplication : public EngineApplication {
 		*/
 		PL_API void SetBaseDirectory(const PLCore::String &sBaseDirectory);
 
+		/**
+		*  @brief
+		*    Returns the used script instance
+		*
+		*  @return
+		*    Used script instance, can be a null pointer (do not destroy the returned instance)
+		*/
+		PL_API PLCore::Script *GetScript() const;
+
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLCore::AbstractLifecycle functions ]

@@ -7,6 +7,8 @@ PLViewerQt:
 - When disabling the GUI, do also deactivate the timed update
 - Added reload option
 - Added automatic reload when the viewed resource file was changed
+- It's possible (and reasonable) that e.g. a Lua script is composed of multiple scripts, it's now possible to track whether or
+  not any of those associated files have been changed in order to reload the main-script
 
 
 

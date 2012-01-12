@@ -127,7 +127,7 @@ void ScriptApplication::SetBaseDirectory(const String &sBaseDirectory)
 	if (!Url(sNewBaseDirectory).IsAbsolute()) {
 		// Nope - if there's currently a script running, use it's absolute filename as start point
 		if (m_pScript) {
-			// Get the directory the script is in
+			// Get the directory the script is in (e.g. a script filename of "C:/Programs/App/Main.lua" will result in "C:/Programs/App/")
 			const String sDirectory = Url(m_sScriptFilename).Collapse().CutFilename();
 
 			// Construct the application base directory
@@ -145,6 +145,15 @@ void ScriptApplication::SetBaseDirectory(const String &sBaseDirectory)
 	// Add the given base directory to the loadable manager
 	if (m_sCurrentSceneBaseDirectory.GetLength())
 		LoadableManager::GetInstance()->AddBaseDir(m_sCurrentSceneBaseDirectory);
+}
+
+/**
+*  @brief
+*    Returns the used script instance
+*/
+Script *ScriptApplication::GetScript() const
+{
+	return m_pScript;
 }
 
 
