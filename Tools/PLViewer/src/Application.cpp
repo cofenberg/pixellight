@@ -109,20 +109,22 @@ Application::~Application()
 void Application::OnControl(Control &cControl)
 {
 	// Is it a button and was it just hit?
-	if (cControl.GetType() == ControlButton && reinterpret_cast<Button&>(cControl).IsHit()) {
-		// Check whether the escape key was pressed
+	if (cControl.GetType() == ControlButton) {
+		// Shut down the application?
 		if (cControl.GetName() == "KeyboardEscape") {
-			// Shut down the application
-			Exit(0);
+			if (reinterpret_cast<Button&>(cControl).IsHit())
+				Exit(0);
 
-		// Make a screenshot from the current render target
+		// Make a screenshot from the current render target?
 		} else if (cControl.GetName() == "KeyboardF12") {
-			GetScreenshotTool().SaveScreenshot();
+			if (reinterpret_cast<Button&>(cControl).IsHit())
+				GetScreenshotTool().SaveScreenshot();
 
-		// Toggle mouse cursor visibility
+		// Toggle mouse cursor visibility?
 		} else if (cControl.GetName() == "KeyboardM") {
 			// Toggle mouse cursor visibility
-			GetFrontend().SetMouseVisible(!GetFrontend().IsMouseVisible());
+			if (reinterpret_cast<Button&>(cControl).IsHit())
+				GetFrontend().SetMouseVisible(!GetFrontend().IsMouseVisible());
 		}
 	}
 }

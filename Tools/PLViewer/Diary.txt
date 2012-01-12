@@ -1,3 +1,9 @@
+>> 12.01.2012
+[CO]
+- "Application::OnControl()" was stealing all key hits, even when the viewer wasn't interested in the key
+
+
+
 >> 08.01.2012
 [CO]
 - "Application::LoadResource()": When loading a resource in general, reset to the basic default scene renderer
