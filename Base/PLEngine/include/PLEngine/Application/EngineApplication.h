@@ -44,7 +44,6 @@ namespace PLInput {
 }
 namespace PLScene {
 	class SNCamera;
-	class SNKeyValue;
 	class SceneQuery;
 }
 namespace PLEngine {
@@ -458,10 +457,10 @@ class EngineApplication : public PLScene::SceneApplication {
 		PLScene::SceneNodeHandler				   m_cSceneContainerHandler;	/**< Scene node handler for the scene container */
 		PLScene::SceneNodeHandler				   m_cCameraHandler;			/**< Scene node handler for the camera */
 		PLCore::String							   m_sDefaultSceneRenderer;		/**< Default scene renderer */
+		PLCore::String							   m_sSceneRendererVariables;	/**< Scene renderer variables */
 		PLCore::String							   m_sClearColor;				/**< Clear color */
 		PLCore::String							   m_sStartCamera;				/**< Name of the given start camera */
 		PLScene::SceneNode						  *m_pFirstFoundCamera;			/**< First found camera, can be a null pointer */
-		PLCore::Array<const PLScene::SNKeyValue*>  m_lstPostKeys;				/**< Keys to process AFTER all other */
 		bool									   m_bHasLoadScreen;			/**< Is there a load screen? */
 		PLInput::VirtualController				  *m_pInputController;			/**< Virtual input controller, can be a null pointer */
 		SceneRendererTool						   m_cSceneRendererTool;		/**< Scene renderer tool */

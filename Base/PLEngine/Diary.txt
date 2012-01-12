@@ -1,3 +1,10 @@
+>> 12.01.2012
+[CO]
+- "EngineApplication": When searching the loaded scene for "keys" giving hints e.g. which camera to use as default, only the first found key will be used.
+  In case a scene is composed of multiple other scenes, this is important so one knows which key will be used.
+
+
+
 >> 08.01.2012
 [CO]
 - "Picking" & "MousePicking": Added cull parameter
