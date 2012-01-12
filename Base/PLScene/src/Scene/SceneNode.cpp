@@ -748,8 +748,8 @@ SceneNodeModifier *SceneNode::AddModifier(const String &sClass, const String &sP
 						if (IsInitialized())
 							pModifier->InformedOnInit();
 
-						// Call the "OnActivate()"-method of the modifier
-						pModifier->OnActivate(EvaluateGlobalActiveState());
+						// Call the "OnActivate()"-method of the modifier, don't forget to also respect the active state of the scene node modifier itself
+						pModifier->OnActivate(EvaluateGlobalActiveState() && pModifier->IsActive());
 
 						// Return the created modifier
 						return pModifier;
@@ -1190,7 +1190,7 @@ void SceneNode::OnActivate(bool bActivate)
 		// Get the scene node modifier
 		SceneNodeModifier *pSceneNodeModifier = m_lstModifiers[i];
 
-		// Evaluate the global active state
+		// Evaluate the global active state, don't forget to also respect the active state of the scene node modifier itself
 		pSceneNodeModifier->OnActivate(bActivate && pSceneNodeModifier->IsActive());
 	}
 }
