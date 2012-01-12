@@ -88,7 +88,9 @@ class SRPShadowMapping : public PLScene::SceneRendererPass {
 	//[-------------------------------------------------------]
 	pl_class(PLCOM_RTTI_EXPORT, SRPShadowMapping, "PLCompositing", PLScene::SceneRendererPass, "Shadow map manager scene renderer pass implementation")
 		// Attributes
-		pl_attribute(ShaderLanguage,	PLCore::String,	"",	ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(ShaderLanguage,		PLCore::String,	"",		ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(SlopeScaleDepthBias,	float,			2.0f,	ReadWrite,	DirectValue,	"Slope scale depth bias (polygon offset to avoid nasty shadow artifacts)",																"")
+		pl_attribute(DepthBias,				float,			10.0f,	ReadWrite,	DirectValue,	"Depth bias (polygon offset to avoid nasty shadow artifacts)",																			"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
