@@ -143,11 +143,19 @@ void Gui::SetEnabled(bool bEnabled)
 			pFrontendMainWindow->GetDockWidgetManager().CallDockWidgetsMethod("SetSceneContainer", Params<void, SceneContainer*>(bEnabled ? m_pApplication->GetScene() : nullptr));
 		}
 
-		// Create/destroy the GUI picking
+		// Is the GUI enabled?
 		if (bEnabled) {
+			// Create the GUI picking
 			if (!m_pGuiPicking)
 				m_pGuiPicking = new GuiPicking(*this);
+
+			// Setup the update interval of the Qt main window (in milliseconds)
+			pFrontendMainWindow->SetUpdateInterval(10);
 		} else {
+			// Disable the timed update of the Qt main window
+			pFrontendMainWindow->SetUpdateInterval(0);
+
+			// Destroy the GUI picking
 			if (m_pGuiPicking) {
 				delete m_pGuiPicking;
 				m_pGuiPicking = nullptr;
