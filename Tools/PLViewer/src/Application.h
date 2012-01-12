@@ -86,6 +86,22 @@ class Application : public PLEngine::ScriptApplication {
 		*/
 		virtual ~Application();
 
+		/**
+		*  @brief
+		*    Returns the filename of the currently loaded resource
+		*
+		*  @return
+		*    The filename of the currently loaded resource
+		*/
+		PLCore::String GetResourceFilename() const;
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual PLEngine::EngineApplication functions  ]
+	//[-------------------------------------------------------]
+	public:
+		virtual bool LoadScene(const PLCore::String &sFilename) override;
+
 
 	//[-------------------------------------------------------]
 	//[ Protected functions                                   ]
@@ -154,6 +170,13 @@ class Application : public PLEngine::ScriptApplication {
 	//[-------------------------------------------------------]
 	private:
 		virtual void OnCreateInputController() override;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::String m_sResourceFilename;	/**< The filename of the currently loaded resource */
 
 
 };

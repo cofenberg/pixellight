@@ -98,6 +98,29 @@ Application::~Application()
 {
 }
 
+/**
+*  @brief
+*    Returns the filename of the currently loaded resource
+*/
+String Application::GetResourceFilename() const
+{
+	return m_sResourceFilename;
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual PLEngine::EngineApplication functions  ]
+//[-------------------------------------------------------]
+bool Application::LoadScene(const String &sFilename)
+{
+	// Do not backup the filename of the current resource in here
+	// -> Background: When the current resource is a script which is using "LoadScene()" in order to load a scene we would backup an imposter in here
+	// m_sResourceFilename = sFilename;
+
+	// Call base implementation
+	return ScriptApplication::LoadScene(sFilename);
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected functions                                   ]
@@ -143,6 +166,9 @@ bool Application::LoadResource(const String &sFilename, const String &sType)
 
 	// Clear the scene, after calling this method the scene is empty
 	ClearScene();
+
+	// Backup the filename of the current resource
+	m_sResourceFilename = sFilename;
 
 	// Get file extension
 	const String sExtension = Url(sFilename).GetExtension();

@@ -1,6 +1,7 @@
 >> 12.01.2012
 [CO]
 - "Application::OnControl()" was stealing all key hits, even when the viewer wasn't interested in the key
+- The viewer application is now saving the filename of the currently loaded resource
 PLViewerQt:
 - Bugfix: "ApplicationQt::OnDeInit()" was calling the base method "OnInit()" instead of "OnDeInit()"
 - When disabling the GUI, do also deactivate the timed update
