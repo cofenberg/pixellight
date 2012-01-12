@@ -106,12 +106,14 @@ FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) :
 */
 FrontendMainWindow::~FrontendMainWindow()
 {
+	// Stop window redraw timer before entering frontend deinitialization phase
+	if (m_nWindowRedrawTimerID) {
+		killTimer(m_nWindowRedrawTimerID);
+		m_nWindowRedrawTimerID = 0;
+	}
+
 	// Do the frontend life cycle thing - stop
 	m_pFrontendQt->OnStop();
-
-	// Stop window redraw timer
-	if (m_nWindowRedrawTimerID)
-		killTimer(m_nWindowRedrawTimerID);
 
 	// Destroy the dock widget manager of this main window, if there's one
 	if (m_pDockWidgetManager)
