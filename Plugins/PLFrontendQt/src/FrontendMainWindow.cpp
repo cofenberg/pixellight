@@ -74,7 +74,7 @@ DockWidgetManager &FrontendMainWindow::GetDockWidgetManager()
 FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) :
 	m_pFrontendQt(&cFrontendQt),
 	m_bVisible(false),
-	m_nWindowRedrawTimerID(startTimer(10)),	// An interval of 10 milliseconds should be enough
+	m_nWindowRedrawTimerID(0),
 	m_pDockWidgetManager(nullptr)
 {
 	// Tell the frontend about this instance at once because it may already be required during frontend life cycle initialization
@@ -95,6 +95,9 @@ FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) :
 
 	// If the widget is not visible yet, make it visible right now
 	MakeVisible();
+
+	// Ready to rumble, start the update-timer (by default, an interval of 10 milliseconds resulting in 100 FPS should be enough)
+	m_nWindowRedrawTimerID = startTimer(10);
 }
 
 /**
