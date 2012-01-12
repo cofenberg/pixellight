@@ -202,6 +202,7 @@ class Gui : public QObject {
 	//[-------------------------------------------------------]
 	private slots:
 		void QtSlotTriggeredLoad();
+		void QtSlotTriggeredReload();
 		void QtSlotTriggeredExit();
 		void QtSlotAboutToShowMenuCamera();
 		void QtSlotSelectedCamera(QAction *);
@@ -226,6 +227,7 @@ class Gui : public QObject {
 		ApplicationQt *m_pApplication;			/**< Owner application, always valid */
 		GuiPicking	  *m_pGuiPicking;			/**< GUI picking component instance, can be a null pointer */
 		// Menu bar
+		QAction		  *m_pQActionReload;		/**< Reload Qt action, can be a null pointer */
 		QMenu		  *m_pQMenuCamera;			/**< Camera Qt menu, can be a null pointer */
 		QActionGroup  *m_pQActionGroupCamera;	/**< Camera Qt action group, can be a null pointer */
 		QMenu		  *m_pQMenuWindow;			/**< Window Qt menu, can be a null pointer */

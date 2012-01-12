@@ -73,6 +73,7 @@ Gui::Gui(ApplicationQt &cApplication) :
 	m_pApplication(&cApplication),
 	m_pGuiPicking(nullptr),
 	// Menu bar
+	m_pQActionReload(nullptr),
 	m_pQMenuCamera(nullptr),
 	m_pQActionGroupCamera(nullptr),
 	m_pQMenuWindow(nullptr),
@@ -151,6 +152,9 @@ void Gui::SetEnabled(bool bEnabled)
 
 			// Setup the update interval of the Qt main window (in milliseconds)
 			pFrontendMainWindow->SetUpdateInterval(10);
+
+			// Update reload Qt action
+			m_pQActionReload->setEnabled(m_pApplication->GetResourceFilename().GetLength() != 0);
 		} else {
 			// Disable the timed update of the Qt main window
 			pFrontendMainWindow->SetUpdateInterval(0);
@@ -273,6 +277,13 @@ void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 				connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredLoad()));
 				pQAction->setShortcut(tr("Ctrl+L"));
 				pQMenu->addAction(pQAction);
+			}
+
+			{ // Setup the reload action
+				m_pQActionReload = new QAction(tr("R&eload"), &cQMainWindow);
+				connect(m_pQActionReload, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredReload()));
+				m_pQActionReload->setShortcut(tr("F5"));
+				pQMenu->addAction(m_pQActionReload);
 			}
 
 			// Add a separator
@@ -457,6 +468,13 @@ void Gui::QtSlotTriggeredLoad()
 		// Load the resource
 		m_pApplication->LoadResource(QtStringAdapter::QtToPL(sQFilename), (sType != sAllFiles) ? sType : "");
 	}
+}
+
+void Gui::QtSlotTriggeredReload()
+{
+	const String sResourceFilename = m_pApplication->GetResourceFilename();
+	if (sResourceFilename.GetLength())
+		m_pApplication->LoadResource(sResourceFilename);
 }
 
 void Gui::QtSlotTriggeredExit()

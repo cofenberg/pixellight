@@ -5,6 +5,7 @@
 PLViewerQt:
 - Bugfix: "ApplicationQt::OnDeInit()" was calling the base method "OnInit()" instead of "OnDeInit()"
 - When disabling the GUI, do also deactivate the timed update
+- Added reload option
 
 
 
