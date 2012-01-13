@@ -23,11 +23,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Tools/Timing.h>
 #include <PLCore/Frontend/Frontend.h>
 #include <PLCore/Frontend/FrontendApplication.h>
 #include <PLMath/Ray.h>
 #include <PLMath/Intersect.h>
 #include <PLMath/Matrix3x3.h>
+#include <PLInput/Input/InputManager.h>
+#include <PLInput/Input/Devices/Mouse.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLScene/Visibility/VisNode.h>
 #include "PLEngine/Controller/SNMTransformGizmoPositionController.h"
@@ -38,6 +41,7 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLMath;
+using namespace PLInput;
 using namespace PLRenderer;
 using namespace PLScene;
 namespace PLEngine {
@@ -111,10 +115,39 @@ void SNMTransformGizmoPositionController::UpdateSelection(Renderer &cRenderer, c
 	}
 }
 
-bool SNMTransformGizmoPositionController::PerformTransform(Renderer &cRenderer, const VisNode &cVisNode)
+void SNMTransformGizmoPositionController::PerformTransform()
 {
-	// [TODO] Implement me
-	return false;
+	// Get the mouse device, there's no point in abstracting this in here because the transform gizmos are used through a mouse
+	Mouse *pMouse = InputManager::GetInstance()->GetMouse();
+	if (pMouse) {
+		// General transform speed
+		static const float TransformSpeed = 0.5f;
+
+		// Get the current time difference
+		const float fTimeDifference = Timing::GetInstance()->GetTimeDifference()*TransformSpeed;
+
+		// Get timed transform speed along each mouse axis, this speed is "eaten up" as soon as it's used
+		float fTransformSpeedX = fTimeDifference*pMouse->X.GetValue();
+		float fTransformSpeedY = fTimeDifference*pMouse->Y.GetValue();
+
+		// Get the current position of the owner scene node
+		Vector3 vPosition = GetSceneNode().GetPosition();
+
+		// Update position
+		if (m_nSelected & XAxis) {
+			vPosition.x -= fTransformSpeedX;
+			fTransformSpeedX = 0.0f;
+		}
+		if (m_nSelected & YAxis) {
+			vPosition.y -= fTransformSpeedY;
+			fTransformSpeedY = 0.0f;
+		}
+		if (m_nSelected & ZAxis)
+			vPosition.z -= fTransformSpeedX ? fTransformSpeedX : fTransformSpeedY;
+
+		// Set the new position of the owner scene node
+		GetSceneNode().MoveTo(vPosition);
+	}
 }
 
 
@@ -122,3 +155,4 @@ bool SNMTransformGizmoPositionController::PerformTransform(Renderer &cRenderer, 
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLEngine
+

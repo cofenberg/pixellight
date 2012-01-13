@@ -82,7 +82,7 @@ class SNMTransformGizmoRotationController : public PLScene::SNMTransformGizmoRot
 	//[-------------------------------------------------------]
 	private:
 		virtual void UpdateSelection(PLRenderer::Renderer &cRenderer, const PLScene::VisNode &cVisNode) override;
-		virtual bool PerformTransform(PLRenderer::Renderer &cRenderer, const PLScene::VisNode &cVisNode) override;
+		virtual void PerformTransform() override;
 
 
 };

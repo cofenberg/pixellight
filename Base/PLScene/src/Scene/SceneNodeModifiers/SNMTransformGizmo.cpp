@@ -26,6 +26,7 @@
 #include <PLMath/Rectangle.h>
 #include <PLMath/Matrix4x4.h>
 #include <PLRenderer/Renderer/Renderer.h>
+#include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMTransformGizmo.h"
 
 
@@ -84,6 +85,7 @@ void SNMTransformGizmo::SetTransformMode(bool bTransformMode)
 */
 SNMTransformGizmo::SNMTransformGizmo(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	SlotOnDrawTransparent(this),
+	SlotOnUpdate(this),
 	m_nSelected(0),
 	m_bTransform(false)
 {
@@ -128,10 +130,16 @@ float SNMTransformGizmo::SetScaledWorldMatrix(Renderer &cRenderer, Matrix4x4 &mW
 void SNMTransformGizmo::OnActivate(bool bActivate)
 {
 	// Connect/disconnect event handler
-	if (bActivate)
-		GetSceneNode().SignalDrawTransparent.Connect(SlotOnDrawTransparent);
-	else
-		GetSceneNode().SignalDrawTransparent.Disconnect(SlotOnDrawTransparent);
+	SceneContext *pSceneContext = GetSceneContext();
+	if (pSceneContext) {
+		if (bActivate) {
+			GetSceneNode().SignalDrawTransparent.Connect(SlotOnDrawTransparent);
+			pSceneContext->EventUpdate.Connect(SlotOnUpdate);
+		} else {
+			GetSceneNode().SignalDrawTransparent.Disconnect(SlotOnDrawTransparent);
+			pSceneContext->EventUpdate.Disconnect(SlotOnUpdate);
+		}
+	}
 }
 
 
@@ -145,15 +153,22 @@ void SNMTransformGizmo::OnActivate(bool bActivate)
 void SNMTransformGizmo::OnDrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 {
 	// Update gizmo
-	if (pVisNode) {
-		if (m_bTransform)
-			PerformTransform(cRenderer, *pVisNode);
-		else
-			UpdateSelection(cRenderer, *pVisNode);
-	}
+	if (!m_bTransform)
+		UpdateSelection(cRenderer, *pVisNode);
 
 	// Draw gizmo
 	DrawGizmo(cRenderer, pVisNode);
+}
+
+/**
+*  @brief
+*    Called when the scene node modifier needs to be updated
+*/
+void SNMTransformGizmo::OnUpdate()
+{
+	// Update gizmo
+	if (m_bTransform)
+		PerformTransform();
 }
 
 

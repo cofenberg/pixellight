@@ -23,11 +23,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Tools/Timing.h>
 #include <PLCore/Frontend/Frontend.h>
 #include <PLCore/Frontend/FrontendApplication.h>
 #include <PLMath/Ray.h>
 #include <PLMath/Intersect.h>
 #include <PLMath/Matrix3x3.h>
+#include <PLInput/Input/InputManager.h>
+#include <PLInput/Input/Devices/Mouse.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLScene/Visibility/VisNode.h>
 #include "PLEngine/Controller/SNMTransformGizmoScaleController.h"
@@ -38,6 +41,7 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLMath;
+using namespace PLInput;
 using namespace PLRenderer;
 using namespace PLScene;
 namespace PLEngine {
@@ -111,10 +115,39 @@ void SNMTransformGizmoScaleController::UpdateSelection(Renderer &cRenderer, cons
 	}
 }
 
-bool SNMTransformGizmoScaleController::PerformTransform(Renderer &cRenderer, const VisNode &cVisNode)
+void SNMTransformGizmoScaleController::PerformTransform()
 {
-	// [TODO] Implement me
-	return false;
+	// Get the mouse device, there's no point in abstracting this in here because the transform gizmos are used through a mouse
+	Mouse *pMouse = InputManager::GetInstance()->GetMouse();
+	if (pMouse) {
+		// General transform speed
+		static const float TransformSpeed = 1.0f;
+
+		// Get the current time difference
+		const float fTimeDifference = Timing::GetInstance()->GetTimeDifference()*TransformSpeed;
+
+		// Get timed transform speed along each mouse axis, this speed is "eaten up" as soon as it's used
+		float fTransformSpeedX = fTimeDifference*pMouse->X.GetValue();
+		float fTransformSpeedY = fTimeDifference*pMouse->Y.GetValue();
+
+		// Get the current scale of the owner scene node
+		Vector3 vScale = GetSceneNode().GetScale();
+
+		// Update scale
+		if (m_nSelected & XAxis) {
+			vScale.x -= fTransformSpeedX;
+			fTransformSpeedX = 0.0f;
+		}
+		if (m_nSelected & YAxis) {
+			vScale.y -= fTransformSpeedY;
+			fTransformSpeedY = 0.0f;
+		}
+		if (m_nSelected & ZAxis)
+			vScale.z -= fTransformSpeedX ? fTransformSpeedX : fTransformSpeedY;
+
+		// Set the new scale of the owner scene node
+		GetSceneNode().SetScale(vScale);
+	}
 }
 
 

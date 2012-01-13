@@ -76,6 +76,7 @@ class SNMTransformGizmo : public SNMTransform {
 	pl_class(PLS_RTTI_EXPORT, SNMTransformGizmo, "PLScene", PLScene::SNMTransform, "Abstract transform gizmo scene node modifier base class")
 		// Slots
 		pl_slot_2(OnDrawTransparent,	PLRenderer::Renderer&,	const VisNode*,	"Called on scene node transparent draw, the used renderer as first parameter, the current visibility node of this scene node, can be a null pointer as second parameter",	"")
+		pl_slot_0(OnUpdate,														"Called when the scene node modifier needs to be updated",																													"")
 	pl_class_end
 
 
@@ -182,13 +183,8 @@ class SNMTransformGizmo : public SNMTransform {
 		/**
 		*  @brief
 		*    Performs the transform
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] cVisNode
-		*    The current visibility node of this scene node
 		*/
-		virtual bool PerformTransform(PLRenderer::Renderer &cRenderer, const VisNode &cVisNode) = 0;
+		virtual void PerformTransform() = 0;
 
 		/**
 		*  @brief
@@ -224,6 +220,12 @@ class SNMTransformGizmo : public SNMTransform {
 		*    The current visibility node of this scene node, can be a null pointer
 		*/
 		void OnDrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode);
+
+		/**
+		*  @brief
+		*    Called when the scene node modifier needs to be updated
+		*/
+		void OnUpdate();
 
 
 };

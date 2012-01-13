@@ -23,10 +23,14 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Tools/Timing.h>
 #include <PLCore/Frontend/Frontend.h>
 #include <PLCore/Frontend/FrontendApplication.h>
 #include <PLMath/Ray.h>
 #include <PLMath/Intersect.h>
+#include <PLMath/EulerAngles.h>
+#include <PLInput/Input/InputManager.h>
+#include <PLInput/Input/Devices/Mouse.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLScene/Visibility/VisNode.h>
 #include "PLEngine/Controller/SNMTransformGizmoRotationController.h"
@@ -37,6 +41,7 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLMath;
+using namespace PLInput;
 using namespace PLRenderer;
 using namespace PLScene;
 namespace PLEngine {
@@ -110,10 +115,46 @@ void SNMTransformGizmoRotationController::UpdateSelection(Renderer &cRenderer, c
 	}
 }
 
-bool SNMTransformGizmoRotationController::PerformTransform(Renderer &cRenderer, const VisNode &cVisNode)
+void SNMTransformGizmoRotationController::PerformTransform()
 {
-	// [TODO] Implement me
-	return false;
+	// Get the mouse device, there's no point in abstracting this in here because the transform gizmos are used through a mouse
+	Mouse *pMouse = InputManager::GetInstance()->GetMouse();
+	if (pMouse) {
+		// General transform speed
+		static const float TransformSpeed = 10.0f;
+
+		// Get the current time difference
+		const float fTimeDifference = Timing::GetInstance()->GetTimeDifference()*TransformSpeed;
+
+		// Get timed transform speed along each mouse axis, this speed is "eaten up" as soon as it's used
+		float fTransformSpeedX = fTimeDifference*pMouse->X.GetValue();
+		float fTransformSpeedY = fTimeDifference*pMouse->Y.GetValue();
+
+		// Get rotation delta
+		float fX = 0.0f;
+		float fY = 0.0f;
+		float fZ = 0.0f;
+		if (m_nSelected & XAxis) {
+			fX = fTransformSpeedX;
+			fTransformSpeedX = 0.0f;
+		}
+		if (m_nSelected & YAxis) {
+			fY = fTransformSpeedY;
+			fTransformSpeedY = 0.0f;
+		}
+		if (m_nSelected & ZAxis)
+			fZ = fTransformSpeedX ? fTransformSpeedX : fTransformSpeedY;
+
+		// Get a quaternion representation of the rotation delta
+		Quaternion qRotationDelta;
+		EulerAngles::ToQuaternion(static_cast<float>(fX*Math::DegToRad),
+								  static_cast<float>(fY*Math::DegToRad),
+								  static_cast<float>(fZ*Math::DegToRad),
+								  qRotationDelta);
+
+		// Set the new rotation of the owner scene node
+		GetSceneNode().GetTransform().SetRotation(GetSceneNode().GetTransform().GetRotation()*qRotationDelta);
+	}
 }
 
 
