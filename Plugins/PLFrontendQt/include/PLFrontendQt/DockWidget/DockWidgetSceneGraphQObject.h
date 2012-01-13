@@ -78,12 +78,16 @@ class DockWidgetSceneGraphQObject : public QObject {
 
 
 	//[-------------------------------------------------------]
-	//[ Public definitions                                    ]
+	//[ Private definitions                                   ]
 	//[-------------------------------------------------------]
-	public:
-		enum FilterTypes {
-			BySceneNodeName,
-			ByClassName
+	private:
+		/**
+		*  @brief
+		*    Filter types
+		*/
+		enum EFilterTypes {
+			BySceneNodeName,	/**< Filter by scene node name */
+			ByClassName			/**< Filter by scene node class name */
 		};
 
 

@@ -66,13 +66,14 @@ void DockWidgetSceneGraphQObject::QtSlotTreeViewDoubleClicked(const QModelIndex 
 	DataModels::SceneGraphTreeModel *pSceneGraphTreeModel = m_pDockWidgetSceneGraph->m_pSceneGraphTreeModel;
 	DataModels::TreeSortAndFilterProxyModel *pFilterModel = m_pDockWidgetSceneGraph->m_pSortAndFilterModel;
 	if (pSceneGraphTreeModel && pFilterModel) {
-		
-		QModelIndex sourceIndex = pFilterModel->mapToSource(cQModelIndex);
+		// We have been provided with a filter model index, what we need is an index which can be used within the original tree view
+		const QModelIndex cQModelIndexSource = pFilterModel->mapToSource(cQModelIndex);
+
 		// Get selected scene node
-		Object *pObject = reinterpret_cast<Object*>(pSceneGraphTreeModel->GetSceneNodeFromIndex(sourceIndex));
+		Object *pObject = reinterpret_cast<Object*>(pSceneGraphTreeModel->GetSceneNodeFromIndex(cQModelIndexSource));
 		if (!pObject) {
 			// Hm, maybe it's an selected scene node modifier?
-			pObject = reinterpret_cast<Object*>(pSceneGraphTreeModel->GetSceneNodeModifierFromIndex(sourceIndex));
+			pObject = reinterpret_cast<Object*>(pSceneGraphTreeModel->GetSceneNodeModifierFromIndex(cQModelIndexSource));
 		}
 
 		// Perform a dock widget manager broadcast (excludes this emitting dock widget)
@@ -82,15 +83,12 @@ void DockWidgetSceneGraphQObject::QtSlotTreeViewDoubleClicked(const QModelIndex 
 
 void DockWidgetSceneGraphQObject::QtSlotFilterTypeChanged(int filterId)
 {
-	DataModels::TreeSortAndFilterProxyModel *pFilterModel = m_pDockWidgetSceneGraph->m_pSortAndFilterModel;
-	int role = filterId == ByClassName ? (int)DataModels::SceneGraphTreeModel::ClassNameRole : (int)Qt::DisplayRole;
-	pFilterModel->setFilterRole(role);
+	m_pDockWidgetSceneGraph->m_pSortAndFilterModel->setFilterRole((filterId == ByClassName) ? DataModels::SceneGraphTreeModel::ClassNameRole : Qt::DisplayRole);
 }
 
 void DockWidgetSceneGraphQObject::QtSlotFilterChanged(const QString &text)
 {
-	DataModels::TreeSortAndFilterProxyModel *pFilterModel = m_pDockWidgetSceneGraph->m_pSortAndFilterModel;
-	pFilterModel->setFilterWildcard(text);
+	m_pDockWidgetSceneGraph->m_pSortAndFilterModel->setFilterWildcard(text);
 }
 
 

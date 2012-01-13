@@ -38,7 +38,6 @@
 #include "PLFrontendQt/Widget/FilterWidgetWithFilterTypSelector.h"
 
 
-
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
@@ -70,29 +69,35 @@ DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidget
 	// Get encapsulated Qt dock widget
 	QDockWidget *pQDockWidget = GetQDockWidget();
 	if (pQDockWidget) {
-		// Create tree view and set scene graph model
-		QTreeView *pQTreeView = new QTreeView(pQDockWidget);
-		m_pDockWidgetSceneGraphQObject->connect(pQTreeView, SIGNAL(doubleClicked(const QModelIndex&)), m_pDockWidgetSceneGraphQObject, SLOT(QtSlotTreeViewDoubleClicked(const QModelIndex&)));
-		
-		FilterWidgetWithFilterTypSelector *pFilterWidget = new FilterWidgetWithFilterTypSelector(pQDockWidget);
-		pFilterWidget->AddFilterType(pQDockWidget->tr("by SceneNode Name"), DockWidgetSceneGraphQObject::BySceneNodeName, true);
-		pFilterWidget->AddFilterType(pQDockWidget->tr("by Class Name"), DockWidgetSceneGraphQObject::ByClassName);
-				
-		m_pDockWidgetSceneGraphQObject->connect(pFilterWidget, SIGNAL(filterTypeChanged(int)), m_pDockWidgetSceneGraphQObject, SLOT(QtSlotFilterTypeChanged(int)));
-		m_pDockWidgetSceneGraphQObject->connect(pFilterWidget, SIGNAL(filterChanged(const QString)), m_pDockWidgetSceneGraphQObject, SLOT(QtSlotFilterChanged(const QString)));
-		
-		QWidget *pHost = new QWidget(pQDockWidget);
-		pHost->setLayout(new QVBoxLayout);
-		pHost->layout()->addWidget(pFilterWidget);
-		pHost->layout()->addWidget(pQTreeView);
-		
-		pQDockWidget->setWidget(pHost);
-		m_pSceneGraphTreeModel = new DataModels::SceneGraphTreeModel(pQDockWidget);
-		m_pSortAndFilterModel = new DataModels::TreeSortAndFilterProxyModel(pQDockWidget);
-		m_pSortAndFilterModel->setSourceModel(m_pSceneGraphTreeModel);
-		m_pSortAndFilterModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
-		pQTreeView->setModel(m_pSortAndFilterModel);
-		pQTreeView->expandToDepth(0);
+		{ // Create tree view and set scene graph model
+			// Create tree view widget
+			QTreeView *pQTreeView = new QTreeView(pQDockWidget);
+			m_pDockWidgetSceneGraphQObject->connect(pQTreeView, SIGNAL(doubleClicked(const QModelIndex&)), m_pDockWidgetSceneGraphQObject, SLOT(QtSlotTreeViewDoubleClicked(const QModelIndex&)));
+
+			// Create filter widget
+			FilterWidgetWithFilterTypSelector *pFilterWidget = new FilterWidgetWithFilterTypSelector(pQDockWidget);
+			pFilterWidget->AddFilterType(pQDockWidget->tr("By Scene Node Name"), DockWidgetSceneGraphQObject::BySceneNodeName, true);
+			pFilterWidget->AddFilterType(pQDockWidget->tr("By Class Name"), DockWidgetSceneGraphQObject::ByClassName);
+			m_pDockWidgetSceneGraphQObject->connect(pFilterWidget, SIGNAL(filterTypeChanged(int)), m_pDockWidgetSceneGraphQObject, SLOT(QtSlotFilterTypeChanged(int)));
+			m_pDockWidgetSceneGraphQObject->connect(pFilterWidget, SIGNAL(filterChanged(const QString)), m_pDockWidgetSceneGraphQObject, SLOT(QtSlotFilterChanged(const QString)));
+
+			// Create host widget combining tree view widget and filter widget
+			QWidget *pQWidgetHost = new QWidget(pQDockWidget);
+			pQWidgetHost->setLayout(new QVBoxLayout);
+			pQWidgetHost->layout()->addWidget(pFilterWidget);
+			pQWidgetHost->layout()->addWidget(pQTreeView);
+			pQDockWidget->setWidget(pQWidgetHost);
+
+			// Set models
+			m_pSceneGraphTreeModel = new DataModels::SceneGraphTreeModel(pQDockWidget);
+			m_pSortAndFilterModel = new DataModels::TreeSortAndFilterProxyModel(pQDockWidget);
+			m_pSortAndFilterModel->setSourceModel(m_pSceneGraphTreeModel);
+			m_pSortAndFilterModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
+			pQTreeView->setModel(m_pSortAndFilterModel);
+
+			// Hide the root
+			pQTreeView->expandToDepth(0);
+		}
 
 		// Add the created Qt dock widget to the given Qt main window
 		pQMainWindow->addDockWidget(Qt::LeftDockWidgetArea, pQDockWidget);
