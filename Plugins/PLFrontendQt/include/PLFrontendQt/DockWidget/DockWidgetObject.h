@@ -57,9 +57,6 @@ namespace PLFrontendQt {
 /**
 *  @brief
 *    "PLCore::Object" Qt dock widget class
-*
-*  @note
-*    - By default, the "PLCore::CoreApplication::GetApplication()" RTTI object is used
 */
 class DockWidgetObject : public DockWidget {
 
