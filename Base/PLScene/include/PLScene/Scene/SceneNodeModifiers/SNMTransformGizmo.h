@@ -103,30 +103,12 @@ class SNMTransformGizmo : public SNMTransform {
 
 		/**
 		*  @brief
-		*    Returns the start transform value
+		*    Sets whether the transform gizmo is currently in transform mode or not
 		*
-		*  @return
-		*    The start transform value
+		*  @param[in] bTransformMode
+		*    'true' if the transform gizmo is currently in transform mode, else 'false'
 		*/
-		PLS_API const PLMath::Vector3 &GetStartValue() const;
-
-		/**
-		*  @brief
-		*    Returns the current delta transform value
-		*
-		*  @return
-		*    The current delta transform value
-		*/
-		PLS_API PLMath::Vector3 GetCurrentDeltaValue() const;
-
-		/**
-		*  @brief
-		*    Returns the current transform value
-		*
-		*  @return
-		*    The current transform value
-		*/
-		PLS_API const PLMath::Vector3 &GetCurrentValue() const;
+		PLS_API void SetTransformMode(bool bTransformMode);
 
 
 	//[-------------------------------------------------------]
@@ -224,12 +206,8 @@ class SNMTransformGizmo : public SNMTransform {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCore::uint32	  m_nPrevUsedSelected;	/**< The previous used selection */
-		PLCore::uint32	  m_nSelected;			/**< The current selection */
-		bool			  m_bTransform;			/**< Is currently a transform performed? */
-		PLMath::Vector3	  m_vStartValue;		/**< Transform start value */
-		PLMath::Vector3	  m_vPreviousValue;		/**< Previous transform value */
-		PLMath::Vector3	  m_vCurrentValue;		/**< Current transform value */
+		PLCore::uint32 m_nSelected;		/**< The current selection */
+		bool		   m_bTransform;	/**< Is currently a transform performed? */
 
 
 	//[-------------------------------------------------------]

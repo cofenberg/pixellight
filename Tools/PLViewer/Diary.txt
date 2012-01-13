@@ -5,6 +5,7 @@ PLViewerQt:
 - "SelectObject" is now emitted by the new "GuiPickingQObject" instead of "Gui"
 - "GuiPickingQObject": When pressing the left mouse button while the mouse cursor is over a transform gizmo axis, the camera is now disabled and enabled
   again when the left mouse button is released. This way one is able to play around with the transform gizmo without controlling the camera at the same time.
+- When one transform gizmo is currently in transform mode, the other transform gizmos are disabled and the axis selection is locked
 
 
 

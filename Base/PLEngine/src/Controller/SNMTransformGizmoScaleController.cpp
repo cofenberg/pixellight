@@ -79,9 +79,6 @@ void SNMTransformGizmoScaleController::UpdateSelection(Renderer &cRenderer, cons
 
 	// Check whether or not the mouse is currently over the frontend
 	if (cFrontend.IsMouseOver()) {
-		// If the mouse isn't over something select the previous used selection
-		m_nSelected = m_nPrevUsedSelected;
-
 		// Set translation matrix (rotation & scale has no influence on the transform gizmo)
 		Matrix4x4 mTranslation;
 		const Matrix4x4 &mWorld = cVisNode.GetWorldMatrix();
@@ -110,7 +107,7 @@ void SNMTransformGizmoScaleController::UpdateSelection(Renderer &cRenderer, cons
 		cRay.Set(vCamPos, vEndPos);
 		m_nSelected = DetermineSelected(cRay);
 	} else {
-		m_nSelected = m_nPrevUsedSelected = 0;
+		m_nSelected = 0;
 	}
 }
 

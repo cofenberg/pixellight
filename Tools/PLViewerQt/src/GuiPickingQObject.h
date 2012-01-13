@@ -34,6 +34,9 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
+namespace PLScene {
+	class SNMTransformGizmo;
+}
 class GuiPicking;
 
 
@@ -97,8 +100,8 @@ class GuiPickingQObject : public QObject {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GuiPicking *m_pGuiPicking;		/**< GUI picking owner instance, always valid */
-		bool		m_bCameraDisabled;	/**< Camera disabled by us? */
+		GuiPicking				   *m_pGuiPicking;		/**< GUI picking owner instance, always valid */
+		PLScene::SNMTransformGizmo *m_pTransformGizmo;	/**< Currently used transform gizmo, can be a null pointer */
 
 
 };

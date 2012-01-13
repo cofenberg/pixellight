@@ -53,7 +53,7 @@ using namespace PLScene;
 */
 GuiPickingQObject::GuiPickingQObject(GuiPicking &cGuiPicking) :
 	m_pGuiPicking(&cGuiPicking),
-	m_bCameraDisabled(false)
+	m_pTransformGizmo(nullptr)
 {
 	// Get the Qt main window
 	FrontendMainWindow *pFrontendMainWindow = m_pGuiPicking->m_pGui->GetFrontendMainWindow();
@@ -69,6 +69,9 @@ GuiPickingQObject::GuiPickingQObject(GuiPicking &cGuiPicking) :
 */
 GuiPickingQObject::~GuiPickingQObject()
 {
+	// Are we currently in transform mode?
+	if (m_pTransformGizmo)
+		m_pGuiPicking->SetTransformMode(*m_pTransformGizmo, false);
 }
 
 
@@ -85,13 +88,12 @@ bool GuiPickingQObject::eventFilter(QObject *pQObject, QEvent *pQEvent)
 		switch (pQEvent->type()) {
 			// Mouse button pressed (QMouseEvent)
 			case QEvent::MouseButtonPress:
-				// Is currently any of the transform gizmo axis selected?
-				if (m_pGuiPicking->IsAnyTransformGizmoAxisSelected()) {
-					// Disable the camera so one is able to play around with the transform gizmo without controlling the camera at the same time
-					SceneNode *pSceneNode = reinterpret_cast<SceneNode*>(m_pGuiPicking->m_pGui->GetApplication().GetCamera());
-					if(pSceneNode) {
-						pSceneNode->SetActive(false);
-						m_bCameraDisabled = true;
+				// Are we currently in transform mode?
+				if (!m_pTransformGizmo) {
+					// Is currently any of the transform gizmo axis selected?
+					m_pTransformGizmo = m_pGuiPicking->IsAnyTransformGizmoAxisSelected();
+					if (m_pTransformGizmo) {
+						m_pGuiPicking->SetTransformMode(*m_pTransformGizmo, true);
 
 						// Done - filter the event out, i.e. stop it being handled further
 						return true;
@@ -101,16 +103,13 @@ bool GuiPickingQObject::eventFilter(QObject *pQObject, QEvent *pQEvent)
 
 			// Mouse button released (QMouseEvent)
 			case QEvent::MouseButtonRelease:
-				// In case the camera was disabled by us, enable it
-				if (m_bCameraDisabled) {
-					SceneNode *pSceneNode = reinterpret_cast<SceneNode*>(m_pGuiPicking->m_pGui->GetApplication().GetCamera());
-					if(pSceneNode) {
-						pSceneNode->SetActive(true);
-						m_bCameraDisabled = false;
+				// Are we currently in transform mode?
+				if (m_pTransformGizmo) {
+					m_pGuiPicking->SetTransformMode(*m_pTransformGizmo, false);
+					m_pTransformGizmo = nullptr;
 
-						// Done - filter the event out, i.e. stop it being handled further
-						return true;
-					}
+					// Done - filter the event out, i.e. stop it being handled further
+					return true;
 				}
 				break;
 
@@ -124,9 +123,9 @@ bool GuiPickingQObject::eventFilter(QObject *pQObject, QEvent *pQEvent)
 				if (pQMouseEvent->button() == Qt::LeftButton) {
 					// It appears that the user intends to select something
 					// -> In case a transform gizmo axis is currently selected, ignore this request
-					// -> The "m_bCameraDisabled" test is just there for safty, "usually" it is not possible to hold down
+					// -> The "m_pTransformGizmo" test is just there for safty, "usually" it is not possible to hold down
 					//    the left mouse button while at the same time performing a double-click with it :D
-					if (!m_pGuiPicking->IsAnyTransformGizmoAxisSelected() && !m_bCameraDisabled) {
+					if (!m_pTransformGizmo && !m_pGuiPicking->IsAnyTransformGizmoAxisSelected()) {
 						// Perform picking
 						SceneNode *pSceneNode = m_pGuiPicking->PerformPicking();
 

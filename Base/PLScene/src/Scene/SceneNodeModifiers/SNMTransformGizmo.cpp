@@ -67,29 +67,11 @@ bool SNMTransformGizmo::IsTransformMode() const
 
 /**
 *  @brief
-*    Returns the start transform value
+*    Sets whether the transform gizmo is currently in transform mode or not
 */
-const Vector3 &SNMTransformGizmo::GetStartValue() const
+void SNMTransformGizmo::SetTransformMode(bool bTransformMode)
 {
-	return m_vStartValue;
-}
-
-/**
-*  @brief
-*    Returns the current delta transform value
-*/
-Vector3 SNMTransformGizmo::GetCurrentDeltaValue() const
-{
-	return m_vCurrentValue-m_vPreviousValue;
-}
-
-/**
-*  @brief
-*    Returns the current transform value
-*/
-const Vector3 &SNMTransformGizmo::GetCurrentValue() const
-{
-	return m_vCurrentValue;
+	m_bTransform = bTransformMode;
 }
 
 
@@ -102,7 +84,6 @@ const Vector3 &SNMTransformGizmo::GetCurrentValue() const
 */
 SNMTransformGizmo::SNMTransformGizmo(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	SlotOnDrawTransparent(this),
-	m_nPrevUsedSelected(0),
 	m_nSelected(0),
 	m_bTransform(false)
 {
@@ -165,9 +146,10 @@ void SNMTransformGizmo::OnDrawTransparent(Renderer &cRenderer, const VisNode *pV
 {
 	// Update gizmo
 	if (pVisNode) {
-		if (!m_bTransform)
+		if (m_bTransform)
+			PerformTransform(cRenderer, *pVisNode);
+		else
 			UpdateSelection(cRenderer, *pVisNode);
-		PerformTransform(cRenderer, *pVisNode);
 	}
 
 	// Draw gizmo

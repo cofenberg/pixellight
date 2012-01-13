@@ -262,7 +262,7 @@ void GuiPicking::OnDestroyed()
 *  @brief
 *    Returns whether or not any of the transform gizmo axis is currently selected
 */
-bool GuiPicking::IsAnyTransformGizmoAxisSelected() const
+SNMTransformGizmo *GuiPicking::IsAnyTransformGizmoAxisSelected() const
 {
 	// Loop through all scene node modifiers
 	for (uint32 i=0; i<m_lstSceneNodeModifiers.GetNumOfElements(); i++) {
@@ -270,13 +270,53 @@ bool GuiPicking::IsAnyTransformGizmoAxisSelected() const
 		SceneNodeModifier *pSceneNodeModifer = m_lstSceneNodeModifiers[i];
 		if (pSceneNodeModifer->IsInstanceOf("PLScene::SNMTransformGizmo")) {
 			// Is an axis of this transform gizmo currently selected?
-			if (static_cast<SNMTransformGizmo*>(pSceneNodeModifer)->GetSelected())
-				return true;	// A transform gizmo axis is currently selected
+			SNMTransformGizmo *pSNMTransformGizmo = static_cast<SNMTransformGizmo*>(pSceneNodeModifer);
+			if (pSNMTransformGizmo->GetSelected())
+				return pSNMTransformGizmo;	// A transform gizmo axis is currently selected
 		}
 	}
 
 	// No transform gizmo axis is currently selected
-	return false;
+	return nullptr;
+}
+
+/**
+*  @brief
+*    Sets whether a transform gizmo is currently in transform mode or not
+*/
+void GuiPicking::SetTransformMode(SNMTransformGizmo &cTransformGizmo, bool bTransformMode)
+{
+	// State change?
+	if (cTransformGizmo.IsTransformMode() != bTransformMode) {
+		{ // Enable/disable the camera
+			SceneNode *pSceneNode = reinterpret_cast<SceneNode*>(m_pGui->GetApplication().GetCamera());
+			if (pSceneNode)
+				pSceneNode->SetActive(!bTransformMode);
+		}
+
+		// Loop through all scene node modifiers and disable the transform mode
+		for (uint32 i=0; i<m_lstSceneNodeModifiers.GetNumOfElements(); i++) {
+			// Get the current scene node modifier
+			SceneNodeModifier *pSceneNodeModifer = m_lstSceneNodeModifiers[i];
+			if (pSceneNodeModifer->IsInstanceOf("PLScene::SNMTransformGizmo")) {
+				static_cast<SNMTransformGizmo*>(pSceneNodeModifer)->SetTransformMode(false);
+				pSceneNodeModifer->SetActive(true);
+			}
+		}
+
+		// Enable the transform mode of the given transform gizmo
+		if (bTransformMode) {
+			cTransformGizmo.SetTransformMode(true);
+
+			// Hide all other transform gizmos
+			for (uint32 i=0; i<m_lstSceneNodeModifiers.GetNumOfElements(); i++) {
+				// Get the current scene node modifier
+				SceneNodeModifier *pSceneNodeModifer = m_lstSceneNodeModifiers[i];
+				if (pSceneNodeModifer != &cTransformGizmo && pSceneNodeModifer->IsInstanceOf("PLScene::SNMTransformGizmo"))
+					pSceneNodeModifer->SetActive(false);
+			}
+		}
+	}
 }
 
 

@@ -39,6 +39,9 @@
 QT_BEGIN_NAMESPACE
 	class QLabel;
 QT_END_NAMESPACE
+namespace PLScene {
+	class SNMTransformGizmo;
+}
 class Gui;
 class GuiPickingQObject;
 
@@ -175,9 +178,21 @@ class GuiPicking : public PLFrontendQt::DockWidget, public PLEngine::MousePickin
 		*    Returns whether or not any of the transform gizmo axis is currently selected
 		*
 		*  @return
-		*    'true' when any of the transform gizmo axis is currently selected, else 'false'
+		*    In case any of the transform gizmo axis is currently selected,
+		*    the transform gizmo instance is returned, else a null pointer
 		*/
-		bool IsAnyTransformGizmoAxisSelected() const;
+		PLScene::SNMTransformGizmo *IsAnyTransformGizmoAxisSelected() const;
+
+		/**
+		*  @brief
+		*    Sets whether a transform gizmo is currently in transform mode or not
+		*
+		*  @param[in] cTransformGizmo
+		*    Transform gizmo to change the transform mode of
+		*  @param[in] bTransformMode
+		*    'true' if the transform gizmo is currently in transform mode, else 'false'
+		*/
+		void SetTransformMode(PLScene::SNMTransformGizmo &cTransformGizmo, bool bTransformMode);
 
 
 	//[-------------------------------------------------------]
