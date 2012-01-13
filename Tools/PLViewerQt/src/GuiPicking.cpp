@@ -37,6 +37,7 @@ PL_WARNING_POP
 #include <PLFrontendQt/DockWidget/DockWidgetManager.h>
 #include "Gui.h"
 #include "ApplicationQt.h"
+#include "GuiPickingQObject.h"
 #include "GuiPicking.h"
 
 
@@ -64,6 +65,7 @@ pl_implement_class(GuiPicking)
 GuiPicking::GuiPicking(Gui &cGui) : DockWidget(nullptr, cGui.GetFrontendMainWindow() ? &cGui.GetFrontendMainWindow()->GetDockWidgetManager() : nullptr), MousePicking(cGui.GetApplication().GetFrontend()),
 	SlotOnDestroyed(this),
 	m_pGui(&cGui),
+	m_pGuiPickingQObject(new GuiPickingQObject(*this)),
 	m_nLastPickingTime(Timing::GetInstance()->GetPastTime()),
 	m_pSceneNode(nullptr),
 	m_pQLabelStatusBar(new QLabel())
@@ -82,6 +84,9 @@ GuiPicking::GuiPicking(Gui &cGui) : DockWidget(nullptr, cGui.GetFrontendMainWind
 */
 GuiPicking::~GuiPicking()
 {
+	// Destroy the QObject instance for Qt's signal/slot mechanisms
+	delete m_pGuiPickingQObject;
+
 	// Now no scene node is currently selected
 	SelectObject(nullptr);
 

@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: DockWidgetSceneRendererQObject.h               *
+ *  File: GuiPickingQObject.h                            *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTENDQT_DOCKWIDGET_SCENERENDERER_QOBJECT_H__
-#define __PLFRONTENDQT_DOCKWIDGET_SCENERENDERER_QOBJECT_H__
+#ifndef __PLVIEWERQT_PICKING_QOBJECT_H__
+#define __PLVIEWERQT_PICKING_QOBJECT_H__
 #pragma once
 
 
@@ -32,15 +32,9 @@
 
 
 //[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
-namespace PLFrontendQt {
-
-
-//[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-class DockWidgetSceneRenderer;
+class GuiPicking;
 
 
 //[-------------------------------------------------------]
@@ -48,21 +42,21 @@ class DockWidgetSceneRenderer;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene renderer Qt dock widget class, QObject instance for Qt's signal/slot mechanisms
+*    GUI picking Qt dock widget class, QObject instance for Qt's signal/slot mechanisms
 *
 *  @remarks
 *    Sadly, it appears that Qt's signal/slot mechanisms can't be used without QObject/Q_OBJECT. But we don't want to do a multiple inheritance
-*    like "class DockWidgetSceneRenderer : public QObject, public DockWidgetScene" either because this can cause serious casting issues.
+*    like "class GuiPicking : public QObject, public PLFrontendQt::DockWidget" either because this can cause serious casting issues.
 *    So, we need to add another class just to be able to use Qt's signal/slot mechanisms. We can't use an embedded class for this either because
 *    Qt's MOC doesn't like this. :/
 */
-class DockWidgetSceneRendererQObject : public QObject {
+class GuiPickingQObject : public QObject {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class DockWidgetSceneRenderer;
+	friend class GuiPicking;
 
 
 	//[-------------------------------------------------------]
@@ -80,16 +74,16 @@ class DockWidgetSceneRendererQObject : public QObject {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] cDockWidgetSceneRenderer
-		*    Dock widget scene renderer owner instance
+		*  @param[in] cGuiPicking
+		*    GUI picking owner instance
 		*/
-		DockWidgetSceneRendererQObject(DockWidgetSceneRenderer &cDockWidgetSceneRenderer);
+		GuiPickingQObject(GuiPicking &cGuiPicking);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~DockWidgetSceneRendererQObject();
+		virtual ~GuiPickingQObject();
 
 
 	//[-------------------------------------------------------]
@@ -103,16 +97,10 @@ class DockWidgetSceneRendererQObject : public QObject {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		DockWidgetSceneRenderer *m_pDockWidgetSceneRenderer;	/**< Dock widget scene renderer owner instance, always valid */
+		GuiPicking *m_pGuiPicking;	/**< GUI picking owner instance, always valid */
 
 
 };
 
 
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
-} // PLFrontendQt
-
-
-#endif // __PLFRONTENDQT_DOCKWIDGET_SCENERENDERER_QOBJECT_H__
+#endif // __PLVIEWERQT_PICKING_QOBJECT_H__

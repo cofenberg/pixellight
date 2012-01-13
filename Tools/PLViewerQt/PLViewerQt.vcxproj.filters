@@ -34,6 +34,12 @@
     <ClCompile Include="src\GuiPicking.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\GuiPickingQObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_GuiPickingQObject.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ApplicationQt.h">
@@ -58,6 +64,9 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="src\Gui.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="src\GuiPickingQObject.h">
       <Filter>Source Files</Filter>
     </CustomBuild>
   </ItemGroup>

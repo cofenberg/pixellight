@@ -31,6 +31,7 @@ define_project(PLViewerQt NOSUFFIX)
 # Include files with Qt relevant information
 SET(INC_FILES
 	src/Gui.h
+	src/GuiPickingQObject.h
 )
 
 # Run moc
@@ -44,6 +45,7 @@ add_sources(
 	src/Main.cpp
 	src/Gui.cpp
 	src/GuiPicking.cpp
+	src/GuiPickingQObject.cpp
 	../PLViewer/src/Application.cpp	# Reused
 	../PLViewer/src/Config.cpp		# Reused
 	${UI_SRCS}	# Add source produced by uic

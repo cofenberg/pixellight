@@ -1,6 +1,8 @@
 >> 13.01.2012
 [CO]
 - Changed the names of the applications shown to the user to a less cryptic and more human readable "PixelLight viewer" and "PixelLight viewer (Qt)"
+PLViewerQt:
+- "SelectObject" is now emitted by the new "GuiPickingQObject" instead of "Gui"
 
 
 

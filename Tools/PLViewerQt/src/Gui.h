@@ -153,13 +153,6 @@ class Gui : public QObject {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual QObject methods                        ]
-	//[-------------------------------------------------------]
-	public:
-		virtual bool eventFilter(QObject *pQObject, QEvent *pQEvent);
-
-
-	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:

@@ -237,42 +237,6 @@ void Gui::Update()
 
 
 //[-------------------------------------------------------]
-//[ Public virtual QObject methods                        ]
-//[-------------------------------------------------------]
-bool Gui::eventFilter(QObject *pQObject, QEvent *pQEvent)
-{
-	// Get the Qt main window
-	FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
-
-	// Handle Qt main window events
-	if (pQObject == GetFrontendMainWindow()) {
-		// Mouse button double click (QMouseEvent)
-		if (pQEvent->type() == QEvent::MouseButtonDblClick) {
-			// Cast the received event to QMouseEvent
-			QMouseEvent *pQMouseEvent = static_cast<QMouseEvent*>(pQEvent);
-
-			// Left mouse button?
-			if (pQMouseEvent->button() == Qt::LeftButton) {
-				// Perform picking
-				if (m_pGuiPicking) {
-					SceneNode *pSceneNode = m_pGuiPicking->PerformPicking();
-
-					// Perform a dock widget manager broadcast
-					pFrontendMainWindow->GetDockWidgetManager().CallDockWidgetsMethod("SelectObject", Params<void, Object*>(pSceneNode));
-
-					// Done - filter the event out, i.e. stop it being handled further
-					return true;
-				}
-			}
-		}
-	}
-
-	// Pass the event on to the parent class
-	return QObject::eventFilter(pQObject, pQEvent);
-}
-
-
-//[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
 /**
@@ -281,9 +245,6 @@ bool Gui::eventFilter(QObject *pQObject, QEvent *pQEvent)
 */
 void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 {
-	// This Qt object should receive events from the Qt main window
-	cQMainWindow.installEventFilter(this);
-
 	{ // Menu bar
 		{ // Setup the file menu
 			QMenu *pQMenu = cQMainWindow.menuBar()->addMenu(tr("&File"));

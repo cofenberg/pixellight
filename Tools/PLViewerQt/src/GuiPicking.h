@@ -40,6 +40,7 @@ QT_BEGIN_NAMESPACE
 	class QLabel;
 QT_END_NAMESPACE
 class Gui;
+class GuiPickingQObject;
 
 
 //[-------------------------------------------------------]
@@ -53,6 +54,12 @@ class Gui;
 *    - This class is also derived from "PLFrontendQt::DockWidget" to be able to spy on the dock widget communication
 */
 class GuiPicking : public PLFrontendQt::DockWidget, public PLEngine::MousePicking {
+
+
+	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class GuiPickingQObject;
 
 
 	//[-------------------------------------------------------]
@@ -176,6 +183,7 @@ class GuiPicking : public PLFrontendQt::DockWidget, public PLEngine::MousePickin
 	//[-------------------------------------------------------]
 	private:
 		Gui										   *m_pGui;						/**< Owner GUI, always valid! */
+		GuiPickingQObject						   *m_pGuiPickingQObject;		/**< QObject instance for Qt's signal/slot mechanisms, always valid */
 		PLCore::uint64							    m_nLastPickingTime;			/**< Last picking time */
 		PLScene::SceneNodeHandler				    m_cPickedSceneNodeHandler;	/**< Currently picked scene node (aka "mouse over") */
 		PLScene::SceneNode						   *m_pSceneNode;				/**< The scene node which is currently the center of the attention */
