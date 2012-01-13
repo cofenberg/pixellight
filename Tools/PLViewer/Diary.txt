@@ -3,6 +3,8 @@
 - Changed the names of the applications shown to the user to a less cryptic and more human readable "PixelLight viewer" and "PixelLight viewer (Qt)"
 PLViewerQt:
 - "SelectObject" is now emitted by the new "GuiPickingQObject" instead of "Gui"
+- "GuiPickingQObject": When pressing the left mouse button while the mouse cursor is over a transform gizmo axis, the camera is now disabled and enabled
+  again when the left mouse button is released. This way one is able to play around with the transform gizmo without controlling the camera at the same time.
 
 
 

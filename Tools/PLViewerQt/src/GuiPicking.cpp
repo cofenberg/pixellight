@@ -31,6 +31,7 @@ PL_WARNING_PUSH
 PL_WARNING_POP
 #include <PLCore/Tools/Timing.h>
 #include <PLScene/Scene/SceneNodeModifier.h>
+#include <PLScene/Scene/SceneNodeModifiers/SNMTransformGizmo.h>
 #include <PLEngine/Picking/PickingResult.h>
 #include <PLFrontendQt/QtStringAdapter.h>
 #include <PLFrontendQt/FrontendMainWindow.h>
@@ -255,6 +256,27 @@ void GuiPicking::OnDestroyed()
 	// Argh! Mayday! We lost our scene node!
 	// -> Now no scene node is currently selected
 	SelectObject(nullptr);
+}
+
+/**
+*  @brief
+*    Returns whether or not any of the transform gizmo axis is currently selected
+*/
+bool GuiPicking::IsAnyTransformGizmoAxisSelected() const
+{
+	// Loop through all scene node modifiers
+	for (uint32 i=0; i<m_lstSceneNodeModifiers.GetNumOfElements(); i++) {
+		// Get the current scene node modifier
+		SceneNodeModifier *pSceneNodeModifer = m_lstSceneNodeModifiers[i];
+		if (pSceneNodeModifer->IsInstanceOf("PLScene::SNMTransformGizmo")) {
+			// Is an axis of this transform gizmo currently selected?
+			if (static_cast<SNMTransformGizmo*>(pSceneNodeModifer)->GetSelected())
+				return true;	// A transform gizmo axis is currently selected
+		}
+	}
+
+	// No transform gizmo axis is currently selected
+	return false;
 }
 
 

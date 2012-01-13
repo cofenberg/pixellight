@@ -170,6 +170,15 @@ class GuiPicking : public PLFrontendQt::DockWidget, public PLEngine::MousePickin
 		*/
 		void OnDestroyed();
 
+		/**
+		*  @brief
+		*    Returns whether or not any of the transform gizmo axis is currently selected
+		*
+		*  @return
+		*    'true' when any of the transform gizmo axis is currently selected, else 'false'
+		*/
+		bool IsAnyTransformGizmoAxisSelected() const;
+
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLEngine::Picking functions           ]

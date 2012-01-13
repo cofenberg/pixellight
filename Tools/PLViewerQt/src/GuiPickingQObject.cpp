@@ -32,6 +32,7 @@ PL_WARNING_POP
 #include <PLFrontendQt/DockWidget/DockWidgetManager.h>
 #include "Gui.h"
 #include "GuiPicking.h"
+#include "ApplicationQt.h"
 #include "GuiPickingQObject.h"
 
 
@@ -51,7 +52,8 @@ using namespace PLScene;
 *    Constructor
 */
 GuiPickingQObject::GuiPickingQObject(GuiPicking &cGuiPicking) :
-	m_pGuiPicking(&cGuiPicking)
+	m_pGuiPicking(&cGuiPicking),
+	m_bCameraDisabled(false)
 {
 	// Get the Qt main window
 	FrontendMainWindow *pFrontendMainWindow = m_pGuiPicking->m_pGui->GetFrontendMainWindow();
@@ -80,23 +82,62 @@ bool GuiPickingQObject::eventFilter(QObject *pQObject, QEvent *pQEvent)
 
 	// Handle Qt main window events
 	if (pQObject == pFrontendMainWindow) {
-		// Mouse button double click (QMouseEvent)
-		if (pQEvent->type() == QEvent::MouseButtonDblClick) {
-			// Cast the received event to QMouseEvent
-			QMouseEvent *pQMouseEvent = static_cast<QMouseEvent*>(pQEvent);
+		switch (pQEvent->type()) {
+			// Mouse button pressed (QMouseEvent)
+			case QEvent::MouseButtonPress:
+				// Is currently any of the transform gizmo axis selected?
+				if (m_pGuiPicking->IsAnyTransformGizmoAxisSelected()) {
+					// Disable the camera so one is able to play around with the transform gizmo without controlling the camera at the same time
+					SceneNode *pSceneNode = reinterpret_cast<SceneNode*>(m_pGuiPicking->m_pGui->GetApplication().GetCamera());
+					if(pSceneNode) {
+						pSceneNode->SetActive(false);
+						m_bCameraDisabled = true;
 
-			// Left mouse button?
-			if (pQMouseEvent->button() == Qt::LeftButton) {
-				// Perform picking
-				if (m_pGuiPicking) {
-					SceneNode *pSceneNode = m_pGuiPicking->PerformPicking();
-
-					// Perform a dock widget manager broadcast
-					m_pGuiPicking->GetDockWidgetManager()->CallDockWidgetsMethod("SelectObject", Params<void, Object*>(pSceneNode));
-
-					// Done - filter the event out, i.e. stop it being handled further
-					return true;
+						// Done - filter the event out, i.e. stop it being handled further
+						return true;
+					}
 				}
+				break;
+
+			// Mouse button released (QMouseEvent)
+			case QEvent::MouseButtonRelease:
+				// In case the camera was disabled by us, enable it
+				if (m_bCameraDisabled) {
+					SceneNode *pSceneNode = reinterpret_cast<SceneNode*>(m_pGuiPicking->m_pGui->GetApplication().GetCamera());
+					if(pSceneNode) {
+						pSceneNode->SetActive(true);
+						m_bCameraDisabled = false;
+
+						// Done - filter the event out, i.e. stop it being handled further
+						return true;
+					}
+				}
+				break;
+
+			// Mouse button double click (QMouseEvent)
+			case QEvent::MouseButtonDblClick:
+			{
+				// Cast the received event to QMouseEvent
+				QMouseEvent *pQMouseEvent = static_cast<QMouseEvent*>(pQEvent);
+
+				// Left mouse button?
+				if (pQMouseEvent->button() == Qt::LeftButton) {
+					// It appears that the user intends to select something
+					// -> In case a transform gizmo axis is currently selected, ignore this request
+					// -> The "m_bCameraDisabled" test is just there for safty, "usually" it is not possible to hold down
+					//    the left mouse button while at the same time performing a double-click with it :D
+					if (!m_pGuiPicking->IsAnyTransformGizmoAxisSelected() && !m_bCameraDisabled) {
+						// Perform picking
+						SceneNode *pSceneNode = m_pGuiPicking->PerformPicking();
+
+						// Perform a dock widget manager broadcast
+						m_pGuiPicking->GetDockWidgetManager()->CallDockWidgetsMethod("SelectObject", Params<void, Object*>(pSceneNode));
+
+						// Done - filter the event out, i.e. stop it being handled further
+						return true;
+					}
+				}
+				break;
 			}
 		}
 	}

@@ -97,7 +97,8 @@ class GuiPickingQObject : public QObject {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		GuiPicking *m_pGuiPicking;	/**< GUI picking owner instance, always valid */
+		GuiPicking *m_pGuiPicking;		/**< GUI picking owner instance, always valid */
+		bool		m_bCameraDisabled;	/**< Camera disabled by us? */
 
 
 };
