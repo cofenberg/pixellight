@@ -76,9 +76,11 @@ class ScriptApplication : public EngineApplication {
 			pl_constructor_2(ParameterConstructor2,	PLCore::Frontend&, PLCore::String,													"Parameter constructor. Frontend this application instance is running in as first parameter, parameter with the filename of the script to load as second parameter.",																																																		"")
 			pl_constructor_5(ParameterConstructor5,	PLCore::Frontend&, PLCore::String,	PLCore::String,	PLCore::String,	PLCore::String,	"Parameter constructor. Frontend this application instance is running in as first parameter, parameter with the filename of the script to load as second parameter, the following parameters name, title and subdirectory for application data files are optional and will be constructed automatically by using the filename of the script if an empty string is given",	"")
 			// Methods
-			pl_method_0(GetBaseDirectory,	pl_ret_type(PLCore::String),							"Returns the base directory of the application (native path style, e.g. on Windows: 'C:\MyApplication\').",						"")
-			pl_method_1(SetBaseDirectory,	pl_ret_type(void),				const PLCore::String&,	"Sets the base directory of the application (e.g. on Windows: 'C:\MyApplication\'). Base directory as the first parameter.",	"")
-			pl_method_0(GetScript,			pl_ret_type(PLCore::Script*),							"Returns the used script instance.",																							"")
+			pl_method_0(GetBaseDirectory,	pl_ret_type(PLCore::String),							"Returns the base directory of the application (native path style, e.g. on Windows: 'C:\MyApplication\').",																		"")
+			pl_method_1(SetBaseDirectory,	pl_ret_type(void),				const PLCore::String&,	"Sets the base directory of the application (e.g. on Windows: 'C:\MyApplication\'). Base directory as the first parameter.",													"")
+			pl_method_0(GetScript,			pl_ret_type(PLCore::Script*),							"Returns the used script instance.",																																			"")
+			pl_method_0(GetScriptFilename,	pl_ret_type(PLCore::String),							"Returns the absolute filename of the used script (native path style, e.g. on Windows: 'C:\MyApplication\Main.lua').",															"")
+			pl_method_0(GetScriptDirectory,	pl_ret_type(PLCore::String),							"Returns the absolute directory the used script is in (native path style, e.g. on Windows: 'C:\MyApplication\' if currently the script 'C:\MyApplication\Main.lua' is used).",	"")
 		#endif
 	pl_class_end
 
@@ -175,6 +177,24 @@ class ScriptApplication : public EngineApplication {
 		*/
 		PL_API PLCore::Script *GetScript() const;
 
+		/**
+		*  @brief
+		*    Returns the absolute filename of the used script
+		*
+		*  @return
+		*    Absolute filename of the used script (native path style, e.g. on Windows: 'C:\MyApplication\Main.lua')
+		*/
+		PL_API PLCore::String GetScriptFilename() const;
+
+		/**
+		*  @brief
+		*    Returns the absolute directory the used script is in
+		*
+		*  @return
+		*    The absolute directory the used script is in (native path style, e.g. on Windows: 'C:\MyApplication\' if currently the script 'C:\MyApplication\Main.lua' is used)
+		*/
+		PL_API PLCore::String GetScriptDirectory() const;
+
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLCore::AbstractLifecycle functions ]
@@ -258,8 +278,15 @@ class ScriptApplication : public EngineApplication {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
+		PLCore::String	 m_sInitialScriptFilename;		/**< Initial filename of the script to use */
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
 		PLCore::String	 m_sCurrentSceneBaseDirectory;	/**< Base directory of the currently loaded scene */
-		PLCore::String	 m_sScriptFilename;				/**< Filename of the used script */
+		PLCore::String	 m_sScriptFilename;				/**< Absolute filename of the used script (native path style, e.g. on Windows: 'C:\MyApplication\Main.lua') */
 		PLCore::Script	*m_pScript;						/**< Used script instance, can be a null pointer */
 
 

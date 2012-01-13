@@ -334,8 +334,8 @@ void Application::OnInit()
 
 	// Anything to load in?
 	if (sFilename.GetLength()) {
-		// Reset the current script file, else "ScriptApplication::OnInit()" will load and start the script given to it's constructor
-		m_sScriptFilename = "";
+		// Reset the initial script file, else "ScriptApplication::OnInit()" will load and start the script given to it's constructor
+		m_sInitialScriptFilename = "";
 	}
 
 	// Call base implementation

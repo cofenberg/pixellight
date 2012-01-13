@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/File/Url.h>
+#include <PLCore/File/File.h>
 #include <PLCore/Script/Script.h>
 #include <PLCore/Script/FuncScriptPtr.h>
 #include <PLCore/Script/ScriptManager.h>
@@ -67,7 +67,7 @@ ScriptApplication::ScriptApplication(Frontend &cFrontend, String sScriptFilename
 	OnInitFunction(this),
 	OnUpdateFunction(this),
 	OnDeInitFunction(this),
-	m_sScriptFilename(sScriptFilename),
+	m_sInitialScriptFilename(sScriptFilename),
 	m_pScript(nullptr)
 {
 	// Get the script filename without directory
@@ -86,7 +86,7 @@ ScriptApplication::ScriptApplication(Frontend &cFrontend, String sScriptFilename
 	OnInitFunction(this),
 	OnUpdateFunction(this),
 	OnDeInitFunction(this),
-	m_sScriptFilename(sScriptFilename),
+	m_sInitialScriptFilename(sScriptFilename),
 	m_pScript(nullptr)
 {
 	// Get the script filename without directory
@@ -129,7 +129,7 @@ void ScriptApplication::SetBaseDirectory(const String &sBaseDirectory)
 		// Nope - if there's currently a script running, use it's absolute filename as start point
 		if (m_pScript) {
 			// Get the directory the script is in (e.g. a script filename of "C:/MyApplication/Main.lua" will result in "C:/MyApplication/")
-			const String sDirectory = Url(m_sScriptFilename).Collapse().CutFilename();
+			const String sDirectory = Url(m_sScriptFilename).CutFilename();
 
 			// Construct the application base directory and ensure it's native path style so we have something we can rely on
 			sNewBaseDirectory = Url(sDirectory + sNewBaseDirectory).Collapse().GetNativePath();
@@ -157,6 +157,24 @@ Script *ScriptApplication::GetScript() const
 	return m_pScript;
 }
 
+/**
+*  @brief
+*    Returns the absolute filename of the used script
+*/
+String ScriptApplication::GetScriptFilename() const
+{
+	return m_sScriptFilename;
+}
+
+/**
+*  @brief
+*    Returns the absolute directory the used script is in
+*/
+String ScriptApplication::GetScriptDirectory() const
+{
+	return m_sScriptFilename.GetLength() ? Url(Url(m_sScriptFilename).CutFilename()).GetNativePath() : "";
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected virtual PLCore::AbstractLifecycle functions ]
@@ -169,9 +187,9 @@ bool ScriptApplication::OnStart()
 {
 	// Call base implementation
 	if (EngineApplication::OnStart()) {
-		// Is there a script filename?
-		if (m_sScriptFilename.GetLength())
-			LoadScript(m_sScriptFilename);
+		// Is there a initial script filename?
+		if (m_sInitialScriptFilename.GetLength())
+			LoadScript(m_sInitialScriptFilename);
 
 		// Done
 		return true;
@@ -228,21 +246,36 @@ bool ScriptApplication::LoadScript(const String &sFilename)
 	// Destroy the currently used script
 	DestroyScript();
 
-	// Create the script instance
-	m_pScript = ScriptManager::GetInstance()->CreateFromFile(sFilename);
-	if (m_pScript) {
-		// Backup the script filename
-		m_sScriptFilename = sFilename;
+	// Open the file
+	File cFile;
+	if (LoadableManager::GetInstance()->OpenFile(cFile, sFilename)) {
+		// Create the script instance by using the extension of the given filename to detect the script language
+		m_pScript = ScriptManager::GetInstance()->Create(ScriptManager::GetInstance()->GetScriptLanguageByExtension(Url(sFilename).GetExtension()));
+		if (m_pScript) {
+			// Backup the absolute script filename
+			m_sScriptFilename = Url(cFile.GetUrl()).Collapse().GetNativePath();
 
-		// Add the global variable "this" to the script so that it's able to access "this" RTTI class instance
-		m_pScript->SetGlobalVariable("this", Var<Object*>(this));
+			// Get the script source code
+			const String sSourceCode = cFile.GetContentAsString();
 
-		// Call the initialize script function, but only when it's really there because it's optional
-		if (m_pScript->IsGlobalFunction(OnInitFunction.Get()))
-			FuncScriptPtr<void>(m_pScript, OnInitFunction.Get()).Call(Params<void>());
+			// Set the script source code
+			if (!sSourceCode.GetLength() || !m_pScript->SetSourceCode(sSourceCode)) {
+				// Error! Destroy the created script instance...
+				delete m_pScript;
+				m_pScript = nullptr;
+				m_sScriptFilename = "";
+			} else {
+				// Add the global variable "this" to the script so that it's able to access "this" RTTI class instance
+				m_pScript->SetGlobalVariable("this", Var<Object*>(this));
 
-		// Done
-		return true;
+				// Call the initialize script function, but only when it's really there because it's optional
+				if (m_pScript->IsGlobalFunction(OnInitFunction.Get()))
+					FuncScriptPtr<void>(m_pScript, OnInitFunction.Get()).Call(Params<void>());
+
+				// Done
+				return true;
+			}
+		}
 	}
 
 	// Error!
