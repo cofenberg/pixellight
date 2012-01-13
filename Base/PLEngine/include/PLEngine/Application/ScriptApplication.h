@@ -78,6 +78,7 @@ class ScriptApplication : public EngineApplication {
 			// Methods
 			pl_method_0(GetBaseDirectory,	pl_ret_type(PLCore::String),							"Returns the base directory of the application (native path style, e.g. on Windows: 'C:\MyApplication\').",						"")
 			pl_method_1(SetBaseDirectory,	pl_ret_type(void),				const PLCore::String&,	"Sets the base directory of the application (e.g. on Windows: 'C:\MyApplication\'). Base directory as the first parameter.",	"")
+			pl_method_0(GetScript,			pl_ret_type(PLCore::Script*),							"Returns the used script instance.",																							"")
 		#endif
 	pl_class_end
 

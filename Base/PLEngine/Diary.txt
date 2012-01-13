@@ -1,6 +1,7 @@
 >> 13.01.2012
 [CO]
 - "ScriptApplication::GetBaseDirectory()" now always returns a native style path so we have something we can rely on
+- Exposed "ScriptApplication::GetScript()" to the RTTI
 
 
 
