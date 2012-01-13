@@ -76,8 +76,8 @@ class ScriptApplication : public EngineApplication {
 			pl_constructor_2(ParameterConstructor2,	PLCore::Frontend&, PLCore::String,													"Parameter constructor. Frontend this application instance is running in as first parameter, parameter with the filename of the script to load as second parameter.",																																																		"")
 			pl_constructor_5(ParameterConstructor5,	PLCore::Frontend&, PLCore::String,	PLCore::String,	PLCore::String,	PLCore::String,	"Parameter constructor. Frontend this application instance is running in as first parameter, parameter with the filename of the script to load as second parameter, the following parameters name, title and subdirectory for application data files are optional and will be constructed automatically by using the filename of the script if an empty string is given",	"")
 			// Methods
-			pl_method_0(GetBaseDirectory,	pl_ret_type(PLCore::String),							"Returns the base directory of the application.",										"")
-			pl_method_1(SetBaseDirectory,	pl_ret_type(void),				const PLCore::String&,	"Sets the base directory of the application. Base directory as the first parameter.",	"")
+			pl_method_0(GetBaseDirectory,	pl_ret_type(PLCore::String),							"Returns the base directory of the application (native path style, e.g. on Windows: 'C:\MyApplication\').",						"")
+			pl_method_1(SetBaseDirectory,	pl_ret_type(void),				const PLCore::String&,	"Sets the base directory of the application (e.g. on Windows: 'C:\MyApplication\'). Base directory as the first parameter.",	"")
 		#endif
 	pl_class_end
 
@@ -152,7 +152,7 @@ class ScriptApplication : public EngineApplication {
 		*    Returns the base directory of the application
 		*
 		*  @return
-		*    The base directory of the application
+		*    The base directory of the application (native path style, e.g. on Windows: 'C:\MyApplication\')
 		*/
 		PL_API PLCore::String GetBaseDirectory() const;
 
@@ -161,7 +161,7 @@ class ScriptApplication : public EngineApplication {
 		*    Sets the base directory of the application
 		*
 		*  @param[in] sBaseDirectory
-		*    The base directory of the application
+		*    The base directory of the application (e.g. on Windows: 'C:\MyApplication\')
 		*/
 		PL_API void SetBaseDirectory(const PLCore::String &sBaseDirectory);
 

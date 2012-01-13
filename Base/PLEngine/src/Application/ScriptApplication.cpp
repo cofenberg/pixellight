@@ -121,17 +121,18 @@ String ScriptApplication::GetBaseDirectory() const
 */
 void ScriptApplication::SetBaseDirectory(const String &sBaseDirectory)
 {
-	String sNewBaseDirectory = sBaseDirectory;
+	// Ensure the given directory is native path style so we have something we can rely on
+	String sNewBaseDirectory = Url(sBaseDirectory).GetNativePath();
 
 	// Is the given base directory absolute?
 	if (!Url(sNewBaseDirectory).IsAbsolute()) {
 		// Nope - if there's currently a script running, use it's absolute filename as start point
 		if (m_pScript) {
-			// Get the directory the script is in (e.g. a script filename of "C:/Programs/App/Main.lua" will result in "C:/Programs/App/")
+			// Get the directory the script is in (e.g. a script filename of "C:/MyApplication/Main.lua" will result in "C:/MyApplication/")
 			const String sDirectory = Url(m_sScriptFilename).Collapse().CutFilename();
 
-			// Construct the application base directory
-			sNewBaseDirectory = sDirectory + sNewBaseDirectory;
+			// Construct the application base directory and ensure it's native path style so we have something we can rely on
+			sNewBaseDirectory = Url(sDirectory + sNewBaseDirectory).Collapse().GetNativePath();
 		}
 	}
 
