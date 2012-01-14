@@ -1,3 +1,10 @@
+>> 14.01.2012
+[CO]
+PLFrontendQt:
+- "DockWidgetManager": Exposed "ShowDockWidget()" & "GetFirstDockWidget()" & "HideDockWidgets()" & "DestroyDockWidgets()" to the RTTI
+
+
+
 >> 12.01.2012
 [CO]
 - Added "Script::GetAssociatedFilenames()" and implemented the method within the Lua backend
