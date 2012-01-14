@@ -66,6 +66,24 @@ ApplicationQt::~ApplicationQt()
 	// GUI instance has to be destroyed in "ApplicationQt::OnDeInit()" which is guaranteed to be called
 }
 
+/**
+*  @brief
+*    Returns the dock widget manager instance the application is using
+*/
+PLFrontendQt::DockWidgetManager *ApplicationQt::GetDockWidgetManager() const
+{
+	// Is there an GUI instance?
+	if (m_pGui) {
+		// Get the Qt main window
+		PLFrontendQt::FrontendMainWindow *pFrontendMainWindow = m_pGui->GetFrontendMainWindow();
+		if (pFrontendMainWindow)
+			return &pFrontendMainWindow->GetDockWidgetManager();
+	}
+
+	// Error!
+	return nullptr;
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected virtual PLCore::AbstractFrontend functions  ]

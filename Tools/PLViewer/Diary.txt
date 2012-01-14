@@ -1,3 +1,11 @@
+>> 14.01.2012
+[CO]
+PLViewerQt:
+- Added "ApplicationQt::GetDockWidgetManager()" and exposed it to the RTTI. I'am now able to open a dock widget via a Lua script... which is quite useful
+  when working on something without opening the required dock widgets everytime manually.
+
+
+
 >> 13.01.2012
 [CO]
 - Changed the names of the applications shown to the user to a less cryptic and more human readable "PixelLight viewer" and "PixelLight viewer (Qt)"
