@@ -154,7 +154,7 @@ class FrontendMainWindow : public QMainWindow {
 		int				   m_nUpdateTimerID;		/**< Update timer ID, "0" means no timer */
 		DockWidgetManager *m_pDockWidgetManager;	/**< Dock widget manager of this main window, can be a null pointer */
 		bool			   m_bInitialized;			/**< Is the frontend already initialized? */
-		QWidget			  *m_pRenderWidget;
+		QWidget			  *m_pRenderWidget;			/**< Pointer to the render window always valis! */
 
 
 };
