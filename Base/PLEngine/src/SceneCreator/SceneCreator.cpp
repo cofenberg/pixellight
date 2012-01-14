@@ -68,13 +68,13 @@ SNCamera *SceneCreator::ConfigureGenericScene(SceneContainer &cSceneContainer, S
 	// If primary scene node given, add an orbiter camera scene node named "OrbiterCamera"
 	SceneNode *pOrbitingCamera = pPrimarySceneNode ? cSceneContainer.Create("PLScene::SNCamera", "OrbiterCamera") : nullptr;
 	if (pOrbitingCamera) {
-		// Get the axis align bounding box (in 'scene node space') from the primary scene node
-		const AABoundingBox &cAABoundingBox = pPrimarySceneNode->GetAABoundingBox();
+		// Get the axis align bounding box (in 'scene container space') from the primary scene node
+		const AABoundingBox &cAABoundingBox = pPrimarySceneNode->GetContainerAABoundingBox();
 
-		// Get orbiting distance, use the axis align bounding box (in 'scene node space') from the primary scene node as hint
+		// Get orbiting distance, use the axis align bounding box (in 'scene container space') from the primary scene node as hint
 		const float fDistance = cAABoundingBox.GetLongestAxisLength()*2;
 
-		// Calculate the orbiting offset, use the axis align bounding box (in 'scene node space') from the primary scene node as hint
+		// Calculate the orbiting offset, use the axis align bounding box (in 'scene container space') from the primary scene node as hint
 		const Vector3 vOffset = cAABoundingBox.GetCenter();
 
 		// Add a controller modifier so we can orbiting around the camera by using a default control

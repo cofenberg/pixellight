@@ -8,10 +8,40 @@ PLFrontendQt:
 
 
 
+>> 12.01.2012
+[CO]
+- Added "Script::GetAssociatedFilenames()" and implemented the method within the Lua backend
+PLFrontendQt:
+- "FrontendMainWindow": Do only start the timer when the initialization phase is over
+- "FrontendMainWindow::~FrontendMainWindow()": Stop the timer at once, safe is safe
+- Added "FrontendMainWindow::SetUpdateInterval()"
+
+
+
 >> 08.01.2012
 [CO]
+- "LoadableManager": Added "GetTypesByExtension()" and "GetLoadersByExtension()"
+- "LoadableType": Added "GetLoadersByExtension()"
+- Fixed confusing path style inconsistencies within "ApplicationContext"
+  -> "GetAppDirectory()": The documentation stated that this method returns "C:\MyApplication", while it was acutally "file://C:/MyApplication"
+      and e.g. "GetExecutableFilename()" returned a native path style
+  -> "ApplicationContext": "SetStartupDirectory()", "SetLogFilename()" and "SetConfigFilename()" have to ensure that native path style is stored internally
+     as the documentation states
+- "ApplicationContext": "GetAppDirectory()" points to the application directory, e.g. "C:\MyApplication" on Windows. This single method was fine when
+  we only supported 32 bit. Back then this was equal to the directory the executable was in. When adding 64 bit support there was need to put the binaries,
+  including the executable, within a separate directory to be able to switch between 32/64 bit while still sharing the same data. Now, "GetAppDirectory()"
+  points to e.g. "C:\MyApplication" while for 32 bit the executable is e.g. within "C:\MyApplication\x86". But its also possible that there are situations
+  were both point to one and the same directory. This means that there's need for another method explicitly returning the directory the executable is in.
+  -> Added "GetExecutableDirectory()"
+-> When writing the unit tests for this class, Jens Schmer noticed those confusing inconsistencies and partly missing documentation about path style etc.
+- "CoreApplication::OnInitPlugins()" & "FrontendApplication::OnInitPlugins()": There's no guarantee that the application executable directory is the same
+  as the application startup directory
+  -> If the application executable directory is not the same as the application startup directory, do also scan the application startup directory
+  -> This behaviour is quite useful because it allows development of plugins which can be tested within e.g. PLViewer without copying files around,
+     just set the current directory to your plugin directory when launching the viewer application
 PLFrontendQt:
 - "SceneGraphTreeModel": Do not show scene nodes or scene node modifiers with a set "Automatic"-flag within a GUI (yes, this all way planned over years *g*)
+- "DockWidgetSceneRenderer" & "DockWidgetObject": Usability: Resize the first tree view column given to the size of its contents
 
 
 

@@ -1,7 +1,37 @@
+>> 13.01.2012
+[CO]
+- Changed the names of the applications shown to the user to a less cryptic and more human readable "PixelLight viewer" and "PixelLight viewer (Qt)"
+PLViewerQt:
+- "SelectObject" is now emitted by the new "GuiPickingQObject" instead of "Gui"
+- "GuiPickingQObject": When pressing the left mouse button while the mouse cursor is over a transform gizmo axis, the camera is now disabled and enabled
+  again when the left mouse button is released. This way one is able to play around with the transform gizmo without controlling the camera at the same time.
+- When one transform gizmo is currently in transform mode, the other transform gizmos are disabled and the axis selection is locked
+
+
+
+>> 12.01.2012
+[CO]
+- "Application::OnControl()" was stealing all key hits, even when the viewer wasn't interested in the key
+- The viewer application is now saving the filename of the currently loaded resource
+PLViewerQt:
+- Bugfix: "ApplicationQt::OnDeInit()" was calling the base method "OnInit()" instead of "OnDeInit()"
+- When disabling the GUI, do also deactivate the timed update
+- Added reload option
+- Added automatic reload when the viewed resource file was changed
+- It's possible (and reasonable) that e.g. a Lua script is composed of multiple scripts, it's now possible to track whether or
+  not any of those associated files have been changed in order to reload the main-script
+
+
+
 >> 08.01.2012
 [CO]
+- "Application::LoadResource()": When loading a resource in general, reset to the basic default scene renderer
 PLViewerQt:
 - When a scene node is selected, position and rotation transform gizmos are added automatically and removed later on if no longer required
+- When loading a resource and it's not clear how to process it, open a dialog in order to give the user a choice between multiple options
+- Usability: When something gets selected show the "PLFrontendQt::DockWidgetObject" dock widget so we can view & edit RTTI attributes at once
+- Usability: When hiding all windows at once, do also unselect the current object (if one is selected)
+  -> A kind of "Disable edit mode and switch back to business as usual"
 
 
 

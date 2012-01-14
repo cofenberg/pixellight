@@ -54,6 +54,7 @@ pl_implement_class(DockWidgetObject)
 */
 DockWidgetObject::DockWidgetObject(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidget(pQMainWindow, pDockWidgetManager),
 	SlotOnDestroyed(this),
+	m_pQTreeView(nullptr),
 	m_pPLIntrospectionModel(nullptr),
 	m_pObject(nullptr)
 {
@@ -61,11 +62,11 @@ DockWidgetObject::DockWidgetObject(QMainWindow *pQMainWindow, DockWidgetManager 
 	QDockWidget *pQDockWidget = GetQDockWidget();
 	if (pQDockWidget) {
 		// Create tree view and set scene graph model
-		QTreeView *pQTreeView = new QTreeView();
-		pQDockWidget->setWidget(pQTreeView);
+		m_pQTreeView = new QTreeView();
+		pQDockWidget->setWidget(m_pQTreeView);
 		m_pPLIntrospectionModel = new DataModels::PLIntrospectionModel(pQDockWidget);
-		pQTreeView->setModel(m_pPLIntrospectionModel);
-		pQTreeView->expandToDepth(0);
+		m_pQTreeView->setModel(m_pPLIntrospectionModel);
+		m_pQTreeView->expandToDepth(0);
 
 		// Add the created Qt dock widget to the given Qt main window
 		pQMainWindow->addDockWidget(Qt::BottomDockWidgetArea, pQDockWidget);
@@ -134,6 +135,13 @@ void DockWidgetObject::SelectObject(Object *pObject)
 		if (m_pPLIntrospectionModel) {
 			// Set object
 			m_pPLIntrospectionModel->SetObject(m_pObject);
+
+			{ // Usability: Resize the first tree view column given to the size of its contents
+				// No need to backup current expanded state and restore it after we're done because we set new content above resulting in that all is collapsed when we're in here
+				m_pQTreeView->expandAll();
+				m_pQTreeView->resizeColumnToContents(0);
+				m_pQTreeView->collapseAll();
+			}
 
 			// Get encapsulated Qt dock widget and set a decent window title
 			QDockWidget *pQDockWidget = GetQDockWidget();

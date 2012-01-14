@@ -76,6 +76,7 @@ class SNMTransformGizmo : public SNMTransform {
 	pl_class(PLS_RTTI_EXPORT, SNMTransformGizmo, "PLScene", PLScene::SNMTransform, "Abstract transform gizmo scene node modifier base class")
 		// Slots
 		pl_slot_2(OnDrawTransparent,	PLRenderer::Renderer&,	const VisNode*,	"Called on scene node transparent draw, the used renderer as first parameter, the current visibility node of this scene node, can be a null pointer as second parameter",	"")
+		pl_slot_0(OnUpdate,														"Called when the scene node modifier needs to be updated",																													"")
 	pl_class_end
 
 
@@ -103,30 +104,12 @@ class SNMTransformGizmo : public SNMTransform {
 
 		/**
 		*  @brief
-		*    Returns the start transform value
+		*    Sets whether the transform gizmo is currently in transform mode or not
 		*
-		*  @return
-		*    The start transform value
+		*  @param[in] bTransformMode
+		*    'true' if the transform gizmo is currently in transform mode, else 'false'
 		*/
-		PLS_API const PLMath::Vector3 &GetStartValue() const;
-
-		/**
-		*  @brief
-		*    Returns the current delta transform value
-		*
-		*  @return
-		*    The current delta transform value
-		*/
-		PLS_API PLMath::Vector3 GetCurrentDeltaValue() const;
-
-		/**
-		*  @brief
-		*    Returns the current transform value
-		*
-		*  @return
-		*    The current transform value
-		*/
-		PLS_API const PLMath::Vector3 &GetCurrentValue() const;
+		PLS_API void SetTransformMode(bool bTransformMode);
 
 
 	//[-------------------------------------------------------]
@@ -200,13 +183,8 @@ class SNMTransformGizmo : public SNMTransform {
 		/**
 		*  @brief
 		*    Performs the transform
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] cVisNode
-		*    The current visibility node of this scene node
 		*/
-		virtual bool PerformTransform(PLRenderer::Renderer &cRenderer, const VisNode &cVisNode) = 0;
+		virtual void PerformTransform() = 0;
 
 		/**
 		*  @brief
@@ -224,12 +202,8 @@ class SNMTransformGizmo : public SNMTransform {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCore::uint32	  m_nPrevUsedSelected;	/**< The previous used selection */
-		PLCore::uint32	  m_nSelected;			/**< The current selection */
-		bool			  m_bTransform;			/**< Is currently a transform performed? */
-		PLMath::Vector3	  m_vStartValue;		/**< Transform start value */
-		PLMath::Vector3	  m_vPreviousValue;		/**< Previous transform value */
-		PLMath::Vector3	  m_vCurrentValue;		/**< Current transform value */
+		PLCore::uint32 m_nSelected;		/**< The current selection */
+		bool		   m_bTransform;	/**< Is currently a transform performed? */
 
 
 	//[-------------------------------------------------------]
@@ -246,6 +220,12 @@ class SNMTransformGizmo : public SNMTransform {
 		*    The current visibility node of this scene node, can be a null pointer
 		*/
 		void OnDrawTransparent(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode);
+
+		/**
+		*  @brief
+		*    Called when the scene node modifier needs to be updated
+		*/
+		void OnUpdate();
 
 
 };

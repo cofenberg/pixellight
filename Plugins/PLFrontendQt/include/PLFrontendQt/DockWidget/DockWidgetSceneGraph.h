@@ -62,10 +62,6 @@ namespace PLFrontendQt {
 /**
 *  @brief
 *    Scene graph Qt dock widget class
-*
-*  @note
-*    - By default, the "PLEngine::EngineApplication::GetScene()" scene graph is used, but only
-*      if "PLCore::CoreApplication::GetApplication()" is an "PLEngine::EngineApplication"-instance
 */
 class DockWidgetSceneGraph : public DockWidgetScene {
 

@@ -27,15 +27,19 @@
 PL_WARNING_PUSH
 	PL_WARNING_DISABLE(4127)	// "warning C4127: conditional expression is constant"
 	#include <QtCore/qurl.h>
+	#include <QtCore/qfilesystemwatcher.h>
 	#include <QtGui/qevent.h>
 	#include <QtGui/qlabel.h>
 	#include <QtGui/qmenubar.h>
 	#include <QtGui/qstatusbar.h>
 	#include <QtGui/qfiledialog.h>
+	#include <QtGui/qinputdialog.h>
 	#include <QtGui/qdesktopservices.h>
 PL_WARNING_POP
 #include <PLCore/Log/Log.h>
+#include <PLCore/File/Url.h>
 #include <PLCore/Base/Class.h>
+#include <PLCore/Script/Script.h>
 #include <PLCore/System/System.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SceneQueries/SQByClassName.h>
@@ -71,7 +75,10 @@ Gui::Gui(ApplicationQt &cApplication) :
 	EventHandlerCameraFound(&Gui::OnCameraFound, this),
 	m_pApplication(&cApplication),
 	m_pGuiPicking(nullptr),
+	m_pQFileSystemWatcher(new QFileSystemWatcher()),
 	// Menu bar
+	m_pQActionReload(nullptr),
+	m_pQActionAutomaticReload(nullptr),
 	m_pQMenuCamera(nullptr),
 	m_pQActionGroupCamera(nullptr),
 	m_pQMenuWindow(nullptr),
@@ -79,6 +86,8 @@ Gui::Gui(ApplicationQt &cApplication) :
 	// Status bar
 	m_pQLabelStatusBar(nullptr)
 {
+	connect(m_pQFileSystemWatcher, SIGNAL(fileChanged(const QString&)), this, SLOT(QtSlotFileChanged(const QString&)));
+
 	// Get the Qt main window
 	FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
 	if (pFrontendMainWindow) {
@@ -96,6 +105,9 @@ Gui::~Gui()
 	// Destroy the GUI picking instance
 	if (m_pGuiPicking)
 		delete m_pGuiPicking;
+
+	// Destroy the Qt file system watcher instance
+	delete m_pQFileSystemWatcher;
 }
 
 /**
@@ -140,13 +152,30 @@ void Gui::SetEnabled(bool bEnabled)
 
 			// Perform a dock widget manager broadcast
 			pFrontendMainWindow->GetDockWidgetManager().CallDockWidgetsMethod("SetSceneContainer", Params<void, SceneContainer*>(bEnabled ? m_pApplication->GetScene() : nullptr));
+
+			// Remove all files from the Qt file system watcher instance
+			m_pQFileSystemWatcher->removePaths(m_pQFileSystemWatcher->files());
 		}
 
-		// Create/destroy the GUI picking
+		// Is the GUI enabled?
 		if (bEnabled) {
+			// Create the GUI picking
 			if (!m_pGuiPicking)
 				m_pGuiPicking = new GuiPicking(*this);
+
+			// Setup the update interval of the Qt main window (in milliseconds)
+			pFrontendMainWindow->SetUpdateInterval(10);
+
+			// Update reload Qt action
+			m_pQActionReload->setEnabled(m_pApplication->GetResourceFilename().GetLength() != 0);
+
+			// Reset and fill the Qt file system watcher instance
+			ResetAndFillQFileSystemWatcher();
 		} else {
+			// Disable the timed update of the Qt main window
+			pFrontendMainWindow->SetUpdateInterval(0);
+
+			// Destroy the GUI picking
 			if (m_pGuiPicking) {
 				delete m_pGuiPicking;
 				m_pGuiPicking = nullptr;
@@ -168,6 +197,35 @@ void Gui::SetStateText(const String &sText)
 
 /**
 *  @brief
+*    Opens a dialog in order to give the user a choice between multiple options
+*/
+String Gui::InputDialog(const String &sTitle, const String &sText, const Array<String> &lstOptions) const
+{
+	// Construct Qt string list
+	QStringList cQStringList;
+	for (uint32 i=0; i<lstOptions.GetNumOfElements(); i++)
+		cQStringList << QtStringAdapter::PLToQt(lstOptions[i]);
+
+	// Create Qt input dialog
+	QInputDialog cQInputDialog(GetFrontendMainWindow(), Qt::Tool);
+	cQInputDialog.setWindowTitle(tr(sTitle));
+	cQInputDialog.setLabelText(tr(sText));
+	cQInputDialog.setComboBoxItems(cQStringList);
+
+	{ // Usability: Set dialog width so we can see the complete title at once and disable dialog resize
+		const int nWidth = cQInputDialog.fontMetrics().boundingRect(cQInputDialog.windowTitle()).width() + 80;
+		QSize cQSize = cQInputDialog.size();
+		if (cQSize.width() < nWidth)
+			cQSize.setWidth(nWidth);
+		cQInputDialog.setFixedSize(cQSize);
+	}
+
+	// Open Qt input dialog
+	return (cQInputDialog.exec() == QDialog::Accepted) ? QtStringAdapter::QtToPL(cQInputDialog.textValue()) : "";
+}
+
+/**
+*  @brief
 *    Updates the GUI
 */
 void Gui::Update()
@@ -175,42 +233,6 @@ void Gui::Update()
 	// Perform the informativ picking
 	if (m_pGuiPicking)
 		m_pGuiPicking->PerformInformativPicking();
-}
-
-
-//[-------------------------------------------------------]
-//[ Public virtual QObject methods                        ]
-//[-------------------------------------------------------]
-bool Gui::eventFilter(QObject *pQObject, QEvent *pQEvent)
-{
-	// Get the Qt main window
-	FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
-
-	// Handle Qt main window events
-	if (pQObject == GetFrontendMainWindow()) {
-		// Mouse button double click (QMouseEvent)
-		if (pQEvent->type() == QEvent::MouseButtonDblClick) {
-			// Cast the received event to QMouseEvent
-			QMouseEvent *pQMouseEvent = static_cast<QMouseEvent*>(pQEvent);
-
-			// Left mouse button?
-			if (pQMouseEvent->button() == Qt::LeftButton) {
-				// Perform picking
-				if (m_pGuiPicking) {
-					SceneNode *pSceneNode = m_pGuiPicking->PerformPicking();
-
-					// Perform a dock widget manager broadcast
-					pFrontendMainWindow->GetDockWidgetManager().CallDockWidgetsMethod("SelectObject", Params<void, Object*>(pSceneNode));
-
-					// Done - filter the event out, i.e. stop it being handled further
-					return true;
-				}
-			}
-		}
-	}
-
-	// Pass the event on to the parent class
-	return QObject::eventFilter(pQObject, pQEvent);
 }
 
 
@@ -223,9 +245,6 @@ bool Gui::eventFilter(QObject *pQObject, QEvent *pQEvent)
 */
 void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 {
-	// This Qt object should receive events from the Qt main window
-	cQMainWindow.installEventFilter(this);
-
 	{ // Menu bar
 		{ // Setup the file menu
 			QMenu *pQMenu = cQMainWindow.menuBar()->addMenu(tr("&File"));
@@ -235,6 +254,21 @@ void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 				connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredLoad()));
 				pQAction->setShortcut(tr("Ctrl+L"));
 				pQMenu->addAction(pQAction);
+			}
+
+			{ // Setup the reload action
+				m_pQActionReload = new QAction(tr("R&eload"), &cQMainWindow);
+				connect(m_pQActionReload, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredReload()));
+				m_pQActionReload->setShortcut(tr("F5"));
+				pQMenu->addAction(m_pQActionReload);
+			}
+
+			{ // Setup the automatic reload action
+				m_pQActionAutomaticReload = new QAction(tr("A&utomatic reload"), &cQMainWindow);
+				m_pQActionAutomaticReload->setCheckable(true);
+				m_pQActionAutomaticReload->setChecked(true);
+				connect(m_pQActionAutomaticReload, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredAutomaticReload()));
+				pQMenu->addAction(m_pQActionAutomaticReload);
 			}
 
 			// Add a separator
@@ -366,10 +400,51 @@ uint32 Gui::FillMenuWindowRec(QMenu &cQMenu, const String &sBaseClass)
 	return nCheckedItems;
 }
 
+/**
+*  @brief
+*    Resets and fills the Qt file system watcher instance
+*/
+void Gui::ResetAndFillQFileSystemWatcher()
+{
+	// Remove all files from the Qt file system watcher instance
+	m_pQFileSystemWatcher->removePaths(m_pQFileSystemWatcher->files());
+
+	// Update the Qt file system watcher instance
+	if (m_pQActionAutomaticReload && m_pQActionAutomaticReload->isChecked()) {
+		// Add files to the Qt file system watcher instance
+		const String sResourceFilename = m_pApplication->GetResourceFilename();
+		if (sResourceFilename.GetLength()) {
+			// Add the resource file itself
+			m_pQFileSystemWatcher->addPath(QtStringAdapter::PLToQt(Url(sResourceFilename).GetNativePath()));
+
+			// In case the resource is a script, do also take the associated filenames into account
+			Script *pScript = m_pApplication->GetScript();
+			if (pScript) {
+				// Get a list of associated filenames
+				Array<String> lstFilenames;
+				pScript->GetAssociatedFilenames(lstFilenames);
+
+				// Add the filenames to the Qt file system watcher instance
+				for (uint32 i=0; i<lstFilenames.GetNumOfElements(); i++)
+					m_pQFileSystemWatcher->addPath(QtStringAdapter::PLToQt(Url(lstFilenames[i]).GetNativePath()));
+			}
+		}
+	}
+}
+
 
 //[-------------------------------------------------------]
 //[ Private Qt slots (MOC)                                ]
 //[-------------------------------------------------------]
+void Gui::QtSlotFileChanged(const QString &path)
+{
+	// Reload the resource, not the provided file
+	// -> In case of scripts, the main script may be "Main.lua" but the included "Application.lua" may have just been changed
+	const String sResourceFilename = m_pApplication->GetResourceFilename();
+	if (sResourceFilename.GetLength())
+		m_pApplication->LoadResource(sResourceFilename);
+}
+
 void Gui::QtSlotTriggeredLoad()
 {
 	// Fill the file filter (filter example: "All Files (*);;Scene (*.scene *.SCENE);;Script (*.lua *.LUA)")
@@ -419,6 +494,19 @@ void Gui::QtSlotTriggeredLoad()
 		// Load the resource
 		m_pApplication->LoadResource(QtStringAdapter::QtToPL(sQFilename), (sType != sAllFiles) ? sType : "");
 	}
+}
+
+void Gui::QtSlotTriggeredReload()
+{
+	const String sResourceFilename = m_pApplication->GetResourceFilename();
+	if (sResourceFilename.GetLength())
+		m_pApplication->LoadResource(sResourceFilename);
+}
+
+void Gui::QtSlotTriggeredAutomaticReload()
+{
+	// Reset and fill the Qt file system watcher instance
+	ResetAndFillQFileSystemWatcher();
 }
 
 void Gui::QtSlotTriggeredExit()
@@ -515,6 +603,11 @@ void Gui::QtSlotTriggeredWindowHideAll()
 	if (pFrontendMainWindow) {
 		// All registered dock widgets
 		pFrontendMainWindow->GetDockWidgetManager().HideDockWidgets();
+
+		// Usability: When hiding all windows at once, do also unselect the current object (if one is selected)
+		// -> A kind of "Disable edit mode and switch back to business as usual"
+		// -> Perform a dock widget manager broadcast
+		pFrontendMainWindow->GetDockWidgetManager().CallDockWidgetsMethod("SelectObject", Params<void, Object*>(nullptr));
 	}
 }
 

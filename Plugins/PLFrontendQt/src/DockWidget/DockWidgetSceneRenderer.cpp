@@ -55,6 +55,7 @@ pl_implement_class(DockWidgetSceneRenderer)
 */
 DockWidgetSceneRenderer::DockWidgetSceneRenderer(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidgetScene(pQMainWindow, pDockWidgetManager),
 	SlotOnDestroyed(this),
+	m_pQTreeView(nullptr),
 	m_pSceneRendererDataModel(nullptr),
 	m_pDockWidgetSceneRendererQObject(new DockWidgetSceneRendererQObject(*this))
 {
@@ -62,11 +63,11 @@ DockWidgetSceneRenderer::DockWidgetSceneRenderer(QMainWindow *pQMainWindow, Dock
 	QDockWidget *pQDockWidget = GetQDockWidget();
 	if (pQDockWidget) {
 		// Create tree view and set scene graph model
-		QTreeView *pQTreeView = new QTreeView();
-		pQDockWidget->setWidget(pQTreeView);
+		m_pQTreeView = new QTreeView();
+		pQDockWidget->setWidget(m_pQTreeView);
 		m_pSceneRendererDataModel = new DataModels::SceneRendererDataModel::SceneRendererDataModel(pQDockWidget);
-		pQTreeView->setModel(m_pSceneRendererDataModel);
-		pQTreeView->expandToDepth(0);
+		m_pQTreeView->setModel(m_pSceneRendererDataModel);
+		m_pQTreeView->expandToDepth(0);
 
 		// Add the created Qt dock widget to the given Qt main window
 		pQMainWindow->addDockWidget(Qt::BottomDockWidgetArea, pQDockWidget);
@@ -125,6 +126,13 @@ void DockWidgetSceneRenderer::SelectSceneRenderer(SceneRenderer *pSceneRenderer)
 
 			// Assign new scene renderer
 			m_pSceneRendererDataModel->SetSceneRenderer(pSceneRenderer);
+
+			{ // Usability: Resize the first tree view column given to the size of its contents
+				// No need to backup current expanded state and restore it after we're done because we set new content above resulting in that all is collapsed when we're in here
+				m_pQTreeView->expandAll();
+				m_pQTreeView->resizeColumnToContents(0);
+				m_pQTreeView->collapseAll();
+			}
 
 			// Connect event handler
 			if (pSceneRenderer)

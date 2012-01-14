@@ -258,10 +258,6 @@ void SNMTransformGizmoScale::DrawGizmo(Renderer &cRenderer, const VisNode *pVisN
 	DrawHelpers &cDrawHelpers = cRenderer.GetDrawHelpers();
 	const float fLineWidth = 2.0f;
 
-	// Draw transform line
-	if (m_bTransform)
-		cDrawHelpers.DrawLine(Color4::Blue, m_vStartValue, m_vCurrentValue, mObjectSpaceToClipSpace);
-
 	{ // Draw axis lines
 		// X axis
 		if (!(m_nSelected & XAxis) || !(m_nSelected & YAxis) || !(m_nSelected & ZAxis))

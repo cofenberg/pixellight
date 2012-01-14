@@ -71,7 +71,16 @@ Name of the optional script function called by C++ when the application should d
 \subsection{Methods}
 
 \paragraph{<string> GetBaseDirectory()}
-Write \emph{<RTTI object>:GetBaseDirectory()} in order to get the base directory of the application.
+Write \emph{<RTTI object>:GetBaseDirectory()} in order to get the base directory of the application (native path style, e.g. on Windows: 'C:\textbackslash MyApplication\textbackslash ').
 
 \paragraph{SetBaseDirectory(<string>)}
-Write \emph{<RTTI object>:SetBaseDirectory(<string>)} in order to set the base directory of the application. Base directory as the first parameter.
+Write \emph{<RTTI object>:SetBaseDirectory(<string>)} in order to set the base directory of the application (e.g. on Windows: 'C:\textbackslash MyApplication\textbackslash '). Base directory as the first parameter.
+
+\paragraph{<string> GetScript()}
+Write \emph{<RTTI object>:GetScript()} in order to get the used script instance.
+
+\paragraph{<string> GetScriptFilename()}
+Write \emph{<RTTI object>:GetScriptFilename()} in order to get the absolute filename of the used script (native path style, e.g. on Windows: 'C:\textbackslash MyApplication\textbackslash Main.lua').
+
+\paragraph{<string> GetScriptDirectory()}
+Write \emph{<RTTI object>:GetScriptDirectory()} in order to get the absolute directory the used script is in (native path style, e.g. on Windows: 'C:\textbackslash MyApplication\textbackslash ' if currently the script 'C:\textbackslash MyApplication\textbackslash Main.lua' is used).

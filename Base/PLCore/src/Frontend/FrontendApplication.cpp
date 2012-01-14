@@ -171,13 +171,26 @@ void FrontendApplication::OnInitPlugins()
 {
 	// The "Scan PL-runtime directory for compatible plugins and load them in"-part is job of a higher being
 
-	// Scan for plugins in the application directory, but not recursively, please. This is quite useful
-	// for shipping applications and putting all plugins inside the application root directory
+	// Scan for plugins in the application executable directory, but not recursively, please. This is
+	// quite useful for shipping applications and putting all plugins inside the application root directory
 	// (which is necessary due to VC manifest policy)
-	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory(), NonRecursive);
+	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetExecutableDirectory(), NonRecursive);
 
 	// Scan for plugins in "Plugins" directory (recursively)
-	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetAppDirectory() + "/Plugins/", Recursive);
+	ClassManager::GetInstance()->ScanPlugins(m_cApplicationContext.GetExecutableDirectory() + "/Plugins/", Recursive);
+
+	// There's no guarantee that the application executable directory is the same as the application startup directory
+	// -> If the application executable directory is not the same as the application startup directory, do also scan the application startup directory
+	// -> This behaviour is quite useful because it allows development of plugins which can be tested within e.g. PLViewer without copying files around,
+	//    just set the current directory to your plugin directory when launching the viewer application
+	const String sStartupDirectory = m_cApplicationContext.GetStartupDirectory();
+	if (m_cApplicationContext.GetExecutableDirectory() != sStartupDirectory) {
+		// Scan for plugins in the application startup directory, but not recursively, please
+		ClassManager::GetInstance()->ScanPlugins(sStartupDirectory, NonRecursive);
+
+		// Scan for plugins in "Plugins" directory (recursively)
+		ClassManager::GetInstance()->ScanPlugins(sStartupDirectory + "/Plugins/", Recursive);
+	}
 }
 
 /**

@@ -23,6 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/File/Url.h>
+#include <PLCore/Tools/LoadableType.h>
+#include <PLCore/Tools/LoadableManager.h>
 #include <PLMath/Math.h>
 #include <PLFrontendQt/FrontendMainWindow.h>
 #include "Gui.h"
@@ -98,7 +101,7 @@ void ApplicationQt::OnDeInit()
 	m_pGui = nullptr;
 
 	// Call base implementation
-	Application::OnInit();
+	Application::OnDeInit();
 }
 
 
@@ -162,8 +165,41 @@ void ApplicationQt::OnLoadProgress(float fLoadProgress)
 //[-------------------------------------------------------]
 bool ApplicationQt::LoadResource(const String &sFilename, const String &sType)
 {
+	// The used loadable type may be changed within this method
+	String sTypeToUse = sType;
+
 	// Disable the GUI window while loading so the user can't prank around
 	if (m_pGui) {
+		// In case no loadable type is provided, we need to guess the loadable type...
+		// which can go terrible wrong. If required, ask the user for the desired loadable type.
+		if (!sTypeToUse.GetLength()) {
+			// Get file extension
+			const Url cUrl(sFilename);
+			const String sExtension = cUrl.GetExtension();
+			if (sExtension.GetLength()) {
+				// Get loadable types by using the loadable extension
+				Array<LoadableType*> lstTypes;
+				LoadableManager::GetInstance()->GetTypesByExtension(sExtension, lstTypes);
+				if (lstTypes.GetNumOfElements() > 1) {
+					// Get array with type names
+					Array<String> lstTypeNames;
+					for (uint32 i=0; i<lstTypes.GetNumOfElements(); i++)
+						lstTypeNames.Add(lstTypes[i]->GetName());
+
+					// We have multiple candidates, ask the user for the desired loadable type
+					sTypeToUse = m_pGui->InputDialog(cUrl.GetNativePath(), "Please specify the resource type", lstTypeNames);
+					if (!sTypeToUse.GetLength()) {
+						// Get us out of here right now!
+						return false;
+					}
+
+					// It's also possible that one loadable type has multiple loaders with a same extension
+					// -> For simplicity we ignore this case in here
+				}
+			}
+		}
+
+		// Disable the GUI
 		m_pGui->SetEnabled(false);
 
 		// Give the user a hint what's currently going on
@@ -175,7 +211,7 @@ bool ApplicationQt::LoadResource(const String &sFilename, const String &sType)
 	}
 
 	// Call base implementation
-	const bool bResult = Application::LoadResource(sFilename, sType);
+	const bool bResult = Application::LoadResource(sFilename, sTypeToUse);
 
 	// Enable the Qt main window when loading is done
 	if (m_pGui)

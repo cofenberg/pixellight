@@ -78,6 +78,29 @@ DockWidgetManager &FrontendMainWindow::GetDockWidgetManager()
 	return *m_pDockWidgetManager;
 }
 
+/**
+*  @brief
+*    Sets the update interval
+*/
+void FrontendMainWindow::SetUpdateInterval(int nUpdateInterval)
+{
+	// State change?
+	if (m_nUpdateInterval != nUpdateInterval) {
+		// Stop the previous timer (if there's one)
+		if (m_nUpdateTimerID) {
+			killTimer(m_nUpdateTimerID);
+			m_nUpdateTimerID = 0;
+		}
+
+		// Backup the given update interval
+		m_nUpdateInterval = nUpdateInterval;
+
+		// Start timer with new interval? (only if the frontend is already initialized)
+		if (m_bInitialized && m_nUpdateInterval)
+			m_nUpdateTimerID = startTimer(m_nUpdateInterval);
+	}
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected functions                                   ]
@@ -89,8 +112,10 @@ DockWidgetManager &FrontendMainWindow::GetDockWidgetManager()
 FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) :
 	m_pFrontendQt(&cFrontendQt),
 	m_bVisible(false),
-	m_nWindowRedrawTimerID(startTimer(10)),	// An interval of 10 milliseconds should be enough
-	m_pDockWidgetManager(nullptr)
+	m_nUpdateInterval(10),
+	m_nUpdateTimerID(0),
+	m_pDockWidgetManager(nullptr),
+	m_bInitialized(false)
 {
 	// Tell the frontend about this instance at once because it may already be required during frontend life cycle initialization
 	m_pFrontendQt->SetMainWindow(this);
@@ -122,9 +147,13 @@ FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) :
 
 	// Do the frontend life cycle thing - start
 	m_pFrontendQt->OnStart();
+	m_bInitialized = true;
 
 	// If the widget is not visible yet, make it visible right now
 	MakeVisible();
+
+	// Ready to rumble, start the update-timer
+	m_nUpdateTimerID = startTimer(m_nUpdateInterval);
 }
 
 bool FrontendMainWindow::eventFilter(QObject *pQObject, QEvent *pQEvent)
@@ -149,12 +178,14 @@ bool FrontendMainWindow::eventFilter(QObject *pQObject, QEvent *pQEvent)
 */
 FrontendMainWindow::~FrontendMainWindow()
 {
+	// Stop window redraw timer before entering frontend deinitialization phase
+	if (m_nUpdateTimerID) {
+		killTimer(m_nUpdateTimerID);
+		m_nUpdateTimerID = 0;
+	}
+
 	// Do the frontend life cycle thing - stop
 	m_pFrontendQt->OnStop();
-
-	// Stop window redraw timer
-	if (m_nWindowRedrawTimerID)
-		killTimer(m_nWindowRedrawTimerID);
 
 	// Destroy the dock widget manager of this main window, if there's one
 	if (m_pDockWidgetManager)
@@ -185,7 +216,7 @@ void FrontendMainWindow::MakeVisible()
 //[-------------------------------------------------------]
 void FrontendMainWindow::timerEvent(QTimerEvent *pQTimerEvent)
 {
-	if (pQTimerEvent->timerId() == m_nWindowRedrawTimerID) {
+	if (pQTimerEvent->timerId() == m_nUpdateTimerID) {
 		// Is the frontend still running?
 		if (m_pFrontendQt->GetFrontend() && m_pFrontendQt->GetFrontend()->IsRunning()) {
 			// Check if we're allowed to perform an update right now

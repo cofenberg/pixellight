@@ -248,10 +248,6 @@ void SNMTransformGizmoPosition::DrawGizmo(Renderer &cRenderer, const VisNode *pV
 	// Get draw helpers instance
 	DrawHelpers &cDrawHelpers = cRenderer.GetDrawHelpers();
 
-	// Draw transform line
-	if (m_bTransform)
-		cDrawHelpers.DrawLine(Color4::Blue, m_vStartValue, m_vCurrentValue, mObjectSpaceToClipSpace);
-
 	{ // Draw axis lines
 		const float fLineWidth = 2.0f;
 

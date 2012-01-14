@@ -228,6 +228,11 @@ bool Script::SetSourceCode(const String &sSourceCode)
 	return false;
 }
 
+void Script::GetAssociatedFilenames(Array<String> &lstFilenames)
+{
+	// [TODO] Implement me
+}
+
 void Script::GetGlobalVariables(Array<String> &lstGlobalVariables, const String &sNamespace)
 {
 	// [TODO] Add namespace support

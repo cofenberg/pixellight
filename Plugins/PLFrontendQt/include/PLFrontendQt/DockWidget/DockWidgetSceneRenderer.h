@@ -35,6 +35,7 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 QT_BEGIN_NAMESPACE
+	class QTreeView;
 	class QMainWindow;
 QT_END_NAMESPACE
 namespace PLScene {
@@ -138,6 +139,7 @@ class DockWidgetSceneRenderer : public DockWidgetScene {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
+		QTreeView												   *m_pQTreeView;						/**< Qt tree view instance, can be a null pointer */
 		DataModels::SceneRendererDataModel::SceneRendererDataModel *m_pSceneRendererDataModel;			/**< Scene renderer data model, can be a null pointer */
 		DockWidgetSceneRendererQObject							   *m_pDockWidgetSceneRendererQObject;	/**< QObject instance for Qt's signal/slot mechanisms, always valid */
 

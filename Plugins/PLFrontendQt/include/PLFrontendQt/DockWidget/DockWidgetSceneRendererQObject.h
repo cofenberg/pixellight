@@ -52,7 +52,7 @@ class DockWidgetSceneRenderer;
 *
 *  @remarks
 *    Sadly, it appears that Qt's signal/slot mechanisms can't be used without QObject/Q_OBJECT. But we don't want to do a multiple inheritance
-*    like "class DockWidgetSceneRenderer : public QObject, public DockWidgetSceneRenderer" either because this can cause serious casting issues.
+*    like "class DockWidgetSceneRenderer : public QObject, public DockWidgetScene" either because this can cause serious casting issues.
 *    So, we need to add another class just to be able to use Qt's signal/slot mechanisms. We can't use an embedded class for this either because
 *    Qt's MOC doesn't like this. :/
 */

@@ -98,6 +98,29 @@ Application::~Application()
 {
 }
 
+/**
+*  @brief
+*    Returns the filename of the currently loaded resource
+*/
+String Application::GetResourceFilename() const
+{
+	return m_sResourceFilename;
+}
+
+
+//[-------------------------------------------------------]
+//[ Public virtual PLEngine::EngineApplication functions  ]
+//[-------------------------------------------------------]
+bool Application::LoadScene(const String &sFilename)
+{
+	// Do not backup the filename of the current resource in here
+	// -> Background: When the current resource is a script which is using "LoadScene()" in order to load a scene we would backup an imposter in here
+	// m_sResourceFilename = sFilename;
+
+	// Call base implementation
+	return ScriptApplication::LoadScene(sFilename);
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected functions                                   ]
@@ -109,20 +132,22 @@ Application::~Application()
 void Application::OnControl(Control &cControl)
 {
 	// Is it a button and was it just hit?
-	if (cControl.GetType() == ControlButton && reinterpret_cast<Button&>(cControl).IsHit()) {
-		// Check whether the escape key was pressed
+	if (cControl.GetType() == ControlButton) {
+		// Shut down the application?
 		if (cControl.GetName() == "KeyboardEscape") {
-			// Shut down the application
-			Exit(0);
+			if (reinterpret_cast<Button&>(cControl).IsHit())
+				Exit(0);
 
-		// Make a screenshot from the current render target
+		// Make a screenshot from the current render target?
 		} else if (cControl.GetName() == "KeyboardF12") {
-			GetScreenshotTool().SaveScreenshot();
+			if (reinterpret_cast<Button&>(cControl).IsHit())
+				GetScreenshotTool().SaveScreenshot();
 
-		// Toggle mouse cursor visibility
+		// Toggle mouse cursor visibility?
 		} else if (cControl.GetName() == "KeyboardM") {
 			// Toggle mouse cursor visibility
-			GetFrontend().SetMouseVisible(!GetFrontend().IsMouseVisible());
+			if (reinterpret_cast<Button&>(cControl).IsHit())
+				GetFrontend().SetMouseVisible(!GetFrontend().IsMouseVisible());
 		}
 	}
 }
@@ -141,6 +166,9 @@ bool Application::LoadResource(const String &sFilename, const String &sType)
 
 	// Clear the scene, after calling this method the scene is empty
 	ClearScene();
+
+	// Backup the filename of the current resource
+	m_sResourceFilename = sFilename;
 
 	// Get file extension
 	const String sExtension = Url(sFilename).GetExtension();
@@ -188,6 +216,9 @@ bool Application::LoadResource(const String &sFilename, const String &sType)
 			}
 		}
 
+		// Set default (and very basic) scene renderer
+		GetSceneRendererTool().SetSceneRenderer(GetScene(), DefaultSceneRenderer, DefaultSceneRenderer);
+
 		// The viewer supports loading in multiple resource types, but scenes and scripts are
 		// the most important because most powerful ones, so give them the highest priority.
 		// -> It would be possible to implement support for scripting so that e.g. a Lua script
@@ -225,6 +256,7 @@ bool Application::LoadResource(const String &sFilename, const String &sType)
 				// Get the scene container (the 'concrete scene')
 				SceneContainer *pSceneContainer = GetScene();
 				if (pSceneContainer) {
+					// Configure scene and set the preferred camera scene node
 					SetCamera(SceneCreatorLoadableType::ConfigureSceneByLoadableType(*pSceneContainer, pLoadableType->GetName(), sFilename));
 
 					// Done
@@ -302,8 +334,8 @@ void Application::OnInit()
 
 	// Anything to load in?
 	if (sFilename.GetLength()) {
-		// Reset the current script file, else "ScriptApplication::OnInit()" will load and start the script given to it's constructor
-		m_sScriptFilename = "";
+		// Reset the initial script file, else "ScriptApplication::OnInit()" will load and start the script given to it's constructor
+		m_sInitialScriptFilename = "";
 	}
 
 	// Call base implementation

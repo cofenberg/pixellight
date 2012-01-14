@@ -41,6 +41,7 @@ QT_BEGIN_NAMESPACE
 	class QAction;
 	class QMainWindow;
 	class QActionGroup;
+	class QFileSystemWatcher;
 QT_END_NAMESPACE
 namespace PLScene {
 	class SceneNode;
@@ -127,19 +128,28 @@ class Gui : public QObject {
 
 		/**
 		*  @brief
+		*    Opens a dialog in order to give the user a choice between multiple options
+		*
+		*  @param[in]  sTitle
+		*    Title
+		*  @param[in]  sText
+		*    Reason for input text
+		*  @param[in] lstOptions
+		*    Options, empty strings will be ignored
+		*
+		*  @return
+		*    The chosen option or empty string on abort
+		*/
+		PLCore::String InputDialog(const PLCore::String &sTitle, const PLCore::String &sText, const PLCore::Array<PLCore::String> &lstOptions) const;
+
+		/**
+		*  @brief
 		*    Updates the GUI
 		*
 		*  @note
 		*    - Performs work which has to be done every frame, but this work is kept to a minimum
 		*/
 		void Update();
-
-
-	//[-------------------------------------------------------]
-	//[ Public virtual QObject methods                        ]
-	//[-------------------------------------------------------]
-	public:
-		virtual bool eventFilter(QObject *pQObject, QEvent *pQEvent);
 
 
 	//[-------------------------------------------------------]
@@ -180,12 +190,21 @@ class Gui : public QObject {
 		*/
 		PLCore::uint32 FillMenuWindowRec(QMenu &cQMenu, const PLCore::String &sBaseClass);
 
+		/**
+		*  @brief
+		*    Resets and fills the Qt file system watcher instance
+		*/
+		void ResetAndFillQFileSystemWatcher();
+
 
 	//[-------------------------------------------------------]
 	//[ Private Qt slots (MOC)                                ]
 	//[-------------------------------------------------------]
 	private slots:
+		void QtSlotFileChanged(const QString &path);
 		void QtSlotTriggeredLoad();
+		void QtSlotTriggeredReload();
+		void QtSlotTriggeredAutomaticReload();
 		void QtSlotTriggeredExit();
 		void QtSlotAboutToShowMenuCamera();
 		void QtSlotSelectedCamera(QAction *);
@@ -207,15 +226,18 @@ class Gui : public QObject {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		ApplicationQt *m_pApplication;			/**< Owner application, always valid */
-		GuiPicking	  *m_pGuiPicking;			/**< GUI picking component instance, can be a null pointer */
+		ApplicationQt		*m_pApplication;			/**< Owner application, always valid */
+		GuiPicking			*m_pGuiPicking;				/**< GUI picking component instance, can be a null pointer */
+		QFileSystemWatcher	*m_pQFileSystemWatcher;		/**< Qt file system watcher, always valid */
 		// Menu bar
-		QMenu		  *m_pQMenuCamera;			/**< Camera Qt menu, can be a null pointer */
-		QActionGroup  *m_pQActionGroupCamera;	/**< Camera Qt action group, can be a null pointer */
-		QMenu		  *m_pQMenuWindow;			/**< Window Qt menu, can be a null pointer */
-		QActionGroup  *m_pQActionGroupWindow;	/**< Window Qt action group, can be a null pointer */
+		QAction				*m_pQActionReload;			/**< Reload Qt action, can be a null pointer */
+		QAction				*m_pQActionAutomaticReload;	/**< Automatic reload Qt action, can be a null pointer */
+		QMenu				*m_pQMenuCamera;			/**< Camera Qt menu, can be a null pointer */
+		QActionGroup		*m_pQActionGroupCamera;		/**< Camera Qt action group, can be a null pointer */
+		QMenu				*m_pQMenuWindow;			/**< Window Qt menu, can be a null pointer */
+		QActionGroup		*m_pQActionGroupWindow;		/**< Window Qt action group, can be a null pointer */
 		// Status bar
-		QLabel		  *m_pQLabelStatusBar;		/**< Qt label shown in the status bar of the Qt main window, can be a null pointer */
+		QLabel				*m_pQLabelStatusBar;		/**< Qt label shown in the status bar of the Qt main window, can be a null pointer */
 
 
 };

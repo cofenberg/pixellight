@@ -1,3 +1,21 @@
+>> 13.01.2012
+[CO]
+- "ScriptApplication::GetBaseDirectory()" now always returns a native style path so we have something we can rely on
+- Exposed "ScriptApplication::GetScript()" to the RTTI
+- "ScriptApplication": Added "GetScriptFilename()" and "GetScriptDirectory()"
+- Manipulating a scene node by using a transform gizmo is working. There's still need to scale the transform gizmo dynamically so it always has the same
+  size on screen and the transform itself has also room for improvement - but it's a start. Finally I can manipulate again scene nodes directly within
+  the viewport by draging them around. :D
+
+
+
+>> 12.01.2012
+[CO]
+- "EngineApplication": When searching the loaded scene for "keys" giving hints e.g. which camera to use as default, only the first found key will be used.
+  In case a scene is composed of multiple other scenes, this is important so one knows which key will be used.
+
+
+
 >> 08.01.2012
 [CO]
 - "Picking" & "MousePicking": Added cull parameter

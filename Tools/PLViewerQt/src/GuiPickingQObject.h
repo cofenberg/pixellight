@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: DockWidgetSceneGraphQObject.h                  *
+ *  File: GuiPickingQObject.h                            *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTENDQT_DOCKWIDGET_SCENEGRAPH_QOBJECT_H__
-#define __PLFRONTENDQT_DOCKWIDGET_SCENEGRAPH_QOBJECT_H__
+#ifndef __PLVIEWERQT_PICKING_QOBJECT_H__
+#define __PLVIEWERQT_PICKING_QOBJECT_H__
 #pragma once
 
 
@@ -34,18 +34,10 @@
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
-QT_BEGIN_NAMESPACE
-	class QModelIndex;
-QT_END_NAMESPACE
-namespace PLFrontendQt {
-	class DockWidgetSceneGraph;
+namespace PLScene {
+	class SNMTransformGizmo;
 }
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
-namespace PLFrontendQt {
+class GuiPicking;
 
 
 //[-------------------------------------------------------]
@@ -53,21 +45,21 @@ namespace PLFrontendQt {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene graph Qt dock widget class, QObject instance for Qt's signal/slot mechanisms
+*    GUI picking Qt dock widget class, QObject instance for Qt's signal/slot mechanisms
 *
 *  @remarks
 *    Sadly, it appears that Qt's signal/slot mechanisms can't be used without QObject/Q_OBJECT. But we don't want to do a multiple inheritance
-*    like "class DockWidgetSceneGraph : public QObject, public DockWidgetScene" either because this can cause serious casting issues. So, we
-*    need to add another class just to be able to use Qt's signal/slot mechanisms. We can't use an embedded class for this either because
+*    like "class GuiPicking : public QObject, public PLFrontendQt::DockWidget" either because this can cause serious casting issues.
+*    So, we need to add another class just to be able to use Qt's signal/slot mechanisms. We can't use an embedded class for this either because
 *    Qt's MOC doesn't like this. :/
 */
-class DockWidgetSceneGraphQObject : public QObject {
+class GuiPickingQObject : public QObject {
 
 
 	//[-------------------------------------------------------]
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
-	friend class DockWidgetSceneGraph;
+	friend class GuiPicking;
 
 
 	//[-------------------------------------------------------]
@@ -78,20 +70,6 @@ class DockWidgetSceneGraphQObject : public QObject {
 
 
 	//[-------------------------------------------------------]
-	//[ Private definitions                                   ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Filter types
-		*/
-		enum EFilterTypes {
-			BySceneNodeName,	/**< Filter by scene node name */
-			ByClassName			/**< Filter by scene node class name */
-		};
-
-
-	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
@@ -99,41 +77,34 @@ class DockWidgetSceneGraphQObject : public QObject {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] cDockWidgetSceneGraph
-		*    Dock widget scene graph owner instance
+		*  @param[in] cGuiPicking
+		*    GUI picking owner instance
 		*/
-		DockWidgetSceneGraphQObject(DockWidgetSceneGraph &cDockWidgetSceneGraph);
+		GuiPickingQObject(GuiPicking &cGuiPicking);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		virtual ~DockWidgetSceneGraphQObject();
+		virtual ~GuiPickingQObject();
 
 
 	//[-------------------------------------------------------]
-	//[ Private Qt slots (MOC)                                ]
+	//[ Public virtual QObject methods                        ]
 	//[-------------------------------------------------------]
-	private slots:
-		void QtSlotTreeViewDoubleClicked(const QModelIndex &cQModelIndex);
-		void QtSlotFilterTypeChanged(int filterId);
-		void QtSlotFilterChanged(const QString &text);
+	public:
+		virtual bool eventFilter(QObject *pQObject, QEvent *pQEvent);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		DockWidgetSceneGraph *m_pDockWidgetSceneGraph;	/**< Dock widget scene graph owner instance, always valid */
+		GuiPicking				   *m_pGuiPicking;		/**< GUI picking owner instance, always valid */
+		PLScene::SNMTransformGizmo *m_pTransformGizmo;	/**< Currently used transform gizmo, can be a null pointer */
 
 
 };
 
 
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
-} // PLFrontendQt
-
-
-#endif // __PLFRONTENDQT_DOCKWIDGET_SCENEGRAPH_QOBJECT_H__
+#endif // __PLVIEWERQT_PICKING_QOBJECT_H__

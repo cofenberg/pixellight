@@ -501,8 +501,10 @@ class CoreApplication : public Object, protected AbstractLifecycle {
 		*    The default implementation does the following tasks:
 		*    - Scan for plugins in PixelLight runtime directory non-recursively
 		*    - Scan for plugins in PixelLight runtime directory "Plugins/" recursively
-		*    - Scan for plugins in application directory non-recursively
-		*    - Scan for plugins in application directory "Plugins/" recursively
+		*    - Scan for plugins in application executable directory non-recursively
+		*    - Scan for plugins in application executable directory "Plugins/" recursively
+		*    - If the application executable directory is not the same as the application startup directory, scan for plugins in application startup directory non-recursively
+		*    - If the application executable directory is not the same as the application startup directory, scan for plugins in application startup directory "Plugins/" recursively
 		*
 		*  @note
 		*    - Part of the application framework initialization function "OnStart()"

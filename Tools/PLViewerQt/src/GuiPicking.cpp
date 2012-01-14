@@ -31,11 +31,14 @@ PL_WARNING_PUSH
 PL_WARNING_POP
 #include <PLCore/Tools/Timing.h>
 #include <PLScene/Scene/SceneNodeModifier.h>
+#include <PLScene/Scene/SceneNodeModifiers/SNMTransformGizmo.h>
 #include <PLEngine/Picking/PickingResult.h>
 #include <PLFrontendQt/QtStringAdapter.h>
 #include <PLFrontendQt/FrontendMainWindow.h>
+#include <PLFrontendQt/DockWidget/DockWidgetManager.h>
 #include "Gui.h"
 #include "ApplicationQt.h"
+#include "GuiPickingQObject.h"
 #include "GuiPicking.h"
 
 
@@ -63,6 +66,7 @@ pl_implement_class(GuiPicking)
 GuiPicking::GuiPicking(Gui &cGui) : DockWidget(nullptr, cGui.GetFrontendMainWindow() ? &cGui.GetFrontendMainWindow()->GetDockWidgetManager() : nullptr), MousePicking(cGui.GetApplication().GetFrontend()),
 	SlotOnDestroyed(this),
 	m_pGui(&cGui),
+	m_pGuiPickingQObject(new GuiPickingQObject(*this)),
 	m_nLastPickingTime(Timing::GetInstance()->GetPastTime()),
 	m_pSceneNode(nullptr),
 	m_pQLabelStatusBar(new QLabel())
@@ -81,6 +85,9 @@ GuiPicking::GuiPicking(Gui &cGui) : DockWidget(nullptr, cGui.GetFrontendMainWind
 */
 GuiPicking::~GuiPicking()
 {
+	// Destroy the QObject instance for Qt's signal/slot mechanisms
+	delete m_pGuiPickingQObject;
+
 	// Now no scene node is currently selected
 	SelectObject(nullptr);
 
@@ -217,6 +224,13 @@ void GuiPicking::SelectObject(Object *pObject)
 			}
 		}
 	}
+
+	// Usability: Show the "PLFrontendQt::DockWidgetObject" dock widget so we can view & edit RTTI attributes at once
+	if (m_pSceneNode) {
+		PLFrontendQt::DockWidgetManager *pDockWidgetManager = GetDockWidgetManager();
+		if (pDockWidgetManager)
+			pDockWidgetManager->ShowDockWidget( "PLFrontendQt::DockWidgetObject");
+	}
 }
 
 
@@ -242,6 +256,67 @@ void GuiPicking::OnDestroyed()
 	// Argh! Mayday! We lost our scene node!
 	// -> Now no scene node is currently selected
 	SelectObject(nullptr);
+}
+
+/**
+*  @brief
+*    Returns whether or not any of the transform gizmo axis is currently selected
+*/
+SNMTransformGizmo *GuiPicking::IsAnyTransformGizmoAxisSelected() const
+{
+	// Loop through all scene node modifiers
+	for (uint32 i=0; i<m_lstSceneNodeModifiers.GetNumOfElements(); i++) {
+		// Get the current scene node modifier
+		SceneNodeModifier *pSceneNodeModifer = m_lstSceneNodeModifiers[i];
+		if (pSceneNodeModifer->IsInstanceOf("PLScene::SNMTransformGizmo")) {
+			// Is an axis of this transform gizmo currently selected?
+			SNMTransformGizmo *pSNMTransformGizmo = static_cast<SNMTransformGizmo*>(pSceneNodeModifer);
+			if (pSNMTransformGizmo->GetSelected())
+				return pSNMTransformGizmo;	// A transform gizmo axis is currently selected
+		}
+	}
+
+	// No transform gizmo axis is currently selected
+	return nullptr;
+}
+
+/**
+*  @brief
+*    Sets whether a transform gizmo is currently in transform mode or not
+*/
+void GuiPicking::SetTransformMode(SNMTransformGizmo &cTransformGizmo, bool bTransformMode)
+{
+	// State change?
+	if (cTransformGizmo.IsTransformMode() != bTransformMode) {
+		{ // Enable/disable the camera
+			SceneNode *pSceneNode = reinterpret_cast<SceneNode*>(m_pGui->GetApplication().GetCamera());
+			if (pSceneNode)
+				pSceneNode->SetActive(!bTransformMode);
+		}
+
+		// Loop through all scene node modifiers and disable the transform mode
+		for (uint32 i=0; i<m_lstSceneNodeModifiers.GetNumOfElements(); i++) {
+			// Get the current scene node modifier
+			SceneNodeModifier *pSceneNodeModifer = m_lstSceneNodeModifiers[i];
+			if (pSceneNodeModifer->IsInstanceOf("PLScene::SNMTransformGizmo")) {
+				static_cast<SNMTransformGizmo*>(pSceneNodeModifer)->SetTransformMode(false);
+				pSceneNodeModifer->SetActive(true);
+			}
+		}
+
+		// Enable the transform mode of the given transform gizmo
+		if (bTransformMode) {
+			cTransformGizmo.SetTransformMode(true);
+
+			// Hide all other transform gizmos
+			for (uint32 i=0; i<m_lstSceneNodeModifiers.GetNumOfElements(); i++) {
+				// Get the current scene node modifier
+				SceneNodeModifier *pSceneNodeModifer = m_lstSceneNodeModifiers[i];
+				if (pSceneNodeModifer != &cTransformGizmo && pSceneNodeModifer->IsInstanceOf("PLScene::SNMTransformGizmo"))
+					pSceneNodeModifer->SetActive(false);
+			}
+		}
+	}
 }
 
 

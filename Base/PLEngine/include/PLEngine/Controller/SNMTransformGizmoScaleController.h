@@ -82,7 +82,7 @@ class SNMTransformGizmoScaleController : public PLScene::SNMTransformGizmoScale 
 	//[-------------------------------------------------------]
 	private:
 		virtual void UpdateSelection(PLRenderer::Renderer &cRenderer, const PLScene::VisNode &cVisNode) override;
-		virtual bool PerformTransform(PLRenderer::Renderer &cRenderer, const PLScene::VisNode &cVisNode) override;
+		virtual void PerformTransform() override;
 
 
 };

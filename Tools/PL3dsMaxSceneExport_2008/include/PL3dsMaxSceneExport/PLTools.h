@@ -37,7 +37,12 @@
 //[-------------------------------------------------------]
 class Quat;
 class Box3;
+class Point3;
 class GMatrix;
+namespace PLCore {
+	class String;
+	class XmlElement;
+}
 
 
 //[-------------------------------------------------------]
@@ -86,6 +91,8 @@ class PLTools {
 		static std::string ToString(unsigned long nValue);
 		static std::string ToString(float fValue);
 		static std::string ToLower(const std::string &sString);
+		static void XmlElementSetAttributeWithDefault(PLCore::XmlElement &cXmlElement, const PLCore::String &sName, float fValue, float fDefaultValue);
+		static void XmlElementSetAttributeWithDefault(PLCore::XmlElement &cXmlElement, const PLCore::String &sName, const Point3 &cPoint, const Point3 &cDefault);
 
 		/**
 		*  @brief

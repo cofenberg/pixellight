@@ -80,6 +80,23 @@ String LoadableType::GetRelativeFilePath(const String &sPath) const
 //[-------------------------------------------------------]
 /**
 *  @brief
+*    Returns loaders by using a loadable extension
+*/
+void LoadableType::GetLoadersByExtension(const String &sExtension, Array<Loader*> &lstLoaders)
+{
+	// Loop through all registered loaders
+	for (uint32 i=0; i<m_lstLoaders.GetNumOfElements(); i++) {
+		// Get the current loader
+		Loader *pLoader = m_lstLoaders[i];
+
+		// Check whether or not the loader is capable of dealing with the given extension
+		if (pLoader->IsFormatSupported(sExtension))
+			lstLoaders.Add(pLoader);
+	}
+}
+
+/**
+*  @brief
 *    Returns a loader for loading by using a loadable file
 */
 Loader *LoadableType::GetLoaderForLoadingByFile(File &cFile) const

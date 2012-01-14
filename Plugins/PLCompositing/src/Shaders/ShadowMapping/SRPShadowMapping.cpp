@@ -76,6 +76,8 @@ pl_implement_class(SRPShadowMapping)
 */
 SRPShadowMapping::SRPShadowMapping() :
 	ShaderLanguage(this),
+	SlopeScaleDepthBias(this),
+	DepthBias(this),
 	m_pShadowMapping(new ShadowMappingUSM()),
 	m_pLightCullQuery(new SceneQueryHandler()),
 	m_pCurrentCubeShadowRenderTarget(nullptr),
@@ -264,8 +266,8 @@ void SRPShadowMapping::UpdateShadowMap(Renderer &cRenderer, SNLight &cLight, con
 						cRenderer.SetRenderState(RenderState::ScissorTestEnable, true);
 
 						// Set polygon offset to avoid nasty shadow artifacts
-						cRenderer.SetRenderState(RenderState::SlopeScaleDepthBias,	Tools::FloatToUInt32(2.0f));
-						cRenderer.SetRenderState(RenderState::DepthBias,			Tools::FloatToUInt32(10.0f));
+						cRenderer.SetRenderState(RenderState::SlopeScaleDepthBias,	Tools::FloatToUInt32(SlopeScaleDepthBias.Get()));
+						cRenderer.SetRenderState(RenderState::DepthBias,			Tools::FloatToUInt32(DepthBias.Get()));
 
 						// Get world space inverse light radius
 						const float fInvRadius = 1.0f/(cLight.IsPointLight() ? static_cast<SNPointLight&>(cLight).GetRange() : 0.0f);

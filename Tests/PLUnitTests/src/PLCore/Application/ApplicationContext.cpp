@@ -5,13 +5,14 @@
 #include <PLCore/Application/ApplicationContext.h>
 #include <PLCore/String/String.h>
 #include <PLCore/Container/Array.h>
+#include <PLCore/File/Url.h>
 
 using namespace PLCore;
 
 /*
-* Naming Convention for SUITE:
-* CLASSNAME
-*/
+ * Naming Convention for SUITE:
+ * CLASSNAME
+ */
 SUITE(ApplicationContext) {
 	/*
 	* Naming Convention for METHOD:
@@ -22,183 +23,179 @@ SUITE(ApplicationContext) {
 	String sEmpty = "";
 	String sNormal = "I_am_a_String";
 	String sLong = "I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!_I_am_a_very_long_String_that_will_be_repeated_often!";
-	String sExpect = "";
 
+	// SetExecutableFilename sets:
+	// - executable filename
+	// - executable directory
+	// - application directory
+	// and removes trailing '/'
+	// and application directory defaults to '.' if no application directory was given
+	//
 	TEST(SetExecutableFilename_EmptyString) {
 		// initially: no Filename!
-		sExpect = App.GetExecutableFilename();
-		CHECK_EQUAL(sExpect.GetASCII(), sEmpty.GetASCII());
+		CHECK_EQUAL(sEmpty.GetASCII(), App.GetExecutableFilename().GetASCII());
 
 		// set empty name
 		App.SetExecutableFilename(sEmpty);
-		sExpect = App.GetExecutableFilename();
-		CHECK_EQUAL(sExpect.GetASCII(), sEmpty.GetASCII());
+		CHECK_EQUAL(sEmpty.GetASCII(), App.GetExecutableFilename().GetASCII());
 
-		// appDirectory defaults to "." if no name was given
-		CHECK_EQUAL(".", App.GetAppDirectory().GetASCII());		
+		// ExecutableDirectory is empty if no path was given
+		CHECK_EQUAL(Url("").GetNativePath().GetASCII(), App.GetExecutableDirectory().GetASCII());
+
+		// ApplicationDirectory defaults to "." if no name was given
+		CHECK_EQUAL(Url(".").GetNativePath().GetASCII(), App.GetAppDirectory().GetASCII());
 	}
 
 	TEST(SetExecutableFilename_NormalString) {
 		// set name only
 		App.SetExecutableFilename(sNormal);
-		sExpect = App.GetExecutableFilename();
-		CHECK_EQUAL(sExpect.GetASCII(), sNormal.GetASCII());
+		CHECK_EQUAL(sNormal.GetASCII(), App.GetExecutableFilename().GetASCII());
 
-		// appDirectory will be set to ".." if only a executable name was given
-		CHECK_EQUAL("..", App.GetAppDirectory().GetASCII());		
+		// ExecutableDirectory is empty if no path was given
+		CHECK_EQUAL(Url("").GetNativePath().GetASCII(), App.GetExecutableDirectory().GetASCII());
+
+		// ApplicationDirectory will be set to ".." if only a executable name was given
+		CHECK_EQUAL(Url("..").GetNativePath().GetASCII(), App.GetAppDirectory().GetASCII());
 	}
 
 	TEST(SetExecutableFilename_LongName) {
 		// set name only
 		App.SetExecutableFilename(sLong);
-		sExpect = App.GetExecutableFilename();
-		CHECK_EQUAL(sExpect.GetASCII(), sLong.GetASCII());
+		CHECK_EQUAL(sLong.GetASCII(), App.GetExecutableFilename().GetASCII());
 
-		// appDirectory will be set to ".." if only a executable name was given
-		CHECK_EQUAL("..", App.GetAppDirectory().GetASCII());		
+		// ExecutableDirectory is empty if no path was given
+		CHECK_EQUAL(Url("").GetNativePath().GetASCII(), App.GetExecutableDirectory().GetASCII());
+
+		// ApplicationDirectory will be set to ".." if only a executable name was given
+		CHECK_EQUAL(Url("..").GetNativePath().GetASCII(), App.GetAppDirectory().GetASCII());
 	}
 
 	TEST(SetExecutableFilename_ShortValidFilePath) {
-		String sPath = "C:\\" + sEmpty;
+		String sPath = Url("C:\\").GetNativePath() + sEmpty;
 
 		// set valid path
 		App.SetExecutableFilename(sPath);
-		sExpect = App.GetExecutableFilename();
-		CHECK_EQUAL(sExpect.GetASCII(), sPath.GetASCII());
+		CHECK_EQUAL(sPath.GetASCII(), App.GetExecutableFilename().GetASCII());
 
-		// construct expected filepath for appdirectory
-		sExpect = sPath;
-		sExpect.Replace("\\", "/");
-		sExpect = "file://" + sExpect.GetSubstring(0, sExpect.GetLength()-1);
+		// ExecutableDirectory
+		CHECK_EQUAL("C:", App.GetExecutableDirectory().GetASCII());
 
-		CHECK_EQUAL(sExpect.GetASCII(), App.GetAppDirectory().GetASCII());		
+		// ApplicationDirectory
+		CHECK_EQUAL("C:", App.GetAppDirectory().GetASCII());
 	}
 
 	TEST(SetExecutableFilename_AverageValidFilePath) {
-		String sPath = "C:\\TestPath\\" + sNormal;
+		String sPath = Url("C:\\TestPath\\").GetNativePath() + sNormal;
 
 		// set valid path
-		// [TODO] SetExecutableFilename sets appdirectory 2 directories higher! update documentation?
 		App.SetExecutableFilename(sPath);
-		sExpect = App.GetExecutableFilename();
-		CHECK_EQUAL(sExpect.GetASCII(), sPath.GetASCII());
+		CHECK_EQUAL(sPath.GetASCII(), App.GetExecutableFilename().GetASCII());
 
-		// construct expected filepath
-		sExpect = sPath;
-		sExpect.Replace("\\", "/");
-		sExpect = "file://" + sExpect.GetSubstring(0, sExpect.GetLength()-1);
+		// ExecutableDirectory
+		CHECK_EQUAL(Url("C:\\TestPath").GetNativePath().GetASCII(), App.GetExecutableDirectory().GetASCII());
 
-		// [TODO] expects "file://C:/TestPath" but is "file://C:"
-		CHECK_EQUAL(sExpect.GetASCII(), App.GetAppDirectory().GetASCII());		
+		// ApplicationDirectory
+		CHECK_EQUAL("C:", App.GetAppDirectory().GetASCII());
 	}
 
 	TEST(SetExecutableFilename_LongValidFilePath) {
-		String sPath = "C:\\" + sLong;
+		String sPath = Url("C:\\TestPathRoot\\TestPath\\").GetNativePath() + sLong;
 
 		// set valid path
 		App.SetExecutableFilename(sPath);
-		sExpect = App.GetExecutableFilename();
-		CHECK_EQUAL(sExpect.GetASCII(), sPath.GetASCII());
+		CHECK_EQUAL(sPath.GetASCII(), App.GetExecutableFilename().GetASCII());
 
-		// construct expected filepath
-		sExpect = sPath;
-		sExpect.Replace("\\", "/");
-		sExpect = "file://" + sExpect.GetSubstring(0, sExpect.GetLength()-1);
+		// ExecutableDirectory
+		CHECK_EQUAL(Url("C:\\TestPathRoot\\TestPath").GetNativePath().GetASCII(), App.GetExecutableDirectory().GetASCII());
 
-		// [TODO] expects "file://C:/I_am_a_String....." but is "file://C:", look at TODO of test "SetExecutableFilename_AverageValidFilePath"
-		CHECK_EQUAL(sExpect.GetASCII(), App.GetAppDirectory().GetASCII());
+		// ApplicationDirectory
+		CHECK_EQUAL(Url("C:\\TestPathRoot").GetNativePath().GetASCII(), App.GetAppDirectory().GetASCII());
 	}
 
 	TEST(SetExecutableFilename_NonValidFilePath) {
-		String sPath = ":\\TestPath\\\\" + sNormal;
+		String sPath = Url("!§%&:\\TestPath\\\\").GetNativePath().GetASCII() + sNormal;
 
 		// set nonValid path
 		App.SetExecutableFilename(sPath);
-		sExpect = App.GetExecutableFilename();
-		CHECK_EQUAL(sExpect.GetASCII(), sPath.GetASCII());
+		CHECK_EQUAL(Url("TestPath\\" + sNormal).GetNativePath().GetASCII(), App.GetExecutableFilename().GetASCII());
 
-		// if path is not valid => defaults to "."
-		CHECK_EQUAL(App.GetAppDirectory().GetASCII(), ".");
+		// ExecutableDirectory
+		CHECK_EQUAL(Url("TestPath").GetNativePath().GetASCII(), App.GetExecutableDirectory().GetASCII());
+
+		// ApplicationDirectory defaults to '.' if path is not valid
+		CHECK_EQUAL(Url(".").GetNativePath().GetASCII(), App.GetAppDirectory().GetASCII());
 	}
 
 	TEST(SetExecutableFilename_ValidHttpPath) {
 		String sPath = "http://TestDir/" + sNormal;
 
-		// set valid path
+		// [TODO] should this be possible?
 		App.SetExecutableFilename(sPath);
-		sExpect = App.GetExecutableFilename();
-		CHECK_EQUAL(sExpect.GetASCII(), sPath.GetASCII());
+		CHECK_EQUAL(sPath.GetASCII(), App.GetExecutableFilename().GetASCII());
 
-		// [TODO] What to expect here? "http:/" is definitely wrong! 
-		CHECK_EQUAL(sPath.GetASCII(), App.GetAppDirectory().GetASCII());		
+		// ExecutableDirectory
+		CHECK_EQUAL(Url("http://TestDir").GetNativePath().GetASCII(), App.GetExecutableDirectory().GetASCII());
+
+		// 
+		CHECK_EQUAL(Url("http:").GetNativePath().GetASCII(), App.GetAppDirectory().GetASCII());
 	}
 
 	TEST(SetArguments_NoElements) {
-		Array<String> elems, test;
-
-		test = App.GetArguments();
-		CHECK(elems.Compare(test));
+		Array<String> elems;
+		CHECK(elems.Compare(App.GetArguments()));
 
 		// set empty arguments array
 		App.SetArguments(elems);
-		test = App.GetArguments();
 
 		// compare content of both arrays, has to be the same!
-		CHECK(elems.Compare(test));
+		CHECK(elems.Compare(App.GetArguments()));
 	}
 
 	TEST(SetArguments_WithElements) {
-		Array<String> elems, test;
+		Array<String> elems;
 		elems.Add(String("Elem1"));
 		elems.Add(String("Elem2"));
 
 		// set arguments array with 2 elements
 		App.SetArguments(elems);
-		test = App.GetArguments();
-		CHECK(elems.Compare(test));	
+		CHECK(elems.Compare(App.GetArguments()));	
 	}
 
 	TEST(SetStartupDirectory_EmptyString) {
 		// set empty path
 		App.SetStartupDirectory(sEmpty);
-		sExpect = App.GetStartupDirectory();
-		CHECK_EQUAL(sExpect.GetASCII(), sEmpty.GetASCII());		
+		CHECK_EQUAL(sEmpty.GetASCII(), App.GetStartupDirectory().GetASCII());		
 	}
 
 	TEST(SetStartupDirectory_ValidPath) {
-		String sPath = "C:\\" + sNormal;
+		String sPath = Url("C:\\").GetNativePath().GetASCII() + sNormal;
 
 		// set directory
 		App.SetStartupDirectory(sPath);
-		sExpect = App.GetStartupDirectory();
-		CHECK_EQUAL(sExpect.GetASCII(), sPath.GetASCII());		
+		CHECK_EQUAL(sPath.GetASCII(), App.GetStartupDirectory().GetASCII());		
 	}
 
 	TEST(SetLogFilename_EmptyName) {
 		// set empty
 		App.SetLogFilename(sEmpty);
-		sExpect = App.GetLogFilename();
-		CHECK_EQUAL(sExpect.GetASCII(), sEmpty.GetASCII());	
+		CHECK_EQUAL(sEmpty.GetASCII(), App.GetLogFilename().GetASCII());	
 	}
 
 	TEST(SetLogFilename_ValidName) {
 		// set name
 		App.SetLogFilename(sNormal);
-		sExpect = App.GetLogFilename();
-		CHECK_EQUAL(sExpect.GetASCII(), sNormal.GetASCII());
+		CHECK_EQUAL(sNormal.GetASCII(), App.GetLogFilename().GetASCII());
 	}
 
 	TEST(SetConfigFilename_EmptyName) {
 		// set empty
 		App.SetConfigFilename(sEmpty);
-		sExpect = App.GetConfigFilename();
-		CHECK_EQUAL(sExpect.GetASCII(), sEmpty.GetASCII());		
+		CHECK_EQUAL(sEmpty.GetASCII(), App.GetConfigFilename().GetASCII());		
 	}
 
 	TEST(SetConfigFilename_ValidName) {
 		// set name
 		App.SetConfigFilename(sNormal);
-		sExpect = App.GetConfigFilename();
-		CHECK_EQUAL(sExpect.GetASCII(), sNormal.GetASCII());		
+		CHECK_EQUAL(sNormal.GetASCII(), App.GetConfigFilename().GetASCII());		
 	}
 }

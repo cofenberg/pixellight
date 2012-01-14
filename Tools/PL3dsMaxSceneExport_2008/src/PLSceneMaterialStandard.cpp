@@ -184,7 +184,7 @@ void PLSceneMaterialStandard::SaveParameters(XmlElement &cMaterialElement)
 
 			// Save diffuse color?
 			Color cDiffuseColor = pMaxStandardMat->GetDiffuse(m_pScene->GetMaxInterface().GetTime());
-			if (!g_SEOptions.bSmartMaterialParameters || (cDiffuseColor.r != 1.0f && cDiffuseColor.g != 1.0f && cDiffuseColor.b != 1.0f)) {
+			if (!g_SEOptions.bSmartMaterialParameters || cDiffuseColor.r != 1.0f || cDiffuseColor.g != 1.0f || cDiffuseColor.b != 1.0f) {
 				// Add to material
 				XmlElement *pFloat3Element = new XmlElement("Float3");
 				pFloat3Element->SetAttribute("Name", "DiffuseColor");
@@ -215,7 +215,7 @@ void PLSceneMaterialStandard::SaveParameters(XmlElement &cMaterialElement)
 			// Save specular color?
 			Color cSpecularColor = pMaxStandardMat->GetSpecular(m_pScene->GetMaxInterface().GetTime());
 			cSpecularColor *= pMaxStandardMat->GetShinStr(m_pScene->GetMaxInterface().GetTime());
-			if (!g_SEOptions.bSmartMaterialParameters || (cSpecularColor.r != 1.0f && cSpecularColor.g != 1.0f && cSpecularColor.b != 1.0f)) {
+			if (!g_SEOptions.bSmartMaterialParameters || cSpecularColor.r != 1.0f || cSpecularColor.g != 1.0f || cSpecularColor.b != 1.0f) {
 				// Add to material
 				XmlElement *pFloat3Element = new XmlElement("Float3");
 				pFloat3Element->SetAttribute("Name", "SpecularColor");

@@ -1,3 +1,12 @@
+>> 12.01.2012
+[CO]
+- Bugfix within "PLSceneMaterialStandard": The diffuse and specular default value test was wrong resulting that those colors were not always exported
+  correctly
+- Added "PLTools::XmlElementSetAttributeWithDefault()" to make it easier and less error prone to write out values while ignoring values which are equal
+  to a given default value
+
+
+
 >> 11.11.2011
 [CO]
 - PL3dsMaxSceneExport_2008: We don't support the legacy 3ds Max 2008 for x64, use a newer version instead

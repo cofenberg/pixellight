@@ -29,6 +29,7 @@ extern "C" {
 	#include <Lua/lauxlib.h>
 }
 #include <PLCore/Log/Log.h>
+#include <PLCore/File/File.h>
 #include "PLScriptLua/LuaContext.h"
 #include "PLScriptLua/RTTIObjectPointer.h"
 #include "PLScriptLua/RTTIObjectMethodPointer.h"
@@ -300,6 +301,67 @@ bool Script::SetSourceCode(const String &sSourceCode)
 
 	// Error!
 	return false;
+}
+
+void Script::GetAssociatedFilenames(Array<String> &lstFilenames)
+{
+	// We want to have a list of script filenames which were included within this script
+	// -> It appears that there's no "easy" way in Lua to get this kind of information :/
+
+	// Contains "Application", "Interaction" and so on (no final filenames)
+	Array<String> lstRequire;
+
+	// Get a list of loaded "require"-files
+	{ // -> The files loaded within a Lua script by using "require" can be accessed by using the
+		//    global control table variable "_LOADED". See http://www.lua.org/pil/8.1.html for details.
+		lua_getfield(m_pLuaState, LUA_REGISTRYINDEX, "_LOADED");
+		if (lua_istable(m_pLuaState, -1)) {
+			lua_pushnil(m_pLuaState);
+			while (lua_next(m_pLuaState, -2)) {
+				if (lua_isstring(m_pLuaState, -2))
+					lstRequire.Add(lua_tostring(m_pLuaState, -2));
+				lua_pop(m_pLuaState, 1);
+			}
+		}
+
+		// Pop the table from the Lua stack
+		lua_pop(m_pLuaState, 1);
+	}
+
+	// Get the content of "package.path" used by "require" to search for a Lua loader
+	// -> The content looks like "?.lua;C:\SomePath\?.lua;"
+	const String sPackagePath = GetGlobalVariable("path", "package");
+
+	// Iterate over the "require"-list
+	const String sToReplace = "?.";
+	for (uint32 i=0; i<lstRequire.GetNumOfElements(); i++) {
+		// Get the current "require"
+		const String sRequire = lstRequire[i] + '.';
+
+		// Get the index of the first ";" within the package path
+		int nPreviousIndex = 0;
+		int nIndex = sPackagePath.IndexOf(';');
+		while (nIndex>-1) {
+			// Get current package search path, we now have e.g. "C:\SomePath\?.lua"
+			String sFilename = sPackagePath.GetSubstring(nPreviousIndex, nIndex-nPreviousIndex);
+
+			// Replace "?." with the "require"-name
+			sFilename.Replace(sToReplace, sRequire);
+
+			// Does this file exist?
+			if (File(sFilename).Exists()) {
+				// We found a match!
+				lstFilenames.Add(sFilename);
+
+				// Get us out of the while-loop
+				nIndex = -1;
+			} else {
+				// Get the index of the next ";" within the package path
+				nPreviousIndex = nIndex + 1;
+				nIndex = sPackagePath.IndexOf(';', nPreviousIndex);
+			}
+		}
+	}
 }
 
 void Script::GetGlobalVariables(Array<String> &lstGlobalVariables, const String &sNamespace)

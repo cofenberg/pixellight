@@ -68,6 +68,44 @@ bool LoadableManager::HasInstance()
 //[-------------------------------------------------------]
 /**
 *  @brief
+*    Returns loadable types by using a loadable extension
+*/
+void LoadableManager::GetTypesByExtension(const String &sExtension, Array<LoadableType*> &lstTypes)
+{
+	RegisterClasses();
+
+	// Loop through all registered loadable types
+	for (uint32 i=0; i<m_lstTypes.GetNumOfElements(); i++) {
+		// Get the current loadabel type
+		LoadableType *pLoadableType = m_lstTypes[i];
+
+		// Check whether or not there's at least one loader capable of dealing with the given extension
+		if (pLoadableType->GetLoaderByExtension(sExtension))
+			lstTypes.Add(pLoadableType);
+	}
+}
+
+/**
+*  @brief
+*    Returns loaders by using a loadable extension
+*/
+void LoadableManager::GetLoadersByExtension(const String &sExtension, Array<Loader*> &lstLoaders)
+{
+	RegisterClasses();
+
+	// Loop through all registered loaders
+	for (uint32 i=0; i<m_lstLoaders.GetNumOfElements(); i++) {
+		// Get the current loader
+		Loader *pLoader = m_lstLoaders[i];
+
+		// Check whether or not the loader is capable of dealing with the given extension
+		if (pLoader->IsFormatSupported(sExtension))
+			lstLoaders.Add(pLoader);
+	}
+}
+
+/**
+*  @brief
 *    Returns whether loading is supported for the given format
 */
 bool LoadableManager::IsFormatLoadSupported(const String &sExtension, const String &sType)
