@@ -406,8 +406,10 @@ uint32 Gui::FillMenuWindowRec(QMenu &cQMenu, const String &sBaseClass)
 */
 void Gui::ResetAndFillQFileSystemWatcher()
 {
-	// Remove all files from the Qt file system watcher instance
-	m_pQFileSystemWatcher->removePaths(m_pQFileSystemWatcher->files());
+	// Remove all files from the Qt file system watcher instance only when files where set
+	// This avoids a warning printed by Qt into the console "QFileSystemWatcher::removePaths: list is empty"
+	if(m_pQFileSystemWatcher->files().count())
+		m_pQFileSystemWatcher->removePaths(m_pQFileSystemWatcher->files());
 
 	// Update the Qt file system watcher instance
 	if (m_pQActionAutomaticReload && m_pQActionAutomaticReload->isChecked()) {

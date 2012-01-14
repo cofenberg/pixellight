@@ -1,3 +1,8 @@
+>> 14.01.2012
+[SW]
+PLViewerQt: Avoid that Qt prints the warning "QFileSystemWatcher::removePaths: list is empty" when QFileSystemWatcher::removePaths gets called with an empty list
+
+
 >> 13.01.2012
 [CO]
 - Changed the names of the applications shown to the user to a less cryptic and more human readable "PixelLight viewer" and "PixelLight viewer (Qt)"
