@@ -1,3 +1,13 @@
+>> 14.01.2012
+[SW]
+PLFrontendQt:
+- FrontendMainWindow: added linux part of an workaround to avoid that the "render window" process mouse move input events while the user moves/resize the toplevel window.
+  Added also a workaround for the same problem when the user drags an DockWidget. The only thing which can't be worked around is that the "render window" processes mouse input events while the user resize a DockWidget.
+  This is nearly impossible to solve, because in this case no widget gets an focus in/out event. A solution might be to disable processing the mouse input
+  events from the main mouse pointer (also used by the windowing system) by PLInput when the mouse cursor leaves the area of the render window (leave event).
+
+
+
 >> 08.01.2012
 [CO]
 PLFrontendQt:

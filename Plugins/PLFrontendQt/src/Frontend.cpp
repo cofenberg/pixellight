@@ -29,6 +29,7 @@
 #include "PLFrontendQt/FrontendMainWindow.h"
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/Frontend.h"
+#include <QLayout>
 
 
 //[-------------------------------------------------------]
@@ -151,9 +152,8 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 handle Frontend::GetNativeWindowHandle() const
 {
 	if (m_pMainWindow) {
-		// Get the central widget of the Qt main window (don't use "GetCentralWidget()" in here)
-		QWidget *pCentralWidget = m_pMainWindow->centralWidget();
-
+		// Get the render widget
+		QWidget *pCentralWidget = m_pMainWindow->m_pRenderWidget;
 		// Get window system identifier of the widget
 		if (pCentralWidget)
 			return (handle)(pCentralWidget->winId());
@@ -388,8 +388,8 @@ QWidget *Frontend::GetCentralWidget() const
 
 	// Is there a Qt main window?
 	if (m_pMainWindow) {
-		// Get the central widget, if there's one
-		pQWidget = m_pMainWindow->centralWidget();
+		// Get the render window, if there's one
+		pQWidget = m_pMainWindow->m_pRenderWidget;
 
 		// In case there's no central widget, use the Qt main window instead
 		// so that we can return at least "something" which may do the job as well

@@ -77,6 +77,7 @@ class FrontendMainWindow : public QMainWindow {
 		*    The dock widget manager of this main window
 		*/
 		PLFRONTENDQT_API DockWidgetManager &GetDockWidgetManager();
+		virtual bool eventFilter(QObject *pQObject, QEvent *pQEvent);
 
 
 	//[-------------------------------------------------------]
@@ -116,7 +117,6 @@ class FrontendMainWindow : public QMainWindow {
 	//[ Protected virtual QWidget functions                   ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void mousePressEvent(QMouseEvent *) override;
 		virtual void keyPressEvent(QKeyEvent *) override;
 		virtual void focusInEvent(QFocusEvent *) override;
 		virtual void focusOutEvent(QFocusEvent *) override;
@@ -126,6 +126,9 @@ class FrontendMainWindow : public QMainWindow {
 		virtual void dropEvent(QDropEvent *) override;
 		#if defined(Q_WS_WIN)
 			virtual bool winEvent(MSG *message, long *result) override;
+		#endif
+		#if defined(Q_WS_X11)
+			virtual bool x11Event(XEvent *);
 		#endif
 
 
@@ -137,6 +140,7 @@ class FrontendMainWindow : public QMainWindow {
 		bool			   m_bVisible;				/**< Was the widget made visible? (independent of the real Qt widget visibility state) */
 		int				   m_nWindowRedrawTimerID;	/**< Window redraw timer */
 		DockWidgetManager *m_pDockWidgetManager;	/**< Dock widget manager of this main window, can be a null pointer */
+		QWidget			  *m_pRenderWidget;
 
 
 };

@@ -67,6 +67,11 @@ class InternalQDockWidget : public QDockWidget {
 		InternalQDockWidget(DockWidget &cDockWidget, QWidget *pQWidgetParent) : QDockWidget(pQWidgetParent),
 			m_pDockWidget(&cDockWidget)
 		{
+			// Enable getting input focus when the user clicks on the header part of the QDockWidget.
+			// Normaly the QDockWidget itself or at least its titlebar doesn't can get input focus.
+			// In conjunction with not setting the render window directly as the central window of the QMainWindow
+			// solves the "problem" that the "render window" process mouse move input events while the user drags an QDockWidget
+			setFocusPolicy(Qt::ClickFocus);
 			// By default, when someone is closing the dock widget Qt hides instead of deletes it
 			// -> We could write
 			//        setAttribute(Qt::WA_DeleteOnClose);	// Delete the dock widget instead of hiding it when someone is closing it
