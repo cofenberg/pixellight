@@ -115,7 +115,8 @@ FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) :
 	m_nUpdateInterval(10),
 	m_nUpdateTimerID(0),
 	m_pDockWidgetManager(nullptr),
-	m_bInitialized(false)
+	m_bInitialized(false),
+	m_pRenderWidget(nullptr)
 {
 	// Tell the frontend about this instance at once because it may already be required during frontend life cycle initialization
 	m_pFrontendQt->SetMainWindow(this);
@@ -123,20 +124,20 @@ FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) :
 	// This solves, in conjunction with the change that a DockWidget can receive input focus, the "problem" that the "render window"
 	// processes mouse move input event while a user drags a QDockwidget.
 	// Note: The centralWidget of an QMainWindow becomes the input focus, when an docked QDockWidget gets dragged by the user.
-	QWidget *central = new QWidget(this);
-	central->setLayout(new QVBoxLayout);
+	QWidget *pQCentralWidget = new QWidget(this);
+	pQCentralWidget->setLayout(new QVBoxLayout);
 	m_pRenderWidget = new FrontendRenderWindow(this);
 	// Set focus policy to ClickFocus. Normaly a QWidget doesn't get input focus via mouse click on the widget itself.
 	// With this policy the widget gets input focus when the user does an mous click while the cursor is in the widget area.
 	m_pRenderWidget->setFocusPolicy(Qt::ClickFocus);
-	central->layout()->addWidget(m_pRenderWidget);
+	pQCentralWidget->layout()->addWidget(m_pRenderWidget);
 	
 	// Install an event filter onto the render window
 	// The event filter will do the frontend pause/resume cycle when the render window gets/loose the input focus
 	m_pRenderWidget->installEventFilter(this);
 
 	// Set central widget
-	setCentralWidget(central);
+	setCentralWidget(pQCentralWidget);
 
 	// Set window title and size
 	setWindowTitle(m_pFrontendQt->GetFrontend() ? QtStringAdapter::PLToQt(m_pFrontendQt->GetFrontend()->GetContext().GetName()) : "");
