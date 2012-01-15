@@ -23,9 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <QtCore/qurl.h>
+#include <QtCore/QUrl>
 #include <QtCore/qcoreevent.h>
 #include <QtGui/qevent.h>
+#include <QtGui/QBoxLayout>
 #if defined(Q_WS_WIN)
 	#include <PLCore/PLCoreWindowsIncludes.h>
 	#include <QtGui/qwindowdefs_win.h>	// For QWidget::winEvent() usage
@@ -38,6 +39,20 @@
 #include "PLFrontendQt/FrontendRenderWindow.h"
 #include "PLFrontendQt/DockWidget/DockWidgetManager.h"
 #include "PLFrontendQt/FrontendMainWindow.h"
+#if defined(Q_WS_X11)
+#include <X11/Xlib.h> // For the X11 event type definitions
+// undefine some identifier their names are also used by other headers
+#undef Bool
+#undef None
+// put the X11 defines for FocusIn/Out event type into a enum and undefine the defines because the names are also used as names for enum values by Qt QEvent
+enum X11
+{
+	FocusInX11 = FocusIn,
+	FocusOutX11 = FocusOut
+};
+#undef FocusIn
+#undef FocusOut
+#endif
 
 
 //[-------------------------------------------------------]
@@ -100,13 +115,29 @@ FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) :
 	m_nUpdateInterval(10),
 	m_nUpdateTimerID(0),
 	m_pDockWidgetManager(nullptr),
-	m_bInitialized(false)
+	m_bInitialized(false),
+	m_pRenderWidget(nullptr)
 {
 	// Tell the frontend about this instance at once because it may already be required during frontend life cycle initialization
 	m_pFrontendQt->SetMainWindow(this);
+	// Create a dump QWidget as the central widget for the QMainWindow and add the FrontendRenderWindow as an child of this widget
+	// This solves, in conjunction with the change that a DockWidget can receive input focus, the "problem" that the "render window"
+	// processes mouse move input event while a user drags a QDockwidget.
+	// Note: The centralWidget of an QMainWindow becomes the input focus, when an docked QDockWidget gets dragged by the user.
+	QWidget *pQCentralWidget = new QWidget(this);
+	pQCentralWidget->setLayout(new QVBoxLayout);
+	m_pRenderWidget = new FrontendRenderWindow(this);
+	// Set focus policy to ClickFocus. Normaly a QWidget doesn't get input focus via mouse click on the widget itself.
+	// With this policy the widget gets input focus when the user does an mous click while the cursor is in the widget area.
+	m_pRenderWidget->setFocusPolicy(Qt::ClickFocus);
+	pQCentralWidget->layout()->addWidget(m_pRenderWidget);
+	
+	// Install an event filter onto the render window
+	// The event filter will do the frontend pause/resume cycle when the render window gets/loose the input focus
+	m_pRenderWidget->installEventFilter(this);
 
 	// Set central widget
-	setCentralWidget(new FrontendRenderWindow(this));
+	setCentralWidget(pQCentralWidget);
 
 	// Set window title and size
 	setWindowTitle(m_pFrontendQt->GetFrontend() ? QtStringAdapter::PLToQt(m_pFrontendQt->GetFrontend()->GetContext().GetName()) : "");
@@ -124,6 +155,22 @@ FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) :
 
 	// Ready to rumble, start the update-timer
 	m_nUpdateTimerID = startTimer(m_nUpdateInterval);
+}
+
+bool FrontendMainWindow::eventFilter(QObject *pQObject, QEvent *pQEvent)
+{
+	if (pQObject == m_pRenderWidget)
+	{
+		if (pQEvent->type() == QEvent::FocusIn)
+		{
+			m_pFrontendQt->OnResume();
+		}
+		else if (pQEvent->type() == QEvent::FocusOut)
+		{
+			m_pFrontendQt->OnPause();
+		}
+	}
+	return false;
 }
 
 /**
@@ -160,7 +207,7 @@ void FrontendMainWindow::MakeVisible()
 		show();
 
 		// Activate the window by giving it the focus
-		setFocus(Qt::ActiveWindowFocusReason);
+		m_pRenderWidget->setFocus(Qt::ActiveWindowFocusReason);
 	}
 }
 
@@ -192,16 +239,6 @@ void FrontendMainWindow::timerEvent(QTimerEvent *pQTimerEvent)
 //[-------------------------------------------------------]
 //[ Protected virtual QWidget functions                   ]
 //[-------------------------------------------------------]
-void FrontendMainWindow::mousePressEvent(QMouseEvent *)
-{
-	// [HACK] As soon as there's a Qt dock widget there are focus issues?
-	// -> Central widget has the focus, click in dock widget, click back in central widget and no focus change?
-	//    Even when destroying the dock widget the focus is now completely messed up?
-	// -> When adding this single line, all those issues are gone... but why is there such an issue in the first
-	//    place? I was unable to find anything in the Qt documentation and other approaches didn't work either. :/
-	setFocus();
-}
-
 void FrontendMainWindow::keyPressEvent(QKeyEvent *pQKeyEvent)
 {
 	// Is it allowed to toggle the fullscreen mode using hotkeys? If so, toggle fullscreen right now? (Alt-Return or AltGr-Return)
@@ -275,6 +312,36 @@ void FrontendMainWindow::dropEvent(QDropEvent *pQDropEvent)
 				// Do the frontend life cycle thing - pause
 				m_pFrontendQt->OnPause();
 				return true;	// Stop the event being handled by Qt
+		}
+
+		// Let the event being handled by Qt
+		return false;
+	}
+#endif
+
+#if defined(Q_WS_X11)
+	// The linux part of the workaround for the problem described by the comment of the FrontendMainWindow::winEvent
+	// Under Linux the toplevel window becomes an FocusOut event, when the user moves/resize the window via windowmanager frame
+	bool FrontendMainWindow::x11Event(XEvent * x11Event)
+	{
+		switch (x11Event->type) {
+			case FocusInX11:
+				// Do the frontend life cycle thing - resume. Only when the render window has the input focus to avoid a double call to OnResume.
+				// Because the frontend life cycle thing is also done when the render window itself gets/loose the input focus
+				if(m_pRenderWidget->hasFocus())
+				{
+					m_pFrontendQt->OnResume();
+				}
+				break;
+
+			case FocusOutX11:
+				// Do the frontend life cycle thing - pause.  Only when the render window has the input focus to avoid a double call to OnPause.
+				// Because the frontend life cycle thing is also done when the render window itself gets/loose the input focus
+				if(m_pRenderWidget->hasFocus())
+				{
+					m_pFrontendQt->OnPause();
+				}
+				break;
 		}
 
 		// Let the event being handled by Qt
