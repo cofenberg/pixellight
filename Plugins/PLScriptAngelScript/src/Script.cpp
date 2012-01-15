@@ -689,11 +689,11 @@ void Script::AngelScriptFunctionCallback(asIScriptGeneric *pAngelScriptGeneric)
 		switch (nAngelScriptArgTypeId) {
 			case asTYPEID_BOOL:		sValue = pAngelScriptGeneric->GetArgByte(i);						break;
 			case asTYPEID_INT8:		sValue = pAngelScriptGeneric->GetArgByte(i);						break;
-			case asTYPEID_INT16:	sValue = pAngelScriptGeneric->GetArgWord(i);						break;
-			case asTYPEID_INT32:	sValue = static_cast<uint32>(pAngelScriptGeneric->GetArgDWord(i));	break;
+			case asTYPEID_INT16:	sValue = static_cast<int16>(pAngelScriptGeneric->GetArgWord(i));	break;
+			case asTYPEID_INT32:	sValue = static_cast<int32>(pAngelScriptGeneric->GetArgDWord(i));	break;
 			case asTYPEID_INT64:	sValue = pAngelScriptGeneric->GetArgQWord(i);						break;
 			case asTYPEID_UINT8:	sValue = pAngelScriptGeneric->GetArgByte(i);						break;
-			case asTYPEID_UINT16:	sValue = pAngelScriptGeneric->GetArgWord(i);						break;
+			case asTYPEID_UINT16:	sValue = static_cast<uint32>(pAngelScriptGeneric->GetArgWord(i));	break;
 			case asTYPEID_UINT32:	sValue = static_cast<uint32>(pAngelScriptGeneric->GetArgDWord(i));	break;
 			case asTYPEID_UINT64:	sValue = pAngelScriptGeneric->GetArgQWord(i);						break;
 			case asTYPEID_FLOAT:	sValue = pAngelScriptGeneric->GetArgFloat(i);						break;
