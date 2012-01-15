@@ -93,7 +93,7 @@ class GuiPickingQObject : public QObject {
 	//[ Public virtual QObject methods                        ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool eventFilter(QObject *pQObject, QEvent *pQEvent);
+		virtual bool eventFilter(QObject *pQObject, QEvent *pQEvent) override;
 
 
 	//[-------------------------------------------------------]

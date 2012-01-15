@@ -29,7 +29,6 @@
 #include "PLFrontendQt/FrontendMainWindow.h"
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/Frontend.h"
-#include <QLayout>
 
 
 //[-------------------------------------------------------]

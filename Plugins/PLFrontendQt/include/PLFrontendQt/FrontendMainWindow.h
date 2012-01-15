@@ -77,7 +77,6 @@ class FrontendMainWindow : public QMainWindow {
 		*    The dock widget manager of this main window
 		*/
 		PLFRONTENDQT_API DockWidgetManager &GetDockWidgetManager();
-		virtual bool eventFilter(QObject *pQObject, QEvent *pQEvent);
 
 		/**
 		*  @brief
@@ -90,6 +89,13 @@ class FrontendMainWindow : public QMainWindow {
 		*    - By default an update interval of 10 milliseconds resulting in 100 FPS is set
 		*/
 		PLFRONTENDQT_API void SetUpdateInterval(int nUpdateInterval = 100);
+
+
+	//[-------------------------------------------------------]
+	//[ Public virtual QObject methods                        ]
+	//[-------------------------------------------------------]
+	public:
+		virtual bool eventFilter(QObject *pQObject, QEvent *pQEvent) override;
 
 
 	//[-------------------------------------------------------]
@@ -130,17 +136,14 @@ class FrontendMainWindow : public QMainWindow {
 	//[-------------------------------------------------------]
 	protected:
 		virtual void keyPressEvent(QKeyEvent *) override;
-		virtual void focusInEvent(QFocusEvent *) override;
-		virtual void focusOutEvent(QFocusEvent *) override;
 		virtual void paintEvent(QPaintEvent *) override;
 		virtual void resizeEvent(QResizeEvent *) override;
 		virtual void dragEnterEvent(QDragEnterEvent *) override;
 		virtual void dropEvent(QDropEvent *) override;
 		#if defined(Q_WS_WIN)
 			virtual bool winEvent(MSG *message, long *result) override;
-		#endif
-		#if defined(Q_WS_X11)
-			virtual bool x11Event(XEvent *);
+		#elif defined(Q_WS_X11)
+			virtual bool x11Event(XEvent *) override;
 		#endif
 
 
@@ -154,7 +157,7 @@ class FrontendMainWindow : public QMainWindow {
 		int				   m_nUpdateTimerID;		/**< Update timer ID, "0" means no timer */
 		DockWidgetManager *m_pDockWidgetManager;	/**< Dock widget manager of this main window, can be a null pointer */
 		bool			   m_bInitialized;			/**< Is the frontend already initialized? */
-		QWidget			  *m_pRenderWidget;			/**< Pointer to the render window always valis! */
+		QWidget			  *m_pRenderWidget;			/**< Pointer to the render window, always valid! */
 
 
 };

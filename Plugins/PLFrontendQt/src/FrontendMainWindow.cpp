@@ -23,14 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <QtCore/QUrl>
+#include <QtCore/qurl.h>
 #include <QtCore/qcoreevent.h>
 #include <QtGui/qevent.h>
-#include <QtGui/QBoxLayout>
-#if defined(Q_WS_WIN)
-	#include <PLCore/PLCoreWindowsIncludes.h>
-	#include <QtGui/qwindowdefs_win.h>	// For QWidget::winEvent() usage
-#endif
+#include <QtGui/qboxlayout.h>
 #include <PLCore/Tools/Timing.h>
 #include <PLCore/Frontend/Frontend.h>
 #include <PLCore/Frontend/FrontendContext.h>
@@ -39,19 +35,21 @@
 #include "PLFrontendQt/FrontendRenderWindow.h"
 #include "PLFrontendQt/DockWidget/DockWidgetManager.h"
 #include "PLFrontendQt/FrontendMainWindow.h"
-#if defined(Q_WS_X11)
-#include <X11/Xlib.h> // For the X11 event type definitions
-// undefine some identifier their names are also used by other headers
-#undef Bool
-#undef None
-// put the X11 defines for FocusIn/Out event type into a enum and undefine the defines because the names are also used as names for enum values by Qt QEvent
-enum X11
-{
-	FocusInX11 = FocusIn,
-	FocusOutX11 = FocusOut
-};
-#undef FocusIn
-#undef FocusOut
+#if defined(Q_WS_WIN)
+	#include <PLCore/PLCoreWindowsIncludes.h>
+	#include <QtGui/qwindowdefs_win.h>	// For QWidget::winEvent() usage
+#elif defined(Q_WS_X11)
+	#include <X11/Xlib.h> // For the X11 event type definitions
+	// Undefine some identifiers, their names are also used by other headers
+	#undef Bool
+	#undef None
+	// Put the X11 defines for FocusIn/Out event type into a enum and undefine the defines because the names are also used as names for enum values by Qt QEvent
+	enum X11 {
+		FocusInX11 = FocusIn,
+		FocusOutX11 = FocusOut
+	};
+	#undef FocusIn
+	#undef FocusOut
 #endif
 
 
@@ -103,6 +101,34 @@ void FrontendMainWindow::SetUpdateInterval(int nUpdateInterval)
 
 
 //[-------------------------------------------------------]
+//[ Public virtual QObject methods                        ]
+//[-------------------------------------------------------]
+bool FrontendMainWindow::eventFilter(QObject *pQObject, QEvent *pQEvent)
+{
+	if (pQObject == m_pRenderWidget) {
+		switch (pQEvent->type()) {
+			case QEvent::FocusIn:
+				// Do the frontend life cycle thing - resume
+				m_pFrontendQt->OnResume();
+
+				// Done - filter the event out, i.e. stop it being handled further
+				return true;
+
+			case QEvent::FocusOut:
+				// Do the frontend life cycle thing - pause
+				m_pFrontendQt->OnPause();
+
+				// Done - filter the event out, i.e. stop it being handled further
+				return true;
+		}
+	}
+
+	// Pass the event on to the parent class
+	return QObject::eventFilter(pQObject, pQEvent);
+}
+
+
+//[-------------------------------------------------------]
 //[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
@@ -120,24 +146,29 @@ FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) :
 {
 	// Tell the frontend about this instance at once because it may already be required during frontend life cycle initialization
 	m_pFrontendQt->SetMainWindow(this);
-	// Create a dump QWidget as the central widget for the QMainWindow and add the FrontendRenderWindow as an child of this widget
-	// This solves, in conjunction with the change that a DockWidget can receive input focus, the "problem" that the "render window"
-	// processes mouse move input event while a user drags a QDockwidget.
-	// Note: The centralWidget of an QMainWindow becomes the input focus, when an docked QDockWidget gets dragged by the user.
-	QWidget *pQCentralWidget = new QWidget(this);
-	pQCentralWidget->setLayout(new QVBoxLayout);
-	m_pRenderWidget = new FrontendRenderWindow(this);
-	// Set focus policy to ClickFocus. Normaly a QWidget doesn't get input focus via mouse click on the widget itself.
-	// With this policy the widget gets input focus when the user does an mous click while the cursor is in the widget area.
-	m_pRenderWidget->setFocusPolicy(Qt::ClickFocus);
-	pQCentralWidget->layout()->addWidget(m_pRenderWidget);
-	
-	// Install an event filter onto the render window
-	// The event filter will do the frontend pause/resume cycle when the render window gets/loose the input focus
-	m_pRenderWidget->installEventFilter(this);
 
-	// Set central widget
-	setCentralWidget(pQCentralWidget);
+	{ // Create a dump QWidget as the central widget for the QMainWindow and add the FrontendRenderWindow as a child of this widget.
+		// -> This solves, in conjunction with the change that a DockWidget can receive input focus, the "problem" that the "render window"
+		//    processes mouse move input event while a user drags a QDockWidget.
+		// -> Note: The central widget of a QMainWindow receives the input focus when a docked QDockWidget gets dragged by the user
+		QWidget *pQCentralWidget = new QWidget(this);
+		QVBoxLayout *pQVBoxLayout = new QVBoxLayout;
+		pQVBoxLayout->setContentsMargins(0, 0, 0, 0);	// No visible border, please
+		pQCentralWidget->setLayout(pQVBoxLayout);
+		m_pRenderWidget = new FrontendRenderWindow(this);
+
+		// Set focus policy to "Qt::ClickFocus". Normally a QWidget doesn't get input focus via mouse click on the widget itself.
+		// With this policy the widget gets the input focus when the user performs a mouse click while the cursor is inside the widget area.
+		m_pRenderWidget->setFocusPolicy(Qt::ClickFocus);
+		pQCentralWidget->layout()->addWidget(m_pRenderWidget);
+
+		// Install an event filter onto the render window.
+		// -> The event filter will do the frontend pause/resume cycle when the render window gets/loose the input focus
+		m_pRenderWidget->installEventFilter(this);
+
+		// Set central widget
+		setCentralWidget(pQCentralWidget);
+	}
 
 	// Set window title and size
 	setWindowTitle(m_pFrontendQt->GetFrontend() ? QtStringAdapter::PLToQt(m_pFrontendQt->GetFrontend()->GetContext().GetName()) : "");
@@ -155,22 +186,6 @@ FrontendMainWindow::FrontendMainWindow(Frontend &cFrontendQt) :
 
 	// Ready to rumble, start the update-timer
 	m_nUpdateTimerID = startTimer(m_nUpdateInterval);
-}
-
-bool FrontendMainWindow::eventFilter(QObject *pQObject, QEvent *pQEvent)
-{
-	if (pQObject == m_pRenderWidget)
-	{
-		if (pQEvent->type() == QEvent::FocusIn)
-		{
-			m_pFrontendQt->OnResume();
-		}
-		else if (pQEvent->type() == QEvent::FocusOut)
-		{
-			m_pFrontendQt->OnPause();
-		}
-	}
-	return false;
 }
 
 /**
@@ -248,18 +263,6 @@ void FrontendMainWindow::keyPressEvent(QKeyEvent *pQKeyEvent)
 	}
 }
 
-void FrontendMainWindow::focusInEvent(QFocusEvent *)
-{
-	// Do the frontend life cycle thing - resume
-	m_pFrontendQt->OnResume();
-}
-
-void FrontendMainWindow::focusOutEvent(QFocusEvent *)
-{
-	// Do the frontend life cycle thing - pause
-	m_pFrontendQt->OnPause();
-}
-
 void FrontendMainWindow::paintEvent(QPaintEvent *)
 {
 	// Qt only calls this method if the draw area isn't null
@@ -305,43 +308,53 @@ void FrontendMainWindow::dropEvent(QDropEvent *pQDropEvent)
 		switch (message->message) {
 			case WM_EXITSIZEMOVE:
 				// Do the frontend life cycle thing - resume
-				m_pFrontendQt->OnResume();
-				return true;	// Stop the event being handled by Qt
+				// -> Do only do this when the render window has the input focus to avoid a double call to "OnResume()"
+				// -> The frontend life cycle thing is also done when the render window itself gets/looses the input focus (see "FrontendMainWindow::eventFilter()")
+				if (m_pRenderWidget->hasFocus())
+					m_pFrontendQt->OnResume();
+
+				// Stop the event being handled by Qt
+				return true;
 
 			case WM_ENTERSIZEMOVE:
 				// Do the frontend life cycle thing - pause
-				m_pFrontendQt->OnPause();
-				return true;	// Stop the event being handled by Qt
+				// -> Do only do this when the render window has the input focus to avoid a double call to "OnResume()"
+				// -> The frontend life cycle thing is also done when the render window itself gets/looses the input focus (see "FrontendMainWindow::eventFilter()")
+				if (m_pRenderWidget->hasFocus())
+					m_pFrontendQt->OnPause();
+
+				// Stop the event being handled by Qt
+				return true;
 		}
 
 		// Let the event being handled by Qt
 		return false;
 	}
-#endif
-
-#if defined(Q_WS_X11)
-	// The linux part of the workaround for the problem described by the comment of the FrontendMainWindow::winEvent
-	// Under Linux the toplevel window becomes an FocusOut event, when the user moves/resize the window via windowmanager frame
-	bool FrontendMainWindow::x11Event(XEvent * x11Event)
+#elif defined(Q_WS_X11)
+	// The Linux part of the workaround for the problem described by the comment of the "FrontendMainWindow::winEvent()".
+	// -> Under Linux the top level window receives an "FocusOut"-event when the user moves/resize the window via window manager frame
+	bool FrontendMainWindow::x11Event(XEvent *pXEvent)
 	{
-		switch (x11Event->type) {
+		switch (pXEvent->type) {
 			case FocusInX11:
-				// Do the frontend life cycle thing - resume. Only when the render window has the input focus to avoid a double call to OnResume.
-				// Because the frontend life cycle thing is also done when the render window itself gets/loose the input focus
-				if(m_pRenderWidget->hasFocus())
-				{
+				// Do the frontend life cycle thing - resume
+				// -> Do only do this when the render window has the input focus to avoid a double call to "OnResume()"
+				// -> The frontend life cycle thing is also done when the render window itself gets/looses the input focus (see "FrontendMainWindow::eventFilter()")
+				if (m_pRenderWidget->hasFocus())
 					m_pFrontendQt->OnResume();
-				}
-				break;
+
+				// Stop the event being handled by Qt
+				return true;
 
 			case FocusOutX11:
-				// Do the frontend life cycle thing - pause.  Only when the render window has the input focus to avoid a double call to OnPause.
-				// Because the frontend life cycle thing is also done when the render window itself gets/loose the input focus
-				if(m_pRenderWidget->hasFocus())
-				{
+				// Do the frontend life cycle thing - pause
+				// -> Do only do this when the render window has the input focus to avoid a double call to "OnResume()"
+				// -> The frontend life cycle thing is also done when the render window itself gets/looses the input focus (see "FrontendMainWindow::eventFilter()")
+				if (m_pRenderWidget->hasFocus())
 					m_pFrontendQt->OnPause();
-				}
-				break;
+
+				// Stop the event being handled by Qt
+				return true;
 		}
 
 		// Let the event being handled by Qt
