@@ -83,7 +83,7 @@ void DockWidgetSceneGraphQObject::QtSlotTreeViewDoubleClicked(const QModelIndex 
 
 void DockWidgetSceneGraphQObject::QtSlotFilterTypeChanged(int filterId)
 {
-	m_pDockWidgetSceneGraph->m_pSortAndFilterModel->setFilterRole((filterId == ByClassName) ? DataModels::SceneGraphTreeModel::ClassNameRole : Qt::DisplayRole);
+	m_pDockWidgetSceneGraph->m_pSortAndFilterModel->setFilterRole((filterId == ByClassName) ? DataModels::SceneGraphTreeModel::ClassNameRole : static_cast<int>(Qt::DisplayRole));
 }
 
 void DockWidgetSceneGraphQObject::QtSlotFilterChanged(const QString &text)
