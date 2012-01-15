@@ -343,8 +343,9 @@ void FrontendMainWindow::dropEvent(QDropEvent *pQDropEvent)
 				if (m_pRenderWidget->hasFocus())
 					m_pFrontendQt->OnResume();
 
-				// Stop the event being handled by Qt
-				return true;
+				// Lookout! Unlike the Windows part, don't stop the event being handled by Qt by writing "return true;"
+				// -> Else the focus will not be handled correctly
+				break;
 
 			case FocusOutX11:
 				// Do the frontend life cycle thing - pause
@@ -353,8 +354,9 @@ void FrontendMainWindow::dropEvent(QDropEvent *pQDropEvent)
 				if (m_pRenderWidget->hasFocus())
 					m_pFrontendQt->OnPause();
 
-				// Stop the event being handled by Qt
-				return true;
+				// Lookout! Unlike the Windows part, don't stop the event being handled by Qt by writing "return true;"
+				// -> Else the focus will not be handled correctly
+				break;
 		}
 
 		// Let the event being handled by Qt
