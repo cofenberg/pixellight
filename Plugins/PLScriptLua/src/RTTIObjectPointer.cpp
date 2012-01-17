@@ -239,6 +239,12 @@ void RTTIObjectPointer::CallMetamethod(lua_State *pLuaState)
 	// Nothing to do in here
 }
 
+void RTTIObjectPointer::ToStringMetamethod(lua_State *pLuaState)
+{
+	// Convert RTTI class instance pointer into a string
+	lua_pushstring(pLuaState, Type<Object*>::ConvertToString(m_pRTTIObject));
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

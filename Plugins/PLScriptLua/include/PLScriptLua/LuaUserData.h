@@ -216,6 +216,18 @@ class LuaUserData : private PLCore::RefCount<LuaUserData> {
 		*/
 		virtual void CallMetamethod(lua_State *pLuaState) = 0;
 
+		/*
+		*  @brief
+		*    Lua __tostring metamethod callback (called when Lua tries to convert the user data into a string)
+		*
+		*  @param[in] pLuaState
+		*    Lua state
+		*
+		*  @see
+		*    - "Lua 5.1 Reference Manual " -> "5.1 - Basic Functions" -> "If the metatable of e has a "__tostring" field, then tostring calls the corresponding value with e as argument, and uses the result of the call as its result." -> http://www.lua.org/manual/5.1/manual.html
+		*/
+		virtual void ToStringMetamethod(lua_State *pLuaState) = 0;
+
 
 	//[-------------------------------------------------------]
 	//[ Protected data                                        ]
@@ -326,6 +338,21 @@ class LuaUserData : private PLCore::RefCount<LuaUserData> {
 		*    - "Lua 5.1 Reference Manual " -> "2.8 - Metatables" -> ""call": called when Lua calls a value" -> http://www.lua.org/manual/5.1/manual.html
 		*/
 		static int LuaCallMetamethodCallback(lua_State *pLuaState);
+
+		/*
+		*  @brief
+		*    Lua __tostring metamethod callback (called when Lua tries to convert the user data into a string)
+		*
+		*  @param[in] pLuaState
+		*    Lua state
+		*
+		*  @return
+		*    Number of parameters to return to Lua
+		*
+		*  @see
+		*    - "Lua 5.1 Reference Manual " -> "5.1 - Basic Functions" -> "If the metatable of e has a "__tostring" field, then tostring calls the corresponding value with e as argument, and uses the result of the call as its result." -> http://www.lua.org/manual/5.1/manual.html
+		*/
+		static int LuaToStringMetamethodCallback(lua_State *pLuaState);
 
 
 	//[-------------------------------------------------------]

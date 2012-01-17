@@ -115,6 +115,7 @@ class RTTIObjectPointer : public LuaUserData {
 		virtual int NewIndexMetamethod(lua_State *pLuaState) override;
 		virtual void CGMetamethod(lua_State *pLuaState) override;
 		virtual void CallMetamethod(lua_State *pLuaState) override;
+		virtual void ToStringMetamethod(lua_State *pLuaState) override;
 
 
 	//[-------------------------------------------------------]

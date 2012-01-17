@@ -75,6 +75,11 @@ void LuaUserData::CreateMetatable(lua_State *pLuaState)
 	lua_pushcfunction(pLuaState, LuaCallMetamethodCallback);
 	lua_rawset(pLuaState, -3);
 
+	// Lua __tostring metamethod callback (called when Lua tries to convert the user data into a string)
+	lua_pushstring(pLuaState, "__tostring");
+	lua_pushcfunction(pLuaState, LuaToStringMetamethodCallback);
+	lua_rawset(pLuaState, -3);
+
 	lua_rawset(pLuaState, LUA_REGISTRYINDEX);
 }
 
@@ -258,6 +263,26 @@ int LuaUserData::LuaCallMetamethodCallback(lua_State *pLuaState)
 	if (pLuaUserData) {
 		// Call the virtual method
 		pLuaUserData->CallMetamethod(pLuaState);
+	}
+
+	// Done, inform Lua what's on the stack
+	return lua_gettop(pLuaState) - nLuaStackTop;
+}
+
+/*
+*  @brief
+*    Lua __tostring metamethod callback (called when Lua tries to convert the user data into a string)
+*/
+int LuaUserData::LuaToStringMetamethodCallback(lua_State *pLuaState)
+{
+	// Get the current top of the Lua stack
+	const int nLuaStackTop = lua_gettop(pLuaState);
+
+	// Get user data from the Lua stack without removing it
+	LuaUserData *pLuaUserData = GetUserDataFromLuaStack(pLuaState, 1);
+	if (pLuaUserData) {
+		// Call the virtual method
+		pLuaUserData->ToStringMetamethod(pLuaState);
 	}
 
 	// Done, inform Lua what's on the stack

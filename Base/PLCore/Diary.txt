@@ -17,6 +17,8 @@ PLScriptBindings:
 - Added "Object *ScriptBinding_PL_ClassManager::Create(String sClass, String sParameters)" and
   "Object *ScriptBinding_PL_ClassManager::CreateByConstructor(String sClass, String sConstructor, String sConstructorParameters, String sParameters)"
   making it possible to create RTTI class instance via script
+PLScriptLua:
+- "LuaUserData": Implemented Lua __tostring metamethod callback (called when Lua tries to convert the user data into a string)
 
 
 
