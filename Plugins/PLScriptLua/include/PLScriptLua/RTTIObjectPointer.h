@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Event/EventHandler.h>
 #include "PLScriptLua/LuaUserData.h"
 
 
@@ -119,10 +120,22 @@ class RTTIObjectPointer : public LuaUserData {
 
 
 	//[-------------------------------------------------------]
-	//[ Protected data                                        ]
+	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
-	protected:
-		PLCore::Object *m_pRTTIObject;	/**< Pointer to the RTTI object to wrap, can be a null pointer */
+	private:
+		/**
+		*  @brief
+		*    Called when the RTTI object assigned with this wrapper was destroyed
+		*/
+		void OnDestroy();
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<>  m_cEventHandlerOnDestroy;	/**< "OnDestroy" event handler */
+		PLCore::Object		   *m_pRTTIObject;				/**< Pointer to the RTTI object to wrap, can be a null pointer */
 
 
 };

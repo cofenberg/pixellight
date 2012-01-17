@@ -84,7 +84,7 @@ int RTTIObjectSignalPointer::IndexMetamethod(lua_State *pLuaState)
 		if (nMethod != RTTIObjectSignalMethodPointer::MethodUnknown) {
 			// It's a build in signal method... just put another user data instance on the Lua stack...
 			// The destruction of the new RTTIObjectSignalMethodPointer instance is done by the Lua garbage collector
-			new RTTIObjectSignalMethodPointer(*m_pScript, m_pRTTIObject, m_pDynEvent, nMethod);
+			new RTTIObjectSignalMethodPointer(*m_pScript, GetObject(), m_pDynEvent, nMethod);
 
 			// Done
 			return 1;
@@ -113,7 +113,7 @@ int RTTIObjectSignalPointer::NewIndexMetamethod(lua_State *pLuaState)
 void RTTIObjectSignalPointer::CallMetamethod(lua_State *pLuaState)
 {
 	// Is there a RTTI object and a RTTI object signal?
-	if (m_pRTTIObject && m_pDynEvent) {
+	if (GetObject() && m_pDynEvent) {
 		// Get the current Lua function parameters on the Lua stack as string
 		Array<String> lstTempStrings;
 		const String sParams = RTTIObjectMethodPointer::GetLuaFunctionParametersAsString(*m_pScript, *m_pDynEvent, true, lstTempStrings);

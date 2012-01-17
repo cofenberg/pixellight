@@ -258,7 +258,7 @@ int RTTIObjectMethodPointer::NewIndexMetamethod(lua_State *pLuaState)
 void RTTIObjectMethodPointer::CallMetamethod(lua_State *pLuaState)
 {
 	// Is there a RTTI object and a RTTI object method?
-	if (m_pRTTIObject && m_pDynFunc) {
+	if (GetObject() && m_pDynFunc) {
 		// Call the dynamic function
 		CallDynFunc(*m_pScript, *m_pDynFunc, true);
 	}

@@ -70,11 +70,14 @@ void RTTIObjectPointer::LuaStackPush(Script &cScript, Object *pRTTIObject)
 *    Constructor
 */
 RTTIObjectPointer::RTTIObjectPointer(Script &cScript, Object *pRTTIObject, EType nType) : LuaUserData(cScript, nType),
+	m_cEventHandlerOnDestroy(&RTTIObjectPointer::OnDestroy, this),
 	m_pRTTIObject(pRTTIObject)
 {
 	// Add RTTI object reference
-	if (m_pRTTIObject)
+	if (m_pRTTIObject) {
 		m_pRTTIObject->AddReference();
+		m_pRTTIObject->SignalDestroyed.Connect(m_cEventHandlerOnDestroy);
+	}
 }
 
 /**
@@ -243,6 +246,20 @@ void RTTIObjectPointer::ToStringMetamethod(lua_State *pLuaState)
 {
 	// Convert RTTI class instance pointer into a string
 	lua_pushstring(pLuaState, Type<Object*>::ConvertToString(m_pRTTIObject));
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Called when the RTTI object assigned with this wrapper was destroyed
+*/
+void RTTIObjectPointer::OnDestroy()
+{
+	// Argh! Mayday! We lost our RTTI object!
+	m_pRTTIObject = nullptr;
 }
 
 

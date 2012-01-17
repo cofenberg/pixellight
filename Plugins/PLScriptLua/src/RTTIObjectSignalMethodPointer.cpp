@@ -103,7 +103,7 @@ int RTTIObjectSignalMethodPointer::NewIndexMetamethod(lua_State *pLuaState)
 void RTTIObjectSignalMethodPointer::CallMetamethod(lua_State *pLuaState)
 {
 	// Is there a RTTI object, a RTTI object signal and a valid build in signal method?
-	if (m_pRTTIObject && m_pDynEvent && m_nMethod != MethodUnknown) {
+	if (GetObject() && m_pDynEvent && m_nMethod != MethodUnknown) {
 		// Choose the method
 		switch (m_nMethod) {
 			// Connect method

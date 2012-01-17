@@ -19,6 +19,7 @@ PLScriptBindings:
   making it possible to create RTTI class instance via script
 PLScriptLua:
 - "LuaUserData": Implemented Lua __tostring metamethod callback (called when Lua tries to convert the user data into a string)
+- "RTTIObjectPointer" gets now informed when it's assigned object gets destroyed
 
 
 
