@@ -1,3 +1,9 @@
+>> 17.01.2012
+[CO]
+- "Camcorder": Added RTTI constructor to make it possible to e.g. create an instance of this RTTI class by using a script
+
+
+
 >> 13.01.2012
 [CO]
 - "ScriptApplication::GetBaseDirectory()" now always returns a native style path so we have something we can rely on
