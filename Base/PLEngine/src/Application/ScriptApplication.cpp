@@ -177,40 +177,33 @@ String ScriptApplication::GetScriptDirectory() const
 
 
 //[-------------------------------------------------------]
-//[ Protected virtual PLCore::AbstractLifecycle functions ]
+//[ Protected virtual PLCore::CoreApplication functions   ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Initialization function that is called prior to OnInit()
+*    Called when application should initialize itself
 */
-bool ScriptApplication::OnStart()
+void ScriptApplication::OnInit()
 {
 	// Call base implementation
-	if (EngineApplication::OnStart()) {
-		// Is there a initial script filename?
-		if (m_sInitialScriptFilename.GetLength())
-			LoadScript(m_sInitialScriptFilename);
+	EngineApplication::OnInit();
 
-		// Done
-		return true;
-	}
-
-	// Error
-	return false;
+	// Is there a initial script filename?
+	if (m_sInitialScriptFilename.GetLength())
+		LoadScript(m_sInitialScriptFilename);
 }
-
 
 /**
 *  @brief
-*    De-initialization function that is called after OnDeInit()
+*    Called when application should de-initialize itself
 */
-void ScriptApplication::OnStop()
+void ScriptApplication::OnDeInit()
 {
 	// Destroy the currently used script
 	DestroyScript();
 
 	// Call base implementation
-	EngineApplication::OnStop();
+	EngineApplication::OnDeInit();
 }
 
 

@@ -1,6 +1,9 @@
 >> 17.01.2012
 [CO]
 - "Camcorder": Added RTTI constructor to make it possible to e.g. create an instance of this RTTI class by using a script
+- "ScriptApplication": This application class is now using "OnInit()" instead of "OnStart()" and "OnDeInit()" instead of "OnStop()". A script can already
+  perform high level stuff up to the point that the complete application is implemented within the script. So, we really want this script to start when
+  everything important is known to be already initialized and ready-to-go.
 
 
 
