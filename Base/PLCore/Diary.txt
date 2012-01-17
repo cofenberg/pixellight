@@ -23,6 +23,17 @@ PLScriptLua:
 
 
 
+>> 16.01.2012
+[SW]
+PLFrontendQt:
+- FrontendMainWindow: Made the windows version of the native OS event handling the same as under linux.
+  Because, we don't do a event filtering here, so there is no reason to hide some native OS events from Qt.
+  Under windows it seems that for the events WM_ENTERSIZEMOVE/WM_EXITSIZEMOVE it doesn't break something obviously in Qt, but to be an the save side it is better to not hide any native OS events from Qt.
+  (Maybe Qt does react on these events to do some "performance" tweaks regarding resizeing the toplevel window by the user)
+  We only add additional handling for not Qt components when certain native OS events occures, because Qt itself doesn't provide any useful events for the problem we try to solve here (e.g. the camera spinns around while the user moves/resizes the window).
+
+
+
 >> 14.01.2012
 [CO]
 PLFrontendQt:
