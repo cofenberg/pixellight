@@ -13,6 +13,10 @@
   -> I'am of course not totally happy with this solution because having an initial reference count of 1 is inconsistent to "RefCount". "SoftRelease()" can also be
      misused. But I'am afraid there's no other solution, except saying "It's impossible to create an RTTI class instance from within a script"... but this solution
      was not acceptable for me either because it's limiting the use of scripting.
+PLScriptBindings:
+- Added "Object *ScriptBinding_PL_ClassManager::Create(String sClass, String sParameters)" and
+  "Object *ScriptBinding_PL_ClassManager::CreateByConstructor(String sClass, String sConstructor, String sConstructorParameters, String sParameters)"
+  making it possible to create RTTI class instance via script
 
 
 

@@ -155,6 +155,7 @@ uint32 ObjectBase::SoftRelease()
 	} else {
 		// Unlike "Release()", do not destroy this instance
 		// delete this;
+		m_nRefCount = 0;
 
 		// This object is no longer referenced
 		return 0;

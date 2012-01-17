@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Base/Class.h>
 #include <PLCore/Base/ClassManager.h>
 #include "PLScriptBindings/ScriptBinding_PL_ClassManager.h"
 
@@ -46,6 +47,56 @@ pl_implement_class(ScriptBinding_PL_ClassManager)
 bool ScriptBinding_PL_ClassManager::ScanPlugins(String sPath, bool bRecursive, bool bDelayedPluginLoading)
 {
 	return ClassManager::GetInstance()->ScanPlugins(sPath, bRecursive ? Recursive : NonRecursive, bDelayedPluginLoading);
+}
+
+Object *ScriptBinding_PL_ClassManager::Create(String sClass, String sParameters)
+{
+	// Get the requested RTTI class
+	const Class *pClass =  ClassManager::GetInstance()->GetClass(sClass);
+	if (pClass) {
+		// Create an instance of the requested RTTI class
+		Object *pObject = pClass->Create();
+
+		// By default, a created RTTI class instance has an initial reference count of 1
+		// -> This RTTI class instance was possibly created by a script, so, set an initial reference
+		//    count of 0 so that the instance is destroyed automatically as soon as it's no longer referenced
+		pObject->SoftRelease();
+
+		// Set optional parameters
+		if (pObject && sParameters.GetLength())
+			pObject->SetValues(sParameters);
+
+		// Return the created RTTI class instance
+		return pObject;
+	}
+
+	// Error!
+	return nullptr;
+}
+
+Object *ScriptBinding_PL_ClassManager::CreateByConstructor(String sClass, String sConstructor, String sConstructorParameters, String sParameters)
+{
+	// Get the requested RTTI class
+	const Class *pClass =  ClassManager::GetInstance()->GetClass(sClass);
+	if (pClass) {
+		// Create an instance of the requested RTTI class
+		Object *pObject = pClass->Create(sConstructor, sConstructorParameters);
+
+		// By default, a created RTTI class instance has an initial reference count of 1
+		// -> This RTTI class instance was possibly created by a script, so, set an initial reference
+		//    count of 0 so that the instance is destroyed automatically as soon as it's no longer referenced
+		pObject->SoftRelease();
+
+		// Set optional parameters
+		if (pObject && sParameters.GetLength())
+			pObject->SetValues(sParameters);
+
+		// Return the created RTTI class instance
+		return pObject;
+	}
+
+	// Error!
+	return nullptr;
 }
 
 

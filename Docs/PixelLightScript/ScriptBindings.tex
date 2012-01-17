@@ -74,8 +74,14 @@ Write \emph{PL.Timing.GetFramesPerSecond()} in order to get the current \ac{FPS}
 
 
 
-\section{PL.System.ClassManager}
+\section{PL.ClassManager}
 Exposes \emph{PLCore::ClassManager}-features to scripts.
 
-\paragraph{PL.System.ClassManager.Print(<string>, <boolean>, <boolean>)}
-Write \emph{PL.System.ClassManager.Print(<string>, <boolean>, <boolean>)} in order to scan a directory for compatible plugins and load them in. Directory to search in as first parameter, boolean value deciding whether or not to take sub-directories into account as second parameter, boolean value deciding whether or not its allowed to perform delayed shared library loading to speed up the program start as third parameter. Returns \emph{true} if all went fine, else \emph{false}.
+\paragraph{PL.ClassManager.ScanPlugins(<string>, <boolean>, <boolean>)}
+Write \emph{PL.ClassManager.ScanPlugins(<string>, <boolean>, <boolean>)} in order to scan a directory for compatible plugins and load them in. Directory to search in as first parameter, boolean value deciding whether or not to take sub-directories into account as second parameter, boolean value deciding whether or not its allowed to perform delayed shared library loading to speed up the program start as third parameter. Returns \emph{true} if all went fine, else \emph{false}.
+
+\paragraph{PL.ClassManager.Create(<string>, <string>)}
+Write \emph{PL.ClassManager.Create(<string>, <string>)} in order to create a new RTTI class instance by using the default constructor. Name of the RTTI class to create an instance from as first parameter and optional parameter string for the created instance as second parameter. Returns a pointer to the new RTTI class instance or a null pointer if something went wrong (maybe unknown class). Created instance has initially no references, meaning that a script usually automatically destroys the instance when no longer used.
+
+\paragraph{PL.ClassManager.CreateByConstructor(<string>, <string>, <string>, <string>)}
+Write \emph{PL.ClassManager.CreateByConstructor(<string>, <string>, <string>, <string>)} in order to create a new RTTI class instance by using a specified constructor. Name of the RTTI class to create an instance from as first parameter, constructor name as second parameter, constructor parameters as third parameter and optional parameter string for the created instance as fourth parameter. Returns a pointer to the new RTTI class instance or a null pointer if something went wrong (maybe unknown class). Created instance has initially no references, meaning that a script usually automatically destroys the instance when no longer used.
