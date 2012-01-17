@@ -319,7 +319,12 @@ Matrix4x4 &SNCamera::GetProjectionMatrix(const Rectangle &cViewport)
 	// Calculate projection matrix if required
 	if (m_bAutoUpdate && ((m_nInternalCameraFlags & RecalculateProjectionMatrix) ||
 		m_nViewportWidth != nViewportWidth || m_nViewportHeight != nViewportHeight)) {
-		// Get the viewport
+		// Ensure that the other camera properties which depend on the viewport dimension are also updated correctly
+		// -> This may lead to a "double" (in sense of "we could probably avoid one when doing more complex tests") calculation, but this in here is just an optimization and should never result in invalid settings
+		m_nInternalCameraFlags |= RecalculateFrustum;
+		m_nInternalCameraFlags |= RecalculateFrustumVertices;
+
+		// Backup the viewport dimension
 		m_nViewportWidth  = nViewportWidth;
 		m_nViewportHeight = nViewportHeight;
 
@@ -397,6 +402,15 @@ Frustum &SNCamera::GetFrustum(const Rectangle &cViewport)
 	// Calculate frustum if required
 	if (m_bAutoUpdate && ((m_nInternalCameraFlags & RecalculateFrustum) ||
 		m_nViewportWidth != nViewportWidth || m_nViewportHeight != nViewportHeight)) {
+		// Ensure that the other camera properties which depend on the viewport dimension are also updated correctly
+		// -> This may lead to a "double" (in sense of "we could probably avoid one when doing more complex tests") calculation, but this in here is just an optimization and should never result in invalid settings
+		m_nInternalCameraFlags |= RecalculateProjectionMatrix;
+		m_nInternalCameraFlags |= RecalculateFrustumVertices;
+
+		// Backup the viewport dimension
+		m_nViewportWidth  = nViewportWidth;
+		m_nViewportHeight = nViewportHeight;
+
 		// Concatenate (multiply) the view matrix and the projection matrix
 		Matrix4x4 mViewProjection = GetProjectionMatrix(cViewport);
 		mViewProjection *= GetViewMatrix();
@@ -425,6 +439,15 @@ const Array<Vector3> &SNCamera::GetFrustumVertices(const Rectangle &cViewport)
 	// Calculate frustum vertices if required
 	if ((m_nInternalCameraFlags & RecalculateFrustumVertices) ||
 		m_nViewportWidth != nViewportWidth || m_nViewportHeight != nViewportHeight) {
+		// Ensure that the other camera properties which depend on the viewport dimension are also updated correctly
+		// -> This may lead to a "double" (in sense of "we could probably avoid one when doing more complex tests") calculation, but this in here is just an optimization and should never result in invalid settings
+		m_nInternalCameraFlags |= RecalculateProjectionMatrix;
+		m_nInternalCameraFlags |= RecalculateFrustum;
+
+		// Backup the viewport dimension
+		m_nViewportWidth  = nViewportWidth;
+		m_nViewportHeight = nViewportHeight;
+
 		// Set unit box
 		m_cFrustumVertices.Resize(8);
 		m_cFrustumVertices[0].SetXYZ(-1.0f, -1.0f, -1.0f);

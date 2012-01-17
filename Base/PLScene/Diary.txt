@@ -1,3 +1,10 @@
+>> 17.01.2012
+[CO]
+- "SNCamera": "GetProjectionMatrix()" & "GetFrustum()" & "GetFrustumVertices()": Ensure that the other camera properties which depend on the viewport
+  dimension are also updated correctly
+
+
+
 >> 12.01.2012
 [CO]
 - Bugfix: "SceneNode::AddModifier()": When informing the scene node modifier about it's initial active-state via "OnActivate()" the active state of the scene
