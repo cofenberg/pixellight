@@ -57,6 +57,9 @@ class DynParams;
 /**
 *  @brief
 *    Internal Object base class
+*
+*  @note
+*    - Initially the reference counter is 1 (Lookout! Within the "RefCount"-template it's 0)
 */
 class ObjectBase {
 
@@ -94,6 +97,73 @@ class ObjectBase {
 		*    Class of the object (do not destroy the returned instance, should never be a null pointer, unless something is *terribly* wrong ;-) )
 		*/
 		PLCORE_API virtual Class *GetClass() const;
+
+		//[-------------------------------------------------------]
+		//[ Reference counting ("RefCount"-template interface)    ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Get a pointer to the object
+		*
+		*  @return
+		*    Pointer to the reference counter's object, NEVER a null pointer!
+		*/
+		PLCORE_API const ObjectBase *GetPointer() const;
+		PLCORE_API ObjectBase *GetPointer();
+
+		/**
+		*  @brief
+		*    Increases the reference count
+		*
+		*  @return
+		*    Current reference count
+		*/
+		PLCORE_API uint32 AddReference();
+
+		/**
+		*  @brief
+		*    Decreases the reference count
+		*
+		*  @return
+		*    Current reference count
+		*
+		*  @note
+		*    - When the last reference was released, the instance is destroyed automatically
+		*/
+		PLCORE_API uint32 Release();
+
+		/**
+		*  @brief
+		*    Gets the current reference count
+		*
+		*  @return
+		*    Current reference count
+		*/
+		PLCORE_API uint32 GetRefCount() const;
+
+		//[-------------------------------------------------------]
+		//[ Reference counting                                    ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Decreases the reference count witout destroying this instance automatically
+		*
+		*  @return
+		*    Current reference count
+		*
+		*  @note
+		*    - Whenever possible, do not use this method, use "Release()" instead
+		*    - Unlike "Release()", when the last reference was released the instance is not destroyed automatically
+		*    - Use this method e.g. to release the initial set reference so e.g. a script can have the total control over an instance
+		*/
+		PLCORE_API uint32 SoftRelease();
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		uint32 m_nRefCount; /**< Reference count */
 
 
 };

@@ -72,6 +72,9 @@ void RTTIObjectPointer::LuaStackPush(Script &cScript, Object *pRTTIObject)
 RTTIObjectPointer::RTTIObjectPointer(Script &cScript, Object *pRTTIObject, EType nType) : LuaUserData(cScript, nType),
 	m_pRTTIObject(pRTTIObject)
 {
+	// Add RTTI object reference
+	if (m_pRTTIObject)
+		m_pRTTIObject->AddReference();
 }
 
 /**
@@ -80,6 +83,9 @@ RTTIObjectPointer::RTTIObjectPointer(Script &cScript, Object *pRTTIObject, EType
 */
 RTTIObjectPointer::~RTTIObjectPointer()
 {
+	// Release RTTI object reference
+	if (m_pRTTIObject)
+		m_pRTTIObject->Release();
 }
 
 /**

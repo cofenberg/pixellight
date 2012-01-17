@@ -751,7 +751,6 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
     <None Include="include\PLCore\Base\Func\FuncDesc.inl" />
     <None Include="include\PLCore\Base\MemberDesc.inl" />
     <None Include="include\PLCore\Base\Module.inl" />
-    <None Include="include\PLCore\Base\Object.inl" />
     <None Include="include\PLCore\Base\Tools\ParamsParser.inl" />
     <None Include="include\PLCore\Base\Tools\ParamsParserXml.inl" />
     <None Include="include\PLCore\Base\Type\TypeBool.inl" />

@@ -1,3 +1,21 @@
+>> 17.01.2012
+[CO]
+- "ObjectBase" is now using a reference counter. I want to be able to create RTTI class instances from within a script to be able to access loose C++ components,
+  and when this instance is no longer referenced by the script it has to be destroyed automatically. When I added script support several month ago, I didn't touch
+  this because it would have been to many changes at once - also I tried to find another solution without touching "PLCore::ObjectBase". I was unable to find another
+  solution not involving several ugly and error prone hacks. This has to be a feature directly implemented within "PLCore::ObjectBase" to keep things simple.
+  -> When just using C++, this change is uncritical because it only has an influence in case this reference counting is really used
+  -> To be on the safe side, we now have to add a reference whenever we created an RTTI instance, else when passing this object to a script, it would be destroyed by
+     the scripted automatically. Because I don't think that we're able to (or want to) add some thousands "AddReference()" without forgetting a single one, "ObjectBase"
+     is not directly derived from "RefCount<ObjectBase>". Instead the interface is reimplemented, but with an initial reference count of 1 and the additional method
+     "SoftRelease()" releasing a reference without destroying the instance automatically. This way we can use "ObjectBase" as usual, and when creating an RTTI class
+     instance we call "SoftRelease()" before we pass the object pointer into the script so that the script is now fully responsible for it's the object.
+  -> I'am of course not totally happy with this solution because having an initial reference count of 1 is inconsistent to "RefCount". "SoftRelease()" can also be
+     misused. But I'am afraid there's no other solution, except saying "It's impossible to create an RTTI class instance from within a script"... but this solution
+     was not acceptable for me either because it's limiting the use of scripting.
+
+
+
 >> 14.01.2012
 [CO]
 PLFrontendQt:

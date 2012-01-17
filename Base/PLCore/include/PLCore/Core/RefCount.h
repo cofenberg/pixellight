@@ -92,6 +92,9 @@ class RefCount {
 		*
 		*  @return
 		*    Current reference count
+		*
+		*  @note
+		*    - When the last reference was released, the instance is destroyed automatically
 		*/
 		uint32 Release();
 

@@ -57,7 +57,8 @@ pl_implement_class(Object)
 *  @brief
 *    Constructor
 */
-ObjectBase::ObjectBase()
+ObjectBase::ObjectBase() :
+	m_nRefCount(1)	// Not 0, see class comment
 {
 }
 
@@ -76,6 +77,88 @@ ObjectBase::~ObjectBase()
 Class *ObjectBase::GetClass() const
 {
 	return nullptr;
+}
+
+/**
+*  @brief
+*    Get a pointer to the object
+*/
+const ObjectBase *ObjectBase::GetPointer() const
+{
+	return this;
+}
+
+ObjectBase *ObjectBase::GetPointer()
+{
+	return this;
+}
+
+/**
+*  @brief
+*    Increases the reference count
+*/
+uint32 ObjectBase::AddReference()
+{
+	// Increment reference count
+	m_nRefCount++;
+
+	// Return current reference count
+	return m_nRefCount;
+}
+
+/**
+*  @brief
+*    Decreases the reference count
+*/
+uint32 ObjectBase::Release()
+{
+	// Decrement reference count
+	if (m_nRefCount > 1) {
+		m_nRefCount--;
+
+		// Return current reference count
+		return m_nRefCount;
+
+	// Destroy object when no references are left
+	} else {
+		delete this;
+
+		// This object is no longer
+		return 0;
+	}
+}
+
+/**
+*  @brief
+*    Gets the current reference count
+*/
+uint32 ObjectBase::GetRefCount() const
+{
+	// Return current reference count
+	return m_nRefCount;
+}
+
+/**
+*  @brief
+*    Decreases the reference count witout destroying this instance automatically
+*/
+uint32 ObjectBase::SoftRelease()
+{
+	// Decrement reference count
+	if (m_nRefCount > 1) {
+		m_nRefCount--;
+
+		// Return current reference count
+		return m_nRefCount;
+
+	// Destroy object when no references are left
+	} else {
+		// Unlike "Release()", do not destroy this instance
+		// delete this;
+
+		// This object is no longer referenced
+		return 0;
+	}
 }
 
 

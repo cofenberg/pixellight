@@ -1600,9 +1600,6 @@
     <None Include="include\PLCore\Base\Module.inl">
       <Filter>Base</Filter>
     </None>
-    <None Include="include\PLCore\Base\Object.inl">
-      <Filter>Base</Filter>
-    </None>
     <None Include="include\PLCore\Base\Event\EventDesc.inl">
       <Filter>Base\Event</Filter>
     </None>
