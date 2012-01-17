@@ -1,14 +1,23 @@
+>> 17.01.2012
+[CO]
+- "Application::OnCreateScene()": The default implementation of this method creates a scene which we never need within this viewer, so, just overwrite
+  it and do not create a scene in here
+
+
+
 >> 14.01.2012
-<<<<<<< HEAD
 [CO]
 PLViewerQt:
 - Added "ApplicationQt::GetDockWidgetManager()" and exposed it to the RTTI. I'am now able to open a dock widget via a Lua script... which is quite useful
   when working on something without opening the required dock widgets everytime manually.
 
-=======
+
+
+>> 14.01.2012
 [SW]
-PLViewerQt: Avoid that Qt prints the warning "QFileSystemWatcher::removePaths: list is empty" when QFileSystemWatcher::removePaths gets called with an empty list
->>>>>>> c71b08c1f5dc340cf03f83e1df742f74831ca6d9
+PLViewerQt:
+- Avoid that Qt prints the warning "QFileSystemWatcher::removePaths: list is empty" when QFileSystemWatcher::removePaths gets called with an empty list
+
 
 
 >> 13.01.2012

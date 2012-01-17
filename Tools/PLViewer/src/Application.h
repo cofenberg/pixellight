@@ -169,6 +169,7 @@ class Application : public PLEngine::ScriptApplication {
 	//[ Private virtual PLEngine::EngineApplication functions ]
 	//[-------------------------------------------------------]
 	private:
+		virtual void OnCreateScene(PLScene::SceneContainer &cContainer) override;
 		virtual void OnCreateInputController() override;
 
 

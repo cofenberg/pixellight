@@ -33,6 +33,7 @@
 #include <PLInput/Input/Controller.h>
 #include <PLInput/Input/Controls/Button.h>
 #include <PLScene/Scene/SPScene.h>
+#include <PLScene/Scene/SceneContainer.h>
 #include <PLEngine/SceneCreator/SceneCreatorLoadableType.h>
 #include "Application.h"
 
@@ -368,6 +369,26 @@ void Application::OnDrop(const Container<String> &lstFiles)
 //[-------------------------------------------------------]
 //[ Private virtual PLEngine::EngineApplication functions ]
 //[-------------------------------------------------------]
+void Application::OnCreateScene(SceneContainer &cContainer)
+{
+	// Set scene container flags
+	cContainer.SetFlags(SceneNode::NoCulling | SceneNode::NoPause);
+
+	// Setup scene surface painter
+	SurfacePainter *pPainter = GetPainter();
+	if (pPainter && pPainter->IsInstanceOf("PLScene::SPScene")) {
+		SPScene *pSPScene = static_cast<SPScene*>(pPainter);
+		pSPScene->SetRootContainer(cContainer.GetContainer());
+		pSPScene->SetSceneContainer(&cContainer);
+	}
+
+	// The default implementation of this method creates a scene which we never need
+	// within this viewer, so, just overwrite it and do not create a scene in here
+
+	// Set scene container
+	SetScene(&cContainer);
+}
+
 void Application::OnCreateInputController()
 {
 	// Call base implementation
