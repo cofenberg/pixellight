@@ -53,6 +53,16 @@ float ScriptBinding_PL_Timing::GetFramesPerSecond()
 	return Timing::GetInstance()->GetFramesPerSecond();
 }
 
+float ScriptBinding_PL_Timing::GetTimeScaleFactor()
+{
+	return Timing::GetInstance()->GetTimeScaleFactor();
+}
+
+bool ScriptBinding_PL_Timing::SetTimeScaleFactor(float fFactor)
+{
+	return Timing::GetInstance()->SetTimeScaleFactor(fFactor);
+}
+
 
 //[-------------------------------------------------------]
 //[ Public functions                                      ]

@@ -71,6 +71,12 @@ Write \emph{PL.Timing.GetTimeDifference()} in order to get the past time since l
 \paragraph{<float> PL.Timing.GetFramesPerSecond()}
 Write \emph{PL.Timing.GetFramesPerSecond()} in order to get the current \ac{FPS}.
 
+\paragraph{<float> PL.Timing.GetTimeScaleFactor()}
+Write \emph{PL.Timing.GetTimeScaleFactor()} in order to get the time scale factor. The global time scale factor should only be manipulated for debugging. A factor of <= 0 is NOT allowed because this may cause problems in certain situations, pause the timer instead by hand! Do NOT make the factor \emph{too} (for example > 4) extreme, this may cause problems in certain situations!
+
+\paragraph{<float> PL.Timing.SetTimeScaleFactor(<float>)}
+Write \emph{PL.Timing.SetTimeScaleFactor(<float>)} in order to set the time scale factor. Time scale as first parameter (a factor of <= 0 is NOT allowed!). Returns \emph{true} if all went fine, else \emph{false} (maybe the given factor is <= 0?).
+
 
 
 

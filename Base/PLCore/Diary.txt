@@ -1,3 +1,10 @@
+>> 18.01.2012
+[CO]
+PLScriptBindings:
+- "ScriptBinding_PL_Timing": Added "GetTimeScaleFactor()" and "SetTimeScaleFactor()"
+
+
+
 >> 17.01.2012
 [CO]
 - "ObjectBase" is now using a reference counter. I want to be able to create RTTI class instances from within a script to be able to access loose C++ components,
