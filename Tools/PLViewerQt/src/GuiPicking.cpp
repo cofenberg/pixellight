@@ -315,6 +315,12 @@ void GuiPicking::SetTransformMode(SNMTransformGizmo &cTransformGizmo, bool bTran
 				if (pSceneNodeModifer != &cTransformGizmo && pSceneNodeModifer->IsInstanceOf("PLScene::SNMTransformGizmo"))
 					pSceneNodeModifer->SetActive(false);
 			}
+		} else {
+			// When stopping a transform, unselect all axis
+			// -> The scene node the transform gizmo scene node modifier is attached to may have
+			//    been moved outside the visible area
+			// -> To handle this case we now have to perform a new axis selection
+			cTransformGizmo.SetSelected(0);
 		}
 	}
 }
