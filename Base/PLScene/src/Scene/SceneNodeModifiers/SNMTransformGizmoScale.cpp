@@ -137,50 +137,58 @@ uint32 SNMTransformGizmoScale::DetermineSelected(const Ray &cRay) const
 	// axis line to this ray/plane intersection point is calculated. If this two point are not too far away
 	// the given axis is selected.
 	if (!nSelected) {
-		// X axis
 		Plane cPlane;
+		Vector3 vMin;
+
+		// X axis
 		cPlane.ComputeND(Vector3::Zero, Vector3::UnitY);
-		Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV);
-		Vector3 vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(10.0f, 0.0f, 0.0f));
-		if ((vMin-vV).GetSquaredLength() < 0.6f) {
-			nSelected = XAxis;
-		} else {
-			// Try another plane for sure
-			cPlane.ComputeND(Vector3::Zero, Vector3::UnitZ);
-			Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV);
+		if (Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV)) {
 			vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(10.0f, 0.0f, 0.0f));
 			if ((vMin-vV).GetSquaredLength() < 0.6f)
 				nSelected = XAxis;
 		}
+		if (nSelected != XAxis) {
+			// Try another plane for sure
+			cPlane.ComputeND(Vector3::Zero, Vector3::UnitZ);
+			if (Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV)) {
+				vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(10.0f, 0.0f, 0.0f));
+				if ((vMin-vV).GetSquaredLength() < 0.6f)
+					nSelected = XAxis;
+			}
+		}
 
 		// Y axis
 		cPlane.ComputeND(Vector3::Zero, Vector3::UnitX);
-		Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV);
-		vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(0.0f, 10.0f, 0.0f));
-		if ((vMin-vV).GetSquaredLength() < 0.6f) {
-			nSelected = YAxis;
-		} else {
-			// Try another plane for sure
-			cPlane.ComputeND(Vector3::Zero, Vector3::UnitZ);
-			Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV);
+		if (Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV)) {
 			vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(0.0f, 10.0f, 0.0f));
 			if ((vMin-vV).GetSquaredLength() < 0.6f)
 				nSelected = YAxis;
 		}
+		if (nSelected != YAxis) {
+			// Try another plane for sure
+			cPlane.ComputeND(Vector3::Zero, Vector3::UnitZ);
+			if (Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV)) {
+				vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(0.0f, 10.0f, 0.0f));
+				if ((vMin-vV).GetSquaredLength() < 0.6f)
+					nSelected = YAxis;
+			}
+		}
 
 		// Z axis
 		cPlane.ComputeND(Vector3::Zero, Vector3::UnitY);
-		Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV);
-		vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(0.0f, 0.0f, 10.0f));
-		if ((vMin-vV).GetSquaredLength() < 0.6f) {
-			nSelected = ZAxis;
-		} else {
-			// Try another plane for sure
-			cPlane.ComputeND(Vector3::Zero, Vector3::UnitX);
-			Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV);
+		if (Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV)) {
 			vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(0.0f, 0.0f, 10.0f));
 			if ((vMin-vV).GetSquaredLength() < 0.6f)
 				nSelected = ZAxis;
+		}
+		if (nSelected != ZAxis) {
+			// Try another plane for sure
+			cPlane.ComputeND(Vector3::Zero, Vector3::UnitX);
+			if (Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV)) {
+				vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(0.0f, 0.0f, 10.0f));
+				if ((vMin-vV).GetSquaredLength() < 0.6f)
+					nSelected = ZAxis;
+			}
 		}
 	}
 

@@ -95,6 +95,15 @@ class SNMTransformGizmo : public SNMTransform {
 
 		/**
 		*  @brief
+		*    Sets the current selected axis (see ESelected flags)
+		*
+		*  @param[in] nSelected
+		*    Current selected axis, 0 if nothing is currently selected
+		*/
+		PLS_API void SetSelected(PLCore::uint32 nSelected);
+
+		/**
+		*  @brief
 		*    Returns whether the transform gizmo is currently in transform mode or not
 		*
 		*  @return

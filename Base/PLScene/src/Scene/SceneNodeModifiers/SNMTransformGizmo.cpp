@@ -59,6 +59,15 @@ uint32 SNMTransformGizmo::GetSelected() const
 
 /**
 *  @brief
+*    Sets the current selected axis (see ESelected flags)
+*/
+void SNMTransformGizmo::SetSelected(uint32 nSelected)
+{
+	m_nSelected = nSelected;
+}
+
+/**
+*  @brief
 *    Returns whether the transform gizmo is currently in transform mode or not
 */
 bool SNMTransformGizmo::IsTransformMode() const
