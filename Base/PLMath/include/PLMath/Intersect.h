@@ -503,12 +503,20 @@ class Intersect {
 		*    Ray position
 		*  @param[in] vRayDir
 		*    Ray direction (must be normalized)
+		*  @param[out] vIntersectionPointPos
+		*    Will receive the position of the intersection point, do only use the result when this method returned 'true'
 		*
 		*  @return
-		*    The intersection point, if there was no intersection the ray position
-		*    will be returned
+		*    'true' if the ray intersects the plane, else 'false'
+		*
+		*  @note
+		*    - By definition, a ray has an infinite length, in both directions
+		*    - "PlaneRayPositive()" only returns "true" for intersection with positive distance to plane
+		*    - "PlaneRayNegative()" only returns "true" for intersection with negative distance to plane
 		*/
-		static PLMATH_API Vector3 PlaneRay(const Plane &cPlane, const Vector3 &vRayPos, const Vector3 &vRayDir);
+		static PLMATH_API bool PlaneRay(const Plane &cPlane, const Vector3 &vRayPos, const Vector3 &vRayDir, Vector3 &vIntersectionPointPos);
+		static PLMATH_API bool PlaneRayPositive(const Plane &cPlane, const Vector3 &vRayPos, const Vector3 &vRayDir, Vector3 &vIntersectionPointPos);
+		static PLMATH_API bool PlaneRayNegative(const Plane &cPlane, const Vector3 &vRayPos, const Vector3 &vRayDir, Vector3 &vIntersectionPointPos);
 
 		/**
 		*  @brief
@@ -710,16 +718,29 @@ class Intersect {
 		*    Ray origin
 		*  @param[in]  vRayDirection
 		*    Ray direction vector
-		*  @param[out] pvIntersectionPointPos
-		*    If not a null pointer, will receive the position of the intersection point
+		*  @param[out] vIntersectionPointPos
+		*    Will receive the position of the intersection point, do only use the result when this method returned 'true'
 		*
 		*  @return
 		*    'true' if the ray intersects the triangle, else 'false'
+		*
+		*  @note
+		*    - By definition, a ray has an infinite length, in both directions
+		*    - "TriangleRayPositive()" only returns "true" for intersection with positive distance to triangle plane
+		*    - "TriangleRayNegative()" only returns "true" for intersection with negative distance to triangle plane
 		*/
 		static PLMATH_API bool TriangleRay(const Vector3 &vV1, const Vector3 &vV2,
 										   const Vector3 &vV3, const Vector3 &vN,
 										   const Vector3 &vRayOrigin, const Vector3 &vRayDirection,
-										   Vector3 *pvIntersectionPointPos = nullptr);
+										   Vector3 &vIntersectionPointPos);
+		static PLMATH_API bool TriangleRayPositive(const Vector3 &vV1, const Vector3 &vV2,
+												   const Vector3 &vV3, const Vector3 &vN,
+												   const Vector3 &vRayOrigin, const Vector3 &vRayDirection,
+												   Vector3 &vIntersectionPointPos);
+		static PLMATH_API bool TriangleRayNegative(const Vector3 &vV1, const Vector3 &vV2,
+												   const Vector3 &vV3, const Vector3 &vN,
+												   const Vector3 &vRayOrigin, const Vector3 &vRayDirection,
+												   Vector3 &vIntersectionPointPos);
 
 		/**
 		*  @brief
@@ -735,15 +756,26 @@ class Intersect {
 		*    Triangle plane normal
 		*  @param[in]  cRay
 		*    Ray to check
-		*  @param[out] pvIntersectionPointPos
-		*    If not a null pointer, will receive the position of the intersection point
+		*  @param[out] vIntersectionPointPos
+		*    Will receive the position of the intersection point, do only use the result when this method returned 'true'
 		*
 		*  @return
 		*    'true' if the ray intersects the triangle, else 'false'
+		*
+		*  @note
+		*    - By definition, a ray has an infinite length, in both directions
+		*    - "TriangleRayPositive()" only returns "true" for intersection with positive distance to triangle plane
+		*    - "TriangleRayNegative()" only returns "true" for intersection with negative distance to triangle plane
 		*/
 		static PLMATH_API bool TriangleRay(const Vector3 &vV1, const Vector3 &vV2,
 										   const Vector3 &vV3, const Vector3 &vN,
-										   const Ray &cRay, Vector3 *pvIntersectionPointPos = nullptr);
+										   const Ray &cRay, Vector3 &vIntersectionPointPos);
+		static PLMATH_API bool TriangleRayPositive(const Vector3 &vV1, const Vector3 &vV2,
+												   const Vector3 &vV3, const Vector3 &vN,
+												   const Ray &cRay, Vector3 &vIntersectionPointPos);
+		static PLMATH_API bool TriangleRayNegative(const Vector3 &vV1, const Vector3 &vV2,
+												   const Vector3 &vV3, const Vector3 &vN,
+												   const Ray &cRay, Vector3 &vIntersectionPointPos);
 
 
 };

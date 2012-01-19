@@ -956,7 +956,7 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 													}
 
 													// Check triangle intersection
-													if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, &vIntersectionPointPos)) {
+													if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, vIntersectionPointPos)) {
 														// Hit!
 														// Get squared distance
 														float fCurrentSquaredDistance = Math::Abs((vIntersectionPointPos-vLineStartPos).GetSquaredLength());
@@ -1009,7 +1009,7 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 													}
 
 													// Check triangle intersection
-													if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, &vIntersectionPointPos)) {
+													if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, vIntersectionPointPos)) {
 														// Hit!
 														// Get squared distance
 														float fCurrentSquaredDistance = Math::Abs((vIntersectionPointPos-vLineStartPos).GetSquaredLength());
@@ -1062,7 +1062,7 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 													}
 
 													// Check triangle intersection
-													if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, &vIntersectionPointPos)) {
+													if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, vIntersectionPointPos)) {
 														// Hit!
 														// Get squared distance
 														float fCurrentSquaredDistance = Math::Abs((vIntersectionPointPos-vLineStartPos).GetSquaredLength());
@@ -1112,7 +1112,7 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 												}
 
 												// Check triangle intersection
-												if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, &vIntersectionPointPos)) {
+												if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, vIntersectionPointPos)) {
 													// Hit!
 													// Get squared distance
 													float fCurrentSquaredDistance = Math::Abs((vIntersectionPointPos-vLineStartPos).GetSquaredLength());
@@ -1180,7 +1180,7 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 												}
 
 												// Check triangle intersection
-												if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, &vIntersectionPointPos)) {
+												if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, vIntersectionPointPos)) {
 													// Hit!
 													// Get squared distance
 													float fCurrentSquaredDistance = Math::Abs((vIntersectionPointPos-vLineStartPos).GetSquaredLength());
@@ -1233,7 +1233,7 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 												}
 
 												// Check triangle intersection
-												if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, &vIntersectionPointPos)) {
+												if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, vIntersectionPointPos)) {
 													// Hit!
 													// Get squared distance
 													float fCurrentSquaredDistance = Math::Abs((vIntersectionPointPos-vLineStartPos).GetSquaredLength());
@@ -1286,7 +1286,7 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 												}
 
 												// Check triangle intersection
-												if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, &vIntersectionPointPos)) {
+												if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, vIntersectionPointPos)) {
 													// Hit!
 													// Get squared distance
 													float fCurrentSquaredDistance = Math::Abs((vIntersectionPointPos-vLineStartPos).GetSquaredLength());
@@ -1336,7 +1336,7 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 											}
 
 											// Check triangle intersection
-											if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, &vIntersectionPointPos)) {
+											if (Intersect::TriangleRay(vV1, vV2, vV3, vN, vLineStartPos, vDirection, vIntersectionPointPos)) {
 												// Hit!
 												// Get squared distance
 												float fCurrentSquaredDistance = Math::Abs((vIntersectionPointPos-vLineStartPos).GetSquaredLength());

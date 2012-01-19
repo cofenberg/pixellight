@@ -91,6 +91,8 @@ SNMTransformGizmoScale::~SNMTransformGizmoScale()
 //[-------------------------------------------------------]
 uint32 SNMTransformGizmoScale::DetermineSelected(const Ray &cRay) const
 {
+	const Vector3 &vRayPos = cRay.GetPos();
+	const Vector3 &vRayDir = cRay.GetDir();
 	uint32 nSelected = 0;
 
 	// Perform ray/triangle collision detection for multiple axis selection. The distance found collision
@@ -98,33 +100,33 @@ uint32 SNMTransformGizmoScale::DetermineSelected(const Ray &cRay) const
 	// XYZ
 	Vector3 vN, vV;
 	vN.GetFaceNormal(Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 5.0f, 0.0f), Vector3(0.0f, 0.0f, 5.0f));
-	if (Intersect::TriangleRay(Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 5.0f, 0.0f), Vector3(0.0f, 0.0f, 5.0f), vN,                     cRay, &vV) ||
-		Intersect::TriangleRay(Vector3::Zero,             Vector3(0.0f, 5.0f, 0.0f), Vector3(0.0f, 0.0f, 5.0f), Vector3::NegativeUnitX, cRay, &vV) ||
-		Intersect::TriangleRay(Vector3(5.0f, 0.0f, 0.0f), Vector3::Zero,             Vector3(0.0f, 0.0f, 5.0f), Vector3::NegativeUnitY, cRay, &vV) ||
-		Intersect::TriangleRay(Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 5.0f, 0.0f), Vector3::Zero,             Vector3::NegativeUnitZ, cRay, &vV)) {
+	if (Intersect::TriangleRayNegative(Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 5.0f, 0.0f), Vector3(0.0f, 0.0f, 5.0f), vN,                     cRay, vV) ||
+		Intersect::TriangleRayNegative(Vector3::Zero,             Vector3(0.0f, 5.0f, 0.0f), Vector3(0.0f, 0.0f, 5.0f), Vector3::NegativeUnitX, cRay, vV) ||
+		Intersect::TriangleRayNegative(Vector3(5.0f, 0.0f, 0.0f), Vector3::Zero,             Vector3(0.0f, 0.0f, 5.0f), Vector3::NegativeUnitY, cRay, vV) ||
+		Intersect::TriangleRayNegative(Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 5.0f, 0.0f), Vector3::Zero,             Vector3::NegativeUnitZ, cRay, vV)) {
 		nSelected = XAxis | YAxis | ZAxis;
 	} else {
-		Vector3 vMax = cRay.GetPos();
+		Vector3 vMax = vRayPos;
 
 		// XY
-		if (Intersect::TriangleRay(Vector3(0.0f, 8.0f, 0.0f), Vector3(8.0f, 0.0f, 0.0f), Vector3(5.0f, 0.0f, 0.0f), Vector3::UnitZ, cRay, &vV) ||
-			Intersect::TriangleRay(Vector3(0.0f, 8.0f, 0.0f), Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 5.0f, 0.0f), Vector3::UnitZ, cRay, &vV)) {
+		if (Intersect::TriangleRayNegative(Vector3(0.0f, 8.0f, 0.0f), Vector3(8.0f, 0.0f, 0.0f), Vector3(5.0f, 0.0f, 0.0f), Vector3::UnitZ, cRay, vV) ||
+			Intersect::TriangleRayNegative(Vector3(0.0f, 8.0f, 0.0f), Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 5.0f, 0.0f), Vector3::UnitZ, cRay, vV)) {
 			vMax = vV;
 			nSelected = XAxis | YAxis;
 		}
 
 		// XZ
-		if ((Intersect::TriangleRay(Vector3(0.0f, 0.0f, 5.0f), Vector3(5.0f, 0.0f, 0.0f), Vector3(8.0f, 0.0f, 0.0f), Vector3::UnitY, cRay, &vV) ||
-				Intersect::TriangleRay(Vector3(0.0f, 0.0f, 5.0f), Vector3(8.0f, 0.0f, 0.0f), Vector3(0.0f, 0.0f, 8.0f), Vector3::UnitY, cRay, &vV)) &&
-			(cRay.GetPos()-vV).GetSquaredLength() > (cRay.GetPos()-vMax).GetSquaredLength()) {
+		if ((Intersect::TriangleRayNegative(Vector3(0.0f, 0.0f, 5.0f), Vector3(5.0f, 0.0f, 0.0f), Vector3(8.0f, 0.0f, 0.0f), Vector3::UnitY, cRay, vV) ||
+			 Intersect::TriangleRayNegative(Vector3(0.0f, 0.0f, 5.0f), Vector3(8.0f, 0.0f, 0.0f), Vector3(0.0f, 0.0f, 8.0f), Vector3::UnitY, cRay, vV)) &&
+			(vRayPos-vV).GetSquaredLength() > (vRayPos-vMax).GetSquaredLength()) {
 			vMax = vV;
 			nSelected = XAxis | ZAxis;
 		}
 
 		// YZ
-		if ((Intersect::TriangleRay(Vector3(0.0f, 0.0f, 8.0f), Vector3(0.0f, 8.0f, 0.0f), Vector3(0.0f, 5.0f, 0.0f), Vector3::UnitX, cRay, &vV) ||
-				Intersect::TriangleRay(Vector3(0.0f, 0.0f, 8.0f), Vector3(0.0f, 5.0f, 0.0f), Vector3(0.0f, 0.0f, 5.0f), Vector3::UnitX, cRay, &vV)) &&
-			(cRay.GetPos()-vV).GetSquaredLength() > (cRay.GetPos()-vMax).GetSquaredLength()) {
+		if ((Intersect::TriangleRayNegative(Vector3(0.0f, 0.0f, 8.0f), Vector3(0.0f, 8.0f, 0.0f), Vector3(0.0f, 5.0f, 0.0f), Vector3::UnitX, cRay, vV) ||
+			 Intersect::TriangleRayNegative(Vector3(0.0f, 0.0f, 8.0f), Vector3(0.0f, 5.0f, 0.0f), Vector3(0.0f, 0.0f, 5.0f), Vector3::UnitX, cRay, vV)) &&
+			(vRayPos-vV).GetSquaredLength() > (vRayPos-vMax).GetSquaredLength()) {
 			vMax = vV;
 			nSelected = YAxis | ZAxis;
 		}
@@ -138,44 +140,44 @@ uint32 SNMTransformGizmoScale::DetermineSelected(const Ray &cRay) const
 		// X axis
 		Plane cPlane;
 		cPlane.ComputeND(Vector3::Zero, Vector3::UnitY);
-		vV = Intersect::PlaneRay(cPlane, cRay.GetPos(), cRay.GetDir());
+		Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV);
 		Vector3 vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(10.0f, 0.0f, 0.0f));
 		if ((vMin-vV).GetSquaredLength() < 0.6f) {
 			nSelected = XAxis;
 		} else {
 			// Try another plane for sure
 			cPlane.ComputeND(Vector3::Zero, Vector3::UnitZ);
-			vV    = Intersect::PlaneRay(cPlane, cRay.GetPos(), cRay.GetDir());
-			vMin  = vV.ClosestPointOnLine(Vector3::Zero, Vector3(10.0f, 0.0f, 0.0f));
+			Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV);
+			vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(10.0f, 0.0f, 0.0f));
 			if ((vMin-vV).GetSquaredLength() < 0.6f)
 				nSelected = XAxis;
 		}
 
 		// Y axis
 		cPlane.ComputeND(Vector3::Zero, Vector3::UnitX);
-		vV    = Intersect::PlaneRay(cPlane, cRay.GetPos(), cRay.GetDir());
-		vMin  = vV.ClosestPointOnLine(Vector3::Zero, Vector3(0.0f, 10.0f, 0.0f));
+		Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV);
+		vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(0.0f, 10.0f, 0.0f));
 		if ((vMin-vV).GetSquaredLength() < 0.6f) {
 			nSelected = YAxis;
 		} else {
 			// Try another plane for sure
 			cPlane.ComputeND(Vector3::Zero, Vector3::UnitZ);
-			vV    = Intersect::PlaneRay(cPlane, cRay.GetPos(), cRay.GetDir());
-			vMin  = vV.ClosestPointOnLine(Vector3::Zero, Vector3(0.0f, 10.0f, 0.0f));
+			Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV);
+			vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(0.0f, 10.0f, 0.0f));
 			if ((vMin-vV).GetSquaredLength() < 0.6f)
 				nSelected = YAxis;
 		}
 
 		// Z axis
 		cPlane.ComputeND(Vector3::Zero, Vector3::UnitY);
-		vV    = Intersect::PlaneRay(cPlane, cRay.GetPos(), cRay.GetDir());
+		Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV);
 		vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(0.0f, 0.0f, 10.0f));
 		if ((vMin-vV).GetSquaredLength() < 0.6f) {
 			nSelected = ZAxis;
 		} else {
 			// Try another plane for sure
 			cPlane.ComputeND(Vector3::Zero, Vector3::UnitX);
-			vV    = Intersect::PlaneRay(cPlane, cRay.GetPos(), cRay.GetDir());
+			Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV);
 			vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(0.0f, 0.0f, 10.0f));
 			if ((vMin-vV).GetSquaredLength() < 0.6f)
 				nSelected = ZAxis;

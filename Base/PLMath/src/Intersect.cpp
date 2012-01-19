@@ -1131,12 +1131,86 @@ bool Intersect::IsPlaneRay(const Plane &cPlane, const Vector3 &vRayDir)
 *  @brief
 *    Returns the plane/ray intersection point
 */
-Vector3 Intersect::PlaneRay(const Plane &cPlane, const Vector3 &vRayPos, const Vector3 &vRayDir)
+bool Intersect::PlaneRay(const Plane &cPlane, const Vector3 &vRayPos, const Vector3 &vRayDir, Vector3 &vIntersectionPointPos)
 {
-	float fA = cPlane.fN[0]*vRayDir.x + cPlane.fN[1]*vRayDir.y + cPlane.fN[2]*vRayDir.z;
-
 	// Line parallel to plane?
-	return fA ? vRayPos-vRayDir*(cPlane.GetDistance(vRayPos)/fA) : vRayPos;
+	const float *fN = &cPlane.fN[0];
+	float fA = fN[0]*vRayDir.x + fN[1]*vRayDir.y + fN[2]*vRayDir.z;
+	if (fA) {
+		// Get a point on the plane
+		const Vector3 vPointOnPlane = cPlane.GetPointOnPlane();
+
+		// Not optimized
+//		vIntersectionPointPos = vRayPos-vRayDir*((Vector3(cPlane.fN).DotProduct(vRayPos)-vPointOnPlane.DotProduct(Vector3(cPlane.fN)))/fA);
+
+		// Optimized (no temporal vector objects on the runtime stack)
+		fA = ((fN[0]*vRayPos.x + fN[1]*vRayPos.y + fN[2]*vRayPos.z) - (vPointOnPlane.x*fN[0] + vPointOnPlane.y*fN[1] + vPointOnPlane.z*fN[2]))/fA;
+		vIntersectionPointPos.x = vRayPos.x - vRayDir.x*fA;
+		vIntersectionPointPos.y = vRayPos.y - vRayDir.y*fA;
+		vIntersectionPointPos.z = vRayPos.z - vRayDir.z*fA;
+
+		// Intersection
+		return true;
+	}
+
+	// Error line parallel to plane
+	return false;
+}
+
+bool Intersect::PlaneRayPositive(const Plane &cPlane, const Vector3 &vRayPos, const Vector3 &vRayDir, Vector3 &vIntersectionPointPos)
+{
+	// Line parallel to plane?
+	const float *fN = &cPlane.fN[0];
+	float fA = fN[0]*vRayDir.x + fN[1]*vRayDir.y + fN[2]*vRayDir.z;
+	if (fA) {
+		// Get a point on the plane
+		const Vector3 vPointOnPlane = cPlane.GetPointOnPlane();
+
+		// Not optimized
+//		vIntersectionPointPos = vRayPos-vRayDir*((Vector3(cPlane.fN).DotProduct(vRayPos)-vPointOnPlane.DotProduct(Vector3(cPlane.fN)))/fA);
+
+		// Optimized (no temporal vector objects on the runtime stack)
+		fA = ((fN[0]*vRayPos.x + fN[1]*vRayPos.y + fN[2]*vRayPos.z) - (vPointOnPlane.x*fN[0] + vPointOnPlane.y*fN[1] + vPointOnPlane.z*fN[2]))/fA;
+		if (fA > 0.0f) {
+			vIntersectionPointPos.x = vRayPos.x - vRayDir.x*fA;
+			vIntersectionPointPos.y = vRayPos.y - vRayDir.y*fA;
+			vIntersectionPointPos.z = vRayPos.z - vRayDir.z*fA;
+
+			// Intersection
+			return true;
+		}
+	}
+
+	// Error line parallel to plane or distance not positive
+	return false;
+}
+
+bool Intersect::PlaneRayNegative(const Plane &cPlane, const Vector3 &vRayPos, const Vector3 &vRayDir, Vector3 &vIntersectionPointPos)
+{
+	// Line parallel to plane?
+	const float *fN = &cPlane.fN[0];
+	float fA = fN[0]*vRayDir.x + fN[1]*vRayDir.y + fN[2]*vRayDir.z;
+	if (fA) {
+		// Get a point on the plane
+		const Vector3 vPointOnPlane = cPlane.GetPointOnPlane();
+
+		// Not optimized
+//		vIntersectionPointPos = vRayPos-vRayDir*((Vector3(cPlane.fN).DotProduct(vRayPos)-vPointOnPlane.DotProduct(Vector3(cPlane.fN)))/fA);
+
+		// Optimized (no temporal vector objects on the runtime stack)
+		fA = ((fN[0]*vRayPos.x + fN[1]*vRayPos.y + fN[2]*vRayPos.z) - (vPointOnPlane.x*fN[0] + vPointOnPlane.y*fN[1] + vPointOnPlane.z*fN[2]))/fA;
+		if (fA < 0.0f) {
+			vIntersectionPointPos.x = vRayPos.x - vRayDir.x*fA;
+			vIntersectionPointPos.y = vRayPos.y - vRayDir.y*fA;
+			vIntersectionPointPos.z = vRayPos.z - vRayDir.z*fA;
+
+			// Intersection
+			return true;
+		}
+	}
+
+	// Error line parallel to plane or distance not negative
+	return false;
 }
 
 /**
@@ -1465,26 +1539,80 @@ bool Intersect::PlaneSetAABox(const PlaneSet &cPlaneSet, const Vector3 &vMin, co
 bool Intersect::TriangleRay(const Vector3 &vV1, const Vector3 &vV2,
 							const Vector3 &vV3, const Vector3 &vN,
 							const Vector3 &vRayOrigin, const Vector3 &vRayDirection,
-							Vector3 *pvIntersectionPointPos)
+							Vector3 &vIntersectionPointPos)
 {
 	// Calculate plane intersection point
 	float fA = vN.DotProduct(vRayDirection);
 	if (fA) {
 		// Not optimized
-//		*pvIntersectionPointPos = vRayOrigin-vRayDirection*((vN.DotProduct(vRayOrigin)-vV1.DotProduct(vN))/fA);
+//		vIntersectionPointPos = vRayOrigin-vRayDirection*((vN.DotProduct(vRayOrigin)-vV1.DotProduct(vN))/fA);
 
 		// Optimized (no temporal vector objects on the runtime stack)
 		fA = (vN.DotProduct(vRayOrigin) - vV1.DotProduct(vN))/fA;
-		pvIntersectionPointPos->x = vRayOrigin.x - vRayDirection.x*fA;
-		pvIntersectionPointPos->y = vRayOrigin.y - vRayDirection.y*fA;
-		pvIntersectionPointPos->z = vRayOrigin.z - vRayDirection.z*fA;
+		vIntersectionPointPos.x = vRayOrigin.x - vRayDirection.x*fA;
+		vIntersectionPointPos.y = vRayOrigin.y - vRayDirection.y*fA;
+		vIntersectionPointPos.z = vRayOrigin.z - vRayDirection.z*fA;
 
 		// Check whether the intersection point is in the triangle
-		return pvIntersectionPointPos->IsPointInTriangle(vV1, vV2, vV3);
-	} else {
-		// Error line parallel to plane
-		return false;
+		return vIntersectionPointPos.IsPointInTriangle(vV1, vV2, vV3);
 	}
+
+	// Error line parallel to plane
+	return false;
+}
+
+bool Intersect::TriangleRayPositive(const Vector3 &vV1, const Vector3 &vV2,
+									const Vector3 &vV3, const Vector3 &vN,
+									const Vector3 &vRayOrigin, const Vector3 &vRayDirection,
+									Vector3 &vIntersectionPointPos)
+{
+	// Calculate plane intersection point
+	float fA = vN.DotProduct(vRayDirection);
+	if (fA) {
+		// Not optimized
+//		vIntersectionPointPos = vRayOrigin-vRayDirection*((vN.DotProduct(vRayOrigin)-vV1.DotProduct(vN))/fA);
+
+		// Optimized (no temporal vector objects on the runtime stack)
+		fA = (vN.DotProduct(vRayOrigin) - vV1.DotProduct(vN))/fA;
+		if (fA > 0.0f) {
+			vIntersectionPointPos.x = vRayOrigin.x - vRayDirection.x*fA;
+			vIntersectionPointPos.y = vRayOrigin.y - vRayDirection.y*fA;
+			vIntersectionPointPos.z = vRayOrigin.z - vRayDirection.z*fA;
+
+			// Check whether the intersection point is in the triangle
+			return vIntersectionPointPos.IsPointInTriangle(vV1, vV2, vV3);
+		}
+	}
+
+	// Error line parallel to plane or distance not positive
+	return false;
+}
+
+bool Intersect::TriangleRayNegative(const Vector3 &vV1, const Vector3 &vV2,
+									const Vector3 &vV3, const Vector3 &vN,
+									const Vector3 &vRayOrigin, const Vector3 &vRayDirection,
+									Vector3 &vIntersectionPointPos)
+{
+	// Calculate plane intersection point
+	float fA = vN.DotProduct(vRayDirection);
+	if (fA) {
+		// Not optimized
+//		vIntersectionPointPos = vRayOrigin-vRayDirection*((vN.DotProduct(vRayOrigin)-vV1.DotProduct(vN))/fA);
+
+		// Optimized (no temporal vector objects on the runtime stack)
+		fA = (vN.DotProduct(vRayOrigin) - vV1.DotProduct(vN))/fA;
+		if (fA < 0.0f) {
+			vIntersectionPointPos.x = vRayOrigin.x - vRayDirection.x*fA;
+			vIntersectionPointPos.y = vRayOrigin.y - vRayDirection.y*fA;
+			vIntersectionPointPos.z = vRayOrigin.z - vRayDirection.z*fA;
+
+			// Check whether the intersection point is in the triangle
+			return vIntersectionPointPos.IsPointInTriangle(vV1, vV2, vV3);
+		}
+	}
+
+	// Error line parallel to plane or distance not negative
+	return false;
 }
 
 /**
@@ -1493,9 +1621,23 @@ bool Intersect::TriangleRay(const Vector3 &vV1, const Vector3 &vV2,
 */
 bool Intersect::TriangleRay(const Vector3 &vV1, const Vector3 &vV2,
 							const Vector3 &vV3, const Vector3 &vN,
-							const Ray &cRay, Vector3 *pvIntersectionPointPos)
+							const Ray &cRay, Vector3 &vIntersectionPointPos)
 {
-	return TriangleRay(vV1, vV2, vV3, vN, cRay.GetPos(), cRay.GetDir(), pvIntersectionPointPos);
+	return TriangleRay(vV1, vV2, vV3, vN, cRay.GetPos(), cRay.GetDir(), vIntersectionPointPos);
+}
+
+bool Intersect::TriangleRayPositive(const Vector3 &vV1, const Vector3 &vV2,
+									const Vector3 &vV3, const Vector3 &vN,
+									const Ray &cRay, Vector3 &vIntersectionPointPos)
+{
+	return TriangleRayPositive(vV1, vV2, vV3, vN, cRay.GetPos(), cRay.GetDir(), vIntersectionPointPos);
+}
+
+bool Intersect::TriangleRayNegative(const Vector3 &vV1, const Vector3 &vV2,
+									const Vector3 &vV3, const Vector3 &vN,
+									const Ray &cRay, Vector3 &vIntersectionPointPos)
+{
+	return TriangleRayNegative(vV1, vV2, vV3, vN, cRay.GetPos(), cRay.GetDir(), vIntersectionPointPos);
 }
 
 

@@ -42,7 +42,7 @@ namespace PLMath {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Line class
+*    Line class (finite length)
 */
 class Line {
 

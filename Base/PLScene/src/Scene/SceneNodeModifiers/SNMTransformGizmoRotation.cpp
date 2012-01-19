@@ -90,26 +90,29 @@ SNMTransformGizmoRotation::~SNMTransformGizmoRotation()
 //[-------------------------------------------------------]
 uint32 SNMTransformGizmoRotation::DetermineSelected(const Ray &cRay) const
 {
+	const Vector3 &vRayPos = cRay.GetPos();
+	const Vector3 &vRayDir = cRay.GetDir();
 	uint32 nSelected = 0;
 
 	// X axis
 	Plane cPlane;
+	Vector3 vV;
 	cPlane.ComputeND(Vector3::Zero, Vector3::UnitX);
-	Vector3 vV        = Intersect::PlaneRay(cPlane, cRay.GetPos(), cRay.GetDir());
-	float   fDistance = vV.GetLength();
+	Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV);
+	float fDistance = vV.GetLength();
 	if (fDistance <= 6.0f && fDistance >= 4.0f) {
 		nSelected = XAxis;
 	} else {
 		// Y axis
 		cPlane.ComputeND(Vector3::Zero, Vector3::UnitY);
-		vV = Intersect::PlaneRay(cPlane, cRay.GetPos(), cRay.GetDir());
+		Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV);
 		fDistance = vV.GetLength();
 		if (fDistance <= 6.0f && fDistance >= 4.0f)
 			nSelected = YAxis;
 		else {
 			// Z axis
 			cPlane.ComputeND(Vector3::Zero, Vector3::UnitZ);
-			vV = Intersect::PlaneRay(cPlane, cRay.GetPos(), cRay.GetDir());
+			Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV);
 			fDistance = vV.GetLength();
 			if (fDistance <= 5.0f && fDistance >= 4.0f)
 				nSelected = ZAxis;

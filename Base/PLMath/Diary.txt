@@ -1,4 +1,15 @@
-﻿>> 28.12.2011
+﻿>> 19.01.2012
+[CO]
+- "Intersect": Added "TriangleRayPositive()" and "TriangleRayNegative()" variations because I currently need them and I don't want to add even more
+   parameters to this method or doing any other more complex solution. In my humble opinion, some more comfort intersection methods for special cases
+   are just fine. I also noticed that the last parameter was a pointer and the documention stated "optional", but internally it was used without being
+   tested. This parameter is no longer optional.
+- "Intersect": "PlaneRay()" has now a similar signature as "TriangleRay()" and the same variations... those methods had been writen many, many years ago.
+  Time for an update.
+
+
+
+>> 28.12.2011
 [CO]
 - "Half": Added "ToFloat()" and "FromFloat()" implementations. Having a buggy implemtation for this task would be fatal, so, I don't dare to write an
   own implementation. I'am using the robust OpenEXR IlmBase 1.0.2 (Modified BSD License) implementation.

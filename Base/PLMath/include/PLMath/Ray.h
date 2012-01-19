@@ -42,7 +42,7 @@ namespace PLMath {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Ray class
+*    Ray class (infinite length, in both directions)
 */
 class Ray {
 
