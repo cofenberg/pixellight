@@ -29,6 +29,7 @@
 #include <PLCore/Base/Class.h>
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/DataModels/PLIntrospectionModel.h"
+#include "PLFrontendQt/DataModels/SceneNodeInfoDelegate.h"
 #include "PLFrontendQt/DockWidget/DockWidgetObject.h"
 
 
@@ -67,6 +68,7 @@ DockWidgetObject::DockWidgetObject(QMainWindow *pQMainWindow, DockWidgetManager 
 		m_pPLIntrospectionModel = new DataModels::PLIntrospectionModel(pQDockWidget);
 		m_pQTreeView->setModel(m_pPLIntrospectionModel);
 		m_pQTreeView->expandToDepth(0);
+		m_pQTreeView->setItemDelegate(new DataModels::SceneNodeInfoDelegate);
 
 		// Add the created Qt dock widget to the given Qt main window
 		pQMainWindow->addDockWidget(Qt::BottomDockWidgetArea, pQDockWidget);

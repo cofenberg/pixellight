@@ -1,3 +1,11 @@
+>> 19.01.2012
+[SW]
+PLViewerQt:
+- Reviewed all QObject::eventFilter usage and in all cases we now doesn't filter out events which we handle to add additional handling
+- the eventFilter for picking is now set for the render window and not for the QMainWindow
+
+
+
 >> 17.01.2012
 [CO]
 - "Application::OnCreateScene()": The default implementation of this method creates a scene which we never need within this viewer, so, just overwrite

@@ -90,6 +90,15 @@ class FrontendMainWindow : public QMainWindow {
 		*/
 		PLFRONTENDQT_API void SetUpdateInterval(int nUpdateInterval = 100);
 
+		/**
+		*  @brief
+		*    Gets the render window which is used by this main window
+		*
+		*  @return
+		*    The render window
+		*/
+		PLFRONTENDQT_API QWidget* GetRenderWindow();
+
 
 	//[-------------------------------------------------------]
 	//[ Public virtual QObject methods                        ]
