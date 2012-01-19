@@ -51,6 +51,13 @@ namespace DataModels {
 /**
 *  @brief
 *    Scene node info delegate
+*
+*  @remarks
+*    This item delegate adds additional (rudimentary) features when handling edits:
+*    - Showing a color chooser button for RTTI members which represent a color
+*      (currently only when the type is "PLGraphics::Color3")
+*    - Showing a spin edit box when floating point values should be edit with directly
+*      setting the value to the RTTI member when changing the value in the edit control
 */
 class SceneNodeInfoDelegate : public QStyledItemDelegate {
 

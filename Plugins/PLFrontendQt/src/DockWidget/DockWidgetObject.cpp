@@ -68,6 +68,9 @@ DockWidgetObject::DockWidgetObject(QMainWindow *pQMainWindow, DockWidgetManager 
 		m_pPLIntrospectionModel = new DataModels::PLIntrospectionModel(pQDockWidget);
 		m_pQTreeView->setModel(m_pPLIntrospectionModel);
 		m_pQTreeView->expandToDepth(0);
+
+		// This item delegate adds additional (rudimentary) features when handling edits
+		// -> See "DataModels::SceneNodeInfoDelegate"-class documentation for details
 		m_pQTreeView->setItemDelegate(new DataModels::SceneNodeInfoDelegate);
 
 		// Add the created Qt dock widget to the given Qt main window
