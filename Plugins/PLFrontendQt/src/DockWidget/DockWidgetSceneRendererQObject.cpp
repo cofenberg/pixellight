@@ -94,8 +94,7 @@ bool DockWidgetSceneRendererQObject::eventFilter(QObject *pQObject, QEvent *pQEv
 				pQDockWidget->setWindowTitle(sQStringWindowTitle);
 			}
 
-			// Done - filter the event out, i.e. stop it being handled further
-			return true;
+			// We do not filter out the event because we add only additional handling
 		}
 	}
 

@@ -153,8 +153,10 @@ void Gui::SetEnabled(bool bEnabled)
 			// Perform a dock widget manager broadcast
 			pFrontendMainWindow->GetDockWidgetManager().CallDockWidgetsMethod("SetSceneContainer", Params<void, SceneContainer*>(bEnabled ? m_pApplication->GetScene() : nullptr));
 
-			// Remove all files from the Qt file system watcher instance
-			m_pQFileSystemWatcher->removePaths(m_pQFileSystemWatcher->files());
+			// Remove all files from the Qt file system watcher instance, but only when files where set
+			// -> This avoids a warning printed by Qt into the console: "QFileSystemWatcher::removePaths: list is empty"
+			if (m_pQFileSystemWatcher->files().count())
+				m_pQFileSystemWatcher->removePaths(m_pQFileSystemWatcher->files());
 		}
 
 		// Is the GUI enabled?

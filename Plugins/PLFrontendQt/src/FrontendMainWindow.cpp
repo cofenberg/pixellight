@@ -99,6 +99,15 @@ void FrontendMainWindow::SetUpdateInterval(int nUpdateInterval)
 	}
 }
 
+/**
+*  @brief
+*    Gets the render window which is used by this main window
+*/
+QWidget* FrontendMainWindow::GetRenderWindow()
+{
+	return m_pRenderWidget;
+}
+
 
 //[-------------------------------------------------------]
 //[ Public virtual QObject methods                        ]
@@ -111,15 +120,15 @@ bool FrontendMainWindow::eventFilter(QObject *pQObject, QEvent *pQEvent)
 				// Do the frontend life cycle thing - resume
 				m_pFrontendQt->OnResume();
 
-				// Done - filter the event out, i.e. stop it being handled further
-				return true;
+				// We do not filter out the event because we add only additional handling
+				break;
 
 			case QEvent::FocusOut:
 				// Do the frontend life cycle thing - pause
 				m_pFrontendQt->OnPause();
 
-				// Done - filter the event out, i.e. stop it being handled further
-				return true;
+				// We do not filter out the event because we add only additional handling
+				break;
 		}
 	}
 
@@ -313,7 +322,7 @@ void FrontendMainWindow::dropEvent(QDropEvent *pQDropEvent)
 				if (m_pRenderWidget->hasFocus())
 					m_pFrontendQt->OnResume();
 
-				// Unlike "QObject::eventFilter()", do not return true in here in order to filter the event out (i.e. stop it being handled further, this might cause unexpected behaviour)
+				// do not return true in here in order to filter the event out (i.e. stop it being handled further, this might cause unexpected behaviour)
 				break;
 
 			case WM_ENTERSIZEMOVE:
@@ -323,7 +332,7 @@ void FrontendMainWindow::dropEvent(QDropEvent *pQDropEvent)
 				if (m_pRenderWidget->hasFocus())
 					m_pFrontendQt->OnPause();
 
-				// Unlike "QObject::eventFilter()", do not return true in here in order to filter the event out (i.e. stop it being handled further, this might cause unexpected behaviour)
+				// do not return true in here in order to filter the event out (i.e. stop it being handled further, this might cause unexpected behaviour)
 				break;
 		}
 
@@ -343,7 +352,7 @@ void FrontendMainWindow::dropEvent(QDropEvent *pQDropEvent)
 				if (m_pRenderWidget->hasFocus())
 					m_pFrontendQt->OnResume();
 
-				// Unlike "QObject::eventFilter()", do not return true in here in order to filter the event out (i.e. stop it being handled further, this might cause unexpected behaviour)
+				// do not return true in here in order to filter the event out (i.e. stop it being handled further, this might cause unexpected behaviour)
 				break;
 
 			case FocusOutX11:
@@ -353,7 +362,7 @@ void FrontendMainWindow::dropEvent(QDropEvent *pQDropEvent)
 				if (m_pRenderWidget->hasFocus())
 					m_pFrontendQt->OnPause();
 
-				// Unlike "QObject::eventFilter()", do not return true in here in order to filter the event out (i.e. stop it being handled further, this might cause unexpected behaviour)
+				// do not return true in here in order to filter the event out (i.e. stop it being handled further, this might cause unexpected behaviour)
 				break;
 		}
 

@@ -1,3 +1,14 @@
+>> 19.01.2012
+[SW]
+PLFrontendQt:
+- Reviewed all QObject::eventFilter usage and in all cases we now doesn't filter out events which we handle to add additional handling
+- Added setting an ItemDelegate for the TreeView used bei the DockWidgetObject.
+  This ItemDelegate adds additional (rudimentary) features when handling edits:
+    - Showing a color chooser button for rtti members which represent an Color (currently only when the typ is Color3)
+    - Showing a spin edit box when floating point values should be edit with directly setting the value to the rtti member when changing the value in the edit control.
+
+
+
 >> 18.01.2012
 [CO]
 PLScriptBindings:

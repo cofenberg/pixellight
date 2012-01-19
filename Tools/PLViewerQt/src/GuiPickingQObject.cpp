@@ -56,10 +56,10 @@ GuiPickingQObject::GuiPickingQObject(GuiPicking &cGuiPicking) :
 	m_pTransformGizmo(nullptr)
 {
 	// Get the Qt main window
-	FrontendMainWindow *pFrontendMainWindow = m_pGuiPicking->m_pGui->GetFrontendMainWindow();
-	if (pFrontendMainWindow) {
-		// This Qt object should receive events from the Qt main window
-		pFrontendMainWindow->installEventFilter(this);
+	QWidget *pRenderWindow = m_pGuiPicking->m_pGui->GetFrontendMainWindow()->GetRenderWindow();
+	if (pRenderWindow) {
+		// This Qt object should receive events from the Qt window
+		pRenderWindow->installEventFilter(this);
 	}
 }
 
@@ -81,10 +81,10 @@ GuiPickingQObject::~GuiPickingQObject()
 bool GuiPickingQObject::eventFilter(QObject *pQObject, QEvent *pQEvent)
 {
 	// Get the Qt main window
-	FrontendMainWindow *pFrontendMainWindow = m_pGuiPicking->m_pGui->GetFrontendMainWindow();
+	QWidget *pRenderWindow = m_pGuiPicking->m_pGui->GetFrontendMainWindow()->GetRenderWindow();
 
 	// Handle Qt main window events
-	if (pQObject == pFrontendMainWindow) {
+	if (pQObject == pRenderWindow) {
 		switch (pQEvent->type()) {
 			// Mouse button pressed (QMouseEvent)
 			case QEvent::MouseButtonPress:
@@ -92,13 +92,10 @@ bool GuiPickingQObject::eventFilter(QObject *pQObject, QEvent *pQEvent)
 				if (!m_pTransformGizmo) {
 					// Is currently any of the transform gizmo axis selected?
 					m_pTransformGizmo = m_pGuiPicking->IsAnyTransformGizmoAxisSelected();
-					if (m_pTransformGizmo) {
+					if (m_pTransformGizmo)
 						m_pGuiPicking->SetTransformMode(*m_pTransformGizmo, true);
-
-						// Done - filter the event out, i.e. stop it being handled further
-						return true;
-					}
 				}
+				// We do not filter out the event because we add only additional handling
 				break;
 
 			// Mouse button released (QMouseEvent)
@@ -107,10 +104,8 @@ bool GuiPickingQObject::eventFilter(QObject *pQObject, QEvent *pQEvent)
 				if (m_pTransformGizmo) {
 					m_pGuiPicking->SetTransformMode(*m_pTransformGizmo, false);
 					m_pTransformGizmo = nullptr;
-
-					// Done - filter the event out, i.e. stop it being handled further
-					return true;
 				}
+				// We do not filter out the event because we add only additional handling
 				break;
 
 			// Mouse button double click (QMouseEvent)
@@ -131,11 +126,9 @@ bool GuiPickingQObject::eventFilter(QObject *pQObject, QEvent *pQEvent)
 
 						// Perform a dock widget manager broadcast
 						m_pGuiPicking->GetDockWidgetManager()->CallDockWidgetsMethod("SelectObject", Params<void, Object*>(pSceneNode));
-
-						// Done - filter the event out, i.e. stop it being handled further
-						return true;
 					}
 				}
+				// We do not filter out the event because we add only additional handling
 				break;
 			}
 		}
