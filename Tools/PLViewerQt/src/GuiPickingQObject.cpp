@@ -95,6 +95,7 @@ bool GuiPickingQObject::eventFilter(QObject *pQObject, QEvent *pQEvent)
 					if (m_pTransformGizmo)
 						m_pGuiPicking->SetTransformMode(*m_pTransformGizmo, true);
 				}
+
 				// We do not filter out the event because we add only additional handling
 				break;
 
@@ -105,6 +106,7 @@ bool GuiPickingQObject::eventFilter(QObject *pQObject, QEvent *pQEvent)
 					m_pGuiPicking->SetTransformMode(*m_pTransformGizmo, false);
 					m_pTransformGizmo = nullptr;
 				}
+
 				// We do not filter out the event because we add only additional handling
 				break;
 
@@ -128,6 +130,7 @@ bool GuiPickingQObject::eventFilter(QObject *pQObject, QEvent *pQEvent)
 						m_pGuiPicking->GetDockWidgetManager()->CallDockWidgetsMethod("SelectObject", Params<void, Object*>(pSceneNode));
 					}
 				}
+
 				// We do not filter out the event because we add only additional handling
 				break;
 			}

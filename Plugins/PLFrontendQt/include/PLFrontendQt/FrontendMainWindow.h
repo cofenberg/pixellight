@@ -95,9 +95,9 @@ class FrontendMainWindow : public QMainWindow {
 		*    Gets the render window which is used by this main window
 		*
 		*  @return
-		*    The render window
+		*    The render window, assumed to be always valid (but check for null pointer if you feel more safe this way)
 		*/
-		PLFRONTENDQT_API QWidget* GetRenderWindow();
+		PLFRONTENDQT_API QWidget *GetRenderWindow() const;
 
 
 	//[-------------------------------------------------------]
