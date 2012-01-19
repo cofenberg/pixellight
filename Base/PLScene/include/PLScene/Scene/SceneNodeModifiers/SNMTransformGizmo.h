@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Matrix4x4.h>
 #include "PLScene/Scene/SceneNodeModifiers/SNMTransform.h"
 
 
@@ -51,6 +52,9 @@ namespace PLScene {
 /**
 *  @brief
 *    Abstract transform gizmo scene node modifier base class
+*
+*  @note
+*    - The internal transform gizmo object space coordinate system we draw in is 10x10x10 so we don't have to work with to small numbers
 */
 class SNMTransformGizmo : public SNMTransform {
 
@@ -74,6 +78,8 @@ class SNMTransformGizmo : public SNMTransform {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMTransformGizmo, "PLScene", PLScene::SNMTransform, "Abstract transform gizmo scene node modifier base class")
+		// Attributes
+		pl_attribute(DistanceFromCamera,	float,	50.0f,	ReadWrite,	DirectValue,	"Distance from the camera (for size control)",	"")
 		// Slots
 		pl_slot_2(OnDrawTransparent,	PLRenderer::Renderer&,	const VisNode*,	"Called on scene node transparent draw, the used renderer as first parameter, the current visibility node of this scene node, can be a null pointer as second parameter",	"")
 		pl_slot_0(OnUpdate,														"Called when the scene node modifier needs to be updated",																													"")
@@ -140,20 +146,6 @@ class SNMTransformGizmo : public SNMTransform {
 		*/
 		PLS_API virtual ~SNMTransformGizmo();
 
-		/**
-		*  @brief
-		*    Sets a scaled world matrix
-		*
-		*  @param[in]      cRenderer
-		*    Renderer to use
-		*  @param[in, out] mWorld
-		*    World matrix to use/manipulate
-		*
-		*  @return
-		*    Scale factor
-		*/
-		PLS_API float SetScaledWorldMatrix(PLRenderer::Renderer &cRenderer, PLMath::Matrix4x4 &mWorld);
-
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual SceneNodeModifier functions         ]
@@ -211,8 +203,10 @@ class SNMTransformGizmo : public SNMTransform {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCore::uint32 m_nSelected;		/**< The current selection */
-		bool		   m_bTransform;	/**< Is currently a transform performed? */
+		PLMath::Matrix4x4 m_mObjectSpaceToClipSpace;	/**< Current object space to clip space matrix of the transform gizmo */
+		PLMath::Matrix4x4 m_mTranslation;				/**< Current transform matrix of the transform gizmo */
+		PLCore::uint32	  m_nSelected;					/**< The current selection */
+		bool			  m_bTransform;					/**< Is currently a transform performed? */
 
 
 	//[-------------------------------------------------------]

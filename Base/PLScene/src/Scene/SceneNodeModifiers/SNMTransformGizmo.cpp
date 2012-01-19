@@ -26,6 +26,7 @@
 #include <PLMath/Rectangle.h>
 #include <PLMath/Matrix4x4.h>
 #include <PLRenderer/Renderer/Renderer.h>
+#include "PLScene/Visibility/VisNode.h"
 #include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMTransformGizmo.h"
 
@@ -95,6 +96,7 @@ void SNMTransformGizmo::SetTransformMode(bool bTransformMode)
 SNMTransformGizmo::SNMTransformGizmo(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
 	SlotOnDrawTransparent(this),
 	SlotOnUpdate(this),
+	DistanceFromCamera(this),
 	m_nSelected(0),
 	m_bTransform(false)
 {
@@ -108,28 +110,6 @@ SNMTransformGizmo::SNMTransformGizmo(SceneNode &cSceneNode) : SNMTransform(cScen
 */
 SNMTransformGizmo::~SNMTransformGizmo()
 {
-}
-
-/**
-*  @brief
-*    Sets a scaled world matrix
-*/
-float SNMTransformGizmo::SetScaledWorldMatrix(Renderer &cRenderer, Matrix4x4 &mWorld)
-{
-	const float fWidthDelta  = 100.0f/cRenderer.GetViewport().GetWidth();
-	const float fHeightDelta = 100.0f/cRenderer.GetViewport().GetHeight();
-
-	float fScale = fWidthDelta;
-	if (fHeightDelta < fScale)
-		fScale = fHeightDelta;
-
-	// Apply scale
-	Matrix3x4 mScale;
-	mScale.SetScaleMatrix(fScale, fScale, fScale);
-	mWorld *= mScale;
-
-	// Return scale
-	return fScale;
 }
 
 
@@ -161,6 +141,30 @@ void SNMTransformGizmo::OnActivate(bool bActivate)
 */
 void SNMTransformGizmo::OnDrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 {
+	// Calculate the current transform gizmo matrix
+	if (pVisNode) {
+		// Get translation (rotation & scale has no influence on the transform gizmo)
+		Vector3 vTranslation = pVisNode->GetWorldMatrix().GetTranslation();
+
+		// Transform translation into view space (view space is our friend, we really like the view space... it's so, so simple...)
+		vTranslation *= pVisNode->GetViewMatrix();
+
+		// Get camera (at origin in view space) to scene node normalized direction
+		const Vector3 vDirection = vTranslation.Normalize();
+
+		// Set new translation in view space
+		vTranslation = vDirection*DistanceFromCamera.Get();
+
+		// Bring translation back into world space
+		vTranslation *= pVisNode->GetViewMatrix().GetInverted();
+
+		// Set translation matrix
+		m_mTranslation.SetTranslationMatrix(vTranslation);
+
+		// Calculate the world view projection transform matrix
+		m_mObjectSpaceToClipSpace = pVisNode->GetViewProjectionMatrix()*m_mTranslation;
+	}
+
 	// Update gizmo
 	if (!m_bTransform)
 		UpdateSelection(cRenderer, *pVisNode);

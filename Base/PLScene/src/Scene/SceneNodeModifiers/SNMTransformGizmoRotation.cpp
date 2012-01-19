@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLCore/Tools/Tools.h>
 #include <PLMath/Ray.h>
-#include <PLMath/Matrix4x4.h>
 #include <PLMath/Intersect.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/FixedFunctions.h>
@@ -62,6 +61,7 @@ pl_implement_class(SNMTransformGizmoRotation)
 *    Constructor
 */
 SNMTransformGizmoRotation::SNMTransformGizmoRotation(SceneNode &cSceneNode) : SNMTransformGizmo(cSceneNode),
+	LineWidth(this),
 	m_pDiskMeshHandler(new MeshHandler())
 {
 	// Get/create the 'disk silhouette' mesh
@@ -127,39 +127,34 @@ void SNMTransformGizmoRotation::DrawGizmo(Renderer &cRenderer, const VisNode *pV
 {
 	// This method does not need to be hightly effective because it's usually only called once per frame, so we prefere the generic way
 
-	// The object space coordinate system we draw in is 10x10x10 so we don't have to work with to small numbers
+	// The internal transform gizmo object space coordinate system we draw in is 10x10x10 so we don't have to work with to small numbers
 
 	// [TODO] Remove the direct usage of fixed functions in here
 	// Fixed functions support required
 	FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
 	if (pFixedFunctions) {
-		// Set translation matrix (rotation & scale has no influence on the transform gizmo)
-		Matrix4x4 mTranslation;
-		mTranslation.SetTranslationMatrix(pVisNode->GetWorldMatrix().GetTranslation());
-		SetScaledWorldMatrix(cRenderer, mTranslation);
-
 		// Setup render states
 		cRenderer.GetRendererContext().GetEffectManager().Use();
 		cRenderer.SetRenderState(RenderState::CullMode,     Cull::None);
 		cRenderer.SetRenderState(RenderState::ZEnable,      false);
 		cRenderer.SetRenderState(RenderState::ZWriteEnable, false);
-		cRenderer.SetRenderState(RenderState::LineWidth,	Tools::FloatToUInt32(1.0f));
+		cRenderer.SetRenderState(RenderState::LineWidth,	Tools::FloatToUInt32(LineWidth.Get()));
 
 		// Draw X disk silhouette
 		Matrix4x4 mLocal;
 		mLocal.FromEulerAngleY(static_cast<float>(90.0f*Math::DegToRad));
-		pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mTranslation*mLocal);
+		pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mTranslation*mLocal);
 		pFixedFunctions->SetColor((m_nSelected & XAxis) ? Color4::Yellow : Color4::Red);
 		m_pDiskMeshHandler->Draw(false, false);
 
 		// Draw Y disk silhouette
 		mLocal.FromEulerAngleX(static_cast<float>(90.0f*Math::DegToRad));
-		pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mTranslation*mLocal);
+		pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mTranslation*mLocal);
 		pFixedFunctions->SetColor((m_nSelected & YAxis) ? Color4::Yellow : Color4::Green);
 		m_pDiskMeshHandler->Draw(false, false);
 
 		// Draw Z disk silhouette
-		pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mTranslation);
+		pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mTranslation);
 		pFixedFunctions->SetColor((m_nSelected & ZAxis) ? Color4::Yellow : Color4::Blue);
 		m_pDiskMeshHandler->Draw(false, false);
 	}

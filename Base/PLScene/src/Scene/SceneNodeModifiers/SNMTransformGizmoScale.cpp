@@ -62,6 +62,7 @@ pl_implement_class(SNMTransformGizmoScale)
 *    Constructor
 */
 SNMTransformGizmoScale::SNMTransformGizmoScale(SceneNode &cSceneNode) : SNMTransformGizmo(cSceneNode),
+	LineWidth(this),
 	m_pMeshHandler(new MeshHandler())
 {
 	// Get/create the 'cone' mesh for the axis arrow
@@ -200,8 +201,7 @@ void SNMTransformGizmoScale::DrawGizmo(Renderer &cRenderer, const VisNode *pVisN
 {
 	// This method does not need to be hightly effective because it's usually only called once per frame, so we prefere the generic way
 
-	// The object space coordinate system we draw in is 10x10x10 so we don't have to work with to small numbers
-	float fScale = 1.0f;
+	// The internal transform gizmo object space coordinate system we draw in is 10x10x10 so we don't have to work with to small numbers
 
 	// Get primary axis color (changed when axis is selected)
 	const Color4 &cPrimaryXAxisColor = (m_nSelected & XAxis) ? Color4::Yellow : Color4::Red;
@@ -218,125 +218,104 @@ void SNMTransformGizmoScale::DrawGizmo(Renderer &cRenderer, const VisNode *pVisN
 	// Fixed functions support required
 	FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
 	if (pFixedFunctions) {
-		// Set translation matrix (rotation & scale has no influence on the transform gizmo)
-		Matrix4x4 mTranslation;
-		mTranslation.SetTranslationMatrix(pVisNode->GetWorldMatrix().GetTranslation());
-		fScale = SetScaledWorldMatrix(cRenderer, mTranslation);
-
 		{ // Draw sphere meshes
 			Matrix4x4 mLocal;
 
 			// Draw X sphere mesh
 			mLocal.FromEulerAngleZ(static_cast<float>(-90.0f*Math::DegToRad));
 			mLocal.SetTranslation(10.0f, 0.0f, 0.0f);
-			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mTranslation*mLocal);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mTranslation*mLocal);
 			pFixedFunctions->SetColor(cPrimaryXAxisColor);
 			m_pMeshHandler->Draw(false, false);
 
 			// Draw Y sphere mesh
 			mLocal.SetTranslationMatrix(0.0f, 10.0f, 0.0f);
-			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mTranslation*mLocal);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mTranslation*mLocal);
 			pFixedFunctions->SetColor(cPrimaryYAxisColor);
 			m_pMeshHandler->Draw(false, false);
 
 			// Draw Z sphere mesh
 			mLocal.FromEulerAngleX(static_cast<float>(90.0f*Math::DegToRad));
 			mLocal.SetTranslation(0.0f, 0.0f, 10.0f);
-			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, mTranslation*mLocal);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mTranslation*mLocal);
 			pFixedFunctions->SetColor(cPrimaryZAxisColor);
 			m_pMeshHandler->Draw(false, false);
 		}
 	}
 
-	// Get object space to clip space matrix (rotation & scale has no influence on the transform gizmo)
-	Matrix4x4 mObjectSpaceToClipSpace;
-	{ // Apply world translation
-		// Construct translation matrix
-		Matrix4x4 mTranslation;
-		mTranslation.SetTranslationMatrix(pVisNode->GetWorldMatrix().GetTranslation());
-
-		// Calculate the world view projection transform matrix
-		mObjectSpaceToClipSpace = pVisNode->GetViewProjectionMatrix()*mTranslation;
-	}
-	{ // Apply scale
-		Matrix3x4 mScale;
-		mScale.SetScaleMatrix(fScale, fScale, fScale);
-		mObjectSpaceToClipSpace *= mScale;
-	}
-
 	// Get draw helpers instance
 	DrawHelpers &cDrawHelpers = cRenderer.GetDrawHelpers();
-	const float fLineWidth = 2.0f;
+	const float fLineWidth = LineWidth.Get();
 
 	{ // Draw axis lines
 		// X axis
 		if (!(m_nSelected & XAxis) || !(m_nSelected & YAxis) || !(m_nSelected & ZAxis))
-			cDrawHelpers.DrawLine(cPrimaryXAxisColor, Vector3(0.0f, 0.0f, 0.0f), Vector3(10.0f, 0.0f, 0.0f), mObjectSpaceToClipSpace, fLineWidth);
+			cDrawHelpers.DrawLine(cPrimaryXAxisColor, Vector3(0.0f, 0.0f, 0.0f), Vector3(10.0f, 0.0f, 0.0f), m_mObjectSpaceToClipSpace, fLineWidth);
 		{ // XY
 			const Color4 &cColor = (m_nSelected & XAxis) && (m_nSelected & YAxis) ? Color4::Yellow : Color4::Red;
-			cDrawHelpers.DrawLine(cColor, Vector3(5.0f, 0.0f, 0.0f), Vector3(2.5f, 2.5f, 0.0f), mObjectSpaceToClipSpace, fLineWidth);
-			cDrawHelpers.DrawLine(cColor, Vector3(8.0f, 0.0f, 0.0f), Vector3(4.0f, 4.0f, 0.0f), mObjectSpaceToClipSpace, fLineWidth);
+			cDrawHelpers.DrawLine(cColor, Vector3(5.0f, 0.0f, 0.0f), Vector3(2.5f, 2.5f, 0.0f), m_mObjectSpaceToClipSpace, fLineWidth);
+			cDrawHelpers.DrawLine(cColor, Vector3(8.0f, 0.0f, 0.0f), Vector3(4.0f, 4.0f, 0.0f), m_mObjectSpaceToClipSpace, fLineWidth);
 		}
 		{ // XZ
 			const Color4 &cColor = ((m_nSelected & XAxis) && (m_nSelected & ZAxis)) ? Color4::Yellow : Color4::Red;
-			cDrawHelpers.DrawLine(cColor, Vector3(5.0f, 0.0f, 0.0f), Vector3(2.5f, 0.0f, 2.5f), mObjectSpaceToClipSpace, fLineWidth);
-			cDrawHelpers.DrawLine(cColor, Vector3(8.0f, 0.0f, 0.0f), Vector3(4.0f, 0.0f, 4.0f), mObjectSpaceToClipSpace, fLineWidth);
+			cDrawHelpers.DrawLine(cColor, Vector3(5.0f, 0.0f, 0.0f), Vector3(2.5f, 0.0f, 2.5f), m_mObjectSpaceToClipSpace, fLineWidth);
+			cDrawHelpers.DrawLine(cColor, Vector3(8.0f, 0.0f, 0.0f), Vector3(4.0f, 0.0f, 4.0f), m_mObjectSpaceToClipSpace, fLineWidth);
 		}
 
 		// Y axis
 		if (!(m_nSelected & XAxis) || !(m_nSelected & YAxis) || !(m_nSelected & ZAxis))
-			cDrawHelpers.DrawLine(cPrimaryYAxisColor, Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 10.0f, 0.0f), mObjectSpaceToClipSpace, fLineWidth);
+			cDrawHelpers.DrawLine(cPrimaryYAxisColor, Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 10.0f, 0.0f), m_mObjectSpaceToClipSpace, fLineWidth);
 		{ // XY
 			const Color4 &cColor = ((m_nSelected & XAxis) && (m_nSelected & YAxis)) ? Color4::Yellow : Color4::Green;
-			cDrawHelpers.DrawLine(cColor, Vector3(0.0f, 5.0f, 0.0f), Vector3(2.5f, 2.5f, 0.0f), mObjectSpaceToClipSpace, fLineWidth);
-			cDrawHelpers.DrawLine(cColor, Vector3(0.0f, 8.0f, 0.0f), Vector3(4.0f, 4.0f, 0.0f), mObjectSpaceToClipSpace, fLineWidth);
+			cDrawHelpers.DrawLine(cColor, Vector3(0.0f, 5.0f, 0.0f), Vector3(2.5f, 2.5f, 0.0f), m_mObjectSpaceToClipSpace, fLineWidth);
+			cDrawHelpers.DrawLine(cColor, Vector3(0.0f, 8.0f, 0.0f), Vector3(4.0f, 4.0f, 0.0f), m_mObjectSpaceToClipSpace, fLineWidth);
 		}
 		{ // YZ
 			const Color4 &cColor = ((m_nSelected & YAxis) && (m_nSelected & ZAxis)) ? Color4::Yellow : Color4::Green;
-			cDrawHelpers.DrawLine(cColor, Vector3(0.0f, 5.0f, 0.0f), Vector3(0.0f, 2.5f, 2.5f), mObjectSpaceToClipSpace, fLineWidth);
-			cDrawHelpers.DrawLine(cColor, Vector3(0.0f, 8.0f, 0.0f), Vector3(0.0f, 4.0f, 4.0f), mObjectSpaceToClipSpace, fLineWidth);
+			cDrawHelpers.DrawLine(cColor, Vector3(0.0f, 5.0f, 0.0f), Vector3(0.0f, 2.5f, 2.5f), m_mObjectSpaceToClipSpace, fLineWidth);
+			cDrawHelpers.DrawLine(cColor, Vector3(0.0f, 8.0f, 0.0f), Vector3(0.0f, 4.0f, 4.0f), m_mObjectSpaceToClipSpace, fLineWidth);
 		}
 
 		// Z axis
 		if (!(m_nSelected & XAxis) || !(m_nSelected & YAxis) || !(m_nSelected & ZAxis))
-			cDrawHelpers.DrawLine(cPrimaryZAxisColor, Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 0.0f, 10.0f), mObjectSpaceToClipSpace, fLineWidth);
+			cDrawHelpers.DrawLine(cPrimaryZAxisColor, Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 0.0f, 10.0f), m_mObjectSpaceToClipSpace, fLineWidth);
 		{ // XZ
 			const Color4 &cColor = ((m_nSelected & XAxis) && (m_nSelected & ZAxis)) ? Color4::Yellow : Color4::Blue;
-			cDrawHelpers.DrawLine(cColor, Vector3(0.0f, 0.0f, 5.0f), Vector3(2.5f, 0.0f, 2.5f), mObjectSpaceToClipSpace, fLineWidth);
-			cDrawHelpers.DrawLine(cColor, Vector3(0.0f, 0.0f, 8.0f), Vector3(4.0f, 0.0f, 4.0f), mObjectSpaceToClipSpace, fLineWidth);
+			cDrawHelpers.DrawLine(cColor, Vector3(0.0f, 0.0f, 5.0f), Vector3(2.5f, 0.0f, 2.5f), m_mObjectSpaceToClipSpace, fLineWidth);
+			cDrawHelpers.DrawLine(cColor, Vector3(0.0f, 0.0f, 8.0f), Vector3(4.0f, 0.0f, 4.0f), m_mObjectSpaceToClipSpace, fLineWidth);
 		}
 		{ // YZ
 			const Color4 &cColor = ((m_nSelected & YAxis) && (m_nSelected & ZAxis)) ? Color4::Yellow : Color4::Blue;
-			cDrawHelpers.DrawLine(cColor, Vector3(0.0f, 0.0f, 5.0f), Vector3(0.0f, 2.5f, 2.5f), mObjectSpaceToClipSpace, fLineWidth);
-			cDrawHelpers.DrawLine(cColor, Vector3(0.0f, 0.0f, 8.0f), Vector3(0.0f, 4.0f, 4.0f), mObjectSpaceToClipSpace, fLineWidth);
+			cDrawHelpers.DrawLine(cColor, Vector3(0.0f, 0.0f, 5.0f), Vector3(0.0f, 2.5f, 2.5f), m_mObjectSpaceToClipSpace, fLineWidth);
+			cDrawHelpers.DrawLine(cColor, Vector3(0.0f, 0.0f, 8.0f), Vector3(0.0f, 4.0f, 4.0f), m_mObjectSpaceToClipSpace, fLineWidth);
 		}
 	}
 	{ // Draw selected axis combination
 		// XY
 		if ((m_nSelected & XAxis) && (m_nSelected & YAxis) && !(m_nSelected & ZAxis)) {
-			cDrawHelpers.DrawQuad(Color4::Yellow, Vector3(0.0f, 8.0f, 0.0f), Vector3(8.0f, 0.0f, 0.0f), Vector3(0.0f, 5.0f, 0.0f), Vector3(5.0f, 0.0f, 0.0f), mObjectSpaceToClipSpace);
+			cDrawHelpers.DrawQuad(Color4::Yellow, Vector3(0.0f, 8.0f, 0.0f), Vector3(8.0f, 0.0f, 0.0f), Vector3(0.0f, 5.0f, 0.0f), Vector3(5.0f, 0.0f, 0.0f), m_mObjectSpaceToClipSpace);
 
 		// XZ
 		} else if ((m_nSelected & XAxis) && !(m_nSelected & YAxis) && (m_nSelected & ZAxis)) {
-			cDrawHelpers.DrawQuad(Color4::Yellow, Vector3(0.0f, 0.0f, 5.0f), Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 0.0f, 8.0f), Vector3(8.0f, 0.0f, 0.0f), mObjectSpaceToClipSpace);
+			cDrawHelpers.DrawQuad(Color4::Yellow, Vector3(0.0f, 0.0f, 5.0f), Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 0.0f, 8.0f), Vector3(8.0f, 0.0f, 0.0f), m_mObjectSpaceToClipSpace);
 
 		// YZ
 		} else if (!(m_nSelected & XAxis) && (m_nSelected & YAxis) && (m_nSelected & ZAxis)) {
-			cDrawHelpers.DrawQuad(Color4::Yellow, Vector3(0.0f, 0.0f, 8.0f), Vector3(0.0f, 8.0f, 0.0f), Vector3(0.0f, 0.0f, 5.0f), Vector3(0.0f, 5.0f, 0.0f), mObjectSpaceToClipSpace);
+			cDrawHelpers.DrawQuad(Color4::Yellow, Vector3(0.0f, 0.0f, 8.0f), Vector3(0.0f, 8.0f, 0.0f), Vector3(0.0f, 0.0f, 5.0f), Vector3(0.0f, 5.0f, 0.0f), m_mObjectSpaceToClipSpace);
 
 		// XYZ
 		} else if ((m_nSelected & XAxis) && (m_nSelected & YAxis) && (m_nSelected & ZAxis)) {
-			cDrawHelpers.DrawTriangle(Color4::Yellow, Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 5.0f, 0.0f), Vector3(0.0f, 0.0f, 5.0f), mObjectSpaceToClipSpace);
-			cDrawHelpers.DrawTriangle(Color4::Yellow, Vector3::Zero,             Vector3(0.0f, 5.0f, 0.0f), Vector3(0.0f, 0.0f, 5.0f), mObjectSpaceToClipSpace);
-			cDrawHelpers.DrawTriangle(Color4::Yellow, Vector3(5.0f, 0.0f, 0.0f), Vector3::Zero,             Vector3(0.0f, 0.0f, 5.0f), mObjectSpaceToClipSpace);
+			cDrawHelpers.DrawTriangle(Color4::Yellow, Vector3(5.0f, 0.0f, 0.0f), Vector3(0.0f, 5.0f, 0.0f), Vector3(0.0f, 0.0f, 5.0f), m_mObjectSpaceToClipSpace);
+			cDrawHelpers.DrawTriangle(Color4::Yellow, Vector3::Zero,             Vector3(0.0f, 5.0f, 0.0f), Vector3(0.0f, 0.0f, 5.0f), m_mObjectSpaceToClipSpace);
+			cDrawHelpers.DrawTriangle(Color4::Yellow, Vector3(5.0f, 0.0f, 0.0f), Vector3::Zero,             Vector3(0.0f, 0.0f, 5.0f), m_mObjectSpaceToClipSpace);
 
 			// Draw axis in selected color
 			// X axis
-			cDrawHelpers.DrawLine(Color4::Yellow, Vector3(5.0f, 0.0f, 0.0f), Vector3(10.0f,  0.0f,  0.0f), mObjectSpaceToClipSpace, fLineWidth*2);
+			cDrawHelpers.DrawLine(Color4::Yellow, Vector3(5.0f, 0.0f, 0.0f), Vector3(10.0f,  0.0f,  0.0f), m_mObjectSpaceToClipSpace, fLineWidth*2);
 			// Y axis
-			cDrawHelpers.DrawLine(Color4::Yellow, Vector3(0.0f, 5.0f, 0.0f), Vector3( 0.0f, 10.0f,  0.0f), mObjectSpaceToClipSpace, fLineWidth*2);
+			cDrawHelpers.DrawLine(Color4::Yellow, Vector3(0.0f, 5.0f, 0.0f), Vector3( 0.0f, 10.0f,  0.0f), m_mObjectSpaceToClipSpace, fLineWidth*2);
 			// Z axis
-			cDrawHelpers.DrawLine(Color4::Yellow, Vector3(0.0f, 0.0f, 5.0f), Vector3( 0.0f,  0.0f, 10.0f), mObjectSpaceToClipSpace, fLineWidth*2);
+			cDrawHelpers.DrawLine(Color4::Yellow, Vector3(0.0f, 0.0f, 5.0f), Vector3( 0.0f,  0.0f, 10.0f), m_mObjectSpaceToClipSpace, fLineWidth*2);
 		}
 	}
 
@@ -344,13 +323,13 @@ void SNMTransformGizmoScale::DrawGizmo(Renderer &cRenderer, const VisNode *pVisN
 	Font *pFont = cRenderer.GetFontManager().GetDefaultFontTexture();
 	if (pFont) {
 		// X axis
-		cDrawHelpers.DrawText(*pFont, 'X', cPrimaryXAxisColor, Vector3(11.0f, 0.0f, 0.0f), mObjectSpaceToClipSpace, Font::CenterText);
+		cDrawHelpers.DrawText(*pFont, 'X', cPrimaryXAxisColor, Vector3(11.0f, 0.0f, 0.0f), m_mObjectSpaceToClipSpace, Font::CenterText);
 
 		// Y axis
-		cDrawHelpers.DrawText(*pFont, 'Y', cPrimaryYAxisColor, Vector3(0.0f, 11.0f, 0.0f), mObjectSpaceToClipSpace, Font::CenterText);
+		cDrawHelpers.DrawText(*pFont, 'Y', cPrimaryYAxisColor, Vector3(0.0f, 11.0f, 0.0f), m_mObjectSpaceToClipSpace, Font::CenterText);
 
 		// Z axis
-		cDrawHelpers.DrawText(*pFont, 'Z', cPrimaryZAxisColor, Vector3(0.0f, 0.0f, 11.0f), mObjectSpaceToClipSpace, Font::CenterText);
+		cDrawHelpers.DrawText(*pFont, 'Z', cPrimaryZAxisColor, Vector3(0.0f, 0.0f, 11.0f), m_mObjectSpaceToClipSpace, Font::CenterText);
 	}
 }
 

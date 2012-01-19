@@ -28,7 +28,6 @@
 #include <PLCore/Frontend/FrontendApplication.h>
 #include <PLMath/Ray.h>
 #include <PLMath/Intersect.h>
-#include <PLMath/Matrix3x3.h>
 #include <PLInput/Input/InputManager.h>
 #include <PLInput/Input/Devices/Mouse.h>
 #include <PLRenderer/Renderer/Renderer.h>
@@ -83,12 +82,6 @@ void SNMTransformGizmoPositionController::UpdateSelection(Renderer &cRenderer, c
 
 	// Check whether or not the mouse is currently over the frontend
 	if (cFrontend.IsMouseOver()) {
-		// Set translation matrix (rotation & scale has no influence on the transform gizmo)
-		Matrix4x4 mTranslation;
-		const Matrix4x4 &mWorld = cVisNode.GetWorldMatrix();
-		mTranslation.SetTranslationMatrix(mWorld.GetTranslation().x, mWorld.GetTranslation().y, mWorld.GetTranslation().z);
-		SetScaledWorldMatrix(cRenderer, mTranslation);
-
 		// Get current mouse cursor position inside the widget
 		const int nMousePosX = cFrontend.GetMousePositionX();
 		const int nMousePosY = cFrontend.GetMousePositionY();
@@ -98,12 +91,12 @@ void SNMTransformGizmoPositionController::UpdateSelection(Renderer &cRenderer, c
 		Vector3 v2DPos(static_cast<float>(nMousePosX), static_cast<float>(nMousePosY), 0.0001f);
 		Vector3 vCamPos = v2DPos.To3DCoordinate(cVisNode.GetProjectionMatrix(),
 												cVisNode.GetViewMatrix(),
-												mTranslation,
+												m_mTranslation,
 												cRenderer.GetViewport());
 		v2DPos.z = 0.9999f;
 		Vector3 vEndPos = v2DPos.To3DCoordinate(cVisNode.GetProjectionMatrix(),
 												cVisNode.GetViewMatrix(),
-												mTranslation,
+												m_mTranslation,
 												cRenderer.GetViewport());
 
 		// Determine the current selected axis by using a picking ray

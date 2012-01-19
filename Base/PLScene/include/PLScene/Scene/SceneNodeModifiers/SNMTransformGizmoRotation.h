@@ -51,6 +51,8 @@ class SNMTransformGizmoRotation : public SNMTransformGizmo {
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMTransformGizmoRotation, "PLScene", PLScene::SNMTransformGizmo, "Abstract rotation transform gizmo scene node modifier base class")
+		// Attributes
+		pl_attribute(LineWidth,	float,	2.0f,	ReadWrite,	DirectValue,	"Line width",	"")
 	pl_class_end
 
 
