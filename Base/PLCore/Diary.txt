@@ -1,4 +1,11 @@
 >> 19.01.2012
+[CO]
+PLFrontendQt:
+- "DockWidgetSceneRenderer": Added same item delegate as Stephan did in "DockWidgetObject"
+
+
+
+>> 19.01.2012
 [SW]
 PLFrontendQt:
 - Reviewed all QObject::eventFilter usage and in all cases we now doesn't filter out events which we handle to add additional handling
