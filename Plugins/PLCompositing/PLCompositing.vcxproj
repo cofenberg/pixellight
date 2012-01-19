@@ -263,6 +263,7 @@ copy build\release_x64\PLCompositing.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\Shaders\General\SRPDebugWireframesShaders.cpp" />
     <ClCompile Include="src\Shaders\General\SRPDirectionalLightingShadersMaterial.cpp" />
     <ClCompile Include="src\Shaders\General\SRPLightingMaterial.cpp" />
+    <ClCompile Include="src\Shaders\PostProcessing\SRPEndFXAA.cpp" />
     <ClCompile Include="src\SRPBackground.cpp" />
     <ClCompile Include="src\SRPBackgroundBitmap.cpp" />
     <ClCompile Include="src\SRPBackgroundColorGradient.cpp" />
@@ -335,6 +336,7 @@ copy build\release_x64\PLCompositing.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLCompositing\Shaders\General\SRPDebugWireframesShaders.h" />
     <ClInclude Include="include\PLCompositing\Shaders\General\SRPDirectionalLightingShadersMaterial.h" />
     <ClInclude Include="include\PLCompositing\Shaders\General\SRPLightingMaterial.h" />
+    <ClInclude Include="include\PLCompositing\Shaders\PostProcessing\SRPEndFXAA.h" />
     <ClInclude Include="include\PLCompositing\SRPBackground.h" />
     <ClInclude Include="include\PLCompositing\SRPBackgroundBitmap.h" />
     <ClInclude Include="include\PLCompositing\SRPBackgroundColorGradient.h" />
@@ -434,6 +436,9 @@ copy build\release_x64\PLCompositing.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLCompositing\Shaders\ShadowMapping\ShadowMappingPSM.h" />
     <ClInclude Include="include\PLCompositing\Shaders\ShadowMapping\ShadowMappingUSM.h" />
     <ClInclude Include="include\PLCompositing\Shaders\ShadowMapping\SRPShadowMapping.h" />
+    <ClInclude Include="src\Shaders\PostProcessing\FxaaShader.h" />
+    <ClInclude Include="src\Shaders\PostProcessing\SRPEndFXAA_Cg.h" />
+    <ClInclude Include="src\Shaders\PostProcessing\SRPEndFXAA_GLSL.h" />
     <ClInclude Include="src\Shaders\ShadowMapping\SRPShadowMapping_Cg.h" />
     <ClInclude Include="src\Shaders\ShadowMapping\SRPShadowMapping_GLSL.h" />
     <ClInclude Include="include\PLCompositing\Shaders\PostProcessing\PostProcess.h" />

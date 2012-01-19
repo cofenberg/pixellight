@@ -8,6 +8,7 @@ Changes in PixelLight 0.9.11-R1 (not yet released)
 - Feature: Implemented "PLCompositing::SRPBackgroundColorGradient" which can be used for a simple color gradient background
 - Feature: It's now possible to create RTTI class instances via script
 - Feature: Added position, rotation and scale transform gimzo scene node modifiers
+- Feature: Added "Fast Approximate Anti-Aliasing" (FXAA) support within "PLCompositing"
 - Removed: "PLViewerStandalone", use "PLViewer" instead and provide "PLViewer.cfg" in it's executable directory for standalone-mode
 - Bugfix: "PLRendererOpenGLES2" font rendering worked on "Tegra 2", but failed on "PowerVR SGX 540"
 - Bugfix: Now taking into account odd OpenGL ES 2.0 "gl_FragColor" behaviour on "LG P920 Optimus 3D" (PowerVR SGX 540, Android 2.3.5, "Link Error: Fragment shader was not successfully compiled.")

@@ -31,7 +31,6 @@
 #include <PLGraphics/Color/Color3.h>
 #include <PLRenderer/Renderer/ProgramGenerator.h>
 #include "PLCompositing/SRPEnd.h"
-#include "PLCompositing/PLCompositing.h"
 
 
 //[-------------------------------------------------------]
