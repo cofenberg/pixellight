@@ -216,14 +216,22 @@ class ClassInfoAttributeTreeItem : public ClassInfoTreeItemBase<VarDesc> {
 
 
 	public:
-		ClassInfoAttributeTreeItem(const VarDesc &cVarDesc, QObject *parent = nullptr) : ClassInfoTreeItemBase(cVarDesc, parent)
+		ClassInfoAttributeTreeItem(const VarDesc &cVarDesc, QObject *parent = nullptr) : ClassInfoTreeItemBase(cVarDesc, parent),
+			m_sType(QtStringAdapter::PLToQt(cVarDesc.GetTypeName())),
+			m_sDefault(QtStringAdapter::PLToQt(cVarDesc.GetDefault()))
 		{
 			SetToolTipText(tr("<table>"
 							"<tr><td bgcolor=#00ff00 colspan=\"2\">Attribute Information</td></tr>"
 							"<tr><td>Name: </td><td>%1</td></tr>"
-							"<tr><td>Description: </td><td>%2</td></tr>"
-							"</table>").arg(m_sName, m_sDescription));
+							"<tr><td>Type: </td><td>%2</td></tr>"
+							"<tr><td>Default: </td><td>%3</td></tr>"
+							"<tr><td>Description: </td><td>%4</td></tr>"
+							"</table>").arg(m_sName, m_sType, m_sDefault, m_sDescription));
 		}
+
+	protected:
+		QString m_sType;
+		QString m_sDefault;
 };
 
 template<class T>
