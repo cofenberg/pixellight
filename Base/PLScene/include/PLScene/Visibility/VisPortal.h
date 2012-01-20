@@ -83,8 +83,11 @@ class VisPortal : public VisNode {
 		/**
 		*  @brief
 		*    Constructor
+		*
+		*  @param[in] cParent
+		*    The parent visibility node
 		*/
-		VisPortal();
+		VisPortal(VisNode &cParent);
 
 		/**
 		*  @brief

@@ -59,7 +59,7 @@ VisContainer *VisPortal::GetTargetVisContainer() const
 *  @brief
 *    Constructor
 */
-VisPortal::VisPortal() :
+VisPortal::VisPortal(VisNode &cParent) : VisNode(&cParent),
 	EventHandlerDestroy(&VisPortal::OnDestroy, this),
 	m_pTargetCell(nullptr)
 {

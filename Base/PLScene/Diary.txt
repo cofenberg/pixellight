@@ -1,3 +1,9 @@
+>> 20.01.2012
+[CO]
+- Bugfix: The poor "VisPortal" had no parent, this explains why the portal debug visualization was broken
+
+
+
 >> 19.01.2012
 [CO]
 - Transform gizmos: "DetermineSelected()": Avoid "back fire" during axis selection

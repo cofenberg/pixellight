@@ -167,7 +167,7 @@ VisNode *VisContainer::AddSceneNode(SceneNode &cSceneNode, float fSquaredDistanc
 			if (pPortal->m_pTargetCell)
 				pPortal->m_pTargetCell->m_fSquaredDistanceToCamera = fSquaredDistanceToCamera;
 		} else {
-			pPortal = new VisPortal();
+			pPortal = new VisPortal(*this);
 			m_mapPortals.Add(cSceneNode.GetName(), pPortal);
 
 			// Connect event handler so we get informed if this visibility portal is loosing it's scene node
