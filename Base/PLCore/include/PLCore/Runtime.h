@@ -269,7 +269,6 @@ class Runtime {
 		*  @remarks
 		*    The implementation does the following tasks:
 		*    - Scan for plugins in PixelLight runtime directory non-recursively
-		*    - Scan for plugins in PixelLight runtime directory "Plugins/" recursively
 		*
 		*  @see
 		*    - Runtime::GetDirectory()

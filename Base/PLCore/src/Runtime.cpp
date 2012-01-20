@@ -478,9 +478,6 @@ void Runtime::ScanDirectoryPlugins(const String &sDirectory, bool bDelayedPlugin
 		// for projects which can be used completely dynamically, but can also be used in other C++ projects
 		// to access certain features.
 		ClassManager::GetInstance()->ScanPlugins(sPLDirectory, NonRecursive, bDelayedPluginLoading);
-
-		// Scan for plugins in PixelLight runtime directory
-		ClassManager::GetInstance()->ScanPlugins(sPLDirectory + "/Plugins/", Recursive, bDelayedPluginLoading);
 	}
 }
 
