@@ -2,6 +2,8 @@
 [CO]
 - Bugfix: The poor "VisPortal" had no parent, this explains why the portal debug visualization was broken
 - "SceneContext::Update()": By default, pause should be respected ("PLCore::Timing::GetInstance()->IsPaused()")
+- Removed "SceneNode::NoPause" by replacing it by the place holder "Reserved". This way we don't have to update everything while still removing an obsolete
+  flag which makes no longer sense because the scene graph has no build in frequent-update-per-node (had been removed a while ago).
 
 
 

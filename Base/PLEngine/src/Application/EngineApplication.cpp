@@ -557,7 +557,7 @@ void EngineApplication::OnCreateScene(SceneContainer &cContainer)
 	// [TODO] Load 'm_sSceneFilename' if provided
 
 	// Set scene container flags
-	cContainer.SetFlags(SceneNode::NoCulling | SceneNode::NoPause);
+	cContainer.SetFlags(SceneNode::NoCulling);
 
 	// Setup scene surface painter
 	SurfacePainter *pPainter = GetPainter();

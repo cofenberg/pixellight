@@ -120,11 +120,7 @@ class SceneNode : public PLCore::Object, public PLCore::Element<SceneNode> {
 			Inactive         = 1<<0,	/**< This scene node is currently NOT active */
 			Invisible        = 1<<1,	/**< This scene node is currently NOT visible */
 			Frozen           = 1<<2,	/**< This scene node is currently frozen and therefore not updated */
-			NoPause          = 1<<3,	/**< Do NOT perform pause if the timer is paused.
-											 All scene nodes should perform a pause if the timer is paused!
-											 Exceptions for this should ONLY be special scene nodes like e.g. a camera node:
-											 If the camera node is set to not perform the pause, it can still
-											 be moved around while the game/simulation is paused) */
+			Reserved         = 1<<3,	/**< Reserved for future use */
 			Automatic        = 1<<4,	/**< This scene node was created automatically during runtime and should
 											 not be saved with the scene. Such scene nodes are also hidden for instance
 											 within the scene editor. */
@@ -138,7 +134,7 @@ class SceneNode : public PLCore::Object, public PLCore::Element<SceneNode> {
 			pl_enum_value(Inactive,			"This scene node is currently NOT active")
 			pl_enum_value(Invisible,		"This scene node is currently NOT visible")
 			pl_enum_value(Frozen,			"This scene node is currently frozen and therefore not updated")
-			pl_enum_value(NoPause,			"Do NOT perform pause if the timer is paused. All scene nodes should perform a pause if the timer is paused! Exceptions for this should ONLY be special scene nodes like e.g. a camera node: If the camera node is set to not perform the pause, it can still be moved around while the game/simulation is paused)")
+			// pl_enum_value(Reserved,		"Reserved for future use")	// Don't expose this to the RTTI
 			pl_enum_value(Automatic,		"This scene node was created automatically during runtime and should not be saved with the scene. Such scene nodes are also hidden for instance within the scene editor.")
 			pl_enum_value(NoCulling,		"No visibility culling for this node, please (the container the node is in may still be culled...)")
 			pl_enum_value(NoLighting,		"No lighting for this node, please")

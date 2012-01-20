@@ -148,7 +148,7 @@ SceneContainer *SceneContext::GetRoot()
 			pContainer->m_pSceneContext = this;
 			pContainer->SetProtected(true);
 			pContainer->SetName("Root");
-			pContainer->SetFlags(pContainer->GetFlags() | SceneNode::NoPause | SceneNode::NoCulling);
+			pContainer->SetFlags(pContainer->GetFlags() | SceneNode::NoCulling);
 
 			// Done
 			return pContainer;
