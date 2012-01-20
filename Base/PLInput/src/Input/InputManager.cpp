@@ -54,13 +54,13 @@ namespace PLInput {
 //[-------------------------------------------------------]
 InputManager *InputManager::GetInstance()
 {
-	// The compiler should be able to optimize this extra call (inlining)
+	// The compiler should be able to optimize this extra call, at least inside this project (inlining)
 	return Singleton<InputManager>::GetInstance();
 }
 
 bool InputManager::HasInstance()
 {
-	// The compiler should be able to optimize this extra call (inlining)
+	// The compiler should be able to optimize this extra call, at least inside this project (inlining)
 	return Singleton<InputManager>::HasInstance();
 }
 

@@ -50,13 +50,13 @@ namespace PLInput {
 //[-------------------------------------------------------]
 Bluetooth *Bluetooth::GetInstance()
 {
-	// The compiler should be able to optimize this extra call (inlining)
+	// The compiler should be able to optimize this extra call, at least inside this project (inlining)
 	return Singleton<Bluetooth>::GetInstance();
 }
 
 bool Bluetooth::HasInstance()
 {
-	// The compiler should be able to optimize this extra call (inlining)
+	// The compiler should be able to optimize this extra call, at least inside this project (inlining)
 	return Singleton<Bluetooth>::HasInstance();
 }
 

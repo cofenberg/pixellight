@@ -53,13 +53,13 @@ template class Singleton<System>;
 //[-------------------------------------------------------]
 System *System::GetInstance()
 {
-	// The compiler should be able to optimize this extra call (inlining)
+	// The compiler should be able to optimize this extra call, at least inside this project (inlining)
 	return Singleton<System>::GetInstance();
 }
 
 bool System::HasInstance()
 {
-	// The compiler should be able to optimize this extra call (inlining)
+	// The compiler should be able to optimize this extra call, at least inside this project (inlining)
 	return Singleton<System>::HasInstance();
 }
 

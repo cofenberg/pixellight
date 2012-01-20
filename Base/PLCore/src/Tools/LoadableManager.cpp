@@ -52,13 +52,13 @@ template class Singleton<LoadableManager>;
 //[-------------------------------------------------------]
 LoadableManager *LoadableManager::GetInstance()
 {
-	// The compiler should be able to optimize this extra call (inlining)
+	// The compiler should be able to optimize this extra call, at least inside this project (inlining)
 	return Singleton<LoadableManager>::GetInstance();
 }
 
 bool LoadableManager::HasInstance()
 {
-	// The compiler should be able to optimize this extra call (inlining)
+	// The compiler should be able to optimize this extra call, at least inside this project (inlining)
 	return Singleton<LoadableManager>::HasInstance();
 }
 

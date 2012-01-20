@@ -52,13 +52,13 @@ namespace PLInput {
 //[-------------------------------------------------------]
 HID *HID::GetInstance()
 {
-	// The compiler should be able to optimize this extra call (inlining)
+	// The compiler should be able to optimize this extra call, at least inside this project (inlining)
 	return Singleton<HID>::GetInstance();
 }
 
 bool HID::HasInstance()
 {
-	// The compiler should be able to optimize this extra call (inlining)
+	// The compiler should be able to optimize this extra call, at least inside this project (inlining)
 	return Singleton<HID>::HasInstance();
 }
 

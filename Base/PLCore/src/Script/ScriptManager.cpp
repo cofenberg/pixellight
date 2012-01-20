@@ -49,13 +49,13 @@ template class Singleton<ScriptManager>;
 //[-------------------------------------------------------]
 ScriptManager *ScriptManager::GetInstance()
 {
-	// The compiler should be able to optimize this extra call (inlining)
+	// The compiler should be able to optimize this extra call, at least inside this project (inlining)
 	return Singleton<ScriptManager>::GetInstance();
 }
 
 bool ScriptManager::HasInstance()
 {
-	// The compiler should be able to optimize this extra call (inlining)
+	// The compiler should be able to optimize this extra call, at least inside this project (inlining)
 	return Singleton<ScriptManager>::HasInstance();
 }
 

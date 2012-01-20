@@ -43,13 +43,13 @@ template class Singleton<Profiling>;
 //[-------------------------------------------------------]
 Profiling *Profiling::GetInstance()
 {
-	// The compiler should be able to optimize this extra call (inlining)
+	// The compiler should be able to optimize this extra call, at least inside this project (inlining)
 	return Singleton<Profiling>::GetInstance();
 }
 
 bool Profiling::HasInstance()
 {
-	// The compiler should be able to optimize this extra call (inlining)
+	// The compiler should be able to optimize this extra call, at least inside this project (inlining)
 	return Singleton<Profiling>::HasInstance();
 }
 

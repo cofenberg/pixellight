@@ -47,13 +47,13 @@ namespace PLInput {
 //[-------------------------------------------------------]
 RawInput *RawInput::GetInstance()
 {
-	// The compiler should be able to optimize this extra call (inlining)
+	// The compiler should be able to optimize this extra call, at least inside this project (inlining)
 	return Singleton<RawInput>::GetInstance();
 }
 
 bool RawInput::HasInstance()
 {
-	// The compiler should be able to optimize this extra call (inlining)
+	// The compiler should be able to optimize this extra call, at least inside this project (inlining)
 	return Singleton<RawInput>::HasInstance();
 }
 

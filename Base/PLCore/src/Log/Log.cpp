@@ -67,13 +67,13 @@ const String g_sLogLevelToString[] = {
 //[-------------------------------------------------------]
 Log *Log::GetInstance()
 {
-	// The compiler should be able to optimize this extra call (inlining)
+	// The compiler should be able to optimize this extra call, at least inside this project (inlining)
 	return Singleton<Log>::GetInstance();
 }
 
 bool Log::HasInstance()
 {
-	// The compiler should be able to optimize this extra call (inlining)
+	// The compiler should be able to optimize this extra call, at least inside this project (inlining)
 	return Singleton<Log>::HasInstance();
 }
 
