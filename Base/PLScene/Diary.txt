@@ -2,6 +2,7 @@
 [CO]
 - Transform gizmos: "DetermineSelected()": Avoid "back fire" during axis selection
 - Transform gizmos: Have now always the same size on the screen
+- "SNMTransformGizmoRotation": Improved axis selection
 
 
 

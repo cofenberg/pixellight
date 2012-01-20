@@ -62,6 +62,7 @@ pl_implement_class(SNMTransformGizmoRotation)
 */
 SNMTransformGizmoRotation::SNMTransformGizmoRotation(SceneNode &cSceneNode) : SNMTransformGizmo(cSceneNode),
 	LineWidth(this),
+	Tolerance(this),
 	m_pDiskMeshHandler(new MeshHandler())
 {
 	// Get/create the 'disk silhouette' mesh
@@ -92,35 +93,45 @@ uint32 SNMTransformGizmoRotation::DetermineSelected(const Ray &cRay) const
 {
 	const Vector3 &vRayPos = cRay.GetPos();
 	const Vector3 &vRayDir = cRay.GetDir();
+	float fMinDistance = -1.0f;
+	uint32 nSelected = 0;
 	Plane cPlane;
 	Vector3 vV;
+
+	// Get inner and outer tolerance radius
+	const float fInnerRadius = 5.0f - Tolerance.Get();
+	const float fOuterRadius = 5.0f + Tolerance.Get();
 
 	// X axis
 	cPlane.ComputeND(Vector3::Zero, Vector3::UnitX);
 	if (Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV)) {
 		const float fDistance = vV.GetLength();
-		if (fDistance <= 6.0f && fDistance >= 4.0f)
-			return XAxis;
+		if (fDistance <= fOuterRadius && fDistance >= fInnerRadius) {
+			fMinDistance = fDistance;
+			nSelected    = XAxis;
+		}
 	}
 
-	// Still here? Try y axis...
+	// Y axis...
 	cPlane.ComputeND(Vector3::Zero, Vector3::UnitY);
 	if (Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV)) {
 		const float fDistance = vV.GetLength();
-		if (fDistance <= 6.0f && fDistance >= 4.0f)
-			return YAxis;
+		if (fDistance <= fOuterRadius && fDistance >= fInnerRadius && (fMinDistance < 0.0f || fMinDistance > fDistance)) {
+			fMinDistance = fDistance;
+			nSelected    = YAxis;
+		}
 	}
 
-	// Still here? Try z axis...
+	// Z axis...
 	cPlane.ComputeND(Vector3::Zero, Vector3::UnitZ);
 	if (Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV)) {
 		const float fDistance = vV.GetLength();
-		if (fDistance <= 5.0f && fDistance >= 4.0f)
-			return ZAxis;
+		if (fDistance <= fOuterRadius && fDistance >= fInnerRadius && (fMinDistance < 0.0f || fMinDistance > fDistance))
+			nSelected    = ZAxis;
 	}
 
 	// No axis selected
-	return 0;
+	return nSelected;
 }
 
 void SNMTransformGizmoRotation::DrawGizmo(Renderer &cRenderer, const VisNode *pVisNode)

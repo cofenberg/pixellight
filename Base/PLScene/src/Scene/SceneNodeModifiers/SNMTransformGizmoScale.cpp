@@ -63,6 +63,7 @@ pl_implement_class(SNMTransformGizmoScale)
 */
 SNMTransformGizmoScale::SNMTransformGizmoScale(SceneNode &cSceneNode) : SNMTransformGizmo(cSceneNode),
 	LineWidth(this),
+	Tolerance(this),
 	m_pMeshHandler(new MeshHandler())
 {
 	// Get/create the 'cone' mesh for the axis arrow
@@ -138,6 +139,7 @@ uint32 SNMTransformGizmoScale::DetermineSelected(const Ray &cRay) const
 	// axis line to this ray/plane intersection point is calculated. If this two point are not too far away
 	// the given axis is selected.
 	if (!nSelected) {
+		const float fTolerance = Tolerance.Get();
 		Plane cPlane;
 		Vector3 vMin;
 
@@ -145,7 +147,7 @@ uint32 SNMTransformGizmoScale::DetermineSelected(const Ray &cRay) const
 		cPlane.ComputeND(Vector3::Zero, Vector3::UnitY);
 		if (Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV)) {
 			vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(10.0f, 0.0f, 0.0f));
-			if ((vMin-vV).GetSquaredLength() < 0.6f)
+			if ((vMin-vV).GetSquaredLength() < fTolerance)
 				nSelected = XAxis;
 		}
 		if (nSelected != XAxis) {
@@ -153,7 +155,7 @@ uint32 SNMTransformGizmoScale::DetermineSelected(const Ray &cRay) const
 			cPlane.ComputeND(Vector3::Zero, Vector3::UnitZ);
 			if (Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV)) {
 				vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(10.0f, 0.0f, 0.0f));
-				if ((vMin-vV).GetSquaredLength() < 0.6f)
+				if ((vMin-vV).GetSquaredLength() < fTolerance)
 					nSelected = XAxis;
 			}
 		}
@@ -162,7 +164,7 @@ uint32 SNMTransformGizmoScale::DetermineSelected(const Ray &cRay) const
 		cPlane.ComputeND(Vector3::Zero, Vector3::UnitX);
 		if (Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV)) {
 			vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(0.0f, 10.0f, 0.0f));
-			if ((vMin-vV).GetSquaredLength() < 0.6f)
+			if ((vMin-vV).GetSquaredLength() < fTolerance)
 				nSelected = YAxis;
 		}
 		if (nSelected != YAxis) {
@@ -170,7 +172,7 @@ uint32 SNMTransformGizmoScale::DetermineSelected(const Ray &cRay) const
 			cPlane.ComputeND(Vector3::Zero, Vector3::UnitZ);
 			if (Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV)) {
 				vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(0.0f, 10.0f, 0.0f));
-				if ((vMin-vV).GetSquaredLength() < 0.6f)
+				if ((vMin-vV).GetSquaredLength() < fTolerance)
 					nSelected = YAxis;
 			}
 		}
@@ -179,7 +181,7 @@ uint32 SNMTransformGizmoScale::DetermineSelected(const Ray &cRay) const
 		cPlane.ComputeND(Vector3::Zero, Vector3::UnitY);
 		if (Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV)) {
 			vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(0.0f, 0.0f, 10.0f));
-			if ((vMin-vV).GetSquaredLength() < 0.6f)
+			if ((vMin-vV).GetSquaredLength() < fTolerance)
 				nSelected = ZAxis;
 		}
 		if (nSelected != ZAxis) {
@@ -187,7 +189,7 @@ uint32 SNMTransformGizmoScale::DetermineSelected(const Ray &cRay) const
 			cPlane.ComputeND(Vector3::Zero, Vector3::UnitX);
 			if (Intersect::PlaneRayNegative(cPlane, vRayPos, vRayDir, vV)) {
 				vMin = vV.ClosestPointOnLine(Vector3::Zero, Vector3(0.0f, 0.0f, 10.0f));
-				if ((vMin-vV).GetSquaredLength() < 0.6f)
+				if ((vMin-vV).GetSquaredLength() < fTolerance)
 					nSelected = ZAxis;
 			}
 		}

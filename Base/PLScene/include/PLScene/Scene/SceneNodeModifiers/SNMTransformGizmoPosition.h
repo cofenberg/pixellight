@@ -52,7 +52,8 @@ class SNMTransformGizmoPosition : public SNMTransformGizmo {
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SNMTransformGizmoPosition, "PLScene", PLScene::SNMTransformGizmo, "Abstract position transform gizmo scene node modifier base class")
 		// Attributes
-		pl_attribute(LineWidth,	float,	2.0f,	ReadWrite,	DirectValue,	"Line width",	"")
+		pl_attribute(LineWidth,	float,	2.0f,	ReadWrite,	DirectValue,	"Line width",					"")
+		pl_attribute(Tolerance,	float,	0.6f,	ReadWrite,	DirectValue,	"Tolerance for axis selection",	"")
 	pl_class_end
 
 
