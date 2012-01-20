@@ -110,6 +110,19 @@ String Application::GetResourceFilename() const
 
 
 //[-------------------------------------------------------]
+//[ Public virtual PLCore::AbstractLifecycle functions    ]
+//[-------------------------------------------------------]
+bool Application::OnStart()
+{
+	// Set human readable frontend title
+	GetFrontend().SetTitle("PixelLight viewer");
+
+	// Call base implementation
+	return ScriptApplication::OnStart();
+}
+
+
+//[-------------------------------------------------------]
 //[ Public virtual PLEngine::EngineApplication functions  ]
 //[-------------------------------------------------------]
 bool Application::LoadScene(const String &sFilename)

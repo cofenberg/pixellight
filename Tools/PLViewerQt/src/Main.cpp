@@ -32,7 +32,7 @@
 //[-------------------------------------------------------]
 //[ Module definition                                     ]
 //[-------------------------------------------------------]
-pl_module_application_frontend("PixelLight viewer (Qt)", "ApplicationQt", "PLFrontendQt::Frontend")
+pl_module_application_frontend("PLViewerQt", "ApplicationQt", "PLFrontendQt::Frontend")
 	pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
 	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
 	pl_module_description("Qt based PixelLight viewer")

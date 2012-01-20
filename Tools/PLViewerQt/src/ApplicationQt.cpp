@@ -86,6 +86,19 @@ PLFrontendQt::DockWidgetManager *ApplicationQt::GetDockWidgetManager() const
 
 
 //[-------------------------------------------------------]
+//[ Public virtual PLCore::AbstractLifecycle functions    ]
+//[-------------------------------------------------------]
+bool ApplicationQt::OnStart()
+{
+	// Set human readable frontend title
+	GetFrontend().SetTitle("PixelLight viewer (Qt)");
+
+	// Call base implementation
+	return Application::OnStart();
+}
+
+
+//[-------------------------------------------------------]
 //[ Protected virtual PLCore::AbstractFrontend functions  ]
 //[-------------------------------------------------------]
 void ApplicationQt::OnUpdate()

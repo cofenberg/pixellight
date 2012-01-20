@@ -97,6 +97,13 @@ class Application : public PLEngine::ScriptApplication {
 
 
 	//[-------------------------------------------------------]
+	//[ Public virtual PLCore::AbstractLifecycle functions    ]
+	//[-------------------------------------------------------]
+	public:
+		virtual bool OnStart() override;
+
+
+	//[-------------------------------------------------------]
 	//[ Public virtual PLEngine::EngineApplication functions  ]
 	//[-------------------------------------------------------]
 	public:

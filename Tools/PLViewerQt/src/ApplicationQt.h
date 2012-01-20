@@ -97,6 +97,13 @@ class ApplicationQt : public Application {
 
 
 	//[-------------------------------------------------------]
+	//[ Public virtual PLCore::AbstractLifecycle functions    ]
+	//[-------------------------------------------------------]
+	public:
+		virtual bool OnStart() override;
+
+
+	//[-------------------------------------------------------]
 	//[ Protected virtual PLCore::AbstractFrontend functions  ]
 	//[-------------------------------------------------------]
 	protected:
