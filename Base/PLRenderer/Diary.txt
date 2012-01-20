@@ -1,3 +1,15 @@
+>> 20.01.2012
+[CO]
+- Bugfix: "Animation" was not initializing "m_fFrame" within "Reset()" -> "SetCurrentFrame()". To avoid such issues in the future I now copied
+  all "Reset()" variable resetting into the constructor initializer list as usually done. This way we *really* know that there are known initial
+  values set because it can be seen by just looking at it without the need to follow the program logic to see were it's been initialized.
+  Found this bug when playing the work-in-progress Sci-Fi "realtime movie" under Linux... and suddenly noticed that some shots were not played
+  correctly... at least not always, sometimes it worked... the typical indicator for "A. Memory leak" or "B. Not initialized variable". Reviewing
+  the involved classes with A or B in mind revealed the issue at once. One of those horror bugs because not recognizable or exploding at once,
+  not on all platforms/combinations - but when it's jumping onto you it's always fun to narrow down the issue.
+
+
+
 >> 08.01.2012
 [CO]
 PLRendererOpenGLES2

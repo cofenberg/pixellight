@@ -46,9 +46,19 @@ namespace PLRenderer {
 *    Constructor
 */
 Animation::Animation(const String &sName, AnimationManager *pManager) : Element<Animation>(sName, pManager),
-	m_bEvents(true)
+	m_fFrame(0.0f),
+	m_bActive(false),
+	m_bRunning(false),
+	m_nType(0),
+	m_nFlags(0),
+	m_nStart(0),
+	m_nEnd(0),
+	m_fSpeed(24.0f),
+	m_bEvents(true),
+	m_pAnimationInfo(nullptr),
+	m_fWeight(1.0f),
+	m_bBounced(false)
 {
-	Reset();
 }
 
 /**
