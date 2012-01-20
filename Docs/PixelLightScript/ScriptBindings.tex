@@ -71,6 +71,12 @@ Write \emph{PL.Timing.GetTimeDifference()} in order to get the past time since l
 \paragraph{<float> PL.Timing.GetFramesPerSecond()}
 Write \emph{PL.Timing.GetFramesPerSecond()} in order to get the current \ac{FPS}.
 
+\paragraph{<bool> PL.Timing.IsPaused()}
+Write \emph{PL.Timing.IsPaused()} in order to receive \emph{true} when the timing is paused, else \emph{false}. If the timing is paused scene nodes, particles etc. are not updated. The timing will still be updated.
+
+\paragraph{<float> PL.Timing.Pause(<boolean>)}
+Write \emph{PL.Timing.Pause(<boolean>)} in order to set pause mode. \emph{true} as first parameter when timing should be pause, else \emph{false}.
+
 \paragraph{<float> PL.Timing.GetTimeScaleFactor()}
 Write \emph{PL.Timing.GetTimeScaleFactor()} in order to get the time scale factor. The global time scale factor should only be manipulated for debugging. A factor of <= 0 is NOT allowed because this may cause problems in certain situations, pause the timer instead by hand! Do NOT make the factor \emph{too} (for example > 4) extreme, this may cause problems in certain situations!
 

@@ -53,6 +53,16 @@ float ScriptBinding_PL_Timing::GetFramesPerSecond()
 	return Timing::GetInstance()->GetFramesPerSecond();
 }
 
+bool ScriptBinding_PL_Timing::IsPaused()
+{
+	return Timing::GetInstance()->IsPaused();
+}
+
+void ScriptBinding_PL_Timing::Pause(bool bPause)
+{
+	Timing::GetInstance()->Pause(bPause);
+}
+
 float ScriptBinding_PL_Timing::GetTimeScaleFactor()
 {
 	return Timing::GetInstance()->GetTimeScaleFactor();

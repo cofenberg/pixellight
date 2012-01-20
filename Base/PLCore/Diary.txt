@@ -2,6 +2,8 @@
 [CO]
 PLFrontendQt:
 - RTTI browser: "ClassInfoAttributeTreeItem": Added "Type" and "Default" information (quite useful e.g. when scripting)
+PLScriptBindings:
+- "ScriptBinding_PL_Timing": Added "IsPaused()" and "Pause()"
 
 
 
