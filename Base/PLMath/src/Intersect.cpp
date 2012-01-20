@@ -66,12 +66,12 @@ bool Intersect::SpherePoint(const Sphere &cSphere, const Vector4 &cPoint)
 *  @brief
 *    Check whether there's a sphere/ray intersection
 */
-float Intersect::SphereRay(const Sphere &cSphere, const Vector3 &vRayOrigin, const Vector3 &vRayDir)
+float Intersect::SphereRay(const Sphere &cSphere, const Vector3 &vRayOrigin, const Vector3 &vRayDirection)
 {
 	const Vector3 vDelta = cSphere.GetPos() - vRayOrigin;
 
 	const float fC = vDelta.GetSquaredLength();
-	const float fV = vDelta.DotProduct(vRayDir);
+	const float fV = vDelta.DotProduct(vRayDirection);
 	const float fD = cSphere.GetRadius()*cSphere.GetRadius() - (fC - fV*fV);
 
 	// Return the distance to the (first) intersecting point
@@ -399,16 +399,16 @@ bool Intersect::AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
 		return true;
 
 	// Check each face in turn, only check closest 3
-	const Vector3 vRayDir = (vEnd - vStart).Normalize();
+	const Vector3 vRayDirection = (vEnd - vStart).Normalize();
 	bool  bHit  = false;
 	float fLowt = 0.0f;
 
 	// Min x
-	if (vRayOrig.x < vAABoxMin.x && vRayDir.x > 0) {
-		const float t = (vAABoxMin.x - vRayOrig.x)/vRayDir.x;
+	if (vRayOrig.x < vAABoxMin.x && vRayDirection.x > 0) {
+		const float t = (vAABoxMin.x - vRayOrig.x)/vRayDirection.x;
 		if (t > 0) {
 			// Substitute t back into ray and check bounds and dist
-			const Vector3 vHitpoint = vRayOrig + vRayDir*t;
+			const Vector3 vHitpoint = vRayOrig + vRayDirection*t;
 			if (vHitpoint.y >= vAABoxMin.y && vHitpoint.y <= vAABoxMax.y &&
 				vHitpoint.z >= vAABoxMin.z && vHitpoint.z <= vAABoxMax.z &&
 				(!bHit || t < fLowt)) {
@@ -418,11 +418,11 @@ bool Intersect::AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
 		}
 	}
 	// Max x
-	if (vRayOrig.x > vAABoxMax.x && vRayDir.x < 0) {
-		const float t = (vAABoxMax.x - vRayOrig.x)/vRayDir.x;
+	if (vRayOrig.x > vAABoxMax.x && vRayDirection.x < 0) {
+		const float t = (vAABoxMax.x - vRayOrig.x)/vRayDirection.x;
 		if (t > 0) {
 			// Substitute t back into ray and check bounds and dist
-			const Vector3 vHitpoint = vRayOrig + vRayDir*t;
+			const Vector3 vHitpoint = vRayOrig + vRayDirection*t;
 			if (vHitpoint.y >= vAABoxMin.y && vHitpoint.y <= vAABoxMax.y &&
 				vHitpoint.z >= vAABoxMin.z && vHitpoint.z <= vAABoxMax.z &&
 				(!bHit || t < fLowt)) {
@@ -432,11 +432,11 @@ bool Intersect::AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
 		}
 	}
 	// Min y
-	if (vRayOrig.y < vAABoxMin.y && vRayDir.y > 0) {
-		const float t = (vAABoxMin.y - vRayOrig.y)/vRayDir.y;
+	if (vRayOrig.y < vAABoxMin.y && vRayDirection.y > 0) {
+		const float t = (vAABoxMin.y - vRayOrig.y)/vRayDirection.y;
 		if (t > 0) {
 			// Substitute t back into ray and check bounds and dist
-			const Vector3 vHitpoint = vRayOrig + vRayDir*t;
+			const Vector3 vHitpoint = vRayOrig + vRayDirection*t;
 			if (vHitpoint.x >= vAABoxMin.x && vHitpoint.x <= vAABoxMax.x &&
 				vHitpoint.z >= vAABoxMin.z && vHitpoint.z <= vAABoxMax.z &&
 				(!bHit || t < fLowt)) {
@@ -446,11 +446,11 @@ bool Intersect::AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
 		}
 	}
 	// Max y
-	if (vRayOrig.y > vAABoxMax.y && vRayDir.y < 0) {
-		const float t = (vAABoxMax.y - vRayOrig.y)/vRayDir.y;
+	if (vRayOrig.y > vAABoxMax.y && vRayDirection.y < 0) {
+		const float t = (vAABoxMax.y - vRayOrig.y)/vRayDirection.y;
 		if (t > 0) {
 			// Substitute t back into ray and check bounds and dist
-			const Vector3 vHitpoint = vRayOrig + vRayDir*t;
+			const Vector3 vHitpoint = vRayOrig + vRayDirection*t;
 			if (vHitpoint.x >= vAABoxMin.x && vHitpoint.x <= vAABoxMax.x &&
 				vHitpoint.z >= vAABoxMin.z && vHitpoint.z <= vAABoxMax.z &&
 				(!bHit || t < fLowt)) {
@@ -460,11 +460,11 @@ bool Intersect::AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
 		}
 	}
 	// Min z
-	if (vRayOrig.z < vAABoxMin.z && vRayDir.z > 0) {
-		const float t = (vAABoxMin.z - vRayOrig.z)/vRayDir.z;
+	if (vRayOrig.z < vAABoxMin.z && vRayDirection.z > 0) {
+		const float t = (vAABoxMin.z - vRayOrig.z)/vRayDirection.z;
 		if (t > 0) {
 			// Substitute t back into ray and check bounds and dist
-			const Vector3 vHitpoint = vRayOrig + vRayDir*t;
+			const Vector3 vHitpoint = vRayOrig + vRayDirection*t;
 			if (vHitpoint.x >= vAABoxMin.x && vHitpoint.x <= vAABoxMax.x &&
 				vHitpoint.y >= vAABoxMin.y && vHitpoint.y <= vAABoxMax.y &&
 				(!bHit || t < fLowt)) {
@@ -474,11 +474,11 @@ bool Intersect::AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
 		}
 	}
 	// Max z
-	if (vRayOrig.z > vAABoxMax.z && vRayDir.z < 0) {
-		const float t = (vAABoxMax.z - vRayOrig.z)/vRayDir.z;
+	if (vRayOrig.z > vAABoxMax.z && vRayDirection.z < 0) {
+		const float t = (vAABoxMax.z - vRayOrig.z)/vRayDirection.z;
 		if (t > 0) {
 			// Substitute t back into ray and check bounds and dist
-			const Vector3 vHitpoint = vRayOrig + vRayDir*t;
+			const Vector3 vHitpoint = vRayOrig + vRayDirection*t;
 			if (vHitpoint.x >= vAABoxMin.x && vHitpoint.x <= vAABoxMax.x &&
 				vHitpoint.y >= vAABoxMin.y && vHitpoint.y <= vAABoxMax.y &&
 				(!bHit || t < fLowt)) {
@@ -1121,33 +1121,33 @@ bool Intersect::BoxPlaneSet(const BoundingBox &cBox, const PlaneSet &cPlaneSet)
 *  @brief
 *    Checks if there's a plane/ray intersection
 */
-bool Intersect::IsPlaneRay(const Plane &cPlane, const Vector3 &vRayDir)
+bool Intersect::IsPlaneRay(const Plane &cPlane, const Vector3 &vRayDirection)
 {
 	// Ray parallel to plane?
-	return ((cPlane.fN[0]*vRayDir.x + cPlane.fN[1]*vRayDir.y + cPlane.fN[2]*vRayDir.z) != 0.0f);
+	return ((cPlane.fN[0]*vRayDirection.x + cPlane.fN[1]*vRayDirection.y + cPlane.fN[2]*vRayDirection.z) != 0.0f);
 }
 
 /**
 *  @brief
 *    Returns the plane/ray intersection point
 */
-bool Intersect::PlaneRay(const Plane &cPlane, const Vector3 &vRayPos, const Vector3 &vRayDir, Vector3 &vIntersectionPointPos)
+bool Intersect::PlaneRay(const Plane &cPlane, const Vector3 &vRayOrigin, const Vector3 &vRayDirection, Vector3 &vIntersectionPointPos)
 {
 	// Line parallel to plane?
 	const float *fN = &cPlane.fN[0];
-	float fA = fN[0]*vRayDir.x + fN[1]*vRayDir.y + fN[2]*vRayDir.z;
+	float fA = fN[0]*vRayDirection.x + fN[1]*vRayDirection.y + fN[2]*vRayDirection.z;
 	if (fA) {
 		// Get a point on the plane
 		const Vector3 vPointOnPlane = cPlane.GetPointOnPlane();
 
 		// Not optimized
-//		vIntersectionPointPos = vRayPos-vRayDir*((Vector3(cPlane.fN).DotProduct(vRayPos)-vPointOnPlane.DotProduct(Vector3(cPlane.fN)))/fA);
+//		vIntersectionPointPos = vRayOrigin-vRayDirection*((Vector3(cPlane.fN).DotProduct(vRayOrigin)-vPointOnPlane.DotProduct(Vector3(cPlane.fN)))/fA);
 
 		// Optimized (no temporal vector objects on the runtime stack)
-		fA = ((fN[0]*vRayPos.x + fN[1]*vRayPos.y + fN[2]*vRayPos.z) - (vPointOnPlane.x*fN[0] + vPointOnPlane.y*fN[1] + vPointOnPlane.z*fN[2]))/fA;
-		vIntersectionPointPos.x = vRayPos.x - vRayDir.x*fA;
-		vIntersectionPointPos.y = vRayPos.y - vRayDir.y*fA;
-		vIntersectionPointPos.z = vRayPos.z - vRayDir.z*fA;
+		fA = ((fN[0]*vRayOrigin.x + fN[1]*vRayOrigin.y + fN[2]*vRayOrigin.z) - (vPointOnPlane.x*fN[0] + vPointOnPlane.y*fN[1] + vPointOnPlane.z*fN[2]))/fA;
+		vIntersectionPointPos.x = vRayOrigin.x - vRayDirection.x*fA;
+		vIntersectionPointPos.y = vRayOrigin.y - vRayDirection.y*fA;
+		vIntersectionPointPos.z = vRayOrigin.z - vRayDirection.z*fA;
 
 		// Intersection
 		return true;
@@ -1157,24 +1157,24 @@ bool Intersect::PlaneRay(const Plane &cPlane, const Vector3 &vRayPos, const Vect
 	return false;
 }
 
-bool Intersect::PlaneRayPositive(const Plane &cPlane, const Vector3 &vRayPos, const Vector3 &vRayDir, Vector3 &vIntersectionPointPos)
+bool Intersect::PlaneRayPositive(const Plane &cPlane, const Vector3 &vRayOrigin, const Vector3 &vRayDirection, Vector3 &vIntersectionPointPos)
 {
 	// Line parallel to plane?
 	const float *fN = &cPlane.fN[0];
-	float fA = fN[0]*vRayDir.x + fN[1]*vRayDir.y + fN[2]*vRayDir.z;
+	float fA = fN[0]*vRayDirection.x + fN[1]*vRayDirection.y + fN[2]*vRayDirection.z;
 	if (fA) {
 		// Get a point on the plane
 		const Vector3 vPointOnPlane = cPlane.GetPointOnPlane();
 
 		// Not optimized
-//		vIntersectionPointPos = vRayPos-vRayDir*((Vector3(cPlane.fN).DotProduct(vRayPos)-vPointOnPlane.DotProduct(Vector3(cPlane.fN)))/fA);
+//		vIntersectionPointPos = vRayOrigin-vRayDirection*((Vector3(cPlane.fN).DotProduct(vRayOrigin)-vPointOnPlane.DotProduct(Vector3(cPlane.fN)))/fA);
 
 		// Optimized (no temporal vector objects on the runtime stack)
-		fA = ((fN[0]*vRayPos.x + fN[1]*vRayPos.y + fN[2]*vRayPos.z) - (vPointOnPlane.x*fN[0] + vPointOnPlane.y*fN[1] + vPointOnPlane.z*fN[2]))/fA;
+		fA = ((fN[0]*vRayOrigin.x + fN[1]*vRayOrigin.y + fN[2]*vRayOrigin.z) - (vPointOnPlane.x*fN[0] + vPointOnPlane.y*fN[1] + vPointOnPlane.z*fN[2]))/fA;
 		if (fA > 0.0f) {
-			vIntersectionPointPos.x = vRayPos.x - vRayDir.x*fA;
-			vIntersectionPointPos.y = vRayPos.y - vRayDir.y*fA;
-			vIntersectionPointPos.z = vRayPos.z - vRayDir.z*fA;
+			vIntersectionPointPos.x = vRayOrigin.x - vRayDirection.x*fA;
+			vIntersectionPointPos.y = vRayOrigin.y - vRayDirection.y*fA;
+			vIntersectionPointPos.z = vRayOrigin.z - vRayDirection.z*fA;
 
 			// Intersection
 			return true;
@@ -1185,24 +1185,24 @@ bool Intersect::PlaneRayPositive(const Plane &cPlane, const Vector3 &vRayPos, co
 	return false;
 }
 
-bool Intersect::PlaneRayNegative(const Plane &cPlane, const Vector3 &vRayPos, const Vector3 &vRayDir, Vector3 &vIntersectionPointPos)
+bool Intersect::PlaneRayNegative(const Plane &cPlane, const Vector3 &vRayOrigin, const Vector3 &vRayDirection, Vector3 &vIntersectionPointPos)
 {
 	// Line parallel to plane?
 	const float *fN = &cPlane.fN[0];
-	float fA = fN[0]*vRayDir.x + fN[1]*vRayDir.y + fN[2]*vRayDir.z;
+	float fA = fN[0]*vRayDirection.x + fN[1]*vRayDirection.y + fN[2]*vRayDirection.z;
 	if (fA) {
 		// Get a point on the plane
 		const Vector3 vPointOnPlane = cPlane.GetPointOnPlane();
 
 		// Not optimized
-//		vIntersectionPointPos = vRayPos-vRayDir*((Vector3(cPlane.fN).DotProduct(vRayPos)-vPointOnPlane.DotProduct(Vector3(cPlane.fN)))/fA);
+//		vIntersectionPointPos = vRayOrigin-vRayDirection*((Vector3(cPlane.fN).DotProduct(vRayOrigin)-vPointOnPlane.DotProduct(Vector3(cPlane.fN)))/fA);
 
 		// Optimized (no temporal vector objects on the runtime stack)
-		fA = ((fN[0]*vRayPos.x + fN[1]*vRayPos.y + fN[2]*vRayPos.z) - (vPointOnPlane.x*fN[0] + vPointOnPlane.y*fN[1] + vPointOnPlane.z*fN[2]))/fA;
+		fA = ((fN[0]*vRayOrigin.x + fN[1]*vRayOrigin.y + fN[2]*vRayOrigin.z) - (vPointOnPlane.x*fN[0] + vPointOnPlane.y*fN[1] + vPointOnPlane.z*fN[2]))/fA;
 		if (fA < 0.0f) {
-			vIntersectionPointPos.x = vRayPos.x - vRayDir.x*fA;
-			vIntersectionPointPos.y = vRayPos.y - vRayDir.y*fA;
-			vIntersectionPointPos.z = vRayPos.z - vRayDir.z*fA;
+			vIntersectionPointPos.x = vRayOrigin.x - vRayDirection.x*fA;
+			vIntersectionPointPos.y = vRayOrigin.y - vRayDirection.y*fA;
+			vIntersectionPointPos.z = vRayOrigin.z - vRayDirection.z*fA;
 
 			// Intersection
 			return true;

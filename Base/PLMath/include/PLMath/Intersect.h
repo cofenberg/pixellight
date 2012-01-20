@@ -100,13 +100,13 @@ class Intersect {
 		*    Sphere to check
 		*  @param[in] vRayOrigin
 		*    Ray origin
-		*  @param[in] vRayDir
+		*  @param[in] vRayDirection
 		*    Ray direction vector
 		*
 		*  @return
 		*    Distance to intersection point, -1.0 it there was no intersection
 		*/
-		static PLMATH_API float SphereRay(const Sphere &cSphere, const Vector3 &vRayOrigin, const Vector3 &vRayDir);
+		static PLMATH_API float SphereRay(const Sphere &cSphere, const Vector3 &vRayOrigin, const Vector3 &vRayDirection);
 
 		/**
 		*  @brief
@@ -124,8 +124,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's a sphere/ray intersection, else 'false'
 		*/
-		static PLMATH_API bool SphereRay(const Sphere &cSphere, const Vector3 &vRayOrigin,
-										 const Vector3 &vRayDirection, Vector3 *pvIntersect = nullptr);
+		static PLMATH_API bool SphereRay(const Sphere &cSphere, const Vector3 &vRayOrigin, const Vector3 &vRayDirection, Vector3 *pvIntersect = nullptr);
 
 		/**
 		*  @brief
@@ -380,8 +379,7 @@ class Intersect {
 		*  @return
 		*    'true' if there's a axis aligned box/axis aligned box intersection, else 'false'
 		*/
-		static PLMATH_API bool AABoxAABox(const Vector3 &vAABoxMin1, const Vector3 &vAABoxMax1,
-										  const Vector3 &vAABoxMin2, const Vector3 &vAABoxMax2);
+		static PLMATH_API bool AABoxAABox(const Vector3 &vAABoxMin1, const Vector3 &vAABoxMax1, const Vector3 &vAABoxMin2, const Vector3 &vAABoxMax2);
 
 		/**
 		*  @brief
@@ -485,13 +483,13 @@ class Intersect {
 		*
 		*  @param[in] cPlane
 		*    Plane to check
-		*  @param[in] vRayDir
+		*  @param[in] vRayDirection
 		*    Ray direction (must be normalized)
 		*
 		*  @return
 		*    'true' if the ray intersects the plane, else 'false' (ray is parallel to plane)
 		*/
-		static PLMATH_API bool IsPlaneRay(const Plane &cPlane, const Vector3 &vRayDir);
+		static PLMATH_API bool IsPlaneRay(const Plane &cPlane, const Vector3 &vRayDirection);
 
 		/**
 		*  @brief
@@ -499,9 +497,9 @@ class Intersect {
 		*
 		*  @param[in] cPlane
 		*    Plane to check
-		*  @param[in] vRayPos
-		*    Ray position
-		*  @param[in] vRayDir
+		*  @param[in] vRayOrigin
+		*    Ray origin position
+		*  @param[in] vRayDirection
 		*    Ray direction (must be normalized)
 		*  @param[out] vIntersectionPointPos
 		*    Will receive the position of the intersection point, do only use the result when this method returned 'true'
@@ -514,9 +512,9 @@ class Intersect {
 		*    - "PlaneRayPositive()" only returns "true" for intersection with positive distance to plane
 		*    - "PlaneRayNegative()" only returns "true" for intersection with negative distance to plane
 		*/
-		static PLMATH_API bool PlaneRay(const Plane &cPlane, const Vector3 &vRayPos, const Vector3 &vRayDir, Vector3 &vIntersectionPointPos);
-		static PLMATH_API bool PlaneRayPositive(const Plane &cPlane, const Vector3 &vRayPos, const Vector3 &vRayDir, Vector3 &vIntersectionPointPos);
-		static PLMATH_API bool PlaneRayNegative(const Plane &cPlane, const Vector3 &vRayPos, const Vector3 &vRayDir, Vector3 &vIntersectionPointPos);
+		static PLMATH_API bool PlaneRay(const Plane &cPlane, const Vector3 &vRayOrigin, const Vector3 &vRayDirection, Vector3 &vIntersectionPointPos);
+		static PLMATH_API bool PlaneRayPositive(const Plane &cPlane, const Vector3 &vRayOrigin, const Vector3 &vRayDirection, Vector3 &vIntersectionPointPos);
+		static PLMATH_API bool PlaneRayNegative(const Plane &cPlane, const Vector3 &vRayOrigin, const Vector3 &vRayDirection, Vector3 &vIntersectionPointPos);
 
 		/**
 		*  @brief
@@ -676,8 +674,7 @@ class Intersect {
 		*  @return
 		*    'true' if the triangle is in plane set, else 'false'
 		*/
-		static PLMATH_API bool PlaneSetTriangle(const PlaneSet &cPlaneSet, const Vector3 &vV1,
-												const Vector3 &vV2, const Vector3 &vV3);
+		static PLMATH_API bool PlaneSetTriangle(const PlaneSet &cPlaneSet, const Vector3 &vV1, const Vector3 &vV2, const Vector3 &vV3);
 
 		/**
 		*  @brief
