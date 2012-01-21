@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Class.h>
+#include <PLCore/Tools/Timing.h>
 #include <PLCore/Tools/Stopwatch.h>
 #include <PLCore/Tools/Profiling.h>
 #include <PLMath/Graph/GraphPathManager.h>
@@ -147,7 +148,7 @@ SceneContainer *SceneContext::GetRoot()
 			pContainer->m_pSceneContext = this;
 			pContainer->SetProtected(true);
 			pContainer->SetName("Root");
-			pContainer->SetFlags(pContainer->GetFlags() | SceneNode::NoPause | SceneNode::NoCulling);
+			pContainer->SetFlags(pContainer->GetFlags() | SceneNode::NoCulling);
 
 			// Done
 			return pContainer;
@@ -183,23 +184,26 @@ void SceneContext::Cleanup()
 *  @brief
 *    Method that is called once per update loop
 */
-void SceneContext::Update()
+void SceneContext::Update(bool bRespectPause)
 {
-	// Perform profiling?
-	Profiling *pProfiling = Profiling::GetInstance();
-	if (pProfiling->IsActive()) {
-		// Start the stopwatch
-		Stopwatch cStopwatch(true);
+	// Do only emit the update event when timing currently not paused
+	if (!Timing::GetInstance()->IsPaused()) {
+		// Perform profiling?
+		Profiling *pProfiling = Profiling::GetInstance();
+		if (pProfiling->IsActive()) {
+			// Start the stopwatch
+			Stopwatch cStopwatch(true);
 
-		// Emit event
-		EventUpdate();
+			// Emit event
+			EventUpdate();
 
-		// Update the profiling data
-		pProfiling->Set("Scene context", "Update time",		 String::Format("%.3f ms", cStopwatch.GetMilliseconds()));
-		pProfiling->Set("Scene context", "Updated elements", String::Format("%d", EventUpdate.GetNumOfConnects()));
-	} else {
-		// Emit event
-		EventUpdate();
+			// Update the profiling data
+			pProfiling->Set("Scene context", "Update time",		 String::Format("%.3f ms", cStopwatch.GetMilliseconds()));
+			pProfiling->Set("Scene context", "Updated elements", String::Format("%d", EventUpdate.GetNumOfConnects()));
+		} else {
+			// Emit event
+			EventUpdate();
+		}
 	}
 }
 

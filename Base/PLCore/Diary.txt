@@ -10,8 +10,13 @@ PLFrontendQt:
 
 >> 20.01.2012
 [CO]
+- "Runtime::ScanDirectoryPlugins()" & "CoreApplication::OnInitPlugins()" & "FrontendApplication::OnInitPlugins()" no longer search within a "Plugins"-directory.
+  Those directories had been removed several month ago because they were just trouble, especially under Linux. In case one really needs such a directory, it's no
+  problem to add the one-line-code within the user application.
 PLFrontendQt:
 - RTTI browser: "ClassInfoAttributeTreeItem": Added "Type" and "Default" information (quite useful e.g. when scripting)
+PLScriptBindings:
+- "ScriptBinding_PL_Timing": Added "IsPaused()" and "Pause()"
 
 
 

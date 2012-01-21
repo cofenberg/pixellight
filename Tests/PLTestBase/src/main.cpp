@@ -56,13 +56,8 @@ pl_module_end
 //[-------------------------------------------------------]
 int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 {
-	{ // Add plugins
-		// Scan for plugins within in the current plugins directory
-		ClassManager::GetInstance()->ScanPlugins("Plugins/");
-
-		// Scan PL-runtime directory for compatible plugins and load them in
-		Runtime::ScanDirectoryPlugins();
-	}
+	// Scan PL-runtime directory for compatible plugins and load them in
+	Runtime::ScanDirectoryPlugins();
 
 	// Perform general tests
 	GeneralTests();

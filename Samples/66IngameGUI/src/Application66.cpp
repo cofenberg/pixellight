@@ -118,7 +118,7 @@ void Application66::OnDeInit()
 void Application66::OnCreateScene(SceneContainer &cContainer)
 {
 	// Set scene container flags
-	cContainer.SetFlags(SceneNode::NoCulling | SceneNode::NoPause);
+	cContainer.SetFlags(SceneNode::NoCulling);
 
 	// Setup scene surface painter
 	SurfacePainter *pPainter = GetPainter();

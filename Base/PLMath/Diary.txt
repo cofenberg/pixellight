@@ -1,4 +1,10 @@
-﻿>> 19.01.2012
+﻿>> 20.01.2012
+[CO]
+- Minor "Intersect"-class naming cleanup
+
+
+
+>> 19.01.2012
 [CO]
 - "Intersect": Added "TriangleRayPositive()" and "TriangleRayNegative()" variations because I currently need them and I don't want to add even more
    parameters to this method or doing any other more complex solution. In my humble opinion, some more comfort intersection methods for special cases

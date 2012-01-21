@@ -161,13 +161,16 @@ class SceneContext : public PLCore::AbstractContext {
 		*  @brief
 		*    Method that is called once per update loop
 		*
+		*  @param[in] bRespectPause
+		*    Respect pause? ("PLCore::Timing::GetInstance()->IsPaused()")
+		*
 		*  @remarks
 		*    You can use this method to do work you have to to within each frame. It's
 		*    recommended to keep the work done within the implementation as compact as possible.
 		*    Don't use this method to perform 'polling'-everything, use events or if required
 		*    for example timers instead.
 		*/
-		PLS_API void Update();
+		PLS_API void Update(bool bRespectPause = true);
 
 		/**
 		*  @brief
