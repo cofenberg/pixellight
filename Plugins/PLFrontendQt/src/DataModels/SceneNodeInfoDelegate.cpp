@@ -183,13 +183,27 @@ void SceneNodeInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
 	if (dataVal.userType() ==  QMetaType::QColor && index.column() == 1) {
 		const QColor color = qVariantValue<QColor>(dataVal);
 		painter->save();
+		
+		const int pixSize = 10;
+		QBrush br(color);
+		{
+			QPixmap pm(2 * pixSize, 2 * pixSize);
+			QPainter pmp(&pm);
+			pmp.fillRect(0, 0, pixSize, pixSize, Qt::white);
+			pmp.fillRect(pixSize, pixSize, pixSize, pixSize, Qt::white);
+			pmp.fillRect(0, pixSize, pixSize, pixSize, Qt::black);
+			pmp.fillRect(pixSize, 0, pixSize, pixSize, Qt::black);
+			pmp.fillRect(0, 0, 2 * pixSize, 2 * pixSize, color);
+			br = QBrush(pm);
+		}
+		
 		painter->setBrushOrigin(option.rect.x(), option.rect.y());
 
 		// [TODO]
 		// int xOffset = 8;
 		//painter->fillRect(QRect(option.rect.left()+xOffset, option.rect.top()+4, option.rect.width()-xOffset*2, option.rect.height()-8), color);
 
-		painter->fillRect(option.rect.adjusted(8, 4, -8, -4), color);
+		painter->fillRect(option.rect.adjusted(8, 4, -8, -4), br);
 		painter->restore();
 	}
 }

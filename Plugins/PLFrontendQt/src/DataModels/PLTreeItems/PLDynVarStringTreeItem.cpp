@@ -40,6 +40,7 @@ namespace DataModels {
 PLDynVarStringTreeItem::PLDynVarStringTreeItem(PLCore::DynVar *dynVar, PLDynVarTreeItemTypes::DynVarTreeItemTypes dynVarType, QObject *parent) : TreeItemBase(2, parent),
 	m_dynVar(dynVar),
 	m_varName(dynVar ? QtStringAdapter::PLToQt(dynVar->GetDesc()->GetName()): ""),
+	m_typeName(dynVar ? QtStringAdapter::PLToQt(dynVar->GetTypeName()): ""),
 	m_dynVarType(dynVarType)
 {
 	SetFlags(1, Qt::ItemIsEditable);
@@ -49,6 +50,9 @@ QVariant PLDynVarStringTreeItem::data(const int column, const int role)
 {
 	if (column == 1 && role == PLDynVarTreeItemTypes::DynVarItemTypeRole)
 		return m_dynVarType;
+	
+	if (column == 1 && role == Qt::ToolTipRole)
+		return m_typeName;
 	
 	if (!IsInStandardRole(role))
 		return QVariant();

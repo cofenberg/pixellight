@@ -25,9 +25,11 @@
 //[-------------------------------------------------------]
 #include <PLMath/Vector3.h>
 #include <PLGraphics/Color/Color3.h>
+#include <PLGraphics/Color/Color4.h>
 #include <PLCore/Base/TypeInfo/DynTypeInfo.h>
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarStringTreeItem.h"
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarFlagsTreeItem.h"
+#include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarVector2TreeItem.h"
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarVector3TreeItem.h"
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarFloatTreeItem.h"
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarColorTreeItem.h"
@@ -47,11 +49,13 @@ TreeItemBase *PLDynVarTreeItemsFactory::CreateDynVarTreeItem(PLCore::DynVar *dyn
 {
 	if (dynVar->GetType().IsFlagType())
 		new PLDynVarFlagsTreeItem(dynVar, parent);
+	else if (dynVar->GetTypeID() == PLCore::Type<PLMath::Vector2>::TypeID)
+		new PLDynVarVector2TreeItem(dynVar, parent);
 	else if (dynVar->GetTypeID() == PLCore::Type<PLMath::Vector3>::TypeID)
 		new PLDynVarVector3TreeItem(dynVar, parent);
 	else if (dynVar->GetTypeID() == PLCore::TypeFloat)
 		new PLDynVarFloatTreeItem(dynVar, parent);
-	else if (dynVar->GetTypeID() == PLCore::Type<PLGraphics::Color3>::TypeID)
+	else if (dynVar->GetTypeID() == PLCore::Type<PLGraphics::Color3>::TypeID || dynVar->GetTypeID() == PLCore::Type<PLGraphics::Color4>::TypeID)
 		new PLDynVarColorTreeItem(dynVar, parent);
 	else if(dynVar->GetType().IsEnumType())
 		new PLDynVarEnumTreeItem(dynVar, parent);

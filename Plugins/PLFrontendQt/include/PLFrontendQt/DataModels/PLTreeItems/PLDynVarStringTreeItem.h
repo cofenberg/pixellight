@@ -92,6 +92,7 @@ class PLFRONTENDQT_API PLDynVarStringTreeItem : public TreeItemBase {
 	//[-------------------------------------------------------]
 	private:
 		QString										 m_varName;
+		QString										 m_typeName;
 		PLDynVarTreeItemTypes::DynVarTreeItemTypes	 m_dynVarType;
 
 

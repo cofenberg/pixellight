@@ -59,7 +59,8 @@ class PLDynVarTreeItemTypes {
 			Flags,
 			Float,
 			Vector3,
-			Color3
+			Vector2,
+			Color
 		};
 		
 		enum ItemRoles {

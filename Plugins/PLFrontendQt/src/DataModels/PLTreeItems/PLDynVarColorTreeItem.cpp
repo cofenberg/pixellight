@@ -27,6 +27,7 @@
 #include <QtGui/QColor>
 #include <PLCore/Base/Var/DynVar.h>
 #include <PLGraphics/Color/Color3.h>
+#include <PLGraphics/Color/Color4.h>
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarColorTreeItem.h"
 
@@ -41,19 +42,17 @@ namespace PLFrontendQt {
 namespace DataModels {
 
 
-PLDynVarColorTreeItem::PLDynVarColorTreeItem(PLCore::DynVar *dynVar, QObject *parent) : PLDynVarStringTreeItem(dynVar, PLDynVarTreeItemTypes::Color3, parent)
+PLDynVarColorTreeItem::PLDynVarColorTreeItem(PLCore::DynVar *dynVar, QObject *parent) : PLDynVarStringTreeItem(dynVar, PLDynVarTreeItemTypes::Color, parent)
+ , m_bHasAlpha(dynVar ? dynVar->GetTypeID() == PLCore::Type<PLGraphics::Color4>::TypeID : false)
 {
+	
 }
 
 QVariant PLDynVarColorTreeItem::data(const int column, const int role)
 {
 	if (column == 1) {
 		if (role == ColorRole) {
-			PLGraphics::Color3 col;
-			QString qstr(QtStringAdapter::PLToQt(m_dynVar->GetString()));
-			col.FromString(m_dynVar->GetString());
-			QColor color(QColor::fromRgbF(col.GetR(), col.GetG(), col.GetB()));
-			return color;
+			return GetQColorFromDynVar();
 		}
 		return QVariant();
 	}
@@ -63,13 +62,41 @@ QVariant PLDynVarColorTreeItem::data(const int column, const int role)
 
 bool PLDynVarColorTreeItem::setData(const int column, const QVariant &value, const int role)
 {
-	if (role != Qt::EditRole || column != 1)
+	if (role != Qt::EditRole || column != 1 || value.userType() != QMetaType::QColor)
 		return false;
 
-	QColor color = value.value<QColor>();
-	PLGraphics::Color3 col((float)color.redF(), (float)color.greenF(), (float)color.blueF());
-	m_dynVar->SetString(col.ToString());
+	if (!m_bHasAlpha)
+	{
+		QColor color = value.value<QColor>();
+		PLGraphics::Color3 col((float)color.redF(), (float)color.greenF(), (float)color.blueF());
+		m_dynVar->SetString(col.ToString());
+	}
+	else
+	{
+		QColor color = value.value<QColor>();
+		PLGraphics::Color4 col((float)color.redF(), (float)color.greenF(), (float)color.blueF(), (float)color.alphaF());
+		m_dynVar->SetString(col.ToString());
+	}
+
 	return true;
+}
+
+QColor PLDynVarColorTreeItem::GetQColorFromDynVar()
+{
+	if (!m_bHasAlpha)
+	{
+		PLGraphics::Color3 col;
+		col.FromString(m_dynVar->GetString());
+		QColor color(QColor::fromRgbF(col.GetR(), col.GetG(), col.GetB()));
+		return color;
+	}
+	else
+	{
+		PLGraphics::Color4 col;
+		col.FromString(m_dynVar->GetString());
+		QColor color(QColor::fromRgbF(col.GetR(), col.GetG(), col.GetB(), col.GetA()));
+		return color;
+	}
 }
 
 

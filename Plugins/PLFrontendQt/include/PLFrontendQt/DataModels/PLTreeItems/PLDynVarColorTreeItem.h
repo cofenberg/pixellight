@@ -32,6 +32,12 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+class QColor;
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLFrontendQt {
@@ -43,7 +49,7 @@ namespace DataModels {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Dynamic variable tree item: Color3
+*    Dynamic variable tree item: Color3 and Color4
 */
 class PLFRONTENDQT_API PLDynVarColorTreeItem : public PLDynVarStringTreeItem {
 
@@ -62,6 +68,20 @@ class PLFRONTENDQT_API PLDynVarColorTreeItem : public PLDynVarStringTreeItem {
 		explicit PLDynVarColorTreeItem(PLCore::DynVar *dynVar, QObject *parent = nullptr);
 		virtual QVariant data(const int column, const int role) override;
 		bool setData(const int column, const QVariant &value, const int role);
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		QColor GetQColorFromDynVar();
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		bool m_bHasAlpha;
 
 
 };
