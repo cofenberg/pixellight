@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 #include <QtGui/QStyledItemDelegate>
 #include <PLCore/PLCore.h>	// Only needed for compilers which doesn't have nullptr as a builtin type
+#include "PLFrontendQt/PLFrontendQt.h"
 
 
 //[-------------------------------------------------------]
@@ -59,7 +60,7 @@ namespace DataModels {
 *    - Showing a spin edit box when floating point values should be edit with directly
 *      setting the value to the RTTI member when changing the value in the edit control
 */
-class SceneNodeInfoDelegate : public QStyledItemDelegate {
+class PLFRONTENDQT_API SceneNodeInfoDelegate : public QStyledItemDelegate {
 
 
 	//[-------------------------------------------------------]
@@ -90,6 +91,7 @@ class SceneNodeInfoDelegate : public QStyledItemDelegate {
 	//[-------------------------------------------------------]
 	private slots:
 		void doubleSpinboxChanged(double);
+		void currentComboboxIndexChanged(int);
 
 
 };

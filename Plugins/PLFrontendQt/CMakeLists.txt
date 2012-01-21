@@ -70,6 +70,7 @@ SET(INC_FILES
 	include/PLFrontendQt/DataModels/PLTreeItems/PLDynVarColorTreeItem.h
 	include/PLFrontendQt/DataModels/PLTreeItems/PLDynVarStringTreeItem.h
 	include/PLFrontendQt/DataModels/PLTreeItems/PLDynVarVector3TreeItem.h
+	include/PLFrontendQt/DataModels/PLTreeItems/PLDynVarEnumTreeItem.h
 	include/PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererDataModel.h
 	include/PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererPassTreeItem.h
 	include/PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererHeaderTreeItem.h
@@ -133,6 +134,7 @@ add_sources(
 	src/DataModels/PLTreeItems/PLDynVarColorTreeItem.cpp
 	src/DataModels/PLTreeItems/PLDynVarStringTreeItem.cpp
 	src/DataModels/PLTreeItems/PLDynVarVector3TreeItem.cpp
+	src/DataModels/PLTreeItems/PLDynVarEnumTreeItem.cpp
 	src/DataModels/PLTreeItems/PLDynVarTreeItemsFactory.cpp
 	src/DataModels/SceneRendererDataModel/SceneRendererDataModel.cpp
 	src/DataModels/SceneRendererDataModel/SceneRendererPassTreeItem.cpp

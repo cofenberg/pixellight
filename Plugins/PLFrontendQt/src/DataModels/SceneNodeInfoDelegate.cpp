@@ -28,11 +28,12 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QApplication>
 #include <QtGui/QDoubleSpinBox>
+#include <QtGui/QComboBox>
 #include "PLFrontendQt/External/qtcolorbutton.h"
 #include "PLFrontendQt/DataModels/SceneNodeInfoDelegate.h"
 
 
-enum { ColorRole = 33 };
+enum { ColorRole = 33, DynVarItemTypeRole = Qt::UserRole+1, DynVarEnumValues };
 
 
 //[-------------------------------------------------------]
@@ -82,12 +83,31 @@ SceneNodeInfoDelegate::SceneNodeInfoDelegate(QObject *parent) : QStyledItemDeleg
 QWidget *SceneNodeInfoDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 	QVariant dataVal = index.data(ColorRole);
+	QVariant plTreeItemtype = index.data(DynVarItemTypeRole);
+	
 	if (dataVal.userType() ==  QMetaType::QColor && index.column() == 1) {
 		ColorEditor *editor = new ColorEditor(parent);
 		connect(editor, SIGNAL(changed(QWidget*)), this, SIGNAL(commitData(QWidget*)));
 		editor->setFocusPolicy(Qt::NoFocus);
 		editor->installEventFilter(const_cast<SceneNodeInfoDelegate *>(this));
 		return editor;
+	} else if (plTreeItemtype.isValid() && plTreeItemtype.toInt() == 1 && index.column() == 1) {
+		QMap<QString, QVariant> enumValues = index.data(DynVarEnumValues).toMap();
+		QString currentValue = index.data(Qt::DisplayRole).toString();
+		
+		
+		// Create the combobox and populate it
+		QComboBox *cb = new QComboBox(parent);
+		QMapIterator<QString, QVariant> iterator(enumValues);
+		while (iterator.hasNext()) {
+			iterator.next();
+			QString sKey(iterator.key());
+			QVariant cValue(iterator.value());
+			cb->addItem(sKey, cValue);
+		}
+		connect(cb, (SIGNAL(currentIndexChanged(int))), this, SLOT(currentComboboxIndexChanged(int)));
+		cb->setCurrentIndex(cb->findText(currentValue));
+		return cb;
 	} else {
 		QWidget *editor = QStyledItemDelegate::createEditor(parent, option, index);
 
@@ -104,6 +124,15 @@ QWidget *SceneNodeInfoDelegate::createEditor(QWidget *parent, const QStyleOption
 void SceneNodeInfoDelegate::doubleSpinboxChanged(double)
 {
 	QDoubleSpinBox *editor = qobject_cast<QDoubleSpinBox *>(sender());
+	commitData(editor);
+}
+
+void SceneNodeInfoDelegate::currentComboboxIndexChanged(int index)
+{
+	if (index == -1)
+		return;
+	
+	QComboBox *editor = qobject_cast<QComboBox *>(sender());
 	commitData(editor);
 }
 
@@ -128,6 +157,9 @@ void SceneNodeInfoDelegate::setModelData(QWidget *ed, QAbstractItemModel *model,
 			QColor color = editor->color();
 			model->setData(index, color, Qt::EditRole);
 		}
+	} else if(QComboBox *cb = qobject_cast<QComboBox *>(ed)) {
+        // save the user data of the currentIndex of the combo box as the current value of the item
+        model->setData(index, cb->itemData(cb->currentIndex()), Qt::EditRole);
 	} else {
 		QStyledItemDelegate::setModelData(ed, model, index);
 	}

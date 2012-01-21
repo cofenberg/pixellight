@@ -34,7 +34,7 @@ namespace PLFrontendQt {
 namespace DataModels {
 
 
-PLDynVarFloatTreeItem::PLDynVarFloatTreeItem(PLCore::DynVar *dynVar, QObject *parent) : PLDynVarStringTreeItem(dynVar, parent)
+PLDynVarFloatTreeItem::PLDynVarFloatTreeItem(PLCore::DynVar *dynVar, QObject *parent) : PLDynVarStringTreeItem(dynVar, PLDynVarTreeItemTypes::Float, parent)
 {
 }
 

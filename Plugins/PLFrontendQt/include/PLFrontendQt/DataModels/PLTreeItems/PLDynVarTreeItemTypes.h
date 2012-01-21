@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: PLDynVarColorTreeItem.cpp                      *
+ *  File: PLDynVarTreeItemTypes.h                        *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,18 +20,15 @@
 \*********************************************************/
 
 
+#ifndef __PLFRONTENDQT_PLDYNVARTREEITEMTYPES_H__
+#define __PLFRONTENDQT_PLDYNVARTREEITEMTYPES_H__
+#pragma once
+
+
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <QtGui/QRgb>
-#include <QtGui/QColor>
-#include <PLCore/Base/Var/DynVar.h>
-#include <PLGraphics/Color/Color3.h>
-#include "PLFrontendQt/QtStringAdapter.h"
-#include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarColorTreeItem.h"
-
-
-enum { ColorRole = 33 };
+#include <QtCore/qnamespace.h>
 
 
 //[-------------------------------------------------------]
@@ -41,36 +38,36 @@ namespace PLFrontendQt {
 namespace DataModels {
 
 
-PLDynVarColorTreeItem::PLDynVarColorTreeItem(PLCore::DynVar *dynVar, QObject *parent) : PLDynVarStringTreeItem(dynVar, PLDynVarTreeItemTypes::Color3, parent)
-{
-}
+//[-------------------------------------------------------]
+//[ Classes                                               ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    This class is only a container for some enums used for PLTreeItems
+*/
+// [TODO] convert to c++0x11 enum class when possible
+class PLDynVarTreeItemTypes {
 
-QVariant PLDynVarColorTreeItem::data(const int column, const int role)
-{
-	if (column == 1) {
-		if (role == ColorRole) {
-			PLGraphics::Color3 col;
-			QString qstr(QtStringAdapter::PLToQt(m_dynVar->GetString()));
-			col.FromString(m_dynVar->GetString());
-			QColor color(QColor::fromRgbF(col.GetR(), col.GetG(), col.GetB()));
-			return color;
-		}
-		return QVariant();
-	}
 
-	return PLDynVarStringTreeItem::data(column, role);
-}
+	//[-------------------------------------------------------]
+	//[ Public definitions                                    ]
+	//[-------------------------------------------------------]
+	public:
+		enum DynVarTreeItemTypes {
+			String,
+			Enum,
+			Flags,
+			Float,
+			Vector3,
+			Color3
+		};
+		
+		enum ItemRoles {
+			DynVarItemTypeRole = Qt::UserRole+1,
+			DynVarEnumValues
+		};
+};
 
-bool PLDynVarColorTreeItem::setData(const int column, const QVariant &value, const int role)
-{
-	if (role != Qt::EditRole || column != 1)
-		return false;
-
-	QColor color = value.value<QColor>();
-	PLGraphics::Color3 col((float)color.redF(), (float)color.greenF(), (float)color.blueF());
-	m_dynVar->SetString(col.ToString());
-	return true;
-}
 
 
 //[-------------------------------------------------------]
@@ -78,3 +75,6 @@ bool PLDynVarColorTreeItem::setData(const int column, const QVariant &value, con
 //[-------------------------------------------------------]
 } // DataModels
 } // PLFrontendQt
+
+
+#endif // __PLFRONTENDQT_PLDYNVARTREEITEMTYPES_H__

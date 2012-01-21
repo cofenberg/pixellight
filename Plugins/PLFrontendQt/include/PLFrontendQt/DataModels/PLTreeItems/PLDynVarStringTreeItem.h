@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLFrontendQt/DataModels/TreeItemBase.h"
+#include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarTreeItemTypes.h"
 
 
 //[-------------------------------------------------------]
@@ -67,7 +68,7 @@ class PLFRONTENDQT_API PLDynVarStringTreeItem : public TreeItemBase {
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		explicit PLDynVarStringTreeItem(PLCore::DynVar *dynVar, QObject *parent = nullptr);
+		explicit PLDynVarStringTreeItem(PLCore::DynVar *dynVar, PLDynVarTreeItemTypes::DynVarTreeItemTypes dynVarType = PLDynVarTreeItemTypes::String, QObject *parent = nullptr);
 		virtual QVariant data(const int column, const int role) override;
 		virtual bool setData(const int column, const QVariant &value, const int role) override;
 
@@ -83,14 +84,15 @@ class PLFRONTENDQT_API PLDynVarStringTreeItem : public TreeItemBase {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLCore::DynVar *m_dynVar;
+		PLCore::DynVar 								*m_dynVar;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		QString m_varName;
+		QString										 m_varName;
+		PLDynVarTreeItemTypes::DynVarTreeItemTypes	 m_dynVarType;
 
 
 };
