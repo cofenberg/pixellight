@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SceneNodeInfoDelegate.cpp                      *
+ *  File: PLTreeItemsDelegate.cpp                        *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -30,10 +30,11 @@
 #include <QtGui/QDoubleSpinBox>
 #include <QtGui/QComboBox>
 #include "PLFrontendQt/External/qtcolorbutton.h"
-#include "PLFrontendQt/DataModels/SceneNodeInfoDelegate.h"
+#include "PLFrontendQt/DataModels/PLTreeItemsDelegate.h"
+#include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarTreeItemTypes.h"
 
 
-enum { ColorRole = 33, DynVarItemTypeRole = Qt::UserRole+1, DynVarEnumValues };
+enum { ColorRole = 33 };
 
 
 //[-------------------------------------------------------]
@@ -76,24 +77,23 @@ bool ColorEditor::changed() const
 	return m_changed;
 }
 
-SceneNodeInfoDelegate::SceneNodeInfoDelegate(QObject *parent) : QStyledItemDelegate (parent)
+PLTreeItemsDelegate::PLTreeItemsDelegate(QObject *parent) : QStyledItemDelegate (parent)
 {
 }
 
-QWidget *SceneNodeInfoDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
+QWidget *PLTreeItemsDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 	QVariant dataVal = index.data(ColorRole);
-	QVariant plTreeItemtype = index.data(DynVarItemTypeRole);
+	QVariant plTreeItemtype = index.data(PLDynVarTreeItemTypes::DynVarItemTypeRole);
 	
 	if (dataVal.userType() ==  QMetaType::QColor && index.column() == 1) {
 		ColorEditor *editor = new ColorEditor(parent);
 		connect(editor, SIGNAL(changed(QWidget*)), this, SIGNAL(commitData(QWidget*)));
 		editor->setFocusPolicy(Qt::NoFocus);
-		editor->installEventFilter(const_cast<SceneNodeInfoDelegate *>(this));
+		editor->installEventFilter(const_cast<PLTreeItemsDelegate *>(this));
 		return editor;
 	} else if (plTreeItemtype.isValid() && plTreeItemtype.toInt() == 1 && index.column() == 1) {
-		QMap<QString, QVariant> enumValues = index.data(DynVarEnumValues).toMap();
-		QString currentValue = index.data(Qt::DisplayRole).toString();
+		QMap<QString, QVariant> enumValues = index.data(PLDynVarTreeItemTypes::DynVarEnumValues).toMap();
 		
 		
 		// Create the combobox and populate it
@@ -106,7 +106,6 @@ QWidget *SceneNodeInfoDelegate::createEditor(QWidget *parent, const QStyleOption
 			cb->addItem(sKey, cValue);
 		}
 		connect(cb, (SIGNAL(currentIndexChanged(int))), this, SLOT(currentComboboxIndexChanged(int)));
-		cb->setCurrentIndex(cb->findText(currentValue));
 		return cb;
 	} else {
 		QWidget *editor = QStyledItemDelegate::createEditor(parent, option, index);
@@ -121,13 +120,13 @@ QWidget *SceneNodeInfoDelegate::createEditor(QWidget *parent, const QStyleOption
 	}
 }
 
-void SceneNodeInfoDelegate::doubleSpinboxChanged(double)
+void PLTreeItemsDelegate::doubleSpinboxChanged(double)
 {
 	QDoubleSpinBox *editor = qobject_cast<QDoubleSpinBox *>(sender());
 	commitData(editor);
 }
 
-void SceneNodeInfoDelegate::currentComboboxIndexChanged(int index)
+void PLTreeItemsDelegate::currentComboboxIndexChanged(int index)
 {
 	if (index == -1)
 		return;
@@ -136,19 +135,22 @@ void SceneNodeInfoDelegate::currentComboboxIndexChanged(int index)
 	commitData(editor);
 }
 
-void SceneNodeInfoDelegate::setEditorData(QWidget *ed, const QModelIndex &index) const
+void PLTreeItemsDelegate::setEditorData(QWidget *ed, const QModelIndex &index) const
 {
 	QVariant dataVal = index.data(ColorRole);
 	if (dataVal.userType() ==  QMetaType::QColor && index.column() == 1) {
 		const QColor color = qVariantValue<QColor>(dataVal);
 		ColorEditor *editor = static_cast<ColorEditor *>(ed);
 		editor->setColor(color);
+	} else if (QComboBox *cb = qobject_cast<QComboBox *>(ed)) {
+		QString currentValue = index.data(Qt::DisplayRole).toString();
+		cb->setCurrentIndex(cb->findText(currentValue));
 	} else {
 		QStyledItemDelegate::setEditorData(ed, index);
 	}
 }
 
-void SceneNodeInfoDelegate::setModelData(QWidget *ed, QAbstractItemModel *model, const QModelIndex &index) const
+void PLTreeItemsDelegate::setModelData(QWidget *ed, QAbstractItemModel *model, const QModelIndex &index) const
 {
 	QVariant dataVal = index.data(ColorRole);
 	if (dataVal.userType() ==  QMetaType::QColor && index.column() == 1) {
@@ -165,7 +167,7 @@ void SceneNodeInfoDelegate::setModelData(QWidget *ed, QAbstractItemModel *model,
 	}
 }
 
-void SceneNodeInfoDelegate::updateEditorGeometry(QWidget *ed, const QStyleOptionViewItem &option, const QModelIndex &index) const
+void PLTreeItemsDelegate::updateEditorGeometry(QWidget *ed, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
 	QStyledItemDelegate::updateEditorGeometry(ed, option, index);
 	QVariant dataVal = index.data(ColorRole);
@@ -173,7 +175,7 @@ void SceneNodeInfoDelegate::updateEditorGeometry(QWidget *ed, const QStyleOption
 		ed->setGeometry(ed->geometry().adjusted(5, 1, -5, -1));
 }
 
-void SceneNodeInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt, const QModelIndex &index) const
+void PLTreeItemsDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt, const QModelIndex &index) const
 {
 	QStyleOptionViewItem option = opt;
 
@@ -208,7 +210,7 @@ void SceneNodeInfoDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
 	}
 }
 
-QSize SceneNodeInfoDelegate::sizeHint ( const QStyleOptionViewItem & option, const QModelIndex & index ) const
+QSize PLTreeItemsDelegate::sizeHint ( const QStyleOptionViewItem & option, const QModelIndex & index ) const
 {
 	return QStyledItemDelegate::sizeHint(option, index) + QSize(0, 5);
 }

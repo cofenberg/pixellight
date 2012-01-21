@@ -29,7 +29,7 @@
 #include <PLCore/Base/Class.h>
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/DataModels/PLIntrospectionModel.h"
-#include "PLFrontendQt/DataModels/SceneNodeInfoDelegate.h"
+#include "PLFrontendQt/DataModels/PLTreeItemsDelegate.h"
 #include "PLFrontendQt/DockWidget/DockWidgetObject.h"
 
 
@@ -70,8 +70,8 @@ DockWidgetObject::DockWidgetObject(QMainWindow *pQMainWindow, DockWidgetManager 
 		m_pQTreeView->expandToDepth(0);
 
 		// This item delegate adds additional (rudimentary) features when handling edits
-		// -> See "DataModels::SceneNodeInfoDelegate"-class documentation for details
-		m_pQTreeView->setItemDelegate(new DataModels::SceneNodeInfoDelegate);
+		// -> See "DataModels::PLTreeItemsDelegate"-class documentation for details
+		m_pQTreeView->setItemDelegate(new DataModels::PLTreeItemsDelegate);
 
 		// Add the created Qt dock widget to the given Qt main window
 		pQMainWindow->addDockWidget(Qt::BottomDockWidgetArea, pQDockWidget);

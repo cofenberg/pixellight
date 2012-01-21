@@ -63,7 +63,7 @@ SET(INC_FILES
 	include/PLFrontendQt/DataModels/SceneNodeInfoModel.h
 	include/PLFrontendQt/DataModels/SceneGraphTreeModel.h
 	include/PLFrontendQt/DataModels/PLIntrospectionModel.h
-	include/PLFrontendQt/DataModels/SceneNodeInfoDelegate.h
+	include/PLFrontendQt/DataModels/PLTreeItemsDelegate.h
 	include/PLFrontendQt/DataModels/SceneGraphNodeTreeItemBase.h
 	include/PLFrontendQt/DataModels/PLTreeItems/PLDynVarFlagsTreeItem.h
 	include/PLFrontendQt/DataModels/PLTreeItems/PLDynVarFloatTreeItem.h
@@ -128,7 +128,7 @@ add_sources(
 	src/DataModels/SceneNodeInfoModel.cpp
 	src/DataModels/SceneGraphTreeModel.cpp
 	src/DataModels/PLIntrospectionModel.cpp
-	src/DataModels/SceneNodeInfoDelegate.cpp
+	src/DataModels/PLTreeItemsDelegate.cpp
 	src/DataModels/SceneGraphNodeTreeItemBase.cpp
 	src/DataModels/PLTreeItems/PLDynVarFlagsTreeItem.cpp
 	src/DataModels/PLTreeItems/PLDynVarFloatTreeItem.cpp

@@ -27,7 +27,7 @@
 #include <QtGui/qdockwidget.h>
 #include <QtGui/qmainwindow.h>
 #include <PLScene/Compositing/SceneRenderer.h>
-#include "PLFrontendQt/DataModels/SceneNodeInfoDelegate.h"
+#include "PLFrontendQt/DataModels/PLTreeItemsDelegate.h"
 #include "PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererDataModel.h"
 #include "PLFrontendQt/DockWidget/DockWidgetSceneRendererQObject.h"
 #include "PLFrontendQt/DockWidget/DockWidgetSceneRenderer.h"
@@ -71,8 +71,8 @@ DockWidgetSceneRenderer::DockWidgetSceneRenderer(QMainWindow *pQMainWindow, Dock
 		m_pQTreeView->expandToDepth(0);
 
 		// This item delegate adds additional (rudimentary) features when handling edits
-		// -> See "DataModels::SceneNodeInfoDelegate"-class documentation for details
-		m_pQTreeView->setItemDelegate(new DataModels::SceneNodeInfoDelegate);
+		// -> See "DataModels::PLTreeItemsDelegate"-class documentation for details
+		m_pQTreeView->setItemDelegate(new DataModels::PLTreeItemsDelegate);
 
 		// Add the created Qt dock widget to the given Qt main window
 		pQMainWindow->addDockWidget(Qt::BottomDockWidgetArea, pQDockWidget);

@@ -28,7 +28,7 @@
 #include <PLScene/Scene/SceneContainer.h>
 #include "PLFrontendQt/DataModels/SceneNodeInfoModel.h"
 #include "PLFrontendQt/DataModels/SceneGraphTreeModel.h"
-#include "PLFrontendQt/DataModels/SceneNodeInfoDelegate.h"
+#include "PLFrontendQt/DataModels/PLTreeItemsDelegate.h"
 #include "PLFrontendQt/DataModels/SceneGraphNodeTreeItemBase.h"
 #include "PLFrontendQt/QPLSceneContext.h"
 #include "PLFrontendQt/QPLDebugDialog.h"
@@ -58,7 +58,7 @@ QPLDebugDialog::QPLDebugDialog(QWidget *parent, Qt::WindowFlags f) : QWidget(par
 	ui->sceneTree->setModel(graphModel);
 	ui->sceneTree->expandToDepth(0);
 	ui->sceneNodeTree->setModel(nodeInfoModel);
-	ui->sceneNodeTree->setItemDelegate(new SceneNodeInfoDelegate);
+	ui->sceneNodeTree->setItemDelegate(new PLTreeItemsDelegate);
 }
 
 void QPLDebugDialog::SetContext(QPLSceneContext *context, bool hideSceneStartNode)

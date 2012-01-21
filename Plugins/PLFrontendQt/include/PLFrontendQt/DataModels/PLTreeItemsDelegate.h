@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SceneNodeInfoDelegate.h                        *
+ *  File: PLTreeItemsDelegate.h                          *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTENDQT_SCENENODEINFODELEGATE_H__
-#define __PLFRONTENDQT_SCENENODEINFODELEGATE_H__
+#ifndef __PLFRONTENDQT_PLTREEITEMSDELEGATE_H__
+#define __PLFRONTENDQT_PLTREEITEMSDELEGATE_H__
 #pragma once
 
 
@@ -51,16 +51,16 @@ namespace DataModels {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene node info delegate
+*    Item delegate mainly for models useable which use internally PLDynVarTreeItems
 *
 *  @remarks
 *    This item delegate adds additional (rudimentary) features when handling edits:
 *    - Showing a color chooser button for RTTI members which represent a color
-*      (currently only when the type is "PLGraphics::Color3")
 *    - Showing a spin edit box when floating point values should be edit with directly
 *      setting the value to the RTTI member when changing the value in the edit control
+*    - Showing a combobox for enum values
 */
-class PLFRONTENDQT_API SceneNodeInfoDelegate : public QStyledItemDelegate {
+class PLFRONTENDQT_API PLTreeItemsDelegate : public QStyledItemDelegate {
 
 
 	//[-------------------------------------------------------]
@@ -74,7 +74,7 @@ class PLFRONTENDQT_API SceneNodeInfoDelegate : public QStyledItemDelegate {
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		explicit SceneNodeInfoDelegate(QObject *parent = nullptr);
+		explicit PLTreeItemsDelegate(QObject *parent = nullptr);
 		QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
 		void setEditorData(QWidget *ed, const QModelIndex &index) const;
@@ -154,4 +154,4 @@ class ColorEditor : public QWidget {
 } // PLFrontendQt
 
 
-#endif // __PLFRONTENDQT_SCENENODEINFODELEGATE_H__
+#endif // __PLFRONTENDQT_PLTREEITEMSDELEGATE_H__

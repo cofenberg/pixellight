@@ -1,3 +1,13 @@
+>> 21.01.2012
+[SW]
+PLFrontendQt:
+- Renamed SceneNodeInfoDelegate to PLTreeItemsDelegate because this delegate is mainly usefull for models which uses internally PLDynVarTreeItems
+- Added PLDynVarVector2TreeItem and PLDynVarEnumTreeItem
+- PLDynVarColorTreeItem is now also useable for PLGraphics::Color4
+- Extended the Delegate to create a Combobox editor for Enum values
+
+
+
 >> 20.01.2012
 [CO]
 PLFrontendQt:
