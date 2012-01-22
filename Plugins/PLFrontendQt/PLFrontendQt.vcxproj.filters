@@ -34,7 +34,7 @@
     <ClCompile Include="src\DataModels\PLTreeItems\PLDynVarFlagsTreeItem.cpp">
       <Filter>DataModels\PLTreeItems</Filter>
     </ClCompile>
-    <ClCompile Include="src\DataModels\PLTreeItems\PLDynVarFloatTreeItem.cpp">
+    <ClCompile Include="src\DataModels\PLTreeItems\PLDynVarNativNumericTypeTreeItem.cpp">
       <Filter>DataModels\PLTreeItems</Filter>
     </ClCompile>
     <ClCompile Include="src\DataModels\PLTreeItems\PLDynVarStringTreeItem.cpp">
@@ -91,7 +91,7 @@
     <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarFlagsTreeItem.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarFloatTreeItem.cpp">
+    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarNativNumericTypeTreeItem.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
     <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarStringTreeItem.cpp">
@@ -253,6 +253,24 @@
     <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarVector2TreeItem.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
+    <ClCompile Include="src\DataModels\PLTreeItems\PLDynVarVector3iTreeItem.cpp">
+      <Filter>DataModels\PLTreeItems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DataModels\PLTreeItems\PLDynVarVector4TreeItem.cpp">
+      <Filter>DataModels\PLTreeItems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DataModels\PLTreeItems\PLDynVarVector2iTreeItem.cpp">
+      <Filter>DataModels\PLTreeItems</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarVector2iTreeItem.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarVector3iTreeItem.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarVector4TreeItem.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarTreeItemsFactory.h">
@@ -380,7 +398,7 @@
     <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarFlagsTreeItem.h">
       <Filter>DataModels\PLTreeItems</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarFloatTreeItem.h">
+    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarNativNumericTypeTreeItem.h">
       <Filter>DataModels\PLTreeItems</Filter>
     </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarStringTreeItem.h">
@@ -459,6 +477,15 @@
       <Filter>DataModels\PLTreeItems</Filter>
     </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarEnumTreeItem.h">
+      <Filter>DataModels\PLTreeItems</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarVector4TreeItem.h">
+      <Filter>DataModels\PLTreeItems</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarVector3iTreeItem.h">
+      <Filter>DataModels\PLTreeItems</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarVector2iTreeItem.h">
       <Filter>DataModels\PLTreeItems</Filter>
     </CustomBuild>
   </ItemGroup>
