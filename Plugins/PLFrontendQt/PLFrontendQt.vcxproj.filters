@@ -7,7 +7,7 @@
     <ClCompile Include="src\DataModels\SceneGraphTreeModel.cpp">
       <Filter>DataModels</Filter>
     </ClCompile>
-    <ClCompile Include="src\DataModels\SceneNodeInfoDelegate.cpp">
+    <ClCompile Include="src\DataModels\PLTreeItemsDelegate.cpp">
       <Filter>DataModels</Filter>
     </ClCompile>
     <ClCompile Include="src\DataModels\SceneNodeInfoModel.cpp">
@@ -127,7 +127,7 @@
     <ClCompile Include="build\GeneratedQtFiles\moc_SceneGraphTreeModel.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_SceneNodeInfoDelegate.cpp">
+    <ClCompile Include="build\GeneratedQtFiles\moc_PLTreeItemsDelegate.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
     <ClCompile Include="build\GeneratedQtFiles\moc_SceneNodeInfoModel.cpp">
@@ -241,6 +241,18 @@
     <ClCompile Include="build\GeneratedQtFiles\moc_TreeSortAndFilterProxyModel.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
+    <ClCompile Include="src\DataModels\PLTreeItems\PLDynVarVector2TreeItem.cpp">
+      <Filter>DataModels\PLTreeItems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DataModels\PLTreeItems\PLDynVarEnumTreeItem.cpp">
+      <Filter>DataModels\PLTreeItems</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarEnumTreeItem.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarVector2TreeItem.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarTreeItemsFactory.h">
@@ -290,6 +302,9 @@
     </ClInclude>
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneGraph.h">
       <Filter>DockWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarTreeItemTypes.h">
+      <Filter>DataModels\PLTreeItems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -347,7 +362,7 @@
     <CustomBuild Include="include\PLFrontendQt\DataModels\SceneGraphTreeModel.h">
       <Filter>DataModels</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DataModels\SceneNodeInfoDelegate.h">
+    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItemsDelegate.h">
       <Filter>DataModels</Filter>
     </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\DataModels\SceneNodeInfoModel.h">
@@ -439,6 +454,12 @@
     </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\DataModels\TreeSortAndFilterProxyModel.h">
       <Filter>DataModels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarVector2TreeItem.h">
+      <Filter>DataModels\PLTreeItems</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarEnumTreeItem.h">
+      <Filter>DataModels\PLTreeItems</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
