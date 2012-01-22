@@ -86,13 +86,15 @@ QWidget *PLTreeItemsDelegate::createEditor(QWidget *parent, const QStyleOptionVi
 	QVariant dataVal = index.data(ColorRole);
 	QVariant plTreeItemtype = index.data(PLDynVarTreeItemTypes::DynVarItemTypeRole);
 	
+	PLDynVarTreeItemTypes::DynVarTreeItemTypes dynVarType = plTreeItemtype.isValid() ? (PLDynVarTreeItemTypes::DynVarTreeItemTypes)plTreeItemtype.toInt() : PLDynVarTreeItemTypes::Unknown;
+	
 	if (dataVal.userType() ==  QMetaType::QColor && index.column() == 1) {
 		ColorEditor *editor = new ColorEditor(parent);
 		connect(editor, SIGNAL(changed(QWidget*)), this, SIGNAL(commitData(QWidget*)));
 		editor->setFocusPolicy(Qt::NoFocus);
 		editor->installEventFilter(const_cast<PLTreeItemsDelegate *>(this));
 		return editor;
-	} else if (plTreeItemtype.isValid() && plTreeItemtype.toInt() == 1 && index.column() == 1) {
+	} else if ( dynVarType == PLDynVarTreeItemTypes::Enum && index.column() == 1) {
 		QMap<QString, QVariant> enumValues = index.data(PLDynVarTreeItemTypes::DynVarEnumValues).toMap();
 		
 		
@@ -108,10 +110,33 @@ QWidget *PLTreeItemsDelegate::createEditor(QWidget *parent, const QStyleOptionVi
 		connect(cb, (SIGNAL(currentIndexChanged(int))), this, SLOT(currentComboboxIndexChanged(int)));
 		return cb;
 	} else {
-		QWidget *editor = QStyledItemDelegate::createEditor(parent, option, index);
-
+		if (index.column() != 1)
+			return QStyledItemDelegate::createEditor(parent, option, index);
+		
 		dataVal = index.data(Qt::EditRole);
-		if (dataVal.userType() ==  QMetaType::Double && index.column() == 1) {
+		
+		QWidget *editor;
+		
+		if (dataVal.userType() == QMetaType::Float) {
+			editor = new QDoubleSpinBox(parent);
+		} else {
+			editor = QStyledItemDelegate::createEditor(parent, option, index);
+		}
+
+		// int8 type
+		if (dynVarType == PLDynVarTreeItemTypes::Int8) {
+			QSpinBox *spin = ((QSpinBox*)editor);
+			spin->setRange(-128, 127);
+		} else if (dynVarType == PLDynVarTreeItemTypes::Int16) {
+			QSpinBox *spin = ((QSpinBox*)editor);
+			spin->setRange(-32768, 32767);
+		} else if (dynVarType == PLDynVarTreeItemTypes::UInt8) {
+			QSpinBox *spin = ((QSpinBox*)editor);
+			spin->setRange(0, 255);
+		} else if (dynVarType == PLDynVarTreeItemTypes::UInt16) {
+			QSpinBox *spin = ((QSpinBox*)editor);
+			spin->setRange(0, 65535);
+		} else if (dynVarType == PLDynVarTreeItemTypes::Double || dynVarType == PLDynVarTreeItemTypes::Float)  {
 			QDoubleSpinBox *spin = ((QDoubleSpinBox*)editor);
 			connect(spin, (SIGNAL(valueChanged(double))), this, SLOT(doubleSpinboxChanged(double)));
 			spin->setSingleStep(0.05);

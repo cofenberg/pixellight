@@ -69,6 +69,13 @@ class PLFRONTENDQT_API PLDynVarTreeItemsFactory {
 		static TreeItemBase *CreateDynVarTreeItem(PLCore::DynVar *dynVar, QObject *parent = nullptr);
 
 
+	//[-------------------------------------------------------]
+	//[ Private static functions                              ]
+	//[-------------------------------------------------------]
+	private:
+		static bool IsBaseType(const PLCore::DynVar &dynVar);
+
+
 };
 
 

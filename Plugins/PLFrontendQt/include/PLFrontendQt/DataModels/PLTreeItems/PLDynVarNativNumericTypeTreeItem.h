@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: PLDynVarFloatTreeItem.h                        *
+ *  File: PLDynVarNativNumericTypeTreeItem.h             *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTENDQT_PLDYNVARFLOATTREEITEM_H__
-#define __PLFRONTENDQT_PLDYNVARFLOATTREEITEM_H__
+#ifndef __PLFRONTENDQT_PLDYNVARNATIVNUMERICTYPETREEITEM_H__
+#define __PLFRONTENDQT_PLDYNVARNATIVNUMERICTYPETREEITEM_H__
 #pragma once
 
 
@@ -43,9 +43,9 @@ namespace DataModels {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Dynamic variable tree item: Float
+*    Dynamic variable tree item: for native numeric types, float, double, signed/unsigned integer (8, 16, 32, 64 bit)
 */
-class PLFRONTENDQT_API PLDynVarFloatTreeItem : public PLDynVarStringTreeItem {
+class PLFRONTENDQT_API PLDynVarNativNumericTypeTreeItem : public PLDynVarStringTreeItem {
 
 
 	//[-------------------------------------------------------]
@@ -59,9 +59,24 @@ class PLFRONTENDQT_API PLDynVarFloatTreeItem : public PLDynVarStringTreeItem {
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		explicit PLDynVarFloatTreeItem(PLCore::DynVar *dynVar, QObject *parent = nullptr);
+		explicit PLDynVarNativNumericTypeTreeItem(PLCore::DynVar *dynVar, QObject *parent = nullptr);
 		virtual QVariant data(const int column, const int role) override;
 		bool setData(const int column, const QVariant &value, const int role);
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		QVariant getBaseTypeData();
+		bool setBaseTypeData(const QVariant &value);
+		static PLDynVarTreeItemTypes::DynVarTreeItemTypes GetNumericTypeFromDynVar(const PLCore::DynVar *dynVar);
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		int m_basisTypeId;
 
 
 };
@@ -74,4 +89,4 @@ class PLFRONTENDQT_API PLDynVarFloatTreeItem : public PLDynVarStringTreeItem {
 } // PLFrontendQt
 
 
-#endif // __PLFRONTENDQT_PLDYNVARFLOATTREEITEM_H__
+#endif // __PLFRONTENDQT_PLDYNVARNATIVNUMERICTYPETREEITEM_H__

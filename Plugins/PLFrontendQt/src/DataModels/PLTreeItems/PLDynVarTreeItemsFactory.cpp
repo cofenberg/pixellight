@@ -31,7 +31,7 @@
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarFlagsTreeItem.h"
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarVector2TreeItem.h"
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarVector3TreeItem.h"
-#include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarFloatTreeItem.h"
+#include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarNativNumericTypeTreeItem.h"
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarColorTreeItem.h"
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarEnumTreeItem.h"
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarTreeItemsFactory.h"
@@ -47,22 +47,34 @@ using namespace PLCore;
 
 TreeItemBase *PLDynVarTreeItemsFactory::CreateDynVarTreeItem(PLCore::DynVar *dynVar, QObject *parent)
 {
+	if (dynVar == nullptr)
+		return nullptr;
+	
+	// Check Flags and Enums before BaseType because Flags and Enums are internaly represented as int32
 	if (dynVar->GetType().IsFlagType())
-		new PLDynVarFlagsTreeItem(dynVar, parent);
-	else if (dynVar->GetTypeID() == PLCore::Type<PLMath::Vector2>::TypeID)
-		new PLDynVarVector2TreeItem(dynVar, parent);
-	else if (dynVar->GetTypeID() == PLCore::Type<PLMath::Vector3>::TypeID)
-		new PLDynVarVector3TreeItem(dynVar, parent);
-	else if (dynVar->GetTypeID() == PLCore::TypeFloat)
-		new PLDynVarFloatTreeItem(dynVar, parent);
-	else if (dynVar->GetTypeID() == PLCore::Type<PLGraphics::Color3>::TypeID || dynVar->GetTypeID() == PLCore::Type<PLGraphics::Color4>::TypeID)
-		new PLDynVarColorTreeItem(dynVar, parent);
+		return new PLDynVarFlagsTreeItem(dynVar, parent);
 	else if(dynVar->GetType().IsEnumType())
-		new PLDynVarEnumTreeItem(dynVar, parent);
+		return new PLDynVarEnumTreeItem(dynVar, parent);
+	else if (IsBaseType(*dynVar))
+		return new PLDynVarNativNumericTypeTreeItem(dynVar, parent);
+	else if (dynVar->GetTypeID() == PLCore::Type<PLMath::Vector2>::TypeID)
+		return new PLDynVarVector2TreeItem(dynVar, parent);
+	else if (dynVar->GetTypeID() == PLCore::Type<PLMath::Vector3>::TypeID)
+		return new PLDynVarVector3TreeItem(dynVar, parent);
+	else if (dynVar->GetTypeID() == PLCore::Type<PLGraphics::Color3>::TypeID || dynVar->GetTypeID() == PLCore::Type<PLGraphics::Color4>::TypeID)
+		return new PLDynVarColorTreeItem(dynVar, parent);
 	else
-		new PLDynVarStringTreeItem(dynVar, PLFrontendQt::DataModels::PLDynVarTreeItemTypes::String, parent);
+		return new PLDynVarStringTreeItem(dynVar, PLFrontendQt::DataModels::PLDynVarTreeItemTypes::String, parent);
 
 	return nullptr;
+}
+
+bool PLDynVarTreeItemsFactory::IsBaseType(const PLCore::DynVar &dynVar)
+{
+	int typeId = dynVar.GetTypeID();
+	return (typeId == PLCore::TypeBool || typeId == PLCore::TypeFloat || typeId == PLCore::TypeDouble
+			|| typeId == PLCore::TypeInt || typeId == PLCore::TypeInt32 || typeId == PLCore::TypeInt16 || typeId == PLCore::TypeInt64  || typeId == PLCore::TypeInt8
+		   || typeId == PLCore::TypeUInt32 || typeId == PLCore::TypeUInt16 || typeId == PLCore::TypeUInt64  || typeId == PLCore::TypeUInt8);
 }
 
 

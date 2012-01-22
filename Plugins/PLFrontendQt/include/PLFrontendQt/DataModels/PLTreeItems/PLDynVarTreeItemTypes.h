@@ -54,10 +54,21 @@ class PLDynVarTreeItemTypes {
 	//[-------------------------------------------------------]
 	public:
 		enum DynVarTreeItemTypes {
+			Unknown,
 			String,
 			Enum,
 			Flags,
+			Bool,
+			Int8,
+			Int16,
+			Int32, // int is Int32
+			Int64,
+			UInt8,
+			UInt16,
+			UInt32, // unsigend int is UInt32
+			UInt64,
 			Float,
+			Double,
 			Vector3,
 			Vector2,
 			Color

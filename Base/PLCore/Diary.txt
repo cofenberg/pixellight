@@ -1,3 +1,12 @@
+>> 22.01.2012
+[SW]
+PLFrontendQt:
+- Renamed PLDynVarFloatTreeItem to PLDynVarNativNumericTypeTreeItem. This Item now handles more numeric base types (float, double, signed/unsigned integers in 8 16 32 and 64 Bit)
+- Extended the Delegate to set proper min/max ranges to the QSpinBox for 8/16 singed/unsigned integers.
+	(Note for 64Bit signed/unsinged integers there is no spinbox)
+
+
+
 >> 21.01.2012
 [SW]
 PLFrontendQt:
