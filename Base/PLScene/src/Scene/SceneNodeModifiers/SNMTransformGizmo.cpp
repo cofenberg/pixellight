@@ -94,9 +94,9 @@ void SNMTransformGizmo::SetTransformMode(bool bTransformMode)
 *    Constructor
 */
 SNMTransformGizmo::SNMTransformGizmo(SceneNode &cSceneNode) : SNMTransform(cSceneNode),
+	DistanceFromCamera(this),
 	SlotOnDrawTransparent(this),
 	SlotOnUpdate(this),
-	DistanceFromCamera(this),
 	m_nSelected(0),
 	m_bTransform(false)
 {
