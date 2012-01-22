@@ -71,6 +71,9 @@ class PLDynVarTreeItemTypes {
 			Double,
 			Vector3,
 			Vector2,
+			Vector4,
+			Vector3i,
+			Vector2i,
 			Color
 		};
 		

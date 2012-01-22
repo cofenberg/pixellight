@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLMath/Vector3.h>
+#include <PLMath/Vector3i.h>
 #include <PLGraphics/Color/Color3.h>
 #include <PLGraphics/Color/Color4.h>
 #include <PLCore/Base/TypeInfo/DynTypeInfo.h>
@@ -31,6 +32,9 @@
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarFlagsTreeItem.h"
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarVector2TreeItem.h"
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarVector3TreeItem.h"
+#include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarVector4TreeItem.h"
+#include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarVector2iTreeItem.h"
+#include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarVector3iTreeItem.h"
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarNativNumericTypeTreeItem.h"
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarColorTreeItem.h"
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarEnumTreeItem.h"
@@ -61,6 +65,12 @@ TreeItemBase *PLDynVarTreeItemsFactory::CreateDynVarTreeItem(PLCore::DynVar *dyn
 		return new PLDynVarVector2TreeItem(dynVar, parent);
 	else if (dynVar->GetTypeID() == PLCore::Type<PLMath::Vector3>::TypeID)
 		return new PLDynVarVector3TreeItem(dynVar, parent);
+	else if (dynVar->GetTypeID() == PLCore::Type<PLMath::Vector4>::TypeID)
+		return new PLDynVarVector4TreeItem(dynVar, parent);
+	else if (dynVar->GetTypeID() == PLCore::Type<PLMath::Vector2i>::TypeID)
+		return new PLDynVarVector2iTreeItem(dynVar, parent);
+	else if (dynVar->GetTypeID() == PLCore::Type<PLMath::Vector3i>::TypeID)
+		return new PLDynVarVector3iTreeItem(dynVar, parent);
 	else if (dynVar->GetTypeID() == PLCore::Type<PLGraphics::Color3>::TypeID || dynVar->GetTypeID() == PLCore::Type<PLGraphics::Color4>::TypeID)
 		return new PLDynVarColorTreeItem(dynVar, parent);
 	else

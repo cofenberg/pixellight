@@ -78,7 +78,7 @@ QVariant PLDynVarNativNumericTypeTreeItem::getBaseTypeData()
 		case PLCore::TypeDouble:
 			return m_dynVar->GetDouble();
 		case PLCore::TypeFloat:
-			return m_dynVar->GetFloat();
+			return (double)m_dynVar->GetFloat(); // return float values as double this makes it easier to display a working editor
 		case PLCore::TypeInt8:
 			return (qint8)m_dynVar->GetInt8();
 		case PLCore::TypeInt16:

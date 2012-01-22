@@ -110,18 +110,9 @@ QWidget *PLTreeItemsDelegate::createEditor(QWidget *parent, const QStyleOptionVi
 		connect(cb, (SIGNAL(currentIndexChanged(int))), this, SLOT(currentComboboxIndexChanged(int)));
 		return cb;
 	} else {
+		QWidget *editor = QStyledItemDelegate::createEditor(parent, option, index);
 		if (index.column() != 1)
-			return QStyledItemDelegate::createEditor(parent, option, index);
-		
-		dataVal = index.data(Qt::EditRole);
-		
-		QWidget *editor;
-		
-		if (dataVal.userType() == QMetaType::Float) {
-			editor = new QDoubleSpinBox(parent);
-		} else {
-			editor = QStyledItemDelegate::createEditor(parent, option, index);
-		}
+			return editor;
 
 		// int8 type
 		if (dynVarType == PLDynVarTreeItemTypes::Int8) {
@@ -163,6 +154,7 @@ void PLTreeItemsDelegate::currentComboboxIndexChanged(int index)
 void PLTreeItemsDelegate::setEditorData(QWidget *ed, const QModelIndex &index) const
 {
 	QVariant dataVal = index.data(ColorRole);
+	
 	if (dataVal.userType() ==  QMetaType::QColor && index.column() == 1) {
 		const QColor color = qVariantValue<QColor>(dataVal);
 		ColorEditor *editor = static_cast<ColorEditor *>(ed);
@@ -211,6 +203,7 @@ void PLTreeItemsDelegate::paint(QPainter *painter, const QStyleOptionViewItem &o
 		const QColor color = qVariantValue<QColor>(dataVal);
 		painter->save();
 		
+		// Create a checker background
 		const int pixSize = 10;
 		QBrush br(color);
 		{
