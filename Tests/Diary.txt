@@ -1,3 +1,20 @@
+>> 23.01.2012
+[JS]
+PLUnitTests:
+- migrated Vector2 tests from PLTestBase
+- extended Math tests
+
+
+
+>> 09.01.2012
+[JS]
+PLUnitTests:
+- started to migrate tests from PLTestBase to PLUnitTests
+- added a portion of Math tests
+- fixed/changed ApplicationContext tests due to modifications/fixes to this class
+
+
+
 >> 30.12.2011
 [JS]
 PLUnitTests:
