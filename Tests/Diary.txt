@@ -3,6 +3,7 @@
 PLUnitTests:
 - migrated Vector2 tests from PLTestBase
 - extended Math tests
+- fixed Comparison of Enums in linux environment => UnitTest++ can't compare these?
 
 
 

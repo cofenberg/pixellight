@@ -333,7 +333,7 @@ SUITE(Vector2) {
 	}
 
 	TEST_FIXTURE(ConstructTest, ToString) {
-		CHECK_EQUAL(PLCore::String("1 2"), vec2.ToString());
+		CHECK_EQUAL("1 2", vec2.ToString().GetASCII());
 	}
 
 	TEST_FIXTURE(ConstructTest, FromString) {
@@ -361,16 +361,16 @@ SUITE(Vector2) {
 		vec2 = Vector2(0.5f, 1.0f);
 		vec2.PackTo01();
 		
-		CHECK_EQUAL(0.72360682f, vec2.x);
-		CHECK_EQUAL(0.94721359f, vec2.y);
+		CHECK_CLOSE(0.72360682f, vec2.x, Math::Epsilon);
+		CHECK_CLOSE(0.94721359f, vec2.y, Math::Epsilon);
 	}
 
 	TEST_FIXTURE(ConstructTest, GetPackedTo01) {
 		vec2 = Vector2(0.5f, 1.0f);
 		vec2 = vec2.GetPackedTo01();
 		
-		CHECK_EQUAL(0.72360682f, vec2.x);
-		CHECK_EQUAL(0.94721359f, vec2.y);
+		CHECK_CLOSE(0.72360682f, vec2.x, Math::Epsilon);
+		CHECK_CLOSE(0.94721359f, vec2.y, Math::Epsilon);
 	}
 
 	TEST_FIXTURE(ConstructTest, UnpackFrom01) {
@@ -390,7 +390,7 @@ SUITE(Vector2) {
 	}
 
 	TEST_FIXTURE(ConstructTest, GetSmallestComponent) {	
-		CHECK_EQUAL(Vector2::X, vec2.GetSmallestComponent());
+		CHECK(Vector2::X == vec2.GetSmallestComponent());
 	}
 
 	TEST_FIXTURE(ConstructTest, GetSmallestValue) {	
@@ -398,7 +398,7 @@ SUITE(Vector2) {
 	}
 
 	TEST_FIXTURE(ConstructTest, GetGreatestComponent) {	
-		CHECK_EQUAL(Vector2::Y, vec2.GetGreatestComponent());
+		CHECK(Vector2::Y == vec2.GetGreatestComponent());
 	}
 
 	TEST_FIXTURE(ConstructTest, GetGreatestValue) {	
