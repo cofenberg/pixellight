@@ -94,7 +94,7 @@ PLFrontendQt::DockWidgetManager *ApplicationQt::GetDockWidgetManager() const
 bool ApplicationQt::OnStart()
 {
 	// Set human readable frontend title
-	GetFrontend().SetTitle("PixelLight viewer (Qt)");
+	GetFrontend().SetTitle("PixelLight Viewer (Qt)");
 
 	// Call directly "ScriptApplication" base implementation (else "Application::OnStart()" would overwrite our title)
 	return ScriptApplication::OnStart();
@@ -247,25 +247,11 @@ bool ApplicationQt::LoadResource(const String &sFilename, const String &sType)
 	// Call base implementation
 	const bool bResult = Application::LoadResource(sFilename, sTypeToUse);
 
-	// Activated color gradient background within the scene renderer, or at least try it
-	// -> The standard scene renderer compositions of PixelLight within "Standard.zip" always have an inactive "PLCompositing::SRPBackgroundColorGradient"-instance
-	// -> By using a color gradient background, also completely black/gray/white etc. meshes can be seen which is a good thing as a default setting within this viewer
-	if (GetConfig().GetVarInt("PLViewerQtConfig", "ShowColorGradientBackground"))
-		GetSceneRendererTool().SetPassAttribute("BackgroundColorGradient", "Flags", "");
+	// Update color gradient background according to the configuration
+	UpdateColorGradientBackground();
 
-	// Show backfaces as wireframe and silhouettes
-	// -> Quite useful when there are no materials or we see within the initial camera configuration only
-	//    culled backfaces which may at first look like nothing had been loaded in the first place
-	// -> Even when a material is "two sided" we can see wireframes at the "back side", this is no problem and enables us to figure out which face is the front face
-	// -> This results as a side effect in a slim silhouette, no problem because this viewer is meant for development and debugging
-	if (GetConfig().GetVarInt("PLViewerQtConfig", "ShowBackfacesAndSilhouettes")) {
-		SceneRendererPass *pSceneRendererPass = GetSceneRendererTool().GetPassByName("DebugWireframes");
-		if (pSceneRendererPass) {
-			pSceneRendererPass->SetAttribute("Flags",		"UseDepth");	// Activate and use depth buffer
-			pSceneRendererPass->SetAttribute("CullMode",	"CW");			// Render only back faces
-			pSceneRendererPass->SetAttribute("LineWidth",	"2");			// We have a slim silhouette anyway, so, make it more visible as a visual aid
-		}
-	}
+	// Update backfaces and silhouettes visualization according to the configuration
+	UpdateBackfacesAndSilhouettes();
 
 	// Enable the Qt main window when loading is done
 	if (m_pGui)
@@ -289,4 +275,47 @@ void ApplicationQt::SetStateText(const String &sText)
 	// We could ping the frontend via "GetFrontend().Ping()" in general so the GUI shows the
 	// important state text as soon as possible, but this might have an notable influence on
 	// the performance due to internal message processing
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Update color gradient background according to the configuration
+*/
+void ApplicationQt::UpdateColorGradientBackground()
+{
+	// Activated color gradient background within the scene renderer, or at least try it
+	// -> The standard scene renderer compositions of PixelLight within "Standard.zip" always have an inactive "PLCompositing::SRPBackgroundColorGradient"-instance
+	// -> By using a color gradient background, also completely black/gray/white etc. meshes can be seen which is a good thing as a default setting within this viewer
+	if (GetConfig().GetVarInt("PLViewerQtConfig", "ShowColorGradientBackground"))
+		GetSceneRendererTool().SetPassAttribute("BackgroundColorGradient", "Flags", "");
+	else
+		GetSceneRendererTool().SetPassAttribute("BackgroundColorGradient", "Flags", "Inactive");
+}
+
+/**
+*  @brief
+*    Update backfaces and silhouettes visualization according to the configuration
+*/
+void ApplicationQt::UpdateBackfacesAndSilhouettes()
+{
+	// Show backfaces as wireframe and silhouettes
+	// -> Quite useful when there are no materials or we see within the initial camera configuration only
+	//    culled backfaces which may at first look like nothing had been loaded in the first place
+	// -> Even when a material is "two sided" we can see wireframes at the "back side", this is no problem and enables us to figure out which face is the front face
+	// -> This results as a side effect in a slim silhouette, no problem because this viewer is meant for development and debugging
+	if (GetConfig().GetVarInt("PLViewerQtConfig", "ShowBackfacesAndSilhouettes")) {
+		SceneRendererPass *pSceneRendererPass = GetSceneRendererTool().GetPassByName("DebugWireframes");
+		if (pSceneRendererPass) {
+			pSceneRendererPass->SetAttribute("Flags",		"UseDepth");	// Activate and use depth buffer
+			pSceneRendererPass->SetAttribute("CullMode",	"CW");			// Render only back faces
+			pSceneRendererPass->SetAttribute("LineWidth",	"2");			// We have a slim silhouette anyway, so, make it more visible as a visual aid
+		}
+	} else {
+		// Inactive
+		GetSceneRendererTool().SetPassAttribute("DebugWireframes", "Flags", "Inactive");
+	}
 }

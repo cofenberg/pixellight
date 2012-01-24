@@ -6,6 +6,7 @@ PLViewerQt:
 - The window title is now set correctly
 - Visual aid: Show backfaces as wireframe and silhouettes
 - Added a configuration which makes it possible to deactivate visual aids
+- There are now two entries within the tools menu for visual aids
 
 
 

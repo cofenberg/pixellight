@@ -23,13 +23,54 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include "ApplicationQt.h"
 #include "Config.h"
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]
 //[ RTTI interface                                        ]
 //[-------------------------------------------------------]
 pl_implement_class(PLViewerQtConfig)
+
+
+//[-------------------------------------------------------]
+//[ Public RTTI get/set functions                         ]
+//[-------------------------------------------------------]
+bool PLViewerQtConfig::GetShowColorGradientBackground() const
+{
+	return m_bShowColorGradientBackground;
+}
+
+void PLViewerQtConfig::SetShowColorGradientBackground(bool bValue)
+{
+	m_bShowColorGradientBackground = bValue;
+
+	// Update color gradient background according to the configuration
+	CoreApplication *pCoreApplication = CoreApplication::GetApplication();
+	if (pCoreApplication && pCoreApplication->IsInstanceOf("ApplicationQt"))
+		static_cast<ApplicationQt*>(pCoreApplication)->UpdateColorGradientBackground();
+}
+
+bool PLViewerQtConfig::GetShowBackfacesAndSilhouettes() const
+{
+	return m_bShowBackfacesAndSilhouettes;
+}
+
+void PLViewerQtConfig::SetShowBackfacesAndSilhouettes(bool bValue)
+{
+	m_bShowBackfacesAndSilhouettes = bValue;
+
+	// Update backfaces and silhouettes visualization according to the configuration
+	CoreApplication *pCoreApplication = CoreApplication::GetApplication();
+	if (pCoreApplication && pCoreApplication->IsInstanceOf("ApplicationQt"))
+		static_cast<ApplicationQt*>(pCoreApplication)->UpdateBackfacesAndSilhouettes();
+}
 
 
 //[-------------------------------------------------------]
@@ -42,7 +83,10 @@ pl_implement_class(PLViewerQtConfig)
 PLViewerQtConfig::PLViewerQtConfig() :
 	DefaultFilename(this),
 	ShowColorGradientBackground(this),
-	ShowBackfacesAndSilhouettes(this)
+	ShowBackfacesAndSilhouettes(this),
+	m_bShowColorGradientBackground(true),
+	m_bShowBackfacesAndSilhouettes(true)
+
 {
 }
 

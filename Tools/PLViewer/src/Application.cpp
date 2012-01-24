@@ -115,7 +115,7 @@ String Application::GetResourceFilename() const
 bool Application::OnStart()
 {
 	// Set human readable frontend title
-	GetFrontend().SetTitle("PixelLight viewer");
+	GetFrontend().SetTitle("PixelLight Viewer");
 
 	// Call base implementation
 	return ScriptApplication::OnStart();

@@ -54,6 +54,7 @@ class ApplicationQt : public Application {
 	//[ Friends                                               ]
 	//[-------------------------------------------------------]
 	friend class Gui;
+	friend class PLViewerQtConfig;
 
 
 	//[-------------------------------------------------------]
@@ -138,6 +139,23 @@ class ApplicationQt : public Application {
 	protected:
 		virtual bool LoadResource(const PLCore::String &sFilename, const PLCore::String &sType = "") override;
 		virtual void SetStateText(const PLCore::String &sText) override;
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Update color gradient background according to the configuration
+		*/
+		void UpdateColorGradientBackground();
+
+		/**
+		*  @brief
+		*    Update backfaces and silhouettes visualization according to the configuration
+		*/
+		void UpdateBackfacesAndSilhouettes();
 
 
 	//[-------------------------------------------------------]

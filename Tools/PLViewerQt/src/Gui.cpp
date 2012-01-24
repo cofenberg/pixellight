@@ -83,6 +83,8 @@ Gui::Gui(ApplicationQt &cApplication) :
 	m_pQActionGroupCamera(nullptr),
 	m_pQMenuWindow(nullptr),
 	m_pQActionGroupWindow(nullptr),
+	m_pQActionShowColorGradientBackground(nullptr),
+	m_pQActionShowBackfacesAndSilhouettes(nullptr),
 	// Status bar
 	m_pQLabelStatusBar(nullptr)
 {
@@ -266,7 +268,7 @@ void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 			}
 
 			{ // Setup the automatic reload action
-				m_pQActionAutomaticReload = new QAction(tr("A&utomatic reload"), &cQMainWindow);
+				m_pQActionAutomaticReload = new QAction(tr("A&utomatic Reload"), &cQMainWindow);
 				m_pQActionAutomaticReload->setCheckable(true);
 				m_pQActionAutomaticReload->setChecked(true);
 				connect(m_pQActionAutomaticReload, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredAutomaticReload()));
@@ -301,11 +303,26 @@ void Gui::InitMainWindow(QMainWindow &cQMainWindow)
 
 		{ // Setup the tools menu
 			QMenu *pQMenu = cQMainWindow.menuBar()->addMenu(tr("&Tools"));
+			connect(pQMenu, SIGNAL(aboutToShow()), this, SLOT(QtSlotAboutToShowMenuTools()));
 
 			{ // Setup the log action
-				QAction *pQAction = new QAction(tr("Open log file"), &cQMainWindow);
+				QAction *pQAction = new QAction(tr("Open Log File"), &cQMainWindow);
 				connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredOpenLogFile()));
 				pQMenu->addAction(pQAction);
+			}
+
+			{ // Setup the show color gradient background action
+				m_pQActionShowColorGradientBackground = new QAction(tr("Show Color Gradient Background"), &cQMainWindow);
+				m_pQActionShowColorGradientBackground->setCheckable(true);
+				connect(m_pQActionShowColorGradientBackground, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredShowColorGradientBackground()));
+				pQMenu->addAction(m_pQActionShowColorGradientBackground);
+			}
+
+			{ // Setup the show backfaces and silhouettes action
+				m_pQActionShowBackfacesAndSilhouettes = new QAction(tr("Show Backfaces and Silhouettes"), &cQMainWindow);
+				m_pQActionShowBackfacesAndSilhouettes->setCheckable(true);
+				connect(m_pQActionShowBackfacesAndSilhouettes, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredShowBackfacesAndSilhouettes()));
+				pQMenu->addAction(m_pQActionShowBackfacesAndSilhouettes);
 			}
 		}
 
@@ -628,11 +645,42 @@ void Gui::QtSlotSelectedWindow(QAction *pQAction)
 	}
 }
 
+void Gui::QtSlotAboutToShowMenuTools()
+{
+	// Get the configuration and scene renderer tool instance
+	Config &cConfig = m_pApplication->GetConfig();
+	SceneRendererTool &cSceneRendererTool = m_pApplication->GetSceneRendererTool();
+
+	// Update actions according to the configuration or disable them completely in case the option would have no effect in the first place
+	m_pQActionShowColorGradientBackground->setVisible(cSceneRendererTool.GetPassByName("BackgroundColorGradient") != nullptr);
+	if (m_pQActionShowColorGradientBackground->isVisible())
+		m_pQActionShowColorGradientBackground->setChecked(cConfig.GetVarInt("PLViewerQtConfig", "ShowColorGradientBackground") != 0);
+	m_pQActionShowBackfacesAndSilhouettes->setVisible(cSceneRendererTool.GetPassByName("DebugWireframes") != nullptr);
+	if (m_pQActionShowBackfacesAndSilhouettes->isVisible())
+		m_pQActionShowBackfacesAndSilhouettes->setChecked(cConfig.GetVarInt("PLViewerQtConfig", "ShowBackfacesAndSilhouettes") != 0);
+}
+
 void Gui::QtSlotTriggeredOpenLogFile()
 {
 	// Use "PLCore::System::Execute()" to open the log file which is usually a simple text file
 	// -> "QDesktopServices::openUrl(QtStringAdapter::PLToQt(Log::GetInstance()->GetFilename()));" didn't work for me
 	System::GetInstance()->Execute(Log::GetInstance()->GetFilename(), "");
+}
+
+void Gui::QtSlotTriggeredShowColorGradientBackground()
+{
+	// Update the configuration
+	if (m_pQActionShowColorGradientBackground) {
+		m_pApplication->GetConfig().SetVar("PLViewerQtConfig", "ShowColorGradientBackground", m_pQActionShowColorGradientBackground->isChecked());
+	}
+}
+
+void Gui::QtSlotTriggeredShowBackfacesAndSilhouettes()
+{
+	// Update the configuration
+	if (m_pQActionShowBackfacesAndSilhouettes) {
+		m_pApplication->GetConfig().SetVar("PLViewerQtConfig", "ShowBackfacesAndSilhouettes", m_pQActionShowBackfacesAndSilhouettes->isChecked());
+	}
 }
 
 void Gui::QtSlotTriggeredOpenPixelLightWebsite()
