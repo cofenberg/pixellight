@@ -198,12 +198,17 @@ void SRPDebugWireframesFixedFunctions::Draw(Renderer &cRenderer, const SQCull &c
 			// Setup renderer states
 			cRenderer.GetRendererContext().GetEffectManager().Use();
 			const bool bUseDepth = (GetFlags() & UseDepth) != 0;
+			cRenderer.SetRenderState(RenderState::CullMode,			 CullMode.Get());
 			cRenderer.SetRenderState(RenderState::ZEnable,			 bUseDepth);
 			cRenderer.SetRenderState(RenderState::ZWriteEnable,		 bUseDepth);
 			cRenderer.SetRenderState(RenderState::BlendEnable,		 (LineColor.Get().a < 1.0f));
 			cRenderer.SetRenderState(RenderState::ScissorTestEnable, true);
 			cRenderer.SetRenderState(RenderState::LineWidth,		 Tools::FloatToUInt32(LineWidth));
 			pFixedFunctions->SetColor(LineColor.Get());
+
+			// Set polygon offset to avoid nasty line artifacts
+			cRenderer.SetRenderState(RenderState::SlopeScaleDepthBias,	Tools::FloatToUInt32(SlopeScaleDepthBias.Get()));
+			cRenderer.SetRenderState(RenderState::DepthBias,			Tools::FloatToUInt32(DepthBias.Get()));
 
 			// Set the initial world matrix
 			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, cCullQuery.GetSceneContainer().GetTransform().GetMatrix());

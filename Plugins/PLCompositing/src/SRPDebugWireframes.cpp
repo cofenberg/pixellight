@@ -49,6 +49,9 @@ SRPDebugWireframes::SRPDebugWireframes() :
 	LineWidth(this),
 	LineColor(this),
 	MaxDrawDistance(this),
+	CullMode(this),
+	SlopeScaleDepthBias(this),
+	DepthBias(this),
 	Flags(this)
 {
 }

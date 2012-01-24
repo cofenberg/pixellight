@@ -296,11 +296,16 @@ void SRPDebugWireframesShaders::Draw(Renderer &cRenderer, const SQCull &cCullQue
 		if (cRenderer.SetProgram(m_pProgram)) {
 			// Setup renderer states
 			const bool bUseDepth = (GetFlags() & UseDepth) != 0;
+			cRenderer.SetRenderState(RenderState::CullMode,			 CullMode.Get());
 			cRenderer.SetRenderState(RenderState::ZEnable,			 bUseDepth);
 			cRenderer.SetRenderState(RenderState::ZWriteEnable,		 bUseDepth);
 			cRenderer.SetRenderState(RenderState::BlendEnable,		 (LineColor.Get().a < 1.0f));
 			cRenderer.SetRenderState(RenderState::ScissorTestEnable, true);
 			cRenderer.SetRenderState(RenderState::LineWidth,		 Tools::FloatToUInt32(LineWidth));
+
+			// Set polygon offset to avoid nasty line artifacts
+			cRenderer.SetRenderState(RenderState::SlopeScaleDepthBias,	Tools::FloatToUInt32(SlopeScaleDepthBias.Get()));
+			cRenderer.SetRenderState(RenderState::DepthBias,			Tools::FloatToUInt32(DepthBias.Get()));
 
 			// Set the "Color" fragment shader parameter
 			if (m_pColorProgramUniform)

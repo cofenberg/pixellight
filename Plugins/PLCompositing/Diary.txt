@@ -1,3 +1,10 @@
+>> 24.01.2012
+[CO]
+- "SRPDebugWireframes": By default, "MaxDrawDistance" is now set to -1 because it's at first confusing when no wireframes can be seen because e.g. the scale is huge
+- "SRPDebugWireframes": Added "CullMode"-attribute
+
+
+
 >> 19.01.2012
 [CO]
 - Added FXAA ("SRPEndFXAA" scene renderer step) as described within http://developer.download.nvidia.com/assets/gamedev/files/sdk/11/FXAA_WhitePaper.pdf
