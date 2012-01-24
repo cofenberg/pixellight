@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Math.h>
 #include "PLRenderer/Renderer/TextureBuffer3D.h"
 
 
@@ -115,6 +116,11 @@ TextureBuffer3D &TextureBuffer3D::operator =(const TextureBuffer3D &cSource)
 //[-------------------------------------------------------]
 //[ Public virtual TextureBuffer functions                ]
 //[-------------------------------------------------------]
+bool TextureBuffer3D::IsPowerOfTwo() const
+{
+	return (Math::IsPowerOfTwo(m_vSize.x) && Math::IsPowerOfTwo(m_vSize.y) && Math::IsPowerOfTwo(m_vSize.z));
+}
+
 uint32 TextureBuffer3D::GetNumOfPixels(uint32 nMipmap) const
 {
 	// Check the given parameter

@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Math.h>
 #include "PLRenderer/Renderer/TextureBufferCube.h"
 
 
@@ -30,6 +31,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
+using namespace PLMath;
 namespace PLRenderer {
 
 
@@ -107,6 +109,11 @@ TextureBufferCube &TextureBufferCube::operator =(const TextureBufferCube &cSourc
 //[-------------------------------------------------------]
 //[ Public virtual TextureBuffer functions                ]
 //[-------------------------------------------------------]
+bool TextureBufferCube::IsPowerOfTwo() const
+{
+	return Math::IsPowerOfTwo(m_nSize);
+}
+
 uint32 TextureBufferCube::GetNumOfPixels(uint32 nMipmap) const
 {
 	// Check the given parameter

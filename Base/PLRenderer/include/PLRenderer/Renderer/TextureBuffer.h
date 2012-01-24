@@ -446,6 +446,23 @@ class TextureBuffer : public Resource {
 	public:
 		/**
 		*  @brief
+		*    Returns whether or not the texture has a power of two dimension (POT)
+		*
+		*  @return
+		*    'true' if the texture has a power of two dimension, else 'false'
+		*
+		*  @remarks
+		*    Although modern graphics APIs and graphics hardware is often capable to deal with
+		*    non power of two dimension, there might be certain restrictions up to unexpected
+		*    driver crashes within certain situations. This methods exists to make it easier
+		*    to check for this sort of texture dimension. A texture is only power of two when
+		*    it's power of two along each axis - except array textures which are considered
+		*    to be a stack of 2D textures.
+		*/
+		virtual bool IsPowerOfTwo() const = 0;
+
+		/**
+		*  @brief
 		*    Returns the number of pixels of a certain mipmap level
 		*
 		*  @param[in] nMipmap

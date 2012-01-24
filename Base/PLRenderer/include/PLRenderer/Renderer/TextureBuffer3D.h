@@ -124,6 +124,7 @@ class TextureBuffer3D : public TextureBuffer {
 	//[ Public virtual TextureBuffer functions                ]
 	//[-------------------------------------------------------]
 	public:
+		PLRENDERER_API virtual bool IsPowerOfTwo() const override;
 		PLRENDERER_API virtual PLCore::uint32 GetNumOfPixels(PLCore::uint32 nMipmap = 0) const override;
 		PLRENDERER_API virtual PLCore::uint32 GetNumOfBytes(PLCore::uint32 nMipmap = 0, EPixelFormat nFormat = Unknown) const override;
 

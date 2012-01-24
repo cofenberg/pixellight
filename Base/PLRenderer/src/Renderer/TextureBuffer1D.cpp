@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Math.h>
 #include "PLRenderer/Renderer/TextureBuffer1D.h"
 
 
@@ -30,6 +31,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
+using namespace PLMath;
 namespace PLRenderer {
 
 
@@ -107,6 +109,11 @@ TextureBuffer1D &TextureBuffer1D::operator =(const TextureBuffer1D &cSource)
 //[-------------------------------------------------------]
 //[ Public virtual TextureBuffer functions                ]
 //[-------------------------------------------------------]
+bool TextureBuffer1D::IsPowerOfTwo() const
+{
+	return Math::IsPowerOfTwo(m_nSize);
+}
+
 uint32 TextureBuffer1D::GetNumOfPixels(uint32 nMipmap) const
 {
 	return (nMipmap <= m_nNumOfMipmaps) ? GetSize(nMipmap) : 0;

@@ -1,5 +1,6 @@
 >> 24.01.2012
 [CO]
+- Added "TextureBuffer::IsPowerOfTwo()"-method
 PLRendererOpenGL
 - Do also use polygon offset for line and point, even when this is not supported by some other renderer API's
 

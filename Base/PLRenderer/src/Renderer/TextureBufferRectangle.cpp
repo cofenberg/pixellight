@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Math.h>
 #include "PLRenderer/Renderer/TextureBufferRectangle.h"
 
 
@@ -30,6 +31,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
+using namespace PLMath;
 namespace PLRenderer {
 
 
@@ -84,6 +86,11 @@ TextureBufferRectangle &TextureBufferRectangle::operator =(const TextureBufferRe
 //[-------------------------------------------------------]
 //[ Public virtual TextureBuffer functions                ]
 //[-------------------------------------------------------]
+bool TextureBufferRectangle::IsPowerOfTwo() const
+{
+	return (Math::IsPowerOfTwo(m_vSize.x) && Math::IsPowerOfTwo(m_vSize.y));
+}
+
 uint32 TextureBufferRectangle::GetNumOfPixels(uint32 nMipmap) const
 {
 	// Check the given parameter

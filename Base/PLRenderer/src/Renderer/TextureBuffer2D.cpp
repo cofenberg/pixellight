@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Math.h>
 #include "PLRenderer/Renderer/TextureBuffer2D.h"
 
 
@@ -112,6 +113,11 @@ TextureBuffer2D &TextureBuffer2D::operator =(const TextureBuffer2D &cSource)
 //[-------------------------------------------------------]
 //[ Public virtual TextureBuffer functions                ]
 //[-------------------------------------------------------]
+bool TextureBuffer2D::IsPowerOfTwo() const
+{
+	return (Math::IsPowerOfTwo(m_vSize.x) && Math::IsPowerOfTwo(m_vSize.y));
+}
+
 uint32 TextureBuffer2D::GetNumOfPixels(uint32 nMipmap) const
 {
 	// Check the given parameter
