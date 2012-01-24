@@ -1,3 +1,16 @@
+>> 24.01.2012
+[CO]
+- When opening a RTTI dock widgets within PLViewerQt the application crashed, but only when using Windows x64. The crash was inside Qt itself (null pointer access).
+  I was able to reduce everything to a minimalistic Qt application opening a main window and opening a dock widgets, crash again inside Qt - but only on x64 Windows.
+  When compiling Qt as debug version in order to get a hint what's going on, there was no such issue. When compiling Qt as release again, just for rechecking, there
+  was no such issue as well. Hm, ok. That's funny because I always use the same configuration ("git\pixellight\External\Optional\Qt\WindowsBuildReadme\") to build
+  Qt, so I'am not sure what exactly was going on. Uploaded an updated "Qt.tar.gz" package for Windows x64 - but we should watch for any other similar issues, maybe
+  it's a memory leak or uninitialized variable (I doubt it, but this would be an explanation for such a behaviour) and the resulting explosion now just moved to
+  another place.
+  -> Direct link to the package: http://pixellight.sourceforge.net/externals/Windows_x86_64/Qt.tar.gz
+
+
+
 >> 27.12.2011
 [CO]
 - "Apk.cmake": In case of a debug build, gdbserver is added to the created apk file - it appears that on not rooted devices this is the only way to be
