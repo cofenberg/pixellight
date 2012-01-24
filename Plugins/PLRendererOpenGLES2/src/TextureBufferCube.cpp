@@ -128,6 +128,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 				}
 
 				// Upload the texture buffer
+				const bool bIsPowerOfTwo = IsPowerOfTwo();
 				for (uint8 nFace=0; nFace<6; nFace++) {
 					// Get the current image
 					ImagePart *pFaceImagePart = cImage.GetPartBySemantics(static_cast<uint32>(ImagePartCubeSidePosX) + nFace);
@@ -146,11 +147,24 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, Image &cIm
 								// If compressed internal format, we would check whether all went fine - but OpenGL ES 2.0 provides no functionality for this :/
 
 								// Let OpenGL ES create the mipmap chain for us
-								glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
+								// -> Lookout! "OpenGL ES Common Profile Specification Version 2.0.25 (Full Specification) (November 2, 2010)" ->
+								//    "3.7.11 Mipmap Generation" states:
+								//    "If either the width or height of the level zero array are not a power or two, the error INVALID_OPERATION is generated."
+								// -> On "LG P990 Optimus Speed" (Tegra 2, Android 2.3.4) there was no crash
+								// -> "Asus Eee Pad Transformer" (Tegra 2, Android 3.2.1) crashed instead of returning an error
+								// -> So we really have to check for this situation
+								if (bIsPowerOfTwo) {
+									// Let OpenGL ES create the mipmap chain for us
+									glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
 
-								// Update the total number of bytes this texture buffer requires
-								for (uint32 nLevel=0; nLevel<=m_nNumOfMipmaps; nLevel++)
-									m_nTotalNumOfBytes += GetNumOfBytes(nLevel)/6;
+									// Update the total number of bytes this texture buffer requires
+									for (uint32 nLevel=0; nLevel<=m_nNumOfMipmaps; nLevel++)
+										m_nTotalNumOfBytes += GetNumOfBytes(nLevel)/6;
+								} else {
+									// Sorry, no automatic mipmap generation possible
+									m_nNumOfMipmaps = 0;
+									m_nTotalNumOfBytes += GetNumOfBytes();
+								}
 							}
 						} else {
 							// Use given mipmaps

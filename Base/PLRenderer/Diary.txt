@@ -1,8 +1,16 @@
 >> 24.01.2012
 [CO]
 - Added "TextureBuffer::IsPowerOfTwo()"-method
-PLRendererOpenGL
+PLRendererOpenGL:
 - Do also use polygon offset for line and point, even when this is not supported by some other renderer API's
+PLRendererOpenGLES2:
+- When using "glGenerateMipmap()" to let OpenGL ES create the mipmap chain for us...
+  -> Lookout! "OpenGL ES Common Profile Specification Version 2.0.25 (Full Specification) (November 2, 2010)" ->
+      "3.7.11 Mipmap Generation" states:
+     "If either the width or height of the level zero array are not a power or two, the error INVALID_OPERATION is generated."
+  -> On "LG P990 Optimus Speed" (Tegra 2, Android 2.3.4) there was no crash
+  -> "Asus Eee Pad Transformer" (Tegra 2, Android 3.2.1) crashed instead of returning an error
+  -> So we really have to check for this situation by using, right, the new "TextureBuffer::IsPowerOfTwo()"-method
 
 
 
@@ -20,7 +28,7 @@ PLRendererOpenGL
 
 >> 08.01.2012
 [CO]
-PLRendererOpenGLES2
+PLRendererOpenGLES2:
 - "PLRendererOpenGLES2::TextureBuffer3D::TextureBuffer3D()": "glGenerateMipmap(GL_TEXTURE_2D)" -> "glGenerateMipmap(GL_TEXTURE_3D_OES)"
 
 
