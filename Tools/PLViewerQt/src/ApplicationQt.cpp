@@ -93,8 +93,8 @@ bool ApplicationQt::OnStart()
 	// Set human readable frontend title
 	GetFrontend().SetTitle("PixelLight viewer (Qt)");
 
-	// Call base implementation
-	return Application::OnStart();
+	// Call directly "ScriptApplication" base implementation (else "Application::OnStart()" would overwrite our title)
+	return ScriptApplication::OnStart();
 }
 
 
