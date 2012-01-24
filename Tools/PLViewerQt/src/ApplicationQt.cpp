@@ -244,6 +244,11 @@ bool ApplicationQt::LoadResource(const String &sFilename, const String &sType)
 	// Call base implementation
 	const bool bResult = Application::LoadResource(sFilename, sTypeToUse);
 
+	// Activated color gradient background within the scene renderer, or at least try it
+	// -> The standard scene renderer compositions of PixelLight within "Standard.zip" always have an inactive "PLCompositing::SRPBackgroundColorGradient"-instance
+	// -> By using a color gradient background, also completely black/gray/white etc. meshes can be seen which is a good thing as a default setting within this viewer
+	GetSceneRendererTool().SetPassAttribute("BackgroundColorGradient", "Flags", "");
+
 	// Enable the Qt main window when loading is done
 	if (m_pGui)
 		m_pGui->SetEnabled(true);

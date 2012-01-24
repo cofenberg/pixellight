@@ -184,118 +184,119 @@ bool Application::LoadResource(const String &sFilename, const String &sType)
 	// Backup the filename of the current resource
 	m_sResourceFilename = sFilename;
 
-	// Get file extension
-	const String sExtension = Url(sFilename).GetExtension();
-	if (sExtension.GetLength() || sType.GetLength()) {
-		{ // Make the directory of the scene to load in to the current directory
+	// Is there anything to load in?
+	if (sFilename.GetLength()) {
+		// Get file extension
+		const String sExtension = Url(sFilename).GetExtension();
+		if (sExtension.GetLength() || sType.GetLength()) {
+			{ // Make the directory of the scene to load in to the current directory
 
-			// Ok, the next thing is tricky, and every solution will end up in being a hack due to lack of information.
-			// Within materials, meshes etc. there are usually relative paths provided, no absolute (not just true for PixelLight file formats).
-			// Further, those paths are usually relative to a project root resulting e.g. within a default directory layout like
-			// - Root
-			//   - Data
-			//     - Meshes
-			//     - Materials
-			// For "normal" projects this is no issue because everything is usually relative to the root project directory...
-			// ... but this viewer must be able to pick out e.g. a mesh out of nowhere and must still be able to locate the required
-			// other resources like materials. So, in here, we can only work with heuristics... this can and will of course go from
-			// time to time horribly wrong...
+				// Ok, the next thing is tricky, and every solution will end up in being a hack due to lack of information.
+				// Within materials, meshes etc. there are usually relative paths provided, no absolute (not just true for PixelLight file formats).
+				// Further, those paths are usually relative to a project root resulting e.g. within a default directory layout like
+				// - Root
+				//   - Data
+				//     - Meshes
+				//     - Materials
+				// For "normal" projects this is no issue because everything is usually relative to the root project directory...
+				// ... but this viewer must be able to pick out e.g. a mesh out of nowhere and must still be able to locate the required
+				// other resources like materials. So, in here, we can only work with heuristics... this can and will of course go from
+				// time to time horribly wrong...
 
-			// First try: Find the first "Data" occurrence with the given filename and hope that it's the project root directory
+				// First try: Find the first "Data" occurrence with the given filename and hope that it's the project root directory
 
-			// Get filename as clean URL
-			Url cUrl = Url(sFilename);
-			cUrl.Collapse();
+				// Get filename as clean URL
+				Url cUrl = Url(sFilename);
+				cUrl.Collapse();
 
-			// Get the first part of the path, and then look for "Data"
-			uint32 nPathPos = 0;
-			String sPart = cUrl.GetFirstPath(nPathPos);
-			while (sPart != "Data" && sPart.GetLength())
-				sPart = cUrl.GetNextPath(nPathPos);
-			if (sPart == "Data") {
-				// Set the current directory of the application
-				System::GetInstance()->SetCurrentDir(cUrl.GetRoot() + cUrl.GetPath().GetSubstring(0, nPathPos - 5));	// -5 = Remove "Data/"
-			} else {
-				// Second try: Cut of "/Data/Scenes/" and hope that it's the project root directory.
-				// If it's not there, take the directory the given resource is in.
+				// Get the first part of the path, and then look for "Data"
+				uint32 nPathPos = 0;
+				String sPart = cUrl.GetFirstPath(nPathPos);
+				while (sPart != "Data" && sPart.GetLength())
+					sPart = cUrl.GetNextPath(nPathPos);
+				if (sPart == "Data") {
+					// Set the current directory of the application
+					System::GetInstance()->SetCurrentDir(cUrl.GetRoot() + cUrl.GetPath().GetSubstring(0, nPathPos - 5));	// -5 = Remove "Data/"
+				} else {
+					// Second try: Cut of "/Data/Scenes/" and hope that it's the project root directory.
+					// If it's not there, take the directory the given resource is in.
 
-				// Validate path
-				const String sDirectory = cUrl.CutFilename();
+					// Validate path
+					const String sDirectory = cUrl.CutFilename();
 
-				// Search for "/Data/Scenes/" and get the prefix of that, in case it's not there just use directly the scene directory
-				const int nIndex = sDirectory.IndexOf("/Data/Scenes/");
+					// Search for "/Data/Scenes/" and get the prefix of that, in case it's not there just use directly the scene directory
+					const int nIndex = sDirectory.IndexOf("/Data/Scenes/");
 
-				// Set the current directory of the application
-				System::GetInstance()->SetCurrentDir("file://" + ((nIndex >= 0) ? sDirectory.GetSubstring(0, nIndex) : sDirectory) + '/');
-			}
-		}
-
-		// Set default (and very basic) scene renderer
-		GetSceneRendererTool().SetSceneRenderer(GetScene(), DefaultSceneRenderer, DefaultSceneRenderer);
-
-		// The viewer supports loading in multiple resource types, but scenes and scripts are
-		// the most important because most powerful ones, so give them the highest priority.
-		// -> It would be possible to implement support for scripting so that e.g. a Lua script
-		//    can be used to decide how to process a resource. But this viewer should be able to
-		//    work without external data and should be kept as simple as possible, so we stick to C++.
-		// -> Prefere the given loadable type over the filename extension
-
-		// Is the given filename a supported scene?
-		if (sType == "Scene" || (!sType.GetLength() && LoadableManager::GetInstance()->IsFormatLoadSupported(sExtension, "Scene"))) {
-			// Is the given resource a scene?
-			if (LoadScene(sFilename)) {
-				// Done
-				bResult = true;
-			} else {
-				// Write an error message into the log
-				PL_LOG(Error, "Failed to load the scene \"" + sFilename + '\"')
-			}
-
-		// Is the given file a supported script?
-		} else if (ScriptManager::GetInstance()->GetScriptLanguageByExtension(sExtension).GetLength()) {
-			// Load the script
-			if (LoadScript(sFilename)) {
-				// Done
-				bResult = true;
-			} else {
-				// Write an error message into the log
-				PL_LOG(Error, "Failed to load the script \"" + sFilename + '\"')
-			}
-
-		// Ask the loadable system for the resource type
-		} else {
-			// Get loadable type
-			LoadableType *pLoadableType = sType.GetLength() ? LoadableManager::GetInstance()->GetTypeByName(sType) : LoadableManager::GetInstance()->GetTypeByExtension(sExtension);
-			if (pLoadableType) {
-				// Get the scene container (the 'concrete scene')
-				SceneContainer *pSceneContainer = GetScene();
-				if (pSceneContainer) {
-					// Configure scene and set the preferred camera scene node
-					SetCamera(SceneCreatorLoadableType::ConfigureSceneByLoadableType(*pSceneContainer, pLoadableType->GetName(), sFilename));
-
-					// Done
-					bResult = true;
+					// Set the current directory of the application
+					System::GetInstance()->SetCurrentDir("file://" + ((nIndex >= 0) ? sDirectory.GetSubstring(0, nIndex) : sDirectory) + '/');
 				}
 			}
 
-			// Unknown file-type?
-			if (!bResult) {
-				// Write an error message into the log
-				PL_LOG(Error, "Failed to load the resource \"" + sFilename + "\" because the file-type is unknown")
+			// Set default (and very basic) scene renderer
+			GetSceneRendererTool().SetSceneRenderer(GetScene(), DefaultSceneRenderer, DefaultSceneRenderer);
+
+			// The viewer supports loading in multiple resource types, but scenes and scripts are
+			// the most important because most powerful ones, so give them the highest priority.
+			// -> It would be possible to implement support for scripting so that e.g. a Lua script
+			//    can be used to decide how to process a resource. But this viewer should be able to
+			//    work without external data and should be kept as simple as possible, so we stick to C++.
+			// -> Prefere the given loadable type over the filename extension
+
+			// Is the given filename a supported scene?
+			if (sType == "Scene" || (!sType.GetLength() && LoadableManager::GetInstance()->IsFormatLoadSupported(sExtension, "Scene"))) {
+				// Is the given resource a scene?
+				if (LoadScene(sFilename)) {
+					// Done
+					bResult = true;
+				} else {
+					// Write an error message into the log
+					PL_LOG(Error, "Failed to load the scene \"" + sFilename + '\"')
+				}
+
+			// Is the given file a supported script?
+			} else if (ScriptManager::GetInstance()->GetScriptLanguageByExtension(sExtension).GetLength()) {
+				// Load the script
+				if (LoadScript(sFilename)) {
+					// Done
+					bResult = true;
+				} else {
+					// Write an error message into the log
+					PL_LOG(Error, "Failed to load the script \"" + sFilename + '\"')
+				}
+
+			// Ask the loadable system for the resource type
+			} else {
+				// Get loadable type
+				LoadableType *pLoadableType = sType.GetLength() ? LoadableManager::GetInstance()->GetTypeByName(sType) : LoadableManager::GetInstance()->GetTypeByExtension(sExtension);
+				if (pLoadableType) {
+					// Get the scene container (the 'concrete scene')
+					SceneContainer *pSceneContainer = GetScene();
+					if (pSceneContainer) {
+						// Configure scene and set the preferred camera scene node
+						SetCamera(SceneCreatorLoadableType::ConfigureSceneByLoadableType(*pSceneContainer, pLoadableType->GetName(), sFilename));
+
+						// Done
+						bResult = true;
+					}
+				}
+
+				// Unknown file-type?
+				if (!bResult) {
+					// Write an error message into the log
+					PL_LOG(Error, "Failed to load the resource \"" + sFilename + "\" because the file-type is unknown")
+				}
 			}
+		} else {
+			// Write an error message into the log
+			PL_LOG(Error, "Failed to load the resource \"" + sFilename + "\" because the file has no extension")
 		}
+
+		// Set the state text, show the user a native filename within the GUI
+		SetStateText(bResult ? Url(sFilename).GetNativePath() : ("Failed to load \"" + Url(sFilename).GetNativePath() + "\" (see log for details)"));
 	} else {
-		// Write an error message into the log
-		PL_LOG(Error, "Failed to load the resource \"" + sFilename + "\" because the file has no extension")
+		// Set the state text
+		SetStateText("Nothing loaded");
 	}
-
-	// Set the state text, show the user a native filename within the GUI
-	SetStateText(bResult ? Url(sFilename).GetNativePath() : ("Failed to load \"" + Url(sFilename).GetNativePath() + "\" (see log for details)"));
-
-	// Activated color gradient background within the scene renderer, or at least try it
-	// -> The standard scene renderer compositions of PixelLight within "Standard.zip" always have an inactive "PLCompositing::SRPBackgroundColorGradient"-instance
-	// -> By using a color gradient background, also completely black/gray/white etc. meshes can be seen which is a good thing as a default setting within this viewer
-	GetSceneRendererTool().SetPassAttribute("BackgroundColorGradient", "Flags", "");
 
 	// Done
 	return bResult;
@@ -355,17 +356,8 @@ void Application::OnInit()
 	// Call base implementation
 	ScriptApplication::OnInit();
 
-	// Load resource (if it's one :)
-	if (sFilename.GetLength()) {
-		// Load the resource
-		LoadResource(sFilename);
-	} else {
-		// Set the state text
-		SetStateText("Nothing loaded");
-
-		// Activated color gradient background within the scene renderer, or at least try it
-		GetSceneRendererTool().SetPassAttribute("BackgroundColorGradient", "Flags", "");
-	}
+	// Load the resource
+	LoadResource(sFilename);
 }
 
 
