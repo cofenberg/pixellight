@@ -246,6 +246,7 @@
     <ClCompile Include="build\GeneratedQtFiles\moc_Gui.cpp" />
     <ClCompile Include="build\GeneratedQtFiles\moc_GuiPickingQObject.cpp" />
     <ClCompile Include="src\ApplicationQt.cpp" />
+    <ClCompile Include="src\Config.cpp" />
     <ClCompile Include="src\Gui.cpp" />
     <ClCompile Include="src\GuiPicking.cpp" />
     <ClCompile Include="src\GuiPickingQObject.cpp" />
@@ -256,6 +257,7 @@
     <ClInclude Include="..\PLViewer\src\Application.h" />
     <ClInclude Include="..\PLViewer\src\Config.h" />
     <ClInclude Include="src\ApplicationQt.h" />
+    <ClInclude Include="src\Config.h" />
     <ClInclude Include="src\GuiPicking.h" />
     <CustomBuild Include="src\GuiPickingQObject.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>

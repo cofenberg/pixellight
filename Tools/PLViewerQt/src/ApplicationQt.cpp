@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/File/Url.h>
+#include <PLCore/Config/Config.h>
 #include <PLCore/Tools/LoadableType.h>
 #include <PLCore/Tools/LoadableManager.h>
 #include <PLMath/Math.h>
@@ -249,18 +250,21 @@ bool ApplicationQt::LoadResource(const String &sFilename, const String &sType)
 	// Activated color gradient background within the scene renderer, or at least try it
 	// -> The standard scene renderer compositions of PixelLight within "Standard.zip" always have an inactive "PLCompositing::SRPBackgroundColorGradient"-instance
 	// -> By using a color gradient background, also completely black/gray/white etc. meshes can be seen which is a good thing as a default setting within this viewer
-	GetSceneRendererTool().SetPassAttribute("BackgroundColorGradient", "Flags", "");
+	if (GetConfig().GetVarInt("PLViewerQtConfig", "ShowColorGradientBackground"))
+		GetSceneRendererTool().SetPassAttribute("BackgroundColorGradient", "Flags", "");
 
 	// Show backfaces as wireframe and silhouettes
 	// -> Quite useful when there are no materials or we see within the initial camera configuration only
 	//    culled backfaces which may at first look like nothing had been loaded in the first place
 	// -> Even when a material is "two sided" we can see wireframes at the "back side", this is no problem and enables us to figure out which face is the front face
 	// -> This results as a side effect in a slim silhouette, no problem because this viewer is meant for development and debugging
-	SceneRendererPass *pSceneRendererPass = GetSceneRendererTool().GetPassByName("DebugWireframes");
-	if (pSceneRendererPass) {
-		pSceneRendererPass->SetAttribute("Flags",		"UseDepth");	// Activate and use depth buffer
-		pSceneRendererPass->SetAttribute("CullMode",	"CW");			// Render only back faces
-		pSceneRendererPass->SetAttribute("LineWidth",	"2");			// We have a slim silhouette anyway, so, make it more visible as a visual aid
+	if (GetConfig().GetVarInt("PLViewerQtConfig", "ShowBackfacesAndSilhouettes")) {
+		SceneRendererPass *pSceneRendererPass = GetSceneRendererTool().GetPassByName("DebugWireframes");
+		if (pSceneRendererPass) {
+			pSceneRendererPass->SetAttribute("Flags",		"UseDepth");	// Activate and use depth buffer
+			pSceneRendererPass->SetAttribute("CullMode",	"CW");			// Render only back faces
+			pSceneRendererPass->SetAttribute("LineWidth",	"2");			// We have a slim silhouette anyway, so, make it more visible as a visual aid
+		}
 	}
 
 	// Enable the Qt main window when loading is done

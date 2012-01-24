@@ -42,6 +42,7 @@ QT4_WRAP_CPP(MOC_SRCS ${INC_FILES})
 ##################################################
 add_sources(
 	src/ApplicationQt.cpp
+	src/Config.cpp
 	src/Main.cpp
 	src/Gui.cpp
 	src/GuiPicking.cpp
