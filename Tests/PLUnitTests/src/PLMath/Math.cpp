@@ -39,7 +39,6 @@ SUITE(Math) {
 	}
 
 	TEST(IsPowerOfTwo) {
-		// [TODO] 0 is NOT a power of two!
 		CHECK(!Math::IsPowerOfTwo(0));
 		CHECK(Math::IsPowerOfTwo(1));
 		CHECK(Math::IsPowerOfTwo(2));
@@ -48,17 +47,13 @@ SUITE(Math) {
 	}
 
 	TEST(GetNearestPowerOfTwo) {
-		// [TODO] function assumes only unsigned integers! why not use uint? negative inputs are totally useless here...
 		// lowest integer number
 		CHECK_EQUAL(
 			static_cast<int>(Math::Pow(2, sizeof(int)*8-1)),
 			Math::GetNearestPowerOfTwo(static_cast<int>(Math::Pow(2, sizeof(int)*8-1)), true)
 		);
-		CHECK_EQUAL(-1, Math::GetNearestPowerOfTwo(-1, true));
 
 		CHECK_EQUAL(0, Math::GetNearestPowerOfTwo(0, true));
-		// [TODO] shouldn't this return 1 as its the nearest power of two above 0?
-		//			Note: this function consideres the range 2^1 to 2^14 only! shouldn't it be 2^0 to 2^32?		
 		CHECK_EQUAL(1, Math::GetNearestPowerOfTwo(0, false));
 		CHECK_EQUAL(1, Math::GetNearestPowerOfTwo(1, true));
 		CHECK_EQUAL(1, Math::GetNearestPowerOfTwo(1, false));
@@ -68,7 +63,6 @@ SUITE(Math) {
 		CHECK_EQUAL(8192, Math::GetNearestPowerOfTwo(16383, true));
 		CHECK_EQUAL(16384, Math::GetNearestPowerOfTwo(16383, false));
 		
-		// [TODO] function can't find these! it consideres the range 2^1 to 2^14 only!
 		CHECK_EQUAL(536870912, Math::GetNearestPowerOfTwo(1073741823, true));
 		CHECK_EQUAL(1073741824, Math::GetNearestPowerOfTwo(1073741823, false));
 

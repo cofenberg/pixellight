@@ -104,30 +104,38 @@ bool Math::IsFinite(double dValue)
 *  @brief
 *    Check's whether the given the number is a power of 2
 */
-inline bool Math::IsPowerOfTwo(int nNumber)
+inline bool Math::IsPowerOfTwo(PLCore::uint32 nNumber)
 {
-	return ((nNumber & (nNumber-1)) == 0);
+	// 0 is not a power of 2, so we need to perform an additional test to catch this special case
+	return (nNumber == 0) ? false : ((nNumber & (nNumber-1)) == 0);
 }
 
 /**
 *  @brief
 *    Returns the nearest power of 2
 */
-int Math::GetNearestPowerOfTwo(int nNumber, bool bLower)
+PLCore::uint32 Math::GetNearestPowerOfTwo(PLCore::uint32 nNumber, bool bLower)
 {
-	// Check whether this number is already a power of 2
-	if (!IsPowerOfTwo(nNumber)) {
-		int nLast = 1;
-		for (int i=1; i<15; i++) {
-			int nNumberT = static_cast<int>(powf(2.0f, static_cast<float>(i)));
-			if (nNumber < nNumberT)
-				return bLower ? nLast : nNumberT;
-			nLast = nNumberT;
+	// 0 is not a power of 2, so we need to perform an additional test to catch this special case
+	if (nNumber == 0) {
+		// There's no nearest power of 2 below 0, so return the given 0 as stated within the method documentation, else return 1
+		return bLower ? 0 : 1;
+	} else {
+		// Check whether this number is already a power of 2
+		if (!IsPowerOfTwo(nNumber)) {
+			// 2^31 is our upper limit
+			PLCore::uint32 nPreviousNumber = 1;
+			for (PLCore::uint32 i=1; i<32; i++) {
+				const PLCore::uint32 nCurrentNumber = static_cast<PLCore::uint32>(powf(2.0f, static_cast<float>(i)));
+				if (nNumber < nCurrentNumber)
+					return bLower ? nPreviousNumber : nCurrentNumber;
+				nPreviousNumber = nCurrentNumber;
+			}
 		}
-	}
 
-	// Return the found number
-	return nNumber;
+		// Return the found number
+		return nNumber;
+	}
 }
 
 

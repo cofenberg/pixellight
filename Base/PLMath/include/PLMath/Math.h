@@ -117,7 +117,7 @@ class Math {
 		*  @return
 		*    'true' if the number is a power of 2, else 'false'
 		*/
-		static inline bool IsPowerOfTwo(int nNumber);
+		static inline bool IsPowerOfTwo(PLCore::uint32 nNumber);
 
 		/**
 		*  @brief
@@ -131,7 +131,7 @@ class Math {
 		*  @return
 		*    The nearest power of 2, if it couldn't be found 'nNumber'
 		*/
-		static inline int GetNearestPowerOfTwo(int nNumber, bool bLower = true);
+		static inline PLCore::uint32 GetNearestPowerOfTwo(PLCore::uint32 nNumber, bool bLower = true);
 
 		//[-------------------------------------------------------]
 		//[ Random                                                ]

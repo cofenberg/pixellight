@@ -5,6 +5,8 @@
   "08.03.2011". As far as I can remember there were no updates required because PixelLight doesn't use those operators. Just checked it by removing the operators
   and jap, not used in PixelLight... except for this single line in "Intersect::AABoxLine()" which, in case I remember correctly again, was added *after* the
   lexicographically change. Fixed this mix up.
+- While working on PLUnitTests, Jens Schmer noticed that "Math::IsPowerOfTwo()" returned "true" when feeding it with a zero, fixed this. Also changed the type from
+  signed integer to unsigned integer and increased the upper limit.
 
 
 
