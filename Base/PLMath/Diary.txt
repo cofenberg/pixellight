@@ -1,4 +1,14 @@
-﻿>> 20.01.2012
+﻿>> 24.01.2012
+[CO]
+- "Intersect::AABoxLine()": D'OH! For checking whether or not the ray origin is inside the given bounding box, the lexicographically vector operations
+  < and > were used... which of course is totally wrong. Some time ago, those operators were not lexicographically. Due to user request this was changed on
+  "08.03.2011". As far as I can remember there were no updates required because PixelLight doesn't use those operators. Just checked it by removing the operators
+  and jap, not used in PixelLight... except for this single line in "Intersect::AABoxLine()" which, in case I remember correctly again, was added *after* the
+  lexicographically change. Fixed this mix up.
+
+
+
+>> 20.01.2012
 [CO]
 - Minor "Intersect"-class naming cleanup
 

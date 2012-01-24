@@ -394,9 +394,11 @@ bool Intersect::AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
 		return false;
 
 	// Check origin inside first
-	const Vector3 &vRayOrig = vStart;
-	if (vRayOrig > vAABoxMin && vRayOrig < vAABoxMax)
+	const Vector3 &vRayOrigin = vStart;
+	if (AABoxPoint(vAABoxMin, vAABoxMax, vRayOrigin)) {
+		// The ray origin is inside the bounding box
 		return true;
+	}
 
 	// Check each face in turn, only check closest 3
 	const Vector3 vRayDirection = (vEnd - vStart).Normalize();
@@ -404,11 +406,11 @@ bool Intersect::AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
 	float fLowt = 0.0f;
 
 	// Min x
-	if (vRayOrig.x < vAABoxMin.x && vRayDirection.x > 0) {
-		const float t = (vAABoxMin.x - vRayOrig.x)/vRayDirection.x;
+	if (vRayOrigin.x < vAABoxMin.x && vRayDirection.x > 0) {
+		const float t = (vAABoxMin.x - vRayOrigin.x)/vRayDirection.x;
 		if (t > 0) {
 			// Substitute t back into ray and check bounds and dist
-			const Vector3 vHitpoint = vRayOrig + vRayDirection*t;
+			const Vector3 vHitpoint = vRayOrigin + vRayDirection*t;
 			if (vHitpoint.y >= vAABoxMin.y && vHitpoint.y <= vAABoxMax.y &&
 				vHitpoint.z >= vAABoxMin.z && vHitpoint.z <= vAABoxMax.z &&
 				(!bHit || t < fLowt)) {
@@ -418,11 +420,11 @@ bool Intersect::AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
 		}
 	}
 	// Max x
-	if (vRayOrig.x > vAABoxMax.x && vRayDirection.x < 0) {
-		const float t = (vAABoxMax.x - vRayOrig.x)/vRayDirection.x;
+	if (vRayOrigin.x > vAABoxMax.x && vRayDirection.x < 0) {
+		const float t = (vAABoxMax.x - vRayOrigin.x)/vRayDirection.x;
 		if (t > 0) {
 			// Substitute t back into ray and check bounds and dist
-			const Vector3 vHitpoint = vRayOrig + vRayDirection*t;
+			const Vector3 vHitpoint = vRayOrigin + vRayDirection*t;
 			if (vHitpoint.y >= vAABoxMin.y && vHitpoint.y <= vAABoxMax.y &&
 				vHitpoint.z >= vAABoxMin.z && vHitpoint.z <= vAABoxMax.z &&
 				(!bHit || t < fLowt)) {
@@ -432,11 +434,11 @@ bool Intersect::AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
 		}
 	}
 	// Min y
-	if (vRayOrig.y < vAABoxMin.y && vRayDirection.y > 0) {
-		const float t = (vAABoxMin.y - vRayOrig.y)/vRayDirection.y;
+	if (vRayOrigin.y < vAABoxMin.y && vRayDirection.y > 0) {
+		const float t = (vAABoxMin.y - vRayOrigin.y)/vRayDirection.y;
 		if (t > 0) {
 			// Substitute t back into ray and check bounds and dist
-			const Vector3 vHitpoint = vRayOrig + vRayDirection*t;
+			const Vector3 vHitpoint = vRayOrigin + vRayDirection*t;
 			if (vHitpoint.x >= vAABoxMin.x && vHitpoint.x <= vAABoxMax.x &&
 				vHitpoint.z >= vAABoxMin.z && vHitpoint.z <= vAABoxMax.z &&
 				(!bHit || t < fLowt)) {
@@ -446,11 +448,11 @@ bool Intersect::AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
 		}
 	}
 	// Max y
-	if (vRayOrig.y > vAABoxMax.y && vRayDirection.y < 0) {
-		const float t = (vAABoxMax.y - vRayOrig.y)/vRayDirection.y;
+	if (vRayOrigin.y > vAABoxMax.y && vRayDirection.y < 0) {
+		const float t = (vAABoxMax.y - vRayOrigin.y)/vRayDirection.y;
 		if (t > 0) {
 			// Substitute t back into ray and check bounds and dist
-			const Vector3 vHitpoint = vRayOrig + vRayDirection*t;
+			const Vector3 vHitpoint = vRayOrigin + vRayDirection*t;
 			if (vHitpoint.x >= vAABoxMin.x && vHitpoint.x <= vAABoxMax.x &&
 				vHitpoint.z >= vAABoxMin.z && vHitpoint.z <= vAABoxMax.z &&
 				(!bHit || t < fLowt)) {
@@ -460,11 +462,11 @@ bool Intersect::AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
 		}
 	}
 	// Min z
-	if (vRayOrig.z < vAABoxMin.z && vRayDirection.z > 0) {
-		const float t = (vAABoxMin.z - vRayOrig.z)/vRayDirection.z;
+	if (vRayOrigin.z < vAABoxMin.z && vRayDirection.z > 0) {
+		const float t = (vAABoxMin.z - vRayOrigin.z)/vRayDirection.z;
 		if (t > 0) {
 			// Substitute t back into ray and check bounds and dist
-			const Vector3 vHitpoint = vRayOrig + vRayDirection*t;
+			const Vector3 vHitpoint = vRayOrigin + vRayDirection*t;
 			if (vHitpoint.x >= vAABoxMin.x && vHitpoint.x <= vAABoxMax.x &&
 				vHitpoint.y >= vAABoxMin.y && vHitpoint.y <= vAABoxMax.y &&
 				(!bHit || t < fLowt)) {
@@ -474,11 +476,11 @@ bool Intersect::AABoxLine(const Vector3 &vAABoxMin, const Vector3 &vAABoxMax,
 		}
 	}
 	// Max z
-	if (vRayOrig.z > vAABoxMax.z && vRayDirection.z < 0) {
-		const float t = (vAABoxMax.z - vRayOrig.z)/vRayDirection.z;
+	if (vRayOrigin.z > vAABoxMax.z && vRayDirection.z < 0) {
+		const float t = (vAABoxMax.z - vRayOrigin.z)/vRayDirection.z;
 		if (t > 0) {
 			// Substitute t back into ray and check bounds and dist
-			const Vector3 vHitpoint = vRayOrig + vRayDirection*t;
+			const Vector3 vHitpoint = vRayOrigin + vRayDirection*t;
 			if (vHitpoint.x >= vAABoxMin.x && vHitpoint.x <= vAABoxMax.x &&
 				vHitpoint.y >= vAABoxMin.y && vHitpoint.y <= vAABoxMax.y &&
 				(!bHit || t < fLowt)) {
