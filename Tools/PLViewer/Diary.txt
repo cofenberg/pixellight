@@ -4,6 +4,7 @@
   for developers and debugging
 PLViewerQt:
 - The window title is now set correctly
+- Visual aid: Show backfaces as wireframe and silhouettes
 
 
 
