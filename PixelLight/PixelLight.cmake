@@ -245,7 +245,6 @@ if(NOT CMAKETOOLS_MINIMAL)
 	set (PL_PLUGIN_FRONTEND_PLGUI					"1"					CACHE BOOL "Build plugin 'PLFrontendPLGui'? (requires 'PLGui')")
 	# Qt
 	set (PL_PLUGIN_FRONTEND_QT						"1"					CACHE BOOL "Build plugin 'PLFrontendQt'?")
-	set (PL_EDITOR									"0"					CACHE BOOL "Build 'PLEditor'? (requires 'PLFrontendQt') (heavily under construction)")	# The editor is heavily work in progress
 	# Tools
 	set (PL_TOOL_PLUPGRADE							"1"					CACHE BOOL "Build plugin 'PLUpgrade'?")
 	# Tests and samples
@@ -329,7 +328,6 @@ else()
 	set (PL_PLUGIN_FRONTEND_PLGUI					"0"					CACHE BOOL "Build plugin 'PLFrontendPLGui'? (requires 'PLGui')")
 	# Qt
 	set (PL_PLUGIN_FRONTEND_QT						"0"					CACHE BOOL "Build plugin 'PLFrontendQt'?")
-	set (PL_EDITOR									"0"					CACHE BOOL "Build 'PLEditor'? (requires 'PLFrontendQt') (heavily under construction)")
 	# Tests and samples
 	set (PL_SAMPLES									"0"					CACHE BOOL "Build the samples?")
 	set (PL_TESTS									"0"					CACHE BOOL "Build the tests?")
