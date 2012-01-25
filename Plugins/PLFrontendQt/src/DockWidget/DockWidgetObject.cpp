@@ -62,7 +62,7 @@ DockWidgetObject::DockWidgetObject(QMainWindow *pQMainWindow, DockWidgetManager 
 	// Get encapsulated Qt dock widget
 	QDockWidget *pQDockWidget = GetQDockWidget();
 	if (pQDockWidget) {
-		// Create tree view and set scene graph model
+		// Create tree view and set introspection model
 		m_pQTreeView = new QTreeView();
 		pQDockWidget->setWidget(m_pQTreeView);
 		m_pPLIntrospectionModel = new DataModels::PLIntrospectionModel(pQDockWidget);

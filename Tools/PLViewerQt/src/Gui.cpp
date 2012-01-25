@@ -670,17 +670,15 @@ void Gui::QtSlotTriggeredOpenLogFile()
 void Gui::QtSlotTriggeredShowColorGradientBackground()
 {
 	// Update the configuration
-	if (m_pQActionShowColorGradientBackground) {
+	if (m_pQActionShowColorGradientBackground)
 		m_pApplication->GetConfig().SetVar("PLViewerQtConfig", "ShowColorGradientBackground", m_pQActionShowColorGradientBackground->isChecked());
-	}
 }
 
 void Gui::QtSlotTriggeredShowBackfacesAndSilhouettes()
 {
 	// Update the configuration
-	if (m_pQActionShowBackfacesAndSilhouettes) {
+	if (m_pQActionShowBackfacesAndSilhouettes)
 		m_pApplication->GetConfig().SetVar("PLViewerQtConfig", "ShowBackfacesAndSilhouettes", m_pQActionShowBackfacesAndSilhouettes->isChecked());
-	}
 }
 
 void Gui::QtSlotTriggeredOpenPixelLightWebsite()

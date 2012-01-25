@@ -271,6 +271,9 @@
     <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarVector4TreeItem.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
+    <ClCompile Include="src\DockWidget\DockWidgetLog.cpp">
+      <Filter>DockWidget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarTreeItemsFactory.h">
@@ -323,6 +326,9 @@
     </ClInclude>
     <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarTreeItemTypes.h">
       <Filter>DataModels\PLTreeItems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetLog.h">
+      <Filter>DockWidget</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

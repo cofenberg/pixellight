@@ -330,6 +330,7 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
     <ClCompile Include="src\DataModels\TreeModelBase.cpp" />
     <ClCompile Include="src\DataModels\TreeSortAndFilterProxyModel.cpp" />
     <ClCompile Include="src\DockWidget\DockWidget.cpp" />
+    <ClCompile Include="src\DockWidget\DockWidgetLog.cpp" />
     <ClCompile Include="src\DockWidget\DockWidgetManager.cpp" />
     <ClCompile Include="src\DockWidget\DockWidgetObject.cpp" />
     <ClCompile Include="src\DockWidget\DockWidgetRTTIBrowser.cpp" />
@@ -900,6 +901,7 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../External/_Windows_x86_64/Qt/bin/moc.exe</AdditionalInputs>
     </CustomBuild>
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidget.h" />
+    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetLog.h" />
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetManager.h" />
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetObject.h" />
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetRTTIBrowser.h" />
