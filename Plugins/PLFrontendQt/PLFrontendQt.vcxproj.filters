@@ -274,6 +274,12 @@
     <ClCompile Include="src\DockWidget\DockWidgetLog.cpp">
       <Filter>DockWidget</Filter>
     </ClCompile>
+    <ClCompile Include="src\Widget\SceneGraphMenu.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="build\GeneratedQtFiles\moc_SceneGraphMenu.cpp">
+      <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarTreeItemsFactory.h">
@@ -493,6 +499,9 @@
     </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarVector2iTreeItem.h">
       <Filter>DataModels\PLTreeItems</Filter>
+    </CustomBuild>
+    <CustomBuild Include="include\PLFrontendQt\Widget\SceneGraphMenu.h">
+      <Filter>Widget</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

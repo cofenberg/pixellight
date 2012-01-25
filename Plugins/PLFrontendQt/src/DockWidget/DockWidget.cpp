@@ -52,6 +52,12 @@ class InternalQDockWidget : public QDockWidget {
 
 
 	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class DockWidget;
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -87,8 +93,10 @@ class InternalQDockWidget : public QDockWidget {
 		virtual ~InternalQDockWidget()
 		{
 			// Inform the RTTI dock widget politely that we're now dead, then shoot at it...
-			m_pDockWidget->m_pQDockWidget = nullptr;
-			delete m_pDockWidget;
+			if (m_pDockWidget) {
+				m_pDockWidget->m_pQDockWidget = nullptr;
+				delete m_pDockWidget;
+			}
 		}
 
 
@@ -96,7 +104,7 @@ class InternalQDockWidget : public QDockWidget {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		DockWidget *m_pDockWidget;	/**< RTTI dock widget we need to inform when we get destroyed, always valid */
+		DockWidget *m_pDockWidget;	/**< RTTI dock widget we need to inform when we get destroyed, can be a null pointer */
 
 
 };
@@ -116,8 +124,10 @@ DockWidget::~DockWidget()
 		m_pDockWidgetManager->UnregisterDockWidget(*this);
 
 	// Destroy the encapsulated Qt dock widget, if it still exists
-	if (m_pQDockWidget)
+	if (m_pQDockWidget) {
+		m_pQDockWidget->m_pDockWidget = nullptr;
 		delete m_pQDockWidget;
+	}
 }
 
 /**

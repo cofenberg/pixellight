@@ -23,10 +23,10 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <QtGui/QTreeView>
-#include <QtGui/QDockWidget>
-#include <QtGui/QMainWindow>
-#include <QtGui/QVBoxLayout>
+#include <QtGui/qtreeview.h>
+#include <QtGui/qboxlayout.h>
+#include <QtGui/qdockwidget.h>
+#include <QtGui/qmainwindow.h>
 #include <PLCore/Base/Class.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include "PLFrontendQt/QtStringAdapter.h"
@@ -61,6 +61,7 @@ pl_implement_class(DockWidgetSceneGraph)
 */
 DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidgetScene(pQMainWindow, pDockWidgetManager),
 	SlotOnDestroy(this),
+	m_pQTreeView(nullptr),
 	m_pSceneGraphTreeModel(nullptr),
 	m_pSceneContainer(nullptr),
 	m_pDockWidgetSceneGraphQObject(new DockWidgetSceneGraphQObject(*this)),
@@ -71,8 +72,12 @@ DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidget
 	if (pQDockWidget) {
 		{ // Create tree view and set scene graph model
 			// Create tree view widget
-			QTreeView *pQTreeView = new QTreeView(pQDockWidget);
-			m_pDockWidgetSceneGraphQObject->connect(pQTreeView, SIGNAL(doubleClicked(const QModelIndex&)), m_pDockWidgetSceneGraphQObject, SLOT(QtSlotTreeViewDoubleClicked(const QModelIndex&)));
+			m_pQTreeView = new QTreeView(pQDockWidget);
+			m_pDockWidgetSceneGraphQObject->connect(m_pQTreeView, SIGNAL(doubleClicked(const QModelIndex&)), m_pDockWidgetSceneGraphQObject, SLOT(QtSlotTreeViewDoubleClicked(const QModelIndex&)));
+
+			// Setup tree view widget context menu
+			m_pQTreeView->setContextMenuPolicy(Qt::CustomContextMenu);
+			m_pDockWidgetSceneGraphQObject->connect(m_pQTreeView, SIGNAL(customContextMenuRequested(const QPoint&)), m_pDockWidgetSceneGraphQObject, SLOT(QtSlotCustomContextMenuRequested(const QPoint&)));
 
 			// Create filter widget
 			FilterWidgetWithFilterTypSelector *pFilterWidget = new FilterWidgetWithFilterTypSelector(pQDockWidget);
@@ -85,7 +90,7 @@ DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidget
 			QWidget *pQWidgetHost = new QWidget(pQDockWidget);
 			pQWidgetHost->setLayout(new QVBoxLayout);
 			pQWidgetHost->layout()->addWidget(pFilterWidget);
-			pQWidgetHost->layout()->addWidget(pQTreeView);
+			pQWidgetHost->layout()->addWidget(m_pQTreeView);
 			pQDockWidget->setWidget(pQWidgetHost);
 
 			// Set models
@@ -93,10 +98,10 @@ DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidget
 			m_pSortAndFilterModel = new DataModels::TreeSortAndFilterProxyModel(pQDockWidget);
 			m_pSortAndFilterModel->setSourceModel(m_pSceneGraphTreeModel);
 			m_pSortAndFilterModel->setFilterCaseSensitivity(Qt::CaseInsensitive);
-			pQTreeView->setModel(m_pSortAndFilterModel);
+			m_pQTreeView->setModel(m_pSortAndFilterModel);
 
 			// Hide the root
-			pQTreeView->expandToDepth(0);
+			m_pQTreeView->expandToDepth(0);
 		}
 
 		// Add the created Qt dock widget to the given Qt main window
@@ -146,7 +151,11 @@ void DockWidgetSceneGraph::SetSceneContainer(SceneContainer *pSceneContainer)
 			m_pSceneContainer->SignalDestroy.Connect(SlotOnDestroy);
 
 		// Set the start scene node within the scene graph tree model instance
-		m_pSceneGraphTreeModel->SetStartNode(m_pSceneContainer, true);
+		// -> Hiding the start node would be nice, but then it would not be possible to manipulate it :/
+		m_pSceneGraphTreeModel->SetStartNode(m_pSceneContainer);
+
+		// At least expand the first depth by default
+		m_pQTreeView->expandToDepth(0);
 
 		// Get encapsulated Qt dock widget
 		QDockWidget *pQDockWidget = GetQDockWidget();
@@ -168,7 +177,18 @@ void DockWidgetSceneGraph::SetSceneContainer(SceneContainer *pSceneContainer)
 */
 Object *DockWidgetSceneGraph::GetSelectedObject() const
 {
-	// [TODO] Implement me
+	// Is there a Qt tree widget instance?
+	if (m_pQTreeView) {
+		// Get the selected model index
+		// -> We only support one selected item at the same time
+		const QModelIndex cQModelIndex = m_pQTreeView->selectionModel()->currentIndex();
+		if (cQModelIndex.isValid()) {
+			// Use the Qt model index to figure out the currently selected RTTI class instance
+			return GetObjectByQModelIndex(cQModelIndex);
+		}
+	}
+
+	// Error!
 	return nullptr;
 }
 
@@ -244,6 +264,17 @@ void DockWidgetSceneGraph::SetSceneContainerAndObject()
 	}
 }
 
+
+/**
+*  @brief
+*    Updates the scene graph tree view
+*/
+void DockWidgetSceneGraph::UpdateTreeView()
+{
+	// [TODO] Implement a more advanced solution which keeps the currently expanded items expanded
+	SetSceneContainer(GetSceneContainer());
+}
+
 /**
 *  @brief
 *    Called when the scene container assigned with this dock widget was destroyed
@@ -253,6 +284,32 @@ void DockWidgetSceneGraph::OnDestroy()
 	// Argh! Mayday! We lost our scene container!
 	// -> Now no scene container is currently set
 	SetSceneContainer(nullptr);
+}
+
+/**
+*  @brief
+*    Returns an object by using a given Qt model index
+*/
+Object *DockWidgetSceneGraph::GetObjectByQModelIndex(const QModelIndex &cQModelIndex) const
+{
+	// Is there a scene graph tree model instance?
+	if (m_pSceneGraphTreeModel && m_pSortAndFilterModel) {
+		// We have been provided with a filter model index, what we need is an index which can be used within the original tree view
+		const QModelIndex cQModelIndexSource = m_pSortAndFilterModel->mapToSource(cQModelIndex);
+
+		// Get selected scene node
+		Object *pObject = reinterpret_cast<Object*>(m_pSceneGraphTreeModel->GetSceneNodeFromIndex(cQModelIndexSource));
+		if (!pObject) {
+			// Hm, maybe it's an selected scene node modifier?
+			pObject = reinterpret_cast<Object*>(m_pSceneGraphTreeModel->GetSceneNodeModifierFromIndex(cQModelIndexSource));
+		}
+
+		// Return the RTTI class instance
+		return pObject;
+	}
+
+	// Error!
+	return nullptr;
 }
 
 

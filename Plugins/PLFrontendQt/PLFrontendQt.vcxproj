@@ -291,6 +291,7 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
     <ClCompile Include="build\GeneratedQtFiles\moc_QPLSceneContext.cpp" />
     <ClCompile Include="build\GeneratedQtFiles\moc_qtcolorbutton.cpp" />
     <ClCompile Include="build\GeneratedQtFiles\moc_RTTIBrowserWidget.cpp" />
+    <ClCompile Include="build\GeneratedQtFiles\moc_SceneGraphMenu.cpp" />
     <ClCompile Include="build\GeneratedQtFiles\moc_SceneGraphNodeTreeItemBase.cpp" />
     <ClCompile Include="build\GeneratedQtFiles\moc_SceneGraphTreeModel.cpp" />
     <ClCompile Include="build\GeneratedQtFiles\moc_PLTreeItemsDelegate.cpp" />
@@ -354,8 +355,27 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
     <ClCompile Include="src\Widget\ClassListWidget.cpp" />
     <ClCompile Include="src\Widget\FilterWidgetWithFilterTypSelector.cpp" />
     <ClCompile Include="src\Widget\RTTIBrowserWidget.cpp" />
+    <ClCompile Include="src\Widget\SceneGraphMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <CustomBuild Include="include\PLFrontendQt\Widget\SceneGraphMenu.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"../../External/_Windows_x86_64/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"../../External/_Windows_x86_64/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build\GeneratedQtFiles\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build\GeneratedQtFiles\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build\GeneratedQtFiles\moc_%(Filename).cpp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build\GeneratedQtFiles\moc_%(Filename).cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../External/_Windows_x86_64/Qt/bin/moc.exe</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../External/_Windows_x86_64/Qt/bin/moc.exe</AdditionalInputs>
+    </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\Widget\FilterWidgetWithFilterTypSelector.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>

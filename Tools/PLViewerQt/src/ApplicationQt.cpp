@@ -30,6 +30,7 @@
 #include <PLMath/Math.h>
 #include <PLScene/Compositing/SceneRendererPass.h>
 #include <PLFrontendQt/FrontendMainWindow.h>
+#include <PLFrontendQt/DockWidget/DockWidgetManager.h>
 #include "Gui.h"
 #include "ApplicationQt.h"
 
@@ -130,9 +131,16 @@ void ApplicationQt::OnInit()
 
 void ApplicationQt::OnDeInit()
 {
+	// Get the Qt main window
+	PLFrontendQt::FrontendMainWindow *pFrontendMainWindow = m_pGui->GetFrontendMainWindow();
+
 	// De-initialize the GUI (no "m_pGui" security checks required, the application lifecycle is guaranteed)
 	delete m_pGui;
 	m_pGui = nullptr;
+
+	// Close all dock widgets right now while most of the data is still valid
+	if (pFrontendMainWindow)
+		pFrontendMainWindow->GetDockWidgetManager().DestroyDockWidgets();
 
 	// Call base implementation
 	Application::OnDeInit();

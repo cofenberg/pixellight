@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: DockWidgetSceneGraphQObject.h                  *
+ *  File: SceneGraphMenu.h                               *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,26 +20,31 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTENDQT_DOCKWIDGET_SCENEGRAPH_QOBJECT_H__
-#define __PLFRONTENDQT_DOCKWIDGET_SCENEGRAPH_QOBJECT_H__
+#ifndef __PLFRONTENDQT_SCENEGRAPHMENU_H__
+#define __PLFRONTENDQT_SCENEGRAPHMENU_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <QtCore/qobject.h>
+#include <QtGui/qmenu.h>
+#include <PLCore/Base/Event/EventHandler.h>
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 QT_BEGIN_NAMESPACE
-	class QPoint;
-	class QModelIndex;
+	class QAction;
+	class QActionGroup;
 QT_END_NAMESPACE
-namespace PLFrontendQt {
-	class DockWidgetSceneGraph;
+namespace PLCore {
+	class Object;
+}
+namespace PLScene {
+	class SceneNode;
+	class SceneContainer;
 }
 
 
@@ -54,21 +59,9 @@ namespace PLFrontendQt {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene graph Qt dock widget class, QObject instance for Qt's signal/slot mechanisms
-*
-*  @remarks
-*    Sadly, it appears that Qt's signal/slot mechanisms can't be used without QObject/Q_OBJECT. But we don't want to do a multiple inheritance
-*    like "class DockWidgetSceneGraph : public QObject, public DockWidgetScene" either because this can cause serious casting issues. So, we
-*    need to add another class just to be able to use Qt's signal/slot mechanisms. We can't use an embedded class for this either because
-*    Qt's MOC doesn't like this. :/
+*    Scene graph Qt menu class
 */
-class DockWidgetSceneGraphQObject : public QObject {
-
-
-	//[-------------------------------------------------------]
-	//[ Friends                                               ]
-	//[-------------------------------------------------------]
-	friend class DockWidgetSceneGraph;
+class SceneGraphMenu : public QMenu {
 
 
 	//[-------------------------------------------------------]
@@ -79,17 +72,23 @@ class DockWidgetSceneGraphQObject : public QObject {
 
 
 	//[-------------------------------------------------------]
-	//[ Private definitions                                   ]
+	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
-	private:
+	public:
 		/**
 		*  @brief
-		*    Filter types
+		*    Constructor
+		*
+		*  @param[in] cObject
+		*    RTTI class instance we're working on
 		*/
-		enum EFilterTypes {
-			BySceneNodeName,	/**< Filter by scene node name */
-			ByClassName			/**< Filter by scene node class name */
-		};
+		SceneGraphMenu(PLCore::Object &cObject);
+
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		virtual ~SceneGraphMenu();
 
 
 	//[-------------------------------------------------------]
@@ -98,35 +97,59 @@ class DockWidgetSceneGraphQObject : public QObject {
 	private:
 		/**
 		*  @brief
-		*    Constructor
-		*
-		*  @param[in] cDockWidgetSceneGraph
-		*    Dock widget scene graph owner instance
+		*    Called when the object assigned with this menu was destroyed
 		*/
-		DockWidgetSceneGraphQObject(DockWidgetSceneGraph &cDockWidgetSceneGraph);
+		void OnDestroyed();
 
 		/**
 		*  @brief
-		*    Destructor
+		*    Fills the add menu recursivity
+		*
+		*  @param[in] cQMenu
+		*    Current Qt menu to fill
+		*  @param[in] sBaseClass
+		*    Name of the currently used RTTI base class
 		*/
-		virtual ~DockWidgetSceneGraphQObject();
+		void FillAddWindowRec(QMenu &cQMenu, const PLCore::String &sBaseClass);
+
+		/**
+		*  @brief
+		*    Clones the given scene node
+		*
+		*  @param[in] cTargetSceneContainer
+		*    Scene container were to create the new scene node in
+		*  @param[in] cSceneNode
+		*    Scene node to clone
+		*  @param[in] sNameExtension
+		*    Clone name extension
+		*/
+		void CloneSceneNode(PLScene::SceneContainer &cTargetSceneContainer, const PLScene::SceneNode &cSceneNode, const PLCore::String &sNameExtension);
 
 
 	//[-------------------------------------------------------]
 	//[ Private Qt slots (MOC)                                ]
 	//[-------------------------------------------------------]
 	private slots:
-		void QtSlotTreeViewDoubleClicked(const QModelIndex &cQModelIndex);
-		void QtSlotCustomContextMenuRequested(const QPoint &cQPoint);
-		void QtSlotFilterTypeChanged(int filterId);
-		void QtSlotFilterChanged(const QString &text);
+		void QtSlotAboutToShowAdd();
+		void QtSlotSelectedAdd(QAction *);
+		void QtSlotTriggeredClone();
+		void QtSlotTriggeredDelete();
+
+
+	//[-------------------------------------------------------]
+	//[ Private PixelLight slots                              ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::EventHandler<> SlotDestroyed;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		DockWidgetSceneGraph *m_pDockWidgetSceneGraph;	/**< Dock widget scene graph owner instance, always valid */
+		PLCore::Object *m_pObject;			/**< RTTI class instance we're working on, always valid */
+		QMenu		   *m_pQMenuAdd;		/**< Add Qt menu instance, always valid */
+		QActionGroup   *m_pQActionGroupAdd;	/**< Add Qt action group, can be a null pointer */
 
 
 };
@@ -138,4 +161,4 @@ class DockWidgetSceneGraphQObject : public QObject {
 } // PLFrontendQt
 
 
-#endif // __PLFRONTENDQT_DOCKWIDGET_SCENEGRAPH_QOBJECT_H__
+#endif // __PLFRONTENDQT_SCENEGRAPHMENU_H__

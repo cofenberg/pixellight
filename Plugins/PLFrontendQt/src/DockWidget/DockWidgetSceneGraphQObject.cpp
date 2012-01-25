@@ -23,6 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <QtGui/qtreeview.h>
+#include "PLFrontendQt/Widget/SceneGraphMenu.h"
 #include "PLFrontendQt/DataModels/SceneGraphTreeModel.h"
 #include "PLFrontendQt/DataModels/TreeSortAndFilterProxyModel.h"
 #include "PLFrontendQt/DockWidget/DockWidgetSceneGraph.h"
@@ -62,22 +64,32 @@ DockWidgetSceneGraphQObject::~DockWidgetSceneGraphQObject()
 //[-------------------------------------------------------]
 void DockWidgetSceneGraphQObject::QtSlotTreeViewDoubleClicked(const QModelIndex &cQModelIndex)
 {
-	// Is there a scene graph tree model instance?
-	DataModels::SceneGraphTreeModel *pSceneGraphTreeModel = m_pDockWidgetSceneGraph->m_pSceneGraphTreeModel;
-	DataModels::TreeSortAndFilterProxyModel *pFilterModel = m_pDockWidgetSceneGraph->m_pSortAndFilterModel;
-	if (pSceneGraphTreeModel && pFilterModel) {
-		// We have been provided with a filter model index, what we need is an index which can be used within the original tree view
-		const QModelIndex cQModelIndexSource = pFilterModel->mapToSource(cQModelIndex);
+	// Use the given Qt model index to figure out the currently selected RTTI class instance
+	Object *pObject = m_pDockWidgetSceneGraph->GetObjectByQModelIndex(cQModelIndex);
 
-		// Get selected scene node
-		Object *pObject = reinterpret_cast<Object*>(pSceneGraphTreeModel->GetSceneNodeFromIndex(cQModelIndexSource));
-		if (!pObject) {
-			// Hm, maybe it's an selected scene node modifier?
-			pObject = reinterpret_cast<Object*>(pSceneGraphTreeModel->GetSceneNodeModifierFromIndex(cQModelIndexSource));
+	// Perform a dock widget manager broadcast (excludes this emitting dock widget)
+	m_pDockWidgetSceneGraph->CallDockWidgetsMethod("SelectObject", Params<void, Object*>(pObject));
+}
+
+void DockWidgetSceneGraphQObject::QtSlotCustomContextMenuRequested(const QPoint &cQPoint)
+{
+	// Show the scene graph context menu
+	if (m_pDockWidgetSceneGraph->m_pQTreeView) {
+		// We could use
+		//   "Object *pObject = m_pDockWidgetSceneGraph->GetSelectedObject();"
+		// in here, but it looks odd to be able to add a context menu for
+		// an item while the mouse is far, far away from the item itself
+		// -> So, we're asking Qt for a model index below the given point
+		const QModelIndex cQModelIndex = m_pDockWidgetSceneGraph->m_pQTreeView->indexAt(cQPoint);
+
+		// Use the resulting Qt model index to figure out the currently selected RTTI class instance
+		Object *pObject = cQModelIndex.isValid() ? m_pDockWidgetSceneGraph->GetObjectByQModelIndex(cQModelIndex) : nullptr;
+
+		// Show the scene graph context menu
+		if (pObject && SceneGraphMenu(*pObject).exec(reinterpret_cast<QWidget*>(m_pDockWidgetSceneGraph->m_pQTreeView)->mapToGlobal(cQPoint))) {
+			// Update the scene graph tree view because the probability is high that it's content was changed
+			m_pDockWidgetSceneGraph->UpdateTreeView();
 		}
-
-		// Perform a dock widget manager broadcast (excludes this emitting dock widget)
-		m_pDockWidgetSceneGraph->CallDockWidgetsMethod("SelectObject", Params<void, Object*>(pObject));
 	}
 }
 

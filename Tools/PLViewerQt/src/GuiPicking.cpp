@@ -252,6 +252,8 @@ void GuiPicking::OnDestroyed()
 {
 	// Argh! Mayday! We lost our scene node!
 	// -> Now no scene node is currently selected
+	m_pSceneNode = nullptr;
+	m_lstSceneNodeModifiers.Clear();
 	SelectObject(nullptr);
 }
 

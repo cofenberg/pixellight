@@ -9,6 +9,7 @@
 - "Queue" and "Stack" are now iterable as well
 PLFrontendQt:
 - Added log dock widget
+- Added scene graph context menu
 
 
 

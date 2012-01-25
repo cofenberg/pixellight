@@ -35,6 +35,7 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 QT_BEGIN_NAMESPACE
+	class QTreeView;
 	class QMainWindow;
 QT_END_NAMESPACE
 namespace PLScene {
@@ -164,15 +165,34 @@ class DockWidgetSceneGraph : public DockWidgetScene {
 
 		/**
 		*  @brief
+		*    Updates the scene graph tree view
+		*/
+		void UpdateTreeView();
+
+		/**
+		*  @brief
 		*    Called when the scene container assigned with this dock widget was destroyed
 		*/
 		void OnDestroy();
+
+		/**
+		*  @brief
+		*    Returns an object by using a given Qt model index
+		*
+		*  @param[in] cQModelIndex
+		*    Qt model index to return the RTTI class instance from
+		*
+		*  @return
+		*    The object, can be a null pointer
+		*/
+		PLCore::Object *GetObjectByQModelIndex(const QModelIndex &cQModelIndex) const;
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
+		QTreeView								*m_pQTreeView;						/**< Qt tree view instance, can be a null pointer */
 		DataModels::SceneGraphTreeModel 		*m_pSceneGraphTreeModel;			/**< Scene graph tree model, can be a null pointer */
 		PLScene::SceneContainer					*m_pSceneContainer;					/**< Scene container assigned with this dock widget, can be a null pointer */
 		DockWidgetSceneGraphQObject				*m_pDockWidgetSceneGraphQObject;	/**< QObject instance for Qt's signal/slot mechanisms, always valid */

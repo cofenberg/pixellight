@@ -87,6 +87,7 @@ SET(INC_FILES
 	include/PLFrontendQt/Widget/ClassListWidget.h
 	include/PLFrontendQt/Widget/RTTIBrowserWidget.h
 	include/PLFrontendQt/Widget/FilterWidgetWithFilterTypSelector.h
+	include/PLFrontendQt/Widget/SceneGraphMenu.h
 	include/PLFrontendQt/DockWidget/DockWidgetSceneGraphQObject.h
 	include/PLFrontendQt/DockWidget/DockWidgetSceneRendererQObject.h
 )
@@ -156,6 +157,7 @@ add_sources(
 	src/Widget/ClassListWidget.cpp
 	src/Widget/RTTIBrowserWidget.cpp
 	src/Widget/FilterWidgetWithFilterTypSelector.cpp
+	src/Widget/SceneGraphMenu.cpp
 	src/DockWidget/DockWidgetManager.cpp
 	src/DockWidget/DockWidget.cpp
 	src/DockWidget/DockWidgetLog.cpp
