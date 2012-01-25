@@ -29,8 +29,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLCore/Core/Singleton.h"
-#include "PLCore/String/String.h"
 #include "PLCore/Container/Queue.h"
+#include "PLCore/Base/Event/Event.h"
 
 
 //[-------------------------------------------------------]
@@ -115,6 +115,13 @@ class Log : public Singleton<Log> {
 			Info,		/**< Should be used for info texts */
 			Debug		/**< Should be used for debug level texts */
 		};
+
+
+	//[-------------------------------------------------------]
+	//[ Public events                                         ]
+	//[-------------------------------------------------------]
+	public:
+		Event<> EventNewEntry;	/**< A new log entry had been added, use e.g. "GetLastMessages()" to access the latest messages */
 
 
 	//[-------------------------------------------------------]
@@ -296,7 +303,7 @@ class Log : public Singleton<Log> {
 		*  @note
 		*    The nBufferCount-last log messages gets buffered
 		*/
-		PLCORE_API void SetBufferCount(uint32 nBufferCount = 10);
+		PLCORE_API void SetBufferCount(uint32 nBufferCount = 1000);
 
 		/**
 		*  @brief

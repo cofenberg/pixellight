@@ -217,7 +217,7 @@ Log::Log() :
 	m_nLogLevel(Info),
 	m_nFlushLogLevel(Error),
 	m_nFlushMessages(0),
-	m_nBufferedMessages(10),
+	m_nBufferedMessages(1000),
 	m_pLogFormatter(nullptr)
 {
 }
@@ -232,7 +232,7 @@ Log::Log(const Log &cSource) :
 	m_nLogLevel(Info),
 	m_nFlushLogLevel(Error),
 	m_nFlushMessages(0),
-	m_nBufferedMessages(10),
+	m_nBufferedMessages(1000),
 	m_pLogFormatter(nullptr)
 {
 	// No implementation because the copy constructor is never used
@@ -338,9 +338,6 @@ bool Log::Write(uint8 nLogLevel, const String &sText)
 			if (bResult) {
 				// Remove the latest message from the list if the limit is reached
 				if (m_qLastMessages.GetNumOfElements() == m_nBufferedMessages) {
-					// Make an explicit flush
-					Flush();
-
 					// Remove the oldest message
 					m_qLastMessages.Pop();
 				}
@@ -356,6 +353,9 @@ bool Log::Write(uint8 nLogLevel, const String &sText)
 					if (!m_pLogFormatter->Flush())
 						bResult = false; // Error!
 				}
+
+				// Emit the event
+				EventNewEntry();
 			}
 		}
 
