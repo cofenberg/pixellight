@@ -131,6 +131,17 @@ bool Queue<ValueType>::Pop(ValueType *pElement)
 
 /**
 *  @brief
+*    Get the top element without removing it
+*/
+template <class ValueType>
+ValueType Queue<ValueType>::Top() const
+{
+	// On error return temp object...
+	return m_pTop ? m_pTop->Data : temp;
+}
+
+/**
+*  @brief
 *    Get the bottom element without removing it
 */
 template <class ValueType>

@@ -4,6 +4,7 @@
   - Bugfix: "Log::Write()" as soon as the internal log message backup buffer was full, the log was flushed always with each new entry
   - By default, the log buffers now 1000 instead of just 10 messages, we're not that memory restricted, even on mobile devices :D
   - Added "EventNewEntry"-event
+- Added "Queue::Top()"
 
 
 

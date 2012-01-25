@@ -119,10 +119,19 @@ class Queue {
 
 		/**
 		*  @brief
+		*    Returns the top element without removing it
+		*
+		*  @return
+		*    Top queue element (newest element)
+		*/
+		ValueType Top() const;
+
+		/**
+		*  @brief
 		*    Returns the bottom element without removing it
 		*
 		*  @return
-		*    Bottom queue element
+		*    Bottom queue element (oldest element)
 		*/
 		ValueType Bottom() const;
 
