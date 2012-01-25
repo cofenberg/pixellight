@@ -150,10 +150,12 @@ Script *ScriptManager::CreateFromFile(const String &sFilename, bool bAddBindings
 *    Constructor
 */
 ScriptManager::ScriptManager() :
-	SlotClassLoaded(&ScriptManager::OnClassLoaded, this)
+	SlotClassLoaded(&ScriptManager::OnClassLoaded, this),
+	SlotClassUnloaded(&ScriptManager::OnClassUnloaded, this)
 {
 	// The script manager MUST be informed if new classes are registered in order to register new script languages!
 	ClassManager::GetInstance()->EventClassLoaded.Connect(SlotClassLoaded);
+	ClassManager::GetInstance()->EventClassUnloaded.Connect(SlotClassUnloaded);
 
 	{ // Register all script languages
 		List<const Class*> lstClasses;
@@ -178,7 +180,7 @@ ScriptManager::ScriptManager() :
 */
 ScriptManager::~ScriptManager()
 {
-	// Destroy all script binding instances
+	// Destroy all script binding instances, usually when we're in here there should no such instances be left
 	for (uint32 i=0; i<m_lstScriptBindings.GetNumOfElements(); i++)
 		delete m_lstScriptBindings[i];
 }
@@ -187,6 +189,29 @@ ScriptManager::~ScriptManager()
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Unregister a class
+*/
+void ScriptManager::OnClassUnloaded(const Class *pClass)
+{
+	// Destroy script binding instance if required
+	for (uint32 i=0; i<m_lstScriptBindings.GetNumOfElements(); i++) {
+		// Get the current script binding instance
+		ScriptBinding *pScriptBinding = m_lstScriptBindings[i];
+
+		// Is this an instance of the unloaded class?
+		if (pScriptBinding->GetClass() == pClass) {
+			// Destroy instance
+			m_lstScriptBindings.RemoveAtIndex(i);
+			delete pScriptBinding;
+
+			// Get us out of the loop (there's just one instance per script binding class)
+			i = m_lstScriptBindings.GetNumOfElements();
+		}
+	}
+}
+
 /**
 *  @brief
 *    Registers queued classes
