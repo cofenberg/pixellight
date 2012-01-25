@@ -176,6 +176,11 @@ LoadableType::LoadableType(const String &sName, const Class &cClass) :
 */
 LoadableType::~LoadableType()
 {
+	// Destroy all loaders managed by this loadable type
+	for (uint32 i=0; m_lstLoaders.GetNumOfElements() && i<m_lstLoaders.GetNumOfElements(); i++) {
+		// Remove the first loader, it's removed from the list automatically
+		RemoveLoader(*m_lstLoaders[0]);
+	}
 }
 
 /**
@@ -190,11 +195,11 @@ LoadableType &LoadableType::operator =(const LoadableType &cSource)
 
 /**
 *  @brief
-*    Adds loader to this loadable type
+*    Adds a loader to this loadable type
 */
 void LoadableType::AddLoader(Loader &cLoader)
 {
-	// Check parameter
+	// Is the given loader already managed by this loadable type?
 	if (cLoader.m_pLoadableType != this) {
 		// Add loader
 		cLoader.m_pLoadableType = this;
@@ -232,6 +237,52 @@ void LoadableType::AddLoader(Loader &cLoader)
 			}
 		}
 	}
+}
+
+/**
+*  @brief
+*    Removes a loader from this loadable type
+*/
+bool LoadableType::RemoveLoader(Loader &cLoader)
+{
+	// Is the given loader managed by this loadable type?
+	if (cLoader.m_pLoadableType == this) {
+		// Remove loader
+		cLoader.m_pLoadableType = nullptr;
+		m_lstLoaders.Remove(&cLoader);
+		LoadableManager *pLoadableManager = LoadableManager::GetInstance();
+		pLoadableManager->m_lstLoaders.Remove(&cLoader);
+
+		// Remove all formats of this loader
+		for (uint32 i=0; i<cLoader.GetNumOfFormats(); i++) {
+			// Get the current format
+			const String sFormat = cLoader.GetFormat(i);
+
+			// Remove format from this loadable type
+			const Loader *pLoader = m_mapLoaders.Get(sFormat);
+			if (pLoader == &cLoader) {
+				m_mapLoaders.Remove(sFormat);
+				m_lstFormats.Remove(sFormat);
+			}
+
+			// Remove format from the loadable manager
+			pLoader = pLoadableManager->m_mapLoaders.Get(sFormat);
+			if (pLoader == &cLoader) {
+				pLoadableManager->m_mapLoaders.Remove(sFormat);
+				pLoadableManager->m_lstFormats.Remove(sFormat);
+				pLoadableManager->m_mapTypesByExtension.Remove(sFormat);
+			}
+		}
+
+		// Destroy the given loader instance
+		delete &cLoader;
+
+		// Done
+		return true;
+	}
+
+	// Error!
+	return false;
 }
 
 

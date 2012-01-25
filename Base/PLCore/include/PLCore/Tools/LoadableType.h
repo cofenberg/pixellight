@@ -227,12 +227,24 @@ class LoadableType {
 
 		/**
 		*  @brief
-		*    Adds loader to this loadable type
+		*    Adds a loader to this loadable type
 		*
 		*  @param[in] cLoader
-		*    Loader to add
+		*    Loader to add, this loadable type takes over the memory control
 		*/
 		void AddLoader(Loader &cLoader);
+
+		/**
+		*  @brief
+		*    Removes a loader from this loadable type
+		*
+		*  @param[in] cLoader
+		*    Loader to remove, when all went fine then the given reference is no longer valid after this method was successfully called
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		bool RemoveLoader(Loader &cLoader);
 
 
 	//[-------------------------------------------------------]
