@@ -137,6 +137,17 @@ ValueType Stack<ValueType>::Top() const
 
 /**
 *  @brief
+*    Get the bottom element without removing it
+*/
+template <class ValueType>
+ValueType Stack<ValueType>::Bottom() const
+{
+	// On error return temp object...
+	return m_pBottom ? m_pBottom->Data : temp;
+}
+
+/**
+*  @brief
 *    Returns the number of element on the stack
 */
 template <class ValueType>

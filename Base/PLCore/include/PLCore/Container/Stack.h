@@ -122,9 +122,18 @@ class Stack {
 		*    Returns the top element without removing it
 		*
 		*  @return
-		*    Top stack element
+		*    Top stack element (newest element)
 		*/
 		ValueType Top() const;
+
+		/**
+		*  @brief
+		*    Returns the bottom element without removing it
+		*
+		*  @return
+		*    Bottom stack element (oldest element)
+		*/
+		ValueType Bottom() const;
 
 		/**
 		*  @brief
@@ -197,8 +206,8 @@ class Stack {
 	//[-------------------------------------------------------]
 	private:
 		uint32		  m_nNumOfElements;	/**< Number of elements on the stack */
-		StackElement *m_pTop;			/**< Pointer to the top element, can be a null pointer */
-		StackElement *m_pBottom;		/**< Pointer to the bottom element, can be a null pointer */
+		StackElement *m_pTop;			/**< Pointer to the top element (newest element), can be a null pointer */
+		StackElement *m_pBottom;		/**< Pointer to the bottom element (oldest element), can be a null pointer */
 
 
 };

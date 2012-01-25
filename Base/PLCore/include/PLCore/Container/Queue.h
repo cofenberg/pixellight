@@ -189,8 +189,8 @@ class Queue {
 	//[-------------------------------------------------------]
 	private:
 		uint32		  m_nNumOfElements;	/**< Number of elements on the queue */
-		QueueElement *m_pTop;			/**< Pointer to the top element, can be a null pointer */
-		QueueElement *m_pBottom;		/**< Pointer to the bottom element, can be a null pointer */
+		QueueElement *m_pTop;			/**< Pointer to the top element (newest element), can be a null pointer */
+		QueueElement *m_pBottom;		/**< Pointer to the bottom element (oldest element), can be a null pointer */
 
 
 };
