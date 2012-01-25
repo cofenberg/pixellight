@@ -102,51 +102,8 @@ DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidget
 		// Add the created Qt dock widget to the given Qt main window
 		pQMainWindow->addDockWidget(Qt::LeftDockWidgetArea, pQDockWidget);
 
-		// Get a list of dock widgets registered within the same dock widget manager this dock widget is in
-		const Array<DockWidget*> &lstDockWidgets = GetFellowDockWidgets();
-
-		// Ask the RTTI dock widget fellows whether or not someone knows which is the currently used scene container
-		for (uint32 i=0; i<lstDockWidgets.GetNumOfElements() && !m_pSceneContainer; i++) {
-			// Get the dock widget, and ignore our own ego
-			DockWidget *pDockWidget = lstDockWidgets[i];
-			if (pDockWidget != this) {
-				// Get the typed dynamic parameters
-				Params<SceneContainer*> cParams;
-
-				// Call the RTTI method
-				pDockWidget->CallMethod("GetSceneContainer", cParams);
-
-				// Get the result
-				if (cParams.Return)
-					SetSceneContainer(cParams.Return);
-			}
-		}
-
-		{ // Ask the RTTI dock widget fellows whether or not someone knows which is the currently selected scene node or scene node modifier
-			// Get a list of dock widgets registered within the same dock widget manager this dock widget is in
-			Object *pObject = nullptr;
-			for (uint32 i=0; i<lstDockWidgets.GetNumOfElements() && !pObject; i++) {
-				// Get the dock widget, and ignore our own ego
-				DockWidget *pDockWidget = lstDockWidgets[i];
-				if (pDockWidget != this) {
-					// Get the typed dynamic parameters
-					Params<Object*> cParams;
-
-					// Call the RTTI method
-					pDockWidget->CallMethod("GetSelectedObject", cParams);
-
-					// Get the result
-					pObject = cParams.Return;
-					if (pObject) {
-						// This method handles the filtering
-						SelectObject(pObject);
-
-						// Get the now selected object, null pointer if the found object one was rejected
-						pObject = GetSelectedObject();
-					}
-				}
-			}
-		}
+		// Set the used scene container and object
+		SetSceneContainerAndObject();
 	}
 }
 
@@ -234,6 +191,59 @@ void DockWidgetSceneGraph::SelectObject(Object *pObject)
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Sets the used scene container and object
+*/
+void DockWidgetSceneGraph::SetSceneContainerAndObject()
+{
+	// Get a list of dock widgets registered within the same dock widget manager this dock widget is in
+	const Array<DockWidget*> &lstDockWidgets = GetFellowDockWidgets();
+
+	// Ask the RTTI dock widget fellows whether or not someone knows which is the currently used scene container
+	for (uint32 i=0; i<lstDockWidgets.GetNumOfElements() && !m_pSceneContainer; i++) {
+		// Get the dock widget, and ignore our own ego
+		DockWidget *pDockWidget = lstDockWidgets[i];
+		if (pDockWidget != this) {
+			// Get the typed dynamic parameters
+			Params<SceneContainer*> cParams;
+
+			// Call the RTTI method
+			pDockWidget->CallMethod("GetSceneContainer", cParams);
+
+			// Get the result
+			if (cParams.Return)
+				SetSceneContainer(cParams.Return);
+		}
+	}
+
+	{ // Ask the RTTI dock widget fellows whether or not someone knows which is the currently selected scene node or scene node modifier
+		// Get a list of dock widgets registered within the same dock widget manager this dock widget is in
+		Object *pObject = nullptr;
+		for (uint32 i=0; i<lstDockWidgets.GetNumOfElements() && !pObject; i++) {
+			// Get the dock widget, and ignore our own ego
+			DockWidget *pDockWidget = lstDockWidgets[i];
+			if (pDockWidget != this) {
+				// Get the typed dynamic parameters
+				Params<Object*> cParams;
+
+				// Call the RTTI method
+				pDockWidget->CallMethod("GetSelectedObject", cParams);
+
+				// Get the result
+				pObject = cParams.Return;
+				if (pObject) {
+					// This method handles the filtering
+					SelectObject(pObject);
+
+					// Get the now selected object, null pointer if the found object one was rejected
+					pObject = GetSelectedObject();
+				}
+			}
+		}
+	}
+}
+
 /**
 *  @brief
 *    Called when the scene container assigned with this dock widget was destroyed

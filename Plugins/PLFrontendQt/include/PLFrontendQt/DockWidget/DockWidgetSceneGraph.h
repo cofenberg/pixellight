@@ -158,6 +158,12 @@ class DockWidgetSceneGraph : public DockWidgetScene {
 	private:
 		/**
 		*  @brief
+		*    Sets the used scene container and object
+		*/
+		void SetSceneContainerAndObject();
+
+		/**
+		*  @brief
 		*    Called when the scene container assigned with this dock widget was destroyed
 		*/
 		void OnDestroy();
