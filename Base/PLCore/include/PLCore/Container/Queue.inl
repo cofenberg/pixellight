@@ -22,6 +22,12 @@
 
 
 //[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include "PLCore/Container/QueueIterator.h"
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
@@ -87,14 +93,14 @@ bool Queue<ValueType>::Push(const ValueType &Element)
 	// Is this the first element?
 	if (m_pTop) {
 		// Push onto queue
-		m_pTop->pNext = pElement;
-		m_pTop		  = pElement;
-		m_pTop->pNext = nullptr;
+		m_pTop->pNextElement = pElement;
+		m_pTop				 = pElement;
+		m_pTop->pNextElement = nullptr;
 	} else {
 		// This is the first element
-		m_pBottom	  = pElement;
-		m_pTop		  = pElement;
-		m_pTop->pNext = nullptr;
+		m_pBottom			 = pElement;
+		m_pTop				 = pElement;
+		m_pTop->pNextElement = nullptr;
 	}
 	m_nNumOfElements++;
 
@@ -119,7 +125,7 @@ bool Queue<ValueType>::Pop(ValueType *pElement)
 
 	// Pop element
 	QueueElement *pBottomElement = m_pBottom;
-	m_pBottom = m_pBottom->pNext;
+	m_pBottom = m_pBottom->pNextElement;
 	if (!m_pBottom)
 		m_pTop = nullptr;
 	delete pBottomElement;
@@ -175,7 +181,7 @@ Queue<ValueType> &Queue<ValueType>::operator =(const Queue<ValueType> &cSource)
 	QueueElement *pElement = cSource.m_pBottom;
 	while (pElement) {
 		Push(pElement->Data);
-		pElement = pElement->pNext;
+		pElement = pElement->pNextElement;
 	}
 
 	// Return this instance
@@ -192,6 +198,38 @@ void Queue<ValueType>::Clear()
 	// Remove all elements
 	while (m_pBottom)
 		Pop();
+}
+
+
+//[-------------------------------------------------------]
+//[ Public Iterable functions                             ]
+//[-------------------------------------------------------]
+template <class ValueType>
+Iterator<ValueType> Queue<ValueType>::GetIterator(uint32 nIndex) const
+{
+	Iterator<ValueType> cIterator(*(new QueueIterator<ValueType>(*this, nIndex)));
+	return cIterator;
+}
+
+template <class ValueType>
+ConstIterator<ValueType> Queue<ValueType>::GetConstIterator(uint32 nIndex) const
+{
+	ConstIterator<ValueType> cIterator(*(new QueueIterator<ValueType>(*this, nIndex)));
+	return cIterator;
+}
+
+template <class ValueType>
+Iterator<ValueType> Queue<ValueType>::GetEndIterator() const
+{
+	Iterator<ValueType> cIterator(*(new QueueIterator<ValueType>(*this)));
+	return cIterator;
+}
+
+template <class ValueType>
+ConstIterator<ValueType> Queue<ValueType>::GetConstEndIterator() const
+{
+	ConstIterator<ValueType> cIterator(*(new QueueIterator<ValueType>(*this)));
+	return cIterator;
 }
 
 

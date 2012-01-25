@@ -414,6 +414,8 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
     </ClCompile>
     <ClCompile Include="src\System\SemaphoreWindows.cpp" />
     <ClCompile Include="src\System\System.cpp" />
+    <ClInclude Include="include\PLCore\Container\QueueIterator.h" />
+    <ClInclude Include="include\PLCore\Container\StackIterator.h" />
     <ClInclude Include="include\PLCore\File\FileAndroid.h" />
     <ClInclude Include="include\PLCore\File\FileSearchAndroid.h" />
     <ClInclude Include="include\PLCore\System\CriticalSection.h" />
@@ -803,6 +805,7 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
     <None Include="include\PLCore\Container\Pool.inl" />
     <None Include="include\PLCore\Container\PoolIterator.inl" />
     <None Include="include\PLCore\Container\Queue.inl" />
+    <None Include="include\PLCore\Container\QueueIterator.inl" />
     <None Include="include\PLCore\Container\Resource.inl" />
     <None Include="include\PLCore\Container\ResourceHandler.inl" />
     <None Include="include\PLCore\Container\ResourceManager.inl" />
@@ -812,6 +815,7 @@ copy build\release_x64\PLCore.lib ..\..\Bin\Lib\x64\
     <None Include="include\PLCore\Container\SimpleMapIterator.inl" />
     <None Include="include\PLCore\Container\SimpleMapKeyIterator.inl" />
     <None Include="include\PLCore\Container\Stack.inl" />
+    <None Include="include\PLCore\Container\StackIterator.inl" />
     <None Include="include\PLCore\Core\MemoryManager.inl" />
     <None Include="include\PLCore\Core\MemoryManagerOnlyOncePerProject.inl" />
     <None Include="include\PLCore\Core\RefCount.inl" />

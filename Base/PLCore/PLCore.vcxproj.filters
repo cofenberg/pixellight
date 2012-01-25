@@ -1350,6 +1350,12 @@
     <ClInclude Include="include\PLCore\System\CriticalSection.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="include\PLCore\Container\QueueIterator.h">
+      <Filter>Container</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCore\Container\StackIterator.h">
+      <Filter>Container</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\PLCore\Base\Type\TypeBool.inl">
@@ -1770,6 +1776,12 @@
     </None>
     <None Include="include\PLCore\Core\MemoryManagerOnlyOncePerProject.inl">
       <Filter>Core</Filter>
+    </None>
+    <None Include="include\PLCore\Container\QueueIterator.inl">
+      <Filter>Container</Filter>
+    </None>
+    <None Include="include\PLCore\Container\StackIterator.inl">
+      <Filter>Container</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -28,13 +28,19 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/PLCore.h"
+#include "PLCore/Container/Iterable.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+template <class ValueType> class StackIterator;
 
 
 //[-------------------------------------------------------]
@@ -62,7 +68,13 @@ namespace PLCore {
 *  @endverbatim
 */
 template <class ValueType>
-class Stack {
+class Stack : public Iterable<ValueType> {
+
+
+	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class StackIterator<ValueType>;
 
 
 	//[-------------------------------------------------------]
@@ -164,6 +176,16 @@ class Stack {
 
 
 	//[-------------------------------------------------------]
+	//[ Public virtual Iterable functions                     ]
+	//[-------------------------------------------------------]
+	public:
+		virtual Iterator<ValueType> GetIterator(uint32 nIndex = 0) const override;
+		virtual ConstIterator<ValueType> GetConstIterator(uint32 nIndex = 0) const override;
+		virtual Iterator<ValueType> GetEndIterator() const override;
+		virtual ConstIterator<ValueType> GetConstEndIterator() const override;
+
+
+	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
@@ -189,8 +211,8 @@ class Stack {
 		*    Internal stack element
 		*/
 		struct StackElement {
-			StackElement *pNext;	/**< Pointer to the next element on the stack, can be a null pointer */
-			ValueType	  Data;		/**< The stored data */
+			StackElement *pNextElement;	/**< Pointer to the next element on the stack, can be a null pointer */
+			ValueType	  Data;			/**< The stored data */
 		};
 
 

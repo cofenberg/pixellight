@@ -70,13 +70,9 @@ DockWidgetLog::DockWidgetLog(QMainWindow *pQMainWindow, DockWidgetManager *pDock
 		pQDockWidget->setWidget(m_pQPlainTextEdit);
 
 		{ // Append the last log messages
-			// [TODO] Don't copy the queue - add queue iterator instead
-			String sEntry;
-			Queue<String> qLastMessages = pLog->GetLastMessages();
-			while (qLastMessages.GetNumOfElements()) {
-				qLastMessages.Pop(&sEntry);
-				m_pQPlainTextEdit->appendPlainText(QtStringAdapter::PLToQt(sEntry));
-			}
+			Iterator<String> cIterator = pLog->GetLastMessages().GetIterator();
+			while (cIterator.HasNext())
+				m_pQPlainTextEdit->appendPlainText(QtStringAdapter::PLToQt(cIterator.Next()));
 		}
 
 		// Set window title

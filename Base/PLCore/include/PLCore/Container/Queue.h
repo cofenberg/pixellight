@@ -28,13 +28,19 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCore/PLCore.h"
+#include "PLCore/Container/Iterable.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
+
+
+//[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+template <class ValueType> class QueueIterator;
 
 
 //[-------------------------------------------------------]
@@ -62,7 +68,13 @@ namespace PLCore {
 *  @endverbatim
 */
 template <class ValueType>
-class Queue {
+class Queue : public Iterable<ValueType> {
+
+
+	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class QueueIterator<ValueType>;
 
 
 	//[-------------------------------------------------------]
@@ -164,6 +176,16 @@ class Queue {
 
 
 	//[-------------------------------------------------------]
+	//[ Public virtual Iterable functions                     ]
+	//[-------------------------------------------------------]
+	public:
+		virtual Iterator<ValueType> GetIterator(uint32 nIndex = 0) const override;
+		virtual ConstIterator<ValueType> GetConstIterator(uint32 nIndex = 0) const override;
+		virtual Iterator<ValueType> GetEndIterator() const override;
+		virtual ConstIterator<ValueType> GetConstEndIterator() const override;
+
+
+	//[-------------------------------------------------------]
 	//[ Private structures                                    ]
 	//[-------------------------------------------------------]
 	private:
@@ -172,8 +194,8 @@ class Queue {
 		*    Internal queue element
 		*/
 		struct QueueElement {
-			QueueElement *pNext;	/**< Pointer to the next element on the queue, can be a null pointer */
-			ValueType	  Data;		/**< The stored data */
+			QueueElement *pNextElement;	/**< Pointer to the next element on the queue, can be a null pointer */
+			ValueType	  Data;			/**< The stored data */
 		};
 
 

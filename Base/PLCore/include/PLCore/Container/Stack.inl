@@ -22,6 +22,12 @@
 
 
 //[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include "PLCore/Container/StackIterator.h"
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLCore {
@@ -89,7 +95,7 @@ bool Stack<ValueType>::Push(const ValueType &Element)
 		m_pBottom = pElement;
 
 	// Push onto stack
-	pElement->pNext = m_pTop;
+	pElement->pNextElement = m_pTop;
 	m_pTop = pElement;
 	m_nNumOfElements++;
 
@@ -114,7 +120,7 @@ bool Stack<ValueType>::Pop(ValueType *pElement)
 
 	// Pop element
 	StackElement *pTopElement = m_pTop;
-	m_pTop = m_pTop->pNext;
+	m_pTop = m_pTop->pNextElement;
 	if (!m_pTop)
 		m_pBottom = nullptr;
 	delete pTopElement;
@@ -170,7 +176,7 @@ Stack<ValueType> &Stack<ValueType>::operator =(const Stack<ValueType> &cSource)
 	StackElement *pElement = cSource.m_pTop;
 	while (pElement) {
 		PushBack(pElement->Data);
-		pElement = pElement->pNext;
+		pElement = pElement->pNextElement;
 	}
 
 	// Return this instance
@@ -201,8 +207,8 @@ bool Stack<ValueType>::PushBack(const ValueType &Element)
 		// No, stack isn't empty
 		StackElement *pElement = new StackElement;
 		pElement->Data = Element;
-		pElement->pNext = nullptr;
-		m_pBottom->pNext = pElement;
+		pElement->pNextElement = nullptr;
+		m_pBottom->pNextElement = pElement;
 		m_pBottom = pElement;
 		m_nNumOfElements++;
 
@@ -212,6 +218,38 @@ bool Stack<ValueType>::PushBack(const ValueType &Element)
 		// Yes stack was empty, so pushback == push
 		return Push(Element);
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Public Iterable functions                             ]
+//[-------------------------------------------------------]
+template <class ValueType>
+Iterator<ValueType> Stack<ValueType>::GetIterator(uint32 nIndex) const
+{
+	Iterator<ValueType> cIterator(*(new StackIterator<ValueType>(*this, nIndex)));
+	return cIterator;
+}
+
+template <class ValueType>
+ConstIterator<ValueType> Stack<ValueType>::GetConstIterator(uint32 nIndex) const
+{
+	ConstIterator<ValueType> cIterator(*(new StackIterator<ValueType>(*this, nIndex)));
+	return cIterator;
+}
+
+template <class ValueType>
+Iterator<ValueType> Stack<ValueType>::GetEndIterator() const
+{
+	Iterator<ValueType> cIterator(*(new StackIterator<ValueType>(*this)));
+	return cIterator;
+}
+
+template <class ValueType>
+ConstIterator<ValueType> Stack<ValueType>::GetConstEndIterator() const
+{
+	ConstIterator<ValueType> cIterator(*(new StackIterator<ValueType>(*this)));
+	return cIterator;
 }
 
 
