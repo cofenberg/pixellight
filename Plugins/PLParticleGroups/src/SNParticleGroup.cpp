@@ -767,9 +767,6 @@ void SNParticleGroup::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNo
 		// Check if the particle group material is transparent or not
 		PLRenderer::Material *pMaterial = m_cMaterial.GetResource();
 		if (pMaterial && pMaterial->GetBlend()) {
-			// Call base implementation
-			SceneNode::DrawTransparent(cRenderer, pVisNode);
-
 			// Are the particles within the local scene node space?
 			if (!(GetFlags() & SceneNodeSpaceParticles)) {
 				// Each particle is in 'world' space
@@ -787,6 +784,9 @@ void SNParticleGroup::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNo
 
 			// Draw the particle shapes
 			DrawShapes(cRenderer);
+
+			// Call base implementation
+			SceneNode::DrawTransparent(cRenderer, pVisNode);
 		}
 	}
 }

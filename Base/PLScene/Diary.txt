@@ -1,3 +1,9 @@
+>> 25.01.2012
+[CO]
+- Scene nodes overwriting the "DrawTransparent()"-method: For transparent stuff it's best to first let the derived class draw before calling the base implementation
+
+
+
 >> 20.01.2012
 [CO]
 - Bugfix: The poor "VisPortal" had no parent, this explains why the portal debug visualization was broken

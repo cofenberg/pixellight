@@ -121,6 +121,9 @@ void SNSystem::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 		cRenderer.GetRendererContext().GetEffectManager().Use();
 		m_pParticleSystem->render();
 	}
+
+	// Call base implementation
+	SceneNode::DrawTransparent(cRenderer, pVisNode);
 }
 
 

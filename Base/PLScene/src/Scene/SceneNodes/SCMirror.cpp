@@ -286,9 +286,6 @@ void SCMirror::DrawSolid(Renderer &cRenderer, const VisNode *pVisNode)
 
 void SCMirror::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 {
-	// Call base implementation
-	SCRenderToTexture::DrawTransparent(cRenderer, pVisNode);
-
 	// Draw the mirror
 	if (m_pMeshHandler) {
 		// Set the dynamic mirror texture
@@ -304,6 +301,9 @@ void SCMirror::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 		// Draw
 		m_pMeshHandler->Draw(true);
 	}
+
+	// Call base implementation
+	SCRenderToTexture::DrawTransparent(cRenderer, pVisNode);
 }
 
 

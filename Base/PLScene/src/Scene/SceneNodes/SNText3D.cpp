@@ -166,9 +166,6 @@ const MaterialHandler &SNText3D::GetBackgroundMaterialHandler()
 //[-------------------------------------------------------]
 void SNText3D::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 {
-	// Call base implementation
-	SNText::DrawTransparent(cRenderer, pVisNode);
-
 	// Is there any text to draw?
 	if (GetText().GetLength() && pVisNode) {
 		const PLRenderer::Font *pDefaultFont = cRenderer.GetFontManager().GetDefaultFontTexture();
@@ -227,6 +224,9 @@ void SNText3D::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 			pFont->Draw(GetText(), Color.Get(), pVisNode->GetWorldViewProjectionMatrix(), Vector2(fScale, fScale), Vector2::Zero, nFlags);
 		}
 	}
+
+	// Call base implementation
+	SNText::DrawTransparent(cRenderer, pVisNode);
 }
 
 

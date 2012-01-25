@@ -106,9 +106,6 @@ void SNPoint::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 {
 	// Perform depth test?
 	if (GetFlags() & NoDepthTest) {
-		// Call base implementation
-		SceneNode::DrawTransparent(cRenderer, pVisNode);
-
 		// Draw the point
 		cRenderer.GetRendererContext().GetEffectManager().Use();
 		cRenderer.SetRenderState(RenderState::ZEnable,      false);
@@ -130,6 +127,9 @@ void SNPoint::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 			// Draw the point
 			cDrawHelpers.DrawPoint(Color.Get(), Vector3::Zero, pVisNode->GetWorldViewProjectionMatrix(), Size);
 		}
+
+		// Call base implementation
+		SceneNode::DrawTransparent(cRenderer, pVisNode);
 	}
 }
 

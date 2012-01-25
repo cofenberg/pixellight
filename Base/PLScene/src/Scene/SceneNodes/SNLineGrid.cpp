@@ -161,12 +161,12 @@ void SNLineGrid::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 {
 	// Perform depth test?
 	if (GetFlags() & NoDepthTest) {
-		// Call base implementation
-		SceneNode::DrawTransparent(cRenderer, pVisNode);
-
 		// Draw the grid
 		if (pVisNode)
 			DrawGrid(cRenderer, *pVisNode);
+
+		// Call base implementation
+		SceneNode::DrawTransparent(cRenderer, pVisNode);
 	}
 }
 
