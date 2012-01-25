@@ -254,8 +254,13 @@ bool ApplicationQt::LoadResource(const String &sFilename, const String &sType)
 	UpdateBackfacesAndSilhouettes();
 
 	// Enable the Qt main window when loading is done
-	if (m_pGui)
+	if (m_pGui) {
 		m_pGui->SetEnabled(true);
+
+		// Usability: In case of an error open the log RTTI dock widget at once so we can see what when wrong
+		if (!bResult)
+			m_pGui->ShowDockWidget("PLFrontendQt::DockWidgetLog");
+	}
 
 	// Done
 	return bResult;

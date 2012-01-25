@@ -294,6 +294,9 @@ bool Application::LoadResource(const String &sFilename, const String &sType)
 		// Set the state text, show the user a native filename within the GUI
 		SetStateText(bResult ? Url(sFilename).GetNativePath() : ("Failed to load \"" + Url(sFilename).GetNativePath() + "\" (see log for details)"));
 	} else {
+		// Nothing to do = all went fine
+		bResult = true;
+
 		// Set the state text
 		SetStateText("Nothing loaded");
 	}

@@ -48,6 +48,7 @@ namespace PLScene {
 	class SceneQuery;
 }
 namespace PLFrontendQt {
+	class DockWidget;
 	class FrontendMainWindow;
 }
 class GuiPicking;
@@ -141,6 +142,23 @@ class Gui : public QObject {
 		*    The chosen option or empty string on abort
 		*/
 		PLCore::String InputDialog(const PLCore::String &sTitle, const PLCore::String &sText, const PLCore::Array<PLCore::String> &lstOptions) const;
+
+		/**
+		*  @brief
+		*    Shows a dock widget
+		*
+		*  @param[in] sClassName
+		*    Class name of the PixelLight RTTI class encapsulating a Qt dock widget (must be derived from "PLFrontendQt::DockWidget")
+		*
+		*  @return
+		*    The shown dock widget, can be a null pointer (you don't need to care about destroying the dock widget instance)
+		*
+		*  @note
+		*    - If there's already a shown dock widget of the given class name, it will get the focus
+		*    - If there's already a dock widget of the given class name, it will be shown
+		*    - If there's currently no dock widget of the given class name, it will be instanced and shown
+		*/
+		PLFrontendQt::DockWidget *ShowDockWidget(const PLCore::String &sClassName);
 
 		/**
 		*  @brief

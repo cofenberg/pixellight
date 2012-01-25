@@ -230,6 +230,23 @@ String Gui::InputDialog(const String &sTitle, const String &sText, const Array<S
 
 /**
 *  @brief
+*    Shows a dock widget
+*/
+DockWidget *Gui::ShowDockWidget(const String &sClassName)
+{
+	// Get the Qt main window
+	FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
+	if (pFrontendMainWindow) {
+		// Show the requested dock widget
+		return pFrontendMainWindow->GetDockWidgetManager().ShowDockWidget(sClassName);
+	}
+
+	// Error!
+	return nullptr;
+}
+
+/**
+*  @brief
 *    Updates the GUI
 */
 void Gui::Update()
@@ -634,15 +651,8 @@ void Gui::QtSlotTriggeredWindowHideAll()
 
 void Gui::QtSlotSelectedWindow(QAction *pQAction)
 {
-	// Get the Qt main window
-	FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
-	if (pFrontendMainWindow) {
-		// Get the RTTI dock widget class name
-		const String sClassName = QtStringAdapter::QtToPL(pQAction->data().toString());
-
-		// Show the requested dock widget
-		pFrontendMainWindow->GetDockWidgetManager().ShowDockWidget(sClassName);
-	}
+	// Show the requested dock widget
+	ShowDockWidget(QtStringAdapter::QtToPL(pQAction->data().toString()));
 }
 
 void Gui::QtSlotAboutToShowMenuTools()

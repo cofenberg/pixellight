@@ -1,3 +1,10 @@
+>> 25.01.2012
+[CO]
+PLViewerQt:
+- Usability: In case of an error open the log RTTI dock widget at once so we can see what when wrong
+
+
+
 >> 24.01.2012
 [CO]
 - The color gradient background is now only activated within PLViewerQt, PLViewer should be as simple and generic as possible while PLViewerQt is primarly

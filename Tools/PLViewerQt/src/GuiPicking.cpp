@@ -226,11 +226,8 @@ void GuiPicking::SelectObject(Object *pObject)
 	}
 
 	// Usability: Show the "PLFrontendQt::DockWidgetObject" dock widget so we can view & edit RTTI attributes at once
-	if (m_pSceneNode) {
-		PLFrontendQt::DockWidgetManager *pDockWidgetManager = GetDockWidgetManager();
-		if (pDockWidgetManager)
-			pDockWidgetManager->ShowDockWidget( "PLFrontendQt::DockWidgetObject");
-	}
+	if (m_pSceneNode)
+		m_pGui->ShowDockWidget("PLFrontendQt::DockWidgetObject");
 }
 
 
