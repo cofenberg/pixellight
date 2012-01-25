@@ -177,10 +177,15 @@ LoadableType::LoadableType(const String &sName, const Class &cClass) :
 LoadableType::~LoadableType()
 {
 	// Destroy all loaders managed by this loadable type
-	for (uint32 i=0; m_lstLoaders.GetNumOfElements() && i<m_lstLoaders.GetNumOfElements(); i++) {
+	const uint32 nNumOfElements = m_lstLoaders.GetNumOfElements();
+	for (uint32 i=0; m_lstLoaders.GetNumOfElements() && i<nNumOfElements; i++) {
 		// Remove the first loader, it's removed from the list automatically
 		RemoveLoader(*m_lstLoaders[0]);
 	}
+
+	// Remove this type from the loadable manager
+	LoadableManager::GetInstance()->m_lstTypes.Remove(this);
+	LoadableManager::GetInstance()->m_mapTypes.Remove(m_sName);
 }
 
 /**

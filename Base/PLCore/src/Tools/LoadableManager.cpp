@@ -420,10 +420,12 @@ String LoadableManager::LoadStringFromFile(const String &sFilename, String::EFor
 *    Constructor
 */
 LoadableManager::LoadableManager() :
-	SlotClassLoaded(&LoadableManager::OnClassLoaded, this)
+	SlotClassLoaded(&LoadableManager::OnClassLoaded, this),
+	SlotClassUnloaded(&LoadableManager::OnClassUnloaded, this)
 {
 	// The loadable manager MUST be informed if new classes are registered in order to register new loadable types!
 	ClassManager::GetInstance()->EventClassLoaded.Connect(SlotClassLoaded);
+	ClassManager::GetInstance()->EventClassUnloaded.Connect(SlotClassUnloaded);
 
 	// Register all loaders
 	List<const Class*> lstClasses;
@@ -439,9 +441,12 @@ LoadableManager::LoadableManager() :
 */
 LoadableManager::~LoadableManager()
 {
-	// Destroy all types
-	for (uint32 i=0; i<m_lstTypes.GetNumOfElements(); i++)
-		delete m_lstTypes[i];
+	// Destroy all types, usually when we're in here there should only be types and loaders left which are defined within PLCore itself
+	const uint32 nNumOfElements = m_lstTypes.GetNumOfElements();
+	for (uint32 i=0; m_lstTypes.GetNumOfElements() && i<nNumOfElements; i++) {
+		// Remove the first type, it's removed from the list automatically
+		delete m_lstTypes[0];
+	}
 }
 
 
@@ -467,6 +472,46 @@ void LoadableManager::OnClassLoaded(const Class *pClass)
 	// Just put the new class on the queue - because we can't assume that this class is or can be initialized
 	// already, we can't even expect "IsDerivedFrom" to work, so, just REALLY note this class in here!
 	m_lstNewClasses.Add(pClass);
+}
+
+/**
+*  @brief
+*    Unregister a class
+*/
+void LoadableManager::OnClassUnloaded(const Class *pClass)
+{
+	// Destroy loadable type instance if required
+	for (uint32 nType=0; nType<m_lstTypes.GetNumOfElements(); nType++) {
+		// Get the current loadable type instance
+		LoadableType *pLoadableType = m_lstTypes[nType];
+
+		// Is this an instance of the unloaded class?
+		if (&pLoadableType->GetClass() == pClass) {
+			// Destroy instance
+			m_lstTypes.RemoveAtIndex(nType);
+			delete pLoadableType;
+
+			// Get us out of here (there's just one instance per loadable type or loader class)
+			nType = m_lstTypes.GetNumOfElements();
+		} else {
+			// Destroy loader instance if required
+			Array<Loader*> &lstLoaders = pLoadableType->m_lstLoaders;
+			for (uint32 nLoader=0; nLoader<lstLoaders.GetNumOfElements(); nLoader++) {
+				// Get the current loader instance
+				Loader *pLoader = lstLoaders[nLoader];
+
+				// Is this an instance of the unloaded class?
+				if (&pLoader->GetClass() == pClass) {
+					// Destroy instance
+					pLoadableType->RemoveLoader(*pLoader);
+
+					// Get us out of here (there's just one instance per loadable type or loader class)
+					nLoader = lstLoaders.GetNumOfElements();
+					nType = m_lstTypes.GetNumOfElements();
+				}
+			}
+		}
+	}
 }
 
 /**

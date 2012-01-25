@@ -9,6 +9,7 @@
 - "Queue" and "Stack" are now iterable as well
 - "ScriptManager" is now also using "ClassManager::EventClassUnloaded"
 - Bugfix: "LoadableType" was not destroying it's loaders
+- "LoadableManager" is now also using "ClassManager::EventClassUnloaded"
 PLFrontendQt:
 - Added log dock widget
 - Added scene graph context menu

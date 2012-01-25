@@ -484,6 +484,15 @@ class LoadableManager : public Singleton<LoadableManager> {
 
 		/**
 		*  @brief
+		*    Unregister a class
+		*
+		*  @param[in] pClass
+		*    Class to unregister, must be valid!
+		*/
+		void OnClassUnloaded(const Class *pClass);
+
+		/**
+		*  @brief
 		*    Registers queued classes
 		*/
 		PLCORE_API void RegisterClasses();
@@ -494,6 +503,7 @@ class LoadableManager : public Singleton<LoadableManager> {
 	//[-------------------------------------------------------]
 	private:
 		EventHandler<const Class*> SlotClassLoaded;
+		EventHandler<const Class*> SlotClassUnloaded;
 
 
 	//[-------------------------------------------------------]
