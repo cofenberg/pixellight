@@ -127,13 +127,13 @@ void SNBitmap3D::DrawShape(Renderer &cRenderer, const VisNode &cVisNode)
 //[-------------------------------------------------------]
 void SNBitmap3D::DrawSolid(Renderer &cRenderer, const VisNode *pVisNode)
 {
+	// Call base implementation
+	SNBitmap::DrawSolid(cRenderer, pVisNode);
+
 	if (pVisNode) {
 		// Check if the bitmap material is transparent or not
 		PLRenderer::Material *pMaterial = GetMaterialHandler().GetResource();
 		if (pMaterial && !pMaterial->GetBlend()) {
-			// Call base implementation
-			SNBitmap::DrawSolid(cRenderer, pVisNode);
-
 			// Draw the bitmap shape
 			DrawShape(cRenderer, *pVisNode);
 		}
@@ -148,11 +148,11 @@ void SNBitmap3D::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 		if (pMaterial && pMaterial->GetBlend()) {
 			// Draw the bitmap shape
 			DrawShape(cRenderer, *pVisNode);
-
-			// Call base implementation
-			SNBitmap::DrawTransparent(cRenderer, pVisNode);
 		}
 	}
+
+	// Call base implementation
+	SNBitmap::DrawTransparent(cRenderer, pVisNode);
 }
 
 

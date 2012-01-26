@@ -146,11 +146,11 @@ void SNLineGrid::DrawGrid(Renderer &cRenderer, const VisNode &cVisNode)
 //[-------------------------------------------------------]
 void SNLineGrid::DrawSolid(Renderer &cRenderer, const VisNode *pVisNode)
 {
+	// Call base implementation
+	SceneNode::DrawSolid(cRenderer, pVisNode);
+
 	// Perform depth test?
 	if (!(GetFlags() & NoDepthTest)) {
-		// Call base implementation
-		SceneNode::DrawSolid(cRenderer, pVisNode);
-
 		// Draw the grid
 		if (pVisNode)
 			DrawGrid(cRenderer, *pVisNode);
@@ -164,10 +164,10 @@ void SNLineGrid::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 		// Draw the grid
 		if (pVisNode)
 			DrawGrid(cRenderer, *pVisNode);
-
-		// Call base implementation
-		SceneNode::DrawTransparent(cRenderer, pVisNode);
 	}
+
+	// Call base implementation
+	SceneNode::DrawTransparent(cRenderer, pVisNode);
 }
 
 

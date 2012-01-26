@@ -115,11 +115,11 @@ SNLineBox::~SNLineBox()
 //[-------------------------------------------------------]
 void SNLineBox::DrawSolid(Renderer &cRenderer, const VisNode *pVisNode)
 {
+	// Call base implementation
+	SceneNode::DrawSolid(cRenderer, pVisNode);
+
 	// Transparent?
 	if (Color.Get().a == 1.0f) {
-		// Call base implementation
-		SceneNode::DrawSolid(cRenderer, pVisNode);
-
 		// Setup render states
 		cRenderer.GetRendererContext().GetEffectManager().Use();
 		cRenderer.SetRenderState(RenderState::ZEnable, !(GetFlags() & NoDepthTest));
@@ -167,10 +167,10 @@ void SNLineBox::DrawTransparent(Renderer &cRenderer, const VisNode *pVisNode)
 			// Draw the line box
 			cDrawHelpers.DrawBox(Color.Get(), m_vStartPosition, m_vEndPosition, pVisNode->GetWorldViewProjectionMatrix(), Width);
 		}
-
-		// Call base implementation
-		SceneNode::DrawTransparent(cRenderer, pVisNode);
 	}
+
+	// Call base implementation
+	SceneNode::DrawTransparent(cRenderer, pVisNode);
 }
 
 
