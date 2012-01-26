@@ -186,7 +186,7 @@ class Renderer : public PLCore::Object {
 		*    Returns a shader language instance
 		*
 		*  @param[in] sShaderLanguage
-		*    The name of the shader language the geometry shader is using (for example "GLSL" or "Cg"), if empty string,
+		*    The name of the shader language (for example "GLSL" or "Cg"), if empty string,
 		*    the default renderer shader language is used (see GetDefaultShaderLanguage())
 		*
 		*  @return

@@ -38,26 +38,23 @@
 namespace PLCore {
 	template <class AType> class Array;
 }
+namespace PLMath {
+	class Ray;
+	class Line;
+	class Plane;
+	class Sphere;
+	class Vector3;
+	class Vector4;
+	class PlaneSet;
+	class BoundingBox;
+	class AABoundingBox;
+}
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLMath {
-
-
-//[-------------------------------------------------------]
-//[ Predefinitions                                         ]
-//[-------------------------------------------------------]
-class Ray;
-class Line;
-class Plane;
-class Sphere;
-class Vector3;
-class Vector4;
-class PlaneSet;
-class BoundingBox;
-class AABoundingBox;
 
 
 //[-------------------------------------------------------]
