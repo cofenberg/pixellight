@@ -35,6 +35,7 @@
 #include "PLFrontendQt/DataModels/TreeItemBase.h"
 #include "PLFrontendQt/DataModels/SceneGraphNodeTreeItemBase.h"
 #include "PLFrontendQt/DataModels/SceneGraphTreeModel.h"
+#include "PLFrontendQt/DataModels/Helper.h"
 
 
 //[-------------------------------------------------------]
@@ -96,6 +97,9 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 					return m_nodeName;
 				else if(role == SceneGraphTreeModel::ClassNameRole) {
 					return m_nodeClassName;
+				}
+				else if(role == SceneGraphTreeModel::InternalObjectPointer) {
+					return VPtr<PLScene::SceneNodeModifier>::asQVariant(m_nodeObj);
 				}
 			}
 
@@ -195,6 +199,8 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 				return QtStringAdapter::PLToQt(m_nodeObj->GetName());
 			else if(column == 0 && role == SceneGraphTreeModel::ClassNameRole) {
 				return QtStringAdapter::PLToQt(m_nodeObj->GetClass()->GetClassName());
+			}else if(role == SceneGraphTreeModel::InternalObjectPointer) {
+				return VPtr<PLScene::SceneNode>::asQVariant(m_nodeObj);
 			}
 
 			return QVariant();
@@ -287,6 +293,21 @@ PLScene::SceneNodeModifier *SceneGraphTreeModel::GetSceneNodeModifierFromIndex(c
 SceneGraphNodeTreeItemBase *SceneGraphTreeModel::GetSceneTreeItemFromIndex(const QModelIndex &index)
 {
 	return (!index.isValid() || index.model() != this) ? nullptr : (SceneGraphNodeTreeItemBase*)GetTreeItemFromIndex(index);
+}
+
+QModelIndex SceneGraphTreeModel::GetModelIndexForSceneNode(PLScene::SceneNode *nodeObj)
+{
+	if(nodeObj) {
+		// Search through the complete model data to find the SceneNode
+		// The memory address is used for comparison. Which can be retreived via the ItemDataRole InternalObjectPointerRole 
+		// The search stops when the first item with the same memory address was found.
+		QModelIndexList items = this->match(index(0,0), SceneGraphTreeModel::InternalObjectPointerRole, VPtr<PLScene::SceneNode>::asQVariant(nodeObj), 1, Qt::MatchRecursive);
+		// return the model index if we found something
+		if(items.count() == 1)
+			return items[0];
+	}
+	
+	return QModelIndex();
 }
 
 

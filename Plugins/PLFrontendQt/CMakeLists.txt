@@ -57,6 +57,7 @@ SET(INC_FILES
 	include/PLFrontendQt/QPLRenderWindow.h
 	include/PLFrontendQt/QPLSceneContext.h
 	include/PLFrontendQt/QPLInputHandler.h
+	include/PLFrontendQt/DataModels/Helper.h
 	include/PLFrontendQt/DataModels/TreeItemBase.h
 	include/PLFrontendQt/DataModels/TreeModelBase.h
 	include/PLFrontendQt/DataModels/HeaderTreeItem.h

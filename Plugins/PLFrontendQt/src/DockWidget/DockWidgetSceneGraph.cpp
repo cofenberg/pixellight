@@ -203,7 +203,14 @@ void DockWidgetSceneGraph::SelectObject(Object *pObject)
 	if (pObject && pObject->IsInstanceOf("PLScene::SceneNode"))
 		pSceneNode = static_cast<SceneNode*>(pObject);
 	if (pSceneNode) {
-		// [TODO] Select the given scene node within the scene graph tree view
+		// Get the model index for the given SceneNode
+		QModelIndex cSourceIndex = m_pSceneGraphTreeModel->GetModelIndexForSceneNode(pSceneNode);
+		// We use an QSortAndFilterProxyModel so we have to map the model index of the SceneGraphTreeModel to an index of the proxy model 
+		QModelIndex cFilterModelIndex = m_pSortAndFilterModel->mapFromSource(cSourceIndex);
+		// Select the item as the current one
+		m_pQTreeView->selectionModel()->select(cFilterModelIndex, QItemSelectionModel::SelectCurrent);
+		// Make the selected item visible if needed 
+		m_pQTreeView->scrollTo(cFilterModelIndex);
 	}
 }
 

@@ -1,3 +1,15 @@
+>> 28.01.2012
+[SW]
+PLFrontendQt:
+- SceneGraphTreeModel: Added the Method GetModelIndexForSceneNode to get an QModelIndex from an PLScene::SceneNode instance.
+  To find the item in the model the memory address of the PLScene::SceneNode item is currently used for comparison.
+  If there is a better way to identify a SceneNode exclusivly without relaying on a memory address then inform me
+- Added Helper.h which contains an template class which makes it easier to store an pointer into an QVariant and get the value back.
+  (The template class is a copy from http://blog.bigpixel.ro/2010/04/storing-pointer-in-qvariant/)
+- DockWidgetSceneGraph: Added the missing part of the SelectObject implementation
+
+
+
 >> 25.01.2012
 [CO]
 - Log enhancements
