@@ -336,6 +336,9 @@
     <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetLog.h">
       <Filter>DockWidget</Filter>
     </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DataModels\Helper.h">
+      <Filter>DataModels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Base\PLCore\Diary.txt" />

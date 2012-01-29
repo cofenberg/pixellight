@@ -98,7 +98,7 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 				else if(role == SceneGraphTreeModel::ClassNameRole) {
 					return m_nodeClassName;
 				}
-				else if(role == SceneGraphTreeModel::InternalObjectPointer) {
+				else if(role == SceneGraphTreeModel::InternalObjectPointerRole) {
 					return VPtr<PLScene::SceneNodeModifier>::asQVariant(m_nodeObj);
 				}
 			}
@@ -199,7 +199,7 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 				return QtStringAdapter::PLToQt(m_nodeObj->GetName());
 			else if(column == 0 && role == SceneGraphTreeModel::ClassNameRole) {
 				return QtStringAdapter::PLToQt(m_nodeObj->GetClass()->GetClassName());
-			}else if(role == SceneGraphTreeModel::InternalObjectPointer) {
+			}else if(role == SceneGraphTreeModel::InternalObjectPointerRole) {
 				return VPtr<PLScene::SceneNode>::asQVariant(m_nodeObj);
 			}
 
