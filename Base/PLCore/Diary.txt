@@ -2,6 +2,7 @@
 [CO]
 PLFrontendQt:
 - "DockWidgetSceneGraph::UpdateTreeView()": Ensure that at least the current selection remains
+- "SceneGraphTreeModel::SceneGraphNodeModifierTreeItem" needs to be informed about the destruction of it's object
 
 
 

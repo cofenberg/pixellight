@@ -86,8 +86,11 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 			m_nodeObj(nodeObj),
 			m_nodeName(nodeObj ? QtStringAdapter::PLToQt(m_nodeObj->GetClass()->GetName()) : "null modifier"),
 			m_nodeClassName(nodeObj ? QtStringAdapter::PLToQt(m_nodeObj->GetClass()->GetClassName()) : "null class"),
-			m_textColor(Qt::cyan)
+			m_textColor(Qt::cyan),
+			EventHandlerOnDestroyed(&SceneGraphNodeModifierTreeItem::OnDestroyed, this)
 		{
+			// Connect event handler
+			m_nodeObj->SignalDestroyed.Connect(EventHandlerOnDestroyed);
 		}
 
 		virtual QVariant data(const int column, const int role) override
@@ -123,10 +126,26 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 
 
 	private:
+		/**
+		*  @brief
+		*    Called when the scene node modifier assigned with this item was destroyed
+		*/
+		void OnDestroyed()
+		{
+			// Argh! Mayday! We lost our scene node modifier!
+			m_nodeObj = nullptr;
+
+			// [TODO] Review this situation when the scene node modifier get's killed, update the tree view. Maybe we don't need
+			// to have an own event handler for each and every tree item and a single one for the whole tree is enough.
+			// (maybe we just need to know that an item is now invalid due to removal, then rebuild the tree?)
+		}
+
+	private:
 		PLScene::SceneNodeModifier	*m_nodeObj;	// Can be a null pointer
 		QString						 m_nodeName;
 		QString						 m_nodeClassName;
 		QBrush						 m_textColor;
+		PLCore::EventHandler<>		 EventHandlerOnDestroyed;
 
 
 };
