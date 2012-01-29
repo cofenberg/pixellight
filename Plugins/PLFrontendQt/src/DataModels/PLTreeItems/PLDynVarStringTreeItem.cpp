@@ -44,6 +44,19 @@ PLDynVarStringTreeItem::PLDynVarStringTreeItem(PLCore::DynVar *dynVar, PLDynVarT
 	m_dynVarType(dynVarType)
 {
 	SetFlags(1, Qt::ItemIsEditable);
+	
+	QString tooltip(tr("<table>"
+							"<tr><td bgcolor=#00ff00 colspan=\"2\">Attribute Information</td></tr>"
+							"<tr><td>Name: </td><td>%1</td></tr>"
+							"<tr><td>Type: </td><td>%2</td></tr>"
+							"<tr><td>Default: </td><td>%3</td></tr>"
+							"<tr><td>Description: </td><td>%4</td></tr>"
+							"</table>").arg(m_varName,
+											QtStringAdapter::PLToQt(dynVar->GetDesc()->GetTypeName()),
+											QtStringAdapter::PLToQt(dynVar->GetDesc()->GetDefault()),
+											QtStringAdapter::PLToQt(dynVar->GetDesc()->GetDescription())));
+	// Add Tooltip info for column 0
+	m_cToolTips.append(tooltip);
 }
 
 QVariant PLDynVarStringTreeItem::data(const int column, const int role)
@@ -51,8 +64,8 @@ QVariant PLDynVarStringTreeItem::data(const int column, const int role)
 	if (column == 1 && role == PLDynVarTreeItemTypes::DynVarItemTypeRole)
 		return m_dynVarType;
 	
-	if (column == 1 && role == Qt::ToolTipRole)
-		return m_typeName;
+	if (column < m_cToolTips.count() && role == Qt::ToolTipRole)
+		return m_cToolTips[column];
 	
 	if (!IsInStandardRole(role))
 		return QVariant();

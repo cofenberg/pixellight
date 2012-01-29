@@ -1,4 +1,11 @@
 >> 29.01.2012
+[SW]
+PLFrontendQt:
+- PLTreeItems: Add Tooltip information about the Attributes for the first column.
+
+
+
+>> 29.01.2012
 [CO]
 PLFrontendQt:
 - "DockWidgetSceneGraph::UpdateTreeView()": Ensure that at least the current selection remains

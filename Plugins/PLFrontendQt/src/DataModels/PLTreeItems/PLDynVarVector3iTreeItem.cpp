@@ -69,7 +69,8 @@ PLDynVarVector3iTreeItem::Vector3iValueBaseTreeItem::Vector3iValueBaseTreeItem(c
 
 QVariant PLDynVarVector3iTreeItem::Vector3iValueBaseTreeItem::data(const int column, const int role)
 {
-	if (!m_parentItem->IsInStandardRole(role))
+	// Don't show tooltip for Vector sub Items in column 0
+	if (!m_parentItem->IsInStandardRole(role) || (role == Qt::ToolTipRole && column == 0))
 		return QVariant();
 
 	if(m_parentItem == nullptr)
