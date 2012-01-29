@@ -198,22 +198,26 @@ Object *DockWidgetSceneGraph::GetSelectedObject() const
 */
 void DockWidgetSceneGraph::SelectObject(Object *pObject)
 {
-	// We only know "PLScene::SceneNode"
-	SceneNode *pSceneNode = nullptr;
-	if (pObject && pObject->IsInstanceOf("PLScene::SceneNode"))
-		pSceneNode = static_cast<SceneNode*>(pObject);
-	if (pSceneNode) {
-		// Get the model index for the given scene node
-		const QModelIndex cSourceIndex = m_pSceneGraphTreeModel->GetModelIndexForSceneNode(pSceneNode);
+	// Is there a scene graph tree model and tree view instance?
+	if (m_pSceneGraphTreeModel && m_pSortAndFilterModel && m_pQTreeView) {
+		// We only know "PLScene::SceneNode"
+		SceneNode *pSceneNode = nullptr;
+		if (pObject && pObject->IsInstanceOf("PLScene::SceneNode"))
+			pSceneNode = static_cast<SceneNode*>(pObject);
+		if (pSceneNode) {
+			// Get the model index for the given scene node
+			const QModelIndex cSourceIndex = m_pSceneGraphTreeModel->GetModelIndexForSceneNode(pSceneNode);
+			if (cSourceIndex.isValid()) {
+				// We use an QSortAndFilterProxyModel so we have to map the model index of the SceneGraphTreeModel to an index of the proxy model
+				const QModelIndex cFilterModelIndex = m_pSortAndFilterModel->mapFromSource(cSourceIndex);
 
-		// We use an QSortAndFilterProxyModel so we have to map the model index of the SceneGraphTreeModel to an index of the proxy model
-		const QModelIndex cFilterModelIndex = m_pSortAndFilterModel->mapFromSource(cSourceIndex);
+				// Select the item as the current one
+				m_pQTreeView->selectionModel()->select(cFilterModelIndex, QItemSelectionModel::SelectCurrent);
 
-		// Select the item as the current one
-		m_pQTreeView->selectionModel()->select(cFilterModelIndex, QItemSelectionModel::SelectCurrent);
-
-		// Make the selected item visible if needed
-		m_pQTreeView->scrollTo(cFilterModelIndex);
+				// Make the selected item visible if needed
+				m_pQTreeView->scrollTo(cFilterModelIndex);
+			}
+		}
 	}
 }
 
