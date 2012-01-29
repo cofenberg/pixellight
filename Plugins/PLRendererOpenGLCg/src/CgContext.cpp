@@ -56,6 +56,16 @@ void CgContext::AddCgContextReference()
 		m_pCgContext = cgCreateContext();
 		cgSetErrorCallback(CgErrorCallback);
 
+		{ // Enumerate the supported Cg profiles and print the information into the log
+			const int nNumSupportedProfiles = cgGetNumSupportedProfiles();
+			PL_LOG(Info, "Supported Cg profiles:")
+			for (int i=0; i<nNumSupportedProfiles; i++) {
+				CGprofile pCGProfile = cgGetSupportedProfile(i);
+				if (cgGLIsProfileSupported(pCGProfile))
+					PL_LOG(Info, String("- ") + cgGetProfileString(pCGProfile))
+			}
+		}
+
 		// [TEST] Disable debug mode for better performance
 //		cgGLSetDebugMode(CG_FALSE);
 
