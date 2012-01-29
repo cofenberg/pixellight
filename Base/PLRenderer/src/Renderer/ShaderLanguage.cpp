@@ -49,14 +49,14 @@ pl_implement_class(ShaderLanguage)
 *  @brief
 *    Creates a vertex shader and sets the shader source code
 */
-VertexShader *ShaderLanguage::CreateVertexShader(const String &sSourceCode, const String &sProfile, const String &sEntry)
+VertexShader *ShaderLanguage::CreateVertexShader(const String &sSourceCode, const String &sProfile, const String &sArguments, const String &sEntry)
 {
 	// Create the vertex shader instance
 	VertexShader *pVertexShader = CreateVertexShader();
 
 	// Set the vertex shader source code
 	if (pVertexShader)
-		pVertexShader->SetSourceCode(sSourceCode, sProfile, sEntry);
+		pVertexShader->SetSourceCode(sSourceCode, sProfile, sArguments, sEntry);
 
 	// Return the created vertex shader instance
 	return pVertexShader;
@@ -66,14 +66,14 @@ VertexShader *ShaderLanguage::CreateVertexShader(const String &sSourceCode, cons
 *  @brief
 *    Creates a geometry shader and sets the shader source code
 */
-GeometryShader *ShaderLanguage::CreateGeometryShader(const String &sSourceCode, GeometryShader::EInputPrimitiveType nInputPrimitiveType, GeometryShader::EOutputPrimitiveType nOutputPrimitiveType, uint32 nNumOfOutputVertices, const String &sProfile, const String &sEntry)
+GeometryShader *ShaderLanguage::CreateGeometryShader(const String &sSourceCode, GeometryShader::EInputPrimitiveType nInputPrimitiveType, GeometryShader::EOutputPrimitiveType nOutputPrimitiveType, uint32 nNumOfOutputVertices, const String &sProfile, const String &sArguments, const String &sEntry)
 {
 	// Create the geometry shader instance
 	GeometryShader *pGeometryShader = CreateGeometryShader();
 
 	// Set the geometry shader source code
 	if (pGeometryShader)
-		pGeometryShader->SetSourceCode(sSourceCode, nInputPrimitiveType, nOutputPrimitiveType, nNumOfOutputVertices, sProfile, sEntry);
+		pGeometryShader->SetSourceCode(sSourceCode, nInputPrimitiveType, nOutputPrimitiveType, nNumOfOutputVertices, sProfile, sArguments, sEntry);
 
 	// Return the created geometry shader instance
 	return pGeometryShader;
@@ -83,14 +83,14 @@ GeometryShader *ShaderLanguage::CreateGeometryShader(const String &sSourceCode, 
 *  @brief
 *    Creates a fragment shader and sets the shader source code
 */
-FragmentShader *ShaderLanguage::CreateFragmentShader(const String &sSourceCode, const String &sProfile, const String &sEntry)
+FragmentShader *ShaderLanguage::CreateFragmentShader(const String &sSourceCode, const String &sProfile, const String &sArguments, const String &sEntry)
 {
 	// Create the fragment shader instance
 	FragmentShader *pFragmentShader = CreateFragmentShader();
 
 	// Set the fragment shader source code
 	if (pFragmentShader)
-		pFragmentShader->SetSourceCode(sSourceCode, sProfile, sEntry);
+		pFragmentShader->SetSourceCode(sSourceCode, sProfile, sArguments, sEntry);
 
 	// Return the created fragment shader instance
 	return pFragmentShader;

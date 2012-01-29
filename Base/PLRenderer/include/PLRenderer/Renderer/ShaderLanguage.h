@@ -77,6 +77,8 @@ class ShaderLanguage : public PLCore::Object {
 		*  @param[in] sProfile
 		*    Shader profile to use, if empty string, a default profile will be used which usually
 		*    tries to use the best available profile that runs on most hardware
+		*  @param[in] sArguments
+		*    Optional shader compiler arguments, e.g. "version=150" when using Cg and a "glslv" profile
 		*  @param[in] sEntry
 		*    Entry point, if empty string, "main" is used as default
 		*
@@ -87,7 +89,7 @@ class ShaderLanguage : public PLCore::Object {
 		*    - Virtual "ShaderLanguage::CreateVertexShader()"-method
 		*    - "Shader::SetSourceCode()"
 		*/
-		PLRENDERER_API VertexShader *CreateVertexShader(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "");
+		PLRENDERER_API VertexShader *CreateVertexShader(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sArguments = "", const PLCore::String &sEntry = "");
 
 		/**
 		*  @brief
@@ -104,6 +106,8 @@ class ShaderLanguage : public PLCore::Object {
 		*  @param[in] sProfile
 		*    Geometry shader profile to use, if empty string, a default profile will be used which usually
 		*    tries to use the best available profile that runs on most hardware
+		*  @param[in] sArguments
+		*    Optional shader compiler arguments, e.g. "version=150" when using Cg and a "glslg" profile
 		*  @param[in] sEntry
 		*    Entry point, if empty string, "main" is used as default
 		*
@@ -114,7 +118,7 @@ class ShaderLanguage : public PLCore::Object {
 		*    - Virtual "ShaderLanguage::CreateGeometryShader()"-method
 		*    - "GeometryShader::SetSourceCode()"
 		*/
-		PLRENDERER_API GeometryShader *CreateGeometryShader(const PLCore::String &sSourceCode, GeometryShader::EInputPrimitiveType nInputPrimitiveType, GeometryShader::EOutputPrimitiveType nOutputPrimitiveType, PLCore::uint32 nNumOfOutputVertices, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "");
+		PLRENDERER_API GeometryShader *CreateGeometryShader(const PLCore::String &sSourceCode, GeometryShader::EInputPrimitiveType nInputPrimitiveType, GeometryShader::EOutputPrimitiveType nOutputPrimitiveType, PLCore::uint32 nNumOfOutputVertices, const PLCore::String &sProfile = "", const PLCore::String &sArguments = "", const PLCore::String &sEntry = "");
 
 		/**
 		*  @brief
@@ -125,6 +129,8 @@ class ShaderLanguage : public PLCore::Object {
 		*  @param[in] sProfile
 		*    Shader profile to use, if empty string, a default profile will be used which usually
 		*    tries to use the best available profile that runs on most hardware
+		*  @param[in] sArguments
+		*    Optional shader compiler arguments, e.g. "version=150" when using Cg and a "glslf" profile
 		*  @param[in] sEntry
 		*    Entry point, if empty string, "main" is used as default
 		*
@@ -135,7 +141,7 @@ class ShaderLanguage : public PLCore::Object {
 		*    - Virtual "ShaderLanguage::CreateFragmentShader()"-method
 		*    - "Shader::SetSourceCode()"
 		*/
-		PLRENDERER_API FragmentShader *CreateFragmentShader(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "");
+		PLRENDERER_API FragmentShader *CreateFragmentShader(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sArguments = "", const PLCore::String &sEntry = "");
 
 		/**
 		*  @brief

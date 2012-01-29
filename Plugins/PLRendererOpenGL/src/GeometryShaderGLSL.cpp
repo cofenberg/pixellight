@@ -94,7 +94,7 @@ uint32 GeometryShaderGLSL::GetNumOfOutputVertices() const
 	return m_nNumOfOutputVertices;
 }
 
-bool GeometryShaderGLSL::SetSourceCode(const String &sSourceCode, EInputPrimitiveType nInputPrimitiveType, EOutputPrimitiveType nOutputPrimitiveType, uint32 nNumOfOutputVertices, const String &sProfile, const String &sEntry)
+bool GeometryShaderGLSL::SetSourceCode(const String &sSourceCode, EInputPrimitiveType nInputPrimitiveType, EOutputPrimitiveType nOutputPrimitiveType, uint32 nNumOfOutputVertices, const String &sProfile, const String &sArguments, const String &sEntry)
 {
 	// Backup the input/output primitive type and the number of output vertices
 	m_nInputPrimitiveType  = nInputPrimitiveType;
@@ -102,6 +102,7 @@ bool GeometryShaderGLSL::SetSourceCode(const String &sSourceCode, EInputPrimitiv
 	m_nNumOfOutputVertices = nNumOfOutputVertices;
 
 	// GLSL doesn't have profiles, so sProfile is just ignored
+	// GLSL doesn't have shader compiler arguments, so sArguments is just ignored
 	// GLSL doesn't have an user defined entry point, so sEntry is just ignored
 	return ShaderToolsGLSL::SetSourceCode(m_nOpenGLGeometryShader, sSourceCode);
 }
@@ -137,15 +138,22 @@ String GeometryShaderGLSL::GetProfile() const
 	return "";
 }
 
+String GeometryShaderGLSL::GetArguments() const
+{
+	// GLSL doesn't have shader compiler arguments
+	return "";
+}
+
 String GeometryShaderGLSL::GetEntry() const
 {
 	// GLSL doesn't have an user defined entry point
 	return "";
 }
 
-bool GeometryShaderGLSL::SetSourceCode(const String &sSourceCode, const String &sProfile, const String &sEntry)
+bool GeometryShaderGLSL::SetSourceCode(const String &sSourceCode, const String &sProfile, const String &sArguments, const String &sEntry)
 {
 	// GLSL doesn't have profiles, so sProfile is just ignored
+	// GLSL doesn't have shader compiler arguments, so sArguments is just ignored
 	// GLSL doesn't have an user defined entry point, so sEntry is just ignored
 	return ShaderToolsGLSL::SetSourceCode(m_nOpenGLGeometryShader, sSourceCode);
 }

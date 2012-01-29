@@ -104,8 +104,9 @@ class VertexShaderGLSL : public PLRenderer::VertexShader {
 		virtual PLCore::String GetShaderLanguage() const override;
 		virtual PLCore::String GetSourceCode() const override;
 		virtual PLCore::String GetProfile() const override;
+		virtual PLCore::String GetArguments() const override;
 		virtual PLCore::String GetEntry() const override;
-		virtual bool SetSourceCode(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "") override;
+		virtual bool SetSourceCode(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sArguments = "", const PLCore::String &sEntry = "") override;
 
 
 };

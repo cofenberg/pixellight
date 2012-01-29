@@ -103,15 +103,22 @@ String VertexShaderGLSL::GetProfile() const
 	return "";
 }
 
+String VertexShaderGLSL::GetArguments() const
+{
+	// GLSL doesn't have shader compiler arguments
+	return "";
+}
+
 String VertexShaderGLSL::GetEntry() const
 {
 	// GLSL doesn't have an user defined entry point
 	return "";
 }
 
-bool VertexShaderGLSL::SetSourceCode(const String &sSourceCode, const String &sProfile, const String &sEntry)
+bool VertexShaderGLSL::SetSourceCode(const String &sSourceCode, const String &sProfile, const String &sArguments, const String &sEntry)
 {
 	// GLSL doesn't have profiles, so sProfile is just ignored
+	// GLSL doesn't have shader compiler arguments, so sArguments is just ignored
 	// GLSL doesn't have an user defined entry point, so sEntry is just ignored
 	return ShaderToolsGLSL::SetSourceCode(m_nOpenGLVertexShader, sSourceCode);
 }

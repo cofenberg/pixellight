@@ -131,6 +131,8 @@ class GeometryShader : public Shader {
 		*  @param[in] sProfile
 		*    Geometry shader profile to use, if empty string, a default profile will be used which usually
 		*    tries to use the best available profile that runs on most hardware
+		*  @param[in] sArguments
+		*    Optional shader compiler arguments, e.g. "version=150" when using Cg and a "glslg" profile
 		*  @param[in] sEntry
 		*    Entry point, if empty string, "main" is used as default
 		*
@@ -147,7 +149,7 @@ class GeometryShader : public Shader {
 		*  @see
 		*   - "Shader::SetSourceCode()" for additional information
 		*/
-		virtual bool SetSourceCode(const PLCore::String &sSourceCode, EInputPrimitiveType nInputPrimitiveType, EOutputPrimitiveType nOutputPrimitiveType, PLCore::uint32 nNumOfOutputVertices, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "") = 0;
+		virtual bool SetSourceCode(const PLCore::String &sSourceCode, EInputPrimitiveType nInputPrimitiveType, EOutputPrimitiveType nOutputPrimitiveType, PLCore::uint32 nNumOfOutputVertices, const PLCore::String &sProfile = "", const PLCore::String &sArguments = "", const PLCore::String &sEntry = "") = 0;
 
 
 	//[-------------------------------------------------------]

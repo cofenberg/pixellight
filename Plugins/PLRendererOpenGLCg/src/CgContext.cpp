@@ -104,7 +104,7 @@ CGcontext CgContext::GetCgContext()
 *  @brief
 *    Creates a Cg program
 */
-CGprogram CgContext::CreateCgProgram(CGprofile pCgProfile, const String &sSourceCode, const String &sEntry, const String &sArguments)
+CGprogram CgContext::CreateCgProgram(CGprofile pCgProfile, const String &sSourceCode, const String &sArguments, const String &sEntry)
 {
 	// Set optimal profile options - this will set implicit compiler arguments chosen based on the the available compiler arguments, GPU, and driver
 	cgGLSetOptimalOptions(pCgProfile);

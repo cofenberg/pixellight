@@ -107,12 +107,17 @@ String VertexShaderCg::GetProfile() const
 	return cgGetProfileString(m_pCgProfile);
 }
 
+String VertexShaderCg::GetArguments() const
+{
+	return m_sArguments;
+}
+
 String VertexShaderCg::GetEntry() const
 {
 	return m_sEntry;
 }
 
-bool VertexShaderCg::SetSourceCode(const String &sSourceCode, const String &sProfile, const String &sEntry)
+bool VertexShaderCg::SetSourceCode(const String &sSourceCode, const String &sProfile, const String &sArguments, const String &sEntry)
 {
 	// Destroy the previous Cg vertex program, if there's one
 	if (m_pCgVertexProgram) {
@@ -132,17 +137,19 @@ bool VertexShaderCg::SetSourceCode(const String &sSourceCode, const String &sPro
 
 	// Create the Cg vertex program
 	if (m_pCgProfile != CG_PROFILE_UNKNOWN)
-		m_pCgVertexProgram = CgContext::CreateCgProgram(m_pCgProfile, sSourceCode, sEntry);
+		m_pCgVertexProgram = CgContext::CreateCgProgram(m_pCgProfile, sSourceCode, sArguments, sEntry);
 
 	// Was the Cg program created successfully?
 	if (m_pCgVertexProgram) {
-		// Backup the user defined entry point
-		m_sEntry = sEntry;
+		// Backup the optional shader compiler arguments and the user defined entry point
+		m_sArguments = sArguments;
+		m_sEntry     = sEntry;
 
 		// Done
 		return true;
 	} else {
 		m_pCgProfile = CG_PROFILE_UNKNOWN;
+		m_sArguments = "";
 		m_sEntry     = "";
 
 		// Error!
@@ -174,7 +181,7 @@ void VertexShaderCg::RestoreDeviceData(uint8 **ppBackup)
 	// Restore data
 	if (*ppBackup) {
 		// The string class takes over the control of the string memory and also deletes it
-		SetSourceCode(String(reinterpret_cast<char*>(*ppBackup), false), GetProfile(), m_sEntry);
+		SetSourceCode(String(reinterpret_cast<char*>(*ppBackup), false), GetProfile(), m_sArguments, m_sEntry);
 	}
 }
 

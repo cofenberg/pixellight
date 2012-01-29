@@ -102,6 +102,7 @@ class VertexShaderCg : public PLRenderer::VertexShader {
 	//[-------------------------------------------------------]
 	private:
 		CGprofile	   m_pCgProfile;		/**< Used Cg profile, can be CG_PROFILE_UNKNOWN */
+		PLCore::String m_sArguments;		/**< Optional shader compiler arguments */
 		PLCore::String m_sEntry;			/**< User defined entry point */
 		CGprogram	   m_pCgVertexProgram;	/**< Cg vertex program, can be a null pointer */
 
@@ -113,8 +114,9 @@ class VertexShaderCg : public PLRenderer::VertexShader {
 		virtual PLCore::String GetShaderLanguage() const override;
 		virtual PLCore::String GetSourceCode() const override;
 		virtual PLCore::String GetProfile() const override;
+		virtual PLCore::String GetArguments() const override;
 		virtual PLCore::String GetEntry() const override;
-		virtual bool SetSourceCode(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "") override;
+		virtual bool SetSourceCode(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sArguments = "", const PLCore::String &sEntry = "") override;
 
 
 	//[-------------------------------------------------------]

@@ -90,10 +90,10 @@ class CgContext : public PLCore::AbstractContext {
 		*    Cg profile the created Cg program should use
 		*  @param[in] sSourceCode
 		*    Shader source code, usually blank ASCII code
+		*  @param[in] sArguments
+		*    Optional shader compiler arguments
 		*  @param[in] sEntry
 		*    Entry point, if empty string, "main" is used as default
-		*  @param[in] sArguments
-		*    Optional arguments
 		*
 		*  @return
 		*    The creates Cg program, a null pointer on error
@@ -101,7 +101,7 @@ class CgContext : public PLCore::AbstractContext {
 		*  @note
 		*    - There must be at least one reference to the Cg context
 		*/
-		static CGprogram CreateCgProgram(CGprofile pCgProfile, const PLCore::String &sSourceCode, const PLCore::String &sEntry, const PLCore::String &sArguments = "");
+		static CGprogram CreateCgProgram(CGprofile pCgProfile, const PLCore::String &sSourceCode, const PLCore::String &sArguments, const PLCore::String &sEntry);
 
 
 	//[-------------------------------------------------------]

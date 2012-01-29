@@ -107,12 +107,17 @@ String FragmentShaderCg::GetProfile() const
 	return cgGetProfileString(m_pCgProfile);
 }
 
+String FragmentShaderCg::GetArguments() const
+{
+	return m_sArguments;
+}
+
 String FragmentShaderCg::GetEntry() const
 {
 	return m_sEntry;
 }
 
-bool FragmentShaderCg::SetSourceCode(const String &sSourceCode, const String &sProfile, const String &sEntry)
+bool FragmentShaderCg::SetSourceCode(const String &sSourceCode, const String &sProfile, const String &sArguments, const String &sEntry)
 {
 	// Destroy the previous Cg fragment program, if there's one
 	if (m_pCgFragmentProgram) {
@@ -132,17 +137,19 @@ bool FragmentShaderCg::SetSourceCode(const String &sSourceCode, const String &sP
 
 	// Create the Cg fragment program
 	if (m_pCgProfile != CG_PROFILE_UNKNOWN)
-		m_pCgFragmentProgram = CgContext::CreateCgProgram(m_pCgProfile, sSourceCode, sEntry);
+		m_pCgFragmentProgram = CgContext::CreateCgProgram(m_pCgProfile, sSourceCode, sArguments, sEntry);
 
 	// Was the Cg program created successfully?
 	if (m_pCgFragmentProgram) {
-		// Backup the user defined entry point
-		m_sEntry = sEntry;
+		// Backup the optional shader compiler arguments and the user defined entry point
+		m_sArguments = sArguments;
+		m_sEntry     = sEntry;
 
 		// Done
 		return true;
 	} else {
 		m_pCgProfile = CG_PROFILE_UNKNOWN;
+		m_sArguments = "";
 		m_sEntry     = "";
 
 		// Error!
@@ -174,7 +181,7 @@ void FragmentShaderCg::RestoreDeviceData(uint8 **ppBackup)
 	// Restore data
 	if (*ppBackup) {
 		// The string class takes over the control of the string memory and also deletes it
-		SetSourceCode(String(reinterpret_cast<char*>(*ppBackup), false), GetProfile(), m_sEntry);
+		SetSourceCode(String(reinterpret_cast<char*>(*ppBackup), false), GetProfile(), m_sArguments, m_sEntry);
 	}
 }
 

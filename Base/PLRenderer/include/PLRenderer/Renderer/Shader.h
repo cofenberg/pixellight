@@ -118,6 +118,15 @@ class Shader : public Resource {
 
 		/**
 		*  @brief
+		*    Returns the optional shader compiler arguments the shader is using
+		*
+		*  @return
+		*    The optional shader compiler arguments the shader is using (for example "version=150" when using Cg and a "glslv"/"glslg"/"glslf" profile)
+		*/
+		virtual PLCore::String GetArguments() const = 0;
+
+		/**
+		*  @brief
 		*    Returns the name of the shader entry point the shader is using
 		*
 		*  @return
@@ -134,6 +143,8 @@ class Shader : public Resource {
 		*  @param[in] sProfile
 		*    Shader profile to use, if empty string, a default profile will be used which usually
 		*    tries to use the best available profile that runs on most hardware
+		*  @param[in] sArguments
+		*    Optional shader compiler arguments, e.g. "version=150" when using Cg and a "glslv"/"glslg"/"glslf" profile
 		*  @param[in] sEntry
 		*    Entry point, if empty string, "main" is used as default
 		*
@@ -188,7 +199,7 @@ class Shader : public Resource {
 		*  GPU's you have virtually no other change then using the GLSL profiles in order to write shaders using modern features. While the concept of Cg is
 		*  fantastic, this lack of modern none NVIDIA profiles destroys many of Cg's advantages...
 		*/
-		virtual bool SetSourceCode(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sEntry = "") = 0;
+		virtual bool SetSourceCode(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sArguments = "", const PLCore::String &sEntry = "") = 0;
 
 
 	//[-------------------------------------------------------]

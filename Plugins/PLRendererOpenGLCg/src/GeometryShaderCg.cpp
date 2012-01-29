@@ -110,7 +110,7 @@ uint32 GeometryShaderCg::GetNumOfOutputVertices() const
 	return m_nNumOfOutputVertices;
 }
 
-bool GeometryShaderCg::SetSourceCode(const String &sSourceCode, EInputPrimitiveType nInputPrimitiveType, EOutputPrimitiveType nOutputPrimitiveType, uint32 nNumOfOutputVertices, const String &sProfile, const String &sEntry)
+bool GeometryShaderCg::SetSourceCode(const String &sSourceCode, EInputPrimitiveType nInputPrimitiveType, EOutputPrimitiveType nOutputPrimitiveType, uint32 nNumOfOutputVertices, const String &sProfile, const String &sArguments, const String &sEntry)
 {
 	// Backup the input/output primitive type and the number of output vertices
 	m_nInputPrimitiveType  = nInputPrimitiveType;
@@ -137,7 +137,8 @@ bool GeometryShaderCg::SetSourceCode(const String &sSourceCode, EInputPrimitiveT
 	if (m_pCgProfile != CG_PROFILE_UNKNOWN) {
 		// Ok, the next thing is definitively no fun in Cg because it looks like there's no unified way to do it:
 		// Set the input/output primitive type and the number of output vertices
-		String sArguments;
+		String sComposedArguments = sArguments;
+		sComposedArguments += ' ';
 		switch (m_pCgProfile) {
 			// GLSL geometry shader
 			case CG_PROFILE_GLSLG:
@@ -156,68 +157,70 @@ bool GeometryShaderCg::SetSourceCode(const String &sSourceCode, EInputPrimitiveT
 				// Set the input primitive type
 				switch (m_nInputPrimitiveType) {
 					case InputPoints:
-						sArguments += "-po POINT ";
+						sComposedArguments += "-po POINT ";
 						break;
 
 					case InputLines:
-						sArguments += "-po LINE ";
+						sComposedArguments += "-po LINE ";
 						break;
 
 					case InputLinesAdjacency:
-						sArguments += "-po LINE_ADJ ";
+						sComposedArguments += "-po LINE_ADJ ";
 						break;
 
 					case InputTriangles:
-						sArguments += "-po TRIANGLE ";
+						sComposedArguments += "-po TRIANGLE ";
 						break;
 
 					case InputTrianglesAdjacency:
-						sArguments += "-po TRIANGLE_ADJ ";
+						sComposedArguments += "-po TRIANGLE_ADJ ";
 						break;
 
 					default:
-						sArguments += "-po TRIANGLE ";
+						sComposedArguments += "-po TRIANGLE ";
 						break;
 				}
 
 				// Set the output primitive type
 				switch (m_nOutputPrimitiveType) {
 					case OutputPoints:
-						sArguments += "-po POINT_OUT ";
+						sComposedArguments += "-po POINT_OUT ";
 						break;
 
 					case OutputLines:
-						sArguments += "-po LINE_OUT ";
+						sComposedArguments += "-po LINE_OUT ";
 						break;
 
 					case OutputTriangles:
-						sArguments += "-po TRIANGLE_OUT ";
+						sComposedArguments += "-po TRIANGLE_OUT ";
 						break;
 
 					default:
-						sArguments += "-po TRIANGLE_OUT ";
+						sComposedArguments += "-po TRIANGLE_OUT ";
 						break;
 				}
 
 				// Set the number of output vertices
-				sArguments += "-po Vertices=";
-				sArguments += m_nNumOfOutputVertices;
+				sComposedArguments += "-po Vertices=";
+				sComposedArguments += m_nNumOfOutputVertices;
 				break;
 		}
 
 		// Create the Cg geometry program
-		m_pCgGeometryProgram = CgContext::CreateCgProgram(m_pCgProfile, sSourceCode, sEntry, sArguments);
+		m_pCgGeometryProgram = CgContext::CreateCgProgram(m_pCgProfile, sSourceCode, sComposedArguments, sEntry);
 	}
 
 	// Was the Cg program created successfully?
 	if (m_pCgGeometryProgram) {
-		// Backup the user defined entry point
-		m_sEntry = sEntry;
+		// Backup the optional shader compiler arguments and the user defined entry point
+		m_sArguments = sArguments;
+		m_sEntry     = sEntry;
 
 		// Done
 		return true;
 	} else {
 		m_pCgProfile = CG_PROFILE_UNKNOWN;
+		m_sArguments = "";
 		m_sEntry     = "";
 
 		// Error!
@@ -244,15 +247,20 @@ String GeometryShaderCg::GetProfile() const
 	return cgGetProfileString(m_pCgProfile);
 }
 
+String GeometryShaderCg::GetArguments() const
+{
+	return m_sArguments;
+}
+
 String GeometryShaderCg::GetEntry() const
 {
 	return m_sEntry;
 }
 
-bool GeometryShaderCg::SetSourceCode(const String &sSourceCode, const String &sProfile, const String &sEntry)
+bool GeometryShaderCg::SetSourceCode(const String &sSourceCode, const String &sProfile, const String &sArguments, const String &sEntry)
 {
 	// Call the extended version of "Shader::SetSourceCode()" for geometry shaders with default settings
-	return SetSourceCode(sSourceCode, InputTriangles, OutputTriangles, 0, sProfile, sEntry);
+	return SetSourceCode(sSourceCode, InputTriangles, OutputTriangles, 0, sProfile, m_sArguments, sEntry);
 }
 
 
@@ -279,7 +287,7 @@ void GeometryShaderCg::RestoreDeviceData(uint8 **ppBackup)
 	// Restore data
 	if (*ppBackup) {
 		// The string class takes over the control of the string memory and also deletes it
-		SetSourceCode(String(reinterpret_cast<char*>(*ppBackup), false), GetProfile(), m_sEntry);
+		SetSourceCode(String(reinterpret_cast<char*>(*ppBackup), false), GetProfile(), m_sArguments, m_sEntry);
 	}
 }
 

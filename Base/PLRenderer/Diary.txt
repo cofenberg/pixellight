@@ -1,5 +1,6 @@
 >> 29.01.2012
 [CO]
+- "SetSourceCode()"-method within "Shader"/"GeometryShader": Added optional shader compiler arguments parameter
 PLRendererOpenGLCg:
 - Beside the namespace "CG_PROGRAM", we also have to search the namespace "CG_GLOBAL" for parameters
 - When searching for parameters, ignore unused ones (the compiler may have optimized them out) because we're only interested in used stuff
