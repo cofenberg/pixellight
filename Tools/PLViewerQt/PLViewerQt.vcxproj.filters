@@ -25,9 +25,6 @@
     <ClCompile Include="src\ApplicationQt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\PLViewer\src\Config.cpp">
-      <Filter>PLViewer</Filter>
-    </ClCompile>
     <ClCompile Include="..\PLViewer\src\Application.cpp">
       <Filter>PLViewer</Filter>
     </ClCompile>
@@ -40,16 +37,16 @@
     <ClCompile Include="build\GeneratedQtFiles\moc_GuiPickingQObject.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
-    <ClCompile Include="src\Config.cpp">
+    <ClCompile Include="src\PLViewerQtConfig.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\PLViewer\src\PLViewerConfig.cpp">
+      <Filter>PLViewer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ApplicationQt.h">
       <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\PLViewer\src\Config.h">
-      <Filter>PLViewer</Filter>
     </ClInclude>
     <ClInclude Include="..\PLViewer\src\Application.h">
       <Filter>PLViewer</Filter>
@@ -60,8 +57,11 @@
     <ClInclude Include="src\GuiPicking.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Config.h">
+    <ClInclude Include="src\PLViewerQtConfig.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\PLViewer\src\PLViewerConfig.h">
+      <Filter>PLViewer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

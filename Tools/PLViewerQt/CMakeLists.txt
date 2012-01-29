@@ -42,13 +42,13 @@ QT4_WRAP_CPP(MOC_SRCS ${INC_FILES})
 ##################################################
 add_sources(
 	src/ApplicationQt.cpp
-	src/Config.cpp
+	src/PLViewerQtConfig.cpp
 	src/Main.cpp
 	src/Gui.cpp
 	src/GuiPicking.cpp
 	src/GuiPickingQObject.cpp
-	../PLViewer/src/Application.cpp	# Reused
-	../PLViewer/src/Config.cpp		# Reused
+	../PLViewer/src/Application.cpp		# Reused
+	../PLViewer/src/PLViewerConfig.cpp	# Reused
 	${UI_SRCS}	# Add source produced by uic
 	${MOC_SRCS}	# Add source produced by moc
 	${QRC_SRCS}	# Add sources produced by rcc

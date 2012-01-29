@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "ApplicationQt.h"
-#include "Config.h"
+#include "PLViewerQtConfig.h"
 
 
 //[-------------------------------------------------------]
@@ -81,7 +81,6 @@ void PLViewerQtConfig::SetShowBackfacesAndSilhouettes(bool bValue)
 *    Default constructor
 */
 PLViewerQtConfig::PLViewerQtConfig() :
-	DefaultFilename(this),
 	ShowColorGradientBackground(this),
 	ShowBackfacesAndSilhouettes(this),
 	m_bShowColorGradientBackground(true),

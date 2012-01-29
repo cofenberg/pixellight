@@ -30,7 +30,7 @@ define_project(PLViewer NOSUFFIX)
 ##################################################
 add_sources(
 	src/Application.cpp
-	src/Config.cpp
+	src/PLViewerConfig.cpp
 	src/Main.cpp
 )
 if(WIN32)

@@ -46,9 +46,8 @@ class PLViewerQtConfig : public PLCore::ConfigGroup {
 	//[-------------------------------------------------------]
 	pl_class(pl_rtti_export, PLViewerQtConfig, "", PLCore::ConfigGroup, "PLViewerQt general configuration classes")
 		// Attributes
-		pl_attribute(DefaultFilename,				PLCore::String,	"",		ReadWrite,	DirectValue,	"Default resource (e.g. scene or script)",																	"")
-		pl_attribute(ShowColorGradientBackground,	bool,			true,	ReadWrite,	GetSet,			"Show color gradient background? (whether or not this has an effect depends on the used scene renderer)",	"")
-		pl_attribute(ShowBackfacesAndSilhouettes,	bool,			true,	ReadWrite,	GetSet,			"Show backfaces and silhouettes? (whether or not this has an effect depends on the used scene renderer)",	"")
+		pl_attribute(ShowColorGradientBackground,	bool,	true,	ReadWrite,	GetSet,	"Show color gradient background? (whether or not this has an effect depends on the used scene renderer)",	"")
+		pl_attribute(ShowBackfacesAndSilhouettes,	bool,	true,	ReadWrite,	GetSet,	"Show backfaces and silhouettes? (whether or not this has an effect depends on the used scene renderer)",	"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

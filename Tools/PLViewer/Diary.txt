@@ -1,5 +1,6 @@
 >> 29.01.2012
 [CO]
+- PLViewer/PLViewerQt: Fixed configuration mixup
 PLViewerQt:
 - Camera menu: Added "Select Current Camera"
 - "GuiPicking::SelectObject()": Usability: Show the "PLFrontendQt::DockWidgetSceneGraph" dock widget so we can view & edit the scene elements at once
