@@ -68,7 +68,8 @@ PLDynVarVector2TreeItem::Vector2ValueBaseTreeItem::Vector2ValueBaseTreeItem(cons
 
 QVariant PLDynVarVector2TreeItem::Vector2ValueBaseTreeItem::data(const int column, const int role)
 {
-	if (!m_parentItem->IsInStandardRole(role))
+// Don't show tooltip for Vector sub Items in column 0
+	if (!m_parentItem->IsInStandardRole(role) || (role == Qt::ToolTipRole && column == 0))
 		return QVariant();
 
 	if(m_parentItem == nullptr)

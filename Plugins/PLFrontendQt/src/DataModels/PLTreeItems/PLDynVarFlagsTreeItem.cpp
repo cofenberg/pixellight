@@ -80,7 +80,8 @@ PLDynVarFlagsTreeItem::FlagValueTreeItem::FlagValueTreeItem(QObject *parent, QSt
 
 QVariant PLDynVarFlagsTreeItem::FlagValueTreeItem::data(const int column, const int role)
 {
-	if (m_parentItem == nullptr)
+	// Don't show tooltip for Flag sub Items in column 0
+	if (m_parentItem == nullptr || column == 0 && role == Qt::ToolTipRole)
 		return QVariant();
 
 	if (column == 0 && m_parentItem->IsInStandardRole(role))

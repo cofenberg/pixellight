@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 #include "PLFrontendQt/DataModels/TreeItemBase.h"
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarTreeItemTypes.h"
+#include <QtCore/QStringList>
 
 
 //[-------------------------------------------------------]
@@ -93,6 +94,7 @@ class PLFRONTENDQT_API PLDynVarStringTreeItem : public TreeItemBase {
 	private:
 		QString										 m_varName;
 		QString										 m_typeName;
+		QStringList 								 m_cToolTips;
 		PLDynVarTreeItemTypes::DynVarTreeItemTypes	 m_dynVarType;
 
 
