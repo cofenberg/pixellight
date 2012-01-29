@@ -55,9 +55,9 @@ class ProgramAttributeCg : public PLRenderer::ProgramAttribute {
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		/**
 		*  @brief
 		*    Constructor

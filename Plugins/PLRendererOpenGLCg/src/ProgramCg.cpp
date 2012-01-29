@@ -29,7 +29,7 @@
 #include "PLRendererOpenGLCg/GeometryShaderCg.h"
 #include "PLRendererOpenGLCg/FragmentShaderCg.h"
 #include "PLRendererOpenGLCg/CgContext.h"
-#include "PLRendererOpenGLCg/ProgramAttributeCg.h"
+#include "PLRendererOpenGLCg/ProgramAttributeCgGLSL.h"
 #include "PLRendererOpenGLCg/ProgramUniformCg.h"
 #include "PLRendererOpenGLCg/ProgramUniformBlockCg.h"
 #include "PLRendererOpenGLCg/ProgramCg.h"
@@ -130,8 +130,7 @@ CGprogram ProgramCg::GetCgCombinedProgram(bool bAutomaticLink)
 							// We're going to need "glProgramParameteriEXT" from "GL_EXT_geometry_shader4"
 							#ifdef WIN32
 								static PFNGLPROGRAMPARAMETERIEXTPROC glProgramParameteriEXT = reinterpret_cast<PFNGLPROGRAMPARAMETERIEXTPROC>(wglGetProcAddress("glProgramParameteriEXT"));
-							#endif
-							#ifdef LINUX
+							#elif LINUX
 								static PFNGLPROGRAMPARAMETERIEXTPROC glProgramParameteriEXT = reinterpret_cast<PFNGLPROGRAMPARAMETERIEXTPROC>(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glProgramParameteriEXT")));
 							#endif
 							if (glProgramParameteriEXT) {
@@ -218,6 +217,10 @@ CGprogram ProgramCg::GetCgCombinedProgram(bool bAutomaticLink)
 				// Error, program link failed!
 				m_bLinkedFailed = true;
 			}
+
+			// Is the program is now linked?
+			if (m_bLinked)
+				m_bGLSL = bGLSL;
 		}
 	}
 
@@ -244,6 +247,7 @@ bool ProgramCg::IsLinked() const
 */
 ProgramCg::ProgramCg(PLRenderer::Renderer &cRenderer) : Program(cRenderer),
 	m_pCgCombinedProgram(nullptr),
+	m_bGLSL(false),
 	m_bLinked(false),
 	m_bLinkedFailed(false),
 	m_bAttributeInformationBuild(false),
@@ -276,6 +280,7 @@ void ProgramCg::RelinkRequired()
 		if (m_pCgCombinedProgram) {
 			cgDestroyProgram(m_pCgCombinedProgram);
 			m_pCgCombinedProgram = nullptr;
+			m_bGLSL = false;
 		}
 
 		// The program is now dirty
@@ -320,7 +325,7 @@ void ProgramCg::BuildAttributeInformation()
 									CGparameter pStructureCgParameter = cgGetFirstStructParameter(pCgParameter);
 									while (pStructureCgParameter) {
 										// Register the new program attribute
-										ProgramAttributeCg *pProgramAttribute = new ProgramAttributeCg(pStructureCgParameter);
+										ProgramAttributeCg *pProgramAttribute = m_bGLSL ? new ProgramAttributeCgGLSL(pStructureCgParameter) : new ProgramAttributeCg(pStructureCgParameter);
 										m_lstAttributes.Add(pProgramAttribute);
 										m_mapAttributes.Add(cgGetParameterName(pStructureCgParameter), pProgramAttribute);
 
@@ -329,7 +334,7 @@ void ProgramCg::BuildAttributeInformation()
 									}
 								} else {
 									// Register the new program attribute
-									ProgramAttributeCg *pProgramAttribute = new ProgramAttributeCg(pCgParameter);
+									ProgramAttributeCg *pProgramAttribute = m_bGLSL ? new ProgramAttributeCgGLSL(pCgParameter) : new ProgramAttributeCg(pCgParameter);
 									m_lstAttributes.Add(pProgramAttribute);
 									m_mapAttributes.Add(cgGetParameterName(pCgParameter), pProgramAttribute);
 								}
@@ -721,11 +726,27 @@ bool ProgramCg::MakeCurrent()
 			cgGLEnableProfile(cgGetProgramDomainProfile(pCgCombinedProgram, i));
 		}
 
-		// Iterate through all attributes - use GetAttributes() to ensure the attributes list is valid
-		const Array<PLRenderer::ProgramAttribute*> &lstAttributes = GetAttributes();
-		for (uint32 i=0; i<lstAttributes.GetNumOfElements(); i++) {
-			// Enable vertex attribute array
-			cgGLEnableClientState(static_cast<ProgramAttributeCg*>(lstAttributes[i])->m_pCgParameter);
+		// Vertex attribute
+		// -> See "ProgramAttributeCgGLSL" class documentation for details
+		if (m_bGLSL) {
+			// We're going to need "glEnableVertexAttribArrayARB" and "glDisableVertexAttribArrayARB" from "GL_ARB_vertex_program"
+			#ifdef WIN32
+				static PFNGLENABLEVERTEXATTRIBARRAYARBPROC glEnableVertexAttribArrayARB = reinterpret_cast<PFNGLENABLEVERTEXATTRIBARRAYARBPROC>(wglGetProcAddress("glEnableVertexAttribArrayARB"));
+			#elif LINUX
+				static PFNGLENABLEVERTEXATTRIBARRAYARBPROC glEnableVertexAttribArrayARB = reinterpret_cast<PFNGLENABLEVERTEXATTRIBARRAYARBPROC>(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glEnableVertexAttribArrayARB")));
+			#endif
+			if (glEnableVertexAttribArrayARB) {
+				// Enable all vertex attribute arrays
+				for (uint32 i=0; i<m_lstAttributes.GetNumOfElements(); i++)
+					glEnableVertexAttribArrayARB(static_cast<ProgramAttributeCgGLSL*>(m_lstAttributes[i])->m_nOpenGLAttributeLocation);
+			}
+		} else {
+			// Only for non-OpenGL programs: Iterate through all attributes - use GetAttributes() to ensure the attributes list is valid
+			const Array<PLRenderer::ProgramAttribute*> &lstAttributes = GetAttributes();
+			for (uint32 i=0; i<lstAttributes.GetNumOfElements(); i++) {
+				// Enable vertex attribute array
+				cgGLEnableClientState(static_cast<ProgramAttributeCg*>(lstAttributes[i])->m_pCgParameter);
+			}
 		}
 
 		// Done
@@ -740,11 +761,27 @@ bool ProgramCg::UnmakeCurrent()
 {
 	// There must be a Cg combined program
 	if (m_pCgCombinedProgram) {
-		// Iterate through all attributes - use GetAttributes() to ensure the attributes list is valid
-		const Array<PLRenderer::ProgramAttribute*> &lstAttributes = GetAttributes();
-		for (uint32 i=0; i<lstAttributes.GetNumOfElements(); i++) {
-			// Disable vertex attribute array
-			cgGLDisableClientState(static_cast<ProgramAttributeCg*>(lstAttributes[i])->m_pCgParameter);
+		// Vertex attribute
+		// -> See "ProgramAttributeCgGLSL" class documentation for details
+		if (m_bGLSL) {
+			// We're going to need "glEnableVertexAttribArrayARB" and "glDisableVertexAttribArrayARB" from "GL_ARB_vertex_program"
+			#ifdef WIN32
+				static PFNGLDISABLEVERTEXATTRIBARRAYARBPROC glDisableVertexAttribArrayARB = reinterpret_cast<PFNGLDISABLEVERTEXATTRIBARRAYARBPROC>(wglGetProcAddress("glDisableVertexAttribArrayARB"));
+			#elif LINUX
+				static PFNGLDISABLEVERTEXATTRIBARRAYARBPROC glDisableVertexAttribArrayARB = reinterpret_cast<PFNGLDISABLEVERTEXATTRIBARRAYARBPROC>(glXGetProcAddressARB(reinterpret_cast<const GLubyte*>("glDisableVertexAttribArrayARB")));
+			#endif
+			if (glDisableVertexAttribArrayARB) {
+				// Disable all vertex attribute arrays
+				for (uint32 i=0; i<m_lstAttributes.GetNumOfElements(); i++)
+					glDisableVertexAttribArrayARB(static_cast<ProgramAttributeCgGLSL*>(m_lstAttributes[i])->m_nOpenGLAttributeLocation);
+			}
+		} else {
+			// Only for non-OpenGL programs: Iterate through all attributes - use GetAttributes() to ensure the attributes list is valid
+			const Array<PLRenderer::ProgramAttribute*> &lstAttributes = GetAttributes();
+			for (uint32 i=0; i<lstAttributes.GetNumOfElements(); i++) {
+				// Disable vertex attribute array
+				cgGLDisableClientState(static_cast<ProgramAttributeCg*>(lstAttributes[i])->m_pCgParameter);
+			}
 		}
 
 		// Iterate through all Cg programs of the Cg combined program and disable all required profiles

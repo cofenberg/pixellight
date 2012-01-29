@@ -37,6 +37,7 @@ add_sources(
 	src/FragmentShaderCg.cpp
 	src/ProgramCg.cpp
 	src/ProgramAttributeCg.cpp
+	src/ProgramAttributeCgGLSL.cpp
 	src/ProgramUniformCg.cpp
 	src/ProgramUniformBlockCg.cpp
 	src/UniformBufferCg.cpp

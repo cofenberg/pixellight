@@ -150,6 +150,7 @@ class ProgramCg : public PLRendererOpenGL::Program {
 	private:
 		// Program
 		CGprogram															m_pCgCombinedProgram;				/**< Cg combined program, can be a null pointer */
+		bool																m_bGLSL;							/**< Is it an OpenGL GLSL program? If yes, we need some hacks to make it work properly. :/ */
 		bool																m_bLinked;							/**< Is the Cg combined program currently linked? */
 		bool																m_bLinkedFailed;					/**< Cg combined program link failed? */
 		// Shaders

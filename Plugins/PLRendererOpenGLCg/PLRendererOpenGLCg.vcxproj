@@ -269,6 +269,7 @@ copy ..\..\External\_Windows_x86_64\Cg\bin\cgGL.dll ..\..\Bin\Runtime\x64\
     <ClCompile Include="src\GeometryShaderCg.cpp" />
     <ClCompile Include="src\PLRendererOpenGLCg.cpp" />
     <ClCompile Include="src\ProgramAttributeCg.cpp" />
+    <ClCompile Include="src\ProgramAttributeCgGLSL.cpp" />
     <ClCompile Include="src\ProgramCg.cpp" />
     <ClCompile Include="src\ProgramUniformBlockCg.cpp" />
     <ClCompile Include="src\ProgramUniformCg.cpp" />
@@ -281,6 +282,7 @@ copy ..\..\External\_Windows_x86_64\Cg\bin\cgGL.dll ..\..\Bin\Runtime\x64\
     <ClInclude Include="include\PLRendererOpenGLCg\FragmentShaderCg.h" />
     <ClInclude Include="include\PLRendererOpenGLCg\GeometryShaderCg.h" />
     <ClInclude Include="include\PLRendererOpenGLCg\ProgramAttributeCg.h" />
+    <ClInclude Include="include\PLRendererOpenGLCg\ProgramAttributeCgGLSL.h" />
     <ClInclude Include="include\PLRendererOpenGLCg\ProgramCg.h" />
     <ClInclude Include="include\PLRendererOpenGLCg\ProgramUniformBlockCg.h" />
     <ClInclude Include="include\PLRendererOpenGLCg\ProgramUniformCg.h" />

@@ -35,7 +35,7 @@ namespace PLRendererOpenGLCg {
 
 
 //[-------------------------------------------------------]
-//[ Private functions                                     ]
+//[ Protected functions                                   ]
 //[-------------------------------------------------------]
 /**
 *  @brief

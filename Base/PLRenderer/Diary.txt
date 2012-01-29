@@ -4,6 +4,20 @@
 PLRendererOpenGLCg:
 - Beside the namespace "CG_PROGRAM", we also have to search the namespace "CG_GLOBAL" for parameters
 - When searching for parameters, ignore unused ones (the compiler may have optimized them out) because we're only interested in used stuff
+-  When using Cg on a modern AMD/ATI graphics card, we only have a choice between the profiles
+  "arbvp1", "arbfp1", "glslv", "glslf", "glslg" - meaning we don't have a choice and have to stick
+  to GLSL because "arbvp1" & "arbfp1" are heavily out-dated.
+  Sadly, there are several issues when using Cg with GLSL profiles. When using no GLSL version hint,
+  old school GLSL is used which is related to fixed function stuff. This is causing heavy issues when
+  using VBO because the Cg compiler is now throwing e.g. glMultiTexCoord0 into the resulting GLSL code
+  as source of vertex data, but not using VBO is not an option. So, we need to provide the Cg compiler with a
+  GLSL version like 150... then the next thing happens: Cg just tells us "The parameter used is invalid." when
+  using "cgGLSetParameterPointer()"/"cgGLEnableClientState()". So, we have to figure out the OpenGL attribute
+  location and then falling back to "glVertexAttribPointerARB()"/"glEnableVertexAttribArrayARB()" instead
+  of using buggy Cg OpenGL functions. Long story, short conclusion: Using the combination
+  Cg & OpenGL & GLSL & AMD-hardware is painful, but sadly NVIDIA appears to be not interested to changing anything
+  on this situation... this issue is not new and nearly as old as Cg itself and I'am already fighting with this topic
+  for years. Still, Cg is worth all this efforts... a shader cross-compiler is a fantastic thing...
 
 
 
