@@ -74,7 +74,8 @@ class PLFRONTENDQT_API SceneGraphTreeModel : public TreeModelBase {
 	//[-------------------------------------------------------]
 	public:
 		enum SceneGraphTreeModelRoles {
-			ClassNameRole = Qt::UserRole+1
+			ClassNameRole = Qt::UserRole+1,
+			InternalObjectPointerRole
 		};
 
 
@@ -98,6 +99,7 @@ class PLFRONTENDQT_API SceneGraphTreeModel : public TreeModelBase {
 		PLScene::SceneNode *GetSceneNodeFromIndex(const QModelIndex &index);
 		PLScene::SceneNodeModifier *GetSceneNodeModifierFromIndex(const QModelIndex &index);
 		SceneGraphNodeTreeItemBase *GetSceneTreeItemFromIndex(const QModelIndex &index);
+		QModelIndex GetModelIndexForSceneNode(PLScene::SceneNode* nodeObj);
 
 
 };
