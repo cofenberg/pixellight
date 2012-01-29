@@ -282,7 +282,10 @@ void DockWidgetSceneGraph::SetSceneContainerAndObject()
 void DockWidgetSceneGraph::UpdateTreeView()
 {
 	// [TODO] Implement a more advanced solution which keeps the currently expanded items expanded
+	// -> Ensure that at least the current selection remains
+	Object *pSelectedObject = GetSelectedObject();
 	SetSceneContainer(GetSceneContainer());
+	SelectObject(pSelectedObject);
 }
 
 /**
