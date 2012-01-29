@@ -565,6 +565,15 @@ void Gui::QtSlotAboutToShowMenuCamera()
 		m_pQActionGroupCamera = new QActionGroup(GetFrontendMainWindow());
 		connect(m_pQActionGroupCamera, SIGNAL(selected(QAction*)), this, SLOT(QtSlotSelectedCamera(QAction*)));
 
+		{ // Setup the select current camera action
+			QAction *pQActionHideAll = new QAction(tr("Select Current Camera"), GetFrontendMainWindow());
+			connect(pQActionHideAll, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredCameraSelectCurrentCamera()));
+			m_pQMenuCamera->addAction(pQActionHideAll);
+		}
+
+		// Add a separator
+		m_pQMenuCamera->addSeparator();
+
 		// Automatically fill the Qt camera menu by using the cameras which are within the scene
 
 		// Get the scene container with our 'concrete scene'
@@ -586,6 +595,16 @@ void Gui::QtSlotAboutToShowMenuCamera()
 				pSceneContainer->DestroyQuery(*pSceneQuery);
 			}
 		}
+	}
+}
+
+void Gui::QtSlotTriggeredCameraSelectCurrentCamera()
+{
+	// Get the Qt main window
+	FrontendMainWindow *pFrontendMainWindow = GetFrontendMainWindow();
+	if (pFrontendMainWindow) {
+		// Get the camera scene node currently used by the application and make it to the currently selected object
+		pFrontendMainWindow->GetDockWidgetManager().CallDockWidgetsMethod("SelectObject", Params<void, Object*>(reinterpret_cast<Object*>(m_pApplication->GetCamera())));
 	}
 }
 

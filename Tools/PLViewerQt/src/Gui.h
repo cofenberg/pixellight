@@ -225,6 +225,7 @@ class Gui : public QObject {
 		void QtSlotTriggeredAutomaticReload();
 		void QtSlotTriggeredExit();
 		void QtSlotAboutToShowMenuCamera();
+		void QtSlotTriggeredCameraSelectCurrentCamera();
 		void QtSlotSelectedCamera(QAction *);
 		void QtSlotAboutToShowMenuWindow();
 		void QtSlotTriggeredWindowHideAll();

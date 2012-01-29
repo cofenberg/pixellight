@@ -1,3 +1,10 @@
+>> 29.01.2012
+[CO]
+PLViewerQt:
+- Camera menu: Added "Select Current Camera"
+
+
+
 >> 25.01.2012
 [CO]
 PLViewerQt:
