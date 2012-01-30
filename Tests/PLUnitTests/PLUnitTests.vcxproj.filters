@@ -85,6 +85,9 @@
     <ClCompile Include="src\PLMath\Math.cpp">
       <Filter>PLMath</Filter>
     </ClCompile>
+    <ClCompile Include="src\PLCore\Container\Bitset.cpp">
+      <Filter>PLCore\Container\Container</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\UnitTest++AddIns\RunAllTests.h">
