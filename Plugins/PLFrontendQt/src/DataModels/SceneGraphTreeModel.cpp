@@ -331,6 +331,125 @@ QModelIndex SceneGraphTreeModel::GetModelIndexForSceneNode(PLScene::SceneNode *n
 
 
 //[-------------------------------------------------------]
+//[ Public virtual QAbstractItemModel functions           ]
+//[-------------------------------------------------------]
+QModelIndexList SceneGraphTreeModel::match(const QModelIndex &start, int role, const QVariant &value, int hits, Qt::MatchFlags flags) const
+{
+	// [HACK] "QAbstractItemModel::match()" is allocating "QModelIndexList" elements from within the Qt shared library. "QModelIndexList" elements
+	// are deallocated from within our project. No issues when everything is release build. In debug build we're still using a release build
+	// of Qt. In Visual Studio this is a problem because debug and release are using different runtimes. There's no simple solution in mixing,
+	// and never ever mixing release/debug build is no practical solution either. See PLCore diary entry "31.01.2012" for more information.
+	// -> We "solve" this issue locally in here by just overwriting the "QAbstractItemModel::match()"-method
+	// -> This is the original implementation from "Qt 4.7.0"
+
+	/****************************************************************************
+	**
+	** Copyright (C) 2010 Nokia Corporation and/or its subsidiary(-ies).
+	** All rights reserved.
+	** Contact: Nokia Corporation (qt-info@nokia.com)
+	**
+	** This file is part of the QtCore module of the Qt Toolkit.
+	**
+	** $QT_BEGIN_LICENSE:LGPL$
+	** Commercial Usage
+	** Licensees holding valid Qt Commercial licenses may use this file in
+	** accordance with the Qt Commercial License Agreement provided with the
+	** Software or, alternatively, in accordance with the terms contained in
+	** a written agreement between you and Nokia.
+	**
+	** GNU Lesser General Public License Usage
+	** Alternatively, this file may be used under the terms of the GNU Lesser
+	** General Public License version 2.1 as published by the Free Software
+	** Foundation and appearing in the file LICENSE.LGPL included in the
+	** packaging of this file.  Please review the following information to
+	** ensure the GNU Lesser General Public License version 2.1 requirements
+	** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
+	**
+	** In addition, as a special exception, Nokia gives you certain additional
+	** rights.  These rights are described in the Nokia Qt LGPL Exception
+	** version 1.1, included in the file LGPL_EXCEPTION.txt in this package.
+	**
+	** GNU General Public License Usage
+	** Alternatively, this file may be used under the terms of the GNU
+	** General Public License version 3.0 as published by the Free Software
+	** Foundation and appearing in the file LICENSE.GPL included in the
+	** packaging of this file.  Please review the following information to
+	** ensure the GNU General Public License version 3.0 requirements will be
+	** met: http://www.gnu.org/copyleft/gpl.html.
+	**
+	** If you have questions regarding the use of this file, please contact
+	** Nokia at qt-info@nokia.com.
+	** $QT_END_LICENSE$
+	**
+	****************************************************************************/
+    QModelIndexList result;
+    uint matchType = flags & 0x0F;
+    Qt::CaseSensitivity cs = flags & Qt::MatchCaseSensitive ? Qt::CaseSensitive : Qt::CaseInsensitive;
+    bool recurse = flags & Qt::MatchRecursive;
+    bool wrap = flags & Qt::MatchWrap;
+    bool allHits = (hits == -1);
+    QString text; // only convert to a string if it is needed
+    QModelIndex p = parent(start);
+    int from = start.row();
+    int to = rowCount(p);
+
+    // iterates twice if wrapping
+    for (int i = 0; (wrap && i < 2) || (!wrap && i < 1); ++i) {
+        for (int r = from; (r < to) && (allHits || result.count() < hits); ++r) {
+            QModelIndex idx = index(r, start.column(), p);
+            if (!idx.isValid())
+                 continue;
+            QVariant v = data(idx, role);
+            // QVariant based matching
+            if (matchType == Qt::MatchExactly) {
+                if (value == v)
+                    result.append(idx);
+            } else { // QString based matching
+                if (text.isEmpty()) // lazy conversion
+                    text = value.toString();
+                QString t = v.toString();
+                switch (matchType) {
+                case Qt::MatchRegExp:
+                    if (QRegExp(text, cs).exactMatch(t))
+                        result.append(idx);
+                    break;
+                case Qt::MatchWildcard:
+                    if (QRegExp(text, cs, QRegExp::Wildcard).exactMatch(t))
+                        result.append(idx);
+                    break;
+                case Qt::MatchStartsWith:
+                    if (t.startsWith(text, cs))
+                        result.append(idx);
+                    break;
+                case Qt::MatchEndsWith:
+                    if (t.endsWith(text, cs))
+                        result.append(idx);
+                    break;
+                case Qt::MatchFixedString:
+                    if (t.compare(text, cs) == 0)
+                        result.append(idx);
+                    break;
+                case Qt::MatchContains:
+                default:
+                    if (t.contains(text, cs))
+                        result.append(idx);
+                }
+            }
+            if (recurse && hasChildren(idx)) { // search the hierarchy
+                result += match(index(0, idx.column(), idx), role,
+                                (text.isEmpty() ? value : text),
+                                (allHits ? -1 : hits - result.count()), flags);
+            }
+        }
+        // prepare for the next iteration
+        from = 0;
+        to = start.row();
+    }
+    return result;
+}
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // DataModels

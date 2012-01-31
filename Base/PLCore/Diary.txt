@@ -41,6 +41,35 @@ PLFrontendQt:
     6. Adding any restrictions to this chaotic system would artificially limit it's use or would add dependencies where no
        dependencies are required
     "
+- "SceneGraphTreeModel::GetModelIndexForSceneNode()" is using "QModelIndexList", "QModelIndexList" is causing troubles in Visual
+  Studio when mixing release/debug builds. Right now, when debugging, the application will crash when calling the destructor of
+  "QModelIndexList" because the elements were allocated within the release build version of Qt, while the elements are destroyed
+  by using the debug build version of our project. This is a known issue of Visual Studio and the approach of different release/debug
+  versions. When feeding Google with "QModelIndexList crash" I can see that this situation is known. The only solution I found was written by
+  clever persons saying "just don't mix release/debug". The ultimate solution. On the other hand, what when this is no option
+  because this "solution" would spread like a fire through the complete project and all client projects using the engine? Meaning, we
+  can't just change suddenly to a totally other approach just because there's now one part were this would be required for a clean solution.
+  Using only debug versions in debug mode would mean that this must be done for all projects. Including external dependencies: Current number
+  of build external libraries for all platform combinations multiplicated by two. This means we also have to add such debug
+  versions into the SDK. Meaning we have to change the current CMake based debug system to support building the project twice, one in
+  release and one in debug build, before creating the SDK installer. As for me, I don't have the time to stop everything for some weeks in
+  order to hammer out all the necessary details, testing everything and praying there are no additional side effects. In the end this would
+  also mean that when someone is debugging his own PixelLight based application, the debugging would be horrible slow because PixelLight and
+  everything is in debug build mode as well. We had tried this long time ago, and it was really painful slow this way, so that debugging an
+  own application was not practical any more when this application gets a bit more complex. So, beside the time which would be required to
+  do "just don't mix release/debug", there would also be major drawbacks we already know of.
+  -> Why I'am writing such a roman, again? I just don't want that someone is telling me that I'am adding ugly hacks without thinking
+    following consequences through. Or that I'am going the "complicated way".
+  -> Within "SceneGraphTreeModel", overwritten the virtual method "QAbstractItemModel::match()" by using the Qt implementation which is now
+     using the same Visual Studio runtime as we're using.
+  -> I'am now able to debug again without spending weeks in fuzzing around and adding more issues, while not being able to continue with the
+     PixelLight developemnt itself just because of this one single problem in here. We should try to avoid using "QModelIndexList", since working with
+     Qt this is the first found issue. If there's a similar issue which can't be solved that easily there's still the option to use debug build
+     versions of Qt inside "PLFrontendQt", then using this within a custom application. PixelLight itself does not depend on Qt. But adding a debug
+     version of "PLFrontendQt" and Qt within the public SDK isn't that easy as mentioned.
+  -> As far as I'am concerned the just reopend, old, release/debug topic is already closed again. Right now there's far to much work to be done
+     with required concrete visible results so that there's no time to spend time on this topic. No discussion, please, I'am already far behind my
+     time schedule and the reason for this is not that I'am right now writing such detail entries for later analysis. For now, it just has to work.
 
 
 
