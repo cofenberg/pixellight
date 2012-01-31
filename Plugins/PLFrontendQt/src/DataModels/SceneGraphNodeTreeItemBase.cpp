@@ -33,7 +33,7 @@ namespace PLFrontendQt {
 namespace DataModels {
 
 
-SceneGraphNodeTreeItemBase::SceneGraphNodeTreeItemBase(QObject *parent) : TreeItemBase(1, parent)
+SceneGraphNodeTreeItemBase::SceneGraphNodeTreeItemBase(PLFrontendQt::DataModels::SceneGraphTreeModel& cModel, const QModelIndex& parentIdx, int rowNr, QObject* parent) : TreeItemBase(1, parent), m_cModel(cModel), m_cParentModelIndex(parentIdx), m_cRow(rowNr)
 {
 }
 

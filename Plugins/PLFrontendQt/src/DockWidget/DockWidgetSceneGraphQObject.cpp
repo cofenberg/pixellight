@@ -86,9 +86,17 @@ void DockWidgetSceneGraphQObject::QtSlotCustomContextMenuRequested(const QPoint 
 		Object *pObject = cQModelIndex.isValid() ? m_pDockWidgetSceneGraph->GetObjectByQModelIndex(cQModelIndex) : nullptr;
 
 		// Show the scene graph context menu
-		if (pObject && SceneGraphMenu(*pObject).exec(reinterpret_cast<QWidget*>(m_pDockWidgetSceneGraph->m_pQTreeView)->mapToGlobal(cQPoint))) {
-			// Update the scene graph tree view because the probability is high that it's content was changed
-			m_pDockWidgetSceneGraph->UpdateTreeView();
+		if (pObject) {
+			SceneGraphMenu menu(*pObject);
+			QAction* pAction = menu.exec(reinterpret_cast<QWidget*>(m_pDockWidgetSceneGraph->m_pQTreeView)->mapToGlobal(cQPoint));
+			if(pAction) {
+				// Update the scene graph tree view because the probability is high that it's content was changed
+				QVariant cUserData = pAction->data();
+				DockWidgetSceneGraph::UpdateTreeReason updateReason = DockWidgetSceneGraph::Unknwon;
+				if (cUserData.isValid())
+					updateReason = static_cast<DockWidgetSceneGraph::UpdateTreeReason>(pAction->data().value<int>());
+				m_pDockWidgetSceneGraph->UpdateTreeView(updateReason, menu.GetCreatedObject());
+			}
 		}
 	}
 }

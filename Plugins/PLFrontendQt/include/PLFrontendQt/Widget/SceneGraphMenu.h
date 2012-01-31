@@ -90,6 +90,15 @@ class SceneGraphMenu : public QMenu {
 		*/
 		virtual ~SceneGraphMenu();
 
+		/**
+		*  @brief
+		*    Returns the created object instance if an create/clone action was done. Otherwise an nullptr is returned
+		*/
+		PLCore::Object* GetCreatedObject()
+		{
+			return m_pCreatedObject;
+		}
+
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
@@ -148,6 +157,7 @@ class SceneGraphMenu : public QMenu {
 	//[-------------------------------------------------------]
 	private:
 		PLCore::Object *m_pObject;			/**< RTTI class instance we're working on, always valid */
+		PLCore::Object *m_pCreatedObject;	/**< RTTI class instance which was created via an add/clone action, can be a null pointer */
 		QMenu		   *m_pQMenuAdd;		/**< Add Qt menu instance, always valid */
 		QActionGroup   *m_pQActionGroupAdd;	/**< Add Qt action group, can be a null pointer */
 

@@ -37,6 +37,11 @@
 namespace PLCore {
 	class Object;
 }
+namespace PLFrontendQt {
+	namespace DataModels {
+		class SceneGraphTreeModel;
+	}
+}
 
 
 //[-------------------------------------------------------]
@@ -67,10 +72,20 @@ class PLFRONTENDQT_API SceneGraphNodeTreeItemBase : public TreeItemBase {
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		explicit SceneGraphNodeTreeItemBase(QObject *parent = nullptr);
+		explicit SceneGraphNodeTreeItemBase(SceneGraphTreeModel &cModel, const QModelIndex &parentIdx, int rowNr, QObject *parent = nullptr);
 		virtual bool IsSceneNode() = 0;
 		virtual bool IsSceneNodeModifier() = 0;
 		virtual PLCore::Object *GetObject() = 0;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected data                                        ]
+	//[-------------------------------------------------------]
+	protected:
+		SceneGraphTreeModel		&m_cModel;
+		int						 m_cRow;
+		QModelIndex				 m_cParentModelIndex;
+		QModelIndex				 m_cModelIndex;
 
 
 };

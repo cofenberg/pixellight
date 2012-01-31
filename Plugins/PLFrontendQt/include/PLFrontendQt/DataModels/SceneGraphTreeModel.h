@@ -37,6 +37,7 @@
 namespace PLScene {
 	class SceneNode;
 	class SceneNodeModifier;
+	class SceneContainer;
 }
 namespace PLFrontendQt {
 	namespace DataModels {
@@ -100,13 +101,16 @@ class PLFRONTENDQT_API SceneGraphTreeModel : public TreeModelBase {
 		PLScene::SceneNodeModifier *GetSceneNodeModifierFromIndex(const QModelIndex &index);
 		SceneGraphNodeTreeItemBase *GetSceneTreeItemFromIndex(const QModelIndex &index);
 		QModelIndex GetModelIndexForSceneNode(PLScene::SceneNode* nodeObj);
+		void AddSceneNode(PLScene::SceneContainer *pContainer, PLScene::SceneNode *pSceneNode);
+		void AddSceneNodeModifier(PLScene::SceneNode *pParentNode, PLScene::SceneNodeModifier *pSceneNodeModifier);
 
 
-#ifdef WIN32
 	//[-------------------------------------------------------]
 	//[ Public virtual QAbstractItemModel functions           ]
 	//[-------------------------------------------------------]
 	public:
+		virtual bool removeRows(int startRow, int count, const QModelIndex& parent = QModelIndex()) override;
+#ifdef WIN32		
 		virtual QModelIndexList match(const QModelIndex &start, int role, const QVariant &value, int hits = 1, Qt::MatchFlags flags = Qt::MatchFlags(Qt::MatchStartsWith|Qt::MatchWrap)) const override;
 #endif
 

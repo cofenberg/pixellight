@@ -28,6 +28,7 @@
 #include <PLScene/Scene/SceneNodeModifier.h>
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/Widget/SceneGraphMenu.h"
+#include "PLFrontendQt/DockWidget/DockWidgetSceneGraph.h"
 
 
 //[-------------------------------------------------------]
@@ -48,6 +49,7 @@ namespace PLFrontendQt {
 SceneGraphMenu::SceneGraphMenu(Object &cObject) :
 	SlotDestroyed(&SceneGraphMenu::OnDestroyed, this),
 	m_pObject(&cObject),
+	m_pCreatedObject(nullptr),
 	m_pQMenuAdd(nullptr),
 	m_pQActionGroupAdd(nullptr)
 {
@@ -71,11 +73,13 @@ SceneGraphMenu::SceneGraphMenu(Object &cObject) :
 	if (!bProtected) {
 		{ // Setup the clone action
 			QAction *pQAction = addAction(tr("Clone"));
+			pQAction->setData(DockWidgetSceneGraph::UpdateTreeReason::ItemAdded);
 			connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredClone()));
 		}
 
 		{ // Setup the delete action
 			QAction *pQAction = addAction(tr("Delete"));
+			pQAction->setData(DockWidgetSceneGraph::UpdateTreeReason::ItemDeleted);
 			connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredDelete()));
 		}
 	}
@@ -131,6 +135,7 @@ void SceneGraphMenu::FillAddWindowRec(QMenu &cQMenu, const String &sBaseClass)
 
 				// Add action
 				QAction *pQAction = pQMenuSub->addAction(tr(pClass->GetClassName()));
+				pQAction->setData(DockWidgetSceneGraph::UpdateTreeReason::ItemAdded);
 				m_pQActionGroupAdd->addAction(pQAction);
 
 				// Automatically fill the Qt window menu by using RTTI information
@@ -140,6 +145,7 @@ void SceneGraphMenu::FillAddWindowRec(QMenu &cQMenu, const String &sBaseClass)
 
 				// Add action
 				QAction *pQAction = cQMenu.addAction(tr(pClass->GetClassName()));
+				pQAction->setData(DockWidgetSceneGraph::UpdateTreeReason::ItemAdded);
 				m_pQActionGroupAdd->addAction(pQAction);
 			}
 		} else {
@@ -166,6 +172,9 @@ void SceneGraphMenu::CloneSceneNode(SceneContainer &cTargetSceneContainer, const
 	// Clone scene node
 	SceneNode *pSceneNodeClone = cTargetSceneContainer.Create(cSceneNode.GetClass()->GetClassName(), cSceneNode.GetName() + sNameExtension, cSceneNode.GetValues());
 	if (pSceneNodeClone) {
+		
+		m_pCreatedObject = pSceneNodeClone;
+		
 		// Reset debug flags of the clone
 		pSceneNodeClone->SetDebugFlags(0);
 
@@ -239,13 +248,13 @@ void SceneGraphMenu::QtSlotSelectedAdd(QAction *pQAction)
 		if (pClass->IsDerivedFrom("PLScene::SceneNode")) {
 			// Create scene node instance
 			if (m_pObject->IsInstanceOf("PLScene::SceneContainer"))
-				static_cast<SceneContainer*>(m_pObject)->Create(pClass->GetClassName());
+				m_pCreatedObject = static_cast<SceneContainer*>(m_pObject)->Create(pClass->GetClassName());
 
 		// Scene node modifier
 		} else if (pClass->IsDerivedFrom("PLScene::SceneNodeModifier")) {
 			// Create scene node modifier instance
 			if (m_pObject->IsInstanceOf("PLScene::SceneNode"))
-				static_cast<SceneNode*>(m_pObject)->AddModifier(pClass->GetClassName());
+				m_pCreatedObject = static_cast<SceneNode*>(m_pObject)->AddModifier(pClass->GetClassName());
 		}
 	}
 }
@@ -271,7 +280,7 @@ void SceneGraphMenu::QtSlotTriggeredClone()
 		// Do not clone automatic scene node modifiers
 		if (!(cSceneNodeModifier.GetFlags() & SceneNodeModifier::Automatic)) {
 			// Clone the scene node modifier
-			cSceneNodeModifier.GetSceneNode().AddModifier(cSceneNodeModifier.GetClass()->GetClassName(), cSceneNodeModifier.GetValues());
+			m_pCreatedObject = cSceneNodeModifier.GetSceneNode().AddModifier(cSceneNodeModifier.GetClass()->GetClassName(), cSceneNodeModifier.GetValues());
 		}
 	}
 }

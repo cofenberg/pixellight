@@ -49,7 +49,7 @@ class SceneGraphHeaderTreeItem : public SceneGraphNodeTreeItemBase {
 
 
 	public:
-		SceneGraphHeaderTreeItem(QObject *parent = nullptr) : SceneGraphNodeTreeItemBase(parent)
+		SceneGraphHeaderTreeItem(SceneGraphTreeModel &cModel, const QModelIndex &parentIdx, int rowNr, QObject *parent = nullptr) : SceneGraphNodeTreeItemBase(cModel, parentIdx, rowNr, parent)
 		{
 		}
 
@@ -82,7 +82,7 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 
 
 	public:
-		SceneGraphNodeModifierTreeItem(PLScene::SceneNodeModifier *nodeObj, QObject *parent = nullptr) : SceneGraphNodeTreeItemBase(parent),
+		SceneGraphNodeModifierTreeItem(SceneGraphTreeModel &cModel, const QModelIndex &parentIdx, int rowNr, PLScene::SceneNodeModifier *nodeObj, QObject *parent = nullptr) : SceneGraphNodeTreeItemBase(cModel, parentIdx, rowNr, parent),
 			m_nodeObj(nodeObj),
 			m_nodeName(nodeObj ? QtStringAdapter::PLToQt(m_nodeObj->GetClass()->GetName()) : "null modifier"),
 			m_nodeClassName(nodeObj ? QtStringAdapter::PLToQt(m_nodeObj->GetClass()->GetClassName()) : "null class"),
@@ -91,6 +91,12 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 		{
 			// Connect event handler
 			m_nodeObj->SignalDestroyed.Connect(EventHandlerOnDestroyed);
+		}
+		
+		virtual ~SceneGraphNodeModifierTreeItem()
+		{
+			if(m_nodeObj)
+				m_nodeObj->SignalDestroyed.Disconnect(EventHandlerOnDestroyed);
 		}
 
 		virtual QVariant data(const int column, const int role) override
@@ -135,9 +141,7 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 			// Argh! Mayday! We lost our scene node modifier!
 			m_nodeObj = nullptr;
 
-			// [TODO] Review this situation when the scene node modifier get's killed, update the tree view. Maybe we don't need
-			// to have an own event handler for each and every tree item and a single one for the whole tree is enough.
-			// (maybe we just need to know that an item is now invalid due to removal, then rebuild the tree?)
+			m_cModel.removeRow(m_cRow, m_cParentModelIndex);
 		}
 
 	private:
@@ -150,22 +154,25 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 
 };
 
-void CreateSceneGraphItemsFromContainer(PLScene::SceneContainer *pContainer, QObject *parent);
+void CreateSceneGraphItemsFromContainer(PLFrontendQt::DataModels::SceneGraphTreeModel& cModel, const QModelIndex& parentIndex, PLScene::SceneContainer* pContainer, QObject* parent);
 
 class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 
 
 	public:
-		SceneGraphNodeTreeItem(PLScene::SceneNode *nodeObj, QObject *parent = nullptr) : SceneGraphNodeTreeItemBase(parent),
+		SceneGraphNodeTreeItem(SceneGraphTreeModel &cModel, const QModelIndex &parentIdx, int rowNr, PLScene::SceneNode *nodeObj, QObject *parent = nullptr) : SceneGraphNodeTreeItemBase(cModel, parentIdx, rowNr, parent),
 			m_nodeObj(nodeObj),
 			EventHandlerOnDestroy(&SceneGraphNodeTreeItem::OnDestroy, this)
 		{
+			m_cModelIndex = m_cModel.index(m_cRow, 0, parentIdx);
 			// Connect event handler
 			m_nodeObj->SignalDestroy.Connect(EventHandlerOnDestroy);
+			
+			PLCore::String sName(nodeObj->GetName());
 
 			if (m_nodeObj->IsContainer()) {
 				PLScene::SceneContainer *container = (PLScene::SceneContainer*)m_nodeObj;
-				CreateSceneGraphItemsFromContainer(container, this);
+				CreateSceneGraphItemsFromContainer(cModel, m_cModelIndex, container, this);
 			}
 
 			for(PLCore::uint32 i=0; i<m_nodeObj->GetNumOfModifiers(); i++) {
@@ -177,10 +184,16 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 				//     not be saved with the scene. Such scene nodes modifiers may also be hidden for
 				//     instance within a scene editor."
 				if (!(node->GetFlags() & PLScene::SceneNodeModifier::Automatic))
-					new SceneGraphNodeModifierTreeItem(node, this);
+					new SceneGraphNodeModifierTreeItem(cModel, m_cModelIndex, i, node, this);
 			}
 
 			GetIconFromSceneNode();
+		}
+		
+		virtual ~SceneGraphNodeTreeItem()
+		{
+			if(m_nodeObj)
+				m_nodeObj->SignalDestroy.Disconnect(EventHandlerOnDestroy);
 		}
 
 		void GetIconFromSceneNode()
@@ -249,10 +262,8 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 		{
 			// Argh! Mayday! We lost our scene node!
 			m_nodeObj = nullptr;
-
-			// [TODO] Review this situation when the scene node get's killed, update the tree view. Maybe we don't need
-			// to have an own event handler for each and every tree item and a single one for the whole tree is enough.
-			// (maybe we just need to know that an item is now invalid due to removal, then rebuild the tree?)
+			
+			m_cModel.removeRow(m_cRow, m_cParentModelIndex);
 		}
 
 	private:
@@ -263,9 +274,9 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 
 };
 
-void CreateSceneGraphItemsFromContainer(PLScene::SceneContainer *pContainer, QObject *parent)
+void CreateSceneGraphItemsFromContainer(SceneGraphTreeModel &cModel, const QModelIndex &parentIndex, PLScene::SceneContainer *pContainer, QObject *parent)
 {
-	for (PLCore::uint32 i=0; i<pContainer->GetNumOfElements(); i++) {
+	for (PLCore::uint32 i=0, rowNr = 0; i<pContainer->GetNumOfElements(); ++i) {
 		// Get the current scene node
 		PLScene::SceneNode *node = pContainer->GetByIndex(i);
 
@@ -273,12 +284,15 @@ void CreateSceneGraphItemsFromContainer(PLScene::SceneContainer *pContainer, QOb
 		// -> "This scene node was created automatically during runtime and should
 		//     not be saved with the scene. Such scene nodes may also be hidden for
 		//     instance within a scene editor."
-		if (!(node->GetFlags() & PLScene::SceneNode::Automatic))
-			new SceneGraphNodeTreeItem(node, parent);
+		if ((node->GetFlags() & PLScene::SceneNode::Automatic))
+			continue;
+		
+		SceneGraphNodeTreeItem *item = new SceneGraphNodeTreeItem(cModel, parentIndex, rowNr, node, parent);
+		++rowNr;
 	}
 }
 
-SceneGraphTreeModel::SceneGraphTreeModel(QObject *parent) : TreeModelBase(new SceneGraphHeaderTreeItem, parent)
+SceneGraphTreeModel::SceneGraphTreeModel(QObject *parent) : TreeModelBase(new SceneGraphHeaderTreeItem(*this, QModelIndex(), 0), parent)
 {
 }
 
@@ -289,10 +303,11 @@ void SceneGraphTreeModel::SetStartNode(PLScene::SceneNode* nodeObj, bool hideSta
 	qDeleteAll(childs.begin(), childs.end());
 
 	if (nodeObj) {
-		if (!hideStartNode || !nodeObj->IsContainer())
-			new SceneGraphNodeTreeItem(nodeObj, GetRootItem());
+		if (!hideStartNode || !nodeObj->IsContainer()) {
+			SceneGraphNodeTreeItem *item = new SceneGraphNodeTreeItem(*this, index(0,0), 0,nodeObj, GetRootItem());
+		}
 		else
-			CreateSceneGraphItemsFromContainer(static_cast<PLScene::SceneContainer*>(nodeObj), GetRootItem());
+			CreateSceneGraphItemsFromContainer(*this, index(0,0), static_cast<PLScene::SceneContainer*>(nodeObj), GetRootItem());
 	}
 	endResetModel();
 }
@@ -329,11 +344,62 @@ QModelIndex SceneGraphTreeModel::GetModelIndexForSceneNode(PLScene::SceneNode *n
 	return QModelIndex();
 }
 
+void SceneGraphTreeModel::AddSceneNode(PLScene::SceneContainer *pContainer, PLScene::SceneNode *pSceneNode)
+{
+	QModelIndex parentIdx = GetModelIndexForSceneNode(pContainer);
+	// [TODO] handling items to the root SceneContainer (pContainer == nullptr)
+	if (!parentIdx.isValid())
+		return;
+	
+	SceneGraphNodeTreeItemBase *treeItem = GetSceneTreeItemFromIndex(parentIdx);
+	
+	int childCount = treeItem->children().count();
 
-#ifdef WIN32
+	beginInsertRows(parentIdx, childCount, childCount);
+	
+	new SceneGraphNodeTreeItem(*this, parentIdx, childCount, pSceneNode, treeItem);
+	
+	endInsertRows();
+}
+
+void SceneGraphTreeModel::AddSceneNodeModifier(PLScene::SceneNode *pParentNode, PLScene::SceneNodeModifier *pSceneNodeModifier)
+{
+	QModelIndex parentIdx = GetModelIndexForSceneNode(pParentNode);
+	if (!parentIdx.isValid())
+		return;
+	
+	SceneGraphNodeTreeItemBase *treeItem = GetSceneTreeItemFromIndex(parentIdx);
+	
+	int childCount = treeItem->children().count();
+
+	beginInsertRows(parentIdx, childCount, childCount);
+	
+	new SceneGraphNodeModifierTreeItem(*this, parentIdx, childCount, pSceneNodeModifier, treeItem);
+	
+	endInsertRows();
+}
+
 //[-------------------------------------------------------]
 //[ Public virtual QAbstractItemModel functions           ]
 //[-------------------------------------------------------]
+bool SceneGraphTreeModel::removeRows(int startRow, int count, const QModelIndex& parent)
+{
+	if (!parent.isValid())
+		return false;
+
+	beginRemoveRows(parent, startRow, startRow+count-1);
+	
+	QModelIndex childIdx = index(startRow, 0, parent);
+	// All tree items are created on the heap so calling delete is save
+	SceneGraphNodeTreeItemBase* childItem = GetSceneTreeItemFromIndex(childIdx);
+	delete childItem;
+	
+	endRemoveRows();
+	
+	return true;
+}
+
+#ifdef WIN32
 QModelIndexList SceneGraphTreeModel::match(const QModelIndex &start, int role, const QVariant &value, int hits, Qt::MatchFlags flags) const
 {
 	// [HACK] "QAbstractItemModel::match()" is allocating "QModelIndexList" elements from within the Qt shared library. "QModelIndexList" elements

@@ -29,6 +29,7 @@
 #include <QtGui/qmainwindow.h>
 #include <PLCore/Base/Class.h>
 #include <PLScene/Scene/SceneContainer.h>
+#include <PLScene/Scene/SceneNodeModifier.h>
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/DataModels/SceneGraphTreeModel.h"
 #include "PLFrontendQt/DataModels/TreeSortAndFilterProxyModel.h"
@@ -284,13 +285,30 @@ void DockWidgetSceneGraph::SetSceneContainerAndObject()
 *  @brief
 *    Updates the scene graph tree view
 */
-void DockWidgetSceneGraph::UpdateTreeView()
+void DockWidgetSceneGraph::UpdateTreeView(UpdateTreeReason cUpdateReason, PLCore::Object *pCreatedObject)
 {
-	// [TODO] Implement a more advanced solution which keeps the currently expanded items expanded
-	// -> Ensure that at least the current selection remains
-	Object *pSelectedObject = GetSelectedObject();
-	SetSceneContainer(GetSceneContainer());
-	PostSelectObject(pSelectedObject);
+	if (cUpdateReason == ItemAdded && pCreatedObject) {
+		if (pCreatedObject->IsInstanceOf("PLScene::SceneNode")) {
+			PLScene::SceneNode *pSceneNode = static_cast<PLScene::SceneNode*>(pCreatedObject);
+			PLScene::SceneContainer *pContainer = pSceneNode->GetContainer();
+			m_pSceneGraphTreeModel->AddSceneNode(pContainer, pSceneNode);
+		}
+		else if(pCreatedObject->IsInstanceOf("PLScene::SceneNodeModifier")) {
+			PLScene::SceneNodeModifier *pSceneNodeModifier = static_cast<PLScene::SceneNodeModifier*>(pCreatedObject);
+			PLCore::String sName(pSceneNodeModifier->GetClass()->GetName());
+			
+			bool bAutomatic = pSceneNodeModifier->GetFlags() & PLScene::SceneNodeModifier::Automatic;
+			if (bAutomatic)
+				return;
+			
+			PLScene::SceneNode &cParentNode = pSceneNodeModifier->GetSceneNode();
+			m_pSceneGraphTreeModel->AddSceneNodeModifier(&cParentNode, pSceneNodeModifier);
+		}
+	}
+	else if (cUpdateReason == ItemDeleted)
+	{
+		m_pQTreeView->selectionModel()->clearSelection();
+	}
 }
 
 /**
