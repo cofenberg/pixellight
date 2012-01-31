@@ -43,6 +43,13 @@ pl_implement_class(DockWidgetManager)
 
 
 //[-------------------------------------------------------]
+//[ Public static data                                    ]
+//[-------------------------------------------------------]
+const String DockWidgetManager::PreBroadcast  = "Pre";	/**< "Pre"-string */
+const String DockWidgetManager::PostBroadcast = "Post";	/**< "Post"-string */
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -73,6 +80,16 @@ DockWidget *DockWidgetManager::ShowDockWidget(const String &sClassName)
 {
 	// Get the first dock widget instance which is an instance of the given class
 	DockWidget *pDockWidget = GetFirstDockWidget(sClassName);
+	if (!pDockWidget) {
+		// There's no dock widget instance which is an instance of the given class, yet
+
+		// Get the chosen dock widget RTTI class...
+		const Class *pClass = ClassManager::GetInstance()->GetClass(sClassName);
+		if (pClass && pClass->IsDerivedFrom("PLFrontendQt::DockWidget")) {
+			// ... and create an instance of it (the dock widget will register itself within this dock widget manager)
+			pDockWidget = reinterpret_cast<DockWidget*>(pClass->Create(Params<Object*, QMainWindow*, DockWidgetManager*>(m_pQMainWindow, this)));
+		}
+	}
 	if (pDockWidget) {
 		// Get the encapsulated Qt dock widget
 		QDockWidget *pQDockWidget = pDockWidget->GetQDockWidget();
@@ -80,13 +97,6 @@ DockWidget *DockWidgetManager::ShowDockWidget(const String &sClassName)
 			pQDockWidget->show();
 			pQDockWidget->activateWindow();
 			pQDockWidget->raise();
-		}
-	} else {
-		// Get the chosen dock widget RTTI class...
-		const Class *pClass = ClassManager::GetInstance()->GetClass(sClassName);
-		if (pClass && pClass->IsDerivedFrom("PLFrontendQt::DockWidget")) {
-			// ... and create an instance of it (the dock widget will register itself within this dock widget manager)
-			pDockWidget = reinterpret_cast<DockWidget*>(pClass->Create(Params<Object*, QMainWindow*, DockWidgetManager*>(m_pQMainWindow, this)));
 		}
 	}
 
@@ -186,8 +196,21 @@ void DockWidgetManager::SetDockWidgetsAttributeDefault(const String &sName)
 */
 void DockWidgetManager::CallDockWidgetsMethod(const String &sName, DynParams &cParams)
 {
+	{ // Make a pre-broadcast
+		const String sPreName = PreBroadcast + sName;
+		for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
+			m_lstDockWidgets[i]->CallMethod(sPreName, cParams);
+	}
+
+	// Make the main broadcast
 	for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
 		m_lstDockWidgets[i]->CallMethod(sName, cParams);
+
+	{ // Make a post-broadcast
+		const String sPostName = PostBroadcast + sName;
+		for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
+			m_lstDockWidgets[i]->CallMethod(sPostName, cParams);
+	}
 }
 
 /**
@@ -196,8 +219,21 @@ void DockWidgetManager::CallDockWidgetsMethod(const String &sName, DynParams &cP
 */
 void DockWidgetManager::CallDockWidgetsMethod(const String &sName, const DynParams &cParams)
 {
+	{ // Make a pre-broadcast
+		const String sPreName = PreBroadcast + sName;
+		for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
+			m_lstDockWidgets[i]->CallMethod(sPreName, cParams);
+	}
+
+	// Make the main broadcast
 	for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
 		m_lstDockWidgets[i]->CallMethod(sName, cParams);
+
+	{ // Make a post-broadcast
+		const String sPostName = PostBroadcast + sName;
+		for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
+			m_lstDockWidgets[i]->CallMethod(sPostName, cParams);
+	}
 }
 
 /**
@@ -206,8 +242,21 @@ void DockWidgetManager::CallDockWidgetsMethod(const String &sName, const DynPara
 */
 void DockWidgetManager::CallDockWidgetsMethod(const String &sName, const String &sParams)
 {
+	{ // Make a pre-broadcast
+		const String sPreName = PreBroadcast + sName;
+		for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
+			m_lstDockWidgets[i]->CallMethod(sPreName, sParams);
+	}
+
+	// Make the main broadcast
 	for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
 		m_lstDockWidgets[i]->CallMethod(sName, sParams);
+
+	{ // Make a post-broadcast
+		const String sPostName = PostBroadcast + sName;
+		for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
+			m_lstDockWidgets[i]->CallMethod(sPostName, sParams);
+	}
 }
 
 /**
@@ -216,8 +265,21 @@ void DockWidgetManager::CallDockWidgetsMethod(const String &sName, const String 
 */
 void DockWidgetManager::CallDockWidgetsMethod(const String &sName, const XmlElement &cElement)
 {
+	{ // Make a pre-broadcast
+		const String sPreName = PreBroadcast + sName;
+		for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
+			m_lstDockWidgets[i]->CallMethod(sPreName, cElement);
+	}
+
+	// Make the main broadcast
 	for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
 		m_lstDockWidgets[i]->CallMethod(sName, cElement);
+
+	{ // Make a post-broadcast
+		const String sPostName = PostBroadcast + sName;
+		for (uint32 i=0; i<m_lstDockWidgets.GetNumOfElements(); i++)
+			m_lstDockWidgets[i]->CallMethod(sPostName, cElement);
+	}
 }
 
 /**

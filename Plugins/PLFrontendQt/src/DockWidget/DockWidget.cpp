@@ -267,12 +267,32 @@ void DockWidget::CallDockWidgetsMethod(const String &sName, DynParams &cParams)
 		// Get list of registered dock widgets
 		const Array<DockWidget*> &lstDockWidgets = m_pDockWidgetManager->m_lstDockWidgets;
 
-		// Perform broadcast, but exclude this emitting dock widget
+		{ // Make a pre-broadcast
+			const String sPreName = DockWidgetManager::PreBroadcast + sName;
+			for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
+				// Get the current dock widget, do the exclude test and broadcast
+				DockWidget *pDockWidget = lstDockWidgets[i];
+				if (pDockWidget != this)
+					pDockWidget->CallMethod(sPreName, cParams);
+			}
+		}
+
+		// Perform main broadcast, but exclude this emitting dock widget
 		for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
 			// Get the current dock widget, do the exclude test and broadcast
 			DockWidget *pDockWidget = lstDockWidgets[i];
 			if (pDockWidget != this)
 				pDockWidget->CallMethod(sName, cParams);
+		}
+
+		{ // Make a post-broadcast
+			const String sPostName = DockWidgetManager::PostBroadcast + sName;
+			for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
+				// Get the current dock widget, do the exclude test and broadcast
+				DockWidget *pDockWidget = lstDockWidgets[i];
+				if (pDockWidget != this)
+					pDockWidget->CallMethod(sPostName, cParams);
+			}
 		}
 	}
 }
@@ -288,12 +308,32 @@ void DockWidget::CallDockWidgetsMethod(const String &sName, const DynParams &cPa
 		// Get list of registered dock widgets
 		const Array<DockWidget*> &lstDockWidgets = m_pDockWidgetManager->m_lstDockWidgets;
 
-		// Perform broadcast, but exclude this emitting dock widget
+		{ // Make a pre-broadcast
+			const String sPreName = DockWidgetManager::PreBroadcast + sName;
+			for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
+				// Get the current dock widget, do the exclude test and broadcast
+				DockWidget *pDockWidget = lstDockWidgets[i];
+				if (pDockWidget != this)
+					pDockWidget->CallMethod(sPreName, cParams);
+			}
+		}
+
+		// Perform main broadcast, but exclude this emitting dock widget
 		for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
 			// Get the current dock widget, do the exclude test and broadcast
 			DockWidget *pDockWidget = lstDockWidgets[i];
 			if (pDockWidget != this)
 				pDockWidget->CallMethod(sName, cParams);
+		}
+
+		{ // Make a post-broadcast
+			const String sPostName = DockWidgetManager::PostBroadcast + sName;
+			for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
+				// Get the current dock widget, do the exclude test and broadcast
+				DockWidget *pDockWidget = lstDockWidgets[i];
+				if (pDockWidget != this)
+					pDockWidget->CallMethod(sPostName, cParams);
+			}
 		}
 	}
 }
@@ -309,12 +349,32 @@ void DockWidget::CallDockWidgetsMethod(const String &sName, const String &sParam
 		// Get list of registered dock widgets
 		const Array<DockWidget*> &lstDockWidgets = m_pDockWidgetManager->m_lstDockWidgets;
 
-		// Perform broadcast, but exclude this emitting dock widget
+		{ // Make a pre-broadcast
+			const String sPreName = DockWidgetManager::PreBroadcast + sName;
+			for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
+				// Get the current dock widget, do the exclude test and broadcast
+				DockWidget *pDockWidget = lstDockWidgets[i];
+				if (pDockWidget != this)
+					pDockWidget->CallMethod(sPreName, sParams);
+			}
+		}
+
+		// Perform main broadcast, but exclude this emitting dock widget
 		for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
 			// Get the current dock widget, do the exclude test and broadcast
 			DockWidget *pDockWidget = lstDockWidgets[i];
 			if (pDockWidget != this)
 				pDockWidget->CallMethod(sName, sParams);
+		}
+
+		{ // Make a post-broadcast
+			const String sPostName = DockWidgetManager::PostBroadcast + sName;
+			for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
+				// Get the current dock widget, do the exclude test and broadcast
+				DockWidget *pDockWidget = lstDockWidgets[i];
+				if (pDockWidget != this)
+					pDockWidget->CallMethod(sPostName, sParams);
+			}
 		}
 	}
 }
@@ -330,12 +390,32 @@ void DockWidget::CallDockWidgetsMethod(const String &sName, const XmlElement &cE
 		// Get list of registered dock widgets
 		const Array<DockWidget*> &lstDockWidgets = m_pDockWidgetManager->m_lstDockWidgets;
 
-		// Perform broadcast, but exclude this emitting dock widget
+		{ // Make a pre-broadcast
+			const String sPreName = DockWidgetManager::PreBroadcast + sName;
+			for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
+				// Get the current dock widget, do the exclude test and broadcast
+				DockWidget *pDockWidget = lstDockWidgets[i];
+				if (pDockWidget != this)
+					pDockWidget->CallMethod(sPreName, cElement);
+			}
+		}
+
+		// Perform main broadcast, but exclude this emitting dock widget
 		for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
 			// Get the current dock widget, do the exclude test and broadcast
 			DockWidget *pDockWidget = lstDockWidgets[i];
 			if (pDockWidget != this)
 				pDockWidget->CallMethod(sName, cElement);
+		}
+
+		{ // Make a post-broadcast
+			const String sPostName = DockWidgetManager::PostBroadcast + sName;
+			for (uint32 i=0; i<lstDockWidgets.GetNumOfElements(); i++) {
+				// Get the current dock widget, do the exclude test and broadcast
+				DockWidget *pDockWidget = lstDockWidgets[i];
+				if (pDockWidget != this)
+					pDockWidget->CallMethod(sPostName, cElement);
+			}
 		}
 	}
 }

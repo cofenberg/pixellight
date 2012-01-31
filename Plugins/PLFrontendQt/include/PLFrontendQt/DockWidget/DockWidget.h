@@ -238,6 +238,12 @@ class DockWidget : public PLCore::Object {
 		*  @remarks
 		*    Similar to the "PLCore::Object::CallMethod()"-method but iterates over all registered
 		*    dock widgets and calls the "CallMethod()"-method of each RTTI dock widget class instance.
+		*
+		*  @note
+		*   - Calling "Pre<method name>"
+		*   - Calling "<method name>"
+		*   - Calling "Post<method name>" (don't do anything in here which may influence the outside world)
+		*   - See "DockWidgetManager" class documentation for more details
 		*/
 		PLFRONTENDQT_API void CallDockWidgetsMethod(const PLCore::String &sName, PLCore::DynParams &cParams);
 

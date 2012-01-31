@@ -194,9 +194,9 @@ Object *DockWidgetSceneGraph::GetSelectedObject() const
 
 /**
 *  @brief
-*    Selects the given object
+*    Selects the given object (post-broadcast)
 */
-void DockWidgetSceneGraph::SelectObject(Object *pObject)
+void DockWidgetSceneGraph::PostSelectObject(Object *pObject)
 {
 	// Is there a scene graph tree model and tree view instance?
 	if (m_pSceneGraphTreeModel && m_pSortAndFilterModel && m_pQTreeView) {
@@ -215,6 +215,7 @@ void DockWidgetSceneGraph::SelectObject(Object *pObject)
 				m_pQTreeView->selectionModel()->select(cFilterModelIndex, QItemSelectionModel::SelectCurrent);
 
 				// Make the selected item visible if needed
+				// -> This has to be done after the main-broadcast is through
 				m_pQTreeView->scrollTo(cFilterModelIndex);
 			}
 		}
@@ -268,7 +269,7 @@ void DockWidgetSceneGraph::SetSceneContainerAndObject()
 				pObject = cParams.Return;
 				if (pObject) {
 					// This method handles the filtering
-					SelectObject(pObject);
+					PostSelectObject(pObject);
 
 					// Get the now selected object, null pointer if the found object one was rejected
 					pObject = GetSelectedObject();
@@ -289,7 +290,7 @@ void DockWidgetSceneGraph::UpdateTreeView()
 	// -> Ensure that at least the current selection remains
 	Object *pSelectedObject = GetSelectedObject();
 	SetSceneContainer(GetSceneContainer());
-	SelectObject(pSelectedObject);
+	PostSelectObject(pSelectedObject);
 }
 
 /**

@@ -1,3 +1,49 @@
+>> 31.01.2012
+[CO]
+PLFrontendQt:
+- "DockWidgetManager::ShowDockWidget()": Was not calling "show()", "activateWindow()" and "raise()" on a newly created RTTI dock widget.
+  After this minor change the "QTreeView::scrollTo()" issue we noticed was completly gone, without changing anything on the system itself
+  or on applications using this system. But it may just be luck that it's now working, and the discussed enhancement below should still
+  be done to be on the safe side.
+- An special issue occured in "DockWidgetSceneGraph::SelectObject()" when using "QTreeView::scrollTo()", resulting in an internal
+  discussion showing me that it's appearently not obvious how the RTTI dock widget system works. So, I added the following description
+  to "DockWidgetManager" to make it clear how the system is intented to work: ("Pre<method name>" and "Post<method name>" was just
+  added as a result of this internal discussion)
+  "
+     When using the "CallDockWidgetsMethod()"-method to perform a broadcast, the following actions are performed:
+    - Calling "Pre<method name>"
+    - Calling "<method name>"
+    - Calling "Post<method name>" (don't do anything in here which may influence the outside world)
+
+    Just calling directly "<method name>" may not be enough for every broadcast participator due to the near endless
+    possibilities what such a participator can actually do when receiving the broadcast. Let's have a more or less
+    abstract example to make the background clear:
+    For better usability a broadcast participator is calling the Qt method "QTreeView::scrollTo()" to bring something
+    into the visible area. "QTreeView::scrollTo()" is using the widget size, which may change during the main-broadcast
+    when any broadcast participator is for example opening another dock widget with additional information causing the GUI
+    to reduce the hight of our own dock widget. Or changing the size of the main window. Or changing the display resolution.
+    Or doing something totally unexpected crazy. So, while "QTreeView::scrollTo()" was correct at the exact time it was called,
+    the desired final result visible to the user may not be correct when the main-broadcast has been finished.
+    -> This is no problem of the GUI system, a GUI may not even be used at all in certain system constellation
+    -> This is no problem of any application using this system, the using application can't know any technical details of
+       a certain system constellation, nor what broadcast participators will do
+
+    Let's take "DockWidgetSceneGraph::SelectObject() as a concrete example, even if it may not be used in a certain system
+    constellation. In here, the order "issue" from above can't be resolved by simply ensuring that the broadcast receivers
+    are in the order required to make the special case "DockWidgetSceneGraph::SelectObject()" behaves correctly. Reasons:
+    1. Adding any fixed order would require additional information, which is not available to the system or users of the system
+    2. The system itself does not know "DockWidgetSceneGraph::SelectObject()", nor does it know what any broadcast participator do
+    3. Another broadcast participator like "Bob::SelectObject()" may require a totally different broadcast receiver order
+    4. Another broadcast like "Bob::TakesOverTheWorld()" may require a totally different broadcast receiver order
+    5. Any application using this system, can't know what's happening when doing a broadcast, and therefore can't
+       add any special hacks to work around issues possible with certain system configurations, which are also not
+       known due to the dynamic nature of the system. New plugins can add new dock widget required new special behaviour.
+    6. Adding any restrictions to this chaotic system would artificially limit it's use or would add dependencies where no
+       dependencies are required
+    "
+
+
+
 >> 29.01.2012
 [SW]
 PLFrontendQt:
