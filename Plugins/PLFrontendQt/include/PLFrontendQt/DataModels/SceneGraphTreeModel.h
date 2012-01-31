@@ -102,11 +102,13 @@ class PLFRONTENDQT_API SceneGraphTreeModel : public TreeModelBase {
 		QModelIndex GetModelIndexForSceneNode(PLScene::SceneNode* nodeObj);
 
 
+#ifdef WIN32
 	//[-------------------------------------------------------]
 	//[ Public virtual QAbstractItemModel functions           ]
 	//[-------------------------------------------------------]
 	public:
 		virtual QModelIndexList match(const QModelIndex &start, int role, const QVariant &value, int hits = 1, Qt::MatchFlags flags = Qt::MatchFlags(Qt::MatchStartsWith|Qt::MatchWrap)) const override;
+#endif
 
 
 };

@@ -1,6 +1,12 @@
 >> 31.01.2012
 [CO]
 PLFrontendQt:
+- "SceneGraphTreeModel": enable the hack only on Windows builds. No need to pollute non Windows builds with Windows only hacks/workarounds
+
+
+>> 31.01.2012
+[CO]
+PLFrontendQt:
 - "DockWidgetManager::ShowDockWidget()": Was not calling "show()", "activateWindow()" and "raise()" on a newly created RTTI dock widget.
   After this minor change the "QTreeView::scrollTo()" issue we noticed was completly gone, without changing anything on the system itself
   or on applications using this system. But it may just be luck that it's now working, and the discussed enhancement below should still

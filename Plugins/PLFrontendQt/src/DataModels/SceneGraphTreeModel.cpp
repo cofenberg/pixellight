@@ -330,6 +330,7 @@ QModelIndex SceneGraphTreeModel::GetModelIndexForSceneNode(PLScene::SceneNode *n
 }
 
 
+#ifdef WIN32
 //[-------------------------------------------------------]
 //[ Public virtual QAbstractItemModel functions           ]
 //[-------------------------------------------------------]
@@ -447,6 +448,7 @@ QModelIndexList SceneGraphTreeModel::match(const QModelIndex &start, int role, c
     }
     return result;
 }
+#endif
 
 
 //[-------------------------------------------------------]
