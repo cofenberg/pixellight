@@ -1,3 +1,10 @@
+>> 01.02.2012
+[CO]
+PLFrontendQt:
+- "DockWidgetSceneGraphQObject::UpdateTreeView()": Usability: Automatically select the new object
+
+
+
 >> 31.01.2012
 [SW]
 PLFrontendQt:

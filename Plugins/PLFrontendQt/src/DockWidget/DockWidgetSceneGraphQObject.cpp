@@ -28,6 +28,7 @@
 #include <PLScene/Scene/SceneNodeModifier.h>
 #include "PLFrontendQt/DataModels/SceneGraphTreeModel.h"
 #include "PLFrontendQt/DataModels/TreeSortAndFilterProxyModel.h"
+#include "PLFrontendQt/DockWidget/DockWidgetManager.h"
 #include "PLFrontendQt/DockWidget/DockWidgetSceneGraph.h"
 #include "PLFrontendQt/DockWidget/DockWidgetSceneGraphQObject.h"
 
@@ -91,6 +92,13 @@ void DockWidgetSceneGraphQObject::UpdateTreeView(SceneGraphMenu::EAction nAction
 						// Ignore automatically generated stuff
 						if (!(pSceneNodeModifier->GetFlags() & SceneNodeModifier::Automatic))
 							m_pDockWidgetSceneGraph->m_pSceneGraphTreeModel->AddSceneNodeModifier(&pSceneNodeModifier->GetSceneNode(), pSceneNodeModifier);
+					}
+
+					// Usability: Automatically select the new object
+					{ // -> Perform a dock widget manager broadcast (do not exclude this emitting dock widget)
+						DockWidgetManager *pDockWidgetManager = m_pDockWidgetSceneGraph->GetDockWidgetManager();
+						if (pDockWidgetManager)
+							pDockWidgetManager->CallDockWidgetsMethod("SelectObject", Params<void, Object*>(pCreatedObject));
 					}
 				}
 				break;

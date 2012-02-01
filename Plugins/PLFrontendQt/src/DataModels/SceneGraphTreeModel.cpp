@@ -344,6 +344,21 @@ QModelIndex SceneGraphTreeModel::GetModelIndexForSceneNode(PLScene::SceneNode *n
 	return QModelIndex();
 }
 
+QModelIndex SceneGraphTreeModel::GetModelIndexForSceneNodeModifier(PLScene::SceneNodeModifier *nodeObj)
+{
+	if(nodeObj) {
+		// Search through the complete model data to find the SceneNodeModifier
+		// The memory address is used for comparison. Which can be retreived via the ItemDataRole InternalObjectPointerRole 
+		// The search stops when the first item with the same memory address was found.
+		QModelIndexList items = this->match(index(0,0), SceneGraphTreeModel::InternalObjectPointerRole, VPtr<PLScene::SceneNodeModifier>::asQVariant(nodeObj), 1, Qt::MatchRecursive);
+		// return the model index if we found something
+		if(items.count() == 1)
+			return items[0];
+	}
+	
+	return QModelIndex();
+}
+
 void SceneGraphTreeModel::AddSceneNode(PLScene::SceneContainer *pContainer, PLScene::SceneNode *pSceneNode)
 {
 	QModelIndex parentIdx = GetModelIndexForSceneNode(pContainer);

@@ -199,26 +199,37 @@ Object *DockWidgetSceneGraph::GetSelectedObject() const
 */
 void DockWidgetSceneGraph::PostSelectObject(Object *pObject)
 {
-	// Is there a scene graph tree model and tree view instance?
+	// Is there a scene graph tree model and tree view instance
 	if (m_pSceneGraphTreeModel && m_pSortAndFilterModel && m_pQTreeView) {
-		// We only know "PLScene::SceneNode"
-		SceneNode *pSceneNode = nullptr;
-		if (pObject && pObject->IsInstanceOf("PLScene::SceneNode"))
-			pSceneNode = static_cast<SceneNode*>(pObject);
-		if (pSceneNode) {
-			// Get the model index for the given scene node
-			const QModelIndex cSourceIndex = m_pSceneGraphTreeModel->GetModelIndexForSceneNode(pSceneNode);
-			if (cSourceIndex.isValid()) {
-				// We use an QSortAndFilterProxyModel so we have to map the model index of the SceneGraphTreeModel to an index of the proxy model
-				const QModelIndex cFilterModelIndex = m_pSortAndFilterModel->mapFromSource(cSourceIndex);
+		// The model index for the given scene node or scene node modifier
+		QModelIndex cSourceIndex;
 
-				// Select the item as the current one
-				m_pQTreeView->selectionModel()->select(cFilterModelIndex, QItemSelectionModel::SelectCurrent);
+		// Object given?
+		if (pObject) {
+			// Is it a scene node?
+			if (pObject->IsInstanceOf("PLScene::SceneNode")) {
+				// Get the model index for the given scene node
+				cSourceIndex = m_pSceneGraphTreeModel->GetModelIndexForSceneNode(static_cast<SceneNode*>(pObject));
 
-				// Make the selected item visible if needed
-				// -> This has to be done after the main-broadcast is through
-				m_pQTreeView->scrollTo(cFilterModelIndex);
+			// Is it a scene node modifier?
+			} else if (pObject->IsInstanceOf("PLScene::SceneNodeModifier")) {
+				// Get the model index for the given scene node modifier
+				cSourceIndex = m_pSceneGraphTreeModel->GetModelIndexForSceneNodeModifier(static_cast<SceneNodeModifier*>(pObject));
 			}
+		}
+
+		// Is the Qt model index valid?
+		if (cSourceIndex.isValid()) {
+			// We use an QSortAndFilterProxyModel so we have to map the model index of the SceneGraphTreeModel to an index of the proxy model
+			const QModelIndex cFilterModelIndex = m_pSortAndFilterModel->mapFromSource(cSourceIndex);
+
+			// Select the item as the current one
+			// -> We only support one selected item at the same time
+			m_pQTreeView->selectionModel()->select(cFilterModelIndex, QItemSelectionModel::ClearAndSelect);
+
+			// Make the selected item visible if needed
+			// -> This has to be done after the main-broadcast is through
+			m_pQTreeView->scrollTo(cFilterModelIndex);
 		}
 	}
 }
