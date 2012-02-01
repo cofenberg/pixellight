@@ -1,6 +1,7 @@
 >> 01.02.2012
 [CO]
 - "PixelLightBuild"-document: "Windows"-chapter: Added "Using the Build PixelLight Version in MSVC"
+- "PixelLightScript"-document: "Script"-chapter: Added "Creating a RTTI Class Instance"
 
 
 
