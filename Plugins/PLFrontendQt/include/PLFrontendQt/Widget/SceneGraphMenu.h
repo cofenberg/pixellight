@@ -130,7 +130,7 @@ class SceneGraphMenu : public QMenu {
 
 		/**
 		*  @brief
-		*    Fills the add menu recursivity
+		*    Fills the add menu recursive
 		*
 		*  @param[in] cQMenu
 		*    Current Qt menu to fill

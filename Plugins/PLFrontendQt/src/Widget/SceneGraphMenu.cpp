@@ -119,7 +119,7 @@ void SceneGraphMenu::OnDestroyed()
 
 /**
 *  @brief
-*    Fills the add menu recursivity
+*    Fills the add menu recursive
 */
 void SceneGraphMenu::FillAddWindowRec(QMenu &cQMenu, const String &sBaseClass)
 {
