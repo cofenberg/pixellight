@@ -62,17 +62,10 @@ class PLFRONTENDQT_API SceneGraphNodeTreeItemBase : public TreeItemBase {
 
 
 	//[-------------------------------------------------------]
-	//[ Qt definitions (MOC)                                  ]
-	//[-------------------------------------------------------]
-	Q_OBJECT	// All files using the Q_OBJECT macro need to be compiled using the Meta-Object Compiler (MOC) of Qt, else slots won't work!
-				// (VisualStudio: Header file -> Right click -> Properties -> "Custom Build Tool")
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		explicit SceneGraphNodeTreeItemBase(SceneGraphTreeModel &cModel, const QModelIndex &parentIdx, int rowNr, QObject *parent = nullptr);
+		explicit SceneGraphNodeTreeItemBase(SceneGraphTreeModel &cModel, const QModelIndex &parentIdx, int rowNr, TreeItemBase *parent);
 		virtual bool IsSceneNode() = 0;
 		virtual bool IsSceneNodeModifier() = 0;
 		virtual PLCore::Object *GetObject() = 0;

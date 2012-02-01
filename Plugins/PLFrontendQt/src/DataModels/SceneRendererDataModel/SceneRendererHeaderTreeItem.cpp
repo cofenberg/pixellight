@@ -34,7 +34,7 @@ namespace DataModels {
 namespace SceneRendererDataModel {
 
 
-SceneRendererHeaderTreeItem::SceneRendererHeaderTreeItem(QObject *parent) : TreeItemBase(2, parent)
+SceneRendererHeaderTreeItem::SceneRendererHeaderTreeItem(TreeItemBase *parent) : TreeItemBase(2, parent)
 {
 }
 

@@ -49,17 +49,10 @@ class PLFRONTENDQT_API HeaderTreeItem : public TreeItemBase {
 
 
 	//[-------------------------------------------------------]
-	//[ Qt definitions (MOC)                                  ]
-	//[-------------------------------------------------------]
-	Q_OBJECT	// All files using the Q_OBJECT macro need to be compiled using the Meta-Object Compiler (MOC) of Qt, else slots won't work!
-				// (VisualStudio: Header file -> Right click -> Properties -> "Custom Build Tool")
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		explicit HeaderTreeItem(QObject *parent = nullptr);
+		explicit HeaderTreeItem(TreeItemBase *parent = nullptr);
 		void setHeaderItems(const QStringList &headerItems);
 		virtual QVariant data(const int column, const int role) override;
 

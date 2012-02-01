@@ -49,7 +49,7 @@ class ClassListInfoTreeItemBase : public TreeItemBase {
 
 
 	public:
-		ClassListInfoTreeItemBase(bool isModule, const QString &name, const QString &description, QObject *parent = nullptr) : TreeItemBase(1, parent),
+		ClassListInfoTreeItemBase(bool isModule, const QString &name, const QString &description, TreeItemBase *parent = nullptr) : TreeItemBase(1, parent),
 			m_sName(name),
 			m_sDescription(description),
 			m_isModule(isModule)
@@ -92,12 +92,12 @@ class ModuleInfoTreeItem : public ClassListInfoTreeItemBase {
 
 
 	public:
-		ModuleInfoTreeItem(const Module &moduleItem, QObject *parent = nullptr) : ClassListInfoTreeItemBase(true, QtStringAdapter::PLToQt(moduleItem.GetName()), QtStringAdapter::PLToQt(moduleItem.GetDescription()), parent),
+		ModuleInfoTreeItem(const Module &moduleItem, TreeItemBase *parent = nullptr) : ClassListInfoTreeItemBase(true, QtStringAdapter::PLToQt(moduleItem.GetName()), QtStringAdapter::PLToQt(moduleItem.GetDescription()), parent),
 			m_sVendor(QtStringAdapter::PLToQt(moduleItem.GetVendor())),
 			m_sLicense(QtStringAdapter::PLToQt(moduleItem.GetLicense())),
 			m_sFilename(QtStringAdapter::PLToQt(moduleItem.GetFilename()))
 		{
-			SetTooltipText(tr("<table>"
+			SetTooltipText(QObject::tr("<table>"
 							"<tr><td bgcolor=#00ff00 colspan=\"2\">Module Information</td></tr>"
 							"<tr><td>Name: </td><td>%1</td></tr>"
 							"<tr><td>Description: </td><td>%2</td></tr>"
@@ -133,11 +133,11 @@ class ClassInfoTreeItem : public ClassListInfoTreeItemBase {
 
 
 	public:
-		ClassInfoTreeItem(const Class &classItem, QObject *parent = nullptr) : ClassListInfoTreeItemBase(false, QtStringAdapter::PLToQt(classItem.GetClassName()), QtStringAdapter::PLToQt(classItem.GetDescription()), parent),
+		ClassInfoTreeItem(const Class &classItem, TreeItemBase *parent = nullptr) : ClassListInfoTreeItemBase(false, QtStringAdapter::PLToQt(classItem.GetClassName()), QtStringAdapter::PLToQt(classItem.GetDescription()), parent),
 			m_sBaseClass(QtStringAdapter::PLToQt(classItem.GetBaseClassName())),
 			m_sNameWithoutNameSpace(QtStringAdapter::PLToQt(classItem.GetName()))
 		{
-			SetTooltipText(tr("<table>"
+			SetTooltipText(QObject::tr("<table>"
 							"<tr><td bgcolor=#00ff00 colspan=\"2\">Class Information</td></tr>"
 							"<tr><td>Name: </td><td>%1</td></tr>"
 							"<tr><td>Description: </td><td>%2</td></tr>"
@@ -168,7 +168,7 @@ class ClassInfoTreeItem : public ClassListInfoTreeItemBase {
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
-ClassListModel::ClassListModel(bool hierarchical, QObject *parent) : TreeModelBase(new HeaderTreeItem(parent), parent)
+ClassListModel::ClassListModel(bool hierarchical, QObject *parent) : TreeModelBase(new HeaderTreeItem, parent)
 {
 	QStringList headerItems;
 	headerItems << "Element";
@@ -211,7 +211,7 @@ void ClassListModel::SetupModel(bool hierarchical)
 	endResetModel();
 }
 
-void ClassListModel::CreateClassItemsFromModule(const Module &moduleItem, QObject *parent)
+void ClassListModel::CreateClassItemsFromModule(const Module &moduleItem, TreeItemBase *parent)
 {
 	const List<const Class*> classes = moduleItem.GetClasses();
 
@@ -224,7 +224,7 @@ void ClassListModel::CreateClassItemsFromModule(const Module &moduleItem, QObjec
 	}
 }
 
-void ClassListModel::CreateHierarchicalClassItems(const Class &baseClass, QObject *parent)
+void ClassListModel::CreateHierarchicalClassItems(const Class &baseClass, TreeItemBase *parent)
 {
 	List<const Class*> classes;
 	baseClass.GetDerivedClasses(classes);

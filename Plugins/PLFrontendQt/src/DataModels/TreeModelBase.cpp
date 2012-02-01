@@ -37,13 +37,11 @@ namespace DataModels {
 TreeModelBase::TreeModelBase(TreeItemBase *rootItem, QObject *parent) : QAbstractItemModel(parent),
 	m_rootItem(rootItem)
 {
-	// Set parent in constructor body to make sure that the QObject is already completely constructed
-	if (m_rootItem)
-		m_rootItem->setParent(this);
 }
 
 TreeModelBase::~TreeModelBase()
 {
+	delete m_rootItem;
 }
 
 QModelIndex TreeModelBase::index(int row, int column, const QModelIndex &parent) const
@@ -104,8 +102,9 @@ QVariant TreeModelBase::data(const QModelIndex &index, int role) const
 	// Get tree item from model index
 	TreeItemBase *item = static_cast<TreeItemBase*>(index.internalPointer());
 
+	int column = index.column();
 	// Ask tree item for the data for the given column and role
-	return item->data(index.column(), role);
+	return item->data(column, role);
 }
 
 QVariant TreeModelBase::headerData(int section, Qt::Orientation orientation, int role) const

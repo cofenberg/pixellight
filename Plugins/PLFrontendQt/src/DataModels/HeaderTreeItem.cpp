@@ -33,7 +33,7 @@ namespace PLFrontendQt {
 namespace DataModels {
 
 
-HeaderTreeItem::HeaderTreeItem(QObject *parent) : TreeItemBase(parent)
+HeaderTreeItem::HeaderTreeItem(TreeItemBase *parent) : TreeItemBase(parent)
 {
 }
 

@@ -43,7 +43,7 @@ class AttributeInfoHeaderTreeItem : public TreeItemBase {
 
 
 	public:
-		AttributeInfoHeaderTreeItem(QObject *parent = nullptr) : TreeItemBase(2, parent)
+		AttributeInfoHeaderTreeItem(TreeItemBase *parent = nullptr) : TreeItemBase(2, parent)
 		{
 		}
 
@@ -63,7 +63,7 @@ class AttributeInfoHeaderTreeItem : public TreeItemBase {
 };
 
 
-PLIntrospectionModel::PLIntrospectionModel(QObject *parent) : TreeModelBase(new AttributeInfoHeaderTreeItem(parent), parent)
+PLIntrospectionModel::PLIntrospectionModel(QObject *parent) : TreeModelBase(new AttributeInfoHeaderTreeItem, parent)
 {
 }
 
@@ -74,8 +74,7 @@ PLIntrospectionModel::PLIntrospectionModel(DataModels::TreeItemBase *rootItem, Q
 void PLIntrospectionModel::SetObject(PLCore::Object *Obj)
 {
 	beginResetModel();
-	const QObjectList &childs = GetRootItem()->children();
-	qDeleteAll(childs.begin(), childs.end());
+	GetRootItem()->clearChildren();
 
 	if (Obj) {
 		PLCore::List<PLCore::DynFuncPtr> funcs;

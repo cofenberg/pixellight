@@ -41,6 +41,8 @@
 namespace PLFrontendQt {
 namespace DataModels {
 
+class TreeModelBase;
+
 
 //[-------------------------------------------------------]
 //[ Classes                                               ]
@@ -49,29 +51,91 @@ namespace DataModels {
 *  @brief
 *    Tree item base
 */
-class PLFRONTENDQT_API TreeItemBase : public QObject {
-
-
-	//[-------------------------------------------------------]
-	//[ Qt definitions (MOC)                                  ]
-	//[-------------------------------------------------------]
-	Q_OBJECT	// All files using the Q_OBJECT macro need to be compiled using the Meta-Object Compiler (MOC) of Qt, else slots won't work!
-				// (VisualStudio: Header file -> Right click -> Properties -> "Custom Build Tool")
+class PLFRONTENDQT_API TreeItemBase {
 
 
 	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		explicit TreeItemBase(QObject *parent = nullptr);
-		TreeItemBase(int columnCount, QObject *parent = nullptr);
-		virtual ~TreeItemBase(){}
+		explicit TreeItemBase(TreeItemBase *parent = nullptr);
+		TreeItemBase(int columnCount, TreeItemBase* parent);
+		virtual ~TreeItemBase();
 
 		int columnCount() const;
 		int row() const;
 		virtual QVariant data(const int column, const int role) = 0;
 		virtual bool setData(const int column, const QVariant &value, const int role) { return false; };
 		Qt::ItemFlags flags( const int column) const;
+		
+		/**
+		*  @brief
+		*    Adds an child to this tree node
+		* 
+		*  @param[in] pChild
+		*    the child object to be added
+		* 
+		*  @remarks
+		*    The item takes ownership of this item so it can't be an stack object
+		*/
+		void AddChild(TreeItemBase* pChild);
+		
+		/**
+		*  @brief
+		*    Insert an child to this tree node
+		* 
+		*  @param[in] pChild
+		*    the child object to be added
+		* 
+		*  @param[in] cPosition
+		*    the position at which the child should be added
+		* 
+		*  @remarks
+		*    The item takes ownership of this item so it can't be an stack object
+		*/
+		void InsertChild(TreeItemBase* pChild, int cPosition);
+		
+		/**
+		*  @brief
+		*    Remove an child from this tree node
+		* 
+		*  @param[in] pChild
+		*    the child object to be removed
+		*
+		 *  @param[in] bDestroy
+		*    should the child be destroyed?
+		*
+		*  @remarks
+		*    the child item gets destroyed
+		*/
+		void RemoveChild(TreeItemBase* pChild, bool bDestroy = true);
+		
+		/**
+		*  @brief
+		*   Returns a list of child objects.
+		*
+		*  @return
+		*    a const reference to the internal child list
+		*/
+		const QList<TreeItemBase*>& children() const;
+		
+		/**
+		*  @brief
+		*   Removes all child items from the internal list
+		*
+		*  @remarks
+		*    The child items gets destroyed, after this all hold references/pointer to such a child is invalid
+		*/
+		void clearChildren();
+		
+		/**
+		*  @brief
+		*   Returns the parent item of this item
+		*
+		*  @return
+		*    the parent item, can be a null pointer when this item has no parent
+		*/
+		TreeItemBase* parent() const;
 
 
 	//[-------------------------------------------------------]
@@ -81,14 +145,17 @@ class PLFRONTENDQT_API TreeItemBase : public QObject {
 		void SetFlags(const int column, const Qt::ItemFlags flags);
 		void RemoveFlags(const int column, const Qt::ItemFlags flags);
 		void SetColumnCount(const int columnCount);
+		void ChangeParent(TreeItemBase* pNewParent, bool bNoAdd = false);
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		QMap<int, Qt::ItemFlags>	m_flagsMap;
-		int							m_columnCount;
+		QMap<int, Qt::ItemFlags>	 m_flagsMap;
+		int							 m_columnCount;
+		TreeItemBase				*m_pParent;
+		QList<TreeItemBase*>		 m_cChildren;
 
 
 };

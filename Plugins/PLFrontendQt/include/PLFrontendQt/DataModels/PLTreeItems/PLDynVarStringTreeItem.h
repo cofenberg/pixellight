@@ -59,17 +59,10 @@ class PLFRONTENDQT_API PLDynVarStringTreeItem : public TreeItemBase {
 
 
 	//[-------------------------------------------------------]
-	//[ Qt definitions (MOC)                                  ]
-	//[-------------------------------------------------------]
-	Q_OBJECT	// All files using the Q_OBJECT macro need to be compiled using the Meta-Object Compiler (MOC) of Qt, else slots won't work!
-				// (VisualStudio: Header file -> Right click -> Properties -> "Custom Build Tool")
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		explicit PLDynVarStringTreeItem(PLCore::DynVar *dynVar, PLDynVarTreeItemTypes::DynVarTreeItemTypes dynVarType = PLDynVarTreeItemTypes::String, QObject *parent = nullptr);
+		explicit PLDynVarStringTreeItem(PLCore::DynVar *dynVar, PLDynVarTreeItemTypes::DynVarTreeItemTypes dynVarType = PLDynVarTreeItemTypes::String, TreeItemBase *parent = nullptr);
 		virtual QVariant data(const int column, const int role) override;
 		virtual bool setData(const int column, const QVariant &value, const int role) override;
 
