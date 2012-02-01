@@ -6,6 +6,7 @@ PLFrontendQt:
 	- The TreeItem takes ownership of an child item. When the TreeItem gest destroyed then also the childs gets destroyed as well.
 	- When a child item gets destroyed it removes itself from the parent
 	- This management requires that an child element can't be an stack object. The Items must be created on the heap.
+- Replaced all model specific header tree items with the generic HeaderTreeItem.
 
 
 

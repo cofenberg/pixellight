@@ -33,6 +33,7 @@
 #include <PLScene/Scene/SceneNodeModifier.h>
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/DataModels/TreeItemBase.h"
+#include "PLFrontendQt/DataModels/HeaderTreeItem.h"
 #include "PLFrontendQt/DataModels/SceneGraphNodeTreeItemBase.h"
 #include "PLFrontendQt/DataModels/SceneGraphTreeModel.h"
 #include "PLFrontendQt/DataModels/Helper.h"
@@ -44,39 +45,6 @@
 namespace PLFrontendQt {
 namespace DataModels {
 
-
-class SceneGraphHeaderTreeItem : public SceneGraphNodeTreeItemBase {
-
-
-	public:
-		SceneGraphHeaderTreeItem(SceneGraphTreeModel &cModel, const QModelIndex &parentIdx, int rowNr, TreeItemBase *parent = nullptr) : SceneGraphNodeTreeItemBase(cModel, parentIdx, rowNr, parent)
-		{
-		}
-
-		virtual QVariant data(const int column, const int role) //override
-		{
-			if (column == 0)
-				return "Node Name";
-
-			return QVariant();
-		}
-
-		bool IsSceneNode() {
-			return false;
-		}
-
-		bool IsSceneNodeModifier()
-		{
-			return false;
-		}
-
-		PLCore::Object *GetObject()
-		{
-			return nullptr;
-		}
-
-
-};
 
 class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 
@@ -294,8 +262,13 @@ void CreateSceneGraphItemsFromContainer(PLFrontendQt::DataModels::SceneGraphTree
 	}
 }
 
-SceneGraphTreeModel::SceneGraphTreeModel(QObject *parent) : TreeModelBase(new SceneGraphHeaderTreeItem(*this, QModelIndex(), 0), parent)
+SceneGraphTreeModel::SceneGraphTreeModel(QObject *parent) : TreeModelBase(new HeaderTreeItem, parent)
 {
+	QStringList headerItems;
+	headerItems << "Node Name";
+
+	HeaderTreeItem *header = static_cast<HeaderTreeItem*>(GetRootItem());
+	header->setHeaderItems(headerItems);
 }
 
 void SceneGraphTreeModel::SetStartNode(PLScene::SceneNode* nodeObj, bool hideStartNode)
