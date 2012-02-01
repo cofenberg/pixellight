@@ -229,7 +229,13 @@ void DockWidgetSceneGraph::PostSelectObject(Object *pObject)
 
 			// Make the selected item visible if needed
 			// -> This has to be done after the main-broadcast is through
-			m_pQTreeView->scrollTo(cFilterModelIndex);
+			// -> Usability: By default it's ensured that the selection will be visible, the item may
+			//    be on top of our tree view or on the bottom. In case it's e.g. a scene node with
+			//    expanded scene node modifiers and the selected item is placed at the bottom of the
+			//    widget one has to scroll before it's possible to access a modifier. By asking Qt
+			//    to place the item at the center of the widget the item is always at the same position
+			//    and it's easier for the eye to quickly find the selection, need for scrolling is also reduced.
+			m_pQTreeView->scrollTo(cFilterModelIndex, QAbstractItemView::PositionAtCenter);
 		}
 	}
 }
