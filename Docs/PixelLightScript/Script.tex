@@ -407,3 +407,12 @@ myRTTIObject.MySignalParameter.Connect(MySlotFunction)
 -- Emit the RTTI signal
 myRTTIObject:MySignalParameter(42)
 \end{lstlisting}
+
+
+\subsection{Creating a \ac{RTTI} Class Instance via Script}
+It's possible to create a \ac{RTTI} class instance via script. This instance is then managed by the script and will automatically be destroyed when it's no longer referenced. For the purpose of creating a \ac{RTTI} class instance via script we're providing the \emph{PL.ClassManager.CreateByConstructor()}\footnote{See chapter~\ref{ScriptBindingsPlugin} for more information about available script bindings} function which can be used as seen within source~code~\ref{Code:CreatingARTTIClassInstanceViaScript}.
+\begin{lstlisting}[language=lua,float=htb,label=Code:CreatingARTTIClassInstanceViaScript,caption={Creating a RTTI Class Instance via Script}]
+cppCamcorder = PL.ClassManager.CreateByConstructor("PLEngine::Camcorder", "ParameterConstructor", "Param0=\"" .. tostring(PL.GetApplication()) .. "\"")
+cppCamcorder:StartCamcorderPlayback("MyAwesomeMovie")
+\end{lstlisting}
+This example creates an instance of the \emph{PLEngine::Camcorder} class, the constructor is provided with a pointer to the C++ application class requested via the script binding function \emph{PL.GetApplication()}. The created \ac{RTTI} class instance can be used as usual as seen in the presented example. You don't need to care about the fact that this instance was created by the script. By using this approach, it's possible to create more complex or performance critical loose components within C++, and then instancing and using it easily from inside a script.

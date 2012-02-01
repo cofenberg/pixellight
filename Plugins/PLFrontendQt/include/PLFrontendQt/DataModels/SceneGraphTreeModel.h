@@ -101,6 +101,7 @@ class PLFRONTENDQT_API SceneGraphTreeModel : public TreeModelBase {
 		PLScene::SceneNodeModifier *GetSceneNodeModifierFromIndex(const QModelIndex &index);
 		SceneGraphNodeTreeItemBase *GetSceneTreeItemFromIndex(const QModelIndex &index);
 		QModelIndex GetModelIndexForSceneNode(PLScene::SceneNode* nodeObj);
+		QModelIndex GetModelIndexForSceneNodeModifier(PLScene::SceneNodeModifier* nodeObj);
 		void AddSceneNode(PLScene::SceneContainer *pContainer, PLScene::SceneNode *pSceneNode, int cPosition = -1);
 		void AddSceneNodeModifier(PLScene::SceneNode *pParentNode, PLScene::SceneNodeModifier *pSceneNodeModifier, int cPosition = -1);
 

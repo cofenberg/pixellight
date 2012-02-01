@@ -72,6 +72,21 @@ class SceneGraphMenu : public QMenu {
 
 
 	//[-------------------------------------------------------]
+	//[ Public definitions                                    ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Performed action
+		*/
+		enum EAction {
+			ActionUnknown,	/**< Performed action is unknown */
+			ActionAdded,	/**< Something was added */
+			ActionDeleted	/**< Something was deleted */
+		};
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -92,12 +107,15 @@ class SceneGraphMenu : public QMenu {
 
 		/**
 		*  @brief
-		*    Returns the created object instance if an create/clone action was done. Otherwise an nullptr is returned
+		*    Returns the created object instance if an create/clone action was done
+		*
+		*  @return
+		*    The created object instance if an create/clone action was done, otherwise a null pointer will be returned
+		*
+		*  @note
+		*    - Use the returnd object pointer at once when this menu returns, do not use this method later one because the pointer may have become invalid
 		*/
-		PLCore::Object* GetCreatedObject()
-		{
-			return m_pCreatedObject;
-		}
+		PLCore::Object *GetCreatedObject() const;
 
 
 	//[-------------------------------------------------------]
@@ -112,7 +130,7 @@ class SceneGraphMenu : public QMenu {
 
 		/**
 		*  @brief
-		*    Fills the add menu recursivity
+		*    Fills the add menu recursive
 		*
 		*  @param[in] cQMenu
 		*    Current Qt menu to fill
