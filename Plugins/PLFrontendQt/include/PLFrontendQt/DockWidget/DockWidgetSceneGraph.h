@@ -29,7 +29,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLFrontendQt/DockWidget/DockWidgetScene.h"
-#include <QtCore/QModelIndex>
 
 
 //[-------------------------------------------------------]
@@ -37,6 +36,7 @@
 //[-------------------------------------------------------]
 QT_BEGIN_NAMESPACE
 	class QTreeView;
+	class QModelIndex;
 	class QMainWindow;
 QT_END_NAMESPACE
 namespace PLScene {
@@ -94,17 +94,6 @@ class DockWidgetSceneGraph : public DockWidgetScene {
 		// Slots
 		pl_slot_0(OnDestroy,	"Called when the scene container assigned with this dock widget was destroyed",	"")
 	pl_class_end
-
-
-	//[-------------------------------------------------------]
-	//[ Public definitions                                    ]
-	//[-------------------------------------------------------]
-	public:
-		enum UpdateTreeReason {
-			Unknwon,
-			ItemDeleted,
-			ItemAdded
-		};
 
 
 	//[-------------------------------------------------------]
@@ -174,17 +163,6 @@ class DockWidgetSceneGraph : public DockWidgetScene {
 		*    Sets the used scene container and object
 		*/
 		void SetSceneContainerAndObject();
-
-		/**
-		*  @brief
-		*    Updates the scene graph tree view
-		*
-		*  @param[in] cUpdateReason
-		*    Reason of update (e.g. ItemAdded or ItemDeleted)
-		*  @param[in] pCreatedObject
-		*    the created object if reason is ItemAdded otehrwise a nullptr
-		*/
-		void UpdateTreeView(UpdateTreeReason cUpdateReason, PLCore::Object *pCreatedObject);
 
 		/**
 		*  @brief

@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <QtCore/qobject.h>
+#include "PLFrontendQt/Widget/SceneGraphMenu.h"
 
 
 //[-------------------------------------------------------]
@@ -110,6 +111,17 @@ class DockWidgetSceneGraphQObject : public QObject {
 		*    Destructor
 		*/
 		virtual ~DockWidgetSceneGraphQObject();
+
+		/**
+		*  @brief
+		*    Updates the scene graph tree view
+		*
+		*  @param[in] nAction
+		*    Performed action
+		*  @param[in] pCreatedObject
+		*    The created object if reason is "SceneGraphMenu::ActionAdded", otherwise a null pointer
+		*/
+		void UpdateTreeView(SceneGraphMenu::EAction nAction, PLCore::Object *pCreatedObject);
 
 
 	//[-------------------------------------------------------]

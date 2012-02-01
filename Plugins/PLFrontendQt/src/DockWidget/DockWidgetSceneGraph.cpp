@@ -280,37 +280,6 @@ void DockWidgetSceneGraph::SetSceneContainerAndObject()
 	}
 }
 
-
-/**
-*  @brief
-*    Updates the scene graph tree view
-*/
-void DockWidgetSceneGraph::UpdateTreeView(UpdateTreeReason cUpdateReason, PLCore::Object *pCreatedObject)
-{
-	if (cUpdateReason == ItemAdded && pCreatedObject) {
-		if (pCreatedObject->IsInstanceOf("PLScene::SceneNode")) {
-			PLScene::SceneNode *pSceneNode = static_cast<PLScene::SceneNode*>(pCreatedObject);
-			PLScene::SceneContainer *pContainer = pSceneNode->GetContainer();
-			m_pSceneGraphTreeModel->AddSceneNode(pContainer, pSceneNode);
-		}
-		else if(pCreatedObject->IsInstanceOf("PLScene::SceneNodeModifier")) {
-			PLScene::SceneNodeModifier *pSceneNodeModifier = static_cast<PLScene::SceneNodeModifier*>(pCreatedObject);
-			PLCore::String sName(pSceneNodeModifier->GetClass()->GetName());
-			
-			bool bAutomatic = pSceneNodeModifier->GetFlags() & PLScene::SceneNodeModifier::Automatic;
-			if (bAutomatic)
-				return;
-			
-			PLScene::SceneNode &cParentNode = pSceneNodeModifier->GetSceneNode();
-			m_pSceneGraphTreeModel->AddSceneNodeModifier(&cParentNode, pSceneNodeModifier);
-		}
-	}
-	else if (cUpdateReason == ItemDeleted)
-	{
-		m_pQTreeView->selectionModel()->clearSelection();
-	}
-}
-
 /**
 *  @brief
 *    Called when the scene container assigned with this dock widget was destroyed

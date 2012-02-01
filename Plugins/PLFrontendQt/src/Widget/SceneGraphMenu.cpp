@@ -27,8 +27,8 @@
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SceneNodeModifier.h>
 #include "PLFrontendQt/QtStringAdapter.h"
-#include "PLFrontendQt/Widget/SceneGraphMenu.h"
 #include "PLFrontendQt/DockWidget/DockWidgetSceneGraph.h"
+#include "PLFrontendQt/Widget/SceneGraphMenu.h"
 
 
 //[-------------------------------------------------------]
@@ -73,13 +73,13 @@ SceneGraphMenu::SceneGraphMenu(Object &cObject) :
 	if (!bProtected) {
 		{ // Setup the clone action
 			QAction *pQAction = addAction(tr("Clone"));
-			pQAction->setData(DockWidgetSceneGraph::UpdateTreeReason::ItemAdded);
+			pQAction->setData(ActionAdded);
 			connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredClone()));
 		}
 
 		{ // Setup the delete action
 			QAction *pQAction = addAction(tr("Delete"));
-			pQAction->setData(DockWidgetSceneGraph::UpdateTreeReason::ItemDeleted);
+			pQAction->setData(ActionDeleted);
 			connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredDelete()));
 		}
 	}
@@ -91,6 +91,15 @@ SceneGraphMenu::SceneGraphMenu(Object &cObject) :
 */
 SceneGraphMenu::~SceneGraphMenu()
 {
+}
+
+/**
+*  @brief
+*    Returns the created object instance if an create/clone action was done
+*/
+Object *SceneGraphMenu::GetCreatedObject() const
+{
+	return m_pCreatedObject;
 }
 
 
@@ -135,7 +144,7 @@ void SceneGraphMenu::FillAddWindowRec(QMenu &cQMenu, const String &sBaseClass)
 
 				// Add action
 				QAction *pQAction = pQMenuSub->addAction(tr(pClass->GetClassName()));
-				pQAction->setData(DockWidgetSceneGraph::UpdateTreeReason::ItemAdded);
+				pQAction->setData(ActionAdded);
 				m_pQActionGroupAdd->addAction(pQAction);
 
 				// Automatically fill the Qt window menu by using RTTI information
@@ -145,7 +154,7 @@ void SceneGraphMenu::FillAddWindowRec(QMenu &cQMenu, const String &sBaseClass)
 
 				// Add action
 				QAction *pQAction = cQMenu.addAction(tr(pClass->GetClassName()));
-				pQAction->setData(DockWidgetSceneGraph::UpdateTreeReason::ItemAdded);
+				pQAction->setData(ActionAdded);
 				m_pQActionGroupAdd->addAction(pQAction);
 			}
 		} else {
@@ -172,9 +181,9 @@ void SceneGraphMenu::CloneSceneNode(SceneContainer &cTargetSceneContainer, const
 	// Clone scene node
 	SceneNode *pSceneNodeClone = cTargetSceneContainer.Create(cSceneNode.GetClass()->GetClassName(), cSceneNode.GetName() + sNameExtension, cSceneNode.GetValues());
 	if (pSceneNodeClone) {
-		
+		// Backup a pointer to the created object
 		m_pCreatedObject = pSceneNodeClone;
-		
+
 		// Reset debug flags of the clone
 		pSceneNodeClone->SetDebugFlags(0);
 
