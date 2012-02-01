@@ -27,7 +27,7 @@
 #include <PLCore/Base/Module.h>
 #include <PLScene/Compositing/SceneRenderer.h>
 #include <PLScene/Compositing/SceneRendererPass.h>
-#include "PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererHeaderTreeItem.h"
+#include "PLFrontendQt/DataModels/HeaderTreeItem.h"
 #include "PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererPassTreeItem.h"
 #include "PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererDataModel.h"
 
@@ -42,9 +42,14 @@ namespace DataModels {
 namespace SceneRendererDataModel {
 
 
-SceneRendererDataModel::SceneRendererDataModel(QObject *parent): TreeModelBase(new SceneRendererHeaderTreeItem),
+SceneRendererDataModel::SceneRendererDataModel(QObject *parent): TreeModelBase(new HeaderTreeItem),
 	m_pSceneRenderer(nullptr)
 {
+	QStringList headerItems;
+	headerItems << "Node Name" << "Value";
+
+	HeaderTreeItem *header = static_cast<HeaderTreeItem*>(GetRootItem());
+	header->setHeaderItems(headerItems);
 }
 
 SceneRenderer *SceneRendererDataModel::GetSceneRenderer() const
