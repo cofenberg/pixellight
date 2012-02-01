@@ -1,3 +1,10 @@
+> 01.02.2012
+[SW]
+- Extended "SceneContainer::Create()" and "SceneContainer::Add()" with an additional parameter, which can be used to specify the location of the new created element.
+  With this parameter it is now possible to insert a SceneNode to a specific position instead of adding it to the end of the internal list
+
+
+
 >> 25.01.2012
 [CO]
 - Scene nodes overwriting the "DrawTransparent()"-method: For transparent stuff it's best to first let the derived class draw before calling the base implementation

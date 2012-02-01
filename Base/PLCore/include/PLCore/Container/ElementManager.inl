@@ -385,6 +385,16 @@ AType *ElementManager<AType>::GetByIndex(uint32 nIndex) const
 
 /**
 *  @brief
+*    Returns the index of the given element
+*/
+template <class AType>
+int ElementManager<AType>::GetIndex(AType *pElement) const
+{
+	return m_lstElements.GetIndex(pElement);
+}
+
+/**
+*  @brief
 *    Returns the element with the given name
 */
 template <class AType>

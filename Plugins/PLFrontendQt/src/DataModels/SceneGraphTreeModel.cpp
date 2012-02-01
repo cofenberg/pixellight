@@ -109,7 +109,7 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 			// Argh! Mayday! We lost our scene node modifier!
 			m_nodeObj = nullptr;
 
-			m_cModel.removeRow(m_cRow, m_cParentModelIndex);
+			m_cModel.removeRow(row(), m_cParentModelIndex);
 		}
 
 	private:
@@ -132,7 +132,7 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 			m_nodeObj(nodeObj),
 			EventHandlerOnDestroy(&SceneGraphNodeTreeItem::OnDestroy, this)
 		{
-			m_cModelIndex = m_cModel.index(m_cRow, 0, parentIdx);
+			m_cModelIndex = m_cModel.index(rowNr, 0, parentIdx);
 			// Connect event handler
 			m_nodeObj->SignalDestroy.Connect(EventHandlerOnDestroy);
 			
@@ -233,7 +233,7 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 			// Argh! Mayday! We lost our scene node!
 			m_nodeObj = nullptr;
 			
-			m_cModel.removeRow(m_cRow, m_cParentModelIndex);
+			m_cModel.removeRow(row(), m_cParentModelIndex);
 		}
 
 	private:
@@ -347,7 +347,7 @@ void SceneGraphTreeModel::AddSceneNode(PLScene::SceneContainer* pContainer, PLSc
 
 	beginInsertRows(parentIdx, rowNumber, rowNumber);
 	
-	TreeItemBase *pChild = new SceneGraphNodeTreeItem(*this, parentIdx, rowNumber, pSceneNode, treeItem);
+	TreeItemBase *pChild = new SceneGraphNodeTreeItem(*this, parentIdx, rowNumber, pSceneNode);
 	if(cPosition == -1)
 		treeItem->AddChild(pChild);
 	else
@@ -368,7 +368,7 @@ void SceneGraphTreeModel::AddSceneNodeModifier(PLScene::SceneNode* pParentNode, 
 
 	beginInsertRows(parentIdx, rowNumber, rowNumber);
 	
-	TreeItemBase *pChild = new SceneGraphNodeModifierTreeItem(*this, parentIdx, rowNumber, pSceneNodeModifier, treeItem);
+	TreeItemBase *pChild = new SceneGraphNodeModifierTreeItem(*this, parentIdx, rowNumber, pSceneNodeModifier);
 	
 	if(cPosition == -1)
 		treeItem->AddChild(pChild);

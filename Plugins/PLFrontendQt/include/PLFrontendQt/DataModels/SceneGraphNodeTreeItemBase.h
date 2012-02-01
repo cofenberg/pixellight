@@ -76,7 +76,7 @@ class PLFRONTENDQT_API SceneGraphNodeTreeItemBase : public TreeItemBase {
 	//[-------------------------------------------------------]
 	protected:
 		SceneGraphTreeModel		&m_cModel;
-		int						 m_cRow;
+// 		int						 m_cRow;
 		QModelIndex				 m_cParentModelIndex;
 		QModelIndex				 m_cModelIndex;
 

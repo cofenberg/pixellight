@@ -73,7 +73,7 @@ SceneGraphMenu::SceneGraphMenu(Object &cObject) :
 	if (!bProtected) {
 		{ // Setup the clone action
 			QAction *pQAction = addAction(tr("Clone"));
-			pQAction->setData(ActionAdded);
+			pQAction->setData(ActionCloned);
 			connect(pQAction, SIGNAL(triggered()), this, SLOT(QtSlotTriggeredClone()));
 		}
 
@@ -176,13 +176,15 @@ void SceneGraphMenu::FillAddWindowRec(QMenu &cQMenu, const String &sBaseClass)
 *  @brief
 *    Clones the given scene node
 */
-void SceneGraphMenu::CloneSceneNode(SceneContainer &cTargetSceneContainer, const SceneNode &cSceneNode, const String &sNameExtension)
+void SceneGraphMenu::CloneSceneNode(SceneContainer &cTargetSceneContainer, const SceneNode &cSceneNode, const String &sNameExtension, int cPosition)
 {
 	// Clone scene node
-	SceneNode *pSceneNodeClone = cTargetSceneContainer.Create(cSceneNode.GetClass()->GetClassName(), cSceneNode.GetName() + sNameExtension, cSceneNode.GetValues());
+	SceneNode *pSceneNodeClone = cTargetSceneContainer.Create(cSceneNode.GetClass()->GetClassName(), cSceneNode.GetName() + sNameExtension, cSceneNode.GetValues(), cPosition);
 	if (pSceneNodeClone) {
-		// Backup a pointer to the created object
-		m_pCreatedObject = pSceneNodeClone;
+		// Backup a pointer to the created object, but only the first one, because this method can be called recursively
+		// and we want only the root object of the cloned subtree
+		if(!m_pCreatedObject)
+			m_pCreatedObject = pSceneNodeClone;
 
 		// Reset debug flags of the clone
 		pSceneNodeClone->SetDebugFlags(0);
@@ -277,8 +279,10 @@ void SceneGraphMenu::QtSlotTriggeredClone()
 
 		// Do not clone automatic scene nodes
 		if (!(cSceneNode.GetFlags() & SceneNode::Automatic)) {
-			// Clone the scene node
-			CloneSceneNode(*cSceneNode.GetContainer(), cSceneNode, "_Clone");
+			// Get position of the SceneNode
+			int cIndex = cSceneNode.GetContainer()->GetIndex(&cSceneNode);
+			// Clone the scene node and add it after the node from which the clone will be created
+			CloneSceneNode(*cSceneNode.GetContainer(), cSceneNode, "_Clone", cIndex+1);
 		}
 
 	// Scene node modifier
