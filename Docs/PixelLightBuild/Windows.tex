@@ -170,3 +170,31 @@ Please note that you need to unpack the required external packages first. The Vi
 
 \paragraph{Build}
 Open the solution \emph{PixelLight.sln} within the root directory of the cloned Git repository with Microsoft Visual Studio. This solution contains all projects of the PixelLight framework. \emph{Build}. Done.
+
+
+
+
+\section{Using the Build PixelLight Version in \ac{MSVC}}
+
+When using the build PixelLight version in \ac{MSVC} there are two common approaches. The dungeon demo project\footnote{\url{git://pixellight.git.sourceforge.net/gitroot/pixellight/pldungeon/}} is used as an concrete example.
+
+
+\paragraph{Environment Variable}
+Please note that the PixelLight Git repository itself does not require any special PixelLight environment variable to be set in order to build it. Everything is relative to each other. On the other hand, when creating a custom project using PixelLight one might want to use an environment variable pointing to the location of the cloned PixelLight Git repository. In case you prefer this way we would like to ask you to use the name \emph{PL\_ROOT} for the environment variable so that multiple projects are all using the same environment variable for this purpose. When telling \ac{MSVC} where to find the build library you have to use in this example the following path
+\begin{verbatim}
+$(PL_ROOT)/Bin/Lib/x86/
+\end{verbatim}
+for \SI{32}{\bit}. Same thing for the multiple include directories. \ac{MSVC} will automatically look up your environment variable\footnote{Please note that \ac{MSVC} needs to be restarted in case there was a change in the registry}.
+
+
+\paragraph{Relative Paths}
+In case you don't want to manipulate your Windows system by adding an environment variable, there's always the option to use relative paths. Imagine you cloned the Git repositories into a directory which now has the following content:
+\begin{itemize}
+\item{pixellight}
+\item{pldungeon}
+\end{itemize}
+Meaning that the \ac{MSVC} project of the dungeon demo is located at \emph{<directory>/pldungeon/Source/Dungeon.vcxproj}. When telling \ac{MSVC} where to find the build library you have to use in this example the following path
+\begin{verbatim}
+../../pixellight/Bin/Lib/x86/
+\end{verbatim}
+for \SI{32}{\bit}. Same thing for the multiple include directories.
