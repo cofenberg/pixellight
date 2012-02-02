@@ -1,3 +1,10 @@
+>> 02.02.2012
+[CO]
+PLFrontendQt:
+- "DockWidgetLog": Usability: Update the Qt plain text edit cursor to in order to reduce the need for manual scrolling
+
+
+
 >> 01.02.2012
 [CO]
 PLFrontendQt:

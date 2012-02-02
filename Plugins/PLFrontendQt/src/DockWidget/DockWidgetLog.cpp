@@ -75,6 +75,10 @@ DockWidgetLog::DockWidgetLog(QMainWindow *pQMainWindow, DockWidgetManager *pDock
 				m_pQPlainTextEdit->appendPlainText(QtStringAdapter::PLToQt(cIterator.Next()));
 		}
 
+		// Usability: Update the Qt plain text edit cursor to in order to reduce the need for manual scrolling
+		m_pQPlainTextEdit->moveCursor(QTextCursor::End);			// Move to the end of the document
+		m_pQPlainTextEdit->moveCursor(QTextCursor::StartOfLine);	// Move to the start of the current line
+
 		// Set window title
 		pQDockWidget->setWindowTitle(pQDockWidget->tr(GetClass()->GetProperties().Get("Title")));
 
@@ -108,6 +112,15 @@ void DockWidgetLog::OnNewEntry()
 	const Queue<String> &qLastMessages = Log::GetInstance()->GetLastMessages();
 	if (qLastMessages.GetNumOfElements())
 		m_pQPlainTextEdit->appendPlainText(QtStringAdapter::PLToQt(qLastMessages.Top()));
+
+	// Get encapsulated Qt dock widget
+	QDockWidget *pQDockWidget = GetQDockWidget();
+	if (pQDockWidget && !pQDockWidget->hasFocus()) {
+		// Usability: Update the Qt plain text edit cursor in order to reduce the need for manual scrolling
+		// -> But only if we don't have the focus else this behaviour might be annoying instead of useful
+		m_pQPlainTextEdit->moveCursor(QTextCursor::End);			// Move to the end of the document
+		m_pQPlainTextEdit->moveCursor(QTextCursor::StartOfLine);	// Move to the start of the current line
+	}
 }
 
 
