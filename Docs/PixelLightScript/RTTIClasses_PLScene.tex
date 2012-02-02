@@ -107,8 +107,8 @@ Write \emph{<RTTI object>:IsFog()} in order to check whether this scene node is 
 \paragraph{<integer> GetNumOfModifiers(<string>)}
 Write \emph{<RTTI object>:GetNumOfModifiers(<string>)} in order to get the number of modifiers. Optional modifier class name to return the number of instances from as first parameter (if empty return the total number of modifiers).
 
-\paragraph{<RTTI object> AddModifier(<string>, <string>)}
-Write \emph{<RTTI object>:AddModifier(<string>, <string>)} in order to add a modifier. Modifier class name of the modifier to add as first parameter and optional parameter string as second parameter. Returns a pointer to the modifier instance if all went fine, else a null pointer (maybe unknown/incompatible modifier).
+\paragraph{<RTTI object> AddModifier(<string>, <string>, <integer>))}
+Write \emph{<RTTI object>:AddModifier(<string>, <string>, <integer>))} in order to add a modifier. Modifier class name of the modifier to add as first parameter and optional parameter string as second parameter, optional index position specifying the location within the child list where the scene node modifier should be added as third parameter (<0 for at the end). Returns a pointer to the modifier instance if all went fine, else a null pointer (maybe unknown/incompatible modifier).
 
 \paragraph{<RTTI object> GetModifier(<string>, <integer>)}
 Write \emph{<RTTI object>:GetModifier(<string>, <integer>)} in order to get a modifier. Modifier class name of the modifier to return as first parameter, optional modifier index as second parameter (used if class name is empty or if there are multiple instances of this modifier class). Returns the requested modifier, a null pointer on error.

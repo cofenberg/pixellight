@@ -98,6 +98,15 @@ inline bool SceneNode::IsFog() const
 	return ((m_nInternalFlags & ClassFog) != 0);
 }
 
+/**
+*  @brief
+*    Returns the index of the given modifier
+*/
+inline int SceneNode::GetModifierIndex(SceneNodeModifier &cModifier) const
+{
+	return m_lstModifiers.GetIndex(&cModifier);
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected functions                                   ]

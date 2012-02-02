@@ -718,7 +718,7 @@ uint32 SceneNode::GetNumOfModifiers(const String &sClass) const
 *  @brief
 *    Adds a modifier
 */
-SceneNodeModifier *SceneNode::AddModifier(const String &sClass, const String &sParameters)
+SceneNodeModifier *SceneNode::AddModifier(const String &sClass, const String &sParameters, int nPosition)
 {
 	// Check parameter
 	if (sClass.GetLength()) {
@@ -738,7 +738,10 @@ SceneNodeModifier *SceneNode::AddModifier(const String &sClass, const String &sP
 					// Check the scene node class
 					if (IsInstanceOf(pModifier->GetSceneNodeClass())) {
 						// Add the new modifier to the scene node modifier list
-						m_lstModifiers.Add(pModifier);
+						if (nPosition < 0 || nPosition >= static_cast<int>(m_lstModifiers.GetNumOfElements()))
+							m_lstModifiers.Add(pModifier);
+						else
+							m_lstModifiers.AddAtIndex(pModifier, nPosition);
 
 						// Set variables to the desired values
 						if (sParameters.GetLength())
