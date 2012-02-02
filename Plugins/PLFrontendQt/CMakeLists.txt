@@ -58,26 +58,12 @@ SET(INC_FILES
 	include/PLFrontendQt/QPLSceneContext.h
 	include/PLFrontendQt/QPLInputHandler.h
 	include/PLFrontendQt/DataModels/Helper.h
-	include/PLFrontendQt/DataModels/TreeItemBase.h
 	include/PLFrontendQt/DataModels/TreeModelBase.h
-	include/PLFrontendQt/DataModels/HeaderTreeItem.h
 	include/PLFrontendQt/DataModels/SceneNodeInfoModel.h
 	include/PLFrontendQt/DataModels/SceneGraphTreeModel.h
 	include/PLFrontendQt/DataModels/PLIntrospectionModel.h
 	include/PLFrontendQt/DataModels/PLTreeItemsDelegate.h
-	include/PLFrontendQt/DataModels/SceneGraphNodeTreeItemBase.h
-	include/PLFrontendQt/DataModels/PLTreeItems/PLDynVarFlagsTreeItem.h
-	include/PLFrontendQt/DataModels/PLTreeItems/PLDynVarNativNumericTypeTreeItem.h
-	include/PLFrontendQt/DataModels/PLTreeItems/PLDynVarColorTreeItem.h
-	include/PLFrontendQt/DataModels/PLTreeItems/PLDynVarStringTreeItem.h
-	include/PLFrontendQt/DataModels/PLTreeItems/PLDynVarVector2TreeItem.h
-	include/PLFrontendQt/DataModels/PLTreeItems/PLDynVarVector3TreeItem.h
-	include/PLFrontendQt/DataModels/PLTreeItems/PLDynVarVector4TreeItem.h
-	include/PLFrontendQt/DataModels/PLTreeItems/PLDynVarVector2iTreeItem.h
-	include/PLFrontendQt/DataModels/PLTreeItems/PLDynVarVector3iTreeItem.h
-	include/PLFrontendQt/DataModels/PLTreeItems/PLDynVarEnumTreeItem.h
 	include/PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererDataModel.h
-	include/PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererPassTreeItem.h
 	include/PLFrontendQt/DataModels/RTTIInfoModels/ClassListModel.h
 	include/PLFrontendQt/DataModels/RTTIInfoModels/ClassInfoModel.h
 	include/PLFrontendQt/DataModels/TreeSortAndFilterProxyModel.h

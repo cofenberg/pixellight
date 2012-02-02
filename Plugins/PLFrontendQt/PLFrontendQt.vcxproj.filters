@@ -25,9 +25,6 @@
     <ClCompile Include="src\DataModels\SceneRendererDataModel\SceneRendererDataModel.cpp">
       <Filter>DataModels\SceneRendererDataModel</Filter>
     </ClCompile>
-    <ClCompile Include="src\DataModels\SceneRendererDataModel\SceneRendererHeaderTreeItem.cpp">
-      <Filter>DataModels\SceneRendererDataModel</Filter>
-    </ClCompile>
     <ClCompile Include="src\DataModels\SceneRendererDataModel\SceneRendererPassTreeItem.cpp">
       <Filter>DataModels\SceneRendererDataModel</Filter>
     </ClCompile>
@@ -85,21 +82,6 @@
     <ClCompile Include="build\GeneratedQtFiles\moc_TreeModelBase.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarColorTreeItem.cpp">
-      <Filter>GeneratedQtFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarFlagsTreeItem.cpp">
-      <Filter>GeneratedQtFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarNativNumericTypeTreeItem.cpp">
-      <Filter>GeneratedQtFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarStringTreeItem.cpp">
-      <Filter>GeneratedQtFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarVector3TreeItem.cpp">
-      <Filter>GeneratedQtFiles</Filter>
-    </ClCompile>
     <ClCompile Include="build\GeneratedQtFiles\moc_PLIntrospectionModel.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
@@ -121,9 +103,6 @@
     <ClCompile Include="build\GeneratedQtFiles\moc_qtcolorbutton.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_SceneGraphNodeTreeItemBase.cpp">
-      <Filter>GeneratedQtFiles</Filter>
-    </ClCompile>
     <ClCompile Include="build\GeneratedQtFiles\moc_SceneGraphTreeModel.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
@@ -134,15 +113,6 @@
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
     <ClCompile Include="build\GeneratedQtFiles\moc_SceneRendererDataModel.cpp">
-      <Filter>GeneratedQtFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_SceneRendererHeaderTreeItem.cpp">
-      <Filter>GeneratedQtFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_SceneRendererPassTreeItem.cpp">
-      <Filter>GeneratedQtFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_TreeItemBase.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
     <ClCompile Include="build\GeneratedQtFiles\res_ressources.cpp">
@@ -182,9 +152,6 @@
       <Filter>DataModels</Filter>
     </ClCompile>
     <ClCompile Include="build\GeneratedQtFiles\moc_ClassListModel.cpp">
-      <Filter>GeneratedQtFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_HeaderTreeItem.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
     <ClCompile Include="build\GeneratedQtFiles\moc_ClassInfoModel.cpp">
@@ -247,12 +214,6 @@
     <ClCompile Include="src\DataModels\PLTreeItems\PLDynVarEnumTreeItem.cpp">
       <Filter>DataModels\PLTreeItems</Filter>
     </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarEnumTreeItem.cpp">
-      <Filter>GeneratedQtFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarVector2TreeItem.cpp">
-      <Filter>GeneratedQtFiles</Filter>
-    </ClCompile>
     <ClCompile Include="src\DataModels\PLTreeItems\PLDynVarVector3iTreeItem.cpp">
       <Filter>DataModels\PLTreeItems</Filter>
     </ClCompile>
@@ -261,15 +222,6 @@
     </ClCompile>
     <ClCompile Include="src\DataModels\PLTreeItems\PLDynVarVector2iTreeItem.cpp">
       <Filter>DataModels\PLTreeItems</Filter>
-    </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarVector2iTreeItem.cpp">
-      <Filter>GeneratedQtFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarVector3iTreeItem.cpp">
-      <Filter>GeneratedQtFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_PLDynVarVector4TreeItem.cpp">
-      <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
     <ClCompile Include="src\DockWidget\DockWidgetLog.cpp">
       <Filter>DockWidget</Filter>
@@ -339,6 +291,48 @@
     <ClInclude Include="include\PLFrontendQt\DataModels\Helper.h">
       <Filter>DataModels</Filter>
     </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DataModels\HeaderTreeItem.h">
+      <Filter>DataModels</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarVector3iTreeItem.h">
+      <Filter>DataModels\PLTreeItems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarVector3TreeItem.h">
+      <Filter>DataModels\PLTreeItems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarVector4TreeItem.h">
+      <Filter>DataModels\PLTreeItems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarColorTreeItem.h">
+      <Filter>DataModels\PLTreeItems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarEnumTreeItem.h">
+      <Filter>DataModels\PLTreeItems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarFlagsTreeItem.h">
+      <Filter>DataModels\PLTreeItems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarNativNumericTypeTreeItem.h">
+      <Filter>DataModels\PLTreeItems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarStringTreeItem.h">
+      <Filter>DataModels\PLTreeItems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarVector2iTreeItem.h">
+      <Filter>DataModels\PLTreeItems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarVector2TreeItem.h">
+      <Filter>DataModels\PLTreeItems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DataModels\SceneGraphNodeTreeItemBase.h">
+      <Filter>DataModels</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DataModels\SceneRendererDataModel\SceneRendererPassTreeItem.h">
+      <Filter>DataModels\SceneRendererDataModel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DataModels\TreeItemBase.h">
+      <Filter>DataModels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Base\PLCore\Diary.txt" />
@@ -389,9 +383,6 @@
     <CustomBuild Include="include\PLFrontendQt\DataModels\PLIntrospectionModel.h">
       <Filter>DataModels</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DataModels\SceneGraphNodeTreeItemBase.h">
-      <Filter>DataModels</Filter>
-    </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\DataModels\SceneGraphTreeModel.h">
       <Filter>DataModels</Filter>
     </CustomBuild>
@@ -401,34 +392,10 @@
     <CustomBuild Include="include\PLFrontendQt\DataModels\SceneNodeInfoModel.h">
       <Filter>DataModels</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DataModels\TreeItemBase.h">
-      <Filter>DataModels</Filter>
-    </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\DataModels\TreeModelBase.h">
       <Filter>DataModels</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarColorTreeItem.h">
-      <Filter>DataModels\PLTreeItems</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarFlagsTreeItem.h">
-      <Filter>DataModels\PLTreeItems</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarNativNumericTypeTreeItem.h">
-      <Filter>DataModels\PLTreeItems</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarStringTreeItem.h">
-      <Filter>DataModels\PLTreeItems</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarVector3TreeItem.h">
-      <Filter>DataModels\PLTreeItems</Filter>
-    </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\DataModels\SceneRendererDataModel\SceneRendererDataModel.h">
-      <Filter>DataModels\SceneRendererDataModel</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DataModels\SceneRendererDataModel\SceneRendererHeaderTreeItem.h">
-      <Filter>DataModels\SceneRendererDataModel</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DataModels\SceneRendererDataModel\SceneRendererPassTreeItem.h">
       <Filter>DataModels\SceneRendererDataModel</Filter>
     </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\Application.h">
@@ -454,9 +421,6 @@
     </CustomBuild>
     <CustomBuild Include="ressources\ressources.qrc">
       <Filter>Resources</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DataModels\HeaderTreeItem.h">
-      <Filter>DataModels</Filter>
     </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\DataModels\RTTIInfoModels\ClassInfoModel.h">
       <Filter>DataModels\RTTIInfoModels</Filter>
@@ -487,21 +451,6 @@
     </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\DataModels\TreeSortAndFilterProxyModel.h">
       <Filter>DataModels</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarVector2TreeItem.h">
-      <Filter>DataModels\PLTreeItems</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarEnumTreeItem.h">
-      <Filter>DataModels\PLTreeItems</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarVector4TreeItem.h">
-      <Filter>DataModels\PLTreeItems</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarVector3iTreeItem.h">
-      <Filter>DataModels\PLTreeItems</Filter>
-    </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarVector2iTreeItem.h">
-      <Filter>DataModels\PLTreeItems</Filter>
     </CustomBuild>
     <CustomBuild Include="include\PLFrontendQt\Widget\SceneGraphMenu.h">
       <Filter>Widget</Filter>
