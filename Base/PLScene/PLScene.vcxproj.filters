@@ -778,5 +778,8 @@
     </None>
     <None Include="CMakeLists.txt" />
     <None Include="Diary.txt" />
+    <None Include="include\PLScene\Scene\SceneContainer.inl">
+      <Filter>Scene</Filter>
+    </None>
   </ItemGroup>
 </Project>

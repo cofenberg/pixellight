@@ -716,9 +716,9 @@ uint32 SceneNode::GetNumOfModifiers(const String &sClass) const
 
 /**
 *  @brief
-*    Adds a modifier
+*    Adds a modifier at a certain index inside the child list
 */
-SceneNodeModifier *SceneNode::AddModifier(const String &sClass, const String &sParameters, int nPosition)
+SceneNodeModifier *SceneNode::AddModifierAtIndex(const String &sClass, const String &sParameters, int nPosition)
 {
 	// Check parameter
 	if (sClass.GetLength()) {

@@ -179,7 +179,7 @@ void SceneGraphMenu::FillAddWindowRec(QMenu &cQMenu, const String &sBaseClass)
 void SceneGraphMenu::CloneSceneNode(SceneContainer &cTargetSceneContainer, const SceneNode &cSceneNode, const String &sNameExtension, int nPosition)
 {
 	// Clone scene node
-	SceneNode *pSceneNodeClone = cTargetSceneContainer.Create(cSceneNode.GetClass()->GetClassName(), cSceneNode.GetName() + sNameExtension, cSceneNode.GetValues(), nPosition);
+	SceneNode *pSceneNodeClone = cTargetSceneContainer.CreateAtIndex(cSceneNode.GetClass()->GetClassName(), cSceneNode.GetName() + sNameExtension, cSceneNode.GetValues(), nPosition);
 	if (pSceneNodeClone) {
 		// Backup a pointer to the created object
 		// -> But only the first one because this method can be called recursively and we want only the root object of the cloned subtree
@@ -297,7 +297,7 @@ void SceneGraphMenu::QtSlotTriggeredClone()
 			const int nIndex = cSceneNodeModifier.GetSceneNode().GetModifierIndex(cSceneNodeModifier);
 
 			// Clone the scene node modifier
-			m_pCreatedObject = cSceneNodeModifier.GetSceneNode().AddModifier(cSceneNodeModifier.GetClass()->GetClassName(), cSceneNodeModifier.GetValues(), nIndex+1);
+			m_pCreatedObject = cSceneNodeModifier.GetSceneNode().AddModifierAtIndex(cSceneNodeModifier.GetClass()->GetClassName(), cSceneNodeModifier.GetValues(), nIndex+1);
 		}
 	}
 }

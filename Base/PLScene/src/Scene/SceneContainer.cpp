@@ -124,9 +124,9 @@ SceneContainer::~SceneContainer()
 
 /**
 *  @brief
-*    Creates a new scene node
+*    Creates a new scene node at a certain index inside the child list
 */
-SceneNode *SceneContainer::Create(const String &sClass, const String &sName, const String &sParameters, int nPosition)
+SceneNode *SceneContainer::CreateAtIndex(const String &sClass, const String &sName, const String &sParameters, int nPosition)
 {
 	// Check parameter
 	if (sClass.GetLength()) {

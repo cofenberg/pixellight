@@ -100,6 +100,15 @@ inline bool SceneNode::IsFog() const
 
 /**
 *  @brief
+*    Adds a modifier
+*/
+inline SceneNodeModifier *SceneNode::AddModifier(const PLCore::String &sClass, const PLCore::String &sParameters)
+{
+	return AddModifierAtIndex(sClass, sParameters, -1);
+}
+
+/**
+*  @brief
 *    Returns the index of the given modifier
 */
 inline int SceneNode::GetModifierIndex(SceneNodeModifier &cModifier) const
