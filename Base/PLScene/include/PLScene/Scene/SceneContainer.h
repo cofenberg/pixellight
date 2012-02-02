@@ -114,12 +114,12 @@ class SceneContainer : public SceneNode, public PLCore::ElementManager<SceneNode
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 			// Methods
-			pl_method_1(Clear,					pl_ret_type(bool),			bool,																	"Destroys all scene nodes within this scene container. If the first parameter is 'true' protected scene nodes are destroyed as well. Returns 'true' if all went fine, else 'false'.",																																								"")
-			pl_method_1(GetByIndex,				pl_ret_type(SceneNode*),	PLCore::uint32,															"Returns a scene node by using the given index, result can be a null pointer.",																																																																		"")
-			pl_method_1(GetByName,				pl_ret_type(SceneNode*),	const PLCore::String&,													"Returns a scene node by using the given name, result can be a null pointer.",																																																																		"")
-			pl_method_3(Create,					pl_ret_type(SceneNode*),	const PLCore::String&,	const PLCore::String&,	const PLCore::String&,	"Creates a new scene node. Name of the scene node class to create an instance from as first parameter, scene node name as second parameter and optional parameter string as third parameter. Returns a pointer to the new scene node or a null pointer if something went wrong (maybe unknown class or the class is not derived from SceneNode).",	"")
-			pl_method_0(CalculateAABoundingBox,	pl_ret_type(void),																					"Calculates and sets the axis align bounding box in 'scene node space'. Because the 'scene node space' axis aligned bounding box should always cover all scene nodes of this container, you can use this function to calculate and set this a bounding box automatically.",																			"")
-			pl_method_3(LoadByFilename,			pl_ret_type(bool),			const PLCore::String&,	const PLCore::String&,	const PLCore::String&,	"Load a scene from a file given by filename. Scene filename as first parameter, optional load method parameters as second parameter, optional name of the load method to use as third parameter. Returns 'true' if all went fine, else 'false'.",																									"")
+			pl_method_1(Clear,					pl_ret_type(bool),			bool,																			"Destroys all scene nodes within this scene container. If the first parameter is 'true' protected scene nodes are destroyed as well. Returns 'true' if all went fine, else 'false'.",																																																																																"")
+			pl_method_1(GetByIndex,				pl_ret_type(SceneNode*),	PLCore::uint32,																	"Returns a scene node by using the given index, result can be a null pointer.",																																																																																																										"")
+			pl_method_1(GetByName,				pl_ret_type(SceneNode*),	const PLCore::String&,															"Returns a scene node by using the given name, result can be a null pointer.",																																																																																																										"")
+			pl_method_4(Create,					pl_ret_type(SceneNode*),	const PLCore::String&,	const PLCore::String&,	const PLCore::String&,	int,	"Creates a new scene node. Name of the scene node class to create an instance from as first parameter, scene node name as second parameter and optional parameter string as third parameter, optional index position specifying the location within the child list where the scene node should be added as fouth parameter (<0 for at the end). Returns a pointer to the new scene node or a null pointer if something went wrong (maybe unknown class or the class is not derived from \"PLScene::SceneNode\").",	"")
+			pl_method_0(CalculateAABoundingBox,	pl_ret_type(void),																							"Calculates and sets the axis align bounding box in 'scene node space'. Because the 'scene node space' axis aligned bounding box should always cover all scene nodes of this container, you can use this function to calculate and set this a bounding box automatically.",																																																											"")
+			pl_method_3(LoadByFilename,			pl_ret_type(bool),			const PLCore::String&,	const PLCore::String&,	const PLCore::String&,			"Load a scene from a file given by filename. Scene filename as first parameter, optional load method parameters as second parameter, optional name of the load method to use as third parameter. Returns 'true' if all went fine, else 'false'.",																																																																	"")
 		#endif
 		// Signals
 		pl_signal_1(SignalLoadProgress,	float,	"Scene load progress signal. Current load progress as parameter - if not within 0-1 loading is done.",	"")
@@ -161,8 +161,8 @@ class SceneContainer : public SceneNode, public PLCore::ElementManager<SceneNode
 		*    Scene node name
 		*  @param[in] sParameters
 		*    Optional parameter string
-		*  @param[in] cPosition
-		*    Optional parameter position. Specifies the location within the child list to which the new SceneNode should be inserted.
+		*  @param[in] nPosition
+		*    Optional index position specifying the location within the child list where the scene node should be added, <0 for at the end
 		*
 		*  @return
 		*    Pointer to the new scene node or a null pointer if something went wrong
@@ -171,7 +171,7 @@ class SceneContainer : public SceneNode, public PLCore::ElementManager<SceneNode
 		*  @note
 		*    - If the desired name is already in use, the name is chosen automatically
 		*/
-		PLS_API SceneNode *Create(const PLCore::String &sClass, const PLCore::String &sName = "", const PLCore::String &sParameters = "", int cPosition = -1);
+		PLS_API SceneNode *Create(const PLCore::String &sClass, const PLCore::String &sName = "", const PLCore::String &sParameters = "", int nPosition = -1);
 
 		/**
 		*  @brief
@@ -296,8 +296,8 @@ class SceneContainer : public SceneNode, public PLCore::ElementManager<SceneNode
 		*    Node name
 		*  @param[in] bInitNode
 		*    Should the node be initialized?
-		*  @param[in] cPosition
-		*    Optional parameter position. Specifies the location within the child list to which the SceneNode should be inserted.
+		*  @param[in] nPosition
+		*    Optional index position specifying the location within the child list where the scene node should be added, <0 for at the end
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -306,7 +306,7 @@ class SceneContainer : public SceneNode, public PLCore::ElementManager<SceneNode
 		*    - If the node name is already used another unused node name will be used instead!
 		*    - Use this function only in special cases!
 		*/
-		bool Add(SceneNode &cNode, const PLCore::String &sName = "", bool bInitNode = true, int cPosition = -1);
+		bool Add(SceneNode &cNode, const PLCore::String &sName = "", bool bInitNode = true, int nPosition = -1);
 
 		/**
 		*  @brief

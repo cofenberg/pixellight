@@ -126,7 +126,7 @@ SceneContainer::~SceneContainer()
 *  @brief
 *    Creates a new scene node
 */
-SceneNode *SceneContainer::Create(const String &sClass, const String &sName, const String &sParameters, int cPosition)
+SceneNode *SceneContainer::Create(const String &sClass, const String &sName, const String &sParameters, int nPosition)
 {
 	// Check parameter
 	if (sClass.GetLength()) {
@@ -148,7 +148,7 @@ SceneNode *SceneContainer::Create(const String &sClass, const String &sName, con
 
 					if (sParameters.GetLength())
 						pNode->SetValues(sParameters);
-					Add(*pNode, sName, true, cPosition);
+					Add(*pNode, sName, true, nPosition);
 				}
 
 				// Return the created scene node
@@ -374,13 +374,13 @@ bool SceneContainer::DestroyQuery(SceneQuery &cQuery)
 *  @brief
 *    Adds a node
 */
-bool SceneContainer::Add(SceneNode &cNode, const String &sName, bool bInitNode, int cPosition)
+bool SceneContainer::Add(SceneNode &cNode, const String &sName, bool bInitNode, int nPosition)
 {
 	// Add to list
-	if (cPosition < 0 || cPosition >= m_lstElements.GetNumOfElements())
+	if (nPosition < 0 || nPosition >= static_cast<int>(m_lstElements.GetNumOfElements()))
 		m_lstElements.Add(&cNode);
 	else
-		m_lstElements.AddAtIndex(&cNode, cPosition);
+		m_lstElements.AddAtIndex(&cNode, nPosition);
 	cNode.m_pManager = this;
 
 	// Set scene container

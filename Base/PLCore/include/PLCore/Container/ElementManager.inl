@@ -388,9 +388,9 @@ AType *ElementManager<AType>::GetByIndex(uint32 nIndex) const
 *    Returns the index of the given element
 */
 template <class AType>
-int ElementManager<AType>::GetIndex(AType *pElement) const
+int ElementManager<AType>::GetIndex(AType &cElement) const
 {
-	return m_lstElements.GetIndex(pElement);
+	return m_lstElements.GetIndex(&cElement);
 }
 
 /**

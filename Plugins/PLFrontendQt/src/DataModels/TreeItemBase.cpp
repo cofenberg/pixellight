@@ -87,17 +87,17 @@ void TreeItemBase::AddChild(TreeItemBase* pChild)
 *  @brief
 *    Insert an child to this tree node
 */
-void TreeItemBase::InsertChild(TreeItemBase* pChild, int cPosition)
+void TreeItemBase::InsertChild(TreeItemBase* pChild, int nPosition)
 {
 	if(!pChild || m_cChildren.contains(pChild))
 		return;
-	if (cPosition < 0)
-		cPosition = 0;
-	if (cPosition > m_cChildren.size())
-		cPosition = m_cChildren.size();
+	if (nPosition < 0)
+		nPosition = 0;
+	if (nPosition > m_cChildren.size())
+		nPosition = m_cChildren.size();
 	
 	pChild->ChangeParent(this, true);
-	m_cChildren.insert(cPosition, pChild);
+	m_cChildren.insert(nPosition, pChild);
 }
 
 /**

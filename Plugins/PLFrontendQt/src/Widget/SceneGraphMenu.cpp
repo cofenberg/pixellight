@@ -176,14 +176,14 @@ void SceneGraphMenu::FillAddWindowRec(QMenu &cQMenu, const String &sBaseClass)
 *  @brief
 *    Clones the given scene node
 */
-void SceneGraphMenu::CloneSceneNode(SceneContainer &cTargetSceneContainer, const SceneNode &cSceneNode, const String &sNameExtension, int cPosition)
+void SceneGraphMenu::CloneSceneNode(SceneContainer &cTargetSceneContainer, const SceneNode &cSceneNode, const String &sNameExtension, int nPosition)
 {
 	// Clone scene node
-	SceneNode *pSceneNodeClone = cTargetSceneContainer.Create(cSceneNode.GetClass()->GetClassName(), cSceneNode.GetName() + sNameExtension, cSceneNode.GetValues(), cPosition);
+	SceneNode *pSceneNodeClone = cTargetSceneContainer.Create(cSceneNode.GetClass()->GetClassName(), cSceneNode.GetName() + sNameExtension, cSceneNode.GetValues(), nPosition);
 	if (pSceneNodeClone) {
-		// Backup a pointer to the created object, but only the first one, because this method can be called recursively
-		// and we want only the root object of the cloned subtree
-		if(!m_pCreatedObject)
+		// Backup a pointer to the created object
+		// -> But only the first one because this method can be called recursively and we want only the root object of the cloned subtree
+		if (!m_pCreatedObject)
 			m_pCreatedObject = pSceneNodeClone;
 
 		// Reset debug flags of the clone
@@ -279,10 +279,11 @@ void SceneGraphMenu::QtSlotTriggeredClone()
 
 		// Do not clone automatic scene nodes
 		if (!(cSceneNode.GetFlags() & SceneNode::Automatic)) {
-			// Get position of the SceneNode
-			int cIndex = cSceneNode.GetContainer()->GetIndex(&cSceneNode);
+			// Get position of the scene node
+			const int nIndex = cSceneNode.GetContainer()->GetIndex(cSceneNode);
+
 			// Clone the scene node and add it after the node from which the clone will be created
-			CloneSceneNode(*cSceneNode.GetContainer(), cSceneNode, "_Clone", cIndex+1);
+			CloneSceneNode(*cSceneNode.GetContainer(), cSceneNode, "_Clone", nIndex+1);
 		}
 
 	// Scene node modifier

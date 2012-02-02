@@ -87,13 +87,13 @@ class PLFRONTENDQT_API TreeItemBase {
 		*  @param[in] pChild
 		*    the child object to be added
 		* 
-		*  @param[in] cPosition
+		*  @param[in] nPosition
 		*    the position at which the child should be added
 		* 
 		*  @remarks
 		*    The item takes ownership of this item so it can't be an stack object
 		*/
-		void InsertChild(TreeItemBase* pChild, int cPosition);
+		void InsertChild(TreeItemBase* pChild, int nPosition);
 		
 		/**
 		*  @brief

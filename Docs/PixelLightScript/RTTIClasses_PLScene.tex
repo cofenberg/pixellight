@@ -210,8 +210,8 @@ Write \emph{<RTTI object>:GetByIndex(<integer>)} in order to get a scene node by
 \paragraph{<RTTI object> GetByName(<string>)}
 Write \emph{<RTTI object>:GetByName(<string>)} in order to get a scene node by using the given name, result can be a null pointer.
 
-\paragraph{<RTTI object> Create(<string>, <string>, <string>)}
-Write \emph{<RTTI object>:Create(<string>, <string>, <string>)} in order to create a new scene node. Name of the scene node class to create an instance from as first parameter, scene node name as second parameter and optional parameter string as third parameter. Returns a pointer to the new scene node or a null pointer if something went wrong (maybe unknown class or the class is not derived from SceneNode).
+\paragraph{<RTTI object> Create(<string>, <string>, <string>), <integer>}
+Write \emph{<RTTI object>:Create(<string>, <string>, <string>, <integer>)} in order to create a new scene node. Name of the scene node class to create an instance from as first parameter, scene node name as second parameter and optional parameter string as third parameter, optional index position specifying the location within the child list where the scene node should be added as fouth parameter (<0 for at the end). Returns a pointer to the new scene node or a null pointer if something went wrong (maybe unknown class or the class is not derived from \emph{PLScene::SceneNode}).
 
 \paragraph{CalculateAABoundingBox()}
 Write \emph{<RTTI object>:CalculateAABoundingBox()} in order to calculate and sets the axis align bounding box in \emph{scene node space}. Because the \emph{scene node space} axis aligned bounding box should always cover all scene nodes of this container, you can use this function to calculate and set this a bounding box automatically.

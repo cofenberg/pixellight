@@ -334,7 +334,7 @@ QModelIndex SceneGraphTreeModel::GetModelIndexForSceneNodeModifier(PLScene::Scen
 	return QModelIndex();
 }
 
-void SceneGraphTreeModel::AddSceneNode(PLScene::SceneContainer* pContainer, PLScene::SceneNode* pSceneNode, int cPosition)
+void SceneGraphTreeModel::AddSceneNode(PLScene::SceneContainer* pContainer, PLScene::SceneNode* pSceneNode, int nPosition)
 {
 	QModelIndex parentIdx = GetModelIndexForSceneNode(pContainer);
 	// [TODO] handling items to the root SceneContainer (pContainer == nullptr)
@@ -343,20 +343,20 @@ void SceneGraphTreeModel::AddSceneNode(PLScene::SceneContainer* pContainer, PLSc
 	
 	SceneGraphNodeTreeItemBase *treeItem = GetSceneTreeItemFromIndex(parentIdx);
 	
-	int rowNumber = cPosition == -1 ?  treeItem->children().count() : cPosition;
+	int rowNumber = nPosition == -1 ?  treeItem->children().count() : nPosition;
 
 	beginInsertRows(parentIdx, rowNumber, rowNumber);
 	
 	TreeItemBase *pChild = new SceneGraphNodeTreeItem(*this, parentIdx, rowNumber, pSceneNode);
-	if(cPosition == -1)
+	if(nPosition == -1)
 		treeItem->AddChild(pChild);
 	else
-		treeItem->InsertChild(pChild, cPosition);
+		treeItem->InsertChild(pChild, nPosition);
 	
 	endInsertRows();
 }
 
-void SceneGraphTreeModel::AddSceneNodeModifier(PLScene::SceneNode* pParentNode, PLScene::SceneNodeModifier* pSceneNodeModifier, int cPosition)
+void SceneGraphTreeModel::AddSceneNodeModifier(PLScene::SceneNode* pParentNode, PLScene::SceneNodeModifier* pSceneNodeModifier, int nPosition)
 {
 	QModelIndex parentIdx = GetModelIndexForSceneNode(pParentNode);
 	if (!parentIdx.isValid())
@@ -364,16 +364,16 @@ void SceneGraphTreeModel::AddSceneNodeModifier(PLScene::SceneNode* pParentNode, 
 	
 	SceneGraphNodeTreeItemBase *treeItem = GetSceneTreeItemFromIndex(parentIdx);
 	
-	int rowNumber = cPosition == -1 ?  treeItem->children().count() : cPosition;
+	int rowNumber = nPosition == -1 ?  treeItem->children().count() : nPosition;
 
 	beginInsertRows(parentIdx, rowNumber, rowNumber);
 	
 	TreeItemBase *pChild = new SceneGraphNodeModifierTreeItem(*this, parentIdx, rowNumber, pSceneNodeModifier);
 	
-	if(cPosition == -1)
+	if(nPosition == -1)
 		treeItem->AddChild(pChild);
 	else
-		treeItem->InsertChild(pChild, cPosition);
+		treeItem->InsertChild(pChild, nPosition);
 	
 	endInsertRows();
 }

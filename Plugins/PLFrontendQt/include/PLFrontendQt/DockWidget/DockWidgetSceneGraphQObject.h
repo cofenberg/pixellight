@@ -118,12 +118,10 @@ class DockWidgetSceneGraphQObject : public QObject {
 		*
 		*  @param[in] nAction
 		*    Performed action
-		*  @param[in] pParentObject
-		*    The parent object to which the created object was added always valid
 		*  @param[in] pCreatedObject
 		*    The created object if reason is "SceneGraphMenu::ActionAdded", otherwise a null pointer
 		*/
-		void UpdateTreeView(SceneGraphMenu::EAction nAction, PLCore::Object *pParentObject, PLCore::Object *pCreatedObject);
+		void UpdateTreeView(SceneGraphMenu::EAction nAction, PLCore::Object *pCreatedObject);
 
 
 	//[-------------------------------------------------------]

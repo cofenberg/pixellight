@@ -82,7 +82,7 @@ class SceneGraphMenu : public QMenu {
 		enum EAction {
 			ActionUnknown,	/**< Performed action is unknown */
 			ActionAdded,	/**< Something was added */
-			ActionCloned,	/**< Something was Cloned */
+			ActionCloned,	/**< Something was cloned */
 			ActionDeleted	/**< Something was deleted */
 		};
 
@@ -150,8 +150,10 @@ class SceneGraphMenu : public QMenu {
 		*    Scene node to clone
 		*  @param[in] sNameExtension
 		*    Clone name extension
+		*  @param[in] nPosition
+		*    Optional index position specifying the location within the child list where the scene node should be added, <0 for at the end
 		*/
-		void CloneSceneNode(PLScene::SceneContainer &cTargetSceneContainer, const PLScene::SceneNode &cSceneNode, const PLCore::String &sNameExtension, int cPosition = -1);
+		void CloneSceneNode(PLScene::SceneContainer &cTargetSceneContainer, const PLScene::SceneNode &cSceneNode, const PLCore::String &sNameExtension, int nPosition = -1);
 
 
 	//[-------------------------------------------------------]
