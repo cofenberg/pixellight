@@ -286,6 +286,18 @@ template <class AType> class ResourceManager {
 
 		/**
 		*  @brief
+		*    Returns the index of the given resource
+		*
+		*  @param[in] cResource
+		*    The resource for which the index should be retreived
+		*
+		*  @return
+		*    The index position, -1 on failure (e.g. the resource is no member of this manager)
+		*/
+		virtual int GetIndex(AType &cResource) const;
+
+		/**
+		*  @brief
 		*    Returns the resource with the given name
 		*
 		*  @param[in] sName

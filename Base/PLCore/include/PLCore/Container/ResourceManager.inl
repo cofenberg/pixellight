@@ -348,6 +348,16 @@ AType *ResourceManager<AType>::GetByIndex(uint32 nIndex) const
 
 /**
 *  @brief
+*    Returns the index of the given resource
+*/
+template <class AType>
+int ResourceManager<AType>::GetIndex(AType &cResource) const
+{
+	return m_lstResources.GetIndex(&cResource);
+}
+
+/**
+*  @brief
 *    Returns the resource with the given name
 */
 template <class AType>
