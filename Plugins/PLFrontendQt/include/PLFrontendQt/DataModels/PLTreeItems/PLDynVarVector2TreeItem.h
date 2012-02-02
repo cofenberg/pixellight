@@ -50,17 +50,10 @@ class PLFRONTENDQT_API PLDynVarVector2TreeItem : public PLDynVarStringTreeItem {
 
 
 	//[-------------------------------------------------------]
-	//[ Qt definitions (MOC)                                  ]
-	//[-------------------------------------------------------]
-	Q_OBJECT	// All files using the Q_OBJECT macro need to be compiled using the Meta-Object Compiler (MOC) of Qt, else slots won't work!
-				// (VisualStudio: Header file -> Right click -> Properties -> "Custom Build Tool")
-
-
-	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		explicit PLDynVarVector2TreeItem(PLCore::DynVar *dynVar, QObject *parent = nullptr);
+		explicit PLDynVarVector2TreeItem(PLCore::DynVar *dynVar, TreeItemBase *parent = nullptr);
 		virtual QVariant data(const int column, const int role) override;
 
 
@@ -90,7 +83,7 @@ class PLFRONTENDQT_API PLDynVarVector2TreeItem : public PLDynVarStringTreeItem {
 			//[ Public functions                                      ]
 			//[-------------------------------------------------------]
 			public:
-				Vector2ValueBaseTreeItem(const QString &name, QObject *parent, PLDynVarVector2TreeItem *parentItem);
+				Vector2ValueBaseTreeItem(const QString &name, TreeItemBase *parent, PLDynVarVector2TreeItem *parentItem);
 				virtual QVariant data(const int column, const int role) override;
 				bool setData(const int column, const QVariant &value, const int role);
 
@@ -120,7 +113,7 @@ class PLFRONTENDQT_API PLDynVarVector2TreeItem : public PLDynVarStringTreeItem {
 			//[ Public functions                                      ]
 			//[-------------------------------------------------------]
 			public:
-				Vector2XValueTreeItem(QObject *parent, PLDynVarVector2TreeItem *parentItem);
+				Vector2XValueTreeItem(TreeItemBase *parent, PLDynVarVector2TreeItem *parentItem);
 
 
 			//[-------------------------------------------------------]
@@ -140,7 +133,7 @@ class PLFRONTENDQT_API PLDynVarVector2TreeItem : public PLDynVarStringTreeItem {
 			//[ Public functions                                      ]
 			//[-------------------------------------------------------]
 			public:
-				Vector2YValueTreeItem(QObject *parent, PLDynVarVector2TreeItem *parentItem);
+				Vector2YValueTreeItem(TreeItemBase *parent, PLDynVarVector2TreeItem *parentItem);
 
 
 			//[-------------------------------------------------------]

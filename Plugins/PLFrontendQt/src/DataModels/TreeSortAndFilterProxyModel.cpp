@@ -29,7 +29,6 @@
 #include <PLCore/Base/Module.h>
 #include <PLCore/Base/ClassManager.h>
 #include "PLFrontendQt/QtStringAdapter.h"
-#include "PLFrontendQt/DataModels/HeaderTreeItem.h"
 #include "PLFrontendQt/DataModels/TreeSortAndFilterProxyModel.h"
 
 

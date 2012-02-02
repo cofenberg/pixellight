@@ -37,7 +37,7 @@ namespace PLFrontendQt {
 namespace DataModels {
 
 
-PLDynVarFlagsTreeItem::PLDynVarFlagsTreeItem(PLCore::DynVar *dynVar, QObject *parent) : PLDynVarStringTreeItem(dynVar, PLDynVarTreeItemTypes::Flags, parent)
+PLDynVarFlagsTreeItem::PLDynVarFlagsTreeItem(PLCore::DynVar *dynVar, TreeItemBase *parent) : PLDynVarStringTreeItem(dynVar, PLDynVarTreeItemTypes::Flags, parent)
 {
 	RemoveFlags(1, Qt::ItemIsEditable);
 
@@ -70,7 +70,7 @@ void PLDynVarFlagsTreeItem::UpdateDataToVar()
 	m_dynVar->SetUInt32(m_flagValues);
 }
 
-PLDynVarFlagsTreeItem::FlagValueTreeItem::FlagValueTreeItem(QObject *parent, QString flagName, uint32 flagValue, PLDynVarFlagsTreeItem *parentItem) : TreeItemBase(2, parent),
+PLDynVarFlagsTreeItem::FlagValueTreeItem::FlagValueTreeItem(TreeItemBase *parent, QString flagName, uint32 flagValue, PLDynVarFlagsTreeItem *parentItem) : TreeItemBase(2, parent),
 	m_flagValue(flagValue),
 	m_flagName(flagName),
 	m_parentItem(parentItem)

@@ -161,6 +161,8 @@ class SceneContainer : public SceneNode, public PLCore::ElementManager<SceneNode
 		*    Scene node name
 		*  @param[in] sParameters
 		*    Optional parameter string
+		*  @param[in] cPosition
+		*    Optional parameter position. Specifies the location within the child list to which the new SceneNode should be inserted.
 		*
 		*  @return
 		*    Pointer to the new scene node or a null pointer if something went wrong
@@ -169,7 +171,7 @@ class SceneContainer : public SceneNode, public PLCore::ElementManager<SceneNode
 		*  @note
 		*    - If the desired name is already in use, the name is chosen automatically
 		*/
-		PLS_API SceneNode *Create(const PLCore::String &sClass, const PLCore::String &sName = "", const PLCore::String &sParameters = "");
+		PLS_API SceneNode *Create(const PLCore::String &sClass, const PLCore::String &sName = "", const PLCore::String &sParameters = "", int cPosition = -1);
 
 		/**
 		*  @brief
@@ -294,6 +296,8 @@ class SceneContainer : public SceneNode, public PLCore::ElementManager<SceneNode
 		*    Node name
 		*  @param[in] bInitNode
 		*    Should the node be initialized?
+		*  @param[in] cPosition
+		*    Optional parameter position. Specifies the location within the child list to which the SceneNode should be inserted.
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -302,7 +306,7 @@ class SceneContainer : public SceneNode, public PLCore::ElementManager<SceneNode
 		*    - If the node name is already used another unused node name will be used instead!
 		*    - Use this function only in special cases!
 		*/
-		bool Add(SceneNode &cNode, const PLCore::String &sName = "", bool bInitNode = true);
+		bool Add(SceneNode &cNode, const PLCore::String &sName = "", bool bInitNode = true, int cPosition = -1);
 
 		/**
 		*  @brief

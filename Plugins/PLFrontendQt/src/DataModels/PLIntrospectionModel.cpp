@@ -28,6 +28,7 @@
 #include <PLCore/Base/Func/DynFunc.h>
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/DataModels/TreeItemBase.h"
+#include "PLFrontendQt/DataModels/HeaderTreeItem.h"
 #include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarTreeItemsFactory.h"
 #include "PLFrontendQt/DataModels/PLIntrospectionModel.h"
 
@@ -39,32 +40,13 @@ namespace PLFrontendQt {
 namespace DataModels {
 
 
-class AttributeInfoHeaderTreeItem : public TreeItemBase {
-
-
-	public:
-		AttributeInfoHeaderTreeItem(QObject *parent = nullptr) : TreeItemBase(2, parent)
-		{
-		}
-
-		virtual QVariant data(const int column, const int role) override
-		{
-			if (role == Qt::DisplayRole) {
-				if (column == 0)
-					return "Attribute";
-				else if (column == 1)
-					return "Value";
-			}
-
-			return QVariant();
-		}
-
-
-};
-
-
-PLIntrospectionModel::PLIntrospectionModel(QObject *parent) : TreeModelBase(new AttributeInfoHeaderTreeItem(parent), parent)
+PLIntrospectionModel::PLIntrospectionModel(QObject *parent) : TreeModelBase(new HeaderTreeItem, parent)
 {
+	QStringList headerItems;
+	headerItems << "Attribute" << "Value";
+
+	HeaderTreeItem *header = static_cast<HeaderTreeItem*>(GetRootItem());
+	header->setHeaderItems(headerItems);
 }
 
 PLIntrospectionModel::PLIntrospectionModel(DataModels::TreeItemBase *rootItem, QObject *parent) : TreeModelBase(rootItem, parent)
@@ -74,8 +56,7 @@ PLIntrospectionModel::PLIntrospectionModel(DataModels::TreeItemBase *rootItem, Q
 void PLIntrospectionModel::SetObject(PLCore::Object *Obj)
 {
 	beginResetModel();
-	const QObjectList &childs = GetRootItem()->children();
-	qDeleteAll(childs.begin(), childs.end());
+	GetRootItem()->clearChildren();
 
 	if (Obj) {
 		PLCore::List<PLCore::DynFuncPtr> funcs;

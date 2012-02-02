@@ -66,7 +66,7 @@ class PLFRONTENDQT_API PLDynVarTreeItemsFactory {
 	//[ Public static functions                               ]
 	//[-------------------------------------------------------]
 	public:
-		static TreeItemBase *CreateDynVarTreeItem(PLCore::DynVar *dynVar, QObject *parent = nullptr);
+		static TreeItemBase *CreateDynVarTreeItem(PLCore::DynVar *dynVar, TreeItemBase *parent = nullptr);
 
 
 	//[-------------------------------------------------------]

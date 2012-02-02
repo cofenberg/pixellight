@@ -25,6 +25,7 @@
 //[-------------------------------------------------------]
 #include <QtGui/qtreeview.h>
 #include <PLScene/Scene/SceneNode.h>
+#include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SceneNodeModifier.h>
 #include "PLFrontendQt/DataModels/SceneGraphTreeModel.h"
 #include "PLFrontendQt/DataModels/TreeSortAndFilterProxyModel.h"
@@ -65,14 +66,15 @@ DockWidgetSceneGraphQObject::~DockWidgetSceneGraphQObject()
 *  @brief
 *    Updates the scene graph tree view
 */
-void DockWidgetSceneGraphQObject::UpdateTreeView(SceneGraphMenu::EAction nAction, Object *pCreatedObject)
+void DockWidgetSceneGraphQObject::UpdateTreeView(SceneGraphMenu::EAction nAction, PLCore::Object *pParentObject, Object *pCreatedObject)
 {
 	// Check dock widget instances
 	if (m_pDockWidgetSceneGraph->m_pQTreeView && m_pDockWidgetSceneGraph->m_pSceneGraphTreeModel) {
 		// Check the reason for the update
 		switch (nAction) {
-			// Something was added
+			// Something was added or cloned
 			case SceneGraphMenu::ActionAdded:
+			case SceneGraphMenu::ActionCloned:
 				// In case something was added, the provided pointer must be valid
 				if (pCreatedObject) {
 					// Scene node
@@ -81,8 +83,10 @@ void DockWidgetSceneGraphQObject::UpdateTreeView(SceneGraphMenu::EAction nAction
 						SceneNode *pSceneNode = static_cast<SceneNode*>(pCreatedObject);
 
 						// Ignore automatically generated stuff
-						if (!(pSceneNode->GetFlags() & SceneNode::Automatic))
-							m_pDockWidgetSceneGraph->m_pSceneGraphTreeModel->AddSceneNode(pSceneNode->GetContainer(), pSceneNode);
+						if (!(pSceneNode->GetFlags() & SceneNode::Automatic)) {
+							int cIndex = nAction == SceneGraphMenu::ActionCloned ? pSceneNode->GetContainer()->GetIndex(pSceneNode) : -1;
+							m_pDockWidgetSceneGraph->m_pSceneGraphTreeModel->AddSceneNode(pSceneNode->GetContainer(), pSceneNode, cIndex);
+						}
 
 					// Scene node modifier
 					} else if (pCreatedObject->IsInstanceOf("PLScene::SceneNodeModifier")) {
@@ -90,8 +94,9 @@ void DockWidgetSceneGraphQObject::UpdateTreeView(SceneGraphMenu::EAction nAction
 						SceneNodeModifier *pSceneNodeModifier = static_cast<SceneNodeModifier*>(pCreatedObject);
 
 						// Ignore automatically generated stuff
-						if (!(pSceneNodeModifier->GetFlags() & SceneNodeModifier::Automatic))
+						if (!(pSceneNodeModifier->GetFlags() & SceneNodeModifier::Automatic)) {
 							m_pDockWidgetSceneGraph->m_pSceneGraphTreeModel->AddSceneNodeModifier(&pSceneNodeModifier->GetSceneNode(), pSceneNodeModifier);
+						}
 					}
 
 					// Usability: Automatically select the new object
@@ -145,7 +150,7 @@ void DockWidgetSceneGraphQObject::QtSlotCustomContextMenuRequested(const QPoint 
 			if (pAction) {
 				// Evaluate the performed action and update the tree view if required
 				const QVariant cUserData = pAction->data();
-				UpdateTreeView(cUserData.isValid() ? static_cast<SceneGraphMenu::EAction>(pAction->data().value<int>()) : SceneGraphMenu::ActionUnknown, cSceneGraphMenu.GetCreatedObject());
+				UpdateTreeView(cUserData.isValid() ? static_cast<SceneGraphMenu::EAction>(pAction->data().value<int>()) : SceneGraphMenu::ActionUnknown, pObject, cSceneGraphMenu.GetCreatedObject());
 			}
 		}
 	}

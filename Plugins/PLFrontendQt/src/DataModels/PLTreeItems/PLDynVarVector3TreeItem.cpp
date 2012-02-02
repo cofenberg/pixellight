@@ -34,7 +34,7 @@ namespace PLFrontendQt {
 namespace DataModels {
 
 
-PLDynVarVector3TreeItem::PLDynVarVector3TreeItem(PLCore::DynVar *dynVar, QObject *parent) : PLDynVarStringTreeItem(dynVar, PLDynVarTreeItemTypes::Vector3, parent)
+PLDynVarVector3TreeItem::PLDynVarVector3TreeItem(PLCore::DynVar *dynVar, TreeItemBase *parent) : PLDynVarStringTreeItem(dynVar, PLDynVarTreeItemTypes::Vector3, parent)
 {
 	RemoveFlags(1,  Qt::ItemIsEditable);
 	if (m_dynVar && m_dynVar->GetTypeID() == PLCore::Type<PLMath::Vector3>::TypeID) {
@@ -60,7 +60,7 @@ void PLDynVarVector3TreeItem::UpdateDataToVar()
 	m_dynVar->SetString(m_Vector3.ToString());
 }
 
-PLDynVarVector3TreeItem::Vector3ValueBaseTreeItem::Vector3ValueBaseTreeItem(const QString &name, QObject *parent, PLDynVarVector3TreeItem *parentItem) : TreeItemBase(2, parent),
+PLDynVarVector3TreeItem::Vector3ValueBaseTreeItem::Vector3ValueBaseTreeItem(const QString &name, TreeItemBase *parent, PLDynVarVector3TreeItem *parentItem) : TreeItemBase(2, parent),
 	m_Name(name),
 	m_parentItem(parentItem)
 {
@@ -96,7 +96,7 @@ bool PLDynVarVector3TreeItem::Vector3ValueBaseTreeItem::setData(const int column
 	return true;
 }
 
-PLDynVarVector3TreeItem::Vector3XValueTreeItem::Vector3XValueTreeItem(QObject *parent, PLDynVarVector3TreeItem *parentItem) : Vector3ValueBaseTreeItem("X", parent, parentItem)
+PLDynVarVector3TreeItem::Vector3XValueTreeItem::Vector3XValueTreeItem(TreeItemBase *parent, PLDynVarVector3TreeItem *parentItem) : Vector3ValueBaseTreeItem("X", parent, parentItem)
 {
 }
 
@@ -110,7 +110,7 @@ void PLDynVarVector3TreeItem::Vector3XValueTreeItem::SetVectorData(PLMath::Vecto
 	vector.SetX(newValue);
 }
 
-PLDynVarVector3TreeItem::Vector3YValueTreeItem::Vector3YValueTreeItem(QObject *parent, PLDynVarVector3TreeItem *parentItem) : Vector3ValueBaseTreeItem("Y", parent, parentItem)
+PLDynVarVector3TreeItem::Vector3YValueTreeItem::Vector3YValueTreeItem(TreeItemBase *parent, PLDynVarVector3TreeItem *parentItem) : Vector3ValueBaseTreeItem("Y", parent, parentItem)
 {
 }
 
@@ -124,7 +124,7 @@ void PLDynVarVector3TreeItem::Vector3YValueTreeItem::SetVectorData(PLMath::Vecto
 	vector.SetY(newValue);
 }
 
-PLDynVarVector3TreeItem::Vector3ZValueTreeItem::Vector3ZValueTreeItem(QObject *parent, PLDynVarVector3TreeItem *parentItem) : Vector3ValueBaseTreeItem("Z", parent, parentItem)
+PLDynVarVector3TreeItem::Vector3ZValueTreeItem::Vector3ZValueTreeItem(TreeItemBase *parent, PLDynVarVector3TreeItem *parentItem) : Vector3ValueBaseTreeItem("Z", parent, parentItem)
 {
 }
 

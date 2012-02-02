@@ -93,8 +93,8 @@ class PLFRONTENDQT_API ClassListModel : public TreeModelBase {
 	//[-------------------------------------------------------]
 	private:
 		void SetupModel(bool hierarchical);
-		void CreateClassItemsFromModule(const PLCore::Module &moduleItem, QObject *parent);
-		void CreateHierarchicalClassItems(const PLCore::Class &baseClass, QObject *parent);
+		void CreateClassItemsFromModule(const PLCore::Module &moduleItem, TreeItemBase *parent);
+		void CreateHierarchicalClassItems(const PLCore::Class &baseClass, TreeItemBase *parent);
 
 
 };

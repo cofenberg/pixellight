@@ -34,7 +34,7 @@ namespace PLFrontendQt {
 namespace DataModels {
 
 
-PLDynVarVector4TreeItem::PLDynVarVector4TreeItem(PLCore::DynVar *dynVar, QObject *parent) : PLDynVarStringTreeItem(dynVar, PLDynVarTreeItemTypes::Vector4, parent)
+PLDynVarVector4TreeItem::PLDynVarVector4TreeItem(PLCore::DynVar *dynVar, TreeItemBase *parent) : PLDynVarStringTreeItem(dynVar, PLDynVarTreeItemTypes::Vector4, parent)
 {
 	RemoveFlags(1,  Qt::ItemIsEditable);
 	if (m_dynVar && m_dynVar->GetTypeID() == PLCore::Type<PLMath::Vector4>::TypeID) {
@@ -61,7 +61,7 @@ void PLDynVarVector4TreeItem::UpdateDataToVar()
 	m_dynVar->SetString(m_Vector4.ToString());
 }
 
-PLDynVarVector4TreeItem::Vector4ValueBaseTreeItem::Vector4ValueBaseTreeItem(const QString &name, QObject *parent, PLDynVarVector4TreeItem *parentItem) : TreeItemBase(2, parent),
+PLDynVarVector4TreeItem::Vector4ValueBaseTreeItem::Vector4ValueBaseTreeItem(const QString &name, TreeItemBase *parent, PLDynVarVector4TreeItem *parentItem) : TreeItemBase(2, parent),
 	m_Name(name),
 	m_parentItem(parentItem)
 {
@@ -97,7 +97,7 @@ bool PLDynVarVector4TreeItem::Vector4ValueBaseTreeItem::setData(const int column
 	return true;
 }
 
-PLDynVarVector4TreeItem::Vector4XValueTreeItem::Vector4XValueTreeItem(QObject *parent, PLDynVarVector4TreeItem *parentItem) : Vector4ValueBaseTreeItem("X", parent, parentItem)
+PLDynVarVector4TreeItem::Vector4XValueTreeItem::Vector4XValueTreeItem(TreeItemBase *parent, PLDynVarVector4TreeItem *parentItem) : Vector4ValueBaseTreeItem("X", parent, parentItem)
 {
 }
 
@@ -111,7 +111,7 @@ void PLDynVarVector4TreeItem::Vector4XValueTreeItem::SetVectorData(PLMath::Vecto
 	vector.SetX(newValue);
 }
 
-PLDynVarVector4TreeItem::Vector4YValueTreeItem::Vector4YValueTreeItem(QObject *parent, PLDynVarVector4TreeItem *parentItem) : Vector4ValueBaseTreeItem("Y", parent, parentItem)
+PLDynVarVector4TreeItem::Vector4YValueTreeItem::Vector4YValueTreeItem(TreeItemBase *parent, PLDynVarVector4TreeItem *parentItem) : Vector4ValueBaseTreeItem("Y", parent, parentItem)
 {
 }
 
@@ -125,7 +125,7 @@ void PLDynVarVector4TreeItem::Vector4YValueTreeItem::SetVectorData(PLMath::Vecto
 	vector.SetY(newValue);
 }
 
-PLDynVarVector4TreeItem::Vector4ZValueTreeItem::Vector4ZValueTreeItem(QObject *parent, PLDynVarVector4TreeItem *parentItem) : Vector4ValueBaseTreeItem("Z", parent, parentItem)
+PLDynVarVector4TreeItem::Vector4ZValueTreeItem::Vector4ZValueTreeItem(TreeItemBase *parent, PLDynVarVector4TreeItem *parentItem) : Vector4ValueBaseTreeItem("Z", parent, parentItem)
 {
 }
 
@@ -139,7 +139,7 @@ void PLDynVarVector4TreeItem::Vector4ZValueTreeItem::SetVectorData(PLMath::Vecto
 	vector.SetZ(newValue);
 }
 
-PLDynVarVector4TreeItem::Vector4WValueTreeItem::Vector4WValueTreeItem(QObject *parent, PLDynVarVector4TreeItem *parentItem) : Vector4ValueBaseTreeItem("W", parent, parentItem)
+PLDynVarVector4TreeItem::Vector4WValueTreeItem::Vector4WValueTreeItem(TreeItemBase *parent, PLDynVarVector4TreeItem *parentItem) : Vector4ValueBaseTreeItem("W", parent, parentItem)
 {
 }
 

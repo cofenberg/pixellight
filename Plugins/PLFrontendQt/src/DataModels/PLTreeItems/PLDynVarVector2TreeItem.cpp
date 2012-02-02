@@ -34,7 +34,7 @@ namespace PLFrontendQt {
 namespace DataModels {
 
 
-PLDynVarVector2TreeItem::PLDynVarVector2TreeItem(PLCore::DynVar *dynVar, QObject *parent) : PLDynVarStringTreeItem(dynVar, PLDynVarTreeItemTypes::Vector2, parent)
+PLDynVarVector2TreeItem::PLDynVarVector2TreeItem(PLCore::DynVar *dynVar, TreeItemBase *parent) : PLDynVarStringTreeItem(dynVar, PLDynVarTreeItemTypes::Vector2, parent)
 {
 	RemoveFlags(1,  Qt::ItemIsEditable);
 	if (m_dynVar && m_dynVar->GetTypeID() == PLCore::Type<PLMath::Vector2>::TypeID) {
@@ -59,7 +59,7 @@ void PLDynVarVector2TreeItem::UpdateDataToVar()
 	m_dynVar->SetString(m_Vector2.ToString());
 }
 
-PLDynVarVector2TreeItem::Vector2ValueBaseTreeItem::Vector2ValueBaseTreeItem(const QString &name, QObject *parent, PLDynVarVector2TreeItem *parentItem) : TreeItemBase(2, parent),
+PLDynVarVector2TreeItem::Vector2ValueBaseTreeItem::Vector2ValueBaseTreeItem(const QString &name, TreeItemBase *parent, PLDynVarVector2TreeItem *parentItem) : TreeItemBase(2, parent),
 	m_Name(name),
 	m_parentItem(parentItem)
 {
@@ -95,7 +95,7 @@ bool PLDynVarVector2TreeItem::Vector2ValueBaseTreeItem::setData(const int column
 	return true;
 }
 
-PLDynVarVector2TreeItem::Vector2XValueTreeItem::Vector2XValueTreeItem(QObject *parent, PLDynVarVector2TreeItem *parentItem) : Vector2ValueBaseTreeItem("X", parent, parentItem)
+PLDynVarVector2TreeItem::Vector2XValueTreeItem::Vector2XValueTreeItem(TreeItemBase *parent, PLDynVarVector2TreeItem *parentItem) : Vector2ValueBaseTreeItem("X", parent, parentItem)
 {
 }
 
@@ -109,7 +109,7 @@ void PLDynVarVector2TreeItem::Vector2XValueTreeItem::SetVectorData(PLMath::Vecto
 	vector.SetX(newValue);
 }
 
-PLDynVarVector2TreeItem::Vector2YValueTreeItem::Vector2YValueTreeItem(QObject *parent, PLDynVarVector2TreeItem *parentItem) : Vector2ValueBaseTreeItem("Y", parent, parentItem)
+PLDynVarVector2TreeItem::Vector2YValueTreeItem::Vector2YValueTreeItem(TreeItemBase *parent, PLDynVarVector2TreeItem *parentItem) : Vector2ValueBaseTreeItem("Y", parent, parentItem)
 {
 }
 

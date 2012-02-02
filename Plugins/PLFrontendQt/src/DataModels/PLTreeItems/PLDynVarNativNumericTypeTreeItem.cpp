@@ -35,7 +35,7 @@ namespace PLFrontendQt {
 namespace DataModels {
 
 
-PLDynVarNativNumericTypeTreeItem::PLDynVarNativNumericTypeTreeItem(PLCore::DynVar *dynVar, QObject *parent) : PLDynVarStringTreeItem(dynVar, GetNumericTypeFromDynVar(dynVar), parent)
+PLDynVarNativNumericTypeTreeItem::PLDynVarNativNumericTypeTreeItem(PLCore::DynVar *dynVar, TreeItemBase *parent) : PLDynVarStringTreeItem(dynVar, GetNumericTypeFromDynVar(dynVar), parent)
 	, m_basisTypeId(dynVar ? dynVar->GetTypeID() : -1)
 {
 	if (m_basisTypeId == PLCore::TypeBool)

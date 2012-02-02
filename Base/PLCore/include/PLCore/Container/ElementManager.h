@@ -288,6 +288,18 @@ template <class AType> class ElementManager {
 
 		/**
 		*  @brief
+		*    Returns the index of the given element
+		*
+		*  @param[in] cElement
+		*    The elemnt for which the index should be retreived
+		*
+		*  @return
+		*    The index position, -1 on failure (e.g. the elemnt is no member of this manager)
+		*/
+		virtual int GetIndex(AType *pElement) const;
+
+		/**
+		*  @brief
 		*    Returns the element with the given name
 		*
 		*  @param[in] sName

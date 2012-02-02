@@ -27,7 +27,7 @@
 #include <PLCore/Base/Module.h>
 #include <PLScene/Compositing/SceneRenderer.h>
 #include <PLScene/Compositing/SceneRendererPass.h>
-#include "PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererHeaderTreeItem.h"
+#include "PLFrontendQt/DataModels/HeaderTreeItem.h"
 #include "PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererPassTreeItem.h"
 #include "PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererDataModel.h"
 
@@ -42,9 +42,14 @@ namespace DataModels {
 namespace SceneRendererDataModel {
 
 
-SceneRendererDataModel::SceneRendererDataModel(QObject *parent): TreeModelBase(new SceneRendererHeaderTreeItem, parent),
+SceneRendererDataModel::SceneRendererDataModel(QObject *parent): TreeModelBase(new HeaderTreeItem),
 	m_pSceneRenderer(nullptr)
 {
+	QStringList headerItems;
+	headerItems << "Node Name" << "Value";
+
+	HeaderTreeItem *header = static_cast<HeaderTreeItem*>(GetRootItem());
+	header->setHeaderItems(headerItems);
 }
 
 SceneRenderer *SceneRendererDataModel::GetSceneRenderer() const
@@ -58,9 +63,8 @@ void SceneRendererDataModel::SetSceneRenderer(SceneRenderer *nodeObj)
 		m_pSceneRenderer = nodeObj;
 
 		beginResetModel();
-		const QObjectList &childs = GetRootItem()->children();
-		qDeleteAll(childs.begin(), childs.end());
-
+		GetRootItem()->clearChildren();
+		
 		if (m_pSceneRenderer) {
 			uint32 count = m_pSceneRenderer->GetNumOfElements();
 
@@ -69,7 +73,7 @@ void SceneRendererDataModel::SetSceneRenderer(SceneRenderer *nodeObj)
 				// Get the current scene renderer pass
 				SceneRendererPass *pSceneRendererPass = m_pSceneRenderer->GetByIndex(nPass);
 				if (pSceneRendererPass)
-					new SceneRendererPassTreeItem(pSceneRendererPass, GetRootItem());
+					(new SceneRendererPassTreeItem(pSceneRendererPass, GetRootItem()));
 			}
 		}
 

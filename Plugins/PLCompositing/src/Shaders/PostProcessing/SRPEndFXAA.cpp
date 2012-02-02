@@ -192,7 +192,7 @@ void SRPEndFXAA::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 
 					// Preset
 					m_nCurrentPreset = Preset.Get();
-					const String sPreset = String("#define FXAA_PRESET ") + m_nCurrentPreset + '\n';
+					const String sPreset = String("#define FXAA_PRESET ") + static_cast<int>(m_nCurrentPreset) + '\n';
 
 					// Choose the shader source codes depending on the requested shader language
 					#include "FxaaShader.h"	// FXAA shader source

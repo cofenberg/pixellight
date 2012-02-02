@@ -37,7 +37,7 @@ namespace PLFrontendQt {
 namespace DataModels {
 
 
-PLDynVarEnumTreeItem::PLDynVarEnumTreeItem(PLCore::DynVar *dynVar, QObject *parent) : PLDynVarStringTreeItem(dynVar, PLDynVarTreeItemTypes::Enum, parent)
+PLDynVarEnumTreeItem::PLDynVarEnumTreeItem(PLCore::DynVar *dynVar, TreeItemBase *parent) : PLDynVarStringTreeItem(dynVar, PLDynVarTreeItemTypes::Enum, parent)
 {
 	PLCore::DynTypeInfo &typeInfo = m_dynVar->GetType();
 

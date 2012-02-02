@@ -39,7 +39,7 @@ namespace DataModels {
 namespace SceneRendererDataModel {
 
 
-SceneRendererPassTreeItem::SceneRendererPassTreeItem(PLScene::SceneRendererPass *item, QObject *parent) : TreeItemBase(2, parent),
+SceneRendererPassTreeItem::SceneRendererPassTreeItem(PLScene::SceneRendererPass *item, TreeItemBase *parent) : TreeItemBase(2, parent),
 	m_pPass(item)
 {
 	if (m_pPass) {

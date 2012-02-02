@@ -6,6 +6,22 @@ PLFrontendQt:
 
 
 >> 01.02.2012
+[SW]
+PLFrontendQt:
+- "TreeItemBase": Removed the inheritance to QObject. The features of QObject aren't needed for such items. The only thing which was used was the parent<->child relationship management.
+  But this management didn't support reordering of child items. So now the TreeItemBase implements an own paren<->child relationship management with some similarity to the management of QObject:
+	- The TreeItem takes ownership of an child item. When the TreeItem gest destroyed then also the childs gets destroyed as well.
+	- When a child item gets destroyed it removes itself from the parent
+	- This management requires that an child element can't be an stack object. The Items must be created on the heap.
+- Replaced all model specific header tree items with the generic HeaderTreeItem.
+- "SceneGraphMenu::CloneSceneNode": Extended  the Method with an additional parameter to specify the position to which the cloned item should be inserted in the internal child list of an SceneContainer.
+- Added "ActionCloned" to SceneGraphMenu::EAction enum. This value is used to add the cloned SceneNode after the source instead of adding it to the end if the child list. 
+PLCore:
+- "ElementManager": Added GetIndex Method.
+
+
+
+>> 01.02.2012
 [CO]
 PLFrontendQt:
 - "DockWidgetSceneGraphQObject::UpdateTreeView()": Usability: Automatically select the new object

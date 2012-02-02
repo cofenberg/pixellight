@@ -52,9 +52,9 @@ class ClassInfoPropertyTreeItem : public TreeItemBase {
 
 
 	public:
-		ClassInfoPropertyTreeItem(const QString &propertyName, const QString &propertyValue, QObject *parent = nullptr) : TreeItemBase(1, parent), m_sPropertyName(propertyName), m_sPropertyValue(propertyValue)
+		ClassInfoPropertyTreeItem(const QString &propertyName, const QString &propertyValue, TreeItemBase *parent = nullptr) : TreeItemBase(1, parent), m_sPropertyName(propertyName), m_sPropertyValue(propertyValue)
 		{
-			m_sToolTipText = tr("<table>"
+			m_sToolTipText = QObject::tr("<table>"
 							"<tr><td bgcolor=#00ff00 colspan=\"2\">Property Information</td></tr>"
 							"<tr><td>Name: </td><td>%1</td></tr>"
 							"<tr><td>Value: </td><td>%2</td></tr>"
@@ -89,9 +89,9 @@ class ClassListItem : public TreeItemBase {
 
 
 	public:
-		explicit ClassListItem(const Class *pClass, ClassInfoModel::ClassInfoItemRoles displayRole = ClassInfoModel::NameRole, QObject *parent = nullptr) : TreeItemBase(1, parent) , m_pClass(pClass), m_cDisplayRole(displayRole)
+		explicit ClassListItem(const Class *pClass, ClassInfoModel::ClassInfoItemRoles displayRole = ClassInfoModel::NameRole, TreeItemBase *parent = nullptr) : TreeItemBase(1, parent) , m_pClass(pClass), m_cDisplayRole(displayRole)
 		{
-			QString tooltipTemplate = tr("<table>"
+			QString tooltipTemplate = QObject::tr("<table>"
 									"<tr><td bgcolor=#00ff00 colspan=\"2\">Class Information</td></tr>"
 									"<tr><td>Name:</td><td><ClassName></td></tr>"
 									"<tr><td>Description:</td><td><ClassDesc></td></tr>"
@@ -153,7 +153,7 @@ class ClassInfoCategoryTreeItem : public TreeItemBase {
 
 
 	public:
-		ClassInfoCategoryTreeItem(const QString name, QObject *parent = nullptr) : TreeItemBase(1, parent), m_name(name)
+		ClassInfoCategoryTreeItem(const QString name, TreeItemBase *parent = nullptr) : TreeItemBase(1, parent), m_name(name)
 		{
 		}
 
@@ -179,7 +179,7 @@ class ClassInfoTreeItemBase : public TreeItemBase {
 
 
 	public:
-		ClassInfoTreeItemBase(const T &cVarDesc, QObject *parent = nullptr) : TreeItemBase(1, parent),
+		ClassInfoTreeItemBase(const T &cVarDesc, TreeItemBase *parent = nullptr) : TreeItemBase(1, parent),
 			m_sName(QtStringAdapter::PLToQt(cVarDesc.GetName())),
 			m_sDescription(QtStringAdapter::PLToQt(cVarDesc.GetDescription()))
 		{
@@ -216,11 +216,11 @@ class ClassInfoAttributeTreeItem : public ClassInfoTreeItemBase<VarDesc> {
 
 
 	public:
-		ClassInfoAttributeTreeItem(const VarDesc &cVarDesc, QObject *parent = nullptr) : ClassInfoTreeItemBase(cVarDesc, parent),
+		ClassInfoAttributeTreeItem(const VarDesc &cVarDesc, TreeItemBase *parent = nullptr) : ClassInfoTreeItemBase(cVarDesc, parent),
 			m_sType(QtStringAdapter::PLToQt(cVarDesc.GetTypeName())),
 			m_sDefault(QtStringAdapter::PLToQt(cVarDesc.GetDefault()))
 		{
-			SetToolTipText(tr("<table>"
+			SetToolTipText(QObject::tr("<table>"
 							"<tr><td bgcolor=#00ff00 colspan=\"2\">Attribute Information</td></tr>"
 							"<tr><td>Name: </td><td>%1</td></tr>"
 							"<tr><td>Type: </td><td>%2</td></tr>"
@@ -239,11 +239,11 @@ class ClassInfoMemberWithSignatureDescTreeItem : public ClassInfoTreeItemBase<Me
 
 
 	public:
-		ClassInfoMemberWithSignatureDescTreeItem(const QString tooltipTitle, const T &cMemberDesc, QObject *parent = nullptr) :
+		ClassInfoMemberWithSignatureDescTreeItem(const QString tooltipTitle, const T &cMemberDesc, TreeItemBase *parent = nullptr) :
 			ClassInfoTreeItemBase(cMemberDesc, parent),
 			m_sSignature(QtStringAdapter::PLToQt(cMemberDesc.GetSignature()))
 		{
-			SetToolTipText(tr("<table>"
+			SetToolTipText(QObject::tr("<table>"
 							"<tr><td bgcolor=#00ff00 colspan=\"2\">%1 Information</td></tr>"
 							"<tr><td>Name: </td><td>%2</td></tr>"
 							"<tr><td>Description: </td><td>%3</td></tr>"
@@ -260,7 +260,7 @@ class ClassInfoMemberWithSignatureDescTreeItem : public ClassInfoTreeItemBase<Me
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
-ClassInfoModel::ClassInfoModel(QObject *parent): TreeModelBase(new HeaderTreeItem(parent), parent),
+ClassInfoModel::ClassInfoModel(QObject *parent): TreeModelBase(new HeaderTreeItem, parent),
 	m_pCommonCategory(nullptr),
 	m_pAttributeCategory(nullptr),
 	m_pSlotsCategory(nullptr),
@@ -356,8 +356,7 @@ void ClassInfoModel::SetClassItem(const Class &cClass)
 void ClassInfoModel::DeleteChilds(ClassInfoCategoryTreeItem *pCategoryItem)
 {
 	if (pCategoryItem) {
-		const QObjectList &childs = pCategoryItem->children();
-		qDeleteAll(childs.begin(), childs.end());
+		pCategoryItem->clearChildren();
 	}
 }
 

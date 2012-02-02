@@ -34,7 +34,7 @@ namespace PLFrontendQt {
 namespace DataModels {
 
 
-PLDynVarVector2iTreeItem::PLDynVarVector2iTreeItem(PLCore::DynVar *dynVar, QObject *parent) : PLDynVarStringTreeItem(dynVar, PLDynVarTreeItemTypes::Vector2i, parent)
+PLDynVarVector2iTreeItem::PLDynVarVector2iTreeItem(PLCore::DynVar *dynVar, TreeItemBase *parent) : PLDynVarStringTreeItem(dynVar, PLDynVarTreeItemTypes::Vector2i, parent)
 {
 	RemoveFlags(1,  Qt::ItemIsEditable);
 	if (m_dynVar && m_dynVar->GetTypeID() == PLCore::Type<PLMath::Vector2i>::TypeID) {
@@ -59,7 +59,7 @@ void PLDynVarVector2iTreeItem::UpdateDataToVar()
 	m_dynVar->SetString(m_Vector2i.ToString());
 }
 
-PLDynVarVector2iTreeItem::Vector2iValueBaseTreeItem::Vector2iValueBaseTreeItem(const QString &name, QObject *parent, PLDynVarVector2iTreeItem *parentItem) : TreeItemBase(2, parent),
+PLDynVarVector2iTreeItem::Vector2iValueBaseTreeItem::Vector2iValueBaseTreeItem(const QString &name, TreeItemBase *parent, PLDynVarVector2iTreeItem *parentItem) : TreeItemBase(2, parent),
 	m_Name(name),
 	m_parentItem(parentItem)
 {
@@ -95,7 +95,7 @@ bool PLDynVarVector2iTreeItem::Vector2iValueBaseTreeItem::setData(const int colu
 	return true;
 }
 
-PLDynVarVector2iTreeItem::Vector2iXValueTreeItem::Vector2iXValueTreeItem(QObject *parent, PLDynVarVector2iTreeItem *parentItem) : Vector2iValueBaseTreeItem("X", parent, parentItem)
+PLDynVarVector2iTreeItem::Vector2iXValueTreeItem::Vector2iXValueTreeItem(TreeItemBase* parent, PLFrontendQt::DataModels::PLDynVarVector2iTreeItem* parentItem) : Vector2iValueBaseTreeItem("X", parent, parentItem)
 {
 }
 
@@ -109,7 +109,7 @@ void PLDynVarVector2iTreeItem::Vector2iXValueTreeItem::SetVectorData(PLMath::Vec
 	vector.SetX(newValue);
 }
 
-PLDynVarVector2iTreeItem::Vector2iYValueTreeItem::Vector2iYValueTreeItem(QObject *parent, PLDynVarVector2iTreeItem *parentItem) : Vector2iValueBaseTreeItem("Y", parent, parentItem)
+PLDynVarVector2iTreeItem::Vector2iYValueTreeItem::Vector2iYValueTreeItem(TreeItemBase* parent, PLFrontendQt::DataModels::PLDynVarVector2iTreeItem* parentItem) : Vector2iValueBaseTreeItem("Y", parent, parentItem)
 {
 }
 
