@@ -1,3 +1,10 @@
+>> 02.02.2012
+[CO]
+PLViewerQt:
+- "GuiPickingQObject::eventFilter()": Do only allow playing around with a transform gizmo when the left mouse button is used
+
+
+
 >> 29.01.2012
 [CO]
 - PLViewer/PLViewerQt: Fixed configuration mixup

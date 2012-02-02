@@ -88,27 +88,43 @@ bool GuiPickingQObject::eventFilter(QObject *pQObject, QEvent *pQEvent)
 		switch (pQEvent->type()) {
 			// Mouse button pressed (QMouseEvent)
 			case QEvent::MouseButtonPress:
-				// Are we currently in transform mode?
-				if (!m_pTransformGizmo) {
-					// Is currently any of the transform gizmo axis selected?
-					m_pTransformGizmo = m_pGuiPicking->IsAnyTransformGizmoAxisSelected();
-					if (m_pTransformGizmo)
-						m_pGuiPicking->SetTransformMode(*m_pTransformGizmo, true);
+			{
+				// Cast the received event to QMouseEvent
+				QMouseEvent *pQMouseEvent = static_cast<QMouseEvent*>(pQEvent);
+
+				// Left mouse button?
+				if (pQMouseEvent->button() == Qt::LeftButton) {
+					// Are we currently in transform mode?
+					if (!m_pTransformGizmo) {
+						// Is currently any of the transform gizmo axis selected?
+						m_pTransformGizmo = m_pGuiPicking->IsAnyTransformGizmoAxisSelected();
+						if (m_pTransformGizmo)
+							m_pGuiPicking->SetTransformMode(*m_pTransformGizmo, true);
+					}
 				}
 
 				// We do not filter out the event because we add only additional handling
 				break;
+			}
 
 			// Mouse button released (QMouseEvent)
 			case QEvent::MouseButtonRelease:
-				// Are we currently in transform mode?
-				if (m_pTransformGizmo) {
-					m_pGuiPicking->SetTransformMode(*m_pTransformGizmo, false);
-					m_pTransformGizmo = nullptr;
+			{
+				// Cast the received event to QMouseEvent
+				QMouseEvent *pQMouseEvent = static_cast<QMouseEvent*>(pQEvent);
+
+				// Left mouse button?
+				if (pQMouseEvent->button() == Qt::LeftButton) {
+					// Are we currently in transform mode?
+					if (m_pTransformGizmo) {
+						m_pGuiPicking->SetTransformMode(*m_pTransformGizmo, false);
+						m_pTransformGizmo = nullptr;
+					}
 				}
 
 				// We do not filter out the event because we add only additional handling
 				break;
+			}
 
 			// Mouse button double click (QMouseEvent)
 			case QEvent::MouseButtonDblClick:
