@@ -1,3 +1,10 @@
+>> 03.02.2012
+[CO]
+PLViewerQt:
+- When pressing the delete-key, delete the currently selected scene node
+
+
+
 >> 02.02.2012
 [CO]
 PLViewerQt:

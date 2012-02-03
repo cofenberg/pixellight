@@ -150,6 +150,24 @@ bool GuiPickingQObject::eventFilter(QObject *pQObject, QEvent *pQEvent)
 				// We do not filter out the event because we add only additional handling
 				break;
 			}
+
+			// Key pressed (QKeyEvent)
+			case QEvent::KeyPress:
+			{
+				// Cast the received event to QKeyEvent
+				QKeyEvent *pQKeyEvent= static_cast<QKeyEvent*>(pQEvent);
+
+				// Evaluate the pressed key
+				switch (pQKeyEvent->key()) {
+					// Delete
+					case Qt::Key_Delete:
+						// Delete the currently selected scene node
+						if (m_pGuiPicking->m_pSceneNode)
+							m_pGuiPicking->m_pSceneNode->Delete();
+						break;
+				}
+				break;
+			}
 		}
 	}
 
