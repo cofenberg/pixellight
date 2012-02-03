@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/PLCore.h>	// For "override"
 #include <QtCore/qobject.h>
+#include <PLMath/Vector4.h>
 
 
 //[-------------------------------------------------------]
@@ -89,6 +89,27 @@ class GuiPickingQObject : public QObject {
 		*/
 		virtual ~GuiPickingQObject();
 
+		/**
+		*  @brief
+		*    Starts the clone mode when all preconditions for it are satisfied and we're not already in clone mode
+		*/
+		void StartCloneMode();
+
+		/**
+		*  @brief
+		*    Ends the clone mode and starts the clone action, but only if we're in fact in clone mode
+		*/
+		void EndCloneMode();
+
+		/**
+		*  @brief
+		*    Asks the user for the number of desired clones (with a decent limited number)
+		*
+		*  @return
+		*    The number of desired clones
+		*/
+		PLCore::uint32 GetNumOfClones() const;
+
 
 	//[-------------------------------------------------------]
 	//[ Public virtual QObject methods                        ]
@@ -103,6 +124,8 @@ class GuiPickingQObject : public QObject {
 	private:
 		GuiPicking				   *m_pGuiPicking;		/**< GUI picking owner instance, always valid */
 		PLScene::SNMTransformGizmo *m_pTransformGizmo;	/**< Currently used transform gizmo, can be a null pointer */
+		bool						m_bCloneMode;		/**< Are we currently in clone mode? */
+		PLMath::Vector4				m_vOriginalValue;	/**< Original value when the clone mode was started */
 
 
 };

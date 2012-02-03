@@ -30,7 +30,6 @@ PL_WARNING_PUSH
 	#include <QtGui/qstatusbar.h>
 PL_WARNING_POP
 #include <PLCore/Tools/Timing.h>
-#include <PLScene/Scene/SceneNodeModifier.h>
 #include <PLScene/Scene/SceneNodeModifiers/SNMTransformGizmo.h>
 #include <PLEngine/Picking/PickingResult.h>
 #include <PLFrontendQt/QtStringAdapter.h>
@@ -257,6 +256,7 @@ void GuiPicking::OnDestroyed()
 	// Argh! Mayday! We lost our scene node!
 	// -> Now no scene node is currently selected
 	m_pSceneNode = nullptr;
+	m_pGuiPickingQObject->m_pTransformGizmo = nullptr;
 	m_lstSceneNodeModifiers.Clear();
 	SelectObject(nullptr);
 }
