@@ -164,12 +164,12 @@ void GuiPickingQObject::EndCloneMode()
 				SceneNode &cSceneNode = pTransformGizmo->GetSceneNode();
 
 				// Calculate the rotation delta
-				Quaternion qOrignalRotationInverted = m_vOriginalValue;
+				Quaternion qOrignalRotationInverted = m_vOriginalValue.fV;
 				qOrignalRotationInverted.UnitInvert();
 				const Quaternion qDelta = qOrignalRotationInverted*cSceneNode.GetTransform().GetRotation();
 
 				// Set the original scene node back to it's original rotation
-				Quaternion qCurrentRotation = m_vOriginalValue;
+				Quaternion qCurrentRotation = m_vOriginalValue.fV;
 				cSceneNode.GetTransform().SetRotation(qCurrentRotation);
 
 				// Ask the user for the number of desired clones (with a decent limited number)
