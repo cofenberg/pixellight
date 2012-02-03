@@ -144,6 +144,12 @@ void SNMTransformGizmoRotation::DrawGizmo(Renderer &cRenderer, const VisNode *pV
 	// Fixed functions support required
 	FixedFunctions *pFixedFunctions = cRenderer.GetFixedFunctions();
 	if (pFixedFunctions) {
+		// Set identitiy projection and view matrix
+		const Matrix4x4 mProjectionBackup = pFixedFunctions->GetTransformState(FixedFunctions::Transform::Projection);
+		const Matrix4x4 mViewBackup       = pFixedFunctions->GetTransformState(FixedFunctions::Transform::View);
+		pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, Matrix4x4::Identity);
+		pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       Matrix4x4::Identity);
+
 		// Setup render states
 		cRenderer.GetRendererContext().GetEffectManager().Use();
 		cRenderer.SetRenderState(RenderState::CullMode,     Cull::None);
@@ -154,20 +160,24 @@ void SNMTransformGizmoRotation::DrawGizmo(Renderer &cRenderer, const VisNode *pV
 		// Draw X disk silhouette
 		Matrix4x4 mLocal;
 		mLocal.FromEulerAngleY(static_cast<float>(90.0f*Math::DegToRad));
-		pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mTranslation*mLocal);
+		pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mObjectSpaceToClipSpace*mLocal);
 		pFixedFunctions->SetColor((m_nSelected & XAxis) ? Color4::Yellow : Color4::Red);
 		m_pDiskMeshHandler->Draw(false, false);
 
 		// Draw Y disk silhouette
 		mLocal.FromEulerAngleX(static_cast<float>(90.0f*Math::DegToRad));
-		pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mTranslation*mLocal);
+		pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mObjectSpaceToClipSpace*mLocal);
 		pFixedFunctions->SetColor((m_nSelected & YAxis) ? Color4::Yellow : Color4::Green);
 		m_pDiskMeshHandler->Draw(false, false);
 
 		// Draw Z disk silhouette
-		pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mTranslation);
+		pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mObjectSpaceToClipSpace);
 		pFixedFunctions->SetColor((m_nSelected & ZAxis) ? Color4::Yellow : Color4::Blue);
 		m_pDiskMeshHandler->Draw(false, false);
+
+		// Reset identitiy projection and view matrix
+		pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, mProjectionBackup);
+		pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       mViewBackup);
 	}
 }
 

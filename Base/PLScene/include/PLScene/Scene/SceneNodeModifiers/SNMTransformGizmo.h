@@ -204,7 +204,6 @@ class SNMTransformGizmo : public SNMTransform {
 	//[-------------------------------------------------------]
 	protected:
 		PLMath::Matrix4x4 m_mObjectSpaceToClipSpace;	/**< Current object space to clip space matrix of the transform gizmo */
-		PLMath::Matrix4x4 m_mTranslation;				/**< Current transform matrix of the transform gizmo */
 		PLCore::uint32	  m_nSelected;					/**< The current selection */
 		bool			  m_bTransform;					/**< Is currently a transform performed? */
 

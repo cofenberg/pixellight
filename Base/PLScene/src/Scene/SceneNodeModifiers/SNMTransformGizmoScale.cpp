@@ -223,25 +223,35 @@ void SNMTransformGizmoScale::DrawGizmo(Renderer &cRenderer, const VisNode *pVisN
 		{ // Draw sphere meshes
 			Matrix4x4 mLocal;
 
+			// Set identitiy projection and view matrix
+			const Matrix4x4 mProjectionBackup = pFixedFunctions->GetTransformState(FixedFunctions::Transform::Projection);
+			const Matrix4x4 mViewBackup       = pFixedFunctions->GetTransformState(FixedFunctions::Transform::View);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, Matrix4x4::Identity);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       Matrix4x4::Identity);
+
 			// Draw X sphere mesh
 			mLocal.FromEulerAngleZ(static_cast<float>(-90.0f*Math::DegToRad));
 			mLocal.SetTranslation(10.0f, 0.0f, 0.0f);
-			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mTranslation*mLocal);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mObjectSpaceToClipSpace*mLocal);
 			pFixedFunctions->SetColor(cPrimaryXAxisColor);
 			m_pMeshHandler->Draw(false, false);
 
 			// Draw Y sphere mesh
 			mLocal.SetTranslationMatrix(0.0f, 10.0f, 0.0f);
-			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mTranslation*mLocal);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mObjectSpaceToClipSpace*mLocal);
 			pFixedFunctions->SetColor(cPrimaryYAxisColor);
 			m_pMeshHandler->Draw(false, false);
 
 			// Draw Z sphere mesh
 			mLocal.FromEulerAngleX(static_cast<float>(90.0f*Math::DegToRad));
 			mLocal.SetTranslation(0.0f, 0.0f, 10.0f);
-			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mTranslation*mLocal);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mObjectSpaceToClipSpace*mLocal);
 			pFixedFunctions->SetColor(cPrimaryZAxisColor);
 			m_pMeshHandler->Draw(false, false);
+
+			// Reset identitiy projection and view matrix
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, mProjectionBackup);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       mViewBackup);
 		}
 	}
 

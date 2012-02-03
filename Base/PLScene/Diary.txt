@@ -1,3 +1,16 @@
+> 03.02.2012
+[CO]
+- "SNMTransformGizmo::OnDrawTransparent()"
+  -> Lookout! It's not safe to directly use the given projection matrix by writing
+     "m_mObjectSpaceToClipSpace = pVisNode->GetProjectionMatrix();"
+  -> We can't really know the type of this given matrix
+     (should be a projection matrix, should... but we can't be absolutely ensure)
+  -> We can't be sure whether or not e.g. "1.0" was used as z far parameter resulting that
+     our transform gizmo will be clipped away by the z far plane
+  -> So, to be on the safe side, we use our own known projection matrix for the transform gizmo
+
+
+
 > 01.02.2012
 [SW]
 - Extended "SceneContainer::Create()" and "SceneContainer::Add()" with an additional parameter, which can be used to specify the location of the new created element.

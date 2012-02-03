@@ -27,6 +27,7 @@
 #include <PLMath/Matrix4x4.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include "PLScene/Visibility/VisNode.h"
+#include "PLScene/Scene/SNCamera.h"
 #include "PLScene/Scene/SceneContext.h"
 #include "PLScene/Scene/SceneNodeModifiers/SNMTransformGizmo.h"
 
@@ -159,10 +160,36 @@ void SNMTransformGizmo::OnDrawTransparent(Renderer &cRenderer, const VisNode *pV
 		vTranslation *= pVisNode->GetViewMatrix().GetInverted();
 
 		// Set translation matrix
-		m_mTranslation.SetTranslationMatrix(vTranslation);
+		Matrix4x4 mTranslation;
+		mTranslation.SetTranslationMatrix(vTranslation);
 
-		// Calculate the world view projection transform matrix
-		m_mObjectSpaceToClipSpace = pVisNode->GetViewProjectionMatrix()*m_mTranslation;
+		{ // Calculate a known projection matrix
+		  // -> Lookout! It's not safe to directly use the given projection matrix by writing
+		  //   "m_mObjectSpaceToClipSpace = pVisNode->GetProjectionMatrix();"
+		  // -> We can't really know the type of this given matrix
+		  //    (should be a projection matrix, should... but we can't be absolutely ensure)
+		  // -> We can't be sure whether or not e.g. "1.0" was used as z far parameter resulting that
+		  //    our transform gizmo will be clipped away by the z far plane
+		  // -> So, to be on the safe side, we use our own known projection matrix for the transform gizmo
+
+			// Projection matrix parameters
+				   const float FOV        = SNCamera::GetCamera() ? SNCamera::GetCamera()->GetFOV() : 45.0f;
+			static const float Aspect     = 1.0f;
+			static const float ZNear      = 0.01f;
+			static const float ZFarOffset = 50.0f;
+
+			// Calculate the current aspect radio
+			const float fAspectRadio = cRenderer.GetViewport().GetWidth()/cRenderer.GetViewport().GetHeight()*Aspect;
+
+			// Now that we have all parameters, calculate our known projection matrix
+			m_mObjectSpaceToClipSpace.PerspectiveFov(static_cast<float>(FOV*Math::DegToRad), fAspectRadio, ZNear, DistanceFromCamera.Get() + ZFarOffset);
+		}
+
+		// Apply the given view matrix
+		m_mObjectSpaceToClipSpace *= pVisNode->GetViewMatrix();
+
+		// Apply our calculated translation matrix
+		m_mObjectSpaceToClipSpace *= mTranslation;
 	}
 
 	// Update gizmo

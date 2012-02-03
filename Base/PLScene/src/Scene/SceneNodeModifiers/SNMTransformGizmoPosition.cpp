@@ -212,25 +212,35 @@ void SNMTransformGizmoPosition::DrawGizmo(Renderer &cRenderer, const VisNode *pV
 		{ // Draw arrow meshes
 			Matrix4x4 mLocal;
 
+			// Set identitiy projection and view matrix
+			const Matrix4x4 mProjectionBackup = pFixedFunctions->GetTransformState(FixedFunctions::Transform::Projection);
+			const Matrix4x4 mViewBackup       = pFixedFunctions->GetTransformState(FixedFunctions::Transform::View);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, Matrix4x4::Identity);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       Matrix4x4::Identity);
+
 			// Draw X arrow mesh
 			mLocal.FromEulerAngleZ(static_cast<float>(-90.0f*Math::DegToRad));
 			mLocal.SetTranslation(9.0f, 0.0f, 0.0f);
-			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mTranslation*mLocal);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mObjectSpaceToClipSpace*mLocal);
 			pFixedFunctions->SetColor(cPrimaryXAxisColor);
 			m_pMeshHandler->Draw(false, false);
 
 			// Draw Y arrow mesh
 			mLocal.SetTranslationMatrix(0.0f, 9.0f, 0.0f);
-			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mTranslation*mLocal);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mObjectSpaceToClipSpace*mLocal);
 			pFixedFunctions->SetColor(cPrimaryYAxisColor);
 			m_pMeshHandler->Draw(false, false);
 
 			// Draw Z arrow mesh
 			mLocal.FromEulerAngleX(static_cast<float>(90.0f*Math::DegToRad));
 			mLocal.SetTranslation(0.0f, 0.0f, 9.0f);
-			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mTranslation*mLocal);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::World, m_mObjectSpaceToClipSpace*mLocal);
 			pFixedFunctions->SetColor(cPrimaryZAxisColor);
 			m_pMeshHandler->Draw(false, false);
+
+			// Reset identitiy projection and view matrix
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, mProjectionBackup);
+			pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       mViewBackup);
 		}
 	}
 
