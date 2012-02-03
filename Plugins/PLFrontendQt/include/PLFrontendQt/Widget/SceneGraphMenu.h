@@ -140,21 +140,6 @@ class SceneGraphMenu : public QMenu {
 		*/
 		void FillAddWindowRec(QMenu &cQMenu, const PLCore::String &sBaseClass);
 
-		/**
-		*  @brief
-		*    Clones the given scene node
-		*
-		*  @param[in] cTargetSceneContainer
-		*    Scene container were to create the new scene node in
-		*  @param[in] cSceneNode
-		*    Scene node to clone
-		*  @param[in] sNameExtension
-		*    Clone name extension
-		*  @param[in] nPosition
-		*    Optional index position specifying the location within the child list where the scene node should be added, <0 for at the end
-		*/
-		void CloneSceneNode(PLScene::SceneContainer &cTargetSceneContainer, const PLScene::SceneNode &cSceneNode, const PLCore::String &sNameExtension, int nPosition = -1);
-
 
 	//[-------------------------------------------------------]
 	//[ Private Qt slots (MOC)                                ]

@@ -172,57 +172,6 @@ void SceneGraphMenu::FillAddWindowRec(QMenu &cQMenu, const String &sBaseClass)
 	}
 }
 
-/**
-*  @brief
-*    Clones the given scene node
-*/
-void SceneGraphMenu::CloneSceneNode(SceneContainer &cTargetSceneContainer, const SceneNode &cSceneNode, const String &sNameExtension, int nPosition)
-{
-	// Clone scene node
-	SceneNode *pSceneNodeClone = cTargetSceneContainer.CreateAtIndex(cSceneNode.GetClass()->GetClassName(), cSceneNode.GetName() + sNameExtension, cSceneNode.GetValues(), nPosition);
-	if (pSceneNodeClone) {
-		// Backup a pointer to the created object
-		// -> But only the first one because this method can be called recursively and we want only the root object of the cloned subtree
-		if (!m_pCreatedObject)
-			m_pCreatedObject = pSceneNodeClone;
-
-		// Reset debug flags of the clone
-		pSceneNodeClone->SetDebugFlags(0);
-
-		// Is it a scene container?
-		if (cSceneNode.IsContainer()) {
-			const SceneContainer &cSceneContainer = static_cast<const SceneContainer&>(cSceneNode);
-
-			// Clone the scene nodes, but only in case this scene container was not loaded from a file
-			if (!cSceneContainer.Filename.Get().GetLength()) {
-				// Loop through all scene nodes of the scene container
-				for (uint32 i=0; i<cSceneContainer.GetNumOfElements(); i++) {
-					// Get the scene node
-					const SceneNode &cSourceSceneNode = *cSceneContainer.GetByIndex(i);
-
-					// Do not clone automatic scene nodes
-					if (!(cSourceSceneNode.GetFlags() & SceneNode::Automatic)) {
-						// Clone the scene node
-						CloneSceneNode(static_cast<SceneContainer&>(*pSceneNodeClone), cSourceSceneNode, "");
-					}
-				}
-			}
-		}
-
-		// Clone the scene node modifiers
-		for (uint32 i=0; i<cSceneNode.GetNumOfModifiers(); i++) {
-			// Get the scene node modifer
-			SceneNodeModifier *pSceneNodeModifier = cSceneNode.GetModifier("", i);
-
-			// Do not clone automatic scene node modifiers
-			if (!(pSceneNodeModifier->GetFlags() & SceneNodeModifier::Automatic)) {
-				// Clone the scene node modifier
-				pSceneNodeClone->AddModifier(pSceneNodeModifier->GetClass()->GetClassName(), pSceneNodeModifier->GetValues());
-			}
-		}
-	}
-}
-
 
 //[-------------------------------------------------------]
 //[ Private Qt slots (MOC)                                ]
@@ -280,7 +229,7 @@ void SceneGraphMenu::QtSlotTriggeredClone()
 		// Do not clone automatic scene nodes
 		if (!(cSceneNode.GetFlags() & SceneNode::Automatic)) {
 			// Clone the scene node and add it after the scene node from which the clone will be created
-			CloneSceneNode(*cSceneNode.GetContainer(), cSceneNode, "_Clone", cSceneNode.GetContainerIndex() + 1);
+			m_pCreatedObject = cSceneNode.CloneAtIndex(cSceneNode.GetContainerIndex() + 1);
 		}
 
 	// Scene node modifier

@@ -281,6 +281,24 @@ int SceneNode::GetContainerIndex()
 
 /**
 *  @brief
+*    Creates a clone of this scene node within the scene container this scene node is in
+*/
+SceneNode *SceneNode::Clone()
+{
+	return GetManager() ? CloneSceneNode(*static_cast<SceneContainer*>(GetManager()), *this, "_Clone") : nullptr;
+}
+
+/**
+*  @brief
+*    Creates a clone of this scene node within the scene container this scene node is in at a certain index inside the scene node list
+*/
+SceneNode *SceneNode::CloneAtIndex(int nPosition)
+{
+	return GetManager() ? CloneSceneNode(*static_cast<SceneContainer*>(GetManager()), *this, "_Clone", nPosition) : nullptr;
+}
+
+/**
+*  @brief
 *    Returns the scene hierarchy this scene node is linked into
 */
 SceneHierarchy *SceneNode::GetHierarchy() const
@@ -1309,6 +1327,56 @@ void SceneNode::DeInitSceneNode()
 	// Call the virtual de-initialization function
 	if (IsInitialized())
 		DeInitFunction();
+}
+
+/**
+*  @brief
+*    Clones the given scene node
+*/
+SceneNode *SceneNode::CloneSceneNode(SceneContainer &cTargetSceneContainer, const SceneNode &cSceneNode, const String &sNameExtension, int nPosition)
+{
+	// Clone scene node
+	SceneNode *pSceneNodeClone = cTargetSceneContainer.CreateAtIndex(cSceneNode.GetClass()->GetClassName(), cSceneNode.GetName() + sNameExtension, cSceneNode.GetValues(), nPosition);
+	if (pSceneNodeClone) {
+		// Reset debug flags of the clone
+		pSceneNodeClone->SetDebugFlags(0);
+
+		// Is it a scene container?
+		if (cSceneNode.IsContainer()) {
+			// Get the scene container
+			const SceneContainer &cSceneContainer = static_cast<const SceneContainer&>(cSceneNode);
+
+			// Clone the scene nodes, but only in case this scene container was not loaded from a file
+			if (!cSceneContainer.Filename.Get().GetLength()) {
+				// Loop through all scene nodes of the scene container
+				for (uint32 i=0; i<cSceneContainer.GetNumOfElements(); i++) {
+					// Get the scene node
+					const SceneNode &cSourceSceneNode = *cSceneContainer.GetByIndex(i);
+
+					// Do not clone automatic scene nodes
+					if (!(cSourceSceneNode.GetFlags() & SceneNode::Automatic)) {
+						// Clone the scene node
+						CloneSceneNode(static_cast<SceneContainer&>(*pSceneNodeClone), cSourceSceneNode, "");
+					}
+				}
+			}
+		}
+
+		// Clone the scene node modifiers
+		for (uint32 i=0; i<cSceneNode.GetNumOfModifiers(); i++) {
+			// Get the scene node modifer
+			SceneNodeModifier *pSceneNodeModifier = cSceneNode.GetModifier("", i);
+
+			// Do not clone automatic scene node modifiers
+			if (!(pSceneNodeModifier->GetFlags() & SceneNodeModifier::Automatic)) {
+				// Clone the scene node modifier
+				pSceneNodeClone->AddModifier(pSceneNodeModifier->GetClass()->GetClassName(), pSceneNodeModifier->GetValues());
+			}
+		}
+	}
+
+	// Return the created clone
+	return pSceneNodeClone;
 }
 
 /**

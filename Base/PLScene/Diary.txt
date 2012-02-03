@@ -11,6 +11,9 @@
 - Moved "SceneNode::GetModifierIndex()" (I added yesterday) into "SceneNodeModifier::GetSceneNodeIndex()", easier to use this way
 - "SceneNodeModifier": Added "Clone()" and "CloneAtIndex()"
 - "SceneNode": Added "GetContainerIndex()" ("SceneNodeModifier::GetSceneNodeIndex()" counterpart)
+- "SceneNode": Added "Clone()" and "CloneAtIndex()". Scene nodes and scene node modifiers with a set "Automatic"-flag will not be cloned.
+  The debug flags of the created clone are set to 0. If there's really need for it, we can add parameters later to make this customizable,
+  but for now, I want to keep it simple.
 
 
 

@@ -202,34 +202,36 @@ class SceneNode : public PLCore::Object, public PLCore::Element<SceneNode> {
 		pl_attribute(Name,				PLCore::String,				"",						ReadWrite,	GetSet,			"Optional scene node name. If not defined, a name is chosen automatically",															"")
 		#ifdef PLSCENE_EXPORTS	// The following is only required when compiling PLScene
 			// Methods
-			pl_method_0(GetContainer,				pl_ret_type(SceneContainer*),																"Returns the scene container the scene node is in or a null pointer if this is the root node.",																																																																																																	"")
-			pl_method_1(SetContainer,				pl_ret_type(bool),					SceneContainer&,										"Sets the scene container the scene node is in. Scene container this node is in as first parameter. Returns 'true' if all went fine, else 'false' (Position, rotation, scale etc. are not manipulated, only the container is changed!).",																																																														"")
-			pl_method_0(GetRootContainer,			pl_ret_type(SceneContainer*),																"Returns the scene root container (this scene container can be the root scene container), a null pointer on error.",																																																																																											"")
-			pl_method_1(GetCommonContainer,			pl_ret_type(SceneContainer*),		SceneNode&,												"Gets the common container of this and another scene node. The other scene node as first parameter. Returns the common container, or a null pointer.",																																																																																			"")
-			pl_method_0(GetContainerIndex,			pl_ret_type(int),																			"Returns the index of this scene node within the scene node list of the scene container this scene node is in, <0 on failure (e.g. the scene node is not within a scene container).",																																																																											"")
-			pl_method_0(GetHierarchy,				pl_ret_type(SceneHierarchy*),																"Returns the scene hierarchy this scene node is linked into. Returns the scene hierarchy this scene node is linked into, a null pointer on error.",																																																																																				"")
-			pl_method_0(GetAbsoluteName,			pl_ret_type(PLCore::String),																"Returns the unique absolute name of the scene node (for instance 'Root.MyScene.MyNode').",																																																																																																		"")
-			pl_method_0(IsActive,					pl_ret_type(bool),																			"Returns whether the scene node is active or not. Returns 'true' if the scene node is active, else 'false'.",																																																																																													"")
-			pl_method_1(SetActive,					pl_ret_type(void),					bool,													"Sets whether the scene node is active or not. 'true' as first parameter if the scene node should be active, else 'false' (sets/unsets the 'Inactive'-flag).",																																																																																	"")
-			pl_method_0(IsVisible,					pl_ret_type(bool),																			"Returns whether the scene node is visible or not. Returns 'true' if the scene node is visible, else 'false' (invisible/inactive). If the scene node is not active it's automatically invisible but the 'Invisible'-flag is not touched. 'Visible' doesn't mean 'currently' on screen, it just means 'can be seen in general'.",																																								"")
-			pl_method_1(SetVisible,					pl_ret_type(void),					bool,													"Sets whether the scene node is visible or not. 'true' as first parameter if the scene node should be visible, else 'false' (sets/unsets the 'Invisible'-flag). See 'IsVisible()'-method for more information.",																																																																				"")
-			pl_method_0(IsFrozen,					pl_ret_type(bool),																			"Returns whether the scene node is frozen or not. Returns 'true' if the scene node is frozen, else 'false'."										,																																																																																			"")
-			pl_method_1(SetFrozen,					pl_ret_type(void),					bool,													"Sets whether the scene node is frozen or not. 'true' as first parameter if the scene node should be frozen, else 'false' (sets/unsets the 'Frozen'-flag).",																																																																																	"")
-			pl_method_0(IsContainer,				pl_ret_type(bool),																			"Returns whether this scene node is a scene container (SceneContainer) or not. Returns 'true' if this scene node is a scene container, else 'false'.",																																																																																			"")
-			pl_method_0(IsCell,						pl_ret_type(bool),																			"Returns whether this scene node is a cell (SCCell) or not. Returns 'true' if this scene node is a cell, else 'false'.",																																																																																										"")
-			pl_method_0(IsPortal,					pl_ret_type(bool),																			"Returns whether this scene node is a portal (SNPortal) or not. Returns 'true' if this scene node is a portal, else 'false'.",																																																																																									"")
-			pl_method_0(IsCamera,					pl_ret_type(bool),																			"Returns whether this scene node is a camera (SNCamera) or not. Returns 'true' if this scene node is a camera, else 'false'.",																																																																																									"")
-			pl_method_0(IsLight,					pl_ret_type(bool),																			"Returns whether this scene node is a light (SNLight) or not. Returns 'true' if this scene node is a light, else 'false'.",																																																																																										"")
-			pl_method_0(IsFog,						pl_ret_type(bool),																			"Returns whether this scene node is a fog (SNFog) or not. Returns 'true' if this scene node is a fog, else 'false'.",																																																																																											"")
-			pl_method_1(GetNumOfModifiers,			pl_ret_type(PLCore::uint32),		const PLCore::String&,									"Returns the number of modifiers. Optional modifier class name to return the number of instances from as first parameter (if empty return the total number of modifiers).",																																																																														"")
-			pl_method_2(AddModifier,				pl_ret_type(SceneNodeModifier*),	const PLCore::String&,	const PLCore::String&,			"Adds a modifier. Modifier class name of the modifier to add as first parameter and optional parameter string as second parameter. Returns a pointer to the modifier instance if all went fine, else a null pointer (maybe unknown/incompatible modifier).",																																																									"")
-			pl_method_3(AddModifierAtIndex,			pl_ret_type(SceneNodeModifier*),	const PLCore::String&,	const PLCore::String&,	int,	"Adds a modifier at a certain index inside the scene node modifier list. Modifier class name of the modifier to add as first parameter and optional parameter string as second parameter, optional index position specifying the location within the scene node modifier list where the scene node modifier should be added as third parameter (<0 for at the end). Returns a pointer to the modifier instance if all went fine, else a null pointer (maybe unknown/incompatible modifier).",	"")
-			pl_method_2(GetModifier,				pl_ret_type(SceneNodeModifier*),	const PLCore::String&,	PLCore::uint32,					"Returns a modifier. Modifier class name of the modifier to return as first parameter, optional modifier index as second parameter (used if class name is empty or if there are multiple instances of this modifier class). Returns the requested modifier, a null pointer on error.",																																																			"")
-			pl_method_1(RemoveModifierByReference,	pl_ret_type(bool),					SceneNodeModifier&,										"Removes a modifier by using a given reference to the modifier to remove. Modifier to remove as first parameter. Returns 'true' if all went fine, else 'false' (maybe invalid modifier). After this method succeeded, the given reference is no longer valid.",																																																									"")
-			pl_method_2(RemoveModifier,				pl_ret_type(bool),					const PLCore::String&,	PLCore::uint32,					"Removes a modifier. Modifier class name of the modifier to remove as first parameter, modifier index as second parameter (used if class name is empty or if there are multiple instances of this modifier class). Returns 'true' if all went fine, else 'false' (maybe invalid modifier).",																																																	"")
-			pl_method_0(ClearModifiers,				pl_ret_type(void),																			"Clears all modifiers.",																																																																																																																		"")
-			pl_method_1(Delete,						pl_ret_type(bool),					bool,													"Deletes this scene node. If the first parameter is 'true' the scene node will also be deleted when it's protected. Returns 'true' when all went fine, else 'false'.",																																																																															"")
-			pl_method_0(GetInputController,			pl_ret_type(PLInput::Controller*),															"Get the input controller. Returns the input controller (can be a null pointer).",																																																																																																				"")
+			pl_method_0(GetContainer,				pl_ret_type(SceneContainer*),																"Returns the scene container the scene node is in or a null pointer if this is the root node.",																																																																																																																"")
+			pl_method_1(SetContainer,				pl_ret_type(bool),					SceneContainer&,										"Sets the scene container the scene node is in. Scene container this node is in as first parameter. Returns 'true' if all went fine, else 'false' (Position, rotation, scale etc. are not manipulated, only the container is changed!).",																																																																													"")
+			pl_method_0(GetRootContainer,			pl_ret_type(SceneContainer*),																"Returns the scene root container (this scene container can be the root scene container), a null pointer on error.",																																																																																																										"")
+			pl_method_1(GetCommonContainer,			pl_ret_type(SceneContainer*),		SceneNode&,												"Gets the common container of this and another scene node. The other scene node as first parameter. Returns the common container, or a null pointer.",																																																																																																		"")
+			pl_method_0(GetContainerIndex,			pl_ret_type(int),																			"Returns the index of this scene node within the scene node list of the scene container this scene node is in, <0 on failure (e.g. the scene node is not within a scene container).",																																																																																										"")
+			pl_method_0(Clone,						pl_ret_type(SceneNode*),																	"Creates a clone of this scene node within the scene container this scene node is in. Returns the created clone of this scene node within the same scene container the original scene node is in, null pointer on error. Scene nodes and scene node modifiers with a set \"Automatic\"-flag will not be cloned. The debug flags of the created clone are set to 0.",																																														"")
+			pl_method_1(CloneAtIndex,				pl_ret_type(SceneNode*),			int,													"Creates a clone of this scene node within the scene container this scene node is in at a certain index inside the scene node list. Index position specifying the location within the scene node list where the scene node should be added as first parameter (<0 for at the end). The created clone of this scene node within the same scene container the original scene node is in, null pointer on error. Scene nodes and scene node modifiers with a set \"Automatic\"-flag will not be cloned. The debug flags of the created clone are set to 0.",	"")
+			pl_method_0(GetHierarchy,				pl_ret_type(SceneHierarchy*),																"Returns the scene hierarchy this scene node is linked into. Returns the scene hierarchy this scene node is linked into, a null pointer on error.",																																																																																																			"")
+			pl_method_0(GetAbsoluteName,			pl_ret_type(PLCore::String),																"Returns the unique absolute name of the scene node (for instance 'Root.MyScene.MyNode').",																																																																																																																	"")
+			pl_method_0(IsActive,					pl_ret_type(bool),																			"Returns whether the scene node is active or not. Returns 'true' if the scene node is active, else 'false'.",																																																																																																												"")
+			pl_method_1(SetActive,					pl_ret_type(void),					bool,													"Sets whether the scene node is active or not. 'true' as first parameter if the scene node should be active, else 'false' (sets/unsets the 'Inactive'-flag).",																																																																																																"")
+			pl_method_0(IsVisible,					pl_ret_type(bool),																			"Returns whether the scene node is visible or not. Returns 'true' if the scene node is visible, else 'false' (invisible/inactive). If the scene node is not active it's automatically invisible but the 'Invisible'-flag is not touched. 'Visible' doesn't mean 'currently' on screen, it just means 'can be seen in general'.",																																																							"")
+			pl_method_1(SetVisible,					pl_ret_type(void),					bool,													"Sets whether the scene node is visible or not. 'true' as first parameter if the scene node should be visible, else 'false' (sets/unsets the 'Invisible'-flag). See 'IsVisible()'-method for more information.",																																																																																			"")
+			pl_method_0(IsFrozen,					pl_ret_type(bool),																			"Returns whether the scene node is frozen or not. Returns 'true' if the scene node is frozen, else 'false'."										,																																																																																																		"")
+			pl_method_1(SetFrozen,					pl_ret_type(void),					bool,													"Sets whether the scene node is frozen or not. 'true' as first parameter if the scene node should be frozen, else 'false' (sets/unsets the 'Frozen'-flag).",																																																																																																"")
+			pl_method_0(IsContainer,				pl_ret_type(bool),																			"Returns whether this scene node is a scene container (SceneContainer) or not. Returns 'true' if this scene node is a scene container, else 'false'.",																																																																																																		"")
+			pl_method_0(IsCell,						pl_ret_type(bool),																			"Returns whether this scene node is a cell (SCCell) or not. Returns 'true' if this scene node is a cell, else 'false'.",																																																																																																									"")
+			pl_method_0(IsPortal,					pl_ret_type(bool),																			"Returns whether this scene node is a portal (SNPortal) or not. Returns 'true' if this scene node is a portal, else 'false'.",																																																																																																								"")
+			pl_method_0(IsCamera,					pl_ret_type(bool),																			"Returns whether this scene node is a camera (SNCamera) or not. Returns 'true' if this scene node is a camera, else 'false'.",																																																																																																								"")
+			pl_method_0(IsLight,					pl_ret_type(bool),																			"Returns whether this scene node is a light (SNLight) or not. Returns 'true' if this scene node is a light, else 'false'.",																																																																																																									"")
+			pl_method_0(IsFog,						pl_ret_type(bool),																			"Returns whether this scene node is a fog (SNFog) or not. Returns 'true' if this scene node is a fog, else 'false'.",																																																																																																										"")
+			pl_method_1(GetNumOfModifiers,			pl_ret_type(PLCore::uint32),		const PLCore::String&,									"Returns the number of modifiers. Optional modifier class name to return the number of instances from as first parameter (if empty return the total number of modifiers).",																																																																																													"")
+			pl_method_2(AddModifier,				pl_ret_type(SceneNodeModifier*),	const PLCore::String&,	const PLCore::String&,			"Adds a modifier. Modifier class name of the modifier to add as first parameter and optional parameter string as second parameter. Returns a pointer to the modifier instance if all went fine, else a null pointer (maybe unknown/incompatible modifier).",																																																																								"")
+			pl_method_3(AddModifierAtIndex,			pl_ret_type(SceneNodeModifier*),	const PLCore::String&,	const PLCore::String&,	int,	"Adds a modifier at a certain index inside the scene node modifier list. Modifier class name of the modifier to add as first parameter and optional parameter string as second parameter, optional index position specifying the location within the scene node modifier list where the scene node modifier should be added as third parameter (<0 for at the end). Returns a pointer to the modifier instance if all went fine, else a null pointer (maybe unknown/incompatible modifier).",																"")
+			pl_method_2(GetModifier,				pl_ret_type(SceneNodeModifier*),	const PLCore::String&,	PLCore::uint32,					"Returns a modifier. Modifier class name of the modifier to return as first parameter, optional modifier index as second parameter (used if class name is empty or if there are multiple instances of this modifier class). Returns the requested modifier, a null pointer on error.",																																																																		"")
+			pl_method_1(RemoveModifierByReference,	pl_ret_type(bool),					SceneNodeModifier&,										"Removes a modifier by using a given reference to the modifier to remove. Modifier to remove as first parameter. Returns 'true' if all went fine, else 'false' (maybe invalid modifier). After this method succeeded, the given reference is no longer valid.",																																																																								"")
+			pl_method_2(RemoveModifier,				pl_ret_type(bool),					const PLCore::String&,	PLCore::uint32,					"Removes a modifier. Modifier class name of the modifier to remove as first parameter, modifier index as second parameter (used if class name is empty or if there are multiple instances of this modifier class). Returns 'true' if all went fine, else 'false' (maybe invalid modifier).",																																																																"")
+			pl_method_0(ClearModifiers,				pl_ret_type(void),																			"Clears all modifiers.",																																																																																																																																	"")
+			pl_method_1(Delete,						pl_ret_type(bool),					bool,													"Deletes this scene node. If the first parameter is 'true' the scene node will also be deleted when it's protected. Returns 'true' when all went fine, else 'false'.",																																																																																														"")
+			pl_method_0(GetInputController,			pl_ret_type(PLInput::Controller*),															"Get the input controller. Returns the input controller (can be a null pointer).",																																																																																																																			"")
 		#endif
 		// Signals
 		pl_signal_0(SignalDestroy,															"Scene node destruction signal. Unlike \"PLCore::Object::SignalDestroyed\", the scene node is still intact at the point the signal is emitted.","")
@@ -344,6 +346,34 @@ class SceneNode : public PLCore::Object, public PLCore::Element<SceneNode> {
 		*    (e.g. the scene node is not within a scene container)
 		*/
 		PLS_API int GetContainerIndex();
+
+		/**
+		*  @brief
+		*    Creates a clone of this scene node within the scene container this scene node is in
+		*
+		*  @return
+		*    The created clone of this scene node within the same scene container the original scene node is in, null pointer on error
+		*
+		*  @note
+		*    - Scene nodes and scene node modifiers with a set "Automatic"-flag will not be cloned
+		*    - The debug flags of the created clone are set to 0
+		*/
+		PLS_API SceneNode *Clone();
+
+		/**
+		*  @brief
+		*    Creates a clone of this scene node within the scene container this scene node is in at a certain index inside the scene node list
+		*
+		*  @param[in] nPosition
+		*    Index position specifying the location within the scene node list where the scene node should be added, <0 for at the end
+		*
+		*  @return
+		*    The created clone of this scene node within the same scene container the original scene node is in, null pointer on error
+		*
+		*  @see
+		*    - "Clone()"
+		*/
+		PLS_API SceneNode *CloneAtIndex(int nPosition);
 
 		/**
 		*  @brief
@@ -1059,6 +1089,28 @@ class SceneNode : public PLCore::Object, public PLCore::Element<SceneNode> {
 		*    De-Initializes the scene node
 		*/
 		void DeInitSceneNode();
+
+		/**
+		*  @brief
+		*    Clones the given scene node
+		*
+		*  @param[in] cTargetSceneContainer
+		*    Scene container were to create the new scene node in
+		*  @param[in] cSceneNode
+		*    Scene node to clone
+		*  @param[in] sNameExtension
+		*    Clone name extension
+		*  @param[in] nPosition
+		*    Optional index position specifying the location within the child list where the scene node should be added, <0 for at the end
+		*
+		*  @return
+		*    The created clone, null pointer on error
+		*
+		*  @note
+		*    - Scene nodes and scene node modifiers with a set "Automatic"-flag will not be cloned
+		*    - The debug flags of the created clone are set to 0
+		*/
+		SceneNode *CloneSceneNode(SceneContainer &cTargetSceneContainer, const SceneNode &cSceneNode, const PLCore::String &sNameExtension, int nPosition = -1);
 
 		/**
 		*  @brief
