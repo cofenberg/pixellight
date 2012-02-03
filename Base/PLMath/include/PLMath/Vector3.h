@@ -1013,12 +1013,8 @@ class Vector3 {
 		*  @brief
 		*    Returns the 3D coordinate corresponding to this 2D screen coordinate
 		*
-		*  @param[in] mProj
-		*    Projection matrix to use
-		*  @param[in] mView
-		*    View matrix to use
-		*  @param[in] mWorld
-		*    World matrix to use
+		*  @param[in] mClipSpaceToObjectSpace
+		*    The clip space to object space matrix to  use
 		*  @param[in] cViewportRectangle
 		*    Viewport rectangle to use
 		*
@@ -1030,7 +1026,7 @@ class Vector3 {
 		*    Try to avoid using 0.0 & 1.0, instead add a small value like 0.0001 - else
 		*    wrong results may be returned, especially if an infinite projection matrix is used.
 		*/
-		PLMATH_API Vector3 To3DCoordinate(const Matrix4x4 &mProj, const Matrix4x4 &mView, const Matrix4x4 &mWorld, const Rectangle &cViewportRectangle) const;
+		PLMATH_API Vector3 To3DCoordinate(const Matrix4x4 &mClipSpaceToObjectSpace, const Rectangle &cViewportRectangle) const;
 
 		/**
 		*  @brief

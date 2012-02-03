@@ -135,17 +135,16 @@ bool MousePicking::PerformMousePicking(PickingResult &cPickingResult, const Vect
 		// Get the viewport rectangle
 		Rectangle cViewport(0.0f, 0.0f, static_cast<float>(m_pFrontend->GetWidth()), static_cast<float>(m_pFrontend->GetHeight()));
 
+		// Calculate the clip space to object space matrix
+		Matrix4x4 mClipSpaceToObjectSpace = m_pCamera->GetProjectionMatrix(cViewport);
+		mClipSpaceToObjectSpace *= m_pCamera->GetViewMatrix();
+		mClipSpaceToObjectSpace.Invert();
+
 		// Get picking line start and end
 		Vector3 v2DPos(static_cast<float>(vMousePos.x), static_cast<float>(vMousePos.y), 0.0f);
-		Vector3 vLineStartPos = v2DPos.To3DCoordinate(m_pCamera->GetProjectionMatrix(cViewport),
-													  m_pCamera->GetViewMatrix(),
-													  Matrix4x4::Identity,
-													  cViewport);
+		Vector3 vLineStartPos = v2DPos.To3DCoordinate(mClipSpaceToObjectSpace, cViewport);
 		v2DPos.z = 1.0f;
-		Vector3 vLineEndPos = v2DPos.To3DCoordinate(m_pCamera->GetProjectionMatrix(cViewport),
-													m_pCamera->GetViewMatrix(),
-													Matrix4x4::Identity,
-													cViewport);
+		Vector3 vLineEndPos = v2DPos.To3DCoordinate(mClipSpaceToObjectSpace, cViewport);
 
 		// Is there a maximum picking distance?
 		if (fMaxDistance >= 0.0f)

@@ -532,7 +532,7 @@ Vector3 Vector3::To2DCoordinate(const Matrix4x4 &mWorldViewProjection, const Rec
 *  @brief
 *    Returns the 3D coordinate corresponding to this 2D screen coordinate
 */
-Vector3 Vector3::To3DCoordinate(const Matrix4x4 &mProj, const Matrix4x4 &mView, const Matrix4x4 &mWorld, const Rectangle &cViewportRectangle) const
+Vector3 Vector3::To3DCoordinate(const Matrix4x4 &mClipSpaceToObjectSpace, const Rectangle &cViewportRectangle) const
 {
 	// Get viewport parameters
 	uint32 nX      = static_cast<uint32>(cViewportRectangle.GetX());
@@ -550,15 +550,8 @@ Vector3 Vector3::To3DCoordinate(const Matrix4x4 &mProj, const Matrix4x4 &mView, 
 	vPos.y = vPos.y*2 - 1;
 	vPos.z = vPos.z*2 - 1;
 
-	// Calculate the composed matrix (step by step to avoid to many temporal variables)
-	Matrix4x4 mFinal = mProj;
-	mFinal *= mView;
-	mFinal *= mWorld;
-	// And invert it
-	mFinal.Invert();
-
 	// Done
-	return mFinal*vPos;
+	return mClipSpaceToObjectSpace*vPos;
 }
 
 /**

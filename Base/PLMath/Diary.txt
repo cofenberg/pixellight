@@ -1,4 +1,12 @@
-﻿>> 24.01.2012
+﻿>> 03.02.2012
+[CO]
+- "Vector3::To3DCoordinate()": The method is now directly fed with a clip space to object space matrix instead of the individual matrices such
+  a matrix is usually" (not always, just usually) made up of. This voids internal overhead and there are situations were one has already such a
+  matrix or one that just has to be inverted (I learned one or two things since writing this method in "17.05.2008").
+
+
+
+>> 24.01.2012
 [CO]
 - "Intersect::AABoxLine()": D'OH! For checking whether or not the ray origin is inside the given bounding box, the lexicographically vector operations
   < and > were used... which of course is totally wrong. Some time ago, those operators were not lexicographically. Due to user request this was changed on

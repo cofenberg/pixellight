@@ -86,12 +86,16 @@ void SNMTransformGizmoPositionController::UpdateSelection(Renderer &cRenderer, c
 		const int nMousePosX = cFrontend.GetMousePositionX();
 		const int nMousePosY = cFrontend.GetMousePositionY();
 
+		// Calculate the clip space to object space matrix
+		Matrix4x4 mClipSpaceToObjectSpace = m_mObjectSpaceToClipSpace;
+		mClipSpaceToObjectSpace.Invert();
+
 		// Check where the mouse is over
 		// Get the ray starting from the camera position in direction of the mouse position
 		Vector3 v2DPos(static_cast<float>(nMousePosX), static_cast<float>(nMousePosY), 0.0001f);
-		Vector3 vCamPos = v2DPos.To3DCoordinate(Matrix4x4::Identity, Matrix4x4::Identity, m_mObjectSpaceToClipSpace, cRenderer.GetViewport());
+		Vector3 vCamPos = v2DPos.To3DCoordinate(mClipSpaceToObjectSpace, cRenderer.GetViewport());
 		v2DPos.z = 0.9999f;
-		Vector3 vEndPos = v2DPos.To3DCoordinate(Matrix4x4::Identity, Matrix4x4::Identity, m_mObjectSpaceToClipSpace, cRenderer.GetViewport());
+		Vector3 vEndPos = v2DPos.To3DCoordinate(mClipSpaceToObjectSpace, cRenderer.GetViewport());
 
 		// Determine the current selected axis by using a picking ray
 		Ray cRay;
