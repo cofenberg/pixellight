@@ -141,16 +141,20 @@ void GuiPickingQObject::EndCloneMode()
 				const uint32 nNumOfClones = GetNumOfClones();
 
 				// Create the clones
-				const int nContainerIndex = cSceneNode.GetContainerIndex() + 1;
+				const int nIndex = cSceneNode.GetContainerIndex() + 1;
 				for (uint32 i=0; i<nNumOfClones; i++) {
 					// Create the clone
-					pSceneNodeClone = cSceneNode.CloneAtIndex(nContainerIndex + i);
+					const int nCurrentIndex = nIndex + i;
+					pSceneNodeClone = cSceneNode.CloneAtIndex(nCurrentIndex);
 					if (pSceneNodeClone) {
 						// Advance the current position
 						vCurrentPosition += vDelta;
 
 						// Give this scene node clone the current position
 						pSceneNodeClone->SetPosition(vCurrentPosition);
+
+						// Perform a dock widget manager broadcast
+						m_pGuiPicking->GetDockWidgetManager()->CallDockWidgetsMethod("AddedObject", Params<void, Object&, int>(*pSceneNodeClone, nCurrentIndex));
 					}
 				}
 
@@ -172,16 +176,20 @@ void GuiPickingQObject::EndCloneMode()
 				const uint32 nNumOfClones = GetNumOfClones();
 
 				// Create the clones
-				const int nContainerIndex = cSceneNode.GetContainerIndex() + 1;
+				const int nIndex = cSceneNode.GetContainerIndex() + 1;
 				for (uint32 i=0; i<nNumOfClones; i++) {
 					// Create the clone
-					pSceneNodeClone = cSceneNode.CloneAtIndex(nContainerIndex + i);
+					const int nCurrentIndex = nIndex + i;
+					pSceneNodeClone = cSceneNode.CloneAtIndex(nCurrentIndex);
 					if (pSceneNodeClone) {
 						// Advance the current rotation
 						qCurrentRotation *= qDelta;
 
 						// Give this scene node clone the current rotation
 						pSceneNodeClone->GetTransform().SetRotation(qCurrentRotation);
+
+						// Perform a dock widget manager broadcast
+						m_pGuiPicking->GetDockWidgetManager()->CallDockWidgetsMethod("AddedObject", Params<void, Object&, int>(*pSceneNodeClone, nCurrentIndex));
 					}
 				}
 
@@ -202,16 +210,20 @@ void GuiPickingQObject::EndCloneMode()
 				const uint32 nNumOfClones = GetNumOfClones();
 
 				// Create the clones
-				const int nContainerIndex = cSceneNode.GetContainerIndex() + 1;
+				const int nIndex = cSceneNode.GetContainerIndex() + 1;
 				for (uint32 i=0; i<nNumOfClones; i++) {
 					// Create the clone
-					pSceneNodeClone = cSceneNode.CloneAtIndex(nContainerIndex + i);
+					const int nCurrentIndex = nIndex + i;
+					pSceneNodeClone = cSceneNode.CloneAtIndex(nCurrentIndex);
 					if (pSceneNodeClone) {
 						// Advance the current scale
 						vCurrentScale += vDelta;
 
 						// Give this scene node clone the current scale
 						pSceneNodeClone->SetScale(vCurrentScale);
+
+						// Perform a dock widget manager broadcast
+						m_pGuiPicking->GetDockWidgetManager()->CallDockWidgetsMethod("AddedObject", Params<void, Object&, int>(*pSceneNodeClone, nCurrentIndex));
 					}
 				}
 			}
