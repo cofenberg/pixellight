@@ -50,7 +50,7 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 
 
 	public:
-		SceneGraphNodeModifierTreeItem(SceneGraphTreeModel &cModel, const QModelIndex &parentIdx, int rowNr, PLScene::SceneNodeModifier *nodeObj, TreeItemBase *parent = nullptr) : SceneGraphNodeTreeItemBase(cModel, parentIdx, rowNr, parent),
+		SceneGraphNodeModifierTreeItem(SceneGraphTreeModel &cModel, PLScene::SceneNodeModifier *nodeObj, TreeItemBase *parent = nullptr) : SceneGraphNodeTreeItemBase(cModel, parent),
 			m_nodeObj(nodeObj),
 			m_nodeName(nodeObj ? QtStringAdapter::PLToQt(m_nodeObj->GetClass()->GetName()) : "null modifier"),
 			m_nodeClassName(nodeObj ? QtStringAdapter::PLToQt(m_nodeObj->GetClass()->GetClassName()) : "null class"),
@@ -109,7 +109,8 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 			// Argh! Mayday! We lost our scene node modifier!
 			m_nodeObj = nullptr;
 
-			m_cModel.removeRow(row(), m_cParentModelIndex);
+			const QModelIndex cIndex = index();
+			m_cModel.removeRow(cIndex.row(), cIndex.parent());
 		}
 
 	private:
@@ -122,17 +123,16 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 
 };
 
-void CreateSceneGraphItemsFromContainer(PLFrontendQt::DataModels::SceneGraphTreeModel& cModel, const QModelIndex& parentIndex, PLScene::SceneContainer* pContainer, TreeItemBase* parent);
+void CreateSceneGraphItemsFromContainer(PLFrontendQt::DataModels::SceneGraphTreeModel& cModel, PLScene::SceneContainer* pContainer, TreeItemBase* parent);
 
 class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 
 
 	public:
-		SceneGraphNodeTreeItem(SceneGraphTreeModel &cModel, const QModelIndex &parentIdx, int rowNr, PLScene::SceneNode *nodeObj, TreeItemBase *parent = nullptr) : SceneGraphNodeTreeItemBase(cModel, parentIdx, rowNr, parent),
+		SceneGraphNodeTreeItem(SceneGraphTreeModel &cModel, PLScene::SceneNode *nodeObj, TreeItemBase *parent = nullptr) : SceneGraphNodeTreeItemBase(cModel, parent),
 			m_nodeObj(nodeObj),
 			EventHandlerOnDestroy(&SceneGraphNodeTreeItem::OnDestroy, this)
 		{
-			m_cModelIndex = m_cModel.index(rowNr, 0, parentIdx);
 			// Connect event handler
 			m_nodeObj->SignalDestroy.Connect(EventHandlerOnDestroy);
 			
@@ -140,7 +140,7 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 
 			if (m_nodeObj->IsContainer()) {
 				PLScene::SceneContainer *container = (PLScene::SceneContainer*)m_nodeObj;
-				CreateSceneGraphItemsFromContainer(cModel, m_cModelIndex, container, this);
+				CreateSceneGraphItemsFromContainer(cModel, container, this);
 			}
 
 			for(PLCore::uint32 i=0; i<m_nodeObj->GetNumOfModifiers(); i++) {
@@ -154,7 +154,7 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 				if ((node->GetFlags() & PLScene::SceneNodeModifier::Automatic))
 					continue;
 				
-				AddChild(new SceneGraphNodeModifierTreeItem(cModel, m_cModelIndex, i, node, this));
+				AddChild(new SceneGraphNodeModifierTreeItem(cModel, node, this));
 			}
 
 			GetIconFromSceneNode();
@@ -232,8 +232,8 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 		{
 			// Argh! Mayday! We lost our scene node!
 			m_nodeObj = nullptr;
-			
-			m_cModel.removeRow(row(), m_cParentModelIndex);
+			const QModelIndex cIndex = index();
+			m_cModel.removeRow(cIndex.row(), cIndex.parent());
 		}
 
 	private:
@@ -244,9 +244,9 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 
 };
 
-void CreateSceneGraphItemsFromContainer(PLFrontendQt::DataModels::SceneGraphTreeModel& cModel, const QModelIndex& parentIndex, PLScene::SceneContainer* pContainer, PLFrontendQt::DataModels::TreeItemBase* parent)
+void CreateSceneGraphItemsFromContainer(PLFrontendQt::DataModels::SceneGraphTreeModel& cModel, PLScene::SceneContainer* pContainer, PLFrontendQt::DataModels::TreeItemBase* parent)
 {
-	for (PLCore::uint32 i=0, rowNr = 0; i<pContainer->GetNumOfElements(); ++i) {
+	for (PLCore::uint32 i=0; i<pContainer->GetNumOfElements(); ++i) {
 		// Get the current scene node
 		PLScene::SceneNode *node = pContainer->GetByIndex(i);
 
@@ -257,8 +257,7 @@ void CreateSceneGraphItemsFromContainer(PLFrontendQt::DataModels::SceneGraphTree
 		if ((node->GetFlags() & PLScene::SceneNode::Automatic))
 			continue;
 		
-		parent->AddChild(new SceneGraphNodeTreeItem(cModel, parentIndex, rowNr, node, parent));
-		++rowNr;
+		parent->AddChild(new SceneGraphNodeTreeItem(cModel, node, parent));
 	}
 }
 
@@ -279,10 +278,14 @@ void SceneGraphTreeModel::SetStartNode(PLScene::SceneNode* nodeObj, bool hideSta
 
 	if (nodeObj) {
 		if (!hideStartNode || !nodeObj->IsContainer()) {
-			pRootItem->AddChild(new SceneGraphNodeTreeItem(*this, index(0,0), 0,nodeObj));
+			pRootItem->AddChild(new SceneGraphNodeTreeItem(*this,nodeObj));
+			QModelIndex tt = index(0,0);
+			QString str;
+			if (tt.isValid())
+				str = tt.data().toString();
 		}
 		else
-			CreateSceneGraphItemsFromContainer(*this, index(0,0), static_cast<PLScene::SceneContainer*>(nodeObj), pRootItem);
+			CreateSceneGraphItemsFromContainer(*this, static_cast<PLScene::SceneContainer*>(nodeObj), pRootItem);
 	}
 	endResetModel();
 }
@@ -347,7 +350,7 @@ void SceneGraphTreeModel::AddSceneNode(PLScene::SceneContainer* pContainer, PLSc
 
 	beginInsertRows(parentIdx, rowNumber, rowNumber);
 	
-	TreeItemBase *pChild = new SceneGraphNodeTreeItem(*this, parentIdx, rowNumber, pSceneNode);
+	TreeItemBase *pChild = new SceneGraphNodeTreeItem(*this, pSceneNode);
 	if(nPosition == -1)
 		treeItem->AddChild(pChild);
 	else
@@ -368,7 +371,7 @@ void SceneGraphTreeModel::AddSceneNodeModifier(PLScene::SceneNode* pParentNode, 
 
 	beginInsertRows(parentIdx, rowNumber, rowNumber);
 	
-	TreeItemBase *pChild = new SceneGraphNodeModifierTreeItem(*this, parentIdx, rowNumber, pSceneNodeModifier);
+	TreeItemBase *pChild = new SceneGraphNodeModifierTreeItem(*this, pSceneNodeModifier);
 	
 	if(nPosition == -1)
 		treeItem->AddChild(pChild);

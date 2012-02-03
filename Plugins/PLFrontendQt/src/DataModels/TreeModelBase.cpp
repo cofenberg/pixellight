@@ -150,6 +150,19 @@ bool TreeModelBase::setData(const QModelIndex &index, const QVariant &value, int
 	return false;
 }
 
+/**
+*  @brief
+*    Returns the model index of the given item
+*/
+QModelIndex TreeModelBase::GetIndexForTreeItem(TreeItemBase *item) const
+{
+	if (item && item->parent()) {
+        QPair<int, int> pos = item->position();
+        return createIndex(pos.first, pos.second, item);
+	}
+    return QModelIndex();
+}
+
 TreeItemBase *TreeModelBase::GetTreeItemFromIndex(const QModelIndex &parent) const
 {
 	if (parent.isValid()) {

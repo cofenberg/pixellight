@@ -102,13 +102,22 @@ class PLFRONTENDQT_API TreeItemBase {
 		*  @param[in] pChild
 		*    the child object to be removed
 		*
-		 *  @param[in] bDestroy
+		*  @param[in] bDestroy
 		*    should the child be destroyed?
 		*
 		*  @remarks
 		*    the child item gets destroyed
 		*/
 		void RemoveChild(TreeItemBase* pChild, bool bDestroy = true);
+		
+		/**
+		*  @brief
+		*    Returns the index of the child
+		*
+		*  @return
+		*    the child index if the given item or -1 if not found
+		*/
+		int GetChildIndex(TreeItemBase* pChild) const;
 		
 		/**
 		*  @brief
@@ -136,6 +145,15 @@ class PLFRONTENDQT_API TreeItemBase {
 		*    the parent item, can be a null pointer when this item has no parent
 		*/
 		TreeItemBase* parent() const;
+		
+		/**
+		*  @brief
+		*   Returns the position of this item
+		*
+		*  @return
+		*    the position of this item as a pair (row, column)
+		*/
+		QPair<int, int> position();
 
 
 	//[-------------------------------------------------------]

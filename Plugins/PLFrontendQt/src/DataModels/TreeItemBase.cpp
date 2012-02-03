@@ -116,6 +116,17 @@ void TreeItemBase::RemoveChild(TreeItemBase* pChild, bool bDestroy)
 
 /**
 *  @brief
+*    Returns the index of the child
+*/
+int TreeItemBase::GetChildIndex(TreeItemBase* pChild) const
+{
+	if (!pChild)
+		return -1;
+	return m_cChildren.indexOf(pChild);
+}
+
+/**
+*  @brief
 *   Returns a list of child objects.
 */
 const QList<TreeItemBase*>& TreeItemBase::children() const
@@ -147,6 +158,23 @@ void TreeItemBase::clearChildren()
 TreeItemBase* TreeItemBase::parent() const
 {
 	return m_pParent;
+}
+
+/**
+*  @brief
+*   Returns the position of this item
+*/
+QPair<int, int> TreeItemBase::position()
+{
+    if (const TreeItemBase *par = parent()) {
+		// idx = row in the tree
+        int idx = par->GetChildIndex(this);
+        if (idx == -1)
+            return QPair<int, int>(-1, -1);
+		// return position (row, column), column is always 0 because there can only be one item per row
+        return QPair<int, int>(idx , 0);
+    }
+    return QPair<int, int>(-1, -1);
 }
 
 void TreeItemBase::SetFlags(const int column, const Qt::ItemFlags flags)

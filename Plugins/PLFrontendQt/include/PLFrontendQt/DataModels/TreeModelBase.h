@@ -157,6 +157,15 @@ class PLFRONTENDQT_API TreeModelBase : public QAbstractItemModel {
 		*/
 		bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
 
+		/**
+		*  @brief
+		*    Returns the model index of the given item
+		*
+		*  @returns
+		*    the model index of the given item or an invalid model index when the item doesn't belong to this model instance
+		*/
+		QModelIndex GetIndexForTreeItem(TreeItemBase *item) const;
+
 
 	//[-------------------------------------------------------]
 	//[ Protected functions                                   ]

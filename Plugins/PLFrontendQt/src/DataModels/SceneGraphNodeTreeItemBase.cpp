@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLFrontendQt/DataModels/SceneGraphNodeTreeItemBase.h"
+#include <DataModels/SceneGraphTreeModel.h>
 
 
 //[-------------------------------------------------------]
@@ -33,10 +34,14 @@ namespace PLFrontendQt {
 namespace DataModels {
 
 
-SceneGraphNodeTreeItemBase::SceneGraphNodeTreeItemBase(PLFrontendQt::DataModels::SceneGraphTreeModel& cModel, const QModelIndex& parentIdx, int rowNr, PLFrontendQt::DataModels::TreeItemBase* parent) : TreeItemBase(1, parent), m_cModel(cModel), /*m_cRow(rowNr),*/ m_cParentModelIndex(parentIdx)
+SceneGraphNodeTreeItemBase::SceneGraphNodeTreeItemBase(PLFrontendQt::DataModels::SceneGraphTreeModel& cModel, PLFrontendQt::DataModels::TreeItemBase* parent) : TreeItemBase(1, parent), m_cModel(cModel)
 {
 }
 
+QModelIndex SceneGraphNodeTreeItemBase::index()
+{
+	return m_cModel.GetIndexForTreeItem(this);
+}
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
