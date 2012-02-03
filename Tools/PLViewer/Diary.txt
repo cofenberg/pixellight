@@ -1,3 +1,13 @@
+>> 03.02.2012
+[CO]
+PLViewerQt:
+- When pressing the delete-key, delete the currently selected scene node
+- Added support for cloning via transform gizmo. In case the shift key is down when starting the transform, clone mode is activated.
+  When finishing the transform the user will be asked for the number of desired clones. A "AddedObject"-broadcast is made when adding
+  the clones.
+
+
+
 >> 02.02.2012
 [CO]
 PLViewerQt:

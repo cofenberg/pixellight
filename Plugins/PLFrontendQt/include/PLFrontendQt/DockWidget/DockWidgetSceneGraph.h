@@ -84,10 +84,11 @@ class DockWidgetSceneGraph : public DockWidgetScene {
 		pl_properties_end
 		#ifdef PLFRONTENDQT_EXPORTS	// The following is only required when compiling PLFrontendQt
 			// Methods
-			pl_method_0(GetSceneContainer,	pl_ret_type(PLScene::SceneContainer*),								"Returns the used scene container, can be a null pointer.",							"")
-			pl_method_1(SetSceneContainer,	pl_ret_type(void),						PLScene::SceneContainer*,	"Sets the scene container to use. Scene container to use as first parameter.",		"")
-			pl_method_0(GetSelectedObject,	pl_ret_type(PLCore::Object*),										"Returns the currently selected object, can be a null pointer.",					"")
-			pl_method_1(PostSelectObject,	pl_ret_type(void),						PLCore::Object*,			"Selects the given object (post-broadcast). Object to select as first parameter.",	"")
+			pl_method_0(GetSceneContainer,	pl_ret_type(PLScene::SceneContainer*),										"Returns the used scene container, can be a null pointer.",																																			"")
+			pl_method_1(SetSceneContainer,	pl_ret_type(void),						PLScene::SceneContainer*,			"Sets the scene container to use. Scene container to use as first parameter.",																														"")
+			pl_method_0(GetSelectedObject,	pl_ret_type(PLCore::Object*),												"Returns the currently selected object, can be a null pointer.",																																	"")
+			pl_method_1(PostSelectObject,	pl_ret_type(void),						PLCore::Object*,					"Selects the given object (post-broadcast). Object to select as first parameter.",																													"")
+			pl_method_2(AddedObject,		pl_ret_type(void),						PLCore::Object&,			int,	"An object was added. Added object as first parameter, index position specifying the location within the object list where the object should be added (<0 for at the end) as second parameter.",	"")
 		#endif
 		// Constructors
 		pl_constructor_2(DefaultConstructor,	QMainWindow*,	DockWidgetManager*,	"Constructor with a pointer to the Qt main window as first parameter, pointer to the dock widget manager this dock widget should be registered to as second parameter",	"")
@@ -152,6 +153,17 @@ class DockWidgetSceneGraph : public DockWidgetScene {
 		*    Object to select, can be a null pointer
 		*/
 		PLFRONTENDQT_API void PostSelectObject(PLCore::Object *pObject);
+
+		/**
+		*  @brief
+		*    An object was added
+		*
+		*  @param[in] cObject
+		*    Added object
+		*  @param[in] nPosition
+		*    Index position specifying the location within the object list where the object should be added, <0 for at the end
+		*/
+		PLFRONTENDQT_API void AddedObject(PLCore::Object &cObject, int nPosition);
 
 
 	//[-------------------------------------------------------]

@@ -240,6 +240,43 @@ void DockWidgetSceneGraph::PostSelectObject(Object *pObject)
 	}
 }
 
+/**
+*  @brief
+*    An object was added
+*/
+void DockWidgetSceneGraph::AddedObject(Object &cObject, int nPosition)
+{
+	// Is there a scene graph tree model instance?
+	if (m_pSceneGraphTreeModel) {
+		// Scene node
+		if (cObject.IsInstanceOf("PLScene::SceneNode")) {
+			// Get scene node instance
+			SceneNode &cSceneNode = static_cast<SceneNode&>(cObject);
+
+			// Ignore automatically generated stuff
+			if (!(cSceneNode.GetFlags() & SceneNode::Automatic)) {
+				// Get the scene container
+				SceneContainer *pSceneContainer = cSceneNode.GetContainer();
+				if (pSceneContainer) {
+					// Add the new scene node modifier to the tree view
+					m_pSceneGraphTreeModel->AddSceneNode(pSceneContainer, &cSceneNode, nPosition);
+				}
+			}
+
+		// Scene node modifier
+		} else if (cObject.IsInstanceOf("PLScene::SceneNodeModifier")) {
+			// Get scene node modifier instance
+			SceneNodeModifier &cSceneNodeModifier = static_cast<SceneNodeModifier&>(cObject);
+
+			// Ignore automatically generated stuff
+			if (!(cSceneNodeModifier.GetFlags() & SceneNodeModifier::Automatic)) {
+				// Add the new scene node modifier to the tree view
+				m_pSceneGraphTreeModel->AddSceneNodeModifier(&cSceneNodeModifier.GetSceneNode(), &cSceneNodeModifier, nPosition);
+			}
+		}
+	}
+}
+
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]

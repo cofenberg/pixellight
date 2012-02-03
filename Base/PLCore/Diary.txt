@@ -5,6 +5,13 @@ PLFrontendQt:
 
 
 
+>> 03.02.2012
+[CO]
+PLFrontendQt:
+- "DockWidgetSceneGraph": Added support for the "AddedObject"-broadcast
+
+
+
 >> 02.02.2012
 [CO]
 PLFrontendQt:
