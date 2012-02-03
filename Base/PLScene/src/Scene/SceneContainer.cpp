@@ -124,7 +124,7 @@ SceneContainer::~SceneContainer()
 
 /**
 *  @brief
-*    Creates a new scene node at a certain index inside the child list
+*    Creates a new scene node at a certain index inside the scene node list
 */
 SceneNode *SceneContainer::CreateAtIndex(const String &sClass, const String &sName, const String &sParameters, int nPosition)
 {

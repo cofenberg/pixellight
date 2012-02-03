@@ -70,6 +70,24 @@ void SceneNodeModifier::SetFlags(uint32 nValue)
 //[-------------------------------------------------------]
 /**
 *  @brief
+*    Creates a clone of this scene node modifier within the owner scene node
+*/
+SceneNodeModifier *SceneNodeModifier::Clone()
+{
+	return m_pSceneNode->AddModifier(GetClass()->GetClassName(), GetValues());
+}
+
+/**
+*  @brief
+*    Creates a clone of this scene node modifier within the owner scene node at a certain index inside the scene node modifier list
+*/
+SceneNodeModifier *SceneNodeModifier::CloneAtIndex(int nPosition)
+{
+	return m_pSceneNode->AddModifierAtIndex(GetClass()->GetClassName(), GetValues(), nPosition);
+}
+
+/**
+*  @brief
 *    Returns the scene node class this modifier operates on
 */
 String SceneNodeModifier::GetSceneNodeClass() const

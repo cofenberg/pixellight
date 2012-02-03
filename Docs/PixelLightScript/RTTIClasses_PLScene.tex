@@ -111,7 +111,7 @@ Write \emph{<RTTI object>:GetNumOfModifiers(<string>)} in order to get the numbe
 Write \emph{<RTTI object>:AddModifier(<string>, <string>))} in order to add a modifier. Modifier class name of the modifier to add as first parameter and optional parameter string as second parameter. Returns a pointer to the modifier instance if all went fine, else a null pointer (maybe unknown/incompatible modifier).
 
 \paragraph{<RTTI object> AddModifierAtIndex(<string>, <string>, <integer>))}
-Write \emph{<RTTI object>:AddModifierAtIndex(<string>, <string>, <integer>))} in order to add a modifier at a certain index inside the child list. Modifier class name of the modifier to add as first parameter and optional parameter string as second parameter, optional index position specifying the location within the child list where the scene node modifier should be added as third parameter (<0 for at the end). Returns a pointer to the modifier instance if all went fine, else a null pointer (maybe unknown/incompatible modifier).
+Write \emph{<RTTI object>:AddModifierAtIndex(<string>, <string>, <integer>))} in order to add a modifier at a certain index inside the scene node modifier list. Modifier class name of the modifier to add as first parameter and optional parameter string as second parameter, optional index position specifying the location within the scene node modifier list where the scene node modifier should be added as third parameter (<0 for at the end). Returns a pointer to the modifier instance if all went fine, else a null pointer (maybe unknown/incompatible modifier).
 
 \paragraph{<RTTI object> GetModifier(<string>, <integer>)}
 Write \emph{<RTTI object>:GetModifier(<string>, <integer>)} in order to get a modifier. Modifier class name of the modifier to return as first parameter, optional modifier index as second parameter (used if class name is empty or if there are multiple instances of this modifier class). Returns the requested modifier, a null pointer on error.
@@ -178,6 +178,12 @@ Write \emph{<RTTI object>:GetSceneNode()} in order to get the owner scene node.
 \paragraph{<RTTI object> GetSceneNodeIndex()}
 Write \emph{<RTTI object>:GetSceneNodeIndex()} in order to get the index of this scene node modifier within the scene node modifier list of the owner scene node, <0 on failure (e.g. the scene node modifier is no member of this scene node).			
 
+\paragraph{<RTTI object> Clone()}
+Write \emph{<RTTI object>:Clone()} in order to create a clone of this scene node modifier within the owner scene node. Returns the created clone of this scene node modifier within the owner scene node, null pointer on error.
+
+\paragraph{<RTTI object> CloneAtIndex(<integer>)}
+Write \emph{<RTTI object>:CloneAtIndex(<integer>)} in order to create a clone of this scene node modifier within the owner scene node at a certain index inside the scene node modifier list. Index position specifying the location within the scene node modifier list where the scene node modifier should be added as first parameter (<0 for at the end). Returns the created clone of this scene node modifier within the owner scene node, null pointer on error.
+
 \paragraph{<string> GetAbsoluteName()}
 Write \emph{<RTTI object>:GetAbsoluteName()} in order to get an unique absolute name for the scene node modifier. The name is constructed by using \emph{<absolute owner scene node name>:<scene node modifier class name>.<zero based index>} (for instance \emph{Root.MyScene.MyNode:SNMRotationLinearAnimation.0}). Do not use this method on a regular basis.
 
@@ -220,7 +226,7 @@ Write \emph{<RTTI object>:GetByName(<string>)} in order to get a scene node by u
 Write \emph{<RTTI object>:Create(<string>, <string>, <string>)} in order to create a new scene node. Name of the scene node class to create an instance from as first parameter, scene node name as second parameter and optional parameter string as third parameter. Returns a pointer to the new scene node or a null pointer if something went wrong (maybe unknown class or the class is not derived from \emph{PLScene::SceneNode}).
 
 \paragraph{<RTTI object> CreateAtIndex(<string>, <string>, <string>), <integer>}
-Write \emph{<RTTI object>:CreateAtIndex(<string>, <string>, <string>, <integer>)} in order to create a new scene node at a certain index inside the child list. Name of the scene node class to create an instance from as first parameter, scene node name as second parameter and optional parameter string as third parameter, optional index position specifying the location within the child list where the scene node should be added as fouth parameter (<0 for at the end). Returns a pointer to the new scene node or a null pointer if something went wrong (maybe unknown class or the class is not derived from \emph{PLScene::SceneNode}).
+Write \emph{<RTTI object>:CreateAtIndex(<string>, <string>, <string>, <integer>)} in order to create a new scene node at a certain index inside the scene node list. Name of the scene node class to create an instance from as first parameter, scene node name as second parameter and optional parameter string as third parameter, optional index position specifying the location within the scene node list where the scene node should be added as fouth parameter (<0 for at the end). Returns a pointer to the new scene node or a null pointer if something went wrong (maybe unknown class or the class is not derived from \emph{PLScene::SceneNode}).
 
 \paragraph{CalculateAABoundingBox()}
 Write \emph{<RTTI object>:CalculateAABoundingBox()} in order to calculate and sets the axis align bounding box in \emph{scene node space}. Because the \emph{scene node space} axis aligned bounding box should always cover all scene nodes of this container, you can use this function to calculate and set this a bounding box automatically.

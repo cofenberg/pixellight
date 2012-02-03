@@ -9,6 +9,7 @@
      our transform gizmo will be clipped away by the z far plane
   -> So, to be on the safe side, we use our own known projection matrix for the transform gizmo
 - Moved "SceneNode::GetModifierIndex()" (I added yesterday) into "SceneNodeModifier::GetSceneNodeIndex()", easier to use this way
+- "SceneNodeModifier": Added "Clone()" and "CloneAtIndex()"
 
 
 

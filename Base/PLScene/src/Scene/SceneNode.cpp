@@ -716,7 +716,7 @@ uint32 SceneNode::GetNumOfModifiers(const String &sClass) const
 
 /**
 *  @brief
-*    Adds a modifier at a certain index inside the child list
+*    Adds a modifier at a certain index inside the scene node modifier list
 */
 SceneNodeModifier *SceneNode::AddModifierAtIndex(const String &sClass, const String &sParameters, int nPosition)
 {

@@ -101,14 +101,11 @@ void DockWidgetSceneGraphQObject::UpdateTreeView(SceneGraphMenu::EAction nAction
 
 						// Ignore automatically generated stuff
 						if (!(pSceneNodeModifier->GetFlags() & SceneNodeModifier::Automatic)) {
-							// Get the owner scene node
-							SceneNode &cSceneNode = pSceneNodeModifier->GetSceneNode();
-
 							// Get the index of this scene modifier inside the scene node modifier list of the owner scene node
-							const int nIndex = (nAction == SceneGraphMenu::ActionCloned) ? cSceneNode.GetModifierIndex(*pSceneNodeModifier) : -1;
+							const int nIndex = (nAction == SceneGraphMenu::ActionCloned) ? pSceneNodeModifier->GetSceneNodeIndex() : -1;
 
 							// Add the new scene node modifier to the tree view
-							m_pDockWidgetSceneGraph->m_pSceneGraphTreeModel->AddSceneNodeModifier(&cSceneNode, pSceneNodeModifier, nIndex);
+							m_pDockWidgetSceneGraph->m_pSceneGraphTreeModel->AddSceneNodeModifier(&pSceneNodeModifier->GetSceneNode(), pSceneNodeModifier, nIndex);
 						}
 					}
 
