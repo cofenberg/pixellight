@@ -279,11 +279,8 @@ void SceneGraphMenu::QtSlotTriggeredClone()
 
 		// Do not clone automatic scene nodes
 		if (!(cSceneNode.GetFlags() & SceneNode::Automatic)) {
-			// Get position of the scene node
-			const int nIndex = cSceneNode.GetContainer()->GetIndex(cSceneNode);
-
-			// Clone the scene node and add it after the node from which the clone will be created
-			CloneSceneNode(*cSceneNode.GetContainer(), cSceneNode, "_Clone", nIndex+1);
+			// Clone the scene node and add it after the scene node from which the clone will be created
+			CloneSceneNode(*cSceneNode.GetContainer(), cSceneNode, "_Clone", cSceneNode.GetContainerIndex() + 1);
 		}
 
 	// Scene node modifier
@@ -292,8 +289,10 @@ void SceneGraphMenu::QtSlotTriggeredClone()
 		SceneNodeModifier &cSceneNodeModifier = static_cast<SceneNodeModifier&>(*m_pObject);
 
 		// Do not clone automatic scene node modifiers
-		if (!(cSceneNodeModifier.GetFlags() & SceneNodeModifier::Automatic))
+		if (!(cSceneNodeModifier.GetFlags() & SceneNodeModifier::Automatic)) {
+			// Clone the scene node modifier and add it after the scene node modifier from which the clone will be created
 			m_pCreatedObject = cSceneNodeModifier.CloneAtIndex(cSceneNodeModifier.GetSceneNodeIndex() + 1);
+		}
 	}
 }
 

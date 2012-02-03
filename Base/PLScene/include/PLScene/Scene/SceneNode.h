@@ -203,9 +203,10 @@ class SceneNode : public PLCore::Object, public PLCore::Element<SceneNode> {
 		#ifdef PLSCENE_EXPORTS	// The following is only required when compiling PLScene
 			// Methods
 			pl_method_0(GetContainer,				pl_ret_type(SceneContainer*),																"Returns the scene container the scene node is in or a null pointer if this is the root node.",																																																																																																	"")
-			pl_method_1(SetContainer,				pl_ret_type(bool),					SceneContainer&,										"Sets the scene container the scene node is in. Scene container this node is in as first parameter. Returns 'true' if all went fine, else 'false' (Position, rotation, scale etc. are not manipulated, only the container is changed!)."										,																																																				"")
+			pl_method_1(SetContainer,				pl_ret_type(bool),					SceneContainer&,										"Sets the scene container the scene node is in. Scene container this node is in as first parameter. Returns 'true' if all went fine, else 'false' (Position, rotation, scale etc. are not manipulated, only the container is changed!).",																																																														"")
 			pl_method_0(GetRootContainer,			pl_ret_type(SceneContainer*),																"Returns the scene root container (this scene container can be the root scene container), a null pointer on error.",																																																																																											"")
 			pl_method_1(GetCommonContainer,			pl_ret_type(SceneContainer*),		SceneNode&,												"Gets the common container of this and another scene node. The other scene node as first parameter. Returns the common container, or a null pointer.",																																																																																			"")
+			pl_method_0(GetContainerIndex,			pl_ret_type(int),																			"Returns the index of this scene node within the scene node list of the scene container this scene node is in, <0 on failure (e.g. the scene node is not within a scene container).",																																																																											"")
 			pl_method_0(GetHierarchy,				pl_ret_type(SceneHierarchy*),																"Returns the scene hierarchy this scene node is linked into. Returns the scene hierarchy this scene node is linked into, a null pointer on error.",																																																																																				"")
 			pl_method_0(GetAbsoluteName,			pl_ret_type(PLCore::String),																"Returns the unique absolute name of the scene node (for instance 'Root.MyScene.MyNode').",																																																																																																		"")
 			pl_method_0(IsActive,					pl_ret_type(bool),																			"Returns whether the scene node is active or not. Returns 'true' if the scene node is active, else 'false'.",																																																																																													"")
@@ -333,6 +334,16 @@ class SceneNode : public PLCore::Object, public PLCore::Element<SceneNode> {
 		*    Common container, or a null pointer
 		*/
 		PLS_API SceneContainer *GetCommonContainer(SceneNode &cSceneNode) const;
+
+		/**
+		*  @brief
+		*    Returns the index of this scene node within the scene node list of the scene container this scene node is in
+		*
+		*  @return
+		*    The index of this scene node within the scene node list of the scene container this scene node is in, <0 on failure
+		*    (e.g. the scene node is not within a scene container)
+		*/
+		PLS_API int GetContainerIndex();
 
 		/**
 		*  @brief

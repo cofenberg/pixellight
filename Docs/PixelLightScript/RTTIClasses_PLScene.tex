@@ -62,6 +62,9 @@ Write \emph{<RTTI object>:GetRootContainer()} in order to get the scene root con
 \paragraph{<RTTI object> GetCommonContainer(<RTTI object>)}
 Write \emph{<RTTI object>:GetCommonContainer(<RTTI object>)} in order to get the common container of this and another scene node. The other scene node as first parameter. Returns the common container, or a null pointer.
 
+\paragraph{<RTTI object> GetContainerIndex()}
+Write \emph{<RTTI object>:GetContainerIndex()} in order to get the index of this scene node within the scene node list of the scene container this scene node is in, <0 on failure (e.g. the scene node is not within a scene container).
+
 \paragraph{<RTTI object> GetHierarchy()}
 Write \emph{<RTTI object>:GetHierarchy()} in order to get the scene hierarchy this scene node is linked into. Returns the scene hierarchy this scene node is linked into, a null pointer on error.
 
@@ -176,7 +179,7 @@ Flags.
 Write \emph{<RTTI object>:GetSceneNode()} in order to get the owner scene node.
 
 \paragraph{<RTTI object> GetSceneNodeIndex()}
-Write \emph{<RTTI object>:GetSceneNodeIndex()} in order to get the index of this scene node modifier within the scene node modifier list of the owner scene node, <0 on failure (e.g. the scene node modifier is no member of this scene node).			
+Write \emph{<RTTI object>:GetSceneNodeIndex()} in order to get the index of this scene node modifier within the scene node modifier list of the owner scene node, <0 on failure.
 
 \paragraph{<RTTI object> Clone()}
 Write \emph{<RTTI object>:Clone()} in order to create a clone of this scene node modifier within the owner scene node. Returns the created clone of this scene node modifier within the owner scene node, null pointer on error.

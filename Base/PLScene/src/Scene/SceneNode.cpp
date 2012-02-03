@@ -272,6 +272,15 @@ SceneContainer *SceneNode::GetCommonContainer(SceneNode &cSceneNode) const
 
 /**
 *  @brief
+*    Returns the index of this scene node within the scene node list of the scene container this scene node is in
+*/
+int SceneNode::GetContainerIndex()
+{
+	return GetManager() ? static_cast<SceneContainer*>(GetManager())->GetIndex(*this) : -1;
+}
+
+/**
+*  @brief
 *    Returns the scene hierarchy this scene node is linked into
 */
 SceneHierarchy *SceneNode::GetHierarchy() const

@@ -95,7 +95,7 @@ class SceneNodeModifier : public PLCore::Object {
 		#ifdef PLSCENE_EXPORTS	// The following is only required when compiling PLScene
 			// Methods
 			pl_method_0(GetSceneNode,		pl_ret_type(SceneNode&),					"Returns the owner scene node.",																																																																																												"")
-			pl_method_0(GetSceneNodeIndex,	pl_ret_type(int),							"Returns the index of this scene node modifier within the scene node modifier list of the owner scene node, <0 on failure (e.g. the scene node modifier is no member of this scene node).",																																																						"")
+			pl_method_0(GetSceneNodeIndex,	pl_ret_type(int),							"Returns the index of this scene node modifier within the scene node modifier list of the owner scene node, <0 on failure.",																																																																					"")
 			pl_method_0(Clone,				pl_ret_type(SceneNodeModifier*),			"Creates a clone of this scene node modifier within the owner scene node. Returns the created clone of this scene node modifier within the owner scene node, null pointer on error.",																																																							"")
 			pl_method_1(CloneAtIndex,		pl_ret_type(SceneNodeModifier*),	int,	"Creates a clone of this scene node modifier within the owner scene node at a certain index inside the scene node modifier list. Index position specifying the location within the scene node modifier list where the scene node modifier should be added as first parameter (<0 for at the end). Returns the created clone of this scene node modifier within the owner scene node, null pointer on error.",	"")
 			pl_method_0(GetAbsoluteName,	pl_ret_type(PLCore::String),				"Constructs an unique absolute name for the scene node modifier by using \"<absolute owner scene node name>:<scene node modifier class name>.<zero based index>\" (for instance 'Root.MyScene.MyNode:SNMRotationLinearAnimation.0'). Do not use this method on a regular basis.",																																"")
@@ -133,7 +133,6 @@ class SceneNodeModifier : public PLCore::Object {
 		*
 		*  @return
 		*    The index of this scene node modifier within the scene node modifier list of the owner scene node, <0 on failure
-		*    (e.g. the scene node modifier is no member of this scene node)
 		*/
 		inline int GetSceneNodeIndex();
 
