@@ -293,13 +293,13 @@ void SNPhysicsMouseInteraction::OnUpdate()
 							const Renderer &cRenderer = GetSceneContext()->GetRendererContext().GetRenderer();
 
 							// Calculate the clip space to object space matrix
-							Matrix4x4 mClipSpaceToObjectSpace = pCamera->GetProjectionMatrix(cRenderer.GetViewport();
+							Matrix4x4 mClipSpaceToObjectSpace = pCamera->GetProjectionMatrix(cRenderer.GetViewport());
 							mClipSpaceToObjectSpace *= pCamera->GetViewMatrix();
 							mClipSpaceToObjectSpace.Invert();
 
 							// Get current mouse position in world coordinates relative to the picked point on the body
 							Vector3 v2DPos(static_cast<float>(m_vPickingMousePos.x), static_cast<float>(m_vPickingMousePos.y), 0.0001f);
-							Vector3 vV0 = v2DPos.To3DCoordinate(mClipSpaceToObjectSpace, Renderer.GetViewport());
+							Vector3 vV0 = v2DPos.To3DCoordinate(mClipSpaceToObjectSpace, cRenderer.GetViewport());
 							v2DPos.z = 0.9999f;
 							Vector3 vV1 = v2DPos.To3DCoordinate(mClipSpaceToObjectSpace, cRenderer.GetViewport());
 							Vector3 vVLocal0 = vV0;

@@ -292,13 +292,8 @@ void SceneGraphMenu::QtSlotTriggeredClone()
 		SceneNodeModifier &cSceneNodeModifier = static_cast<SceneNodeModifier&>(*m_pObject);
 
 		// Do not clone automatic scene node modifiers
-		if (!(cSceneNodeModifier.GetFlags() & SceneNodeModifier::Automatic)) {
-			// Get position of the scene node modifier
-			const int nIndex = cSceneNodeModifier.GetSceneNode().GetModifierIndex(cSceneNodeModifier);
-
-			// Clone the scene node modifier
-			m_pCreatedObject = cSceneNodeModifier.GetSceneNode().AddModifierAtIndex(cSceneNodeModifier.GetClass()->GetClassName(), cSceneNodeModifier.GetValues(), nIndex+1);
-		}
+		if (!(cSceneNodeModifier.GetFlags() & SceneNodeModifier::Automatic))
+			m_pCreatedObject = cSceneNodeModifier.GetSceneNode().AddModifierAtIndex(cSceneNodeModifier.GetClass()->GetClassName(), cSceneNodeModifier.GetValues(), cSceneNodeModifier.GetSceneNodeIndex() + 1);
 	}
 }
 

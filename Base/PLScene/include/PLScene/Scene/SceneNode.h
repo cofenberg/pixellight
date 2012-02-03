@@ -103,6 +103,7 @@ class SceneNode : public PLCore::Object, public PLCore::Element<SceneNode> {
 	friend class SceneContext;
 	friend class SceneContainer;
 	friend class SceneHierarchy;
+	friend class SceneNodeModifier;
 	friend class SceneHierarchyNode;
 	friend class SceneHierarchyNodeItem;
 	friend class PLCore::ElementManager<SceneNode>;
@@ -722,18 +723,6 @@ class SceneNode : public PLCore::Object, public PLCore::Element<SceneNode> {
 		*    The requested modifier, a null pointer on error
 		*/
 		PLS_API SceneNodeModifier *GetModifier(const PLCore::String &sClass, PLCore::uint32 nIndex = 0) const;
-
-		/**
-		*  @brief
-		*    Returns the index of the given modifier
-		*
-		*  @param[in] cModifier
-		*    The modifier for which the index should be retreived
-		*
-		*  @return
-		*    The index position, -1 on failure (e.g. the modifier is no member of this scene node)
-		*/
-		inline int GetModifierIndex(SceneNodeModifier &cModifier) const;
 
 		/**
 		*  @brief

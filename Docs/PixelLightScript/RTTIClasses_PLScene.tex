@@ -175,6 +175,9 @@ Flags.
 \paragraph{<RTTI object> GetSceneNode()}
 Write \emph{<RTTI object>:GetSceneNode()} in order to get the owner scene node.
 
+\paragraph{<RTTI object> GetSceneNodeIndex()}
+Write \emph{<RTTI object>:GetSceneNodeIndex()} in order to get the index of this scene node modifier within the scene node modifier list of the owner scene node, <0 on failure (e.g. the scene node modifier is no member of this scene node).			
+
 \paragraph{<string> GetAbsoluteName()}
 Write \emph{<RTTI object>:GetAbsoluteName()} in order to get an unique absolute name for the scene node modifier. The name is constructed by using \emph{<absolute owner scene node name>:<scene node modifier class name>.<zero based index>} (for instance \emph{Root.MyScene.MyNode:SNMRotationLinearAnimation.0}). Do not use this method on a regular basis.
 

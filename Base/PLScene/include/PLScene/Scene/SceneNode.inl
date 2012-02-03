@@ -107,15 +107,6 @@ inline SceneNodeModifier *SceneNode::AddModifier(const PLCore::String &sClass, c
 	return AddModifierAtIndex(sClass, sParameters, -1);
 }
 
-/**
-*  @brief
-*    Returns the index of the given modifier
-*/
-inline int SceneNode::GetModifierIndex(SceneNodeModifier &cModifier) const
-{
-	return m_lstModifiers.GetIndex(&cModifier);
-}
-
 
 //[-------------------------------------------------------]
 //[ Protected functions                                   ]

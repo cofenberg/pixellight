@@ -70,25 +70,6 @@ void SceneNodeModifier::SetFlags(uint32 nValue)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Returns the owner scene node
-*/
-SceneNode &SceneNodeModifier::GetSceneNode() const
-{
-	return *m_pSceneNode;
-}
-
-/**
-*  @brief
-*    Returns the scene context the owner scene node is in
-*/
-SceneContext *SceneNodeModifier::GetSceneContext() const
-{
-	// There's always a valid owner scene node, so we don't need to check for a null pointer!
-	return m_pSceneNode->GetSceneContext();
-}
-
-/**
-*  @brief
 *    Returns the scene node class this modifier operates on
 */
 String SceneNodeModifier::GetSceneNodeClass() const
@@ -123,15 +104,6 @@ String SceneNodeModifier::GetAbsoluteName() const
 		// Return a constructed unique absolute name for the scene node modifier
 		return m_pSceneNode->GetAbsoluteName() + ":?.42";	// ... as good as any fallback name...
 	}
-}
-
-/**
-*  @brief
-*    Is the scene node modifier active?
-*/
-bool SceneNodeModifier::IsActive() const
-{
-	return !(m_nFlags & Inactive);
 }
 
 /**

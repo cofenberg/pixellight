@@ -292,7 +292,7 @@ template <class AType> class ResourceManager {
 		*    The resource for which the index should be retreived
 		*
 		*  @return
-		*    The index position, -1 on failure (e.g. the resource is no member of this manager)
+		*    The index position, <0 on failure (e.g. the resource is no member of this manager)
 		*/
 		virtual int GetIndex(AType &cResource) const;
 

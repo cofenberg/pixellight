@@ -95,6 +95,7 @@ class SceneNodeModifier : public PLCore::Object {
 		#ifdef PLSCENE_EXPORTS	// The following is only required when compiling PLScene
 			// Methods
 			pl_method_0(GetSceneNode,		pl_ret_type(SceneNode&),					"Returns the owner scene node.",																																																													"")
+			pl_method_0(GetSceneNodeIndex,	pl_ret_type(int),							"Returns the index of this scene node modifier within the scene node modifier list of the owner scene node, <0 on failure (e.g. the scene node modifier is no member of this scene node).",																							"")
 			pl_method_0(GetAbsoluteName,	pl_ret_type(PLCore::String),				"Constructs an unique absolute name for the scene node modifier by using \"<absolute owner scene node name>:<scene node modifier class name>.<zero based index>\" (for instance 'Root.MyScene.MyNode:SNMRotationLinearAnimation.0'). Do not use this method on a regular basis.",	"")
 			pl_method_0(IsActive,			pl_ret_type(bool),							"Returns whether the scene node modifier is active or not. Returns 'true' if the scene node modifier is active, else 'false'.",																																						"")
 			pl_method_1(SetActive,			pl_ret_type(void),					bool,	"Sets whether the scene node modifier is active or not. 'true' as first parameter if the scene node modifier should be active, else 'false' (sets/unsets the 'Inactive'-flag).",																									"")
@@ -122,7 +123,17 @@ class SceneNodeModifier : public PLCore::Object {
 		*  @return
 		*    The owner scene node
 		*/
-		PLS_API SceneNode &GetSceneNode() const;
+		inline SceneNode &GetSceneNode() const;
+
+		/**
+		*  @brief
+		*    Returns the index of this scene node modifier within the scene node modifier list of the owner scene node
+		*
+		*  @return
+		*    The index of this scene node modifier within the scene node modifier list of the owner scene node, <0 on failure
+		*    (e.g. the scene node modifier is no member of this scene node)
+		*/
+		inline int GetSceneNodeIndex();
 
 		/**
 		*  @brief
@@ -131,7 +142,7 @@ class SceneNodeModifier : public PLCore::Object {
 		*  @return
 		*    The scene context the owner scene node is in, can but shouldn't be a null pointer
 		*/
-		PLS_API SceneContext *GetSceneContext() const;
+		inline  SceneContext *GetSceneContext() const;
 
 		/**
 		*  @brief
@@ -167,7 +178,7 @@ class SceneNodeModifier : public PLCore::Object {
 		*  @note
 		*    - Please note that this active state doesn't necessarily mean that the owner scene node is active as well!
 		*/
-		PLS_API bool IsActive() const;
+		inline bool IsActive() const;
 
 		/**
 		*  @brief
@@ -268,6 +279,12 @@ class SceneNodeModifier : public PLCore::Object {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLScene
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLScene/Scene/SceneNodeModifier.inl"
 
 
 #endif // __PLSCENE_SCENENODEMODIFIER_H__

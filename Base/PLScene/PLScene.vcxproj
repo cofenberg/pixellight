@@ -499,6 +499,7 @@ copy build\release_x64\PLScene.lib ..\..\Bin\Lib\x64\
   <ItemGroup>
     <None Include="include\PLScene\Scene\SceneContainer.inl" />
     <None Include="include\PLScene\Scene\SceneNode.inl" />
+    <None Include="include\PLScene\Scene\SceneNodeModifier.inl" />
     <None Include="include\PLScene\Scene\SceneQuery.inl" />
     <None Include="CMakeLists.txt" />
     <None Include="Diary.txt" />

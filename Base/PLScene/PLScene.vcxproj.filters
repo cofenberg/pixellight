@@ -781,5 +781,8 @@
     <None Include="include\PLScene\Scene\SceneContainer.inl">
       <Filter>Scene</Filter>
     </None>
+    <None Include="include\PLScene\Scene\SceneNodeModifier.inl">
+      <Filter>Scene</Filter>
+    </None>
   </ItemGroup>
 </Project>
