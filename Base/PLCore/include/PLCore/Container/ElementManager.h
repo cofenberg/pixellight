@@ -315,6 +315,21 @@ template <class AType> class ElementManager {
 		*/
 		virtual AType *GetByName(const String &sName) const;
 
+		/**
+		*  @brief
+		*    Moves an item within the item list
+		*
+		*  @param[in] nFromIndex
+		*    The index of the item which should be moved
+		*
+		*  @param[in] nToIndex
+		*    The index to which the item should be moved
+		*
+		*  @note
+		*    - This methods assumes, that both index values are within 0 and GetNumOfElements()-1
+		*/
+		virtual void MoveItem(uint32 nFromIndex, uint32 nToIndex);
+
 
 	//[-------------------------------------------------------]
 	//[ Protected functions                                   ]

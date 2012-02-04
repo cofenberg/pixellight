@@ -404,6 +404,16 @@ AType *ElementManager<AType>::GetByName(const String &sName) const
 	return m_mapElements.Get(sName);
 }
 
+/**
+*  @brief
+*    Moves an item within the item list
+*/
+template <class AType>
+void ElementManager<AType>::MoveItem(uint32 nFromIndex, uint32 nToIndex)
+{
+	m_lstElements.MoveItem(nFromIndex, nToIndex);
+}
+
 
 //[-------------------------------------------------------]
 //[ Protected functions                                   ]

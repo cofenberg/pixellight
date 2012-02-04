@@ -64,6 +64,7 @@ SET(INC_FILES
 	include/PLFrontendQt/DataModels/PLIntrospectionModel.h
 	include/PLFrontendQt/DataModels/PLTreeItemsDelegate.h
 	include/PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererDataModel.h
+	include/PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererDataModelMimeData.h
 	include/PLFrontendQt/DataModels/RTTIInfoModels/ClassListModel.h
 	include/PLFrontendQt/DataModels/RTTIInfoModels/ClassInfoModel.h
 	include/PLFrontendQt/DataModels/TreeSortAndFilterProxyModel.h
@@ -133,6 +134,7 @@ add_sources(
 	src/DataModels/PLTreeItems/PLDynVarTreeItemsFactory.cpp
 	src/DataModels/SceneRendererDataModel/SceneRendererDataModel.cpp
 	src/DataModels/SceneRendererDataModel/SceneRendererPassTreeItem.cpp
+	src/DataModels/SceneRendererDataModel/SceneRendererDataModelMimeData.cpp
 	src/DataModels/RTTIInfoModels/ClassListModel.cpp
 	src/DataModels/RTTIInfoModels/ClassInfoModel.cpp
 	src/DataModels/TreeSortAndFilterProxyModel.cpp

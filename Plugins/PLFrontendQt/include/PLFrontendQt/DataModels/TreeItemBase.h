@@ -112,6 +112,21 @@ class PLFRONTENDQT_API TreeItemBase {
 		
 		/**
 		*  @brief
+		*    move an child within the child list
+		*
+		*  @param[in] nFromIndex
+		*    The index of the child which should be moved
+		*
+		*  @param[in] nToIndex
+		*    The index to child the item should be moved
+		*
+		*  @note
+		*    - This methods assumes, that both index values are within 0 and child count -1
+		*/
+		void MoveChild(int nFromIndex, int nToIndex);
+		
+		/**
+		*  @brief
 		*    Returns the index of the child
 		*
 		*  @return

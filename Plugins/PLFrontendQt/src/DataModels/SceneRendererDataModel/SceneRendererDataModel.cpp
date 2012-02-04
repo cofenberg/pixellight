@@ -30,6 +30,7 @@
 #include "PLFrontendQt/DataModels/HeaderTreeItem.h"
 #include "PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererPassTreeItem.h"
 #include "PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererDataModel.h"
+#include "PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererDataModelMimeData.h"
 
 
 //[-------------------------------------------------------]
@@ -79,6 +80,73 @@ void SceneRendererDataModel::SetSceneRenderer(SceneRenderer *nodeObj)
 
 		endResetModel();
 	}
+}
+
+Qt::ItemFlags SceneRendererDataModel::flags(const QModelIndex &index) const
+{
+	Qt::ItemFlags itemFlags = TreeModelBase::flags(index);
+	if(!index.isValid())
+		itemFlags |= Qt::ItemIsDropEnabled;
+	return itemFlags;
+}
+
+bool SceneRendererDataModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
+                      int row, int column, const QModelIndex &parent)
+{
+	Q_UNUSED(column);
+
+	if (action == Qt::IgnoreAction)
+		return true;
+	
+	if (action != Qt::MoveAction)
+		return false;
+
+	if (!data->hasFormat("application/x-pixellight.scenerendererpasses.list") || row == -1)
+		return false;
+
+	if (const SceneRendererDataModelMimeData *mmd = qobject_cast<const SceneRendererDataModelMimeData*>(data))
+	{
+		foreach (QModelIndex idx, mmd->indexes()) {
+			// check if the index is from this model
+			if (idx.model() != this)
+				continue;
+
+			// We support only single selection so we move only one row at once
+			if(!beginMoveRows(idx.parent(), idx.row(), idx.row(), parent, row))
+				return false;
+
+			int rowToMove = idx.row();
+			int rowTarget = row == 0 ? row : row-1;
+
+			TreeItemBase *parentItem = GetTreeItemFromIndex(idx.parent());
+			
+			this->m_pSceneRenderer->MoveItem(rowToMove, rowTarget);
+			parentItem->MoveChild(rowToMove, rowTarget);
+
+			endMoveRows();
+		}
+
+		return true;
+	}
+	return false;
+}
+
+QMimeData *SceneRendererDataModel::mimeData(const QModelIndexList &indexes) const
+{
+	return new SceneRendererDataModelMimeData(indexes);
+}
+
+QStringList SceneRendererDataModel::mimeTypes() const
+{
+	QStringList types;
+    types << "application/x-pixellight.scenerendererpasses.list";
+    return types;
+}
+
+Qt::DropActions SceneRendererDataModel::supportedDropActions() const
+{
+	// We only support move actions
+	return Qt::MoveAction;
 }
 
 

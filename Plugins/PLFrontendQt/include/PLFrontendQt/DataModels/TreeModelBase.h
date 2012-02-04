@@ -143,7 +143,7 @@ class PLFRONTENDQT_API TreeModelBase : public QAbstractItemModel {
 		*  @brief
 		*    Returns the item flags for the given index
 		*/
-		Qt::ItemFlags flags(const QModelIndex &index) const;
+		virtual Qt::ItemFlags flags(const QModelIndex &index) const;
 
 		/**
 		*  @brief

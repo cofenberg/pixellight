@@ -1,3 +1,13 @@
+>> 04.02.2012
+[SW]
+PLCore:
+- "Array and ElementManager": Implemented MoveItem Method. With this method an item can be moved within the container "list" (between index 0 and itemcount-1)
+PLFrontendQt:
+- "SceneRendererDataModel": Implememted internal Drag and Drop support for moving items (only SceneRendererPass items can be moved)
+- "DockWidgetSceneRenderer": Activated Drag and Drop with internal move on the tree view 
+
+
+
 >> 03.02.2012
 [SW]
 PLFrontendQt:

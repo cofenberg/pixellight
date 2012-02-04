@@ -202,6 +202,21 @@ class PLCORE_TMPL Array : public Container<ValueType> {
 		*/
 		void Reset();
 
+		/**
+		*  @brief
+		*    Moves an item within the array
+		*
+		*  @param[in] nFromIndex
+		*    The index of the item which should be moved
+		*
+		*  @param[in] nToIndex
+		*    The index to which the item should be moved
+		*
+		*  @note
+		*    - This methods assumes, that both index values are within 0 and GetNumOfElements()-1
+		*/
+		void MoveItem(uint32 nFromIndex, uint32 nToIndex);
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]

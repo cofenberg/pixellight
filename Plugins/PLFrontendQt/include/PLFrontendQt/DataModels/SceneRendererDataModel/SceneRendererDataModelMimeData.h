@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SceneRendererDataModel.h                       *
+ *  File: SceneRendererDataModelMimeData.h               *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,17 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTENDQT_SCENERENDERERDATAMODEL_H__
-#define __PLFRONTENDQT_SCENERENDERERDATAMODEL_H__
+#ifndef __PLFRONTENDQT_SCENERENDERERDATAMODELMIMEDATA_H__
+#define __PLFRONTENDQT_SCENERENDERERDATAMODELMIMEDATA_H__
 #pragma once
-
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLFrontendQt/DataModels/TreeModelBase.h"
 #include <QtCore/QMimeData>
-#include <QtCore/QStringList>
+#include <QtCore/QModelIndexList>
 
 
 //[-------------------------------------------------------]
@@ -56,7 +54,7 @@ namespace SceneRendererDataModel {
 *  @brief
 *    Scene renderer data model
 */
-class PLFRONTENDQT_API SceneRendererDataModel : public TreeModelBase {
+class SceneRendererDataModelMimeData : public QMimeData {
 
 
 	//[-------------------------------------------------------]
@@ -70,27 +68,15 @@ class PLFRONTENDQT_API SceneRendererDataModel : public TreeModelBase {
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		explicit SceneRendererDataModel(QObject *parent = nullptr);
-		PLScene::SceneRenderer *GetSceneRenderer() const;
-		void SetSceneRenderer(PLScene::SceneRenderer *nodeObj);
-		
-		/**
-		*  @brief
-		*    Returns the item flags for the given index
-		*/
-		virtual Qt::ItemFlags flags(const QModelIndex &index) const;
-		bool dropMimeData(const QMimeData *data, Qt::DropAction action,
-                      int row, int column, const QModelIndex &parent);
-		QMimeData *mimeData(const QModelIndexList &indexes) const;
-		QStringList mimeTypes() const;
-		Qt::DropActions supportedDropActions() const;
-
+		explicit SceneRendererDataModelMimeData(const QModelIndexList & indexes);
+		const QModelIndexList & indexes() const;
+		bool hasFormat ( const QString & mimeType ) const;
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLScene::SceneRenderer *m_pSceneRenderer;
+		QModelIndexList indexes_;
 
 
 };
@@ -104,4 +90,4 @@ class PLFRONTENDQT_API SceneRendererDataModel : public TreeModelBase {
 } // PLFrontendQt
 
 
-#endif // __PLFRONTENDQT_SCENERENDERERDATAMODEL_H__
+#endif // __PLFRONTENDQT_SCENERENDERERDATAMODELMIMEDATA_H__

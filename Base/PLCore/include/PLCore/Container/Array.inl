@@ -219,6 +219,37 @@ void Array<ValueType>::Reset()
 	m_nNumOfElements = 0;
 }
 
+/**
+*  @brief
+*    Moves an item within the array
+*/
+template <class ValueType>
+void Array<ValueType>::MoveItem(uint32 nFromIndex, uint32 nToIndex)
+{
+	if (nFromIndex == nToIndex)
+		return; // nothing to move
+	
+	ValueType itemToMove = Get(nFromIndex);
+	
+	if (nToIndex > nFromIndex)
+	{
+		// move all items after fromIndex one up until toIndex is reached
+		for(uint32 i = nFromIndex; i < nToIndex; ++i)
+		{
+			m_pData[i] = m_pData[i+1];
+		}
+	}
+	else
+	{
+		// move all items bevor fromIndex one down until toIndex is reached
+		for(uint32 i = nFromIndex; i > nToIndex; --i)
+		{
+			m_pData[i] = m_pData[i-1];
+		}
+	}
+	m_pData[nToIndex] = itemToMove;
+}
+
 
 //[-------------------------------------------------------]
 //[ Public virtual Iterable functions                     ]

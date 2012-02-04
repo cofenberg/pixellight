@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SceneRendererPassTreeItem.cpp                  *
+ *  File: SceneRendererDataModel.cpp                     *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,44 +23,30 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Compositing/SceneRendererPass.h>
-#include "PLFrontendQt/QtStringAdapter.h"
-#include "PLFrontendQt/DataModels/PLTreeItems/PLDynVarTreeItemsFactory.h"
-#include "PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererPassTreeItem.h"
+#include "PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererDataModelMimeData.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLCore;
-using namespace PLScene;
 namespace PLFrontendQt {
 namespace DataModels {
 namespace SceneRendererDataModel {
 
 
-SceneRendererPassTreeItem::SceneRendererPassTreeItem(PLScene::SceneRendererPass *item, TreeItemBase *parent) : TreeItemBase(2, parent),
-	m_pPass(item)
+SceneRendererDataModelMimeData::SceneRendererDataModelMimeData(const QModelIndexList & indexes): indexes_(indexes)
 {
-	SetFlags(0, Qt::ItemIsDragEnabled);
-	if (m_pPass) {
-		List<PLCore::DynVar*> list = m_pPass->GetAttributes();
-		for (uint32 i=0; i<list.GetNumOfElements(); i++) {
-			PLCore::DynVar *var = list[i];
-			PLDynVarTreeItemsFactory::CreateDynVarTreeItem(var, this);
-		}
-	}
+}
+const QModelIndexList & SceneRendererDataModelMimeData::indexes() const
+{
+	return indexes_;
 }
 
-QVariant SceneRendererPassTreeItem::data(const int column, const int role)
+bool SceneRendererDataModelMimeData::hasFormat ( const QString & mimeType ) const
 {
-	if (role != Qt::DisplayRole)
-		return QVariant();
-
-	if (column == 0)
-		return QtStringAdapter::PLToQt(m_pPass->GetName().GetUTF8());
-
-	return QVariant();
+	if (mimeType == "application/x-pixellight.scenerendererpasses.list")
+		return true;
+	return false;
 }
 
 

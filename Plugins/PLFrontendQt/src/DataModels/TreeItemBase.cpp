@@ -116,6 +116,15 @@ void TreeItemBase::RemoveChild(TreeItemBase* pChild, bool bDestroy)
 
 /**
 *  @brief
+*    move an child within the child list
+*/
+void TreeItemBase::MoveChild(int nFromIndex, int nToIndex)
+{
+	m_cChildren.move(nFromIndex, nToIndex);
+}
+
+/**
+*  @brief
 *    Returns the index of the child
 */
 int TreeItemBase::GetChildIndex(TreeItemBase* pChild) const
