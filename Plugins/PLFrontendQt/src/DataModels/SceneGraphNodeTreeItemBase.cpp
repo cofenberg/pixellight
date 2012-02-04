@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLFrontendQt/DataModels/SceneGraphNodeTreeItemBase.h"
-#include <DataModels/SceneGraphTreeModel.h>
+#include "PLFrontendQt/DataModels/SceneGraphTreeModel.h"
 
 
 //[-------------------------------------------------------]
