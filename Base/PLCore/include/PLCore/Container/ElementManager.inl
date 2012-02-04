@@ -395,6 +395,16 @@ int ElementManager<AType>::GetIndex(AType &cElement) const
 
 /**
 *  @brief
+*    Moves an element within the element list
+*/
+template <class AType>
+void ElementManager<AType>::MoveElement(uint32 nFromIndex, uint32 nToIndex)
+{
+	m_lstElements.MoveElement(nFromIndex, nToIndex);
+}
+
+/**
+*  @brief
 *    Returns the element with the given name
 */
 template <class AType>
@@ -402,16 +412,6 @@ AType *ElementManager<AType>::GetByName(const String &sName) const
 {
 	// Search for an object with that name
 	return m_mapElements.Get(sName);
-}
-
-/**
-*  @brief
-*    Moves an item within the item list
-*/
-template <class AType>
-void ElementManager<AType>::MoveItem(uint32 nFromIndex, uint32 nToIndex)
-{
-	m_lstElements.MoveItem(nFromIndex, nToIndex);
 }
 
 

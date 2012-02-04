@@ -210,20 +210,21 @@ String Gui::InputDialog(const String &sTitle, const String &sText, const Array<S
 	for (uint32 i=0; i<lstOptions.GetNumOfElements(); i++)
 		cQStringList << QtStringAdapter::PLToQt(lstOptions[i]);
 
-	QString sQTitle = tr(sTitle);
 	// Create Qt input dialog
 	QInputDialog cQInputDialog(GetFrontendMainWindow(), Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
 	cQInputDialog.setLabelText(tr(sText));
 	cQInputDialog.setComboBoxItems(cQStringList);
 
-	{
-		const int cMaxTitleWidth = 100;
-
+	{ // Set window title and size
+		const int nMaxNumOfTitleCharacters = 100;
 		const QFontMetrics &cQFontMetrics = cQInputDialog.fontMetrics();
-		// shorten title when the title has more then 100 characters
-		if(sQTitle.length() > cMaxTitleWidth)
-			sQTitle = cQFontMetrics.elidedText(sQTitle, Qt::ElideMiddle, cQFontMetrics.averageCharWidth()*cMaxTitleWidth);
 
+		// Shorten title when the title has more then 100 characters
+		QString sQTitle = tr(sTitle);
+		if (sQTitle.length() > nMaxNumOfTitleCharacters)
+			sQTitle = cQFontMetrics.elidedText(sQTitle, Qt::ElideMiddle, cQFontMetrics.averageCharWidth()*nMaxNumOfTitleCharacters);
+
+		// Set window title
 		cQInputDialog.setWindowTitle(sQTitle);
 
 		// Usability: Set dialog width so we can see the complete title at once

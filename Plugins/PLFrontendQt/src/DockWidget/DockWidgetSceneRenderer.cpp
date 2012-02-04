@@ -70,8 +70,8 @@ DockWidgetSceneRenderer::DockWidgetSceneRenderer(QMainWindow *pQMainWindow, Dock
 		m_pQTreeView->setModel(m_pSceneRendererDataModel);
 		m_pQTreeView->expandToDepth(0);
 		m_pQTreeView->setDragEnabled(false);
-        m_pQTreeView->setDragDropMode(QAbstractItemView::InternalMove);
-        m_pQTreeView->setDefaultDropAction(Qt::IgnoreAction);
+		m_pQTreeView->setDragDropMode(QAbstractItemView::InternalMove);
+		m_pQTreeView->setDefaultDropAction(Qt::IgnoreAction);
 
 		// This item delegate adds additional (rudimentary) features when handling edits
 		// -> See "DataModels::PLTreeItemsDelegate"-class documentation for details

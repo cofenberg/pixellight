@@ -300,6 +300,20 @@ template <class AType> class ElementManager {
 
 		/**
 		*  @brief
+		*    Moves an element within the element list
+		*
+		*  @param[in] nFromIndex
+		*    The index of the element which should be moved
+		*  @param[in] nToIndex
+		*    The index to which the element should be moved
+		*
+		*  @note
+		*    - This methods assumes, that both index values are within 0 and GetNumOfElements()-1
+		*/
+		virtual void MoveElement(uint32 nFromIndex, uint32 nToIndex);
+
+		/**
+		*  @brief
 		*    Returns the element with the given name
 		*
 		*  @param[in] sName
@@ -314,21 +328,6 @@ template <class AType> class ElementManager {
 		*      like 'Root.MyScene.MyNode', too.
 		*/
 		virtual AType *GetByName(const String &sName) const;
-
-		/**
-		*  @brief
-		*    Moves an item within the item list
-		*
-		*  @param[in] nFromIndex
-		*    The index of the item which should be moved
-		*
-		*  @param[in] nToIndex
-		*    The index to which the item should be moved
-		*
-		*  @note
-		*    - This methods assumes, that both index values are within 0 and GetNumOfElements()-1
-		*/
-		virtual void MoveItem(uint32 nFromIndex, uint32 nToIndex);
 
 
 	//[-------------------------------------------------------]

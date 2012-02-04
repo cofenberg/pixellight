@@ -120,7 +120,7 @@ bool SceneRendererDataModel::dropMimeData(const QMimeData *data, Qt::DropAction 
 
 			TreeItemBase *parentItem = GetTreeItemFromIndex(idx.parent());
 			
-			this->m_pSceneRenderer->MoveItem(rowToMove, rowTarget);
+			this->m_pSceneRenderer->MoveElement(rowToMove, rowTarget);
 			parentItem->MoveChild(rowToMove, rowTarget);
 
 			endMoveRows();

@@ -298,6 +298,20 @@ template <class AType> class ResourceManager {
 
 		/**
 		*  @brief
+		*    Moves a resource within the resource list
+		*
+		*  @param[in] nFromIndex
+		*    The index of the resource which should be moved
+		*  @param[in] nToIndex
+		*    The index to which the resource should be moved
+		*
+		*  @note
+		*    - This methods assumes, that both index values are within 0 and GetNumOfElements()-1
+		*/
+		virtual void MoveResource(uint32 nFromIndex, uint32 nToIndex);
+
+		/**
+		*  @brief
 		*    Returns the resource with the given name
 		*
 		*  @param[in] sName

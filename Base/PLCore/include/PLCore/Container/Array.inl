@@ -221,33 +221,30 @@ void Array<ValueType>::Reset()
 
 /**
 *  @brief
-*    Moves an item within the array
+*    Moves an element within the array
 */
 template <class ValueType>
-void Array<ValueType>::MoveItem(uint32 nFromIndex, uint32 nToIndex)
+void Array<ValueType>::MoveElement(uint32 nFromIndex, uint32 nToIndex)
 {
-	if (nFromIndex == nToIndex)
-		return; // nothing to move
-	
-	ValueType itemToMove = Get(nFromIndex);
-	
-	if (nToIndex > nFromIndex)
-	{
-		// move all items after fromIndex one up until toIndex is reached
-		for(uint32 i = nFromIndex; i < nToIndex; ++i)
-		{
-			m_pData[i] = m_pData[i+1];
+	// Anything to do in here?
+	if (nFromIndex != nToIndex) {
+		// Get the item we want to move
+		ValueType cItemToMove = Get(nFromIndex);
+
+		// Evaluate the movement direction
+		if (nToIndex > nFromIndex) {
+			// Move all items after "nFromIndex" one down until "nToIndex" is reached
+			for (uint32 i=nFromIndex; i<nToIndex; i++)
+				m_pData[i] = m_pData[i+1];
+		} else {
+			// Move all items before "nFromIndex" one up until "nToIndex" is reached
+			for (uint32 i=nFromIndex; i>nToIndex; i--)
+				m_pData[i] = m_pData[i-1];
 		}
+
+		// Give the moved element a new home
+		m_pData[nToIndex] = cItemToMove;
 	}
-	else
-	{
-		// move all items bevor fromIndex one down until toIndex is reached
-		for(uint32 i = nFromIndex; i > nToIndex; --i)
-		{
-			m_pData[i] = m_pData[i-1];
-		}
-	}
-	m_pData[nToIndex] = itemToMove;
 }
 
 

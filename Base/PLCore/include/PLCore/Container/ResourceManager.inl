@@ -358,6 +358,16 @@ int ResourceManager<AType>::GetIndex(AType &cResource) const
 
 /**
 *  @brief
+*    Moves a resource within the resource list
+*/
+template <class AType>
+void ResourceManager<AType>::MoveResource(uint32 nFromIndex, uint32 nToIndex)
+{
+	m_lstResources.MoveElement(nFromIndex, nToIndex);
+}
+
+/**
+*  @brief
 *    Returns the resource with the given name
 */
 template <class AType>
