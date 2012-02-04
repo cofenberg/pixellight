@@ -211,7 +211,7 @@ String Gui::InputDialog(const String &sTitle, const String &sText, const Array<S
 		cQStringList << QtStringAdapter::PLToQt(lstOptions[i]);
 
 	// Create Qt input dialog
-	QInputDialog cQInputDialog(GetFrontendMainWindow(), Qt::Tool);
+	QInputDialog cQInputDialog(GetFrontendMainWindow(), Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
 	cQInputDialog.setWindowTitle(tr(sTitle));
 	cQInputDialog.setLabelText(tr(sText));
 	cQInputDialog.setComboBoxItems(cQStringList);
