@@ -210,14 +210,24 @@ String Gui::InputDialog(const String &sTitle, const String &sText, const Array<S
 	for (uint32 i=0; i<lstOptions.GetNumOfElements(); i++)
 		cQStringList << QtStringAdapter::PLToQt(lstOptions[i]);
 
+	QString sQTitle = tr(sTitle);
 	// Create Qt input dialog
 	QInputDialog cQInputDialog(GetFrontendMainWindow(), Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
-	cQInputDialog.setWindowTitle(tr(sTitle));
 	cQInputDialog.setLabelText(tr(sText));
 	cQInputDialog.setComboBoxItems(cQStringList);
 
-	{ // Usability: Set dialog width so we can see the complete title at once and disable dialog resize
-		const int nWidth = cQInputDialog.fontMetrics().boundingRect(cQInputDialog.windowTitle()).width() + 80;
+	{
+		const int cMaxTitleWidth = 100;
+
+		const QFontMetrics &cQFontMetrics = cQInputDialog.fontMetrics();
+		// shorten title when the title has more then 100 characters
+		if(sQTitle.length() > cMaxTitleWidth)
+			sQTitle = cQFontMetrics.elidedText(sQTitle, Qt::ElideMiddle, cQFontMetrics.averageCharWidth()*cMaxTitleWidth);
+
+		cQInputDialog.setWindowTitle(sQTitle);
+
+		// Usability: Set dialog width so we can see the complete title at once
+		const int nWidth = cQFontMetrics.width(sQTitle) + 200;
 		QSize cQSize = cQInputDialog.size();
 		if (cQSize.width() < nWidth)
 			cQSize.setWidth(nWidth);
