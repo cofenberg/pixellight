@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/PLCore.h>
+#include <PLCore/Tools/Timing.h>
 PL_WARNING_PUSH
 	PL_WARNING_DISABLE(4127)	// "warning C4127: conditional expression is constant"
 	#include <QtGui/qevent.h>
@@ -246,11 +246,20 @@ void GuiPickingQObject::EndCloneMode()
 */
 uint32 GuiPickingQObject::GetNumOfClones() const
 {
+	// Pause timing
+	// -> Avoids e.g. that the original scene node changes it's states via script, modifiers and so on
+	// -> "Feels" right
+	const bool bPausedBackup = Timing::GetInstance()->IsPaused();
+	Timing::GetInstance()->Pause(true);
+
 	// Ask the user for the number of desired clones (with a decent limited number)
 	Array<String> lstNumberOfClones;
 	for (uint32 i=1; i<11; i++)
 		lstNumberOfClones.Add(i);
 	const String sNumOfClones = m_pGuiPicking->m_pGui->InputDialog("Clone", "Please specify the number of clones", lstNumberOfClones);
+
+	// Restore previous pause state
+	Timing::GetInstance()->Pause(bPausedBackup);
 
 	// Return the desired number of clones
 	return sNumOfClones.GetLength() ? sNumOfClones.GetUInt32() : 0;

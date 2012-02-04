@@ -1,3 +1,10 @@
+>> 04.02.2012
+[CO]
+PLViewerQt:
+- Pause the timer as long as the "clone dialog" is shown, feels more correct this way
+
+
+
 >> 03.02.2012
 [CO]
 PLViewerQt:
