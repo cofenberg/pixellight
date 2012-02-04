@@ -37,6 +37,8 @@
 #include "PLFrontendQt/DataModels/SceneGraphNodeTreeItemBase.h"
 #include "PLFrontendQt/DataModels/SceneGraphTreeModel.h"
 #include "PLFrontendQt/DataModels/Helper.h"
+#include "PLFrontendQt/DataModels/ModelIndexMimeData.h"
+#include <QDebug>
 
 
 //[-------------------------------------------------------]
@@ -84,6 +86,11 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 		}
 
 		bool IsSceneNode()
+		{
+			return false;
+		}
+		
+		bool IsSceneContainer()
 		{
 			return false;
 		}
@@ -136,10 +143,13 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 			// Connect event handler
 			m_nodeObj->SignalDestroy.Connect(EventHandlerOnDestroy);
 			
+			SetFlags(0, Qt::ItemIsDragEnabled);
+			
 			PLCore::String sName(nodeObj->GetName());
 
 			if (m_nodeObj->IsContainer()) {
 				PLScene::SceneContainer *container = (PLScene::SceneContainer*)m_nodeObj;
+				SetFlags(0, Qt::ItemIsDropEnabled);
 				CreateSceneGraphItemsFromContainer(cModel, container, this);
 			}
 
@@ -212,6 +222,13 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 		{
 			return true;
 		}
+		
+		bool IsSceneContainer()
+		{
+			if (m_nodeObj)
+				return m_nodeObj->IsContainer();
+			return false;
+		}
 
 		bool IsSceneNodeModifier()
 		{
@@ -230,6 +247,7 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 		*/
 		void OnDestroy()
 		{
+			qDebug()<<"SceneNode destroyed!!";
 			// Argh! Mayday! We lost our scene node!
 			m_nodeObj = nullptr;
 			const QModelIndex cIndex = index();
@@ -261,7 +279,7 @@ void CreateSceneGraphItemsFromContainer(PLFrontendQt::DataModels::SceneGraphTree
 	}
 }
 
-SceneGraphTreeModel::SceneGraphTreeModel(QObject *parent) : TreeModelBase(new HeaderTreeItem, parent)
+SceneGraphTreeModel::SceneGraphTreeModel(QObject *parent) : TreeModelBase(new HeaderTreeItem, parent), m_bInMoveOperation(false)
 {
 	QStringList headerItems;
 	headerItems << "Node Name";
@@ -381,11 +399,168 @@ void SceneGraphTreeModel::AddSceneNodeModifier(PLScene::SceneNode* pParentNode, 
 	endInsertRows();
 }
 
+bool SceneGraphTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction action,
+                      int destinationRow, int column, const QModelIndex &parent)
+{
+	Q_UNUSED(column);
+	
+	if (action == Qt::IgnoreAction)
+		return true;
+	
+	if (action != Qt::MoveAction)
+		return false;
+	
+	if (!data->hasFormat("application/x-pixellight.scenenode.list"))
+		return false;
+	
+	if (const ModelIndexMimeData *mmd = qobject_cast<const ModelIndexMimeData*>(data))
+	{
+		foreach (QModelIndex idx, mmd->indexes()) {
+			// check if the index is from this model
+			if (idx.model() != this)
+				continue;
+
+			SceneGraphNodeTreeItemBase *parentItem = GetSceneTreeItemFromIndex(parent);
+			SceneGraphNodeTreeItemBase *item = GetSceneTreeItemFromIndex(idx);
+			
+			PLScene::SceneContainer *pSceneContainer = static_cast<PLScene::SceneContainer*>(parentItem->GetObject());
+			PLScene::SceneNode *pSceneNode = static_cast<PLScene::SceneNode*>(item->GetObject());
+			
+			if (parent != idx.parent())
+			{
+				// We do a move operation to an different parent
+				int rowToMove = idx.row();
+				int rowTarget = destinationRow;
+				int childCount =  parentItem->children().count();
+				bool bAppend = false;
+				
+				if (rowTarget >= childCount || rowTarget == -1)
+				{
+					// The item should be moved after the last item in the child list (this is also done when destinationRow = -1 => it's up to the model where to put the item)
+					// Set rowTarget to childCount because we move the item after the last item in the child list and from the model/view point of view the new row is lasChildRowNumber + 1
+					rowTarget = childCount;
+				}
+				
+				// We support only single selection so we move only one row at once
+				if(!beginMoveRows(idx.parent(), idx.row(), idx.row(), parent, rowTarget))
+					return false;
+				
+				// Set that we are in a move operation see comment in removeRows() why
+				m_bInMoveOperation = true;
+				
+				// Do the move in the underlaying data structure
+				pSceneNode->SetContainer(*pSceneContainer);
+				
+				if (rowTarget >= childCount)
+				{
+					// when rowTarget equals childCount then we Append the child tree item (the child gets automatically removed from the old parent child list)
+					parentItem->AddChild(item);
+				}
+				else
+				{
+					// Otherwise we insert the item at the specified location
+					int nodeIdx = pSceneContainer->GetIndex(*pSceneNode);
+					
+					// We have to move the underlaying data item also to the new location, because SceneNode::SetContainer appends the item to the end of the new container
+					if(nodeIdx != rowTarget)
+						pSceneContainer->MoveItem(nodeIdx, rowTarget);
+					
+					// Insert the tree item to the new parent at the specified location (the child gets automatically removed from the old parent child list)
+					parentItem->InsertChild(item, rowTarget);
+				}
+			}
+			else
+			{
+				// We do a move operation within the same parent
+				int rowToMove = idx.row();
+				int rowTarget = destinationRow;
+				int targetIdx = destinationRow;
+				int childCount =  parentItem->children().count();
+				
+				if (rowTarget == -1)
+				{
+					// It is up to the model where the item should be placed
+					// For this model the item gets placed om the end of the list.
+					// Set the target index to childcount -1 otherwise the index is out of range 
+					targetIdx = childCount - 1;
+					// But set rowTarget to childcount because we move the item after the last item in the child list and from the model/view point of view the new row is lasChildRowNumber + 1
+					rowTarget = childCount;
+				}
+				else if (targetIdx >= childCount) {
+					// The item should be moved after the last item in the child list
+					// Set the target index to childcount -1 otherwise the index is out of range 
+					targetIdx = childCount - 1;
+				}
+				else if (rowTarget > rowToMove)
+				{
+					// We have to decrement the target child index by one, when the item should be moved down the internal child list (child index gets greater).
+					// Background:
+					// We have a list with 4 items (indexes: 0, 1, 2 , 3). The user drags the item at index 1 and want it to be between the items at index 2 and 3 (-> item at index 2 moves to index 1 and the dragged item moves to index 2).
+					// In this case the destinationRow param of this function has the value 3. From the View-class point of view the item should be positioned after the item at index 2 and so the destinationRow value is 3.
+					// Because the View-class doesn't distinguishes between an copy or move operation when calling this function. So the view fills the destinationRow param with a value which is correct when doing an copy operation
+					// But when the user drags e.g. the item at index 2 to be between index 0 and 1 then the destinationRow param value is correct for the internal move operation because the item at index 1 moves to index 2 and the dragged item moves to index 1 (moves upwards and not downwards)
+					targetIdx -= 1;
+				}
+
+				// Check if we move the item to the same location within the child list
+				// rowToMove equals the current list index of the item
+				if (rowToMove == targetIdx)
+					return false;
+
+				// We support only single selection so we move only one row at once
+				if(!beginMoveRows(idx.parent(), idx.row(), idx.row(), parent, rowTarget))
+					return false;
+				
+				// Set that we are in a move operation see comment in removeRows() why
+				m_bInMoveOperation = true;
+
+				// Do the actual moving in the underlaying data structure
+				pSceneContainer->MoveItem(rowToMove, targetIdx);
+				// And move the child tree item to the new position. See the comment in removeRows() why we do this here
+				parentItem->MoveChild(rowToMove, targetIdx);
+			}
+			
+			endMoveRows();
+			return true;
+		}
+	}
+	return false;
+}
+
+QMimeData *SceneGraphTreeModel::mimeData(const QModelIndexList &indexes) const
+{
+	return new ModelIndexMimeData(indexes, "application/x-pixellight.scenenode.list");
+}
+
+QStringList SceneGraphTreeModel::mimeTypes() const
+{
+	QStringList types;
+    types << "application/x-pixellight.scenenode.list";
+    return types;
+}
+
+Qt::DropActions SceneGraphTreeModel::supportedDropActions() const
+{
+	// We only support move actions
+	return Qt::MoveAction;
+}
+
 //[-------------------------------------------------------]
 //[ Public virtual QAbstractItemModel functions           ]
 //[-------------------------------------------------------]
 bool SceneGraphTreeModel::removeRows(int startRow, int count, const QModelIndex& parent)
 {
+	// Check if we are currently in a move operation
+	// Background:
+	// When a view does an drag and drop move operation the view calls dropMimeData after this call the view calls removeRows and insertRows.
+	// Normaly dropMimeData should only be used to insert/move data in the underlaying datastructure of the model.
+	// But we doesn't do it that way we move also the tree item to the new location, because otherwise we had to destroy the old tree item (and all it's child items) and create a new one for the new location. So we must cancel the removeRows call when a move operation is done via drag and drop
+	if (m_bInMoveOperation) {
+		m_bInMoveOperation = false;
+		return false;
+	}
+	
+
 	if (!parent.isValid())
 		return false;
 

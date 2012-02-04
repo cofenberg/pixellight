@@ -68,6 +68,7 @@ class PLFRONTENDQT_API SceneGraphNodeTreeItemBase : public TreeItemBase {
 		explicit SceneGraphNodeTreeItemBase(SceneGraphTreeModel &cModel, TreeItemBase *parent);
 		QModelIndex index();
 		virtual bool IsSceneNode() = 0;
+		virtual bool IsSceneContainer() = 0;
 		virtual bool IsSceneNodeModifier() = 0;
 		virtual PLCore::Object *GetObject() = 0;
 

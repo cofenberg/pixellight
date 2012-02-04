@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SceneRendererDataModelMimeData.h               *
+ *  File: ModelIndexMimeData.h                           *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLFRONTENDQT_SCENERENDERERDATAMODELMIMEDATA_H__
-#define __PLFRONTENDQT_SCENERENDERERDATAMODELMIMEDATA_H__
+#ifndef __PLFRONTENDQT_MODELINDEXMIMEDATA_H__
+#define __PLFRONTENDQT_MODELINDEXMIMEDATA_H__
 #pragma once
 
 //[-------------------------------------------------------]
@@ -44,7 +44,6 @@ namespace PLScene {
 //[-------------------------------------------------------]
 namespace PLFrontendQt {
 namespace DataModels {
-namespace SceneRendererDataModel {
 
 
 //[-------------------------------------------------------]
@@ -52,9 +51,9 @@ namespace SceneRendererDataModel {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Scene renderer data model
+*    Mime data object which holds a list of model indexes. Only usefull for drag and drop operation in the same model instance and the same application
 */
-class SceneRendererDataModelMimeData : public QMimeData {
+class ModelIndexMimeData : public QMimeData {
 
 
 	//[-------------------------------------------------------]
@@ -68,7 +67,7 @@ class SceneRendererDataModelMimeData : public QMimeData {
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		explicit SceneRendererDataModelMimeData(const QModelIndexList & indexes);
+		explicit ModelIndexMimeData(const QModelIndexList & indexes, const QString mimeType);
 		const QModelIndexList & indexes() const;
 		bool hasFormat ( const QString & mimeType ) const;
 
@@ -77,6 +76,7 @@ class SceneRendererDataModelMimeData : public QMimeData {
 	//[-------------------------------------------------------]
 	private:
 		QModelIndexList indexes_;
+		QString m_mimeType;
 
 
 };
@@ -85,9 +85,8 @@ class SceneRendererDataModelMimeData : public QMimeData {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // SceneRendererDataModel
 } // DataModels
 } // PLFrontendQt
 
 
-#endif // __PLFRONTENDQT_SCENERENDERERDATAMODELMIMEDATA_H__
+#endif // __PLFRONTENDQT_MODELINDEXMIMEDATA_H__
