@@ -105,6 +105,13 @@ class PLFRONTENDQT_API SceneGraphTreeModel : public TreeModelBase {
 		void AddSceneNode(PLScene::SceneContainer *pContainer, PLScene::SceneNode *pSceneNode, int nPosition = -1);
 		void AddSceneNodeModifier(PLScene::SceneNode *pParentNode, PLScene::SceneNodeModifier *pSceneNodeModifier, int nPosition = -1);
 
+		
+		
+		bool dropMimeData(const QMimeData *data, Qt::DropAction action,
+                      int row, int column, const QModelIndex &parent);
+		QMimeData *mimeData(const QModelIndexList &indexes) const;
+		QStringList mimeTypes() const;
+		Qt::DropActions supportedDropActions() const;
 
 	//[-------------------------------------------------------]
 	//[ Public virtual QAbstractItemModel functions           ]
@@ -114,6 +121,13 @@ class PLFRONTENDQT_API SceneGraphTreeModel : public TreeModelBase {
 #ifdef WIN32		
 		virtual QModelIndexList match(const QModelIndex &start, int role, const QVariant &value, int hits = 1, Qt::MatchFlags flags = Qt::MatchFlags(Qt::MatchStartsWith|Qt::MatchWrap)) const override;
 #endif
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		bool m_bInMoveOperation;
 
 
 };

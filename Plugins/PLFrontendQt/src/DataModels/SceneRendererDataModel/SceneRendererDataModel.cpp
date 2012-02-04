@@ -28,9 +28,9 @@
 #include <PLScene/Compositing/SceneRenderer.h>
 #include <PLScene/Compositing/SceneRendererPass.h>
 #include "PLFrontendQt/DataModels/HeaderTreeItem.h"
+#include "PLFrontendQt/DataModels/ModelIndexMimeData.h"
 #include "PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererPassTreeItem.h"
 #include "PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererDataModel.h"
-#include "PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererDataModelMimeData.h"
 
 
 //[-------------------------------------------------------]
@@ -104,7 +104,7 @@ bool SceneRendererDataModel::dropMimeData(const QMimeData *data, Qt::DropAction 
 	if (!data->hasFormat("application/x-pixellight.scenerendererpasses.list") || row == -1)
 		return false;
 
-	if (const SceneRendererDataModelMimeData *mmd = qobject_cast<const SceneRendererDataModelMimeData*>(data))
+	if (const ModelIndexMimeData *mmd = qobject_cast<const ModelIndexMimeData*>(data))
 	{
 		foreach (QModelIndex idx, mmd->indexes()) {
 			// check if the index is from this model
@@ -116,7 +116,13 @@ bool SceneRendererDataModel::dropMimeData(const QMimeData *data, Qt::DropAction 
 				return false;
 
 			int rowToMove = idx.row();
-			int rowTarget = row == 0 ? row : row-1;
+			// We have to decrement the target child index by one, when the item should be moved down the internal child list (child index gets greater).
+			// Background:
+			// We have a list with 4 items (indexes: 0, 1, 2 , 3). The user drags the item at index 1 and want it to be between the items at index 2 and 3 (-> item at index 2 moves to index 1 and the dragged item moves to index 2).
+			// In this case the destinationRow param of this function has the value 3. From the View-class point of view the item should be positioned after the item at index 2 and so the destinationRow value is 3.
+			// Because the View-class doesn't distinguishes between an copy or move operation when calling this function. So the view fills the destinationRow param with a value which is correct when doing an copy operation
+			// But when the user drags e.g. the item at index 2 to be between index 0 and 1 then the destinationRow param value is correct for the internal move operation because the item at index 1 moves to index 2 and the dragged item moves to index 1 (moves upwards and not downwards)
+			int rowTarget = row > rowToMove ? row -1 : row;
 
 			TreeItemBase *parentItem = GetTreeItemFromIndex(idx.parent());
 			
@@ -133,7 +139,7 @@ bool SceneRendererDataModel::dropMimeData(const QMimeData *data, Qt::DropAction 
 
 QMimeData *SceneRendererDataModel::mimeData(const QModelIndexList &indexes) const
 {
-	return new SceneRendererDataModelMimeData(indexes);
+	return new ModelIndexMimeData(indexes, "application/x-pixellight.scenerendererpasses.list");
 }
 
 QStringList SceneRendererDataModel::mimeTypes() const

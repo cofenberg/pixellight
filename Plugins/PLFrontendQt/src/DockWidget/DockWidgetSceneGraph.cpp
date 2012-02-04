@@ -103,6 +103,9 @@ DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidget
 
 			// Hide the root
 			m_pQTreeView->expandToDepth(0);
+			m_pQTreeView->setDragEnabled(false);
+			m_pQTreeView->setDragDropMode(QAbstractItemView::InternalMove);
+			m_pQTreeView->setDefaultDropAction(Qt::IgnoreAction);
 		}
 
 		// Add the created Qt dock widget to the given Qt main window

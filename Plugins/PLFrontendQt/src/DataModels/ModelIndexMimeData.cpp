@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SceneRendererDataModel.cpp                     *
+ *  File: ModelIndexMimeData.cpp                         *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererDataModelMimeData.h"
+#include "PLFrontendQt/DataModels/ModelIndexMimeData.h"
 
 
 //[-------------------------------------------------------]
@@ -31,20 +31,19 @@
 //[-------------------------------------------------------]
 namespace PLFrontendQt {
 namespace DataModels {
-namespace SceneRendererDataModel {
 
 
-SceneRendererDataModelMimeData::SceneRendererDataModelMimeData(const QModelIndexList & indexes): indexes_(indexes)
+ModelIndexMimeData::ModelIndexMimeData(const QModelIndexList & indexes, const QString mimeType): indexes_(indexes), m_mimeType(mimeType)
 {
 }
-const QModelIndexList & SceneRendererDataModelMimeData::indexes() const
+const QModelIndexList & ModelIndexMimeData::indexes() const
 {
 	return indexes_;
 }
 
-bool SceneRendererDataModelMimeData::hasFormat ( const QString & mimeType ) const
+bool ModelIndexMimeData::hasFormat ( const QString & mimeType ) const
 {
-	if (mimeType == "application/x-pixellight.scenerendererpasses.list")
+	if (mimeType == m_mimeType)
 		return true;
 	return false;
 }
@@ -53,6 +52,5 @@ bool SceneRendererDataModelMimeData::hasFormat ( const QString & mimeType ) cons
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // SceneRendererDataModel
 } // DataModels
 } // PLFrontendQt
