@@ -232,11 +232,11 @@
     <ClCompile Include="build\GeneratedQtFiles\moc_SceneGraphMenu.cpp">
       <Filter>GeneratedQtFiles</Filter>
     </ClCompile>
-    <ClCompile Include="src\DataModels\SceneRendererDataModel\SceneRendererDataModelMimeData.cpp">
-      <Filter>DataModels\SceneRendererDataModel</Filter>
-    </ClCompile>
-    <ClCompile Include="build\GeneratedQtFiles\moc_SceneRendererDataModelMimeData.cpp">
+    <ClCompile Include="build\GeneratedQtFiles\moc_ModelIndexMimeData.cpp">
       <Filter>GeneratedQtFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DataModels\ModelIndexMimeData.cpp">
+      <Filter>DataModels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -461,8 +461,8 @@
     <CustomBuild Include="include\PLFrontendQt\Widget\SceneGraphMenu.h">
       <Filter>Widget</Filter>
     </CustomBuild>
-    <CustomBuild Include="include\PLFrontendQt\DataModels\SceneRendererDataModel\SceneRendererDataModelMimeData.h">
-      <Filter>DataModels\SceneRendererDataModel</Filter>
+    <CustomBuild Include="include\PLFrontendQt\DataModels\ModelIndexMimeData.h">
+      <Filter>DataModels</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

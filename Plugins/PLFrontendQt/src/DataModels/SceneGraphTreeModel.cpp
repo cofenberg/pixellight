@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <QtCore/QDebug>
 #include <QtGui/QBrush>
 #include <PLCore/Base/Class.h>
 #include <PLCore/Base/Object.h>
@@ -38,7 +39,6 @@
 #include "PLFrontendQt/DataModels/SceneGraphTreeModel.h"
 #include "PLFrontendQt/DataModels/Helper.h"
 #include "PLFrontendQt/DataModels/ModelIndexMimeData.h"
-#include <QDebug>
 
 
 //[-------------------------------------------------------]
@@ -463,7 +463,7 @@ bool SceneGraphTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction act
 					
 					// We have to move the underlaying data item also to the new location, because SceneNode::SetContainer appends the item to the end of the new container
 					if(nodeIdx != rowTarget)
-						pSceneContainer->MoveItem(nodeIdx, rowTarget);
+						pSceneContainer->MoveElement(nodeIdx, rowTarget);
 					
 					// Insert the tree item to the new parent at the specified location (the child gets automatically removed from the old parent child list)
 					parentItem->InsertChild(item, rowTarget);
@@ -515,7 +515,7 @@ bool SceneGraphTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction act
 				m_bInMoveOperation = true;
 
 				// Do the actual moving in the underlaying data structure
-				pSceneContainer->MoveItem(rowToMove, targetIdx);
+				pSceneContainer->MoveElement(rowToMove, targetIdx);
 				// And move the child tree item to the new position. See the comment in removeRows() why we do this here
 				parentItem->MoveChild(rowToMove, targetIdx);
 			}
