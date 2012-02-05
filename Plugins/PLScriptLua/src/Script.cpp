@@ -364,6 +364,11 @@ void Script::GetAssociatedFilenames(Array<String> &lstFilenames)
 	}
 }
 
+bool Script::Execute(const String &sSourceCode)
+{
+	return m_pLuaState ? !luaL_dostring(m_pLuaState, sSourceCode.GetASCII()) : false;
+}
+
 void Script::GetGlobalVariables(Array<String> &lstGlobalVariables, const String &sNamespace)
 {
 	// Is there a Lua state? If so, get a nested Lua table

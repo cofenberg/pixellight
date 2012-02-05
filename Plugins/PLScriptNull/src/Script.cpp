@@ -105,6 +105,12 @@ void Script::GetAssociatedFilenames(Array<String> &lstFilenames)
 	// Nothing to do in here
 }
 
+bool Script::Execute(const String &sSourceCode)
+{
+	// Nothing to do in here
+	return true;
+}
+
 void Script::GetGlobalVariables(Array<String> &lstGlobalVariables, const String &sNamespace)
 {
 	// Nothing to do in here

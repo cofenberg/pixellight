@@ -255,6 +255,12 @@ void Script::GetAssociatedFilenames(Array<String> &lstFilenames)
 	// [TODO] Implement me
 }
 
+bool Script::Execute(const String &sSourceCode)
+{
+	// [TODO] Implement me
+	return false;
+}
+
 void Script::GetGlobalVariables(Array<String> &lstGlobalVariables, const String &sNamespace)
 {
 	// [TODO] Add namespace support

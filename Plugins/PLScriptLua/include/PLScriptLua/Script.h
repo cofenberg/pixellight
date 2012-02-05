@@ -130,6 +130,7 @@ class Script : public PLCore::Script {
 		PLSCRIPTLUA_API virtual PLCore::String GetSourceCode() const override;
 		PLSCRIPTLUA_API virtual bool SetSourceCode(const PLCore::String &sSourceCode) override;
 		PLSCRIPTLUA_API virtual void GetAssociatedFilenames(PLCore::Array<PLCore::String> &lstFilenames) override;
+		PLSCRIPTLUA_API virtual bool Execute(const PLCore::String &sSourceCode) override;
 
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]

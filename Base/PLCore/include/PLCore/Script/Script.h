@@ -233,6 +233,22 @@ class Script : public Object {
 		*/
 		virtual void GetAssociatedFilenames(Array<String> &lstFilenames) = 0;
 
+		/**
+		*  @brief
+		*    Executes a given script source code string
+		*
+		*  @param[in] sSourceCode
+		*    Script source code to execute, usually blank ASCII code
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - Only works if there's already a valid script currently used
+		*    - Lua example statement: "Speed=42"
+		*/
+		virtual bool Execute(const String &sSourceCode) = 0;
+
 		//[-------------------------------------------------------]
 		//[ Global variables                                      ]
 		//[-------------------------------------------------------]
