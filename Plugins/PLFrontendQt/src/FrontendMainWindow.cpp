@@ -288,7 +288,7 @@ void FrontendMainWindow::resizeEvent(QResizeEvent *)
 
 void FrontendMainWindow::dragEnterEvent(QDragEnterEvent *pQDragEnterEvent)
 {
-	if(pQDragEnterEvent->mimeData()->hasUrls();)
+	if(pQDragEnterEvent->mimeData()->hasUrls())
 	{
 		// We only support drop elements with urls
 		pQDragEnterEvent->acceptProposedAction();
