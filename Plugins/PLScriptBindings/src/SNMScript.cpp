@@ -69,7 +69,26 @@ void SNMScript::SetScript(const String &sValue)
 		// Call the initialize script function, but only when it's really there because it's optional
 		if (m_pScript->IsGlobalFunction(OnInitFunction.Get()))
 			FuncScriptPtr<void>(m_pScript, OnInitFunction.Get()).Call(Params<void>());
+
+		// Is there any script source code to execute?
+		if (m_sScriptExecute.GetLength())
+			m_pScript->Execute(m_sScriptExecute);
 	}
+}
+
+String SNMScript::GetScriptExecute() const
+{
+	return m_sScriptExecute;
+}
+
+void SNMScript::SetScriptExecute(const String &sValue)
+{
+	// Backup the given string
+	m_sScriptExecute = sValue;
+
+	// Is there any script source code to execute?
+	if (m_sScriptExecute.GetLength() && m_pScript)
+		m_pScript->Execute(m_sScriptExecute);
 }
 
 
@@ -86,6 +105,7 @@ SNMScript::SNMScript(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 	OnUpdateFunction(this),
 	OnDeInitFunction(this),
 	SlotOnUpdate(this),
+	ScriptExecute(this),
 	m_pScript(nullptr)
 {
 }

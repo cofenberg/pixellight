@@ -2,6 +2,8 @@
 [CO]
 PLCore:
 - Added "Script::Execute()"
+PLScriptBindings:
+- Added "SNMScript::ScriptExecute"
 
 
 
