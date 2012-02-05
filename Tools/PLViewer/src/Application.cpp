@@ -215,8 +215,8 @@ bool Application::LoadResource(const String &sFilename, const String &sType)
 				while (sPart != "Data" && sPart.GetLength())
 					sPart = cUrl.GetNextPath(nPathPos);
 				if (sPart == "Data") {
-					// Set the current directory of the application
-					System::GetInstance()->SetCurrentDir(cUrl.GetRoot() + cUrl.GetPath().GetSubstring(0, nPathPos - 5));	// -5 = Remove "Data/"
+					// Set the base directory of the application
+					SetBaseDirectory(cUrl.GetRoot() + cUrl.GetPath().GetSubstring(0, nPathPos - 5));	// -5 = Remove "Data/"
 				} else {
 					// Second try: Cut of "/Data/Scenes/" and hope that it's the project root directory.
 					// If it's not there, take the directory the given resource is in.
@@ -227,8 +227,8 @@ bool Application::LoadResource(const String &sFilename, const String &sType)
 					// Search for "/Data/Scenes/" and get the prefix of that, in case it's not there just use directly the scene directory
 					const int nIndex = sDirectory.IndexOf("/Data/Scenes/");
 
-					// Set the current directory of the application
-					System::GetInstance()->SetCurrentDir("file://" + ((nIndex >= 0) ? sDirectory.GetSubstring(0, nIndex) : sDirectory) + '/');
+					// Set the base directory of the application
+					SetBaseDirectory("file://" + ((nIndex >= 0) ? sDirectory.GetSubstring(0, nIndex) : sDirectory) + '/');
 				}
 			}
 

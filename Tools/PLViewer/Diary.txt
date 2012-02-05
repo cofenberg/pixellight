@@ -1,3 +1,9 @@
+>> 05.02.2012
+[CO]
+- "Application::LoadResource()": Use "SetBaseDirectory()" instead of "set current system application directory", should be sufficient
+
+
+
 >> 04.02.2012
 [CO]
 PLViewerQt:
