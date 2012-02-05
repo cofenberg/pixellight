@@ -44,12 +44,19 @@ PLDynVarFlagsTreeItem::PLDynVarFlagsTreeItem(PLCore::DynVar *dynVar, TreeItemBas
 	PLCore::DynTypeInfo &typeInfo = m_dynVar->GetType();
 
 	if (typeInfo.IsFlagType()) {
+		// Get a list containing the names of all available flags
 		const List<String> &enumList = typeInfo.GetEnumValues();
 
-		// Assumption that the order in the list equals to the bit which the flag represents
+		// Loop thru all flags
 		for (uint32 i=0; i<enumList.GetNumOfElements(); i++) {
-			QString str(QtStringAdapter::PLToQt(enumList[i]));
-			new FlagValueTreeItem(this, str, 1<<i, this);
+			// Get the name of the current flag
+			const String flagName = enumList[i];
+
+			// Get the value of the current flag
+			const uint32 flagValue = typeInfo.GetEnumValue(flagName).GetUInt32();
+
+			// Add this flag item
+			new FlagValueTreeItem(this, QtStringAdapter::PLToQt(flagName), flagValue, this);
 		}
 	}
 }

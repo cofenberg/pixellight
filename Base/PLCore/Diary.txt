@@ -4,6 +4,9 @@ PLCore:
 - Added "Script::Execute()"
 PLScriptBindings:
 - Added "SNMScript::ScriptExecute"
+PLFrontendQt:
+- "PLDynVarFlagsTreeItem::PLDynVarFlagsTreeItem()": Now asking the RTTI for the flag value to ensure it's always valid (it's possible that e.g.
+  there's no flag with a value of, say "4", but one with a value of "8")
 
 
 
