@@ -422,7 +422,7 @@ void PLScene::WriteToXMLDocument(XmlDocument &cDocument)
 		if (!PLTools::IsEmpty(m_cBoundingBox)) {
 			Box3 cLocalBox;
 			if (m_pIGameNode) {
-				GMatrix mTransform = m_pIGameNode->GetWorldTM().Inverse();
+				GMatrix mTransform = PLTools::Inverse(m_pIGameNode->GetWorldTM());
 				cLocalBox.pmin = cLocalBox.pmax = m_cBoundingBox[0]*mTransform;
 				for (int i=1; i<8; i++)
 					cLocalBox += m_cBoundingBox[i]*mTransform;

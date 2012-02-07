@@ -1,3 +1,10 @@
+>> 07.02.2012
+[CO]
+- Wow, I don't believe this: "GMatrix::Inverse()" appears to be buggy... had some issues with skinned mesh animation export, after using
+  the "Matrix3::Invert()" function of 3ds Max instead of the "GMatrix::Inverse()" function of IGame, the issues were gone...
+
+
+
 >> 12.01.2012
 [CO]
 - Bugfix within "PLSceneMaterialStandard": The diffuse and specular default value test was wrong resulting that those colors were not always exported

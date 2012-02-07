@@ -303,8 +303,8 @@ void PLSceneMesh::CollectMeshData(IGameObject &cIGameObject)
 						GMatrix mParentMatrix;
 						IGameNode *pIGameNodeParent = m_pIGameNode->GetNodeParent();
 						if (pIGameNodeParent)
-							mParentMatrix = pIGameNodeParent->GetWorldTM(0);
-						const GMatrix mInvNode = (m_pIGameNode->GetWorldTM(0)*mParentMatrix.Inverse()).Inverse();
+							mParentMatrix = pIGameNodeParent->GetWorldTM();
+						const GMatrix mInvNode = PLTools::Inverse((m_pIGameNode->GetWorldTM()*PLTools::Inverse(mParentMatrix)));
 
 						// Get a list of ALL other bones
 						int nTotalSkinBoneCount = pIGameSkin->GetTotalBoneCount();
@@ -465,7 +465,7 @@ void PLSceneMesh::CollectMeshData(IGameObject &cIGameObject)
 		// object offset...)
 		// So, I request the vertices in 'world space' and then I transform them into 'node space' and all
 		// is fine...
-		GMatrix mTransform = m_pIGameNode->GetWorldTM().Inverse();
+		GMatrix mTransform = PLTools::Inverse(m_pIGameNode->GetWorldTM());
 		Quat    qRotation  = mTransform.Rotation();
 
 		// Transform the vertex data from 'world space' to 'node space' and calculate the bounding box of

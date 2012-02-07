@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 #include <string>
 #include <max.h>
+#include <IGame/IGameType.h>
 
 
 //[-------------------------------------------------------]
@@ -38,7 +39,6 @@
 class Quat;
 class Box3;
 class Point3;
-class GMatrix;
 namespace PLCore {
 	class String;
 	class XmlElement;
@@ -195,6 +195,9 @@ class PLTools {
 		*    Resource filename
 		*/
 		static std::string GetResourceFilename(EResourceType nResourceType, const std::string &sFilename);
+
+		// [HACK] Wow, "GMatrix::Inverse()" appears to be buggy...
+		static GMatrix Inverse(const GMatrix &mMatrix);
 
 
 };

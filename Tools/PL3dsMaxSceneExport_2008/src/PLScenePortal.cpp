@@ -70,7 +70,7 @@ PLScenePortal::PLScenePortal(PLSceneContainer &cContainer, IGameNode &cIGameNode
 						// is not correctly and I can't figure out how to fix that. (some kind of mysterious object offset...)
 						// So, I request the vertices in 'world space' and then I transform them into 'node space' and all
 						// is fine...
-						GMatrix mTransform = cIGameNode.GetWorldTM().Inverse();
+						GMatrix mTransform = PLTools::Inverse(cIGameNode.GetWorldTM());
 
 						// Get the portal vertices and center
 						for (std::vector<Point3>::size_type i=0; i<static_cast<std::vector<Point3>::size_type>(nNumOfVertices); i++) {

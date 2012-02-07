@@ -437,3 +437,11 @@ std::string PLTools::GetResourceFilename(EResourceType nResourceType, const std:
 	// Just return the given filename
 	return sFilename;
 }
+
+// [HACK] Wow, "GMatrix::Inverse()" appears to be buggy...
+GMatrix PLTools::Inverse(const GMatrix &mMatrix)
+{
+	Matrix3 mMatrix3 = mMatrix.ExtractMatrix3();
+	mMatrix3.Invert();
+	return mMatrix3;
+}

@@ -1047,18 +1047,18 @@ bool PLScenePLMesh::WriteSkeleton(FILE &cFile, ChunkStack &cChunkStack)
 					// Get relative base transform
 					GMatrix cBaseGMatrix = m_lstBonesInitPose[nJoint];
 					if (lstJointParents[nJoint] >= 0)
-						cBaseGMatrix *= m_lstBonesInitPose[lstJointParents[nJoint]].Inverse();
+						cBaseGMatrix *= PLTools::Inverse(m_lstBonesInitPose[lstJointParents[nJoint]]);
 
 					// Get relative current transform
 					GMatrix cGMatrix = pIGameNodeBone->GetWorldTM(nTime);
 					if (lstJointParents[nJoint] >= 0) {
 						IGameNode *pIGameNodeParentBone = m_lstBones[lstJointParents[nJoint]];
 						if (pIGameNodeParentBone)
-							cGMatrix *= pIGameNodeParentBone->GetWorldTM(nTime).Inverse();
+							cGMatrix *= PLTools::Inverse(pIGameNodeParentBone->GetWorldTM(nTime));
 					}
 
 					// Please note, the following solution is NOT working correctly although it 'looks within the code correctly'
-					// cGMatrix *= cBaseGMatrix.Inverse(); // Get relative transform between current and base transform
+					// cGMatrix *= PLTools::Inverse(cBaseGMatrix(); // Get relative transform between current and base transform
 					// ... if we get the position & rotation from the animation frame AND the base frame and
 					// subtracting them, the result is quite fine (maybe a precision problem?)
 
@@ -1175,7 +1175,7 @@ bool PLScenePLMesh::WriteSkeleton(FILE &cFile, ChunkStack &cChunkStack)
 			// Get the relative translation and rotation of the initial bone transform
 			GMatrix cGMatrix = m_lstBonesInitPose[nJoint];
 			if (lstJointParents[nJoint] >= 0)
-				cGMatrix *= m_lstBonesInitPose[lstJointParents[nJoint]].Inverse();
+				cGMatrix *= PLTools::Inverse(m_lstBonesInitPose[lstJointParents[nJoint]]);
 
 			// Get the position, rotation and scale
 			Point3 vPos, vScale;
@@ -1196,7 +1196,7 @@ bool PLScenePLMesh::WriteSkeleton(FILE &cFile, ChunkStack &cChunkStack)
 
 			// Joint space using the the initial bone transform
 			cGMatrix = m_lstBonesInitPose[nJoint];
-			cGMatrix = cGMatrix.Inverse();
+			cGMatrix = PLTools::Inverse(cGMatrix);
 
 			// Get the position, rotation and scale
 			PLTools::GetPosRotScale(cGMatrix, vPos, qRot, vScale);
@@ -1233,18 +1233,18 @@ bool PLScenePLMesh::WriteSkeleton(FILE &cFile, ChunkStack &cChunkStack)
 					// Get relative base transform
 					GMatrix cBaseGMatrix = m_lstBonesInitPose[nJoint];
 					if (lstJointParents[nJoint] >= 0)
-						cBaseGMatrix *= m_lstBonesInitPose[lstJointParents[nJoint]].Inverse();
+						cBaseGMatrix *= PLTools::Inverse(m_lstBonesInitPose[lstJointParents[nJoint]]);
 
 					// Get relative current transform
 					GMatrix cGMatrix = pIGameNodeBone->GetWorldTM(nTime);
 					if (lstJointParents[nJoint] >= 0) {
 						IGameNode *pIGameNodeParentBone = m_lstBones[lstJointParents[nJoint]];
 						if (pIGameNodeParentBone)
-							cGMatrix *= pIGameNodeParentBone->GetWorldTM(nTime).Inverse();
+							cGMatrix *= PLTools::Inverse(pIGameNodeParentBone->GetWorldTM(nTime));
 					}
 
 					// Please note, the following solution is NOT working correctly although it 'looks within the code correctly'
-					// cGMatrix *= cBaseGMatrix.Inverse(); // Get relative transform between current and base transform
+					// cGMatrix *= PLTools::Inverse(cBaseGMatrix(); // Get relative transform between current and base transform
 					// ... if we get the position & rotation from the animation frame AND the base frame and
 					// subtracting them, the result is quite fine (maybe a precision problem?)
 

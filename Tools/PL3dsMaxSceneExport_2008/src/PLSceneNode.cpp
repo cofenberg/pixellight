@@ -761,7 +761,7 @@ void PLSceneNode::GetPosRotScale(Point3 &vPos, Point3 &vRot, Point3 &vScale, Tim
 		IGameNode *pIGameNodeParent = m_pIGameNode->GetNodeParent();
 		if (pIGameNodeParent)
 			mParentMatrix = pIGameNodeParent->GetWorldTM(nTime);
-		PLTools::GetPosRotScale(m_pIGameNode->GetWorldTM(nTime)*mParentMatrix.Inverse(), vPos, vRot, vScale, IsRotationFlipped());
+		PLTools::GetPosRotScale(m_pIGameNode->GetWorldTM(nTime)*PLTools::Inverse(mParentMatrix), vPos, vRot, vScale, IsRotationFlipped());
 
 		// Get the scale (NOT done for special nodes!)
 		if (m_nType != TypeContainer && m_nType != TypeScene && m_nType != TypeCell &&
@@ -791,7 +791,7 @@ void PLSceneNode::GetPosRotScale(Point3 &vPos, Quat &qRot, Point3 &vScale, TimeV
 		IGameNode *pIGameNodeParent = m_pIGameNode->GetNodeParent();
 		if (pIGameNodeParent)
 			mParentMatrix = pIGameNodeParent->GetWorldTM(nTime);
-		PLTools::GetPosRotScale(m_pIGameNode->GetWorldTM(nTime)*mParentMatrix.Inverse(), vPos, qRot, vScale, IsRotationFlipped());
+		PLTools::GetPosRotScale(m_pIGameNode->GetWorldTM(nTime)*PLTools::Inverse(mParentMatrix), vPos, qRot, vScale, IsRotationFlipped());
 
 		// Get the scale (NOT done for special nodes!)
 		if (m_nType != TypeContainer && m_nType != TypeScene && m_nType != TypeCell &&
