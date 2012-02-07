@@ -1,3 +1,9 @@
+>> 07.02.2012
+[CO]
+- Updated Qt from version "4.7.0" to "4.8.0", Windows x86 & x64 packages updated
+
+
+
 >> 06.01.2012
 [SW]
 - specify minimal Qt version when using system libraries. PLFrontendQt depends on Qt 4.7 or higher
