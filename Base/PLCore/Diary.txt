@@ -1,3 +1,18 @@
+>> 07.02.2012
+[CO]
+PLFrontendQt:
+- "QModelIndexList - The Return" (see diary entry "31.01.2012"): The new "ModelIndexMimeData" is also using "QModelIndexList" and it appears that 
+  this time there's no work around: Data is allocated within our project (debug) and deallocated in Qt (release). Bang! Debugging impossible in Visual Studio.
+  Ok, I have to stop some other work to solve this issue because it starting to get annoying. :/
+  Updated today from Qt 4.7.0 to Qt 4.8.0. In the new Windows x86 and x64 packages are also debug versions of Qt. The Visual Studio files within the Git repository
+  are now using the Qt debug version for the debug version of the projects. This solves this issue within the Git repository, but for the Windows SDK I
+  still have to do some more work. We now have to build PLFrontendQt twice. One time as usual in release mode, and one time using PixelLight release version
+  and Qt debug version. An ugly mix up, but I'am afraid there's no way around. As mentioned in the diary entry "31.01.2012", adding debug versions
+  of everything within the SDK is no option right now because there's no available time to spend on this topic. Other work must be done, which can't be
+  delayed.
+
+
+
 >> 05.02.2012
 [CO]
 PLCore:

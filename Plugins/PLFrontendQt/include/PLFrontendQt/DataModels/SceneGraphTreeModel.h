@@ -118,9 +118,6 @@ class PLFRONTENDQT_API SceneGraphTreeModel : public TreeModelBase {
 	//[-------------------------------------------------------]
 	public:
 		virtual bool removeRows(int startRow, int count, const QModelIndex& parent = QModelIndex()) override;
-#ifdef WIN32		
-		virtual QModelIndexList match(const QModelIndex &start, int role, const QVariant &value, int hits = 1, Qt::MatchFlags flags = Qt::MatchFlags(Qt::MatchStartsWith|Qt::MatchWrap)) const override;
-#endif
 
 
 	//[-------------------------------------------------------]
