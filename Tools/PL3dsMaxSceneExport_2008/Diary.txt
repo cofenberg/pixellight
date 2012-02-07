@@ -2,6 +2,8 @@
 [CO]
 - Wow, I don't believe this: "GMatrix::Inverse()" appears to be buggy... had some issues with skinned mesh animation export, after using
   the "Matrix3::Invert()" function of 3ds Max instead of the "GMatrix::Inverse()" function of IGame, the issues were gone...
+- Bugfix: D'OH! "PLSceneMesh::CollectMeshData()": "GetTotalBoneCount()" (returned 59 in my example) was used instead of "GetTotalSkinBoneCount()"
+  (returned 70 in my example)
 
 
 

@@ -307,7 +307,7 @@ void PLSceneMesh::CollectMeshData(IGameObject &cIGameObject)
 						const GMatrix mInvNode = PLTools::Inverse((m_pIGameNode->GetWorldTM()*PLTools::Inverse(mParentMatrix)));
 
 						// Get a list of ALL other bones
-						int nTotalSkinBoneCount = pIGameSkin->GetTotalBoneCount();
+						int nTotalSkinBoneCount = pIGameSkin->GetTotalSkinBoneCount();
 						if (nTotalSkinBoneCount > 0) {
 							// We now the array size, so set it at once - but without 'added elements'
 							m_lstBones.Resize(nTotalSkinBoneCount, false);
