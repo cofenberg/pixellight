@@ -1,3 +1,26 @@
+>> 08.02.2012
+[CO]
+PLRendererOpenGL:
+- Added support for "NV_texture_compression_vtc"... or to be more correct: We need test for this extension to do some special nasty stuff.
+  When uploading LATC1 compressed 3D textures on AMD/ATI GPU's, there are no issues. When doing the same on NVIDIA GPU's the rendered
+  volume looks pretty odd. The issue 13 in the "EXT_texture_compression_latc"-specification explains this weired behaviour:
+  "
+    13) Should these formats be allowed to specify 3D texture images
+        when NV_texture_compression_vtc is supported?
+
+        RESOLVED: The NV_texture_compression_vtc stacks 4x4 blocks into
+        4x4x4 bricks.  It may be more desirable to represent compressed
+        3D textures as simply slices of 4x4 blocks.
+
+        However the NV_texture_compression_vtc extension expects
+        data passed to the glCompressedTexImage commands to be "bricked"
+        rather than blocked slices.
+  "
+  So, we need to check for this extension, if it's there, we need to reorder the texture data before uploading it to the GPU. I'am sure
+  this will accelerate the loading times and make this easier. :/
+
+
+
 >> 29.01.2012
 [CO]
 - "SetSourceCode()"-method within "Shader"/"GeometryShader": Added optional shader compiler arguments parameter
