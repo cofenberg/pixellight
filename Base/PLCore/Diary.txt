@@ -1,3 +1,18 @@
+>> 09.02.2012
+[CO]
+- Handled bug report "PLCore::String operator <" (http://dev.pixellight.org/forum/viewtopic.php?f=4&t=226)
+  "
+  PLCore::String s1 = "so";
+  PLCore::String s2 = "so1";
+  printf("%d %d\n",s1 < s2,s2 < s1);
+  "
+  -> Result was "0 0", should have been "1 0"
+  -> "StringBuffer": "IsLessThan()", "IsLessThan()", "IsGreaterThan()", "IsGreaterThan()" were using the minimum length of both strings when calling e.g. "strncmp".
+     When debugging into "strncmp()" and "strcmp()" within Visual Studio, the "strcmp()"-implementation appears to be more simple and now I'am just using "strcmp()"
+     instead of "strncmp()" for the lexicographical comparison.
+
+
+
 >> 07.02.2012
 [CO]
 PLFrontendQt:
