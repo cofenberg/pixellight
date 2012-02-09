@@ -239,30 +239,36 @@ StringBuffer *StringBufferASCII::Duplicate()
 
 bool StringBufferASCII::IsLessThan(const char szString[], uint32 nLength) const
 {
-	return (strncmp(m_pszString, szString, (m_nLength < nLength) ? m_nLength : nLength) < 0);
+	// "nLength" is not required in this implementation
+	return (strcmp(m_pszString, szString) < 0);
 }
 
 bool StringBufferASCII::IsLessThan(const wchar_t szString[], uint32 nLength) const
 {
+	// "nLength" is not required in this implementation
+
 	// We need to convert this ASCII string into an Unicode one :(
 	wchar_t *pUnicode = new wchar_t[m_nLength + 1];
 	mbstowcs(pUnicode, m_pszString, m_nLength + 1);
-	const bool bResult = (wcsncmp(pUnicode, szString, (m_nLength < nLength) ? m_nLength : nLength) < 0);
+	const bool bResult = (wcscmp(pUnicode, szString) < 0);
 	delete [] pUnicode;
 	return bResult;
 }
 
 bool StringBufferASCII::IsGreaterThan(const char szString[], uint32 nLength) const
 {
-	return (strncmp(m_pszString, szString, (m_nLength < nLength) ? m_nLength : nLength) > 0);
+	// "nLength" is not required in this implementation
+	return (strcmp(m_pszString, szString) > 0);
 }
 
 bool StringBufferASCII::IsGreaterThan(const wchar_t szString[], uint32 nLength) const
 {
+	// "nLength" is not required in this implementation
+
 	// We need to convert this ASCII string into an Unicode one :(
 	wchar_t *pUnicode = new wchar_t[m_nLength + 1];
 	mbstowcs(pUnicode, m_pszString, m_nLength + 1);
-	const bool bResult = (wcsncmp(pUnicode, szString, (m_nLength < nLength) ? m_nLength : nLength) > 0);
+	const bool bResult = (wcscmp(pUnicode, szString) > 0);
 	delete [] pUnicode;
 	return bResult;
 }
