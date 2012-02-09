@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Container/FastPool.h>
-#include "PLScriptLua/RTTIObjectSignalPointer.h"
+#include "PLScriptLua/RTTIObjectSignalPointerBase.h"
 
 
 //[-------------------------------------------------------]
@@ -54,7 +54,7 @@ namespace PLScriptLua {
 *  @brief
 *    RTTI object build in signal method pointer
 */
-class RTTIObjectSignalMethodPointer : public RTTIObjectSignalPointer, public PLCore::FastPoolElement<RTTIObjectSignalMethodPointer> {
+class RTTIObjectSignalMethodPointer : public RTTIObjectSignalPointerBase, public PLCore::FastPoolElement<RTTIObjectSignalMethodPointer> {
 
 
 	//[-------------------------------------------------------]

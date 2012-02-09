@@ -67,7 +67,7 @@ String RTTIObjectMethodPointer::GetLuaFunctionParametersAsString(Script &cScript
 			LuaUserData *pLuaUserData = GetUserDataFromLuaStack(pLuaState, i);
 			if (pLuaUserData) {
 				// [TODO] Do any type tests in here?
-				pObject = reinterpret_cast<RTTIObjectPointer*>(pLuaUserData)->GetObject();
+				pObject = reinterpret_cast<RTTIObjectPointerBase*>(pLuaUserData)->GetObject();
 			}
 
 			// Add the Lua argument to the parameter string
@@ -212,7 +212,7 @@ int RTTIObjectMethodPointer::CallDynFunc(Script &cScript, DynFunc &cDynFunc, boo
 *  @brief
 *    Default constructor
 */
-RTTIObjectMethodPointer::RTTIObjectMethodPointer() : RTTIObjectPointer(TypeObjectMethodPointer),
+RTTIObjectMethodPointer::RTTIObjectMethodPointer() : RTTIObjectPointerBase(TypeObjectMethodPointer),
 	m_pDynFunc(nullptr)
 {
 }
@@ -259,7 +259,7 @@ int RTTIObjectMethodPointer::NewIndexMetamethod(lua_State *pLuaState)
 void RTTIObjectMethodPointer::CGMetamethod(lua_State *pLuaState)
 {
 	// De-initializes this instance
-	RTTIObjectPointer::DeInitializeInstance();
+	RTTIObjectPointerBase::DeInitializeInstance();
 	m_pDynFunc = nullptr;
 
 	// Release this instance, but do not delete it because we can reuse it later on
@@ -286,7 +286,7 @@ void RTTIObjectMethodPointer::CallMetamethod(lua_State *pLuaState)
 void RTTIObjectMethodPointer::InitializeInstance(Script &cScript, Object *pRTTIObject, DynFuncPtr pDynFunc)
 {
 	// Call base implementation
-	RTTIObjectPointer::InitializeInstance(cScript, pRTTIObject);
+	RTTIObjectPointerBase::InitializeInstance(cScript, pRTTIObject);
 
 	// Set given data
 	m_pDynFunc = pDynFunc;

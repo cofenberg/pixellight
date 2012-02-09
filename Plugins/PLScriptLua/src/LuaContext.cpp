@@ -41,10 +41,10 @@ namespace PLScriptLua {
 //[ Private static data                                   ]
 //[-------------------------------------------------------]
 uint32									LuaContext::m_nContexCounter = 0;
-Pool<RTTIObjectPointer>					LuaContext::m_lstRTTIObjectPointer;
+FastPool<RTTIObjectPointer>				LuaContext::m_lstRTTIObjectPointer;
 FastPool<RTTIObjectSlotPointer>			LuaContext::m_lstRTTIObjectSlotPointer;
 FastPool<RTTIObjectMethodPointer>		LuaContext::m_lstRTTIObjectMethodPointer;
-Pool<RTTIObjectSignalPointer>			LuaContext::m_lstRTTIObjectSignalPointer;
+FastPool<RTTIObjectSignalPointer>		LuaContext::m_lstRTTIObjectSignalPointer;
 FastPool<RTTIObjectSignalMethodPointer>	LuaContext::m_lstRTTIObjectSignalMethodPointer;
 
 

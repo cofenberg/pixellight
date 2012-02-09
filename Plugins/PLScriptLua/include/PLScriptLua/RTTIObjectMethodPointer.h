@@ -31,7 +31,7 @@
 #include <PLCore/Container/Array.h>
 #include <PLCore/Base/Func/DynFunc.h>
 #include <PLCore/Container/FastPool.h>
-#include "PLScriptLua/RTTIObjectPointer.h"
+#include "PLScriptLua/RTTIObjectPointerBase.h"
 
 
 //[-------------------------------------------------------]
@@ -47,7 +47,7 @@ namespace PLScriptLua {
 *  @brief
 *    RTTI object method pointer
 */
-class RTTIObjectMethodPointer : public RTTIObjectPointer, public PLCore::FastPoolElement<RTTIObjectMethodPointer> {
+class RTTIObjectMethodPointer : public RTTIObjectPointerBase, public PLCore::FastPoolElement<RTTIObjectMethodPointer> {
 
 
 	//[-------------------------------------------------------]

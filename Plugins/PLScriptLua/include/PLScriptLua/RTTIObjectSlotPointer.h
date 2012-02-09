@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Container/FastPool.h>
-#include "PLScriptLua/RTTIObjectPointer.h"
+#include "PLScriptLua/RTTIObjectPointerBase.h"
 
 
 //[-------------------------------------------------------]
@@ -53,7 +53,7 @@ namespace PLScriptLua {
 *  @brief
 *    RTTI object slot pointer
 */
-class RTTIObjectSlotPointer : public RTTIObjectPointer, public PLCore::FastPoolElement<RTTIObjectSlotPointer> {
+class RTTIObjectSlotPointer : public RTTIObjectPointerBase, public PLCore::FastPoolElement<RTTIObjectSlotPointer> {
 
 
 	//[-------------------------------------------------------]

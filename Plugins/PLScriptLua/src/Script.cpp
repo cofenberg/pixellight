@@ -371,9 +371,11 @@ bool Script::Execute(const String &sSourceCode)
 		// Execute
 		const bool bResult = !luaL_dostring(m_pLuaState, sSourceCode.GetASCII());
 
-		// Perform an incremental step of garbage collection
-		// -> For now we don't want to bother the script API user with somethig
+		// -> For now we don't want to bother the script API user with something
 		//    like garbage collection, so do this automatically
+		// -> If this is not done, reuse of "RTTIObjectPointer"-instances (as well as derived classes of course)
+		//    will not work that well because unused stuff will not be removed automatically by Lua when not asking
+		//    Lua to do so
 		lua_gc(m_pLuaState, LUA_GCSTEP, 1);
 
 		// Done
@@ -718,8 +720,11 @@ bool Script::EndCall()
 		const int nResult = lua_pcall(m_pLuaState, m_nCurrentArgument, m_bFunctionResult, 0);
 
 		// Perform an incremental step of garbage collection
-		// -> For now we don't want to bother the script API user with somethig
+		// -> For now we don't want to bother the script API user with something
 		//    like garbage collection, so do this automatically
+		// -> If this is not done, reuse of "RTTIObjectPointer"-instances (as well as derived classes of course)
+		//    will not work that well because unused stuff will not be removed automatically by Lua when not asking
+		//    Lua to do so
 		lua_gc(m_pLuaState, LUA_GCSTEP, 1);
 
 		// Evaluate the result

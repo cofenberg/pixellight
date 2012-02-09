@@ -66,7 +66,7 @@ RTTIObjectSignalMethodPointer::EMethod RTTIObjectSignalMethodPointer::StringToMe
 *  @brief
 *    Default constructor
 */
-RTTIObjectSignalMethodPointer::RTTIObjectSignalMethodPointer() : RTTIObjectSignalPointer(TypeObjectSignalMethodPointer),
+RTTIObjectSignalMethodPointer::RTTIObjectSignalMethodPointer() : RTTIObjectSignalPointerBase(TypeObjectSignalMethodPointer),
 	m_nMethod(MethodUnknown)
 {
 }
@@ -104,7 +104,7 @@ int RTTIObjectSignalMethodPointer::NewIndexMetamethod(lua_State *pLuaState)
 void RTTIObjectSignalMethodPointer::CGMetamethod(lua_State *pLuaState)
 {
 	// De-initializes this instance
-	RTTIObjectPointer::DeInitializeInstance();
+	RTTIObjectPointerBase::DeInitializeInstance();
 	m_pDynEvent = nullptr;
 	m_nMethod = MethodUnknown;
 
@@ -245,7 +245,7 @@ void RTTIObjectSignalMethodPointer::EventCallback(DynParams &cDynParams, void *p
 void RTTIObjectSignalMethodPointer::InitializeInstance(Script &cScript, Object *pRTTIObject, DynEvent *pDynEvent, EMethod nMethod)
 {
 	// Call base implementation
-	RTTIObjectSignalPointer::InitializeInstance(cScript, pRTTIObject, pDynEvent);
+	RTTIObjectSignalPointerBase::InitializeInstance(cScript, pRTTIObject, pDynEvent);
 
 	// Set given data
 	m_nMethod = nMethod;

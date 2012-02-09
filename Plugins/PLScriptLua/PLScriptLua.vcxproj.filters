@@ -34,6 +34,12 @@
     <ClCompile Include="src\RTTIObjectSignalMethodPointer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\RTTIObjectPointerBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RTTIObjectSignalPointerBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLScriptLua\Script.h">
@@ -61,6 +67,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScriptLua\RTTIObjectSignalMethodPointer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLScriptLua\RTTIObjectPointerBase.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLScriptLua\RTTIObjectSignalPointerBase.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

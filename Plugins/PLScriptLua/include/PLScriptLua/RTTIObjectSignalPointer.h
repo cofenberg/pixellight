@@ -28,15 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScriptLua/RTTIObjectPointer.h"
-
-
-//[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-namespace PLCore {
-	class DynEvent;
-}
+#include <PLCore/Container/FastPool.h>
+#include "PLScriptLua/RTTIObjectSignalPointerBase.h"
 
 
 //[-------------------------------------------------------]
@@ -52,7 +45,7 @@ namespace PLScriptLua {
 *  @brief
 *    RTTI object signal pointer
 */
-class RTTIObjectSignalPointer : public RTTIObjectPointer {
+class RTTIObjectSignalPointer : public RTTIObjectSignalPointerBase, public PLCore::FastPoolElement<RTTIObjectSignalPointer> {
 
 
 	//[-------------------------------------------------------]
@@ -67,12 +60,9 @@ class RTTIObjectSignalPointer : public RTTIObjectPointer {
 	public:
 		/**
 		*  @brief
-		*    Constructor
-		*
-		*  @param[in] nType
-		*    The Lua user data type
+		*    Default constructor
 		*/
-		RTTIObjectSignalPointer(EType nType = TypeObjectSignalPointer);
+		RTTIObjectSignalPointer();
 
 		/**
 		*  @brief
@@ -80,49 +70,12 @@ class RTTIObjectSignalPointer : public RTTIObjectPointer {
 		*/
 		virtual ~RTTIObjectSignalPointer();
 
-		/**
-		*  @brief
-		*    Returns the pointer to the RTTI object signal to wrap
-		*
-		*  @return
-		*    Pointer to the RTTI object signal to wrap, can be a null pointer
-		*/
-		PLCore::DynEvent *GetDynEvent() const;
-
-
-	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
-	//[-------------------------------------------------------]
-	protected:
-		/**
-		*  @brief
-		*    Initializes this instance
-		*
-		*  @param[in] cScript
-		*    The owner script instance
-		*  @param[in] pRTTIObject
-		*    Pointer to the RTTI object to wrap, can be a null pointer
-		*  @param[in] pDynEvent
-		*    Pointer to the RTTI object signal to wrap, can be a null pointer
-		*/
-		void InitializeInstance(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynEvent *pDynEvent);
-
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual LuaUserData functions               ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual int IndexMetamethod(lua_State *pLuaState) override;
-		virtual int NewIndexMetamethod(lua_State *pLuaState) override;
 		virtual void CGMetamethod(lua_State *pLuaState) override;
-		virtual void CallMetamethod(lua_State *pLuaState) override;
-
-
-	//[-------------------------------------------------------]
-	//[ Protected data                                        ]
-	//[-------------------------------------------------------]
-	protected:
-		PLCore::DynEvent *m_pDynEvent;	/**< Pointer to the RTTI object signal to wrap, can be a null pointer */
 
 
 };

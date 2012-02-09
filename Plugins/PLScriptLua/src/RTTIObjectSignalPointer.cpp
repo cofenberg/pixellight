@@ -26,18 +26,13 @@
 extern "C" {
 	#include <Lua/lua.h>
 }
-#include <PLCore/Base/Object.h>
-#include "PLScriptLua/Script.h"
 #include "PLScriptLua/LuaContext.h"
-#include "PLScriptLua/RTTIObjectMethodPointer.h"
-#include "PLScriptLua/RTTIObjectSignalMethodPointer.h"
 #include "PLScriptLua/RTTIObjectSignalPointer.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-using namespace PLCore;
 namespace PLScriptLua {
 
 
@@ -46,10 +41,9 @@ namespace PLScriptLua {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
+*    Default constructor
 */
-RTTIObjectSignalPointer::RTTIObjectSignalPointer(EType nType) : RTTIObjectPointer(nType),
-	m_pDynEvent(nullptr)
+RTTIObjectSignalPointer::RTTIObjectSignalPointer()
 {
 }
 
@@ -61,94 +55,18 @@ RTTIObjectSignalPointer::~RTTIObjectSignalPointer()
 {
 }
 
-/**
-*  @brief
-*    Returns the pointer to the RTTI object signal to wrap
-*/
-DynEvent *RTTIObjectSignalPointer::GetDynEvent() const
-{
-	return m_pDynEvent;
-}
-
-
-//[-------------------------------------------------------]
-//[ Protected functions                                   ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Initializes this instance
-*/
-void RTTIObjectSignalPointer::InitializeInstance(Script &cScript, Object *pRTTIObject, DynEvent *pDynEvent)
-{
-	// Call base implementation
-	RTTIObjectPointer::InitializeInstance(cScript, pRTTIObject);
-
-	// Set given data
-	m_pDynEvent = pDynEvent;
-}
-
 
 //[-------------------------------------------------------]
 //[ Protected virtual LuaUserData functions               ]
 //[-------------------------------------------------------]
-int RTTIObjectSignalPointer::IndexMetamethod(lua_State *pLuaState)
-{
-	// This method deals with build in signal methods
-
-	// There must be a string Lua stack (first argument is a user data)
-	if (lua_isstring(pLuaState, 2)) {
-		// Figure out the build in signal method to be called
-		const RTTIObjectSignalMethodPointer::EMethod nMethod = RTTIObjectSignalMethodPointer::StringToMethod(lua_tolstring(pLuaState, 2, nullptr));
-		if (nMethod != RTTIObjectSignalMethodPointer::MethodUnknown) {
-			// It's a build in signal method... just put another user data instance on the Lua stack...
-			// The destruction of the new RTTIObjectSignalMethodPointer instance is done by the Lua garbage collector
-			LuaContext::GetRTTIObjectSignalMethodPointer(*m_pScript, GetObject(), m_pDynEvent, nMethod);
-
-			// Done
-			return 1;
-		} else {
-			// Error, this is no valid build in signal method!
-
-			// [TODO] Write an error message into the log? (with current script line etc.)
-		}
-	}
-
-	// [TODO] Write an error message into the log? (with current script line etc.)
-
-	// Error!
-	return 0;
-}
-
-int RTTIObjectSignalPointer::NewIndexMetamethod(lua_State *pLuaState)
-{
-	// Error! A signal can't be called like an object...
-	// [TODO] Write an error message into the log? (with current script line etc.)
-
-	// Done
-	return 0;
-}
-
 void RTTIObjectSignalPointer::CGMetamethod(lua_State *pLuaState)
 {
 	// De-initializes this instance
-	RTTIObjectPointer::DeInitializeInstance();
+	RTTIObjectPointerBase::DeInitializeInstance();
 	m_pDynEvent = nullptr;
 
 	// Release this instance, but do not delete it because we can reuse it later on
 	LuaContext::ReleaseRTTIObjectSignalPointer(*this);
-}
-
-void RTTIObjectSignalPointer::CallMetamethod(lua_State *pLuaState)
-{
-	// Is there a RTTI object and a RTTI object signal?
-	if (GetObject() && m_pDynEvent) {
-		// Get the current Lua function parameters on the Lua stack as string
-		Array<String> lstTempStrings;
-		const String sParams = RTTIObjectMethodPointer::GetLuaFunctionParametersAsString(*m_pScript, *m_pDynEvent, true, lstTempStrings);
-
-		// Emit the RTTI object signal
-		m_pDynEvent->Emit(sParams);
-	}
 }
 
 

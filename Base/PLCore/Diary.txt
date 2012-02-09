@@ -10,9 +10,12 @@
   -> "StringBuffer": "IsLessThan()", "IsLessThan()", "IsGreaterThan()", "IsGreaterThan()" were using the minimum length of both strings when calling e.g. "strncmp".
      When debugging into "strncmp()" and "strcmp()" within Visual Studio, the "strcmp()"-implementation appears to be more simple and now I'am just using "strcmp()"
      instead of "strncmp()" for the lexicographical comparison.
-- PLScriptLua: "RTTIObjectPointer", "RTTIObjectSlotPointer", "RTTIObjectMethodPointer", "RTTIObjectSignalPointer" and "RTTIObjectSignalMethodPointer" instances
+PLScriptLua:
+- "RTTIObjectPointer", "RTTIObjectSlotPointer", "RTTIObjectMethodPointer", "RTTIObjectSignalPointer" and "RTTIObjectSignalMethodPointer" instances
   are now managed by "LuaContext" instead of constantly using "new" and "delete" directly. "LuaContext" will cache no longer used instances so that they can be reused
   later on. Before this performance optimization my stress test took 3167 milliseconds, after this change it took 1360 milliseconds.
+  -> Added base classes "RTTIObjectPointerBase" and "RTTIObjectSignalPointerBase" to make it possible to use "RTTIObjectPointer" and "RTTIObjectSignalPointer" as fast
+     pool elements as well. Removing elements takes now O(1) instead of O(n).
 - "Script::Execute()" and "Script::EndCall()" perform an incremental step of garbage collection
   -> For now I don't want to bother the script API user with somethig like garbage collection, so do this automatically
   -> Without doing this, the instance reuse optimization from above has no chance to improve the performance because Lua will not release unused stuff when it's not

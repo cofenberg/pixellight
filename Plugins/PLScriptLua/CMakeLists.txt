@@ -32,8 +32,10 @@ add_sources(
 	src/PLScriptLua.cpp
 	src/LuaContext.cpp
 	src/LuaUserData.cpp
+	src/RTTIObjectPointerBase.cpp
 	src/RTTIObjectPointer.cpp
 	src/RTTIObjectMethodPointer.cpp
+	src/RTTIObjectSignalPointerBase.cpp
 	src/RTTIObjectSignalPointer.cpp
 	src/RTTIObjectSignalMethodPointer.cpp
 	src/RTTIObjectSlotPointer.cpp

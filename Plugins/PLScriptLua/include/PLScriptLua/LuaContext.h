@@ -29,7 +29,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Core/AbstractContext.h>
-#include <PLCore/Container/Pool.h>
 #include <PLCore/Container/FastPool.h>
 #include "PLScriptLua/RTTIObjectPointer.h"
 #include "PLScriptLua/RTTIObjectSlotPointer.h"
@@ -103,10 +102,10 @@ class LuaContext : public PLCore::AbstractContext {
 		static PLCore::uint32 m_nContexCounter;	/**< Lua context counter */
 
 		// Lua user data types
-		static PLCore::Pool<RTTIObjectPointer>					m_lstRTTIObjectPointer;				/**< Pool for "RTTIObjectPointer"-instances */
+		static PLCore::FastPool<RTTIObjectPointer>				m_lstRTTIObjectPointer;				/**< Fast pool for "RTTIObjectPointer"-instances */
 		static PLCore::FastPool<RTTIObjectSlotPointer>			m_lstRTTIObjectSlotPointer;			/**< Fast pool for "RTTIObjectSlotPointer"-instances */
 		static PLCore::FastPool<RTTIObjectMethodPointer>		m_lstRTTIObjectMethodPointer;		/**< Fast pool for "RTTIObjectMethodPointer"-instances */
-		static PLCore::Pool<RTTIObjectSignalPointer>			m_lstRTTIObjectSignalPointer;		/**< Pool for "RTTIObjectSignalPointer"-instances */
+		static PLCore::FastPool<RTTIObjectSignalPointer>		m_lstRTTIObjectSignalPointer;		/**< Fast pool for "RTTIObjectSignalPointer"-instances */
 		static PLCore::FastPool<RTTIObjectSignalMethodPointer>	m_lstRTTIObjectSignalMethodPointer;	/**< Fast pool for "RTTIObjectSignalMethodPointer"-instances */
 
 

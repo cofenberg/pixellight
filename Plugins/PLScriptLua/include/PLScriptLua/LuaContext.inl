@@ -40,7 +40,7 @@ inline RTTIObjectPointer &LuaContext::GetRTTIObjectPointer(Script &cScript, PLCo
 inline void LuaContext::ReleaseRTTIObjectPointer(RTTIObjectPointer &cInstance)
 {
 	// Remove the given instance (added to the list of free elements)
-	m_lstRTTIObjectPointer.Remove(cInstance);
+	m_lstRTTIObjectPointer.RemoveElement(cInstance);
 }
 
 // RTTIObjectSlotPointer
@@ -82,7 +82,7 @@ inline RTTIObjectSignalPointer &LuaContext::GetRTTIObjectSignalPointer(Script &c
 inline void LuaContext::ReleaseRTTIObjectSignalPointer(RTTIObjectSignalPointer &cInstance)
 {
 	// Remove the given instance (added to the list of free elements)
-	m_lstRTTIObjectSignalPointer.Remove(cInstance);
+	m_lstRTTIObjectSignalPointer.RemoveElement(cInstance);
 }
 
 // RTTIObjectSignalMethodPointer

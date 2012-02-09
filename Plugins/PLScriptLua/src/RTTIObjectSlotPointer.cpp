@@ -44,7 +44,7 @@ namespace PLScriptLua {
 *  @brief
 *    Constructor
 */
-RTTIObjectSlotPointer::RTTIObjectSlotPointer() : RTTIObjectPointer(TypeObjectSlotPointer),
+RTTIObjectSlotPointer::RTTIObjectSlotPointer() : RTTIObjectPointerBase(TypeObjectSlotPointer),
 	m_pDynEventHandler(nullptr)
 {
 }
@@ -91,7 +91,7 @@ int RTTIObjectSlotPointer::NewIndexMetamethod(lua_State *pLuaState)
 void RTTIObjectSlotPointer::CGMetamethod(lua_State *pLuaState)
 {
 	// De-initializes this instance
-	RTTIObjectPointer::DeInitializeInstance();
+	RTTIObjectPointerBase::DeInitializeInstance();
 	m_pDynEventHandler = nullptr;
 
 	// Release this instance, but do not delete it because we can reuse it later on
@@ -115,7 +115,7 @@ void RTTIObjectSlotPointer::CallMetamethod(lua_State *pLuaState)
 void RTTIObjectSlotPointer::InitializeInstance(Script &cScript, Object *pRTTIObject, PLCore::DynEventHandler *pDynEventHandler)
 {
 	// Call base implementation
-	RTTIObjectPointer::InitializeInstance(cScript, pRTTIObject);
+	RTTIObjectPointerBase::InitializeInstance(cScript, pRTTIObject);
 
 	// Set given data
 	m_pDynEventHandler = pDynEventHandler;
