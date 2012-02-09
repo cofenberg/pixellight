@@ -203,9 +203,6 @@ ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialias
 									if (m_hDummyWindowRenderContext != nullptr) {
 										// Make the OpenGL render context to the current one
 										MakeDummyCurrent();
-
-										// Initialize the OpenGL extensions
-										GetExtensions().Init();
 									}
 								}
 							}
@@ -223,6 +220,10 @@ ContextWindows::ContextWindows(Renderer &cRenderer, uint32 nMultisampleAntialias
 	} else {
 		// Error, failed to create the OpenGL dummy window!
 	}
+
+	// Initialize the OpenGL extensions
+	if (m_hDummyWindowRenderContext != nullptr)
+		GetExtensions().Init();
 }
 
 /**

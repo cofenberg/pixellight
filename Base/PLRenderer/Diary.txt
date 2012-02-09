@@ -1,3 +1,11 @@
+>> 09.02.2012
+[CO]
+PLRendererOpenGL:
+- Bugfix: "ContextWindows" when multisample antialiasing was disabled, the extensions were not initialized. I assume that I introduced this bug
+  either on "07.12.2011" or "22.11.2011" when trying to simplify this overcomplicated OpenGL context creation without much success.
+
+
+
 >> 29.01.2012
 [CO]
 - "SetSourceCode()"-method within "Shader"/"GeometryShader": Added optional shader compiler arguments parameter
