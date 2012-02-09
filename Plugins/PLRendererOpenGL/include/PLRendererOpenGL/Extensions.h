@@ -184,6 +184,7 @@ class Extensions {
 		bool IsGL_NV_occlusion_query() const;
 		bool IsGL_NVX_gpu_memory_info() const;
 		bool IsGL_NV_half_float() const;
+		bool IsNV_texture_compression_vtc() const;
 		// SGIS
 		bool IsGL_SGIS_generate_mipmap() const;
 		// HP
@@ -367,6 +368,7 @@ class Extensions {
 		bool m_bGL_NV_occlusion_query;
 		bool m_bGL_NVX_gpu_memory_info;
 		bool m_bGL_NV_half_float;
+		bool m_bNV_texture_compression_vtc;
 		// SGIS
 		bool m_bGL_SGIS_generate_mipmap;
 		// HP
