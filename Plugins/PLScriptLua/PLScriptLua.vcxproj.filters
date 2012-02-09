@@ -67,5 +67,8 @@
   <ItemGroup>
     <None Include="CMakeLists.txt" />
     <None Include="..\..\Base\PLCore\Diary.txt" />
+    <None Include="include\PLScriptLua\LuaContext.inl">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

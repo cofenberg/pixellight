@@ -28,6 +28,7 @@ extern "C" {
 }
 #include <PLCore/Base/Object.h>
 #include "PLScriptLua/Script.h"
+#include "PLScriptLua/LuaContext.h"
 #include "PLScriptLua/RTTIObjectMethodPointer.h"
 
 
@@ -209,10 +210,10 @@ int RTTIObjectMethodPointer::CallDynFunc(Script &cScript, DynFunc &cDynFunc, boo
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
+*    Default constructor
 */
-RTTIObjectMethodPointer::RTTIObjectMethodPointer(Script &cScript, Object *pRTTIObject, DynFuncPtr pDynFunc) : RTTIObjectPointer(cScript, pRTTIObject, TypeObjectMethodPointer),
-	m_pDynFunc(pDynFunc)
+RTTIObjectMethodPointer::RTTIObjectMethodPointer() : RTTIObjectPointer(TypeObjectMethodPointer),
+	m_pDynFunc(nullptr)
 {
 }
 
@@ -255,6 +256,16 @@ int RTTIObjectMethodPointer::NewIndexMetamethod(lua_State *pLuaState)
 	return 0;
 }
 
+void RTTIObjectMethodPointer::CGMetamethod(lua_State *pLuaState)
+{
+	// De-initializes this instance
+	RTTIObjectPointer::DeInitializeInstance();
+	m_pDynFunc = nullptr;
+
+	// Release this instance, but do not delete it because we can reuse it later on
+	LuaContext::ReleaseRTTIObjectMethodPointer(*this);
+}
+
 void RTTIObjectMethodPointer::CallMetamethod(lua_State *pLuaState)
 {
 	// Is there a RTTI object and a RTTI object method?
@@ -262,6 +273,23 @@ void RTTIObjectMethodPointer::CallMetamethod(lua_State *pLuaState)
 		// Call the dynamic function
 		CallDynFunc(*m_pScript, *m_pDynFunc, true);
 	}
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Initializes this instance
+*/
+void RTTIObjectMethodPointer::InitializeInstance(Script &cScript, Object *pRTTIObject, DynFuncPtr pDynFunc)
+{
+	// Call base implementation
+	RTTIObjectPointer::InitializeInstance(cScript, pRTTIObject);
+
+	// Set given data
+	m_pDynFunc = pDynFunc;
 }
 
 

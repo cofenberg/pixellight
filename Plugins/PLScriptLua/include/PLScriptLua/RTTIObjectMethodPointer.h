@@ -30,6 +30,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/Container/Array.h>
 #include <PLCore/Base/Func/DynFunc.h>
+#include <PLCore/Container/FastPool.h>
 #include "PLScriptLua/RTTIObjectPointer.h"
 
 
@@ -46,7 +47,13 @@ namespace PLScriptLua {
 *  @brief
 *    RTTI object method pointer
 */
-class RTTIObjectMethodPointer : public RTTIObjectPointer {
+class RTTIObjectMethodPointer : public RTTIObjectPointer, public PLCore::FastPoolElement<RTTIObjectMethodPointer> {
+
+
+	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class LuaContext;
 
 
 	//[-------------------------------------------------------]
@@ -108,16 +115,9 @@ class RTTIObjectMethodPointer : public RTTIObjectPointer {
 	public:
 		/**
 		*  @brief
-		*    Constructor
-		*
-		*  @param[in] cScript
-		*    The owner script instance
-		*  @param[in] pRTTIObject
-		*    Pointer to the RTTI object to wrap, can be a null pointer
-		*  @param[in] pDynFunc
-		*    Smart pointer to the RTTI object method to wrap, can be a null pointer
+		*    Default constructor
 		*/
-		RTTIObjectMethodPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynFuncPtr pDynFunc);
+		RTTIObjectMethodPointer();
 
 		/**
 		*  @brief
@@ -141,6 +141,7 @@ class RTTIObjectMethodPointer : public RTTIObjectPointer {
 	protected:
 		virtual int IndexMetamethod(lua_State *pLuaState) override;
 		virtual int NewIndexMetamethod(lua_State *pLuaState) override;
+		virtual void CGMetamethod(lua_State *pLuaState) override;
 		virtual void CallMetamethod(lua_State *pLuaState) override;
 
 
@@ -149,6 +150,24 @@ class RTTIObjectMethodPointer : public RTTIObjectPointer {
 	//[-------------------------------------------------------]
 	protected:
 		PLCore::DynFuncPtr m_pDynFunc;	/**< Smart pointer to the RTTI object method to wrap, can be a null pointer */
+
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Initializes this instance
+		*
+		*  @param[in] cScript
+		*    The owner script instance
+		*  @param[in] pRTTIObject
+		*    Pointer to the RTTI object to wrap, can be a null pointer
+		*  @param[in] pDynFunc
+		*    Smart pointer to the RTTI object method to wrap, can be a null pointer
+		*/
+		void InitializeInstance(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynFuncPtr pDynFunc);
 
 
 };

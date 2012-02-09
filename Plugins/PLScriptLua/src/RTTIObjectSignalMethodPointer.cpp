@@ -29,6 +29,7 @@ extern "C" {
 }
 #include <PLCore/Base/Object.h>
 #include "PLScriptLua/Script.h"
+#include "PLScriptLua/LuaContext.h"
 #include "PLScriptLua/RTTIObjectSlotPointer.h"
 #include "PLScriptLua/RTTIObjectSignalMethodPointer.h"
 
@@ -63,10 +64,10 @@ RTTIObjectSignalMethodPointer::EMethod RTTIObjectSignalMethodPointer::StringToMe
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
+*    Default constructor
 */
-RTTIObjectSignalMethodPointer::RTTIObjectSignalMethodPointer(Script &cScript, Object *pRTTIObject, DynEvent *pDynEvent, EMethod nMethod) : RTTIObjectSignalPointer(cScript, pRTTIObject, pDynEvent, TypeObjectSignalMethodPointer),
-	m_nMethod(nMethod)
+RTTIObjectSignalMethodPointer::RTTIObjectSignalMethodPointer() : RTTIObjectSignalPointer(TypeObjectSignalMethodPointer),
+	m_nMethod(MethodUnknown)
 {
 }
 
@@ -98,6 +99,17 @@ int RTTIObjectSignalMethodPointer::NewIndexMetamethod(lua_State *pLuaState)
 
 	// Done
 	return 0;
+}
+
+void RTTIObjectSignalMethodPointer::CGMetamethod(lua_State *pLuaState)
+{
+	// De-initializes this instance
+	RTTIObjectPointer::DeInitializeInstance();
+	m_pDynEvent = nullptr;
+	m_nMethod = MethodUnknown;
+
+	// Release this instance, but do not delete it because we can reuse it later on
+	LuaContext::ReleaseRTTIObjectSignalMethodPointer(*this);
 }
 
 void RTTIObjectSignalMethodPointer::CallMetamethod(lua_State *pLuaState)
@@ -226,6 +238,19 @@ void RTTIObjectSignalMethodPointer::EventCallback(DynParams &cDynParams, void *p
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Initializes this instance
+*/
+void RTTIObjectSignalMethodPointer::InitializeInstance(Script &cScript, Object *pRTTIObject, DynEvent *pDynEvent, EMethod nMethod)
+{
+	// Call base implementation
+	RTTIObjectSignalPointer::InitializeInstance(cScript, pRTTIObject, pDynEvent);
+
+	// Set given data
+	m_nMethod = nMethod;
+}
+
 /**
 *  @brief
 *    Returns a RTTI slot from the Lua stack without removing it

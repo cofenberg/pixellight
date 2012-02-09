@@ -10,6 +10,9 @@
   -> "StringBuffer": "IsLessThan()", "IsLessThan()", "IsGreaterThan()", "IsGreaterThan()" were using the minimum length of both strings when calling e.g. "strncmp".
      When debugging into "strncmp()" and "strcmp()" within Visual Studio, the "strcmp()"-implementation appears to be more simple and now I'am just using "strcmp()"
      instead of "strncmp()" for the lexicographical comparison.
+- PLScriptLua: "RTTIObjectPointer", "RTTIObjectSlotPointer", "RTTIObjectMethodPointer", "RTTIObjectSignalPointer" and "RTTIObjectSignalMethodPointer" instances
+  are now managed by "LuaContext" instead of constantly using "new" and "delete" directly. "LuaContext" will cache no longer used instances so that they can be reused
+  later on. Before this performance optimization my stress test took 3167 milliseconds, after this change it took 1360 milliseconds.
 
 
 

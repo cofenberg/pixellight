@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Core/RefCount.h>
+#include "PLScriptLua/PLScriptLua.h"
 
 
 //[-------------------------------------------------------]
@@ -53,7 +53,7 @@ class Script;
 *  @note
 *    - "Lua 5.1 Reference Manual " -> "2.8 - Metatables" -> http://www.lua.org/manual/5.1/manual.html
 */
-class LuaUserData : private PLCore::RefCount<LuaUserData> {
+class LuaUserData {
 
 
 	//[-------------------------------------------------------]
@@ -144,18 +144,37 @@ class LuaUserData : private PLCore::RefCount<LuaUserData> {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] cScript
-		*    The owner script instance
 		*  @param[in] nType
 		*    The Lua user data type
 		*/
-		LuaUserData(Script &cScript, EType nType);
+		LuaUserData(EType nType);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
 		virtual ~LuaUserData();
+
+		/**
+		*  @brief
+		*    Initializes this instance
+		*
+		*  @param[in] cScript
+		*    The owner script instance
+		*/
+		void InitializeInstance(Script &cScript);
+
+		/**
+		*  @brief
+		*    Copy operator
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
+		*/
+		LuaUserData &operator =(const LuaUserData &cSource);
 
 
 	//[-------------------------------------------------------]
@@ -249,30 +268,12 @@ class LuaUserData : private PLCore::RefCount<LuaUserData> {
 	private:
 		/**
 		*  @brief
-		*    Default constructor
-		*/
-		LuaUserData();
-
-		/**
-		*  @brief
 		*    Copy constructor
 		*
 		*  @param[in] cSource
 		*    Source to copy from
 		*/
 		LuaUserData(const LuaUserData &cSource);
-
-		/**
-		*  @brief
-		*    Copy operator
-		*
-		*  @param[in] cSource
-		*    Source to copy from
-		*
-		*  @return
-		*    Reference to this instance
-		*/
-		LuaUserData &operator =(const LuaUserData &cSource);
 
 
 	//[-------------------------------------------------------]

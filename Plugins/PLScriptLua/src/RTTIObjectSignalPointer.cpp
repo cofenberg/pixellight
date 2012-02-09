@@ -28,6 +28,7 @@ extern "C" {
 }
 #include <PLCore/Base/Object.h>
 #include "PLScriptLua/Script.h"
+#include "PLScriptLua/LuaContext.h"
 #include "PLScriptLua/RTTIObjectMethodPointer.h"
 #include "PLScriptLua/RTTIObjectSignalMethodPointer.h"
 #include "PLScriptLua/RTTIObjectSignalPointer.h"
@@ -47,8 +48,8 @@ namespace PLScriptLua {
 *  @brief
 *    Constructor
 */
-RTTIObjectSignalPointer::RTTIObjectSignalPointer(Script &cScript, Object *pRTTIObject, DynEvent *pDynEvent, EType nType) : RTTIObjectPointer(cScript, pRTTIObject, nType),
-	m_pDynEvent(pDynEvent)
+RTTIObjectSignalPointer::RTTIObjectSignalPointer(EType nType) : RTTIObjectPointer(nType),
+	m_pDynEvent(nullptr)
 {
 }
 
@@ -71,6 +72,23 @@ DynEvent *RTTIObjectSignalPointer::GetDynEvent() const
 
 
 //[-------------------------------------------------------]
+//[ Protected functions                                   ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Initializes this instance
+*/
+void RTTIObjectSignalPointer::InitializeInstance(Script &cScript, Object *pRTTIObject, DynEvent *pDynEvent)
+{
+	// Call base implementation
+	RTTIObjectPointer::InitializeInstance(cScript, pRTTIObject);
+
+	// Set given data
+	m_pDynEvent = pDynEvent;
+}
+
+
+//[-------------------------------------------------------]
 //[ Protected virtual LuaUserData functions               ]
 //[-------------------------------------------------------]
 int RTTIObjectSignalPointer::IndexMetamethod(lua_State *pLuaState)
@@ -84,7 +102,7 @@ int RTTIObjectSignalPointer::IndexMetamethod(lua_State *pLuaState)
 		if (nMethod != RTTIObjectSignalMethodPointer::MethodUnknown) {
 			// It's a build in signal method... just put another user data instance on the Lua stack...
 			// The destruction of the new RTTIObjectSignalMethodPointer instance is done by the Lua garbage collector
-			new RTTIObjectSignalMethodPointer(*m_pScript, GetObject(), m_pDynEvent, nMethod);
+			LuaContext::GetRTTIObjectSignalMethodPointer(*m_pScript, GetObject(), m_pDynEvent, nMethod);
 
 			// Done
 			return 1;
@@ -108,6 +126,16 @@ int RTTIObjectSignalPointer::NewIndexMetamethod(lua_State *pLuaState)
 
 	// Done
 	return 0;
+}
+
+void RTTIObjectSignalPointer::CGMetamethod(lua_State *pLuaState)
+{
+	// De-initializes this instance
+	RTTIObjectPointer::DeInitializeInstance();
+	m_pDynEvent = nullptr;
+
+	// Release this instance, but do not delete it because we can reuse it later on
+	LuaContext::ReleaseRTTIObjectSignalPointer(*this);
 }
 
 void RTTIObjectSignalPointer::CallMetamethod(lua_State *pLuaState)

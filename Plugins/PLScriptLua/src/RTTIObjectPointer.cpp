@@ -29,6 +29,7 @@ extern "C" {
 #include <PLCore/Base/Class.h>
 #include <PLCore/Base/Object.h>
 #include "PLScriptLua/Script.h"
+#include "PLScriptLua/LuaContext.h"
 #include "PLScriptLua/RTTIObjectMethodPointer.h"
 #include "PLScriptLua/RTTIObjectSignalPointer.h"
 #include "PLScriptLua/RTTIObjectSlotPointer.h"
@@ -56,7 +57,7 @@ void RTTIObjectPointer::LuaStackPush(Script &cScript, Object *pRTTIObject)
 {
 	// Valid RTTI object given?
 	if (pRTTIObject)
-		new RTTIObjectPointer(cScript, pRTTIObject);
+		LuaContext::GetRTTIObjectPointer(cScript, pRTTIObject);
 	else
 		lua_pushnil(cScript.GetLuaState());
 }
@@ -69,15 +70,10 @@ void RTTIObjectPointer::LuaStackPush(Script &cScript, Object *pRTTIObject)
 *  @brief
 *    Constructor
 */
-RTTIObjectPointer::RTTIObjectPointer(Script &cScript, Object *pRTTIObject, EType nType) : LuaUserData(cScript, nType),
+RTTIObjectPointer::RTTIObjectPointer(EType nType) : LuaUserData(nType),
 	m_cEventHandlerOnDestroy(&RTTIObjectPointer::OnDestroy, this),
-	m_pRTTIObject(pRTTIObject)
+	m_pRTTIObject(nullptr)
 {
-	// Add RTTI object reference
-	if (m_pRTTIObject) {
-		m_pRTTIObject->AddReference();
-		m_pRTTIObject->SignalDestroyed.Connect(m_cEventHandlerOnDestroy);
-	}
 }
 
 /**
@@ -86,9 +82,6 @@ RTTIObjectPointer::RTTIObjectPointer(Script &cScript, Object *pRTTIObject, EType
 */
 RTTIObjectPointer::~RTTIObjectPointer()
 {
-	// Release RTTI object reference
-	if (m_pRTTIObject)
-		m_pRTTIObject->Release();
 }
 
 /**
@@ -98,6 +91,55 @@ RTTIObjectPointer::~RTTIObjectPointer()
 Object *RTTIObjectPointer::GetObject() const
 {
 	return m_pRTTIObject;
+}
+
+/**
+*  @brief
+*    Comparison operator
+*/
+bool RTTIObjectPointer::operator ==(const RTTIObjectPointer &cOther) const
+{
+	return (this == &cOther);
+}
+
+
+//[-------------------------------------------------------]
+//[ Protected functions                                   ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Initializes this instance
+*/
+void RTTIObjectPointer::InitializeInstance(Script &cScript, Object *pRTTIObject)
+{
+	// Call base implementation
+	LuaUserData::InitializeInstance(cScript);
+
+	// Set given data
+	m_pRTTIObject = pRTTIObject;
+
+	// Add RTTI object reference
+	if (m_pRTTIObject) {
+		m_pRTTIObject->AddReference();
+		m_pRTTIObject->SignalDestroyed.Connect(m_cEventHandlerOnDestroy);
+	}
+}
+
+/**
+*  @brief
+*    De-initializes this instance
+*/
+void RTTIObjectPointer::DeInitializeInstance()
+{
+	// Release RTTI object reference
+	if (m_pRTTIObject) {
+		m_pRTTIObject->SignalDestroyed.Disconnect(m_cEventHandlerOnDestroy);
+		m_pRTTIObject->Release();
+		m_pRTTIObject = nullptr;
+	}
+
+	// Reset
+	m_pScript = nullptr;
 }
 
 
@@ -153,7 +195,7 @@ int RTTIObjectPointer::IndexMetamethod(lua_State *pLuaState)
 				if (pDynFunc) {
 					// It's a method... just put another user data instance on the Lua stack...
 					// The destruction of the new RTTIObjectMethodPointer instance is done by the Lua garbage collector
-					new RTTIObjectMethodPointer(*m_pScript, m_pRTTIObject, pDynFunc);
+					LuaContext::GetRTTIObjectMethodPointer(*m_pScript, m_pRTTIObject, pDynFunc);
 
 					// Done
 					return 1;
@@ -163,7 +205,7 @@ int RTTIObjectPointer::IndexMetamethod(lua_State *pLuaState)
 					if (pDynEvent) {
 						// It's a signal... just put another user data instance on the Lua stack...
 						// The destruction of the new RTTIObjectSignalPointer instance is done by the Lua garbage collector
-						new RTTIObjectSignalPointer(*m_pScript, m_pRTTIObject, pDynEvent);
+						LuaContext::GetRTTIObjectSignalPointer(*m_pScript, m_pRTTIObject, pDynEvent);
 
 						// Done
 						return 1;
@@ -173,7 +215,7 @@ int RTTIObjectPointer::IndexMetamethod(lua_State *pLuaState)
 						if (pDynEventHandler) {
 							// It's a slot... just put another user data instance on the Lua stack...
 							// The destruction of the new RTTIObjectSlotPointer instance is done by the Lua garbage collector
-							new RTTIObjectSlotPointer(*m_pScript, m_pRTTIObject, pDynEventHandler);
+							LuaContext::GetRTTIObjectSlotPointer(*m_pScript, m_pRTTIObject, pDynEventHandler);
 
 							// Done
 							return 1;
@@ -234,7 +276,11 @@ int RTTIObjectPointer::NewIndexMetamethod(lua_State *pLuaState)
 
 void RTTIObjectPointer::CGMetamethod(lua_State *pLuaState)
 {
-	// Nothing to do in here
+	// De-initializes this instance
+	DeInitializeInstance();
+
+	// Release this instance, but do not delete it because we can reuse it later on
+	LuaContext::ReleaseRTTIObjectPointer(*this);
 }
 
 void RTTIObjectPointer::CallMetamethod(lua_State *pLuaState)

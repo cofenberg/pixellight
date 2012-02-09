@@ -163,19 +163,37 @@ LuaUserData::EType LuaUserData::GetType() const
 *  @brief
 *    Constructor
 */
-LuaUserData::LuaUserData(Script &cScript, EType nType) :
-	m_pScript(&cScript),
+LuaUserData::LuaUserData(EType nType) :
+	m_pScript(nullptr),	// Set known value, "InitializeInstance()" setting valid data will be called shortly
 	m_nType(nType)
 {
+}
+
+/**
+*  @brief
+*    Destructor
+*/
+LuaUserData::~LuaUserData()
+{
+}
+
+/**
+*  @brief
+*    Initializes this instance
+*/
+void LuaUserData::InitializeInstance(Script &cScript)
+{
+	// Set given data
+	m_pScript = &cScript;
+
 	// Get the Lua state
 	lua_State *pLuaState = m_pScript->GetLuaState();
 
 	// Allocate memory for a pointer to to object
 	LuaUserData **ppLuaUserData = reinterpret_cast<LuaUserData**>(lua_newuserdata(pLuaState, sizeof(LuaUserData*)));
 
-	// Set as data a pointer to this instance and increase the reference count
+	// Set as data a pointer to this instance
 	*ppLuaUserData = this;
-	AddReference();
 
 	// Attach metatable
 	lua_pushlightuserdata(pLuaState, &LuaMetatable);
@@ -185,10 +203,12 @@ LuaUserData::LuaUserData(Script &cScript, EType nType) :
 
 /**
 *  @brief
-*    Destructor
+*    Copy operator
 */
-LuaUserData::~LuaUserData()
+LuaUserData &LuaUserData::operator =(const LuaUserData &cSource)
 {
+	// No implementation because the copy operator is never used
+	return *this;
 }
 
 
@@ -240,9 +260,6 @@ int LuaUserData::LuaCGMetamethodCallback(lua_State *pLuaState)
 	if (pLuaUserData) {
 		// Call the virtual method
 		pLuaUserData->CGMetamethod(pLuaState);
-
-		// Release the instance
-		pLuaUserData->Release();
 	}
 
 	// Done
@@ -295,29 +312,11 @@ int LuaUserData::LuaToStringMetamethodCallback(lua_State *pLuaState)
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Default constructor
-*/
-LuaUserData::LuaUserData()
-{
-}
-
-/**
-*  @brief
 *    Copy constructor
 */
 LuaUserData::LuaUserData(const LuaUserData &cSource)
 {
 	// No implementation because the copy constructor is never used
-}
-
-/**
-*  @brief
-*    Copy operator
-*/
-LuaUserData &LuaUserData::operator =(const LuaUserData &cSource)
-{
-	// No implementation because the copy operator is never used
-	return *this;
 }
 
 

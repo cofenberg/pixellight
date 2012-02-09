@@ -285,6 +285,7 @@ copy ..\..\External\_Windows_x86_64\Lua\bin\lua51.dll ..\..\Bin\Runtime\x64\
   <ItemGroup>
     <None Include="..\..\Base\PLCore\Diary.txt" />
     <None Include="CMakeLists.txt" />
+    <None Include="include\PLScriptLua\LuaContext.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

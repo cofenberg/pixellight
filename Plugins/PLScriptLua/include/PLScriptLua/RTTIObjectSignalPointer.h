@@ -56,6 +56,12 @@ class RTTIObjectSignalPointer : public RTTIObjectPointer {
 
 
 	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class LuaContext;
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
@@ -63,16 +69,10 @@ class RTTIObjectSignalPointer : public RTTIObjectPointer {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] cScript
-		*    The owner script instance
-		*  @param[in] pRTTIObject
-		*    Pointer to the RTTI object to wrap, can be a null pointer
-		*  @param[in] pDynEvent
-		*    Pointer to the RTTI object signal to wrap, can be a null pointer
 		*  @param[in] nType
 		*    The Lua user data type
 		*/
-		RTTIObjectSignalPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynEvent *pDynEvent, EType nType = TypeObjectSignalPointer);
+		RTTIObjectSignalPointer(EType nType = TypeObjectSignalPointer);
 
 		/**
 		*  @brief
@@ -91,11 +91,30 @@ class RTTIObjectSignalPointer : public RTTIObjectPointer {
 
 
 	//[-------------------------------------------------------]
+	//[ Protected functions                                   ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Initializes this instance
+		*
+		*  @param[in] cScript
+		*    The owner script instance
+		*  @param[in] pRTTIObject
+		*    Pointer to the RTTI object to wrap, can be a null pointer
+		*  @param[in] pDynEvent
+		*    Pointer to the RTTI object signal to wrap, can be a null pointer
+		*/
+		void InitializeInstance(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynEvent *pDynEvent);
+
+
+	//[-------------------------------------------------------]
 	//[ Protected virtual LuaUserData functions               ]
 	//[-------------------------------------------------------]
 	protected:
 		virtual int IndexMetamethod(lua_State *pLuaState) override;
 		virtual int NewIndexMetamethod(lua_State *pLuaState) override;
+		virtual void CGMetamethod(lua_State *pLuaState) override;
 		virtual void CallMetamethod(lua_State *pLuaState) override;
 
 

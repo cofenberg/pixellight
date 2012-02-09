@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Base/Event/EventHandler.h>
+#include <PLCore/Container/FastPool.h>
 #include "PLScriptLua/LuaUserData.h"
 
 
@@ -54,6 +55,12 @@ namespace PLScriptLua {
 *    RTTI object pointer
 */
 class RTTIObjectPointer : public LuaUserData {
+
+
+	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class LuaContext;
 
 
 	//[-------------------------------------------------------]
@@ -83,14 +90,10 @@ class RTTIObjectPointer : public LuaUserData {
 		*  @brief
 		*    Constructor
 		*
-		*  @param[in] cScript
-		*    The owner script instance
-		*  @param[in] pRTTIObject
-		*    Pointer to the RTTI object to wrap, can be a null pointer
 		*  @param[in] nType
 		*    The Lua user data type
 		*/
-		RTTIObjectPointer(Script &cScript, PLCore::Object *pRTTIObject, EType nType = TypeObjectPointer);
+		RTTIObjectPointer(EType nType = TypeObjectPointer);
 
 		/**
 		*  @brief
@@ -106,6 +109,40 @@ class RTTIObjectPointer : public LuaUserData {
 		*    Pointer to the RTTI object to wrap, can be a null pointer
 		*/
 		PLCore::Object *GetObject() const;
+
+		/**
+		*  @brief
+		*    Comparison operator
+		*
+		*  @param[in] cOther
+		*    Other instance to compare with
+		*
+		*  @return
+		*    'true' if both are equal, else 'false'
+		*/
+		bool operator ==(const RTTIObjectPointer &cOther) const;
+
+
+	//[-------------------------------------------------------]
+	//[ Protected functions                                   ]
+	//[-------------------------------------------------------]
+	protected:
+		/**
+		*  @brief
+		*    Initializes this instance
+		*
+		*  @param[in] cScript
+		*    The owner script instance
+		*  @param[in] pRTTIObject
+		*    Pointer to the RTTI object to wrap, can be a null pointer
+		*/
+		void InitializeInstance(Script &cScript, PLCore::Object *pRTTIObject);
+
+		/**
+		*  @brief
+		*    De-initializes this instance
+		*/
+		void DeInitializeInstance();
 
 
 	//[-------------------------------------------------------]

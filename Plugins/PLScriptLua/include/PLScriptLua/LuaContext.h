@@ -29,6 +29,13 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Core/AbstractContext.h>
+#include <PLCore/Container/Pool.h>
+#include <PLCore/Container/FastPool.h>
+#include "PLScriptLua/RTTIObjectPointer.h"
+#include "PLScriptLua/RTTIObjectSlotPointer.h"
+#include "PLScriptLua/RTTIObjectMethodPointer.h"
+#include "PLScriptLua/RTTIObjectSignalPointer.h"
+#include "PLScriptLua/RTTIObjectSignalMethodPointer.h"
 
 
 //[-------------------------------------------------------]
@@ -69,12 +76,38 @@ class LuaContext : public PLCore::AbstractContext {
 		*/
 		static void ReleaseContextReference();
 
+		//[-------------------------------------------------------]
+		//[ Lua user data types                                   ]
+		//[-------------------------------------------------------]
+		// RTTIObjectPointer
+		static inline RTTIObjectPointer &GetRTTIObjectPointer(Script &cScript, PLCore::Object *pRTTIObject);
+		static inline void ReleaseRTTIObjectPointer(RTTIObjectPointer &cInstance);
+		// RTTIObjectSlotPointer
+		static inline RTTIObjectSlotPointer &GetRTTIObjectSlotPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynEventHandler *pDynEventHandler);
+		static inline void ReleaseRTTIObjectSlotPointer(RTTIObjectSlotPointer &cInstance);
+		// RTTIObjectMethodPointer
+		static inline RTTIObjectMethodPointer &GetRTTIObjectMethodPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynFuncPtr pDynFunc);
+		static inline void ReleaseRTTIObjectMethodPointer(RTTIObjectMethodPointer &cInstance);
+		// RTTIObjectSignalPointer
+		static inline RTTIObjectSignalPointer &GetRTTIObjectSignalPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynEvent *pDynEvent);
+		static inline void ReleaseRTTIObjectSignalPointer(RTTIObjectSignalPointer &cInstance);
+		// RTTIObjectSignalMethodPointer
+		static inline RTTIObjectSignalMethodPointer &GetRTTIObjectSignalMethodPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynEvent *pDynEvent, RTTIObjectSignalMethodPointer::EMethod nMethod);
+		static inline void ReleaseRTTIObjectSignalMethodPointer(RTTIObjectSignalMethodPointer &cInstance);
+
 
 	//[-------------------------------------------------------]
 	//[ Private static data                                   ]
 	//[-------------------------------------------------------]
 	private:
 		static PLCore::uint32 m_nContexCounter;	/**< Lua context counter */
+
+		// Lua user data types
+		static PLCore::Pool<RTTIObjectPointer>					m_lstRTTIObjectPointer;				/**< Pool for "RTTIObjectPointer"-instances */
+		static PLCore::FastPool<RTTIObjectSlotPointer>			m_lstRTTIObjectSlotPointer;			/**< Fast pool for "RTTIObjectSlotPointer"-instances */
+		static PLCore::FastPool<RTTIObjectMethodPointer>		m_lstRTTIObjectMethodPointer;		/**< Fast pool for "RTTIObjectMethodPointer"-instances */
+		static PLCore::Pool<RTTIObjectSignalPointer>			m_lstRTTIObjectSignalPointer;		/**< Pool for "RTTIObjectSignalPointer"-instances */
+		static PLCore::FastPool<RTTIObjectSignalMethodPointer>	m_lstRTTIObjectSignalMethodPointer;	/**< Fast pool for "RTTIObjectSignalMethodPointer"-instances */
 
 
 };
@@ -84,6 +117,12 @@ class LuaContext : public PLCore::AbstractContext {
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 } // PLScriptLua
+
+
+//[-------------------------------------------------------]
+//[ Implementation                                        ]
+//[-------------------------------------------------------]
+#include "PLScriptLua/LuaContext.inl"
 
 
 #endif // __PLSCRIPTLUA_LUACONTEXT_H__

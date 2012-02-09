@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Container/FastPool.h>
 #include "PLScriptLua/RTTIObjectSignalPointer.h"
 
 
@@ -53,7 +54,13 @@ namespace PLScriptLua {
 *  @brief
 *    RTTI object build in signal method pointer
 */
-class RTTIObjectSignalMethodPointer : public RTTIObjectSignalPointer {
+class RTTIObjectSignalMethodPointer : public RTTIObjectSignalPointer, public PLCore::FastPoolElement<RTTIObjectSignalMethodPointer> {
+
+
+	//[-------------------------------------------------------]
+	//[ Friends                                               ]
+	//[-------------------------------------------------------]
+	friend class LuaContext;
 
 
 	//[-------------------------------------------------------]
@@ -94,18 +101,9 @@ class RTTIObjectSignalMethodPointer : public RTTIObjectSignalPointer {
 	public:
 		/**
 		*  @brief
-		*    Constructor
-		*
-		*  @param[in] cScript
-		*    The owner script instance
-		*  @param[in] pRTTIObject
-		*    Pointer to the RTTI object to wrap, can be a null pointer
-		*  @param[in] pDynEvent
-		*    Pointer to the RTTI object signal to wrap, can be a null pointer
-		*  @param[in] nMethod
-		*    Build in method
+		*    Default constructor
 		*/
-		RTTIObjectSignalMethodPointer(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynEvent *pDynEvent, EMethod nMethod);
+		RTTIObjectSignalMethodPointer();
 
 		/**
 		*  @brief
@@ -120,6 +118,7 @@ class RTTIObjectSignalMethodPointer : public RTTIObjectSignalPointer {
 	protected:
 		virtual int IndexMetamethod(lua_State *pLuaState) override;
 		virtual int NewIndexMetamethod(lua_State *pLuaState) override;
+		virtual void CGMetamethod(lua_State *pLuaState) override;
 		virtual void CallMetamethod(lua_State *pLuaState) override;
 
 
@@ -150,6 +149,21 @@ class RTTIObjectSignalMethodPointer : public RTTIObjectSignalPointer {
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
+		/**
+		*  @brief
+		*    Initializes this instance
+		*
+		*  @param[in] cScript
+		*    The owner script instance
+		*  @param[in] pRTTIObject
+		*    Pointer to the RTTI object to wrap, can be a null pointer
+		*  @param[in] pDynEvent
+		*    Pointer to the RTTI object signal to wrap, can be a null pointer
+		*  @param[in] nMethod
+		*    Build in method
+		*/
+		void InitializeInstance(Script &cScript, PLCore::Object *pRTTIObject, PLCore::DynEvent *pDynEvent, EMethod nMethod);
+
 		/**
 		*  @brief
 		*    Returns a RTTI slot from the Lua stack without removing it

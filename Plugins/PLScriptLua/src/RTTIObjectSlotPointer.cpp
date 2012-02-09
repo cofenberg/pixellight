@@ -26,6 +26,7 @@
 extern "C" {
 	#include <Lua/lua.h>
 }
+#include "PLScriptLua/LuaContext.h"
 #include "PLScriptLua/RTTIObjectSlotPointer.h"
 
 
@@ -43,8 +44,8 @@ namespace PLScriptLua {
 *  @brief
 *    Constructor
 */
-RTTIObjectSlotPointer::RTTIObjectSlotPointer(Script &cScript, Object *pRTTIObject, DynEventHandler *pDynEventHandler) : RTTIObjectPointer(cScript, pRTTIObject, TypeObjectSlotPointer),
-	m_pDynEventHandler(pDynEventHandler)
+RTTIObjectSlotPointer::RTTIObjectSlotPointer() : RTTIObjectPointer(TypeObjectSlotPointer),
+	m_pDynEventHandler(nullptr)
 {
 }
 
@@ -87,10 +88,37 @@ int RTTIObjectSlotPointer::NewIndexMetamethod(lua_State *pLuaState)
 	return 0;
 }
 
+void RTTIObjectSlotPointer::CGMetamethod(lua_State *pLuaState)
+{
+	// De-initializes this instance
+	RTTIObjectPointer::DeInitializeInstance();
+	m_pDynEventHandler = nullptr;
+
+	// Release this instance, but do not delete it because we can reuse it later on
+	LuaContext::ReleaseRTTIObjectSlotPointer(*this);
+}
+
 void RTTIObjectSlotPointer::CallMetamethod(lua_State *pLuaState)
 {
 	// Error! A slot can't be called like a function...
 	// [TODO] Write an error message into the log? (with current script line etc.)
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*    Initializes this instance
+*/
+void RTTIObjectSlotPointer::InitializeInstance(Script &cScript, Object *pRTTIObject, PLCore::DynEventHandler *pDynEventHandler)
+{
+	// Call base implementation
+	RTTIObjectPointer::InitializeInstance(cScript, pRTTIObject);
+
+	// Set given data
+	m_pDynEventHandler = pDynEventHandler;
 }
 
 
