@@ -13,6 +13,10 @@
 - PLScriptLua: "RTTIObjectPointer", "RTTIObjectSlotPointer", "RTTIObjectMethodPointer", "RTTIObjectSignalPointer" and "RTTIObjectSignalMethodPointer" instances
   are now managed by "LuaContext" instead of constantly using "new" and "delete" directly. "LuaContext" will cache no longer used instances so that they can be reused
   later on. Before this performance optimization my stress test took 3167 milliseconds, after this change it took 1360 milliseconds.
+- "Script::Execute()" and "Script::EndCall()" perform an incremental step of garbage collection
+  -> For now I don't want to bother the script API user with somethig like garbage collection, so do this automatically
+  -> Without doing this, the instance reuse optimization from above has no chance to improve the performance because Lua will not release unused stuff when it's not
+     asked to do so
 
 
 

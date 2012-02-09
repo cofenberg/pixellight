@@ -366,7 +366,22 @@ void Script::GetAssociatedFilenames(Array<String> &lstFilenames)
 
 bool Script::Execute(const String &sSourceCode)
 {
-	return m_pLuaState ? !luaL_dostring(m_pLuaState, sSourceCode.GetASCII()) : false;
+	// Is there a Lua state?
+	if (m_pLuaState) {
+		// Execute
+		const bool bResult = !luaL_dostring(m_pLuaState, sSourceCode.GetASCII());
+
+		// Perform an incremental step of garbage collection
+		// -> For now we don't want to bother the script API user with somethig
+		//    like garbage collection, so do this automatically
+		lua_gc(m_pLuaState, LUA_GCSTEP, 1);
+
+		// Done
+		return bResult;
+	}
+
+	// Error!
+	return false;
 }
 
 void Script::GetGlobalVariables(Array<String> &lstGlobalVariables, const String &sNamespace)
@@ -701,6 +716,13 @@ bool Script::EndCall()
 	if (m_pLuaState) {
 		// Do the call ('m_nCurrentArgument' arguments, 1 result)
 		const int nResult = lua_pcall(m_pLuaState, m_nCurrentArgument, m_bFunctionResult, 0);
+
+		// Perform an incremental step of garbage collection
+		// -> For now we don't want to bother the script API user with somethig
+		//    like garbage collection, so do this automatically
+		lua_gc(m_pLuaState, LUA_GCSTEP, 1);
+
+		// Evaluate the result
 		if (nResult) {
 			// Write a log message
 			String sErrorDescription;
