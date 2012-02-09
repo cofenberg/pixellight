@@ -20,6 +20,22 @@ PLScriptLua:
   -> For now I don't want to bother the script API user with somethig like garbage collection, so do this automatically
   -> Without doing this, the instance reuse optimization from above has no chance to improve the performance because Lua will not release unused stuff when it's not
      asked to do so
+PLFrontendQt:
+- "SceneGraphTreeModel::dropMimeData()": Currently, there's a different tree view item drag'n'drop behaviour on Linux and Windows
+  -> Linux: If an item is marked to not allow drop onto it, the mouse cursor gets "X" and dropping is impossible (as expected in the first place)
+  -> Windows: If an item is marked to not allow drop onto it, the dropped item is inserted in top of or below the
+              item we dropped our item onto. When debugging into Qt in order to understand the drag'n'drop behaviour,
+              the exlaination for this behaviour can be found within
+              "QAbstractItemView::DropIndicatorPosition QAbstractItemViewPrivate::position(const QPoint &pos, const QRect &rect, const QModelIndex &index) const"
+               When just looking at this Qt source code, it appears that this has nothing to do with the Windows operation
+              system at all. No OS features are used. Interesting that the behaviour under Linux is that different. Maybe
+              we should also debug the drag'n'drop procedure under Linux to be able to find the one part were it starts to differ.
+              I assume that there are some other relevant parts before "QAbstractItemViewPrivate::position()" is even called.
+  -> When searching for this issue in the internet, it appears that there are also other people which have noticed the same thing
+  -> For now we have the following hack under Windows, if we don't do this, items will disappear regularly when doing drag'n'drop making is unusable :/
+  -> I'am using this drag'n'drop feature regularly when testing stuff from my master thesis and I already had this change locally to not constantly stumble into
+     this issue... but it would only have been a matter of time until this local change would have been committed accidentally. So, an error description and OS
+     related hack is probably the better way. As for me, I have to focus on none Qt parts in order to be able to accomplish the work I have to get done in a certain time frame.
 
 
 

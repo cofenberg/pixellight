@@ -502,6 +502,23 @@ bool SceneGraphTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction act
 					targetIdx -= 1;
 				}
 
+				// [HACK][TODO] Currently, there's a different tree view item drag'n'drop behaviour on Linux and Windows
+				// -> Linux: If an item is marked to not allow drop onto it, the mouse cursor gets "X" and dropping is impossible (as expected in the first place)
+				// -> Windows: If an item is marked to not allow drop onto it, the dropped item is inserted in top of or below the
+				//             item we dropped our item onto. When debugging into Qt in order to understand the drag'n'drop behaviour,
+				//             the exlaination for this behaviour can be found within
+				//             "QAbstractItemView::DropIndicatorPosition QAbstractItemViewPrivate::position(const QPoint &pos, const QRect &rect, const QModelIndex &index) const"
+				//             When just looking at this Qt source code, it appears that this has nothing to do with the Windows operation
+				//             system at all. No OS features are used. Interesting that the behaviour under Linux is that different. Maybe
+				//             we should also debug the drag'n'drop procedure under Linux to be able to find the one part were it starts to differ.
+				//             I assume that there are some other relevant parts before "QAbstractItemViewPrivate::position()" is even called.
+				// -> When searching for this issue in the internet, it appears that there are also other people which have noticed the same thing
+				// -> For now we have the following hack under Windows, if we don't do this, items will disappear regularly when doing drag'n'drop making is unusable :/
+				#ifdef WIN32
+					// Set that we are in a move operation see comment in removeRows() why
+					m_bInMoveOperation = true;
+				#endif
+
 				// Check if we move the item to the same location within the child list
 				// rowToMove equals the current list index of the item
 				if (rowToMove == targetIdx)
