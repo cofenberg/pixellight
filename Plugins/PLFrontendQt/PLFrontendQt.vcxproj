@@ -117,8 +117,8 @@
     <PostBuildEvent>
       <Command>copy build\debug_x86\PLFrontendQtD.dll ..\..\Bin\Runtime\x86\
 copy build\debug_x86\PLFrontendQtD.lib ..\..\Bin\Lib\x86\
-copy ..\..\External\_Windows_x86_32\Qt\bin\QtCore4.dll ..\..\Bin\Runtime\x86\
-copy ..\..\External\_Windows_x86_32\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\Qt\bin\QtCored4.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\Qt\bin\QtGuid4.dll ..\..\Bin\Runtime\x86\
 ..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
@@ -157,8 +157,8 @@ copy ..\..\External\_Windows_x86_32\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x86\
     <PostBuildEvent>
       <Command>copy build\debug_x64\PLFrontendQtD.dll ..\..\Bin\Runtime\x64\
 copy build\debug_x64\PLFrontendQtD.lib ..\..\Bin\Lib\x64\
-copy ..\..\External\_Windows_x86_64\Qt\bin\QtCore4.dll ..\..\Bin\Runtime\x64\
-copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
+copy ..\..\External\_Windows_x86_64\Qt\bin\QtCored4.dll ..\..\Bin\Runtime\x64\
+copy ..\..\External\_Windows_x86_64\Qt\bin\QtGuid4.dll ..\..\Bin\Runtime\x64\
 ..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
