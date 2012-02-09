@@ -77,7 +77,7 @@ void TextureBuffer3D::InitialUploadVolumeData(Renderer &cRendererOpenGL, const I
 	// Upload the texture buffer
 	if (bUsePreCompressedData && cImageBuffer.HasCompressedData()) {
 		// Pass thru the already compressed data to the GPU
-		glCompressedTexImage3DARB(nOpenGLTarget, nOpenGLLevel, nOpenGLInternalformat, vSize.x, vSize.y, vSize.z, 0, cImageBuffer.GetCompressedDataSize(), cImageBuffer.GetCompressedData());
+		CompressedTexImage3D(cRendererOpenGL, nOpenGLTarget, nOpenGLLevel, nOpenGLInternalformat, vSize, cImageBuffer.GetCompressedDataSize(), cImageBuffer.GetCompressedData());
 	} else {
 		// When trying to upload a 512x512x1743 8 bit (435,75 MiB) uncompressed volume to the GPU using one "glTexImage3DEXT"-call and asking for
 		// LATC1 as internal format (resulting in 217,875 MiB), the result was a crash inside the graphics driver.
@@ -134,6 +134,131 @@ void TextureBuffer3D::InitialUploadVolumeData(Renderer &cRendererOpenGL, const I
 				InitialUploadVolumeData(cRendererOpenGL, cImageBuffer, vSize, false, false, nImageFormat, nOpenGLTarget, nOpenGLLevel, *pAPIPixelFormatFallback, nOpenGLFormat, nOpenGLType, nPrimaryImageFormat);
 			}
 		}
+	}
+}
+
+// "glCompressedTexImage3DARB"-version handling some special behaviour across different GPU's
+void TextureBuffer3D::CompressedTexImage3D(const Renderer &cRendererOpenGL, GLenum nOpenGLTarget, GLint nOpenGLLevel, GLenum nOpenGLInternalformat, const Vector3i &vSize, uint32 nCompressedDataSize, const uint8 *pCompressedData)
+{
+	// Reason for the existence of this method:
+	// When uploading e.g. LATC1 compressed 3D textures on AMD/ATI GPU's, there are no issues. When doing the same on NVIDIA GPU's
+	// e.g. a rendered volume using this data looks pretty odd. The issue 13 in the "EXT_texture_compression_latc"-specification
+	// (http://www.opengl.org/registry/specs/EXT/texture_compression_latc.txt) explains this weird behaviour:
+	// "
+	//   13) Should these formats be allowed to specify 3D texture images
+	//   when NV_texture_compression_vtc is supported?
+
+	//   RESOLVED: The NV_texture_compression_vtc stacks 4x4 blocks into
+	//   4x4x4 bricks.  It may be more desirable to represent compressed
+	//   3D textures as simply slices of 4x4 blocks.
+
+	//   However the NV_texture_compression_vtc extension expects
+	//   data passed to the glCompressedTexImage commands to be "bricked"
+	//   rather than blocked slices.
+	// "
+	// So, we need to check for this extension. If it's there, we need to reorder the texture data before uploading
+	// it to the GPU. It's impossible to deactivate this NVIDIA "feature", so we have to life with it.
+
+	// Is the "NV_texture_compression_vtc"-extension there?
+	if (vSize.z > 1 && cRendererOpenGL.GetContext().GetExtensions().IsNV_texture_compression_vtc()) {
+		// Go the complicated way
+		// -> This is not tuned for maximum performance, so we're allocating/deallocating a temporary
+		//    buffer in here in order to keep this nasty behaviour handling as local as possible
+
+		// Pointer to the original compressed data
+		const uint8 *pCompressedDataCurrent = pCompressedData;
+
+		// Allocate memory for the reordered compressed data
+		uint8 *pReorderedData = new uint8[nCompressedDataSize];
+
+		// Reorder the compressed data as described within http://www.nvidia.com/dev_content/nvopenglspecs/GL_NV_texture_compression_vtc.txt
+		// (quoted in here because it's quite important to understand how it's working in detail)
+		// "
+		//  VTC Compressed Texture Image Formats
+		//
+		//  Each VTC compression format is similar to a corresponding S3TC
+		//  compression format, but where an S3TC block encodes a 4x4 block of
+		//  texels, a VTC block encodes a 4x4x1, 4x4x2, or 4x4x4 block of texels.
+		//  If the depth of the image is four or greater, 4x4x4 blocks are used,
+		//  and if the depth is 1 or 2, 4x4x1 or 4x4x2 blocks are used.
+		//  The size in bytes of a VTC image with dimensions w, h, and d is:
+		//
+		//    ceil(w/4) * ceil(h/4) * d * blocksize,
+		//
+		//  where blocksize is the size of an analogous 4x4 S3TC block and is
+		//  either 8 or 16 bytes.
+		//
+		//  The block containing a texel at location (x,y,z) starts at an offset
+		//  inside the image of:
+		//
+		//    blocksize * min(d,4) * (floor(x/4) + ceil(w/4) * (floor(y/4) + ceil(h/4) * floor(z/4)))
+		//
+		//  bytes.
+		//
+		//  A 4x4x1 block of each of the four formats is stored in exactly the
+		//  same way that a 4x4 block of the analogous S3TC format is stored.
+		//
+		//  A 4x4x2 or 4x4x4 block is stored as two or four consecutive 4x4
+		//  blocks of the analogous S3TC format, one for each layer inside the
+		//  block.  For example, a 4x4x2 DXT1 block consists of 16 bytes in
+		//  total.  The first 8 bytes encode the texels at locations (0,0,0)
+		//  through (3,3,0), and the second 8 bytes encode the texels at
+		//  locations (0,0,1) through (3,3,1).
+		// "
+
+		// Get the block depth
+		const uint32 nBlockDepth = (vSize.z > 2) ? 4 : 2;
+
+		// Blocksize, either 8 or 16 bytes
+		const uint32 nNumOfBytesPerBlock = (nOpenGLInternalformat == GL_COMPRESSED_RGB_S3TC_DXT1_EXT || nOpenGLInternalformat == GL_COMPRESSED_LUMINANCE_LATC1_EXT) ? 8 : 16;
+
+		// Get the number of bytes per depth layer block (e.g. four depth layers are within a VTC block)
+		const uint32 nNumOfBytesPerLayerBlock = nCompressedDataSize/vSize.z*nBlockDepth;
+
+		// Get the number of blocks along the x-axis and y-axis
+		const int nNumOfXBlocks = (vSize.x + 3)/4;
+		const int nNumOfYBlocks = (vSize.y + 3)/4;
+
+		// Loop through all depth layers along the z-axis
+		for (int z=0; z<vSize.z; z++) {
+			// Get start position inside the current depth layer block
+			const uint32 nFloorZ = static_cast<uint32>(Math::Floor(z/static_cast<float>(nBlockDepth)));
+			const uint32 nBlockStartOffset = nFloorZ*nNumOfBytesPerLayerBlock;
+
+			// Take care of the last block layer
+			const uint32 nCurrentZEnd = nFloorZ*nBlockDepth + nBlockDepth;
+			const uint32 nCurrentBlockDepth = (static_cast<int>(nCurrentZEnd) > vSize.z) ? (nBlockDepth - (nCurrentZEnd - vSize.z)) : nBlockDepth;
+
+			// Loop through all blocks along the y-axis
+			for (int y=0; y<nNumOfYBlocks; y++) {
+				// Loop through all block along the x-axis
+				for (int x=0; x<nNumOfXBlocks; x++) {
+					// Get start position inside the current depth layer block
+					uint32 nBlockOffset = nBlockStartOffset;
+
+					// Add the index of the block inside the current depth layer block
+					nBlockOffset += (x + y*nNumOfXBlocks)*nNumOfBytesPerBlock*nCurrentBlockDepth;
+
+					// Add the depth offset
+					nBlockOffset += (z%nCurrentBlockDepth)*nNumOfBytesPerBlock;
+
+					// Copy the block to the new location
+					MemoryManager::Copy(pReorderedData + nBlockOffset, pCompressedDataCurrent, nNumOfBytesPerBlock);
+
+					// Update the original compressed data pointer
+					pCompressedDataCurrent += nNumOfBytesPerBlock;
+				}
+			}
+		}
+
+		// Finally, upload the reordered compressed data
+		glCompressedTexImage3DARB(nOpenGLTarget, nOpenGLLevel, nOpenGLInternalformat, vSize.x, vSize.y, vSize.z, 0, nCompressedDataSize, pReorderedData);
+
+		// Deallocate memory of the reordered compressed data
+		delete [] pReorderedData;
+	} else {
+		// Go the simple way
+		glCompressedTexImage3DARB(nOpenGLTarget, nOpenGLLevel, nOpenGLInternalformat, vSize.x, vSize.y, vSize.z, 0, nCompressedDataSize, pCompressedData);
 	}
 }
 
@@ -333,7 +458,7 @@ bool TextureBuffer3D::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *p
 				const uint32 nNumOfBytes = GetNumOfBytes(nMipmap);
 
 				// Upload
-				glCompressedTexImage3DARB(GL_TEXTURE_3D_EXT, nMipmap, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, nNumOfBytes, pData);
+				CompressedTexImage3D(cRendererOpenGL, GL_TEXTURE_3D_EXT, nMipmap, *pAPIPixelFormat, vSize, nNumOfBytes, static_cast<const uint8*>(pData));
 			} else {
 				// Bind this texture buffer
 				glBindTexture(GL_TEXTURE_3D_EXT, m_nOpenGLTexture);
@@ -492,7 +617,7 @@ void TextureBuffer3D::RestoreDeviceData(uint8 **ppBackup)
 
 				// Upload the texture buffer
 				if (bCompressedFormat)
-					glCompressedTexImage3DARB(GL_TEXTURE_3D_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, nNumOfBytes, pData);
+					CompressedTexImage3D(cRendererOpenGL, GL_TEXTURE_3D_EXT, nLevel, *pAPIPixelFormat, vSize, nNumOfBytes, pData);
 				else
 					glTexImage3DEXT(GL_TEXTURE_3D_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, nPixelFormat, nDataFormat, pData);
 
