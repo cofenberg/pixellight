@@ -1,3 +1,13 @@
+>> 10.02.2012
+[CO]
+- Bugfix: "TextureBuffer::DownloadAsImage()" (added "09.12.2011"): The mipmap size was wrong
+  -> Just noticed that one of my favourite texture tools "The Compressonator Version 1.50.1731" (64 bit, http://developer.amd.com/tools/compressonator/Pages/default.aspx )
+     crashes when I try to create mipmaps for a 3D texture (used LATC1 compressed volume data). Also, when trying to load in a LATC1 compressed 3D texture containing mipmaps,
+     nothing happens, no crash, no error message, just nothing. This tool is also really useful to inspect the slices of 3D textures, but unusable when using 3D textures
+     with mipmaps. :/
+
+
+
 >> 09.02.2012
 [CO]
 PLRendererOpenGL:
