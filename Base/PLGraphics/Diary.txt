@@ -1,3 +1,9 @@
+>> 10.02.2012
+[CO]
+- Bugfix: "ImageLoaderDDS::Load()": Loading 3D texture data containing mipmaps was not working properly
+
+
+
 >> 08.12.2011
 [CO]
 - "ImageLoaderDDS": Implemented the save-method, but only for compressed data because that was exactly what I currently need and this implementation is easy.

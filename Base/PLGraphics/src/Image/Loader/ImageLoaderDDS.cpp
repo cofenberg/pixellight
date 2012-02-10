@@ -405,7 +405,7 @@ bool ImageLoaderDDS::Load(Image &cImage, File &cFile)
 												  nColorFormat,
 												  Vector3i(ImageBuffer::GetMipmapSize(sHeader.nWidth,  nMipmap),
 														   ImageBuffer::GetMipmapSize(sHeader.nHeight, nMipmap),
-														   nDepth),
+														   ImageBuffer::GetMipmapSize(nDepth,		   nMipmap)),
 												  nCompression);
 
 						// Read in compressed data?
