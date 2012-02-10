@@ -163,7 +163,7 @@ bool Extensions::IsGL_NV_texture_rectangle()			const { return m_bGL_NV_texture_r
 bool Extensions::IsGL_NV_occlusion_query()				const { return m_bGL_NV_occlusion_query;			 }
 bool Extensions::IsGL_NVX_gpu_memory_info()				const { return m_bGL_NVX_gpu_memory_info;			 }
 bool Extensions::IsGL_NV_half_float()					const { return m_bGL_NV_half_float;					 }
-bool Extensions::IsNV_texture_compression_vtc()			const { return m_bNV_texture_compression_vtc;		 }
+bool Extensions::IsGL_NV_texture_compression_vtc()		const { return m_bGL_NV_texture_compression_vtc;	 }
 // SGIS
 bool Extensions::IsGL_SGIS_generate_mipmap()			const { return m_bGL_SGIS_generate_mipmap;			 }
 // HP
@@ -358,7 +358,7 @@ void Extensions::ResetExtensions()
 	m_bGL_NV_occlusion_query				= false;
 	m_bGL_NVX_gpu_memory_info				= false;
 	m_bGL_NV_half_float						= false;
-	m_bNV_texture_compression_vtc			= false;
+	m_bGL_NV_texture_compression_vtc		= false;
 	// SGIS
 	m_bGL_SGIS_generate_mipmap				= false;
 	// HP
@@ -948,8 +948,8 @@ bool Extensions::InitUniversal()
 	// GL_NV_half_float
 	m_bGL_NV_half_float = IsSupported("GL_NV_half_float");
 
-	// NV_texture_compression_vtc
-	m_bNV_texture_compression_vtc = IsSupported("NV_texture_compression_vtc");
+	// GL_NV_texture_compression_vtc
+	m_bGL_NV_texture_compression_vtc = IsSupported("GL_NV_texture_compression_vtc");
 
 
 	//[-------------------------------------------------------]

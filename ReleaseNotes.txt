@@ -9,6 +9,7 @@ Changes in PixelLight 0.9.11-R1 (not yet released)
 - Feature: It's now possible to create RTTI class instances via script
 - Feature: Added position, rotation and scale transform gimzo scene node modifiers
 - Feature: Added "Fast Approximate Anti-Aliasing" (FXAA) support within "PLCompositing"
+- Feature: Added volume texture compression (VTC, "GL_NV_texture_compression_vtc"-extension) support
 - Change: Updated Qt from "4.7.0" to "4.8.0"
 - Removed: "PLViewerStandalone", use "PLViewer" instead and provide "PLViewer.cfg" in it's executable directory for standalone-mode
 - Bugfix: "PLRendererOpenGLES2" font rendering worked on "Tegra 2", but failed on "PowerVR SGX 540"

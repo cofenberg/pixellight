@@ -159,8 +159,8 @@ void TextureBuffer3D::CompressedTexImage3D(const Renderer &cRendererOpenGL, GLen
 	// So, we need to check for this extension. If it's there, we need to reorder the texture data before uploading
 	// it to the GPU. It's impossible to deactivate this NVIDIA "feature", so we have to life with it.
 
-	// Is the "NV_texture_compression_vtc"-extension there?
-	if (vSize.z > 1 && cRendererOpenGL.GetContext().GetExtensions().IsNV_texture_compression_vtc()) {
+	// Is the "GL_NV_texture_compression_vtc"-extension there?
+	if (vSize.z > 1 && cRendererOpenGL.GetContext().GetExtensions().IsGL_NV_texture_compression_vtc()) {
 		// Go the complicated way
 		// -> This is not tuned for maximum performance, so we're allocating/deallocating a temporary
 		//    buffer in here in order to keep this nasty behaviour handling as local as possible
