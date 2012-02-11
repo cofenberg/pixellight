@@ -1,3 +1,13 @@
+>> 11.02.2012
+[CO]
+- Added support for "LuaJIT", a Just-in-time (JIT) compiler for Lua. Better performance, but transparent to the programmer, it's still just Lua. First performance tests
+  are promising, but we will still keep up the support for the "Classic Lua". On the other hand, I'am not going to add extra CMake options which may confuse. Under Windows
+  "LuaJIT" will be used by default because I already build the external packages. In case someone don't want to use "LuaJIT" for what reasons ever, it's still possible to
+  easily switch the external packages without reconfiguring everything. Would be cool to have also "LuaJIT" packages for Linux 32 bit and 64 bit, but for me personally this
+  can't have priority, right now I have to focus on one platform in order to get things done.
+
+
+
 >> 07.02.2012
 [CO]
 - Updated Qt from version "4.7.0" to "4.8.0", Windows x86 & x64 packages updated
