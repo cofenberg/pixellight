@@ -26,6 +26,7 @@
 #include <string.h>
 #include <signal.h>
 #include "../pl_icon.h"
+#include <PLCore/Tools/Timing.h>
 #include <PLCore/Frontend/Frontend.h>
 #include <PLCore/Frontend/FrontendContext.h>
 #include "PLFrontendOS/Frontend.h"
@@ -57,6 +58,7 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 	m_pFrontendOS(&cFrontendOS),
 	m_pDisplay(XOpenDisplay(nullptr)),
 	m_nNativeWindowHandle(NULL_HANDLE),
+	m_bInitialized(false),
 	m_bVisible(false),
 	m_bIsMouseOver(false),
 	m_bMouseVisible(true),
@@ -114,6 +116,9 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 
 	// If the window is not visible yet, make it visible right now
 	MakeVisible();
+
+	// Initialization is done
+	m_bInitialized = true;
 }
 
 /**
@@ -215,6 +220,12 @@ void OSWindowLinux::Redraw()
 bool OSWindowLinux::Ping()
 {
 	bool bQuit = g_bSignalSystemQuit ? true : false;
+
+	// Check if we're allowed to perform an update right now, please note that an update is only allowed when the frontend is fully initialized
+	if (m_bInitialized && Timing::GetInstance()->Update()) {
+		// Let the frontend update it's states (do this before drawing else, e.g. the first frame may have an unwanted content)
+		m_pFrontendOS->OnUpdate();
+	}
 
 	// Look if messages are waiting (non-blocking)
 	while (XPending(m_pDisplay) > 0) {

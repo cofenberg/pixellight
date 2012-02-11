@@ -184,6 +184,7 @@ class Frontend : public PLCore::FrontendImpl {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
+		bool			  m_bInitialized;					/**< Initialization done? */
 		PLGui::Widget	 *m_pMainWindow;					/**< Main window of the application (can be a null pointer) */
 		PLCore::uint32	  m_nHotkeyIDAltTab;				/**< Alt-tab hotkey ID */
 		bool			  m_bToggleFullscreenMode;			/**< Is it allowed to toggle the fullscreen mode using hotkeys? */

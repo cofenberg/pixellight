@@ -23,7 +23,6 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/Timing.h>
 #include <PLCore/Frontend/Frontend.h>
 #if defined(WIN32)
 	#include "PLFrontendOS/OSWindowWindows.h"
@@ -133,12 +132,6 @@ void Frontend::Redraw()
 
 void Frontend::Ping()
 {
-	// Check if we're allowed to perform an update right now
-	if (!m_bQuit && Timing::GetInstance()->Update()) {
-		// Let the frontend update it's states (do this before drawing else, e.g. the first frame may have an unwanted content)
-		OnUpdate();
-	}
-
 	// Ping the OS window
 	if (m_pOSWindow)
 		m_bQuit = m_pOSWindow->Ping();

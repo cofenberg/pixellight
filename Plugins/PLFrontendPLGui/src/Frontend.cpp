@@ -66,6 +66,7 @@ Frontend::Frontend() :
 	EventHandlerSizeMainWindow    (&Frontend::OnSizeMainWindow,     this),
 	EventHandlerKeyDownMainWindow (&Frontend::OnKeyDownMainWindow,  this),
 	EventHandlerDropMainWindow    (&Frontend::OnDropMainWindow,     this),
+	m_bInitialized(false),
 	m_pMainWindow(nullptr),
 	m_nHotkeyIDAltTab(0),
 	m_bToggleFullscreenMode(true),
@@ -194,8 +195,8 @@ void Frontend::Redraw()
 
 void Frontend::Ping()
 {
-	// Check if we're allowed to perform an update right now
-	if (Timing::GetInstance()->Update()) {
+	// Check if we're allowed to perform an update right now, please note that an update is only allowed when the frontend is fully initialized
+	if (m_bInitialized && Timing::GetInstance()->Update()) {
 		// Let the frontend update it's states (do this before drawing else, e.g. the first frame may have an unwanted content)
 		OnUpdate();
 	}
@@ -443,6 +444,9 @@ void Frontend::OnCreateMainWindow()
 
 	// Do the frontend life cycle thing - start
 	OnStart();
+
+	// Initialization is done
+	m_bInitialized = true;
 }
 
 

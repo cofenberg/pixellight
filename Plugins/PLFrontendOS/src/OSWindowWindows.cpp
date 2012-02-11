@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "../resource.h"
+#include <PLCore/Tools/Timing.h>
 #include <PLCore/Frontend/Frontend.h>
 #include <PLCore/Frontend/FrontendContext.h>
 #include "PLFrontendOS/Frontend.h"
@@ -138,7 +139,7 @@ LRESULT CALLBACK OSWindowWindows::WndProc(HWND hWnd, UINT nMsg, WPARAM wParam, L
 
 			case WM_ERASEBKGND:
 				// Catch WM_ERASEBKGND in order to avoid black flickering?
-				if (pOSWindowWindows->m_bInitialized)
+				if (pOSWindowWindows->m_bBackgroundInitialized)
 					return 0;	// Gotcha!
 
 				// ... no catching, the system will now "erase" the background...
@@ -225,6 +226,7 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 	m_nThreadID(::GetCurrentThreadId()),
 	m_hWnd(nullptr),
 	m_bInitialized(false),
+	m_bBackgroundInitialized(false),
 	m_bVisible(false),
 	m_bDestroyed(false),
 	m_nHotkeyIDAltTab(0),
@@ -294,7 +296,7 @@ OSWindowWindows::OSWindowWindows(Frontend &cFrontendOS) :
 			m_pFrontendOS->OnStart();
 
 			// Initialization is done
-			m_bInitialized = true;
+			m_bInitialized = m_bBackgroundInitialized = true;
 
 			// If the window is not visible yet, make it visible right now
 			MakeVisible();
@@ -396,14 +398,14 @@ handle OSWindowWindows::GetNativeWindowHandle() const
 void OSWindowWindows::Redraw()
 {
 	// Initialization done?
-	if (!m_bInitialized) {
+	if (!m_bBackgroundInitialized) {
 		// If the window is not visible yet, make it visible right now
 		MakeVisible();
 
 		// Ok, someone asked us to redraw, so we just assume that for this person
 		// the initialization is done and everything is usable for drawing.
 		// WM_ERASEBKGND will now be caught.
-		m_bInitialized = true;
+		m_bBackgroundInitialized = true;
 	}
 
 	// Redraw
@@ -414,6 +416,12 @@ void OSWindowWindows::Redraw()
 bool OSWindowWindows::Ping()
 {
 	bool bQuit = false;
+
+	// Check if we're allowed to perform an update right now, please note that an update is only allowed when the frontend is fully initialized
+	if (m_bInitialized && Timing::GetInstance()->Update()) {
+		// Let the frontend update it's states (do this before drawing else, e.g. the first frame may have an unwanted content)
+		m_pFrontendOS->OnUpdate();
+	}
 
 	// Look if messages are waiting (non-blocking)
 	MSG sMsg;

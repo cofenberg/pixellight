@@ -161,20 +161,21 @@ class OSWindowWindows : public OSWindow {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Frontend   *m_pFrontendOS;			/**< Owner frontend implementation instance, always valid! */
-		HINSTANCE	m_hInstance;			/**< OS main process handle */
-		DWORD		m_nThreadID;			/**< OS main thread ID */
-		WNDCLASS	m_WndClass;				/**< OS window class */
-		HICON		m_hIcon;				/**< Extracted default icon of the process (don't forget to call "DestroyIcon()" on it), can be a null pointer */
-		HWND		m_hWnd;					/**< OS window handle, can be a null pointer */
-		bool		m_bInitialized;			/**< Initialization done? (if false, WM_ERASEBKGND won't be caught) */
-		bool		m_bVisible;				/**< Was the window made visible? (independent of the real OS window visibility state) */
-		bool		m_bDestroyed;			/**< 'true' if the window has already been destroyed */
-		int			m_nHotkeyIDAltTab;		/**< Alt-Tab hotkey */
-		bool		m_bWindowRectBackup;	/**< Is there a window position & size backup? */
-		RECT		m_sWindowRectBackup;	/**< Window position & size backup */
-		bool		m_bMouseVisible;		/**< Is the mouse cursor visible? */
-		bool		m_bTrapMouse;			/**< Trap mouse? */
+		Frontend   *m_pFrontendOS;				/**< Owner frontend implementation instance, always valid! */
+		HINSTANCE	m_hInstance;				/**< OS main process handle */
+		DWORD		m_nThreadID;				/**< OS main thread ID */
+		WNDCLASS	m_WndClass;					/**< OS window class */
+		HICON		m_hIcon;					/**< Extracted default icon of the process (don't forget to call "DestroyIcon()" on it), can be a null pointer */
+		HWND		m_hWnd;						/**< OS window handle, can be a null pointer */
+		bool		m_bInitialized;				/**< Initialization done? */
+		bool		m_bBackgroundInitialized;	/**< Background initialization done? (if false, WM_ERASEBKGND won't be caught) */
+		bool		m_bVisible;					/**< Was the window made visible? (independent of the real OS window visibility state) */
+		bool		m_bDestroyed;				/**< 'true' if the window has already been destroyed */
+		int			m_nHotkeyIDAltTab;			/**< Alt-Tab hotkey */
+		bool		m_bWindowRectBackup;		/**< Is there a window position & size backup? */
+		RECT		m_sWindowRectBackup;		/**< Window position & size backup */
+		bool		m_bMouseVisible;			/**< Is the mouse cursor visible? */
+		bool		m_bTrapMouse;				/**< Trap mouse? */
 
 
 };

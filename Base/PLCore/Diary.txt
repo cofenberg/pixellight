@@ -6,6 +6,9 @@ PLScriptBindings:
 PLScriptLua:
 - "RTTIObjectMethodPointer::CallDynFunc()" performance optimization: There's no need to perform expensive parameter conversion if a function has no parameters
 - "RTTIObjectPointerBase::NewIndexMetamethod()" performance optimization: If possible, no string is used for parameter conversion
+- Now using "LuaJIT" by default, classic Lua external packages will still be supported
+PLFrontendOS & PLFrontendPLGui:
+- Calling "OnUpdate()" is only allowed when the frontend is already fully initialized, everything else would be like a Russian roulette
 
 
 
