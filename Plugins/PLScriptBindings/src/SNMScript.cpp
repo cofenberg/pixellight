@@ -66,6 +66,9 @@ void SNMScript::SetScript(const String &sValue)
 		// Add the global variable "this" to the script so that it's able to access "this" RTTI class instance
 		m_pScript->SetGlobalVariable("this", Var<Object*>(this));
 
+		// Update active state
+		OnActivate(m_bActive);
+
 		// Call the initialize script function, but only when it's really there because it's optional
 		if (m_pScript->IsGlobalFunction(OnInitFunction.Get()))
 			FuncScriptPtr<void>(m_pScript, OnInitFunction.Get()).Call(Params<void>());
@@ -74,6 +77,20 @@ void SNMScript::SetScript(const String &sValue)
 		if (m_sScriptExecute.GetLength())
 			m_pScript->Execute(m_sScriptExecute);
 	}
+}
+
+String SNMScript::GetOnUpdateFunction() const
+{
+	return m_sOnUpdateFunction;
+}
+
+void SNMScript::SetOnUpdateFunction(const String &sValue)
+{
+	// Backup the given value
+	m_sOnUpdateFunction = sValue;
+
+	// Update active state
+	OnActivate(m_bActive);
 }
 
 String SNMScript::GetScriptExecute() const
@@ -106,7 +123,9 @@ SNMScript::SNMScript(SceneNode &cSceneNode) : SceneNodeModifier(cSceneNode),
 	OnDeInitFunction(this),
 	SlotOnUpdate(this),
 	ScriptExecute(this),
-	m_pScript(nullptr)
+	m_pScript(nullptr),
+	m_sOnUpdateFunction("OnUpdate"),
+	m_bActive(false)
 {
 }
 
@@ -138,7 +157,11 @@ void SNMScript::OnActivate(bool bActivate)
 	// Connect/disconnect event handler
 	SceneContext *pSceneContext = GetSceneContext();
 	if (pSceneContext) {
-		if (bActivate)
+		// Backup the real active state
+		m_bActive = bActivate;
+
+		// In case there's no script instance or no valid update function, we also don't need a constant update
+		if (bActivate && m_pScript && m_pScript->IsGlobalFunction(m_sOnUpdateFunction))
 			pSceneContext->EventUpdate.Connect(SlotOnUpdate);
 		else
 			pSceneContext->EventUpdate.Disconnect(SlotOnUpdate);
@@ -173,11 +196,10 @@ void SNMScript::DestroyScript()
 */
 void SNMScript::OnUpdate()
 {
-	// Is there a script? If so, do also check whether or not our optional global script function is there.
-	if (m_pScript && m_pScript->IsGlobalFunction(OnUpdateFunction.Get())) {
-		// Call the update script function
-		FuncScriptPtr<void>(m_pScript, OnUpdateFunction.Get()).Call(Params<void>());
-	}
+	// When we're in here, we know that the script instance and the optional global script update function are both valid (see "SNMScript::OnActivate()")
+
+	// Call the update script function
+	FuncScriptPtr<void>(m_pScript, m_sOnUpdateFunction).Call(Params<void>());
 }
 
 

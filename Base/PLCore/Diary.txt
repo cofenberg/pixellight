@@ -1,3 +1,10 @@
+>> 11.02.2012
+[CO]
+PLScriptBindings:
+- "SNMScript": In case there's no script instance or no valid update function, we also don't need a constant update
+
+
+
 >> 09.02.2012
 [CO]
 - Handled bug report "PLCore::String operator <" (http://dev.pixellight.org/forum/viewtopic.php?f=4&t=226)

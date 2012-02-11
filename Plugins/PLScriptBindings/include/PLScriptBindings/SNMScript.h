@@ -65,7 +65,7 @@ class SNMScript : public PLScene::SceneNodeModifier {
 		// Attributes
 		pl_attribute(Script,			PLCore::String,	"",			ReadWrite,	GetSet,			"Script to use (set the script again in order to reload it)",																									"")
 		pl_attribute(OnInitFunction,	PLCore::String,	"OnInit",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the scene node modifier should initialize itself",														"")
-		pl_attribute(OnUpdateFunction,	PLCore::String,	"OnUpdate",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the scene node modifier should update itself",															"")
+		pl_attribute(OnUpdateFunction,	PLCore::String,	"OnUpdate",	ReadWrite,	GetSet,			"Name of the optional script function called by C++ when the scene node modifier should update itself",															"")
 		pl_attribute(OnDeInitFunction,	PLCore::String,	"OnDeInit",	ReadWrite,	DirectValue,	"Name of the optional script function called by C++ when the scene node modifier should de-initialize itself",													"")
 		pl_attribute(ScriptExecute,		PLCore::String,	"",			ReadWrite,	GetSet,			"Script source code to execute, can be used to set global variables (Lua example: ScriptExecute=\"PublicVariables.Speed=0.07 PublicVariables.Radius=0.01\")",	"")
 		// Constructors
@@ -83,6 +83,8 @@ class SNMScript : public PLScene::SceneNodeModifier {
 	public:
 		PLCore::String GetScript() const;
 		void SetScript(const PLCore::String &sValue);
+		PLCore::String GetOnUpdateFunction() const;
+		void SetOnUpdateFunction(const PLCore::String &sValue);
 		PLCore::String GetScriptExecute() const;
 		void SetScriptExecute(const PLCore::String &sValue);
 
@@ -144,9 +146,11 @@ class SNMScript : public PLScene::SceneNodeModifier {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::String  m_sScript;			/**< Script to use */
-		PLCore::Script *m_pScript;			/**< Used script instance, can be a null pointer */
-		PLCore::String  m_sScriptExecute;	/**< Script source code to execute, can be used to set global variables (Lua example: ScriptExecute="PublicVariables.Speed=0.07 PublicVariables.Radius=0.01") */
+		PLCore::String  m_sScript;				/**< Script to use */
+		PLCore::Script *m_pScript;				/**< Used script instance, can be a null pointer */
+		PLCore::String  m_sOnUpdateFunction;	/**< Name of the optional script function called by C++ when the scene node modifier should update itself */
+		PLCore::String  m_sScriptExecute;		/**< Script source code to execute, can be used to set global variables (Lua example: ScriptExecute="PublicVariables.Speed=0.07 PublicVariables.Radius=0.01") */
+		bool			m_bActive;				/**< Backup of the real active state */
 
 
 };
