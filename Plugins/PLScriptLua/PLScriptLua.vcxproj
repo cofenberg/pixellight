@@ -117,7 +117,7 @@
     <PostBuildEvent>
       <Command>copy build\debug_x86\PLScriptLuaD.dll ..\..\Bin\Runtime\x86\
 copy build\debug_x86\PLScriptLuaD.lib ..\..\Bin\Lib\x86\
-copy ..\..\External\_Windows_x86_32\Lua\bin\lua51.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\LuaJIT\bin\lua51.dll ..\..\Bin\Runtime\x86\
 ..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
@@ -156,7 +156,7 @@ copy ..\..\External\_Windows_x86_32\Lua\bin\lua51.dll ..\..\Bin\Runtime\x86\
     <PostBuildEvent>
       <Command>copy build\debug_x64\PLScriptLuaD.dll ..\..\Bin\Runtime\x64\
 copy build\debug_x64\PLScriptLuaD.lib ..\..\Bin\Lib\x64\
-copy ..\..\External\_Windows_x86_64\Lua\bin\lua51.dll ..\..\Bin\Runtime\x64\
+copy ..\..\External\_Windows_x86_64\LuaJIT\bin\lua51.dll ..\..\Bin\Runtime\x64\
 ..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
@@ -204,7 +204,7 @@ copy ..\..\External\_Windows_x86_64\Lua\bin\lua51.dll ..\..\Bin\Runtime\x64\
     <PostBuildEvent>
       <Command>copy build\release_x86\PLScriptLua.dll ..\..\Bin\Runtime\x86\
 copy build\release_x86\PLScriptLua.lib ..\..\Bin\Lib\x86\
-copy ..\..\External\_Windows_x86_32\Lua\bin\lua51.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\LuaJIT\bin\lua51.dll ..\..\Bin\Runtime\x86\
 ..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
@@ -255,7 +255,7 @@ copy ..\..\External\_Windows_x86_32\Lua\bin\lua51.dll ..\..\Bin\Runtime\x86\
     <PostBuildEvent>
       <Command>copy build\release_x64\PLScriptLua.dll ..\..\Bin\Runtime\x64\
 copy build\release_x64\PLScriptLua.lib ..\..\Bin\Lib\x64\
-copy ..\..\External\_Windows_x86_64\Lua\bin\lua51.dll ..\..\Bin\Runtime\x64\
+copy ..\..\External\_Windows_x86_64\LuaJIT\bin\lua51.dll ..\..\Bin\Runtime\x64\
 ..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
