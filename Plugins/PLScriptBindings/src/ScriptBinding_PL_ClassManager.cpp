@@ -46,13 +46,13 @@ pl_implement_class(ScriptBinding_PL_ClassManager)
 //[-------------------------------------------------------]
 bool ScriptBinding_PL_ClassManager::ScanPlugins(String sPath, bool bRecursive, bool bDelayedPluginLoading)
 {
-	return ClassManager::GetInstance()->ScanPlugins(sPath, bRecursive ? Recursive : NonRecursive, bDelayedPluginLoading);
+	return m_pClassManager->ScanPlugins(sPath, bRecursive ? Recursive : NonRecursive, bDelayedPluginLoading);
 }
 
 Object *ScriptBinding_PL_ClassManager::Create(String sClass, String sParameters)
 {
 	// Get the requested RTTI class
-	const Class *pClass =  ClassManager::GetInstance()->GetClass(sClass);
+	const Class *pClass =  m_pClassManager->GetClass(sClass);
 	if (pClass) {
 		// Create an instance of the requested RTTI class
 		Object *pObject = pClass->Create();
@@ -78,7 +78,7 @@ Object *ScriptBinding_PL_ClassManager::Create(String sClass, String sParameters)
 Object *ScriptBinding_PL_ClassManager::CreateByConstructor(String sClass, String sConstructor, String sConstructorParameters, String sParameters)
 {
 	// Get the requested RTTI class
-	const Class *pClass =  ClassManager::GetInstance()->GetClass(sClass);
+	const Class *pClass =  m_pClassManager->GetClass(sClass);
 	if (pClass) {
 		// Create an instance of the requested RTTI class
 		Object *pObject = pClass->Create(sConstructor, sConstructorParameters);
@@ -109,7 +109,8 @@ Object *ScriptBinding_PL_ClassManager::CreateByConstructor(String sClass, String
 *  @brief
 *    Constructor
 */
-ScriptBinding_PL_ClassManager::ScriptBinding_PL_ClassManager()
+ScriptBinding_PL_ClassManager::ScriptBinding_PL_ClassManager() :
+	m_pClassManager(ClassManager::GetInstance())
 {
 }
 

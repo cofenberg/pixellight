@@ -2,6 +2,7 @@
 [CO]
 PLScriptBindings:
 - "SNMScript": In case there's no script instance or no valid update function, we also don't need a constant update
+- Now directly storing singleton instances, they will not change over time
 
 
 

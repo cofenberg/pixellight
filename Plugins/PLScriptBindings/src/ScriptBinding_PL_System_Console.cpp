@@ -46,7 +46,7 @@ pl_implement_class(ScriptBinding_PL_System_Console)
 //[-------------------------------------------------------]
 void ScriptBinding_PL_System_Console::Print(String sText)
 {
-	System::GetInstance()->GetConsole().Print(sText);
+	m_pConsole->Print(sText);
 }
 
 
@@ -57,7 +57,8 @@ void ScriptBinding_PL_System_Console::Print(String sText)
 *  @brief
 *    Constructor
 */
-ScriptBinding_PL_System_Console::ScriptBinding_PL_System_Console()
+ScriptBinding_PL_System_Console::ScriptBinding_PL_System_Console() :
+	m_pConsole(&System::GetInstance()->GetConsole())
 {
 }
 

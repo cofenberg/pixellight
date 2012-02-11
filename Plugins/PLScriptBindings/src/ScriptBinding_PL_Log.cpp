@@ -45,32 +45,32 @@ pl_implement_class(ScriptBinding_PL_Log)
 //[-------------------------------------------------------]
 void ScriptBinding_PL_Log::OutputAlways(String sText)
 {
-	Log::GetInstance()->Output(Log::Always, sText);
+	m_pLog->Output(Log::Always, sText);
 }
 
 void ScriptBinding_PL_Log::OutputCritical(String sText)
 {
-	Log::GetInstance()->Output(Log::Critical, sText);
+	m_pLog->Output(Log::Critical, sText);
 }
 
 void ScriptBinding_PL_Log::OutputError(String sText)
 {
-	Log::GetInstance()->Output(Log::Error, sText);
+	m_pLog->Output(Log::Error, sText);
 }
 
 void ScriptBinding_PL_Log::OutputWarning(String sText)
 {
-	Log::GetInstance()->Output(Log::Warning, sText);
+	m_pLog->Output(Log::Warning, sText);
 }
 
 void ScriptBinding_PL_Log::OutputInfo(String sText)
 {
-	Log::GetInstance()->Output(Log::Info, sText);
+	m_pLog->Output(Log::Info, sText);
 }
 
 void ScriptBinding_PL_Log::OutputDebug(String sText)
 {
-	Log::GetInstance()->Output(Log::Debug, sText);
+	m_pLog->Output(Log::Debug, sText);
 }
 
 
@@ -81,7 +81,8 @@ void ScriptBinding_PL_Log::OutputDebug(String sText)
 *  @brief
 *    Constructor
 */
-ScriptBinding_PL_Log::ScriptBinding_PL_Log()
+ScriptBinding_PL_Log::ScriptBinding_PL_Log() :
+	m_pLog(Log::GetInstance())
 {
 }
 

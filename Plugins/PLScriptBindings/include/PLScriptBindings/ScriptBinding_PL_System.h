@@ -32,6 +32,14 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLCore {
+	class System;
+}
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLScriptBindings {
@@ -88,6 +96,13 @@ class ScriptBinding_PL_System : public PLCore::ScriptBinding {
 		*    Destructor
 		*/
 		virtual ~ScriptBinding_PL_System();
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		const PLCore::System *m_pSystem;	/**< System instance, always valid */
 
 
 };

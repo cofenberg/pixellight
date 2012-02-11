@@ -64,7 +64,7 @@ bool ScriptBinding_PL_System::IsLinux()
 
 String ScriptBinding_PL_System::GetPlatformArchitecture()
 {
-	return System::GetInstance()->GetPlatformArchitecture();
+	return m_pSystem->GetPlatformArchitecture();
 }
 
 
@@ -75,7 +75,8 @@ String ScriptBinding_PL_System::GetPlatformArchitecture()
 *  @brief
 *    Constructor
 */
-ScriptBinding_PL_System::ScriptBinding_PL_System()
+ScriptBinding_PL_System::ScriptBinding_PL_System() :
+	m_pSystem(System::GetInstance())
 {
 }
 

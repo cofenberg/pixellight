@@ -45,32 +45,32 @@ pl_implement_class(ScriptBinding_PL_Timing)
 //[-------------------------------------------------------]
 float ScriptBinding_PL_Timing::GetTimeDifference()
 {
-	return Timing::GetInstance()->GetTimeDifference();
+	return m_pTiming->GetTimeDifference();
 }
 
 float ScriptBinding_PL_Timing::GetFramesPerSecond()
 {
-	return Timing::GetInstance()->GetFramesPerSecond();
+	return m_pTiming->GetFramesPerSecond();
 }
 
 bool ScriptBinding_PL_Timing::IsPaused()
 {
-	return Timing::GetInstance()->IsPaused();
+	return m_pTiming->IsPaused();
 }
 
 void ScriptBinding_PL_Timing::Pause(bool bPause)
 {
-	Timing::GetInstance()->Pause(bPause);
+	m_pTiming->Pause(bPause);
 }
 
 float ScriptBinding_PL_Timing::GetTimeScaleFactor()
 {
-	return Timing::GetInstance()->GetTimeScaleFactor();
+	return m_pTiming->GetTimeScaleFactor();
 }
 
 bool ScriptBinding_PL_Timing::SetTimeScaleFactor(float fFactor)
 {
-	return Timing::GetInstance()->SetTimeScaleFactor(fFactor);
+	return m_pTiming->SetTimeScaleFactor(fFactor);
 }
 
 
@@ -81,7 +81,8 @@ bool ScriptBinding_PL_Timing::SetTimeScaleFactor(float fFactor)
 *  @brief
 *    Constructor
 */
-ScriptBinding_PL_Timing::ScriptBinding_PL_Timing()
+ScriptBinding_PL_Timing::ScriptBinding_PL_Timing() :
+	m_pTiming(Timing::GetInstance())
 {
 }
 

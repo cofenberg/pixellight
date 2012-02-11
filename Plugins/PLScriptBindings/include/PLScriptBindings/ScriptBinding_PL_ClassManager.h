@@ -32,6 +32,14 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLCore {
+	class ClassManager;
+}
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLScriptBindings {
@@ -88,6 +96,13 @@ class ScriptBinding_PL_ClassManager : public PLCore::ScriptBinding {
 		*    Destructor
 		*/
 		virtual ~ScriptBinding_PL_ClassManager();
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::ClassManager *m_pClassManager;	/**< Class manager instance, always valid */
 
 
 };

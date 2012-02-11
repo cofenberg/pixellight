@@ -32,6 +32,14 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLCore {
+	class Console;
+}
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLScriptBindings {
@@ -84,6 +92,13 @@ class ScriptBinding_PL_System_Console : public PLCore::ScriptBinding {
 		*    Destructor
 		*/
 		virtual ~ScriptBinding_PL_System_Console();
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		const PLCore::Console *m_pConsole;	/**< Console instance, always valid */
 
 
 };

@@ -32,6 +32,14 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLCore {
+	class Timing;
+}
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLScriptBindings {
@@ -94,6 +102,13 @@ class ScriptBinding_PL_Timing : public PLCore::ScriptBinding {
 		*    Destructor
 		*/
 		virtual ~ScriptBinding_PL_Timing();
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::Timing *m_pTiming;	/**< Timing instance, always valid */
 
 
 };

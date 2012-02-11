@@ -32,6 +32,14 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+namespace PLCore {
+	class Log;
+}
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLScriptBindings {
@@ -94,6 +102,13 @@ class ScriptBinding_PL_Log : public PLCore::ScriptBinding {
 		*    Destructor
 		*/
 		virtual ~ScriptBinding_PL_Log();
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLCore::Log *m_pLog;	/**< Log instance, always valid */
 
 
 };
