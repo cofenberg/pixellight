@@ -5,6 +5,7 @@ PLScriptBindings:
 - Now directly storing singleton instances, they will not change over time
 PLScriptLua:
 - "RTTIObjectMethodPointer::CallDynFunc()" performance optimization: There's no need to perform expensive parameter conversion if a function has no parameters
+- "RTTIObjectPointerBase::NewIndexMetamethod()" performance optimization: If possible, no string is used for parameter conversion
 
 
 

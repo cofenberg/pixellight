@@ -215,43 +215,54 @@ int RTTIObjectPointerBase::IndexMetamethod(lua_State *pLuaState)
 
 int RTTIObjectPointerBase::NewIndexMetamethod(lua_State *pLuaState)
 {
-	// Get RTTI attribute value to set
-	String sAttributeValue;
-	{
-		// Lookout! We can't just use "lua_tostring(pLuaState, 3)" because Lua will give us e.g.
-		// for a boolean type just an empty string, meaning that within a Lua script something
-		// intuitive like "MyRTTIObject.MyBooleanAttribute = true" would not work.
-		static const int LuaValueIndex = 3;
-		const int nLuaType = lua_type(pLuaState, LuaValueIndex);
-		switch (nLuaType) {
-			case LUA_TNIL:
-				// Setting a null pointer is a little bit problematic
-				sAttributeValue = "0";
-				break;
+	static const int LuaNameIndex  = 2;	// Attribute name is at index 2
+	static const int LuaValueIndex = 3;	// Attribute value is at index 3
 
-			case LUA_TNUMBER:
-				sAttributeValue = lua_tonumber(pLuaState, LuaValueIndex);
-				break;
-
-			case LUA_TBOOLEAN:
-				sAttributeValue = lua_toboolean(pLuaState, LuaValueIndex) ? '1' : '0';
-				break;
-
-			case LUA_TSTRING:
-				sAttributeValue = lua_tostring(pLuaState, LuaValueIndex);
-				break;
-
-			default:
-				// Setting e.g. "LUA_TTABLE", "LUA_TFUNCTION", "LUA_TUSERDATA", "LUA_TTHREAD", "LUA_TLIGHTUSERDATA" won't work
-				return 0;	// Get us out of this method right now!
+	// Lookout! We can't just use "lua_tostring(pLuaState, 3)" because Lua will give us e.g.
+	// for a boolean type just an empty string, meaning that within a Lua script something
+	// intuitive like "MyRTTIObject.MyBooleanAttribute = true" would not work.
+	const int nLuaType = lua_type(pLuaState, LuaValueIndex);
+	switch (nLuaType) {
+		case LUA_TNIL:
+		{
+			// Get the RTTI attribute were we want to assign our value to and set value
+			DynVar *pDynVar = m_pRTTIObject->GetAttribute(lua_tostring(pLuaState, LuaNameIndex));
+			if (pDynVar)
+				pDynVar->SetUIntPtr(0); // Setting a null pointer is a little bit problematic
+			break;
 		}
+
+		case LUA_TNUMBER:
+		{
+			// Get the RTTI attribute were we want to assign our value to and set value
+			DynVar *pDynVar = m_pRTTIObject->GetAttribute(lua_tostring(pLuaState, LuaNameIndex));
+			if (pDynVar)
+				pDynVar->SetDouble(lua_tonumber(pLuaState, LuaValueIndex));
+			break;
+		}
+
+		case LUA_TBOOLEAN:
+		{
+			// Get the RTTI attribute were we want to assign our value to and set value
+			DynVar *pDynVar = m_pRTTIObject->GetAttribute(lua_tostring(pLuaState, LuaNameIndex));
+			if (pDynVar)
+				pDynVar->SetBool(lua_toboolean(pLuaState, LuaValueIndex) != 0);
+			break;
+		}
+
+		case LUA_TSTRING:
+		{
+			// Get the RTTI attribute were we want to assign our value to and set value
+			DynVar *pDynVar = m_pRTTIObject->GetAttribute(lua_tostring(pLuaState, LuaNameIndex));
+			if (pDynVar)
+				pDynVar->SetString(lua_tostring(pLuaState, LuaValueIndex));
+			break;
+		}
+
+		default:
+			// Setting e.g. "LUA_TTABLE", "LUA_TFUNCTION", "LUA_TUSERDATA", "LUA_TTHREAD", "LUA_TLIGHTUSERDATA" won't work
+			break;
 	}
-
-	// Get the name of the RTTI attribute were we want to assign our value to
-	const String sAttributeName = lua_tostring(pLuaState, 2);
-
-	// Set the RTTI attribute
-	m_pRTTIObject->SetAttribute(sAttributeName, sAttributeValue);
 
 	// Done
 	return 0;
