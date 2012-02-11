@@ -162,46 +162,190 @@ int RTTIObjectMethodPointer::CallDynFunc(Script &cScript, DynFunc &cDynFunc, boo
 	// Get the Lua state
 	lua_State *pLuaState = cScript.GetLuaState();
 
-	// Get the current Lua function parameters on the Lua stack as string
-	Array<String> lstTempStrings;
-	const String sParams = GetLuaFunctionParametersAsString(cScript, cDynFunc, bIsMethod, lstTempStrings);
+	// Has the given dynamic function any parameters?
+	if (cDynFunc.GetNumOfParameters()) {
+		// This is a bit more complex due to paramter conversion
 
-	// Get the global function
-	const String sReturn = cDynFunc.CallWithReturn(sParams);
-	if (sReturn.GetLength()) {
-		// Process the functor return
+		// Get the current Lua function parameters on the Lua stack as string
+		Array<String> lstTempStrings;
+		const String sParams = GetLuaFunctionParametersAsString(cScript, cDynFunc, bIsMethod, lstTempStrings);
+
+		// Get the global function
+		const String sReturn = cDynFunc.CallWithReturn(sParams);
+		if (sReturn.GetLength()) {
+			// Process the functor return
+			switch (cDynFunc.GetReturnTypeID()) {
+				case TypeVoid:																								return 0;	// The function returns nothing
+				case TypeBool:		lua_pushboolean(pLuaState, sReturn.GetBool());											break;
+				case TypeDouble:	lua_pushnumber (pLuaState, sReturn.GetDouble());										break;
+				case TypeFloat:		lua_pushnumber (pLuaState, sReturn.GetFloat());											break;
+				case TypeInt:		lua_pushinteger(pLuaState, sReturn.GetInt());											break;
+				case TypeInt16:		lua_pushinteger(pLuaState, sReturn.GetInt());											break;
+				case TypeInt32:		lua_pushinteger(pLuaState, sReturn.GetInt());											break;
+				case TypeInt64:		lua_pushinteger(pLuaState, sReturn.GetInt());											break;	// [TODO] TypeInt64 is currently handled just as long
+				case TypeInt8:		lua_pushinteger(pLuaState, sReturn.GetInt());											break;
+				case TypeString:	lua_pushstring (pLuaState, sReturn);													break;
+				case TypeUInt16:	lua_pushinteger(pLuaState, sReturn.GetUInt16());										break;
+				case TypeUInt32:	lua_pushinteger(pLuaState, sReturn.GetUInt32());										break;
+				case TypeUInt64:	lua_pushinteger(pLuaState, static_cast<lua_Integer>(sReturn.GetUInt64()));				break;	// [TODO] TypeUInt64 is currently handled just as long
+				case TypeUInt8:		lua_pushinteger(pLuaState, sReturn.GetUInt8());											break;
+
+				// [HACK] Currently, classes derived from "PLCore::Object" are just recognized as type "void*"... but "PLCore::Object*" type would be perfect
+				case TypeRef:
+				case TypePtr:
+				case TypeObjectPtr:
+					RTTIObjectPointer::LuaStackPush(cScript, Type<Object*>::ConvertFromString(sReturn));
+					break;
+
+				default:			lua_pushstring (pLuaState, sReturn);													break;	// Unknown type
+			}
+
+			// The function returns one argument
+			return 1;
+		}
+	} else {
+		// There's no need to perform expensive parameter conversion
+
+		// Process the functor dependent on it's return type
 		switch (cDynFunc.GetReturnTypeID()) {
-			case TypeVoid:																								return 0;	// The function returns nothing
-			case TypeBool:		lua_pushboolean(pLuaState, sReturn.GetBool());											break;
-			case TypeDouble:	lua_pushnumber (pLuaState, sReturn.GetDouble());										break;
-			case TypeFloat:		lua_pushnumber (pLuaState, sReturn.GetFloat());											break;
-			case TypeInt:		lua_pushinteger(pLuaState, sReturn.GetInt());											break;
-			case TypeInt16:		lua_pushinteger(pLuaState, sReturn.GetInt());											break;
-			case TypeInt32:		lua_pushinteger(pLuaState, sReturn.GetInt());											break;
-			case TypeInt64:		lua_pushinteger(pLuaState, sReturn.GetInt());											break;	// [TODO] TypeInt64 is currently handled just as long
-			case TypeInt8:		lua_pushinteger(pLuaState, sReturn.GetInt());											break;
-			case TypeString:	lua_pushstring (pLuaState, sReturn);													break;
-			case TypeUInt16:	lua_pushinteger(pLuaState, sReturn.GetUInt16());										break;
-			case TypeUInt32:	lua_pushinteger(pLuaState, sReturn.GetUInt32());										break;
-			case TypeUInt64:	lua_pushinteger(pLuaState, static_cast<lua_Integer>(sReturn.GetUInt64()));				break;	// [TODO] TypeUInt64 is currently handled just as long
-			case TypeUInt8:		lua_pushinteger(pLuaState, sReturn.GetUInt8());											break;
+			case TypeVoid:
+				// The function returns nothing
+				cDynFunc.Call(Params<void>());
+				return 0;
+
+			case TypeBool:
+			{
+				Params<bool> cParams;
+				cDynFunc.Call(cParams);
+				lua_pushboolean(pLuaState, cParams.Return);
+				break;
+			}
+
+			case TypeDouble:
+			{
+				Params<double> cParams;
+				cDynFunc.Call(cParams);
+				lua_pushnumber(pLuaState, cParams.Return);
+				break;
+			}
+
+			case TypeFloat:
+			{
+				Params<float> cParams;
+				cDynFunc.Call(cParams);
+				lua_pushnumber(pLuaState, cParams.Return);
+				break;
+			}
+
+			case TypeInt:
+			{
+				Params<int> cParams;
+				cDynFunc.Call(cParams);
+				lua_pushinteger(pLuaState, cParams.Return);
+				break;
+			}
+
+			case TypeInt16:
+			{
+				Params<int16> cParams;
+				cDynFunc.Call(cParams);
+				lua_pushinteger(pLuaState, cParams.Return);
+				break;
+			}
+
+			case TypeInt32:
+			{
+				Params<int32> cParams;
+				cDynFunc.Call(cParams);
+				lua_pushinteger(pLuaState, cParams.Return);
+				break;
+			}
+
+			case TypeInt64:
+			{
+				Params<int64> cParams;
+				cDynFunc.Call(cParams);
+				lua_pushinteger(pLuaState, static_cast<lua_Integer>(cParams.Return));
+				break;	// [TODO] TypeInt64 is currently handled just as long
+			}
+
+			case TypeInt8:
+			{
+				Params<int8> cParams;
+				cDynFunc.Call(cParams);
+				lua_pushinteger(pLuaState, cParams.Return);
+				break;
+			}
+
+			case TypeString:
+			{
+				Params<String> cParams;
+				cDynFunc.Call(cParams);
+				lua_pushstring(pLuaState, cParams.Return);
+				break;
+			}
+
+			case TypeUInt16:
+			{
+				Params<uint16> cParams;
+				cDynFunc.Call(cParams);
+				lua_pushinteger(pLuaState, cParams.Return);
+				break;
+			}
+
+			case TypeUInt32:
+			{
+				Params<uint32> cParams;
+				cDynFunc.Call(cParams);
+				lua_pushinteger(pLuaState, cParams.Return);
+				break;
+			}
+
+			case TypeUInt64:
+			{
+				Params<uint64> cParams;
+				cDynFunc.Call(cParams);
+				lua_pushinteger(pLuaState, static_cast<lua_Integer>(cParams.Return));
+				break;	// [TODO] TypeUInt64 is currently handled just as long
+			}
+
+			case TypeUInt8:
+			{
+				Params<uint8> cParams;
+				cDynFunc.Call(cParams);
+				lua_pushinteger(pLuaState, cParams.Return);
+				break;
+			}
 
 			// [HACK] Currently, classes derived from "PLCore::Object" are just recognized as type "void*"... but "PLCore::Object*" type would be perfect
 			case TypeRef:
+			{
+				Params<Object&> cParams;
+				cDynFunc.Call(cParams);
+				RTTIObjectPointer::LuaStackPush(cScript, static_cast<Object*>(cParams.Return));
+				break;
+			}
 			case TypePtr:
 			case TypeObjectPtr:
-				RTTIObjectPointer::LuaStackPush(cScript, Type<Object*>::ConvertFromString(sReturn));
+			{
+				Params<void*> cParams;	// Must be "void*", not "Object*" else the signature test will fail
+				cDynFunc.Call(cParams);
+				RTTIObjectPointer::LuaStackPush(cScript, static_cast<Object*>(cParams.Return));
 				break;
+			}
 
-			default:			lua_pushstring (pLuaState, sReturn);													break;	// Unknown type
+			// Unknown type, fall back to generic string
+			default:
+				lua_pushstring(pLuaState, cDynFunc.CallWithReturn(""));
+				break;
 		}
 
 		// The function returns one argument
 		return 1;
-	} else {
-		// The function returns nothing
-		return 0;
 	}
+
+	// The function returns nothing
+	return 0;
 }
 
 
