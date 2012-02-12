@@ -112,8 +112,26 @@ class MemoryManager {
 		*
 		*  @note
 		*    - 'memcpy'-wrapper
+		*    -  The memory areas should not overlap
 		*/
 		static inline void Copy(void *pDestination, const void *pSource, uint32 nNumOfBytes);
+
+		/**
+		*  @brief
+		*    Moves memory
+		*
+		*  @param[in] pDestination
+		*    Destination buffer (MUST be valid!)
+		*  @param[in] pSource
+		*    Source buffer (MUST be valid!)
+		*  @param[in] nNumOfBytes
+		*    Number of bytes to copy
+		*
+		*  @note
+		*    - 'memmove'-wrapper
+		*    -  The memory areas may overlap
+		*/
+		static inline void Move(void *pDestination, const void *pSource, uint32 nNumOfBytes);
 
 		/**
 		*  @brief

@@ -1,3 +1,9 @@
+>> 12.02.2012
+[CO]
+- Feature request "ID: 3486884" (http://sourceforge.net/tracker/?func=detail&aid=3486884&group_id=507544&atid=2063685): Added "MemoryManager::Move()"
+
+
+
 >> 11.02.2012
 [CO]
 PLScriptBindings:

@@ -39,7 +39,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <stdlib.h>	// For "realloc()", "malloc()" and "free()"
-#include <string.h>	// For "memcpy()", "memset()" and "memcmp()"
+#include <string.h>	// For "memcpy()", "memmove()", "memset()" and "memcmp()"
 
 
 //[-------------------------------------------------------]
@@ -58,6 +58,15 @@ namespace PLCore {
 inline void MemoryManager::Copy(void *pDestination, const void *pSource, uint32 nNumOfBytes)
 {
 	memcpy(pDestination, pSource, nNumOfBytes);
+}
+
+/**
+*  @brief
+*    Moves memory
+*/
+inline void MemoryManager::Move(void *pDestination, const void *pSource, uint32 nNumOfBytes)
+{
+	memmove(pDestination, pSource, nNumOfBytes);
 }
 
 /**
