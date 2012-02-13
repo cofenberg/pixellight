@@ -33,17 +33,26 @@ SUITE(Bitset) {
 
 		// Container for testing
 		Bitset bitset;
+		//Array<bool> arr;
 	};
+	
+	TEST(implement) {
+		CHECK(false);
+	}
 
+	/*
 	TEST(Bitset_Null_Not_working_unresolved_external) {
+		Bitset b;
 		//CHECK(!PLCore::Bitset::Null);
+		//CHECK(b.Null);
+		//CHECK(PLCore::Iterable<bool>::Null);
 	}
 
 	TEST_FIXTURE(ConstructTestBitset, testme){
-		Bitset bitset;
+		bitset.Clear();
 		CHECK(bitset.IsEmpty());
 	}
-
+	/*
 	TEST_FIXTURE(ConstructTestBitset, IsEmpty_and_Clear)
 	{
 		bitset.Clear();
