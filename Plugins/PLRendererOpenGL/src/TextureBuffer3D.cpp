@@ -90,10 +90,16 @@ void TextureBuffer3D::InitialUploadVolumeData(Renderer &cRendererOpenGL, const I
 		// -> Hopefully 32,00 MiB per "glTexSubImage3DEXT"-call is fine across various graphics cards
 		// -> On NVIDIA GeForce GTX 285 (2048 MiB) using driver version 285.62 WHQL and Windows 7 64 bit,
 		//    there were no such issues and it was possible to upload the data in once single call
+		// -> When generating mipmaps for 3D textures, this hack will slow down the generation process dramatically,
+		//    so, some more checks whether it may be safe to avoid using this hack
 		static const uint32 nMaximumNumberOfBytesPerCall = 512*512*128;
 
-		// Has the texture data a critical size?
-		if (cImageBuffer.HasAnyData() && cImageBuffer.GetDataSize() > nMaximumNumberOfBytesPerCall) {
+		// Is the "GL_NV_texture_compression_vtc"-extension there?
+		// -> If so, we're probably on a NVIDIA GPU, disable this hack
+		// -> Has the texture data a critical size?
+		if (cImageBuffer.HasAnyData() && cImageBuffer.GetDataSize() > nMaximumNumberOfBytesPerCall &&
+			(!cRendererOpenGL.GetContext().GetExtensions().IsGL_NV_texture_compression_vtc() ||
+			  cImageBuffer.GetDataSize()/1024 > cRendererOpenGL.GetCapabilities().nTotalAvailableGPUMemory)) {	// Total available GPU memory is in kilobytes
 			// Split the upload into multiple "glTexSubImage3DEXT"-calls to be on the safe side
 
 			// Ask the GPU to allocate the texture

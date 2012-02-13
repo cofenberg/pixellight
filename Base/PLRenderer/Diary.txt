@@ -1,3 +1,13 @@
+>> 13.02.2012
+[CO]
+PLRendererOpenGL:
+- More massive volume data upload fun within "TextureBuffer3D::InitialUploadVolumeData()" (08.12.2011): When the "GL_NV_texture_compression_vtc"-extension is there
+  and there's enough GPU memory available, I "hope" it's save to upload the data in one single "glTexImage3DEXT()" call instead of splitting it into multiple calls in
+  order to avoid a GPU driver crash. When asking the GPU to compress the data as well as to generate mipmaps, this split will slow down the process horribly. But still
+  better as a crash. Wow, getting a >500 MiB big 3D texture onto the GPU can be a lot of fun, especially when it has to work on GPUs from different vendors.
+
+
+
 >> 10.02.2012
 [CO]
 - Bugfix: "TextureBuffer::DownloadAsImage()" (added "09.12.2011"): The mipmap size was wrong
