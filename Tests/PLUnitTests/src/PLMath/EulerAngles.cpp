@@ -5,6 +5,8 @@
 #include <PLMath/EulerAngles.h>
 #include <PLMath/Matrix3x3.h>
 #include <PLMath/Quaternion.h>
+#include "UnitTest++AddIns/PLCheckMacros.h"
+#include "UnitTest++AddIns/PLChecks.h"
 
 using namespace PLMath;
 
@@ -23,138 +25,55 @@ SUITE(EulerAngles) {
 	{
 		ConstructTest() { 
 			/* some setup */
-			EPSI = 1.0E-5f;
 		}
 		~ConstructTest() {
 			/* some teardown */
 		}
 
-		void ClearData() {
-			fAngleX = 0.0f;
-			fAngleY = 0.0f;
-			fAngleZ = 0.0f;
-			mRot.SetIdentity();
-			qRot.SetWXYZ(1.0f, 0.0f, 0.0f, 0.0f);
-		}
-
-		void CheckEulerAngleX(float fAngle, float fExpectedAngle)
-		{
-			this->ClearData();
-
-			// Degree to radian
-			fAngle         = static_cast<float>(fAngle*Math::DegToRad);
-			fExpectedAngle = static_cast<float>(fExpectedAngle*Math::DegToRad);
-
-			// FromEulerAngleX() & FromMatrix()
-			mRot.FromEulerAngleX(fAngle);
-			EulerAngles::FromMatrix(mRot, fAngleX, fAngleY, fAngleZ);
-
-			CHECK_CLOSE(fAngleX, fExpectedAngle, EPSI);
-			CHECK_EQUAL(0.0f, fAngleY);
-			CHECK_EQUAL(0.0f, fAngleZ);
-
-			// The other functions must return the same values...
-			Matrix3x3 mRotT;
-			EulerAngles::ToMatrix(fAngle, 0.0f, 0.0f, mRot);
-
-			// [TODO]: is this comparison implemented?
-			if (mRot != mRotT)
-				CHECK(false); // Error!
-			// CHECK(mRot == mRotT);
-
-			// ToQuaternion() & FromQuaternion()
-			EulerAngles::ToQuaternion(fAngle, 0.0f, 0.0f, qRot);
-			EulerAngles::FromQuaternion(qRot, fAngleX, fAngleY, fAngleZ);
-
-			CHECK_CLOSE(fAngleX, fExpectedAngle, EPSI);
-			CHECK_EQUAL(0.0f, fAngleY);
-			CHECK_EQUAL(0.0f, fAngleZ);
-		}
-
-		void CheckEulerAngleY(float fAngle, float fExpectedAngle)
-		{
-			this->ClearData();
-
-			// Degree to radian
-			fAngle         = static_cast<float>(fAngle*Math::DegToRad);
-			fExpectedAngle = static_cast<float>(fExpectedAngle*Math::DegToRad);
-
-			// FromEulerAngleY() & FromMatrix()
-			mRot.FromEulerAngleY(fAngle);
-			EulerAngles::FromMatrix(mRot, fAngleX, fAngleY, fAngleZ);
-
-			CHECK_CLOSE(fAngleY, fExpectedAngle, EPSI);
-			CHECK_EQUAL(0.0f, fAngleX);
-			CHECK_EQUAL(0.0f, fAngleZ);
-
-			// The other functions must return the same values...
-			Matrix3x3 mRotT;
-			EulerAngles::ToMatrix(0.0f, fAngle, 0.0f, mRot);
-
-			// [TODO]: is this comparison implemented?
-			if (mRot != mRotT)
-				CHECK(false); // Error!
-			// CHECK(mRot == mRotT);
-
-			// ToQuaternion() & FromQuaternion()
-			EulerAngles::ToQuaternion(0.0f, fAngle, 0.0f, qRot);
-			EulerAngles::FromQuaternion(qRot, fAngleX, fAngleY, fAngleZ);
-		
-			CHECK_CLOSE(fAngleY, fExpectedAngle, EPSI);
-			CHECK_EQUAL(0.0f, fAngleX);
-			CHECK_EQUAL(0.0f, fAngleZ);
-		}
-
-		void CheckEulerAngleZ(float fAngle, float fExpectedAngle)
-		{
-			this->ClearData();
-
-			// Degree to radian
-			fAngle         = static_cast<float>(fAngle*Math::DegToRad);
-			fExpectedAngle = static_cast<float>(fExpectedAngle*Math::DegToRad);
-
-			// FromEulerAngleY() & FromMatrix()
-			mRot.SetZero();
-			mRot.FromEulerAngleZ(fAngle);
-			EulerAngles::FromMatrix(mRot, fAngleX, fAngleY, fAngleZ);
-
-			CHECK_CLOSE(fAngleZ, fExpectedAngle, EPSI);
-			CHECK_EQUAL(0.0f, fAngleX);
-			CHECK_EQUAL(0.0f, fAngleY);
-
-			// The other functions must return the same values...
-			Matrix3x3 mRotT;
-			EulerAngles::ToMatrix(0.0f, fAngle, 0.0f, mRot);
-
-			// [TODO]: is this comparison implemented?
-			if (mRot != mRotT)
-				CHECK(false); // Error!
-			// CHECK(mRot == mRotT);
-
-			// ToQuaternion() & FromQuaternion()
-			EulerAngles::ToQuaternion(0.0f, fAngle, 0.0f, qRot);
-			EulerAngles::FromQuaternion(qRot, fAngleX, fAngleY, fAngleZ);
-		
-			CHECK_CLOSE(fAngleZ, fExpectedAngle, EPSI);
-			CHECK_EQUAL(0.0f, fAngleX);
-			CHECK_EQUAL(0.0f, fAngleY);
-		}
-		
 		// Objects for testing
-		float fAngleX, fAngleY, fAngleZ;
-		Matrix3x3 mRot;
-		Quaternion qRot;
-
-		// epsilon
-		float EPSI;
 	};
 
-	// copied from PLTestBase
-	TEST_FIXTURE(ConstructTest, EulerAngle_360) {
-		CheckEulerAngleX(360.0f, 0.0f);
+	TEST(FromEulerAngles) {
+		// checking CHECK_MATRIX3X3 macro
+		Matrix3x3 m1, m2;
 
-		CheckEulerAngleY(360.0f, 0.0f);
+		m1.Set(1,2,3,4,5,6,7,8,9);
+		m2.Set(1,2,3,4,5,6,7,8,9);
 
-		CheckEulerAngleZ(360.0f, 0.0f);
+		CHECK_MATRIX3X3(m1, m2, 0.01f);
+
+		// actual test
+		float PI = static_cast<float>(Math::Pi);
+
+		float fX, fY, fZ;
+		Matrix3x3 mRotX, mRotY, mRotZ;
+		Matrix3x3 mEulX, mEulY, mEulZ;
+		Matrix3x3 mRot, mEul;
+
+		for (float x=0.0; x<=2*PI; x+=PI/4) {
+			mRotX.FromEulerAngleX(x);
+
+			for (float y=0.0; y<=2*PI; y+=PI/4) {
+				mRotY.FromEulerAngleY(y);
+
+				for (float z=0.0; z<=2*PI; z+=PI/4) {
+					mRotZ.FromEulerAngleZ(z);
+
+					mRot =  mRotX * mRotY * mRotZ;
+
+					EulerAngles::FromMatrix(mRot, fX, fY, fZ);
+
+					mEulX.FromEulerAngleX(fX);
+					mEulY.FromEulerAngleY(fY);
+					mEulZ.FromEulerAngleZ(fZ);
+
+					mEul = mEulZ * mEulY * mEulX;
+
+					printf("x=%f y=%f z=%f\n", x, y, z);
+
+					CHECK_MATRIX3X3(mEul, mRot, 0.01f);
+				}
+			}
+		}
 	}
 }
