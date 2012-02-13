@@ -52,6 +52,7 @@
     <ClCompile Include="src\PLMath\Vector4.cpp" />
     <ClCompile Include="src\UnitTest++AddIns\MyMobileTestReporter.cpp" />
     <ClCompile Include="src\UnitTest++AddIns\MyTestReporter.cpp" />
+    <ClCompile Include="src\UnitTest++AddIns\PLChecks.cpp" />
     <ClCompile Include="src\UnitTest++AddIns\RunAllTests.cpp" />
     <ClCompile Include="src\UnitTest++AddIns\wchar_template.cpp" />
     <ClCompile Include="src\UnitTests.cpp" />
@@ -59,6 +60,8 @@
   <ItemGroup>
     <ClInclude Include="include\UnitTest++AddIns\MyMobileTestReporter.h" />
     <ClInclude Include="include\UnitTest++AddIns\MyTestReporter.h" />
+    <ClInclude Include="include\UnitTest++AddIns\PLCheckMacros.h" />
+    <ClInclude Include="include\UnitTest++AddIns\PLChecks.h" />
     <ClInclude Include="include\UnitTest++AddIns\RunAllTests.h" />
     <ClInclude Include="include\UnitTest++AddIns\wchar_template.h" />
     <ClInclude Include="src\PLCore\Container\HeapTests.h" />

@@ -88,6 +88,9 @@
     <ClCompile Include="src\PLCore\Container\Bitset.cpp">
       <Filter>PLCore\Container\Container</Filter>
     </ClCompile>
+    <ClCompile Include="src\UnitTest++AddIns\PLChecks.cpp">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\UnitTest++AddIns\RunAllTests.h">
@@ -107,6 +110,12 @@
     </ClInclude>
     <ClInclude Include="src\PLCore\Container\HeapTests.h">
       <Filter>PLCore\Container\Heap</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UnitTest++AddIns\PLCheckMacros.h">
+      <Filter>UnitTest++AddIns</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UnitTest++AddIns\PLChecks.h">
+      <Filter>UnitTest++AddIns</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
