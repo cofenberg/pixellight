@@ -558,6 +558,8 @@ void TextureBuffer3D::BackupDeviceData(uint8 **ppBackup)
 				// Loop through all mipmaps
 				for (uint32 nLevel=0; nLevel<=m_nNumOfMipmaps; nLevel++) {
 					// Get the data from the GPU
+					// -> When the "GL_NV_texture_compression_vtc"-extension is there, the data blocks have not the same
+					//    order "as usual" but this is not interesting in here because we're just caching it in here for the GPU
 					glGetCompressedTexImageARB(GL_TEXTURE_3D_EXT, nLevel, pData);
 
 					// Next level, please
@@ -622,10 +624,14 @@ void TextureBuffer3D::RestoreDeviceData(uint8 **ppBackup)
 				const uint32 nNumOfBytes = GetNumOfBytes(nLevel);
 
 				// Upload the texture buffer
-				if (bCompressedFormat)
-					CompressedTexImage3D(cRendererOpenGL, GL_TEXTURE_3D_EXT, nLevel, *pAPIPixelFormat, vSize, nNumOfBytes, pData);
-				else
+				if (bCompressedFormat) {
+					// Use directly "glCompressedTexImage3DARB()" instead of our helper method "CompressedTexImage3D()"
+					// -> When the "GL_NV_texture_compression_vtc"-extension is there, the data blocks have not the same
+					//    order "as usual" but this is not interesting in here because we're just caching it in here for the GPU
+					glCompressedTexImage3DARB(GL_TEXTURE_3D_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, nNumOfBytes, pData);
+				} else {
 					glTexImage3DEXT(GL_TEXTURE_3D_EXT, nLevel, *pAPIPixelFormat, vSize.x, vSize.y, vSize.z, 0, nPixelFormat, nDataFormat, pData);
+				}
 
 				// Next level, please
 				pData += nNumOfBytes;
