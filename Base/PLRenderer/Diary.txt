@@ -7,6 +7,10 @@ PLRendererOpenGL:
   better as a crash. Wow, getting a >500 MiB big 3D texture onto the GPU can be a lot of fun, especially when it has to work on GPUs from different vendors.
 - "TextureBuffer3D::BackupDeviceData()" & "TextureBuffer3D::RestoreDeviceData()": In here we can ignore "GL_NV_texture_compression_vtc" because we're just caching the
   data for the GPU, so, the internal block order is not interesting
+- Another "GL_NV_texture_compression_vtc"-extension thingy, I hope that was the last thing we have to take into account when this extension is there. Such a different
+  behaviour is just evil. Added "TextureBuffer3D::GetCompressedTexImage()" used within "TextureBuffer3D::Download()". When the user requests the compressed data from the
+  GPU and the "GL_NV_texture_compression_vtc"-extension is there, we also have to reorder the data blocks in order to hide this NVIDIA extension behaviour - if we don't
+  do this, it would e.g. be impossible to directly save the requested data within a dds file.
 
 
 

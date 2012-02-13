@@ -93,6 +93,7 @@ class TextureBuffer3D : public PLRenderer::TextureBuffer3D {
 	private:
 		static void InitialUploadVolumeData(Renderer &cRendererOpenGL, const PLGraphics::ImageBuffer &cImageBuffer, const PLMath::Vector3i &vSize, bool bUsePreCompressedData, bool bCompressedFormat, EPixelFormat nImageFormat, GLenum nOpenGLTarget, GLint nOpenGLLevel, GLenum nOpenGLInternalformat, GLenum nOpenGLFormat, GLenum nOpenGLType, EPixelFormat &nPrimaryImageFormat);
 		static void CompressedTexImage3D(const Renderer &cRendererOpenGL, GLenum nOpenGLTarget, GLint nOpenGLLevel, GLenum nOpenGLInternalformat, const PLMath::Vector3i &vSize, PLCore::uint32 nCompressedDataSize, const PLCore::uint8 *pCompressedData);
+		static void GetCompressedTexImage(const Renderer &cRendererOpenGL, GLenum nOpenGLTarget, GLint nOpenGLLevel, EPixelFormat nFormat, const PLMath::Vector3i &vSize, PLCore::uint8 *pCompressedData);
 
 
 	//[-------------------------------------------------------]

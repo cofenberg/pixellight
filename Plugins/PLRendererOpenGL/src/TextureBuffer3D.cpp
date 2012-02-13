@@ -268,6 +268,88 @@ void TextureBuffer3D::CompressedTexImage3D(const Renderer &cRendererOpenGL, GLen
 	}
 }
 
+// "glGetCompressedTexImageARB"-version handling some special behaviour across different GPU's
+void TextureBuffer3D::GetCompressedTexImage(const Renderer &cRendererOpenGL, GLenum nOpenGLTarget, GLint nOpenGLLevel, EPixelFormat nFormat, const Vector3i &vSize, uint8 *pCompressedData)
+{
+	// See "TextureBuffer3D::CompressedTexImage3D()" for detailed comments, this in here is nearly the same implementation
+
+	// Is the "GL_NV_texture_compression_vtc"-extension there?
+	if (vSize.z > 1 && cRendererOpenGL.GetContext().GetExtensions().IsGL_NV_texture_compression_vtc()) {
+		// Go the complicated way
+		// -> This is not tuned for maximum performance, so we're allocating/deallocating a temporary
+		//    buffer in here in order to keep this nasty behaviour handling as local as possible
+
+		// Get the block depth
+		const uint32 nBlockDepth = (vSize.z > 2) ? 4 : 2;
+
+		// Blocksize, either 8 or 16 bytes
+		const uint32 nNumOfBytesPerBlock = (nFormat == DXT1 || nFormat == LATC1) ? 8 : 16;
+
+		// Pointer to the resulting compressed data
+		uint8 *pCompressedDataCurrent = pCompressedData;
+
+		// Calculate the size of the compressed data
+		// http://www.nvidia.com/dev_content/nvopenglspecs/GL_NV_texture_compression_vtc.txt
+		// "
+		//  The size in bytes of a VTC image with dimensions w, h, and d is:
+		//
+		//    ceil(w/4) * ceil(h/4) * d * blocksize,
+		// "
+		const uint32 nCompressedDataSize = static_cast<uint32>(Math::Ceil(vSize.x/4.0f))*static_cast<uint32>(Math::Ceil(vSize.y/4.0f))*vSize.z*nNumOfBytesPerBlock;
+
+		// Allocate memory for the reordered compressed data we're receiving from the GPU
+		uint8 *pReorderedData = new uint8[nCompressedDataSize];
+
+		// Download the reordered compressed data from the GPU
+		glGetCompressedTexImageARB(nOpenGLTarget, nOpenGLLevel, pReorderedData);
+
+		// Get the number of bytes per depth layer block (e.g. four depth layers are within a VTC block)
+		const uint32 nNumOfBytesPerLayerBlock = nCompressedDataSize/vSize.z*nBlockDepth;
+
+		// Get the number of blocks along the x-axis and y-axis
+		const int nNumOfXBlocks = (vSize.x + 3)/4;
+		const int nNumOfYBlocks = (vSize.y + 3)/4;
+
+		// Loop through all depth layers along the z-axis
+		for (int z=0; z<vSize.z; z++) {
+			// Get start position inside the current depth layer block
+			const uint32 nFloorZ = static_cast<uint32>(Math::Floor(z/static_cast<float>(nBlockDepth)));
+			const uint32 nBlockStartOffset = nFloorZ*nNumOfBytesPerLayerBlock;
+
+			// Take care of the last block layer
+			const uint32 nCurrentZEnd = nFloorZ*nBlockDepth + nBlockDepth;
+			const uint32 nCurrentBlockDepth = (static_cast<int>(nCurrentZEnd) > vSize.z) ? (nBlockDepth - (nCurrentZEnd - vSize.z)) : nBlockDepth;
+
+			// Loop through all blocks along the y-axis
+			for (int y=0; y<nNumOfYBlocks; y++) {
+				// Loop through all block along the x-axis
+				for (int x=0; x<nNumOfXBlocks; x++) {
+					// Get start position inside the current depth layer block
+					uint32 nBlockOffset = nBlockStartOffset;
+
+					// Add the index of the block inside the current depth layer block
+					nBlockOffset += (x + y*nNumOfXBlocks)*nNumOfBytesPerBlock*nCurrentBlockDepth;
+
+					// Add the depth offset
+					nBlockOffset += (z%nCurrentBlockDepth)*nNumOfBytesPerBlock;
+
+					// Copy the block to the new location
+					MemoryManager::Copy(pCompressedDataCurrent, pReorderedData + nBlockOffset, nNumOfBytesPerBlock);
+
+					// Update the original compressed data pointer
+					pCompressedDataCurrent += nNumOfBytesPerBlock;
+				}
+			}
+		}
+
+		// Deallocate memory of the reordered compressed data
+		delete [] pReorderedData;
+	} else {
+		// Go the simple way
+		glGetCompressedTexImageARB(nOpenGLTarget, nOpenGLLevel, pCompressedData);
+	}
+}
+
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
@@ -500,7 +582,7 @@ bool TextureBuffer3D::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData
 		glBindTexture(GL_TEXTURE_3D_EXT, m_nOpenGLTexture);
 
 		// Download
-		glGetCompressedTexImageARB(GL_TEXTURE_3D_EXT, nMipmap, pData);
+		GetCompressedTexImage(static_cast<Renderer&>(GetRenderer()), GL_TEXTURE_3D_EXT, nMipmap, nFormat, GetSize(nMipmap), static_cast<uint8*>(pData));
 	} else {
 		// Bind this texture buffer
 		glBindTexture(GL_TEXTURE_3D_EXT, m_nOpenGLTexture);
