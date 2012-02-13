@@ -58,15 +58,14 @@ SUITE(String_Performance) {
 
 	TEST(PL_String_insert){
 		for (int i=0; i<testloops; i++)
-			PLString->Insert(char(i+48), 0);	// First parameter is what to insert, second is position
+			PLString->Insert(static_cast<char>(i+48),0);
 	}
 
 	TEST(C_String_insert){
 		char insert[2];
 		insert[1] = '\0';
-		for (int i=0; i<testloops; i++) {
+		for (int i=0; i<testloops; i++)
 			insert[0] = char(i+48);
-			CString->insert(0, insert);	// First parameter is position, second is what to insert
-		}
+			CString->insert(0, insert);
 	}
 }

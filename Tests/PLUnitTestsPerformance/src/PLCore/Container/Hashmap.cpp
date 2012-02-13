@@ -57,18 +57,18 @@ SUITE(Hashmap_Performance) {
 	
 
 	TEST(PL_Hashmap_Add){
-		for (int i=0; i<testloops*10; i++)
+		for (int i=0; i<testloops; i++)
 			PLHashmap.Add(static_cast<char>(i+48), i);
 	}
-
+	
 	TEST(C_Hashmap_Add){
 		for (int i=0; i<testloops; i++)
 			CHashmap[static_cast<char>(i+48)] = i;
 	}
-
+	
 	TEST(PL_Hashmap_Replace){
 		for (int i=0; i<testloops; i++)
-			PLHashmap.Replace(static_cast<char>(48), i);
+			PLHashmap.Replace(static_cast<char>(i+48), i);
 	}
 
 	TEST(C_Hashmap_Replace){
@@ -82,7 +82,7 @@ SUITE(Hashmap_Performance) {
 	}
 
 	TEST(C_Hashmap_Set){
-		for (int i=0; i<testloops*10; i++)
+		for (int i=0; i<testloops; i++)
 			CHashmap.insert(std::pair<char,int>(48,300));
 	}
 

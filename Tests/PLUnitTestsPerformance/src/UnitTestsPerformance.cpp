@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: UnitTestsPerformance.cpp                       *
  *
- *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -28,11 +28,9 @@
 #include <fstream>
 #include <iostream>
 #include <UnitTest++/UnitTest++.h>
-#include <UnitTest++AddIns/MyTestReporter.h>
-#include <UnitTest++AddIns/MyMobileTestReporter.h>
 #include <UnitTest++AddIns/RunAllTests.h>
+#include "../include/UnitTest++AddIns/MyPerformanceReporter.h"
 #include <PLCore/PLCore.h>	// For "nullptr" in case the compiler doesn't support this C++11 feature
-#include "UnitTest++AddIns/MyPerformanceReporter.h"
 
 
 //[-------------------------------------------------------]
@@ -74,6 +72,7 @@ int UnitTestsPerformance()
 	// Close the results output file
 	outputFile.close();
 
+	system("Pause");
 	// Done
 	return nResult;
 }

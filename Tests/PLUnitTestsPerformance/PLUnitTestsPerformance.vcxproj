@@ -19,16 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\MyMobileTestReporter.cpp" />
+    <ClCompile Include="..\..\..\..\..\Desktop\PLUnitTestsPerformance\src\PLCore\Container\Array.cpp" />
+    <ClCompile Include="..\..\..\..\..\Desktop\PLUnitTestsPerformance\src\PLCore\Container\Functions.cpp" />
+    <ClCompile Include="..\..\..\..\..\Desktop\PLUnitTestsPerformance\src\PLCore\Container\List.cpp" />
     <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\RunAllTests.cpp" />
     <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\wchar_template.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\MainAndroid.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="src\PLCore\Container\Hashmap.cpp" />
     <ClCompile Include="src\PLCore\Container\Queue.cpp" />
     <ClCompile Include="src\PLCore\Container\Stack.cpp" />
@@ -37,7 +33,6 @@
     <ClCompile Include="src\UnitTestsPerformance.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\MyMobileTestReporter.h" />
     <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\RunAllTests.h" />
     <ClInclude Include="..\PLUnitTests\include\UnitTest++AddIns\wchar_template.h" />
     <ClInclude Include="include\UnitTest++AddIns\MyPerformanceReporter.h" />

@@ -1,7 +1,7 @@
 /*********************************************************\
- *  File: MyPerformanceReporter.cpp                      *
+ *  File: MyTestReporter.cpp                                 *
  *
- *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2011 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -29,13 +29,11 @@
 #include "UnitTest++AddIns/MyPerformanceReporter.h"
 #include "PLCore/Tools/Stopwatch.h"
 
-
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace std;
 using namespace PLCore;
-
 
 //[-------------------------------------------------------]
 //[ Global variables                                      ]
@@ -43,7 +41,6 @@ using namespace PLCore;
 extern ofstream outputFile;
 string lastsuitename;
 Stopwatch Counter;
-
 
 void MyPerformanceReporter::ReportTestStart(UnitTest::TestDetails const& test)
 {
@@ -61,7 +58,7 @@ void MyPerformanceReporter::ReportTestFinish(UnitTest::TestDetails const& test, 
 		outputFile << endl << endl << test.suiteName <<endl;
 		lastsuitename = test.suiteName;
 	}
-	outputFile << test.testName << ";" << secondsElapsed*1000 << ";" << Counter.GetMilliseconds()<< endl;
+	outputFile << test.testName << ";" << (secondsElapsed*1000) << "ms" << endl;
 	
 }
 void MyPerformanceReporter::ReportSummary(int totalTestCount, int failedTestCount, int failureCount, float secondsElapsed)
