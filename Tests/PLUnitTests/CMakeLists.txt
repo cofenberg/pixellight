@@ -67,7 +67,6 @@ add_sources(
 	src/UnitTest++AddIns/MyMobileTestReporter.cpp
 	src/UnitTest++AddIns/RunAllTests.cpp
 	src/UnitTest++AddIns/wchar_template.cpp
-	src/UnitTest++AddIns/PLCheckMacros.cpp
 	src/UnitTest++AddIns/PLChecks.cpp
 )
 if(ANDROID)
