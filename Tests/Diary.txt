@@ -1,10 +1,30 @@
-﻿>> 13.02.2012
+﻿>> 14.02.2012
+[JS]
+PLUnitTests:
+- added Bitset tests (copied and modified from ContainerTest.h, can't directly use ContainerTest.h as it uses int over bool)
+- copied Graph test from PLTestBase (to be reviewed!)
+- added a new CHECK-Macro to UnitTest++: "CHECK_MATRIX3X3"
+	-> comfortable way to check if the values in 2 matrices (3x3) are equal
+- added EulerAngles test (to be reviewed!)
+- refactored EulerAngles, Math and Bitset tests to point out the problems there
+
+
+
+>> 13.02.2012
 [CP]
 PLUnitPerformance:
 - added "ms" to the values which are displayed as milliseconds
 - values are also displayed as floatingpoint values (when "ms" is not added, 
 	false values are displayed. Mostly it seems multiplied by 1000 by "mistake"?)
 - added Array, List, Hashmap Tests
+
+
+
+>> 30.01.2012
+[JS]
+PLUnitTests:
+- added Bitset tests (copied and modified from ContainerTest.h, can't directly use ContainerTest.h as it uses int over bool)
+
 
 
 >> 23.01.2012

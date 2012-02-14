@@ -25,15 +25,22 @@ SUITE(EulerAngles) {
 	{
 		ConstructTest() { 
 			/* some setup */
+			PI  = static_cast<float>(Math::Pi);
 		}
 		~ConstructTest() {
 			/* some teardown */
 		}
 
 		// Objects for testing
+		float PI;
+
+		float fX, fY, fZ;
+		Matrix3x3 mRotX, mRotY, mRotZ;
+		Matrix3x3 mEulX, mEulY, mEulZ;
+		Matrix3x3 mRot, mEul;
 	};
 
-	TEST(FromEulerAngles) {
+	TEST(CHECK_MATRIX3X3_MACRO) {
 		// checking CHECK_MATRIX3X3 macro
 		Matrix3x3 m1, m2;
 
@@ -41,15 +48,10 @@ SUITE(EulerAngles) {
 		m2.Set(1,2,3,4,5,6,7,8,9);
 
 		CHECK_MATRIX3X3(m1, m2, 0.01f);
+	}
 
+	TEST_FIXTURE(ConstructTest, FromMatrix) {
 		// actual test
-		float PI = static_cast<float>(Math::Pi);
-
-		float fX, fY, fZ;
-		Matrix3x3 mRotX, mRotY, mRotZ;
-		Matrix3x3 mEulX, mEulY, mEulZ;
-		Matrix3x3 mRot, mEul;
-
 		for (float x=0.0; x<=2*PI; x+=PI/4) {
 			mRotX.FromEulerAngleX(x);
 
@@ -70,10 +72,32 @@ SUITE(EulerAngles) {
 					mEul = mEulZ * mEulY * mEulX;
 
 					printf("x=%f y=%f z=%f\n", x, y, z);
-
 					CHECK_MATRIX3X3(mEul, mRot, 0.01f);
 				}
 			}
 		}
 	}
+
+	TEST_FIXTURE(ConstructTest, konkret) {
+            fX=PI/4;
+            fY=0;
+            fZ=0;
+
+            mRotX.FromEulerAngleX(fX);
+            mRotY.FromEulerAngleY(fY);
+            mRotZ.FromEulerAngleZ(fZ);
+
+            mRot =  mRotX * mRotY * mRotZ;
+
+            EulerAngles::FromMatrix(mRot, fX, fY, fZ);
+
+            mEulX.FromEulerAngleX(fX);
+            mEulY.FromEulerAngleY(fY);
+            mEulZ.FromEulerAngleZ(fZ);
+
+            mEul = mEulZ * mEulY * mEulX;
+
+            printf("x=%f y=%f z=%f\n", fX, fY, fZ);
+            CHECK_MATRIX3X3(mEul, mRot, 0.01f);
+    }
 }

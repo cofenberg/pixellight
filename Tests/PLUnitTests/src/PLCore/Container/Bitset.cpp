@@ -36,15 +36,17 @@ SUITE(Bitset) {
 		//Array<bool> arr;
 	};
 	
-	TEST(implement) {
+	TEST(Check_TODOs) {
 		CHECK(false);
 	}
 
-	/*
+	// TODO uncomment one of these and you get an unresolved external linker error!
 	TEST(Bitset_Null_Not_working_unresolved_external) {
 		Bitset b;
-		//CHECK(!PLCore::Bitset::Null);
+		//Array<bool> arr;
+
 		//CHECK(b.Null);
+		//CHECK(PLCore::Bitset::Null);
 		//CHECK(PLCore::Iterable<bool>::Null);
 	}
 
@@ -52,7 +54,7 @@ SUITE(Bitset) {
 		bitset.Clear();
 		CHECK(bitset.IsEmpty());
 	}
-	/*
+	
 	TEST_FIXTURE(ConstructTestBitset, IsEmpty_and_Clear)
 	{
 		bitset.Clear();
@@ -63,7 +65,7 @@ SUITE(Bitset) {
 		CHECK(!bitset.IsEmpty());
 		CHECK_EQUAL(1U, bitset.GetNumOfElements());
 	}
-
+	
 	TEST_FIXTURE(ConstructTestBitset, IsElement_Within)
 	{
 		bitset.Clear();
@@ -108,6 +110,7 @@ SUITE(Bitset) {
 		bitset.Add(true);
 
 		//CHECK_EQUAL(PLCore::Bitset::Null, bitset.Get(6U));
+		CHECK(!bitset.Get(6U));
 	}
 	
 	TEST_FIXTURE(ConstructTestBitset, Operator_AccessElement_Within_Bounds)
@@ -127,6 +130,7 @@ SUITE(Bitset) {
 		bitset.Add(false);
 
 		//CHECK_EQUAL(PLCore::Bitset::Null, bitset[5]);
+		CHECK(!bitset[5]);
 	}
 	
 	TEST_FIXTURE(ConstructTestBitset, Replace_ElementWithin)
@@ -209,6 +213,7 @@ SUITE(Bitset) {
 		CHECK_EQUAL(true, bitset.Get(2U));
 		CHECK_EQUAL(true, bitset.Get(3U));
 		//CHECK_EQUAL(PLCore::Bitset::Null, bitset.Get(4U));
+		CHECK(!bitset.Get(4U));
 
 		// append
 		CHECK_EQUAL(2U, bitset.Add(ccon, 2));
@@ -221,6 +226,7 @@ SUITE(Bitset) {
 		CHECK_EQUAL(true, bitset.Get(4U));
 		CHECK_EQUAL(false, bitset.Get(5U));
 		//CHECK_EQUAL(PLCore::Bitset::Null, bitset.Get(6U));
+		CHECK(!bitset.Get(6U));
 	}
 	
 	TEST_FIXTURE(ConstructTestBitset, Operator_Add_Element)
@@ -231,6 +237,7 @@ SUITE(Bitset) {
 		CHECK_EQUAL(1U, bitset.GetNumOfElements());
 		CHECK_EQUAL(true, bitset.Get(0U));
 		//CHECK_EQUAL(PLCore::Bitset::Null, bitset.Get(1U));
+		CHECK(!bitset.Get(1U));
 
 		bitset += false;
 
@@ -238,12 +245,12 @@ SUITE(Bitset) {
 		CHECK_EQUAL(true, bitset.Get(0U));
 		CHECK_EQUAL(false, bitset.Get(1U));
 	}
-
+	/*
 	TEST_FIXTURE(ConstructTestBitset, Add_Container)
 	{
 		bitset.Clear();
 		// constructing Container for adding
-		Array<bool> Appendcon;
+		List<bool> Appendcon;
 		Appendcon.Clear();
 		Appendcon.Add(true);
 		Appendcon.Add(true);
@@ -318,7 +325,7 @@ SUITE(Bitset) {
 		CHECK_EQUAL(false, bitset.Get(16U));
 		CHECK_EQUAL(true, bitset.Get(17U));
 	}
-	/*
+	
 	TEST_FIXTURE(ConstructTestBitset, Operator_Add_Container)
 	{
 		bitset.Clear();
@@ -338,14 +345,14 @@ SUITE(Bitset) {
 		CHECK_EQUAL(3, bitset.Get(2U));
 		CHECK_EQUAL(4, bitset.Get(3U));
 	}
-
+	*/
 	TEST_FIXTURE(ConstructTestBitset, AddAtIndex_Within_Bounds)
 	{
 		bitset.Clear();
-		bitset.Add(1);
-		bitset.Add(2);
-		bitset.Add(3);
-		bitset.Add(4);
+		bitset.Add(true);
+		bitset.Add(false);
+		bitset.Add(true);
+		bitset.Add(true);
 
 		// "adds new" element that is at index, we can't check its value as it may be uninitialized!
 		CHECK(bitset.AddAtIndex(2U));
@@ -356,24 +363,26 @@ SUITE(Bitset) {
 	TEST_FIXTURE(ConstructTestBitset, AddAtIndex_Outside_Bounds_Positive)
 	{
 		bitset.Clear();
-		bitset.Add(1);
-		bitset.Add(2);
-		bitset.Add(3);
-		bitset.Add(4);
+		bitset.Add(true);
+		bitset.Add(false);
+		bitset.Add(true);
+		bitset.Add(true);
 
 		//CHECK_EQUAL(PLCore::Bitset::Null, bitset.AddAtIndex(99));
+		CHECK(!bitset.AddAtIndex(99));
 	}
 
 	TEST_FIXTURE(ConstructTestBitset, AddAtIndex_Outside_Bounds_Negative)
 	{
 		bitset.Clear();
-		bitset.Add(1);
-		bitset.Add(2);
-		bitset.Add(3);
-		bitset.Add(4);
+		bitset.Add(true);
+		bitset.Add(false);
+		bitset.Add(true);
+		bitset.Add(true);
 
-		// should append at the end of Container, element not initialized! e.g. we can't check its value
+		// should append at the end of Container, element not initialized! e.g. we can't check its value, only the number of elements it holds
 //		CHECK(PLCore::Bitset::Null != bitset.AddAtIndex(-10));
+		bitset.AddAtIndex(-10);
 		CHECK_EQUAL(5U, bitset.GetNumOfElements());
 		CHECK(bitset.Compare(bitset, 0, 4));
 	}
@@ -381,74 +390,73 @@ SUITE(Bitset) {
 	TEST_FIXTURE(ConstructTestBitset, AddAtIndex_Element_Within_Bounds)
 	{
 		bitset.Clear();
-		bitset.Add(1);
-		bitset.Add(2);
-		bitset.Add(3);
-		bitset.Add(4);
+		bitset.Add(true);
+		bitset.Add(false);
+		bitset.Add(true);
+		bitset.Add(true);
 
 		// inserts element at index
-		CHECK_EQUAL(1, bitset.AddAtIndex(1, 2U));
-		CHECK_EQUAL(1, bitset.Get(2U));
+		CHECK_EQUAL(false, bitset.AddAtIndex(false, 2U));
+		CHECK_EQUAL(true, bitset.Get(3U));
 		CHECK_EQUAL(5U, bitset.GetNumOfElements());
 	}
 
 	TEST_FIXTURE(ConstructTestBitset, AddAtIndex_Element_Outside_Bounds_Positive)
 	{
 		bitset.Clear();
-		bitset.Add(1);
-		bitset.Add(2);
-		bitset.Add(3);
-		bitset.Add(4);
+		bitset.Add(true);
+		bitset.Add(false);
+		bitset.Add(true);
+		bitset.Add(true);
 
 		//CHECK_EQUAL(PLCore::Bitset::Null, bitset.AddAtIndex(1, 99));
+		CHECK(!bitset.AddAtIndex(false, 99));
 	}
 
 	TEST_FIXTURE(ConstructTestBitset, AddAtIndex_Element_Outside_Bounds_Negative)
 	{
 		bitset.Clear();
-		bitset.Add(1);
-		bitset.Add(2);
-		bitset.Add(3);
-		bitset.Add(4);
+		bitset.Add(true);
+		bitset.Add(false);
+		bitset.Add(true);
+		bitset.Add(true);
 
 		// should append at the end of Container
-		CHECK_EQUAL(1, bitset.AddAtIndex(1, -10));
+		CHECK_EQUAL(false, bitset.AddAtIndex(false, -10));
 		CHECK_EQUAL(5U, bitset.GetNumOfElements());
-		CHECK_EQUAL(1, bitset.Get(bitset.GetNumOfElements()-1));
+		CHECK_EQUAL(false, bitset.Get(bitset.GetNumOfElements()-1));
 	}
 
 	TEST_FIXTURE(ConstructTestBitset, Remove_Element_Within)
 	{
 		bitset.Clear();
-		bitset.Add(1);
-		bitset.Add(2);
-		bitset.Add(3);
-		bitset.Add(4);
+		bitset.Add(true);
+		bitset.Add(false);
+		bitset.Add(true);
+		bitset.Add(true);
 
-		CHECK(bitset.Remove(2));
+		CHECK(bitset.Remove(false));
 		CHECK_EQUAL(3U, bitset.GetNumOfElements());
 	}
 
 	TEST_FIXTURE(ConstructTestBitset, Remove_Element_NotWithin)
 	{
 		bitset.Clear();
-		bitset.Add(1);
-		bitset.Add(2);
-		bitset.Add(3);
-		bitset.Add(4);
+		bitset.Add(true);
+		bitset.Add(true);
+		bitset.Add(true);
 
-		// should NOT append at the end of Container
-		CHECK(!bitset.Remove(9));
-		CHECK_EQUAL(4U, bitset.GetNumOfElements());
+		CHECK(!bitset.Remove(false));
+		CHECK_EQUAL(3U, bitset.GetNumOfElements());
 	}
 
 	TEST_FIXTURE(ConstructTestBitset, RemoveAtIndex_Inside_Bounds)
 	{
 		bitset.Clear();
-		bitset.Add(1);
-		bitset.Add(2);
-		bitset.Add(3);
-		bitset.Add(4);
+		bitset.Add(true);
+		bitset.Add(false);
+		bitset.Add(true);
+		bitset.Add(true);
 
 		CHECK(bitset.RemoveAtIndex(2U));
 		CHECK_EQUAL(3U, bitset.GetNumOfElements());
@@ -457,10 +465,10 @@ SUITE(Bitset) {
 	TEST_FIXTURE(ConstructTestBitset, RemoveAtIndex_Outside_Bounds)
 	{
 		bitset.Clear();
-		bitset.Add(1);
-		bitset.Add(2);
-		bitset.Add(3);
-		bitset.Add(4);
+		bitset.Add(true);
+		bitset.Add(false);
+		bitset.Add(true);
+		bitset.Add(true);
 
 		CHECK(!bitset.RemoveAtIndex(99U));
 		CHECK_EQUAL(4U, bitset.GetNumOfElements());
@@ -469,31 +477,31 @@ SUITE(Bitset) {
 	TEST_FIXTURE(ConstructTestBitset, Operator_Remove_Element_Within)
 	{
 		bitset.Clear();
-		bitset.Add(1);
-		bitset.Add(2);
-		bitset.Add(3);
-		bitset.Add(4);
+		bitset.Add(true);
+		bitset.Add(false);
+		bitset.Add(true);
+		bitset.Add(true);
 
-		bitset -= 2;
+		bitset -= false;
 
-		CHECK_EQUAL(3, bitset.Get(1U));
+		CHECK_EQUAL(true, bitset.Get(1U));
 		CHECK_EQUAL(3U, bitset.GetNumOfElements());
 	}
 
 	TEST_FIXTURE(ConstructTestBitset, Operator_Remove_Element_NotWithin)
 	{
 		bitset.Clear();
-		bitset.Add(1);
-		bitset.Add(2);
-		bitset.Add(3);
-		bitset.Add(4);
+		bitset.Add(true);
+		bitset.Add(true);
+		bitset.Add(true);
 
-		bitset -= 9;
+		bitset -= false;
 
-		CHECK_EQUAL(2, bitset.Get(1U));
-		CHECK_EQUAL(4U, bitset.GetNumOfElements());
+		CHECK_EQUAL(true, bitset.Get(1U));
+		CHECK_EQUAL(3U, bitset.GetNumOfElements());
 	}
 
+	/* 
 	TEST_FIXTURE(ConstructTestBitset, Remove_Container)
 	{
 		//TODO: refactor these: each scenario = one TEST()
