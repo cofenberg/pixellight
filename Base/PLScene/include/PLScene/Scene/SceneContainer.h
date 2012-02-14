@@ -109,7 +109,7 @@ class SceneContainer : public SceneNode, public PLCore::ElementManager<SceneNode
 		pl_attribute(AABBMin,	PLMath::Vector3,		PLMath::Vector3(-10000.0f, -10000.0f, -10000.0f),	ReadWrite,	GetSet,	"Minimum position of the 'scene node space' axis aligned bounding box",	"")
 		pl_attribute(AABBMax,	PLMath::Vector3,		PLMath::Vector3( 10000.0f,  10000.0f,  10000.0f),	ReadWrite,	GetSet,	"Maximum position of the 'scene node space' axis aligned bounding box",	"")
 			// Overwritten Loadable attributes
-		pl_attribute(Filename,	PLCore::String,			"",													ReadWrite,	GetSet,	"Filename of the file to load the container from",						"")
+		pl_attribute(Filename,	PLCore::String,			"",													ReadWrite,	GetSet,	"Filename of the file to load the container from",						"Type='Scene'")
 		#ifdef PLSCENE_EXPORTS	// The following is only required when compiling PLScene
 			// Constructors
 			pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
