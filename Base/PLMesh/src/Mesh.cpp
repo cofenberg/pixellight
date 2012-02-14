@@ -37,8 +37,7 @@
 #include "PLMesh/MeshLODLevel.h"
 #include "PLMesh/MeshMorphTarget.h"
 #include "PLMesh/MeshOctree.h"
-#include "PLMesh/SkeletonHandler.h"
-#include "PLMesh/Skeleton.h"
+#include "PLMesh/SkeletonManager.h"
 #include "PLMesh/Mesh.h"
 
 
@@ -116,6 +115,8 @@ bool MeshEdge::operator ==(const MeshEdge &cMeshEdge) const
 */
 Mesh::~Mesh()
 {
+	if (m_pSkeletonManager)
+		delete m_pSkeletonManager;
 }
 
 /**
@@ -125,6 +126,17 @@ Mesh::~Mesh()
 MeshManager *Mesh::GetMeshManager() const
 {
 	return static_cast<MeshManager*>(GetManager());
+}
+
+/**
+*  @brief
+*    Returns the skeleton manager
+*/
+SkeletonManager &Mesh::GetSkeletonManager()
+{
+	if (!m_pSkeletonManager)
+		m_pSkeletonManager = new SkeletonManager();
+	return *m_pSkeletonManager;
 }
 
 /**
@@ -856,7 +868,8 @@ bool Mesh::CalculateBoundingSphere(Vector3 &vPos, float &fRadius)
 Mesh::Mesh(Renderer *pRenderer, ResourceManager<Mesh> &cManager, const String &sName, bool bStatic) :
 	PLCore::Resource<Mesh>(sName, &cManager),
 	m_pRenderer(pRenderer),
-	m_bStatic(bStatic)
+	m_bStatic(bStatic),
+	m_pSkeletonManager(nullptr)
 {
 }
 
@@ -872,6 +885,10 @@ bool Mesh::Unload()
 	ClearMorphTargets();
 	ClearLODLevels();
 	ClearSkeletonHandlers();
+	if (m_pSkeletonManager) {
+		delete m_pSkeletonManager;
+		m_pSkeletonManager = nullptr;
+	}
 
 	// Call base implementation
 	return PLCore::Resource<Mesh>::Unload();

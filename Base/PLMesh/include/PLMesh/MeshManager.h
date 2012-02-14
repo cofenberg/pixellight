@@ -39,12 +39,6 @@ namespace PLMesh {
 
 
 //[-------------------------------------------------------]
-//[ Forward declarations                                  ]
-//[-------------------------------------------------------]
-class SkeletonManager;
-
-
-//[-------------------------------------------------------]
 //[ Classes                                               ]
 //[-------------------------------------------------------]
 /**
@@ -155,22 +149,12 @@ class MeshManager : public PLCore::ResourceManager<Mesh> {
 		*/
 		PLMESH_API Mesh *LoadMesh(const PLCore::String &sFilename, const PLCore::String &sParams = "", const PLCore::String &sMethod = "", bool bReloadMesh = false, bool bStatic = true);
 
-		/**
-		*  @brief
-		*    Returns the skeleton manager
-		*
-		*  @return
-		*    The skeleton manager
-		*/
-		PLMESH_API SkeletonManager &GetSkeletonManager() const;
-
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::Renderer *m_pRenderer;			/**< Renderer the manager is using (always valid!) */
-		SkeletonManager		 *m_pSkeletonManager;	/**< Skeleton manager (always valid!) */
+		PLRenderer::Renderer *m_pRenderer;	/**< Renderer the manager is using (always valid!) */
 
 
 	//[-------------------------------------------------------]

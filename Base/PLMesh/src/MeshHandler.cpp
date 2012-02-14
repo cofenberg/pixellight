@@ -639,7 +639,7 @@ void MeshHandler::GetAnimationsList(Array<String> &lstAnimations) const
 		lstAnimations.Clear();
 
 		// Add all skeleton animations
-		const SkeletonManager &cSkeletonManager = pMesh->GetMeshManager()->GetSkeletonManager();
+		const SkeletonManager &cSkeletonManager = pMesh->GetSkeletonManager();
 		for (uint32 i=0; i<cSkeletonManager.GetNumOfElements(); i++)
 			lstAnimations.Add(cSkeletonManager.GetByIndex(i)->GetName());
 
@@ -664,7 +664,7 @@ AnimationInfo *MeshHandler::GetAnimationInfo(const String &sName, int nLogMessag
 		// Check parameter
 		if (sName.GetLength()) {
 			// First, check the skeleton manager
-			AnimationInfo *pInfo = pMesh->GetMeshManager()->GetSkeletonManager().GetByName(sName);
+			AnimationInfo *pInfo = pMesh->GetSkeletonManager().GetByName(sName);
 			if (pInfo)
 				return pInfo;
 

@@ -483,26 +483,10 @@ bool MeshLoaderPL::ReadSkeleton(Mesh &cMesh, File &cFile) const
 		return false; // Error!
 
 	// Get the skeleton manager
-	SkeletonManager &cSkeletonManager = cMesh.GetMeshManager()->GetSkeletonManager();
-
-	// Change name if this is the base skeleton
-	// [TODO] Try to avoid skeleton name conflicts...
-	String sName;
-//	if (!cMesh.GetSkeleton()) {
-//		sName = cMesh.GetName() + "_" + sSkeleton.szName;
-//	} else 
-	if (cSkeletonManager.GetByName(sSkeleton.szName)) {
-		uint32 i = 0;
-		do {
-			sName = String::Format("%s_%d", sSkeleton.szName, i);
-			i++;
-		} while (cSkeletonManager.GetByName(sName));
-	} else {
-		sName = sSkeleton.szName;
-	}
+	SkeletonManager &cSkeletonManager = cMesh.GetSkeletonManager();
 
 	// Create skeleton
-	Skeleton *pSkeleton = cSkeletonManager.Create(sName);
+	Skeleton *pSkeleton = cSkeletonManager.Create(sSkeleton.szName);
 	if (pSkeleton) {
 		// Add this skeleton to the skeleton list of the mesh
 		SkeletonHandler *pSkeletonHandler = new SkeletonHandler();

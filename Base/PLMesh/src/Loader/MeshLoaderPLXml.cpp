@@ -760,26 +760,10 @@ bool MeshLoaderPLXml::ReadSkeleton(Mesh &cMesh, const XmlElement &cSkeletonEleme
 	const uint32 nFrames = cSkeletonElement.GetAttribute("Frames").GetUInt32();
 
 	// Get the skeleton manager
-	SkeletonManager &cSkeletonManager = cMesh.GetMeshManager()->GetSkeletonManager();
-
-	// Change name if this is the base skeleton
-	// [TODO] Try to avoid skeleton name conflicts...
-	String sUsedName;
-//	if (!cMesh.GetSkeleton()) {
-//		sUsedName = cMesh.GetName() + '_' + sName;
-//	} else 
-	if (cSkeletonManager.GetByName(sName)) {
-		uint32 i = 0;
-		do {
-			sUsedName = sName + '_' + i;
-			i++;
-		} while (cSkeletonManager.GetByName(sUsedName));
-	} else {
-		sUsedName = sName;
-	}
+	SkeletonManager &cSkeletonManager = cMesh.GetSkeletonManager();
 
 	// Create skeleton
-	Skeleton *pSkeleton = cSkeletonManager.Create(sUsedName);
+	Skeleton *pSkeleton = cSkeletonManager.Create(sName);
 	if (pSkeleton) {
 		// Add this skeleton to the skeleton list of the mesh
 		SkeletonHandler *pSkeletonHandler = new SkeletonHandler();

@@ -1,3 +1,16 @@
+>> 14.02.2012
+[CO]
+- Moved skeleton manager instance from "MeshManager" into "Mesh". Skeletons have never really been used and therefore the original implementation was never
+  improved. For years there's an name issue with multiple skeletons within a scene. The base skeleton is not allowed to be shared by using the skeleton
+  manager. We can't avoid potential skeleton name conflicts, but we can't change the name of base skeletons connected to a mesh either because this makes it
+  impossible to address it by using it's name. Until now, the skeleton name was changed making it impossible to address it by name later on. Since I now have
+  multiple skeletons within the dungeon demo, this issue had to be resolved without spending to much unavailable time on it. So, the simplest solution is to just
+  move the skeleton manager instance into "Mesh". Skeleton sharing between totally different meshes is currently impossible anyway. This way there's no urgent
+  need to review the skeleton and animation system at this very moment. I have to get my master thesis done and I can't combine volume rendering with skeleton
+  animation, so, I can't justify it to work on this right now. :/
+
+
+
 >> 08.01.2012
 [CO]
 - "MeshHandler::FindTriangle()": Added cull parameter

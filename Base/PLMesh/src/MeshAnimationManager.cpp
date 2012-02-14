@@ -163,7 +163,7 @@ bool MeshAnimationManager::Apply(MeshHandler &cMeshHandler) const
 			cMeshHandler.GetMorphTargetWeights() = cMeshHandler.GetBaseMorphTargetWeights();
 
 		// Get the skeleton manager
-		SkeletonManager &cSkeletonManager = pMesh->GetMeshManager()->GetSkeletonManager();
+		SkeletonManager &cSkeletonManager = pMesh->GetSkeletonManager();
 
 		// Loop through all animations
 		for (uint32 i=0; i<m_lstElements.GetNumOfElements(); i++) {

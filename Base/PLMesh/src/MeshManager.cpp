@@ -31,7 +31,6 @@
 #include <PLRenderer/Material/MaterialManager.h>
 #include "PLMesh/Creator/MeshCreator.h"
 #include "PLMesh/MeshLODLevel.h"
-#include "PLMesh/SkeletonManager.h"
 #include "PLMesh/MeshManager.h"
 
 
@@ -51,8 +50,7 @@ namespace PLMesh {
 *    Constructor
 */
 MeshManager::MeshManager(Renderer &cRenderer) :
-	m_pRenderer(&cRenderer),
-	m_pSkeletonManager(new SkeletonManager())
+	m_pRenderer(&cRenderer)
 {
 	SetManagerName("Mesh manager");
 
@@ -77,7 +75,6 @@ MeshManager::MeshManager(Renderer &cRenderer) :
 */
 MeshManager::~MeshManager()
 {
-	delete m_pSkeletonManager;
 }
 
 /**
@@ -261,15 +258,6 @@ Mesh *MeshManager::LoadMesh(const String &sFilename, const String &sParams, cons
 
 	// Return the mesh
 	return pMesh;
-}
-
-/**
-*  @brief
-*    Returns the skeleton manager
-*/
-SkeletonManager &MeshManager::GetSkeletonManager() const
-{
-	return *m_pSkeletonManager;
 }
 
 

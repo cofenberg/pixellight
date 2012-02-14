@@ -50,6 +50,7 @@ namespace PLMesh {
 	class MeshLODLevel;
 	class MeshMorphTarget;
 	class SkeletonHandler;
+	class SkeletonManager;
 }
 
 
@@ -148,6 +149,15 @@ class Mesh : public PLCore::Resource<Mesh> {
 		*    Pointer to the owner mesh manager, a null pointer on error
 		*/
 		PLMESH_API MeshManager *GetMeshManager() const;
+
+		/**
+		*  @brief
+		*    Returns the skeleton manager
+		*
+		*  @return
+		*    The skeleton manager
+		*/
+		PLMESH_API SkeletonManager &GetSkeletonManager();
 
 		/**
 		*  @brief
@@ -694,9 +704,10 @@ class Mesh : public PLCore::Resource<Mesh> {
 		PLCore::Array<PLRenderer::MaterialHandler*> m_lstMaterials;
 
 		/** Skeleton */
-		PLCore::Array<SkeletonHandler*> m_lstSkeletonHandler;	/**< List of skeleton handlers */
-		PLCore::Array<Weight>		    m_lstWeights;			/**< Optional weights */
-		PLCore::Array<VertexWeights>	m_lstVertexWeights;		/**< Optional vertex weights per vertex */
+		SkeletonManager				    *m_pSkeletonManager;	/**< Skeleton manager, can be a null pointer */
+		PLCore::Array<SkeletonHandler*>  m_lstSkeletonHandler;	/**< List of skeleton handlers */
+		PLCore::Array<Weight>		     m_lstWeights;			/**< Optional weights */
+		PLCore::Array<VertexWeights>	 m_lstVertexWeights;	/**< Optional vertex weights per vertex */
 
 
 	//[-------------------------------------------------------]
