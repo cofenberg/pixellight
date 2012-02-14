@@ -1,4 +1,17 @@
-﻿>> 03.02.2012
+﻿>> 14.02.2012
+[CO]
+- "EulerAngles"-Bugfix: Indices were swapped within "ToMatrix()" and "FromMatrix()"
+  -> When writing the unit tests for Euler angles, Jens Schmer and Prof. Dr. Frank Deinzer noticed an odd behaviour. When using e.g. "Matrix3::FromEulerAngleX()"
+     to construct a rotation matrix and "EulerAngles::FromMatrix()" in order to calculate back Euler angles the angle sign was wrong. After checking in detail,
+     it turned out that the matrix indices within "EulerAngles::ToMatrix()" and "EulerAngles::FromMatrix()" were swapped, resulting in the inverse of the orthogonal
+     rotation matrix. This explains why the quaternion versions were fine. When searching for places where those methods are used within PixelLight itself, I only
+     found a few not critical places. This explains why this obvious bug wasn't noticed earlier. So, as far as I can see, this bugfix does not introduce ugly side
+     effects within PixelLight itself. Lucky me.
+  -> It's really fantastic to finally have people checking out and testing PixelLight in detail.
+
+
+
+>> 03.02.2012
 [CO]
 - "Vector3::To3DCoordinate()": The method is now directly fed with a clip space to object space matrix instead of the individual matrices such
   a matrix is usually" (not always, just usually) made up of. This voids internal overhead and there are situations were one has already such a
