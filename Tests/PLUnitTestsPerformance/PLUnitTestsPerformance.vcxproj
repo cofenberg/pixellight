@@ -19,13 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\Desktop\PLUnitTestsPerformance\src\PLCore\Container\Array.cpp" />
-    <ClCompile Include="..\..\..\..\..\Desktop\PLUnitTestsPerformance\src\PLCore\Container\Functions.cpp" />
-    <ClCompile Include="..\..\..\..\..\Desktop\PLUnitTestsPerformance\src\PLCore\Container\List.cpp" />
     <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\RunAllTests.cpp" />
     <ClCompile Include="..\PLUnitTests\src\UnitTest++AddIns\wchar_template.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\PLCore\Container\Array.cpp" />
+    <ClCompile Include="src\PLCore\Container\Functions.cpp" />
     <ClCompile Include="src\PLCore\Container\Hashmap.cpp" />
+    <ClCompile Include="src\PLCore\Container\List.cpp" />
     <ClCompile Include="src\PLCore\Container\Queue.cpp" />
     <ClCompile Include="src\PLCore\Container\Stack.cpp" />
     <ClCompile Include="src\PLCore\String\String.cpp" />
