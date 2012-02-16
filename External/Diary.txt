@@ -1,3 +1,9 @@
+>> 16.02.2012
+[CO]
+- Updated from "Cg Toolkit 3.0 - February 2011" to "Cg Toolkit 3.1 - February 2012"
+
+
+
 >> 11.02.2012
 [CO]
 - Added support for "LuaJIT", a Just-in-time (JIT) compiler for Lua. Better performance, but transparent to the programmer, it's still just Lua. First performance tests
