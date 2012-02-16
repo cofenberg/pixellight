@@ -3,6 +3,8 @@
 PLRendererOpenGL:
 - "TextureBuffer3D::InitialUploadVolumeData()": We really have to disable the automatic mipmap generation for the split, else mipmaps are generated
   for every single uploaded depth layer... which may take ages on large volume data...
+PLRendererOpenGLCg:
+- "CgContext::AddCgContextReference()": Our renderer is not multithreaded, so, avoid lock overhead by setting "cgSetLockingPolicy(CG_NO_LOCKS_POLICY);"
 
 
 
