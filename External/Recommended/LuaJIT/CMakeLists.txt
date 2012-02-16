@@ -23,17 +23,17 @@
 ##################################################
 ## Project
 ##################################################
-define_external_project(Lua)
+define_external_project(LuaJIT)
 
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] System libs possible for Lua?
+# [TODO] System libs possible for LuaJIT?
 #if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
 	##################################################
-#	find_package(LUA)
+#	find_package(LUAJIT)
 #else()
 	# Build external
 	message(STATUS "Using build script for external '${CMAKETOOLS_CURRENT_NAME}'")
