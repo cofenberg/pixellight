@@ -39,10 +39,10 @@ add_sources(
 	src/PLCore/Container/Stack.cpp
 	src/PLCore/String/String.cpp
 	# UnitTest++ AddIns
-	../PLUnitTests/src/UnitTest++AddIns/MyTestReporter.cpp
-	../PLUnitTests/src/UnitTest++AddIns/MyMobileTestReporter.cpp
 	../PLUnitTests/src/UnitTest++AddIns/RunAllTests.cpp
 	../PLUnitTests/src/UnitTest++AddIns/wchar_template.cpp
+	# UnitTest++AddInsPerformance
+	src/UnitTest++AddIns/MyPerformanceReporter.cpp
 )
 if(ANDROID)
 	add_sources(
