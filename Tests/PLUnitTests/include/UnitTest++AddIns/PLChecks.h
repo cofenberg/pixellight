@@ -30,6 +30,8 @@
 namespace UnitTest {
 	void CheckMatrix3x3(TestResults& results, PLMath::Matrix3x3 const& expected, PLMath::Matrix3x3 const& actual, float const& tolerance,
 		TestDetails const& details);
+
+	void CheckMissingImplementation(TestResults& results, TestDetails const& details);
 }
 
 #endif // __PLCHECKS_H_

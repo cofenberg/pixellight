@@ -4,6 +4,8 @@
 #include <UnitTest++/UnitTest++.h>
 #include <PLCore/String/String.h>
 #include "UnitTest++AddIns/wchar_template.h"
+#include "UnitTest++AddIns/PLCheckMacros.h"
+#include "UnitTest++AddIns/PLChecks.h"
 
 /*
 * Naming Convention for SUITE:
@@ -30,6 +32,6 @@ SUITE(String) {
 	};
 
 	TEST_FIXTURE(ConstructTest, Dummy) {
-		CHECK_EQUAL(0U, str.GetLength());
+		CHECK_IMPLEMENT;
 	}
 }
