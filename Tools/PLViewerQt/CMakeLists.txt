@@ -58,7 +58,7 @@ if(WIN32)
 	## Win32
 	##################################################
 	add_sources(
-		../PLViewer/src/PLViewerQt.rc	# Reused
+		../PLViewer/PLViewer.rc	# Reused
 	)
 endif()
 
