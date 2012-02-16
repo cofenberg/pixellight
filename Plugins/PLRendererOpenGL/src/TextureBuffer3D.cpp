@@ -90,8 +90,6 @@ void TextureBuffer3D::InitialUploadVolumeData(Renderer &cRendererOpenGL, const I
 		// -> Hopefully 32,00 MiB per "glTexSubImage3DEXT"-call is fine across various graphics cards
 		// -> On NVIDIA GeForce GTX 285 (2048 MiB) using driver version 285.62 WHQL and Windows 7 64 bit,
 		//    there were no such issues and it was possible to upload the data in once single call
-		// -> When generating mipmaps for 3D textures, this hack will slow down the generation process dramatically,
-		//    so, some more checks whether it may be safe to avoid using this hack
 		static const uint32 nMaximumNumberOfBytesPerCall = 512*512*128;
 
 		// Is the "GL_NV_texture_compression_vtc"-extension there?
@@ -102,24 +100,53 @@ void TextureBuffer3D::InitialUploadVolumeData(Renderer &cRendererOpenGL, const I
 			  cImageBuffer.GetDataSize()/1024 > cRendererOpenGL.GetCapabilities().nTotalAvailableGPUMemory)) {	// Total available GPU memory is in kilobytes
 			// Split the upload into multiple "glTexSubImage3DEXT"-calls to be on the safe side
 
-			// Ask the GPU to allocate the texture
-			glTexImage3DEXT(nOpenGLTarget, nOpenGLLevel, nOpenGLInternalformat, vSize.x, vSize.y, vSize.z, 0, nOpenGLFormat, nOpenGLType, nullptr);
-
 			// Update the texture data
 			if (cImageBuffer.HasAnyData()) {
-				// [TODO] Upload along the longest image axis
-
 				// Get the number of bytes per depth layer
 				const uint32 nNumOfLayerBytes = vSize.x*vSize.y*cImageBuffer.GetBytesPerPixel();
 
 				// Get a pointer to the start position of the given image data
 				const uint8 *pImageData = cImageBuffer.GetData();
 
+				// Lookout!
+				// -> The "GL_SGIS_generate_mipmap"-extension (http://www.opengl.org/registry/specs/SGIS/generate_mipmap.txt) specification states
+				// "
+				//  If GENERATE_MIPMAP_SGIS is enabled, the side effect occurs whenever
+				//  any change is made to the interior or edge image values of the base
+				//  level texture array.  The side effect is computation of a complete
+				//  set of mipmap arrays, all derived from the modified base level array.
+				// "
+				// -> We really have to disable the automatic mipmap generation for the following split, else mipmaps are generated
+				//    for every single uploaded depth layer... which may take ages on large volume data...
+				GLint nGL_GENERATE_MIPMAP_SGIS = 0;
+				if (!nOpenGLLevel && cRendererOpenGL.GetContext().GetExtensions().IsGL_SGIS_generate_mipmap()) {
+					// Get current state
+					glGetTexParameteriv(GL_TEXTURE_3D_EXT, GL_GENERATE_MIPMAP_SGIS, &nGL_GENERATE_MIPMAP_SGIS);
+
+					// Disable automatic mipmap generation
+					if (nGL_GENERATE_MIPMAP_SGIS)
+						glTexParameteri(GL_TEXTURE_3D_EXT, GL_GENERATE_MIPMAP_SGIS, 0);
+				}
+
+				// Ask the GPU to allocate the texture
+				glTexImage3DEXT(nOpenGLTarget, nOpenGLLevel, nOpenGLInternalformat, vSize.x, vSize.y, vSize.z, 0, nOpenGLFormat, nOpenGLType, nullptr);
+
 				// Add each depth layer by using a separate OpenGL API call
-				for (int i=0; i<vSize.z; i++, pImageData+=nNumOfLayerBytes) {
+				for (int i=0; i<vSize.z-1; i++) {
 					// Update the image data of the current depth layer
 					glTexSubImage3DEXT(nOpenGLTarget, nOpenGLLevel, 0, 0, i, vSize.x, vSize.y, 1, nOpenGLFormat, nOpenGLType, pImageData);
+					pImageData += nNumOfLayerBytes;
 				}
+
+				// Ok, we're now about to upload the last depth layer, reactivate automatic mipmap generation if required
+				if (nGL_GENERATE_MIPMAP_SGIS)
+					glTexParameteri(GL_TEXTURE_3D_EXT, GL_GENERATE_MIPMAP_SGIS, 1);
+
+				// Update the image data of the last depth layer
+				glTexSubImage3DEXT(nOpenGLTarget, nOpenGLLevel, 0, 0, vSize.z-1, vSize.x, vSize.y, 1, nOpenGLFormat, nOpenGLType, pImageData);
+			} else {
+				// Ask the GPU to allocate the texture
+				glTexImage3DEXT(nOpenGLTarget, nOpenGLLevel, nOpenGLInternalformat, vSize.x, vSize.y, vSize.z, 0, nOpenGLFormat, nOpenGLType, nullptr);
 			}
 		} else {
 			// We can do all in one simple "glTexImage3DEXT"-call

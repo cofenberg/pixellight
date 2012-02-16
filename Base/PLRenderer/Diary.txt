@@ -1,3 +1,11 @@
+>> 16.02.2012
+[CO]
+PLRendererOpenGL:
+- "TextureBuffer3D::InitialUploadVolumeData()": We really have to disable the automatic mipmap generation for the split, else mipmaps are generated
+  for every single uploaded depth layer... which may take ages on large volume data...
+
+
+
 >> 13.02.2012
 [CO]
 PLRendererOpenGL:
