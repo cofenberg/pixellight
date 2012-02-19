@@ -279,6 +279,27 @@ void RTTIObjectPointerBase::ToStringMetamethod(lua_State *pLuaState)
 	lua_pushstring(pLuaState, Type<Object*>::ConvertToString(m_pRTTIObject));
 }
 
+int RTTIObjectPointerBase::EqualityMetamethod(lua_State *pLuaState)
+{
+	// Is it user data?
+	bool bEqual = false;
+	if (lua_isuserdata(pLuaState, 2)) {
+		// Get user data from the Lua stack without removing it
+		LuaUserData *pLuaUserData = GetUserDataFromLuaStack(pLuaState, 2);
+		if (pLuaUserData) {
+			// [TODO] Do any type tests in here?
+			Object *pObject = reinterpret_cast<RTTIObjectPointerBase*>(pLuaUserData)->GetObject();
+
+			// Compare object pointers
+			bEqual = (m_pRTTIObject == pObject);
+		}
+	}
+
+	// Push the result onto the Lua stack
+	lua_pushboolean(pLuaState, bEqual);
+	return 1;
+}
+
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]

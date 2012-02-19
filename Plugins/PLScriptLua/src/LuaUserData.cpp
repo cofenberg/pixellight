@@ -80,6 +80,11 @@ void LuaUserData::CreateMetatable(lua_State *pLuaState)
 	lua_pushcfunction(pLuaState, LuaToStringMetamethodCallback);
 	lua_rawset(pLuaState, -3);
 
+	// Lua __eq metamethod callback (called when Lua tries to check for equality)
+	lua_pushstring(pLuaState, "__eq");
+	lua_pushcfunction(pLuaState, LuaEqualityMetamethodCallback);
+	lua_rawset(pLuaState, -3);
+
 	lua_rawset(pLuaState, LUA_REGISTRYINDEX);
 }
 
@@ -304,6 +309,23 @@ int LuaUserData::LuaToStringMetamethodCallback(lua_State *pLuaState)
 
 	// Done, inform Lua what's on the stack
 	return lua_gettop(pLuaState) - nLuaStackTop;
+}
+
+/*
+*  @brief
+*    Lua __eq metamethod callback (called when Lua tries to check for equality)
+*/
+int LuaUserData::LuaEqualityMetamethodCallback(lua_State *pLuaState)
+{
+	// Get user data from the Lua stack without removing it
+	LuaUserData *pLuaUserData = GetUserDataFromLuaStack(pLuaState, 1);
+	if (pLuaUserData) {
+		// Call the virtual method
+		return pLuaUserData->EqualityMetamethod(pLuaState);
+	}
+
+	// Error!
+	return 0;
 }
 
 

@@ -1,3 +1,10 @@
+>> 19.02.2012
+[CO]
+PLScriptLua:
+- "LuaUserData": Added support for Lua's "__eq" metamethod callback (called when Lua tries to check for equality)
+
+
+
 >> 12.02.2012
 [CO]
 - Feature request "ID: 3486884" (http://sourceforge.net/tracker/?func=detail&aid=3486884&group_id=507544&atid=2063685): Added "MemoryManager::Move()"
