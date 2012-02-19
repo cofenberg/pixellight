@@ -635,19 +635,19 @@ void CheckDerivedContainerFunctions(PLCore::Container<AType>& con) {
 
 		// copies all elements from index 1 to end
 		CHECK(con.Copy(Copycon, 1, 0));
-		Copycon.RemoveAtIndex(1);
+		Copycon.RemoveAtIndex(0);
 		CHECK(con.Compare(Copycon, 1, 0));
 		Copycon.AddAtIndex(3, 0);
 
 		// copies element at index 1
 		CHECK(con.Copy(Copycon, 1, 1));
-		Copycon.RemoveAtIndex(1);
+		Copycon.RemoveAtIndex(0);
 		CHECK(con.Compare(Copycon, 0, 1));
 		Copycon.AddAtIndex(3, 0);
 
 		// copies all elements from index 1 to 8 (stops at last element of Copycon)
 		CHECK(con.Copy(Copycon, 1, 8));
-		Copycon.RemoveAtIndex(1);
+		Copycon.RemoveAtIndex(0);
 		CHECK(con.Compare(Copycon));
 		Copycon.AddAtIndex(3, 0);
 
