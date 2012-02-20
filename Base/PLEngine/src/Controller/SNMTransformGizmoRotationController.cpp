@@ -31,6 +31,7 @@
 #include <PLMath/EulerAngles.h>
 #include <PLInput/Input/InputManager.h>
 #include <PLInput/Input/Devices/Mouse.h>
+#include <PLInput/Input/Devices/Keyboard.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLScene/Visibility/VisNode.h>
 #include "PLEngine/Controller/SNMTransformGizmoRotationController.h"
@@ -115,8 +116,21 @@ void SNMTransformGizmoRotationController::PerformTransform()
 		// General transform speed
 		static const float TransformSpeed = 10.0f;
 
+		// Transform speed factor
+		float fTransformSpeedFactor = 1.0f;
+		Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
+		if (pKeyboard) {
+			// Speed up?
+			if (pKeyboard->Shift.IsPressed())
+				fTransformSpeedFactor = 10.0f;
+
+			// Slow down?
+			else if (pKeyboard->Control.IsPressed())
+				fTransformSpeedFactor = 0.1f;
+		}
+
 		// Get the current time difference
-		const float fTimeDifference = Timing::GetInstance()->GetTimeDifference()*TransformSpeed;
+		const float fTimeDifference = Timing::GetInstance()->GetTimeDifference()*TransformSpeed*fTransformSpeedFactor;
 
 		// Get timed transform speed along each mouse axis, this speed is "eaten up" as soon as it's used
 		float fTransformSpeedX = fTimeDifference*pMouse->X.GetValue();
@@ -135,7 +149,7 @@ void SNMTransformGizmoRotationController::PerformTransform()
 			fTransformSpeedY = 0.0f;
 		}
 		if (m_nSelected & ZAxis)
-			fZ = fTransformSpeedX ? fTransformSpeedX : fTransformSpeedY;
+			fZ = fTransformSpeedX;	// Do always use x, everything else is difficult to use
 
 		// Get a quaternion representation of the rotation delta
 		Quaternion qRotationDelta;

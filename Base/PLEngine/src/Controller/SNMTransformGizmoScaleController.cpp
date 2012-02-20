@@ -30,6 +30,7 @@
 #include <PLMath/Intersect.h>
 #include <PLInput/Input/InputManager.h>
 #include <PLInput/Input/Devices/Mouse.h>
+#include <PLInput/Input/Devices/Keyboard.h>
 #include <PLRenderer/Renderer/Renderer.h>
 #include <PLScene/Visibility/VisNode.h>
 #include "PLEngine/Controller/SNMTransformGizmoScaleController.h"
@@ -114,8 +115,21 @@ void SNMTransformGizmoScaleController::PerformTransform()
 		// General transform speed
 		static const float TransformSpeed = 1.0f;
 
+		// Transform speed factor
+		float fTransformSpeedFactor = 1.0f;
+		Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
+		if (pKeyboard) {
+			// Speed up?
+			if (pKeyboard->Shift.IsPressed())
+				fTransformSpeedFactor = 10.0f;
+
+			// Slow down?
+			else if (pKeyboard->Control.IsPressed())
+				fTransformSpeedFactor = 0.1f;
+		}
+
 		// Get the current time difference
-		const float fTimeDifference = Timing::GetInstance()->GetTimeDifference()*TransformSpeed;
+		const float fTimeDifference = Timing::GetInstance()->GetTimeDifference()*TransformSpeed*fTransformSpeedFactor;
 
 		// Get timed transform speed along each mouse axis, this speed is "eaten up" as soon as it's used
 		float fTransformSpeedX = fTimeDifference*pMouse->X.GetValue();
@@ -134,7 +148,7 @@ void SNMTransformGizmoScaleController::PerformTransform()
 			fTransformSpeedY = 0.0f;
 		}
 		if (m_nSelected & ZAxis)
-			vScale.z -= fTransformSpeedX ? fTransformSpeedX : fTransformSpeedY;
+			vScale.z -= fTransformSpeedX;	// Do always use x, everything else is difficult to use
 
 		// Set the new scale of the owner scene node
 		GetSceneNode().SetScale(vScale);
