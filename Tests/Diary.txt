@@ -1,4 +1,13 @@
-﻿>> 14.02.2012
+﻿>> 16.02.2012
+[JS]
+PLUnitTests:
+- added a new CHECK-Macro to UnitTest++: "CHECK_IMPLEMENT"
+	-> comfortable way to mark a test as "not implemented yet"
+- refactored EulerAngles test
+
+
+
+>> 14.02.2012
 [JS]
 PLUnitTests:
 - added Bitset tests (copied and modified from ContainerTest.h, can't directly use ContainerTest.h as it uses int over bool)

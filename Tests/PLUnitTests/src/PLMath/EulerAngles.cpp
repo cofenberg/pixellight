@@ -41,7 +41,7 @@ SUITE(EulerAngles) {
 	};
 
 	TEST(CHECK_MATRIX3X3_MACRO) {
-		// checking CHECK_MATRIX3X3 macro
+		// checking testmacro: CHECK_MATRIX3X3
 		Matrix3x3 m1, m2;
 
 		m1.Set(1,2,3,4,5,6,7,8,9);
@@ -50,35 +50,43 @@ SUITE(EulerAngles) {
 		CHECK_MATRIX3X3(m1, m2, 0.01f);
 	}
 
-	TEST_FIXTURE(ConstructTest, FromMatrix) {
+	TEST_FIXTURE(ConstructTest, Matrix_Functions) {
+		int steps = 10;
+
 		// actual test
-		for (float x=0.0; x<=2*PI; x+=PI/4) {
+		for (float x=0.0; x<=2*PI; x+=PI/steps) {
 			mRotX.FromEulerAngleX(x);
 
-			for (float y=0.0; y<=2*PI; y+=PI/4) {
+			for (float y=0.0; y<=2*PI; y+=PI/steps) {
 				mRotY.FromEulerAngleY(y);
 
-				for (float z=0.0; z<=2*PI; z+=PI/4) {
+				for (float z=0.0; z<=2*PI; z+=PI/steps) {
 					mRotZ.FromEulerAngleZ(z);
 
 					mRot =  mRotX * mRotY * mRotZ;
 
 					EulerAngles::FromMatrix(mRot, fX, fY, fZ);
 
+					// rotate back to get expected result
 					mEulX.FromEulerAngleX(fX);
 					mEulY.FromEulerAngleY(fY);
 					mEulZ.FromEulerAngleZ(fZ);
 
+					// [TODO] is this order ok?
 					mEul = mEulZ * mEulY * mEulX;
 
-					printf("x=%f y=%f z=%f\n", x, y, z);
-					CHECK_MATRIX3X3(mEul, mRot, 0.01f);
+					//printf("x=%f y=%f z=%f\n", x, y, z);
+					CHECK_MATRIX3X3(mEul, mRot, 0.0001f);
+
+					EulerAngles::ToMatrix(fX, fY, fZ, mRot);
+
+					CHECK_MATRIX3X3(mEul, mRot, 0.0001f);
 				}
 			}
 		}
 	}
 
-	TEST_FIXTURE(ConstructTest, konkret) {
+	TEST_FIXTURE(ConstructTest, Matrix_Functions_SingleCase) {
             fX=PI/4;
             fY=0;
             fZ=0;
@@ -97,7 +105,11 @@ SUITE(EulerAngles) {
 
             mEul = mEulZ * mEulY * mEulX;
 
-            printf("x=%f y=%f z=%f\n", fX, fY, fZ);
+            //printf("x=%f y=%f z=%f\n", fX, fY, fZ);
             CHECK_MATRIX3X3(mEul, mRot, 0.01f);
     }
+
+	TEST_FIXTURE(ConstructTest, Quaternion_Functions) {
+		CHECK_IMPLEMENT;
+	}
 }

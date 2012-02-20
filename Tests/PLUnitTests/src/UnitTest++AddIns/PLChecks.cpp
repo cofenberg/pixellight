@@ -44,4 +44,13 @@ namespace UnitTest {
 			if (bFailed)
 				results.OnTestFailure(details, stream.GetText());
 		}
+
+	void CheckMissingImplementation(TestResults& results, TestDetails const& details) {
+		UnitTest::MemoryOutStream stream;
+		
+		// missing implementation message
+		stream << "Implement this test!" << std::endl;
+
+		results.OnTestFailure(details, stream.GetText());
+	}
 }

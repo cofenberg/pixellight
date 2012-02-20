@@ -27,6 +27,10 @@
 	#error UnitTest++ redefines CHECK_MATRIX3X3
 #endif
 
+#ifdef CHECK_IMPLEMENT
+	#error UnitTest++ redefines CHECK_MATRIX3X3
+#endif
+
 #define CHECK_MATRIX3X3(expected, actual, tolerance) \
     do \
     { \
@@ -36,6 +40,18 @@
         catch (...) { \
             UnitTest::CurrentTest::Results()->OnTestFailure(UnitTest::TestDetails(*UnitTest::CurrentTest::Details(), __LINE__), \
                     "Unhandled exception in CHECK_MATRIX3X3()"); \
+        } \
+    } while (0)
+
+#define CHECK_IMPLEMENT \
+    do \
+    { \
+        try { \
+            UnitTest::CheckMissingImplementation(*UnitTest::CurrentTest::Results(), UnitTest::TestDetails(*UnitTest::CurrentTest::Details(), __LINE__)); \
+        } \
+        catch (...) { \
+            UnitTest::CurrentTest::Results()->OnTestFailure(UnitTest::TestDetails(*UnitTest::CurrentTest::Details(), __LINE__), \
+                    "Unhandled exception in CHECK_IMPLEMENT"); \
         } \
     } while (0)
 
