@@ -40,12 +40,12 @@ namespace PLCore {
 *  @brief
 *    Returns the checksum of a given buffer
 */
-String Checksum::Get(const uint8 nBuffer[], uint32 nNumOfBytes)
+String Checksum::Get(const uint8 *pnBuffer, uint32 nNumOfBytes)
 {
 	// Check buffer size
 	if (nNumOfBytes) {
 		// Get the checksum
-		Update(nBuffer, nNumOfBytes);
+		Update(pnBuffer, nNumOfBytes);
 		String sChecksum = Final();
 
 		// Return the checksum

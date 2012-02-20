@@ -71,6 +71,29 @@ class ChecksumCRC32 : public Checksum {
 		*/
 		PLCORE_API virtual ~ChecksumCRC32();
 
+		/**
+		*  @brief
+		*    Returns the current CRC32 checksum
+		*
+		*  @return
+		*    Current CRC32 checksum
+		*/
+		PLCORE_API uint32 GetChecksum() const;
+
+		/**
+		*  @brief
+		*    Returns the checksum of a given buffer
+		*
+		*  @param[in] pnBuffer
+		*    Buffer to create the checksum from (MUST be valid!)
+		*  @param[in] nNumOfBytes
+		*    Number of bytes of the given buffer (MUST be valid!)
+		*
+		*  @return
+		*    The checksum of the given buffer
+		*/
+		PLCORE_API uint32 GetChecksum(const uint8 *pnBuffer, uint32 nNumOfBytes);
+
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]

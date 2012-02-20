@@ -69,15 +69,15 @@ class Checksum {
 		*  @brief
 		*    Returns the checksum of a given buffer
 		*
-		*  @param[in] nBuffer
-		*    Buffer to create the checksum from
+		*  @param[in] pnBuffer
+		*    Buffer to create the checksum from (MUST be valid!)
 		*  @param[in] nNumOfBytes
 		*    Number of bytes of the given buffer (MUST be valid!)
 		*
 		*  @return
 		*    The checksum of the given buffer, empty on error (maybe empty buffer?)
 		*/
-		PLCORE_API String Get(const uint8 nBuffer[], uint32 nNumOfBytes);
+		PLCORE_API String Get(const uint8 *pnBuffer, uint32 nNumOfBytes);
 
 		/**
 		*  @brief

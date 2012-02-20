@@ -60,6 +60,39 @@ ChecksumCRC32::~ChecksumCRC32()
 
 /**
 *  @brief
+*    Returns the current CRC32 checksum
+*/
+uint32 ChecksumCRC32::GetChecksum() const
+{
+	return m_nCRC32;
+}
+
+/**
+*  @brief
+*    Returns the checksum of a given buffer
+*/
+uint32 ChecksumCRC32::GetChecksum(const uint8 *pnBuffer, uint32 nNumOfBytes)
+{
+	// Initialize the CRC32 table?
+	if (!m_lstCRC32Table.GetNumOfElements())
+		Init();
+
+	// Update current checksum
+	m_nCRC32 = 0;
+	const uint8 *pInput = pnBuffer;
+	for (uint32 i=0; i<nNumOfBytes; i++)
+		m_nCRC32 = (m_nCRC32 >> 8) ^ m_lstCRC32Table[(m_nCRC32 & 0xFF) ^ *pInput++];
+
+	// Done
+	return m_nCRC32;
+}
+
+
+//[-------------------------------------------------------]
+//[ Private functions                                     ]
+//[-------------------------------------------------------]
+/**
+*  @brief
 *    Initializes the CRC32 table
 */
 void ChecksumCRC32::Init()
