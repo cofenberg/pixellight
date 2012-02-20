@@ -1,3 +1,9 @@
+> 20.02.2012
+[CO]
+- "SkinLoaderPL::LoadV1()": Minor error message improvement (http://dev.pixellight.org/forum/viewtopic.php?f=6&t=121)
+
+
+
 > 03.02.2012
 [CO]
 - "SNMTransformGizmo::OnDrawTransparent()"

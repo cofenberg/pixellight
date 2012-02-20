@@ -216,7 +216,10 @@ bool SkinLoaderPL::LoadV1(SNMesh &cSNMesh, const XmlElement &cSkinElement) const
 						}
 					}
 				} else {
-					PL_LOG(Error, String("Can't replace material at index ") + nID + '!')
+					if (sName.GetLength())
+						PL_LOG(Error, "Can't replace material '" + sName + "' at index " + nID + " because it does no exist")
+					else
+						PL_LOG(Error, "Can't replace material at invalid material index")
 				}
 
 				// Next element, please
