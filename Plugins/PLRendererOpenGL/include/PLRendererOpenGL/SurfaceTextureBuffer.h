@@ -92,6 +92,15 @@ class SurfaceTextureBuffer : public PLRenderer::SurfaceTextureBuffer {
 
 		/**
 		*  @brief
+		*    Sets a depth render target
+		*
+		*  @param[in] pTextureBuffer
+		*    Texture buffer to render in, can be a null pointer
+		*/
+		void SetDepthRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer);
+
+		/**
+		*  @brief
 		*    Finishes the process
 		*/
 		void Finish();

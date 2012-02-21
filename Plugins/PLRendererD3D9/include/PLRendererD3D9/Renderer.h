@@ -236,6 +236,7 @@ class Renderer : public PLRenderer::RendererBackend {
 		//[-------------------------------------------------------]
 		virtual bool SetRenderTarget(PLRenderer::Surface *pSurface, PLCore::uint8 nFace = 0) override;
 		virtual bool SetColorRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, PLCore::uint8 nColorIndex = 0, PLCore::uint8 nFace = 0) override;
+		virtual bool SetDepthRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, PLCore::uint8 nFace = 0) override;
 		virtual bool MakeScreenshot(PLGraphics::Image &cImage) override;
 		virtual bool SetTextureBuffer(int nStage = -1, PLRenderer::TextureBuffer *pTextureBuffer = nullptr) override;
 		virtual bool SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer = nullptr) override;

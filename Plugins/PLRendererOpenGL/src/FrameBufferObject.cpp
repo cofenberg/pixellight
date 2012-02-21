@@ -304,6 +304,19 @@ void FrameBufferObject::Unbind()
 
 /**
 *  @brief
+*    Unbinds the currently used depth texture from the frame buffer
+*/
+void FrameBufferObject::UnbindDephTexture()
+{
+	// Valid frame buffer object?
+	if (m_nFrameBufferIndex) {
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_nFrameBufferIndex);
+		glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, m_nDepthBufferAttachment, GL_TEXTURE_2D, 0, 0);
+	}
+}
+
+/**
+*  @brief
 *    Returns the size of the frame buffer
 */
 const Vector2i &FrameBufferObject::GetSize() const

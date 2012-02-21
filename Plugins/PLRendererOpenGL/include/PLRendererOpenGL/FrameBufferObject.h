@@ -139,6 +139,12 @@ class FrameBufferObject {
 
 		/**
 		*  @brief
+		*    Unbinds the currently used depth texture from the frame buffer
+		*/
+		void UnbindDephTexture();
+
+		/**
+		*  @brief
 		*    Returns the size of the frame buffer
 		*
 		*  @return

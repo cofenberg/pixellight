@@ -107,6 +107,23 @@ void SurfaceTextureBuffer::SetColorRenderTarget(uint8 nColorIndex, PLRenderer::T
 
 /**
 *  @brief
+*    Sets a depth render target
+*/
+void SurfaceTextureBuffer::SetDepthRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer)
+{
+	// Check FBO
+	if (m_pFrameBufferObject) {
+		if (pTextureBuffer) {
+			m_pFrameBufferObject->Bind();
+			m_pFrameBufferObject->SwitchTarget(*pTextureBuffer, 0);
+		} else {
+			m_pFrameBufferObject->UnbindDephTexture();
+		}
+	}
+}
+
+/**
+*  @brief
 *    Finishes the process
 */
 void SurfaceTextureBuffer::Finish()

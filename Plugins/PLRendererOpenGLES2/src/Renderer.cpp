@@ -1902,6 +1902,14 @@ bool Renderer::SetColorRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, u
 	return false;
 }
 
+bool Renderer::SetDepthRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, uint8 nFace)
+{
+	// [TODO] Implement me
+
+	// Error!
+	return false;
+}
+
 bool Renderer::MakeScreenshot(PLGraphics::Image &cImage)
 {
 	// In case the current surface is a texture, we need to 'finish' the current rendering process

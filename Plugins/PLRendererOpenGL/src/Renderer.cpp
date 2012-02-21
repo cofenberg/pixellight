@@ -2464,6 +2464,22 @@ bool Renderer::SetColorRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, u
 	return false;
 }
 
+bool Renderer::SetDepthRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, uint8 nFace)
+{
+	// Check current surface
+	PLRenderer::Surface *pSurface = m_cCurrentSurface.GetSurface();
+	if (pSurface && pSurface->GetType() == PLRenderer::Surface::TextureBuffer) {
+		// Setup
+		static_cast<SurfaceTextureBuffer*>(m_cCurrentSurface.GetSurface())->SetDepthRenderTarget(pTextureBuffer);
+
+		// Done
+		return true;
+	}
+
+	// Error!
+	return false;
+}
+
 bool Renderer::MakeScreenshot(PLGraphics::Image &cImage)
 {
 	// In case the current surface is a texture, we need to 'finish' the current rendering process

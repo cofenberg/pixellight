@@ -1709,6 +1709,14 @@ bool Renderer::SetColorRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, u
 	return false; // Error!
 }
 
+bool Renderer::SetDepthRenderTarget(PLRenderer::TextureBuffer *pTextureBuffer, uint8 nFace)
+{
+	// [TODO] Implement me
+
+	// Error!
+	return false;
+}
+
 bool Renderer::MakeScreenshot(Image &cImage)
 {
 	// [TODO] Fix me!

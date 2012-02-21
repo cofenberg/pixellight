@@ -1290,6 +1290,23 @@ class Renderer : public PLCore::Object {
 
 		/**
 		*  @brief
+		*    Sets the current depth render target
+		*
+		*  @param[in] pTextureBuffer
+		*    Current depth renderer target, can be a null pointer
+		*  @param[in] nFace
+		*    Cube map face to render in ([TODO])
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - This depth render targets MUST have the dimension and format of the render target
+		*/
+		virtual bool SetDepthRenderTarget(TextureBuffer *pTextureBuffer, PLCore::uint8 nFace = 0) = 0;
+
+		/**
+		*  @brief
 		*    Makes a screenshot of the current render target (see GetRenderTarget())
 		*
 		*  @param[out] cImage
