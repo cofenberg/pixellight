@@ -116,7 +116,7 @@ SurfaceTextureBuffer *SRPBegin::GetBackRenderTarget() const
 */
 TextureBuffer2D *SRPBegin::GetTextureBuffer2DDepth() const
 {
-	return (!(GetFlags() & NoDepthTexture) && m_pTextureBuffer2DDepth) ? reinterpret_cast<TextureBuffer2D*>(m_pTextureBuffer2DDepth->GetTextureBuffer()) : nullptr;
+	return ((GetFlags() & DepthTexture) && m_pTextureBuffer2DDepth) ? reinterpret_cast<TextureBuffer2D*>(m_pTextureBuffer2DDepth->GetTextureBuffer()) : nullptr;
 }
 
 /**
@@ -216,7 +216,7 @@ void SRPBegin::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 		}
 
 		// Create a depth texture?
-		if (!(GetFlags() & NoDepthTexture)) {
+		if ((GetFlags() & DepthTexture)) {
 			// Destroy previous texture?
 			if (m_pTextureBuffer2DDepth && m_pTextureBuffer2DDepth->GetSize() != vRenderTargetSize) {
 				delete m_pTextureBuffer2DDepth;
@@ -235,7 +235,7 @@ void SRPBegin::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 		cRenderer.SetRenderTarget(m_pRenderTarget[!m_bCurrentFrontRenderTarget]);
 
 		// Provide a depth texture?
-		if (!(GetFlags() & NoDepthTexture) && m_pTextureBuffer2DDepth)
+		if ((GetFlags() & DepthTexture) && m_pTextureBuffer2DDepth)
 			cRenderer.SetDepthRenderTarget(m_pTextureBuffer2DDepth->GetTextureBuffer());
 	}
 
