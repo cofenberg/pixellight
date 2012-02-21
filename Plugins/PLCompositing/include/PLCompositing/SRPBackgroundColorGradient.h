@@ -56,7 +56,7 @@ class SRPBackgroundColorGradient : public SRPBackground {
 		// Attributes
 		pl_attribute(Color1,	PLGraphics::Color4,	PLGraphics::Color4::White,	ReadWrite,	DirectValue,	"First color to use",																"")
 		pl_attribute(Color2,	PLGraphics::Color4,	PLGraphics::Color4::Black,	ReadWrite,	DirectValue,	"Second color to use",																"")
-		pl_attribute(Angle,		float,				-45.0f,						ReadWrite,	DirectValue,	"Clockwise angle (in degree) of the gradient color. 0° means from left to right.",	"")
+		pl_attribute(Angle,		float,				135.0f,						ReadWrite,	DirectValue,	"Clockwise angle (in degree) of the gradient color. 0° means from left to right.",	"")
 		pl_attribute(Position,	PLMath::Vector2,	PLMath::Vector2::Zero,		ReadWrite,	DirectValue,	"Gradient quad position (0..1), (0, 0)=left top",									"")
 		pl_attribute(Size,		PLMath::Vector2,	PLMath::Vector2::One,		ReadWrite,	DirectValue,	"Gradient quad size (0..1)",														"")
 		// Constructors

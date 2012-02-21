@@ -3,6 +3,7 @@
 - Added "SRPBegin::GetTextureBuffer2DDepth()": Within my master thesis I need to access the currently used depth buffer as texture to be able to modify the cast
   ray. The current render to texture system is definitely not optimal, but for now it still has to do the job. At least I'am not able to move solid objects into
   my rendered volume without rewriting the render to texture system on-the-fly, which is most times no good idea.
+- "SRPBackgroundColorGradient": Changed default angle to make it possible to see the FPS by default *white font on white background*
 
 
 
