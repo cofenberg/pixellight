@@ -106,12 +106,14 @@ class SRPBegin : public PLScene::SceneRendererPass {
 		*/
 		enum EFlags {
 			NoStencil				  = 1<<1,	/**< No stencil buffer */
-			NoMultisampleAntialiasing = 1<<2	/**< Do not use multisample antialiasing */
+			NoMultisampleAntialiasing = 1<<2,	/**< Do not use multisample antialiasing */
+			NoDepthTexture			  = 1<<4	/**< Do not provide a depth texture when rendering into a texture */
 		};
 		pl_enum(EFlags)
 			pl_enum_base(SceneRendererPass::EFlags)
 			pl_enum_value(NoStencil,				 "No stencil buffer")
 			pl_enum_value(NoMultisampleAntialiasing, "Do not use multisample antialiasing")
+			pl_enum_value(NoDepthTexture,			 "Do not provide a depth texture when rendering into a texture")
 		pl_enum_end
 
 		/**
@@ -204,6 +206,15 @@ class SRPBegin : public PLScene::SceneRendererPass {
 
 		/**
 		*  @brief
+		*    Returns the depth texture (used when rendering into a texture)
+		*
+		*  @return
+		*    Depth texture (used when rendering into a texture), can be a null pointer
+		*/
+		PLCOM_API PLRenderer::TextureBuffer2D *GetTextureBuffer2DDepth() const;
+
+		/**
+		*  @brief
 		*    Swaps the render targets
 		*/
 		PLCOM_API void SwapRenderTargets();
@@ -223,6 +234,7 @@ class SRPBegin : public PLScene::SceneRendererPass {
 		PLRenderer::Surface				 *m_pOriginalRenderTarget;		/**< The render target that was set before the current render target was changed to the front/back render target, can be a null pointer */
 		PLRenderer::SurfaceTextureBuffer *m_pRenderTarget[2];			/**< Render targets, can be a null pointer */
 		bool							  m_bCurrentFrontRenderTarget;	/**< Index of the current front render target */
+		PLRenderer::SurfaceTextureBuffer *m_pTextureBuffer2DDepth;		/**< Depth texture (used when rendering into a texture) */
 
 
 };

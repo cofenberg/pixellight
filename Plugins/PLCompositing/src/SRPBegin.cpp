@@ -61,7 +61,8 @@ SRPBegin::SRPBegin() :
 	FillMode(this),
 	Flags(this),
 	m_pOriginalRenderTarget(nullptr),
-	m_bCurrentFrontRenderTarget(0)
+	m_bCurrentFrontRenderTarget(0),
+	m_pTextureBuffer2DDepth(nullptr)
 {
 	// Initialize the pointers to the render targets
 	m_pRenderTarget[0] = m_pRenderTarget[1] = nullptr;
@@ -78,6 +79,8 @@ SRPBegin::~SRPBegin()
 		delete m_pRenderTarget[0];
 	if (m_pRenderTarget[1])
 		delete m_pRenderTarget[1];
+	if (m_pTextureBuffer2DDepth)
+		delete m_pTextureBuffer2DDepth;
 }
 
 /**
@@ -105,6 +108,15 @@ SurfaceTextureBuffer *SRPBegin::GetFrontRenderTarget() const
 SurfaceTextureBuffer *SRPBegin::GetBackRenderTarget() const
 {
 	return m_pRenderTarget[!m_bCurrentFrontRenderTarget];
+}
+
+/**
+*  @brief
+*    Returns the depth texture (used when rendering into a texture)
+*/
+TextureBuffer2D *SRPBegin::GetTextureBuffer2DDepth() const
+{
+	return (!(GetFlags() & NoDepthTexture) && m_pTextureBuffer2DDepth) ? reinterpret_cast<TextureBuffer2D*>(m_pTextureBuffer2DDepth->GetTextureBuffer()) : nullptr;
 }
 
 /**
@@ -202,12 +214,29 @@ void SRPBegin::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 				m_bCurrentFrontRenderTarget = 1;
 			}
 		}
+
+		// Create a depth texture?
+		if (!(GetFlags() & NoDepthTexture)) {
+			// Destroy previous texture?
+			if (m_pTextureBuffer2DDepth && m_pTextureBuffer2DDepth->GetSize() != vRenderTargetSize) {
+				delete m_pTextureBuffer2DDepth;
+				m_pTextureBuffer2DDepth = nullptr;
+			}
+
+			// Create texture?
+			if (!m_pTextureBuffer2DDepth)
+				m_pTextureBuffer2DDepth = cRenderer.CreateSurfaceTextureBuffer2D(vRenderTargetSize, TextureBuffer::D24, (GetFlags() & NoMultisampleAntialiasing) ? SurfaceTextureBuffer::Depth|SurfaceTextureBuffer::NoMultisampleAntialiasing : SurfaceTextureBuffer::Depth);
+		}
 	}
 
 	// Set the current render target
 	if (m_pRenderTarget[0] && m_pRenderTarget[1]) {
 		// Set the new render target, we'll render into the back render target
 		cRenderer.SetRenderTarget(m_pRenderTarget[!m_bCurrentFrontRenderTarget]);
+
+		// Provide a depth texture?
+		if (!(GetFlags() & NoDepthTexture) && m_pTextureBuffer2DDepth)
+			cRenderer.SetDepthRenderTarget(m_pTextureBuffer2DDepth->GetTextureBuffer());
 	}
 
 	// Set fill mode

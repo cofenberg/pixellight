@@ -1,3 +1,11 @@
+>> 21.02.2012
+[CO]
+- Added "SRPBegin::GetTextureBuffer2DDepth()": Within my master thesis I need to access the currently used depth buffer as texture to be able to modify the cast
+  ray. The current render to texture system is definitely not optimal, but for now it still has to do the job. At least I'am not able to move solid objects into
+  my rendered volume without rewriting the render to texture system on-the-fly, which is most times no good idea.
+
+
+
 >> 24.01.2012
 [CO]
 - "SRPDebugWireframes": By default, "MaxDrawDistance" is now set to -1 because it's at first confusing when no wireframes can be seen because e.g. the scale is huge
