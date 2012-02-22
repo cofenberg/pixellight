@@ -266,7 +266,7 @@ uint16 Half::FromFloat(float fFloat)
 		if (e > 30) {
 			{ // Cause a hardware floating point overflow
 				volatile float f = 1e10;
-				for (int i=0; i<10; i++)
+				for (int n=0; n<10; n++)
 					f *= f;	// This will overflow before the for­loop terminates
 			}
 			return static_cast<uint16>(s | 0x7c00);	// If this returns, the half becomes an
