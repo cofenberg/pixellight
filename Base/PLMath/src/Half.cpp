@@ -208,7 +208,7 @@ uint16 Half::FromFloat(float fFloat)
 			// float, a denormalized float or a zero).
 
 			// We convert f to a half zero with the same sign as f.
-			return s;
+			return static_cast<uint16>(s);
 		}
 
 		// E is between -10 and 0.  F is a normalized float
@@ -234,12 +234,12 @@ uint16 Half::FromFloat(float fFloat)
 		m = (m + a + b) >> t;
 
 		// Assemble the half from s, e (zero) and m.
-		return s | m;
+		return static_cast<uint16>(s | m);
 	} else if (e == 0xff - (127 - 15)) {
 		if (m == 0) {
 			// F is an infinity; convert f to a half
 			// infinity with the same sign as f.
-			return s | 0x7c00;
+			return static_cast<uint16>(s | 0x7c00);
 		} else {
 			// F is a NAN; we produce a half NAN that preserves
 			// the sign bit and the 10 leftmost bits of the
@@ -248,7 +248,7 @@ uint16 Half::FromFloat(float fFloat)
 			// into an infinity, so we have to set at least one
 			// bit in the significant.
 			m >>= 13;
-			return s | 0x7c00 | m | (m == 0);
+			return static_cast<uint16>(s | 0x7c00 | m | (m == 0));
 		}
 	} else {
 		// E is greater than zero.  F is a normalized float.
@@ -269,11 +269,11 @@ uint16 Half::FromFloat(float fFloat)
 				for (int i=0; i<10; i++)
 					f *= f;	// This will overflow before the for­loop terminates
 			}
-			return s | 0x7c00;	// If this returns, the half becomes an
-		}						// infinity with the same sign as f.
+			return static_cast<uint16>(s | 0x7c00);	// If this returns, the half becomes an
+		}											// infinity with the same sign as f.
 
 		// Assemble the half from s, e and m.
-		return s | (e << 10) | (m >> 13);
+		return static_cast<uint16>(s | (e << 10) | (m >> 13));
 	}
 }
 
