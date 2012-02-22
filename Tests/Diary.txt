@@ -1,3 +1,11 @@
+>> 22.02.2012
+[CO]
+PLUnitTestsPerformance:
+- Removed "system("Pause")" resulting in the error message "error: 'system' was not declared in this scope" when building for Android,
+  instead "getchar()" is used as already done within "PLUnitTests" (altough I'am not sure whether or not it's a good idea to wait for a key in here)
+
+
+
 ﻿>> 16.02.2012
 [JS]
 PLUnitTests:
