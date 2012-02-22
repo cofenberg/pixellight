@@ -149,7 +149,8 @@ void Application41::RunScript(const String &sScriptFilename)
 		// Check whether or not "g_Factor" is a global variable
 		if (pScript->IsGlobalVariable("g_Factor")) {
 			// Get the type of the global variable
-			ETypeID nTypeID = pScript->GetGlobalVariableTypeID("g_Factor");
+			const ETypeID nTypeID = pScript->GetGlobalVariableTypeID("g_Factor");
+			System::GetInstance()->GetConsole().Print(String("The type ID of the global variable \"g_Factor\" is \"") + nTypeID + "\"\n");
 
 			// Get the current value of the global variable
 			String sOriginalValue = pScript->GetGlobalVariable("g_Factor");
@@ -159,7 +160,7 @@ void Application41::RunScript(const String &sScriptFilename)
 			pScript->SetGlobalVariable("g_Factor", Var<int>(42));
 
 			// Get the current value of the global variable
-			String sValue = pScript->GetGlobalVariable("g_Factor");
+			const String sValue = pScript->GetGlobalVariable("g_Factor");
 			if (sValue == "42")
 				System::GetInstance()->GetConsole().Print("The value of the global variable \"g_Factor\" was changed successfully\n");
 
