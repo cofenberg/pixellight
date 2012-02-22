@@ -22,7 +22,10 @@ SUITE(Vector2) {
 	// Our Array Test Fixture :)
 	struct ConstructTest
 	{
-		ConstructTest() { 
+		ConstructTest() :
+			fX(0.0f),
+			fY(0.0f)
+		{
 			/* some setup */
 			T2[0] = 1.0f;
 			T2[1] = 2.0f;
