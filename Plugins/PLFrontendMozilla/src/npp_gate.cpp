@@ -82,7 +82,7 @@ NPError NPP_Destroy (NPP instance, NPSavedData** save)
 
   NPError rv = NPERR_NO_ERROR;
 
-  nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
+  nsPluginInstanceBase * plugin = static_cast<nsPluginInstanceBase *>(instance->pdata);
   if(plugin != nullptr) {
     plugin->shut();
     NS_DestroyPluginInstance(plugin);
@@ -103,7 +103,7 @@ NPError NPP_SetWindow (NPP instance, NPWindow* pNPWindow)
   if(pNPWindow == nullptr)
     return NPERR_GENERIC_ERROR;
 
-  nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
+  nsPluginInstanceBase * plugin = static_cast<nsPluginInstanceBase *>(instance->pdata);
 
   if(plugin == nullptr) 
     return NPERR_GENERIC_ERROR;
@@ -136,7 +136,7 @@ NPError NPP_NewStream(NPP instance, NPMIMEType type, NPStream* stream, NPBool se
   if(instance == nullptr)
     return NPERR_INVALID_INSTANCE_ERROR;
 
-  nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
+  nsPluginInstanceBase * plugin = static_cast<nsPluginInstanceBase *>(instance->pdata);
   if(plugin == nullptr) 
     return NPERR_GENERIC_ERROR;
 
@@ -149,7 +149,7 @@ int32 NPP_WriteReady (NPP instance, NPStream *stream)
   if(instance == nullptr)
     return 0x0fffffff;
 
-  nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
+  nsPluginInstanceBase * plugin = static_cast<nsPluginInstanceBase *>(instance->pdata);
   if(plugin == nullptr) 
     return 0x0fffffff;
 
@@ -162,7 +162,7 @@ int32 NPP_Write (NPP instance, NPStream *stream, int32 offset, int32 len, void *
   if(instance == nullptr)
     return len;
 
-  nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
+  nsPluginInstanceBase * plugin = static_cast<nsPluginInstanceBase *>(instance->pdata);
   if(plugin == nullptr) 
     return len;
 
@@ -175,7 +175,7 @@ NPError NPP_DestroyStream (NPP instance, NPStream *stream, NPError reason)
   if(instance == nullptr)
     return NPERR_INVALID_INSTANCE_ERROR;
 
-  nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
+  nsPluginInstanceBase * plugin = static_cast<nsPluginInstanceBase *>(instance->pdata);
   if(plugin == nullptr) 
     return NPERR_GENERIC_ERROR;
 
@@ -188,7 +188,7 @@ void NPP_StreamAsFile (NPP instance, NPStream* stream, const char* fname)
   if(instance == nullptr)
     return;
 
-  nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
+  nsPluginInstanceBase * plugin = static_cast<nsPluginInstanceBase *>(instance->pdata);
   if(plugin == nullptr) 
     return;
 
@@ -200,7 +200,7 @@ void NPP_Print (NPP instance, NPPrint* printInfo)
   if(instance == nullptr)
     return;
 
-  nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
+  nsPluginInstanceBase * plugin = static_cast<nsPluginInstanceBase *>(instance->pdata);
   if(plugin == nullptr) 
     return;
 
@@ -212,7 +212,7 @@ void NPP_URLNotify(NPP instance, const char* url, NPReason reason, void* notifyD
   if(instance == nullptr)
     return;
 
-  nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
+  nsPluginInstanceBase * plugin = static_cast<nsPluginInstanceBase *>(instance->pdata);
   if(plugin == nullptr) 
     return;
 
@@ -224,7 +224,7 @@ NPError	NPP_GetValue(NPP instance, NPPVariable variable, void *value)
   if(instance == nullptr)
     return NPERR_INVALID_INSTANCE_ERROR;
 
-  nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
+  nsPluginInstanceBase * plugin = static_cast<nsPluginInstanceBase *>(instance->pdata);
   if(plugin == nullptr) 
     return NPERR_GENERIC_ERROR;
 
@@ -237,7 +237,7 @@ NPError NPP_SetValue(NPP instance, NPNVariable variable, void *value)
   if(instance == nullptr)
     return NPERR_INVALID_INSTANCE_ERROR;
 
-  nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
+  nsPluginInstanceBase * plugin = static_cast<nsPluginInstanceBase *>(instance->pdata);
   if(plugin == nullptr) 
     return NPERR_GENERIC_ERROR;
 
@@ -250,7 +250,7 @@ int16	NPP_HandleEvent(NPP instance, void* event)
   if(instance == nullptr)
     return 0;
 
-  nsPluginInstanceBase * plugin = (nsPluginInstanceBase *)instance->pdata;
+  nsPluginInstanceBase * plugin = static_cast<nsPluginInstanceBase *>(instance->pdata);
   if(plugin == nullptr) 
     return 0;
 

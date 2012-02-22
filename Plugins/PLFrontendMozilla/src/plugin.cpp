@@ -71,7 +71,7 @@ nsPluginInstanceBase * NS_NewPluginInstance(nsPluginCreateData * aCreateDataStru
 void NS_DestroyPluginInstance(nsPluginInstanceBase * aPlugin)
 {
   if(aPlugin)
-    delete (nsPluginInstance *)aPlugin;
+    delete static_cast<nsPluginInstance *>(aPlugin);
 }
 
 ////////////////////////////////////////
@@ -469,7 +469,7 @@ void nsPluginInstance::UpdateTrapMouse()
 
 static LRESULT CALLBACK PluginWinProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-  nsPluginInstance *pPlugin = (nsPluginInstance*)GetWindowLongPtr(hWnd, GWLP_USERDATA);
+  nsPluginInstance *pPlugin = reinterpret_cast<nsPluginInstance*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
   if (pPlugin) {
 	  return pPlugin->ProcessMessage(hWnd, msg, wParam, lParam);
   }
