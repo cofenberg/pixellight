@@ -81,13 +81,13 @@ void NS_DestroyPluginInstance(nsPluginInstanceBase * aPlugin)
 nsPluginInstance::nsPluginInstance(NPP aInstance) : nsPluginInstanceBase(),
   mInstance(aInstance),
   mInitialized(FALSE),
+  mhWnd(nullptr),
+  m_hWnd(nullptr),
   m_bFrontendApplicationInitialized(false),
   m_bMouseVisible(true),
   m_bTrapMouse(false),
   m_cFrontend(m_cFrontendContext, *this)
 {
-  mhWnd = nullptr;
-
 	// Scan PL-runtime directory for compatible plugins and load them in as well as scan for compatible data and register it
 	PLCore::Runtime::ScanDirectoryPluginsAndData();
 
