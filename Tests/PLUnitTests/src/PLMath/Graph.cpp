@@ -17,9 +17,16 @@ SUITE(Graph) {
 	// Our Array Test Fixture :)
 	struct ConstructTest
 	{
-		ConstructTest() { 
+		ConstructTest() :
 			/* some setup */
-			bUsePosition = true;
+			pNodeA(nullptr),
+			pNodeB(nullptr),
+			pNodeC(nullptr),
+			pNodeD(nullptr),
+			pNodeE(nullptr),
+			pNodeF(nullptr),
+			bUsePosition(true)
+		{
 		}
 		~ConstructTest() {
 			/* some teardown */
