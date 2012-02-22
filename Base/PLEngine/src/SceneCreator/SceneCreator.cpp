@@ -81,7 +81,8 @@ SNCamera *SceneCreator::ConfigureGenericScene(SceneContainer &cSceneContainer, S
 		pOrbitingCamera->AddModifier("PLEngine::SNMEgoOrbitingController", "Target=\"" + pPrimarySceneNode->GetAbsoluteName() + "\" Distance=\"" + fDistance + "\" Offset=\"" + vOffset.ToString() + '\"');
 
 		// Give the free camera the same position and rotation as used for the orbiting camera
-		pFreeCamera->GetTransform() = pOrbitingCamera->GetTransform();
+		if (pFreeCamera)
+			pFreeCamera->GetTransform() = pOrbitingCamera->GetTransform();
 	}
 
 	// Return the preferred camera scene node

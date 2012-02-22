@@ -269,7 +269,7 @@ void SRPEndFXAA::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 							pGeneratedProgramUserData->pVertexPosition->Set(pVertexBuffer, PLRenderer::VertexBuffer::Position);
 
 						// Set the "Texture" fragment shader parameter
-						if (pGeneratedProgramUserData->pTexture) {
+						if (pGeneratedProgramUserData->pTexture && m_pRenderTarget) {
 							const int nTextureUnit = pGeneratedProgramUserData->pTexture->Set(m_pRenderTarget->GetTextureBuffer());
 							if (nTextureUnit >= 0) {
 								cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
