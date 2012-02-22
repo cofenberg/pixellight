@@ -123,12 +123,11 @@ EGLConfig ContextRuntimeLinking::ChooseConfig(uint32 nMultisampleAntialiasingSam
 	EGLint nConfigs = 0;
 	bool bChooseConfigCapitulated = false;
 	bool bMultisampleAntialiasing = false;
-	EGLint nMultisampleAntialiasingSampleBuffers = 0;
 	EGLint nMultisampleAntialiasingSamplesCurrent = static_cast<EGLint>(nMultisampleAntialiasingSamples);
 	do {
 		// Get the current multisample antialiasing settings
 		bMultisampleAntialiasing = (nMultisampleAntialiasingSamplesCurrent > 1);	// Multisample antialiasing with just one sample per per pixel isn't real multisample, is it? :D
-		nMultisampleAntialiasingSampleBuffers = bMultisampleAntialiasing ? 1 : 0;
+		// const EGLint nMultisampleAntialiasingSampleBuffers = bMultisampleAntialiasing ? 1 : 0;
 
 		// Set desired configuration
 		const EGLint pConfigAttribs[] =
