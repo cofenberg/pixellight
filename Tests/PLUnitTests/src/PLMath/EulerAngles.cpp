@@ -23,9 +23,13 @@ SUITE(EulerAngles) {
 	// Our Array Test Fixture :)
 	struct ConstructTest
 	{
-		ConstructTest() { 
+		ConstructTest() :
 			/* some setup */
-			PI  = static_cast<float>(Math::Pi);
+			PI(static_cast<float>(Math::Pi)),
+			fX(0.0f),
+			fY(0.0f),
+			fZ(0.0f)
+		{
 		}
 		~ConstructTest() {
 			/* some teardown */
