@@ -150,7 +150,7 @@ void Application41::RunScript(const String &sScriptFilename)
 		if (pScript->IsGlobalVariable("g_Factor")) {
 			// Get the type of the global variable
 			const ETypeID nTypeID = pScript->GetGlobalVariableTypeID("g_Factor");
-			System::GetInstance()->GetConsole().Print(String("The type ID of the global variable \"g_Factor\" is \"") + nTypeID + "\"\n");
+			System::GetInstance()->GetConsole().Print(String("The type ID of the global variable \"g_Factor\" is \"") + static_cast<int>(nTypeID) + "\"\n");
 
 			// Get the current value of the global variable
 			String sOriginalValue = pScript->GetGlobalVariable("g_Factor");
