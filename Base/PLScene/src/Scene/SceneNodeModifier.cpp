@@ -52,7 +52,7 @@ void SceneNodeModifier::SetFlags(uint32 nValue)
 {
 	// We now have to reevaluate the active state of this scene node modifier (similar procedure as in "SceneNode::SetFlags()")
 	// -> But don't call "SetActive(!(nValue & Inactive));" in here or we will end up in an endless recursion
-	if ((m_nFlags & Inactive) != (nValue & nValue)) {
+	if ((m_nFlags & Inactive) != (nValue & Inactive)) {
 		// Set new flags
 		m_nFlags = nValue;
 

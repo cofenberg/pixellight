@@ -1,3 +1,10 @@
+> 22.02.2012
+[CO]
+- "SceneNodeModifier::SetFlags()"-bugfix: "if ((m_nFlags & Inactive) != (nValue & nValue))" should be "if ((m_nFlags & Inactive) != (nValue & Inactive))",
+  cppcheck 1.53 found it
+
+
+
 > 20.02.2012
 [CO]
 - "SkinLoaderPL::LoadV1()": Minor error message improvement (http://dev.pixellight.org/forum/viewtopic.php?f=6&t=121)
