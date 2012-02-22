@@ -429,10 +429,8 @@ bool SceneGraphTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction act
 			if (parent != idx.parent())
 			{
 				// We do a move operation to an different parent
-				int rowToMove = idx.row();
 				int rowTarget = destinationRow;
 				int childCount =  parentItem->children().count();
-				bool bAppend = false;
 				
 				if (rowTarget >= childCount || rowTarget == -1)
 				{
