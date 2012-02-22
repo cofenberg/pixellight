@@ -54,7 +54,7 @@ TreeItemBase *PLDynVarTreeItemsFactory::CreateDynVarTreeItem(PLCore::DynVar *dyn
 	if (dynVar == nullptr)
 		return nullptr;
 	
-	// Check Flags and Enums before BaseType because Flags and Enums are internaly represented as int32
+	// Check Flags and Enums before BaseType because Flags and Enums are internally represented as int32
 	if (dynVar->GetType().IsFlagType())
 		return new PLDynVarFlagsTreeItem(dynVar, parent);
 	else if(dynVar->GetType().IsEnumType())

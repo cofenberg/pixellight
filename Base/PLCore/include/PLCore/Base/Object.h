@@ -146,7 +146,7 @@ class ObjectBase {
 		//[-------------------------------------------------------]
 		/**
 		*  @brief
-		*    Decreases the reference count witout destroying this instance automatically
+		*    Decreases the reference count without destroying this instance automatically
 		*
 		*  @return
 		*    Current reference count

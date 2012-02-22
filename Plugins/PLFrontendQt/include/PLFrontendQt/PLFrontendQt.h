@@ -39,7 +39,7 @@
 *  has to care about. One is just using PixelLight. When using "PLFrontend::Frontend" as PixelLight
 *  frontend, it's possible to access Qt functionality easily to add a GUI. Additionally, there are
 *  advanced features like the RTTI dock widgets making it possible to add new dock widgets to the
-*  main window in an universal way, even by implementing them in seperate plugins.
+*  main window in an universal way, even by implementing them in separate plugins.
 */
 
 

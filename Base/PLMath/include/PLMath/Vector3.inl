@@ -665,7 +665,7 @@ inline Vector3 Vector3::ProjectVector(const Vector3 &vA, const Vector3 &vB) cons
 
 /**
 *  @brief
-*    Calculates the angle between two vectos
+*    Calculates the angle between two vectors
 */
 inline float Vector3::GetAngle(const Vector3 &vV) const
 {

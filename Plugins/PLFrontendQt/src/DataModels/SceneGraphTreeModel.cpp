@@ -329,7 +329,7 @@ QModelIndex SceneGraphTreeModel::GetModelIndexForSceneNode(PLScene::SceneNode *n
 {
 	if(nodeObj) {
 		// Search through the complete model data to find the SceneNode
-		// The memory address is used for comparison. Which can be retreived via the ItemDataRole InternalObjectPointerRole 
+		// The memory address is used for comparison. Which can be retrieved via the ItemDataRole InternalObjectPointerRole 
 		// The search stops when the first item with the same memory address was found.
 		QModelIndexList items = this->match(index(0,0), SceneGraphTreeModel::InternalObjectPointerRole, VPtr<PLScene::SceneNode>::asQVariant(nodeObj), 1, Qt::MatchRecursive);
 		// return the model index if we found something
@@ -344,7 +344,7 @@ QModelIndex SceneGraphTreeModel::GetModelIndexForSceneNodeModifier(PLScene::Scen
 {
 	if(nodeObj) {
 		// Search through the complete model data to find the SceneNodeModifier
-		// The memory address is used for comparison. Which can be retreived via the ItemDataRole InternalObjectPointerRole 
+		// The memory address is used for comparison. Which can be retrieved via the ItemDataRole InternalObjectPointerRole 
 		// The search stops when the first item with the same memory address was found.
 		QModelIndexList items = this->match(index(0,0), SceneGraphTreeModel::InternalObjectPointerRole, VPtr<PLScene::SceneNodeModifier>::asQVariant(nodeObj), 1, Qt::MatchRecursive);
 		// return the model index if we found something
@@ -500,17 +500,17 @@ bool SceneGraphTreeModel::dropMimeData(const QMimeData *data, Qt::DropAction act
 					targetIdx -= 1;
 				}
 
-				// [HACK][TODO] Currently, there's a different tree view item drag'n'drop behaviour on Linux and Windows
+				// [HACK][TODO] Currently, there's a different tree view item drag'n'drop behavior on Linux and Windows
 				// -> Linux: If an item is marked to not allow drop onto it, the mouse cursor gets "X" and dropping is impossible (as expected in the first place)
 				// -> Windows: If an item is marked to not allow drop onto it, the dropped item is inserted in top of or below the
-				//             item we dropped our item onto. When debugging into Qt in order to understand the drag'n'drop behaviour,
-				//             the exlaination for this behaviour can be found within
+				//             item we dropped our item onto. When debugging into Qt in order to understand the drag'n'drop behavior,
+				//             the explanation for this behavior can be found within
 				//             "QAbstractItemView::DropIndicatorPosition QAbstractItemViewPrivate::position(const QPoint &pos, const QRect &rect, const QModelIndex &index) const"
 				//             When just looking at this Qt source code, it appears that this has nothing to do with the Windows operation
-				//             system at all. No OS features are used. Interesting that the behaviour under Linux is that different. Maybe
+				//             system at all. No OS features are used. Interesting that the behavior under Linux is that different. Maybe
 				//             we should also debug the drag'n'drop procedure under Linux to be able to find the one part were it starts to differ.
 				//             I assume that there are some other relevant parts before "QAbstractItemViewPrivate::position()" is even called.
-				// -> When searching for this issue in the internet, it appears that there are also other people which have noticed the same thing
+				// -> When searching for this issue in the Internet, it appears that there are also other people which have noticed the same thing
 				// -> For now we have the following hack under Windows, if we don't do this, items will disappear regularly when doing drag'n'drop making is unusable :/
 				#ifdef WIN32
 					// Set that we are in a move operation see comment in removeRows() why
@@ -568,7 +568,7 @@ bool SceneGraphTreeModel::removeRows(int startRow, int count, const QModelIndex&
 	// Check if we are currently in a move operation
 	// Background:
 	// When a view does an drag and drop move operation the view calls dropMimeData after this call the view calls removeRows and insertRows.
-	// Normaly dropMimeData should only be used to insert/move data in the underlaying datastructure of the model.
+	// Normally dropMimeData should only be used to insert/move data in the underlaying data structure of the model.
 	// But we doesn't do it that way we move also the tree item to the new location, because otherwise we had to destroy the old tree item (and all it's child items) and create a new one for the new location. So we must cancel the removeRows call when a move operation is done via drag and drop
 	if (m_bInMoveOperation) {
 		m_bInMoveOperation = false;

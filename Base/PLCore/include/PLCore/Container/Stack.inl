@@ -215,7 +215,7 @@ bool Stack<ValueType>::PushBack(const ValueType &Element)
 		// Done
 		return true;
 	} else {
-		// Yes stack was empty, so pushback == push
+		// Yes stack was empty, so push-back == push
 		return Push(Element);
 	}
 }

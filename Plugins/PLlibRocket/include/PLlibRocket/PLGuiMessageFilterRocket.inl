@@ -164,7 +164,7 @@ void PLGuiMessageFilterRocket::BuildKeyMaps()
 	m_mapKeyIdentifier.Add(PLGUIKEY_CLEAR,		Rocket::Core::Input::KI_CLEAR);
 	m_mapKeyIdentifier.Add(PLGUIKEY_RETURN,		Rocket::Core::Input::KI_RETURN);
 	m_mapKeyIdentifier.Add(PLGUIKEY_PAUSE,		Rocket::Core::Input::KI_PAUSE);
-	m_mapKeyIdentifier.Add(PLGUIKEY_CAPITAL,	Rocket::Core::Input::KI_CAPITAL);			// Capslock key
+	m_mapKeyIdentifier.Add(PLGUIKEY_CAPITAL,	Rocket::Core::Input::KI_CAPITAL);			// Caps-lock key
 //	m_mapKeyIdentifier.Add(?,					Rocket::Core::Input::KI_KANA);				// IME Kana mode
 //	m_mapKeyIdentifier.Add(?,					Rocket::Core::Input::KI_HANGUL);			// IME Hangul mode
 //	m_mapKeyIdentifier.Add(?,					Rocket::Core::Input::KI_JUNJA);				// IME Junja mode

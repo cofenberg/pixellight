@@ -947,7 +947,7 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 
 													// Perform culling?
 													if (nCull != Cull::None) {
-														// Calculate the dot product between the two normailzed vectors
+														// Calculate the dot product between the two normalized vectors
 														const float fDotProduct = vN.DotProduct(vNormalizedDirection);
 
 														// Perform culling
@@ -1000,7 +1000,7 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 
 													// Perform culling?
 													if (nCull != Cull::None) {
-														// Calculate the dot product between the two normailzed vectors
+														// Calculate the dot product between the two normalized vectors
 														const float fDotProduct = vN.DotProduct(vNormalizedDirection);
 
 														// Perform culling
@@ -1053,7 +1053,7 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 
 													// Perform culling?
 													if (nCull != Cull::None) {
-														// Calculate the dot product between the two normailzed vectors
+														// Calculate the dot product between the two normalized vectors
 														const float fDotProduct = vN.DotProduct(vNormalizedDirection);
 
 														// Perform culling
@@ -1103,7 +1103,7 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 
 												// Perform culling?
 												if (nCull != Cull::None) {
-													// Calculate the dot product between the two normailzed vectors
+													// Calculate the dot product between the two normalized vectors
 													const float fDotProduct = vN.DotProduct(vNormalizedDirection);
 
 													// Perform culling
@@ -1171,7 +1171,7 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 
 												// Perform culling?
 												if (nCull != Cull::None) {
-													// Calculate the dot product between the two normailzed vectors
+													// Calculate the dot product between the two normalized vectors
 													const float fDotProduct = vN.DotProduct(vNormalizedDirection);
 
 													// Perform culling
@@ -1224,7 +1224,7 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 
 												// Perform culling?
 												if (nCull != Cull::None) {
-													// Calculate the dot product between the two normailzed vectors
+													// Calculate the dot product between the two normalized vectors
 													const float fDotProduct = vN.DotProduct(vNormalizedDirection);
 
 													// Perform culling
@@ -1277,7 +1277,7 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 
 												// Perform culling?
 												if (nCull != Cull::None) {
-													// Calculate the dot product between the two normailzed vectors
+													// Calculate the dot product between the two normalized vectors
 													const float fDotProduct = vN.DotProduct(vNormalizedDirection);
 
 													// Perform culling
@@ -1327,7 +1327,7 @@ bool MeshHandler::FindTriangle(const Vector3 &vLineStartPos,
 
 											// Perform culling?
 											if (nCull != Cull::None) {
-												// Calculate the dot product between the two normailzed vectors
+												// Calculate the dot product between the two normalized vectors
 												const float fDotProduct = vN.DotProduct(vNormalizedDirection);
 
 												// Perform culling

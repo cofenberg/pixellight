@@ -240,7 +240,7 @@ bool Application::LoadResource(const String &sFilename, const String &sType)
 			// -> It would be possible to implement support for scripting so that e.g. a Lua script
 			//    can be used to decide how to process a resource. But this viewer should be able to
 			//    work without external data and should be kept as simple as possible, so we stick to C++.
-			// -> Prefere the given loadable type over the filename extension
+			// -> Prefer the given loadable type over the filename extension
 
 			// Is the given filename a supported scene?
 			if (sType == "Scene" || (!sType.GetLength() && LoadableManager::GetInstance()->IsFormatLoadSupported(sExtension, "Scene"))) {

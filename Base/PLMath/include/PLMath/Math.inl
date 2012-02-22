@@ -701,7 +701,7 @@ double Math::Sqrt(double dValue)
 */
 float Math::FastInvSqrt(float fValue)
 {
-	// The orignal author of the following code is unknown, in the 3D graphics community there are rumours who could be the orignal author:
+	// The original author of the following code is unknown, in the 3D graphics community there are rumors who could be the original author:
 	// - See Beyond3D article "Origin of Quake3's Fast InvSqrt()" at www.beyond3d.com/content/articles/8/ and http://www.beyond3d.com/content/articles/15
 	// - See "Fast inverse square root" at http://en.wikipedia.org/wiki/Fast_inverse_square_root
 	const float fThreeHalfs = 1.5f;

@@ -84,7 +84,7 @@ namespace PLFrontendQt {
 *   4. Another broadcast like "Bob::TakesOverTheWorld()" may require a totally different broadcast receiver order
 *   5. Any application using this system, can't know what's happening when doing a broadcast, and therefore can't
 *      add any special hacks to work around issues possible with certain system configurations, which are also not
-*      known due to the dynamic nature of the system. New plugins can add new dock widget required new special behaviour.
+*      known due to the dynamic nature of the system. New plugins can add new dock widget required new special behavior.
 *   6. Adding any restrictions to this chaotic system would artificially limit it's use or would add dependencies where no
 *      dependencies are required
 *

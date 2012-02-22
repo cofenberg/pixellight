@@ -114,7 +114,7 @@ class SceneGraphMenu : public QMenu {
 		*    The created object instance if an create/clone action was done, otherwise a null pointer will be returned
 		*
 		*  @note
-		*    - Use the returnd object pointer at once when this menu returns, do not use this method later one because the pointer may have become invalid
+		*    - Use the returned object pointer at once when this menu returns, do not use this method later one because the pointer may have become invalid
 		*/
 		PLCore::Object *GetCreatedObject() const;
 

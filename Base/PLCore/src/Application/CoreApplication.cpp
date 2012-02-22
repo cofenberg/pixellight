@@ -469,7 +469,7 @@ void CoreApplication::OnInitPlugins()
 
 	// There's no guarantee that the application executable directory is the same as the application startup directory
 	// -> If the application executable directory is not the same as the application startup directory, do also scan the application startup directory
-	// -> This behaviour is quite useful because it allows development of plugins which can be tested within e.g. PLViewer without copying files around,
+	// -> This behavior is quite useful because it allows development of plugins which can be tested within e.g. PLViewer without copying files around,
 	//    just set the current directory to your plugin directory when launching the viewer application
 	const String sStartupDirectory = m_cApplicationContext.GetStartupDirectory();
 	if (m_cApplicationContext.GetExecutableDirectory() != sStartupDirectory) {

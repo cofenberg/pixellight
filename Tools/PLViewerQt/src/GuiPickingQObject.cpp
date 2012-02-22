@@ -339,7 +339,7 @@ bool GuiPickingQObject::eventFilter(QObject *pQObject, QEvent *pQEvent)
 				if (pQMouseEvent->button() == Qt::LeftButton) {
 					// It appears that the user intends to select something
 					// -> In case a transform gizmo axis is currently selected, ignore this request
-					// -> The "m_pTransformGizmo" test is just there for safty, "usually" it is not possible to hold down
+					// -> The "m_pTransformGizmo" test is just there for safety, "usually" it is not possible to hold down
 					//    the left mouse button while at the same time performing a double-click with it :D
 					if (!m_pTransformGizmo && !m_pGuiPicking->IsAnyTransformGizmoAxisSelected()) {
 						// Perform picking

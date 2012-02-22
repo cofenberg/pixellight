@@ -164,7 +164,7 @@ int RTTIObjectMethodPointer::CallDynFunc(Script &cScript, DynFunc &cDynFunc, boo
 
 	// Has the given dynamic function any parameters?
 	if (cDynFunc.GetNumOfParameters()) {
-		// This is a bit more complex due to paramter conversion
+		// This is a bit more complex due to parameter conversion
 
 		// Get the current Lua function parameters on the Lua stack as string
 		Array<String> lstTempStrings;

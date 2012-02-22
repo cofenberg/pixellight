@@ -74,10 +74,10 @@ namespace PLFrontendQt {
 *
 *  @note
 *    - When a RTTI dock widget is instanced, it automatically creates the Qt dock widget it's encapsulating, access it by using "GetQDockWidget()"
-*    - Derived RTTI dock widgets must implement a decent default behaviour to make it possible to use them out-of-the-box
+*    - Derived RTTI dock widgets must implement a decent default behavior to make it possible to use them out-of-the-box
 *    - When a RTTI dock widget instance gets destroyed, it automatically destroys the Qt dock widget it's encapsulating
 *    - When the encapsulated Qt dock widget gets destroyed, it automatically destroys the encapsulating RTTI dock widget
-*    - This behaviour results in a Qt similar behaviour, when a RTTI dock widget is instanced it's parent takes over the control
+*    - This behavior results in a Qt similar behavior, when a RTTI dock widget is instanced it's parent takes over the control
 *    - By convention, one should only derive new RTTI dock widgets from abstract RTTI dock widgets
 */
 class DockWidget : public PLCore::Object {

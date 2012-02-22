@@ -106,7 +106,7 @@ String SceneNodeModifier::GetAbsoluteName() const
 	const Class *pClass = GetClass();
 	const String sClass = pClass ? pClass->GetClassName() : "";
 	if (sClass.GetLength()) {
-		// Find a decend scene node modifier index
+		// Find a decent scene node modifier index
 		int nIndex = -1;
 		SceneNodeModifier *pFoundSceneNodeModifier = nullptr;
 		do {

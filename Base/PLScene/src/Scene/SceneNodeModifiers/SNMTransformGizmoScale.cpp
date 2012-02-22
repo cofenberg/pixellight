@@ -201,7 +201,7 @@ uint32 SNMTransformGizmoScale::DetermineSelected(const Ray &cRay) const
 
 void SNMTransformGizmoScale::DrawGizmo(Renderer &cRenderer, const VisNode *pVisNode)
 {
-	// This method does not need to be hightly effective because it's usually only called once per frame, so we prefere the generic way
+	// This method does not need to be highly effective because it's usually only called once per frame, so we prefer the generic way
 
 	// The internal transform gizmo object space coordinate system we draw in is 10x10x10 so we don't have to work with to small numbers
 
@@ -223,7 +223,7 @@ void SNMTransformGizmoScale::DrawGizmo(Renderer &cRenderer, const VisNode *pVisN
 		{ // Draw sphere meshes
 			Matrix4x4 mLocal;
 
-			// Set identitiy projection and view matrix
+			// Set identity projection and view matrix
 			const Matrix4x4 mProjectionBackup = pFixedFunctions->GetTransformState(FixedFunctions::Transform::Projection);
 			const Matrix4x4 mViewBackup       = pFixedFunctions->GetTransformState(FixedFunctions::Transform::View);
 			pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, Matrix4x4::Identity);
@@ -249,7 +249,7 @@ void SNMTransformGizmoScale::DrawGizmo(Renderer &cRenderer, const VisNode *pVisN
 			pFixedFunctions->SetColor(cPrimaryZAxisColor);
 			m_pMeshHandler->Draw(false, false);
 
-			// Reset identitiy projection and view matrix
+			// Reset identity projection and view matrix
 			pFixedFunctions->SetTransformState(FixedFunctions::Transform::Projection, mProjectionBackup);
 			pFixedFunctions->SetTransformState(FixedFunctions::Transform::View,       mViewBackup);
 		}

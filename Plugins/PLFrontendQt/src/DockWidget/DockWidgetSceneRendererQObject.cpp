@@ -76,7 +76,7 @@ bool DockWidgetSceneRendererQObject::eventFilter(QObject *pQObject, QEvent *pQEv
 		if (pQObject == pQDockWidget) {
 			// The encapsulated Qt dock widget is shown, ensure that we have a scene renderer
 			if (!pSceneRendererDataModel->GetSceneRenderer()) {
-				// Set a default scene renderer to have a decent standard behaviour
+				// Set a default scene renderer to have a decent standard behavior
 				SceneRenderer *pSceneRenderer = nullptr;
 				{
 					CoreApplication *pApplication = CoreApplication::GetApplication();

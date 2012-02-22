@@ -72,7 +72,7 @@ void CgContext::AddCgContextReference()
 		// Delay program recompilation until the program object code is needed
 		cgSetAutoCompile(m_pCgContext, CG_COMPILE_LAZY);
 
-		// Our renderer is not multithreaded, so, avoid lock overhead
+		// Our renderer is not multi-threaded, so, avoid lock overhead
 		cgSetLockingPolicy(CG_NO_LOCKS_POLICY);
 	}
 	m_nCgContexCounter++;

@@ -175,7 +175,7 @@ void SNMEgoLookController::OnRotation()
 		const Transform3 &cTransform = GetSceneNode().GetTransform();
 
 		// X rotation axis: Calculate pitch (also called 'bank', change is moving the nose down and the tail up or vice-versa) - in degree
-		// Calculate the dot product (= cosinus) between z-direction- and up-vector
+		// Calculate the dot product (= cosine) between z-direction- and up-vector
 		m_fPitch = cTransform.GetRotation().GetZAxis().DotProduct(UpVector.Get());
 		// Get the angle in radian
 		m_fPitch = Math::ACos(m_fPitch);
@@ -185,7 +185,7 @@ void SNMEgoLookController::OnRotation()
 		// Y rotation axis: Calculate yaw (also called 'heading', change is turning to the left or right) - in degree
 		Vector3 vRight, vUp;
 		UpVector.Get().GetRightUp(vRight, vUp);
-		// Calculate the dot product (= cosinus) between x-direction-vector and the right-vector of the up-vector (already confused? :)
+		// Calculate the dot product (= cosine) between x-direction-vector and the right-vector of the up-vector (already confused? :)
 		m_fYaw = cTransform.GetRotation().GetXAxis().DotProduct(vRight);
 		// Get the angle in radian
 		m_fYaw = Math::ACos(m_fYaw);

@@ -96,7 +96,7 @@ GuiPicking::~GuiPicking()
 
 /**
 *  @brief
-*    Performs the informativ picking
+*    Performs the informative picking
 */
 SceneNode *GuiPicking::PerformInformativPicking()
 {
@@ -177,7 +177,7 @@ void GuiPicking::SelectObject(Object *pObject)
 
 		// Is it an "PLScene::SceneNodeModifier"-instance?
 		} else if (pObject->IsInstanceOf("PLScene::SceneNodeModifier")) {
-			// Select the owner scene node of this scene node modifer
+			// Select the owner scene node of this scene node modifier
 			pSceneNode = &static_cast<SceneNodeModifier*>(pObject)->GetSceneNode();
 		}
 	}

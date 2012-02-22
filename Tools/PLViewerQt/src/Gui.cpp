@@ -262,7 +262,7 @@ DockWidget *Gui::ShowDockWidget(const String &sClassName)
 */
 void Gui::Update()
 {
-	// Perform the informativ picking
+	// Perform the informative picking
 	if (m_pGuiPicking)
 		m_pGuiPicking->PerformInformativPicking();
 }
@@ -391,7 +391,7 @@ void Gui::OnCameraFound(SceneQuery &cQuery, SceneNode &cSceneNode)
 
 /**
 *  @brief
-*    Fills the window menu recursivity
+*    Fills the window menu recursively
 */
 uint32 Gui::FillMenuWindowRec(QMenu &cQMenu, const String &sBaseClass)
 {

@@ -50,7 +50,7 @@ template <class AType> bool   Singleton<AType>::__Destroyed = false;
 */
 template <class AType> AType *Singleton<AType>::GetInstance()
 {
-	// [HACK] This is neccessary for the compiler to instanciate __Guard
+	// [HACK] This is necessary for the compiler to instantiate __Guard
 	__Guard.init();
 
 	// Check if the instance must be created

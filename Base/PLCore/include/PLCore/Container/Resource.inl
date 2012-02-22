@@ -99,7 +99,7 @@ void Resource<AType>::SetProtected(bool bProtected)
 
 /**
 *  @brief
-*    Returns the ID of the resource within the resouce manager
+*    Returns the ID of the resource within the resource manager
 */
 template <class AType>
 int Resource<AType>::GetID() const

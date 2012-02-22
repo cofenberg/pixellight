@@ -76,7 +76,7 @@ void LoadableManager::GetTypesByExtension(const String &sExtension, Array<Loadab
 
 	// Loop through all registered loadable types
 	for (uint32 i=0; i<m_lstTypes.GetNumOfElements(); i++) {
-		// Get the current loadabel type
+		// Get the current loadable type
 		LoadableType *pLoadableType = m_lstTypes[i];
 
 		// Check whether or not there's at least one loader capable of dealing with the given extension

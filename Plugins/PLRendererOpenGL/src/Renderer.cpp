@@ -1402,7 +1402,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							glDisable(GL_POLYGON_OFFSET_POINT);
 							glDisable(GL_POLYGON_OFFSET_LINE);
 
-							// Disable polgon offset
+							// Disable polygon offset
 							glDisable(GL_POLYGON_OFFSET_FILL);
 						} else {
 							// The bias is not applied to any line and point primitive within D3D, but OpenGL supports this
@@ -1410,7 +1410,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							glEnable(GL_POLYGON_OFFSET_POINT);
 							glEnable(GL_POLYGON_OFFSET_LINE);
 
-							// Enable polgon offset
+							// Enable polygon offset
 							glEnable(GL_POLYGON_OFFSET_FILL);
 							glPolygonOffset(Tools::UInt32ToFloat(nValue), Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::DepthBias)));
 						}
@@ -1423,7 +1423,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							glDisable(GL_POLYGON_OFFSET_POINT);
 							glDisable(GL_POLYGON_OFFSET_LINE);
 
-							// Disable polgon offset
+							// Disable polygon offset
 							glDisable(GL_POLYGON_OFFSET_FILL);
 						} else {
 							// The bias is not applied to any line and point primitive within D3D, but OpenGL supports this
@@ -1431,7 +1431,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							glEnable(GL_POLYGON_OFFSET_POINT);
 							glEnable(GL_POLYGON_OFFSET_LINE);
 
-							// Enable polgon offset
+							// Enable polygon offset
 							glEnable(GL_POLYGON_OFFSET_FILL);
 							glPolygonOffset(Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::SlopeScaleDepthBias)), Tools::UInt32ToFloat(nValue));
 						}

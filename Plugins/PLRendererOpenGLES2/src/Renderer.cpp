@@ -1097,14 +1097,14 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 						//	glDisable(GL_POLYGON_OFFSET_POINT);
 						//	glDisable(GL_POLYGON_OFFSET_LINE);
 
-							// Disable polgon offset
+							// Disable polygon offset
 							glDisable(GL_POLYGON_OFFSET_FILL);
 						} else {
 							// Bias applied to line and point primitive is not supported by OpenGL ES 2.0
 						//	glEnable(GL_POLYGON_OFFSET_POINT);
 						//	glEnable(GL_POLYGON_OFFSET_LINE);
 
-							// Enable polgon offset
+							// Enable polygon offset
 							glEnable(GL_POLYGON_OFFSET_FILL);
 							glPolygonOffset(Tools::UInt32ToFloat(nValue), Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::DepthBias)));
 						}
@@ -1116,14 +1116,14 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 						//	glDisable(GL_POLYGON_OFFSET_POINT);
 						//	glDisable(GL_POLYGON_OFFSET_LINE);
 
-							// Disable polgon offset
+							// Disable polygon offset
 							glDisable(GL_POLYGON_OFFSET_FILL);
 						} else {
 							// Bias applied to line and point primitive is not supported by OpenGL ES 2.0
 						//	glEnable(GL_POLYGON_OFFSET_POINT);
 						//	glEnable(GL_POLYGON_OFFSET_LINE);
 
-							// Enable polgon offset
+							// Enable polygon offset
 							glEnable(GL_POLYGON_OFFSET_FILL);
 							glPolygonOffset(Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::SlopeScaleDepthBias)), Tools::UInt32ToFloat(nValue));
 						}

@@ -63,7 +63,7 @@ String SystemMacOSX::GetPlatform() const
 
 String SystemMacOSX::GetModuleFilenameByMemoryAddress(const void *pMemoryAddress) const
 {
-	// [TODO] Test whether or not the Linux implementaton works (compiles and runs correctly) for Mac OS X as well
+	// [TODO] Test whether or not the Linux implementation works (compiles and runs correctly) for Mac OS X as well
 	return "";
 }
 

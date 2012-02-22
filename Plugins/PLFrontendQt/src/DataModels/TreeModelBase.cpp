@@ -77,7 +77,7 @@ QModelIndex TreeModelBase::parent(const QModelIndex &index) const
 	if (parentItem == m_rootItem)
 		return QModelIndex();
 
-	// Create model index for the parent, column is always 0 because in a tree model only the first column can have childs or an parent
+	// Create model index for the parent, column is always 0 because in a tree model only the first column can have children or an parent
 	return createIndex(parentItem->row(), 0, parentItem);
 }
 

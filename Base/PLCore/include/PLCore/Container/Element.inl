@@ -99,7 +99,7 @@ void Element<AType>::SetProtected(bool bProtected)
 
 /**
 *  @brief
-*    Returns the ID of the element within the resouce manager
+*    Returns the ID of the element within the resource manager
 */
 template <class AType>
 int Element<AType>::GetID() const

@@ -198,7 +198,7 @@ FXAA_SEARCH_THRESHOLD - Controls when to stop searching.\n\
 						1.0/4.0 - seems to be the best quality wise\n\
 ------------------------------------------------------------------------------\n\
 FXAA_SUBPIX_FASTER - Turn on lower quality but faster subpix path.\n\
-						Not recomended, but used in preset 0.\n\
+						Not recommended, but used in preset 0.\n\
 ------------------------------------------------------------------------------\n\
 FXAA_SUBPIX - Toggle subpix filtering.\n\
 				0 - turn off\n\

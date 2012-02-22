@@ -42,7 +42,7 @@ namespace DataModels {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Sort and filterproxy model for tree models
+*    Sort and filter proxy model for tree models
 */
 class TreeSortAndFilterProxyModel : public QSortFilterProxyModel {
 

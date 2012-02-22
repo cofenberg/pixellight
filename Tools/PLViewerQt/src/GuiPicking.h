@@ -99,7 +99,7 @@ class GuiPicking : public PLFrontendQt::DockWidget, public PLEngine::MousePickin
 
 		/**
 		*  @brief
-		*    Performs the informativ picking
+		*    Performs the informative picking
 		*
 		*   @remarks
 		*     The purpose of this method is to provide the user with an information what's currently under the mouse

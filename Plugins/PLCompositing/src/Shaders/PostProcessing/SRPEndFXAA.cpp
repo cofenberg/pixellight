@@ -119,11 +119,11 @@ void SRPEndFXAA::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 				bool bRenderTargetDimensionChanged = (m_nCurrentPreset != Preset.Get());
 
 				{	// [HACK][TODO] Currently the deferred renderer is still using rectangle textures
-					// and not the more universal NPOT texture cabablities which are common nowadays.
+					// and not the more universal NPOT texture capabilities which are common nowadays.
 					// -> The FXAA shader isn't working well with rectangle textures (tried it), so we're "converting"
 					//    our rectangle texture in here so we can feed the result into the FXAA shader
 					// -> This is just a workaround for now, better to remove rectangle texture usage at all
-					//    (just usage, not support!), shouldn't longer be a compabality issue
+					//    (just usage, not support!), shouldn't longer be a compatibility issue
 
 					// Get the texture we will use as 'source texture' when rendering the fullscreen quad
 					TextureBufferRectangle *pTextureBuffer = static_cast<TextureBufferRectangle*>(pSurfaceTextureBuffer->GetTextureBuffer());

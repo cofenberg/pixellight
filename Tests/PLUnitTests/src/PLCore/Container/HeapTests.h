@@ -76,7 +76,7 @@ void CheckDerivedHeapFunctions(PLCore::Heap<KeyType, ValType>& heap) {
 
 		CHECK(!cIterator.HasPrevious());
 
-		// add all elements to our backuplist to check the order of the elements against the backward iterator
+		// add all elements to our backup list to check the order of the elements against the backward iterator
 		while (cIterator.HasNext())
 			lstElems.Add(++cIterator);
 

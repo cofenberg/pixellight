@@ -65,7 +65,7 @@ class PLDynVarTreeItemTypes {
 			Int64,
 			UInt8,
 			UInt16,
-			UInt32, // unsigend int is UInt32
+			UInt32, // unsigned int is UInt32
 			UInt64,
 			Float,
 			Double,

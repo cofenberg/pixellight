@@ -229,7 +229,7 @@ inline bool Matrix3x4::IsZero() const
 
 /**
 *  @brief
-*    Returns whether or not this matrix is truely the zero matrix
+*    Returns whether or not this matrix is truly the zero matrix
 */
 inline bool Matrix3x4::IsTrueZero() const
 {
@@ -258,7 +258,7 @@ inline bool Matrix3x4::IsIdentity() const
 
 /**
 *  @brief
-*    Returns whether or not this matrix is truely the identity matrix
+*    Returns whether or not this matrix is truly the identity matrix
 */
 inline bool Matrix3x4::IsTrueIdentity() const
 {

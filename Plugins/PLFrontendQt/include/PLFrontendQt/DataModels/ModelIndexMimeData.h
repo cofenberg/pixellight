@@ -51,7 +51,7 @@ namespace DataModels {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Mime data object which holds a list of model indexes. Only usefull for drag and drop operation in the same model instance and the same application
+*    Mime data object which holds a list of model indexes. Only useful for drag and drop operation in the same model instance and the same application
 */
 class ModelIndexMimeData : public QMimeData {
 

@@ -84,7 +84,7 @@ void SRPBackgroundColorGradient::Draw(Renderer &cRenderer, const SQCull &cCullQu
 	DrawHelpers &cDrawHelpers = cRenderer.GetDrawHelpers();
 	cDrawHelpers.Begin2DMode();
 
-		// Draw the gradient guad, use degree instead of radian in here because humans tend to be able to imagine degree much better than radian
+		// Draw the gradient quad, use degree instead of radian in here because humans tend to be able to imagine degree much better than radian
 		cDrawHelpers.DrawGradientQuad(Color1.Get(), Color2.Get(), static_cast<float>(Angle.Get()*Math::DegToRad), Position.Get(), Size.Get());
 
 	// End 2D mode

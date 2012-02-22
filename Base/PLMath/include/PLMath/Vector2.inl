@@ -571,7 +571,7 @@ inline Vector2 Vector2::ProjectVector(const Vector2 &vA, const Vector2 &vB) cons
 
 /**
 *  @brief
-*    Calculates the angle between two vectos
+*    Calculates the angle between two vectors
 */
 inline float Vector2::GetAngle(const Vector2 &vV) const
 {

@@ -35,7 +35,7 @@ namespace PLMath {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Default constuctor setting an identity quaternion
+*    Default constructor setting an identity quaternion
 */
 inline Quaternion::Quaternion() :
 	w(1.0f),

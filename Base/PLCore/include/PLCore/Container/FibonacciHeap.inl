@@ -293,7 +293,7 @@ bool FibonacciHeap<KeyType, ValueType, Comparer>::Consolidate()
 		while (pOtherTree) {
 			// Compare keys, the tree with the 'greater' key gets a child of the other one
 			if (Comparer::IsGreater(pThisTree->m_Key, pOtherTree->m_Key)) {
-				// THIS can never, nerver happen because at start, there can not be a set mark! :)
+				// THIS can never, never happen because at start, there can not be a set mark! :)
 //				if (pThisTree == m_pFirst) m_pFirst = m_pFirst->m_pNextSibling;
 				// 'pThisTree' will become a child of 'pOtherTree' - update connectivity
 				if (pThisTree->m_pPreviousSibling)

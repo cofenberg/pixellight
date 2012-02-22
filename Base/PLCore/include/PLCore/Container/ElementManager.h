@@ -291,7 +291,7 @@ template <class AType> class ElementManager {
 		*    Returns the index of the given element
 		*
 		*  @param[in] cElement
-		*    The element for which the index should be retreived
+		*    The element for which the index should be retrieved
 		*
 		*  @return
 		*    The index position, <0 on failure (e.g. the element is no member of this manager)

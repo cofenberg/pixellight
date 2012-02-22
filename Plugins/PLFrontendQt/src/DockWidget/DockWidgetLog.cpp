@@ -117,7 +117,7 @@ void DockWidgetLog::OnNewEntry()
 	QDockWidget *pQDockWidget = GetQDockWidget();
 	if (pQDockWidget && !pQDockWidget->hasFocus()) {
 		// Usability: Update the Qt plain text edit cursor in order to reduce the need for manual scrolling
-		// -> But only if we don't have the focus else this behaviour might be annoying instead of useful
+		// -> But only if we don't have the focus else this behavior might be annoying instead of useful
 		m_pQPlainTextEdit->moveCursor(QTextCursor::End);			// Move to the end of the document
 		m_pQPlainTextEdit->moveCursor(QTextCursor::StartOfLine);	// Move to the start of the current line
 	}

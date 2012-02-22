@@ -49,7 +49,7 @@ const float	 Half::Epsilon						= 0.00097656f;
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Convertes a given half value into a float value
+*    Converts a given half value into a float value
 */
 float Half::ToFloat(uint16 nHalf)
 {
@@ -122,7 +122,7 @@ float Half::ToFloat(uint16 nHalf)
 			sValue.i = (s << 31) | 0x7f800000;
 			return sValue.f;
 		} else {
-			// Nan -- preserve sign and significand bits
+			// Nan -- preserve sign and significant bits
 			uif sValue;
 			sValue.i = (s << 31) | 0x7f800000 | (m << 13);
 			return sValue.f;
@@ -141,7 +141,7 @@ float Half::ToFloat(uint16 nHalf)
 
 /**
 *  @brief
-*    Convertes a given float value into a half value
+*    Converts a given float value into a half value
 */
 uint16 Half::FromFloat(float fFloat)
 {
@@ -191,7 +191,7 @@ uint16 Half::FromFloat(float fFloat)
 
 	// Our floating point number, f, is represented by the bit
 	// pattern in integer i.  Disassemble that bit pattern into
-	// the sign, s, the exponent, e, and the significand, m.
+	// the sign, s, the exponent, e, and the significant, m.
 	// Shift s into the position where it will go in in the
 	// resulting half number.
 	// Adjust e, accounting for the different exponent bias
@@ -216,13 +216,13 @@ uint16 Half::FromFloat(float fFloat)
 
 		// We convert f to a denormalized half.
 
-		// Add an explicit leading 1 to the significand.
+		// Add an explicit leading 1 to the significant.
 		m = m | 0x00800000;
 
 		// Round to m to the nearest (10+e)-bit value (with e between
 		// -10 and 0); in case of a tie, round to the nearest even value.
 
-		// Rounding may cause the significand to overflow and make
+		// Rounding may cause the significant to overflow and make
 		// our number normalized.  Because of the way a half's bits
 		// are laid out, we don't have to treat this case separately;
 		// the code below will handle it correctly.
@@ -243,10 +243,10 @@ uint16 Half::FromFloat(float fFloat)
 		} else {
 			// F is a NAN; we produce a half NAN that preserves
 			// the sign bit and the 10 leftmost bits of the
-			// significand of f, with one exception: If the 10
+			// significant of f, with one exception: If the 10
 			// leftmost bits are all zero, the NAN would turn 
 			// into an infinity, so we have to set at least one
-			// bit in the significand.
+			// bit in the significant.
 			m >>= 13;
 			return s | 0x7c00 | m | (m == 0);
 		}
@@ -258,7 +258,7 @@ uint16 Half::FromFloat(float fFloat)
 		// a tie, round to the nearest even value.
 		m = m + 0x00000fff + ((m >> 13) & 1);
 		if (m & 0x00800000) {
-			m =  0;		// overflow in significand,
+			m =  0;		// overflow in significant,
 			e += 1;		// adjust exponent
 		}
 

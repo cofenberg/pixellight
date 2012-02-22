@@ -153,7 +153,7 @@ class Frontend : public PLCore::FrontendImpl {
 		*    The central widget of the Qt main window, can be a null pointer
 		*
 		*  @note
-		*    - The frontend interface is primarly concerned about the client part and
+		*    - The frontend interface is primarily concerned about the client part and
 		*      not on the GUI stuff around it, so this central widget is especially important
 		*/
 		QWidget *GetCentralWidget() const;

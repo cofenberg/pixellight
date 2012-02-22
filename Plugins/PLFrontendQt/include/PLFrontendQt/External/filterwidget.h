@@ -66,7 +66,7 @@ class QToolButton;
  * (ie, be the first widget of a dialog, else, the hint cannot be displayed.
  * For situations, where it is the only focusable control (widget box),
  * there is a special "refuseFocus()" mode, in which it clears the focus
- * policy and focusses explicitly on click (note that setting Qt::ClickFocus
+ * policy and focuses explicitly on click (note that setting Qt::ClickFocus
  * is not sufficient for that as an ActivationFocus will occur). */
 
 #define ICONBUTTON_SIZE 16

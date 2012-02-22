@@ -1364,7 +1364,7 @@ SceneNode *SceneNode::CloneSceneNode(SceneContainer &cTargetSceneContainer, cons
 
 		// Clone the scene node modifiers
 		for (uint32 i=0; i<cSceneNode.GetNumOfModifiers(); i++) {
-			// Get the scene node modifer
+			// Get the scene node modifier
 			SceneNodeModifier *pSceneNodeModifier = cSceneNode.GetModifier("", i);
 
 			// Do not clone automatic scene node modifiers

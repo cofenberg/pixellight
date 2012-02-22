@@ -479,7 +479,7 @@ class DrawHelpers {
 		*  @param[in] cColor2
 		*    Second color to use
 		*  @param[in] fAngle
-		*    Clockwise angle (in randian) of the gradient color. 0° means from left to right.
+		*    Clockwise angle (in radian) of the gradient color. 0° means from left to right.
 		*  @param[in] vPos
 		*    2D position
 		*  @param[in] vSize
@@ -499,7 +499,7 @@ class DrawHelpers {
 		*  @param[in] cColor2
 		*    Second color to use
 		*  @param[in] fAngle
-		*    Clockwise angle (in randian) of the gradient color. 0° means from left to right.
+		*    Clockwise angle (in radian) of the gradient color. 0° means from left to right.
 		*  @param[in] vV1
 		*    Object space quad vertex 1
 		*  @param[in] vV2

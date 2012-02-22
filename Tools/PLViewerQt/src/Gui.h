@@ -196,7 +196,7 @@ class Gui : public QObject {
 
 		/**
 		*  @brief
-		*    Fills the window menu recursivity
+		*    Fills the window menu recursively
 		*
 		*  @param[in] cQMenu
 		*    Current Qt menu to fill

@@ -170,13 +170,13 @@ void TextureBuffer3D::InitialUploadVolumeData(Renderer &cRendererOpenGL, const I
 	}
 }
 
-// "glCompressedTexImage3DARB"-version handling some special behaviour across different GPU's
+// "glCompressedTexImage3DARB"-version handling some special behavior across different GPU's
 void TextureBuffer3D::CompressedTexImage3D(const Renderer &cRendererOpenGL, GLenum nOpenGLTarget, GLint nOpenGLLevel, GLenum nOpenGLInternalformat, const Vector3i &vSize, uint32 nCompressedDataSize, const uint8 *pCompressedData)
 {
 	// Reason for the existence of this method:
 	// When uploading e.g. LATC1 compressed 3D textures on AMD/ATI GPU's, there are no issues. When doing the same on NVIDIA GPU's
 	// e.g. a rendered volume using this data looks pretty odd. The issue 13 in the "EXT_texture_compression_latc"-specification
-	// (http://www.opengl.org/registry/specs/EXT/texture_compression_latc.txt) explains this weird behaviour:
+	// (http://www.opengl.org/registry/specs/EXT/texture_compression_latc.txt) explains this weird behavior:
 	// "
 	//   13) Should these formats be allowed to specify 3D texture images
 	//   when NV_texture_compression_vtc is supported?
@@ -196,7 +196,7 @@ void TextureBuffer3D::CompressedTexImage3D(const Renderer &cRendererOpenGL, GLen
 	if (vSize.z > 1 && cRendererOpenGL.GetContext().GetExtensions().IsGL_NV_texture_compression_vtc()) {
 		// Go the complicated way
 		// -> This is not tuned for maximum performance, so we're allocating/deallocating a temporary
-		//    buffer in here in order to keep this nasty behaviour handling as local as possible
+		//    buffer in here in order to keep this nasty behavior handling as local as possible
 
 		// Pointer to the original compressed data
 		const uint8 *pCompressedDataCurrent = pCompressedData;
@@ -295,7 +295,7 @@ void TextureBuffer3D::CompressedTexImage3D(const Renderer &cRendererOpenGL, GLen
 	}
 }
 
-// "glGetCompressedTexImageARB"-version handling some special behaviour across different GPU's
+// "glGetCompressedTexImageARB"-version handling some special behavior across different GPU's
 void TextureBuffer3D::GetCompressedTexImage(const Renderer &cRendererOpenGL, GLenum nOpenGLTarget, GLint nOpenGLLevel, EPixelFormat nFormat, const Vector3i &vSize, uint8 *pCompressedData)
 {
 	// See "TextureBuffer3D::CompressedTexImage3D()" for detailed comments, this in here is nearly the same implementation
@@ -304,7 +304,7 @@ void TextureBuffer3D::GetCompressedTexImage(const Renderer &cRendererOpenGL, GLe
 	if (vSize.z > 1 && cRendererOpenGL.GetContext().GetExtensions().IsGL_NV_texture_compression_vtc()) {
 		// Go the complicated way
 		// -> This is not tuned for maximum performance, so we're allocating/deallocating a temporary
-		//    buffer in here in order to keep this nasty behaviour handling as local as possible
+		//    buffer in here in order to keep this nasty behavior handling as local as possible
 
 		// Get the block depth
 		const uint32 nBlockDepth = (vSize.z > 2) ? 4 : 2;

@@ -140,7 +140,7 @@ uint32 ObjectBase::GetRefCount() const
 
 /**
 *  @brief
-*    Decreases the reference count witout destroying this instance automatically
+*    Decreases the reference count without destroying this instance automatically
 */
 uint32 ObjectBase::SoftRelease()
 {

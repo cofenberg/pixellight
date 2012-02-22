@@ -32,14 +32,14 @@ namespace PLMath {
 //[-------------------------------------------------------]
 inline float PerlinNoiseTileable::Noise2(float fX, float fY)
 {
-	// This is just a wrapper - Call the original perlin noise function
+	// This is just a wrapper - Call the original Perlin noise function
 	const double vec[2] = { fX, fY };
 	return static_cast<float>(PerlinNoise::Noise2(vec));
 }
 
 inline float PerlinNoiseTileable::Noise3(float fX, float fY, float fZ)
 {
-	// This is just a wrapper - Call the original perlin noise function
+	// This is just a wrapper - Call the original Perlin noise function
 	const double vec[3] = { fX, fY, fZ };
 	return static_cast<float>(PerlinNoise::Noise3(vec));
 }

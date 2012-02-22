@@ -289,7 +289,7 @@ template <class AType> class ResourceManager {
 		*    Returns the index of the given resource
 		*
 		*  @param[in] cResource
-		*    The resource for which the index should be retreived
+		*    The resource for which the index should be retrieved
 		*
 		*  @return
 		*    The index position, <0 on failure (e.g. the resource is no member of this manager)

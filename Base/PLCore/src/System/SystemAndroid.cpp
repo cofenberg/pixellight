@@ -91,7 +91,7 @@ String SystemAndroid::GetPlatform() const
 
 String SystemAndroid::GetModuleFilenameByMemoryAddress(const void *pMemoryAddress) const
 {
-	// [TODO] Test whether or not the Linux implementaton works (compiles and runs correctly) for Android as well
+	// [TODO] Test whether or not the Linux implementation works (compiles and runs correctly) for Android as well
 	// -> Compiled when using the Android NDK, but when running it on the device it freezed while loading
 	//    the "PLCore.so" shared library. Check this in detail.
 	return "";

@@ -42,7 +42,7 @@ namespace PLMath {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Static class containing tileable perlin noise functions
+*    Static class containing tileable Perlin noise functions
 */
 class PerlinNoiseTileable : public PerlinNoise {
 
