@@ -52,7 +52,7 @@ SUITE(Functions_Performance) {
 	* METHODNAME_SCENARIO
 	*/
 	// general objects for testing
-	int testloops = 10000;	// number of iterations
+	// int testloops = 10000;	// number of iterations
 	Stack<int>* PLStack = new Stack<int>();
 	stack<int>* CStack = new stack<int>();
 
