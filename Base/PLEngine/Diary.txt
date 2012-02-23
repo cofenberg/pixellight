@@ -1,3 +1,9 @@
+>> 23.02.2012
+[CO]
+- "SNMTransformGizmoRotationController::PerformTransform()": Rotating is now working better, although it's still in scene node space and not view dependent
+
+
+
 >> 20.02.2012
 [CO]
 - Added "strg & shift" support within the transform gizmos

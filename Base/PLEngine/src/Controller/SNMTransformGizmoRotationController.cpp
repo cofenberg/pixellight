@@ -159,7 +159,7 @@ void SNMTransformGizmoRotationController::PerformTransform()
 								  qRotationDelta);
 
 		// Set the new rotation of the owner scene node
-		GetSceneNode().GetTransform().SetRotation(GetSceneNode().GetTransform().GetRotation()*qRotationDelta);
+		GetSceneNode().GetTransform().SetRotation(qRotationDelta*GetSceneNode().GetTransform().GetRotation());
 	}
 }
 
