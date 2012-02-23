@@ -1,3 +1,10 @@
+>> 23.02.2012
+[CO]
+- "PLCore::MeshCreatorQuad" (http://dev.pixellight.org/forum/viewtopic.php?f=6&t=264): It's confusing that in here the y-axis of the texture coordinate is flipped.
+   Changed it. (nothing critical, it's not used in PixelLight itself)
+
+
+
 >> 14.02.2012
 [CO]
 - Moved skeleton manager instance from "MeshManager" into "Mesh". Skeletons have never really been used and therefore the original implementation was never

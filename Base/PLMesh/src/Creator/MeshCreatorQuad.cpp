@@ -142,7 +142,7 @@ Mesh *MeshCreatorQuad::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 					if (TexCoords) {
 						pfVertex = static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::TexCoord));
 						pfVertex[Vector2::X] = 0.0f;
-						pfVertex[Vector2::Y] = 0.0f;
+						pfVertex[Vector2::Y] = 1.0f;
 					}
 					if (Normals) {
 						pfVertex = static_cast<float*>(pVertexBuffer->GetData(0, VertexBuffer::Normal));
@@ -159,7 +159,7 @@ Mesh *MeshCreatorQuad::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 					if (TexCoords) {
 						pfVertex = static_cast<float*>(pVertexBuffer->GetData(1, VertexBuffer::TexCoord));
 						pfVertex[Vector2::X] = 1.0f;
-						pfVertex[Vector2::Y] = 0.0f;
+						pfVertex[Vector2::Y] = 1.0f;
 					}
 					if (Normals) {
 						pfVertex = static_cast<float*>(pVertexBuffer->GetData(1, VertexBuffer::Normal));
@@ -176,7 +176,7 @@ Mesh *MeshCreatorQuad::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 					if (TexCoords) {
 						pfVertex = static_cast<float*>(pVertexBuffer->GetData(2, VertexBuffer::TexCoord));
 						pfVertex[Vector2::X] = 1.0f;
-						pfVertex[Vector2::Y] = 1.0f;
+						pfVertex[Vector2::Y] = 0.0f;
 					}
 					if (Normals) {
 						pfVertex = static_cast<float*>(pVertexBuffer->GetData(2, VertexBuffer::Normal));
@@ -193,7 +193,7 @@ Mesh *MeshCreatorQuad::Create(Mesh &cMesh, uint32 nLODLevel, bool bStatic) const
 					if (TexCoords) {
 						pfVertex = static_cast<float*>(pVertexBuffer->GetData(3, VertexBuffer::TexCoord));
 						pfVertex[Vector2::X] = 0.0f;
-						pfVertex[Vector2::Y] = 1.0f;
+						pfVertex[Vector2::Y] = 0.0f;
 					}
 					if (Normals) {
 						pfVertex = static_cast<float*>(pVertexBuffer->GetData(3, VertexBuffer::Normal));
