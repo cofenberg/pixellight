@@ -469,7 +469,7 @@ class Object : public ObjectBase {
 		*  @brief
 		*    Set multiple attribute values as a string at once
 		*
-		*  @param[in] sString
+		*  @param[in] sVars
 		*    String containing attributes and values (e.g. \"Name='Bob' Position='1 2 3'\")
 		*/
 		PLCORE_API void SetValues(const String &sVars);
