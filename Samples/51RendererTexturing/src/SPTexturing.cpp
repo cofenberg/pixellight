@@ -143,7 +143,7 @@ SPTexturing::SPTexturing(Renderer &cRenderer) : SurfacePainter(cRenderer),
 		{ // Fill the image
 			ImageBuffer *pImageBuffer = cImage.GetBuffer();
 
-			// Create the texture data contaning a spot and a white box at (0, 0)..(1, 1)
+			// Create the texture data contaning a spot and a white box at (0, 0)..(1, 1) in image space (0, 0)..(<image width>, <image height>)
 			const float fWidthHalf  = static_cast<float>(nWidth/2)-0.5f;
 			const float fHeightHalf = static_cast<float>(nHeight/2)-0.5f;
 			const float fMin		= Color4::Gray.r;
