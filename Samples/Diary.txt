@@ -1,3 +1,9 @@
+>> 23.02.2012
+[CO]
+- "51RendererTexturing" now also shows how to draw a fullscreen quad and shows some basic coordinate systems
+
+
+
 >> 28.12.2011
 [CO]
 - In order to be as painless as possible, the samples are now using the new "PLRenderer::VertexBuffer::SetFloat()" to fill vertex buffer data

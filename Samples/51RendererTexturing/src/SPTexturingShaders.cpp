@@ -162,7 +162,11 @@ void SPTexturingShaders::OnPaint(Surface &cSurface)
 		}
 
 		// Set "TextureMap" program uniform
-		m_pProgram->Set("TextureMap", m_pTextureBuffer);
+		const int nTextureUnit = m_pProgram->Set("TextureMap", m_pTextureBuffer);
+		if (nTextureUnit >= 0) {
+			cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressU, TextureAddressing::Clamp);
+			cRenderer.SetSamplerState(nTextureUnit, Sampler::AddressV, TextureAddressing::Clamp);
+		}
 
 		// Set program vertex attributes, this creates a connection between "Vertex Buffer Attribute" and "Vertex Shader Attribute"
 		m_pProgram->Set("VertexPosition", m_pVertexBuffer, VertexBuffer::Position);

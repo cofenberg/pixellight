@@ -92,21 +92,39 @@ SPTexturing::SPTexturing(Renderer &cRenderer) : SurfacePainter(cRenderer),
 			//            pfVertex[2] = 0.0f;
 			//        }
 
+			// Use the following vertex order when seen it as a fullscreen quad
+			//   (2)..(3)
+			//   .     .
+			//   .     .
+			//   (0)..(1)
+
+			// Set clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1):
+			//   (-1, 1)..(1, 1)
+			//   .         .
+			//   .         .
+			//   (-1,-1)..(1,-1)
+
+			// Use traditional OpenGL texture coordinate system:
+			//   (0,1)..(1,1)
+			//   .      .
+			//   .      .
+			//   (0,0)..(1,0)
+
 			// Setup vertex 0
-			m_pVertexBuffer->SetFloat(0, VertexBuffer::Position, 0, -1.0f, 1.0f, 0.0f);
+			m_pVertexBuffer->SetFloat(0, VertexBuffer::Position, 0, -1.0f, -1.0f, 0.0f);
 			m_pVertexBuffer->SetFloat(0, VertexBuffer::TexCoord, 0,  0.0f, 0.0f);
 
 			// Setup vertex 1
-			m_pVertexBuffer->SetFloat(1, VertexBuffer::Position, 0, -1.0f, -1.0f, 0.0f);
-			m_pVertexBuffer->SetFloat(1, VertexBuffer::TexCoord, 0,  0.0f,  1.0f);
+			m_pVertexBuffer->SetFloat(1, VertexBuffer::Position, 0, 1.0f, -1.0f, 0.0f);
+			m_pVertexBuffer->SetFloat(1, VertexBuffer::TexCoord, 0, 1.0f, 0.0f);
 
 			// Setup vertex 2
-			m_pVertexBuffer->SetFloat(2, VertexBuffer::Position, 0, 1.0f, 1.0f, 0.0f);
-			m_pVertexBuffer->SetFloat(2, VertexBuffer::TexCoord, 0, 1.0f, 0.0f);
+			m_pVertexBuffer->SetFloat(2, VertexBuffer::Position, 0, -1.0f, 1.0f, 0.0f);
+			m_pVertexBuffer->SetFloat(2, VertexBuffer::TexCoord, 0, 0.0f, 1.0f);
 
 			// Setup vertex 3
-			m_pVertexBuffer->SetFloat(3, VertexBuffer::Position, 0, 1.0f, -1.0f, 0.0f);
-			m_pVertexBuffer->SetFloat(3, VertexBuffer::TexCoord, 0, 1.0f,  1.0f);
+			m_pVertexBuffer->SetFloat(3, VertexBuffer::Position, 0, 1.0f, 1.0f, 0.0f);
+			m_pVertexBuffer->SetFloat(3, VertexBuffer::TexCoord, 0, 1.0f, 1.0f);
 
 			// Now that we have filled the buffer with our data, unlock it. Locked buffers
 			// CANNOT be used for rendering!
@@ -125,17 +143,21 @@ SPTexturing::SPTexturing(Renderer &cRenderer) : SurfacePainter(cRenderer),
 		{ // Fill the image
 			ImageBuffer *pImageBuffer = cImage.GetBuffer();
 
-			// Create the texture data
+			// Create the texture data contaning a spot and a white box at (0, 0)..(1, 1)
 			const float fWidthHalf  = static_cast<float>(nWidth/2)-0.5f;
 			const float fHeightHalf = static_cast<float>(nHeight/2)-0.5f;
 			const float fMin		= Color4::Gray.r;
 			uint8 *pData = pImageBuffer->GetData();
 			for (uint32 j=0; j<nWidth; j++) {
 				for (uint32 i=0; i<nHeight; i++) {
-					const float x  = (i - fWidthHalf)/fWidthHalf;
-					const float y  = (j - fHeightHalf)/fHeightHalf;
-					const float ls = Math::Max(1 - (x*x + y*y), fMin);
-					pData[j*nWidth+i] = static_cast<uint8>(255*ls);
+					if (i < 2 && j < 2) {
+						pData[j*nWidth+i] = 255;
+					} else {
+						const float x  = (i - fWidthHalf)/fWidthHalf;
+						const float y  = (j - fHeightHalf)/fHeightHalf;
+						const float ls = Math::Max(1 - (x*x + y*y), fMin);
+						pData[j*nWidth+i] = static_cast<uint8>(255*ls);
+					}
 				}
 			}
 		}

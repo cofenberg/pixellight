@@ -46,6 +46,9 @@ VS_OUTPUT main(float3   VertexPosition : POSITION,		// Object space vertex posit
 	// Calculate the clip space vertex position
 	Out.VertexPosition = mul(ObjectSpaceToClipSpaceMatrix, float4(VertexPosition, 1));
 
+	// In case you want to have a fullscreen quad in here, replace the line above by
+//	Out.VertexPosition = float4(VertexPosition, 1);
+
 	// Pass through the vertex texture coordinate
 	Out.VertexTexCoord = VertexTexCoord;
 

@@ -45,6 +45,9 @@ void main()
 	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
 	gl_Position = ObjectSpaceToClipSpaceMatrix*vec4(VertexPosition, 1);
 
+	// In case you want to have a fullscreen quad in here, replace the line above by
+//	gl_Position = vec4(VertexPosition, 1);
+
 	// Pass through the vertex texture coordinate
 	VertexTexCoordVS = VertexTexCoord;
 }
