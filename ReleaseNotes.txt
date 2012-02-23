@@ -1,3 +1,7 @@
+Changes in PixelLight 0.9.12-R1 (not yet released)
+-
+
+
 Changes in PixelLight 0.9.11-R1 (released on February 23, 2012)
 - Feature: Beside "Scene" and "Script", "PLViewer" is now also able to load in "Mesh", "Material" and "Image" (= texture)
 - Feature: Within the PLFrontendQt adapter project, there's now an interactive realtime RTTI browsing GUI

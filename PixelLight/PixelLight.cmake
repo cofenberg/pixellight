@@ -101,7 +101,7 @@ if(LINUX)
 	endif()
 
 	# Detailed version information?
-	set(CMAKETOOLS_DETAILED_VERSION_INFORMATION "0" CACHE BOOL "Create detailed version information? If active, symlinks like \"libPLCore.so.0.9.11\" and \"libPLCore.so.0\" are created and also used directly within the created libraries and executables.")
+	set(CMAKETOOLS_DETAILED_VERSION_INFORMATION "0" CACHE BOOL "Create detailed version information? If active, symlinks like \"libPLCore.so.0.9.12\" and \"libPLCore.so.0\" are created and also used directly within the created libraries and executables.")
 endif()
 
 # Repository URL (where to download the external pre-built packages from)
@@ -128,7 +128,7 @@ set(CMAKETOOLS_CONFIG_SUFFIX "" CACHE STRING "Library suffix")
 # Version
 set(CMAKETOOLS_PROJECT_VERSION_MAJOR    0)
 set(CMAKETOOLS_PROJECT_VERSION_MINOR    9)
-set(CMAKETOOLS_PROJECT_VERSION_PATCH    11)
+set(CMAKETOOLS_PROJECT_VERSION_PATCH    12)
 set(CMAKETOOLS_PROJECT_VERSION_RELEASE "R1")
 if(CMAKETOOLS_CONFIG_NIGHTLY)
 	# [TODO] Add date to string (e.g. "nightly-20100101")
