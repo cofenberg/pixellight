@@ -413,7 +413,6 @@ if(APPLE)
 	unset (PL_PLUGIN_GRAPHICS_PNG					CACHE)
 	unset (PL_PLUGIN_GRAPHICS_JPG					CACHE)
 	unset (PL_PLUGIN_FRONTEND_QT					CACHE)
-	unset (PL_EDITOR								CACHE)
 endif()
 
 # Android
@@ -426,7 +425,6 @@ if(ANDROID)
 	unset (PL_PLUGIN_SOUND_OPENAL					CACHE)
 	unset (PL_PLUGIN_SOUND_FMOD						CACHE)
 	unset (PL_PLUGIN_FRONTEND_QT					CACHE)
-	unset (PL_EDITOR								CACHE)
 	unset (PL_TOOL_PLUPGRADE						CACHE)
 
 	# [TODO] The following plugins are not yet supported (create prebuild external packages and test it)
