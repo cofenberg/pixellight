@@ -1,3 +1,9 @@
+>> 23.02.2012
+[CO]
+- "SNRagdoll": Added null pointer tests
+
+
+
 >> 28.11.2011
 [CO]
 - "PLPhysicsNewton": "BodyMesh" & "BodyConvexHull": Added "VertexBuffer::Half3" & "VertexBuffer::Half4" support

@@ -589,9 +589,9 @@ class SNRagdoll : public PLScene::SNMesh, public PLCore::Loadable {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		SCPhysicsWorld			*m_pWorldContainer;			/**< The PL physics world scene node container the physics body is in */
+		SCPhysicsWorld			*m_pWorldContainer;			/**< The PL physics world scene node container the physics body is in, can be a null pointer */
 		bool					 m_bEnabled;				/**< Is the ragdoll enabled? */
-		PLMesh::SkeletonHandler *m_pRagdollSkeletonHandler;	/**< Skeleton handler with the current ragdoll pose */
+		PLMesh::SkeletonHandler *m_pRagdollSkeletonHandler;	/**< Skeleton handler with the current ragdoll pose, can be a null pointer */
 		PLCore::String			 m_sRagdollFilename;		/**< Ragdoll filename, if no provided a default ragdoll is created */
 		bool					 m_bAttachToWorldEnabled;	/**< Are joints allowed to be attached to the world? (fixed joints) */
 		bool					 m_bAutoFreeze;				/**< Freeze the ragdoll automatically? */

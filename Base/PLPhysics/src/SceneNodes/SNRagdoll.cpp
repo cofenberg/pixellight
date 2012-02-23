@@ -463,7 +463,7 @@ void SNRagdoll::CreatePhysicsRagdoll(bool bAllowAttachToWorld)
 */
 Skeleton *SNRagdoll::GetSkeleton() const
 {
-	return m_pRagdollSkeletonHandler->GetResource();
+	return m_pRagdollSkeletonHandler ? m_pRagdollSkeletonHandler->GetResource() : nullptr;
 }
 
 /**
@@ -987,7 +987,7 @@ void SNRagdoll::OnUpdate()
 			}
 
 			// Get skeleton
-			const Skeleton *pSkeleton = m_pRagdollSkeletonHandler->GetResource();
+			const Skeleton *pSkeleton = m_pRagdollSkeletonHandler ? m_pRagdollSkeletonHandler->GetResource() : nullptr;
 			if (pSkeleton) {
 				const Skeleton *pMeshSkeleton = pMeshSkeletonHandler->GetResource();
 				if (pMeshSkeleton) {
