@@ -218,16 +218,14 @@ bool SNMesh::LoadSkin(const String &sFilename, const String &sParams, const Stri
 	if (m_pMeshHandler) {
 		// Get the used mesh
 		PLMesh::Mesh *pMesh = m_pMeshHandler->GetMesh();
-		if (!pMesh)
-			return false; // Error!
+		if (pMesh) {
+			// Any special skin given for this particular mesh instance within the scene?
+			if (m_sSkin.GetLength()) {
+				// Get filename extension (in case it's a filename)
+				const String sExtension = Url(sFilename).GetExtension();
 
-		// Use the default materials of the used mesh?
-		if (m_sSkin.GetLength()) {
-			// Get file extension
-			String sExtension = Url(sFilename).GetExtension();
-			if (sExtension.GetLength()) {
 				// Supported skin file given?
-				if (LoadableManager::GetInstance()->IsFormatLoadSupported(sExtension, "Skin")) {
+				if (sExtension.GetLength() && LoadableManager::GetInstance()->IsFormatLoadSupported(sExtension, "Skin")) {
 					PL_LOG(Debug, "Load skin: " + sFilename)
 
 					// Get loadable type
@@ -252,10 +250,14 @@ bool SNMesh::LoadSkin(const String &sFilename, const String &sParams, const Stri
 									// Finally, load the skin!
 									if (sParams.GetLength()) {
 										pLoaderImpl->CallMethod(sMethodName, "Param0=\"" + Type<SNMesh&>::ConvertToString(*this) + "\" Param1=\"" + Type<File&>::ConvertToString(cFile) + "\" " + sParams);
+
+										// Done
 										return true;
 									} else {
 										Params<bool, SNMesh&, File&> cParams(*this, cFile);
 										pLoaderImpl->CallMethod(sMethodName, cParams);
+
+										// Done, return the result
 										return cParams.Return;
 									}
 								}
@@ -269,10 +271,14 @@ bool SNMesh::LoadSkin(const String &sFilename, const String &sParams, const Stri
 						PL_LOG(Error, "Can't load '" + sFilename + "' because the loadable type 'Skin' is unknown!")
 					}
 
-				// Just replace all materials... 
+				// No skin file given, just replace all materials... 
 				} else {
+					// "MaterialManager().LoadResource()" takes care of the rest
 					Material *pMaterial = GetSceneContext()->GetRendererContext().GetMaterialManager().LoadResource(sFilename);
 					if (pMaterial) {
+						// Brute force: Set all materials within the mesh to the just loaded material
+						// -> If we want to deal with multi-materials meshes, we really need to work with skin files within this method
+						// -> In case you're setting the materials via code, you may not want to use this skin method in the first place
 						for (uint32 i=0; i<pMesh->GetNumOfMaterials(); i++)
 							m_pMeshHandler->SetMaterial(i, pMaterial);
 
@@ -280,15 +286,16 @@ bool SNMesh::LoadSkin(const String &sFilename, const String &sParams, const Stri
 						return true;
 					}
 				}
-			} else {
-				PL_LOG(Error, "Can't load the loadable 'Skin' from '" + sFilename + "' because there's no filename extension!")
-			}
-		} else {
-			for (uint32 i=0; i<pMesh->GetNumOfMaterials(); i++)
-				m_pMeshHandler->SetMaterial(i, pMesh->GetMaterial(i));
 
-			// Done
-			return true;
+			// No special skin given for this particular mesh instance within the scene
+			} else {
+				// Use the default materials of the used mesh
+				for (uint32 i=0; i<pMesh->GetNumOfMaterials(); i++)
+					m_pMeshHandler->SetMaterial(i, pMesh->GetMaterial(i));
+
+				// Done
+				return true;
+			}
 		}
 	}
 

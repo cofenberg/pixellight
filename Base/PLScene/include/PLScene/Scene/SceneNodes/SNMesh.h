@@ -126,11 +126,11 @@ class SNMesh : public SceneNode {
 			pl_property("Icon",	"Data/Textures/IconMesh.dds")
 		pl_properties_end
 		// Attributes
-		pl_attribute(Mesh,			PLCore::String,				"",	ReadWrite,	GetSet,	"Mesh to use",													"Type='Mesh'")
-		pl_attribute(Skin,			PLCore::String,				"",	ReadWrite,	GetSet,	"Skin file overwriting the default materials of the used mesh",	"Type='Skin'")
+		pl_attribute(Mesh,			PLCore::String,				"",	ReadWrite,	GetSet,	"Mesh to use",																		"Type='Mesh'")
+		pl_attribute(Skin,			PLCore::String,				"",	ReadWrite,	GetSet,	"Skin file or material name overwriting the default materials of the used mesh",	"Type='Skin'")
 			// Overwritten SceneNode attributes
-		pl_attribute(Flags,			pl_flag_type(EFlags),		0,	ReadWrite,	GetSet,	"Flags",														"")
-		pl_attribute(DebugFlags,	pl_flag_type(EDebugFlags),	0,	ReadWrite,	GetSet,	"Debug flags",													"")
+		pl_attribute(Flags,			pl_flag_type(EFlags),		0,	ReadWrite,	GetSet,	"Flags",																			"")
+		pl_attribute(DebugFlags,	pl_flag_type(EDebugFlags),	0,	ReadWrite,	GetSet,	"Debug flags",																		"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end

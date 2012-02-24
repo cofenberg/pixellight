@@ -1,3 +1,10 @@
+> 24.02.2012
+[CO]
+- After the forum post http://dev.pixellight.org/forum/viewtopic.php?f=4&t=267 I reviewed "SNMesh::LoadSkin()": In case the given "Skin" has no filename
+  extension, just pass the provided string on to the material manager. This behaviour should be better.
+
+
+
 > 22.02.2012
 [CO]
 - "SceneNodeModifier::SetFlags()"-bugfix: "if ((m_nFlags & Inactive) != (nValue & nValue))" should be "if ((m_nFlags & Inactive) != (nValue & Inactive))",
