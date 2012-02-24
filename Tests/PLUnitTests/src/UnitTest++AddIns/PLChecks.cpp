@@ -49,7 +49,7 @@ namespace UnitTest {
 		UnitTest::MemoryOutStream stream;
 		
 		// missing implementation message
-		stream << "Implement this test!" << std::endl;
+		stream << "Implement this test!";
 
 		results.OnTestFailure(details, stream.GetText());
 	}

@@ -1,4 +1,11 @@
->> 22.02.2012
+>> 25.02.2012
+[JS]
+PLUnitTests:
+- Removed getchar() call, slipped into repo somehow ;)
+
+
+
+﻿>> 22.02.2012
 [CO]
 PLUnitTestsPerformance:
 - Removed "system("Pause")" resulting in the error message "error: 'system' was not declared in this scope" when building for Android,
