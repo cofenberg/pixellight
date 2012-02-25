@@ -5,6 +5,7 @@ PLUnitTests:
 - added Queue tests (migrated from PLTestBase)
 - added FastPool tests
 - fixed check in generic container tests when calling "AddAtIndex", we don't know what value this new element will have so don't check it!
+- added SimpleList tests (migrated from PLTestBase)
 
 
 
