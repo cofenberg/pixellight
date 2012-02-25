@@ -307,8 +307,7 @@ void CheckDerivedContainerFunctions(PLCore::Container<AType>& con) {
 		con.Add(4);
 
 		// "adds new" element that is at index, we can't check its value as it may be uninitialized!
-		CHECK(con.AddAtIndex(2U));
-		CHECK(con.Get(2U));
+		con.AddAtIndex(2U);
 		CHECK_EQUAL(5U, con.GetNumOfElements());
 	}
 
@@ -332,7 +331,7 @@ void CheckDerivedContainerFunctions(PLCore::Container<AType>& con) {
 		con.Add(4);
 
 		// should append at the end of Container, element not initialized! e.g. we can't check its value
-		CHECK(PLCore::Container<AType>::Null != con.AddAtIndex(-10));
+		con.AddAtIndex(-10);
 		CHECK_EQUAL(5U, con.GetNumOfElements());
 		CHECK(con.Compare(con, 0, 4));
 	}

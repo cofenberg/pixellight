@@ -91,6 +91,12 @@
     <ClCompile Include="src\UnitTest++AddIns\PLChecks.cpp">
       <Filter>UnitTest++AddIns</Filter>
     </ClCompile>
+    <ClCompile Include="src\PLCore\Container\FastPool.cpp">
+      <Filter>PLCore\Container\Container</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCore\Queue.cpp">
+      <Filter>PLCore\Container</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\UnitTest++AddIns\RunAllTests.h">

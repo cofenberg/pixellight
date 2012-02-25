@@ -32,12 +32,14 @@
     <ClCompile Include="src\PLCore\Container\BinaryHeap.cpp" />
     <ClCompile Include="src\PLCore\Container\BinominalHeap.cpp" />
     <ClCompile Include="src\PLCore\Container\Bitset.cpp" />
+    <ClCompile Include="src\PLCore\Container\FastPool.cpp" />
     <ClCompile Include="src\PLCore\Container\FibonacciHeap.cpp" />
     <ClCompile Include="src\PLCore\Container\HashMap.cpp" />
     <ClCompile Include="src\PLCore\Container\List.cpp" />
     <ClCompile Include="src\PLCore\Container\ContainerTests.h" />
     <ClCompile Include="src\PLCore\Container\Pool.cpp" />
     <ClCompile Include="src\PLCore\Container\SimpleMap.cpp" />
+    <ClCompile Include="src\PLCore\Queue.cpp" />
     <ClCompile Include="src\PLCore\String.cpp" />
     <ClCompile Include="src\PLMath\EulerAngles.cpp" />
     <ClCompile Include="src\PLMath\Graph.cpp" />
