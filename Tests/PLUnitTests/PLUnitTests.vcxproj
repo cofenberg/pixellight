@@ -40,6 +40,7 @@
     <ClCompile Include="src\PLCore\Container\Pool.cpp" />
     <ClCompile Include="src\PLCore\Container\SimpleList.cpp" />
     <ClCompile Include="src\PLCore\Container\SimpleMap.cpp" />
+    <ClCompile Include="src\PLCore\Container\Stack.cpp" />
     <ClCompile Include="src\PLCore\Queue.cpp" />
     <ClCompile Include="src\PLCore\String.cpp" />
     <ClCompile Include="src\PLMath\EulerAngles.cpp" />
