@@ -31,23 +31,30 @@ define_project(PLUnitTests NOSUFFIX)
 add_sources(
 	src/UnitTests.cpp
 	# PLCore
-	# Application
-	src/PLCore/Application/ApplicationContext.cpp
-	src/PLCore/Application/CoreApplication.cpp
-	# Container
-	src/PLCore/Container/Array.cpp
-	src/PLCore/Container/ContainerTests.h
-	src/PLCore/Container/List.cpp
-	src/PLCore/Container/Pool.cpp
-	# Heap
-	src/PLCore/Container/BinaryHeap.cpp
-	src/PLCore/Container/BinominalHeap.cpp
-	src/PLCore/Container/FibonacciHeap.cpp
-	src/PLCore/Container/HeapTests.h
-	# Map
-	src/PLCore/Container/HashMap.cpp
-	src/PLCore/Container/MapTests.h
-	src/PLCore/Container/SimpleMap.cpp
+		# Application
+		src/PLCore/Application/ApplicationContext.cpp
+		src/PLCore/Application/CoreApplication.cpp
+		# Container
+		src/PLCore/Container/Array.cpp
+		src/PLCore/Container/Bitset.cpp
+		src/PLCore/Container/ContainerTests.h
+		src/PLCore/Container/FastPool.cpp
+		src/PLCore/Container/List.cpp
+		src/PLCore/Container/Pool.cpp
+		src/PLCore/Container/Queue.cpp
+		src/PLCore/Container/SimpleList.cpp
+		src/PLCore/Container/Stack.cpp
+		# Heap
+		src/PLCore/Container/BinaryHeap.cpp
+		src/PLCore/Container/BinominalHeap.cpp
+		src/PLCore/Container/FibonacciHeap.cpp
+		src/PLCore/Container/HeapTests.h
+		# Map
+		src/PLCore/Container/HashMap.cpp
+		src/PLCore/Container/MapTests.h
+		src/PLCore/Container/SimpleMap.cpp
+		# general
+		src/PLCore/String.cpp
 	# PLMath
 	src/PLMath/EulerAngles.cpp
 	src/PLMath/Graph.cpp
@@ -60,14 +67,12 @@ add_sources(
 	src/PLMath/Vector2.cpp
 	src/PLMath/Vector3.cpp
 	src/PLMath/Vector4.cpp
-	# general
-	src/PLCore/String.cpp
 	# UnitTest++ AddIns
-	src/UnitTest++AddIns/MyTestReporter.cpp
 	src/UnitTest++AddIns/MyMobileTestReporter.cpp
+	src/UnitTest++AddIns/MyTestReporter.cpp
+	src/UnitTest++AddIns/PLChecks.cpp
 	src/UnitTest++AddIns/RunAllTests.cpp
 	src/UnitTest++AddIns/wchar_template.cpp
-	src/UnitTest++AddIns/PLChecks.cpp
 )
 if(ANDROID)
 	add_sources(
