@@ -281,24 +281,6 @@ int SceneNode::GetContainerIndex()
 
 /**
 *  @brief
-*    Creates a clone of this scene node within the scene container this scene node is in
-*/
-SceneNode *SceneNode::Clone()
-{
-	return GetManager() ? CloneSceneNode(*static_cast<SceneContainer*>(GetManager()), *this, "_Clone") : nullptr;
-}
-
-/**
-*  @brief
-*    Creates a clone of this scene node within the scene container this scene node is in at a certain index inside the scene node list
-*/
-SceneNode *SceneNode::CloneAtIndex(int nPosition)
-{
-	return GetManager() ? CloneSceneNode(*static_cast<SceneContainer*>(GetManager()), *this, "_Clone", nPosition) : nullptr;
-}
-
-/**
-*  @brief
 *    Returns the scene hierarchy this scene node is linked into
 */
 SceneHierarchy *SceneNode::GetHierarchy() const
@@ -893,6 +875,24 @@ void SceneNode::ClearModifiers()
 //[-------------------------------------------------------]
 //[ Public virtual SceneNode functions                    ]
 //[-------------------------------------------------------]
+/**
+*  @brief
+*    Creates a clone of this scene node within the scene container this scene node is in
+*/
+SceneNode *SceneNode::Clone()
+{
+	return GetManager() ? CloneSceneNode(*static_cast<SceneContainer*>(GetManager()), *this, "_Clone") : nullptr;
+}
+
+/**
+*  @brief
+*    Creates a clone of this scene node within the scene container this scene node is in at a certain index inside the scene node list
+*/
+SceneNode *SceneNode::CloneAtIndex(int nPosition)
+{
+	return GetManager() ? CloneSceneNode(*static_cast<SceneContainer*>(GetManager()), *this, "_Clone", nPosition) : nullptr;
+}
+
 /**
 *  @brief
 *    Returns a pointer to the mesh handler

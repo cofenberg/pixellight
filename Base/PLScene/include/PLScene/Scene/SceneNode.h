@@ -349,34 +349,6 @@ class SceneNode : public PLCore::Object, public PLCore::Element<SceneNode> {
 
 		/**
 		*  @brief
-		*    Creates a clone of this scene node within the scene container this scene node is in
-		*
-		*  @return
-		*    The created clone of this scene node within the same scene container the original scene node is in, null pointer on error
-		*
-		*  @note
-		*    - Scene nodes and scene node modifiers with a set "Automatic"-flag will not be cloned
-		*    - The debug flags of the created clone are set to 0
-		*/
-		PLS_API SceneNode *Clone();
-
-		/**
-		*  @brief
-		*    Creates a clone of this scene node within the scene container this scene node is in at a certain index inside the scene node list
-		*
-		*  @param[in] nPosition
-		*    Index position specifying the location within the scene node list where the scene node should be added, <0 for at the end
-		*
-		*  @return
-		*    The created clone of this scene node within the same scene container the original scene node is in, null pointer on error
-		*
-		*  @see
-		*    - "Clone()"
-		*/
-		PLS_API SceneNode *CloneAtIndex(int nPosition);
-
-		/**
-		*  @brief
 		*    Returns the scene hierarchy this scene node is linked into
 		*
 		*  @return
@@ -803,6 +775,34 @@ class SceneNode : public PLCore::Object, public PLCore::Element<SceneNode> {
 	//[ Public virtual SceneNode functions                    ]
 	//[-------------------------------------------------------]
 	public:
+		/**
+		*  @brief
+		*    Creates a clone of this scene node within the scene container this scene node is in
+		*
+		*  @return
+		*    The created clone of this scene node within the same scene container the original scene node is in, null pointer on error
+		*
+		*  @note
+		*    - Scene nodes and scene node modifiers with a set "Automatic"-flag will not be cloned
+		*    - The debug flags of the created clone are set to 0
+		*/
+		PLS_API virtual SceneNode *Clone();
+
+		/**
+		*  @brief
+		*    Creates a clone of this scene node within the scene container this scene node is in at a certain index inside the scene node list
+		*
+		*  @param[in] nPosition
+		*    Index position specifying the location within the scene node list where the scene node should be added, <0 for at the end
+		*
+		*  @return
+		*    The created clone of this scene node within the same scene container the original scene node is in, null pointer on error
+		*
+		*  @see
+		*    - "Clone()"
+		*/
+		PLS_API virtual SceneNode *CloneAtIndex(int nPosition);
+
 		/**
 		*  @brief
 		*    Returns a pointer to the mesh handler

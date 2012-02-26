@@ -1,3 +1,13 @@
+> 26.02.2012
+[CO]
+- Bug "ID: 3493844" (http://sourceforge.net/tracker/index.php?func=detail&aid=3493844&group_id=507544&atid=2063682):
+    "Would not prevent overloading method SceneNode::Clone(PLCore::String sCloneName)."
+  -> Not really a bug, also thought about making it virtual and was not totally sure whether or not this is really required. It's easier to "open"
+     something later on, instead of making everything accessible and removing it later due to chaos. Now that there's feedback, I  made this method
+     virtual so one can e.g. do some special stuff when cloning.
+
+
+
 > 24.02.2012
 [CO]
 - After the forum post http://dev.pixellight.org/forum/viewtopic.php?f=4&t=267 I reviewed "SNMesh::LoadSkin()": In case the given "Skin" has no filename
