@@ -417,6 +417,22 @@ class LoadableManager : public Singleton<LoadableManager> {
 
 		/**
 		*  @brief
+		*    Opens a directory by using base directories
+		*
+		*  @param[in] cDirectory
+		*    Directory object
+		*  @param[in] sFilename
+		*    Filename of the directory to open
+		*  @param[in] bCreate
+		*    Create the directory if it doesn't exist?
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		PLCORE_API bool OpenDirectory(Directory &cDirectory, const String &sFilename, bool bCreate = false) const;
+
+		/**
+		*  @brief
 		*    Loads in a string by using a file
 		*
 		*  @param[in] sFilename

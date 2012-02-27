@@ -61,6 +61,10 @@ namespace PLCore {
 *    - "Formats": File format extensions this loader can load in (for example: "bmp" or "jpg,jpeg")
 *    - "Load":    "1" if loading is implemented, else "0"
 *    - "Save":    "1" if saving is implemented, else "0"
+*
+*    Special file format case: There are file formats which don't have any filename extension or
+*    even expect that it's data is within a provided directory (example: DICOM). As "Format", write
+*    ",", ",dcm,DCM,dicom,DICOM" and so on.
 */
 class LoaderImpl : public Object {
 

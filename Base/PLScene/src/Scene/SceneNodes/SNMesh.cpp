@@ -222,10 +222,11 @@ bool SNMesh::LoadSkin(const String &sFilename, const String &sParams, const Stri
 			// Any special skin given for this particular mesh instance within the scene?
 			if (m_sSkin.GetLength()) {
 				// Get filename extension (in case it's a filename)
+				// -> There are file formats without an extension, so no extension must also be valid
 				const String sExtension = Url(sFilename).GetExtension();
 
 				// Supported skin file given?
-				if (sExtension.GetLength() && LoadableManager::GetInstance()->IsFormatLoadSupported(sExtension, "Skin")) {
+				if (LoadableManager::GetInstance()->IsFormatLoadSupported(sExtension, "Skin")) {
 					PL_LOG(Debug, "Load skin: " + sFilename)
 
 					// Get loadable type
@@ -310,9 +311,8 @@ bool SNMesh::LoadSkin(const String &sFilename, const String &sParams, const Stri
 bool SNMesh::SaveSkin(const String &sFilename, const String &sParams, const String &sMethod)
 {
 	// Get the filename extension
+	// -> There are file formats without an extension, so no extension must also be valid
 	const String sExtension = Url(sFilename).GetExtension();
-	if (!sExtension.GetLength())
-		return false; // Error!
 
 	// Supported skin file given?
 	if (LoadableManager::GetInstance()->IsFormatSaveSupported(sExtension, "Skin")) {

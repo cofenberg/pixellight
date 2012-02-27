@@ -300,14 +300,14 @@ bool LoadableManager::RemoveBaseDir(uint32 nNum)
 String LoadableManager::GetRelativeFilename(const String &sFilename)
 {
 	// Get file extension
+	// -> There are file formats without an extension, so no extension must also be valid
 	RegisterClasses();
 	const String sExtension = Url(sFilename).GetExtension();
-	if (sExtension.GetLength()) {
-		// Get the loadable type
-		const LoadableType *pLoadableType = m_mapTypesByExtension.Get(sExtension);
-		if (pLoadableType)
-			return pLoadableType->GetRelativeFilePath(sFilename);
-	}
+
+	// Get the loadable type
+	const LoadableType *pLoadableType = m_mapTypesByExtension.Get(sExtension);
+	if (pLoadableType)
+		return pLoadableType->GetRelativeFilePath(sFilename);
 
 	// Error!
 	return "";
@@ -394,6 +394,64 @@ bool LoadableManager::OpenFile(File &cFile, const String &sFilename, bool bCreat
 
 	// Check if the file has been found
 	return cFile.Open(bCreate ? (File::FileWrite | File::FileCreate) : File::FileRead, nStringFormat);
+}
+
+/**
+*  @brief
+*    Opens a directory by using base directories
+*/
+bool LoadableManager::OpenDirectory(Directory &cDirectory, const String &sFilename, bool bCreate) const
+{
+	// Because absolute filenames can be accessed fastest by the file system, we first give
+	// the file system an absolute filename which is hopefully the correct one... if
+	// not, we must search the directory which is quite slow...
+	const Url cUrl(sFilename);
+	if (cUrl.IsAbsolute()) {
+		// The given filename is already absolute! :)
+		cDirectory.Assign(cUrl);
+	} else {
+		// Are there any base directories?
+		const uint32 nNumOfBaseDirs = m_lstBaseDirs.GetNumOfElements();
+		if (nNumOfBaseDirs) {
+			// Reset directory
+			cDirectory.Assign("");
+
+			// Loop through all base directories
+			bool bDirectoryFound = false;
+			for (uint32 nBaseDir=0; nBaseDir<nNumOfBaseDirs && !bDirectoryFound; nBaseDir++) {
+				// Get the base directory
+				const String sBaseDir = m_lstBaseDirs[nBaseDir];
+
+				// Try to open the directory directly (resolve "./" because we always want to work with absolute paths so the user can figure out the absolute path later on)
+				if (sBaseDir == "./") {
+					// Use current directory
+					cDirectory.Assign(System::GetInstance()->GetCurrentDir() + '/' + sFilename);
+				} else {
+					// Use given base directory
+					cDirectory.Assign(sBaseDir + sFilename);
+				}
+
+				// Directory found?
+				bDirectoryFound = cDirectory.IsFile();
+
+				// Create the directory?
+				if (bCreate && !bDirectoryFound)
+					bDirectoryFound = cDirectory.CreateRecursive();
+			}
+		} else {
+			// Try to open the directory directly
+			cDirectory.Assign(cUrl);
+		}
+	}
+
+	// Check if the directory has been found
+	if (cDirectory.IsDirectory()) {
+		// Done
+		return true;
+	} else {
+		// Create the directory right now?
+		return bCreate ? cDirectory.CreateRecursive() : false;
+	}
 }
 
 /**

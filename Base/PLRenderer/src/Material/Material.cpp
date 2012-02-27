@@ -401,46 +401,45 @@ bool Material::LoadByFilename(const String &sFilename, const String &sParams, co
 	Unload();
 
 	// Get the filename extension for material/effect detection
+	// -> There are file formats without an extension, so no extension must also be valid
 	const String sExtension = Url(sFilename).GetExtension();
-	if (sExtension.GetLength()) {
-		// Material file given?
-		if (LoadableManager::GetInstance()->IsFormatLoadSupported(sExtension, "Material")) {
-			// Call base implementation, m_sAbsFilename is set automatically :)
-			return PLCore::Resource<Material>::LoadByFilename(sFilename, sParams, sMethod);
 
-		// Effect given?
-		} else if (LoadableManager::GetInstance()->IsFormatLoadSupported(sExtension, "Effect")) {
-			// Load the effect
-			Effect *pFX = GetMaterialManager().GetRendererContext().GetEffectManager().LoadResource(sFilename);
-			if (pFX) {
-				// Backup the absolute filename of the effect
-				m_sUrl = pFX->GetUrl();
+	// Material file given?
+	if (LoadableManager::GetInstance()->IsFormatLoadSupported(sExtension, "Material")) {
+		// Call base implementation, m_sAbsFilename is set automatically :)
+		return PLCore::Resource<Material>::LoadByFilename(sFilename, sParams, sMethod);
 
-				// Set this effect
-				SetEffect(pFX);
+	// Effect given?
+	} else if (LoadableManager::GetInstance()->IsFormatLoadSupported(sExtension, "Effect")) {
+		// Load the effect
+		Effect *pFX = GetMaterialManager().GetRendererContext().GetEffectManager().LoadResource(sFilename);
+		if (pFX) {
+			// Backup the absolute filename of the effect
+			m_sUrl = pFX->GetUrl();
 
-				// Done
-				return true;
-			} else {
-				// Error!
-				return false;
-			}
-		}
-
-	// If there's no extension, maybe it's an automatic texture?
-	} else {
-		if (sFilename.Compare("Create ", 0, 7)) {
-			// Create a 'DiffuseMap' texture parameter
-			Parameter *pParameter = m_pParameterManager->CreateParameter(ParameterManager::TextureBuffer, DiffuseMap);
-			if (pParameter)
-				pParameter->SetValueTexture(sFilename);
-
-			// Just backup the given 'filename'
-			m_sUrl = sFilename;
+			// Set this effect
+			SetEffect(pFX);
 
 			// Done
 			return true;
+		} else {
+			// Error!
+			return false;
 		}
+	}
+
+	// If there's no extension, maybe it's an automatic texture?
+	if (sFilename.Compare("Create ", 0, 7)) {
+		// Create a 'DiffuseMap' texture parameter
+		Parameter *pParameter = m_pParameterManager->CreateParameter(ParameterManager::TextureBuffer, DiffuseMap);
+		if (pParameter)
+			pParameter->SetValueTexture(sFilename);
+
+		// Just backup the given 'filename'
+		m_sUrl = sFilename;
+
+		// Done
+		return true;
 	}
 
 	// Still there? Must be a simple texture... please note that it is NOT a good idea to check to perform a check like this:

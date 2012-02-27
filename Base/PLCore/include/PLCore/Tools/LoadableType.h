@@ -45,6 +45,7 @@ namespace PLCore {
 class File;
 class Class;
 class Loader;
+class Directory;
 
 
 //[-------------------------------------------------------]
@@ -184,6 +185,18 @@ class LoadableType {
 		*    The requested loader (first found if there are multiple candidates), a null pointer on error (format is not supported)
 		*/
 		PLCORE_API Loader *GetLoaderForLoadingByFile(File &cFile) const;
+
+		/**
+		*  @brief
+		*    Returns a loader for loading by using a loadable directory
+		*
+		*  @param[in] cDirectory
+		*    Directory to load from
+		*
+		*  @return
+		*    The requested loader (first found if there are multiple candidates), a null pointer on error (format is not supported)
+		*/
+		PLCORE_API Loader *GetLoaderForLoadingByDirectory(Directory &cDirectory) const;
 
 
 	//[-------------------------------------------------------]

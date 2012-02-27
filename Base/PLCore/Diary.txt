@@ -1,3 +1,15 @@
+>> 27.02.2012
+[CO]
+- The loadable system can now also deal with file formats which don't have any file extension
+  -> Personally, I would try to avoid using such file formats because if there are multiple of such file formats, it becomes hard to
+     figure out automatically which one should be used *content must be analysed*
+- The loadable system can now also deal with file formats like DICOM which load from directories instead of files
+  -> Now working since 4 month with DICOM data within my master thesis. Until now I had some uggly hacks within my project and now it's time for
+     cleanup. Similar to file formats without an extension, such "directory formats" should not be overused because it becomes hard to
+     figure out automatically which one should be used *content must be analysed*.
+
+
+
 >> 20.02.2012
 [CO]
 - Improved "Checksum"/"ChecksumCRC32" usability (I currently use a CRC32 checksum to deal with shader permutations)

@@ -215,29 +215,28 @@ bool ApplicationQt::LoadResource(const String &sFilename, const String &sType)
 		// In case no loadable type is provided, we need to guess the loadable type...
 		// which can go terrible wrong. If required, ask the user for the desired loadable type.
 		if (!sTypeToUse.GetLength()) {
-			// Get file extension
+			// Get file extension (it's valid that there's no extension, example: DICOM)
 			const Url cUrl(sFilename);
 			const String sExtension = cUrl.GetExtension();
-			if (sExtension.GetLength()) {
-				// Get loadable types by using the loadable extension
-				Array<LoadableType*> lstTypes;
-				LoadableManager::GetInstance()->GetTypesByExtension(sExtension, lstTypes);
-				if (lstTypes.GetNumOfElements() > 1) {
-					// Get array with type names
-					Array<String> lstTypeNames;
-					for (uint32 i=0; i<lstTypes.GetNumOfElements(); i++)
-						lstTypeNames.Add(lstTypes[i]->GetName());
 
-					// We have multiple candidates, ask the user for the desired loadable type
-					sTypeToUse = m_pGui->InputDialog(cUrl.GetNativePath(), "Please specify the resource type", lstTypeNames);
-					if (!sTypeToUse.GetLength()) {
-						// Get us out of here right now!
-						return false;
-					}
+			// Get loadable types by using the loadable extension
+			Array<LoadableType*> lstTypes;
+			LoadableManager::GetInstance()->GetTypesByExtension(sExtension, lstTypes);
+			if (lstTypes.GetNumOfElements() > 1) {
+				// Get array with type names
+				Array<String> lstTypeNames;
+				for (uint32 i=0; i<lstTypes.GetNumOfElements(); i++)
+					lstTypeNames.Add(lstTypes[i]->GetName());
 
-					// It's also possible that one loadable type has multiple loaders with a same extension
-					// -> For simplicity we ignore this case in here
+				// We have multiple candidates, ask the user for the desired loadable type
+				sTypeToUse = m_pGui->InputDialog(cUrl.GetNativePath(), "Please specify the resource type", lstTypeNames);
+				if (!sTypeToUse.GetLength()) {
+					// Get us out of here right now!
+					return false;
 				}
+
+				// It's also possible that one loadable type has multiple loaders with a same extension
+				// -> For simplicity we ignore this case in here
 			}
 		}
 

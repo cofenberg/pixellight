@@ -184,6 +184,14 @@ void Loader::InitFormatsList()
 			cTokenizer.SetDelimiters(" ,\t\r\n");
 			cTokenizer.SetSingleChars("");
 
+			// Special case: There are file formats which don't have any filename extension or
+			// even expect that it's data is within a provided directory (example: DICOM)
+			// -> This is no funny thing, but this system must be able to deal with such formats as well
+			if (sFormats[static_cast<uint32>(0)] == ',') {
+				// No filename extension
+				m_lstFormats.Add("");
+			}
+
 			// Register the filename extensions of this loader
 			String sToken = cTokenizer.GetNextToken();
 			while (sToken.GetLength()) {

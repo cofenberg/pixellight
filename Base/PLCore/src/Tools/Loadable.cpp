@@ -24,8 +24,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include "PLCore/Log/Log.h"
-#include "PLCore/File/Url.h"
 #include "PLCore/File/File.h"
+#include "PLCore/File/Directory.h"
 #include "PLCore/Base/Class.h"
 #include "PLCore/Tools/Loader.h"
 #include "PLCore/Tools/LoaderImpl.h"
@@ -88,7 +88,45 @@ bool Loadable::LoadByFilename(const String &sFilename, const String &sParams, co
 					PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + sFilename + "' because the file format is not supported!")
 				}
 			} else {
-				PL_LOG(Error, "Can't open the file '" + sFilename + "' to load in the loadable '" + GetLoadableTypeName() + "'!")
+				// We failed to open the file, maybe it's a directory? (e.g. DICOM is using directories for the data)
+
+				// Open the directory
+				Directory cDirectory;
+				if (LoadableManager::GetInstance()->OpenDirectory(cDirectory, sFilename, false)) {
+					// Get loader, assigned to the current loadable type, capable of processing the directory
+					Loader *pLoader = pLoadableType->GetLoaderForLoadingByDirectory(cDirectory);
+					if (pLoader) {
+						// Because 'm_sAbsFilename' is reset before loading within the Unload()-function,
+						// and 'sFilename' can be a reference to this string, we need to duplicate the string!
+						const String sFilenameBackup = String(sFilename);
+
+						// Unload the loadable
+						Unload();
+
+						// Get method name
+						static const String sLoadDirectory = "LoadDirectory";
+						static const String sLoadDirectoryParams = "LoadDirectoryParams";
+						String sMethodName = sMethod;
+						if (!sMethodName.GetLength())
+							sMethodName = sParams.GetLength() ? sLoadDirectoryParams : sLoadDirectory;
+
+						// Load the loadable
+						const bool bResult = CallLoadable(cDirectory, *pLoader, sMethodName, sParams);
+						if (bResult) {
+							// Backup filename
+							m_sUrl		= cDirectory.GetUrl().GetUrl();
+							m_sFilename	= sFilenameBackup;	// The filename this loadable was given to load from
+						}
+
+						// Done
+						return bResult;
+					} else {
+						PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + sFilename + "' because the file format is not supported!")
+					}
+				} else {
+					// We failed, again
+					PL_LOG(Error, "Can't open the file '" + sFilename + "' to load in the loadable '" + GetLoadableTypeName() + "'!")
+				}
 			}
 		} else {
 			PL_LOG(Error, "Can't load '" + sFilename + "' because the loadable type '" + GetLoadableTypeName() + "' is unknown!")
@@ -150,6 +188,48 @@ bool Loadable::LoadByFile(File &cFile, const String &sParams, const String &sMet
 
 /**
 *  @brief
+*    Loads the loadable from a directory given by a reference
+*/
+bool Loadable::LoadByDirectory(Directory &cDirectory, const String &sParams, const String &sMethod)
+{
+	// Get the registered loadable type ("Mesh", "Scene" etc.) of this loadable implementation
+	const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByName(GetLoadableTypeName());
+	if (pLoadableType) {
+		// Get loader, assigned to the current loadable type, capable of processing the directory
+		Loader *pLoader = pLoadableType->GetLoaderForLoadingByDirectory(cDirectory);
+		if (pLoader) {
+			// Unload the loadable
+			Unload();
+
+			// Get method name
+			static const String sLoadDirectory = "LoadDirectory";
+			static const String sLoadDirectoryParams = "LoadDirectoryParams";
+			String sMethodName = sMethod;
+			if (!sMethodName.GetLength())
+				sMethodName = sParams.GetLength() ? sLoadDirectoryParams : sLoadDirectory;
+
+			// Load the loadable
+			bool bResult = CallLoadable(cDirectory, *pLoader, sMethodName, sParams);
+			if (bResult) {
+				// Backup filename
+				m_sFilename	= m_sUrl = cDirectory.GetUrl().GetFilename();
+			}
+
+			// Done
+			return bResult;
+		} else {
+			PL_LOG(Error, "Can't load the loadable '" + GetLoadableTypeName() + "' from '" + cDirectory.GetUrl().GetNativePath() + "' because the file format is not supported!")
+		}
+	} else {
+		PL_LOG(Error, "Can't load '" + cDirectory.GetUrl().GetNativePath() + "' because the loadable type '" + GetLoadableTypeName() + "' is unknown!")
+	}
+
+	// Error!
+	return false;
+}
+
+/**
+*  @brief
 *    Saves the loadable to a file given by filename
 */
 bool Loadable::SaveByFilename(const String &sFilename, const String &sParams, const String &sMethod)
@@ -157,43 +237,41 @@ bool Loadable::SaveByFilename(const String &sFilename, const String &sParams, co
 	// Check the given filename
 	if (sFilename.GetLength()) {
 		// Get file extension (e.g. "txt" if the filename was "readme.txt", "gz" if the filename was "archive.tar.gz")
+		// -> There are file formats without an extension, so no extension must also be valid
 		const Url &cUrl = sFilename;
-		String sExtension = cUrl.GetExtension();
-		if (sExtension.GetLength()) {
-			// Get the registered loadable type ("Mesh", "Scene" etc.) of this loadable implementation
-			const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByName(GetLoadableTypeName());
-			if (pLoadableType) {
-				// Get loader, assigned to the current loadable type, capable of processing the file extension
-				Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
-				if (pLoader) {
-					// Is this loader capable of saving?
-					if (pLoader->CanSave()) {
-						// Open the file
-						File cFile;
-						if (LoadableManager::GetInstance()->OpenFile(cFile, sFilename, true)) {
-							// Get method name
-							static const String sSave = "Save";
-							static const String sSaveParams = "SaveParams";
-							String sMethodName = sMethod;
-							if (!sMethodName.GetLength())
-								sMethodName = sParams.GetLength() ? sSaveParams : sSave;
+		const String sExtension = cUrl.GetExtension();
 
-							// Save
-							return CallLoadable(cFile, *pLoader, sMethodName, sParams);
-						} else {
-							PL_LOG(Error, "Can't open the file '" + sFilename + "' to save the loadable '" + GetLoadableTypeName() + "'!")
-						}
+		// Get the registered loadable type ("Mesh", "Scene" etc.) of this loadable implementation
+		const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByName(GetLoadableTypeName());
+		if (pLoadableType) {
+			// Get loader, assigned to the current loadable type, capable of processing the file extension
+			Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
+			if (pLoader) {
+				// Is this loader capable of saving?
+				if (pLoader->CanSave()) {
+					// Open the file
+					File cFile;
+					if (LoadableManager::GetInstance()->OpenFile(cFile, sFilename, true)) {
+						// Get method name
+						static const String sSave = "Save";
+						static const String sSaveParams = "SaveParams";
+						String sMethodName = sMethod;
+						if (!sMethodName.GetLength())
+							sMethodName = sParams.GetLength() ? sSaveParams : sSave;
+
+						// Save
+						return CallLoadable(cFile, *pLoader, sMethodName, sParams);
 					} else {
-						PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + sFilename + "' because saving of this file format is not supported!")
+						PL_LOG(Error, "Can't open the file '" + sFilename + "' to save the loadable '" + GetLoadableTypeName() + "'!")
 					}
 				} else {
-					PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + sFilename + "' because the file format is not supported!")
+					PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + sFilename + "' because saving of this file format is not supported!")
 				}
 			} else {
-				PL_LOG(Error, "Can't save '" + sFilename + "' because the loadable type '" + GetLoadableTypeName() + "' is unknown!")
+				PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + sFilename + "' because the file format is not supported!")
 			}
 		} else {
-			PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + sFilename + "' because there's no filename extension!")
+			PL_LOG(Error, "Can't save '" + sFilename + "' because the loadable type '" + GetLoadableTypeName() + "' is unknown!")
 		}
 	} else {
 		PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' because there's no given filename!")
@@ -217,42 +295,85 @@ bool Loadable::SaveByFile(File &cFile, const String &sParams, const String &sMet
 		// Check parameter
 		if (cUrl.GetNativePath().GetLength()) {
 			// Get file extension (e.g. "txt" if the filename was "readme.txt", "gz" if the filename was "archive.tar.gz")
-			String sExtension = cUrl.GetExtension();
-			if (sExtension.GetLength()) {
-				// Get the registered loadable type ("Mesh", "Scene" etc.) of this loadable implementation
-				const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByName(GetLoadableTypeName());
-				if (pLoadableType) {
-					// Get loader, assigned to the current loadable type, capable of processing the file extension
-					Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
-					if (pLoader) {
-						// Is this loader capable of saving?
-						if (pLoader->CanSave()) {
-							// Get method name
-							static const String sSave = "Save";
-							static const String sSaveParams = "SaveParams";
-							String sMethodName = sMethod;
-							if (!sMethodName.GetLength())
-								sMethodName = sParams.GetLength() ? sSaveParams : sSave;
+			// -> There are file formats without an extension, so no extension must also be valid
+			const String sExtension = cUrl.GetExtension();
 
-							// Save
-							return CallLoadable(cFile, *pLoader, sMethodName, sParams);
-						} else {
-							PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + cUrl.GetNativePath() + "' because saving of this file format is not supported!")
-						}
+			// Get the registered loadable type ("Mesh", "Scene" etc.) of this loadable implementation
+			const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByName(GetLoadableTypeName());
+			if (pLoadableType) {
+				// Get loader, assigned to the current loadable type, capable of processing the file extension
+				Loader *pLoader = pLoadableType->GetLoaderByExtension(sExtension);
+				if (pLoader) {
+					// Is this loader capable of saving?
+					if (pLoader->CanSave()) {
+						// Get method name
+						static const String sSave = "Save";
+						static const String sSaveParams = "SaveParams";
+						String sMethodName = sMethod;
+						if (!sMethodName.GetLength())
+							sMethodName = sParams.GetLength() ? sSaveParams : sSave;
+
+						// Save
+						return CallLoadable(cFile, *pLoader, sMethodName, sParams);
 					} else {
-						PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + cUrl.GetNativePath() + "' because the file format is not supported!")
+						PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + cUrl.GetNativePath() + "' because saving of this file format is not supported!")
 					}
 				} else {
-					PL_LOG(Error, "Can't save '" + cUrl.GetNativePath() + "' because the loadable type '" + GetLoadableTypeName() + "' is unknown!")
+					PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + cUrl.GetNativePath() + "' because the file format is not supported!")
 				}
 			} else {
-				PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + cUrl.GetNativePath() + "' because there's no filename extension!")
+				PL_LOG(Error, "Can't save '" + cUrl.GetNativePath() + "' because the loadable type '" + GetLoadableTypeName() + "' is unknown!")
 			}
 		} else {
 			PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' because there's no given filename!")
 		}
 	} else {
 		PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' because the given file is not writable!")
+	}
+
+	// Error!
+	return false;
+}
+
+/**
+*  @brief
+*    Saves the loadable to a directory given by reference
+*/
+bool Loadable::SaveByDirectory(Directory &cDirectory, const String &sParams, const String &sMethod)
+{
+	// Get the filename of the given directory
+	const Url &cUrl = cDirectory.GetUrl();
+
+	// Check parameter
+	if (cUrl.GetNativePath().GetLength()) {
+		// Get the registered loadable type ("Mesh", "Scene" etc.) of this loadable implementation
+		const LoadableType *pLoadableType = LoadableManager::GetInstance()->GetTypeByName(GetLoadableTypeName());
+		if (pLoadableType) {
+			// Get loader, assigned to the current loadable type, capable of processing the directory
+			Loader *pLoader = pLoadableType->GetLoaderByExtension("");	// We don't have an extension we can work with
+			if (pLoader) {
+				// Is this loader capable of saving?
+				if (pLoader->CanSave()) {
+					// Get method name
+					static const String sSaveDirectory = "SaveDirectory";
+					static const String sSaveDirectoryParams = "SaveDirectoryParams";
+					String sMethodName = sMethod;
+					if (!sMethodName.GetLength())
+						sMethodName = sParams.GetLength() ? sSaveDirectoryParams : sSaveDirectory;
+
+					// Save
+					return CallLoadable(cDirectory, *pLoader, sMethodName, sParams);
+				} else {
+					PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + cUrl.GetNativePath() + "' because saving of this file format is not supported!")
+				}
+			} else {
+				PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' to '" + cUrl.GetNativePath() + "' because the file format is not supported!")
+			}
+		} else {
+			PL_LOG(Error, "Can't save '" + cUrl.GetNativePath() + "' because the loadable type '" + GetLoadableTypeName() + "' is unknown!")
+		}
+	} else {
+		PL_LOG(Error, "Can't save the loadable '" + GetLoadableTypeName() + "' because there's no given filename!")
 	}
 
 	// Error!
@@ -339,6 +460,26 @@ bool Loadable::CallLoadable(File &cFile, Loader &cLoader, const String &sMethod,
 			return true;
 		} else {
 			Params<bool, Loadable&, File&> cParams(*this, cFile);
+			pLoaderImpl->CallMethod(sMethod, cParams);
+			return cParams.Return;
+		}
+	}
+
+	// Error!
+	return false;
+}
+
+bool Loadable::CallLoadable(Directory &cDirectory, Loader &cLoader, const String &sMethod, const String &sParams)
+{
+	// Get the loader implementation
+	LoaderImpl *pLoaderImpl = cLoader.GetImpl();
+	if (pLoaderImpl) {
+		// Load
+		if (sParams.GetLength()) {
+			pLoaderImpl->CallMethod(sMethod, "Param0=\"" + Type<Loadable&>::ConvertToString(*this) + "\" Param1=\"" + Type<Directory&>::ConvertToString(cDirectory) + "\" " + sParams);
+			return true;
+		} else {
+			Params<bool, Loadable&, Directory&> cParams(*this, cDirectory);
 			pLoaderImpl->CallMethod(sMethod, cParams);
 			return cParams.Return;
 		}

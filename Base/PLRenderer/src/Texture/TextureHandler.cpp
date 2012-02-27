@@ -299,7 +299,7 @@ bool TextureHandler::Load(TextureManager &cTextureManager, const String &sFilena
 	Unload();
 
 	// Check if it's a texture animation
-	String sExtension = Url(sFilename).GetExtension();
+	const String sExtension = Url(sFilename).GetExtension();
 	if (sExtension == "tani") {
 		if (m_pAnimationState) {
 			delete m_pAnimationState;
@@ -327,89 +327,83 @@ bool TextureHandler::Load(TextureManager &cTextureManager, const String &sFilena
 
 		// Done
 		return true;
-	} else {
-		// Load texture
-		if (bReloadTexture) {
-			if (sExtension.GetLength()) {
-				if (cTextureManager.GetByName(sFilename))
-					SetResource(cTextureManager.LoadResource(sFilename));
-				else {
-					SetResource(cTextureManager.Create(sFilename));
-					if (GetTexture())
-						GetTexture()->LoadByFilename(sFilename);
-				}
+	}
 
-				// Done
-				return true;
-			} else {
-				// Error!
-				return false;
-			}
-		} else {
-			// Create the texture by using a texture creator?
-			Texture *pTexture = nullptr;
-			if (sFilename.Compare("Create ", 0, 7)) {
-				// Get texture creator class to use
-				Tokenizer cTokenizer;
-				cTokenizer.Start(sFilename);
-				cTokenizer.GetNextToken(); // Skip 'Create '
-				String sClass = cTokenizer.GetNextToken();
-				if (sClass.GetLength()) {
-					// Get texture name
-					bool bUseName = false;
-					String sName;
-					cTokenizer.PushState();
-					if (cTokenizer.FindToken("Name")) {
-						// Skip '='
-						cTokenizer.GetNextToken();
-
-						// Get name
-						if (cTokenizer.GetNextToken().GetLength()) {
-							if (cTokenizer.GetNextToken().GetLength() == 1 && cTokenizer.GetQuotes().IsSubstring(cTokenizer.GetToken())) {
-								sName = cTokenizer.GetNextToken();
-								// Read "
-								if (!cTokenizer.GetNextToken().GetLength() == 1 && cTokenizer.GetQuotes().IsSubstring(cTokenizer.GetToken()))
-									PL_LOG(Error, "Name var closing \" is missed! (" + sFilename + ')')
-							} else {
-								sName = cTokenizer.GetToken();
-							}
-							bUseName = true;
-						}
-					} else {
-						// There's no name! :(
-						cTokenizer.PopState();
-					}
-
-					// Check whether the texture is already within the texture manager
-					pTexture = bUseName ? cTextureManager.GetByName(sName) : nullptr;
-					if (!pTexture) {
-						// Get the parameters
-						String sParameters = sFilename.GetSubstring(cTokenizer.GetPosition());
-
-						// Try to create the texture
-						pTexture = cTextureManager.CreateTexture(sClass, sParameters);
-						if (pTexture && bUseName)
-							pTexture->SetName(sName);
-					}
-				}
-				cTokenizer.Stop();
-
-			// Try to get/load the texture
-			} else {
-				pTexture = cTextureManager.GetByName(sFilename);
-				if (!pTexture && sExtension.GetLength()) {
-					pTexture = cTextureManager.Create(sFilename);
-					if (pTexture && !pTexture->LoadByFilename(sFilename)) {
-						// Can't load texture...
-						delete pTexture;
-						pTexture = nullptr;
-					}
-				}
-			}
-
-			// Set resource
-			return (pTexture && SetResource(pTexture));
+	// Load texture
+	if (bReloadTexture) {
+		// There are file formats without an extension, so no extension must also be valid
+		if (cTextureManager.GetByName(sFilename))
+			SetResource(cTextureManager.LoadResource(sFilename));
+		else {
+			SetResource(cTextureManager.Create(sFilename));
+			if (GetTexture())
+				GetTexture()->LoadByFilename(sFilename);
 		}
+	} else {
+		// Create the texture by using a texture creator?
+		Texture *pTexture = nullptr;
+		if (sFilename.Compare("Create ", 0, 7)) {
+			// Get texture creator class to use
+			Tokenizer cTokenizer;
+			cTokenizer.Start(sFilename);
+			cTokenizer.GetNextToken(); // Skip 'Create '
+			String sClass = cTokenizer.GetNextToken();
+			if (sClass.GetLength()) {
+				// Get texture name
+				bool bUseName = false;
+				String sName;
+				cTokenizer.PushState();
+				if (cTokenizer.FindToken("Name")) {
+					// Skip '='
+					cTokenizer.GetNextToken();
+
+					// Get name
+					if (cTokenizer.GetNextToken().GetLength()) {
+						if (cTokenizer.GetNextToken().GetLength() == 1 && cTokenizer.GetQuotes().IsSubstring(cTokenizer.GetToken())) {
+							sName = cTokenizer.GetNextToken();
+							// Read "
+							if (!cTokenizer.GetNextToken().GetLength() == 1 && cTokenizer.GetQuotes().IsSubstring(cTokenizer.GetToken()))
+								PL_LOG(Error, "Name var closing \" is missed! (" + sFilename + ')')
+						} else {
+							sName = cTokenizer.GetToken();
+						}
+						bUseName = true;
+					}
+				} else {
+					// There's no name! :(
+					cTokenizer.PopState();
+				}
+
+				// Check whether the texture is already within the texture manager
+				pTexture = bUseName ? cTextureManager.GetByName(sName) : nullptr;
+				if (!pTexture) {
+					// Get the parameters
+					String sParameters = sFilename.GetSubstring(cTokenizer.GetPosition());
+
+					// Try to create the texture
+					pTexture = cTextureManager.CreateTexture(sClass, sParameters);
+					if (pTexture && bUseName)
+						pTexture->SetName(sName);
+				}
+			}
+			cTokenizer.Stop();
+
+		// Try to get/load the texture
+		// -> There are file formats without an extension, so no extension must also be valid
+		} else {
+			pTexture = cTextureManager.GetByName(sFilename);
+			if (!pTexture) {
+				pTexture = cTextureManager.Create(sFilename);
+				if (pTexture && !pTexture->LoadByFilename(sFilename)) {
+					// Can't load texture...
+					delete pTexture;
+					pTexture = nullptr;
+				}
+			}
+		}
+
+		// Set resource
+		return (pTexture && SetResource(pTexture));
 	}
 }
 

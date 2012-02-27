@@ -232,24 +232,23 @@ Mesh *MeshManager::LoadMesh(const String &sFilename, const String &sParams, cons
 			cTokenizer.Stop();
 
 		// Try to get/load the mesh
+		// -> There are file formats without an extension, so no extension must also be valid
 		} else {
-			String sExtension = Url(sFilename).GetExtension();
-			if (sExtension.GetLength()) {
-				pMesh = Create(sFilename);
-				if (pMesh) {
-					if (bStatic) {
-						// We do NOT need to give parameters because 'Static' is 'true' by default!
-						if (!pMesh->LoadByFilename(sFilename, sParams, sMethod)) {
-							// Can't load mesh...
-							delete pMesh;
-							pMesh = nullptr;
-						}
-					} else {
-						if (!pMesh->LoadByFilename(sFilename, String("Static=") + bStatic + '\"')) {
-							// Can't load mesh...
-							delete pMesh;
-							pMesh = nullptr;
-						}
+			const String sExtension = Url(sFilename).GetExtension();
+			pMesh = Create(sFilename);
+			if (pMesh) {
+				if (bStatic) {
+					// We do NOT need to give parameters because 'Static' is 'true' by default!
+					if (!pMesh->LoadByFilename(sFilename, sParams, sMethod)) {
+						// Can't load mesh...
+						delete pMesh;
+						pMesh = nullptr;
+					}
+				} else {
+					if (!pMesh->LoadByFilename(sFilename, String("Static=") + bStatic + '\"')) {
+						// Can't load mesh...
+						delete pMesh;
+						pMesh = nullptr;
 					}
 				}
 			}

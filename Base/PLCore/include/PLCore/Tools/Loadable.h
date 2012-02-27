@@ -42,6 +42,7 @@ namespace PLCore {
 //[-------------------------------------------------------]
 class File;
 class Loader;
+class Directory;
 class Parameters;
 
 
@@ -100,7 +101,8 @@ class Loadable {
 		*    'true' if all went fine, else 'false'
 		*
 		*  @note
-		*    - If no method name was provided, 'Load' if sParams is empty, or 'LoadParams' if sParams is not empty is used automatically
+		*    - If no method name was provided, 'Load' if sParams is empty, or 'LoadParams' if sParams is not empty is used automatically for files
+		*    - If no method name was provided, 'LoadDirectory' if sParams is empty, or 'LoadDirectoryParams' if sParams is not empty is used automatically for directories
 		*/
 		PLCORE_API virtual bool LoadByFilename(const String &sFilename, const String &sParams = "", const String &sMethod = "");
 
@@ -125,6 +127,25 @@ class Loadable {
 
 		/**
 		*  @brief
+		*    Loads the loadable from a directory given by a reference
+		*
+		*  @param[in] cDirectory
+		*    Directory to load from
+		*  @param[in] sParams
+		*    Optional load method parameters, can be an empty string
+		*  @param[in] sMethod
+		*    Optional name of the load method to use, can be an empty string
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - If no method name was provided, 'LoadDirectory' if sParams is empty, or 'LoadDirectoryParams' if sParams is not empty is used automatically
+		*/
+		PLCORE_API virtual bool LoadByDirectory(Directory &cDirectory, const String &sParams = "", const String &sMethod = "");
+
+		/**
+		*  @brief
 		*    Saves the loadable to a file given by filename
 		*
 		*  @param[in] sFilename
@@ -139,6 +160,7 @@ class Loadable {
 		*
 		*  @note
 		*    - If no method name was provided, 'Save' if sParams is empty, or 'SaveParams' if sParams is not empty is used automatically
+		*    - Use "SaveByDirectory()" to save into a directory
 		*/
 		PLCORE_API virtual bool SaveByFilename(const String &sFilename, const String &sParams = "", const String &sMethod = "");
 
@@ -160,6 +182,25 @@ class Loadable {
 		*    - If no method name was provided, 'Save' if sParams is empty, or 'SaveParams' if sParams is not empty is used automatically
 		*/
 		PLCORE_API virtual bool SaveByFile(File &cFile, const String &sParams = "", const String &sMethod = "");
+
+		/**
+		*  @brief
+		*    Saves the loadable to a directory given by reference
+		*
+		*  @param[in] cDirectory
+		*    Directory to save into
+		*  @param[in] sParams
+		*    Optional save method parameters, can be an empty string
+		*  @param[in] sMethod
+		*    Optional name of the save method to use, can be an empty string
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - If no method name was provided, 'SaveDirectory' if sParams is empty, or 'SaveDirectoryParams' if sParams is not empty is used automatically
+		*/
+		PLCORE_API virtual bool SaveByDirectory(Directory &cDirectory, const String &sParams = "", const String &sMethod = "");
 
 		/**
 		*  @brief
@@ -228,11 +269,26 @@ class Loadable {
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
-		*
-		*  @note
-		*    - The default implementation is empty and will return always 'false'
 		*/
 		PLCORE_API virtual bool CallLoadable(File &cFile, Loader &cLoader, const String &sMethod, const String &sParams);
+
+		/**
+		*  @brief
+		*    Calls the loadable in order to load or save
+		*
+		*  @param[in] cDirectory
+		*    Directory to load from
+		*  @param[in] cLoader
+		*    Loader to use
+		*  @param[in] sMethod
+		*    Name of the method to use
+		*  @param[in] sParams
+		*    Method parameters
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		PLCORE_API virtual bool CallLoadable(Directory &cDirectory, Loader &cLoader, const String &sMethod, const String &sParams);
 
 
 	//[-------------------------------------------------------]

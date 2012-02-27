@@ -106,20 +106,18 @@ Loader *LoadableType::GetLoaderForLoadingByFile(File &cFile) const
 
 	{ // Use file extension
 		// Get file extension (e.g. "txt" if the filename was "readme.txt", "gz" if the filename was "archive.tar.gz")
+		// -> There are file formats without an extension, so no extension must also be valid
 		const String sExtension = cUrl.GetExtension();
-		if (sExtension.GetLength()) {
-			// Get a loader by using the loadable extension
-			Loader *pLoader = m_mapLoaders.Get(sExtension);
 
-			// Is there a loader and is this loader capable of loading?
-			if (pLoader && pLoader->CanLoad()) {
-				// Done
-				return pLoader;
-			} else {
-				// Error: Loading of this file format is not supported!
-			}
+		// Get a loader by using the loadable extension
+		Loader *pLoader = m_mapLoaders.Get(sExtension);
+
+		// Is there a loader and is this loader capable of loading?
+		if (pLoader && pLoader->CanLoad()) {
+			// Done
+			return pLoader;
 		} else {
-			// Error: No filename extension
+			// Error: Loading of this file format is not supported!
 		}
 	}
 
@@ -140,6 +138,28 @@ Loader *LoadableType::GetLoaderForLoadingByFile(File &cFile) const
 		} else {
 			// Error: No filename extension at all
 		}
+	}
+
+	// Error!
+	return nullptr;
+}
+
+/**
+*  @brief
+*    Returns a loader for loading by using a loadable directory
+*/
+Loader *LoadableType::GetLoaderForLoadingByDirectory(Directory &cDirectory) const
+{
+	// Get a loader by using the loadable extension
+	// -> We haven't much choice in here, just try no file extension in here
+	Loader *pLoader = m_mapLoaders.Get("");
+
+	// Is there a loader and is this loader capable of loading?
+	if (pLoader && pLoader->CanLoad()) {
+		// Done
+		return pLoader;
+	} else {
+		// Error: Loading of this file format is not supported!
 	}
 
 	// Error!
