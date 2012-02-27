@@ -38,10 +38,10 @@
     <ClCompile Include="src\PLCore\Container\List.cpp" />
     <ClCompile Include="src\PLCore\Container\ContainerTests.h" />
     <ClCompile Include="src\PLCore\Container\Pool.cpp" />
+    <ClCompile Include="src\PLCore\Container\Queue.cpp" />
     <ClCompile Include="src\PLCore\Container\SimpleList.cpp" />
     <ClCompile Include="src\PLCore\Container\SimpleMap.cpp" />
     <ClCompile Include="src\PLCore\Container\Stack.cpp" />
-    <ClCompile Include="src\PLCore\Queue.cpp" />
     <ClCompile Include="src\PLCore\String.cpp" />
     <ClCompile Include="src\PLMath\EulerAngles.cpp" />
     <ClCompile Include="src\PLMath\Graph.cpp" />

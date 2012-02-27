@@ -100,7 +100,7 @@
     <ClCompile Include="src\PLCore\Container\Stack.cpp">
       <Filter>PLCore\Container\Container</Filter>
     </ClCompile>
-    <ClCompile Include="src\PLCore\Queue.cpp">
+    <ClCompile Include="src\PLCore\Container\Queue.cpp">
       <Filter>PLCore\Container\Container</Filter>
     </ClCompile>
   </ItemGroup>
