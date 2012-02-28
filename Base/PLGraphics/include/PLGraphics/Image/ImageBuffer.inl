@@ -247,6 +247,16 @@ inline PLCore::uint32 ImageBuffer::GetNumOfPixels() const
 
 /**
 *  @brief
+*    Returns the number of voxels
+*/
+inline PLCore::uint32 ImageBuffer::GetNumOfVoxels() const
+{
+	// Get number of voxels
+	return m_pImageData->GetSize().x * m_pImageData->GetSize().y * m_pImageData->GetSize().z;
+}
+
+/**
+*  @brief
 *    Check if uncompressed or compressed data is available
 */
 inline bool ImageBuffer::HasAnyData() const

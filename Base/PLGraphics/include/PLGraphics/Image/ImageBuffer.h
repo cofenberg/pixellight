@@ -335,9 +335,18 @@ class ImageBuffer {
 		*    Returns the number of pixels
 		*
 		*  @return
-		*    The number of pixels
+		*    The number of pixels (width*height, no depth)
 		*/
 		inline PLCore::uint32 GetNumOfPixels() const;
+
+		/**
+		*  @brief
+		*    Returns the number of voxels
+		*
+		*  @return
+		*    The number of voxels (width*height*depth)
+		*/
+		inline PLCore::uint32 GetNumOfVoxels() const;
 
 		/**
 		*  @brief
