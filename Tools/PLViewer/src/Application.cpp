@@ -249,6 +249,10 @@ bool Application::LoadResource(const String &sFilename, const String &sType)
 			if (LoadScene(sFilename)) {
 				// Done
 				bResult = true;
+
+				// Emit the scene loading has been finished successfully event
+				// -> Not required because already done within "LoadScene()" above
+				// SignalSceneLoadingFinished();
 			} else {
 				// Write an error message into the log
 				PL_LOG(Error, "Failed to load the scene \"" + sFilename + '\"')
@@ -260,6 +264,9 @@ bool Application::LoadResource(const String &sFilename, const String &sType)
 			if (LoadScript(sFilename)) {
 				// Done
 				bResult = true;
+
+				// Emit the scene loading has been finished successfully event
+				SignalSceneLoadingFinished();
 			} else {
 				// Write an error message into the log
 				PL_LOG(Error, "Failed to load the script \"" + sFilename + '\"')
@@ -278,6 +285,9 @@ bool Application::LoadResource(const String &sFilename, const String &sType)
 
 					// Done
 					bResult = true;
+
+					// Emit the scene loading has been finished successfully event
+					SignalSceneLoadingFinished();
 				}
 			}
 
