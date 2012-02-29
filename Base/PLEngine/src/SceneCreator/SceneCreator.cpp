@@ -55,8 +55,8 @@ SNCamera *SceneCreator::ConfigureGenericScene(SceneContainer &cSceneContainer, S
 	// Add a directional light source scene node named "Light"
 	cSceneContainer.Create("PLScene::SNDirectionalLight", "Light", "Rotation=\"45 0 0\"");
 
-	// Add a free camera scene node named "Camera"
-	SceneNode *pFreeCamera = cSceneContainer.Create("PLScene::SNCamera", "Camera");
+	// Add a free camera scene node named "FreeCamera"
+	SceneNode *pFreeCamera = cSceneContainer.Create("PLScene::SNCamera", "FreeCamera");
 	if (pFreeCamera) {
 		// Add a controller modifier so we can look around the camera by using a default control
 		pFreeCamera->AddModifier("PLEngine::SNMEgoLookController");

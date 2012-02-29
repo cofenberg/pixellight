@@ -83,7 +83,7 @@ class SceneCreator : public PLCore::Object {
 		*
 		*  @note
 		*    - Adds a directional light source scene node named "Light"
-		*    - Adds a free camera scene node named "Camera"
+		*    - Adds a free camera scene node named "FreeCamera"
 		*    - If primary scene node given, adds an orbiter camera scene node named "OrbiterCamera"
 		*    - Makes the orbiting camera to the preferred camera scene node, if there's no orbiting camera then the free camera will be used instead
 		*/

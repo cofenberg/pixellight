@@ -1,3 +1,10 @@
+>> 29.02.2012
+[CO]
+- "SceneCreator::ConfigureGenericScene()": The created free camera scene node is now named "FreeCamera" instead of "Camera" to have the same naming
+  convention used across PixelLight
+
+
+
 >> 23.02.2012
 [CO]
 - "SNMTransformGizmoRotationController::PerformTransform()": Rotating is now working better, although it's still in scene node space and not view dependent
