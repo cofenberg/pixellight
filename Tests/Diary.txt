@@ -1,4 +1,13 @@
->> 25.02.2012
+>> 01.03.2012
+[JS]
+PLUnitTests:
+- added a new CHECK-Macro to UnitTest++: "CHECK_NOT_EQUAL"
+	-> useful for checking if two strings are not equal
+- added String tests (migrated from PLTestBase)
+
+
+
+﻿>> 25.02.2012
 [JS]
 PLUnitTests:
 - Removed getchar() call, slipped into repo somehow ;)
