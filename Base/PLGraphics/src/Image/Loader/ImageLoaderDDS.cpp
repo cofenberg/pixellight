@@ -497,7 +497,7 @@ bool ImageLoaderDDS::Save(const Image &cImage, File &cFile)
 	if (pImagePart) {
 		// Get the first image buffer
 		const ImageBuffer *pImageBuffer = pImagePart->GetMipmap(0);
-		if (pImageBuffer && pImageBuffer->GetRowSize()) {
+		if (pImageBuffer && pImageBuffer->GetBytesPerRow()) {
 			// Get important image information
 			const uint32	nNumOfMipmaps = pImagePart->GetNumOfMipmaps();
 			const Vector3i &vSize		  = pImageBuffer->GetSize();

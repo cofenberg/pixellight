@@ -201,10 +201,10 @@ bool ImageLoaderPNG::Load(Image &cImage, File &cFile)
 					uint8 *pBuffer = pImageBuffer->GetData();
 
 					// Make array with pointers to each individual row inside the image buffer
-					uint32		nRowSize		= nBytes * nComponents * nWidth;
+					uint32		nBytesPerRow	= nBytes * nComponents * nWidth;
 					png_bytepp	ppRowPointers	= new png_bytep[nHeight];
 					for (uint32 i=0; i<nHeight; i++)
-						ppRowPointers[i] = &pBuffer[i*nRowSize];
+						ppRowPointers[i] = &pBuffer[i*nBytesPerRow];
 
 					// Read image
 					png_read_image(pPng, ppRowPointers);
@@ -254,7 +254,7 @@ bool ImageLoaderPNG::Save(const Image &cImage, File &cFile)
 {
 	// Get the image buffer
 	ImageBuffer *pImageBuffer = cImage.GetBuffer();
-	if (pImageBuffer && pImageBuffer->GetRowSize()) {
+	if (pImageBuffer && pImageBuffer->GetBytesPerRow()) {
 		// Get the type
 		int nType = -1;
 		switch (pImageBuffer->GetColorFormat()) {
@@ -312,7 +312,7 @@ bool ImageLoaderPNG::Save(const Image &cImage, File &cFile)
 
 					// Get the data pointer and the number of bytes per row
 					const uint8 *pnData		  = pImageBuffer->GetData();
-					const uint32 nBytesPerRow = pImageBuffer->GetRowSize();
+					const uint32 nBytesPerRow = pImageBuffer->GetBytesPerRow();
 
 					// Do we need to take care of endian?
 					if (pImageBuffer->GetBytesPerPixelComponent() > 1) {

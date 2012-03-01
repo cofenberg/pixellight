@@ -1,6 +1,7 @@
 >> 01.03.2012
 [CO]
 - Added "ImageBuffer::GetBytesPerPlane()" returning the size of one xy-plane (one z/depth layer) of image data in bytes
+- Renamed "ImageBuffer::GetRowSize()" into "ImageBuffer::GetBytesPerRow()", less confusing and consistent to "GetBytesPerPixel()" etc.
 
 
 

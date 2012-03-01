@@ -269,7 +269,7 @@ bool ImageLoaderJPG::LoadParams(Image &cImage, File &cFile, bool bBlockSmoothing
 	uint8 *pCurrentData = pImageBuffer->GetData();
 	while (sInfo.output_scanline < sInfo.output_height){
 		jpeg_read_scanlines(&sInfo, &pCurrentData, 1);
-		pCurrentData += pImageBuffer->GetRowSize();
+		pCurrentData += pImageBuffer->GetBytesPerRow();
 	}
 
 	// Cleanup
@@ -289,7 +289,7 @@ bool ImageLoaderJPG::SaveParams(const Image &cImage, File &cFile, uint32 nQualit
 {
 	// Get the image buffer
 	ImageBuffer *pImageBuffer = cImage.GetBuffer();
-	if (pImageBuffer && pImageBuffer->GetRowSize()) {
+	if (pImageBuffer && pImageBuffer->GetBytesPerRow()) {
 		// We only support 1 or 3 byte per pixel component
 		if (pImageBuffer->GetBytesPerPixelComponent() == 1 || pImageBuffer->GetBytesPerPixelComponent() == 3) {
 			jpeg_compress_struct sInfo;
@@ -338,7 +338,7 @@ bool ImageLoaderJPG::SaveParams(const Image &cImage, File &cFile, uint32 nQualit
 					jpeg_write_scanlines(&sInfo, &pOutputRow, 1);
 
 					// Next, please
-					pCurrentImageData += pImageBuffer->GetRowSize();
+					pCurrentImageData += pImageBuffer->GetBytesPerRow();
 				}
 
 				// Free the allocated output row memory
@@ -348,7 +348,7 @@ bool ImageLoaderJPG::SaveParams(const Image &cImage, File &cFile, uint32 nQualit
 				uint8 *pCurrentImageData = pImageBuffer->GetData();
 				for (uint32 y=0; y<sInfo.image_height; y++) {
 					jpeg_write_scanlines(&sInfo, &pCurrentImageData, 1);
-					pCurrentImageData += pImageBuffer->GetRowSize();
+					pCurrentImageData += pImageBuffer->GetBytesPerRow();
 				}
 			}
 

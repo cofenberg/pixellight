@@ -67,23 +67,23 @@ IEFlipYAxis::~IEFlipYAxis()
 bool IEFlipYAxis::Apply(ImageBuffer &cImageBuffer) const
 {
 	// Get the number of bytes per row
-	const uint32 nRowSize = cImageBuffer.GetRowSize();
-	if (nRowSize) {
+	const uint32 nBytesPerRow = cImageBuffer.GetBytesPerRow();
+	if (nBytesPerRow) {
 		// Allocate memory to backup one row
-		uint8 *pnUpperRowBackup = new uint8[nRowSize];
+		uint8 *pnUpperRowBackup = new uint8[nBytesPerRow];
 
 		// Loop through rows
 		uint8 *pnUpperRow = cImageBuffer.GetData();
-		uint8 *pnLowerRow = pnUpperRow + cImageBuffer.GetDataSize() - nRowSize;
-		for (; pnUpperRow<pnLowerRow; pnUpperRow+=nRowSize, pnLowerRow-=nRowSize) {
+		uint8 *pnLowerRow = pnUpperRow + cImageBuffer.GetDataSize() - nBytesPerRow;
+		for (; pnUpperRow<pnLowerRow; pnUpperRow+=nBytesPerRow, pnLowerRow-=nBytesPerRow) {
 			// Backup the content of the current upper row
-			MemoryManager::Copy(pnUpperRowBackup, pnUpperRow, nRowSize);
+			MemoryManager::Copy(pnUpperRowBackup, pnUpperRow, nBytesPerRow);
 
 			// Copy the content of the current lower row to the current upper row
-			MemoryManager::Copy(pnUpperRow, pnLowerRow, nRowSize);
+			MemoryManager::Copy(pnUpperRow, pnLowerRow, nBytesPerRow);
 
 			// Copy the backup content of the current upper row to the current lower row
-			MemoryManager::Copy(pnLowerRow, pnUpperRowBackup, nRowSize);
+			MemoryManager::Copy(pnLowerRow, pnUpperRowBackup, nBytesPerRow);
 		}
 
 		// Cleanup upper row backup memory

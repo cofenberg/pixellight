@@ -67,8 +67,8 @@ IEFlipXAxis::~IEFlipXAxis()
 bool IEFlipXAxis::Apply(ImageBuffer &cImageBuffer) const
 {
 	// Get the number of bytes per row
-	const uint32 nRowSize = cImageBuffer.GetRowSize();
-	if (nRowSize) {
+	const uint32 nBytesPerRow = cImageBuffer.GetBytesPerRow();
+	if (nBytesPerRow) {
 		// Get the number of bytes per pixel
 		const uint32 nBytesPerPixel = cImageBuffer.GetBytesPerPixel();
 		if (nBytesPerPixel) {
@@ -78,10 +78,10 @@ bool IEFlipXAxis::Apply(ImageBuffer &cImageBuffer) const
 			// Loop through all rows
 			      uint8 *pnRow     = cImageBuffer.GetData();
 			const uint8 *pnDataEnd = pnRow + cImageBuffer.GetDataSize();
-			for (; pnRow<pnDataEnd; pnRow+=nRowSize) {
+			for (; pnRow<pnDataEnd; pnRow+=nBytesPerRow) {
 				// Loop through pixels within the row
 				uint8 *pnLeftPixel  = pnRow;
-				uint8 *pnRightPixel = pnRow + nRowSize - nBytesPerPixel;
+				uint8 *pnRightPixel = pnRow + nBytesPerRow - nBytesPerPixel;
 				for (; pnLeftPixel<pnRightPixel; pnLeftPixel+=nBytesPerPixel, pnRightPixel-=nBytesPerPixel) {
 					// Backup the content of the current left pixel
 					MemoryManager::Copy(pnLeftPixelBackup, pnLeftPixel, nBytesPerPixel);

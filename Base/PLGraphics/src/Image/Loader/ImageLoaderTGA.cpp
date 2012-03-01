@@ -224,11 +224,11 @@ bool ImageLoaderTGA::Load(Image &cImage, File &cFile)
 			}
 
 			// Copy all rows in reversed order
-			const uint32  nRowSize    = pImageBuffer->GetRowSize();
-				  uint8  *pnData      = pImageBuffer->GetData();
-			const uint8  *pSourceData = pnSourceBuffer + pImageBuffer->GetDataSize() - nRowSize; // ... ignore the last row...
-			for (const uint8 *pnDataEnd=pImageBuffer->GetData()+pImageBuffer->GetDataSize(); pnData<pnDataEnd; pnData+=nRowSize, pSourceData-=nRowSize)
-				MemoryManager::Copy(pnData, pSourceData, nRowSize);
+			const uint32  nBytesPerRow = pImageBuffer->GetBytesPerRow();
+				  uint8  *pnData       = pImageBuffer->GetData();
+			const uint8  *pSourceData  = pnSourceBuffer + pImageBuffer->GetDataSize() - nBytesPerRow; // ... ignore the last row...
+			for (const uint8 *pnDataEnd=pImageBuffer->GetData()+pImageBuffer->GetDataSize(); pnData<pnDataEnd; pnData+=nBytesPerRow, pSourceData-=nBytesPerRow)
+				MemoryManager::Copy(pnData, pSourceData, nBytesPerRow);
 			break;
 		}
 
@@ -262,11 +262,11 @@ bool ImageLoaderTGA::Load(Image &cImage, File &cFile)
 		case 32:
 		{
 			// Copy all rows in reversed order
-			const uint32  nRowSize    = pImageBuffer->GetRowSize();
-				  uint8  *pnData      = pImageBuffer->GetData();
-			const uint8  *pSourceData = pnSourceBuffer + pImageBuffer->GetDataSize() - nRowSize; // ... ignore the last row...
-			for (const uint8 *pnDataEnd=pImageBuffer->GetData()+pImageBuffer->GetDataSize(); pnData<pnDataEnd; pnData+=nRowSize, pSourceData-=nRowSize)
-				MemoryManager::Copy(pnData, pSourceData, nRowSize);
+			const uint32  nBytesPerRow = pImageBuffer->GetBytesPerRow();
+				  uint8  *pnData       = pImageBuffer->GetData();
+			const uint8  *pSourceData  = pnSourceBuffer + pImageBuffer->GetDataSize() - nBytesPerRow; // ... ignore the last row...
+			for (const uint8 *pnDataEnd=pImageBuffer->GetData()+pImageBuffer->GetDataSize(); pnData<pnDataEnd; pnData+=nBytesPerRow, pSourceData-=nBytesPerRow)
+				MemoryManager::Copy(pnData, pSourceData, nBytesPerRow);
 
 			// Convert BGR(A) to RGB(A)
 			if (sHeader.nBitsPerPixel == 24)
@@ -292,7 +292,7 @@ bool ImageLoaderTGA::Save(const Image &cImage, File &cFile)
 {
 	// Get the image buffer
 	ImageBuffer *pImageBuffer = cImage.GetBuffer();
-	if (pImageBuffer && pImageBuffer->GetRowSize()) {
+	if (pImageBuffer && pImageBuffer->GetBytesPerRow()) {
 		// We only support 1 byte per pixel component
 		if (pImageBuffer->GetBytesPerPixelComponent() == 1) {
 			// Palette?
@@ -321,12 +321,12 @@ bool ImageLoaderTGA::Save(const Image &cImage, File &cFile)
 				case ColorRGB:
 				{
 					// Write row for row y-flipped
-					const uint32  nRowSize = pImageBuffer->GetRowSize();
-					const uint8  *pnData   = pImageBuffer->GetData() + pImageBuffer->GetDataSize() - nRowSize;
-					for (const uint8 *pnDataEnd=pImageBuffer->GetData(); pnData>=pnDataEnd; pnData-=nRowSize) {
+					const uint32  nBytesPerRow = pImageBuffer->GetBytesPerRow();
+					const uint8  *pnData       = pImageBuffer->GetData() + pImageBuffer->GetDataSize() - nBytesPerRow;
+					for (const uint8 *pnDataEnd=pImageBuffer->GetData(); pnData>=pnDataEnd; pnData-=nBytesPerRow) {
 						// Save all pixels of the row in BGR
 						const uint8 *pRowData = pnData;
-						for (const uint8 *pnRowEnd=pRowData+nRowSize; pRowData<pnRowEnd; pRowData+=3) {
+						for (const uint8 *pnRowEnd=pRowData+nBytesPerRow; pRowData<pnRowEnd; pRowData+=3) {
 							// Write blue
 							uint8 nByte = pRowData[2];
 							cFile.Write(&nByte, 1, 1);
@@ -348,12 +348,12 @@ bool ImageLoaderTGA::Save(const Image &cImage, File &cFile)
 				case ColorRGBA:
 				{
 					// Write row for row y-flipped
-					const uint32  nRowSize = pImageBuffer->GetRowSize();
-					const uint8  *pnData   = pImageBuffer->GetData() + pImageBuffer->GetDataSize() - nRowSize;
-					for (const uint8 *pnDataEnd=pImageBuffer->GetData(); pnData>=pnDataEnd; pnData-=nRowSize) {
+					const uint32  nBytesPerRow = pImageBuffer->GetBytesPerRow();
+					const uint8  *pnData       = pImageBuffer->GetData() + pImageBuffer->GetDataSize() - nBytesPerRow;
+					for (const uint8 *pnDataEnd=pImageBuffer->GetData(); pnData>=pnDataEnd; pnData-=nBytesPerRow) {
 						// Save all pixels of the row in BGRA
 						const uint8 *pRowData = pnData;
-						for (const uint8 *pnRowEnd=pRowData+nRowSize; pRowData<pnRowEnd; pRowData+=4) {
+						for (const uint8 *pnRowEnd=pRowData+nBytesPerRow; pRowData<pnRowEnd; pRowData+=4) {
 							// Write blue
 							uint8 nByte = pRowData[2];
 							cFile.Write(&nByte, 1, 1);
@@ -380,11 +380,11 @@ bool ImageLoaderTGA::Save(const Image &cImage, File &cFile)
 				case ColorBGRA:
 				{
 					// Write row for row y-flipped
-					const uint32  nRowSize = pImageBuffer->GetRowSize();
-					const uint8  *pnData   = pImageBuffer->GetData() + pImageBuffer->GetDataSize() - nRowSize;
-					for (const uint8 *pnDataEnd=pImageBuffer->GetData(); pnData>=pnDataEnd; pnData-=nRowSize) {
+					const uint32  nBytesPerRow = pImageBuffer->GetBytesPerRow();
+					const uint8  *pnData       = pImageBuffer->GetData() + pImageBuffer->GetDataSize() - nBytesPerRow;
+					for (const uint8 *pnDataEnd=pImageBuffer->GetData(); pnData>=pnDataEnd; pnData-=nBytesPerRow) {
 						// Write row
-						cFile.Write(pnData, 1, nRowSize);
+						cFile.Write(pnData, 1, nBytesPerRow);
 					}
 
 					// Done
@@ -403,11 +403,11 @@ bool ImageLoaderTGA::Save(const Image &cImage, File &cFile)
 					cFile.Write(nPalette, sizeof(nPalette), 1);
 
 					// Write row for row y-flipped
-					const uint32  nRowSize = pImageBuffer->GetRowSize();
-					const uint8  *pnData   = pImageBuffer->GetData() + pImageBuffer->GetDataSize() - nRowSize;
-					for (const uint8 *pnDataEnd=pImageBuffer->GetData(); pnData>=pnDataEnd; pnData-=nRowSize) {
+					const uint32  nBytesPerRow = pImageBuffer->GetBytesPerRow();
+					const uint8  *pnData       = pImageBuffer->GetData() + pImageBuffer->GetDataSize() - nBytesPerRow;
+					for (const uint8 *pnDataEnd=pImageBuffer->GetData(); pnData>=pnDataEnd; pnData-=nBytesPerRow) {
 						// Write row
-						cFile.Write(pnData, 1, nRowSize);
+						cFile.Write(pnData, 1, nBytesPerRow);
 					}
 
 					// Done
@@ -422,11 +422,11 @@ bool ImageLoaderTGA::Save(const Image &cImage, File &cFile)
 						cFile.Write(pImagePalette->GetData(), 768, 1);
 
 						// Write row for row y-flipped
-						const uint32  nRowSize = pImageBuffer->GetRowSize();
-						const uint8  *pnData   = pImageBuffer->GetData() + pImageBuffer->GetDataSize() - nRowSize;
-						for (const uint8 *pnDataEnd=pImageBuffer->GetData(); pnData>=pnDataEnd; pnData-=nRowSize) {
+						const uint32  nBytesPerRow = pImageBuffer->GetBytesPerRow();
+						const uint8  *pnData       = pImageBuffer->GetData() + pImageBuffer->GetDataSize() - nBytesPerRow;
+						for (const uint8 *pnDataEnd=pImageBuffer->GetData(); pnData>=pnDataEnd; pnData-=nBytesPerRow) {
 							// Write row
-							cFile.Write(pnData, 1, nRowSize);
+							cFile.Write(pnData, 1, nBytesPerRow);
 						}
 
 						// Done

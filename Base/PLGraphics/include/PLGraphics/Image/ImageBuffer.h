@@ -382,7 +382,7 @@ class ImageBuffer {
 		*  @return
 		*    Size of one row in bytes
 		*/
-		inline PLCore::uint32 GetRowSize() const;
+		inline PLCore::uint32 GetBytesPerRow() const;
 
 		/**
 		*  @brief

@@ -107,7 +107,7 @@ bool ImageLoaderPPM::Save(const Image &cImage, File &cFile)
 {
 	// Get the image buffer
 	ImageBuffer *pImageBuffer = cImage.GetBuffer();
-	if (pImageBuffer && pImageBuffer->GetRowSize()) {
+	if (pImageBuffer && pImageBuffer->GetBytesPerRow()) {
 		// We only support 1 byte per pixel component
 		if (pImageBuffer->GetBytesPerPixelComponent() == 1) {
 			// We only support RGB as color format

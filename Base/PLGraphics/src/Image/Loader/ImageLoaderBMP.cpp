@@ -153,35 +153,35 @@ bool ImageLoaderBMP::Load(Image &cImage, File &cFile)
 						// Do we need to take care of padd bytes?
 						if (nPaddBytes) {
 							// Read row for row y-flipped and ignore padd bytes
-							const uint32  nRowSize = pImageBuffer->GetRowSize();
-								  uint8  *pData    = pImageBuffer->GetData() + pImageBuffer->GetDataSize() - nRowSize;
-								  uint32  nPadd    = 0;
-							for (const uint8 *pDataEnd=pImageBuffer->GetData(); pData>=pDataEnd; pData-=nRowSize) {
+							const uint32  nBytesPerRow = pImageBuffer->GetBytesPerRow();
+								  uint8  *pData        = pImageBuffer->GetData() + pImageBuffer->GetDataSize() - nBytesPerRow;
+								  uint32  nPadd        = 0;
+							for (const uint8 *pDataEnd=pImageBuffer->GetData(); pData>=pDataEnd; pData-=nBytesPerRow) {
 								// Read row
-								cFile.Read(pData, 1, nRowSize);
+								cFile.Read(pData, 1, nBytesPerRow);
 
 								// Read padd bytes
 								cFile.Read(&nPadd, 1, nPaddBytes);
 							}
 						} else {
 							// Read row for row y-flipped
-							const uint32  nRowSize = pImageBuffer->GetRowSize();
-								  uint8  *pData    = pImageBuffer->GetData() + pImageBuffer->GetDataSize() - nRowSize;
-							for (const uint8 *pDataEnd=pImageBuffer->GetData(); pData>=pDataEnd; pData-=nRowSize) {
+							const uint32  nBytesPerRow = pImageBuffer->GetBytesPerRow();
+								  uint8  *pData        = pImageBuffer->GetData() + pImageBuffer->GetDataSize() - nBytesPerRow;
+							for (const uint8 *pDataEnd=pImageBuffer->GetData(); pData>=pDataEnd; pData-=nBytesPerRow) {
 								// Read row
-								cFile.Read(pData, 1, nRowSize);
+								cFile.Read(pData, 1, nBytesPerRow);
 							}
 						}
 					} else {
 						// Do we need to take care of padd bytes?
 						if (nPaddBytes) {
 							// Read row for row and ignore padd bytes
-							const uint32  nRowSize = pImageBuffer->GetRowSize();
-								  uint8  *pData    = pImageBuffer->GetData();
-								  uint32  nPadd    = 0;
-							for (const uint8 *pDataEnd=pImageBuffer->GetData()+pImageBuffer->GetDataSize(); pData<pDataEnd; pData+=nRowSize) {
+							const uint32  nBytesPerRow = pImageBuffer->GetBytesPerRow();
+								  uint8  *pData        = pImageBuffer->GetData();
+								  uint32  nPadd        = 0;
+							for (const uint8 *pDataEnd=pImageBuffer->GetData()+pImageBuffer->GetDataSize(); pData<pDataEnd; pData+=nBytesPerRow) {
 								// Read row
-								cFile.Read(pData, 1, nRowSize);
+								cFile.Read(pData, 1, nBytesPerRow);
 
 								// Read padd bytes
 								cFile.Read(&nPadd, 1, nPaddBytes);
@@ -217,7 +217,7 @@ bool ImageLoaderBMP::Save(const Image &cImage, File &cFile)
 {
 	// Get the image buffer
 	ImageBuffer *pImageBuffer = cImage.GetBuffer();
-	if (pImageBuffer && pImageBuffer->GetRowSize()) {
+	if (pImageBuffer && pImageBuffer->GetBytesPerRow()) {
 		// We only support 1 byte per pixel component
 		if (pImageBuffer->GetBytesPerPixelComponent() == 1) {
 			// Write the header (14 bytes)
@@ -255,13 +255,13 @@ bool ImageLoaderBMP::Save(const Image &cImage, File &cFile)
 					// Do we need to take care of padd bytes?
 					if (nPaddBytes) {
 						// Write row for row and add padd bytes
-						const uint32  nHeight  = pImageBuffer->GetSize().y;
-						const uint32  nRowSize = pImageBuffer->GetRowSize();
-						const uint8  *pData    = pImageBuffer->GetData();
-						const uint32  nPadd    = 0;
+						const uint32  nHeight      = pImageBuffer->GetSize().y;
+						const uint32  nBytesPerRow = pImageBuffer->GetBytesPerRow();
+						const uint8  *pData        = pImageBuffer->GetData();
+						const uint32  nPadd        = 0;
 						for (uint32 nY=0; nY<nHeight; nY++) {
 							// Write row in BGR
-							for (const uint8 *pDataEnd=pData+nRowSize; pData<pDataEnd; pData+=3) {
+							for (const uint8 *pDataEnd=pData+nBytesPerRow; pData<pDataEnd; pData+=3) {
 								// Write blue
 								uint8 nByte = pData[2];
 								cFile.Write(&nByte, 1, 1);
@@ -305,13 +305,13 @@ bool ImageLoaderBMP::Save(const Image &cImage, File &cFile)
 					// Do we need to take care of padd bytes?
 					if (nPaddBytes) {
 						// Write row for row and add padd bytes
-						const uint32  nHeight  = pImageBuffer->GetSize().y;
-						const uint32  nRowSize = pImageBuffer->GetRowSize();
-						const uint8  *pData    = pImageBuffer->GetData();
-						const uint32  nPadd    = 0;
+						const uint32  nHeight      = pImageBuffer->GetSize().y;
+						const uint32  nBytesPerRow = pImageBuffer->GetBytesPerRow();
+						const uint8  *pData        = pImageBuffer->GetData();
+						const uint32  nPadd        = 0;
 						for (uint32 nY=0; nY<nHeight; nY++) {
 							// Write row in BGRA
-							for (const uint8 *pDataEnd=pData+nRowSize; pData<pDataEnd; pData+=4) {
+							for (const uint8 *pDataEnd=pData+nBytesPerRow; pData<pDataEnd; pData+=4) {
 								// Write blue
 								uint8 nByte = pData[2];
 								cFile.Write(&nByte, 1, 1);
@@ -363,12 +363,12 @@ bool ImageLoaderBMP::Save(const Image &cImage, File &cFile)
 					// Do we need to take care of padd bytes?
 					if (nPaddBytes) {
 						// Write row for row and add padd bytes
-						const uint32  nRowSize = pImageBuffer->GetRowSize();
-						const uint8  *pData    = pImageBuffer->GetData();
-						const uint32  nPadd    = 0;
-						for (const uint8 *pDataEnd=pImageBuffer->GetData()+pImageBuffer->GetDataSize(); pData<pDataEnd; pData+=nRowSize) {
+						const uint32  nBytesPerRow = pImageBuffer->GetBytesPerRow();
+						const uint8  *pData        = pImageBuffer->GetData();
+						const uint32  nPadd        = 0;
+						for (const uint8 *pDataEnd=pImageBuffer->GetData()+pImageBuffer->GetDataSize(); pData<pDataEnd; pData+=nBytesPerRow) {
 							// Write row
-							cFile.Write(pData, 1, nRowSize);
+							cFile.Write(pData, 1, nBytesPerRow);
 
 							// Write padd bytes
 							cFile.Write(&nPadd, 1, nPaddBytes);

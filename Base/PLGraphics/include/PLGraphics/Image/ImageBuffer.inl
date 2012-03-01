@@ -289,7 +289,7 @@ inline PLCore::uint32 ImageBuffer::GetDataSize() const
 *  @brief
 *    Get size of one row of image data in bytes
 */
-inline PLCore::uint32 ImageBuffer::GetRowSize() const
+inline PLCore::uint32 ImageBuffer::GetBytesPerRow() const
 {
 	// Get size of a single row
 	return m_pImageData->GetSize().x * GetBytesPerPixelComponent() * GetComponentsPerPixel();
