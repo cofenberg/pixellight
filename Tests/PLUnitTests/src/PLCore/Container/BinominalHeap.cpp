@@ -21,7 +21,7 @@ SUITE(BinominalHeap_Int_Int) {
 	// Our List Test Fixture :)
 	struct ConstructTestBinominalHeap
 	{
-		ConstructTestBinominalHeap() { 
+		ConstructTestBinominalHeap() {
 			/* some setup */
 			biHeap.Add(1, 1);
 			biHeap.Add(2, 2);

@@ -54,7 +54,7 @@ namespace UnitTest {
 		results.OnTestFailure(details, stream.GetText());
 	}
 
-	void CheckStringsNotEqual(TestResults& results, char const* expected, char const* actual, 
+	void CheckStringsNotEqual(TestResults& results, char const* expected, char const* actual,
 		TestDetails const& details)
 	{
 		using namespace std;

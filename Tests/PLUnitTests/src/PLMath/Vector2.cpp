@@ -29,7 +29,7 @@ SUITE(Vector2) {
 			/* some setup */
 			T2[0] = 1.0f;
 			T2[1] = 2.0f;
-			
+
 			vec2 = Vector2(T2);
 		}
 		~ConstructTest() {
@@ -47,7 +47,7 @@ SUITE(Vector2) {
 	TEST(Vector2_Vars) {
 		CHECK_EQUAL(0.0f, Vector2::Zero.x);
 		CHECK_EQUAL(0.0f, Vector2::Zero.y);
-		
+
 		CHECK_EQUAL(1.0f, Vector2::One.x);
 		CHECK_EQUAL(1.0f, Vector2::One.y);
 
@@ -363,7 +363,7 @@ SUITE(Vector2) {
 	TEST_FIXTURE(ConstructTest, PackTo01) {
 		vec2 = Vector2(0.5f, 1.0f);
 		vec2.PackTo01();
-		
+
 		CHECK_CLOSE(0.72360682f, vec2.x, Math::Epsilon);
 		CHECK_CLOSE(0.94721359f, vec2.y, Math::Epsilon);
 	}
@@ -371,7 +371,7 @@ SUITE(Vector2) {
 	TEST_FIXTURE(ConstructTest, GetPackedTo01) {
 		vec2 = Vector2(0.5f, 1.0f);
 		vec2 = vec2.GetPackedTo01();
-		
+
 		CHECK_CLOSE(0.72360682f, vec2.x, Math::Epsilon);
 		CHECK_CLOSE(0.94721359f, vec2.y, Math::Epsilon);
 	}
@@ -379,7 +379,7 @@ SUITE(Vector2) {
 	TEST_FIXTURE(ConstructTest, UnpackFrom01) {
 		vec2 = Vector2(0.5f, 1.0f);
 		vec2.UnpackFrom01();
-		
+
 		CHECK_CLOSE(0.0f, vec2.x, Math::Epsilon);
 		CHECK_CLOSE(1.0f, vec2.y, Math::Epsilon);
 	}
@@ -387,28 +387,28 @@ SUITE(Vector2) {
 	TEST_FIXTURE(ConstructTest, GetUnpackedFrom01) {
 		vec2 = Vector2(0.5f, 1.0f);
 		vec2 = vec2.GetUnpackedFrom01();
-		
+
 		CHECK_CLOSE(0.0f, vec2.x, Math::Epsilon);
 		CHECK_CLOSE(1.0f, vec2.y, Math::Epsilon);
 	}
 
-	TEST_FIXTURE(ConstructTest, GetSmallestComponent) {	
+	TEST_FIXTURE(ConstructTest, GetSmallestComponent) {
 		CHECK(Vector2::X == vec2.GetSmallestComponent());
 	}
 
-	TEST_FIXTURE(ConstructTest, GetSmallestValue) {	
+	TEST_FIXTURE(ConstructTest, GetSmallestValue) {
 		CHECK_EQUAL(1.0f, vec2.GetSmallestValue());
 	}
 
-	TEST_FIXTURE(ConstructTest, GetGreatestComponent) {	
+	TEST_FIXTURE(ConstructTest, GetGreatestComponent) {
 		CHECK(Vector2::Y == vec2.GetGreatestComponent());
 	}
 
-	TEST_FIXTURE(ConstructTest, GetGreatestValue) {	
+	TEST_FIXTURE(ConstructTest, GetGreatestValue) {
 		CHECK_EQUAL(2.0f, vec2.GetGreatestValue());
 	}
 
-	TEST_FIXTURE(ConstructTest, Invert) {	
+	TEST_FIXTURE(ConstructTest, Invert) {
 		vec2 = Vector2(1.0f, -2.0f);
 		vec2.Invert();
 
@@ -416,7 +416,7 @@ SUITE(Vector2) {
 		CHECK_EQUAL(2.0f, vec2.y);
 	}
 
-	TEST_FIXTURE(ConstructTest, GetInverted) {	
+	TEST_FIXTURE(ConstructTest, GetInverted) {
 		vec2 = Vector2(1.0f, -2.0f);
 		vec2 = vec2.GetInverted();
 
@@ -424,43 +424,43 @@ SUITE(Vector2) {
 		CHECK_EQUAL(2.0f, vec2.y);
 	}
 
-	TEST_FIXTURE(ConstructTest, GetLength_NullVec) {	
+	TEST_FIXTURE(ConstructTest, GetLength_NullVec) {
 		vec2 = Vector2(0.0f, 0.0f);
 
 		CHECK_CLOSE(0.0f, vec2.GetLength(), Math::Epsilon);
 	}
 
-	TEST_FIXTURE(ConstructTest, GetLength_NormalVec) {	
+	TEST_FIXTURE(ConstructTest, GetLength_NormalVec) {
 		vec2 = Vector2(0.2f, -0.6f);
 
 		CHECK_CLOSE(0.6324555f, vec2.GetLength(), Math::Epsilon);
 	}
 
-	TEST_FIXTURE(ConstructTest, GetLength_UnitVec) {	
+	TEST_FIXTURE(ConstructTest, GetLength_UnitVec) {
 		vec2 = Vector2(1.0f, 0.0f);
 
 		CHECK_CLOSE(1.0f, vec2.GetLength(), Math::Epsilon);
 	}
 
-	TEST_FIXTURE(ConstructTest, GetSquaredLength_NullVec) {	
+	TEST_FIXTURE(ConstructTest, GetSquaredLength_NullVec) {
 		vec2 = Vector2(0.0f, 0.0f);
 
 		CHECK_CLOSE(0.0f, vec2.GetSquaredLength(), Math::Epsilon);
 	}
 
-	TEST_FIXTURE(ConstructTest, GetSquaredLength_NormalVec) {	
+	TEST_FIXTURE(ConstructTest, GetSquaredLength_NormalVec) {
 		vec2 = Vector2(0.2f, -0.6f);
 
 		CHECK_CLOSE(0.4f, vec2.GetSquaredLength(), Math::Epsilon);
 	}
 
-	TEST_FIXTURE(ConstructTest, GetSquaredLength_UnitVec) {	
+	TEST_FIXTURE(ConstructTest, GetSquaredLength_UnitVec) {
 		vec2 = Vector2(1.0f, 0.0f);
 
 		CHECK_CLOSE(1.0f, vec2.GetSquaredLength(), Math::Epsilon);
 	}
 
-	TEST_FIXTURE(ConstructTest, SetLength_NullVec) {	
+	TEST_FIXTURE(ConstructTest, SetLength_NullVec) {
 		vec2 = Vector2(0.0f, 0.0f);
 		vec2.SetLength(1.0f);
 
@@ -469,7 +469,7 @@ SUITE(Vector2) {
 		CHECK_EQUAL(0.0f, vec2.y);
 	}
 
-	TEST_FIXTURE(ConstructTest, SetLength_NormalVec) {	
+	TEST_FIXTURE(ConstructTest, SetLength_NormalVec) {
 		vec2 = Vector2(0.2f, -0.6f);
 		vec2.SetLength(1.0f);
 
@@ -478,7 +478,7 @@ SUITE(Vector2) {
 		CHECK_CLOSE(-0.9486832f, vec2.y, Math::Epsilon);
 	}
 
-	TEST_FIXTURE(ConstructTest, SetLength_UnitVec) {	
+	TEST_FIXTURE(ConstructTest, SetLength_UnitVec) {
 		vec2 = Vector2(1.0f, 0.0f);
 		vec2.SetLength(1.0f);
 
@@ -487,7 +487,7 @@ SUITE(Vector2) {
 		CHECK_EQUAL(0.0f, vec2.y);
 	}
 
-	TEST_FIXTURE(ConstructTest, Normalize_NullVec) {	
+	TEST_FIXTURE(ConstructTest, Normalize_NullVec) {
 		vec2 = Vector2(0.0f, 0.0f);
 		vec2.Normalize();
 
@@ -496,7 +496,7 @@ SUITE(Vector2) {
 		CHECK_CLOSE(0.0f, vec2.y, Math::Epsilon);
 	}
 
-	TEST_FIXTURE(ConstructTest, Normalize_NormalVec) {	
+	TEST_FIXTURE(ConstructTest, Normalize_NormalVec) {
 		vec2 = Vector2(0.2f, -0.6f);
 		vec2.Normalize();
 
@@ -505,7 +505,7 @@ SUITE(Vector2) {
 		CHECK_CLOSE(-0.9486832f, vec2.y, Math::Epsilon);
 	}
 
-	TEST_FIXTURE(ConstructTest, Normalize_UnitVec) {	
+	TEST_FIXTURE(ConstructTest, Normalize_UnitVec) {
 		vec2 = Vector2(1.0f, 0.0f);
 		vec2.Normalize();
 
@@ -514,7 +514,7 @@ SUITE(Vector2) {
 		CHECK_CLOSE(0.0f, vec2.y, Math::Epsilon);
 	}
 
-	TEST_FIXTURE(ConstructTest, GetNormalized_NullVec) {	
+	TEST_FIXTURE(ConstructTest, GetNormalized_NullVec) {
 		vec2 = Vector2(0.0f, 0.0f);
 		vec2 = vec2.GetNormalized();
 
@@ -523,7 +523,7 @@ SUITE(Vector2) {
 		CHECK_CLOSE(0.0f, vec2.y, Math::Epsilon);
 	}
 
-	TEST_FIXTURE(ConstructTest, GetNormalized_NormalVec) {	
+	TEST_FIXTURE(ConstructTest, GetNormalized_NormalVec) {
 		vec2 = Vector2(0.2f, -0.6f);
 		vec2 = vec2.GetNormalized();
 
@@ -532,7 +532,7 @@ SUITE(Vector2) {
 		CHECK_CLOSE(-0.9486832f, vec2.y, Math::Epsilon);
 	}
 
-	TEST_FIXTURE(ConstructTest, GetNormalized_UnitVec) {	
+	TEST_FIXTURE(ConstructTest, GetNormalized_UnitVec) {
 		vec2 = Vector2(1.0f, 0.0f);
 		vec2 = vec2.GetNormalized();
 
@@ -541,26 +541,26 @@ SUITE(Vector2) {
 		CHECK_CLOSE(0.0f, vec2.y, Math::Epsilon);
 	}
 
-	TEST_FIXTURE(ConstructTest, GetDistance) {	
+	TEST_FIXTURE(ConstructTest, GetDistance) {
 		vec2 = Vector2(0.2f, -0.6f);
 
 		CHECK_CLOSE(0.6324555f, vec2.GetDistance(Vector2(0.0f, 0.0f)), Math::Epsilon);
 	}
 
-	TEST_FIXTURE(ConstructTest, GetSquaredDistance) {	
+	TEST_FIXTURE(ConstructTest, GetSquaredDistance) {
 		vec2 = Vector2(0.2f, -0.6f);
 
 		CHECK_CLOSE(0.4f, vec2.GetSquaredDistance(Vector2(0.0f, 0.0f)), Math::Epsilon);
 	}
 
-	TEST_FIXTURE(ConstructTest, DotProduct) {	
+	TEST_FIXTURE(ConstructTest, DotProduct) {
 		vec2 = Vector2(0.2f, -0.6f);
 
 		CHECK_CLOSE(0.0f, vec2.DotProduct(Vector2(0.0f, 0.0f)), Math::Epsilon);
 		CHECK_CLOSE(0.4f, vec2.DotProduct(Vector2(0.2f, -0.6f)), Math::Epsilon);
 	}
 
-	TEST_FIXTURE(ConstructTest, GetAngle) {	
+	TEST_FIXTURE(ConstructTest, GetAngle) {
 		// ~74,7°
 		vec2 = Vector2(1.0f, 4.0f);
 		CHECK_CLOSE(1.0303768f, vec2.GetAngle(Vector2(-3.0f, 3.0f)), Math::Epsilon);

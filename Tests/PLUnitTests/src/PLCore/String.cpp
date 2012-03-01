@@ -31,7 +31,7 @@ SUITE(String) {
 	// Our Array Test Fixture :)
 	struct ConstructTest
 	{
-		ConstructTest() { 
+		ConstructTest() {
 			/* some setup */
 		}
 		~ConstructTest() {
@@ -94,7 +94,7 @@ SUITE(String) {
 		{
 			char *pszTest = new char[4];
 			strcpy(pszTest, "123");
-			String sTest(pszTest, false); 
+			String sTest(pszTest, false);
 			CHECK_EQUAL(3U, sTest.GetLength());
 			CHECK_EQUAL( "123" , sTest.GetASCII());
 			CHECK_EQUAL( pszTest, sTest.GetASCII() );
@@ -121,7 +121,7 @@ SUITE(String) {
 		{
 			wchar_t *pszTest = new wchar_t[4];
 			wcscpy(pszTest, L"\u65e5\u672c\u8a9e");
-			String sTest(pszTest, false); 
+			String sTest(pszTest, false);
 			CHECK_EQUAL(3U, sTest.GetLength());
 			CHECK_EQUAL( L"\u65e5\u672c\u8a9e" , sTest.GetUnicode());
 			CHECK_EQUAL( pszTest, sTest.GetUnicode() );
@@ -566,7 +566,7 @@ SUITE(String) {
 		sString  = L"A";
 		sString = "%" + sString;
 		CHECK_EQUAL( String::Unicode , sString.GetFormat() );
-		CHECK_EQUAL( L"%A", sString.GetUnicode());	
+		CHECK_EQUAL( L"%A", sString.GetUnicode());
 	}
 
 	TEST_FIXTURE(ConstructTest, Operator_Add_wchar_t_Ptr_left_hand) {
@@ -4191,12 +4191,12 @@ SUITE(String) {
 	TEST_FIXTURE(ConstructTest, Special_Test_Format_g_5_12f) {
 		CHECK_EQUAL( "5.12", String::Format("%g", 5.12f).GetASCII());
 
-		char *pLocalSave = _strdup(setlocale(LC_ALL, nullptr));	
-		setlocale(LC_ALL, "German"); 
+		char *pLocalSave = _strdup(setlocale(LC_ALL, nullptr));
+		setlocale(LC_ALL, "German");
 
 		CHECK_EQUAL( "5.12", String::Format("%g", 5.12f).GetASCII());
 
-		setlocale(LC_ALL, pLocalSave); 
+		setlocale(LC_ALL, pLocalSave);
 		free(pLocalSave);
 	}
 

@@ -21,7 +21,7 @@ SUITE(SimpleMap_Int_Int) {
 	// Our List Test Fixture :)
 	struct ConstructTestSimpleMap
 	{
-		ConstructTestSimpleMap() { 
+		ConstructTestSimpleMap() {
 			/* some setup */
 			SimMap.Add(1, 1);
 			SimMap.Add(2, 2);

@@ -19,7 +19,7 @@ SUITE(Math) {
 	// Our Array Test Fixture :)
 	struct ConstructTest
 	{
-		ConstructTest() { 
+		ConstructTest() {
 			/* some setup */
 		}
 		~ConstructTest() {
@@ -47,12 +47,6 @@ SUITE(Math) {
 	}
 
 	TEST(GetNearestPowerOfTwo) {
-		// lowest integer number
-		CHECK_EQUAL(
-			Math::Pow(2, sizeof(int)*8-1),
-			Math::GetNearestPowerOfTwo(static_cast<int>(Math::Pow(2, sizeof(int)*8-1)), true)
-		);
-
 		CHECK_EQUAL(0U, Math::GetNearestPowerOfTwo(0, true));
 		CHECK_EQUAL(1U, Math::GetNearestPowerOfTwo(0, false));
 		CHECK_EQUAL(1U, Math::GetNearestPowerOfTwo(1, true));
@@ -62,11 +56,11 @@ SUITE(Math) {
 
 		CHECK_EQUAL(8192U, Math::GetNearestPowerOfTwo(16383, true));
 		CHECK_EQUAL(16384U, Math::GetNearestPowerOfTwo(16383, false));
-		
+
 		CHECK_EQUAL(536870912U, Math::GetNearestPowerOfTwo(1073741823, true));
 		CHECK_EQUAL(1073741824U, Math::GetNearestPowerOfTwo(1073741823, false));
 
-		// Test upper bound of integer range :)
+		// Test upper bound of integer range (4byte) :)
 		unsigned int upper = static_cast<int>(Math::Pow(2, sizeof(int)*7)-1);	// highest positive integer that is NOT a power of two
 		unsigned int expect = static_cast<int>(Math::Pow(2, sizeof(int)*7));	// highest positive power of two
 

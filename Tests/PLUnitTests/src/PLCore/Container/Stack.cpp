@@ -19,7 +19,7 @@ SUITE(Stack) {
 	// Our List Test Fixture :)
 	struct ConstructTest
 	{
-		ConstructTest() { 
+		ConstructTest() {
 			/* some setup */
 		}
 		~ConstructTest() {
@@ -38,7 +38,7 @@ SUITE(Stack) {
 		stack.Push(3);
 		stack.Push(4);
 		stack.Push(2);
-		
+
 		CHECK_EQUAL(4U, stack.GetNumOfElements());
 
 		stack.Clear();
@@ -51,7 +51,7 @@ SUITE(Stack) {
 		CHECK(stack.Push(3));
 		CHECK(stack.Push(4));
 		CHECK(stack.Push(2));
-		
+
 		CHECK_EQUAL(4U, stack.GetNumOfElements());
 	}
 
@@ -60,7 +60,7 @@ SUITE(Stack) {
 		stack.Push(3);
 		stack.Push(4);
 		stack.Push(2);
-		
+
 		int ele;
 
 		CHECK(stack.Pop(&ele));
@@ -85,7 +85,7 @@ SUITE(Stack) {
 		stack.Push(3);
 		stack.Push(4);
 		stack.Push(2);
-		
+
 		Stack<int> stackCopy(stack);
 
 		CHECK_EQUAL(4U, stackCopy.GetNumOfElements());

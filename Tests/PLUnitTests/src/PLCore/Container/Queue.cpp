@@ -17,7 +17,7 @@ SUITE(Queue) {
 	// Our Array Test Fixture :)
 	struct ConstructTest
 	{
-		ConstructTest() { 
+		ConstructTest() {
 			/* some setup */
 
 		}
@@ -37,7 +37,7 @@ SUITE(Queue) {
 		que.Push(3);
 		que.Push(4);
 		que.Push(2);
-		
+
 		CHECK_EQUAL(4U, que.GetNumOfElements());
 
 		que.Clear();
@@ -50,7 +50,7 @@ SUITE(Queue) {
 		CHECK(que.Push(3));
 		CHECK(que.Push(4));
 		CHECK(que.Push(2));
-		
+
 		CHECK_EQUAL(4U, que.GetNumOfElements());
 	}
 
@@ -59,7 +59,7 @@ SUITE(Queue) {
 		que.Push(3);
 		que.Push(4);
 		que.Push(2);
-		
+
 		int ele;
 
 		CHECK(que.Pop(&ele));
@@ -84,7 +84,7 @@ SUITE(Queue) {
 		que.Push(3);
 		que.Push(4);
 		que.Push(2);
-		
+
 		PLCore::Queue<int> qCopy(que);
 
 		CHECK_EQUAL(4U, qCopy.GetNumOfElements());

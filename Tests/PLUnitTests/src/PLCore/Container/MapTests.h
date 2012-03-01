@@ -29,7 +29,7 @@ void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
 		CHECK(map.Add(2, 2));
 		CHECK(map.Add(5, 5));
 		CHECK(map.Add(1, 1));
-		
+
 		CHECK_EQUAL(2, map.Get(2));
 		CHECK_EQUAL(5, map.Get(5));
 		CHECK_EQUAL(1, map.Get(1));
@@ -37,7 +37,7 @@ void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
 	}
 
 	// Replace(key, newValue)
-	{	
+	{
 		CHECK_EQUAL(5, map.Get(5));
 		CHECK(map.Replace(5, 6));
 		CHECK_EQUAL(6, map.Get(5));
@@ -46,7 +46,7 @@ void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
 	}
 
 	// Set(key, Value)
-	{	
+	{
 		// adds element
 		CHECK(!map.Set(10, 10));
 
@@ -56,14 +56,14 @@ void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
 	}
 
 	// Remove(key)
-	{	
+	{
 		CHECK(map.Remove(10));
 
 		CHECK(!map.Remove(10));
 	}
 
 	// RemoveValue(value)
-	{	
+	{
 		CHECK(map.RemoveValue(5));
 
 		CHECK(!map.RemoveValue(10));
@@ -115,7 +115,7 @@ void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
 		CHECK(!cIterator.HasPrevious());
 		CHECK(cIterator.HasNext());
 	}
-	
+
 	// KeyIterator, one element map
 	{
 		PLCore::Iterator<KeyType> cIterator = map.GetKeyIterator();

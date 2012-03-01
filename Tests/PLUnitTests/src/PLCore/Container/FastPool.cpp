@@ -54,12 +54,12 @@ SUITE(FastPool) {
 	std::ostream& operator << (std::ostream& stream, TestFastPoolElement const& obj)
     {
 		return stream << obj.i;
-    } 
+    }
 
 	// Our Pool Test Fixture :)
 	struct ConstructTestFastPool
 	{
-		ConstructTestFastPool() { 
+		ConstructTestFastPool() {
 			/* some setup */
 			cPool.Add(1);
 			cPool.Add(2);

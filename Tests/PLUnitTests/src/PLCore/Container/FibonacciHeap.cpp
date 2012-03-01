@@ -21,7 +21,7 @@ SUITE(FibonacciHeap_Int_Int) {
 	// Our List Test Fixture :)
 	struct ConstructTestFibonacciHeap
 	{
-		ConstructTestFibonacciHeap() { 
+		ConstructTestFibonacciHeap() {
 			/* some setup */
 			FiboHeap.Add(1, 1);
 			FiboHeap.Add(2, 2);

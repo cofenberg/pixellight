@@ -41,7 +41,7 @@ void MyMobileTestReporter::ReportSummary(int totalTestCount, int failedTestCount
 	if (failureCount > 0)
 		System::GetInstance()->GetConsole().Print(String("FAILURE: ") + failedTestCount + " out of " + totalTestCount + " tests failed (" + failureCount + " failures).\n");
 	else
-		System::GetInstance()->GetConsole().Print(String("Success: ") + totalTestCount + " tests passed.\n"); 
+		System::GetInstance()->GetConsole().Print(String("Success: ") + totalTestCount + " tests passed.\n");
 
-	System::GetInstance()->GetConsole().Print(String("Test time: ") + secondsElapsed + " seconds.\n\n"); 
+	System::GetInstance()->GetConsole().Print(String("Test time: ") + secondsElapsed + " seconds.\n\n");
 }

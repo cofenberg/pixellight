@@ -21,7 +21,7 @@
 #include "UnitTest++AddIns/wchar_template.h"
 
 namespace UnitTest {
-	void CheckWcharEqual(TestResults& results, wchar_t const* expected, wchar_t const* actual, 
+	void CheckWcharEqual(TestResults& results, wchar_t const* expected, wchar_t const* actual,
 		TestDetails const& details){
 			using namespace std;
 
@@ -63,7 +63,7 @@ namespace UnitTest {
 		CheckWcharEqual(results, expected, actual, details);
 	}
 
-	void CheckWcharNotEqual(TestResults& results, wchar_t const* expected, wchar_t const* actual, 
+	void CheckWcharNotEqual(TestResults& results, wchar_t const* expected, wchar_t const* actual,
 		TestDetails const& details){
 			using namespace std;
 

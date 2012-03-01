@@ -10,7 +10,7 @@ template <class KeyType, class ValType>
 void CheckDerivedHeapFunctions(PLCore::Heap<KeyType, ValType>& heap) {
 	// backup list to check order of elements
 	PLCore::List<ValType> lstElems;
-	
+
 	// isEmpty_and_Clear
 	{
 		heap.Clear();
@@ -99,7 +99,7 @@ void CheckDerivedHeapFunctions(PLCore::Heap<KeyType, ValType>& heap) {
 		CHECK_EQUAL(lstElems.GetNumOfElements(), heap.GetNumOfElements());
 
 		CHECK(!cIterator.HasPrevious());
-		CHECK(cIterator.HasNext());	
+		CHECK(cIterator.HasNext());
 	}
 
 	// GetTop

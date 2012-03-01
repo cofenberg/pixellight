@@ -17,7 +17,7 @@ SUITE(Vector3) {
 	// Our Array Test Fixture :)
 	struct ConstructTest
 	{
-		ConstructTest() { 
+		ConstructTest() {
 			/* some setup */
 		}
 		~ConstructTest() {
