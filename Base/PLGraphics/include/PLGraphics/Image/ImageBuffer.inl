@@ -297,6 +297,16 @@ inline PLCore::uint32 ImageBuffer::GetRowSize() const
 
 /**
 *  @brief
+*    Get size of one xy-plane (z/depth layer) of image data in bytes
+*/
+inline PLCore::uint32 ImageBuffer::GetBytesPerPlane() const
+{
+	// Get size of a single xy-plane
+	return m_pImageData->GetSize().x * m_pImageData->GetSize().y * GetBytesPerPixelComponent() * GetComponentsPerPixel();
+}
+
+/**
+*  @brief
 *    Get image data
 */
 inline const PLCore::uint8 *ImageBuffer::GetData() const

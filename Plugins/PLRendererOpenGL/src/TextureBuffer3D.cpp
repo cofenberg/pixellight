@@ -103,7 +103,7 @@ void TextureBuffer3D::InitialUploadVolumeData(Renderer &cRendererOpenGL, const I
 			// Update the texture data
 			if (cImageBuffer.HasAnyData()) {
 				// Get the number of bytes per depth layer
-				const uint32 nNumOfLayerBytes = vSize.x*vSize.y*cImageBuffer.GetBytesPerPixel();
+				const uint32 nBytesPerPlane = cImageBuffer.GetBytesPerPlane();
 
 				// Get a pointer to the start position of the given image data
 				const uint8 *pImageData = cImageBuffer.GetData();
@@ -135,7 +135,7 @@ void TextureBuffer3D::InitialUploadVolumeData(Renderer &cRendererOpenGL, const I
 				for (int i=0; i<vSize.z-1; i++) {
 					// Update the image data of the current depth layer
 					glTexSubImage3DEXT(nOpenGLTarget, nOpenGLLevel, 0, 0, i, vSize.x, vSize.y, 1, nOpenGLFormat, nOpenGLType, pImageData);
-					pImageData += nNumOfLayerBytes;
+					pImageData += nBytesPerPlane;
 				}
 
 				// Ok, we're now about to upload the last depth layer, reactivate automatic mipmap generation if required
