@@ -28,7 +28,20 @@ namespace UnitTest {
 			if (wcscmp(expected, actual))
 			{
 				UnitTest::MemoryOutStream stream;
-				stream << "Expected wchar_t: " << expected << " but was wchar_t: " << actual;
+
+				// Convert expected and actual to a char*
+				size_t expectedOrigsize = wcslen(expected) + 1;
+				size_t actualOrigsize = wcslen(actual) + 1;
+				const size_t expectedNewsize = 100;
+				const size_t actualNewsize = 100;
+				size_t expectedConvertedChars = 0;
+				size_t actualConvertedChars = 0;
+				char expectedCharstring[expectedNewsize];
+				char actualCharstring[actualNewsize];
+				wcstombs_s(&expectedConvertedChars, expectedCharstring, expectedOrigsize, expected, _TRUNCATE);
+				wcstombs_s(&actualConvertedChars, actualCharstring, actualOrigsize, actual, _TRUNCATE);
+
+				stream << "Expected wchar_t: " << expectedCharstring << " but was wchar_t: " << actualCharstring;
 
 				results.OnTestFailure(details, stream.GetText());
 			}
@@ -48,5 +61,47 @@ namespace UnitTest {
 
 	void CheckEqual(TestResults& results, wchar_t const* expected, wchar_t* actual, TestDetails const& details){
 		CheckWcharEqual(results, expected, actual, details);
+	}
+
+	void CheckWcharNotEqual(TestResults& results, wchar_t const* expected, wchar_t const* actual, 
+		TestDetails const& details){
+			using namespace std;
+
+			if (!wcscmp(expected, actual))
+			{
+				UnitTest::MemoryOutStream stream;
+
+				// Convert expected and actual to a char*
+				size_t expectedOrigsize = wcslen(expected) + 1;
+				size_t actualOrigsize = wcslen(actual) + 1;
+				const size_t expectedNewsize = 100;
+				const size_t actualNewsize = 100;
+				size_t expectedConvertedChars = 0;
+				size_t actualConvertedChars = 0;
+				char expectedCharstring[expectedNewsize];
+				char actualCharstring[actualNewsize];
+				wcstombs_s(&expectedConvertedChars, expectedCharstring, expectedOrigsize, expected, _TRUNCATE);
+				wcstombs_s(&actualConvertedChars, actualCharstring, actualOrigsize, actual, _TRUNCATE);
+
+				stream << "Expected not equal (wchar_t): " << expectedCharstring << " == " << actualCharstring;
+
+				results.OnTestFailure(details, stream.GetText());
+			}
+	}
+
+	void CheckNotEqual(TestResults& results, wchar_t const* expected, wchar_t const* actual, TestDetails const& details){
+		CheckWcharNotEqual(results, expected, actual, details);
+	}
+
+	void CheckNotEqual(TestResults& results, wchar_t* expected, wchar_t* actual, TestDetails const& details){
+		CheckWcharNotEqual(results, expected, actual, details);
+	}
+
+	void CheckNotEqual(TestResults& results, wchar_t* expected, wchar_t const* actual, TestDetails const& details){
+		CheckWcharNotEqual(results, expected, actual, details);
+	}
+
+	void CheckNotEqual(TestResults& results, wchar_t const* expected, wchar_t* actual, TestDetails const& details){
+		CheckWcharNotEqual(results, expected, actual, details);
 	}
 }
