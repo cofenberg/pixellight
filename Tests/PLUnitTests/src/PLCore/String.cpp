@@ -322,12 +322,12 @@ SUITE(String) {
 		sStringT = "";
 		sString = sStringT;
 		CHECK_EQUAL(0U, sString.GetLength());
-		CHECK_EQUAL( sStringT, sString );
+		CHECK_EQUAL( sStringT.GetASCII(), sString.GetASCII() );
 
 		sStringT = "1234";
 		sString = sStringT;
 		CHECK_EQUAL(4U, sString.GetLength());
-		CHECK_EQUAL( sStringT, sString );
+		CHECK_EQUAL( sStringT.GetASCII(), sString.GetASCII() );
 	}
 
 	TEST_FIXTURE(ConstructTest, Operator_Copy_charPtr) {
@@ -4189,14 +4189,17 @@ SUITE(String) {
 	}
 
 	TEST_FIXTURE(ConstructTest, Special_Test_Format_g_5_12f) {
-		CHECK_EQUAL( "5.12", String::Format("%g", 5.12f).GetASCII());
+		CHECK_EQUAL("5.12", String::Format("%g", 5.12f).GetASCII());
 
+		// Now, change the local...
 		char *pLocalSave = _strdup(setlocale(LC_ALL, nullptr));
-		setlocale(LC_ALL, "German");
+		
+		// Get the current set locale, we REALLY need to backup the locale because it "may" be changed by "setlocale"
+		setlocale(LC_ALL, "German"); // Set another local, now normally a ',' instead of '.'
+									 // is used by printf and so on... (but our string class ignores that :)
+		CHECK_EQUAL("5.12", String::Format("%g", 5.12f).GetASCII());
 
-		CHECK_EQUAL( "5.12", String::Format("%g", 5.12f).GetASCII());
-
-		setlocale(LC_ALL, pLocalSave);
+		setlocale(LC_ALL, pLocalSave); // Reset the local
 		free(pLocalSave);
 	}
 
