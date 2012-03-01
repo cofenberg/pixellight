@@ -111,6 +111,17 @@ void Color3::SwapRB(uint8 nBuffer[], uint32 nNumOfPixels)
 #endif
 }
 
+/**
+*  @brief
+*    Constructor
+*/
+Color3::Color3(const Color4 &cC) :
+	r(cC.r),
+	g(cC.g),
+	b(cC.b)
+{
+}
+
 
 //[-------------------------------------------------------]
 //[ Assignment operators                                  ]

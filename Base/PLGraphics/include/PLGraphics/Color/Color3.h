@@ -236,6 +236,15 @@ class Color3 {
 
 		/**
 		*  @brief
+		*    Constructor
+		*
+		*  @param[in] cC
+		*    RGBA color, alpha will be ignored
+		*/
+		PLGRAPHICS_API Color3(const Color4 &cC);
+
+		/**
+		*  @brief
 		*    Copy constructor
 		*
 		*  @param[in] cSource
