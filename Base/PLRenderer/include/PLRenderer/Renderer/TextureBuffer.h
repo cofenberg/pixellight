@@ -392,11 +392,13 @@ class TextureBuffer : public Resource {
 		*
 		*  @param[out] cImage
 		*    Receives the texture buffer data (no need to allocated the image, this is done automatically, just pass in any image instance)
+		*  @param[in]  bMipmaps
+		*    Do also take mipmaps into account?
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool DownloadAsImage(PLGraphics::Image &cImage) const;
+		PLRENDERER_API bool DownloadAsImage(PLGraphics::Image &cImage, bool bMipmaps = true) const;
 
 		/**
 		*  @brief

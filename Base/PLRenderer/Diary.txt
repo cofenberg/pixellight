@@ -1,3 +1,9 @@
+>> 02.03.2012
+[CO]
+- "TextureBuffer::DownloadAsImage()": Added parameter to control whether or not mipmaps should be downloaded as well
+
+
+
 >> 21.02.2012
 [CO]
 - Added "Renderer::SetDepthRenderTarget()"

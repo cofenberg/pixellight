@@ -610,7 +610,7 @@ bool TextureBuffer::GetFormatForImage(EDataFormat &nDataFormat, EColorFormat &nC
 *  @brief
 *    Returns the texture buffer data as image
 */
-bool TextureBuffer::DownloadAsImage(Image &cImage) const
+bool TextureBuffer::DownloadAsImage(Image &cImage, bool bMipmaps) const
 {
 	// Map the internal texture buffer format as close as possible to image data format and image color format
 	EDataFormat					nDataFormat			= DataByte;
@@ -631,7 +631,8 @@ bool TextureBuffer::DownloadAsImage(Image &cImage) const
 			ImagePart *pImagePart = cImage.CreatePart(nImagePartSemantic);
 
 			// Loop through all mipmaps
-			for (uint32 nMipmap=0; nMipmap<=m_nNumOfMipmaps; nMipmap++) {
+			const uint32 nNumOfMipmaps = bMipmaps ? m_nNumOfMipmaps : 0;
+			for (uint32 nMipmap=0; nMipmap<=nNumOfMipmaps; nMipmap++) {
 				// Get the image size
 				Vector3i vSize;
 				switch (GetType()) {
