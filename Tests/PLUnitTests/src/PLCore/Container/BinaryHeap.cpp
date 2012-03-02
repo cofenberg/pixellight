@@ -21,7 +21,7 @@ SUITE(BinaryHeap_Int_Int) {
 	// Our List Test Fixture :)
 	struct ConstructTestBinaryHeap
 	{
-		ConstructTestBinaryHeap() { 
+		ConstructTestBinaryHeap() {
 			/* some setup */
 			byHeap.Add(1, 1);
 			byHeap.Add(2, 2);

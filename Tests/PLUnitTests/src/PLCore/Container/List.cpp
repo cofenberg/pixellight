@@ -21,7 +21,7 @@ SUITE(List_PrimitiveInt) {
 	// Our List Test Fixture :)
 	struct ConstructTestList
 	{
-		ConstructTestList() { 
+		ConstructTestList() {
 			/* some setup */
 			Lst.Add(1);
 			Lst.Add(2);

@@ -21,14 +21,33 @@
 #include "UnitTest++AddIns/wchar_template.h"
 
 namespace UnitTest {
-	void CheckWcharEqual(TestResults& results, wchar_t const* expected, wchar_t const* actual, 
+	void CheckWcharEqual(TestResults& results, wchar_t const* expected, wchar_t const* actual,
 		TestDetails const& details){
 			using namespace std;
 
 			if (wcscmp(expected, actual))
 			{
 				UnitTest::MemoryOutStream stream;
-				stream << "Expected wchar_t: " << expected << " but was wchar_t: " << actual;
+
+				// Convert expected and actual to a char*
+				size_t expectedOrigsize = wcslen(expected) + 1;
+				size_t actualOrigsize = wcslen(actual) + 1;
+
+				char *expectedCharstring = new char[expectedOrigsize + 1];
+				char *actualCharstring = new char[actualOrigsize + 1];
+
+				size_t newExpectedSize = wcstombs(expectedCharstring, expected, expectedOrigsize);
+				size_t newActualSize = wcstombs(actualCharstring, actual, actualOrigsize);
+
+				if (newExpectedSize == -1 || newActualSize == -1) {
+					// encountered unicode characters which we cannot display -> show a message
+					stream << "Encountered Unicode character, printing wchar_t* values!\n\t\t" << "  Expected wchar_t: " << expected << " but was wchar_t: " << actual;
+				} else {
+					stream << "Expected wchar_t: " << expectedCharstring << " but was wchar_t: " << actualCharstring;
+				}
+
+				free(expectedCharstring);
+				free(actualCharstring);
 
 				results.OnTestFailure(details, stream.GetText());
 			}
@@ -48,5 +67,53 @@ namespace UnitTest {
 
 	void CheckEqual(TestResults& results, wchar_t const* expected, wchar_t* actual, TestDetails const& details){
 		CheckWcharEqual(results, expected, actual, details);
+	}
+
+	void CheckWcharNotEqual(TestResults& results, wchar_t const* expected, wchar_t const* actual,
+		TestDetails const& details){
+			using namespace std;
+
+			if (!wcscmp(expected, actual))
+			{
+				UnitTest::MemoryOutStream stream;
+
+				// Convert expected and actual to a char*
+				size_t expectedOrigsize = wcslen(expected) + 1;
+				size_t actualOrigsize = wcslen(actual) + 1;
+
+				char *expectedCharstring = new char[expectedOrigsize + 1];
+				char *actualCharstring = new char[actualOrigsize + 1];
+
+				size_t newExpectedSize = wcstombs(expectedCharstring, expected, expectedOrigsize);
+				size_t newActualSize = wcstombs(actualCharstring, actual, actualOrigsize);
+
+				if (newExpectedSize == -1 || newActualSize == -1) {
+					// encountered unicode characters which we cannot display -> show a message
+					stream << "Encountered Unicode character, printing wchar_t* values!\n\t\t" << "  Expected wchar_t: " << expected << " but was wchar_t: " << actual;
+				} else {
+					stream << "Expected not equal (wchar_t): " << expectedCharstring << " == " << actualCharstring;
+				}
+
+				free(expectedCharstring);
+				free(actualCharstring);
+
+				results.OnTestFailure(details, stream.GetText());
+			}
+	}
+
+	void CheckNotEqual(TestResults& results, wchar_t const* expected, wchar_t const* actual, TestDetails const& details){
+		CheckWcharNotEqual(results, expected, actual, details);
+	}
+
+	void CheckNotEqual(TestResults& results, wchar_t* expected, wchar_t* actual, TestDetails const& details){
+		CheckWcharNotEqual(results, expected, actual, details);
+	}
+
+	void CheckNotEqual(TestResults& results, wchar_t* expected, wchar_t const* actual, TestDetails const& details){
+		CheckWcharNotEqual(results, expected, actual, details);
+	}
+
+	void CheckNotEqual(TestResults& results, wchar_t const* expected, wchar_t* actual, TestDetails const& details){
+		CheckWcharNotEqual(results, expected, actual, details);
 	}
 }

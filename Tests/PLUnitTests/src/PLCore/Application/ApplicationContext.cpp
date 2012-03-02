@@ -136,7 +136,7 @@ SUITE(ApplicationContext) {
 		// ExecutableDirectory
 		CHECK_EQUAL(Url("http://TestDir").GetNativePath().GetASCII(), App.GetExecutableDirectory().GetASCII());
 
-		// 
+		//
 		CHECK_EQUAL(Url("http:").GetNativePath().GetASCII(), App.GetAppDirectory().GetASCII());
 	}
 
@@ -158,13 +158,13 @@ SUITE(ApplicationContext) {
 
 		// set arguments array with 2 elements
 		App.SetArguments(elems);
-		CHECK(elems.Compare(App.GetArguments()));	
+		CHECK(elems.Compare(App.GetArguments()));
 	}
 
 	TEST(SetStartupDirectory_EmptyString) {
 		// set empty path
 		App.SetStartupDirectory(sEmpty);
-		CHECK_EQUAL(sEmpty.GetASCII(), App.GetStartupDirectory().GetASCII());		
+		CHECK_EQUAL(sEmpty.GetASCII(), App.GetStartupDirectory().GetASCII());
 	}
 
 	TEST(SetStartupDirectory_ValidPath) {
@@ -172,13 +172,13 @@ SUITE(ApplicationContext) {
 
 		// set directory
 		App.SetStartupDirectory(sPath);
-		CHECK_EQUAL(sPath.GetASCII(), App.GetStartupDirectory().GetASCII());		
+		CHECK_EQUAL(sPath.GetASCII(), App.GetStartupDirectory().GetASCII());
 	}
 
 	TEST(SetLogFilename_EmptyName) {
 		// set empty
 		App.SetLogFilename(sEmpty);
-		CHECK_EQUAL(sEmpty.GetASCII(), App.GetLogFilename().GetASCII());	
+		CHECK_EQUAL(sEmpty.GetASCII(), App.GetLogFilename().GetASCII());
 	}
 
 	TEST(SetLogFilename_ValidName) {
@@ -190,12 +190,12 @@ SUITE(ApplicationContext) {
 	TEST(SetConfigFilename_EmptyName) {
 		// set empty
 		App.SetConfigFilename(sEmpty);
-		CHECK_EQUAL(sEmpty.GetASCII(), App.GetConfigFilename().GetASCII());		
+		CHECK_EQUAL(sEmpty.GetASCII(), App.GetConfigFilename().GetASCII());
 	}
 
 	TEST(SetConfigFilename_ValidName) {
 		// set name
 		App.SetConfigFilename(sNormal);
-		CHECK_EQUAL(sNormal.GetASCII(), App.GetConfigFilename().GetASCII());		
+		CHECK_EQUAL(sNormal.GetASCII(), App.GetConfigFilename().GetASCII());
 	}
 }

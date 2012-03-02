@@ -31,6 +31,10 @@
 	#error UnitTest++ redefines CHECK_MATRIX3X3
 #endif
 
+#ifdef CHECK_NOT_EQUAL
+	#errorCHECK_NOT_EQUAL
+#endif
+
 #define CHECK_MATRIX3X3(expected, actual, tolerance) \
     do \
     { \
@@ -52,6 +56,18 @@
         catch (...) { \
             UnitTest::CurrentTest::Results()->OnTestFailure(UnitTest::TestDetails(*UnitTest::CurrentTest::Details(), __LINE__), \
                     "Unhandled exception in CHECK_IMPLEMENT"); \
+        } \
+    } while (0)
+
+#define CHECK_NOT_EQUAL(expected, actual) \
+    do \
+    { \
+        try { \
+            UnitTest::CheckNotEqual(*UnitTest::CurrentTest::Results(), expected, actual, UnitTest::TestDetails(*UnitTest::CurrentTest::Details(), __LINE__)); \
+        } \
+        catch (...) { \
+            UnitTest::CurrentTest::Results()->OnTestFailure(UnitTest::TestDetails(*UnitTest::CurrentTest::Details(), __LINE__), \
+                    "Unhandled exception in CHECK_NOT_EQUAL(" #expected ", " #actual ")"); \
         } \
     } while (0)
 

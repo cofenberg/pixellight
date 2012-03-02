@@ -792,7 +792,7 @@ void CheckDerivedContainerFunctions(PLCore::Container<AType>& con) {
 		CHECK(!iter.HasNext());
 		CHECK(iter.HasPrevious());
 
-		
+
 		// enditerator, 2 elements
 		con = Itercon;
 

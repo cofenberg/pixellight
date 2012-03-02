@@ -1,4 +1,22 @@
->> 25.02.2012
+>> 02.03.2012
+[JS]
+PLUnitTests:
+- overloaded CHECK_EQUAL template to automatically cast String::EFormat enums to 'int' to get rid of linux compiler warnings like that:
+	passing 'PLCore::String::EFormat' chooses 'int' over 'unsigned int' [-Wsign-promo]
+- updated wchar_t check template to print a notice if it encounters an wchar_t* string with unicode characters that can't be converted to a char* string
+
+
+
+>> 01.03.2012
+[JS]
+PLUnitTests:
+- added a new CHECK-Macro to UnitTest++: "CHECK_NOT_EQUAL"
+	-> useful for checking if two strings are not equal
+- added String tests (migrated from PLTestBase)
+
+
+
+﻿>> 25.02.2012
 [JS]
 PLUnitTests:
 - Removed getchar() call, slipped into repo somehow ;)
@@ -43,7 +61,7 @@ PLUnitTests:
 [CP]
 PLUnitPerformance:
 - added "ms" to the values which are displayed as milliseconds
-- values are also displayed as floatingpoint values (when "ms" is not added, 
+- values are also displayed as floatingpoint values (when "ms" is not added,
 	false values are displayed. Mostly it seems multiplied by 1000 by "mistake"?)
 - added Array, List, Hashmap Tests
 
@@ -389,7 +407,7 @@ PLBaseTest:
 >> 22.07.2007
 [CO]
 PLBaseTest:
-- Tests für die 'Function'-Funktionalität (von Stefan am 25.02.2007 bei PLGeneral eingeführt) hinzugefügt 
+- Tests für die 'Function'-Funktionalität (von Stefan am 25.02.2007 bei PLGeneral eingeführt) hinzugefügt
 
 
 
@@ -443,7 +461,7 @@ PLBaseTest:
 >> 28.01.2007
 [SB]
 - CMake Projektdateien für alle PLTests-Projekte hinzugefügt
-- PLBaseTest und PLTestPlugin ins Hauptverzeichnis verschoben 
+- PLBaseTest und PLTestPlugin ins Hauptverzeichnis verschoben
 
 
 
@@ -706,7 +724,7 @@ Mathe Tests:
 >> 18.02.2006 - 21.02.2006
 [CO]
 Mathe Tests:
-- Matrizen Tests erweitert bzw. angefangen diese Tests zu Implementieren. Hab auch gleich die verschiedenen Möglichkeiten 
+- Matrizen Tests erweitert bzw. angefangen diese Tests zu Implementieren. Hab auch gleich die verschiedenen Möglichkeiten
   auf die Elemente der Matrizen zuzugreifen durchgetestet da hier schnell etwas durcheinander kommen kann.
 
 
@@ -744,14 +762,14 @@ Mathe Tests: Vektor Tests erweitert bzw. implementiert :)  (es fehlen natürlich
 >> 12.02.2006
 [SW]
 PLBaseTest:
-- MultithreadingTest: das lesen der globalen Variable g_bContinue wird nun per Mutex 
+- MultithreadingTest: das lesen der globalen Variable g_bContinue wird nun per Mutex
   "geschützt". Ist glaube ich nicht wirklich notwendig, aber sicher ist sicher :)
 - subversion: habe das property svn:eol-style für die neuen Dateien gesetzt.
-    um dies automatisch zu machen sollten folgende optionen in der config-datei 
+    um dies automatisch zu machen sollten folgende optionen in der config-datei
     von subversion vorgenommen werden:
     [miscellany]
     enable-auto-props = yes
-    
+
     [auto-props]
     *.c = svn:eol-style=native
     *.cpp = svn:eol-style=native
@@ -766,7 +784,7 @@ PLBaseTest:
     *.txt = svn:eol-style=native
     SCons* = svn:eol-style=native
     Makefile = svn:eol-style=native
-    
+
     damit sollte jede datei die passende eol-kennung(bis auf die vc-projekt-dateien immer die kennung, welche vom OS verwendet wird)
     beim auschecken haben.
 
@@ -780,8 +798,8 @@ PLBaseTest:
 
 >> 09.02.2006
 [CO]
-- Base Tests um Fibonacci Heap Test erweitert + Heap Test etwas geändert: Bei den Heap Iteratoren kann man NICHT im 
-  allgemeinen davon ausgehen das zumindestens das erste zurückgegebene Element das 'kleinste' ist... dies ist zwar bei 
+- Base Tests um Fibonacci Heap Test erweitert + Heap Test etwas geändert: Bei den Heap Iteratoren kann man NICHT im
+  allgemeinen davon ausgehen das zumindestens das erste zurückgegebene Element das 'kleinste' ist... dies ist zwar bei
   einem Binary Heap Iterator so, aber nicht bei einem Binominal/Fibonacci Heap Iterator!
 
 
@@ -822,7 +840,7 @@ Base Test:
                    Wenn beim öffnen ein fehler auftrat so wird der eine fehlermeldung ausgegeben und die Testfunktion beendet.
                    Cleanup-funktion hinzugefügt für linux-build
 PLTestPlugin:
-  DEFINE_CONSTRUCTION_PUBLIC-Makro in TestClass2.h erzeugt einen sigsev wenn 
+  DEFINE_CONSTRUCTION_PUBLIC-Makro in TestClass2.h erzeugt einen sigsev wenn
   versucht wird eine instance dieser Klasse im Testprogramm zu erzeugen
 
 
@@ -830,7 +848,7 @@ PLTestPlugin:
 >> 05.02.2006
 [CO]
 Base Tests:
-- List, Array, Pool, FastPool & Bitset sind wieder einzelnde Test Cases - jedoch von einem speziellem Container Test 
+- List, Array, Pool, FastPool & Bitset sind wieder einzelnde Test Cases - jedoch von einem speziellem Container Test
   Case abgeleitet der bereits allgemeine Container Tests bereitstellt
 - SimpleMap & HashMap zu einzelnen Test Cases gemacht welche von einem speziellem Map Test Case abgeleitet sind
 
@@ -898,7 +916,7 @@ Base Tests:
 
 >> 12.01.2006
 [CO]
-- Neues Projekt: PLTestBase: Test Basis Lib auf der die anderen Tests aufbauen. 'PLTestBase.dll' und 'PLTestBaseD.dll' 
+- Neues Projekt: PLTestBase: Test Basis Lib auf der die anderen Tests aufbauen. 'PLTestBase.dll' und 'PLTestBaseD.dll'
   liegen im Runtime Ordner, werden jedoch von 'CreateSDK.py' ausgefiltert und landen daher auch nicht im PL SDK.
 - Wie mit Stefan besprochen BaseTests nochmal etwas Umstrukturiert. Math liegt nun bei den General Tests mit drinnen.
   Jetzt muss noch der FS Test dort mit eingebaut werden + die einzelnen Tests sauber ausgearbeitet werden.
@@ -907,8 +925,8 @@ Base Tests:
 
 >> 11.01.2006
 [CO]
-- PLBaseTest & PLMathTest neu Strukturiert: Die einzelnen Tests liegen nun in enstsprechenden Dateien so, das alles etwas 
-  Übersichtlicher ist... cpp Dateien hab ich mir hier gespart, ich denke Header reichen hier der einfachtkeitshalber 
+- PLBaseTest & PLMathTest neu Strukturiert: Die einzelnen Tests liegen nun in enstsprechenden Dateien so, das alles etwas
+  Übersichtlicher ist... cpp Dateien hab ich mir hier gespart, ich denke Header reichen hier der einfachtkeitshalber
   völlig.
 
 
@@ -971,7 +989,7 @@ Base Tests:
 - PLTests ist wieder aktuell. Ich werde nun das Projekt kräftig entmisten und alle daraus hervorgegangenen brauchbaren
   Entities in ein neues Entity-Projekt stecken. (PLEntityPacked1 oder so :)
   Ein Teil wird wohl auch in nen PLSampleEntities-Projekt verschoben, wie z.B. das mit dem Picking, Occulision Test etc.
-  und natürlich noch etwas mehr Dokumentiert, aber ich denke das sind wirklich brauchbare und Demonstrative Beispiel 
+  und natürlich noch etwas mehr Dokumentiert, aber ich denke das sind wirklich brauchbare und Demonstrative Beispiel
   Entites.
 
 
@@ -1173,6 +1191,6 @@ Base Tests:
 
 >> 08.05.04
 [CO]
-- Dieses Projekt wird nun PLDemos ersetzen. Durch den anderen Namen unserer internen PL Tests kommt das nicht mit dem 
+- Dieses Projekt wird nun PLDemos ersetzen. Durch den anderen Namen unserer internen PL Tests kommt das nicht mit dem
   großen PL Demo bzw. mit möglicherweise kleineren öffentlichen PL Demos durcheinander. Dieses Projekt ist also quasi
   unsere 'interne Spielwiese' zum Experimentieren und Testen. Das alte PL Demos liegt nun verpackt im 'Backup/Old'-Ordner.

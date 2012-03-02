@@ -327,7 +327,7 @@ SUITE(Bitset) {
 	CHECK_EQUAL(true, bitset.Get(17U));
 	}
 	*/
-	
+
 	TEST_FIXTURE(ConstructTestBitset, Operator_Add_Container)
 	{
 		bitset.Clear();
@@ -625,7 +625,7 @@ SUITE(Bitset) {
 	{
 		bitset.Clear();
 		bitset.Add(true);
-		bitset.Add(false);		
+		bitset.Add(false);
 		bitset.Add(false);
 		bitset.Add(false);
 
@@ -804,7 +804,7 @@ SUITE(Bitset) {
 		bitset.RemoveAtIndex(1);
 		CHECK(bitset != Comparecon);
 	}
-	
+
 	TEST_FIXTURE(ConstructTestBitset, test_iterator)
 	{
 		// setting up Containers for testing

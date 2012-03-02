@@ -38,14 +38,21 @@ class TestDetails;
 //[ Declarations                                          ]
 //[-------------------------------------------------------]
 
-// adds specialization functions to CheckEqual Template with wchar_t support 
+// adds specialization functions to CheckEqual Template with wchar_t support
 namespace UnitTest {
-	void CheckWcharEqual(TestResults& results, wchar_t const* expected, wchar_t const* actual, 
+	void CheckWcharEqual(TestResults& results, wchar_t const* expected, wchar_t const* actual,
 		TestDetails const& details);
 	void CheckEqual(TestResults& results, wchar_t const* expected, wchar_t const* actual, TestDetails const& details);
 	void CheckEqual(TestResults& results, wchar_t* expected, wchar_t* actual, TestDetails const& details);
 	void CheckEqual(TestResults& results, wchar_t* expected, wchar_t const* actual, TestDetails const& details);
 	void CheckEqual(TestResults& results, wchar_t const* expected, wchar_t* actual, TestDetails const& details);
+
+	void CheckWcharNotEqual(TestResults& results, wchar_t const* expected, wchar_t const* actual,
+		TestDetails const& details);
+	void CheckNotEqual(TestResults& results, wchar_t const* expected, wchar_t const* actual, TestDetails const& details);
+	void CheckNotEqual(TestResults& results, wchar_t* expected, wchar_t* actual, TestDetails const& details);
+	void CheckNotEqual(TestResults& results, wchar_t* expected, wchar_t const* actual, TestDetails const& details);
+	void CheckNotEqual(TestResults& results, wchar_t const* expected, wchar_t* actual, TestDetails const& details);
 }
 
 #endif // __PLUNITTESTS_UNITTESTADDINS_WCHAR_TEMPLATE_H_

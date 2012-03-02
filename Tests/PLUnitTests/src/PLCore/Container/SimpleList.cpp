@@ -20,7 +20,7 @@ SUITE(SimpleList_PrimitiveInt) {
 	// Our List Test Fixture :)
 	struct ConstructTestSimpleList
 	{
-		ConstructTestSimpleList() { 
+		ConstructTestSimpleList() {
 			/* some setup */
 		}
 		~ConstructTestSimpleList() {
@@ -139,7 +139,7 @@ SUITE(SimpleList_PrimitiveInt) {
 		CHECK(!iter.HasPrevious());
 		CHECK_EQUAL(SimpleList<int>::Null, iter.Next());
 		CHECK_EQUAL(SimpleList<int>::Null, iter.Previous());
-		
+
 		// enditerator, 2 elements
 		Lst = Itercon;
 

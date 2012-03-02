@@ -21,7 +21,7 @@ SUITE(Pool_PrimitiveInt) {
 	// Our Pool Test Fixture :)
 	struct ConstructTestPool
 	{
-		ConstructTestPool() { 
+		ConstructTestPool() {
 			/* some setup */
 			cPool.Add(1);
 			cPool.Add(2);

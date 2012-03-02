@@ -21,7 +21,7 @@ SUITE(HashMap_Int_Int) {
 	// Our List Test Fixture :)
 	struct ConstructTestHashMap
 	{
-		ConstructTestHashMap() { 
+		ConstructTestHashMap() {
 			/* some setup */
 			Hash.Add(1, 1);
 			Hash.Add(2, 2);

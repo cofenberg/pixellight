@@ -21,7 +21,7 @@ SUITE(Array_PrimitiveInt) {
 	// Our Array Test Fixture :)
 	struct ConstructTestArray
 	{
-		ConstructTestArray() { 
+		ConstructTestArray() {
 			/* some setup */
 			Arr.Add(1);
 			Arr.Add(2);
@@ -56,7 +56,7 @@ SUITE(Array_PrimitiveInt) {
 	TEST_FIXTURE(ConstructTestArray, SetResizeCount_100) {
 		Arr.SetResizeCount(100U);
 		CHECK_EQUAL(100U, Arr.GetResizeCount());
-	}	
+	}
 
 	TEST_FIXTURE(ConstructTestArray, SetResizeCount_4byte) {
 		Arr.SetResizeCount(4294967295U);

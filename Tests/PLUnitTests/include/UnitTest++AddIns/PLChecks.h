@@ -32,6 +32,26 @@ namespace UnitTest {
 		TestDetails const& details);
 
 	void CheckMissingImplementation(TestResults& results, TestDetails const& details);
+
+	template< typename Expected, typename Actual >
+	void CheckNotEqual(TestResults& results, Expected const& expected, Actual const& actual, TestDetails const& details)
+	{
+		if (expected == actual)
+		{
+			UnitTest::MemoryOutStream stream;
+			stream << "Expected not equal: " << expected << " == " << actual;
+
+			results.OnTestFailure(details, stream.GetText());
+		}
+	}
+
+	void CheckNotEqual(TestResults& results, char const* expected, char const* actual, TestDetails const& details);
+	void CheckNotEqual(TestResults& results, char* expected, char* actual, TestDetails const& details);
+	void CheckNotEqual(TestResults& results, char* expected, char const* actual, TestDetails const& details);
+	void CheckNotEqual(TestResults& results, char const* expected, char* actual, TestDetails const& details);
+
+	// PLCore::String::EFormat
+	void CheckEqual(TestResults& results, PLCore::String::EFormat const expected, PLCore::String::EFormat const actual, TestDetails const& details);
 }
 
 #endif // __PLCHECKS_H_
