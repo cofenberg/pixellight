@@ -212,6 +212,24 @@ class ImagePart {
 		*/
 		PLGRAPHICS_API void DeleteMipmaps();
 
+		/**
+		*  @brief
+		*    Get size of image data in bytes, including all mipmaps
+		*
+		*  @return
+		*    Size of image data in bytes
+		*/
+		PLGRAPHICS_API PLCore::uint32 GetDataSize() const;
+
+		/**
+		*  @brief
+		*    Get size of compressed image data in bytes, including all mipmaps
+		*
+		*  @return
+		*    Size of compressed image data in bytes
+		*/
+		PLGRAPHICS_API PLCore::uint32 GetCompressedDataSize() const;
+
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]

@@ -202,6 +202,36 @@ void ImagePart::DeleteMipmaps()
 	}
 }
 
+/**
+*  @brief
+*    Get size of image data in bytes, including all mipmaps
+*/
+uint32 ImagePart::GetDataSize() const
+{
+	// Sum up the data size of all mipmaps
+	uint32 nDataSize = 0;
+	for (uint32 i=0; i<m_lstMipmaps.GetNumOfElements(); i++)
+		nDataSize += m_lstMipmaps[i]->GetDataSize();
+
+	// Done
+	return nDataSize;
+}
+
+/**
+*  @brief
+*    Get size of compressed image data in bytes, including all mipmaps
+*/
+uint32 ImagePart::GetCompressedDataSize() const
+{
+	// Sum up the compressed data size of all mipmaps
+	uint32 nCompressedDataSize = 0;
+	for (uint32 i=0; i<m_lstMipmaps.GetNumOfElements(); i++)
+		nCompressedDataSize += m_lstMipmaps[i]->GetCompressedDataSize();
+
+	// Done
+	return nCompressedDataSize;
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

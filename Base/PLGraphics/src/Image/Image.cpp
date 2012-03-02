@@ -342,6 +342,36 @@ ImageBuffer *Image::GetBuffer(uint32 nPart, uint32 nMipmap) const
 
 /**
 *  @brief
+*    Get size of image data in bytes, including all parts and mipmaps
+*/
+uint32 Image::GetDataSize() const
+{
+	// Sum up the data size of all mipmaps
+	uint32 nDataSize = 0;
+	for (uint32 i=0; i<m_lstParts.GetNumOfElements(); i++)
+		nDataSize += m_lstParts[i]->GetDataSize();
+
+	// Done
+	return nDataSize;
+}
+
+/**
+*  @brief
+*    Get size of compressed image data in bytes, including all parts and mipmaps
+*/
+uint32 Image::GetCompressedDataSize() const
+{
+	// Sum up the compressed data size of all mipmaps
+	uint32 nCompressedDataSize = 0;
+	for (uint32 i=0; i<m_lstParts.GetNumOfElements(); i++)
+		nCompressedDataSize += m_lstParts[i]->GetCompressedDataSize();
+
+	// Done
+	return nCompressedDataSize;
+}
+
+/**
+*  @brief
 *    Create a test image
 */
 void Image::CreateTestImage(ETestImage nTestImage)
