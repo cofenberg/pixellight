@@ -69,6 +69,7 @@ SUITE(String) {
 			CHECK_EQUAL( L"a", sTest.GetUnicode());
 		}
 		{
+			// [TODO] next line emits "warning C4428: universal-character-name encountered in source"
 			String sTest(L'\u9f8d');
 			CHECK_EQUAL(1U, sTest.GetLength());
 			CHECK_EQUAL( L"\u9f8d", sTest.GetUnicode());
@@ -4191,9 +4192,12 @@ SUITE(String) {
 	TEST_FIXTURE(ConstructTest, Special_Test_Format_g_5_12f) {
 		CHECK_EQUAL("5.12", String::Format("%g", 5.12f).GetASCII());
 
-		// Now, change the local...
-		char *pLocalSave = _strdup(setlocale(LC_ALL, nullptr));
-		
+		PL_WARNING_PUSH
+			PL_WARNING_DISABLE(4996)    // "warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details."
+			// Now, change the locale...
+			char *pLocalSave = strdup(setlocale(LC_ALL, nullptr));
+		PL_WARNING_POP
+
 		// Get the current set locale, we REALLY need to backup the locale because it "may" be changed by "setlocale"
 		setlocale(LC_ALL, "German"); // Set another local, now normally a ',' instead of '.'
 									 // is used by printf and so on... (but our string class ignores that :)
