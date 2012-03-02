@@ -92,4 +92,8 @@ namespace UnitTest {
 	{
 		CheckStringsNotEqual(results, expected, actual, details);
 	}
+
+	void CheckEqual(TestResults& results, PLCore::String::EFormat const expected, PLCore::String::EFormat const actual, TestDetails const& details) {
+		CheckEqual(results, static_cast<int>(expected), static_cast<int>(actual), details);
+	}
 }
