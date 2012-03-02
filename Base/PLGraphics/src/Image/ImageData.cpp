@@ -373,108 +373,158 @@ bool ImageData::Decompress()
 	const uint8 *pCompressedData = m_pCompressedData;
 	switch (m_nCompression) {
 		case CompressionDXT1:
+		{
 			// Loop trough all block rows
-			for (int y=0; y<m_vSize.y; y+=4) {
-				// Loop trough all blocks within the current row
-				for (int x=0; x<m_vSize.x; x+=4) {
-					// Get the current destination block start
-					uint8 *pnCurrentDestination = m_pData + (y*m_vSize.x + x)*nComponentsPerPixel;
+			const uint32 nBytesPerPlane = GetBytesPerPlane();
+			uint8 *pCurrentData = m_pData;
+			for (int z=0; z<m_vSize.z; z++) {
+				// Loop trough all block rows
+				for (int y=0; y<m_vSize.y; y+=4) {
+					// Loop trough all blocks within the current row
+					for (int x=0; x<m_vSize.x; x+=4) {
+						// Get the current destination block start
+						uint8 *pnCurrentDestination = pCurrentData + (y*m_vSize.x + x)*nComponentsPerPixel;
 
-					// Get the current block size... Look out! Reduce the block size so we don't leave the area of the destination image!!
-					const int nCurrentBlockWidth  = nBlockWidth  - Math::Max(0, (x+nBlockWidth)  - m_vSize.x);
-					const int nCurrentBlockHeight = nBlockHeight - Math::Max(0, (y+nBlockHeight) - m_vSize.y);
+						// Get the current block size... Look out! Reduce the block size so we don't leave the area of the destination image!!
+						const int nCurrentBlockWidth  = nBlockWidth  - Math::Max(0, (x+nBlockWidth)  - m_vSize.x);
+						const int nCurrentBlockHeight = nBlockHeight - Math::Max(0, (y+nBlockHeight) - m_vSize.y);
 
-					// Decode the current DXT color block
-					DecodeDXTColorBlock(pnCurrentDestination, pCompressedData, nCurrentBlockWidth, nCurrentBlockHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel, m_nCompression, 0, 2);
-					pCompressedData += 8;
+						// Decode the current DXT color block
+						DecodeDXTColorBlock(pnCurrentDestination, pCompressedData, nCurrentBlockWidth, nCurrentBlockHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel, m_nCompression, 0, 2);
+						pCompressedData += 8;
+					}
 				}
+
+				// Update current data pointer (xy-plane (z/depth layer) are independent when it comes to compressed blocks)
+				pCurrentData += nBytesPerPlane;
 			}
 			break;
+		}
 
 		case CompressionDXT3:
+		{
 			// Loop trough all block rows
-			for (int y=0; y<m_vSize.y; y+=4) {
-				// Loop trough all blocks within the current row
-				for (int x=0; x<m_vSize.x; x+=4) {
-					// Get the current destination block start
-					uint8 *pnCurrentDestination = m_pData + (y*m_vSize.x + x)*nComponentsPerPixel;
+			const uint32 nBytesPerPlane = GetBytesPerPlane();
+			uint8 *pCurrentData = m_pData;
+			for (int z=0; z<m_vSize.z; z++) {
+				// Loop trough all block rows
+				for (int y=0; y<m_vSize.y; y+=4) {
+					// Loop trough all blocks within the current row
+					for (int x=0; x<m_vSize.x; x+=4) {
+						// Get the current destination block start
+						uint8 *pnCurrentDestination = pCurrentData + (y*m_vSize.x + x)*nComponentsPerPixel;
 
-					// Get the current block size... Look out! Reduce the block size so we don't leave the area of the destination image!!
-					const int nCurrentBlockWidth  = nBlockWidth  - Math::Max(0, (x+nBlockWidth)  - m_vSize.x);
-					const int nCurrentBlockHeight = nBlockHeight - Math::Max(0, (y+nBlockHeight) - m_vSize.y);
+						// Get the current block size... Look out! Reduce the block size so we don't leave the area of the destination image!!
+						const int nCurrentBlockWidth  = nBlockWidth  - Math::Max(0, (x+nBlockWidth)  - m_vSize.x);
+						const int nCurrentBlockHeight = nBlockHeight - Math::Max(0, (y+nBlockHeight) - m_vSize.y);
 
-					// Decode the current DXT3 alpha block
-					DecodeDXT3AlphaBlock(pnCurrentDestination + 3, pCompressedData, nCurrentBlockWidth, nCurrentBlockHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel);
-					pCompressedData += 8;
+						// Decode the current DXT3 alpha block
+						DecodeDXT3AlphaBlock(pnCurrentDestination + 3, pCompressedData, nCurrentBlockWidth, nCurrentBlockHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel);
+						pCompressedData += 8;
 
-					// Decode the current DXT color block
-					DecodeDXTColorBlock(pnCurrentDestination, pCompressedData, nCurrentBlockWidth, nCurrentBlockHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel, m_nCompression, 0, 2);
-					pCompressedData += 8;
+						// Decode the current DXT color block
+						DecodeDXTColorBlock(pnCurrentDestination, pCompressedData, nCurrentBlockWidth, nCurrentBlockHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel, m_nCompression, 0, 2);
+						pCompressedData += 8;
+					}
 				}
+
+				// Update current data pointer (xy-plane (z/depth layer) are independent when it comes to compressed blocks)
+				pCurrentData += nBytesPerPlane;
 			}
 			break;
+		}
 
 		case CompressionDXT5:
+		{
 			// Loop trough all block rows
-			for (int y=0; y<m_vSize.y; y+=4) {
-				// Loop trough all blocks within the current row
-				for (int x=0; x<m_vSize.x; x+=4) {
-					// Get the current destination block start
-					uint8 *pnCurrentDestination = m_pData + (y*m_vSize.x + x)*nComponentsPerPixel;
+			const uint32 nBytesPerPlane = GetBytesPerPlane();
+			uint8 *pCurrentData = m_pData;
+			for (int z=0; z<m_vSize.z; z++) {
+				// Loop trough all block rows
+				for (int y=0; y<m_vSize.y; y+=4) {
+					// Loop trough all blocks within the current row
+					for (int x=0; x<m_vSize.x; x+=4) {
+						// Get the current destination block start
+						uint8 *pnCurrentDestination = pCurrentData + (y*m_vSize.x + x)*nComponentsPerPixel;
 
-					// Get the current block size... Look out! Reduce the block size so we don't leave the area of the destination image!!
-					const int nCurrentBlockWidth  = nBlockWidth  - Math::Max(0, (x+nBlockWidth)  - m_vSize.x);
-					const int nCurrentBlockHeight = nBlockHeight - Math::Max(0, (y+nBlockHeight) - m_vSize.y);
+						// Get the current block size... Look out! Reduce the block size so we don't leave the area of the destination image!!
+						const int nCurrentBlockWidth  = nBlockWidth  - Math::Max(0, (x+nBlockWidth)  - m_vSize.x);
+						const int nCurrentBlockHeight = nBlockHeight - Math::Max(0, (y+nBlockHeight) - m_vSize.y);
 
-					// Decode the current DXT5 alpha block
-					DecodeDXT5AlphaBlock(pnCurrentDestination + 3, pCompressedData, nCurrentBlockWidth, nCurrentBlockHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel);
-					pCompressedData += 8;
+						// Decode the current DXT5 alpha block
+						DecodeDXT5AlphaBlock(pnCurrentDestination + 3, pCompressedData, nCurrentBlockWidth, nCurrentBlockHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel);
+						pCompressedData += 8;
 
-					// Decode the current DXT color block
-					DecodeDXTColorBlock(pnCurrentDestination, pCompressedData, nCurrentBlockWidth, nCurrentBlockHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel, m_nCompression, 0, 2);
-					pCompressedData += 8;
+						// Decode the current DXT color block
+						DecodeDXTColorBlock(pnCurrentDestination, pCompressedData, nCurrentBlockWidth, nCurrentBlockHeight, nComponentsPerPixel, m_vSize.x*nComponentsPerPixel, m_nCompression, 0, 2);
+						pCompressedData += 8;
+					}
 				}
+
+				// Update current data pointer (xy-plane (z/depth layer) are independent when it comes to compressed blocks)
+				pCurrentData += nBytesPerPlane;
 			}
 			break;
+		}
 
 		case CompressionLATC1:
+		{
 			// Loop trough all block rows
-			for (int y=0; y<m_vSize.y; y+=4) {
-				// Loop trough all blocks within the current row
-				for (int x=0; x<m_vSize.x; x+=4) {
-					// Get the current destination block start
-					uint8 *pnCurrentDestination = m_pData + (y*m_vSize.x + x)*nComponentsPerPixel;
+			const uint32 nBytesPerPlane = GetBytesPerPlane();
+			uint8 *pCurrentData = m_pData;
+			for (int z=0; z<m_vSize.z; z++) {
+				// Loop trough all block rows
+				for (int y=0; y<m_vSize.y; y+=4) {
+					// Loop trough all blocks within the current row
+					for (int x=0; x<m_vSize.x; x+=4) {
+						// Get the current destination block start
+						uint8 *pnCurrentDestination = pCurrentData + (y*m_vSize.x + x)*nComponentsPerPixel;
 
-					// Get the current block size... Look out! Reduce the block size so we don't leave the area of the destination image!!
-					const int nCurrentBlockWidth  = nBlockWidth  - Math::Max(0, (x+nBlockWidth)  - m_vSize.x);
-					const int nCurrentBlockHeight = nBlockHeight - Math::Max(0, (y+nBlockHeight) - m_vSize.y);
+						// Get the current block size... Look out! Reduce the block size so we don't leave the area of the destination image!!
+						const int nCurrentBlockWidth  = nBlockWidth  - Math::Max(0, (x+nBlockWidth)  - m_vSize.x);
+						const int nCurrentBlockHeight = nBlockHeight - Math::Max(0, (y+nBlockHeight) - m_vSize.y);
 
-					// Decode the current DXT5 alpha block
-					DecodeDXT5AlphaBlock(pnCurrentDestination, pCompressedData, nCurrentBlockWidth, nCurrentBlockHeight, 1, m_vSize.x);
-					pCompressedData += 8;
+						// Decode the current DXT5 alpha block
+						DecodeDXT5AlphaBlock(pnCurrentDestination, pCompressedData, nCurrentBlockWidth, nCurrentBlockHeight, 1, m_vSize.x);
+						pCompressedData += 8;
+					}
 				}
+
+				// Update current data pointer (xy-plane (z/depth layer) are independent when it comes to compressed blocks)
+				pCurrentData += nBytesPerPlane;
 			}
 			break;
+		}
 
 		case CompressionLATC2:
+		{
 			// Loop trough all block rows
-			for (int y=0; y<m_vSize.y; y+=4) {
-				// Loop trough all blocks within the current row
-				for (int x=0; x<m_vSize.x; x+=4) {
-					// Get the current destination block start
-					uint8 *pnCurrentDestination = m_pData + (y*m_vSize.x + x)*nComponentsPerPixel;
+			const uint32 nBytesPerPlane = GetBytesPerPlane();
+			uint8 *pCurrentData = m_pData;
+			for (int z=0; z<m_vSize.z; z++) {
+				// Loop trough all block rows
+				for (int y=0; y<m_vSize.y; y+=4) {
+					// Loop trough all blocks within the current row
+					for (int x=0; x<m_vSize.x; x+=4) {
+						// Get the current destination block start
+						uint8 *pnCurrentDestination = pCurrentData + (y*m_vSize.x + x)*nComponentsPerPixel;
 
-					// Get the current block size... Look out! Reduce the block size so we don't leave the area of the destination image!!
-					const int nCurrentBlockWidth  = nBlockWidth  - Math::Max(0, (x+nBlockWidth)  - m_vSize.x);
-					const int nCurrentBlockHeight = nBlockHeight - Math::Max(0, (y+nBlockHeight) - m_vSize.y);
+						// Get the current block size... Look out! Reduce the block size so we don't leave the area of the destination image!!
+						const int nCurrentBlockWidth  = nBlockWidth  - Math::Max(0, (x+nBlockWidth)  - m_vSize.x);
+						const int nCurrentBlockHeight = nBlockHeight - Math::Max(0, (y+nBlockHeight) - m_vSize.y);
 
-					// Decode the current DXT5 alpha block
-					DecodeDXT5AlphaBlock(pnCurrentDestination,     pCompressedData + 8, nCurrentBlockWidth, nCurrentBlockHeight, 2, m_vSize.x*2);
-					DecodeDXT5AlphaBlock(pnCurrentDestination + 1, pCompressedData,     nCurrentBlockWidth, nCurrentBlockHeight, 2, m_vSize.x*2);
-					pCompressedData += 16;
+						// Decode the current DXT5 alpha block
+						DecodeDXT5AlphaBlock(pnCurrentDestination,     pCompressedData + 8, nCurrentBlockWidth, nCurrentBlockHeight, 2, m_vSize.x*2);
+						DecodeDXT5AlphaBlock(pnCurrentDestination + 1, pCompressedData,     nCurrentBlockWidth, nCurrentBlockHeight, 2, m_vSize.x*2);
+						pCompressedData += 16;
+					}
 				}
+
+				// Update current data pointer (xy-plane (z/depth layer) are independent when it comes to compressed blocks)
+				pCurrentData += nBytesPerPlane;
 			}
 			break;
+		}
 	}
 
 	// Done

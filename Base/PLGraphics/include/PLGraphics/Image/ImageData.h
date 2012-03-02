@@ -216,6 +216,24 @@ class ImageData : protected PLCore::RefCount<ImageData> {
 
 		/**
 		*  @brief
+		*    Get size of one row of image data in bytes
+		*
+		*  @return
+		*    Size of one row in bytes
+		*/
+		inline PLCore::uint32 GetBytesPerRow() const;
+
+		/**
+		*  @brief
+		*    Get size of one xy-plane (z/depth layer) of image data in bytes
+		*
+		*  @return
+		*    Size of one xy-plane in bytes
+		*/
+		inline PLCore::uint32 GetBytesPerPlane() const;
+
+		/**
+		*  @brief
 		*    Get image data
 		*
 		*  @return

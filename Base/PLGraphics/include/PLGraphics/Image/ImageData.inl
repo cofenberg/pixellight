@@ -128,6 +128,26 @@ inline PLCore::uint32 ImageData::GetDataSize() const
 
 /**
 *  @brief
+*    Get size of one row of image data in bytes
+*/
+inline PLCore::uint32 ImageData::GetBytesPerRow() const
+{
+	// Get size of a single row
+	return m_vSize.y ? (GetBytesPerPlane() / m_vSize.y) : 0;
+}
+
+/**
+*  @brief
+*    Get size of one xy-plane (z/depth layer) of image data in bytes
+*/
+inline PLCore::uint32 ImageData::GetBytesPerPlane() const
+{
+	// Get size of a single xy-plane
+	return m_vSize.z ? (m_nDataSize / m_vSize.z) : 0;
+}
+
+/**
+*  @brief
 *    Check if compressed data is available
 */
 inline bool ImageData::HasCompressedData() const

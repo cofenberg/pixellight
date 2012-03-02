@@ -292,7 +292,7 @@ inline PLCore::uint32 ImageBuffer::GetDataSize() const
 inline PLCore::uint32 ImageBuffer::GetBytesPerRow() const
 {
 	// Get size of a single row
-	return m_pImageData->GetSize().x * GetBytesPerPixelComponent() * GetComponentsPerPixel();
+	return m_pImageData->GetBytesPerRow();
 }
 
 /**
@@ -302,7 +302,7 @@ inline PLCore::uint32 ImageBuffer::GetBytesPerRow() const
 inline PLCore::uint32 ImageBuffer::GetBytesPerPlane() const
 {
 	// Get size of a single xy-plane
-	return m_pImageData->GetSize().x * m_pImageData->GetSize().y * GetBytesPerPixelComponent() * GetComponentsPerPixel();
+	return m_pImageData->GetBytesPerPlane();
 }
 
 /**
