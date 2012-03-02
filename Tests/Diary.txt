@@ -1,3 +1,12 @@
+>> 02.03.2012
+[JS]
+PLUnitTests:
+- overloaded CHECK_EQUAL template to automatically cast String::EFormat enums to 'int' to get rid of linux compiler warnings like that:
+	passing 'PLCore::String::EFormat' chooses 'int' over 'unsigned int' [-Wsign-promo]
+- updated wchar_t check template to print a notice if it encounters an wchar_t* string with unicode characters that can't be converted to a char* string
+
+
+
 >> 01.03.2012
 [JS]
 PLUnitTests:
