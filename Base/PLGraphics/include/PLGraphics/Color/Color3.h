@@ -254,6 +254,15 @@ class Color3 {
 
 		/**
 		*  @brief
+		*    Constructor
+		*
+		*  @param[in] sString
+		*    String to parse
+		*/
+		inline Color3(const PLCore::String &sString);
+
+		/**
+		*  @brief
 		*    Destructor
 		*/
 		inline ~Color3();

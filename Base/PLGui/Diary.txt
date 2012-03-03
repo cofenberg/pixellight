@@ -1,3 +1,9 @@
+>> 03.03.2012
+[CO]
+- "SizeHint"": Added missing constructor taking a string
+
+
+
 >> 08.10.2011
 [CO]
 - "GuiAndroid" bugfix: D'OH! The mouse movement test should be "Math::Abs(fDeltaX) > 3" instead of "fDeltaX > 3" to also take a

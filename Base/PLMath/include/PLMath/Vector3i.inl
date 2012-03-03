@@ -54,6 +54,16 @@ inline Vector3i::Vector3i(int nX, int nY, int nZ) :
 
 /**
 *  @brief
+*    Constructor
+*/
+inline Vector3i::Vector3i(const PLCore::String &sString)
+{
+	// The following method sets all components, so we don't need the initializer list in here
+	FromString(sString);
+}
+
+/**
+*  @brief
 *    Destructor
 */
 inline Vector3i::~Vector3i()

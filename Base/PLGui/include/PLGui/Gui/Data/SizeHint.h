@@ -98,6 +98,15 @@ class SizeHint {
 
 		/**
 		*  @brief
+		*    Constructor
+		*
+		*  @param[in] sString
+		*    String to parse
+		*/
+		PLGUI_API SizeHint(const PLCore::String &sString);
+
+		/**
+		*  @brief
 		*    Destructor
 		*/
 		PLGUI_API ~SizeHint();

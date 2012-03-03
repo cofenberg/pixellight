@@ -1,4 +1,10 @@
-﻿>> 14.02.2012
+﻿>> 03.03.2012
+[CO]
+- "Vector2i" & "Vector2i": Added missing constructor taking a string
+
+
+
+>> 14.02.2012
 [CO]
 - "EulerAngles"-Bugfix: Indices were swapped within "ToMatrix()" and "FromMatrix()"
   -> When writing the unit tests for Euler angles, Jens Schmer and Prof. Dr. Frank Deinzer noticed an odd behaviour. When using e.g. "Matrix3::FromEulerAngleX()"

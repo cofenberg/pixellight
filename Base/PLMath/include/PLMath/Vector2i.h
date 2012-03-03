@@ -117,6 +117,15 @@ class Vector2i {
 
 		/**
 		*  @brief
+		*    Constructor
+		*
+		*  @param[in] sString
+		*    String to parse
+		*/
+		inline Vector2i(const PLCore::String &sString);
+
+		/**
+		*  @brief
 		*    Destructor
 		*/
 		inline ~Vector2i();

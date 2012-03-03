@@ -52,6 +52,16 @@ inline Vector2i::Vector2i(int nX, int nY) :
 
 /**
 *  @brief
+*    Constructor
+*/
+inline Vector2i::Vector2i(const PLCore::String &sString)
+{
+	// The following method sets all components, so we don't need the initializer list in here
+	FromString(sString);
+}
+
+/**
+*  @brief
 *    Destructor
 */
 inline Vector2i::~Vector2i()

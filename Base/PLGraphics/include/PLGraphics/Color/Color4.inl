@@ -206,6 +206,16 @@ inline Color4::Color4(const Color4 &cSource) :
 
 /**
 *  @brief
+*    Constructor
+*/
+inline Color4::Color4(const PLCore::String &sString)
+{
+	// The following method sets all components, so we don't need the initializer list in here
+	FromString(sString);
+}
+
+/**
+*  @brief
 *    Destructor
 */
 inline Color4::~Color4()

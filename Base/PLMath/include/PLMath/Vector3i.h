@@ -138,6 +138,15 @@ class Vector3i {
 
 		/**
 		*  @brief
+		*    Constructor
+		*
+		*  @param[in] sString
+		*    String to parse
+		*/
+		inline Vector3i(const PLCore::String &sString);
+
+		/**
+		*  @brief
 		*    Destructor
 		*/
 		inline ~Vector3i();

@@ -59,6 +59,16 @@ SizeHint::SizeHint(const SizeHint &cSizeHint) :
 
 /**
 *  @brief
+*    Constructor
+*/
+SizeHint::SizeHint(const String &sString)
+{
+	// The following method sets all components, so we don't need the initializer list in here
+	FromString(sString);
+}
+
+/**
+*  @brief
 *    Destructor
 */
 SizeHint::~SizeHint()

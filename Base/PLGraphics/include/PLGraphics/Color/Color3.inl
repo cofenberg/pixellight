@@ -170,6 +170,16 @@ inline Color3::Color3(const Color3 &cSource) :
 
 /**
 *  @brief
+*    Constructor
+*/
+inline Color3::Color3(const PLCore::String &sString)
+{
+	// The following method sets all components, so we don't need the initializer list in here
+	FromString(sString);
+}
+
+/**
+*  @brief
 *    Destructor
 */
 inline Color3::~Color3()
