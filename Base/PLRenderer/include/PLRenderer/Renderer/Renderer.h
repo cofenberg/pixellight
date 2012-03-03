@@ -656,9 +656,7 @@ class Renderer : public PLCore::Object {
 		*      define all mipmap levels down to 1x1 otherwise the texture buffer is invalid when you try to use any min
 		*      filter that uses mipmaps. (the OpenGL renderer normally uses white color when invalid/incomplete texture buffer is enabled)
 		*/
-		virtual TextureBuffer1D *CreateTextureBuffer1D(PLGraphics::Image &cImage,
-													   TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown,
-													   PLCore::uint32 nFlags = TextureBuffer::Mipmaps | TextureBuffer::Compression) = 0;
+		virtual TextureBuffer1D *CreateTextureBuffer1D(PLGraphics::Image &cImage, TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown, PLCore::uint32 nFlags = TextureBuffer::Mipmaps) = 0;
 
 		/**
 		*  @brief
@@ -678,9 +676,7 @@ class Renderer : public PLCore::Object {
 		*  @see
 		*    - CreateTextureBuffer1D()
 		*/
-		virtual TextureBuffer2D *CreateTextureBuffer2D(PLGraphics::Image &cImage,
-													   TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown,
-													   PLCore::uint32 nFlags = TextureBuffer::Mipmaps | TextureBuffer::Compression) = 0;
+		virtual TextureBuffer2D *CreateTextureBuffer2D(PLGraphics::Image &cImage, TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown, PLCore::uint32 nFlags = TextureBuffer::Mipmaps) = 0;
 
 		/**
 		*  @brief
@@ -700,9 +696,7 @@ class Renderer : public PLCore::Object {
 		*  @see
 		*    - CreateTextureBuffer1D()
 		*/
-		virtual TextureBuffer2DArray *CreateTextureBuffer2DArray(PLGraphics::Image &cImage,
-																 TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown,
-																 PLCore::uint32 nFlags = TextureBuffer::Mipmaps | TextureBuffer::Compression) = 0;
+		virtual TextureBuffer2DArray *CreateTextureBuffer2DArray(PLGraphics::Image &cImage, TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown, PLCore::uint32 nFlags = TextureBuffer::Mipmaps) = 0;
 
 		/**
 		*  @brief
@@ -738,9 +732,7 @@ class Renderer : public PLCore::Object {
 		*  @see
 		*    - CreateTextureBuffer1D()
 		*/
-		virtual TextureBuffer *CreateTextureBufferRectangle(PLGraphics::Image &cImage,
-															TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown,
-															PLCore::uint32 nFlags = TextureBuffer::Compression) = 0;
+		virtual TextureBuffer *CreateTextureBufferRectangle(PLGraphics::Image &cImage, TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown, PLCore::uint32 nFlags = 0) = 0;
 
 		/**
 		*  @brief
@@ -764,9 +756,7 @@ class Renderer : public PLCore::Object {
 		*  @see
 		*    - CreateTextureBuffer1D()
 		*/
-		virtual TextureBuffer3D *CreateTextureBuffer3D(PLGraphics::Image &cImage,
-													   TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown,
-													   PLCore::uint32 nFlags = TextureBuffer::Mipmaps | TextureBuffer::Compression) = 0;
+		virtual TextureBuffer3D *CreateTextureBuffer3D(PLGraphics::Image &cImage, TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown, PLCore::uint32 nFlags = TextureBuffer::Mipmaps) = 0;
 
 		/**
 		*  @brief
@@ -790,9 +780,7 @@ class Renderer : public PLCore::Object {
 		*  @see
 		*    - CreateTextureBuffer1D()
 		*/
-		virtual TextureBufferCube *CreateTextureBufferCube(PLGraphics::Image &cImage,
-														   TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown,
-														   PLCore::uint32 nFlags = TextureBuffer::Mipmaps | TextureBuffer::Compression) = 0;
+		virtual TextureBufferCube *CreateTextureBufferCube(PLGraphics::Image &cImage, TextureBuffer::EPixelFormat nInternalFormat = TextureBuffer::Unknown,PLCore::uint32 nFlags = TextureBuffer::Mipmaps) = 0;
 
 		/**
 		*  @brief
