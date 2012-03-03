@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Type/Type.h>
+#include <PLCore/Base/Var/Var.h>
 
 
 //[-------------------------------------------------------]
@@ -65,11 +65,10 @@ class Type<PLMath::Vector2i> {
 			return "vector2i";
 		}
 
-		// Convert var to PLMath::Vector2i
-		static PLMath::Vector2i ConvertFromVar(const DynVar &cVar)
+		// Convert dynamic variable to PLMath::Vector2i
+		static PLMath::Vector2i ConvertFromVar(const DynVar &cDynVar)
 		{
-			const int nValue = cVar.GetInt();
-			return PLMath::Vector2i(nValue, nValue);
+			return (cDynVar.GetTypeID() == TypeID) ? static_cast<const Var<PLMath::Vector2i>&>(cDynVar).Get() : cDynVar.GetString();
 		}
 
 		// Convert PLMath::Vector2i to bool

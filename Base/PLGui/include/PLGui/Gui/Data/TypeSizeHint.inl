@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Type/Type.h>
+#include <PLCore/Base/Var/Var.h>
 
 
 //[-------------------------------------------------------]
@@ -65,12 +65,10 @@ class Type<PLGui::SizeHint> {
 			return "sizehint";
 		}
 
-		// Convert var to PLGui::SizeHint
-		static PLGui::SizeHint ConvertFromVar(const DynVar &cVar)
+		// Convert dynamic variable to PLGui::SizeHint
+		static PLGui::SizeHint ConvertFromVar(const DynVar &cDynVar)
 		{
-			PLGui::SizeHint cSize;
-			cSize.FromString(cVar.GetString());
-			return cSize;
+			return (cDynVar.GetTypeID() == TypeID) ? static_cast<const Var<PLGui::SizeHint>&>(cDynVar).Get() : cDynVar.GetString();
 		}
 
 		// Convert PLGui::SizeHint to bool

@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Base/Type/Type.h>
+#include <PLCore/Base/Var/Var.h>
 
 
 //[-------------------------------------------------------]
@@ -65,11 +65,10 @@ class Type<PLGraphics::Color3> {
 			return "color3";
 		}
 
-		// Convert var to PLGraphics::Color3
-		static PLGraphics::Color3 ConvertFromVar(const DynVar &cVar)
+		// Convert dynamic variable to PLGraphics::Color3
+		static PLGraphics::Color3 ConvertFromVar(const DynVar &cDynVar)
 		{
-			const float fValue = cVar.GetFloat();
-			return PLGraphics::Color3(fValue, fValue, fValue);
+			return (cDynVar.GetTypeID() == TypeID) ? static_cast<const Var<PLGraphics::Color3>&>(cDynVar).Get() : cDynVar.GetString();
 		}
 
 		// Convert PLGraphics::Color3 to bool
