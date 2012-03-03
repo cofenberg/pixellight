@@ -1,3 +1,11 @@
+>> 03.03.2012
+[CO]
+- "Var::SetInt64()": Disabled the annoying warning (VC 2010)
+   "warning C4244: 'argument' : conversion from 'PLCore::int64' to 'PLCore::int32', possible loss of data""
+   -> We know that this conversion will introduce a potential loss of data
+
+
+
 >> 27.02.2012
 [CO]
 - The loadable system can now also deal with file formats which don't have any file extension

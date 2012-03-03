@@ -282,7 +282,11 @@ class Var : public DynVar {
 
 		virtual void SetInt64(int64 nValue) override
 		{
-			m_Value.Set(Type<T>::ConvertFromInt64(nValue));
+			// Disable an annoying warning, we know that this conversion will introduce a potential loss of data
+			PL_WARNING_PUSH
+				PL_WARNING_DISABLE(4244)	// warning C4244: 'argument' : conversion from 'PLCore::int64' to 'PLCore::int32', possible loss of data"
+				m_Value.Set(Type<T>::ConvertFromInt64(nValue));
+			PL_WARNING_POP
 		}
 
 		virtual uint8 GetUInt8() const override
