@@ -337,6 +337,9 @@ class Math {
 		*
 		*  @return
 		*    The value within the interval [fMin, fMax]
+		*
+		*  @note
+		*    - In case of violating the interface specification by swapping minimum/maximum the result will not be different to the one of the correct order
 		*/
 		static inline float WrapToInterval(float fValue, float fMin, float fMax);
 

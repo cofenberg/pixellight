@@ -2,6 +2,8 @@
 [CO]
 - "Math::ClampToInterval()": The user may try to fool us by swapping minimum/maximum (= violating the interface specification),
   catch this...
+- While working on the unit tests, Jens Schmer noticed an issue within "Math::WrapToInterval()", it's now using the algorithm
+  described at http://en.wikipedia.org/wiki/Wrapping_%28graphics%29 to have a known implementation
 
 
 
