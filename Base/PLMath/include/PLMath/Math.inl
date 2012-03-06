@@ -444,12 +444,25 @@ inline float Math::Sign(float x)
 */
 float Math::ClampToInterval(float fValue, float fMin, float fMax)
 {
-	if (fValue > fMax)
-		return fMax;
-	else if (fValue < fMin)
-		return fMin;
-	else
-		return fValue;
+	// Lookout! The user may try to fool us by swapping minimum/maximum (= violating the interface specification), catch this...
+	if (fMin < fMax) {
+		// Decent interface user
+		if (fValue > fMax)
+			return fMax;
+		else if (fValue < fMin)
+			return fMin;
+		else
+			return fValue;
+	} else {
+		// Messy interface user: Now we have to clean it up by swapping minimum/maximum
+		// -> No issue in here in case minimum and maximum are equal
+		if (fValue > fMin)
+			return fMin;
+		else if (fValue < fMax)
+			return fMax;
+		else
+			return fValue;
+	}
 }
 
 /**

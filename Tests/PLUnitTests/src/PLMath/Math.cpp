@@ -129,9 +129,8 @@ SUITE(Math) {
 		CHECK_EQUAL(1.0f, Math::ClampToInterval(1.0f, 1.0f, 2.0f));
 		CHECK_EQUAL(1.5f, Math::ClampToInterval(1.5f, 1.0f, 2.0f));
 		CHECK_EQUAL(2.0f, Math::ClampToInterval(2.1f, 1.0f, 2.0f));
-
-		// [TODO] what to expect here? lower bound > upper bound
-		CHECK_EQUAL(0.0f, Math::ClampToInterval(1.5f, 2.0f, 1.0f));
+		CHECK_EQUAL(2.0f, Math::ClampToInterval(1.5f, 2.0f, 1.0f));
+		CHECK_EQUAL(2.0f, Math::ClampToInterval(1.5f, 2.0f, 2.0f));
 	}
 
 	TEST(ClampToInterval_negative) {

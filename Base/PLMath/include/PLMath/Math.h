@@ -318,6 +318,9 @@ class Math {
 		*
 		*  @return
 		*    The value within the interval [fMin, fMax]
+		*
+		*  @note
+		*    - In case of violating the interface specification by swapping minimum/maximum, minimum/maximum is swapped internally in order to avoid chaos
 		*/
 		static inline float ClampToInterval(float fValue, float fMin, float fMax);
 
