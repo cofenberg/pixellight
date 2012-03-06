@@ -129,8 +129,8 @@ SUITE(Math) {
 		CHECK_EQUAL(1.0f, Math::ClampToInterval(1.0f, 1.0f, 2.0f));
 		CHECK_EQUAL(1.5f, Math::ClampToInterval(1.5f, 1.0f, 2.0f));
 		CHECK_EQUAL(2.0f, Math::ClampToInterval(2.1f, 1.0f, 2.0f));
-		CHECK_EQUAL(2.0f, Math::ClampToInterval(1.5f, 2.0f, 1.0f));
-		CHECK_EQUAL(2.0f, Math::ClampToInterval(1.5f, 2.0f, 2.0f));
+		CHECK_EQUAL(1.5f, Math::ClampToInterval(1.5f, 2.0f, 1.0f));	// Intended violation of the interface specification
+		CHECK_EQUAL(2.0f, Math::ClampToInterval(1.5f, 2.0f, 2.0f)); // Intended violation of the interface specification
 	}
 
 	TEST(ClampToInterval_negative) {
@@ -138,15 +138,17 @@ SUITE(Math) {
 		CHECK_EQUAL(-1.0f, Math::ClampToInterval(-1.0f, -2.0f, -1.0f));
 		CHECK_EQUAL(-1.5f, Math::ClampToInterval(-1.5f, -2.0f, -1.0f));
 		CHECK_EQUAL(-2.0f, Math::ClampToInterval(-2.1f, -2.0f, -1.0f));
+		CHECK_EQUAL(-1.0f, Math::ClampToInterval(0.0f, -1.0f, -2.0f));	// Intended violation of the interface specification
+		CHECK_EQUAL(-1.0f, Math::ClampToInterval(-1.0f, -1.0f, -2.0f));	// Intended violation of the interface specification
+		CHECK_EQUAL(-1.5f, Math::ClampToInterval(-1.5f, -1.0f, -2.0f));	// Intended violation of the interface specification
+		CHECK_EQUAL(-2.0f, Math::ClampToInterval(-2.1f, -1.0f, -2.0f));	// Intended violation of the interface specification
 	}
 
 	TEST(WrapToInterval_positive) {
-		// value, min, max		value' = value - rounddown((value-min)/(max-min))*(max-min)
-		// [TODO] how does WrapToInterval work? what can i expect?
-		// http://en.wikipedia.org/wiki/Wrapping_%28graphics%29
+		// Wrap as described at http://en.wikipedia.org/wiki/Wrapping_%28graphics%29
+		//   value' = value - rounddown((value-min)/(max-min))*(max-min)
 
 		// expect = 0 - rounddown((0-1)/(2-1))*(2-1) = 0 - (-1) = +1
-		// results is 2.0 ?
 		CHECK_EQUAL(1.0f, Math::WrapToInterval(0.0f, 1.0f, 2.0f));
 
 		// expect = 1 - rounddown((1-1)/(2-1))*(2-1) = 1 - (0) = +1
@@ -155,17 +157,28 @@ SUITE(Math) {
 		// expect = 1.5 - rounddown((1.5-1)/(2-1))*(2-1) = 1.5 - (0) = +1.5
 		CHECK_EQUAL(1.5f, Math::WrapToInterval(1.5f, 1.0f, 2.0f));
 
-		// expect = 2 - rounddown((2-1)/(2-1))*(2-1) = 2 - (0) = +2
-		CHECK_EQUAL(2.0f, Math::WrapToInterval(2.0f, 1.0f, 2.0f));
+		// expect = 2 - rounddown((2-1)/(2-1))*(2-1) = 2 - (1) = +1
+		CHECK_EQUAL(1.0f, Math::WrapToInterval(2.0f, 1.0f, 2.0f));
 
 		// expect = 2.1 - rounddown((2.1-1)/(2-1))*(2-1) = 2.1 - (1) = +1.1
-		// result is completely out of interval: 0.099999999
-		CHECK_EQUAL(1.1f, Math::WrapToInterval(2.1f, 1.0f, 2.0f));
+		// -> Result will be 1.0999999
+		CHECK_CLOSE(1.1f, Math::WrapToInterval(2.1f, 1.0f, 2.0f), Math::Epsilon);
 
-		// [TODO] catch this case?
-		// expect = 1.5 - rounddown((1.5-2)/(1-2))*(1-2) = 1.5 - (-0.5) = +2.0
-		// result is completely out of interval: -0.5
-		CHECK_EQUAL(2.0f, Math::WrapToInterval(1.5f, 2.0f, 1.0f));
+		// expect = 1.5 - rounddown((1.5-2)/(1-2))*(1-2) = 1.5 - (0) = +1.5
+		CHECK_EQUAL(1.5f, Math::WrapToInterval(1.5f, 2.0f, 1.0f));	// Intended violation of the interface specification
+
+		// expect = 1.5 - rounddown((1.5-1)/(1-1))*(1-1) = 1.0
+		// -> Has also to work, even if there would be an evil division through zero
+		CHECK_EQUAL(1.0f, Math::WrapToInterval(1.5f, 1.0f, 1.0f));	// Intended violation of the interface specification
+
+		// ... and now the same as above with swapped signs
+		CHECK_EQUAL(-2.0f, Math::WrapToInterval(0.0f, -2.0f, -1.0f));
+		CHECK_EQUAL(-2.0f, Math::WrapToInterval(-1.0f, -2.0f, -1.0f));
+		CHECK_EQUAL(-1.5f, Math::WrapToInterval(-1.5f, -2.0f, -1.0f));
+		CHECK_EQUAL(-2.0f, Math::WrapToInterval(-2.0f, -2.0f, -1.0f));
+		CHECK_CLOSE(-1.1f, Math::WrapToInterval(-2.1f, -2.0f, -1.0f), Math::Epsilon);
+		CHECK_EQUAL(-1.5f, Math::WrapToInterval(-1.5f, -1.0f, -2.0f));	// Intended violation of the interface specification
+		CHECK_EQUAL(-1.0f, Math::WrapToInterval(-1.5f, -1.0f, -1.0f));	// Intended violation of the interface specification
 	}
 
 	TEST(Abs_float) {

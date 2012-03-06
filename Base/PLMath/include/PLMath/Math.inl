@@ -471,14 +471,12 @@ float Math::ClampToInterval(float fValue, float fMin, float fMax)
 */
 float Math::WrapToInterval(float fValue, float fMin, float fMax)
 {
-	// In here, there's no need to check for swapped minimum/maximum, it's handled correctly
-
 	// Wrap as described at http://en.wikipedia.org/wiki/Wrapping_%28graphics%29
 	//   value' = value - rounddown((value-min)/(max-min))*(max-min)
-	fValue = fValue - static_cast<int>((fValue - fMin)/(fMax - fMin))*(fMax - fMin);
-
-	// This corrects the problem caused by using Int instead of Floor
-	return (fValue < 0) ? (fValue + fMax - fMin) : fValue;
+	// -> In here, there's no need to check for swapped minimum/maximum, it's handled correctly
+	// -> Check interval in order to avoid an evil division through zero
+	const float fInterval = (fMax - fMin);
+	return fInterval ? (fValue - floor((fValue - fMin)/fInterval)*(fMax - fMin)) : fMin;
 }
 
 /**
