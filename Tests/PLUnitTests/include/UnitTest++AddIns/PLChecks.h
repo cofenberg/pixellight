@@ -52,6 +52,9 @@ namespace UnitTest {
 
 	// PLCore::String::EFormat
 	void CheckEqual(TestResults& results, PLCore::String::EFormat const expected, PLCore::String::EFormat const actual, TestDetails const& details);
+
+	// PLCore::String
+	void CheckEqual(TestResults& results, PLCore::String const expected, PLCore::String const actual, TestDetails const& details);
 }
 
 #endif // __PLCHECKS_H_

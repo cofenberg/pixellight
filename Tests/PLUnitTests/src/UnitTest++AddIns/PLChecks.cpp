@@ -96,4 +96,17 @@ namespace UnitTest {
 	void CheckEqual(TestResults& results, PLCore::String::EFormat const expected, PLCore::String::EFormat const actual, TestDetails const& details) {
 		CheckEqual(results, static_cast<int>(expected), static_cast<int>(actual), details);
 	}
+
+	void CheckEqual(TestResults& results, PLCore::String const expected, PLCore::String const actual, TestDetails const& details) {
+		if (expected.GetFormat() == actual.GetFormat()) {
+			if (expected.GetFormat() == PLCore::String::Unicode) {
+				CheckEqual(results, expected.GetUnicode(), actual.GetUnicode(), details);
+			} else {
+				CheckEqual(results, expected.GetASCII(), actual.GetASCII(), details);
+			}
+		}
+		else {
+			CheckEqual(results, expected.GetASCII(), actual.GetASCII(), details);
+		}	
+	}
 }
