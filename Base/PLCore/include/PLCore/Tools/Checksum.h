@@ -173,6 +173,12 @@ class Checksum {
 		*/
 		virtual String Final() = 0;
 
+		/**
+		*  @brief
+		*    Resets stored checksum
+		*/
+		virtual void Reset() = 0;
+
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
@@ -198,8 +204,6 @@ class Checksum {
 		*    Reference to this instance
 		*/
 		Checksum &operator =(const Checksum &cSource);
-
-
 };
 
 

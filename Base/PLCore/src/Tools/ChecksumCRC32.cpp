@@ -149,6 +149,10 @@ String ChecksumCRC32::Final()
 	return String::Format("%x", m_nCRC32^0xFFFFFFFF);
 }
 
+void ChecksumCRC32::Reset()
+{
+	m_nCRC32=0xFFFFFFFF;
+}
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

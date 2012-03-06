@@ -200,6 +200,19 @@ String ChecksumSHA1::Final()
 	return sSHA1;
 }
 
+void ChecksumSHA1::Reset()
+{
+	// SHA1 initialization constants
+	m_nState[0] = 0x67452301;
+	m_nState[1] = 0xEFCDAB89;
+	m_nState[2] = 0x98BADCFE;
+	m_nState[3] = 0x10325476;
+	m_nState[4] = 0xC3D2E1F0;
+
+	m_nCount[0] = 0;
+	m_nCount[1] = 0;
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

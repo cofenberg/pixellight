@@ -396,6 +396,19 @@ String ChecksumMD5::Final()
 	return sMD5;
 }
 
+void ChecksumMD5::Reset()
+{
+	// Zero members
+	MemoryManager::Set(m_nBuffer, 0, 64);
+	m_nCount[0] = m_nCount[1] = 0;
+
+	// Load magic state initialization constants
+	m_nMD5[0] = 0x67452301;
+	m_nMD5[1] = 0xefcdab89;
+	m_nMD5[2] = 0x98badcfe;
+	m_nMD5[3] = 0x10325476;
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

@@ -1,3 +1,14 @@
+>> 06.03.2012
+[JS]
+- "PLCore::Tools::Checksum": added new virtual method "Reset()" to clear stored checksums
+  -> I spotted a weird behaviour of the Checksum Classes (MD5, CRC32, SHA1) during unit testing. It seemed that every test after the first checksum
+     calculation failed. I could locate the Problem in the abstract interface "PLCore::Checksum": it calls the implementation-specific "Update"-Method
+     without clearing previous checksums first and that results in corrupted checksums if you calculate more than one checksum on one specific checksum-object.
+  -> Fixed that with introducing a new method to the abstract "Checksum"-interface named "Reset". It should reset all previous calculated checksums.
+  -> Using the "Reset"-method before calculating anything in the "Checksum"-interfaces "Get"-methods including its overloads fixes this bug.
+  
+
+
 >> 03.03.2012
 [CO]
 - "Var::SetInt64()": Disabled the annoying warning (VC 2010)

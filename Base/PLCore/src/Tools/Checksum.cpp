@@ -42,6 +42,9 @@ namespace PLCore {
 */
 String Checksum::Get(const uint8 *pnBuffer, uint32 nNumOfBytes)
 {
+	// clear stored checksums
+	Reset();
+
 	// Check buffer size
 	if (nNumOfBytes) {
 		// Get the checksum
@@ -62,6 +65,9 @@ String Checksum::Get(const uint8 *pnBuffer, uint32 nNumOfBytes)
 */
 String Checksum::Get(const String &sString)
 {
+	// clear stored checksums
+	Reset();
+
 	// Get the checksum
 	if (sString.GetFormat() == String::Unicode)
 		Update(reinterpret_cast<const uint8*>(sString.GetUnicode()), sString.GetNumOfBytes(String::Unicode));
@@ -88,6 +94,10 @@ String Checksum::Get(File &cFile)
 		const uint32 nBufferSize = 1024;							// Checksum the file in blocks of 1024 bytes
 		uint8		 nBuffer[nBufferSize];							// Buffer for data read from the file
 		uint32		 nLength = cFile.Read(nBuffer, 1, nBufferSize);	// Number of bytes read from the file
+
+		// clear stored checksums
+		Reset();
+
 		while (nLength > 0) {
 			// Update the checksum
 			Update(nBuffer, nLength);
@@ -176,7 +186,6 @@ Checksum &Checksum::operator =(const Checksum &cSource)
 	// No implementation because the copy operator is never used
 	return *this;
 }
-
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

@@ -123,6 +123,7 @@ class ChecksumSHA1 : public Checksum {
 	private:
 		virtual void Update(const uint8 nInput[], uint32 nInputLen) override;
 		virtual String Final() override;
+		virtual void Reset() override;
 
 
 };
