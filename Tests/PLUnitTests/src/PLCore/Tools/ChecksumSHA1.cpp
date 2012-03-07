@@ -8,8 +8,8 @@
 #include <PLCore/File/File.h>
 #include <PLCore/String/String.h>
 
-#include "UnitTest++AddIns\PLCheckMacros.h"
-#include "UnitTest++AddIns\PLChecks.h"
+#include "UnitTest++AddIns/PLCheckMacros.h"
+#include "UnitTest++AddIns/PLChecks.h"
 
 /*
 * Naming Convention for SUITE:
@@ -129,16 +129,16 @@ SUITE(ChecksumSHA1) {
 	// ChecksumSHA1: Get(File &cFile)
 	TEST_FIXTURE(ConstructTest, ChecksumSHA1__Get_File__cFile_) {
 		// Check 'demotest.xml'
-		sChecksum = CheckFile(sumSHA1, "testData\\ChecksumTest_demo.xml");
+		sChecksum = CheckFile(sumSHA1, "testData/ChecksumTest_demo.xml");
 		CHECK_EQUAL("3225f273bb21d4252ac978da0d71fadb1e78eb7f", sChecksum.GetASCII());
 
 		// Check 'tokenizer.txt'
-		sChecksum = CheckFile(sumSHA1, "testData\\ChecksumTest_tokenizer.txt");
+		sChecksum = CheckFile(sumSHA1, "testData/ChecksumTest_tokenizer.txt");
 		// [TODO] fails!
 		CHECK_EQUAL("b6f311adc109cfe58ec1156ad926260c725f3945", sChecksum.GetASCII());
 
 		// Check 'test.zip'
-		sChecksum = CheckFile(sumSHA1, "testData\\ChecksumTest_test.zip");
+		sChecksum = CheckFile(sumSHA1, "testData/ChecksumTest_test.zip");
 		// [TODO] fails!
 		CHECK_EQUAL("1e531304afa05d60b5f9d1cd11b81cdbfae90947", sChecksum.GetASCII());
 	}
@@ -146,16 +146,16 @@ SUITE(ChecksumSHA1) {
 	// ChecksumSHA1: GetFile(const String &sFilename)
 	TEST_FIXTURE(ConstructTest, ChecksumSHA1__Get_const_String__sFilename_) {
 		// Check 'demotest.xml'
-		sChecksum = sumSHA1.GetFile("testData\\ChecksumTest_demo.xml");
+		sChecksum = sumSHA1.GetFile("testData/ChecksumTest_demo.xml");
 		CHECK_EQUAL("3225f273bb21d4252ac978da0d71fadb1e78eb7f", sChecksum.GetASCII());
 
 		// Check 'tokenizer.txt'
-		sChecksum = sumSHA1.GetFile("testData\\ChecksumTest_tokenizer.txt");
+		sChecksum = sumSHA1.GetFile("testData/ChecksumTest_tokenizer.txt");
 		// [TODO] fails!
 		CHECK_EQUAL("b6f311adc109cfe58ec1156ad926260c725f3945", sChecksum.GetASCII());
 
 		// Check 'test.zip'
-		sChecksum = sumSHA1.GetFile("testData\\ChecksumTest_test.zip");
+		sChecksum = sumSHA1.GetFile("testData/ChecksumTest_test.zip");
 		// [TODO] fails!
 		CHECK_EQUAL("1e531304afa05d60b5f9d1cd11b81cdbfae90947", sChecksum.GetASCII());
 	}
