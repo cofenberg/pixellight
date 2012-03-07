@@ -58,13 +58,15 @@ class MapTestCase : public TestCase {
 		*  @brief
 		*    Tests a map implementation
 		*
+		*  @param[in] nNullTypeInstance
+		*    Null type instance
 		*  @param[in] cMap
 		*    Map instance to test
 		*
 		*  @return
 		*    'true' if the test has succeeded, else 'false'
 		*/
-		bool Test(PLCore::Map<PLCore::String, int> &cMap);
+		bool Test(int &nNullTypeInstance, PLCore::Map<PLCore::String, int> &cMap);
 
 
 };

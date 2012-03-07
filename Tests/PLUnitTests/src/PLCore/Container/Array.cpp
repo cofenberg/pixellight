@@ -42,7 +42,7 @@ SUITE(Array_PrimitiveInt) {
 	};
 
 	TEST_FIXTURE(ConstructTestArray, DerivedContainerFunctions) {
-		CheckDerivedContainerFunctions<int>(Arr);
+		CheckDerivedContainerFunctions<int>(Array<int>::Null, Arr);
 	}
 
 	TEST_FIXTURE(ConstructTestArray, SetResizeCount_Zero) {

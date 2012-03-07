@@ -51,7 +51,7 @@ void HashMapTest::Test()
 
 	{ // Perform general tests
 		HashMap<String, int> mapHashMap;
-		bResult = MapTestCase::Test(mapHashMap);
+		bResult = MapTestCase::Test(HashMap<String, int>::Null, mapHashMap);
 	}
 
 	// Test hash map

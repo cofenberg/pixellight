@@ -37,7 +37,7 @@ SUITE(Pool_PrimitiveInt) {
 	};
 
 	TEST_FIXTURE(ConstructTestPool, DerivedContainerFunctions) {
-		CheckDerivedContainerFunctions<int>(cPool);
+		CheckDerivedContainerFunctions<int>(Pool<int>::Null, cPool);
 	}
 
 	TEST_FIXTURE(ConstructTestPool, FreeElementsFunctions) {

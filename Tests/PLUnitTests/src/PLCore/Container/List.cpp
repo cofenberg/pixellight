@@ -37,7 +37,7 @@ SUITE(List_PrimitiveInt) {
 	};
 
 	TEST_FIXTURE(ConstructTestList, DerivedContainerFunctions) {
-		CheckDerivedContainerFunctions<int>(Lst);
+		CheckDerivedContainerFunctions<int>(List<int>::Null, Lst);
 	}
 
 	// no more tests needed, i think it's all covered by DerivedContainerFunction-Test

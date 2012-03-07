@@ -37,7 +37,7 @@ SUITE(HashMap_Int_Int) {
 	};
 
 	TEST_FIXTURE(ConstructTestHashMap, DerivedMapFunctions) {
-		CheckDerivedMapFunctions<int,int>(Hash);
+		CheckDerivedMapFunctions<int,int>(HashMap<int,int>::Null, Hash);
 	}
 
 	TEST_FIXTURE(ConstructTestHashMap, CopyConstructor) {

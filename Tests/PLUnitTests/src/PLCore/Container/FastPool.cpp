@@ -75,7 +75,7 @@ SUITE(FastPool) {
 	};
 
 	TEST_FIXTURE(ConstructTestFastPool, DerivedContainerFunctions) {
-		CheckDerivedContainerFunctions<TestFastPoolElement>(cPool);
+		CheckDerivedContainerFunctions<TestFastPoolElement>(FastPool<TestFastPoolElement>::Null, cPool);
 	}
 
 	TEST_FIXTURE(ConstructTestFastPool, FreeElementsFunctions) {

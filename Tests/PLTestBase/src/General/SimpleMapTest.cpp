@@ -51,7 +51,7 @@ void SimpleMapTest::Test()
 
 	{ // Perform general tests
 		SimpleMap<String, int> mapSimpleMap;
-		bResult = MapTestCase::Test(mapSimpleMap);
+		bResult = MapTestCase::Test(SimpleMap<String, int>::Null, mapSimpleMap);
 	}
 
 	// Test hash map

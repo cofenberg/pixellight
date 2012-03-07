@@ -7,7 +7,7 @@
 #include <PLCore/Container/List.h>
 
 template <class KeyType, class ValueType>
-void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
+void CheckDerivedMapFunctions(ValueType &NullTypeInstance, PLCore::Map<KeyType, ValueType>& map) {
 	// backup lists to check order of elements
 	PLCore::List<ValueType> lstKeys, lstElems;
 
@@ -33,7 +33,7 @@ void CheckDerivedMapFunctions(PLCore::Map<KeyType, ValueType>& map) {
 		CHECK_EQUAL(2, map.Get(2));
 		CHECK_EQUAL(5, map.Get(5));
 		CHECK_EQUAL(1, map.Get(1));
-		CHECK_EQUAL((PLCore::Map<KeyType, ValueType>::Null), map.Get(99));
+		CHECK_EQUAL(NullTypeInstance, map.Get(99));
 	}
 
 	// Replace(key, newValue)

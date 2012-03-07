@@ -41,7 +41,7 @@ using namespace PLCore;
 *  @brief
 *    Tests a map implementation
 */
-bool MapTestCase::Test(Map<String, int> &cMap)
+bool MapTestCase::Test(int &nNullTypeInstance, Map<String, int> &cMap)
 {
 	bool bResult;
 
@@ -59,7 +59,7 @@ bool MapTestCase::Test(Map<String, int> &cMap)
 	EndTask( cMap.Get("One")   == 1 &&
 			 cMap.Get("Two")   == 2 &&
 			 cMap.Get("Three") == 3 &&
-			&cMap.Get("Four")  == &Map<String, int>::Null);
+			&cMap.Get("Four")  == &nNullTypeInstance);
 
 	// Iterator
 	List<int> lstValues; // Backup of the values to check whether 0 -> (NumOfElements-1)

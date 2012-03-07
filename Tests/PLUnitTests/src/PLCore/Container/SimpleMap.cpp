@@ -37,6 +37,6 @@ SUITE(SimpleMap_Int_Int) {
 	};
 
 	TEST_FIXTURE(ConstructTestSimpleMap, DerivedMapFunctions) {
-		CheckDerivedMapFunctions<int,int>(SimMap);
+		CheckDerivedMapFunctions<int,int>(SimpleMap<int,int>::Null, SimMap);
 	}
 }
