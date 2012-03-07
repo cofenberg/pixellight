@@ -33,17 +33,8 @@ SUITE(Bitset) {
 
 		// Container for testing
 		Bitset bitset, Comparecon, Emptycon, Itercon, Copycon, Removecon, Appendcon;
-		Array<bool> arr;
+		Array<bool> TestArr;
 	};
-
-	TEST(Check_TODOs) {
-		CHECK(false);
-	}
-
-	TEST_FIXTURE(ConstructTestBitset, testme){
-		bitset.Clear();
-		CHECK(bitset.IsEmpty());
-	}
 
 	TEST_FIXTURE(ConstructTestBitset, IsEmpty_and_Clear)
 	{
@@ -100,7 +91,6 @@ SUITE(Bitset) {
 		bitset.Add(true);
 
 		CHECK_EQUAL(&PLCore::Bitset::Null, &bitset.Get(6U));
-		CHECK(!bitset.Get(6U));
 	}
 
 	TEST_FIXTURE(ConstructTestBitset, Operator_AccessElement_Within_Bounds)
@@ -120,7 +110,6 @@ SUITE(Bitset) {
 		bitset.Add(false);
 
 		CHECK_EQUAL(&PLCore::Bitset::Null, &bitset[5]);
-		CHECK(!bitset[5]);
 	}
 
 	TEST_FIXTURE(ConstructTestBitset, Replace_ElementWithin)
@@ -203,7 +192,6 @@ SUITE(Bitset) {
 		CHECK_EQUAL(true, bitset.Get(2U));
 		CHECK_EQUAL(true, bitset.Get(3U));
 		CHECK_EQUAL(&PLCore::Bitset::Null, &bitset.Get(4U));
-		CHECK(!bitset.Get(4U));
 
 		// append
 		CHECK_EQUAL(2U, bitset.Add(ccon, 2));
@@ -216,7 +204,6 @@ SUITE(Bitset) {
 		CHECK_EQUAL(true, bitset.Get(4U));
 		CHECK_EQUAL(false, bitset.Get(5U));
 		CHECK_EQUAL(&PLCore::Bitset::Null, &bitset.Get(6U));
-		CHECK(!bitset.Get(6U));
 	}
 
 	TEST_FIXTURE(ConstructTestBitset, Operator_Add_Element)
@@ -227,7 +214,6 @@ SUITE(Bitset) {
 		CHECK_EQUAL(1U, bitset.GetNumOfElements());
 		CHECK_EQUAL(true, bitset.Get(0U));
 		CHECK_EQUAL(&PLCore::Bitset::Null, &bitset.Get(1U));
-		CHECK(!bitset.Get(1U));
 
 		bitset += false;
 
@@ -236,87 +222,84 @@ SUITE(Bitset) {
 		CHECK_EQUAL(false, bitset.Get(1U));
 	}
 
-	/*
 	TEST_FIXTURE(ConstructTestBitset, Add_Container)
 	{
-	bitset.Clear();
-	// constructing Container for adding
-	List<bool> Appendcon;
-	Appendcon.Clear();
-	Appendcon.Add(true);
-	Appendcon.Add(true);
-	Appendcon.Add(false);
-	Appendcon.Add(true);
+		bitset.Clear();
+		// constructing Container for adding
+		Appendcon.Clear();
+		Appendcon.Add(true);
+		Appendcon.Add(true);
+		Appendcon.Add(false);
+		Appendcon.Add(true);
 
-	//TODO: refactor these: each scenario = one TEST()
+		//TODO: refactor these: each scenario = one TEST()
 
-	//SCENARIOS:			return value, description
-	//Add(Append, 0, 0);	true, all elements from index 0
-	//Add(Append, 0, 1);	true, element at index 0
-	//Add(Append, 0, 8);	true, all to index 8 (stops when all elements from appending con are added)
-	//Add(Append, 2, 0);	true, all from index 2
-	//Add(Append, 2, 1);	true, element at index 2
-	//Add(Append, 2, 8);	true, all from index 2
-	//Add(Append, 9, 0);	false
-	//Add(Append, 9, 99);	false
-	//Add(Append);		same as Add(Append, 0, 0)
+		//SCENARIOS:			return value, description
+		//Add(Append, 0, 0);	true, all elements from index 0
+		//Add(Append, 0, 1);	true, element at index 0
+		//Add(Append, 0, 8);	true, all to index 8 (stops when all elements from appending con are added)
+		//Add(Append, 2, 0);	true, all from index 2
+		//Add(Append, 2, 1);	true, element at index 2
+		//Add(Append, 2, 8);	true, all from index 2
+		//Add(Append, 9, 0);	false
+		//Add(Append, 9, 99);	false
+		//Add(Append);		same as Add(Append, 0, 0)
 
 
-	// add all elements
-	CHECK(bitset.Add(Appendcon, 0U, 0U));
-	CHECK_EQUAL(4U, bitset.GetNumOfElements());
-	CHECK_EQUAL(true, bitset.Get(0U));
-	CHECK_EQUAL(true, bitset.Get(1U));
-	CHECK_EQUAL(false, bitset.Get(2U));
-	CHECK_EQUAL(true, bitset.Get(3U));
+		// add all elements
+		CHECK(bitset.Add(Appendcon, 0U, 0U));
+		CHECK_EQUAL(4U, bitset.GetNumOfElements());
+		CHECK_EQUAL(true, bitset.Get(0U));
+		CHECK_EQUAL(true, bitset.Get(1U));
+		CHECK_EQUAL(false, bitset.Get(2U));
+		CHECK_EQUAL(true, bitset.Get(3U));
 
-	// add element at index 0
-	CHECK(bitset.Add(Appendcon, 0U, 1U));
-	CHECK_EQUAL(5U, bitset.GetNumOfElements());
-	CHECK_EQUAL(true, bitset.Get(4U));
+		// add element at index 0
+		CHECK(bitset.Add(Appendcon, 0U, 1U));
+		CHECK_EQUAL(5U, bitset.GetNumOfElements());
+		CHECK_EQUAL(true, bitset.Get(4U));
 
-	// add all elements
-	CHECK(bitset.Add(Appendcon, 0U, 8U));
-	CHECK_EQUAL(9U, bitset.GetNumOfElements());
-	CHECK_EQUAL(true, bitset.Get(5U));
-	CHECK_EQUAL(true, bitset.Get(6U));
-	CHECK_EQUAL(false, bitset.Get(7U));
-	CHECK_EQUAL(true, bitset.Get(8U));
+		// add all elements
+		CHECK(bitset.Add(Appendcon, 0U, 8U));
+		CHECK_EQUAL(9U, bitset.GetNumOfElements());
+		CHECK_EQUAL(true, bitset.Get(5U));
+		CHECK_EQUAL(true, bitset.Get(6U));
+		CHECK_EQUAL(false, bitset.Get(7U));
+		CHECK_EQUAL(true, bitset.Get(8U));
 
-	// add all elements from index 2
-	CHECK(bitset.Add(Appendcon, 2U, 0U));
-	CHECK_EQUAL(11U, bitset.GetNumOfElements());
-	CHECK_EQUAL(false, bitset.Get(9U));
-	CHECK_EQUAL(true, bitset.Get(10U));
+		// add all elements from index 2
+		CHECK(bitset.Add(Appendcon, 2U, 0U));
+		CHECK_EQUAL(11U, bitset.GetNumOfElements());
+		CHECK_EQUAL(false, bitset.Get(9U));
+		CHECK_EQUAL(true, bitset.Get(10U));
 
-	// add element at index 2
-	CHECK(bitset.Add(Appendcon, 2U, 1U));
-	CHECK_EQUAL(12U, bitset.GetNumOfElements());
-	CHECK_EQUAL(false, bitset.Get(11U));
+		// add element at index 2
+		CHECK(bitset.Add(Appendcon, 2U, 1U));
+		CHECK_EQUAL(12U, bitset.GetNumOfElements());
+		CHECK_EQUAL(false, bitset.Get(11U));
 
-	// add all elements from index 2 to 8 (stops when all elements of Appendcon are added)
-	CHECK(bitset.Add(Appendcon, 2U, 8U));
-	CHECK_EQUAL(14U, bitset.GetNumOfElements());
-	CHECK_EQUAL(false, bitset.Get(12U));
-	CHECK_EQUAL(true, bitset.Get(13U));
+		// add all elements from index 2 to 8 (stops when all elements of Appendcon are added)
+		CHECK(bitset.Add(Appendcon, 2U, 8U));
+		CHECK_EQUAL(14U, bitset.GetNumOfElements());
+		CHECK_EQUAL(false, bitset.Get(12U));
+		CHECK_EQUAL(true, bitset.Get(13U));
 
-	// add no elements :)
-	CHECK(!bitset.Add(Appendcon, 9U, 0U));
-	CHECK_EQUAL(14U, bitset.GetNumOfElements());
+		// add no elements :)
+		CHECK(!bitset.Add(Appendcon, 9U, 0U));
+		CHECK_EQUAL(14U, bitset.GetNumOfElements());
 
-	// add no elements :)
-	CHECK(!bitset.Add(Appendcon, 9U, 99U));
-	CHECK_EQUAL(14U, bitset.GetNumOfElements());
+		// add no elements :)
+		CHECK(!bitset.Add(Appendcon, 9U, 99U));
+		CHECK_EQUAL(14U, bitset.GetNumOfElements());
 
-	// add all elements
-	CHECK(bitset.Add(Appendcon));
-	CHECK_EQUAL(18U, bitset.GetNumOfElements());
-	CHECK_EQUAL(true, bitset.Get(14U));
-	CHECK_EQUAL(true, bitset.Get(15U));
-	CHECK_EQUAL(false, bitset.Get(16U));
-	CHECK_EQUAL(true, bitset.Get(17U));
+		// add all elements
+		CHECK(bitset.Add(Appendcon));
+		CHECK_EQUAL(18U, bitset.GetNumOfElements());
+		CHECK_EQUAL(true, bitset.Get(14U));
+		CHECK_EQUAL(true, bitset.Get(15U));
+		CHECK_EQUAL(false, bitset.Get(16U));
+		CHECK_EQUAL(true, bitset.Get(17U));
 	}
-	*/
 
 	TEST_FIXTURE(ConstructTestBitset, Operator_Add_Container)
 	{
@@ -361,7 +344,6 @@ SUITE(Bitset) {
 		bitset.Add(true);
 
 		CHECK_EQUAL(&PLCore::Bitset::Null, &bitset.AddAtIndex(99));
-		CHECK(!bitset.AddAtIndex(99));
 	}
 
 	TEST_FIXTURE(ConstructTestBitset, AddAtIndex_Outside_Bounds_Negative)
@@ -374,8 +356,7 @@ SUITE(Bitset) {
 
 		// should append at the end of Container, element not initialized! e.g. we can't check its value, only the number of elements it holds
 		CHECK(&PLCore::Bitset::Null != &bitset.AddAtIndex(-10));
-		bitset.AddAtIndex(-10);
-		CHECK_EQUAL(6U, bitset.GetNumOfElements());
+		CHECK_EQUAL(5U, bitset.GetNumOfElements());
 		CHECK(bitset.Compare(bitset, 0, 4));
 	}
 
@@ -401,8 +382,7 @@ SUITE(Bitset) {
 		bitset.Add(true);
 		bitset.Add(true);
 
-		CHECK_EQUAL(&PLCore::Bitset::Null, &bitset.AddAtIndex(1, 99));
-		CHECK(!bitset.AddAtIndex(false, 99));
+		CHECK_EQUAL(&PLCore::Bitset::Null, &bitset.AddAtIndex(false, 99));
 	}
 
 	TEST_FIXTURE(ConstructTestBitset, AddAtIndex_Element_Outside_Bounds_Negative)
@@ -493,7 +473,6 @@ SUITE(Bitset) {
 		CHECK_EQUAL(3U, bitset.GetNumOfElements());
 	}
 
-	/*
 	TEST_FIXTURE(ConstructTestBitset, Remove_Container)
 	{
 		//TODO: refactor these: each scenario = one TEST()
@@ -510,106 +489,108 @@ SUITE(Bitset) {
 		//Remove(TestArr, 9, 99) false
 		//Remove(TestArr)		same as Remove(Removecon, 0, 0)
 
+		//bitset.Add(true);
+		//bitset.Add(false);
+		//bitset.Add(false);
+		//bitset.Add(true);
+
 		TestArr.Clear();
-		TestArr.Add(3);
-		TestArr.Add(2);
-		TestArr.Add(1);
-		TestArr.Add(0);
+		TestArr.Add(true);
+		TestArr.Add(true);
+		TestArr.Add(false);
+		TestArr.Add(true);
 
 		// all elements from index 0 to end
 		CHECK(bitset.Remove(TestArr));
 		CHECK_EQUAL(1U, bitset.GetNumOfElements());
-		CHECK_EQUAL(4, bitset.Get(0U));
+		CHECK_EQUAL(false, bitset.Get(0U));
 
 		bitset.Clear();
-		bitset.Add(1);
-		bitset.Add(2);
-		bitset.Add(3);
-		bitset.Add(4);
+		bitset.Add(true);
+		bitset.Add(false);
+		bitset.Add(false);
+		bitset.Add(true);
 
-		// all elements in Removecon removed
+		// all elements in TestArr removed
 		CHECK(bitset.Remove(TestArr, 0U, 0U));
 		CHECK_EQUAL(1U, bitset.GetNumOfElements());
-		CHECK_EQUAL(4, bitset.Get(0U));
+		CHECK_EQUAL(false, bitset.Get(0U));
 
 
 		bitset.Clear();
-		bitset.Add(1);
-		bitset.Add(2);
-		bitset.Add(3);
-		bitset.Add(4);
+		bitset.Add(true);
+		bitset.Add(false);
+		bitset.Add(false);
+		bitset.Add(true);
 
 		// first element
 		CHECK(bitset.Remove(TestArr, 0U, 1U));
-		CHECK_EQUAL(1, bitset.Get(0U));
-		CHECK_EQUAL(2, bitset.Get(1U));
-		CHECK_EQUAL(4, bitset.Get(2U));
+		CHECK_EQUAL(false, bitset.Get(0U));
+		CHECK_EQUAL(false, bitset.Get(1U));
+		CHECK_EQUAL(true, bitset.Get(2U));
 		CHECK_EQUAL(3U, bitset.GetNumOfElements());
 
 
 		bitset.Clear();
-		bitset.Add(1);
-		bitset.Add(2);
-		bitset.Add(3);
-		bitset.Add(4);
+		bitset.Add(true);
+		bitset.Add(false);
+		bitset.Add(false);
+		bitset.Add(true);
 
 		// all elements from index 0 to 8
 		CHECK(bitset.Remove(TestArr, 0U, 8U));
 		CHECK_EQUAL(1U, bitset.GetNumOfElements());
-		CHECK_EQUAL(4, bitset.Get(0U));
+		CHECK_EQUAL(false, bitset.Get(0U));
 
 
 		bitset.Clear();
-		bitset.Add(1);
-		bitset.Add(2);
-		bitset.Add(3);
-		bitset.Add(4);
+		bitset.Add(true);
+		bitset.Add(false);
+		bitset.Add(false);
+		bitset.Add(true);
 
 		// all elements from index 1 to end
 		CHECK(bitset.Remove(TestArr, 1U, 0U));
-		CHECK_EQUAL(2U, bitset.GetNumOfElements());
-		CHECK_EQUAL(3, bitset.Get(0U));
-		CHECK_EQUAL(4, bitset.Get(1U));
+		CHECK_EQUAL(1U, bitset.GetNumOfElements());
+		CHECK_EQUAL(false, bitset.Get(0U));
 
 
 		bitset.Clear();
-		bitset.Add(1);
-		bitset.Add(2);
-		bitset.Add(3);
-		bitset.Add(4);
+		bitset.Add(true);
+		bitset.Add(false);
+		bitset.Add(false);
+		bitset.Add(true);
 
 		// element at index 1
 		CHECK(bitset.Remove(TestArr, 1U, 1U));
 		CHECK_EQUAL(3U, bitset.GetNumOfElements());
-		CHECK_EQUAL(1, bitset.Get(0U));
-		CHECK_EQUAL(3, bitset.Get(1U));
-		CHECK_EQUAL(4, bitset.Get(2U));
+		CHECK_EQUAL(false, bitset.Get(0U));
+		CHECK_EQUAL(false, bitset.Get(1U));
+		CHECK_EQUAL(true, bitset.Get(2U));
 
 		bitset.Clear();
-		bitset.Add(1);
-		bitset.Add(2);
-		bitset.Add(3);
-		bitset.Add(4);
+		bitset.Add(true);
+		bitset.Add(false);
+		bitset.Add(false);
+		bitset.Add(true);
 
 		// all elements from index 1 to 8 (stops at last element from Removecon)
 		CHECK(bitset.Remove(TestArr, 1U, 8U));
-		CHECK_EQUAL(2U, bitset.GetNumOfElements());
-		CHECK_EQUAL(3, bitset.Get(0U));
-		CHECK_EQUAL(4, bitset.Get(1U));
+		CHECK_EQUAL(1U, bitset.GetNumOfElements());
+		CHECK_EQUAL(false, bitset.Get(0U));
 
 		// returns false (start index > number of elements)
 		CHECK(!bitset.Remove(TestArr, 9U, 0U));
-		CHECK_EQUAL(2U, bitset.GetNumOfElements());
+		CHECK_EQUAL(1U, bitset.GetNumOfElements());
 
 		// returns false (start index > number of elements)
 		CHECK(!bitset.Remove(TestArr, 9U, 1U));
-		CHECK_EQUAL(2U, bitset.GetNumOfElements());
+		CHECK_EQUAL(1U, bitset.GetNumOfElements());
 
 		// returns false (start index > number of elements)
 		CHECK(!bitset.Remove(TestArr, 9U, 99U));
-		CHECK_EQUAL(2U, bitset.GetNumOfElements());
+		CHECK_EQUAL(1U, bitset.GetNumOfElements());
 	}
-	*/
 
 	TEST_FIXTURE(ConstructTestBitset, Operator_Remove_Container)
 	{
