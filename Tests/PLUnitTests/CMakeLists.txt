@@ -53,8 +53,16 @@ add_sources(
 		src/PLCore/Container/HashMap.cpp
 		src/PLCore/Container/MapTests.h
 		src/PLCore/Container/SimpleMap.cpp
+		# Log
+		src/PLCore/Log.cpp
+		# FileSystem
+		src/PLCore/FileSystem.h
 		# general
 		src/PLCore/String.cpp
+		# Tools
+		src/PLCore/Tools/ChecksumCRC32.cpp
+		src/PLCore/Tools/ChecksumMD5.cpp
+		src/PLCore/Tools/ChecksumSHA1.cpp
 	# PLMath
 	src/PLMath/EulerAngles.cpp
 	src/PLMath/Graph.cpp

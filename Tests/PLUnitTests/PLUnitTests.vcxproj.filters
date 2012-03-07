@@ -115,6 +115,9 @@
     <ClCompile Include="src\PLCore\Tools\ChecksumCRC32.cpp">
       <Filter>PLCore\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="src\PLCore\FileSystem.cpp">
+      <Filter>PLCore\File</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\UnitTest++AddIns\RunAllTests.h">
@@ -179,6 +182,9 @@
     </Filter>
     <Filter Include="PLCore\Log">
       <UniqueIdentifier>{05bc77ea-a00c-466a-be20-4c655e0117e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PLCore\File">
+      <UniqueIdentifier>{9861809c-228b-4b8c-be3e-5dad5da0b9d4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

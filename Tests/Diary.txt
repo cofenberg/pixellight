@@ -2,6 +2,8 @@
 [JS]
 PLUnitTests:
 - overloaded "CHECK_EQUAL"-macro again to make checks with PLCore::String easier
+- added FileSystem tests (migrated from PLTestbase)
+- added Log tests (migrated from PLTestbase)
 
 
 
