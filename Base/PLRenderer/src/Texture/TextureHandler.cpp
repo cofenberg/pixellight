@@ -339,6 +339,9 @@ bool TextureHandler::Load(TextureManager &cTextureManager, const String &sFilena
 			if (GetTexture())
 				GetTexture()->LoadByFilename(sFilename);
 		}
+
+		// Done
+		return true;
 	} else {
 		// Create the texture by using a texture creator?
 		Texture *pTexture = nullptr;
