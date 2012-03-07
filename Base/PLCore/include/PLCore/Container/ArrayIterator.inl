@@ -97,7 +97,7 @@ bool ArrayIterator<ValueType>::HasNext() const
 template <class ValueType>
 ValueType &ArrayIterator<ValueType>::Next()
 {
-	return (m_nNextID < m_plstContainer->GetNumOfElements()) ? m_plstContainer->Get(m_nNextID++) : Container<ValueType>::Null;
+	return (m_nNextID < m_plstContainer->GetNumOfElements()) ? m_plstContainer->Get(m_nNextID++) : Array<ValueType>::Null;
 }
 
 template <class ValueType>
@@ -109,7 +109,7 @@ bool ArrayIterator<ValueType>::HasPrevious() const
 template <class ValueType>
 ValueType &ArrayIterator<ValueType>::Previous()
 {
-	return m_nNextID ? m_plstContainer->Get(--m_nNextID) : Container<ValueType>::Null;
+	return m_nNextID ? m_plstContainer->Get(--m_nNextID) : Array<ValueType>::Null;
 }
 
 
