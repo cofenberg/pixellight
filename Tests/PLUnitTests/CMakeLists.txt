@@ -56,7 +56,7 @@ add_sources(
 		# Log
 		src/PLCore/Log.cpp
 		# FileSystem
-		src/PLCore/FileSystem.h
+		src/PLCore/FileSystem.cpp
 		# general
 		src/PLCore/String.cpp
 		# Tools

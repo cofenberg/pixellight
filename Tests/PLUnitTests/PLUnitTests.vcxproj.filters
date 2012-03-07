@@ -103,9 +103,6 @@
     <ClCompile Include="src\PLCore\String.cpp">
       <Filter>PLCore\String</Filter>
     </ClCompile>
-    <ClCompile Include="src\PLCore\Log\Log.cpp">
-      <Filter>PLCore\Log</Filter>
-    </ClCompile>
     <ClCompile Include="src\PLCore\Tools\ChecksumMD5.cpp">
       <Filter>PLCore\Tools</Filter>
     </ClCompile>
@@ -117,6 +114,9 @@
     </ClCompile>
     <ClCompile Include="src\PLCore\FileSystem.cpp">
       <Filter>PLCore\File</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCore\Log.cpp">
+      <Filter>PLCore\Log</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

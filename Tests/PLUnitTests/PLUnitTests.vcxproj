@@ -43,7 +43,7 @@
     <ClCompile Include="src\PLCore\Container\SimpleMap.cpp" />
     <ClCompile Include="src\PLCore\Container\Stack.cpp" />
     <ClCompile Include="src\PLCore\FileSystem.cpp" />
-    <ClCompile Include="src\PLCore\Log\Log.cpp" />
+    <ClCompile Include="src\PLCore\Log.cpp" />
     <ClCompile Include="src\PLCore\String.cpp" />
     <ClCompile Include="src\PLCore\Tools\ChecksumCRC32.cpp" />
     <ClCompile Include="src\PLCore\Tools\ChecksumMD5.cpp" />
