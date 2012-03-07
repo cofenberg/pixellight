@@ -22,6 +22,7 @@
 #include "UnitTest++AddIns/PLChecks.h"
 
 namespace UnitTest {
+	// matrix3x3 equal
 	void CheckMatrix3x3(TestResults& results, PLMath::Matrix3x3 const& expected, PLMath::Matrix3x3 const& actual, float const& tolerance,
 		TestDetails const& details) {
 
@@ -45,6 +46,7 @@ namespace UnitTest {
 				results.OnTestFailure(details, stream.GetText());
 	}
 
+	// missing implementation
 	void CheckMissingImplementation(TestResults& results, TestDetails const& details) {
 		UnitTest::MemoryOutStream stream;
 
@@ -68,7 +70,7 @@ namespace UnitTest {
 		}
 	}
 
-
+	// char* not equal
 	void CheckNotEqual(TestResults& results, char const* expected, char const* actual,
 		TestDetails const& details)
 	{
@@ -93,11 +95,13 @@ namespace UnitTest {
 		CheckStringsNotEqual(results, expected, actual, details);
 	}
 
+	// PLCore::String::EFormat
 	void CheckEqual(TestResults& results, PLCore::String::EFormat const expected, PLCore::String::EFormat const actual, TestDetails const& details) {
 		CheckEqual(results, static_cast<int>(expected), static_cast<int>(actual), details);
 	}
 
-	void CheckEqual(TestResults& results, PLCore::String const expected, PLCore::String const actual, TestDetails const& details) {
+	// PLCore::String equal
+	void CheckEqual(TestResults& results, PLCore::String const expected, PLCore::String const actual, TestDetails const& details) {		
 		if (expected.GetFormat() == actual.GetFormat()) {
 			if (expected.GetFormat() == PLCore::String::Unicode) {
 				CheckEqual(results, expected.GetUnicode(), actual.GetUnicode(), details);
@@ -108,5 +112,38 @@ namespace UnitTest {
 		else {
 			CheckEqual(results, expected.GetASCII(), actual.GetASCII(), details);
 		}	
+	}
+
+	void CheckEqual(TestResults& results, char const* expected, PLCore::String const actual, TestDetails const& details) {
+		CheckEqual(results, expected, actual.GetASCII(), details);
+	}
+
+	void CheckEqual(TestResults& results, char* expected, PLCore::String const actual, TestDetails const& details) {
+		CheckEqual(results, expected, actual.GetASCII(), details);
+	}
+
+	void CheckEqual(TestResults& results, PLCore::String const expected, char const* actual, TestDetails const& details) {
+		CheckEqual(results, expected.GetASCII(), actual, details);
+	}
+
+	void CheckEqual(TestResults& results, PLCore::String const expected, char* actual, TestDetails const& details) {
+		CheckEqual(results, expected.GetASCII(), actual, details);
+	}
+
+	// PLCore::String not equal
+	void CheckNotEqual(TestResults& results, char const* expected, PLCore::String const actual, TestDetails const& details) {
+		CheckNotEqual(results, expected, actual.GetASCII(), details);
+	}
+
+	void CheckNotEqual(TestResults& results, char* expected, PLCore::String const actual, TestDetails const& details) {
+		CheckNotEqual(results, expected, actual.GetASCII(), details);
+	}
+
+	void CheckNotEqual(TestResults& results, PLCore::String const expected, char const* actual, TestDetails const& details) {
+		CheckNotEqual(results, expected.GetASCII(), actual, details);
+	}
+
+	void CheckNotEqual(TestResults& results, PLCore::String const expected, char* actual, TestDetails const& details) {
+		CheckNotEqual(results, expected.GetASCII(), actual, details);
 	}
 }
