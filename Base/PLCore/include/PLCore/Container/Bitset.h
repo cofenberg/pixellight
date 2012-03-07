@@ -53,6 +53,13 @@ class PLCORE_API Bitset : public Container<bool> {
 
 
 	//[-------------------------------------------------------]
+	//[ Public static variables                               ]
+	//[-------------------------------------------------------]
+	public:
+		static bool Null;	/**< 'Null'-object, do NEVER EVER manipulate this object! */
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:

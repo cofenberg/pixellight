@@ -34,6 +34,12 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
+//[ Public static variables                               ]
+//[-------------------------------------------------------]
+template <class ValueType> ValueType Stack<ValueType>::Null;
+
+
+//[-------------------------------------------------------]
 //[ Private static data                                   ]
 //[-------------------------------------------------------]
 template <class ValueType> ValueType Stack<ValueType>::temp;

@@ -60,13 +60,6 @@ class Iterable {
 
 
 	//[-------------------------------------------------------]
-	//[ Public static variables                               ]
-	//[-------------------------------------------------------]
-	public:
-		static ValueType Null;	/**< 'Null'-object, do NEVER EVER manipulate this object! */
-
-
-	//[-------------------------------------------------------]
 	//[ Public virtual Iterable functions                     ]
 	//[-------------------------------------------------------]
 	public:
@@ -128,12 +121,6 @@ class Iterable {
 
 
 };
-
-
-//[-------------------------------------------------------]
-//[ Public static variables                               ]
-//[-------------------------------------------------------]
-template <class ValueType> ValueType Iterable<ValueType>::Null;
 
 
 //[-------------------------------------------------------]

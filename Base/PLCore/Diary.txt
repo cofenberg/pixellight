@@ -1,3 +1,16 @@
+>> 07.03.2012
+[CO]
+- "template <class ValueType> ValueType Iterable<ValueType>::Null;" is causing issues within "Bitset" due to "class PLCORE_API Bitset" resulting that
+  stuff from the template base classes have now to be exported/imported as well. It's like a virus or a spreading wildfire. Results in
+  "Bitset.obj : error LNK2001: unresolved external symbol "public: static bool PLCore::Iterable<bool>::Null" (?Null@?$Iterable@_N@PLCore@@2_NA)"
+  within e.g. PLUnitTests. Usually, we don't write something like "class PLCORE_API Bitset" in PixelLight, instead we export/import stuff explicitly in order
+  to have full control. As far as I remember, some time ago, this caused issues on a GCC or Clang compiler version within the bitset class (vtable issue).
+  Now the issue strikes back within PLUnitTests. I don't have time to check all compilers for whether or not the issue we had earlier still exists, so I go the,
+  hopefully safe way, by moving this "Null"-instance from the base into derived classes. E.g. the bitset class can now do the usual export/import and the linker
+  issue within PLUnitTests is gone (it's no hack, just a safer approach).
+
+
+
 >> 06.03.2012
 [JS]
 - "PLCore::Tools::Checksum": added new virtual method "Reset()" to clear stored checksums

@@ -34,6 +34,12 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
+//[ Public static variables                               ]
+//[-------------------------------------------------------]
+template <class KeyType, class ValueType, class Comparer> ValueType BinaryHeap<KeyType, ValueType, Comparer>::Null;
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**

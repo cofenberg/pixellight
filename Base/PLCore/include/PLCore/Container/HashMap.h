@@ -82,6 +82,13 @@ class HashMap : public Map<KeyType, ValueType> {
 
 
 	//[-------------------------------------------------------]
+	//[ Public static variables                               ]
+	//[-------------------------------------------------------]
+	public:
+		static ValueType Null;	/**< 'Null'-object, do NEVER EVER manipulate this object! */
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:

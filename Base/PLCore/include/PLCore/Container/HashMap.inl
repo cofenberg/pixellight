@@ -35,6 +35,12 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
+//[ Public static variables                               ]
+//[-------------------------------------------------------]
+template <class KeyType, class ValueType, class Hasher, class Comparer, class Grower> ValueType HashMap<KeyType, ValueType, Hasher, Comparer, Grower>::Null;
+
+
+//[-------------------------------------------------------]
 //[ SlotsList implementation                              ]
 //[-------------------------------------------------------]
 //[-------------------------------------------------------]

@@ -78,6 +78,13 @@ class Queue : public Iterable<ValueType> {
 
 
 	//[-------------------------------------------------------]
+	//[ Public static variables                               ]
+	//[-------------------------------------------------------]
+	public:
+		static ValueType Null;	/**< 'Null'-object, do NEVER EVER manipulate this object! */
+
+
+	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:

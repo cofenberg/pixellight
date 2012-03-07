@@ -36,6 +36,12 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
+//[ Public static variables                               ]
+//[-------------------------------------------------------]
+template <class KeyType, class ValueType, class Comparer> ValueType SimpleMap<KeyType, ValueType, Comparer>::Null;
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**

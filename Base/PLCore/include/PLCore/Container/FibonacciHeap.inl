@@ -36,6 +36,12 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
+//[ Public static variables                               ]
+//[-------------------------------------------------------]
+template <class KeyType, class ValueType, class Comparer> ValueType FibonacciHeap<KeyType, ValueType, Comparer>::Null;
+
+
+//[-------------------------------------------------------]
 //[ Tree implementation                                   ]
 //[-------------------------------------------------------]
 /**
