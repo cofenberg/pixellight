@@ -33,21 +33,11 @@ SUITE(Bitset) {
 
 		// Container for testing
 		Bitset bitset, Comparecon, Emptycon, Itercon, Copycon, Removecon, Appendcon;
-		//Array<bool> arr;
+		Array<bool> arr;
 	};
 
 	TEST(Check_TODOs) {
 		CHECK(false);
-	}
-
-	// TODO uncomment one of these and you get an unresolved external linker error!
-	TEST(Bitset_Null_Not_working_unresolved_external) {
-		Bitset b;
-		//Array<bool> arr;
-
-		//CHECK(b.Null);
-		//CHECK(PLCore::Bitset::Null);
-		//CHECK(PLCore::Iterable<bool>::Null);
 	}
 
 	TEST_FIXTURE(ConstructTestBitset, testme){
@@ -109,7 +99,7 @@ SUITE(Bitset) {
 		bitset.Clear();
 		bitset.Add(true);
 
-		//CHECK_EQUAL(PLCore::Bitset::Null, bitset.Get(6U));
+		CHECK_EQUAL(&PLCore::Bitset::Null, &bitset.Get(6U));
 		CHECK(!bitset.Get(6U));
 	}
 
@@ -129,7 +119,7 @@ SUITE(Bitset) {
 		bitset.Add(true);
 		bitset.Add(false);
 
-		//CHECK_EQUAL(PLCore::Bitset::Null, bitset[5]);
+		CHECK_EQUAL(&PLCore::Bitset::Null, &bitset[5]);
 		CHECK(!bitset[5]);
 	}
 
@@ -212,7 +202,7 @@ SUITE(Bitset) {
 		CHECK_EQUAL(false, bitset.Get(1U));
 		CHECK_EQUAL(true, bitset.Get(2U));
 		CHECK_EQUAL(true, bitset.Get(3U));
-		//CHECK_EQUAL(PLCore::Bitset::Null, bitset.Get(4U));
+		CHECK_EQUAL(&PLCore::Bitset::Null, &bitset.Get(4U));
 		CHECK(!bitset.Get(4U));
 
 		// append
@@ -225,7 +215,7 @@ SUITE(Bitset) {
 		CHECK_EQUAL(true, bitset.Get(3U));
 		CHECK_EQUAL(true, bitset.Get(4U));
 		CHECK_EQUAL(false, bitset.Get(5U));
-		//CHECK_EQUAL(PLCore::Bitset::Null, bitset.Get(6U));
+		CHECK_EQUAL(&PLCore::Bitset::Null, &bitset.Get(6U));
 		CHECK(!bitset.Get(6U));
 	}
 
@@ -236,7 +226,7 @@ SUITE(Bitset) {
 
 		CHECK_EQUAL(1U, bitset.GetNumOfElements());
 		CHECK_EQUAL(true, bitset.Get(0U));
-		//CHECK_EQUAL(PLCore::Bitset::Null, bitset.Get(1U));
+		CHECK_EQUAL(&PLCore::Bitset::Null, &bitset.Get(1U));
 		CHECK(!bitset.Get(1U));
 
 		bitset += false;
@@ -370,7 +360,7 @@ SUITE(Bitset) {
 		bitset.Add(true);
 		bitset.Add(true);
 
-		//CHECK_EQUAL(PLCore::Bitset::Null, bitset.AddAtIndex(99));
+		CHECK_EQUAL(&PLCore::Bitset::Null, &bitset.AddAtIndex(99));
 		CHECK(!bitset.AddAtIndex(99));
 	}
 
@@ -383,9 +373,9 @@ SUITE(Bitset) {
 		bitset.Add(true);
 
 		// should append at the end of Container, element not initialized! e.g. we can't check its value, only the number of elements it holds
-		//		CHECK(PLCore::Bitset::Null != bitset.AddAtIndex(-10));
+		CHECK(&PLCore::Bitset::Null != &bitset.AddAtIndex(-10));
 		bitset.AddAtIndex(-10);
-		CHECK_EQUAL(5U, bitset.GetNumOfElements());
+		CHECK_EQUAL(6U, bitset.GetNumOfElements());
 		CHECK(bitset.Compare(bitset, 0, 4));
 	}
 
@@ -411,7 +401,7 @@ SUITE(Bitset) {
 		bitset.Add(true);
 		bitset.Add(true);
 
-		//CHECK_EQUAL(PLCore::Bitset::Null, bitset.AddAtIndex(1, 99));
+		CHECK_EQUAL(&PLCore::Bitset::Null, &bitset.AddAtIndex(1, 99));
 		CHECK(!bitset.AddAtIndex(false, 99));
 	}
 
@@ -740,6 +730,7 @@ SUITE(Bitset) {
 
 		Comparecon.Clear();
 		Comparecon.Add(false);
+		Comparecon.Add(false);
 		Comparecon.Add(true);
 		Comparecon.Add(false);
 		Comparecon.Add(false);
@@ -818,8 +809,8 @@ SUITE(Bitset) {
 		// iterator, no elements
 		CHECK(!iter.HasNext());
 		CHECK(!iter.HasPrevious());
-		//		CHECK_EQUAL(PLCore::Bitset::Null, iter.Next());
-		//		CHECK_EQUAL(PLCore::Bitset::Null, iter.Previous());
+		CHECK_EQUAL(&PLCore::Bitset::Null, &iter.Next());
+		CHECK_EQUAL(&PLCore::Bitset::Null, &iter.Previous());
 
 		// iterator, 2 elements
 		bitset = Itercon;
@@ -836,7 +827,7 @@ SUITE(Bitset) {
 		CHECK(!iter.HasNext());
 		CHECK(iter.HasPrevious());
 
-		//		CHECK_EQUAL(PLCore::Bitset::Null, iter.Next());
+		CHECK_EQUAL(&PLCore::Bitset::Null, &iter.Next());
 		CHECK(!iter.HasNext());
 		CHECK(iter.HasPrevious());
 
@@ -856,7 +847,7 @@ SUITE(Bitset) {
 		CHECK(iter.HasNext());
 		CHECK(!iter.HasPrevious());
 
-		//		CHECK_EQUAL(PLCore::Bitset::Null, iter.Previous());
+		CHECK_EQUAL(&PLCore::Bitset::Null, &iter.Previous());
 		CHECK(iter.HasNext());
 		CHECK(!iter.HasPrevious());
 	}

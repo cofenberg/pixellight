@@ -1,3 +1,10 @@
+>> 07.03.2012
+[CO]
+PLUnitTests:
+- Enabled and reviewed "PLCore::Bitset::Null" tests (as usual: Please also review my review)
+
+
+
 >> 06.03.2012
 [JS]
 PLUnitTests:
