@@ -6,7 +6,7 @@
      without clearing previous checksums first and that results in corrupted checksums if you calculate more than one checksum on one specific checksum-object.
   -> Fixed that with introducing a new method to the abstract "Checksum"-interface named "Reset". It should reset all previous calculated checksums.
   -> Using the "Reset"-method before calculating anything in the "Checksum"-interfaces "Get"-methods including its overloads fixes this bug.
-  
+
 
 
 >> 03.03.2012
