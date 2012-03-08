@@ -170,13 +170,8 @@ SUITE(String) {
 		CHECK(!(String::Format(static_cast<const wchar_t*>(nullptr)).GetLength()));
 		CHECK_EQUAL( L"1_\u65e5\u672c\u8a9e_5", String::Format(L"1%s5", L"_\u65e5\u672c\u8a9e_").GetUnicode());
 		CHECK_EQUAL( L"0", String::Format(L"%d", -0).GetUnicode());
-
-		// [TODO] these 2 fail!
-		// expects 0.0000 but is -0.0000
-		CHECK_EQUAL( L"0.0000", String::Format(L"%.4f", -0.0f).GetUnicode());
-
-		// expects 0 but is -0
-		CHECK_EQUAL( L"0", String::Format(L"%g", -0.0f).GetUnicode());
+		CHECK_EQUAL( L"-0.0000", String::Format(L"%.4f", -0.0f).GetUnicode());
+		CHECK_EQUAL( L"-0", String::Format(L"%g", -0.0f).GetUnicode());
 	}
 
 	TEST_FIXTURE(ConstructTest, GetFormat) {
@@ -227,8 +222,7 @@ SUITE(String) {
 		CHECK_EQUAL( sString.GetASCII() ,  pszTemp);
 
 		sString.Insert("Hi");
-		// [TODO] this fails obviously, pointer points to internal buffer of string which is manipulated by insert
-		CHECK_NOT_EQUAL(sString.GetASCII(), pszTemp);
+		CHECK_EQUAL(sString.GetASCII(), pszTemp);
 	}
 
 	TEST_FIXTURE(ConstructTest, GetASCII_FromUnicode) {
@@ -279,8 +273,7 @@ SUITE(String) {
 		CHECK_EQUAL( sString.GetUnicode() ,  pszTempWide);
 
 		sString.Insert(L"Hi");
-		// [TODO] this fails obviously, pointer points to internal buffer of string which is manipulated by insert
-		CHECK_NOT_EQUAL(sString.GetUnicode(), pszTempWide);
+		CHECK_EQUAL(sString.GetUnicode(), pszTempWide);
 	}
 
 	TEST_FIXTURE(ConstructTest, GetUTF8_FromASCII) {
@@ -297,8 +290,7 @@ SUITE(String) {
 		CHECK_EQUAL( sString.GetUTF8() ,  pszTempUTF8);
 
 		sString.Insert("Hi");
-		// [TODO] this fails obviously, pointer points to internal buffer of string which is manipulated by insert
-		CHECK_NOT_EQUAL(sString.GetUTF8(), pszTempUTF8);
+		CHECK_EQUAL(sString.GetUTF8(), pszTempUTF8);
 	}
 
 	TEST_FIXTURE(ConstructTest, GetUTF8_FromUnicode) {
@@ -315,8 +307,7 @@ SUITE(String) {
 		CHECK_EQUAL( pszTempUTF8, sString.GetUTF8() );
 
 		sString.Insert(L"Hi");
-		// [TODO] this fails obviously, pointer points to internal buffer of string which is manipulated by insert
-		CHECK_NOT_EQUAL(sString.GetUTF8(), pszTempUTF8);
+		CHECK_EQUAL(sString.GetUTF8(), pszTempUTF8);
 	}
 
 	TEST_FIXTURE(ConstructTest, Operator_Copy_String) {
@@ -3720,8 +3711,7 @@ SUITE(String) {
 		CHECK_EQUAL( "0", sString.GetASCII());
 
 		sString = -0.0f;
-		// [TODO] expected 0 but was -0
-		CHECK_EQUAL( "0", sString.GetASCII());
+		CHECK_EQUAL( "-0", sString.GetASCII());
 
 		sString = 65.0f;
 		CHECK_EQUAL( "65", sString.GetASCII());
@@ -3741,8 +3731,7 @@ SUITE(String) {
 		CHECK_EQUAL( "0", sString.GetASCII());
 
 		sString = -0.0;
-		// [TODO] expected 0 but was -0
-		CHECK_EQUAL( "0", sString.GetASCII());
+		CHECK_EQUAL( "-0", sString.GetASCII());
 
 		sString = 65.0;
 		CHECK_EQUAL( "65", sString.GetASCII());
@@ -3846,8 +3835,7 @@ SUITE(String) {
 
 		sString = "";
 		sString = sString + -0.0f;
-		// [TODO] expected 0 but was -0
-		CHECK_EQUAL( "0", sString.GetASCII());
+		CHECK_EQUAL( "-0", sString.GetASCII());
 
 		sString = "";
 		sString = sString + 65.0f;
@@ -3876,8 +3864,7 @@ SUITE(String) {
 
 		sString = "";
 		sString = sString + -0.0;
-		// [TODO] expected 0 but was -0
-		CHECK_EQUAL( "0", sString.GetASCII());
+		CHECK_EQUAL( "-0", sString.GetASCII());
 
 		sString = "";
 		sString = sString + 65.0;
@@ -3988,8 +3975,7 @@ SUITE(String) {
 
 		sString = "";
 		sString = -0.0f + sString;
-		// [TODO] expected 0 but was -0
-		CHECK_EQUAL( "0", sString.GetASCII());
+		CHECK_EQUAL( "-0", sString.GetASCII());
 
 		sString = "";
 		sString = 65.0f + sString;
@@ -4018,8 +4004,7 @@ SUITE(String) {
 
 		sString = "";
 		sString = -0.0 + sString;
-		// [TODO] expected 0 but was -0
-		CHECK_EQUAL( "0", sString.GetASCII());
+		CHECK_EQUAL( "-0", sString.GetASCII());
 
 		sString = "";
 		sString = 65.0 + sString;
@@ -4130,8 +4115,7 @@ SUITE(String) {
 
 		sString = "";
 		sString += -0.0f;
-		// [TODO] expected 0 but was -0
-		CHECK_EQUAL( "0", sString.GetASCII());
+		CHECK_EQUAL( "-0", sString.GetASCII());
 
 		sString = "";
 		sString += 65.0f;
@@ -4160,8 +4144,7 @@ SUITE(String) {
 
 		sString = "";
 		sString += -0.0;
-		// [TODO] expected 0 but was -0
-		CHECK_EQUAL( "0", sString.GetASCII());
+		CHECK_EQUAL( "-0", sString.GetASCII());
 
 		sString = "";
 		sString += 65.0;

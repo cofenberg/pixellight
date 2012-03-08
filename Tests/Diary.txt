@@ -5,6 +5,8 @@ PLUnitTests:
 - added Matrix3x4 tests (migrated from PLTestbase)
 - added Matrix3x3 tests (migrated from PLTestbase)
 - added Vector3 tests (migrated from PLTestbase)
+- updated String tests to match current String implementation (GetASCII() returns a pointer to a internal buffer
+  and assigning "-0" to a String won't change it to "0")
 
 
 
