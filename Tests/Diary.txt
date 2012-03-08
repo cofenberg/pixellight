@@ -9,14 +9,6 @@ PLUnitTests:
 
 
 >> 07.03.2012
-[JS]
-PLUnitTests:
-- updated Bitset tests after "PLCore::Bitset::Null"-Fix
-- added testfile for FileSystem test (FileSystemTest.zip)
-
-
-
->> 07.03.2012
 [CO]
 PLUnitTests:
 - Enabled and reviewed "PLCore::Bitset::Null" tests (as usual: Please also review my review)
@@ -29,6 +21,8 @@ PLUnitTests:
 - overloaded "CHECK_EQUAL"-macro again to make checks with PLCore::String easier
 - added FileSystem tests (migrated from PLTestbase)
 - added Log tests (migrated from PLTestbase)
+- updated Bitset tests after "PLCore::Bitset::Null"-Fix
+- added testfile for FileSystem test (FileSystemTest.zip)
 
 
 

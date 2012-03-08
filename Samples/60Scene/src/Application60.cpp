@@ -137,12 +137,16 @@ void Application60::OnUpdate()
 			// for a good sample overview completely within this function.
 			static float fLightTimer = 0.0f;
 
-			// We set the current light position using the RTTI class interface. This is quite comfortable
-			// and universal because you haven't to care about the concrete class type - just set the
-			// variable values. For performance critical situations it's recommend to avoid using this RTTI
+			// Get a new fancy light position
+			const Vector3 vPosition(Math::Sin(fLightTimer), Math::Sin(fLightTimer)/2+2, -(Math::Cos(fLightTimer)+5));
+
+			// We set the current light position using the RTTI class interface. This is quite comfortable and
+			// universal because you haven't to care about the concrete class type - just set the variable values.
+			pLightSceneNode->SetAttribute("Position", Var<Vector3>(vPosition));	// More efficient
+			// Another way by using strings:
+			// pLightSceneNode->SetAttribute("Position", vPosition.ToString());	// More generic
+			// For highly performance critical situations it's recommend to avoid using these RTTI
 			// functions to set your variables and use the concrete provided class interfaces instead.
-			pLightSceneNode->SetAttribute("Position", String::Format("%g %g %g", Math::Sin(fLightTimer),
-				Math::Sin(fLightTimer)/2+2, -(Math::Cos(fLightTimer)+5)));
 
 			// Update the light timer by using the time difference between the last and the current frame
 			fLightTimer += Timing::GetInstance()->GetTimeDifference();
