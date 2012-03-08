@@ -248,7 +248,7 @@ SUITE(Array_PrimitiveInt) {
 		Arr.Clear();
 		Arr.SetResizeCount(0U);
 
-		CHECK_EQUAL(Array<char>::Null, Arr.Add());
+		CHECK_EQUAL(&Array<int>::Null, &Arr.Add());
 
 		// set resizecount back to default
 		Arr.SetResizeCount(10U);
@@ -259,7 +259,7 @@ SUITE(Array_PrimitiveInt) {
 		Arr.Clear();
 		Arr.Resize(0U, false);
 
-		CHECK_EQUAL(Array<char>::Null, Arr.Add(1));
+		CHECK_EQUAL(&Array<int>::Null, &Arr.Add(1));
 
 		// set resizecount back to default
 		Arr.SetResizeCount(10U);
@@ -347,7 +347,7 @@ SUITE(Array_PrimitiveInt) {
 		Arr.Add(3);
 		Arr.Add(4);
 
-		CHECK_EQUAL(Array<char>::Null, Arr.AddAtIndex(2));
+		CHECK_EQUAL(&Array<int>::Null, &Arr.AddAtIndex(2));
 		CHECK_EQUAL(3, Arr.Get(2U));
 
 		// set resizecount back to default

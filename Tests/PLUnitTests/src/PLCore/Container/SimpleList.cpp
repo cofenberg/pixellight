@@ -82,7 +82,7 @@ SUITE(SimpleList_PrimitiveInt) {
 	}
 
 	TEST_FIXTURE(ConstructTestSimpleList, AddAtIndex) {
-		CHECK_EQUAL(SimpleList<int>::Null, Lst.AddAtIndex(0, 99));
+		CHECK_EQUAL(&SimpleList<int>::Null, &Lst.AddAtIndex(0, 99));
 
 		CHECK_EQUAL(0, Lst.AddAtIndex(0, 0));
 		CHECK_EQUAL(8, Lst.AddAtIndex(8, 0));
@@ -109,8 +109,8 @@ SUITE(SimpleList_PrimitiveInt) {
 		// iterator, no elements
 		CHECK(!iter.HasNext());
 		CHECK(!iter.HasPrevious());
-		CHECK_EQUAL(SimpleList<int>::Null, iter.Next());
-		CHECK_EQUAL(SimpleList<int>::Null, iter.Previous());
+		CHECK_EQUAL(&SimpleList<int>::Null, &iter.Next());
+		CHECK_EQUAL(&SimpleList<int>::Null, &iter.Previous());
 
 		// iterator, 2 elements
 		Lst = Itercon;
@@ -127,7 +127,7 @@ SUITE(SimpleList_PrimitiveInt) {
 		CHECK(!iter.HasNext());
 		CHECK(iter.HasPrevious());
 
-		CHECK_EQUAL(SimpleList<int>::Null, iter.Next());
+		CHECK_EQUAL(&SimpleList<int>::Null, &iter.Next());
 		CHECK(!iter.HasNext());
 		CHECK(iter.HasPrevious());
 
@@ -137,8 +137,8 @@ SUITE(SimpleList_PrimitiveInt) {
 		// enditerator, no elements
 		CHECK(!iter.HasNext());
 		CHECK(!iter.HasPrevious());
-		CHECK_EQUAL(SimpleList<int>::Null, iter.Next());
-		CHECK_EQUAL(SimpleList<int>::Null, iter.Previous());
+		CHECK_EQUAL(&SimpleList<int>::Null, &iter.Next());
+		CHECK_EQUAL(&SimpleList<int>::Null, &iter.Previous());
 
 		// enditerator, 2 elements
 		Lst = Itercon;
@@ -155,7 +155,7 @@ SUITE(SimpleList_PrimitiveInt) {
 		CHECK(iter.HasNext());
 		CHECK(!iter.HasPrevious());
 
-		CHECK_EQUAL(SimpleList<int>::Null, iter.Previous());
+		CHECK_EQUAL(&SimpleList<int>::Null, &iter.Previous());
 		CHECK(iter.HasNext());
 		CHECK(!iter.HasPrevious());
 	}
