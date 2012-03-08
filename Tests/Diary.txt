@@ -1,3 +1,13 @@
+>> 08.03.2012
+[JS]
+PLUnitTests:
+- added Matrix4x4 tests (migrated from PLTestbase)
+- added Matrix3x4 tests (migrated from PLTestbase)
+- added Matrix3x3 tests (migrated from PLTestbase)
+- added Vector3 tests (migrated from PLTestbase)
+
+
+
 >> 07.03.2012
 [JS]
 PLUnitTests:
@@ -37,7 +47,7 @@ PLUnitTests:
 >> 06.03.2012
 [JS]
 PLUnitTests:
-- overloaded "CHECK_EQUAL"-macro to automatically convert PLCore::String to char* or wchar_t* based on its internal format, e.g. no more calls to GetASCII() 
+- overloaded "CHECK_EQUAL"-macro to automatically convert PLCore::String to char* or wchar_t* based on its internal format, e.g. no more calls to GetASCII()
   or GetUnicode() in CHECK_EQUAL macro
 - added tests for Checksum classes with testData
 - added tests for PLMath::Vector4 (migrated from PLTestbase)
