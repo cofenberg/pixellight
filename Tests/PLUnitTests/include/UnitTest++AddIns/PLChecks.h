@@ -55,7 +55,7 @@ namespace UnitTest {
 
 	// PLCore::String
 	void CheckEqual(TestResults& results, PLCore::String const expected, PLCore::String const actual, TestDetails const& details);
-	
+
 	void CheckEqual(TestResults& results, char const* expected, PLCore::String const actual, TestDetails const& details);
 	void CheckEqual(TestResults& results, char* expected, PLCore::String const actual, TestDetails const& details);
 	void CheckEqual(TestResults& results, PLCore::String const expected, char const* actual,  TestDetails const& details);

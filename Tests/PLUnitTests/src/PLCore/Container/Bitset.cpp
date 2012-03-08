@@ -852,17 +852,17 @@ SUITE(Bitset) {
 
 		cBitset.Clear();
 		cBitset.Resize(2U, false, false);
-		CHECK_EQUAL(cBitset.GetMaxNumOfElements(), 2U );
+		CHECK_EQUAL(cBitset.GetMaxNumOfElements(), 2U);
 		CHECK_EQUAL(cBitset.GetNumOfElements(), 0U);
 
 		cBitset.Resize(2U, true, false);
-		CHECK_EQUAL(cBitset.GetMaxNumOfElements(), 2U );
+		CHECK_EQUAL(cBitset.GetMaxNumOfElements(), 2U);
 		CHECK_EQUAL(cBitset.GetNumOfElements(), 2U);
 
 		cBitset.RemoveAtIndex(1U);
 		cBitset.Resize(2U, true, true);
-		CHECK_EQUAL(cBitset.GetMaxNumOfElements(), 2U );
-		CHECK_EQUAL(cBitset.GetNumOfElements(), 2U );
+		CHECK_EQUAL(cBitset.GetMaxNumOfElements(), 2U);
+		CHECK_EQUAL(cBitset.GetNumOfElements(), 2U);
 		CHECK_EQUAL(cBitset[1U], false);
 
 		cBitset.Resize(0U);

@@ -101,7 +101,7 @@ namespace UnitTest {
 	}
 
 	// PLCore::String equal
-	void CheckEqual(TestResults& results, PLCore::String const expected, PLCore::String const actual, TestDetails const& details) {		
+	void CheckEqual(TestResults& results, PLCore::String const expected, PLCore::String const actual, TestDetails const& details) {
 		if (expected.GetFormat() == actual.GetFormat()) {
 			if (expected.GetFormat() == PLCore::String::Unicode) {
 				CheckEqual(results, expected.GetUnicode(), actual.GetUnicode(), details);
@@ -111,7 +111,7 @@ namespace UnitTest {
 		}
 		else {
 			CheckEqual(results, expected.GetASCII(), actual.GetASCII(), details);
-		}	
+		}
 	}
 
 	void CheckEqual(TestResults& results, char const* expected, PLCore::String const actual, TestDetails const& details) {

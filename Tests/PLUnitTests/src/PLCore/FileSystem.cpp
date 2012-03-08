@@ -76,10 +76,10 @@ SUITE(FileSystem) {
 				CHECK_EQUAL("[Always]: This is just a simple ASCII log for best compatibility, Unicode characters may not be shown correctly\n", sString);
 
 				sString = cFile.GetS();		// Read 'which is inside a ZIP-file.'
-				CHECK_EQUAL("[Info]: Log-system started\n", sString);				
+				CHECK_EQUAL("[Info]: Log-system started\n", sString);
 
 				sString = cFile.GetS();		// Read ''
-				CHECK_EQUAL("[Error]: Failed to reach the end of the world\n", sString);	
+				CHECK_EQUAL("[Error]: Failed to reach the end of the world\n", sString);
 
 				sString = cFile.GetS();		// Read 'blah'
 				CHECK_EQUAL("Close log\n", sString);

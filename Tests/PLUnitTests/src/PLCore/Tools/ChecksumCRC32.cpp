@@ -40,7 +40,7 @@ SUITE(ChecksumCRC32) {
 	String CheckFile(Checksum &cChecksum, const String &sFilename)
 	{
 		// Check the given parameter
-		if (!sFilename.GetLength()) return ""; 
+		if (!sFilename.GetLength()) return "";
 
 		// Open the file
 		File cFile(sFilename);
@@ -67,7 +67,7 @@ SUITE(ChecksumCRC32) {
 		String sChecksum = cChecksum.Get(cFile);
 
 		// Check the current file offset
-		if (cFile.Tell()) sChecksum = ""; 
+		if (cFile.Tell()) sChecksum = "";
 
 		// Close the file
 		cFile.Close();

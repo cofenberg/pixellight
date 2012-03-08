@@ -48,7 +48,7 @@ SUITE(FastPool) {
 	};
 
 	// global operator for left-hand comparison, e.g.:	1 == TestFastPoolElement, and stream operator for error message output
-	bool operator ==(int i, const TestFastPoolElement& rhs ) {
+	bool operator ==(int i, const TestFastPoolElement& rhs) {
 		return i == rhs.i;
 	}
 	std::ostream& operator << (std::ostream& stream, TestFastPoolElement const& obj)

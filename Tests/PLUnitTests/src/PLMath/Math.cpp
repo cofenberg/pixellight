@@ -218,4 +218,4 @@ SUITE(Math) {
 		CHECK_EQUAL(50.0f, static_cast<float>(f*Math::RadToDeg));
 		CHECK_EQUAL(50.0, d*Math::RadToDeg);
 	}
-} 
+}

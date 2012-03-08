@@ -38,7 +38,7 @@ SUITE(ChecksumMD5) {
 	PLCore::String CheckFile(PLCore::Checksum &cChecksum, const PLCore::String &sFilename)
 	{
 		// Check the given parameter
-		if (!sFilename.GetLength()) return ""; 
+		if (!sFilename.GetLength()) return "";
 
 		// Open the file
 		PLCore::File cFile(sFilename);
@@ -65,7 +65,7 @@ SUITE(ChecksumMD5) {
 		PLCore::String sChecksum = cChecksum.Get(cFile);
 
 		// Check the current file offset
-		if (cFile.Tell()) sChecksum = ""; 
+		if (cFile.Tell()) sChecksum = "";
 
 		// Close the file
 		cFile.Close();

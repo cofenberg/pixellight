@@ -20,7 +20,7 @@ SUITE(Vector4) {
 	// Our Array Test Fixture :)
 	struct ConstructTest
 	{
-		ConstructTest() 
+		ConstructTest()
 		{
 			/* some setup */
 			fT4[0] = 1.0f;

@@ -38,7 +38,17 @@ SUITE(Graph) {
 		bool bUsePosition;
 	};
 
-	// TODO: use this as test?
+	//	Test graph:                  Shortest paths: ('source'->'target' = nodes to pass)
+	//
+	//	+------5------+              A->A: A
+	//	|             |              A->B: A->B
+	//	|  /-2--B--3--C--5-\         A->C: A->D->C
+	//	| /     |    /|     \        A->D: A->D
+	//	+-A     2 /3/ 1      F       A->E: A->D->E
+	//	  \     |/    |     /        A->F: A->D->E->F
+	//	   \-1--D--1--E--2-/
+
+	// TODO: use this as test? It seems it wasn't completed in PLTestBase
 	/*
 	TEST_FIXTURE(ConstructTest, Test) {
 		pNodeA = graph.Create("A");
@@ -98,5 +108,12 @@ SUITE(Graph) {
 		graph.LoadByFilename("Test.graph");
 		graph.SaveByFilename("Test_.graph");
 	}
-	*/
+
+	// [TODO]
+	// Find shortest path
+	/*
+	GraphPath *pPath = cGraph.FindShortestPath(1, 5);
+	if (pPath) {
+		delete pPath;
+	}*/
 }
