@@ -863,7 +863,9 @@ bool Pool<ValueType>::Compare(const Container<ValueType> &lstContainer, uint32 n
 		// Get the number of elements to compare
 		if (!nCount)
 			nCount = lstContainer.GetNumOfElements()-nStart;
-		if (nStart+nCount > lstContainer.GetNumOfElements() || nStart+nCount > m_nNumOfElements)
+		if (nStart+nCount > lstContainer.GetNumOfElements())
+			nCount = lstContainer.GetNumOfElements()-nStart;
+		if (nStart+nCount > m_nNumOfElements)
 			return false; // Not equal!
 
 		// Get the start element from which search direction?

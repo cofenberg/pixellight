@@ -708,9 +708,6 @@ void CheckDerivedContainerFunctions(AType &NullTypeInstance, PLCore::Container<A
 		CHECK(con.Compare(Comparecon, 1, 2));
 		CHECK(con.Compare(Comparecon, 1, con.GetNumOfElements()-1));
 
-		// TODO: review this case :) -- returns false
-		// functions add/remove would crop number 4 down to 2 because this is the maximum number of elements in PLCore::Container
-		//
 		CHECK(con.Compare(Comparecon, 1, 4));
 
 		CHECK(!con.Compare(Comparecon, 10, 0));

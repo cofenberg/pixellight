@@ -392,7 +392,7 @@ class Container : public Iterable<ValueType> {
 		*  @param[in] nStart
 		*    Index the compare operation should start in both containers
 		*  @param[in] nCount
-		*    Number of elements to compare, if 0 compare all elements of lstContainer behind nStart
+		*    Number of elements to compare, if 0 or exceeding the capacity of lstContainer, compare all elements of lstContainer behind nStart
 		*
 		*  @return
 		*    'true' if both containers are equal, else 'false'

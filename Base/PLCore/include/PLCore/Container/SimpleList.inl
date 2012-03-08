@@ -688,7 +688,9 @@ bool SimpleList<ValueType>::Compare(const Container<ValueType> &lstContainer, ui
 		// Get the number of elements to compare
 		if (!nCount)
 			nCount = lstContainer.GetNumOfElements()-nStart;
-		if (nStart+nCount > lstContainer.GetNumOfElements() || nStart+nCount > GetNumOfElements())
+		if (nStart+nCount > lstContainer.GetNumOfElements())
+			nCount = lstContainer.GetNumOfElements()-nStart;
+		if (nStart+nCount > m_nNumOfElements)
 			return false; // Not equal!
 
 		// Start with the first element

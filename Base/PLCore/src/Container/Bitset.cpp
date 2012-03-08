@@ -505,7 +505,9 @@ bool Bitset::Compare(const Container<bool> &lstContainer, uint32 nStart, uint32 
 		// Get the number of elements to compare
 		if (!nCount)
 			nCount = lstContainer.GetNumOfElements()-nStart;
-		if (nStart+nCount > lstContainer.GetNumOfElements() || nStart+nCount > m_nNumOfElements)
+		if (nStart+nCount > lstContainer.GetNumOfElements())
+			nCount = lstContainer.GetNumOfElements()-nStart;
+		if (nStart+nCount > m_nNumOfElements)
 			return false; // Not equal!
 
 		// Compare
