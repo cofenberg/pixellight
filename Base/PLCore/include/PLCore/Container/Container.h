@@ -236,9 +236,9 @@ class Container : public Iterable<ValueType> {
 		*  @param[in] lstContainer
 		*    Container to add
 		*  @param[in] nStart
-		*    Index the copy operation should start
+		*    Index the add operation should start within lstContainer
 		*  @param[in] nCount
-		*    Number of elements to copy, if 0 copy all elements of lstContainer behind nStart
+		*    Number of elements to copy, if 0 or exceeding the capacity of lstContainer, copy all elements of lstContainer behind nStart
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -334,9 +334,9 @@ class Container : public Iterable<ValueType> {
 		*  @param[in] lstContainer
 		*    Container to remove the elements from this container
 		*  @param[in] nStart
-		*    Index the remove operation should start
+		*    Index the remove operation should start within lstContainer
 		*  @param[in] nCount
-		*    Number of elements to remove, if 0 remove all elements of lstContainer behind nStart
+		*    Number of elements to remove, if 0 or exceeding the capacity of lstContainer, remove all elements of lstContainer behind nStart
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -362,9 +362,9 @@ class Container : public Iterable<ValueType> {
 		*  @param[in] lstContainer
 		*    Container to copy from
 		*  @param[in] nStart
-		*    Index the copy operation should start
+		*    Index the copy operation should start within lstContainer
 		*  @param[in] nCount
-		*    Number of elements to copy, if 0 copy all elements of lstContainer behind nStart
+		*    Number of elements to copy, if 0 or exceeding the capacity of lstContainer, copy all elements of lstContainer behind nStart
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -390,7 +390,7 @@ class Container : public Iterable<ValueType> {
 		*  @param[in] lstContainer
 		*    Container to compare with
 		*  @param[in] nStart
-		*    Index the compare operation should start
+		*    Index the compare operation should start in both containers
 		*  @param[in] nCount
 		*    Number of elements to compare, if 0 compare all elements of lstContainer behind nStart
 		*
