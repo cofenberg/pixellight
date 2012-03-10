@@ -162,12 +162,6 @@ class FileObject {
 		*
 		*  @return
 		*    URL of the file
-		*
-		*  @note
-		*    - The URL of a 'FileObject' always contains a filename that never ends with "/"! (so, you can safely
-		*      use 'Url::GetFilename()' to get the name of any file or directory)
-		*    - e.g.: 'Directory("C:\\test")' and 'Directory("C:\\test\\")' are equal, but
-		*      'GetUrl()' will always return "C:/test".
 		*/
 		inline const Url &GetUrl() const;
 

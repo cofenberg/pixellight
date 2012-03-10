@@ -1,3 +1,27 @@
+>> 10.03.2012
+[CO]
+- Within the unit tests, Jens Schmer tried
+    PLCore::Directory cDir("testData/FileSystemTest.zip/");
+    CHECK(cDir.Exists());
+    CHECK(cDir.IsDirectory());
+  with the result that "cDir.IsDirectory()" returned "false" although the "FileObject" class documentation stated that this should be "true".
+  In case of a directory, "FileObject::Assign()" was removing "/" at the end of the filename without more information why it's done. Also, the
+  URL was collapsed which is an expensive operation - we might not do that if it's not absolutely required. The system shouldn't play around too
+  much with the given data. Reviewed and changed the behaviour which is now according to the existing documentation and the unit test no longer
+  fails. Also tested several existing projects, I hope this doesn't break anything unnoticed.
+  -> The "FileObject::GetUrl()"-documentation stated:
+     "The URL of a 'FileObject' always contains a filename that never ends with "/"! (so, you can safely use 'Url::GetFilename()' to get the name
+      of any file or directory)"
+     and
+     "e.g.: 'Directory("C:\\test")' and 'Directory("C:\\test\\")' are equal, but
+      'GetUrl()' will always return "C:/test"."
+     Updated comments according to the made change. This behaviour is now also consistent with the URL-class which preserves "/", in case there
+     was one.
+- "FileSearchZip::GetNextFile()" was removing "/" at the end of a string without more information why this was done. Looked odd and when playing
+  around within the unit tests the behaviour was unexpected.
+
+
+
 >> 08.03.2012
 [CO]
 - While working on PLUnitTests, Jens Schmer noticed that the "nCount"-behaviour of

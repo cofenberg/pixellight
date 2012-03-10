@@ -25,6 +25,7 @@ SUITE(FileSystem) {
 		// Read directory list of 'test.zip'
 		Directory cDir("testData/FileSystemTest.zip/");
 		CHECK(cDir.Exists());
+		CHECK(!cDir.IsFile());
 		CHECK(cDir.IsDirectory());
 
 		if (cDir.Exists() && cDir.IsDirectory()) {

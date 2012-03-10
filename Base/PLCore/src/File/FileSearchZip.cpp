@@ -93,10 +93,6 @@ String FileSearchZip::GetNextFile()
 							m_cZipFile.GetCurrentFile().m_sFilename :
 							m_cZipFile.GetCurrentFile().m_sFilename.GetSubstring(m_sPathInZip.GetLength()));
 
-		// Remove "/" at the end
-		if (sName.GetSubstring(sName.GetLength()-1) == '/')
-			sName = sName.GetSubstring(0, sName.GetLength()-1);
-
 		// Go to next file
 		m_cZipFile.LocateNextFile();
 
