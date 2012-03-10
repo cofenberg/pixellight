@@ -324,6 +324,7 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
     <ClCompile Include="src\DockWidget\DockWidgetScene.cpp" />
     <ClCompile Include="src\DockWidget\DockWidgetSceneGraph.cpp" />
     <ClCompile Include="src\DockWidget\DockWidgetSceneGraphQObject.cpp" />
+    <ClCompile Include="src\DockWidget\DockWidgetSceneMeshInformation.cpp" />
     <ClCompile Include="src\DockWidget\DockWidgetSceneRenderer.cpp" />
     <ClCompile Include="src\DockWidget\DockWidgetSceneRendererQObject.cpp" />
     <ClCompile Include="src\External\filterwidget.cpp" />
@@ -345,6 +346,7 @@ copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\
     <ClCompile Include="src\Widget\SceneGraphMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneMeshInformation.h" />
     <ClInclude Include="include\PLFrontendQt\Widget\QTableViewWithCopy.h" />
     <CustomBuild Include="include\PLFrontendQt\Widget\SceneGraphMenu.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>

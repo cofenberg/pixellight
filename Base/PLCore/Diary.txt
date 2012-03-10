@@ -22,6 +22,9 @@
 PLFrontendQt:
 - Added "QTableViewWithCopy": A "QTableView" where it's possible to copy the selected content into the clipboard. I was using this widget already
   within my master thesis to be able to copy out data without having to typewrite it from the GUI.
+- Added "DockWidgetSceneMeshInformation" for information about the mesh of the currently selected scene node. I was also already using such a thing
+  for volume scene nodes within my master thesis. For now it's a basic table, I assume a tree view would be better in here for a better overview -
+  but the current first implementation is all I need for now.
 
 
 

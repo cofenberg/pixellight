@@ -241,6 +241,9 @@
     <ClCompile Include="src\Widget\QTableViewWithCopy.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
+    <ClCompile Include="src\DockWidget\DockWidgetSceneMeshInformation.cpp">
+      <Filter>DockWidget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarTreeItemsFactory.h">
@@ -344,6 +347,9 @@
     </ClInclude>
     <ClInclude Include="include\PLFrontendQt\Widget\QTableViewWithCopy.h">
       <Filter>Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\DockWidget\DockWidgetSceneMeshInformation.h">
+      <Filter>DockWidget</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

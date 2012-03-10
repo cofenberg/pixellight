@@ -156,6 +156,7 @@ add_sources(
 	src/DockWidget/DockWidgetSceneGraphQObject.cpp
 	src/DockWidget/DockWidgetSceneRenderer.cpp
 	src/DockWidget/DockWidgetSceneRendererQObject.cpp
+	src/DockWidget/DockWidgetSceneMeshInformation.cpp
 	${UI_SRCS}	# Add source produced by uic
 	${MOC_SRCS}	# Add source produced by moc
 	${QRC_SRCS}	# Add sources produced by rcc
