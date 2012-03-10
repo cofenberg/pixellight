@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <QtCore/qnamespace.h>
 #include <PLCore/Base/Object.h>
 #include "PLFrontendQt/PLFrontendQt.h"
 
@@ -37,6 +38,7 @@
 //[-------------------------------------------------------]
 QT_BEGIN_NAMESPACE
 	class QWidget;
+	class QMainWindow;
 	class QDockWidget;
 QT_END_NAMESPACE
 namespace PLFrontendQt {
@@ -326,6 +328,22 @@ class DockWidget : public PLCore::Object {
 		*    dock widgets and calls the "SetDefaultValues()"-method of each RTTI dock widget class instance.
 		*/
 		PLFRONTENDQT_API void SetDockWidgetsDefaultValues();
+
+		//[-------------------------------------------------------]
+		//[ Helper                                                ]
+		//[-------------------------------------------------------]
+		/**
+		*  @brief
+		*    Adds the given Qt dock widget to the given Qt main window and tabifies it
+		*
+		*  @param[in] cQMainWindow
+		*    Qt main window where to add the given Qt dock widget
+		*  @param[in] nQtDockWidgetArea
+		*    Dock widget area where to add the given Qt dock widget within the given Qt main window
+		*  @param[in] cQDockWidget
+		*    Qt dock widget to add to the given Qt main window
+		*/
+		PLFRONTENDQT_API void AddDockWidgetAndTabify(QMainWindow &cQMainWindow, Qt::DockWidgetArea nQtDockWidgetArea, QDockWidget &cQDockWidget) const;
 
 
 	//[-------------------------------------------------------]

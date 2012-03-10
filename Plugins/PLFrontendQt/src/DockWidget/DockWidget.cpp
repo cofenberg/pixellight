@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <QtGui/qdockwidget.h>
+#include <QtGui/qmainwindow.h>
 #include "PLFrontendQt/DockWidget/DockWidgetManager.h"
 #include "PLFrontendQt/DockWidget/DockWidget.h"
 
@@ -479,6 +480,32 @@ void DockWidget::SetDockWidgetsDefaultValues()
 			DockWidget *pDockWidget = lstDockWidgets[i];
 			if (pDockWidget != this)
 				pDockWidget->SetDefaultValues();
+		}
+	}
+}
+
+/**
+*  @brief
+*    Adds the given Qt dock widget to the given Qt main window and tabifies it
+*/
+void DockWidget::AddDockWidgetAndTabify(QMainWindow &cQMainWindow, Qt::DockWidgetArea nQtDockWidgetArea, QDockWidget &cQDockWidget) const
+{
+	// Add the given Qt dock widget to the given Qt main window
+	cQMainWindow.addDockWidget(nQtDockWidgetArea, &cQDockWidget);
+
+	// Tabify
+	const QList<QDockWidget*> lstQDockWidgets = cQMainWindow.findChildren<QDockWidget*>();
+	for (int i=0; i<lstQDockWidgets.count(); i++) {
+		// Get the current dock widget
+		QDockWidget *pQDockWidget = lstQDockWidgets.at(i);
+
+		// Is this current dock widget in the same dock widget area?
+		if (pQDockWidget != &cQDockWidget && cQMainWindow.dockWidgetArea(pQDockWidget) == nQtDockWidgetArea) {
+			// Tabify dock widget
+			cQMainWindow.tabifyDockWidget(pQDockWidget, &cQDockWidget);
+
+			// Get us out of the loop
+			i = lstQDockWidgets.count();
 		}
 	}
 }
