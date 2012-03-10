@@ -121,9 +121,9 @@ class VertexBuffer : public Buffer {
 			ESemantic	   nSemantic;		/**< Any member of the vertex attribute semantic enumeration type */
 			PLCore::uint32 nChannel;		/**< Pipeline channel (see ESemantic) */
 			EType		   nType;			/**< Any member of the EType enumeration type */
-			PLCore::uint32 nOffset;			/**< Offset of the vertex attribute */
+			PLCore::uint32 nOffset;			/**< Offset (in bytes) of the vertex attribute */
 			// API dependent
-			PLCore::uint32 nSizeAPI;		/**< Size of the vertex attribute */
+			PLCore::uint32 nSizeAPI;		/**< Size (in bytes) of the vertex attribute */
 			PLCore::uint32 nTypeAPI;		/**< API dependent vertex type */
 			PLCore::uint32 nComponentsAPI;	/**< Number of vertex type components */
 		};
