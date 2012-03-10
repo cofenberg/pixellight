@@ -89,8 +89,9 @@ class SRPEndHDR : public SRPEnd {
 			NoBloom                     = 1<<4,	/**< Do not add bloom */
 			NoGammaCorrection           = 1<<5,	/**< Do not perform gamma correction */
 			WriteToOriginalSurface      = 1<<6,	/**< The result is drawn into the given original render surface (for example a render window) and there's no further need for an additional SRPEnd instance, if not set, the current render pipeline is continued */
-			ShowBloomTexture            = 1<<7,	/**< Show the bloom texture (for debugging) */
-			UseVertexTextureFetch       = 1<<8	/**< Allow the usage of vertex texture fetch (VTF) - results in usually slightly better performance but there may be driver issues */
+			UseVertexTextureFetch       = 1<<7,	/**< Allow the usage of vertex texture fetch (VTF) - results in usually slightly better performance but there may be driver issues */
+			DebugShowBloomTexture       = 1<<8,	/**< Show the bloom texture (for debugging) */
+			DebugCheckAndFixNANValues   = 1<<9	/**< Check for NAN and fix NAN values by using a red color (for debugging, SLOW!) */
 		};
 		pl_enum(EFlags)
 			pl_enum_base(SRPEnd::EFlags)
@@ -100,8 +101,9 @@ class SRPEndHDR : public SRPEnd {
 			pl_enum_value(NoBloom,						"Do not add bloom")
 			pl_enum_value(NoGammaCorrection,			"Do not perform gamma correction")
 			pl_enum_value(WriteToOriginalSurface,		"The result is drawn into the given original render surface (for example a render window) and there's no further need for an additional SRPEnd instance, if not set, the current render pipeline is continued")
-			pl_enum_value(ShowBloomTexture,				"Show the bloom texture (for debugging)")
 			pl_enum_value(UseVertexTextureFetch,		"Allow the usage of vertex texture fetch (VTF) - results in usually slightly better performance but there may be driver issues")
+			pl_enum_value(DebugShowBloomTexture,		"Show the bloom texture (for debugging)")
+			pl_enum_value(DebugCheckAndFixNANValues,	"Check for NAN and fix NAN values by using a red color (for debugging, SLOW!)")
 		pl_enum_end
 
 

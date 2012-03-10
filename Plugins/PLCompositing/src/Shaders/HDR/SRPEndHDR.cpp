@@ -26,7 +26,10 @@
 #include <float.h>
 #include <PLCore/Tools/Timing.h>
 #include <PLRenderer/RendererContext.h>
+#include <PLRenderer/Renderer/Font.h>
 #include <PLRenderer/Renderer/Program.h>
+#include <PLRenderer/Renderer/FontManager.h>
+#include <PLRenderer/Renderer/DrawHelpers.h>
 #include <PLRenderer/Renderer/ProgramUniform.h>
 #include <PLRenderer/Renderer/ProgramAttribute.h>
 #include <PLRenderer/Renderer/TextureBufferRectangle.h>
@@ -157,6 +160,11 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					// Get the texture we will use as 'source texture' when rendering the fullscreen quad
 					TextureBufferRectangle *pHDRTextureBuffer = static_cast<TextureBufferRectangle*>(pSurfaceTextureBuffer->GetTextureBuffer());
 
+					// Debug feature: Check and NAN fix values (SLOW! But it's only for debugging...)
+					uint32 nNumOfFixedNANValues = 0;
+					if ((GetFlags() & DebugCheckAndFixNANValues) && pHDRTextureBuffer)
+						nNumOfFixedNANValues = pHDRTextureBuffer->FixNANValues(PLGraphics::Color4::Red);
+
 					// Reset all render states to default
 					cRenderer.GetRendererContext().GetEffectManager().Use();
 					cRenderer.SetColorMask();
@@ -206,7 +214,7 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 													LuminanceConvert.Get(), Key, WhiteLevel, AverageLuminance, pHDRAverageLuminanceTextureBuffer, BloomBlurPasses, BloomDownscale, (GetFlags() & UseVertexTextureFetch) != 0);
 
 						// Show bloom texture (for debugging)
-						if (GetFlags() & ShowBloomTexture) {
+						if (GetFlags() & DebugShowBloomTexture) {
 							bToneMapping			   = false;
 							bAutomaticAverageLuminance = false;
 							bBloom					   = false;
@@ -368,6 +376,28 @@ void SRPEndHDR::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 
 					// Restore fixed fill mode render state
 					cRenderer.SetRenderState(RenderState::FixedFillMode, nFixedFillModeBackup);
+
+					// Debug feature: NAN values fixed?
+					if (nNumOfFixedNANValues) {
+						// Get the font
+						Font *pFont = cRenderer.GetFontManager().GetDefaultFontTexture();
+						if (pFont) {
+							// Setup render states
+							cRenderer.GetRendererContext().GetEffectManager().Use();
+							cRenderer.SetRenderState(RenderState::ZEnable,      false);
+							cRenderer.SetRenderState(RenderState::ZWriteEnable, false);
+
+							// Begin 2D mode
+							DrawHelpers &cDrawHelpers = cRenderer.GetDrawHelpers();
+							cDrawHelpers.Begin2DMode(0.0f, 0.0f, 800.0f, 600.0f);
+
+								// Draw the text
+								cDrawHelpers.DrawText(*pFont, String::Format("%d NAN Detected!", nNumOfFixedNANValues), PLGraphics::Color4::Red, Vector2(400.0f, 300.0f), Font::CenterText, Vector2(5.0f, 5.0f));
+
+							// End 2D mode
+							cDrawHelpers.End2DMode();
+						}
+					}
 				}
 			}
 		}
