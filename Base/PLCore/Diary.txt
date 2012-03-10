@@ -19,6 +19,9 @@
      was one.
 - "FileSearchZip::GetNextFile()" was removing "/" at the end of a string without more information why this was done. Looked odd and when playing
   around within the unit tests the behaviour was unexpected.
+PLFrontendQt:
+- Added "QTableViewWithCopy": A "QTableView" where it's possible to copy the selected content into the clipboard. I was using this widget already
+  within my master thesis to be able to copy out data without having to typewrite it from the GUI.
 
 
 

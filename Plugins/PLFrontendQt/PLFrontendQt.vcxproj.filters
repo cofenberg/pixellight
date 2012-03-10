@@ -238,6 +238,9 @@
     <ClCompile Include="src\DataModels\ModelIndexMimeData.cpp">
       <Filter>DataModels</Filter>
     </ClCompile>
+    <ClCompile Include="src\Widget\QTableViewWithCopy.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLFrontendQt\DataModels\PLTreeItems\PLDynVarTreeItemsFactory.h">
@@ -338,6 +341,9 @@
     </ClInclude>
     <ClInclude Include="include\PLFrontendQt\DataModels\TreeItemBase.h">
       <Filter>DataModels</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLFrontendQt\Widget\QTableViewWithCopy.h">
+      <Filter>Widget</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
