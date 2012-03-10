@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <QtGui/qtreeview.h>
 #include <QtGui/qdockwidget.h>
-#include <QtGui/qmainwindow.h>
 #include <PLScene/Compositing/SceneRenderer.h>
 #include "PLFrontendQt/DataModels/PLTreeItemsDelegate.h"
 #include "PLFrontendQt/DataModels/SceneRendererDataModel/SceneRendererDataModel.h"
@@ -54,7 +53,7 @@ pl_implement_class(DockWidgetSceneRenderer)
 *  @brief
 *    Constructor
 */
-DockWidgetSceneRenderer::DockWidgetSceneRenderer(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidgetScene(pQMainWindow, pDockWidgetManager),
+DockWidgetSceneRenderer::DockWidgetSceneRenderer(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidgetScene(reinterpret_cast<QWidget*>(pQMainWindow), pDockWidgetManager),
 	SlotOnDestroyed(this),
 	m_pQTreeView(nullptr),
 	m_pSceneRendererDataModel(nullptr),
@@ -77,8 +76,8 @@ DockWidgetSceneRenderer::DockWidgetSceneRenderer(QMainWindow *pQMainWindow, Dock
 		// -> See "DataModels::PLTreeItemsDelegate"-class documentation for details
 		m_pQTreeView->setItemDelegate(new DataModels::PLTreeItemsDelegate);
 
-		// Add the created Qt dock widget to the given Qt main window
-		pQMainWindow->addDockWidget(Qt::BottomDockWidgetArea, pQDockWidget);
+		// Add the created Qt dock widget to the given Qt main window and tabify it for better usability
+		AddDockWidgetAndTabify(*pQMainWindow, Qt::BottomDockWidgetArea, *pQDockWidget);
 
 		// The Qt object should receive events from the encapsulated Qt dock widget
 		pQDockWidget->installEventFilter(m_pDockWidgetSceneRendererQObject);

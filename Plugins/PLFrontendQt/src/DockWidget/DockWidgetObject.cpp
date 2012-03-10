@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <QtGui/qtreeview.h>
 #include <QtGui/qdockwidget.h>
-#include <QtGui/qmainwindow.h>
 #include <PLCore/Base/Class.h>
 #include "PLFrontendQt/QtStringAdapter.h"
 #include "PLFrontendQt/DataModels/PLIntrospectionModel.h"
@@ -53,7 +52,7 @@ pl_implement_class(DockWidgetObject)
 *  @brief
 *    Constructor
 */
-DockWidgetObject::DockWidgetObject(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidget(pQMainWindow, pDockWidgetManager),
+DockWidgetObject::DockWidgetObject(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidget(reinterpret_cast<QWidget*>(pQMainWindow), pDockWidgetManager),
 	SlotOnDestroyed(this),
 	m_pQTreeView(nullptr),
 	m_pPLIntrospectionModel(nullptr),
@@ -73,8 +72,8 @@ DockWidgetObject::DockWidgetObject(QMainWindow *pQMainWindow, DockWidgetManager 
 		// -> See "DataModels::PLTreeItemsDelegate"-class documentation for details
 		m_pQTreeView->setItemDelegate(new DataModels::PLTreeItemsDelegate);
 
-		// Add the created Qt dock widget to the given Qt main window
-		pQMainWindow->addDockWidget(Qt::BottomDockWidgetArea, pQDockWidget);
+		// Add the created Qt dock widget to the given Qt main window and tabify it for better usability
+		AddDockWidgetAndTabify(*pQMainWindow, Qt::BottomDockWidgetArea, *pQDockWidget);
 
 		{ // Ask the RTTI dock widget fellows whether or not someone knows which is the currently selected object
 			// Get a list of dock widgets registered within the same dock widget manager this dock widget is in

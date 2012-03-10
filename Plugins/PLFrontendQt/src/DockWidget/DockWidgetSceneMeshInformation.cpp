@@ -27,7 +27,6 @@
 PL_WARNING_PUSH
 	PL_WARNING_DISABLE(4127)	// "warning C4127: conditional expression is constant"
 	#include <QtGui/qdockwidget.h>
-	#include <QtGui/qmainwindow.h>
 	#include <QtGui/qheaderview.h>
 	#include <QtGui/qstandarditemmodel.h>
 PL_WARNING_POP
@@ -67,7 +66,7 @@ pl_implement_class(DockWidgetSceneMeshInformation)
 *  @brief
 *    Constructor
 */
-DockWidgetSceneMeshInformation::DockWidgetSceneMeshInformation(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidgetScene(pQMainWindow, pDockWidgetManager),
+DockWidgetSceneMeshInformation::DockWidgetSceneMeshInformation(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidgetScene(reinterpret_cast<QWidget*>(pQMainWindow), pDockWidgetManager),
 	SlotOnDestroyed(this),
 	m_pObject(nullptr),
 	m_pQTableView(nullptr)
@@ -78,8 +77,8 @@ DockWidgetSceneMeshInformation::DockWidgetSceneMeshInformation(QMainWindow *pQMa
 		// Set window title
 		pQDockWidget->setWindowTitle(pQDockWidget->tr(GetClass()->GetProperties().Get("Title")));
 
-		// Add the created Qt dock widget to the given Qt main window
-		pQMainWindow->addDockWidget(Qt::BottomDockWidgetArea, pQDockWidget);
+		// Add the created Qt dock widget to the given Qt main window and tabify it for better usability
+		AddDockWidgetAndTabify(*pQMainWindow, Qt::BottomDockWidgetArea, *pQDockWidget);
 
 		{ // Ask the RTTI dock widget fellows whether or not someone knows which is the currently selected object
 			// Get a list of dock widgets registered within the same dock widget manager this dock widget is in

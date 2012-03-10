@@ -26,7 +26,6 @@
 #include <QtGui/qtreeview.h>
 #include <QtGui/qboxlayout.h>
 #include <QtGui/qdockwidget.h>
-#include <QtGui/qmainwindow.h>
 #include <PLCore/Base/Class.h>
 #include <PLScene/Scene/SceneContainer.h>
 #include <PLScene/Scene/SceneNodeModifier.h>
@@ -60,7 +59,7 @@ pl_implement_class(DockWidgetSceneGraph)
 *  @brief
 *    Constructor
 */
-DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidgetScene(pQMainWindow, pDockWidgetManager),
+DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidgetScene(reinterpret_cast<QWidget*>(pQMainWindow), pDockWidgetManager),
 	SlotOnDestroy(this),
 	m_pQTreeView(nullptr),
 	m_pSceneGraphTreeModel(nullptr),
@@ -108,8 +107,8 @@ DockWidgetSceneGraph::DockWidgetSceneGraph(QMainWindow *pQMainWindow, DockWidget
 			m_pQTreeView->setDefaultDropAction(Qt::IgnoreAction);
 		}
 
-		// Add the created Qt dock widget to the given Qt main window
-		pQMainWindow->addDockWidget(Qt::LeftDockWidgetArea, pQDockWidget);
+		// Add the created Qt dock widget to the given Qt main window and tabify it for better usability
+		AddDockWidgetAndTabify(*pQMainWindow, Qt::LeftDockWidgetArea, *pQDockWidget);
 
 		// Set the used scene container and object
 		SetSceneContainerAndObject();

@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <QtGui/qdockwidget.h>
-#include <QtGui/qmainwindow.h>
 #include <PLCore/Base/Class.h>
 #include "PLFrontendQt/Widget/RTTIBrowserWidget.h"
 #include "PLFrontendQt/DockWidget/DockWidgetRTTIBrowser.h"
@@ -50,7 +49,7 @@ pl_implement_class(DockWidgetRTTIBrowser)
 *  @brief
 *    Constructor
 */
-DockWidgetRTTIBrowser::DockWidgetRTTIBrowser(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidget(pQMainWindow, pDockWidgetManager)
+DockWidgetRTTIBrowser::DockWidgetRTTIBrowser(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidget(reinterpret_cast<QWidget*>(pQMainWindow), pDockWidgetManager)
 {
 	// Get encapsulated Qt dock widget
 	QDockWidget *pQDockWidget = GetQDockWidget();
@@ -61,8 +60,8 @@ DockWidgetRTTIBrowser::DockWidgetRTTIBrowser(QMainWindow *pQMainWindow, DockWidg
 		// Set window title
 		pQDockWidget->setWindowTitle(pQDockWidget->tr(GetClass()->GetProperties().Get("Title")));
 
-		// Add the created Qt dock widget to the given Qt main window
-		pQMainWindow->addDockWidget(Qt::BottomDockWidgetArea, pQDockWidget);
+		// Add the created Qt dock widget to the given Qt main window and tabify it for better usability
+		AddDockWidgetAndTabify(*pQMainWindow, Qt::BottomDockWidgetArea, *pQDockWidget);
 	}
 }
 

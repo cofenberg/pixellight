@@ -26,6 +26,8 @@ PLFrontendQt:
   for volume scene nodes within my master thesis. For now it's a basic table, I assume a tree view would be better in here for a better overview -
   but the current first implementation is all I need for now.
 - Added helper method "DockWidget::AddDockWidgetAndTabify()"
+- Usability: By default, new RTTI dock widget instances are "tabified". Currently I'am working with the RTTI dock widgets all day long and constantly
+  have to move around them after hey have been instanced. Finally more comfortable to work with.
 
 
 

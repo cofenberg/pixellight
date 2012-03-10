@@ -24,7 +24,6 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <QtGui/qdockwidget.h>
-#include <QtGui/qmainwindow.h>
 #include <QtGui/qplaintextedit.h>
 #include <PLCore/Log/Log.h>
 #include <PLCore/Base/Class.h>
@@ -52,7 +51,7 @@ pl_implement_class(DockWidgetLog)
 *  @brief
 *    Constructor
 */
-DockWidgetLog::DockWidgetLog(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidget(pQMainWindow, pDockWidgetManager),
+DockWidgetLog::DockWidgetLog(QMainWindow *pQMainWindow, DockWidgetManager *pDockWidgetManager) : DockWidget(reinterpret_cast<QWidget*>(pQMainWindow), pDockWidgetManager),
 	SlotNewEntry(&DockWidgetLog::OnNewEntry, this),
 	m_pQPlainTextEdit(nullptr)
 {
@@ -82,8 +81,8 @@ DockWidgetLog::DockWidgetLog(QMainWindow *pQMainWindow, DockWidgetManager *pDock
 		// Set window title
 		pQDockWidget->setWindowTitle(pQDockWidget->tr(GetClass()->GetProperties().Get("Title")));
 
-		// Add the created Qt dock widget to the given Qt main window
-		pQMainWindow->addDockWidget(Qt::BottomDockWidgetArea, pQDockWidget);
+		// Add the created Qt dock widget to the given Qt main window and tabify it for better usability
+		AddDockWidgetAndTabify(*pQMainWindow, Qt::BottomDockWidgetArea, *pQDockWidget);
 
 		// Connect event handler
 		pLog->EventNewEntry.Connect(SlotNewEntry);
