@@ -677,8 +677,11 @@ SimpleList<ValueType> &SimpleList<ValueType>::operator =(const Container<ValueTy
 template <class ValueType>
 bool SimpleList<ValueType>::Compare(const Container<ValueType> &lstContainer, uint32 nStart, uint32 nCount) const
 {
+	// Get the number of elements within this container
+	const uint32 nNumOfElements = GetNumOfElements();
+
 	// Check parameters
-	if (nStart >= lstContainer.GetNumOfElements() || nStart >= GetNumOfElements()) {
+	if (nStart >= lstContainer.GetNumOfElements() || nStart >= nNumOfElements) {
 		// Empty containers?
 		if (pFirstElement || lstContainer.GetNumOfElements()) {
 			// Error, invalid start index! Not equal!
@@ -690,7 +693,7 @@ bool SimpleList<ValueType>::Compare(const Container<ValueType> &lstContainer, ui
 			nCount = lstContainer.GetNumOfElements()-nStart;
 		if (nStart+nCount > lstContainer.GetNumOfElements())
 			nCount = lstContainer.GetNumOfElements()-nStart;
-		if (nStart+nCount > m_nNumOfElements)
+		if (nStart+nCount > nNumOfElements)
 			return false; // Not equal!
 
 		// Start with the first element
