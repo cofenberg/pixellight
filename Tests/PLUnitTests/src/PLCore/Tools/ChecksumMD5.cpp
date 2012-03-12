@@ -128,16 +128,16 @@ SUITE(ChecksumMD5) {
 	// ChecksumMD5: Get(File &cFile)
 	TEST_FIXTURE(ConstructTest, ChecksumMD5__Get_File__cFile_) {
 		// Check 'demotest.xml'
-		sChecksum = CheckFile(sumMD5, "testData/ChecksumTest_demo.xml");
+		sChecksum = CheckFile(sumMD5, "../Data/unitTestData/ChecksumTest_demo.xml");
 		CHECK_EQUAL("313a0294c72a84409c9dd6267d44730f", sChecksum.GetASCII());
 
 		// Check 'tokenizer.txt'
-		sChecksum = CheckFile(sumMD5, "testData/ChecksumTest_tokenizer.txt");
+		sChecksum = CheckFile(sumMD5, "../Data/unitTestData/ChecksumTest_tokenizer.txt");
 		// [TODO] fails!
 		CHECK_EQUAL("3ef605c74b399d7d869afb40de4cede4", sChecksum.GetASCII());
 
 		// Check 'test.zip'
-		sChecksum = CheckFile(sumMD5, "testData/ChecksumTest_test.zip");
+		sChecksum = CheckFile(sumMD5, "../Data/unitTestData/ChecksumTest_test.zip");
 		// [TODO] fails!
 		CHECK_EQUAL("898d399c87c96a6f73814b1940fbca16", sChecksum.GetASCII());
 	}
@@ -145,16 +145,16 @@ SUITE(ChecksumMD5) {
 	// ChecksumMD5: GetFile(const String &sFilename)
 	TEST_FIXTURE(ConstructTest, ChecksumMD5__Get_const_String__sFilename_) {
 		// Check 'demotest.xml'
-		sChecksum = sumMD5.GetFile("testData/ChecksumTest_demo.xml");
+		sChecksum = sumMD5.GetFile("../Data/unitTestData/ChecksumTest_demo.xml");
 		CHECK_EQUAL("313a0294c72a84409c9dd6267d44730f", sChecksum.GetASCII());
 
 		// Check 'tokenizer.txt'
-		sChecksum = sumMD5.GetFile("testData/ChecksumTest_tokenizer.txt");
+		sChecksum = sumMD5.GetFile("../Data/unitTestData/ChecksumTest_tokenizer.txt");
 		// [TODO] fails!
 		CHECK_EQUAL("3ef605c74b399d7d869afb40de4cede4", sChecksum.GetASCII());
 
 		// Check 'test.zip'
-		sChecksum = sumMD5.GetFile("testData/ChecksumTest_test.zip");
+		sChecksum = sumMD5.GetFile("../Data/unitTestData/ChecksumTest_test.zip");
 		// [TODO] fails!
 		CHECK_EQUAL("898d399c87c96a6f73814b1940fbca16", sChecksum.GetASCII());
 	}
