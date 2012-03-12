@@ -1,6 +1,7 @@
 Changes in PixelLight 0.9.12-R1 (not yet released)
 - Feature: The loadable system can now also deal with file formats which don't have any file extension
 - Feature: The loadable system can now also deal with file formats like DICOM which load from directories instead of files
+- Bugfix (ID: 3502066): "PLGraphics::Color4::IsValid()" alpha-check was invalid
 
 
 Changes in PixelLight 0.9.11-R1 (released on February 23, 2012)

@@ -516,7 +516,7 @@ inline void Color4::SetA(PLCore::uint8 nA)
 */
 inline bool Color4::IsValid() const
 {
-	return (r >= 0.0f && r <= 1.0f && g >= 0.0f && g <= 1.0f && b >= 0.0f && b <= 1.0f && a >= 0.0f && a <= 0.0f);
+	return (r >= 0.0f && r <= 1.0f && g >= 0.0f && g <= 1.0f && b >= 0.0f && b <= 1.0f && a >= 0.0f && a <= 1.0f);
 }
 
 /**

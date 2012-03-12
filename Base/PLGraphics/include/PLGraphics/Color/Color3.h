@@ -505,6 +505,10 @@ class Color3 {
 		*
 		*  @return
 		*    'true' if the color is valid, else 'false'
+		*
+		*  @note
+		*    - A color is considered to be valid in case all component values are between 0.0 and 1.0
+		*    - Depending on the use-case, there may not always be such a limitation (example: HDR)
 		*/
 		inline bool IsValid() const;
 
