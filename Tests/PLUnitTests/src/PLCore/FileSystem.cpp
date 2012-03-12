@@ -23,7 +23,7 @@ SUITE(FileSystem) {
 
 	TEST(Read_File_List_Of_Zip) {
 		// Read directory list of 'test.zip'
-		Directory cDir("testData/FileSystemTest.zip/");
+		Directory cDir("../Data/unitTestData/FileSystemTest.zip/");
 		CHECK(cDir.Exists());
 		CHECK(!cDir.IsFile());
 		CHECK(cDir.IsDirectory());
@@ -61,7 +61,7 @@ SUITE(FileSystem) {
 
 	TEST(Read_File_In_Zip) {
 		// Open 'aTestLog.txt' inside 'FileSystemTest.zip/'
-		File cFile("testData/FileSystemTest.zip/aTestLog.txt");
+		File cFile("../Data/unitTestData/FileSystemTest.zip/aTestLog.txt");
 
 		CHECK(cFile.Exists());
 		CHECK(cFile.IsFile());

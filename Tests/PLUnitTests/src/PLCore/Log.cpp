@@ -23,7 +23,7 @@ SUITE(Log) {
 		CHECK(pLog);
 
 		// open log
-		CHECK(pLog->Open("testData/TestLog.txt"));
+		CHECK(pLog->Open("../Data/unitTestData/TestLog.txt"));
 
 		// print out some logs
 		PL_LOG(Info, "Log-system started")

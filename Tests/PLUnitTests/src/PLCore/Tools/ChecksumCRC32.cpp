@@ -126,30 +126,30 @@ SUITE(ChecksumCRC32) {
 	// ChecksumCRC32: Get(File &cFile)
 	TEST_FIXTURE(ConstructTest, ChecksumCRC32__Get_File__cFile_) {
 		// Check 'demotest.xml'
-		sChecksum = CheckFile(sumCRC, "testData/ChecksumTest_demo.xml");
+		sChecksum = CheckFile(sumCRC, "../Data/unitTestData/ChecksumTest_demo.xml");
 		CHECK_EQUAL(String("f7a94f8d").ToLower(), sChecksum.ToLower());
 
 		// Check 'tokenizer.txt'
-		sChecksum = CheckFile(sumCRC, "testData/ChecksumTest_tokenizer.txt");
+		sChecksum = CheckFile(sumCRC, "../Data/unitTestData/ChecksumTest_tokenizer.txt");
 		CHECK_EQUAL(String("843cd3ed").ToLower(), sChecksum.ToLower());
 
 		// Check 'test.zip'
-		sChecksum = CheckFile(sumCRC, "testData/ChecksumTest_test.zip");
+		sChecksum = CheckFile(sumCRC, "../Data/unitTestData/ChecksumTest_test.zip");
 		CHECK_EQUAL(String("8076cc81").ToLower(), sChecksum.ToLower());
 	}
 
 	// ChecksumCRC32: GetFile(const String &sFilename)
 	TEST_FIXTURE(ConstructTest, ChecksumCRC32__Get_const_String__sFilename_) {
 		// Check 'demotest.xml'
-		sChecksum = sumCRC.GetFile("testData/ChecksumTest_demo.xml");
+		sChecksum = sumCRC.GetFile("../Data/unitTestData/ChecksumTest_demo.xml");
 		CHECK_EQUAL(String("f7a94f8d").ToLower(), sChecksum.ToLower());
 
 		// Check 'tokenizer.txt'
-		sChecksum = sumCRC.GetFile("testData/ChecksumTest_tokenizer.txt");
+		sChecksum = sumCRC.GetFile("../Data/unitTestData/ChecksumTest_tokenizer.txt");
 		CHECK_EQUAL(String("843cd3ed").ToLower(), sChecksum.ToLower());
 
 		// Check 'test.zip'
-		sChecksum = sumCRC.GetFile("testData/ChecksumTest_test.zip");
+		sChecksum = sumCRC.GetFile("../Data/unitTestData/ChecksumTest_test.zip");
 		CHECK_EQUAL(String("8076cc81").ToLower(), sChecksum.ToLower());
 	}
 }
