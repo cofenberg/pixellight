@@ -81,6 +81,7 @@ add_sources(
 	src/UnitTest++AddIns/PLChecks.cpp
 	src/UnitTest++AddIns/RunAllTests.cpp
 	src/UnitTest++AddIns/wchar_template.cpp
+	src/UnitTest++AddIns/LocaleWrapper.cpp
 )
 if(ANDROID)
 	add_sources(
@@ -189,7 +190,7 @@ endif()
 if(ANDROID)
 	build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
 else()
-	build_executable(${CMAKETOOLS_CURRENT_TARGET} CONSOLE)
+	build_executable(${CMAKETOOLS_CURRENT_TARGET}  CONSOLE)
 endif()
 
 ##################################################
