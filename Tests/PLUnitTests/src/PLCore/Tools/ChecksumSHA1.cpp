@@ -118,8 +118,15 @@ SUITE(ChecksumSHA1) {
 
 		// Unicode
 		sChecksum = sumSHA1.Get(L"\u65e5\u672c\u8a9e");
+#ifdef LINUX
+		// Under linux the checksum differs because PLCore::String uses the wchar_t type for storing unicode string data
+		// The size of this type differs between windows and linux (under windows the size of wchar_t is 2 byte and under linux the size is 4 byte)
+		const char* expectedChecksum = "e9e69ede9a65adc48768e0d52179cfa571344c92";
+#else
+		const char* expectedChecksum = "5c9941a48c296ef5cc2f267874c8dafeeb36a385";
+#endif
 		// [TODO] fails!
-		CHECK_EQUAL("5c9941a48c296ef5cc2f267874c8dafeeb36a385", sChecksum.GetASCII());
+		CHECK_EQUAL(expectedChecksum, sChecksum.GetASCII());
 
 		// Alphabet and numbers - this time as Unicode
 		sChecksum = sumSHA1.Get(L"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");

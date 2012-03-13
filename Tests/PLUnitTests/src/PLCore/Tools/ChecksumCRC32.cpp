@@ -116,7 +116,14 @@ SUITE(ChecksumCRC32) {
 
 		// Unicode
 		sChecksum = sumCRC.Get(L"\u65e5\u672c\u8a9e");
-		CHECK_EQUAL(String("e34ad326"), sChecksum.ToLower());
+#ifdef LINUX
+		// Under linux the checksum differs because PLCore::String uses the wchar_t type for storing unicode string data
+		// The size of this type differs between windows and linux (under windows the size of wchar_t is 2 byte and under linux the size is 4 byte)
+		const char* expectedChecksum = "db95855e";
+#else
+		const char* expectedChecksum = "e34ad326";
+#endif
+		CHECK_EQUAL(expectedChecksum, sChecksum.ToLower());
 
 		// Alphabet and numbers - this time as Unicode
 		sChecksum = sumCRC.Get(L"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");

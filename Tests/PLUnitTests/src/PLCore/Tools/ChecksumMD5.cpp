@@ -117,8 +117,14 @@ SUITE(ChecksumMD5) {
 		// Unicode
 		// [TODO] warning: universal character name encountered in source
 		sChecksum = sumMD5.Get(L"\u65e5\u672c\u8a9e");
-		// [TODO] fails!
-		CHECK_EQUAL("965f626b62b499198df91ae051f13bd2", sChecksum.GetASCII());
+#ifdef LINUX
+		// Under linux the checksum differs because PLCore::String uses the wchar_t type for storing unicode string data
+		// The size of this type differs between windows and linux (under windows the size of wchar_t is 2 byte and under linux the size is 4 byte)
+		const char* expectedChecksum = "5cc5f3b56ed974723ce4cb6c63fbb7a1";
+#else
+		const char* expectedChecksum = "965f626b62b499198df91ae051f13bd2";
+#endif
+		CHECK_EQUAL(expectedChecksum, sChecksum.GetASCII());
 
 		// Alphabet and numbers - this time as Unicode
 		sChecksum = sumMD5.Get(L"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
