@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLMath/Vector3i.h>
 #include <PLGraphics/PLGraphics.h>
 #include "PLRenderer/Renderer/Resource.h"
 
@@ -330,6 +331,21 @@ class TextureBuffer : public Resource {
 		*    Note that mipmaps are only created/used from a given image if the flag 'Mipmaps' is set.
 		*/
 		inline PLCore::uint32 GetNumOfMipmaps() const;
+
+		/**
+		*  @brief
+		*    Returns the texture buffer size as a 3D vector
+		*
+		*  @param[in] nMipmap
+		*    Mipmap level (0 - GetNumOfMipmaps())
+		*
+		*  @return
+		*    Texture buffer size as a 3D vector
+		*
+		*  @note
+		*    - Comfort method so one does not have to use the concrete texture buffer type just to get the texture size
+		*/
+		PLRENDERER_API PLMath::Vector3i GetUniformSize(PLCore::uint32 nMipmap = 0) const;
 
 		/**
 		*  @brief
