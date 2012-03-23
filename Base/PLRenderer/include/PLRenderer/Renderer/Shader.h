@@ -184,10 +184,11 @@ class Shader : public Resource {
 		*                                        "attribute" deprecated; linkage between a vertex shader and OpenGL for per-vertex data -> use "in" instead
 		*                                        "varying"/"centroid varying" deprecated; linkage between a vertex shader and a fragment shader for interpolated data -> use "in"/"out" instead
 		*     140              3.1
-		*     150              3.2
-		*     330              3.3
+		*     150              3.2               Almost feature-identical to Direct3D Shader Model 4.0 (DirectX version 10)
+		*     330              3.3               Equivalent to Direct3D Shader Model 4.0 (DirectX version 10)
 		*     400              4.0
 		*     410              4.1
+		*     420              4.2               Equivalent to Direct3D Shader Model 5.0 (DirectX version 11)
 		*  #version must occur before any other statement in the program as stated within:
 		*    "The OpenGL® Shading Language - Language Version: 3.30 - Document Revision: 6 - 11-Mar-2010" Page 15
 		*      "The #version directive must occur in a shader before anything else, except for comments and white space."
