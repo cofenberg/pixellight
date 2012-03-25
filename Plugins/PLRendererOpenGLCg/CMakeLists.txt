@@ -33,6 +33,8 @@ add_sources(
 	src/CgContext.cpp
 	src/ShaderLanguageCg.cpp
 	src/VertexShaderCg.cpp
+	src/TessellationControlShaderCg.cpp
+	src/TessellationEvaluationShaderCg.cpp
 	src/GeometryShaderCg.cpp
 	src/FragmentShaderCg.cpp
 	src/ProgramCg.cpp

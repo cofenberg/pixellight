@@ -1975,6 +1975,18 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 	}
 }
 
+bool Renderer::DrawPatches(uint32 nVerticesPerPatch, uint32 nStartIndex, uint32 nNumVertices)
+{
+	// Error! Tessellation is not supported by DirectX 9!
+	return false;
+}
+
+bool Renderer::DrawIndexedPatches(uint32 nVerticesPerPatch, uint32 nMinIndex, uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices)
+{
+	// Error! Tessellation is not supported by DirectX 9!
+	return false;
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

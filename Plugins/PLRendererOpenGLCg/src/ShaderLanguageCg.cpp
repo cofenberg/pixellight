@@ -28,6 +28,8 @@
 #include "PLRendererOpenGLCg/UniformBufferCg.h"
 #include "PLRendererOpenGLCg/GeometryShaderCg.h"
 #include "PLRendererOpenGLCg/FragmentShaderCg.h"
+#include "PLRendererOpenGLCg/TessellationControlShaderCg.h"
+#include "PLRendererOpenGLCg/TessellationEvaluationShaderCg.h"
 #include "PLRendererOpenGLCg/ShaderLanguageCg.h"
 
 
@@ -61,6 +63,16 @@ String ShaderLanguageCg::GetShaderLanguage() const
 PLRenderer::VertexShader *ShaderLanguageCg::CreateVertexShader()
 {
 	return new VertexShaderCg(*m_pRenderer);
+}
+
+PLRenderer::TessellationControlShader *ShaderLanguageCg::CreateTessellationControlShader()
+{
+	return new TessellationControlShaderCg(*m_pRenderer);
+}
+
+PLRenderer::TessellationEvaluationShader *ShaderLanguageCg::CreateTessellationEvaluationShader()
+{
+	return new TessellationEvaluationShaderCg(*m_pRenderer);
 }
 
 PLRenderer::GeometryShader *ShaderLanguageCg::CreateGeometryShader()

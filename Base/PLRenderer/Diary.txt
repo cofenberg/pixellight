@@ -1,3 +1,20 @@
+>> 25.03.2012
+[CO]
+- A few days ago, my volume-renderer killed my GPU (AMD Mobility Radeon HD 4850). :/
+  Now I have a machine with a AMD Radeon HD 6970M (OpenGL 4.2 support). Hard decision, but even harder to get my work done without a GPU. I know that I really should
+  only focus on finishing my master thesis (five weeks time left), but it's just far to tempting to try out some new fancy OpenGL extensions...
+- Added support for tessellation related shaders... at first I used the OpenGL names "tessellation control shader" and "tessellation evaluation shader"... but this
+  resulted in to much typing... so, I sticked to the more handy DirectX names... after I noticed that Cg is also using the same naming as OpenGL. So, the long
+  name wins. (yes, there are situations where the naming is more complex as the actual implementation *g*)
+  -> Years ago, PLRenderer had already PN-Triangles (TRUFORM) support (see diary entry 14.06.2005)
+PLRendererOpenGL:
+- Added support for the "GL_ARB_tessellation_shader"-extension
+PLRendererOpenGLCg:
+- It appears that Cg has not (yet) support for GLSL tessellation control & evaluation shader profiles ("February 2012 version of Cg 3.1"), at least one that's
+  not using special NVIDIA-only extensions
+
+
+
 >> 14.03.2012
 [CO]
 - Added comfort method "TextureBuffer::GetUniformSize()"

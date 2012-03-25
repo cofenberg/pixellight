@@ -319,6 +319,12 @@
     <ClCompile Include="src\Texture\SPTexturePreview.cpp">
       <Filter>Texture</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\TessellationEvaluationShader.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\TessellationControlShader.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRenderer\PLRenderer.h">
@@ -622,6 +628,12 @@
       <Filter>Renderer</Filter>
     </ClInclude>
     <ClInclude Include="include\PLRenderer\Renderer\ProgramWrapper.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRenderer\Renderer\TessellationEvaluationShader.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRenderer\Renderer\TessellationControlShader.h">
       <Filter>Renderer</Filter>
     </ClInclude>
   </ItemGroup>

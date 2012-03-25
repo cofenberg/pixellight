@@ -151,6 +151,7 @@ bool Extensions::IsGL_ARB_texture_rectangle()			const { return m_bGL_ARB_texture
 bool Extensions::IsGL_ARB_multisample()					const { return m_bGL_ARB_multisample;				 }
 bool Extensions::IsGL_ARB_uniform_buffer_object()		const { return m_bGL_ARB_uniform_buffer_object;		 }
 bool Extensions::IsGL_ARB_half_float_vertex()			const { return m_bGL_ARB_half_float_vertex;			 }
+bool Extensions::IsGL_ARB_tessellation_shader()			const { return m_bGL_ARB_tessellation_shader;		 }
 // ATI
 bool Extensions::IsGL_ATI_meminfo()						const { return m_bGL_ATI_meminfo;					 }
 bool Extensions::IsGL_ATI_separate_stencil()			const { return m_bGL_ATI_separate_stencil;			 }
@@ -346,6 +347,7 @@ void Extensions::ResetExtensions()
 	m_bGL_ARB_multisample					= false;
 	m_bGL_ARB_uniform_buffer_object			= false;
 	m_bGL_ARB_half_float_vertex				= false;
+	m_bGL_ARB_tessellation_shader			= false;
 	// ATI
 	m_bGL_ATI_meminfo						= false;
 	m_bGL_ATI_separate_stencil				= false;
@@ -874,6 +876,16 @@ bool Extensions::InitUniversal()
 
 	// GL_ARB_half_float_vertex
 	m_bGL_ARB_half_float_vertex = IsSupported("GL_ARB_half_float_vertex");
+
+	// GL_ARB_tessellation_shader
+	m_bGL_ARB_tessellation_shader = IsSupported("GL_ARB_tessellation_shader");
+	if (m_bGL_ARB_tessellation_shader) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glPatchParameteri)
+		IMPORT_FUNC(glPatchParameterfv)
+		m_bGL_ARB_tessellation_shader = bResult;
+	}
 
 
 	//[-------------------------------------------------------]

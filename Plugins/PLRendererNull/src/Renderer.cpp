@@ -744,6 +744,22 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 	return true;
 }
 
+bool Renderer::DrawPatches(uint32 nVerticesPerPatch, uint32 nStartIndex, uint32 nNumVertices)
+{
+	// [TODO] Calculate number of generated triangles?
+
+	// Done
+	return true;
+}
+
+bool Renderer::DrawIndexedPatches(uint32 nVerticesPerPatch, uint32 nMinIndex, uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices)
+{
+	// [TODO] Calculate number of generated triangles?
+
+	// Done
+	return true;
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

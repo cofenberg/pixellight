@@ -26,6 +26,8 @@
 #include "PLRenderer/Renderer/Program.h"
 #include "PLRenderer/Renderer/VertexShader.h"
 #include "PLRenderer/Renderer/FragmentShader.h"
+#include "PLRenderer/Renderer/TessellationControlShader.h"
+#include "PLRenderer/Renderer/TessellationEvaluationShader.h"
 #include "PLRenderer/Renderer/ShaderLanguage.h"
 
 
@@ -60,6 +62,40 @@ VertexShader *ShaderLanguage::CreateVertexShader(const String &sSourceCode, cons
 
 	// Return the created vertex shader instance
 	return pVertexShader;
+}
+
+/**
+*  @brief
+*    Creates a tessellation control shader (named "hull shader" in DirectX) and sets the shader source code
+*/
+TessellationControlShader *ShaderLanguage::CreateTessellationControlShader(const String &sSourceCode, const String &sProfile, const String &sArguments, const String &sEntry)
+{
+	// Create the tessellation control shader instance
+	TessellationControlShader *pTessellationControlShader = CreateTessellationControlShader();
+
+	// Set the tessellation control shader source code
+	if (pTessellationControlShader)
+		pTessellationControlShader->SetSourceCode(sSourceCode, sProfile, sArguments, sEntry);
+
+	// Return the created tessellation control shader instance
+	return pTessellationControlShader;
+}
+
+/**
+*  @brief
+*    Creates a tessellation evaluation shader (named "domain shader" in DirectX) and sets the shader source code
+*/
+TessellationEvaluationShader *ShaderLanguage::CreateTessellationEvaluationShader(const String &sSourceCode, const String &sProfile, const String &sArguments, const String &sEntry)
+{
+	// Create the tessellation evaluation shader instance
+	TessellationEvaluationShader *pTessellationEvaluationShader = CreateTessellationEvaluationShader();
+
+	// Set the tessellation evaluation shader source code
+	if (pTessellationEvaluationShader)
+		pTessellationEvaluationShader->SetSourceCode(sSourceCode, sProfile, sArguments, sEntry);
+
+	// Return the created tessellation evaluation shader instance
+	return pTessellationEvaluationShader;
 }
 
 /**
@@ -116,6 +152,26 @@ Program *ShaderLanguage::CreateProgram(VertexShader *pVertexShader, FragmentShad
 
 /**
 *  @brief
+*    Creates a program and assigns a vertex, tessellation control, tessellation evaluation and fragment shader to it
+*/
+Program *ShaderLanguage::CreateProgram(VertexShader *pVertexShader, TessellationControlShader *pTessellationControlShader, TessellationEvaluationShader *pTessellationEvaluationShader, FragmentShader *pFragmentShader)
+{
+	// Create a program instance
+	Program *pProgram = CreateProgram();
+	if (pProgram) {
+		// Assign the given vertex, tessellation control, tessellation evaluation and fragment shaders to the program
+		pProgram->SetVertexShader(pVertexShader);
+		pProgram->SetTessellationControlShader(pTessellationControlShader);
+		pProgram->SetTessellationEvaluationShader(pTessellationEvaluationShader);
+		pProgram->SetFragmentShader(pFragmentShader);
+	}
+
+	// Return the created program instance
+	return pProgram;
+}
+
+/**
+*  @brief
 *    Creates a program and assigns a vertex, geometry and fragment shader to it
 */
 Program *ShaderLanguage::CreateProgram(VertexShader *pVertexShader, GeometryShader *pGeometryShader, FragmentShader *pFragmentShader)
@@ -125,6 +181,27 @@ Program *ShaderLanguage::CreateProgram(VertexShader *pVertexShader, GeometryShad
 	if (pProgram) {
 		// Assign the given vertex, geometry and fragment shaders to the program
 		pProgram->SetVertexShader(pVertexShader);
+		pProgram->SetGeometryShader(pGeometryShader);
+		pProgram->SetFragmentShader(pFragmentShader);
+	}
+
+	// Return the created program instance
+	return pProgram;
+}
+
+/**
+*  @brief
+*    Creates a program and assigns a vertex, tessellation control, tessellation evaluation, geometry and fragment shader to it
+*/
+Program *ShaderLanguage::CreateProgram(VertexShader *pVertexShader, TessellationControlShader *pTessellationControlShader, TessellationEvaluationShader *pTessellationEvaluationShader, GeometryShader *pGeometryShader, FragmentShader *pFragmentShader)
+{
+	// Create a program instance
+	Program *pProgram = CreateProgram();
+	if (pProgram) {
+		// Assign the given vertex, tessellation control, tessellation evaluation, geometry and fragment shaders to the program
+		pProgram->SetVertexShader(pVertexShader);
+		pProgram->SetTessellationControlShader(pTessellationControlShader);
+		pProgram->SetTessellationEvaluationShader(pTessellationEvaluationShader);
 		pProgram->SetGeometryShader(pGeometryShader);
 		pProgram->SetFragmentShader(pFragmentShader);
 	}

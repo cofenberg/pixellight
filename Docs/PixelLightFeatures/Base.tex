@@ -146,7 +146,7 @@
 \item{Vertex streaming for combining the data of different \ac{VBO}s}
 \item{1D, 2D, 2D array\footnote{Kind of 3D texture, but without filtering between the depth layers}, rectangle\footnote{Predecessor of the modern and universal \ac{NPOT} textures \ac{GPU} feature}, 3D and cube textures}
 \item{Mipmaps and texture compression support\footnote{DXT1 (= BC1), DXT3 (= BC2), DXT5 (= BC3), LATC1 (= 3DC+/ATI1N/BC4) and LATC2 (= 3DC/ATI2N/BC5)}. These can be created automatically on the fly or used from given dds data, for instance, for maximum control and best loading times.}
-\item{Abstract \ac{GPU} program interface with support for vertex, geometry and fragment shaders}
+\item{Abstract \ac{GPU} program interface with support for vertex, tessellation control\footnote{Named \emph{hull shader} in DirectX 11}, tessellation evaluation\footnote{Named \emph{domain shader} in DirectX 11}, geometry and fragment shaders}
 \item{The \ac{OpenGL} renderer backend has a build in \ac{GPU} program interface implementation for \ac{GLSL}}
 \item{The \ac{OpenGL} renderer backend has an optional \ac{GPU} program interface implementation for Cg (\url{http://developer.nvidia.com/object/cg_toolkit.html}) via plugin}
 \item{\ac{UBO} support}

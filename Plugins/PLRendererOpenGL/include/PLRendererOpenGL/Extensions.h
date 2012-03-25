@@ -172,6 +172,7 @@ class Extensions {
 		bool IsGL_ARB_multisample() const;
 		bool IsGL_ARB_uniform_buffer_object() const;
 		bool IsGL_ARB_half_float_vertex() const;
+		bool IsGL_ARB_tessellation_shader() const;
 		// ATI
 		bool IsGL_ATI_meminfo() const;
 		bool IsGL_ATI_separate_stencil() const;
@@ -356,6 +357,7 @@ class Extensions {
 		bool m_bGL_ARB_multisample;
 		bool m_bGL_ARB_uniform_buffer_object;
 		bool m_bGL_ARB_half_float_vertex;
+		bool m_bGL_ARB_tessellation_shader;
 		// ATI
 		bool m_bGL_ATI_meminfo;
 		bool m_bGL_ATI_separate_stencil;
@@ -656,6 +658,10 @@ FNDEF_EX(glGetUniformBlockIndex,		PFNGLGETUNIFORMBLOCKINDEXPROC);
 FNDEF_EX(glGetActiveUniformBlockiv,		PFNGLGETACTIVEUNIFORMBLOCKIVPROC);
 FNDEF_EX(glGetActiveUniformBlockName,	PFNGLGETACTIVEUNIFORMBLOCKNAMEPROC);
 FNDEF_EX(glUniformBlockBinding,			PFNGLUNIFORMBLOCKBINDINGPROC);
+
+// GL_ARB_tessellation_shader
+FNDEF_EX(glPatchParameteri,		PFNGLPATCHPARAMETERIPROC);
+FNDEF_EX(glPatchParameterfv,	PFNGLPATCHPARAMETERFVPROC);
 
 
 //[-------------------------------------------------------]

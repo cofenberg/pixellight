@@ -50,6 +50,8 @@ add_sources(
 	src/Program.cpp
 	src/ProgramUniform.cpp
 	src/VertexShaderGLSL.cpp
+	src/TessellationControlShaderGLSL.cpp
+	src/TessellationEvaluationShaderGLSL.cpp
 	src/GeometryShaderGLSL.cpp
 	src/FragmentShaderGLSL.cpp
 	src/ProgramGLSL.cpp

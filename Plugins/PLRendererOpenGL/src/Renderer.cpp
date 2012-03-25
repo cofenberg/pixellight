@@ -3135,6 +3135,124 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 	return true;
 }
 
+bool Renderer::DrawPatches(uint32 nVerticesPerPatch, uint32 nStartIndex, uint32 nNumVertices)
+{
+	// Draw something?
+	if (!nNumVertices)
+		return true; // Done
+
+	// Get number of primitives
+	// [TODO] Calculate number of generated triangles?
+	const uint32 nPrimitiveCount = nNumVertices/3;
+
+	// Update statistics
+	m_sStatistics.nDrawPrimitivCalls++;
+	m_sStatistics.nVertices  += nNumVertices;
+	m_sStatistics.nTriangles += nPrimitiveCount;
+
+	// Set number of vertices that will be used to make up a single patch primitive
+	glPatchParameteri(GL_PATCH_VERTICES, nVerticesPerPatch);
+
+	// If the vertex buffer is in software mode, try to use compiled vertex array (CVA) for better performance
+	if (m_pFixedFunctions && m_pFixedFunctions->m_ppCurrentVertexBuffer[0] && m_pFixedFunctions->m_ppCurrentVertexBuffer[0]->GetUsage() == PLRenderer::Usage::Software && m_pContext->GetExtensions().IsGL_EXT_compiled_vertex_array()) {
+		glLockArraysEXT(nStartIndex, nNumVertices);
+		glDrawArrays(GL_PATCHES, nStartIndex, nNumVertices);
+		glUnlockArraysEXT();
+	} else {
+		glDrawArrays(GL_PATCHES, nStartIndex, nNumVertices);
+	}
+
+	// Done
+	return true;
+}
+
+bool Renderer::DrawIndexedPatches(uint32 nVerticesPerPatch, uint32 nMinIndex, uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices)
+{
+	// Index and vertex buffer correct?
+	if (!m_pCurrentIndexBuffer)
+		return false; // Error!
+
+	// Draw something?
+	if (!nNumVertices)
+		return true; // Done
+
+	// Check parameters
+	if (nStartIndex+nNumVertices > m_pCurrentIndexBuffer->GetNumOfElements() || nMinIndex > nMaxIndex)
+		return false; // Definitely NOT good...
+
+	// Define an offset helper macro just used inside this function
+	#define BUFFER_OFFSET(i) (static_cast<char*>(static_cast<IndexBuffer*>(m_pCurrentIndexBuffer)->GetDynamicData())+i)
+
+	// Get API dependent type
+	uint32 nTypeSize;
+	uint32 nTypeAPI = m_pCurrentIndexBuffer->GetElementType();
+	if (nTypeAPI == PLRenderer::IndexBuffer::UInt) {
+		nTypeSize = sizeof(uint32);
+		nTypeAPI  = GL_UNSIGNED_INT;
+	} else if (nTypeAPI == PLRenderer::IndexBuffer::UShort) {
+		nTypeSize = sizeof(uint16);
+		nTypeAPI = GL_UNSIGNED_SHORT;
+	} else if (nTypeAPI == PLRenderer::IndexBuffer::UByte) {
+		nTypeSize = sizeof(uint8);
+		nTypeAPI = GL_UNSIGNED_BYTE;
+	} else {
+		// Error!
+		return false;
+	}
+
+	// Get number of primitives
+	// [TODO] Calculate number of generated triangles?
+	const uint32 nPrimitiveCount = nNumVertices/3;
+
+	// Update statistics
+	m_sStatistics.nDrawPrimitivCalls++;
+	m_sStatistics.nVertices  += nNumVertices;
+	m_sStatistics.nTriangles += nPrimitiveCount;
+
+	// Set number of vertices that will be used to make up a single patch primitive
+	glPatchParameteri(GL_PATCH_VERTICES, nVerticesPerPatch);
+
+	// If the vertex buffer is in software mode, try to use compiled vertex array (CVA) for better performance
+	const Extensions &cExtensions = m_pContext->GetExtensions();
+	if (m_pFixedFunctions && m_pFixedFunctions->m_ppCurrentVertexBuffer[0] && m_pFixedFunctions->m_ppCurrentVertexBuffer[0]->GetUsage() == PLRenderer::Usage::Software && cExtensions.IsGL_EXT_compiled_vertex_array()) {
+		glLockArraysEXT(nMinIndex, nMaxIndex-nMinIndex+1);
+
+		// On some GPUs we don't have GL_EXT_draw_range_elements or it is only very limited.
+		// On my old GeForce4 Ti 4200: max elements vertices = 4096 and max elements indices = 4096
+		// ... on my Radion 9600 Mobile the extension can handle much more vertices (2147483647) and indices (65535)
+		// ... we check for this to avoid problems...
+		if (cExtensions.IsGL_EXT_draw_range_elements() && nNumVertices < static_cast<uint32>(cExtensions.GetGL_MAX_ELEMENTS_INDICES_EXT()) &&
+			nMaxIndex < static_cast<uint32>(cExtensions.GetGL_MAX_ELEMENTS_VERTICES_EXT())) {
+			// Draw primitive
+			glDrawRangeElementsEXT(GL_PATCHES, nMinIndex, nMaxIndex, nNumVertices, nTypeAPI, BUFFER_OFFSET(nStartIndex*nTypeSize));
+		} else {
+			// Draw primitive
+			glDrawElements(GL_PATCHES, nNumVertices, nTypeAPI, BUFFER_OFFSET(nStartIndex*nTypeSize));
+		}
+
+		glUnlockArraysEXT();
+	} else {
+		// On some GPUs we don't have GL_EXT_draw_range_elements or it is only very limited.
+		// On my old GeForce4 Ti 4200: max elements vertices = 4096 and max elements indices = 4096
+		// ... on my Radion 9600 Mobile the extension can handle much more vertices (2147483647) and indices (65535)
+		// ... we check for this to avoid problems...
+		if (cExtensions.IsGL_EXT_draw_range_elements() && nNumVertices < static_cast<uint32>(cExtensions.GetGL_MAX_ELEMENTS_INDICES_EXT()) &&
+			nMaxIndex < static_cast<uint32>(cExtensions.GetGL_MAX_ELEMENTS_VERTICES_EXT())) {
+			// Draw primitive
+			glDrawRangeElementsEXT(GL_PATCHES, nMinIndex, nMaxIndex, nNumVertices, nTypeAPI, BUFFER_OFFSET(nStartIndex*nTypeSize));
+		} else {
+			// Draw primitive
+			glDrawElements(GL_PATCHES, nNumVertices, nTypeAPI, BUFFER_OFFSET(nStartIndex*nTypeSize));
+		}
+	}
+
+	// Undefine your offset helper macro because its just used inside this function
+	#undef BUFFER_OFFSET
+
+	// Done
+	return true;
+}
+
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]

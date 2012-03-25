@@ -162,6 +162,10 @@ class ProgramGLSL : public PLRenderer::Program {
 		virtual PLCore::String GetShaderLanguage() const override;
 		virtual PLRenderer::VertexShader *GetVertexShader() const override;
 		virtual bool SetVertexShader(PLRenderer::VertexShader *pVertexShader) override;
+		virtual PLRenderer::TessellationControlShader *GetTessellationControlShader() const override;
+		virtual bool SetTessellationControlShader(PLRenderer::TessellationControlShader *pTessellationControlShader) override;
+		virtual PLRenderer::TessellationEvaluationShader *GetTessellationEvaluationShader() const override;
+		virtual bool SetTessellationEvaluationShader(PLRenderer::TessellationEvaluationShader *pTessellationEvaluationShader) override;
 		virtual PLRenderer::GeometryShader *GetGeometryShader() const override;
 		virtual bool SetGeometryShader(PLRenderer::GeometryShader *pGeometryShader) override;
 		virtual PLRenderer::FragmentShader *GetFragmentShader() const override;
