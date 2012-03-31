@@ -2359,8 +2359,26 @@ bool Renderer::Clear(uint32 nFlags, const Color4 &cColor, float fZ, uint32 nSten
 		return false; // Error!
 
 	// Set clear settings
-	if (nFlags & PLRenderer::Clear::Color)
-		glClearColor(cColor.r, cColor.g, cColor.b, cColor.a);
+	if (nFlags & PLRenderer::Clear::Color) {
+		// [HACK](CO 2012.03.31 *issue only tested on Windows*) Funny GPU driver optimization? For years a simple
+		//   "glClearColor(cColor.r, cColor.g, cColor.b, cColor.a);" (e.g. "glClearColor(0.0f, 0.0f, 0.0f, 0.0f)")
+		// worked without any issues when rendering within a floating point buffer. A few weeks ago
+		// I noticed on a NVIDIA GeForce GTX 285 (up to date driver) that the floating point buffer (color target)
+		// was not cleared as soon as nothing was writing into the depth buffer. As soon as something wrote into
+		// the depth buffer the color buffer was cleared. Due to lack of time and not having the issue on my
+		// AMD ATI Mobility Radeon HD 4850 I didn't look at once into it. Now, with my new AMD Radeon HD 6850M
+		// and the same driver version I used on my AMD ATI Mobility Radeon HD 4850, I now had the exact same issue.
+		// WOW! GPU graphics programming, one just has to love it. Played around a little bit in order to find a
+		// working solution. "glClearColor(0.0f, 0.0f, 0.0f, 0.0f)" didn't work, but as soon as I set
+		// "glClearColor(0.0f, 0.0f, 0.0f, 5.96046448e-08f)" with 5.96046448e-08f been the smallest positive half
+		// value (rendering into a 16 bit floating point buffer), the issue was gone. I have no idea what's going
+		// on and therefore at this point in time I have to assume that it's a funny GPU driver optimization used
+		// on modern GPU architectures - used by NVIDIA and AMD (... wouldn't be the first time...). Can this really
+		// be or do I miss anything? Anyway, no time to spend more time on this topic right now. It "just" has to
+		// work as it did before on not up-to-date graphics cards and/or a little bit older GPU drivers. So I added
+		// this ugly hack and the llooong comment in order to explain in detail why this hack exists.
+		glClearColor(cColor.r, cColor.g, cColor.b, cColor.a ? cColor.a : 5.96046448e-08f);	// "5.96046448e-08f" = smallest positive half
+	}
 	uint32 nZWriteEnableT = 0;
 	if (nFlags & PLRenderer::Clear::ZBuffer) {
 		nZWriteEnableT = GetRenderState(PLRenderer::RenderState::ZWriteEnable);
