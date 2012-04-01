@@ -213,7 +213,7 @@ SNCamera::SNCamera() :
 	EventHandlerPositionRotation(&SNCamera::OnPositionRotation, this),
 	m_fFOV(45.0f),
 	m_fAspect(1.0f),
-	m_fZNear(0.01f),
+	m_fZNear(0.1f),
 	m_fZFar(1000.0f),
 	m_nInternalCameraFlags(RecalculateProjectionMatrix | RecalculateViewMatrix | RecalculateFrustum  | RecalculateFrustumVertices),
 	m_bAutoUpdate(true),

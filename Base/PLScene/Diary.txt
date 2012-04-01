@@ -1,3 +1,10 @@
+> 01.04.2012
+[CO]
+- Changed the default value of "SNCamera::ZNear" from "0.01f" to "0.1f". Usually still sufficient and reduces z-fighting/tearing which is escpecially
+  an issue on mobile devices with a limited number of z buffer bits.
+
+
+
 > 26.02.2012
 [CO]
 - Bug "ID: 3493844" (http://sourceforge.net/tracker/index.php?func=detail&aid=3493844&group_id=507544&atid=2063682):
