@@ -19,10 +19,11 @@
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
 \*********************************************************/
 
-#include "UnitTest++AddIns/LocaleWrapper.h"
 #include <locale.h>
+#include <PLCore/PLCore.h>	// For "nullptr"-definition
+#include "UnitTest++AddIns/LocaleWrapper.h"
 
-LocaleWrapper::LocaleWrapper(): m_pSavedLocale(setlocale(LC_CTYPE, NULL))
+LocaleWrapper::LocaleWrapper(): m_pSavedLocale(setlocale(LC_CTYPE, nullptr))
 {
 	// load system locale
 	setlocale(LC_CTYPE, "");
