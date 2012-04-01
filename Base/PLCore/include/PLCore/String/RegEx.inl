@@ -209,6 +209,7 @@ inline void RegEx::ClearResults()
 {
 	// Clear result string
 	m_sMatchResult = "";
+
 	// Clear lists for groups
 	m_lstGroups.Reset();
 	m_mapGroups.Clear();
