@@ -264,7 +264,7 @@ class RegEx {
 
 		/**
 		*  @brief
-		*    Get the results of the last check
+		*    Get the group results of the last check
 		*
 		*  @return
 		*    List containing all matching groups
@@ -306,6 +306,15 @@ class RegEx {
 
 		/**
 		*  @brief
+		*    Get result (sub)string which was matched by the expression
+		*
+		*  @return
+		*    the string which was matched by the expression
+		*/
+		inline String GetMatchResult() const;
+
+		/**
+		*  @brief
 		*    Clear all results
 		*/
 		inline void ClearResults();
@@ -342,6 +351,7 @@ class RegEx {
 		Array<String>			 m_lstGroups;		/**< List of substrings from the last match */
 		HashMap<String, String>	 m_mapGroups;		/**< Map of name->substrings pairs from the last match */
 		int						 m_nPosition;		/**< Current byte position in the subject */
+		String					 m_sMatchResult;		/**< Contains the (sub)string which matches to the expression */
 
 
 };
