@@ -158,7 +158,7 @@ inline int RegEx::GetPosition() const
 
 /**
 *  @brief
-*    Get the results of the last check
+*    Get the group results of the last check
 */
 inline const Array<String> &RegEx::GetResults() const
 {
@@ -194,11 +194,22 @@ inline String RegEx::GetNameResult(const String &sName) const
 
 /**
 *  @brief
+*    Get result (sub)string which was matched by the expression
+*/
+inline String RegEx::GetMatchResult() const
+{
+	return m_sMatchResult;
+}
+
+/**
+*  @brief
 *    Clear all results
 */
 inline void RegEx::ClearResults()
 {
-	// Clear lists
+	// Clear result string
+	m_sMatchResult = "";
+	// Clear lists for groups
 	m_lstGroups.Reset();
 	m_mapGroups.Clear();
 

@@ -1,4 +1,17 @@
 >> 10.03.2012
+[SW]
+- Regex: Added some comments.
+    Added additional functionality to get the result string:
+	e.g. RegEx expr("Hal+o");
+		 String subject("Hallo World!");
+		 if(expr.Match(subject))
+		 {
+			String result = expr.GetResultMatch(); // returns "Hallo";
+		 }
+
+
+
+>> 10.03.2012
 [CO]
 - Within the unit tests, Jens Schmer tried
     PLCore::Directory cDir("testData/FileSystemTest.zip/");
