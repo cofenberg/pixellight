@@ -149,28 +149,32 @@ class ProgramGLSL : public Program {
 	//[-------------------------------------------------------]
 	private:
 		// Program
-		GLuint																m_nOpenGLProgram;					/**< OpenGL program, always valid! */
-		bool																m_bLinked;							/**< Is the OpenGL program currently linked? */
-		bool																m_bLinkedFailed;					/**< OpenGL program link failed? */
+		GLuint																m_nOpenGLProgram;							/**< OpenGL program, always valid! */
+		bool																m_bLinked;									/**< Is the OpenGL program currently linked? */
+		bool																m_bLinkedFailed;							/**< OpenGL program link failed? */
 		// Shaders
-		PLRenderer::ResourceHandler											m_cVertexShaderHandler;				/**< Vertex shader resource handler */
-		bool																m_bVertexShaderAttached;			/**< Is the vertex shader currently attached? */
-		PLRenderer::ResourceHandler											m_cGeometryShaderHandler;			/**< Geometry shader resource handler */
-		bool																m_bGeometryShaderAttached;			/**< Is the geometry shader currently attached? */
-		PLRenderer::ResourceHandler											m_cFragmentShaderHandler;			/**< Fragment shader resource handler */
-		bool																m_bFragmentShaderAttached;			/**< Is the fragment shader currently attached? */
+		PLRenderer::ResourceHandler											m_cVertexShaderHandler;						/**< Vertex shader resource handler */
+		bool																m_bVertexShaderAttached;					/**< Is the vertex shader currently attached? */
+		PLRenderer::ResourceHandler											m_cTessellationControlShaderHandler;		/**< Tessellation control shader resource handler */
+		bool																m_bTessellationControlShaderAttached;		/**< Is the tessellation control shader currently attached? */
+		PLRenderer::ResourceHandler											m_cTessellationEvaluationShaderHandler;		/**< Tessellation evaluation shader resource handler */
+		bool																m_bTessellationEvaluationShaderAttached;	/**< Is the tessellation evaluation shader currently attached? */
+		PLRenderer::ResourceHandler											m_cGeometryShaderHandler;					/**< Geometry shader resource handler */
+		bool																m_bGeometryShaderAttached;					/**< Is the geometry shader currently attached? */
+		PLRenderer::ResourceHandler											m_cFragmentShaderHandler;					/**< Fragment shader resource handler */
+		bool																m_bFragmentShaderAttached;					/**< Is the fragment shader currently attached? */
 		// Attributes
-		bool																m_bAttributeInformationBuild;		/**< Attribute information already build? */
-		PLCore::Array<PLRenderer::ProgramAttribute*>						m_lstAttributes;					/**< List of attributes */
-		PLCore::HashMap<PLCore::String, PLRenderer::ProgramAttribute*>		m_mapAttributes;					/**< Hash map of names -> attributes */
+		bool																m_bAttributeInformationBuild;				/**< Attribute information already build? */
+		PLCore::Array<PLRenderer::ProgramAttribute*>						m_lstAttributes;							/**< List of attributes */
+		PLCore::HashMap<PLCore::String, PLRenderer::ProgramAttribute*>		m_mapAttributes;							/**< Hash map of names -> attributes */
 		// Uniforms
-		bool																m_bUniformInformationBuild;			/**< Uniform information already build? */
-		PLCore::Array<PLRenderer::ProgramUniform*>							m_lstUniforms;						/**< List of uniforms */
-		PLCore::HashMap<PLCore::String, PLRenderer::ProgramUniform*>		m_mapUniforms;						/**< Hash map of names -> uniforms */
+		bool																m_bUniformInformationBuild;					/**< Uniform information already build? */
+		PLCore::Array<PLRenderer::ProgramUniform*>							m_lstUniforms;								/**< List of uniforms */
+		PLCore::HashMap<PLCore::String, PLRenderer::ProgramUniform*>		m_mapUniforms;								/**< Hash map of names -> uniforms */
 		// Uniform blocks
-		bool																m_bUniformBlockInformationBuild;	/**< Uniform block information already build? */
-		PLCore::Array<PLRenderer::ProgramUniformBlock*>						m_lstUniformBlocks;					/**< List of uniform blocks */
-		PLCore::HashMap<PLCore::String, PLRenderer::ProgramUniformBlock*>	m_mapUniformBlocks;					/**< Hash map of names -> uniform blocks */
+		bool																m_bUniformBlockInformationBuild;			/**< Uniform block information already build? */
+		PLCore::Array<PLRenderer::ProgramUniformBlock*>						m_lstUniformBlocks;							/**< List of uniform blocks */
+		PLCore::HashMap<PLCore::String, PLRenderer::ProgramUniformBlock*>	m_mapUniformBlocks;							/**< Hash map of names -> uniform blocks */
 
 
 	//[-------------------------------------------------------]
@@ -180,6 +184,10 @@ class ProgramGLSL : public Program {
 		virtual PLCore::String GetShaderLanguage() const override;
 		virtual PLRenderer::VertexShader *GetVertexShader() const override;
 		virtual bool SetVertexShader(PLRenderer::VertexShader *pVertexShader) override;
+		virtual PLRenderer::TessellationControlShader *GetTessellationControlShader() const override;
+		virtual bool SetTessellationControlShader(PLRenderer::TessellationControlShader *pTessellationControlShader) override;
+		virtual PLRenderer::TessellationEvaluationShader *GetTessellationEvaluationShader() const override;
+		virtual bool SetTessellationEvaluationShader(PLRenderer::TessellationEvaluationShader *pTessellationEvaluationShader) override;
 		virtual PLRenderer::GeometryShader *GetGeometryShader() const override;
 		virtual bool SetGeometryShader(PLRenderer::GeometryShader *pGeometryShader) override;
 		virtual PLRenderer::FragmentShader *GetFragmentShader() const override;

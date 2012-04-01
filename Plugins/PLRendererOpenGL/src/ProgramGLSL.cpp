@@ -27,6 +27,8 @@
 #include "PLRendererOpenGL/ShaderLanguageGLSL.h"
 #include "PLRendererOpenGL/GeometryShaderGLSL.h"
 #include "PLRendererOpenGL/FragmentShaderGLSL.h"
+#include "PLRendererOpenGL/TessellationControlShaderGLSL.h"
+#include "PLRendererOpenGL/TessellationEvaluationShaderGLSL.h"
 #include "PLRendererOpenGL/Context.h"
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/Extensions.h"
@@ -76,6 +78,24 @@ GLuint ProgramGLSL::GetOpenGLProgram(bool bAutomaticLink)
 				if (pVertexShaderGLSL) {
 					glAttachObjectARB(m_nOpenGLProgram, pVertexShaderGLSL->GetOpenGLVertexShader());
 					m_bVertexShaderAttached = true;
+				}
+			}
+
+			// Attach tessellation control shader
+			if (!m_bTessellationControlShaderAttached) {
+				TessellationControlShaderGLSL *pTessellationControlShaderGLSL = static_cast<TessellationControlShaderGLSL*>(m_cTessellationControlShaderHandler.GetResource());
+				if (pTessellationControlShaderGLSL) {
+					glAttachObjectARB(m_nOpenGLProgram, pTessellationControlShaderGLSL->GetOpenGLTessellationControlShader());
+					m_bTessellationControlShaderAttached = true;
+				}
+			}
+
+			// Attach tessellation evaluation shader
+			if (!m_bTessellationEvaluationShaderAttached) {
+				TessellationEvaluationShaderGLSL *pTessellationEvaluationShaderGLSL = static_cast<TessellationEvaluationShaderGLSL*>(m_cTessellationEvaluationShaderHandler.GetResource());
+				if (pTessellationEvaluationShaderGLSL) {
+					glAttachObjectARB(m_nOpenGLProgram, pTessellationEvaluationShaderGLSL->GetOpenGLTessellationEvaluationShader());
+					m_bTessellationEvaluationShaderAttached = true;
 				}
 			}
 
@@ -142,6 +162,8 @@ ProgramGLSL::ProgramGLSL(PLRenderer::Renderer &cRenderer) : Program(cRenderer),
 	m_bLinked(false),
 	m_bLinkedFailed(false),
 	m_bVertexShaderAttached(false),
+	m_bTessellationControlShaderAttached(false),
+	m_bTessellationEvaluationShaderAttached(false),
 	m_bGeometryShaderAttached(false),
 	m_bFragmentShaderAttached(false),
 	m_bAttributeInformationBuild(false),
@@ -489,6 +511,70 @@ bool ProgramGLSL::SetVertexShader(PLRenderer::VertexShader *pVertexShader)
 	return true;
 }
 
+PLRenderer::TessellationControlShader *ProgramGLSL::GetTessellationControlShader() const
+{
+	return static_cast<PLRenderer::TessellationControlShader*>(m_cTessellationControlShaderHandler.GetResource());
+}
+
+bool ProgramGLSL::SetTessellationControlShader(PLRenderer::TessellationControlShader *pTessellationControlShader)
+{
+	// Is the new tessellation control shader the same one as the current one?
+	PLRenderer::TessellationControlShader *pCurrentTessellationControlShader = static_cast<PLRenderer::TessellationControlShader*>(m_cTessellationControlShaderHandler.GetResource());
+	if (pCurrentTessellationControlShader != pTessellationControlShader) {
+		// The shader language of the program and the tessellation control shader must match
+		if (pTessellationControlShader && pTessellationControlShader->GetShaderLanguage() != ShaderLanguageGLSL::GLSL)
+			return false; // Error, shader language mismatch!
+
+		// Detach the current tessellation control shader from the program
+		if (pCurrentTessellationControlShader && m_bTessellationControlShaderAttached)
+			glDetachObjectARB(m_nOpenGLProgram, static_cast<TessellationControlShaderGLSL*>(pCurrentTessellationControlShader)->GetOpenGLTessellationControlShader());
+
+		// Update the tessellation control shader resource handler
+		m_cTessellationControlShaderHandler.SetResource(pTessellationControlShader);
+
+		// Attached within "ProgramGLSL::GetOpenGLProgram()" on demand
+		m_bTessellationControlShaderAttached = false;
+
+		// Denote that a program relink is required
+		RelinkRequired();
+	}
+
+	// Done
+	return true;
+}
+
+PLRenderer::TessellationEvaluationShader *ProgramGLSL::GetTessellationEvaluationShader() const
+{
+	return static_cast<PLRenderer::TessellationEvaluationShader*>(m_cTessellationEvaluationShaderHandler.GetResource());
+}
+
+bool ProgramGLSL::SetTessellationEvaluationShader(PLRenderer::TessellationEvaluationShader *pTessellationEvaluationShader)
+{
+	// Is the new tessellation evaluation shader the same one as the current one?
+	PLRenderer::TessellationEvaluationShader *pCurrentTessellationEvaluationShader = static_cast<PLRenderer::TessellationEvaluationShader*>(m_cTessellationEvaluationShaderHandler.GetResource());
+	if (pCurrentTessellationEvaluationShader != pTessellationEvaluationShader) {
+		// The shader language of the program and the tessellation evaluation shader must match
+		if (pTessellationEvaluationShader && pTessellationEvaluationShader->GetShaderLanguage() != ShaderLanguageGLSL::GLSL)
+			return false; // Error, shader language mismatch!
+
+		// Detach the current tessellation evaluation shader from the program
+		if (pCurrentTessellationEvaluationShader && m_bTessellationEvaluationShaderAttached)
+			glDetachObjectARB(m_nOpenGLProgram, static_cast<TessellationEvaluationShaderGLSL*>(pCurrentTessellationEvaluationShader)->GetOpenGLTessellationEvaluationShader());
+
+		// Update the tessellation evaluation shader resource handler
+		m_cTessellationEvaluationShaderHandler.SetResource(pTessellationEvaluationShader);
+
+		// Attached within "ProgramGLSL::GetOpenGLProgram()" on demand
+		m_bTessellationEvaluationShaderAttached = false;
+
+		// Denote that a program relink is required
+		RelinkRequired();
+	}
+
+	// Done
+	return true;
+}
+
 PLRenderer::GeometryShader *ProgramGLSL::GetGeometryShader() const
 {
 	return static_cast<PLRenderer::GeometryShader*>(m_cGeometryShaderHandler.GetResource());
@@ -730,6 +816,10 @@ bool ProgramGLSL::MakeCurrent()
 		// Make this to the currently used program
 		glUseProgramObjectARB(nOpenGLProgram);
 
+		// Build the attribute information, if required
+		if (!m_bAttributeInformationBuild)
+			BuildAttributeInformation();
+
 		// Enable all vertex attribute arrays
 		for (uint32 i=0; i<m_lstAttributes.GetNumOfElements(); i++)
 			glEnableVertexAttribArrayARB(static_cast<ProgramAttributeGLSL*>(m_lstAttributes[i])->m_nOpenGLAttributeLocation);
@@ -773,7 +863,7 @@ void ProgramGLSL::RestoreDeviceData(uint8 **ppBackup)
 {
 	if (!m_nOpenGLProgram) {
 		m_nOpenGLProgram = glCreateProgramObjectARB();
-		m_bVertexShaderAttached = m_bGeometryShaderAttached = m_bFragmentShaderAttached = false;
+		m_bVertexShaderAttached = m_bTessellationControlShaderAttached = m_bTessellationEvaluationShaderAttached = m_bGeometryShaderAttached = m_bFragmentShaderAttached = false;
 
 		// Call the relink method, this automatically destroys the used resources and the user will be informed through an dirty-event
 		RelinkRequired();

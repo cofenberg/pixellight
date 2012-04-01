@@ -110,6 +110,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Samples\\\\52RendererMesh.lnk\\\" \\\"$INSTDIR\\\\Samples\\\\Bin\\\\x86\\\\52RendererMesh${PROJECT_SUFFIX}.exe\\\"
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Samples\\\\53RendererMultiView.lnk\\\" \\\"$INSTDIR\\\\Samples\\\\Bin\\\\x86\\\\53RendererMultiView${PROJECT_SUFFIX}.exe\\\"
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Samples\\\\54RendererRTT.lnk\\\" \\\"$INSTDIR\\\\Samples\\\\Bin\\\\x86\\\\54RendererRTT${PROJECT_SUFFIX}.exe\\\"
+		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Samples\\\\55RendererTessellation.lnk\\\" \\\"$INSTDIR\\\\Samples\\\\Bin\\\\x86\\\\55RendererTessellation${PROJECT_SUFFIX}.exe\\\"
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Samples\\\\60Scene.lnk\\\" \\\"$INSTDIR\\\\Samples\\\\Bin\\\\x86\\\\60Scene${PROJECT_SUFFIX}.exe\\\"
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Samples\\\\61Sound.lnk\\\" \\\"$INSTDIR\\\\Samples\\\\Bin\\\\x86\\\\61Sound${PROJECT_SUFFIX}.exe\\\"
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Samples\\\\62Physics.lnk\\\" \\\"$INSTDIR\\\\Samples\\\\Bin\\\\x86\\\\62Physics${PROJECT_SUFFIX}.exe\\\"

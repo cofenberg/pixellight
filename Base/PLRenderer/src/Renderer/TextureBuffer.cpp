@@ -397,6 +397,49 @@ TextureBuffer::~TextureBuffer()
 
 /**
 *  @brief
+*    Returns the texture buffer size as a 3D vector
+*/
+Vector3i TextureBuffer::GetUniformSize(uint32 nMipmap) const
+{
+	// Get the image size
+	Vector3i vSize;
+	switch (GetType()) {
+		case TypeTextureBuffer1D:
+			vSize.x = reinterpret_cast<const TextureBuffer1D*>(this)->GetSize(nMipmap);
+			vSize.y = vSize.z = 1;
+			break;
+
+		case TypeTextureBuffer2D:
+			vSize.SetXYZ(reinterpret_cast<const TextureBuffer2D*>(this)->GetSize(nMipmap), 1);
+			break;
+
+		case TypeTextureBuffer2DArray:
+			vSize = reinterpret_cast<const TextureBuffer2DArray*>(this)->GetSize(nMipmap);
+			break;
+
+		case TypeTextureBufferRectangle:
+			vSize.SetXYZ(reinterpret_cast<const TextureBufferRectangle*>(this)->GetSize(), 1);	// Has no mipmaps
+			break;
+
+		case TypeTextureBuffer3D:
+			vSize = reinterpret_cast<const TextureBuffer3D*>(this)->GetSize(nMipmap);
+			break;
+
+		case TypeTextureBufferCube:
+			vSize.x = vSize.y = reinterpret_cast<const TextureBufferCube*>(this)->GetSize(nMipmap);
+			vSize.z = 1;
+			break;
+
+		default:
+			break;	// Error! (... we should never ever end up in here...)
+	}
+
+	// Return the size
+	return vSize;
+}
+
+/**
+*  @brief
 *    Returns the total number of pixels including all mipmaps
 */
 uint32 TextureBuffer::GetTotalNumOfPixels() const
@@ -633,42 +676,9 @@ bool TextureBuffer::DownloadAsImage(Image &cImage, bool bMipmaps) const
 			// Loop through all mipmaps
 			const uint32 nNumOfMipmaps = bMipmaps ? m_nNumOfMipmaps : 0;
 			for (uint32 nMipmap=0; nMipmap<=nNumOfMipmaps; nMipmap++) {
-				// Get the image size
-				Vector3i vSize;
-				switch (GetType()) {
-					case TypeTextureBuffer1D:
-						vSize.x = reinterpret_cast<const TextureBuffer1D*>(this)->GetSize(nMipmap);
-						vSize.y = vSize.z = 1;
-						break;
-
-					case TypeTextureBuffer2D:
-						vSize.SetXYZ(reinterpret_cast<const TextureBuffer2D*>(this)->GetSize(nMipmap), 1);
-						break;
-
-					case TypeTextureBuffer2DArray:
-						vSize = reinterpret_cast<const TextureBuffer2DArray*>(this)->GetSize(nMipmap);
-						break;
-
-					case TypeTextureBufferRectangle:
-						vSize.SetXYZ(reinterpret_cast<const TextureBufferRectangle*>(this)->GetSize(), 1);	// Has no mipmaps
-						break;
-
-					case TypeTextureBuffer3D:
-						vSize = reinterpret_cast<const TextureBuffer3D*>(this)->GetSize(nMipmap);
-						break;
-
-					case TypeTextureBufferCube:
-						vSize.x = vSize.y = reinterpret_cast<const TextureBufferCube*>(this)->GetSize(nMipmap);
-						vSize.z = 1;
-						break;
-
-					default:
-						return false;	// Error! (... we should never ever end up in here...)
-				}
-
 				// Create and allocate the image buffer instance holding this mipmap
 				ImageBuffer *pImageBuffer = pImagePart->CreateMipmap();
-				pImageBuffer->CreateImage(nDataFormat, nColorFormat, vSize, nCompression);
+				pImageBuffer->CreateImage(nDataFormat, nColorFormat, GetUniformSize(nMipmap), nCompression);
 
 				// Download the mipmap texture buffer data from the GPU
 				if (!Download(nMipmap, nTextureBufferFomat, (nCompression == CompressionNone) ? pImageBuffer->GetData() : pImageBuffer->GetCompressedData(), nFace))

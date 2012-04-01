@@ -45,6 +45,8 @@ class Program;
 class VertexShader;
 class UniformBuffer;
 class FragmentShader;
+class TessellationControlShader;
+class TessellationEvaluationShader;
 
 
 //[-------------------------------------------------------]
@@ -90,6 +92,52 @@ class ShaderLanguage : public PLCore::Object {
 		*    - "Shader::SetSourceCode()"
 		*/
 		PLRENDERER_API VertexShader *CreateVertexShader(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sArguments = "", const PLCore::String &sEntry = "");
+
+		/**
+		*  @brief
+		*    Creates a tessellation control shader (named "hull shader" in DirectX) and sets the shader source code
+		*
+		*  @param[in] sSourceCode
+		*    Shader source code, usually blank ASCII code
+		*  @param[in] sProfile
+		*    Shader profile to use, if empty string, a default profile will be used which usually
+		*    tries to use the best available profile that runs on most hardware
+		*  @param[in] sArguments
+		*    Optional shader compiler arguments ("February 2012 version of Cg 3.1": No GLSL tessellation control shader support, at least one that's not using special NVIDIA-only extensions)
+		*  @param[in] sEntry
+		*    Entry point, if empty string, "main" is used as default
+		*
+		*  @return
+		*    The created tessellation control shader, a null pointer on error
+		*
+		*  @see
+		*    - Virtual "ShaderLanguage::CreateTessellationControlShader()"-method
+		*    - "Shader::SetSourceCode()"
+		*/
+		PLRENDERER_API TessellationControlShader *CreateTessellationControlShader(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sArguments = "", const PLCore::String &sEntry = "");
+
+		/**
+		*  @brief
+		*    Creates a tessellation evaluation shader (named "domain shader" in DirectX) and sets the shader source code
+		*
+		*  @param[in] sSourceCode
+		*    Shader source code, usually blank ASCII code
+		*  @param[in] sProfile
+		*    Shader profile to use, if empty string, a default profile will be used which usually
+		*    tries to use the best available profile that runs on most hardware
+		*  @param[in] sArguments
+		*    Optional shader compiler arguments ("February 2012 version of Cg 3.1": No GLSL tessellation evaluation shader support, at least one that's not using special NVIDIA-only extensions)
+		*  @param[in] sEntry
+		*    Entry point, if empty string, "main" is used as default
+		*
+		*  @return
+		*    The created tessellation evaluation shader, a null pointer on error
+		*
+		*  @see
+		*    - Virtual "ShaderLanguage::CreateTessellationEvaluationShader()"-method
+		*    - "Shader::SetSourceCode()"
+		*/
+		PLRENDERER_API TessellationEvaluationShader *CreateTessellationEvaluationShader(const PLCore::String &sSourceCode, const PLCore::String &sProfile = "", const PLCore::String &sArguments = "", const PLCore::String &sEntry = "");
 
 		/**
 		*  @brief
@@ -164,6 +212,31 @@ class ShaderLanguage : public PLCore::Object {
 
 		/**
 		*  @brief
+		*    Creates a program and assigns a vertex, tessellation control, tessellation evaluation and fragment shader to it
+		*
+		*  @param[in] pVertexShader
+		*    Vertex shader the program is using, can be a null pointer, vertex shader and program language must match!
+		*  @param[in] pTessellationControlShader
+		*    Tessellation control shader the program is using, can be a null pointer, tessellation control shader and program language must match!
+		*  @param[in] pTessellationEvaluationShader
+		*    Tessellation evaluation shader the program is using, can be a null pointer, tessellation evaluation shader and program language must match!
+		*  @param[in] pFragmentShader
+		*    Fragment shader the program is using, can be a null pointer, fragment shader and program language must match!
+		*
+		*  @return
+		*    The created program, a null pointer on error
+		*
+		*  @see
+		*    - Virtual "ShaderLanguage::CreateProgram()"-method
+		*    - "Program::SetVertexShader()"
+		*    - "Program::SetTessellationControlShader()"
+		*    - "Program::SetTessellationEvaluationShader()"
+		*    - "Program::SetFragmentShader()"
+		*/
+		PLRENDERER_API Program *CreateProgram(VertexShader *pVertexShader, TessellationControlShader *pTessellationControlShader, TessellationEvaluationShader *pTessellationEvaluationShader, FragmentShader *pFragmentShader);
+
+		/**
+		*  @brief
 		*    Creates a program and assigns a vertex, geometry and fragment shader to it
 		*
 		*  @param[in] pVertexShader
@@ -183,6 +256,34 @@ class ShaderLanguage : public PLCore::Object {
 		*    - "Program::SetFragmentShader()"
 		*/
 		PLRENDERER_API Program *CreateProgram(VertexShader *pVertexShader, GeometryShader *pGeometryShader, FragmentShader *pFragmentShader);
+
+		/**
+		*  @brief
+		*    Creates a program and assigns a vertex, tessellation control, tessellation evaluation, geometry and fragment shader to it
+		*
+		*  @param[in] pVertexShader
+		*    Vertex shader the program is using, can be a null pointer, vertex shader and program language must match!
+		*  @param[in] pTessellationControlShader
+		*    Tessellation control shader the program is using, can be a null pointer, tessellation control shader and program language must match!
+		*  @param[in] pTessellationEvaluationShader
+		*    Tessellation evaluation shader the program is using, can be a null pointer, tessellation evaluation shader and program language must match!
+		*  @param[in] pGeometryShader
+		*    Geometry shader the program is using, can be a null pointer, geometry shader and program language must match!
+		*  @param[in] pFragmentShader
+		*    Fragment shader the program is using, can be a null pointer, fragment shader and program language must match!
+		*
+		*  @return
+		*    The created program, a null pointer on error
+		*
+		*  @see
+		*    - Virtual "ShaderLanguage::CreateProgram()"-method
+		*    - "Program::SetVertexShader()"
+		*    - "Program::SetTessellationControlShader()"
+		*    - "Program::SetTessellationEvaluationShader()"
+		*    - "Program::SetGeometryShader()"
+		*    - "Program::SetFragmentShader()"
+		*/
+		PLRENDERER_API Program *CreateProgram(VertexShader *pVertexShader, TessellationControlShader *pTessellationControlShader, TessellationEvaluationShader *pTessellationEvaluationShader, GeometryShader *pGeometryShader, FragmentShader *pFragmentShader);
 
 
 	//[-------------------------------------------------------]
@@ -206,6 +307,24 @@ class ShaderLanguage : public PLCore::Object {
 		*    The created vertex shader, a null pointer on error
 		*/
 		virtual VertexShader *CreateVertexShader() = 0;
+
+		/**
+		*  @brief
+		*    Creates a tessellation control shader (named "hull shader" in DirectX)
+		*
+		*  @return
+		*    The created tessellation control shader, a null pointer on error
+		*/
+		virtual TessellationControlShader *CreateTessellationControlShader() = 0;
+
+		/**
+		*  @brief
+		*    Creates a tessellation evaluation shader (named "domain shader" in DirectX)
+		*
+		*  @return
+		*    The created tessellation evaluation shader, a null pointer on error
+		*/
+		virtual TessellationEvaluationShader *CreateTessellationEvaluationShader() = 0;
 
 		/**
 		*  @brief

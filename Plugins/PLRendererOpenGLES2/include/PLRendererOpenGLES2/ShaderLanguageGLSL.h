@@ -87,6 +87,8 @@ class ShaderLanguageGLSL : public PLRenderer::ShaderLanguage {
 	public:
 		virtual PLCore::String GetShaderLanguage() const override;
 		virtual PLRenderer::VertexShader *CreateVertexShader() override;
+		virtual PLRenderer::TessellationControlShader *CreateTessellationControlShader() override;
+		virtual PLRenderer::TessellationEvaluationShader *CreateTessellationEvaluationShader() override;
 		virtual PLRenderer::GeometryShader *CreateGeometryShader() override;
 		virtual PLRenderer::FragmentShader *CreateFragmentShader() override;
 		virtual PLRenderer::Program *CreateProgram() override;

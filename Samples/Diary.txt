@@ -1,3 +1,10 @@
+>> 25.03.2012
+[CO]
+- Added "55RendererTessellation". The shaders are from http://prideout.net/blog/?p=48 (Philip Rideout, "The Little Grasshopper - Graphics Programming Tips")...
+  and are quite cool because all five shader stages are used at once. *perfect for testing and seeing how the shader stages work*
+
+
+
 >> 23.02.2012
 [CO]
 - "51RendererTexturing" now also shows how to draw a fullscreen quad and shows some basic coordinate systems

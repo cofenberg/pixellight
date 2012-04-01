@@ -1,3 +1,49 @@
+>> 31.03.2012
+[CO]
+PLRendererOpenGL:
+- "Renderer::Clear()": *issue only tested on Windows*) Funny GPU driver optimization? For years a simple
+    "glClearColor(cColor.r, cColor.g, cColor.b, cColor.a);" (e.g. "glClearColor(0.0f, 0.0f, 0.0f, 0.0f)")
+  worked without any issues when rendering within a floating point buffer. A few weeks ago
+  I noticed on a NVIDIA GeForce GTX 285 (up to date driver) that the floating point buffer (color target)
+  was not cleared as soon as nothing was writing into the depth buffer. As soon as something wrote into
+  the depth buffer the color buffer was cleared. Due to lack of time and not having the issue on my
+  AMD ATI Mobility Radeon HD 4850 I didn't look at once into it. Now, with my new AMD Radeon HD 6850M
+  and the same driver version I used on my AMD ATI Mobility Radeon HD 4850, I now had the exact same issue.
+  WOW! GPU graphics programming, one just has to love it. Played around a little bit in order to find a
+  working solution. "glClearColor(0.0f, 0.0f, 0.0f, 0.0f)" didn't work, but as soon as I set
+  "glClearColor(0.0f, 0.0f, 0.0f, 5.96046448e-08f)" with 5.96046448e-08f been the smallest positive half
+  value (rendering into a 16 bit floating point buffer), the issue was gone. I have no idea what's going
+  on and therefore at this point in time I have to assume that it's a funny GPU driver optimization used
+  on modern GPU architectures - used by NVIDIA and AMD (... wouldn't be the first time...). Can this
+  really be or do I miss anything? Anyway, no time to spend more time on this topic right now. It "just"
+  has to work as it did before on not up-to-date graphics cards and/or a little bit older GPU drivers. So
+  I added an ugly hack and a llooong comment in order to explain in detail why this hack exists.
+
+
+
+>> 25.03.2012
+[CO]
+- A few days ago, my volume-renderer killed my GPU (AMD Mobility Radeon HD 4850). :/
+  Now I have a machine with a AMD Radeon HD 6970M (OpenGL 4.2 support). Hard decision, but even harder to get my work done without a GPU. I know that I really should
+  only focus on finishing my master thesis (five weeks time left), but it's just far to tempting to try out some new fancy OpenGL extensions...
+- Added support for tessellation related shaders... at first I used the OpenGL names "tessellation control shader" and "tessellation evaluation shader"... but this
+  resulted in to much typing... so, I sticked to the more handy DirectX names... after I noticed that Cg is also using the same naming as OpenGL. So, the long
+  name wins. (yes, there are situations where the naming is more complex as the actual implementation *g*)
+  -> Years ago, PLRenderer had already PN-Triangles (TRUFORM) support (see diary entry 14.06.2005)
+PLRendererOpenGL:
+- Added support for the "GL_ARB_tessellation_shader"-extension
+PLRendererOpenGLCg:
+- It appears that Cg has not (yet) support for GLSL tessellation control & evaluation shader profiles ("February 2012 version of Cg 3.1"), at least one that's
+  not using special NVIDIA-only extensions
+
+
+
+>> 14.03.2012
+[CO]
+- Added comfort method "TextureBuffer::GetUniformSize()"
+
+
+
 >> 03.03.2012
 [CO]
 - "Renderer": "CreateTextureBuffer1D()" & "CreateTextureBuffer2D()" & "CreateTextureBuffer2DArray()" & "CreateTextureBufferRectangle()" & "CreateTextureBuffer3D()" &

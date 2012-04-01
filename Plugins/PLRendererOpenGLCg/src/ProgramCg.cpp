@@ -28,6 +28,8 @@
 #include "PLRendererOpenGLCg/ShaderLanguageCg.h"
 #include "PLRendererOpenGLCg/GeometryShaderCg.h"
 #include "PLRendererOpenGLCg/FragmentShaderCg.h"
+#include "PLRendererOpenGLCg/TessellationControlShaderCg.h"
+#include "PLRendererOpenGLCg/TessellationEvaluationShaderCg.h"
 #include "PLRendererOpenGLCg/CgContext.h"
 #include "PLRendererOpenGLCg/ProgramAttributeCgGLSL.h"
 #include "PLRendererOpenGLCg/ProgramUniformCg.h"
@@ -88,22 +90,54 @@ CGprogram ProgramCg::GetCgCombinedProgram(bool bAutomaticLink)
 						// Error!
 						PL_LOG(Error, "Fragment shader is using GLSL, but vertex shader is not!")
 					} else {
-						// Geometry shader is optional
-						GeometryShaderCg *pGeometryShader = static_cast<GeometryShaderCg*>(m_cGeometryShaderHandler.GetResource());
+						// Tessellation control shader, tessellation evaluation shader and geometry shader are optional
 
-						// Create the Cg combined program
-						if (pGeometryShader) {
-							// Is this a GLSL geometry shader?
-							if (pGeometryShader->GetCgProfile() == CG_PROFILE_GLSLG && !bGLSL) {
-								// Error!
-								PL_LOG(Error, "Geometry shader is using GLSL, but vertex shader and fragment shader don't use GLSL!")
-							} else {
-								// Vertex shader, geometry shader and fragment shader
-								m_pCgCombinedProgram = cgCombinePrograms3(pVertexShader->GetCgVertexProgram(), pGeometryShader->GetCgGeometryProgram(), pFragmentShader->GetCgFragmentProgram());
+						// Gather additional Cg programs
+						CGprogram pAdditionalCgPrograms[3] = { nullptr, nullptr, nullptr };
+						uint32 nNumOfAdditionalCgPrograms = 0;
+
+						{ // Tessellation control shader
+							TessellationControlShaderCg *pTessellationControlShader = static_cast<TessellationControlShaderCg*>(m_cTessellationControlShaderHandler.GetResource());
+							if (pTessellationControlShader) {
+								pAdditionalCgPrograms[nNumOfAdditionalCgPrograms] = pTessellationControlShader->GetCgTessellationControlProgram();
+								nNumOfAdditionalCgPrograms++;
 							}
-						} else {
-							// Just vertex shader and fragment shader
-							m_pCgCombinedProgram = cgCombinePrograms2(pVertexShader->GetCgVertexProgram(), pFragmentShader->GetCgFragmentProgram());
+						}
+
+						{ // Tessellation evaluation shader
+							TessellationEvaluationShaderCg *pTessellationEvaluationShader = static_cast<TessellationEvaluationShaderCg*>(m_cTessellationEvaluationShaderHandler.GetResource());
+							if (pTessellationEvaluationShader) {
+								pAdditionalCgPrograms[nNumOfAdditionalCgPrograms] = pTessellationEvaluationShader->GetCgTessellationEvaluationProgram();
+								nNumOfAdditionalCgPrograms++;
+							}
+						}
+
+						{ // Geometry shader
+							GeometryShaderCg *pGeometryShader = static_cast<GeometryShaderCg*>(m_cGeometryShaderHandler.GetResource());
+							if (pGeometryShader) {
+								pAdditionalCgPrograms[nNumOfAdditionalCgPrograms] = pGeometryShader->GetCgGeometryProgram();
+								nNumOfAdditionalCgPrograms++;
+							}
+						}
+
+						// Combine Cg programs
+						switch (nNumOfAdditionalCgPrograms) {
+							case 0:
+								// Just vertex shader and fragment shader
+								m_pCgCombinedProgram = cgCombinePrograms2(pVertexShader->GetCgVertexProgram(), pFragmentShader->GetCgFragmentProgram());
+								break;
+
+							case 1:
+								m_pCgCombinedProgram = cgCombinePrograms3(pVertexShader->GetCgVertexProgram(), pAdditionalCgPrograms[0], pFragmentShader->GetCgFragmentProgram());
+								break;
+
+							case 2:
+								m_pCgCombinedProgram = cgCombinePrograms4(pVertexShader->GetCgVertexProgram(), pAdditionalCgPrograms[0], pAdditionalCgPrograms[1], pFragmentShader->GetCgFragmentProgram());
+								break;
+
+							case 3:
+								m_pCgCombinedProgram = cgCombinePrograms5(pVertexShader->GetCgVertexProgram(), pAdditionalCgPrograms[0], pAdditionalCgPrograms[1], pAdditionalCgPrograms[2], pFragmentShader->GetCgFragmentProgram());
+								break;
 						}
 					}
 				}
@@ -396,7 +430,7 @@ void ProgramCg::BuildUniformInformation()
 
 				// Iterate through all namespaces
 				for (int nNamespace=0; nNamespace<2; nNamespace++) {
-					// Iterate through all Cg parameters of the Cg vertex program
+					// Iterate through all Cg parameters of the Cg current program domain
 					CGparameter pCgParameter = cgGetFirstParameter(pCgDomainProgram, nNamespace ? CG_GLOBAL : CG_PROGRAM);
 					while (pCgParameter) {
 						// Is this an used uniform?
@@ -487,7 +521,7 @@ void ProgramCg::BuildUniformBlockInformation()
 
 				// Iterate through all namespaces
 				for (int nNamespace=0; nNamespace<2; nNamespace++) {
-					// Iterate through all Cg parameters of the Cg vertex program
+					// Iterate through all Cg parameters of the Cg current program domain
 					CGparameter pCgParameter = cgGetFirstParameter(pCgDomainProgram, nNamespace ? CG_GLOBAL : CG_PROGRAM);
 					while (pCgParameter) {
 						// Is this an used uniform block? ... please note that I wasn't able to figure how how one can enumerate all uniform blocks within Cg, I wasn't
@@ -562,6 +596,58 @@ bool ProgramCg::SetVertexShader(PLRenderer::VertexShader *pVertexShader)
 
 		// Update the vertex shader resource handler
 		m_cVertexShaderHandler.SetResource(pVertexShader);
+
+		// Denote that a program relink is required
+		RelinkRequired();
+	}
+
+	// Done
+	return true;
+}
+
+PLRenderer::TessellationControlShader *ProgramCg::GetTessellationControlShader() const
+{
+	return static_cast<PLRenderer::TessellationControlShader*>(m_cTessellationControlShaderHandler.GetResource());
+}
+
+bool ProgramCg::SetTessellationControlShader(PLRenderer::TessellationControlShader *pTessellationControlShader)
+{
+	// Is the new tessellation control shader the same one as the current one?
+	PLRenderer::TessellationControlShader *pCurrentTessellationControlShader = static_cast<PLRenderer::TessellationControlShader*>(m_cTessellationControlShaderHandler.GetResource());
+	if (pCurrentTessellationControlShader != pTessellationControlShader) {
+		// The shader language of the program and the tessellation control shader must match and the tessellation control shader must be valid!
+		if (pTessellationControlShader && (pTessellationControlShader->GetShaderLanguage() != ShaderLanguageCg::Cg ||
+			!static_cast<TessellationControlShaderCg*>(pTessellationControlShader)->GetCgTessellationControlProgram()))
+			return false; // Error!
+
+		// Update the tessellation control shader resource handler
+		m_cTessellationControlShaderHandler.SetResource(pTessellationControlShader);
+
+		// Denote that a program relink is required
+		RelinkRequired();
+	}
+
+	// Done
+	return true;
+}
+
+PLRenderer::TessellationEvaluationShader *ProgramCg::GetTessellationEvaluationShader() const
+{
+	return static_cast<PLRenderer::TessellationEvaluationShader*>(m_cTessellationEvaluationShaderHandler.GetResource());
+}
+
+bool ProgramCg::SetTessellationEvaluationShader(PLRenderer::TessellationEvaluationShader *pTessellationEvaluationShader)
+{
+	// Is the new tessellation evaluation shader the same one as the current one?
+	PLRenderer::TessellationEvaluationShader *pCurrentTessellationEvaluationShader = static_cast<PLRenderer::TessellationEvaluationShader*>(m_cTessellationEvaluationShaderHandler.GetResource());
+	if (pCurrentTessellationEvaluationShader != pTessellationEvaluationShader) {
+		// The shader language of the program and the tessellation evaluation shader must match and the tessellation evaluation shader must be valid!
+		if (pTessellationEvaluationShader && (pTessellationEvaluationShader->GetShaderLanguage() != ShaderLanguageCg::Cg ||
+			!static_cast<TessellationEvaluationShaderCg*>(pTessellationEvaluationShader)->GetCgTessellationEvaluationProgram()))
+			return false; // Error!
+
+		// Update the tessellation evaluation shader resource handler
+		m_cTessellationEvaluationShaderHandler.SetResource(pTessellationEvaluationShader);
 
 		// Denote that a program relink is required
 		RelinkRequired();

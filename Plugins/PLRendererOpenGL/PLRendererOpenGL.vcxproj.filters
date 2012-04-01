@@ -157,6 +157,12 @@
     <ClCompile Include="src\MacOSX\SurfaceWindowMacOSX_X11.cpp">
       <Filter>MacOSX</Filter>
     </ClCompile>
+    <ClCompile Include="src\TessellationControlShaderGLSL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TessellationEvaluationShaderGLSL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRendererOpenGL\Context.h">
@@ -320,6 +326,12 @@
     </ClInclude>
     <ClInclude Include="..\..\External\Recommended\OpenGL\glu.h">
       <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\TessellationControlShaderGLSL.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\TessellationEvaluationShaderGLSL.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

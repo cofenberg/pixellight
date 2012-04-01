@@ -61,6 +61,18 @@ PLRenderer::VertexShader *ShaderLanguageGLSL::CreateVertexShader()
 	return new VertexShaderGLSL(*m_pRenderer);
 }
 
+PLRenderer::TessellationControlShader *ShaderLanguageGLSL::CreateTessellationControlShader()
+{
+	// OpenGL ES 2.0 has no support for tessellation control shaders
+	return nullptr;
+}
+
+PLRenderer::TessellationEvaluationShader *ShaderLanguageGLSL::CreateTessellationEvaluationShader()
+{
+	// OpenGL ES 2.0 has no support for tessellation evaluation shaders
+	return nullptr;
+}
+
 PLRenderer::GeometryShader *ShaderLanguageGLSL::CreateGeometryShader()
 {
 	// OpenGL ES 2.0 has no support for geometry shaders
