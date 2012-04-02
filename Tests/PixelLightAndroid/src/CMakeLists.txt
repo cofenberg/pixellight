@@ -118,7 +118,7 @@ set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES COMPILE_DEFINITIONS "__S
 # Copy the build shared library as well, can be release or debug build
 set(CURRENT_SHARED_LIBRARIES
 	${CURRENT_SHARED_LIBRARIES}
-	"${CMAKE_BINARY_DIR}/libs/${ARM_TARGET}/lib${CURRENT_TARGET_NAME}.so"
+	"${LIBRARY_OUTPUT_PATH}/lib${CURRENT_TARGET_NAME}.so"
 )
 
 # Create Android apk file (macro from "<PixelLight>/cmake/Android/Apk.cmake")
