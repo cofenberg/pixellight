@@ -164,14 +164,6 @@ class VisNode {
 		*
 		*  @return
 		*    The absolute world view matrix of the scene node
-		*
-		*  @remarks
-		*    You can use for example
-		*      Matrix4x4 mWorldViewProjection(cRenderer.GetTransformState(Transform::View));
-		*      mWorldViewProjection *= pVisNode->GetWorldMatrix();
-		*    to calculate the matrix by yourself. But for instance a advanced per pixel lighting scene
-		*    renderer may need this final matrix of the node multiple times per frame, so, it's recommended
-		*    to use this precalculated one.
 		*/
 		PLS_API const PLMath::Matrix4x4 &GetWorldViewMatrix() const;
 
@@ -181,15 +173,6 @@ class VisNode {
 		*
 		*  @return
 		*    The absolute world view projection matrix of the scene node
-		*
-		*  @remarks
-		*    You can use for example
-		*      Matrix4x4 mWorldViewProjection(cRenderer.GetTransformState(Transform::Projection));
-		*      mWorldViewProjection *= cRenderer.GetTransformState(Transform::View);
-		*      mWorldViewProjection *= pVisNode->GetWorldMatrix();
-		*    to calculate the matrix by yourself. But for instance a advanced per pixel lighting scene
-		*    renderer may need this final matrix of the node multiple times per frame, so, it's recommended
-		*    to use this precalculated one.
 		*/
 		PLS_API const PLMath::Matrix4x4 &GetWorldViewProjectionMatrix() const;
 
