@@ -1,3 +1,9 @@
+>> 02.04.2012
+[CO]
+- "SRPBegin": Optionally it's now possible to define the render to texture size manually
+
+
+
 >> 01.04.2012
 [CO]
 - "SRPVolumetricFog" is now working with OpenGL ES 2.0 as well
