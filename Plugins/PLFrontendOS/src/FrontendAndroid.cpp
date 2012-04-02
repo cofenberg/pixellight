@@ -358,8 +358,8 @@ void displayKeyboard(ANativeActivity* activity, bool pShow) {
 */
 int32_t FrontendAndroid::onInputEvent(struct android_app* app, struct AInputEvent* event)
 {
-	// Toggle soft input visibility by using the search key
-	if (AInputEvent_getType(event) == AINPUT_EVENT_TYPE_KEY && AKeyEvent_getKeyCode(event) == AKEYCODE_SEARCH && AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_DOWN) {
+	// Toggle soft input visibility by using the menu key (don't use the search key, not every device has such a key)
+	if (AInputEvent_getType(event) == AINPUT_EVENT_TYPE_KEY && AKeyEvent_getKeyCode(event) == AKEYCODE_MENU && AKeyEvent_getAction(event) == AKEY_EVENT_ACTION_DOWN) {
 		static bool bSoftKeyboardVisible = false;
 		bSoftKeyboardVisible = !bSoftKeyboardVisible;
 		displayKeyboard(app->activity, bSoftKeyboardVisible);

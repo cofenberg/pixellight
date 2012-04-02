@@ -1,3 +1,11 @@
+>> 02.04.2012
+[CO]
+PLFrontendOS:
+- Android frontend: The virtual keyboard is now opened by using the menu key instead of the search key (which appears to be not that often
+  available on mobile devices)
+
+
+
 >> 01.04.2012
 [CO]
 - Reverted change within "FileObject::Assign()" from "10.03.2012" because it was breaking file loading on the Android platform. Can't look
