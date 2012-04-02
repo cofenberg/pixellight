@@ -1,3 +1,11 @@
+> 02.04.2012
+[CO]
+- "Fordward.sr" within "Standard.zip" is now using "R8G8B8" instead of "R8G8B8A8" as default render to texture format. "R8G8B8A8" is causing issues
+  on the Asus Transformer tabled and currently there's no time to check in detail what's going on. As far as I remember we're not using the alpha
+  channel anyway, so just using RGB instead of RGBA should resolve the immediate issue at this moment.
+
+
+
 > 01.04.2012
 [CO]
 - Changed the default value of "SNCamera::ZNear" from "0.01f" to "0.1f". Usually still sufficient and reduces z-fighting/tearing which is escpecially
