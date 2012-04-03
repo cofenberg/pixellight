@@ -754,8 +754,8 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 				float fRange = fHither;
 				if (fRange < 0.00001f)
 					fRange = 0.00001f;
-				if (fRange != 0.01f) {
-					PLTools::XmlElementSetAttributeWithDefault(*pNodeElement, "ZNear", fRange, 0.01f);
+				if (fRange != 0.1f) {
+					PLTools::XmlElementSetAttributeWithDefault(*pNodeElement, "ZNear", fRange, 0.1f);
 
 					// 'Normally' the near plane should never ever be <=0! (crazy z-fighting!)
 					if (fRange <= 1.0000000e-006 && GetIGameNode())

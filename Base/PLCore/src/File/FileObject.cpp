@@ -53,6 +53,16 @@ namespace PLCore {
 */
 void FileObject::Assign(const Url &cUrl, const FileAccess *pAccess)
 {
+	// Get cleaned up URL (when trying to simplify this, ensure that it's still running on all supported platforms, including Android)
+	Url cFinalUrl;
+	if (cUrl.IsDirectory() && cUrl.GetPath().GetLength()) {
+		const String sUrl = cUrl.GetUrl();
+		cFinalUrl = sUrl.GetSubstring(0, sUrl.GetLength() - 1);
+	} else {
+		cFinalUrl = cUrl;
+	}
+	cFinalUrl.Collapse();
+
 	// Delete existing file implementation
 	if (m_pFileImpl) {
 		delete m_pFileImpl;
@@ -62,28 +72,28 @@ void FileObject::Assign(const Url &cUrl, const FileAccess *pAccess)
 	// Create file implementation
 
 	// ZIP
-	const String sUrlLower = cUrl.GetUrl().ToLower();
+	const String sUrlLower = cFinalUrl.GetUrl().ToLower();
 	const int nPos = sUrlLower.LastIndexOf(".zip/");
 	if (nPos > -1) {
 		// Although not recommended, it's possible to life without ZIP support for minimal builds
 		#ifndef DISABLE_ZIP_SUPPORT
-			const String sZipFile   = cUrl.GetUrl().GetSubstring(0, nPos+4);
-			const String sPathInZip = cUrl.GetUrl().GetSubstring(nPos+5);
-			m_pFileImpl = new FileZip(cUrl, sZipFile, sPathInZip, pAccess);
+			const String sZipFile   = cFinalUrl.GetUrl().GetSubstring(0, nPos+4);
+			const String sPathInZip = cFinalUrl.GetUrl().GetSubstring(nPos+5);
+			m_pFileImpl = new FileZip(cFinalUrl, sZipFile, sPathInZip, pAccess);
 		#endif
 
 	// HTTP
-	} else if (cUrl.GetProtocol() == "http://") {
+	} else if (cFinalUrl.GetProtocol() == "http://") {
 		m_pFileImpl = new FileHttp(cUrl, pAccess);
 
 	// System file
 	} else {
 		#if defined(WIN32)
-			m_pFileImpl = new FileWindows(cUrl, pAccess);
+			m_pFileImpl = new FileWindows(cFinalUrl, pAccess);
 		#elif defined(ANDROID)
-			m_pFileImpl = new FileAndroid(cUrl, pAccess);
+			m_pFileImpl = new FileAndroid(cFinalUrl, pAccess);
 		#elif defined(LINUX)
-			m_pFileImpl = new FileLinux(cUrl, pAccess);
+			m_pFileImpl = new FileLinux(cFinalUrl, pAccess);
 		#else
 			#error "Unsupported platform"
 		#endif

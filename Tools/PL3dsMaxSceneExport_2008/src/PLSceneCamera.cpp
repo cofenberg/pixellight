@@ -89,8 +89,8 @@ void PLSceneCamera::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 	if (cCameraState.manualClip) {
 		// ZNear (ignore 0 or PL default setting)
 		float fRange = cCameraState.hither;
-		if (fRange != 0.01f) {
-			PLTools::XmlElementSetAttributeWithDefault(*pNodeElement, "ZNear", fRange, 0.01f);
+		if (fRange != 0.1f) {
+			PLTools::XmlElementSetAttributeWithDefault(*pNodeElement, "ZNear", fRange, 0.1f);
 
 			// 'Normally' the near plane should never ever be <=0! (crazy z-fighting!)
 			if (fRange <= 1.0000000e-006 && GetIGameNode())
