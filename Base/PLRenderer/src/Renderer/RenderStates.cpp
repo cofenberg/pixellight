@@ -85,6 +85,7 @@ RenderStates::RenderStates() :
 	DitherEnable(this),
 	ScissorTestEnable(this),
 	MultisampleEnable(this),
+	DepthClamp(this),
 	InvCullMode(this),
 	FixedFillMode(this)
 {
@@ -133,6 +134,7 @@ RenderStates::RenderStates() :
 	m_nRS[RenderState::DitherEnable]      = false;
 	m_nRS[RenderState::ScissorTestEnable] = false;
 	m_nRS[RenderState::MultisampleEnable] = false;
+	m_nRS[RenderState::DepthClamp]        = false;
 	m_nRS[RenderState::InvCullMode]       = false;
 	m_nRS[RenderState::FixedFillMode]     = Fill::Unknown;
 }
@@ -180,6 +182,7 @@ RenderStates::RenderStates(const RenderStates &cSource) :
 	DitherEnable(this),
 	ScissorTestEnable(this),
 	MultisampleEnable(this),
+	DepthClamp(this),
 	InvCullMode(this),
 	FixedFillMode(this)
 {

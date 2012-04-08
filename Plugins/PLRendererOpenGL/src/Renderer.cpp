@@ -2037,6 +2037,20 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 					}
 					break;
 
+				case PLRenderer::RenderState::DepthClamp:
+					if (!cExtensions.IsGL_ARB_depth_clamp())
+						return false; // Error, depth not supported!
+
+					if (nValue == 0) {
+						glDisable(GL_DEPTH_CLAMP);
+					} else if (nValue == 1) {
+						glEnable(GL_DEPTH_CLAMP);
+					} else {
+						// Error, invalid value!
+						return false;
+					}
+					break;
+
 				case PLRenderer::RenderState::InvCullMode:
 					if (GetRenderState(PLRenderer::RenderState::CullMode) != PLRenderer::Cull::None) {
 						// Invert cull mode?

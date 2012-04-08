@@ -1283,6 +1283,10 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 					// [TODO] Implement
 					break;
 
+				case PLRenderer::RenderState::DepthClamp:
+					// [TODO] Implement
+					break;
+
 				case PLRenderer::RenderState::InvCullMode:
 					if (GetRenderState(PLRenderer::RenderState::CullMode) != PLRenderer::Cull::None) {
 						// Invert cull mode?

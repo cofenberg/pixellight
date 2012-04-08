@@ -1,3 +1,11 @@
+>> 08.04.2012
+[CO]
+- Added new render state "DepthClamp"
+PLRendererOpenGL:
+- Added support for "GL_ARB_depth_clamp"
+
+
+
 >> 31.03.2012
 [CO]
 PLRendererOpenGL:

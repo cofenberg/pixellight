@@ -413,6 +413,16 @@ inline void RenderStates::SetMultisampleEnable(bool bValue)
 	m_nRS[RenderState::MultisampleEnable] = bValue;
 }
 
+inline bool RenderStates::GetDepthClamp() const
+{
+	return (m_nRS[RenderState::DepthClamp] != 0);
+}
+
+inline void RenderStates::SetDepthClamp(bool bValue)
+{
+	m_nRS[RenderState::DepthClamp] = bValue;
+}
+
 inline bool RenderStates::GetInvCullMode() const
 {
 	return (m_nRS[RenderState::InvCullMode] != 0);

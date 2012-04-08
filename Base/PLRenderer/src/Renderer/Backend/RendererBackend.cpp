@@ -187,6 +187,7 @@ RendererBackend::RendererBackend(EMode nMode) :
 		m_nDefaultRenderState[RenderState::DitherEnable]      = false;
 		m_nDefaultRenderState[RenderState::ScissorTestEnable] = false;
 		m_nDefaultRenderState[RenderState::MultisampleEnable] = true;
+		m_nDefaultRenderState[RenderState::DepthClamp]        = false;
 		m_nDefaultRenderState[RenderState::InvCullMode]       = false;
 		m_nDefaultRenderState[RenderState::FixedFillMode]     = Fill::Unknown;
 	}
