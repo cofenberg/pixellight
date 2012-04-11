@@ -99,6 +99,7 @@ class RenderStates : public PLCore::Object {
 		pl_attribute(DitherEnable,			bool,									false,						ReadWrite,	GetSet,	"Enable/disable dithering",																"")
 		pl_attribute(ScissorTestEnable,		bool,									false,						ReadWrite,	GetSet,	"Enable/disable the scissor test",														"")
 		pl_attribute(MultisampleEnable,		bool,									true,						ReadWrite,	GetSet,	"When true, use multisample",															"")
+		pl_attribute(DepthClamp,			bool,									false,						ReadWrite,	GetSet,	"Enable/disable depth clamp",															"")
 		pl_attribute(InvCullMode,			bool,									false,						ReadWrite,	GetSet,	"Controls computation of size for point primitives",									"")
 		pl_attribute(FixedFillMode,			pl_enum_type(Fill::Enum),				Fill::Unknown,				ReadWrite,	GetSet,	"General fill mode which is normally set once",											"")
 	pl_class_end
@@ -192,6 +193,8 @@ class RenderStates : public PLCore::Object {
 		inline void SetScissorTestEnable(bool bValue);
 		inline bool GetMultisampleEnable() const;
 		inline void SetMultisampleEnable(bool bValue);
+		inline bool GetDepthClamp() const;
+		inline void SetDepthClamp(bool bValue);
 		inline bool GetInvCullMode() const;
 		inline void SetInvCullMode(bool bValue);
 		inline Fill::Enum GetFixedFillMode() const;

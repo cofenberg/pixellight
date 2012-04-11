@@ -56,6 +56,7 @@ pl_implement_class(SRPBegin)
 */
 SRPBegin::SRPBegin() :
 	TextureFormat(this),
+	TextureSize(this),
 	ClearFlags(this),
 	ColorClear(this),
 	FillMode(this),
@@ -176,7 +177,7 @@ void SRPBegin::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 	m_pOriginalRenderTarget = cRenderer.GetRenderTarget();
 	if (m_pOriginalRenderTarget) {
 		// Get the width and height of the viewport
-		const Vector2i vRenderTargetSize = m_pOriginalRenderTarget->GetSize();
+		const Vector2i vRenderTargetSize = (GetFlags() & CustomTextureSize) ? TextureSize : m_pOriginalRenderTarget->GetSize();
 
 		// Create render targets or recreate them if required
 		for (uint32 i=0; i<2; i++) {

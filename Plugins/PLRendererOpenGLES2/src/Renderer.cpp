@@ -1464,6 +1464,10 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 					// Not supported by OpenGL ES 2.0
 					break;
 
+				case PLRenderer::RenderState::DepthClamp:
+					// Not supported by OpenGL ES 2.0
+					break;
+
 				case PLRenderer::RenderState::InvCullMode:
 					if (GetRenderState(PLRenderer::RenderState::CullMode) != PLRenderer::Cull::None) {
 						// Invert cull mode?
