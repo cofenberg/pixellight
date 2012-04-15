@@ -37,6 +37,7 @@
 # General variables
 # Name						Description								Example
 # PL_ARCHBITSIZE			Target architecture & bitsize			"armeabi-v7a" (or "x86", "x64", "armeabi" etc.)
+# PL_BITSIZE				Target bitsize							"32" or "64"
 # PL_ROOT					PixelLight root directory				"/home/username/pixellight"
 # PL_RUNTIME_DIR			PixelLight runtime directory			"/home/username/pixellight/Bin-Linux-ndk/Runtime"
 # PL_RUNTIME_BIN_DIR		PixelLight runtime binary directory		"/home/username/pixellight/Bin-Linux-ndk/Runtime/armeabi-v7a"
@@ -74,6 +75,11 @@ set(PL_RUNTIME_BIN_DIR ${PL_RUNTIME_BIN_DIR} CACHE STRING "This is the PixelLigh
 
 # Get general variables
 get_filename_component(PL_ARCHBITSIZE		"${PL_RUNTIME_BIN_DIR}"							NAME_WE)
+if(PL_ARCHBITSIZE MATCHES "x64")
+	set(PL_BITSIZE "64" CACHE STRING "Target bitsize")
+else()
+	set(PL_BITSIZE "32" CACHE STRING "Target bitsize")
+endif()
 get_filename_component(PL_ROOT				"${PL_RUNTIME_BIN_DIR}/../../.."				ABSOLUTE)
 get_filename_component(PL_RUNTIME_BIN_DIR	"${PL_RUNTIME_BIN_DIR}"							ABSOLUTE)
 get_filename_component(PL_RUNTIME_DIR		"${PL_RUNTIME_BIN_DIR}/.."						ABSOLUTE)
@@ -88,6 +94,7 @@ get_filename_component(PL_TESTS_BIN_DIR		"${PL_TESTS_DIR}/${PL_ARCHBITSIZE}"				
 get_filename_component(PL_TESTS_DATA_DIR	"${PL_TESTS_DIR}/Data"							ABSOLUTE)
 if(PL_ROOT)
 	message(STATUS "Target architecture & bitsize: ${PL_ARCHBITSIZE}")
+	message(STATUS "Target bitsize: ${PL_BITSIZE}")
 	message(STATUS "PixelLight root directory: ${PL_ROOT}")
 	message(STATUS "PixelLight runtime directory: ${PL_RUNTIME_DIR}")
 	message(STATUS "PixelLight runtime binary directory: ${PL_RUNTIME_BIN_DIR}")
