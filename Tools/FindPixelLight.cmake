@@ -158,7 +158,7 @@ _pixellight_find_lib(PL_PLSOUND		PLSound/PLSound.h		PLSound		Base/PLSound/includ
 
 # Plugins
 _pixellight_find_lib(PL_PLASSIMP				PLAssimp/PLAssimp.h							PLAssimp				Plugins/PLAssimp/include)
-_pixellight_find_lib(PL_PLCOMPOSITING			PLCompositing/PLCompositing.h				PLCompositing			PLEngine/PLCompositing/include)
+_pixellight_find_lib(PL_PLCOMPOSITING			PLCompositing/PLCompositing.h				PLCompositing			Plugins/PLCompositing/include)
 # Database plugins
 _pixellight_find_lib(PL_PLDATABASEMYSQL			PLDatabaseMySQL/PLDatabaseMySQL.h			PLDatabaseMySQL			Plugins/PLDatabaseMySQL/include)
 _pixellight_find_lib(PL_PLDATABASENULL			PLDatabaseNull/PLDatabaseNull.h				PLDatabaseNull			Plugins/PLDatabaseNull/include)
