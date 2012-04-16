@@ -1283,6 +1283,10 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 					// [TODO] Implement
 					break;
 
+				case PLRenderer::RenderState::DepthClamp:
+					// [TODO] Implement
+					break;
+
 				case PLRenderer::RenderState::InvCullMode:
 					if (GetRenderState(PLRenderer::RenderState::CullMode) != PLRenderer::Cull::None) {
 						// Invert cull mode?
@@ -1973,6 +1977,18 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 		// Error, invalid value!
 		return false;
 	}
+}
+
+bool Renderer::DrawPatches(uint32 nVerticesPerPatch, uint32 nStartIndex, uint32 nNumVertices)
+{
+	// Error! Tessellation is not supported by DirectX 9!
+	return false;
+}
+
+bool Renderer::DrawIndexedPatches(uint32 nVerticesPerPatch, uint32 nMinIndex, uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices)
+{
+	// Error! Tessellation is not supported by DirectX 9!
+	return false;
 }
 
 

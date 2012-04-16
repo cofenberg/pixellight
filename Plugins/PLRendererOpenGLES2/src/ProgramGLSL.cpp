@@ -346,6 +346,30 @@ bool ProgramGLSL::SetVertexShader(PLRenderer::VertexShader *pVertexShader)
 	return true;
 }
 
+PLRenderer::TessellationControlShader *ProgramGLSL::GetTessellationControlShader() const
+{
+	// OpenGL ES 2.0 has no support for tessellation control shaders
+	return nullptr;
+}
+
+bool ProgramGLSL::SetTessellationControlShader(PLRenderer::TessellationControlShader *pTessellationControlShader)
+{
+	// OpenGL ES 2.0 has no support for tessellation control shaders
+	return false;
+}
+
+PLRenderer::TessellationEvaluationShader *ProgramGLSL::GetTessellationEvaluationShader() const
+{
+	// OpenGL ES 2.0 has no support for tessellation evaluation shaders
+	return nullptr;
+}
+
+bool ProgramGLSL::SetTessellationEvaluationShader(PLRenderer::TessellationEvaluationShader *pTessellationEvaluationShader)
+{
+	// OpenGL ES 2.0 has no support for tessellation evaluation shaders
+	return false;
+}
+
 PLRenderer::GeometryShader *ProgramGLSL::GetGeometryShader() const
 {
 	// OpenGL ES 2.0 has no support for geometry shaders

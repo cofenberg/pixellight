@@ -40,6 +40,7 @@
 namespace PLRenderer {
 	class Surface;
 	class SurfaceTextureBuffer;
+	class TextureBufferRectangle;
 }
 
 
@@ -107,13 +108,15 @@ class SRPBegin : public PLScene::SceneRendererPass {
 		enum EFlags {
 			NoStencil				  = 1<<1,	/**< No stencil buffer */
 			NoMultisampleAntialiasing = 1<<2,	/**< Do not use multisample antialiasing */
-			DepthTexture			  = 1<<4	/**< Provide a depth texture when rendering into a texture */
+			DepthTexture			  = 1<<4,	/**< Provide a depth texture when rendering into a texture */
+			CustomTextureSize		  = 1<<5	/**< Use a texture size given by the user instead of using the original window size */
 		};
 		pl_enum(EFlags)
 			pl_enum_base(SceneRendererPass::EFlags)
 			pl_enum_value(NoStencil,				 "No stencil buffer")
 			pl_enum_value(NoMultisampleAntialiasing, "Do not use multisample antialiasing")
 			pl_enum_value(DepthTexture,				 "Provide a depth texture when rendering into a texture")
+			pl_enum_value(CustomTextureSize,		 "Use a texture size given by the user instead of using the original window size")
 		pl_enum_end
 
 		/**
@@ -148,6 +151,7 @@ class SRPBegin : public PLScene::SceneRendererPass {
 	pl_class(PLCOM_RTTI_EXPORT, SRPBegin, "PLCompositing", PLScene::SceneRendererPass, "First scene renderer pass")
 		// Attributes
 		pl_attribute(TextureFormat,	pl_enum_type(ETextureFormat),	PLRenderer::TextureBuffer::Unknown,			ReadWrite,	DirectValue,	"Render target texture format, unknown means no render to texture",	"")
+		pl_attribute(TextureSize,	PLMath::Vector2i,				PLMath::Vector2i::Zero,						ReadWrite,	DirectValue,	"Render target size, only used in case the ''-flag is set",	"")
 		pl_attribute(ClearFlags,	pl_flag_type(EClearFlags),		ClearColor|ClearDepth|ClearStencil,			ReadWrite,	DirectValue,	"Clear flags",														"")
 		pl_attribute(ColorClear,	PLGraphics::Color4,				PLGraphics::Color4(0.0f, 0.0f, 0.0f, 0.0f),	ReadWrite,	DirectValue,	"Clear color (r/g/b/a)",											"")
 		pl_attribute(FillMode,		pl_enum_type(EFillMode),		SolidMode,									ReadWrite,	DirectValue,	"Fill mode",														"")
@@ -211,7 +215,7 @@ class SRPBegin : public PLScene::SceneRendererPass {
 		*  @return
 		*    Depth texture (used when rendering into a texture), can be a null pointer
 		*/
-		PLCOM_API PLRenderer::TextureBuffer2D *GetTextureBuffer2DDepth() const;
+		PLCOM_API PLRenderer::TextureBufferRectangle *GetTextureBufferDepth() const;
 
 		/**
 		*  @brief
@@ -234,7 +238,7 @@ class SRPBegin : public PLScene::SceneRendererPass {
 		PLRenderer::Surface				 *m_pOriginalRenderTarget;		/**< The render target that was set before the current render target was changed to the front/back render target, can be a null pointer */
 		PLRenderer::SurfaceTextureBuffer *m_pRenderTarget[2];			/**< Render targets, can be a null pointer */
 		bool							  m_bCurrentFrontRenderTarget;	/**< Index of the current front render target */
-		PLRenderer::SurfaceTextureBuffer *m_pTextureBuffer2DDepth;		/**< Depth texture (used when rendering into a texture) */
+		PLRenderer::SurfaceTextureBuffer *m_pTextureBufferDepth;		/**< Depth texture (used when rendering into a texture) */
 
 
 };

@@ -45,6 +45,8 @@ namespace PLRenderer {
 	class FragmentShader;
 	class ProgramAttribute;
 	class ProgramUniformBlock;
+	class TessellationControlShader;
+	class TessellationEvaluationShader;
 }
 
 
@@ -62,7 +64,7 @@ namespace PLRenderer {
 *    Abstract renderer program resource
 *
 *  @note
-*    - While each program must have a vertex shader and a fragment shader, a geometry shader is optional
+*    - While each program must have a vertex shader and a fragment shader, tessellation control, tessellation evaluation as well as geometry shaders are optional
 *    - The program is using lazy evaluation, so the program is only compiled & linked when really required
 *    - In performance critical situations, use uniform blocks if they are available
 *    - In performance critical situations, you may want to request e.g. the pointer to uniforms only once, not constantly
@@ -108,7 +110,7 @@ class Program : public Resource {
 		*  @return
 		*    Vertex shader the program is using (do not delete it), can be a null pointer
 		*/
-		virtual PLRenderer::VertexShader *GetVertexShader() const = 0;
+		virtual VertexShader *GetVertexShader() const = 0;
 
 		/**
 		*  @brief
@@ -124,7 +126,57 @@ class Program : public Resource {
 		*    - The given vertex shader instance is just shared and will not be destroyed automatically by this program
 		*    - The given vertex shader instance must stay valid as long as it's used within this program
 		*/
-		virtual bool SetVertexShader(PLRenderer::VertexShader *pVertexShader) = 0;
+		virtual bool SetVertexShader(VertexShader *pVertexShader) = 0;
+
+		/**
+		*  @brief
+		*    Returns the tessellation control shader the program is using
+		*
+		*  @return
+		*    Tessellation control shader the program is using (do not delete it), can be a null pointer
+		*/
+		virtual TessellationControlShader *GetTessellationControlShader() const = 0;
+
+		/**
+		*  @brief
+		*    Sets the tessellation control shader the program is using
+		*
+		*  @param[in] pTessellationControlShader
+		*    Tessellation control shader the program is using, can be a null pointer, tessellation control shader and program language must match!
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' (maybe shader language mismatch?)
+		*
+		*  @note
+		*    - The given tessellation control shader instance is just shared and will not be destroyed automatically by this program
+		*    - The given tessellation control shader instance must stay valid as long as it's used within this program
+		*/
+		virtual bool SetTessellationControlShader(TessellationControlShader *pTessellationControlShader) = 0;
+
+		/**
+		*  @brief
+		*    Returns the tessellation evaluation shader the program is using
+		*
+		*  @return
+		*    Tessellation evaluation shader the program is using (do not delete it), can be a null pointer
+		*/
+		virtual TessellationEvaluationShader *GetTessellationEvaluationShader() const = 0;
+
+		/**
+		*  @brief
+		*    Sets the tessellation evaluation shader the program is using
+		*
+		*  @param[in] pTessellationEvaluationShader
+		*    Tessellation evaluation shader the program is using, can be a null pointer, tessellation evaluation shader and program language must match!
+		*
+		*  @return
+		*    'true' if all went fine, else 'false' (maybe shader language mismatch?)
+		*
+		*  @note
+		*    - The given tessellation evaluation shader instance is just shared and will not be destroyed automatically by this program
+		*    - The given tessellation evaluation shader instance must stay valid as long as it's used within this program
+		*/
+		virtual bool SetTessellationEvaluationShader(TessellationEvaluationShader *pTessellationEvaluationShader) = 0;
 
 		/**
 		*  @brief
@@ -133,7 +185,7 @@ class Program : public Resource {
 		*  @return
 		*    Geometry shader the program is using (do not delete it), can be a null pointer
 		*/
-		virtual PLRenderer::GeometryShader *GetGeometryShader() const = 0;
+		virtual GeometryShader *GetGeometryShader() const = 0;
 
 		/**
 		*  @brief
@@ -149,7 +201,7 @@ class Program : public Resource {
 		*    - The given geometry shader instance is just shared and will not be destroyed automatically by this program
 		*    - The given geometry shader instance must stay valid as long as it's used within this program
 		*/
-		virtual bool SetGeometryShader(PLRenderer::GeometryShader *pGeometryShader) = 0;
+		virtual bool SetGeometryShader(GeometryShader *pGeometryShader) = 0;
 
 		/**
 		*  @brief
@@ -158,7 +210,7 @@ class Program : public Resource {
 		*  @return
 		*    Fragment shader the program is using (do not delete it), can be a null pointer
 		*/
-		virtual PLRenderer::FragmentShader *GetFragmentShader() const = 0;
+		virtual FragmentShader *GetFragmentShader() const = 0;
 
 		/**
 		*  @brief
@@ -174,7 +226,7 @@ class Program : public Resource {
 		*    - The given fragment shader instance is just shared and will not be destroyed automatically by this program
 		*    - The given fragment shader instance must stay valid as long as it's used within this program
 		*/
-		virtual bool SetFragmentShader(PLRenderer::FragmentShader *pFragmentShader) = 0;
+		virtual bool SetFragmentShader(FragmentShader *pFragmentShader) = 0;
 
 		/**
 		*  @brief

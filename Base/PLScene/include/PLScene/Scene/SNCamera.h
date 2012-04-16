@@ -114,7 +114,7 @@ class SNCamera : public SceneNode {
 		// Attributes
 		pl_attribute(FOV,					float,						45.0f,		ReadWrite,	GetSet,	"Field of view in degree",																									"Min='10.0' Max='170.0'")
 		pl_attribute(Aspect,				float,						1.0f,		ReadWrite,	GetSet,	"Aspect factor",																											"")
-		pl_attribute(ZNear,					float,						0.01f,		ReadWrite,	GetSet,	"Near clipping plane",																										"")
+		pl_attribute(ZNear,					float,						0.1f,		ReadWrite,	GetSet,	"Near clipping plane",																										"")
 		pl_attribute(ZFar,					float,						1000.0f,	ReadWrite,	GetSet,	"Far clipping plane",																										"")
 		pl_attribute(SceneRendererFilename,	PLCore::String,				"",			ReadWrite,	GetSet,	"Filename of the scene renderer to use, if empty the default scene renderer of the scene graph surface painter is used",	"Type='SceneRenderer'")
 			// Overwritten SceneNode attributes

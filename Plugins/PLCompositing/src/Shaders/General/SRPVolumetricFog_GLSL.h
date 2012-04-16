@@ -74,8 +74,8 @@ varying highp vec3 FogPositionVS;			// World space fog position from vertex shad
 		uniform lowp float AlphaReference;\n\
 	#endif\n\
 #endif\n\
-uniform vec3 FogColor0;\n\
-uniform vec3 FogColor1;\n\
+uniform lowp vec3 FogColor0;\n\
+uniform lowp vec3 FogColor1;\n\
 \n\
 // Programs\n\
 void main()\n\
@@ -90,8 +90,8 @@ void main()\n\
 #endif\n\
 \n\
 	// Calculate the fog factor\n\
-	float k  = clamp(dot(FogPositionVS, VertexPositionVS)/dot(VertexPositionVS, VertexPositionVS), 0.0, 1.0);\n\
-	vec4  pl = vec4(k*VertexPositionVS - FogPositionVS, 1.0);\n\
+	highp float k  = clamp(dot(FogPositionVS, VertexPositionVS)/dot(VertexPositionVS, VertexPositionVS), 0.0, 1.0);\n\
+	highp vec4  pl = vec4(k*VertexPositionVS - FogPositionVS, 1.0);\n\
 	gl_FragColor.rgb = clamp(FogColor0/dot(pl, pl) - FogColor1, vec3(0.0, 0.0, 0.0), vec3(1.0, 1.0, 1.0));\n\
 	gl_FragColor.a = 1.0;\n\
 }";

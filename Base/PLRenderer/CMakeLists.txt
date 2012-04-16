@@ -64,6 +64,8 @@ add_sources(
 	src/Renderer/ShaderLanguage.cpp
 	src/Renderer/Shader.cpp
 	src/Renderer/VertexShader.cpp
+	src/Renderer/TessellationControlShader.cpp
+	src/Renderer/TessellationEvaluationShader.cpp
 	src/Renderer/GeometryShader.cpp
 	src/Renderer/FragmentShader.cpp
 	src/Renderer/Program.cpp

@@ -1427,8 +1427,56 @@ class Renderer : public PLCore::Object {
 		*    - DrawIndexedPrimitive() fails if no index and/or vertex array is set
 		*    - The Primitive::PointList member of the primitive enumerated type is not supported and is not a valid type for this method
 		*/
-		virtual bool DrawIndexedPrimitives(Primitive::Enum nType, PLCore::uint32 nMinIndex, PLCore::uint32 nMaxIndex,
-										   PLCore::uint32 nStartIndex, PLCore::uint32 nNumVertices) = 0;
+		virtual bool DrawIndexedPrimitives(Primitive::Enum nType, PLCore::uint32 nMinIndex, PLCore::uint32 nMaxIndex, PLCore::uint32 nStartIndex, PLCore::uint32 nNumVertices) = 0;
+
+		/**
+		*  @brief
+		*    Renders the specified geometric patches, based on an array of vertices
+		*
+		*  @param[in] nVerticesPerPatch
+		*    Number of vertices that will be used to make up a single patch primitive
+		*  @param[in] nStartIndex
+		*    Start vertex index for vertices used during this call
+		*  @param[in] nNumVertices
+		*    Number of vertices used during this call
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - DrawPatches() fails if no vertex array is set
+		*    - Only relevent when using tessellation control and tessellation evaluation shaders
+		*/
+		virtual bool DrawPatches(PLCore::uint32 nVerticesPerPatch, PLCore::uint32 nStartIndex, PLCore::uint32 nNumVertices) = 0;
+
+		/**
+		*  @brief
+		*    Renders the specified geometric patches, based on indexing into an array of vertices
+		*
+		*  @param[in] nVerticesPerPatch
+		*    Number of vertices that will be used to make up a single patch primitive
+		*  @param[in] nMinIndex
+		*    Minimum vertex index for vertices used during this call, usually "0"
+		*  @param[in] nMaxIndex
+		*    Maximum vertex index for vertices used during this call, usually "pVertexBuffer->GetNumOfElements() - 1" when "pVertexBuffer" is your currently used vertex buffer
+		*  @param[in] nStartIndex
+		*    Start vertex index for vertices used during this call, usually "0"
+		*  @param[in] nNumVertices
+		*    Number of vertices used during this call, usually "pIndexBuffer->GetNumOfElements()" when "pIndexBuffer" is your currently used index buffer
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*
+		*  @note
+		*    - This method draws indexed patches from the current set of data input streams
+		*    - The nMinIndex and nMaxIndex parameters specify the range of vertex indices used for each DrawIndexedPatches()
+		*      call. These are used to optimize vertex processing of indexed patches by processing a sequential range of
+		*      vertices prior to indexing into these vertices. It is invalid for any indices used during this call to reference
+		*      any vertices outside of this range.
+		*    - DrawIndexedPatches() fails if no index and/or vertex array is set
+		*    - Only relevent when using tessellation control and tessellation evaluation shaders
+		*/
+		virtual bool DrawIndexedPatches(PLCore::uint32 nVerticesPerPatch, PLCore::uint32 nMinIndex, PLCore::uint32 nMaxIndex, PLCore::uint32 nStartIndex, PLCore::uint32 nNumVertices) = 0;
 
 
 	//[-------------------------------------------------------]

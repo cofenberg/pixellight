@@ -284,13 +284,14 @@ class RenderState {
 		DitherEnable        = 34,	/**< Enable/disable dithering (false/true, default: false) */
 		ScissorTestEnable   = 35,	/**< Enable/disable the scissor test (false/true, default: false) */
 		MultisampleEnable   = 36,	/**< When true, perform multisample (false/true, default: true, requires Capabilities::nMultisampleAntialiasingSamples > 1, usually set automatically by the surfaces) */
-		InvCullMode         = 37,	/**< Inverse cull mode active? RenderState::CullMode isn't touched only the intern API setting
+		DepthClamp          = 37,	/**< Depth clamp (default: false) */
+		InvCullMode         = 38,	/**< Inverse cull mode active? RenderState::CullMode isn't touched only the intern API setting
 										 is inverted! (false/true, default: false) */
-		FixedFillMode       = 38,	/**< General fill mode which is normally set once. If this isn't Fill::Unknown this fill mode
+		FixedFillMode       = 39,	/**< General fill mode which is normally set once. If this isn't Fill::Unknown this fill mode
 										 will be used instead of RenderState::FillMode (see Fill, default: Fill::Unknown) */
 		// End
-		Number              = 39,	/**< Number of render states */
-		Unknown             = 40	/**< Unknown render state */
+		Number              = 40,	/**< Number of render states */
+		Unknown             = 41	/**< Unknown render state */
 	};
 };
 

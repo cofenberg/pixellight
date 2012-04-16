@@ -43,6 +43,12 @@
     <ClCompile Include="src\ProgramAttributeCgGLSL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\TessellationEvaluationShaderCg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TessellationControlShaderCg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLRendererOpenGLCg\FragmentShaderCg.h">
@@ -76,6 +82,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="include\PLRendererOpenGLCg\ProgramAttributeCgGLSL.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLCg\TessellationEvaluationShaderCg.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGLCg\TessellationControlShaderCg.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

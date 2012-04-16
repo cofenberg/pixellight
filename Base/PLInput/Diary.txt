@@ -1,3 +1,9 @@
+>> 28.03.2012
+[CO]
+- Bugfix (ID: 3512436): "pl_implement_class(Keyboard)" was missing within "PLInput"
+
+
+
 >> 20.12.2011
 [CO]
 - Minor "SplitTouchPad" and "AndroidSplitTouchPadDevice" cleanup

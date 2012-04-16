@@ -215,7 +215,12 @@ bool RegEx::Match(const String &sSubject, uint32 nPosition)
 					// Get pointer to subject string
 					const char *pszSubject = sSubject.GetUTF8();
 
-					// Save matching substrings by index
+					// The first two elements in nMatches describe the result string which was matched by the expression
+					// e.g. source string is: "Hallo World!", the expression is "Hal+o" -> first element = "Hallo"
+					m_sMatchResult.Copy(&pszSubject[nMatches[0]], nMatches[1] - nMatches[0]);
+
+					// Save matching substrings which have a group description in the expression by index
+					// there are only group results when nMatchCount is > 1 and the group results are stored in nMatches starting with index 2
 					m_lstGroups.Resize(nMatchCount-1);
 					for (int i=1; i<nMatchCount; i++)
 						m_lstGroups[i-1].Copy(&pszSubject[nMatches[i*2]], nMatches[i*2+1] - nMatches[i*2]);
@@ -282,7 +287,11 @@ bool RegEx::Match(const String &sSubject, uint32 nPosition)
 					// Get pointer to subject string
 					const char *pszSubject = sSubject.GetASCII();
 
-					// Save matching substrings by index
+					// The first two elements in nMatches describe the result string which was matched by the expression
+					// e.g. source string is: "Hallo World!", the expression is "Hal+o" -> first element = "Hallo"
+					m_sMatchResult.Copy(&pszSubject[nMatches[0]], nMatches[1] - nMatches[0]);
+
+					// Save matching substrings which have a group description in the expression by index
 					m_lstGroups.Resize(nMatchCount-1);
 					for (int i=1; i<nMatchCount; i++)
 						m_lstGroups[i-1].Copy(&pszSubject[nMatches[i*2]], nMatches[i*2+1] - nMatches[i*2]);

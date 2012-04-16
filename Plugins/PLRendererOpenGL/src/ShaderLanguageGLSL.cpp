@@ -31,6 +31,8 @@
 #include "PLRendererOpenGL/VertexShaderGLSL.h"
 #include "PLRendererOpenGL/GeometryShaderGLSL.h"
 #include "PLRendererOpenGL/FragmentShaderGLSL.h"
+#include "PLRendererOpenGL/TessellationControlShaderGLSL.h"
+#include "PLRendererOpenGL/TessellationEvaluationShaderGLSL.h"
 #include "PLRendererOpenGL/ShaderLanguageGLSL.h"
 
 
@@ -65,6 +67,18 @@ PLRenderer::VertexShader *ShaderLanguageGLSL::CreateVertexShader()
 {
 	// Is the OpenGL extension GL_ARB_shader_objects available?
 	return static_cast<Renderer*>(m_pRenderer)->GetContext().GetExtensions().IsGL_ARB_shader_objects() ? new VertexShaderGLSL(*m_pRenderer) : nullptr;
+}
+
+PLRenderer::TessellationControlShader *ShaderLanguageGLSL::CreateTessellationControlShader()
+{
+	// Is the OpenGL extension GL_ARB_tessellation_shader available?
+	return static_cast<Renderer*>(m_pRenderer)->GetContext().GetExtensions().IsGL_ARB_tessellation_shader() ? new TessellationControlShaderGLSL(*m_pRenderer) : nullptr;
+}
+
+PLRenderer::TessellationEvaluationShader *ShaderLanguageGLSL::CreateTessellationEvaluationShader()
+{
+	// Is the OpenGL extension GL_ARB_tessellation_shader available?
+	return static_cast<Renderer*>(m_pRenderer)->GetContext().GetExtensions().IsGL_ARB_tessellation_shader() ? new TessellationEvaluationShaderGLSL(*m_pRenderer) : nullptr;
 }
 
 PLRenderer::GeometryShader *ShaderLanguageGLSL::CreateGeometryShader()

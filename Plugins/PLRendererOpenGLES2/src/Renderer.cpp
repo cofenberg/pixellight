@@ -1464,6 +1464,10 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 					// Not supported by OpenGL ES 2.0
 					break;
 
+				case PLRenderer::RenderState::DepthClamp:
+					// Not supported by OpenGL ES 2.0
+					break;
+
 				case PLRenderer::RenderState::InvCullMode:
 					if (GetRenderState(PLRenderer::RenderState::CullMode) != PLRenderer::Cull::None) {
 						// Invert cull mode?
@@ -2131,6 +2135,18 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 
 	// Done
 	return true;
+}
+
+bool Renderer::DrawPatches(uint32 nVerticesPerPatch, uint32 nStartIndex, uint32 nNumVertices)
+{
+	// Error! Tessellation is not supported by OpenGL ES 2.0!
+	return false;
+}
+
+bool Renderer::DrawIndexedPatches(uint32 nVerticesPerPatch, uint32 nMinIndex, uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices)
+{
+	// Error! Tessellation is not supported by OpenGL ES 2.0!
+	return false;
 }
 
 

@@ -333,6 +333,8 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\ShaderToolsGLSL.cpp" />
     <ClCompile Include="src\SurfaceTextureBuffer.cpp" />
     <ClCompile Include="src\SurfaceWindow.cpp" />
+    <ClCompile Include="src\TessellationControlShaderGLSL.cpp" />
+    <ClCompile Include="src\TessellationEvaluationShaderGLSL.cpp" />
     <ClCompile Include="src\TextureBuffer1D.cpp" />
     <ClCompile Include="src\TextureBuffer2D.cpp" />
     <ClCompile Include="src\TextureBuffer2DArray.cpp" />
@@ -368,6 +370,8 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLRendererOpenGL\MacOSX\SurfaceWindowMacOSX_Cocoa.h" />
     <ClInclude Include="include\PLRendererOpenGL\MacOSX\SurfaceWindowMacOSX_X11.h" />
     <ClInclude Include="include\PLRendererOpenGL\ProgramUniformBlockGLSL.h" />
+    <ClInclude Include="include\PLRendererOpenGL\TessellationControlShaderGLSL.h" />
+    <ClInclude Include="include\PLRendererOpenGL\TessellationEvaluationShaderGLSL.h" />
     <ClInclude Include="include\PLRendererOpenGL\TextureBuffer2DArray.h" />
     <ClInclude Include="include\PLRendererOpenGL\UniformBuffer.h" />
     <ClInclude Include="include\PLRendererOpenGL\Windows\ContextWindows.h" />

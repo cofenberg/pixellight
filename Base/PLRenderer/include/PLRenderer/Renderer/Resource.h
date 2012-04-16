@@ -70,21 +70,23 @@ class Resource {
 		*    Resource types
 		*/
 		enum EType {
-			TypeIndexBuffer            =  0,	/**< Index buffer (IBO) */
-			TypeVertexBuffer           =  1,	/**< Vertex buffer (VBO) */
-			TypeUniformBuffer          =  2,	/**< Uniform buffer (UBO) */
-			TypeTextureBuffer1D        =  3,	/**< 1D texture buffer */
-			TypeTextureBuffer2D        =  4,	/**< 2D texture buffer */
-			TypeTextureBuffer2DArray   =  5,	/**< 2D array texture buffer (kind of 3D texture, but without filtering between the depth layers) */
-			TypeTextureBufferRectangle =  6,	/**< Rectangle texture buffer */
-			TypeTextureBuffer3D        =  7,	/**< 3D texture buffer */
-			TypeTextureBufferCube      =  8,	/**< Cube texture buffer */
-			TypeOcclusionQuery         =  9,	/**< Occlusion query */
-			TypeVertexShader           = 10,	/**< Vertex shader */
-			TypeGeometryShader         = 11,	/**< Geometry shader */
-			TypeFragmentShader         = 12,	/**< Fragment shader */
-			TypeProgram                = 13,	/**< Program */
-			TypeFont                   = 14		/**< Font */
+			TypeIndexBuffer                  =  0,	/**< Index buffer (IBO) */
+			TypeVertexBuffer                 =  1,	/**< Vertex buffer (VBO) */
+			TypeUniformBuffer                =  2,	/**< Uniform buffer (UBO) */
+			TypeTextureBuffer1D              =  3,	/**< 1D texture buffer */
+			TypeTextureBuffer2D              =  4,	/**< 2D texture buffer */
+			TypeTextureBuffer2DArray         =  5,	/**< 2D array texture buffer (kind of 3D texture, but without filtering between the depth layers) */
+			TypeTextureBufferRectangle       =  6,	/**< Rectangle texture buffer */
+			TypeTextureBuffer3D              =  7,	/**< 3D texture buffer */
+			TypeTextureBufferCube            =  8,	/**< Cube texture buffer */
+			TypeOcclusionQuery               =  9,	/**< Occlusion query */
+			TypeVertexShader                 = 10,	/**< Vertex shader */
+			TypeTessellationControlShader    = 11,	/**< Tessellation control shader (named "hull" in DirectX) */
+			TypeTessellationEvaluationShader = 12,	/**< Tessellation evaluation shader (named "domain shader" in DirectX) */
+			TypeGeometryShader               = 13,	/**< Geometry shader */
+			TypeFragmentShader               = 14,	/**< Fragment shader */
+			TypeProgram                      = 15,	/**< Program */
+			TypeFont                         = 16	/**< Font */
 		};
 
 

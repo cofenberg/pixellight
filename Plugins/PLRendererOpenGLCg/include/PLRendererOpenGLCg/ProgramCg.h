@@ -149,26 +149,28 @@ class ProgramCg : public PLRendererOpenGL::Program {
 	//[-------------------------------------------------------]
 	private:
 		// Program
-		CGprogram															m_pCgCombinedProgram;				/**< Cg combined program, can be a null pointer */
-		bool																m_bGLSL;							/**< Is it an OpenGL GLSL program? If yes, we need some hacks to make it work properly. :/ */
-		bool																m_bLinked;							/**< Is the Cg combined program currently linked? */
-		bool																m_bLinkedFailed;					/**< Cg combined program link failed? */
+		CGprogram															m_pCgCombinedProgram;					/**< Cg combined program, can be a null pointer */
+		bool																m_bGLSL;								/**< Is it an OpenGL GLSL program? If yes, we need some hacks to make it work properly. :/ */
+		bool																m_bLinked;								/**< Is the Cg combined program currently linked? */
+		bool																m_bLinkedFailed;						/**< Cg combined program link failed? */
 		// Shaders
-		PLRenderer::ResourceHandler											m_cVertexShaderHandler;				/**< Vertex shader resource handler */
-		PLRenderer::ResourceHandler											m_cGeometryShaderHandler;			/**< Geometry shader resource handler */
-		PLRenderer::ResourceHandler											m_cFragmentShaderHandler;			/**< Fragment shader resource handler */
+		PLRenderer::ResourceHandler											m_cVertexShaderHandler;					/**< Vertex shader resource handler */
+		PLRenderer::ResourceHandler											m_cTessellationControlShaderHandler;	/**< Tessellation control shader resource handler */
+		PLRenderer::ResourceHandler											m_cTessellationEvaluationShaderHandler;	/**< Tessellation evaluation shader resource handler */
+		PLRenderer::ResourceHandler											m_cGeometryShaderHandler;				/**< Geometry shader resource handler */
+		PLRenderer::ResourceHandler											m_cFragmentShaderHandler;				/**< Fragment shader resource handler */
 		// Attributes
-		bool																m_bAttributeInformationBuild;		/**< Attribute information already build? */
-		PLCore::Array<PLRenderer::ProgramAttribute*>						m_lstAttributes;					/**< List of attributes */
-		PLCore::HashMap<PLCore::String, PLRenderer::ProgramAttribute*>		m_mapAttributes;					/**< Hash map of names -> attributes */
+		bool																m_bAttributeInformationBuild;			/**< Attribute information already build? */
+		PLCore::Array<PLRenderer::ProgramAttribute*>						m_lstAttributes;						/**< List of attributes */
+		PLCore::HashMap<PLCore::String, PLRenderer::ProgramAttribute*>		m_mapAttributes;						/**< Hash map of names -> attributes */
 		// Uniforms
-		bool																m_bUniformInformationBuild;			/**< Uniform information already build? */
-		PLCore::Array<PLRenderer::ProgramUniform*>							m_lstUniforms;						/**< List of uniforms */
-		PLCore::HashMap<PLCore::String, PLRenderer::ProgramUniform*>		m_mapUniforms;						/**< Hash map of names -> uniforms */
+		bool																m_bUniformInformationBuild;				/**< Uniform information already build? */
+		PLCore::Array<PLRenderer::ProgramUniform*>							m_lstUniforms;							/**< List of uniforms */
+		PLCore::HashMap<PLCore::String, PLRenderer::ProgramUniform*>		m_mapUniforms;							/**< Hash map of names -> uniforms */
 		// Uniform blocks
-		bool																m_bUniformBlockInformationBuild;	/**< Uniform block information already build? */
-		PLCore::Array<PLRenderer::ProgramUniformBlock*>						m_lstUniformBlocks;					/**< List of uniform blocks */
-		PLCore::HashMap<PLCore::String, PLRenderer::ProgramUniformBlock*>	m_mapUniformBlocks;					/**< Hash map of names -> uniform blocks */
+		bool																m_bUniformBlockInformationBuild;		/**< Uniform block information already build? */
+		PLCore::Array<PLRenderer::ProgramUniformBlock*>						m_lstUniformBlocks;						/**< List of uniform blocks */
+		PLCore::HashMap<PLCore::String, PLRenderer::ProgramUniformBlock*>	m_mapUniformBlocks;						/**< Hash map of names -> uniform blocks */
 
 
 	//[-------------------------------------------------------]
@@ -178,6 +180,10 @@ class ProgramCg : public PLRendererOpenGL::Program {
 		virtual PLCore::String GetShaderLanguage() const override;
 		virtual PLRenderer::VertexShader *GetVertexShader() const override;
 		virtual bool SetVertexShader(PLRenderer::VertexShader *pVertexShader) override;
+		virtual PLRenderer::TessellationControlShader *GetTessellationControlShader() const override;
+		virtual bool SetTessellationControlShader(PLRenderer::TessellationControlShader *pTessellationControlShader) override;
+		virtual PLRenderer::TessellationEvaluationShader *GetTessellationEvaluationShader() const override;
+		virtual bool SetTessellationEvaluationShader(PLRenderer::TessellationEvaluationShader *pTessellationEvaluationShader) override;
 		virtual PLRenderer::GeometryShader *GetGeometryShader() const override;
 		virtual bool SetGeometryShader(PLRenderer::GeometryShader *pGeometryShader) override;
 		virtual PLRenderer::FragmentShader *GetFragmentShader() const override;
