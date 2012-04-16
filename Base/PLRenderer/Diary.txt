@@ -1,3 +1,12 @@
+>> 16.04.2012
+[CO]
+PLRendererOpenGL:
+- "FrameBufferObject::Initialize()": 
+  -> "glRenderbufferStorageEXT": While e.g. "GL_DEPTH_COMPONENT24" works on AMD GPUs, on NVIDIA GPUs only "GL_DEPTH_COMPONENT" works
+  ->  Currently I don't have the time to check the framebuffer specification in order to verify this behaviour so I added a [TODO]
+
+
+
 >> 08.04.2012
 [CO]
 - Added new render state "DepthClamp"
