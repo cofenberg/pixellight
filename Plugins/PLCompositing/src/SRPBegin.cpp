@@ -63,7 +63,7 @@ SRPBegin::SRPBegin() :
 	Flags(this),
 	m_pOriginalRenderTarget(nullptr),
 	m_bCurrentFrontRenderTarget(0),
-	m_pTextureBuffer2DDepth(nullptr)
+	m_pTextureBufferDepth(nullptr)
 {
 	// Initialize the pointers to the render targets
 	m_pRenderTarget[0] = m_pRenderTarget[1] = nullptr;
@@ -80,8 +80,8 @@ SRPBegin::~SRPBegin()
 		delete m_pRenderTarget[0];
 	if (m_pRenderTarget[1])
 		delete m_pRenderTarget[1];
-	if (m_pTextureBuffer2DDepth)
-		delete m_pTextureBuffer2DDepth;
+	if (m_pTextureBufferDepth)
+		delete m_pTextureBufferDepth;
 }
 
 /**
@@ -115,9 +115,9 @@ SurfaceTextureBuffer *SRPBegin::GetBackRenderTarget() const
 *  @brief
 *    Returns the depth texture (used when rendering into a texture)
 */
-TextureBuffer2D *SRPBegin::GetTextureBuffer2DDepth() const
+TextureBufferRectangle *SRPBegin::GetTextureBufferDepth() const
 {
-	return ((GetFlags() & DepthTexture) && m_pTextureBuffer2DDepth) ? reinterpret_cast<TextureBuffer2D*>(m_pTextureBuffer2DDepth->GetTextureBuffer()) : nullptr;
+	return ((GetFlags() & DepthTexture) && m_pTextureBufferDepth) ? reinterpret_cast<TextureBufferRectangle*>(m_pTextureBufferDepth->GetTextureBuffer()) : nullptr;
 }
 
 /**
@@ -219,14 +219,14 @@ void SRPBegin::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 		// Create a depth texture?
 		if ((GetFlags() & DepthTexture)) {
 			// Destroy previous texture?
-			if (m_pTextureBuffer2DDepth && m_pTextureBuffer2DDepth->GetSize() != vRenderTargetSize) {
-				delete m_pTextureBuffer2DDepth;
-				m_pTextureBuffer2DDepth = nullptr;
+			if (m_pTextureBufferDepth && m_pTextureBufferDepth->GetSize() != vRenderTargetSize) {
+				delete m_pTextureBufferDepth;
+				m_pTextureBufferDepth = nullptr;
 			}
 
 			// Create texture?
-			if (!m_pTextureBuffer2DDepth)
-				m_pTextureBuffer2DDepth = cRenderer.CreateSurfaceTextureBuffer2D(vRenderTargetSize, TextureBuffer::D24, (GetFlags() & NoMultisampleAntialiasing) ? SurfaceTextureBuffer::Depth|SurfaceTextureBuffer::NoMultisampleAntialiasing : SurfaceTextureBuffer::Depth);
+			if (!m_pTextureBufferDepth)
+				m_pTextureBufferDepth = cRenderer.CreateSurfaceTextureBufferRectangle(vRenderTargetSize, TextureBuffer::D24, (GetFlags() & NoMultisampleAntialiasing) ? SurfaceTextureBuffer::Depth|SurfaceTextureBuffer::NoMultisampleAntialiasing : SurfaceTextureBuffer::Depth);
 		}
 	}
 
@@ -236,8 +236,8 @@ void SRPBegin::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 		cRenderer.SetRenderTarget(m_pRenderTarget[!m_bCurrentFrontRenderTarget]);
 
 		// Provide a depth texture?
-		if ((GetFlags() & DepthTexture) && m_pTextureBuffer2DDepth)
-			cRenderer.SetDepthRenderTarget(m_pTextureBuffer2DDepth->GetTextureBuffer());
+		if ((GetFlags() & DepthTexture) && m_pTextureBufferDepth)
+			cRenderer.SetDepthRenderTarget(m_pTextureBufferDepth->GetTextureBuffer());
 	}
 
 	// Set fill mode

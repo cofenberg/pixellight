@@ -40,6 +40,7 @@
 namespace PLRenderer {
 	class Surface;
 	class SurfaceTextureBuffer;
+	class TextureBufferRectangle;
 }
 
 
@@ -214,7 +215,7 @@ class SRPBegin : public PLScene::SceneRendererPass {
 		*  @return
 		*    Depth texture (used when rendering into a texture), can be a null pointer
 		*/
-		PLCOM_API PLRenderer::TextureBuffer2D *GetTextureBuffer2DDepth() const;
+		PLCOM_API PLRenderer::TextureBufferRectangle *GetTextureBufferDepth() const;
 
 		/**
 		*  @brief
@@ -237,7 +238,7 @@ class SRPBegin : public PLScene::SceneRendererPass {
 		PLRenderer::Surface				 *m_pOriginalRenderTarget;		/**< The render target that was set before the current render target was changed to the front/back render target, can be a null pointer */
 		PLRenderer::SurfaceTextureBuffer *m_pRenderTarget[2];			/**< Render targets, can be a null pointer */
 		bool							  m_bCurrentFrontRenderTarget;	/**< Index of the current front render target */
-		PLRenderer::SurfaceTextureBuffer *m_pTextureBuffer2DDepth;		/**< Depth texture (used when rendering into a texture) */
+		PLRenderer::SurfaceTextureBuffer *m_pTextureBufferDepth;		/**< Depth texture (used when rendering into a texture) */
 
 
 };

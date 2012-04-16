@@ -1,3 +1,9 @@
+>> 16.04.2012
+[CO]
+- "SRPBegin": Currently, we render into a rectangle texture, so, better to have the depth buffer as rectangle as well
+
+
+
 >> 02.04.2012
 [CO]
 - "SRPBegin": Optionally it's now possible to define the render to texture size manually
