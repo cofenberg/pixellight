@@ -1,3 +1,10 @@
+>> 21.04.2012
+[CO]
+PLRenderer:
+- "Texture::SetTextureBuffer()" did not update the original texture size
+
+
+
 >> 16.04.2012
 [CO]
 PLRendererOpenGL:
