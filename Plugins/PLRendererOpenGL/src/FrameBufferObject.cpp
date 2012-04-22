@@ -138,11 +138,11 @@ bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, u
 				// - While e.g. "GL_DEPTH_COMPONENT24" works on AMD GPUs, on NVIDIA GPUs only "GL_DEPTH_COMPONENT" works
 				// - Check the framebuffer specification and so on to verify this behaviour
 				if (nMultisampleAntialiasingSamples) {
-				//	glRenderbufferStorageMultisampleEXT(GL_RENDERBUFFER_EXT, nMultisampleAntialiasingSamples, nDepth,			  m_vSize.x, m_vSize.y);
-					glRenderbufferStorageMultisampleEXT(GL_RENDERBUFFER_EXT, nMultisampleAntialiasingSamples, GL_DEPTH_COMPONENT, m_vSize.x, m_vSize.y);
+					glRenderbufferStorageMultisampleEXT(GL_RENDERBUFFER_EXT, nMultisampleAntialiasingSamples, nDepth,			  m_vSize.x, m_vSize.y);
+				//	glRenderbufferStorageMultisampleEXT(GL_RENDERBUFFER_EXT, nMultisampleAntialiasingSamples, GL_DEPTH_COMPONENT, m_vSize.x, m_vSize.y);
 				} else {
-//					glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, nDepth,			  m_vSize.x, m_vSize.y);
-					glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT, m_vSize.x, m_vSize.y);
+					glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, nDepth,			  m_vSize.x, m_vSize.y);
+			//		glRenderbufferStorageEXT(GL_RENDERBUFFER_EXT, GL_DEPTH_COMPONENT, m_vSize.x, m_vSize.y);
 				}
 			}
 
