@@ -54,6 +54,7 @@ namespace PLRendererOpenGL {
 FrameBufferObject::FrameBufferObject() :
 	m_nFrameBufferIndex(0),
 	m_nMultisampleFrameBufferIndex(0),
+	m_nRenderToFrameBufferIndex(0),
 	m_nColorBufferIndex(0),
 	m_nDepthBufferIndex(0),
 	m_nStencilBufferIndex(0),
@@ -179,6 +180,10 @@ bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, u
 
 			// Check frame buffer
 			const bool bResult = CheckFrameBufferStatus();
+			if (bResult)
+				m_nRenderToFrameBufferIndex = m_nMultisampleFrameBufferIndex ? m_nMultisampleFrameBufferIndex : m_nFrameBufferIndex;
+			else
+				m_nRenderToFrameBufferIndex = 0;
 
 			// Reset current bound FBO
 			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, nFrameBufferT);
@@ -203,7 +208,7 @@ bool FrameBufferObject::Initialize(Renderer &cRenderer, const Vector2i &vSize, u
 void FrameBufferObject::SwitchTarget(PLRenderer::TextureBuffer &cTextureBuffer, uint32 nAttachIndex, uint8 nFace)
 {
 	// Valid frame buffer object?
-	if (m_nFrameBufferIndex) {
+	if (m_nRenderToFrameBufferIndex) {
 		// Get target format and OpenGL texture ID
 		int nTarget = -1;
 		GLuint nOpenGLID = 0;
@@ -244,7 +249,7 @@ void FrameBufferObject::SwitchTarget(PLRenderer::TextureBuffer &cTextureBuffer, 
 				nAttachIndex = 15;
 
 			// Bind
-			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_nFrameBufferIndex);
+			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_nRenderToFrameBufferIndex);
 			PLRenderer::TextureBuffer::EPixelFormat nFormat = cTextureBuffer.GetFormat();
 			if (nFormat == PLRenderer::TextureBuffer::D16 || nFormat == PLRenderer::TextureBuffer::D24 || nFormat == PLRenderer::TextureBuffer::D32) {
 				glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, m_nDepthBufferAttachment, nTarget, nOpenGLID, 0);
@@ -261,13 +266,8 @@ void FrameBufferObject::SwitchTarget(PLRenderer::TextureBuffer &cTextureBuffer, 
 */
 void FrameBufferObject::Bind()
 {
-	// Use multisample?
-	if (m_nMultisampleFrameBufferIndex) 
-		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_nMultisampleFrameBufferIndex);
-	else {
-		if (m_nFrameBufferIndex)
-			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_nFrameBufferIndex);
-	}
+	if (m_nRenderToFrameBufferIndex) 
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_nRenderToFrameBufferIndex);
 }
 
 /**
@@ -315,8 +315,8 @@ void FrameBufferObject::Unbind()
 void FrameBufferObject::UnbindDephTexture()
 {
 	// Valid frame buffer object?
-	if (m_nFrameBufferIndex) {
-		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_nFrameBufferIndex);
+	if (m_nRenderToFrameBufferIndex) {
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_nRenderToFrameBufferIndex);
 		glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, m_nDepthBufferAttachment, GL_TEXTURE_2D, 0, 0);
 	}
 }
@@ -347,17 +347,17 @@ void FrameBufferObject::TakeDepthBufferFromFBO(FrameBufferObject &cFBO)
 
 		// If we have a depth buffer, we destroy it because the depth buffer of the other FBO is much better *g*
 		if (m_nDepthBufferIndex) {
-			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_nMultisampleFrameBufferIndex ? m_nMultisampleFrameBufferIndex : m_nFrameBufferIndex);
+			glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_nRenderToFrameBufferIndex);
 			glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, nDepthBufferAttachment, GL_RENDERBUFFER_EXT, 0);
 			glDeleteRenderbuffersEXT(1, &m_nDepthBufferIndex);
 		}
 
 		// Take away the ownership of the depth buffer
 		m_nDepthBufferIndex = cFBO.m_nDepthBufferIndex;
-		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, cFBO.m_nMultisampleFrameBufferIndex ? cFBO.m_nMultisampleFrameBufferIndex : cFBO.m_nFrameBufferIndex);
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, cFBO.m_nRenderToFrameBufferIndex);
 		glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, nDepthBufferAttachment, GL_RENDERBUFFER_EXT, 0);
 		cFBO.m_nDepthBufferIndex = 0;
-		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_nMultisampleFrameBufferIndex ? m_nMultisampleFrameBufferIndex : m_nFrameBufferIndex);
+		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, m_nRenderToFrameBufferIndex);
 		glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, nDepthBufferAttachment, GL_RENDERBUFFER_EXT, m_nDepthBufferIndex);
 
 		// Reset current bound FBO
