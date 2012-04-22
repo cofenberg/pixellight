@@ -1,3 +1,9 @@
+>> 22.04.2012
+[CO]
+- PLCompositing is now using "Renderer::SetDepthRenderTarget()" instead of "SurfaceTextureBuffer::TakeDepthBufferFromSurfaceTextureBuffer()"
+
+
+
 >> 16.04.2012
 [CO]
 - "SRPBegin": Currently, we render into a rectangle texture, so, better to have the depth buffer as rectangle as well

@@ -43,6 +43,7 @@
 #include <PLScene/Visibility/SQCull.h>
 #include <PLScene/Visibility/VisPortal.h>
 #include <PLScene/Visibility/VisContainer.h>
+#include "PLCompositing/SRPBegin.h"
 #include "PLCompositing/FullscreenQuad.h"
 #include "PLCompositing/Shaders/Deferred/SRPDeferredGBuffer.h"
 
@@ -488,9 +489,10 @@ void SRPDeferredGBuffer::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 		if (m_pRenderTarget) {
 			// Backup the current render target, pass on the depth buffer of the surface texture buffer and set the new render target
 			m_pSurfaceBackup = cRenderer.GetRenderTarget();
-			if (m_pSurfaceBackup->GetType() == Surface::TextureBuffer)
-				m_pRenderTarget->TakeDepthBufferFromSurfaceTextureBuffer(static_cast<SurfaceTextureBuffer&>(*m_pSurfaceBackup));
 			cRenderer.SetRenderTarget(m_pRenderTarget);
+			SRPBegin *pSRPBegin = static_cast<SRPBegin*>(GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPBegin"));
+			if (pSRPBegin)
+				cRenderer.SetDepthRenderTarget(pSRPBegin->GetTextureBufferDepth());
 			cRenderer.SetColorRenderTarget(static_cast<TextureBuffer*>(m_pColorTarget1), 1);
 			cRenderer.SetColorRenderTarget(static_cast<TextureBuffer*>(m_pColorTarget2), 2);
 			cRenderer.SetColorRenderTarget(static_cast<TextureBuffer*>(m_pColorTarget3), 3);
@@ -570,10 +572,10 @@ void SRPDeferredGBuffer::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 			// Restore the color mask
 			cRenderer.SetColorMask(bRed, bGreen, bBlue, bAlpha);
 
-			// Give back the depth buffer of the surface texture buffer and restore the previously set render target
-			if (m_pSurfaceBackup->GetType() == Surface::TextureBuffer)
-				static_cast<SurfaceTextureBuffer*>(m_pSurfaceBackup)->TakeDepthBufferFromSurfaceTextureBuffer(*m_pRenderTarget);
+			// Restore previous render target
 			cRenderer.SetRenderTarget(m_pSurfaceBackup);
+			if (pSRPBegin)
+				cRenderer.SetDepthRenderTarget(pSRPBegin->GetTextureBufferDepth());
 		}
 	}
 }
