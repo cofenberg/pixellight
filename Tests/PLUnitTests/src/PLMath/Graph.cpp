@@ -4,6 +4,9 @@
 #include <UnitTest++/UnitTest++.h>
 #include <PLMath/Graph/Graph.h>
 
+#include "UnitTest++AddIns/PLCheckMacros.h"
+#include "UnitTest++AddIns/PLChecks.h"
+
 /*
 * Naming Convention for SUITE:
 * CLASSNAME
@@ -116,4 +119,8 @@ SUITE(Graph) {
 	if (pPath) {
 		delete pPath;
 	}*/
+
+	TEST(Dummy) {
+		CHECK_IMPLEMENT;
+	}
 }
