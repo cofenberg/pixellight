@@ -28,6 +28,7 @@
     </ClCompile>
     <ClCompile Include="src\PLCore\Application\ApplicationContext.cpp" />
     <ClCompile Include="src\PLCore\Application\CoreApplication.cpp" />
+    <ClCompile Include="src\PLCore\Config.cpp" />
     <ClCompile Include="src\PLCore\Container\Array.cpp" />
     <ClCompile Include="src\PLCore\Container\BinaryHeap.cpp" />
     <ClCompile Include="src\PLCore\Container\BinominalHeap.cpp" />
@@ -44,10 +45,13 @@
     <ClCompile Include="src\PLCore\Container\Stack.cpp" />
     <ClCompile Include="src\PLCore\FileSystem.cpp" />
     <ClCompile Include="src\PLCore\Log.cpp" />
+    <ClCompile Include="src\PLCore\ResourceManagement.cpp" />
+    <ClCompile Include="src\PLCore\ResourceManager.cpp" />
     <ClCompile Include="src\PLCore\String.cpp" />
     <ClCompile Include="src\PLCore\Tools\ChecksumCRC32.cpp" />
     <ClCompile Include="src\PLCore\Tools\ChecksumMD5.cpp" />
     <ClCompile Include="src\PLCore\Tools\ChecksumSHA1.cpp" />
+    <ClCompile Include="src\PLCore\Tools\Localization.cpp" />
     <ClCompile Include="src\PLMath\EulerAngles.cpp" />
     <ClCompile Include="src\PLMath\Graph.cpp" />
     <ClCompile Include="src\PLMath\GraphPath.cpp" />

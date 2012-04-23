@@ -25,10 +25,6 @@
 //[-------------------------------------------------------]
 #include <PLTest/TestManager.h>
 #include "PLTestBase/Core/ChunkTest.h"
-#include "PLTestBase/Core/ConfigTest.h"
-#include "PLTestBase/Core/LocalizationTest.h"
-#include "PLTestBase/Core/ResourceManagementTest.h"
-#include "PLTestBase/Core/ResourceManagerTest.h"
 
 
 //[-------------------------------------------------------]
@@ -43,8 +39,4 @@ void CoreTests()
 	// Perform the test cases
 	TestManager cTestManager("PLCore");
 	cTestManager.Perform(new ChunkTest());
-	cTestManager.Perform(new ConfigTest());
-	cTestManager.Perform(new LocalizationTest());
-	cTestManager.Perform(new ResourceManagementTest());
-	cTestManager.Perform(new ResourceManagerTest());
 }

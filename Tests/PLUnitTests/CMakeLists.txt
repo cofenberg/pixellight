@@ -34,6 +34,8 @@ add_sources(
 		# Application
 		src/PLCore/Application/ApplicationContext.cpp
 		src/PLCore/Application/CoreApplication.cpp
+		# Config
+		src/PLCore/Config.cpp
 		# Container
 		src/PLCore/Container/Array.cpp
 		src/PLCore/Container/Bitset.cpp
@@ -53,16 +55,20 @@ add_sources(
 		src/PLCore/Container/HashMap.cpp
 		src/PLCore/Container/MapTests.h
 		src/PLCore/Container/SimpleMap.cpp
-		# Log
-		src/PLCore/Log.cpp
 		# FileSystem
 		src/PLCore/FileSystem.cpp
-		# general
+		# Log
+		src/PLCore/Log.cpp
+		# String
 		src/PLCore/String.cpp
 		# Tools
 		src/PLCore/Tools/ChecksumCRC32.cpp
 		src/PLCore/Tools/ChecksumMD5.cpp
 		src/PLCore/Tools/ChecksumSHA1.cpp
+		src/PLCore/Tools/Localization.cpp
+		# others
+		src/PLCore/ResourceManagement.cpp
+		src/PLCore/ResourceManager.cpp
 	# PLMath
 	src/PLMath/EulerAngles.cpp
 	src/PLMath/Graph.cpp

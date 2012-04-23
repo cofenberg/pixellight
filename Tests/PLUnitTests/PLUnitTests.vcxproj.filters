@@ -118,6 +118,18 @@
     <ClCompile Include="src\PLCore\Log.cpp">
       <Filter>PLCore\Log</Filter>
     </ClCompile>
+    <ClCompile Include="src\PLCore\Config.cpp">
+      <Filter>PLCore\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCore\Tools\Localization.cpp">
+      <Filter>PLCore\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCore\ResourceManager.cpp">
+      <Filter>PLCore</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PLCore\ResourceManagement.cpp">
+      <Filter>PLCore</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\UnitTest++AddIns\RunAllTests.h">
@@ -185,6 +197,9 @@
     </Filter>
     <Filter Include="PLCore\File">
       <UniqueIdentifier>{9861809c-228b-4b8c-be3e-5dad5da0b9d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PLCore\Config">
+      <UniqueIdentifier>{09a0948d-96cf-4895-a945-5be32b0bd58a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

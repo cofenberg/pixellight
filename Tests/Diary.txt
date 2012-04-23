@@ -1,3 +1,14 @@
+>> 30.04.2012
+[JS]
+PLTestBase:
+- removed Tests that are already ported to PLUnitTests
+PLUnitTests:
+- added Resource tests (migrated from PLTestbase)
+- added Localization tests (migrated from PLTestbase)
+- added Config tests (migrated from PLTestbase)
+
+
+
 >> 23.04.2012
 [JS]
 PLTestBase:

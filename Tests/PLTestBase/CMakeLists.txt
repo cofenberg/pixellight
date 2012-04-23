@@ -52,10 +52,6 @@ add_sources(
 	src/General/QuickSortTest.cpp
 	src/Core/Core.cpp
 	src/Core/ChunkTest.cpp
-	src/Core/ConfigTest.cpp
-	src/Core/LocalizationTest.cpp
-	src/Core/ResourceManagerTest.cpp
-	src/Core/ResourceManagementTest.cpp
 	src/main.cpp
 )
 
