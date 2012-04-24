@@ -39,46 +39,17 @@ add_sources(
 	src/Math/GraphPathTest.cpp
 	src/Math/MathClassTest.cpp
 	src/Math/GraphTest.cpp
-	src/Math/Matrix3x3Test.cpp
-	src/Math/Matrix3x4Test.cpp
-	src/Math/Vector2Test.cpp
-	src/Math/Matrix4x4Test.cpp
-	src/Math/Vector3Test.cpp
 	src/Math/QuaternionTest.cpp
-	src/Math/Vector4Test.cpp
-	src/Math/MathTest.cpp
 	src/Math/Math.cpp
-	src/Math/MiscTest.cpp
-	src/Math/EulerAnglesTest.cpp
 	src/General/XmlTest.cpp
-	src/General/FibonacciHeapTest.cpp
-	src/General/PerformanceTest.cpp
-	src/General/StackTest.cpp
-	src/General/StringTest.cpp
 	src/General/UTF8ToolsTest.cpp
-	src/General/HeapTestCase.cpp
-	src/General/ArrayTest.cpp
 	src/General/General.cpp
-	src/General/FileSystemTest.cpp
-	src/General/HashMapTest.cpp
 	src/General/SystemTest.cpp
-	src/General/BinominalHeapTest.cpp
-	src/General/SimpleMapTest.cpp
-	src/General/FastPoolTest.cpp
 	src/General/TimeTest.cpp
 	src/General/SingletonTest.cpp
 	src/General/TokenizerTest.cpp
-	src/General/MapTestCase.cpp
-	src/General/PoolTest.cpp
-	src/General/QueueTest.cpp
-	src/General/ListTest.cpp
-	src/General/SimpleListTest.cpp
 	src/General/MultiThreadingTest.cpp
-	src/General/BinaryHeapTest.cpp
 	src/General/QuickSortTest.cpp
-	src/General/BitsetTest.cpp
-	src/General/ChecksumTest.cpp
-	src/General/LogTest.cpp
 	src/Core/Core.cpp
 	src/Core/ChunkTest.cpp
 	src/Core/ConfigTest.cpp
