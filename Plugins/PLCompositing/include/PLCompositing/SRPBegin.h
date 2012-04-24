@@ -108,14 +108,14 @@ class SRPBegin : public PLScene::SceneRendererPass {
 		enum EFlags {
 			NoStencil				  = 1<<1,	/**< No stencil buffer */
 			NoMultisampleAntialiasing = 1<<2,	/**< Do not use multisample antialiasing */
-			DepthTexture			  = 1<<4,	/**< Provide a depth texture when rendering into a texture */
+			NoDepthTexture			  = 1<<4,	/**< Do not provide a depth texture when rendering into a texture */
 			CustomTextureSize		  = 1<<5	/**< Use a texture size given by the user instead of using the original window size */
 		};
 		pl_enum(EFlags)
 			pl_enum_base(SceneRendererPass::EFlags)
 			pl_enum_value(NoStencil,				 "No stencil buffer")
 			pl_enum_value(NoMultisampleAntialiasing, "Do not use multisample antialiasing")
-			pl_enum_value(DepthTexture,				 "Provide a depth texture when rendering into a texture")
+			pl_enum_value(NoDepthTexture,			 "Do not provide a depth texture when rendering into a texture")
 			pl_enum_value(CustomTextureSize,		 "Use a texture size given by the user instead of using the original window size")
 		pl_enum_end
 

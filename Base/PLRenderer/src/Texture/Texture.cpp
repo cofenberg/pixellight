@@ -81,6 +81,10 @@ void Texture::SetTextureBuffer(TextureBuffer *pTextureBuffer)
 	if (m_pTextureBufferHandler->GetResource() != pTextureBuffer) {
 		DestroyTextureBuffer();
 		m_pTextureBufferHandler->SetResource(pTextureBuffer);
+
+		// Get the texture buffer size and backup it as original size so the behaviour
+		// is the same as when loading a texture instead of just setting a texture buffer
+		m_vOriginalSize = pTextureBuffer ? pTextureBuffer->GetUniformSize() : Vector3i::Zero;
 	}
 }
 

@@ -183,10 +183,11 @@ class FrameBufferObject {
 		PLMath::Vector2i m_vSize;
 		GLuint			 m_nFrameBufferIndex;
 		GLuint			 m_nMultisampleFrameBufferIndex;
+		GLuint			 m_nRenderToFrameBufferIndex;	/**< Points to "m_nFrameBufferIndex" or "m_nMultisampleFrameBufferIndex" */
 		GLuint			 m_nColorBufferIndex;
 		GLuint			 m_nDepthBufferIndex;
 		GLuint			 m_nStencilBufferIndex;
-		GLuint			 m_nDepthBufferAttachment;	/**< Depth buffer attachment (GL_DEPTH_ATTACHMENT_EXT or GL_DEPTH_STENCIL_ATTACHMENT) */
+		GLuint			 m_nDepthBufferAttachment;		/**< Depth buffer attachment (GL_DEPTH_ATTACHMENT_EXT or GL_DEPTH_STENCIL_ATTACHMENT) */
 
 
 };

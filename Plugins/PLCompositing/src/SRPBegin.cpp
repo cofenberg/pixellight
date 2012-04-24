@@ -117,7 +117,7 @@ SurfaceTextureBuffer *SRPBegin::GetBackRenderTarget() const
 */
 TextureBufferRectangle *SRPBegin::GetTextureBufferDepth() const
 {
-	return ((GetFlags() & DepthTexture) && m_pTextureBufferDepth) ? reinterpret_cast<TextureBufferRectangle*>(m_pTextureBufferDepth->GetTextureBuffer()) : nullptr;
+	return (!(GetFlags() & NoDepthTexture) && m_pTextureBufferDepth) ? reinterpret_cast<TextureBufferRectangle*>(m_pTextureBufferDepth->GetTextureBuffer()) : nullptr;
 }
 
 /**
@@ -131,11 +131,12 @@ void SRPBegin::SwapRenderTargets()
 		// Swap the current front render target
 		m_bCurrentFrontRenderTarget = !m_bCurrentFrontRenderTarget;
 
-		// Pass on the depth buffer of the surface texture buffer
-		m_pRenderTarget[!m_bCurrentFrontRenderTarget]->TakeDepthBufferFromSurfaceTextureBuffer(*m_pRenderTarget[m_bCurrentFrontRenderTarget]);
-
 		// Set the new render target, we'll render into the back render target
 		m_pRenderTarget[m_bCurrentFrontRenderTarget]->GetRenderer().SetRenderTarget(m_pRenderTarget[!m_bCurrentFrontRenderTarget]);
+
+		// Provide a depth texture?
+		if (!(GetFlags() & NoDepthTexture) && m_pTextureBufferDepth)
+			m_pRenderTarget[m_bCurrentFrontRenderTarget]->GetRenderer().SetDepthRenderTarget(m_pTextureBufferDepth->GetTextureBuffer());
 	}
 }
 
@@ -185,12 +186,9 @@ void SRPBegin::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 			SurfaceTextureBuffer *pRenderTarget = m_pRenderTarget[i];
 			if (pRenderTarget) {
 				// Do we need to recreate this render target?
-				const bool bRequestedStencilSetting = !(GetFlags() & NoStencil);
-				const bool bCurrentStencilSetting   = (pRenderTarget->GetFlags() & SurfaceTextureBuffer::Stencil) != 0;
 				const bool bRequestedMultisampleAntialiasingSetting = !(GetFlags() & NoMultisampleAntialiasing);
 				const bool bCurrentMultisampleAntialiasingSetting   = !(pRenderTarget->GetFlags() & SurfaceTextureBuffer::NoMultisampleAntialiasing);
-				if (pRenderTarget->GetFormat() != TextureFormat || pRenderTarget->GetSize() != vRenderTargetSize ||
-					(i == 0 && (bRequestedStencilSetting != bCurrentStencilSetting || bRequestedMultisampleAntialiasingSetting != bCurrentMultisampleAntialiasingSetting))) {
+				if (pRenderTarget->GetFormat() != TextureFormat || pRenderTarget->GetSize() != vRenderTargetSize || bRequestedMultisampleAntialiasingSetting != bCurrentMultisampleAntialiasingSetting) {
 					// Dam'n we have to recreate this render target :(
 					delete pRenderTarget;
 					pRenderTarget = nullptr;
@@ -203,13 +201,6 @@ void SRPBegin::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 				// Flags
 				uint32 nFlags = (GetFlags() & NoMultisampleAntialiasing) ? SurfaceTextureBuffer::NoMultisampleAntialiasing : 0;
 
-				// Only one render target requires a depth&stencil buffer
-				if (i == 0) {
-					nFlags |= SurfaceTextureBuffer::Depth;
-					if (!(GetFlags() & NoStencil))
-						nFlags |= SurfaceTextureBuffer::Stencil;
-				}
-
 				// Create the render target
 				m_pRenderTarget[i] = cRenderer.CreateSurfaceTextureBufferRectangle(vRenderTargetSize, static_cast<TextureBuffer::EPixelFormat>(TextureFormat.GetInt()), nFlags);
 				m_bCurrentFrontRenderTarget = 1;
@@ -217,16 +208,28 @@ void SRPBegin::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 		}
 
 		// Create a depth texture?
-		if ((GetFlags() & DepthTexture)) {
+		if (!(GetFlags() & NoDepthTexture)) {
 			// Destroy previous texture?
-			if (m_pTextureBufferDepth && m_pTextureBufferDepth->GetSize() != vRenderTargetSize) {
-				delete m_pTextureBufferDepth;
-				m_pTextureBufferDepth = nullptr;
+			if (m_pTextureBufferDepth) {
+				// Do we need to recreate this render target?
+				const bool bRequestedStencilSetting = !(GetFlags() & NoStencil);
+				const bool bCurrentStencilSetting   = (m_pTextureBufferDepth->GetFlags() & SurfaceTextureBuffer::Stencil) != 0;
+				const bool bRequestedMultisampleAntialiasingSetting = !(GetFlags() & NoMultisampleAntialiasing);
+				const bool bCurrentMultisampleAntialiasingSetting   = !(m_pTextureBufferDepth->GetFlags() & SurfaceTextureBuffer::NoMultisampleAntialiasing);
+				if (m_pTextureBufferDepth->GetSize() != vRenderTargetSize || bRequestedStencilSetting != bCurrentStencilSetting || bRequestedMultisampleAntialiasingSetting != bCurrentMultisampleAntialiasingSetting) {
+					// We have to recreate this render target :(
+					delete m_pTextureBufferDepth;
+					m_pTextureBufferDepth = nullptr;
+				}
 			}
 
 			// Create texture?
-			if (!m_pTextureBufferDepth)
-				m_pTextureBufferDepth = cRenderer.CreateSurfaceTextureBufferRectangle(vRenderTargetSize, TextureBuffer::D24, (GetFlags() & NoMultisampleAntialiasing) ? SurfaceTextureBuffer::Depth|SurfaceTextureBuffer::NoMultisampleAntialiasing : SurfaceTextureBuffer::Depth);
+			if (!m_pTextureBufferDepth) {
+				uint32 nFlags = (GetFlags() & NoMultisampleAntialiasing) ? SurfaceTextureBuffer::Depth|SurfaceTextureBuffer::NoMultisampleAntialiasing : SurfaceTextureBuffer::Depth;
+				if (!(GetFlags() & NoStencil))
+					nFlags |= SurfaceTextureBuffer::Stencil;
+				m_pTextureBufferDepth = cRenderer.CreateSurfaceTextureBufferRectangle(vRenderTargetSize, TextureBuffer::D24, nFlags);
+			}
 		}
 	}
 
@@ -236,7 +239,7 @@ void SRPBegin::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 		cRenderer.SetRenderTarget(m_pRenderTarget[!m_bCurrentFrontRenderTarget]);
 
 		// Provide a depth texture?
-		if ((GetFlags() & DepthTexture) && m_pTextureBufferDepth)
+		if (!(GetFlags() & NoDepthTexture) && m_pTextureBufferDepth)
 			cRenderer.SetDepthRenderTarget(m_pTextureBufferDepth->GetTextureBuffer());
 	}
 

@@ -1,3 +1,18 @@
+>> 22.04.2012
+[CO]
+PLRendererOpenGL:
+- Minor multisample cleanup within "FrameBufferObject"
+- "FrameBufferObject::Initialize()": I'am still in the process of figuring out some weird NVIDIA behaviour (on AMD GPU no issues at all)
+
+
+
+>> 21.04.2012
+[CO]
+PLRenderer:
+- "Texture::SetTextureBuffer()" did not update the original texture size
+
+
+
 >> 16.04.2012
 [CO]
 PLRendererOpenGL:

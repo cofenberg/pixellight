@@ -1,3 +1,12 @@
+>> 23.04.2012
+[JS]
+PLTestBase:
+- removed Tests that are already ported to PLUnitTests
+PLUnitTests:
+- marked some tests "to be implemented"
+
+
+
 >> 08.03.2012
 [JS]
 PLUnitTests:

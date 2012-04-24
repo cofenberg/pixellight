@@ -4,6 +4,9 @@
 #include <UnitTest++/UnitTest++.h>
 #include <PLMath/Quaternion.h>
 
+#include "UnitTest++AddIns/PLCheckMacros.h"
+#include "UnitTest++AddIns/PLChecks.h"
+
 /*
 * Naming Convention for SUITE:
 * CLASSNAME
@@ -29,8 +32,6 @@ SUITE(Quaternion) {
 	};
 
 	TEST_FIXTURE(ConstructTest, Dummy) {
-		quat.ToString();
-
-		CHECK(false);
+		CHECK_IMPLEMENT;
 	}
 }
