@@ -24,16 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLTest/TestManager.h>
-#include "PLTestBase/Math/MiscTest.h"
-#include "PLTestBase/Math/MathTest.h"
-#include "PLTestBase/Math/Vector2Test.h"
-#include "PLTestBase/Math/Vector3Test.h"
-#include "PLTestBase/Math/Vector4Test.h"
-#include "PLTestBase/Math/Matrix3x3Test.h"
-#include "PLTestBase/Math/Matrix3x4Test.h"
-#include "PLTestBase/Math/Matrix4x4Test.h"
 #include "PLTestBase/Math/QuaternionTest.h"
-#include "PLTestBase/Math/EulerAnglesTest.h"
 #include "PLTestBase/Math/GraphTest.h"
 #include "PLTestBase/Math/GraphPathTest.h"
 #include "PLTestBase/Math/MathClassTest.h"
@@ -50,16 +41,7 @@ void MathTests()
 {
 	// Perform the test cases
 	TestManager cTestManager("PLMath");
-	cTestManager.Perform(new MiscTest());
-	cTestManager.Perform(new MathTest());
-	cTestManager.Perform(new Vector2Test());
-	cTestManager.Perform(new Vector3Test());
-	cTestManager.Perform(new Vector4Test());
-	cTestManager.Perform(new Matrix3x3Test());
-	cTestManager.Perform(new Matrix3x4Test());
-	cTestManager.Perform(new Matrix4x4Test());
 	cTestManager.Perform(new QuaternionTest());
-	cTestManager.Perform(new EulerAnglesTest());
 	cTestManager.Perform(new GraphTest());
 	cTestManager.Perform(new GraphPathTest());
 	cTestManager.Perform(new MathClassTest());

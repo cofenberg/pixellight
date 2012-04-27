@@ -25,76 +25,16 @@
     <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\General\ArrayTest.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\BinaryHeapTest.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\BinominalHeapTest.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\BitsetTest.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\ChecksumTest.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\FastPoolTest.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\FibonacciHeapTest.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\FileSystemTest.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
     <ClCompile Include="src\General\General.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\HashMapTest.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\HeapTestCase.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\ListTest.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\LogTest.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\MapTestCase.cpp">
       <Filter>General</Filter>
     </ClCompile>
     <ClCompile Include="src\General\MultiThreadingTest.cpp">
       <Filter>General</Filter>
     </ClCompile>
-    <ClCompile Include="src\General\PerformanceTest.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\PoolTest.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\QueueTest.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
     <ClCompile Include="src\General\QuickSortTest.cpp">
       <Filter>General</Filter>
     </ClCompile>
-    <ClCompile Include="src\General\SimpleListTest.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\SimpleMapTest.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
     <ClCompile Include="src\General\SingletonTest.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\StackTest.cpp">
-      <Filter>General</Filter>
-    </ClCompile>
-    <ClCompile Include="src\General\StringTest.cpp">
       <Filter>General</Filter>
     </ClCompile>
     <ClCompile Include="src\General\SystemTest.cpp">
@@ -112,9 +52,6 @@
     <ClCompile Include="src\General\XmlTest.cpp">
       <Filter>General</Filter>
     </ClCompile>
-    <ClCompile Include="src\Math\EulerAnglesTest.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
     <ClCompile Include="src\Math\GraphPathTest.cpp">
       <Filter>Math</Filter>
     </ClCompile>
@@ -127,31 +64,7 @@
     <ClCompile Include="src\Math\MathClassTest.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="src\Math\MathTest.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Math\Matrix3x3Test.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Math\Matrix3x4Test.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Math\Matrix4x4Test.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Math\MiscTest.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
     <ClCompile Include="src\Math\QuaternionTest.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Math\Vector2Test.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Math\Vector3Test.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Math\Vector4Test.cpp">
       <Filter>Math</Filter>
     </ClCompile>
     <ClCompile Include="src\Database\Database.cpp">
@@ -195,79 +108,16 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\PLTestBase\General\ArrayTest.h">
-      <Filter>General</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\BinaryHeapTest.h">
-      <Filter>General</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\BinominalHeapTest.h">
-      <Filter>General</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\BitsetTest.h">
-      <Filter>General</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\ChecksumTest.h">
-      <Filter>General</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\ContainerTestCase.h">
-      <Filter>General</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\FastPoolTest.h">
-      <Filter>General</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\FibonacciHeapTest.h">
-      <Filter>General</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\FileSystemTest.h">
-      <Filter>General</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLTestBase\General\General.h">
-      <Filter>General</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\HashMapTest.h">
-      <Filter>General</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\HeapTestCase.h">
-      <Filter>General</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\ListTest.h">
-      <Filter>General</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\LogTest.h">
-      <Filter>General</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\MapTestCase.h">
       <Filter>General</Filter>
     </ClInclude>
     <ClInclude Include="include\PLTestBase\General\MultiThreadingTest.h">
       <Filter>General</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\PerformanceTest.h">
-      <Filter>General</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\PoolTest.h">
-      <Filter>General</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\QueueTest.h">
-      <Filter>General</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLTestBase\General\QuickSortTest.h">
       <Filter>General</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\SimpleListTest.h">
-      <Filter>General</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\SimpleMapTest.h">
-      <Filter>General</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLTestBase\General\SingletonTest.h">
-      <Filter>General</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\StackTest.h">
-      <Filter>General</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\General\StringTest.h">
       <Filter>General</Filter>
     </ClInclude>
     <ClInclude Include="include\PLTestBase\General\SystemTest.h">
@@ -285,9 +135,6 @@
     <ClInclude Include="include\PLTestBase\General\XmlTest.h">
       <Filter>General</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLTestBase\Math\EulerAnglesTest.h">
-      <Filter>Math</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLTestBase\Math\GraphPathTest.h">
       <Filter>Math</Filter>
     </ClInclude>
@@ -300,31 +147,7 @@
     <ClInclude Include="include\PLTestBase\Math\MathClassTest.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLTestBase\Math\MathTest.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\Math\Matrix3x3Test.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\Math\Matrix3x4Test.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\Math\Matrix4x4Test.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\Math\MiscTest.h">
-      <Filter>Math</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLTestBase\Math\QuaternionTest.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\Math\Vector2Test.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\Math\Vector3Test.h">
-      <Filter>Math</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\Math\Vector4Test.h">
       <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="include\PLTestBase\Database\Database.h">
@@ -368,9 +191,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="include\PLTestBase\General\ContainerTestCase.inl">
-      <Filter>General</Filter>
-    </None>
     <None Include="CMakeLists.txt" />
     <None Include="..\Diary.txt" />
   </ItemGroup>
