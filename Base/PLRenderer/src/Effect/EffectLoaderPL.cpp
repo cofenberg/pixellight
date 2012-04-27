@@ -367,6 +367,9 @@ bool EffectLoaderPL::LoadV1(Effect &cFX, const XmlElement &cFXElement) const
 				EffectTechnique *pTechnique = cFX.AddTechnique();
 				cFX.SelectTechnique(cFX.GetNumOfTechniques()-1);
 
+				// Set name
+				pTechnique->SetName(pElement->GetAttribute("Name"));
+
 				// Iterate through all passes
 				bool bTechniqueValid = true;
 				const XmlElement *pTechniqueElement = pElement->GetFirstChildElement("Pass");

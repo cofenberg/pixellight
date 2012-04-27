@@ -1,3 +1,9 @@
+>> 27.04.2012
+[CO]
+- Bugfix: "EffectLoaderPL::LoadV1()" was not loading the "Name"-attribute of techniques
+
+
+
 >> 22.04.2012
 [CO]
 PLRendererOpenGL:
