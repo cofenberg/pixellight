@@ -20,6 +20,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLUpgrade", "PLUpgrade\PLUp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLViewerQt", "PLViewerQt\PLViewerQt.vcxproj", "{C412324A-1958-4141-A2C8-EF60711F4D7A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PL3dsMaxSceneExport_2013", "PL3dsMaxSceneExport_2013\PL3dsMaxSceneExport_2013.vcxproj", "{9EA21E2A-2F89-4501-B0ED-1BDC819EF1B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -142,6 +144,18 @@ Global
 		{C412324A-1958-4141-A2C8-EF60711F4D7A}.Release|Win32.Build.0 = Release|Win32
 		{C412324A-1958-4141-A2C8-EF60711F4D7A}.Release|x64.ActiveCfg = Release|x64
 		{C412324A-1958-4141-A2C8-EF60711F4D7A}.Release|x64.Build.0 = Release|x64
+		{9EA21E2A-2F89-4501-B0ED-1BDC819EF1B2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9EA21E2A-2F89-4501-B0ED-1BDC819EF1B2}.Debug|Win32.Build.0 = Debug|Win32
+		{9EA21E2A-2F89-4501-B0ED-1BDC819EF1B2}.Debug|x64.ActiveCfg = Debug|x64
+		{9EA21E2A-2F89-4501-B0ED-1BDC819EF1B2}.Debug|x64.Build.0 = Debug|x64
+		{9EA21E2A-2F89-4501-B0ED-1BDC819EF1B2}.Hybrid|Win32.ActiveCfg = Hybrid|Win32
+		{9EA21E2A-2F89-4501-B0ED-1BDC819EF1B2}.Hybrid|Win32.Build.0 = Hybrid|Win32
+		{9EA21E2A-2F89-4501-B0ED-1BDC819EF1B2}.Hybrid|x64.ActiveCfg = Hybrid|x64
+		{9EA21E2A-2F89-4501-B0ED-1BDC819EF1B2}.Hybrid|x64.Build.0 = Hybrid|x64
+		{9EA21E2A-2F89-4501-B0ED-1BDC819EF1B2}.Release|Win32.ActiveCfg = Release|Win32
+		{9EA21E2A-2F89-4501-B0ED-1BDC819EF1B2}.Release|Win32.Build.0 = Release|Win32
+		{9EA21E2A-2F89-4501-B0ED-1BDC819EF1B2}.Release|x64.ActiveCfg = Release|x64
+		{9EA21E2A-2F89-4501-B0ED-1BDC819EF1B2}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
