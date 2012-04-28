@@ -76,7 +76,7 @@ PLScene::PLScene(Interface &cMaxInterface, IGameScene &cIGame, int nProgressMin,
 
 	// Loop through all top level nodes
 	g_pLog->LogFLine(PLLog::Scene, "Scene root created");
-	m_pMaxInterface->ProgressUpdate(5, 0, "Process scene...");
+	m_pMaxInterface->ProgressUpdate(5, 0, _T("Process scene..."));
 	for (int nNode=0; nNode<m_pIGame->GetTopLevelNodeCount(); nNode++) {
 		IGameNode *pIGameNode = m_pIGame->GetTopLevelNode(nNode);
 		if (pIGameNode) {
@@ -332,14 +332,14 @@ void PLScene::WriteToXMLDocument(XmlDocument &cDocument)
 		pContainerElement->LinkEndChild(*pNodeElement);
 
 		// Now the stuff from the file properties dialog
-		GetSummaryPropertyValue(*pContainerElement, PROPSET_SUMMARYINFO,    PIDSI_TITLE,    "Title");
-		GetSummaryPropertyValue(*pContainerElement, PROPSET_SUMMARYINFO,    PIDSI_SUBJECT,  "Subject");
-		GetSummaryPropertyValue(*pContainerElement, PROPSET_SUMMARYINFO,    PIDSI_AUTHOR,   "Author");
-		GetSummaryPropertyValue(*pContainerElement, PROPSET_DOCSUMMARYINFO, 0x0000000E,     "Manager");
-		GetSummaryPropertyValue(*pContainerElement, PROPSET_DOCSUMMARYINFO, 0x0000000F,     "Company");
-		GetSummaryPropertyValue(*pContainerElement, PROPSET_DOCSUMMARYINFO, 0x00000002,     "Category");
-		GetSummaryPropertyValue(*pContainerElement, PROPSET_SUMMARYINFO,    PIDSI_KEYWORDS, "Keywords");
-		GetSummaryPropertyValue(*pContainerElement, PROPSET_SUMMARYINFO,    PIDSI_COMMENTS, "Comments");
+		GetSummaryPropertyValue(*pContainerElement, PROPSET_SUMMARYINFO,    PIDSI_TITLE,    _T("Title"));
+		GetSummaryPropertyValue(*pContainerElement, PROPSET_SUMMARYINFO,    PIDSI_SUBJECT,  _T("Subject"));
+		GetSummaryPropertyValue(*pContainerElement, PROPSET_SUMMARYINFO,    PIDSI_AUTHOR,   _T("Author"));
+		GetSummaryPropertyValue(*pContainerElement, PROPSET_DOCSUMMARYINFO, 0x0000000E,     _T("Manager"));
+		GetSummaryPropertyValue(*pContainerElement, PROPSET_DOCSUMMARYINFO, 0x0000000F,     _T("Company"));
+		GetSummaryPropertyValue(*pContainerElement, PROPSET_DOCSUMMARYINFO, 0x00000002,     _T("Category"));
+		GetSummaryPropertyValue(*pContainerElement, PROPSET_SUMMARYINFO,    PIDSI_KEYWORDS, _T("Keywords"));
+		GetSummaryPropertyValue(*pContainerElement, PROPSET_SUMMARYINFO,    PIDSI_COMMENTS, _T("Comments"));
 
 		// Link container element
 		pSceneElement->LinkEndChild(*pContainerElement);

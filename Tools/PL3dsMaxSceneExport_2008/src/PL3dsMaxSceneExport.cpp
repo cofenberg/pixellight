@@ -61,37 +61,37 @@ class PLSceneExport : public SceneExport {
 
 		const TCHAR *Ext(int i)
 		{
-			return (i == 0) ? "scene" : "";
+			return (i == 0) ? _T("scene") : _T("");
 		}
 
 		const TCHAR *LongDesc()
 		{
-			return "PixelLight scene export plugin http://www.pixellight.org";
+			return _T("PixelLight scene export plugin http://www.pixellight.org");
 		}
 
 		const TCHAR *ShortDesc()
 		{
-			return "PixelLight scene export";
+			return _T("PixelLight scene export");
 		}
 
 		const TCHAR *AuthorName()
 		{
-			return "Copyright (C) 2002-2012 by The PixelLight Team";
+			return _T("Copyright (C) 2002-2012 by The PixelLight Team");
 		}
 
 		const TCHAR *CopyrightMessage()
 		{
-			return "";
+			return _T("");
 		}
 
 		const TCHAR *OtherMessage1()
 		{
-			return "";
+			return _T("");
 		}
 
 		const TCHAR *OtherMessage2()
 		{
-			return "";
+			return _T("");
 		}
 
 		unsigned int Version()
@@ -101,7 +101,7 @@ class PLSceneExport : public SceneExport {
 
 		void ShowAbout(HWND hWnd)
 		{
-			MessageBox(hWnd, "PixelLight scene export plugin\nhttp://www.pixellight.org", "about", MB_OK);
+			MessageBox(hWnd, _T("PixelLight scene export plugin\nhttp://www.pixellight.org"), _T("about"), MB_OK);
 		}
 
 		BOOL SupportsOptions(int ext,DWORD options)
@@ -148,7 +148,7 @@ class PLSceneClassDesc : public ClassDesc {
 
 		const TCHAR *ClassName()
 		{
-			return "PixelLight scene export";
+			return _T("PixelLight scene export");
 		}
 
 		SClass_ID SuperClassID()
@@ -163,7 +163,7 @@ class PLSceneClassDesc : public ClassDesc {
 
 		const TCHAR *Category()
 		{
-			return "";
+			return _T("");
 		}
 
 
@@ -175,7 +175,7 @@ extern "C" {
 
 	__declspec(dllexport) const TCHAR *LibDescription()
 	{
-		return "PixelLight scene export plugin";
+		return _T("PixelLight scene export plugin");
 	}
 
 	__declspec(dllexport) int LibNumberClasses()

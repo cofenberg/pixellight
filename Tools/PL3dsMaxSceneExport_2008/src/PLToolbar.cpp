@@ -160,12 +160,12 @@ int TooltipMessageHandler::ProcessMessage(UINT nMessage, WPARAM wParam, LPARAM l
 				{
 					Interface *pMaxInterface = m_pToolbar->GetMaxInterface();
 					TSTR sFilename = pMaxInterface->GetDir(APP_EXPORT_DIR);
-					sFilename += "\\PixelLight";
+					sFilename += _T("\\PixelLight");
 					CreateDirectory(sFilename, nullptr);
 					if (LOWORD(wParam) == ID_TOOLBAR_2) {
-						ShellExecute(0, "open", sFilename, 0, 0, SW_SHOW);
+						ShellExecute(0, _T("open"), sFilename, 0, 0, SW_SHOW);
 					} else {
-						sFilename += "\\Preview.scene";
+						sFilename += _T("\\Preview.scene");
 						PLSceneEnumProc cExporter(sFilename, *pMaxInterface, (LOWORD(wParam) == ID_TOOLBAR_1) ? SCENE_EXPORT_SELECTED : 0);
 					}
 					break;

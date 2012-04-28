@@ -195,7 +195,7 @@ PLSceneNode::PLSceneNode(PLSceneContainer *pContainer, IGameNode *pIGameNode, co
 		TSTR sString;
 
 		// Check whether the default PixelLight class is changed
-		if (pMaxNode->GetUserPropString("Class", sString)) {
+		if (pMaxNode->GetUserPropString(_T("Class"), sString)) {
 			m_sClassName = sString;
 
 			// Erase all '"'
@@ -311,7 +311,7 @@ void PLSceneNode::WriteVariables(PLCore::XmlElement &cNodeElement) const
 		if (pMaxNode) {
 			// Check for variables
 			TSTR s3dsMaxString;
-			if (pMaxNode->GetUserPropString("Vars", s3dsMaxString)) {
+			if (pMaxNode->GetUserPropString(_T("Vars"), s3dsMaxString)) {
 				// Get all expressions
 				static PLCore::RegEx cExpressionRegEx("\\s*((\\w*\\s*=\\s*\"[^\"]*\")|(\\w*\\s*=\\s*[\\w|]*))");
 				const PLCore::String sString = s3dsMaxString;

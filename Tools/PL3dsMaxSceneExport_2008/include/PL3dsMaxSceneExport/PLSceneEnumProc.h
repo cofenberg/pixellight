@@ -52,7 +52,7 @@ class PLSceneEnumProc : public ITreeEnumProc {
 	//[ Public functions                                      ]
 	//[-------------------------------------------------------]
 	public:
-		PLSceneEnumProc(const char szName[], Interface &cMaxInterface, DWORD nMaxOptions);
+		PLSceneEnumProc(const TCHAR szName[], Interface &cMaxInterface, DWORD nMaxOptions);
 
 
 	//[-------------------------------------------------------]

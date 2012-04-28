@@ -346,7 +346,7 @@ void PLSceneMesh::CollectMeshData(IGameObject &cIGameObject)
 						IPropertyContainer *pIPropertyContainer = pIGameModifier->GetIPropertyContainer();
 						if (pIPropertyContainer) {
 							// Get the 'filename' property
-							IGameProperty *pIGameProperty = pIPropertyContainer->QueryProperty("filename");
+							IGameProperty *pIGameProperty = pIPropertyContainer->QueryProperty(_T("filename"));
 							if (pIGameProperty) {
 								// Is this a parameter block 2?
 								if (pIGameProperty->IsPBlock2()) {

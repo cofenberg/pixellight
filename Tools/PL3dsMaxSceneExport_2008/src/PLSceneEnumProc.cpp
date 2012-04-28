@@ -52,7 +52,7 @@ DWORD WINAPI fn(LPVOID arg)
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
-PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, DWORD nMaxOptions)
+PLSceneEnumProc::PLSceneEnumProc(const TCHAR szName[], Interface &cMaxInterface, DWORD nMaxOptions)
 {
 	{ // 3ds Max version check
 		// Get the 3ds Max version of the program currently running
@@ -66,7 +66,7 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 			// Show an error message box
 			std::string sError = "Error: 3ds Max version mismatch!\nYou are using version '" + PLTools::ToString(nRunning3dsMaxVersion/1000.0f) +
 				"', but this exporter was build for at least version '" + PLTools::ToString(nBuild3dsMaxVersion/1000.0f) + "'!";
-			MessageBox(nullptr, sError.c_str(), "PixelLight scene export error", MB_OK);
+			MessageBox(nullptr, sError.c_str(), _T("PixelLight scene export error"), MB_OK);
 
 			// ARGH! Get us out of here!
 			return;
@@ -85,7 +85,7 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 			// Show an error message box
 			std::string sError = "Error: 'IGame.dll' version mismatch!\nYou are using version '" + PLTools::ToString(fRunningIGameVersion) +
 				"', but this exporter was build for at least version '" + PLTools::ToString(fBuildIGameVersion)+ "'!";
-			MessageBox(nullptr, sError.c_str(), "PixelLight scene export error", MB_OK);
+			MessageBox(nullptr, sError.c_str(), _T("PixelLight scene export error"), MB_OK);
 
 			// ARGH! Get us out of here!
 			return;
@@ -96,7 +96,7 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 	g_SEOptions.Load();
 
 	// Setup export options
-	cMaxInterface.ProgressStart("Export", true, fn, nullptr);
+	cMaxInterface.ProgressStart(_T("Export"), true, fn, nullptr);
 	if (!PLSceneOpenExportDialog(cMaxInterface)) {
 		char szApplicationDrive[_MAX_DRIVE], szApplicationDir[_MAX_DIR];
 		std::string sFilename;
@@ -164,7 +164,7 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 		g_SEOptions.sFilename = szName;
 
 		bool bSelected = (nMaxOptions & SCENE_EXPORT_SELECTED);
-		cMaxInterface.ProgressUpdate(0, 0, "Start export...");
+		cMaxInterface.ProgressUpdate(0, 0, _T("Start export..."));
 		PLTextFile cFile(sFilename.c_str());
 		if (cFile.IsValid()) {
 			// Log
@@ -218,11 +218,11 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 				PLScene *pPLScene = new PLScene(cMaxInterface, *pIGame, 0, 60, szApplicationDrive, szApplicationDir);
 
 				// Post process the scene
-				cMaxInterface.ProgressUpdate(60, 0, "Post process the PixelLight scene...");
+				cMaxInterface.ProgressUpdate(60, 0, _T("Post process the PixelLight scene..."));
 				pPLScene->PostProcess();
 
 				// Save the PixelLight scene right now
-				cMaxInterface.ProgressUpdate(62, 0, "Save the PixelLight scene...");
+				cMaxInterface.ProgressUpdate(62, 0, _T("Save the PixelLight scene..."));
 				g_pLog->PrintLine("\nWrite scene to file:");
 
 				// Create XML document
@@ -239,7 +239,7 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 				pPLScene->OutputStatistics();
 
 				// Cleanup
-				cMaxInterface.ProgressUpdate(90, 0, "Cleanup...");
+				cMaxInterface.ProgressUpdate(90, 0, _T("Cleanup..."));
 				delete pPLScene;
 
 				// [TODO] Crash with 3ds Max 2010?! (but not on every system?!)
@@ -260,7 +260,7 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 
 			// Open the log right now?
 			if (g_SEOptions.bLog && g_SEOptions.bLogOpen)
-				ShellExecute(0, "open", sLogFilename.c_str(), 0, 0, SW_SHOW);
+				ShellExecute(0, _T("open"), sLogFilename.c_str(), 0, 0, SW_SHOW);
 
 			// Show the scene right now?
 			if (g_SEOptions.bShowExportedScene && g_SEOptions.sViewer.length()) {
@@ -270,18 +270,18 @@ PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, 
 					nIndex = sDirectory.find_last_of("\\");
 				if (nIndex != std::string::npos) {
 					sDirectory.erase(nIndex);
-					ShellExecute(0, "open", g_SEOptions.sViewer.c_str(), ("\"" + sFilename + "\"").c_str(), sDirectory.c_str(), SW_SHOW);
+					ShellExecute(0, _T("open"), g_SEOptions.sViewer.c_str(), ("\"" + sFilename + "\"").c_str(), sDirectory.c_str(), SW_SHOW);
 				}
 			}
 		} else {
 			// Show an error message box
 			std::string sError = "Error: Can't create the file \"" + sFilename + "\"";
-			MessageBox(nullptr, sError.c_str(), "PixelLight scene export error", MB_OK);
+			MessageBox(nullptr, sError.c_str(), _T("PixelLight scene export error"), MB_OK);
 		}
 	}
 
 	// We're done. Finish the progress bar.
-	cMaxInterface.ProgressUpdate(100, 0, "Export finished");
+	cMaxInterface.ProgressUpdate(100, 0, _T("Export finished"));
 	cMaxInterface.ProgressEnd();
 }
 

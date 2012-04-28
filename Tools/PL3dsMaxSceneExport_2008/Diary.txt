@@ -1,3 +1,9 @@
+>> 28.04.2012
+[CO]
+- Added "_T()" around strings
+
+
+
 >> 07.02.2012
 [CO]
 - Wow, I don't believe this: "GMatrix::Inverse()" appears to be buggy... had some issues with skinned mesh animation export, after using
