@@ -66,7 +66,7 @@ class PLSceneCell : public PLSceneContainer {
 		*  @param[in] sName
 		*    Name of this scene node
 		*/
-		PLSceneCell(PLSceneContainer &cContainer, const std::string &sName);
+		PLSceneCell(PLSceneContainer &cContainer, const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -87,7 +87,7 @@ class PLSceneCell : public PLSceneContainer {
 	//[ Private virtual PLSceneNode functions                 ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void WriteToFile(PLCore::XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir) override;
+		virtual void WriteToFile(PLCore::XmlElement &cSceneElement, const PLCore::String &sApplicationDrive, const PLCore::String &sApplicationDir) override;
 
 
 	//[-------------------------------------------------------]

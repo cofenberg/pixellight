@@ -62,7 +62,7 @@ class PLSceneAntiPortal : public PLScenePortal {
 		*  @param[in] sName
 		*    Name of this scene node
 		*/
-		PLSceneAntiPortal(PLSceneContainer &cContainer, IGameNode &cIGameNode, const std::string &sName);
+		PLSceneAntiPortal(PLSceneContainer &cContainer, IGameNode &cIGameNode, const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -75,7 +75,7 @@ class PLSceneAntiPortal : public PLScenePortal {
 	//[ Private virtual PLSceneNode functions                 ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void WriteToFile(PLCore::XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir) override;
+		virtual void WriteToFile(PLCore::XmlElement &cSceneElement, const PLCore::String &sApplicationDrive, const PLCore::String &sApplicationDir) override;
 
 
 };

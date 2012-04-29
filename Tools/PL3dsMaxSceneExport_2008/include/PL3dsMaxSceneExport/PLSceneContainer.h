@@ -81,7 +81,7 @@ class PLSceneContainer : public PLSceneNode {
 		*    scene container. 'Parent' returns the parent scene container, '' returns THIS container, 'Root' will return
 		*    the root scene container itself.
 		*/
-		PLSceneNode *Get(const std::string &sName);
+		PLSceneNode *Get(const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -111,7 +111,7 @@ class PLSceneContainer : public PLSceneNode {
 		*  @param[in] nType
 		*    Scene node type
 		*/
-		PLSceneContainer(PLSceneContainer *pContainer, const std::string &sName, EType nType = TypeContainer);
+		PLSceneContainer(PLSceneContainer *pContainer, const PLCore::String &sName, EType nType = TypeContainer);
 
 		/**
 		*  @brief
@@ -134,7 +134,7 @@ class PLSceneContainer : public PLSceneNode {
 		*  @note
 		*    - If there's no cell with this name, a new one is created
 		*/
-		PLSceneCell *GetCell(const std::string &sName, IGameNode &cIGameNode);
+		PLSceneCell *GetCell(const PLCore::String &sName, IGameNode &cIGameNode);
 
 		/**
 		*  @brief
@@ -147,7 +147,7 @@ class PLSceneContainer : public PLSceneNode {
 		*  @param[in] szType
 		*    Type of the name
 		*/
-		void CheckAndCorrectName(std::string &sName, const TCHAR szMaxNode[], const char szType[]) const;
+		void CheckAndCorrectName(PLCore::String &sName, const TCHAR szMaxNode[], const char szType[]) const;
 
 		/**
 		*  @brief
@@ -162,7 +162,7 @@ class PLSceneContainer : public PLSceneNode {
 		*  @param[in] sClass
 		*    Name of the node class
 		*/
-		void WriteToFile(PLCore::XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir, const std::string &sClass);
+		void WriteToFile(PLCore::XmlElement &cSceneElement, const PLCore::String &sApplicationDrive, const PLCore::String &sApplicationDir, const PLCore::String &sClass);
 
 
 	//[-------------------------------------------------------]
@@ -221,19 +221,19 @@ class PLSceneContainer : public PLSceneNode {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		bool								m_bFixedCenter;		/**< Do not calculate world space center of this container automatically */
-		Point3								m_vCenter;			/**< World space center of this container */
-		std::vector<PLSceneNode*>			m_lstSceneNodes;	/**< List of scene nodes within this container */
-		SStatistics							m_sStatistics;		/**< Statistics */
-		std::map<std::string, PLSceneCell*>	m_mapCells;			/**< Map with scene cell references within this container */
-		std::map<std::string, PLSceneNode*>	m_mapNodes;			/**< Map with scene node references within this container */
+		bool									m_bFixedCenter;		/**< Do not calculate world space center of this container automatically */
+		Point3									m_vCenter;			/**< World space center of this container */
+		std::vector<PLSceneNode*>				m_lstSceneNodes;	/**< List of scene nodes within this container */
+		SStatistics								m_sStatistics;		/**< Statistics */
+		std::map<PLCore::String, PLSceneCell*>	m_mapCells;			/**< Map with scene cell references within this container */
+		std::map<PLCore::String, PLSceneNode*>	m_mapNodes;			/**< Map with scene node references within this container */
 
 
 	//[-------------------------------------------------------]
 	//[ Protected virtual PLSceneNode functions               ]
 	//[-------------------------------------------------------]
 	protected:
-		virtual void WriteToFile(PLCore::XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir) override;
+		virtual void WriteToFile(PLCore::XmlElement &cSceneElement, const PLCore::String &sApplicationDrive, const PLCore::String &sApplicationDir) override;
 
 
 };

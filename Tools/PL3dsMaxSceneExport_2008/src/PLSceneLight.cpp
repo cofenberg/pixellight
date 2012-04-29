@@ -44,7 +44,7 @@ using namespace PLCore;
 *  @brief
 *    Constructor
 */
-PLSceneLight::PLSceneLight(PLSceneContainer &cContainer, IGameNode &cIGameNode, const std::string &sName) :
+PLSceneLight::PLSceneLight(PLSceneContainer &cContainer, IGameNode &cIGameNode, const String &sName) :
 	PLSceneNode(&cContainer, &cIGameNode, sName, TypeLight, "")
 {
 }
@@ -61,7 +61,7 @@ PLSceneLight::~PLSceneLight()
 //[-------------------------------------------------------]
 //[ Private virtual PLSceneNode functions                 ]
 //[-------------------------------------------------------]
-void PLSceneLight::WriteToFile(XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir)
+void PLSceneLight::WriteToFile(XmlElement &cSceneElement, const String &sApplicationDrive, const String &sApplicationDir)
 {
 	bool bError = true; // Error by default
 
@@ -114,7 +114,7 @@ void PLSceneLight::WriteToFile(XmlElement &cSceneElement, const std::string &sAp
 					XmlElement *pNodeElement = new XmlElement("Node");
 
 					// Spot light
-					std::string sClassName;
+					String sClassName;
 					bool bDirectionalLight = false;
 					bool bSpotLight = (cIGameLight.GetLightType() == IGameLight::IGAME_TSPOT || cIGameLight.GetLightType() == IGameLight::IGAME_FSPOT);
 					if (bSpotLight) {
@@ -147,12 +147,12 @@ void PLSceneLight::WriteToFile(XmlElement &cSceneElement, const std::string &sAp
 					}
 
 					// Class name
-					if (GetClassName().length())
+					if (GetClassName().GetLength())
 						sClassName = GetClassName(); // Overwrite the default PixelLight class name
-					pNodeElement->SetAttribute("Class", sClassName.c_str());
+					pNodeElement->SetAttribute("Class", sClassName);
 
 					// Name
-					pNodeElement->SetAttribute("Name", GetName().c_str());
+					pNodeElement->SetAttribute("Name", GetName());
 
 					// Write position, rotation, scale, bounding box and flags
 					WriteToFilePosRotScaleBoxFlags(*pNodeElement);
@@ -236,7 +236,7 @@ void PLSceneLight::WriteToFile(XmlElement &cSceneElement, const std::string &sAp
 						PLSceneTexture *pTexture = GetScene().CopyTexture(pBitmapTex->GetMapName());
 						if (pTexture) {
 							// Add as light variable
-							pNodeElement->SetAttribute("ProjectedMaterial", pTexture->GetName().c_str());
+							pNodeElement->SetAttribute("ProjectedMaterial", pTexture->GetName());
 						}
 					}
 
@@ -275,8 +275,8 @@ void PLSceneLight::WriteToFile(XmlElement &cSceneElement, const std::string &sAp
 
 		// Add scene node
 		XmlElement *pNodeElement = new XmlElement("Node");
-		pNodeElement->SetAttribute("Class", GetClassName().length() ? GetClassName().c_str() : "PLScene::SNUnknown");
-		pNodeElement->SetAttribute("Name",  GetName().c_str());
+		pNodeElement->SetAttribute("Class", GetClassName().GetLength() ? GetClassName() : "PLScene::SNUnknown");
+		pNodeElement->SetAttribute("Name",  GetName());
 
 		// Write position, rotation, scale, bounding box and flags
 		WriteToFilePosRotScaleBoxFlags(*pNodeElement);

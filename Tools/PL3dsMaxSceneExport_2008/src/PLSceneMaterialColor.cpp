@@ -40,7 +40,7 @@ using namespace PLCore;
 *  @brief
 *    Constructor
 */
-PLSceneMaterialColor::PLSceneMaterialColor(PLScene &cScene, const Color &cColor, const std::string &sName) :
+PLSceneMaterialColor::PLSceneMaterialColor(PLScene &cScene, const Color &cColor, const String &sName) :
 	PLSceneMaterial(cScene, nullptr, nullptr, sName),
 	m_cColor(cColor)
 {

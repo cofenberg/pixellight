@@ -1,5 +1,15 @@
 >> 28.04.2012
 [CO]
+- Started with the Autodesk 3ds Max 2013 scene exporter support
+    - This time, just recompiling don't work :/
+    - http://docs.autodesk.com/3DSMAX/15/ENU/3ds-Max-SDK-Programmer-Guide/index.html?url=files/GUID-3402559A-3929-461C-96B2-93120422715B.htm,topicNumber=d30e5544
+        - The character set was changed from "Use Multi-Byte Character Set" to "Use Unicode Character Set"
+        - This means the can't currently reuse one and the same code for all Autodesk 3ds Max versions. But starting to support
+          multiple code versions is no option. Until now the exporter used "std::string", this is one of the ASCII/Unicode chaos causing
+          points. So, from now on the exporter will use the PixelLight string class in order to avoid nasty ASCII/Unicode chaos introduced
+          when using "std::string".
+        - I'am sure this will take some time until the exporter can also be compiled and used for Autodesk 3ds Max 2013 with one and the same code...
+          ... have to migrate it carefully step by step...
 - Added "_T()" around strings
 
 

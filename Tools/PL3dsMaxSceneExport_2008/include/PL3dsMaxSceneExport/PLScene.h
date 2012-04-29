@@ -163,7 +163,7 @@ class PLScene : public PLSceneContainer {
 		*    If there's already a mesh with the same name within the scene, this mesh
 		*    is returned instead creating a new one.
 		*/
-		PLScenePLMesh *AddMesh(IGameNode &cIGameNode, const std::string &sMeshName);
+		PLScenePLMesh *AddMesh(IGameNode &cIGameNode, const PLCore::String &sMeshName);
 
 		//[-------------------------------------------------------]
 		//[ Materials                                             ]
@@ -185,7 +185,7 @@ class PLScene : public PLSceneContainer {
 		*    already such a texture, this old texture is only overwritten if the other is newer. Textures are
 		*    only copied if this is activated within the options.
 		*/
-		PLSceneTexture *CopyTexture(const std::string &sFilename, bool bNormalMap_xGxR = false);
+		PLSceneTexture *CopyTexture(const PLCore::String &sFilename, bool bNormalMap_xGxR = false);
 
 		/**
 		*  @brief
@@ -239,7 +239,7 @@ class PLScene : public PLSceneContainer {
 		*  @return
 		*    The scene material, a null pointer on error
 		*/
-		PLSceneMaterial *AddMaterial(const Color &cColor, const std::string &sName);
+		PLSceneMaterial *AddMaterial(const Color &cColor, const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -306,20 +306,20 @@ class PLScene : public PLSceneContainer {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		Interface							  *m_pMaxInterface;			/**< 3ds Max interface (always valid!) */
-		IGameScene							  *m_pIGame;				/**< IGame interface (always valid!) */
-		int									   m_nTotalNumOfMaxNodes;	/**< Total number of 3ds Max nodes */
-		int									   m_nNumOfMaxNodes;		/**< Current number of 3ds Max nodes */
-		int									   m_nProgressMin;			/**< Minimum progress (start) */
-		int									   m_nProgressMax;			/**< Maximum progress (end) */
-		int									   m_nProgress;				/**< Current progress */
-		std::string							   m_sApplicationDrive;		/**< Application drive */
-		std::string							   m_sApplicationDir;		/**< Application directory */
-		std::vector<PLScenePLMesh*>			   m_lstMeshes;				/**< List of meshes */
-		std::vector<PLSceneTexture*>		   m_lstTextures;			/**< List of textures */
-		std::vector<PLSceneMaterial*>		   m_lstMaterials;			/**< List of materials */
-		std::map<std::string, PLScenePLMesh*>  m_mapMeshes;				/**< Map with mesh references */
-		std::map<std::string, PLSceneNode*>    m_mapMaxToPLNodes;		/**< Map with Max to PL node references */
+		Interface								 *m_pMaxInterface;			/**< 3ds Max interface (always valid!) */
+		IGameScene								 *m_pIGame;					/**< IGame interface (always valid!) */
+		int										  m_nTotalNumOfMaxNodes;	/**< Total number of 3ds Max nodes */
+		int										  m_nNumOfMaxNodes;			/**< Current number of 3ds Max nodes */
+		int										  m_nProgressMin;			/**< Minimum progress (start) */
+		int										  m_nProgressMax;			/**< Maximum progress (end) */
+		int										  m_nProgress;				/**< Current progress */
+		PLCore::String							  m_sApplicationDrive;		/**< Application drive */
+		PLCore::String							  m_sApplicationDir;		/**< Application directory */
+		std::vector<PLScenePLMesh*>				  m_lstMeshes;				/**< List of meshes */
+		std::vector<PLSceneTexture*>			  m_lstTextures;			/**< List of textures */
+		std::vector<PLSceneMaterial*>			  m_lstMaterials;			/**< List of materials */
+		std::map<PLCore::String, PLScenePLMesh*>  m_mapMeshes;				/**< Map with mesh references */
+		std::map<PLCore::String, PLSceneNode*>    m_mapMaxToPLNodes;		/**< Map with Max to PL node references */
 
 		// Statistics
 		SStatistics	    m_sSceneStatistics;	/**< Scene statistics */

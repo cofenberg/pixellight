@@ -68,7 +68,7 @@ class PLLog : public PLTextFile {
 		*  @param[in] sFilename
 		*    Name of the file to write in
 		*/
-		PLLog(const std::string &sFilename);
+		PLLog(const PLCore::String &sFilename);
 
 		/**
 		*  @brief

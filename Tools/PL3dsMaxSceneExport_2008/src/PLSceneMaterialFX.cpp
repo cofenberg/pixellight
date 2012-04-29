@@ -46,7 +46,7 @@ using namespace PLCore;
 *  @brief
 *    Constructor
 */
-PLSceneMaterialFX::PLSceneMaterialFX(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial, const std::string &sName) :
+PLSceneMaterialFX::PLSceneMaterialFX(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial, const String &sName) :
 	PLSceneMaterial(cScene, pParentIGameMaterial, &cIGameMaterial, sName)
 {
 }
@@ -83,7 +83,7 @@ void PLSceneMaterialFX::SaveParameters(XmlElement &cMaterialElement)
 					BitmapInfo &cBInfo = pBitmap->bi;
 					const char *pszName = static_cast<const char*>(cBInfo.Name());
 					if (pszName && _stricmp(pszName, "None")) {
-						std::string sSemantic;
+						String sSemantic;
 						switch (pFXMaterial->GetBitmapUsage(i)) {
 							case IDxMaterial2::UNKNOWN_MAP:
 								sSemantic = "EmissiveMap";
@@ -117,7 +117,7 @@ void PLSceneMaterialFX::SaveParameters(XmlElement &cMaterialElement)
 								sSemantic = "ReflectionMap";
 								break;
 						}
-						if (sSemantic.length())
+						if (sSemantic.GetLength())
 							SaveTexture(cMaterialElement, pszName, sSemantic);
 					}
 				}

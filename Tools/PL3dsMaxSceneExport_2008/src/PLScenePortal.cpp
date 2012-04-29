@@ -42,7 +42,7 @@ using namespace PLCore;
 *  @brief
 *    Constructor
 */
-PLScenePortal::PLScenePortal(PLSceneContainer &cContainer, IGameNode &cIGameNode, const std::string &sName, EType nType, const std::string &sClassName) :
+PLScenePortal::PLScenePortal(PLSceneContainer &cContainer, IGameNode &cIGameNode, const String &sName, EType nType, const String &sClassName) :
 	PLSceneNode(&cContainer, &cIGameNode, sName, nType, sClassName),
 	m_vCenter(0.0f, 0.0f, 0.0f),
 	m_vNormal(0.0f, 0.0f, 0.0f)

@@ -62,7 +62,7 @@ class PLSceneUnknown : public PLSceneNode {
 		*  @param[in] sName
 		*    Name of this scene node
 		*/
-		PLSceneUnknown(PLSceneContainer &cContainer, IGameNode &cIGameNode, const std::string &sName);
+		PLSceneUnknown(PLSceneContainer &cContainer, IGameNode &cIGameNode, const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -75,7 +75,7 @@ class PLSceneUnknown : public PLSceneNode {
 	//[ Private virtual PLSceneNode functions                 ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void WriteToFile(PLCore::XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir) override;
+		virtual void WriteToFile(PLCore::XmlElement &cSceneElement, const PLCore::String &sApplicationDrive, const PLCore::String &sApplicationDir) override;
 
 
 };

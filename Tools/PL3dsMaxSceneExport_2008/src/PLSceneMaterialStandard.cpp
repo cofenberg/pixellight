@@ -44,7 +44,7 @@ using namespace PLCore;
 *  @brief
 *    Constructor
 */
-PLSceneMaterialStandard::PLSceneMaterialStandard(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial, const std::string &sName) :
+PLSceneMaterialStandard::PLSceneMaterialStandard(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial, const String &sName) :
 	PLSceneMaterial(cScene, pParentIGameMaterial, &cIGameMaterial, sName)
 {
 }
@@ -84,7 +84,7 @@ void PLSceneMaterialStandard::SaveParameters(XmlElement &cMaterialElement)
 						TSTR sSlotName = pMaxMaterial->GetSubTexmapSlotName(nSlot);
 						BitmapTex *pBitmapTex = static_cast<BitmapTex*>(pTexMap);
 						if (!strlen(sSlotName))
-							g_pLog->LogFLine(PLLog::Warning, "Material '%s': Slot '%d' (value: '%s') has no name!", m_sName.c_str(), nSlot, pBitmapTex->GetMapName());
+							g_pLog->LogFLine(PLLog::Warning, "Material '%s': Slot '%d' (value: '%s') has no name!", m_sName.GetASCII(), nSlot, pBitmapTex->GetMapName());
 
 						// Save the texture
 						SaveTexture(cMaterialElement, pBitmapTex->GetMapName(), static_cast<const char*>(sSlotName));

@@ -162,25 +162,24 @@ int PLScene::GetNumOfMaxNodes() const
 */
 PLSceneNode *PLScene::GetPLSceneNode(INode &cMaxNode)
 {
-	// Bah, std::string is horror. Here I use a hack to use the good old sprintf to convert a pointer address into a string...
-	std::string sKey = "XXXXXXXXXXXXXXXXXXXX";
-	sprintf(const_cast<char*>(sKey.c_str()), "%19p", &cMaxNode);
-	std::map<std::string, PLSceneNode*>::iterator pIterator = m_mapMaxToPLNodes.find(sKey);
-	return pIterator == m_mapMaxToPLNodes.end() ? nullptr : pIterator->second;
+	String sKey = String::Format("%19p", &cMaxNode);
+	std::map<PLCore::String, PLSceneNode*>::iterator pIterator = m_mapMaxToPLNodes.find(sKey);
+	return (pIterator == m_mapMaxToPLNodes.end()) ? nullptr : pIterator->second;
 }
 
 /**
 *  @brief
 *    Adds a mesh to the scene
 */
-PLScenePLMesh *PLScene::AddMesh(IGameNode &cIGameNode, const std::string &sMeshName)
+PLScenePLMesh *PLScene::AddMesh(IGameNode &cIGameNode, const PLCore::String &sMeshName)
 {
 	// Is there a valid mesh name? If yes, instancing is quite simple. :)
-	std::string sNewMeshName;
-	if (!sMeshName.empty()) {
+	PLCore::String sNewMeshName;
+	if (sMeshName.GetLength()) {
 		// First at all, IS there already a mesh with this name?
-		std::string sMeshNameLower = PLTools::ToLower(sMeshName); // Do ONLY use lower case, else the hashing will NOT return the same values!
-		std::map<std::string, PLScenePLMesh*>::iterator pIterator = m_mapMeshes.find(sMeshNameLower);
+		PLCore::String sMeshNameLower = sMeshName;
+		sMeshNameLower.ToLower(); // Do ONLY use lower case, else the hashing will NOT return the same values!
+		std::map<String, PLScenePLMesh*>::iterator pIterator = m_mapMeshes.find(sMeshNameLower);
 		if (pIterator != m_mapMeshes.end() && pIterator->second) {
 			// Update the total mesh statistics
 			UpdateTotalMeshStatistics(*pIterator->second);
@@ -215,13 +214,14 @@ PLScenePLMesh *PLScene::AddMesh(IGameNode &cIGameNode, const std::string &sMeshN
 	sNewMeshName = sMeshName;
 
 	// Nope, let's create a mesh with this name
-	g_pLog->LogFLine(PLLog::Scene, "Mesh '%s' is created by the 3ds Max node '%s'", sNewMeshName.c_str(), cIGameNode.GetName());
+	g_pLog->LogFLine(PLLog::Scene, "Mesh '%s' is created by the 3ds Max node '%s'", sNewMeshName.GetASCII(), cIGameNode.GetName());
 	PLScenePLMesh *pMesh = new PLScenePLMesh(*this, cIGameNode, sNewMeshName);
 
 	// Register the new mesh
 	m_lstMeshes.push_back(pMesh);
-	std::string sNewMeshNameLower = PLTools::ToLower(sNewMeshName); // Do ONLY use lower case, else the hashing will NOT return the same values!
-	m_mapMeshes.insert(make_pair(sNewMeshNameLower, pMesh));
+	String sNewMeshNameLower = sNewMeshName;
+	sNewMeshNameLower.ToLower(); // Do ONLY use lower case, else the hashing will NOT return the same values!
+	m_mapMeshes.insert(std::make_pair(sNewMeshNameLower, pMesh));
 
 	// Update the mesh statistics
 	m_sMeshStatistics.nNumOfMeshes++;
@@ -243,17 +243,19 @@ PLScenePLMesh *PLScene::AddMesh(IGameNode &cIGameNode, const std::string &sMeshN
 *  @brief
 *    Copies a texture
 */
-PLSceneTexture *PLScene::CopyTexture(const std::string &sFilename, bool bNormalMap_xGxR)
+PLSceneTexture *PLScene::CopyTexture(const String &sFilename, bool bNormalMap_xGxR)
 {
 	// Get the map name
-	std::string sMapName = sFilename;
+	String sMapName = sFilename;
 
 	// Is there already a texture with this name?
-	std::string sMapNameLower = PLTools::ToLower(sMapName);
+	String sMapNameLower = sMapName;
+	sMapNameLower.ToLower();
 	for (std::vector<PLSceneTexture*>::size_type i=0; i<m_lstTextures.size(); i++) {
 		PLSceneTexture *pTexture = m_lstTextures[i];
 		if (pTexture) {
-			std::string sNameLower = PLTools::ToLower(pTexture->GetName());
+			String sNameLower = pTexture->GetName();
+			sNameLower.ToLower();
 			if (sNameLower == sMapNameLower) {
 				// Jap, do not copy again
 				m_sMeshStatistics.nNumOfTextureReferences++;
@@ -286,7 +288,7 @@ void PLScene::WriteToXMLDocument(XmlDocument &cDocument)
 
 	// Setup attributes
 	pSceneElement->SetAttribute("Version", "1");
-	pSceneElement->SetAttribute("Name",    GetName().c_str());
+	pSceneElement->SetAttribute("Name",    GetName());
 
 	// Write position, rotation, scale, bounding box and flags
 	WriteToFilePosRotScaleBoxFlags(*pSceneElement);
@@ -296,23 +298,23 @@ void PLScene::WriteToXMLDocument(XmlDocument &cDocument)
 
 	// Write modifiers
 	// [TODO] Strings
-	WriteModifiers(*pSceneElement, std::string(), std::string());
+	WriteModifiers(*pSceneElement, "", "");
 
 	// Get the 3ds Max version of the program currently running
 	DWORD nRunning3dsMaxVersion = Get3DSMAXVersion();
-	std::string sRunning3dsMaxVersion = "(" + PLTools::ToString(GET_MAX_RELEASE(   nRunning3dsMaxVersion)/1000.0f) + ").(" +
-											  PLTools::ToString(GET_MAX_API_NUM(   nRunning3dsMaxVersion))		   + ").(" +
-											  PLTools::ToString(GET_MAX_SDK_REV(   nRunning3dsMaxVersion))		   + ").(" +
-											  PLTools::ToString(GET_MAX_SDK_NUMREV(nRunning3dsMaxVersion))		   + ")-('IGame.dll'='" +
-											  PLTools::ToString(GetIGameVersion()) + ")'";
+	String sRunning3dsMaxVersion = "(" + PLTools::ToString(GET_MAX_RELEASE(   nRunning3dsMaxVersion)/1000.0f) + ").(" +
+										 PLTools::ToString(GET_MAX_API_NUM(   nRunning3dsMaxVersion))		  + ").(" +
+										 PLTools::ToString(GET_MAX_SDK_REV(   nRunning3dsMaxVersion))		  + ").(" +
+										 PLTools::ToString(GET_MAX_SDK_NUMREV(nRunning3dsMaxVersion))		  + ")-('IGame.dll'='" +
+										 PLTools::ToString(GetIGameVersion()) + ")'";
 
 	// Get the 3ds Max version this exporter was build for
 	DWORD nBuild3dsMaxVersion = VERSION_3DSMAX;
-	std::string sBuild3dsMaxVersion = "(" + PLTools::ToString(GET_MAX_RELEASE(   nBuild3dsMaxVersion)/1000.0f) + ").(" +
-											PLTools::ToString(GET_MAX_API_NUM(   nBuild3dsMaxVersion))		   + ").(" +
-											PLTools::ToString(GET_MAX_SDK_REV(   nBuild3dsMaxVersion))		   + ").(" +
-											PLTools::ToString(GET_MAX_SDK_NUMREV(nBuild3dsMaxVersion))		   + ")-('IGame.dll'='" +
-											PLTools::ToString(IGAMEDLLVERSION) + ")'";
+	String sBuild3dsMaxVersion = "(" + PLTools::ToString(GET_MAX_RELEASE(   nBuild3dsMaxVersion)/1000.0f) + ").(" +
+									   PLTools::ToString(GET_MAX_API_NUM(   nBuild3dsMaxVersion))		  + ").(" +
+									   PLTools::ToString(GET_MAX_SDK_REV(   nBuild3dsMaxVersion))		  + ").(" +
+									   PLTools::ToString(GET_MAX_SDK_NUMREV(nBuild3dsMaxVersion))		  + ")-('IGame.dll'='" +
+									   PLTools::ToString(IGAMEDLLVERSION) + ")'";
 
 	{ // Write about information
 		// Add scene container
@@ -323,12 +325,12 @@ void PLScene::WriteToXMLDocument(XmlDocument &cDocument)
 		pContainerElement->SetAttribute("Name",  "AboutInformation");
 
 		// First at all, write down some general information
-		std::string sValue = "3ds Max ((<RELEASE>).(<API_NUM>).(<SDK_REV>).(<SDK_NUMREV>), running version: " + sRunning3dsMaxVersion + ", exporter build for version: " + sBuild3dsMaxVersion + ") scene exporter plugin (version 0.8.6, build: date: " + __DATE__ + "  time: " + __TIME__ + ") Copyright (C) 2002-2012 by The PixelLight Team";
+		String sValue = "3ds Max ((<RELEASE>).(<API_NUM>).(<SDK_REV>).(<SDK_NUMREV>), running version: " + sRunning3dsMaxVersion + ", exporter build for version: " + sBuild3dsMaxVersion + ") scene exporter plugin (version 0.8.6, build: date: " + __DATE__ + "  time: " + __TIME__ + ") Copyright (C) 2002-2012 by The PixelLight Team";
 		XmlElement *pNodeElement = new XmlElement("Node");
 		pNodeElement->SetAttribute("Class", "PLScene::SNKeyValue");
 		pNodeElement->SetAttribute("Name",  "CreatedWithKey");
 		pNodeElement->SetAttribute("Key",   "CreatedWith");
-		pNodeElement->SetAttribute("Value", sValue.c_str());
+		pNodeElement->SetAttribute("Value", sValue);
 		pContainerElement->LinkEndChild(*pNodeElement);
 
 		// Now the stuff from the file properties dialog
@@ -353,7 +355,7 @@ void PLScene::WriteToXMLDocument(XmlDocument &cDocument)
 		pNodeElement->SetAttribute("Class", "PLScene::SNKeyValue");
 		pNodeElement->SetAttribute("Name",  "SceneRendererKey");
 		pNodeElement->SetAttribute("Key",   "SceneRenderer");
-		pNodeElement->SetAttribute("Value", g_SEOptions.sSceneRenderer.c_str());
+		pNodeElement->SetAttribute("Value", g_SEOptions.sSceneRenderer);
 
 		// Link node element
 		pSceneElement->LinkEndChild(*pNodeElement);
@@ -402,7 +404,7 @@ void PLScene::WriteToXMLDocument(XmlDocument &cDocument)
 	ExportStartCamera(*pSceneElement);
 
 	// Is there a given scene container?
-	if (g_SEOptions.sSceneContainer.empty()) {
+	if (!g_SEOptions.sSceneContainer.GetLength()) {
 		// Write down all nodes
 		for (std::vector<PLSceneNode*>::size_type i=0; i<m_lstSceneNodes.size(); i++) {
 			PLSceneNode *pSceneNode = m_lstSceneNodes[i];
@@ -414,7 +416,7 @@ void PLScene::WriteToXMLDocument(XmlDocument &cDocument)
 		XmlElement *pContainerElement = new XmlElement("Container");
 
 		// Setup attributes
-		pContainerElement->SetAttribute("Class", g_SEOptions.sSceneContainer.c_str());
+		pContainerElement->SetAttribute("Class", g_SEOptions.sSceneContainer);
 		pContainerElement->SetAttribute("Name",  "Container");
 
 		// [TODO] Currently the bounding boxes are not correct
@@ -440,8 +442,8 @@ void PLScene::WriteToXMLDocument(XmlDocument &cDocument)
 		}*/
 
 		// Are there any flags?
-		if (m_sFlags.length())
-			pContainerElement->SetAttribute("Flags", m_sFlags.c_str());
+		if (m_sFlags.GetLength())
+			pContainerElement->SetAttribute("Flags", m_sFlags);
 
 		// Write down all nodes
 		for (std::vector<PLSceneNode*>::size_type i=0; i<m_lstSceneNodes.size(); i++) {
@@ -504,7 +506,7 @@ PLSceneMaterial *PLScene::AddMaterial(IGameMaterial *pParentIGameMaterial, IGame
 
 	// Ok, we are still here, must be a new one :)
 	// Get the material name
-	std::string sName;
+	String sName;
 	if (g_SEOptions.bCreateMaterials) {
 		// Get material name
 		const TCHAR *pszName = cIGameMaterial.GetMaterialName();
@@ -526,19 +528,19 @@ PLSceneMaterial *PLScene::AddMaterial(IGameMaterial *pParentIGameMaterial, IGame
 		}
 
 		int nIndex = 0;
-		std::string sNewName = sName;
-		sNewName.append(".mat");
+		String sNewName = sName + ".mat";
 		while (1) {
-			std::string sNewNameLower = PLTools::ToLower(sNewName);
+			String sNewNameLower = sNewName;
+			sNewNameLower.ToLower();
 			std::vector<PLSceneMaterial*>::size_type i = 0;
 			for (; i<m_lstMaterials.size(); i++) {
 				PLSceneMaterial *pMaterial = m_lstMaterials[i];
 				if (pMaterial) {
-					std::string sMatNameLower = PLTools::ToLower(pMaterial->GetName());
+					String sMatNameLower = pMaterial->GetName();
+					sMatNameLower.ToLower();
 					if (sMatNameLower == sNewNameLower) {
 						// Try to resolve the name conflict
-						sNewName = sName + "_" + PLTools::ToString(nIndex);
-						sNewName.append(".mat");
+						sNewName = sName + '_' + PLTools::ToString(nIndex) + ".mat";
 						nIndex++;
 						break;
 					}
@@ -587,11 +589,13 @@ PLSceneMaterial *PLScene::AddMaterial(IGameMaterial *pParentIGameMaterial, IGame
 		}
 
 		// Is there already a material with this name?
-		std::string sNameLower = PLTools::ToLower(sName);
+		String sNameLower = sName;
+		sNameLower.ToLower();
 		for (std::vector<PLSceneMaterial*>::size_type i=0; i<m_lstMaterials.size(); i++) {
 			PLSceneMaterial *pMaterial = m_lstMaterials[i];
 			if (pMaterial) {
-				std::string sMatNameLower = PLTools::ToLower(pMaterial->GetName());
+				String sMatNameLower = pMaterial->GetName();
+				sMatNameLower.ToLower();
 				if (sMatNameLower == sNameLower) {
 					// Jap, return this scene material
 					m_sMeshStatistics.nNumOfMaterialReferences++;
@@ -607,10 +611,10 @@ PLSceneMaterial *PLScene::AddMaterial(IGameMaterial *pParentIGameMaterial, IGame
 			PLSceneTexture *pTexture = CopyTexture(pBitmapTex->GetMapName());
 			if (pTexture) {
 				// Done
-				g_pLog->LogFLine(PLLog::Scene, "  Texture: %s", sName.c_str());
+				g_pLog->LogFLine(PLLog::Scene, "  Texture: %s", sName.GetASCII());
 			} else {
 				// Error!
-				g_pLog->LogFLine(PLLog::Error, "  Failed to copy texture: %s", sName.c_str());
+				g_pLog->LogFLine(PLLog::Error, "  Failed to copy texture: %s", sName.GetASCII());
 			}
 		}
 	}
@@ -636,7 +640,7 @@ PLSceneMaterial *PLScene::AddMaterial(IGameMaterial *pParentIGameMaterial, IGame
 *  @brief
 *    Adds a color material to the scene
 */
-PLSceneMaterial *PLScene::AddMaterial(const Color &cColor, const std::string &sName)
+PLSceneMaterial *PLScene::AddMaterial(const Color &cColor, const String &sName)
 {
 	// Create the material
 	PLSceneMaterial *pMaterial = new PLSceneMaterialColor(*this, cColor, sName);
@@ -706,7 +710,7 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 	// Get the 'start camera'
 	ViewExp *pViewport = m_pMaxInterface->GetActiveViewport();
 	if (pViewport) {
-		std::string sName; // Name of the camera node
+		String sName; // Name of the camera node
 
 		// Is there a camera node assigned to the viewport?
 		INode *pCamera = pViewport->GetViewCamera();
@@ -722,7 +726,7 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 				// Add camera scene node
 				XmlElement *pNodeElement = new XmlElement("Node");
 				pNodeElement->SetAttribute("Class", "PLScene::SNCamera");
-				pNodeElement->SetAttribute("Name",  sName.c_str());
+				pNodeElement->SetAttribute("Name",  sName);
 
 				// Get 3ds Max camera data
 				int nPersp;
@@ -776,12 +780,12 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 					bOrbiting = false;
 				if (bOrbiting) {
 					// Get camera target name
-					const std::string sTargetName = sName + std::string("Target");
+					const String sTargetName = sName + "Target";
 
 					// Add scene node modifier so we can automatically orbiting
 					XmlElement *pModifierElement = new XmlElement("Modifier");
 					pModifierElement->SetAttribute("Class",  "PLEngine::SNMOrbitingController");
-					pModifierElement->SetAttribute("Target", sTargetName.c_str());
+					pModifierElement->SetAttribute("Target", sTargetName);
 					pNodeElement->LinkEndChild(*pModifierElement);
 
 					{ // Add camera target scene node
@@ -800,7 +804,7 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 						// Add the scene node
 						XmlElement *pHelperNodeElement = new XmlElement("Node");
 						pHelperNodeElement->SetAttribute("Class", "PLScene::SNHelper");
-						pHelperNodeElement->SetAttribute("Name",  sTargetName.c_str());
+						pHelperNodeElement->SetAttribute("Name",  sTargetName);
 						PLTools::XmlElementSetAttributeWithDefault(*pHelperNodeElement, "Position", vCenter, Point3(0.0f, 0.0f, 0.0f));
 						cSceneElement.LinkEndChild(*pHelperNodeElement);
 					}
@@ -842,19 +846,19 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 		}
 
 		// Is there a '.' within the node name? If yes, replace it by '-'.
-		size_t nIndex = sName.find_first_of(".");
-		if (nIndex != std::string::npos) {
-			char *pszName = const_cast<char*>(sName.c_str()) + nIndex;
+		int nIndex = sName.IndexOf(".");
+		if (nIndex >= 0) {
+			char *pszName = const_cast<char*>(sName.GetASCII()) + nIndex;
 			while (*pszName != '\0') {
 				if (*pszName == '.')
 					*pszName = '-';
 				pszName++;
 			}
 		}
-		TCHAR *pszName = const_cast<TCHAR*>(sName.c_str());
+		TCHAR *pszName = const_cast<TCHAR*>(sName.GetASCII());
 
 		// Look for 'cell_' (cell_<cell name>_<node name>)
-		std::string sSceneCellName, sSceneNodeName;
+		String sSceneCellName, sSceneNodeName;
 		if (!_strnicmp(pszName, "cell_", 5)) {
 			// Get the name of the cell
 			TCHAR *pszNameT = pszName += 5;
@@ -864,7 +868,7 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 				// Read the cell name
 				while (*pszNameT != '_' && *pszNameT != '\0')
 					pszNameT++;
-				sSceneCellName.insert(0, pszName, pszNameT-pszName);
+				sSceneCellName.Insert(pszName, 0, pszNameT-pszName);
 
 				// Check for '_'
 				if (*pszNameT == '_') {
@@ -875,7 +879,7 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 					pszName = pszNameT;
 					while (*pszNameT != '_' && *pszNameT != '\0')
 						pszNameT++;
-					sSceneNodeName.insert(0, pszName, pszNameT-pszName);
+					sSceneNodeName.Insert(pszName, 0, pszNameT-pszName);
 				} else {
 					sSceneNodeName = sName;
 				}
@@ -895,17 +899,17 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 		pNodeElement->SetAttribute("Key",   "StartCamera");
 
 		// Is there a given scene container?
-		g_pLog->PrintFLine("\nStart camera is: '%s'\n", sName.c_str());
-		if (g_SEOptions.sSceneContainer.empty()) {
-			if (sSceneCellName.length())
-				pNodeElement->SetAttribute("Value", String::Format("%s.%s", sSceneCellName.c_str(), sSceneNodeName.c_str()));
+		g_pLog->PrintFLine("\nStart camera is: '%s'\n", sName.GetASCII());
+		if (g_SEOptions.sSceneContainer.GetLength()) {
+			if (sSceneCellName.GetLength())
+				pNodeElement->SetAttribute("Value", "Container." + sSceneCellName + '.' + sSceneNodeName);
 			else
-				pNodeElement->SetAttribute("Value", sSceneNodeName.c_str());
+				pNodeElement->SetAttribute("Value", "Container." + sSceneNodeName);
 		} else {
-			if (sSceneCellName.length())
-				pNodeElement->SetAttribute("Value", String::Format("Container.%s.%s", sSceneCellName.c_str(), sSceneNodeName.c_str()));
+			if (sSceneCellName.GetLength())
+				pNodeElement->SetAttribute("Value", sSceneCellName + '.' +sSceneNodeName);
 			else
-				pNodeElement->SetAttribute("Value", String::Format("Container.%s", sSceneNodeName.c_str()));
+				pNodeElement->SetAttribute("Value", sSceneNodeName);
 		}
 
 		// Link node element
@@ -962,7 +966,7 @@ void PLScene::OutputStatistics()
 	for (std::vector<PLSceneTexture*>::size_type i=0; i<m_lstTextures.size(); i++) {
 		PLSceneTexture *pTexture = m_lstTextures[i];
 		if (pTexture) {
-			g_pLog->PrintFLine("%d: '%s' -> Reference count: %d (%g%%)", i, pTexture->GetName().c_str(), pTexture->GetReferenceCount(),
+			g_pLog->PrintFLine("%d: '%s' -> Reference count: %d (%g%%)", i, pTexture->GetName().GetASCII(), pTexture->GetReferenceCount(),
 							   static_cast<float>(pTexture->GetReferenceCount())/static_cast<float>(m_sMeshStatistics.nNumOfTextureReferences)*100.0f);
 		}
 	}
@@ -978,7 +982,7 @@ void PLScene::OutputStatistics()
 		for (std::vector<PLSceneMaterial*>::size_type i=0; i<m_lstMaterials.size(); i++) {
 			PLSceneMaterial *pMaterial = m_lstMaterials[i];
 			if (pMaterial) {
-				g_pLog->PrintFLine("%d: '%s' -> Reference count: %d (%g%%)", i, pMaterial->GetName().c_str(), pMaterial->GetReferenceCount(),
+				g_pLog->PrintFLine("%d: '%s' -> Reference count: %d (%g%%)", i, pMaterial->GetName().GetASCII(), pMaterial->GetReferenceCount(),
 								   static_cast<float>(pMaterial->GetReferenceCount())/static_cast<float>(m_sMeshStatistics.nNumOfMaterialReferences)*100.0f);
 			}
 		}

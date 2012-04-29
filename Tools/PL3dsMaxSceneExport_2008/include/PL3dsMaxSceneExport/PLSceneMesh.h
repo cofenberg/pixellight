@@ -122,7 +122,7 @@ class PLSceneMesh {
 		*  @return
 		*    The mesh name
 		*/
-		const std::string &GetName() const;
+		PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -402,7 +402,7 @@ class PLSceneMesh {
 		*  @param[in] sName
 		*    Name of this mesh
 		*/
-		PLSceneMesh(PLScene &cScene, IGameNode &cIGameNode, const std::string &sName);
+		PLSceneMesh(PLScene &cScene, IGameNode &cIGameNode, const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -500,7 +500,7 @@ class PLSceneMesh {
 		PLScene							*m_pScene;											/**< PL owner scene (always valid!) */
 		IGameNode						*m_pIGameNode;										/**< IGame node this scene node represents (always valid!) */
 		Object						    *m_p3dsMaxObject;									/**< 3ds Max object node this scene node represents */
-		std::string						 m_sName;											/**< Name of this mesh */
+		PLCore::String					 m_sName;											/**< Name of this mesh */
 		PLCore::Array<PLSceneMaterial*>	 m_lstMaterials;									/**< List of materials (pointer to scene materials - do NOT delete!) */
 		Box3							 m_cLocalBox;										/**< Local bounding box */
 		int								 m_nNumOfVertices;									/**< Number of vertices */

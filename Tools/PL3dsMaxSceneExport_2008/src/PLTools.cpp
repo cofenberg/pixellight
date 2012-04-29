@@ -39,6 +39,12 @@
 
 
 //[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+using namespace PLCore;
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 bool PLTools::IsEmpty(const Box3 &cBox)
@@ -74,40 +80,27 @@ bool PLTools::Compare(const Point3 &P1, const Point3 &P2, float fDelta)
 	return (fabs(P1.x-P2.x) <= fDelta && fabs(P1.y-P2.y) <= fDelta && fabs(P1.z-P2.z) <= fDelta);
 }
 
-std::string PLTools::ToString(int nValue)
+String PLTools::ToString(int nValue)
 {
-	std::stringstream ssStream;
-	ssStream << nValue;
-	return ssStream.str();
+	return nValue;
 }
 
-std::string PLTools::ToString(unsigned long nValue)
+String PLTools::ToString(unsigned long nValue)
 {
-	std::stringstream ssStream;
-	ssStream << nValue;
-	return ssStream.str();
+	return static_cast<uint32>(nValue);
 }
 
-std::string PLTools::ToString(float fValue)
+String PLTools::ToString(float fValue)
 {
-	std::stringstream ssStream;
-	ssStream << fValue;
-	return ssStream.str();
+	return fValue;
 }
 
-std::string PLTools::ToLower(const std::string &sString)
-{
-	std::string sLower = sString;
-	_strlwr(const_cast<char*>(sLower.c_str()));
-	return sLower;
-}
-
-void PLTools::XmlElementSetAttributeWithDefault(PLCore::XmlElement &cXmlElement, const PLCore::String &sName, float fValue, float fDefaultValue)
+void PLTools::XmlElementSetAttributeWithDefault(XmlElement &cXmlElement, const String &sName, float fValue, float fDefaultValue)
 {
 	// Is the given value equal to the given default value?
 	if (fValue != fDefaultValue) {
 		// Value to string
-		const PLCore::String sValue = PLCore::String::Format("%f", fValue);
+		const String sValue = String::Format("%f", fValue);
 
 		// Due to rounding errors the string may now or may not contain the given default value, check for this
 		if (sValue.GetFloat() != fDefaultValue)
@@ -117,16 +110,16 @@ void PLTools::XmlElementSetAttributeWithDefault(PLCore::XmlElement &cXmlElement,
 	}
 }
 
-void PLTools::XmlElementSetAttributeWithDefault(PLCore::XmlElement &cXmlElement, const PLCore::String &sName, const Point3 &cPoint, const Point3 &cDefault)
+void PLTools::XmlElementSetAttributeWithDefault(XmlElement &cXmlElement, const String &sName, const Point3 &cPoint, const Point3 &cDefault)
 {
 	// Is the given value equal to the given default value?
 	if (cPoint.x != cDefault.x || cPoint.y != cDefault.y || cPoint.z != cDefault.z) {
 		// Value to string
-		const PLCore::String sValue = PLCore::String::Format("%f %f %f", cPoint.x, cPoint.y, cPoint.z);
+		const String sValue = String::Format("%f %f %f", cPoint.x, cPoint.y, cPoint.z);
 
 		// Due to rounding errors the string may now or may not contain the given default value, check for this
 		float fValues[3] = { 0.0f, 0.0f, 0.0f };
-		PLCore::ParseTools::ParseFloatArray(sValue, fValues, 3);
+		ParseTools::ParseFloatArray(sValue, fValues, 3);
 		if (fValues[0] != cDefault.x || fValues[1] != cDefault.y || fValues[2] != cDefault.z)
 			cXmlElement.SetAttribute(sName, sValue);
 	} else {
@@ -339,9 +332,9 @@ char *PLTools::GetPixelLightRuntimeDirectory()
 *  @brief
 *    Returns the absolute filename of 'PLViewer'
 */
-std::string PLTools::GetPLViewerFilename()
+String PLTools::GetPLViewerFilename()
 {
-	std::string sViewer;
+	String sViewer;
 
 	// Get get runtime directory
 	char *pszBuffer = PLTools::GetPixelLightRuntimeDirectory();
@@ -369,10 +362,10 @@ std::string PLTools::GetPLViewerFilename()
 
 				{ // Maybe this is your internal developer version?
 					// Construct the absolute filename
-					sViewer = std::string(pszBuffer) + "Tools\\x86\\PLViewer.exe";
+					sViewer = String(pszBuffer) + "Tools\\x86\\PLViewer.exe";
 
 					// Valid filename?
-					FILE *pFile = fopen(sViewer.c_str(), "r");
+					FILE *pFile = fopen(sViewer.GetASCII(), "r");
 					if (pFile)
 						fclose(pFile);
 					else
@@ -380,12 +373,12 @@ std::string PLTools::GetPLViewerFilename()
 				}
 
 				// Installed PL SDK?
-				if (!sViewer.length()) {
+				if (!sViewer.GetLength()) {
 					// Construct the absolute filename
-					sViewer = std::string(pszBuffer) + "Tools\\Bin\\x86\\PLViewer.exe";
+					sViewer = String(pszBuffer) + "Tools\\Bin\\x86\\PLViewer.exe";
 
 					// Valid filename?
-					FILE *pFile = fopen(sViewer.c_str(), "r");
+					FILE *pFile = fopen(sViewer.GetASCII(), "r");
 					if (pFile)
 						fclose(pFile);
 					else
@@ -406,11 +399,11 @@ std::string PLTools::GetPLViewerFilename()
 *  @brief
 *    Constructs a resource filename by using the current options
 */
-std::string PLTools::GetResourceFilename(EResourceType nResourceType, const std::string &sFilename)
+String PLTools::GetResourceFilename(EResourceType nResourceType, const String &sFilename)
 {
 	// Directory of the resource type
 	if (g_SEOptions.bPLDirectories) {
-		std::string sResourceDirectory;
+		String sResourceDirectory;
 		switch (nResourceType) {
 			case ResourceMesh:
 				sResourceDirectory = "Data\\Meshes\\";

@@ -64,7 +64,7 @@ IGameMaterial *PLSceneMaterial::GetIGameMaterial() const
 *  @brief
 *    Returns the material name
 */
-const std::string &PLSceneMaterial::GetName() const
+String PLSceneMaterial::GetName() const
 {
 	return m_sName;
 }
@@ -82,7 +82,7 @@ unsigned int PLSceneMaterial::GetReferenceCount() const
 *  @brief
 *    Saves the material
 */
-bool PLSceneMaterial::Save(const std::string &sApplicationDrive, const std::string &sApplicationDir)
+bool PLSceneMaterial::Save(const String &sApplicationDrive, const String &sApplicationDir)
 {
 	// Create XML document
 	XmlDocument cDocument;
@@ -102,16 +102,16 @@ bool PLSceneMaterial::Save(const std::string &sApplicationDrive, const std::stri
 	cDocument.LinkEndChild(*pMaterialElement);
 
 	// Get the absolute material filename
-	const std::string sFilename = sApplicationDrive + sApplicationDir + PLTools::GetResourceFilename(PLTools::ResourceMaterial, m_sName);
+	const String sFilename = sApplicationDrive + sApplicationDir + PLTools::GetResourceFilename(PLTools::ResourceMaterial, m_sName);
 
 	{ // Before we safe, we need to ensure that the target directory is there, else 'Save()' will fail!
-		Url cUrl = sFilename.c_str();
+		Url cUrl = sFilename;
 		Directory cDirectory(cUrl.CutFilename());
 		cDirectory.CreateRecursive();
 	}
 
 	// Save settings
-	cDocument.Save(sFilename.c_str());
+	cDocument.Save(sFilename);
 
 	// Done
 	return true;
@@ -125,7 +125,7 @@ bool PLSceneMaterial::Save(const std::string &sApplicationDrive, const std::stri
 *  @brief
 *    Constructor
 */
-PLSceneMaterial::PLSceneMaterial(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial *pIGameMaterial, const std::string &sName) :
+PLSceneMaterial::PLSceneMaterial(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial *pIGameMaterial, const String &sName) :
 	m_pScene(&cScene),
 	m_pParentIGameMaterial(pParentIGameMaterial),
 	m_pIGameMaterial(pIGameMaterial),
@@ -146,10 +146,10 @@ PLSceneMaterial::~PLSceneMaterial()
 *  @brief
 *    Saves a texture
 */
-void PLSceneMaterial::SaveTexture(XmlElement &cMaterialElement, const std::string &sFilename, const std::string &sSemantic, bool bNormalMap_xGxR)
+void PLSceneMaterial::SaveTexture(XmlElement &cMaterialElement, const String &sFilename, const String &sSemantic, bool bNormalMap_xGxR)
 {
 	// Get known semantic
-	String sPLSemantic = sSemantic.c_str();
+	String sPLSemantic = sSemantic;
 	if (sPLSemantic.CompareNoCase("Ambient Color", 0, 13) || sPLSemantic.CompareNoCase("EmissiveMap", 0, 11))
 		sPLSemantic = "EmissiveMap";
 	else if (sPLSemantic.CompareNoCase("Diffuse Color", 0, 13) || sPLSemantic.CompareNoCase("DiffuseMap", 0, 10))
@@ -181,7 +181,7 @@ void PLSceneMaterial::SaveTexture(XmlElement &cMaterialElement, const std::strin
 			pTextureElement->SetAttribute("Name", sPLSemantic);
 
 			// Add value
-			XmlText *pValue = new XmlText(pTexture->GetName().c_str());
+			XmlText *pValue = new XmlText(pTexture->GetName());
 			pTextureElement->LinkEndChild(*pValue);
 
 			// Link texture element
@@ -198,7 +198,7 @@ void PLSceneMaterial::SaveTexture(XmlElement &cMaterialElement, const std::strin
 *  @brief
 *    Creates a material
 */
-PLSceneMaterial *PLSceneMaterial::Create(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial, const std::string &sName)
+PLSceneMaterial *PLSceneMaterial::Create(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial, const String &sName)
 {
 	// Get the 3ds Max material... I don't use IGame for this because I didn't get it working using it...
 	Mtl *pMaxMaterial = cIGameMaterial.GetMaxMaterial();
@@ -214,7 +214,7 @@ PLSceneMaterial *PLSceneMaterial::Create(PLScene &cScene, IGameMaterial *pParent
 		#else
 			Url cUrl = pFXMaterial->GetEffectFilename();
 		#endif
-			std::string sEffectFilenameName = cUrl.GetFilename();
+			String sEffectFilenameName = cUrl.GetFilename();
 
 			// Our effect?
 			if (sEffectFilenameName == "PixelLight_SRShaderLighting.fx")

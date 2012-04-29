@@ -44,7 +44,7 @@ using namespace PLCore;
 *  @brief
 *    Constructor
 */
-PLSceneSpline::PLSceneSpline(PLSceneContainer &cContainer, IGameNode &cIGameNode, const std::string &sName) :
+PLSceneSpline::PLSceneSpline(PLSceneContainer &cContainer, IGameNode &cIGameNode, const String &sName) :
 	PLSceneNode(&cContainer, &cIGameNode, sName, TypeSpline, "")
 {
 }
@@ -61,12 +61,12 @@ PLSceneSpline::~PLSceneSpline()
 //[-------------------------------------------------------]
 //[ Private virtual PLSceneNode functions                 ]
 //[-------------------------------------------------------]
-void PLSceneSpline::WriteToFile(XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir)
+void PLSceneSpline::WriteToFile(XmlElement &cSceneElement, const String &sApplicationDrive, const String &sApplicationDir)
 {
 	// Do NOT save it as scene node, it's just a 'resource'
 
 	// Get path filename
-	const std::string sFilename = sApplicationDrive + sApplicationDir + PLTools::GetResourceFilename(PLTools::ResourcePath, GetName() + ".path");
+	const String sFilename = sApplicationDrive + sApplicationDir + PLTools::GetResourceFilename(PLTools::ResourcePath, GetName() + ".path");
 
 	// Get the IGame spline object of the given IGame node
 	IGameObject *pIGameObject = GetIGameNode()->GetIGameObject();
@@ -130,10 +130,10 @@ void PLSceneSpline::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 						cDocument.LinkEndChild(*pPathElement);
 
 						// Save settings
-						if (cDocument.Save(sFilename.c_str()))
-							g_pLog->LogFLine(PLLog::Hint, "Created '%s'", sFilename.c_str());
+						if (cDocument.Save(sFilename))
+							g_pLog->LogFLine(PLLog::Hint, "Created '%s'", sFilename.GetASCII());
 						else
-							g_pLog->LogFLine(PLLog::Error, "Can't create '%s'!", sFilename.c_str());
+							g_pLog->LogFLine(PLLog::Error, "Can't create '%s'!", sFilename.GetASCII());
 					}
 				}
 			}

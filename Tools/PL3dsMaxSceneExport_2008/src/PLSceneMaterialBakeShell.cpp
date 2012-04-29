@@ -43,7 +43,7 @@ using namespace PLCore;
 *  @brief
 *    Constructor
 */
-PLSceneMaterialBakeShell::PLSceneMaterialBakeShell(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial, const std::string &sName) :
+PLSceneMaterialBakeShell::PLSceneMaterialBakeShell(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial, const String &sName) :
 	PLSceneMaterial(cScene, pParentIGameMaterial, &cIGameMaterial, sName)
 {
 }
@@ -89,7 +89,7 @@ void PLSceneMaterialBakeShell::SaveParameters(XmlElement &cMaterialElement)
 			}
 		}
 	} else {
-		g_pLog->LogFLine(PLLog::Error, "Material '%s': Backed material is missing!", m_sName.c_str());
+		g_pLog->LogFLine(PLLog::Error, "Material '%s': Backed material is missing!", m_sName.GetASCII());
 	}
 
 	// Get the 'original' material
@@ -102,13 +102,13 @@ void PLSceneMaterialBakeShell::SaveParameters(XmlElement &cMaterialElement)
 			XmlElement *pMaterialElement = new XmlElement("Material");
 
 			// Add value
-			XmlText *pValue = new XmlText(pOriginalMaterial->GetName().c_str());
+			XmlText *pValue = new XmlText(pOriginalMaterial->GetName());
 			pMaterialElement->LinkEndChild(*pValue);
 
 			// Link material element
 			cMaterialElement.LinkEndChild(*pMaterialElement);
 		}
 	} else {
-		g_pLog->LogFLine(PLLog::Error, "Material '%s': Original material is missing!", m_sName.c_str());
+		g_pLog->LogFLine(PLLog::Error, "Material '%s': Original material is missing!", m_sName.GetASCII());
 	}
 }

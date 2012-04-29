@@ -46,7 +46,7 @@ using namespace PLCore;
 *  @brief
 *    Constructor
 */
-PLSceneObject::PLSceneObject(PLSceneContainer &cContainer, IGameNode &cIGameNode, const std::string &sName, PLSceneMesh *pMesh) :
+PLSceneObject::PLSceneObject(PLSceneContainer &cContainer, IGameNode &cIGameNode, const String &sName, PLSceneMesh *pMesh) :
 	PLSceneNode(&cContainer, &cIGameNode, sName, TypeObject, "PLScene::SNMesh"),
 	m_pMesh(pMesh)
 {
@@ -84,16 +84,16 @@ PLSceneMesh *PLSceneObject::GetMesh() const
 //[-------------------------------------------------------]
 //[ Private virtual PLSceneNode functions                 ]
 //[-------------------------------------------------------]
-void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir)
+void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const String &sApplicationDrive, const String &sApplicationDir)
 {
 	// Add scene node
 	XmlElement *pNodeElement = new XmlElement("Node");
-	pNodeElement->SetAttribute("Class", GetClassName().c_str());
-	pNodeElement->SetAttribute("Name",  GetName().c_str());
+	pNodeElement->SetAttribute("Class", GetClassName());
+	pNodeElement->SetAttribute("Name",  GetName());
 
 	// Mesh filename
 	if (m_pMesh)
-		pNodeElement->SetAttribute("Mesh", PLTools::GetResourceFilename(PLTools::ResourceMesh, m_pMesh->GetName() + ".mesh").c_str());
+		pNodeElement->SetAttribute("Mesh", PLTools::GetResourceFilename(PLTools::ResourceMesh, m_pMesh->GetName() + ".mesh"));
 
 	// Write position, rotation, scale, bounding box and flags
 	WriteToFilePosRotScaleBoxFlags(*pNodeElement);
@@ -152,10 +152,10 @@ void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 									if (pSubMaterial) {
 										// Add material
 										XmlElement *pSubMaterialElement = new XmlElement("Material");
-										pSubMaterialElement->SetAttribute("Name", PLTools::GetResourceFilename(PLTools::ResourceMaterial, pMeshSubMaterial->GetName()).c_str());
+										pSubMaterialElement->SetAttribute("Name", PLTools::GetResourceFilename(PLTools::ResourceMaterial, pMeshSubMaterial->GetName()));
 
 										// Add value
-										XmlText *pValue = new XmlText(PLTools::GetResourceFilename(PLTools::ResourceMaterial, pSubMaterial->GetName()).c_str());
+										XmlText *pValue = new XmlText(PLTools::GetResourceFilename(PLTools::ResourceMaterial, pSubMaterial->GetName()));
 										pSubMaterialElement->LinkEndChild(*pValue);
 
 										// Link general element
@@ -179,15 +179,15 @@ void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 					cDocument.LinkEndChild(*pSkinElement);
 
 					// Save settings
-					const std::string sSkinFilename    = PLTools::GetResourceFilename(PLTools::ResourceSkin, std::string(pMaterial->GetIGameMaterial()->GetMaterialName()) + std::string(".skin"));
-					const std::string sAbsSkinFilename = sApplicationDrive + sApplicationDir + sSkinFilename;
-					if (cDocument.Save(sAbsSkinFilename.c_str()))
-						g_pLog->LogFLine(PLLog::Hint, "Created '%s'", sAbsSkinFilename.c_str());
+					const String sSkinFilename    = PLTools::GetResourceFilename(PLTools::ResourceSkin, String(pMaterial->GetIGameMaterial()->GetMaterialName()) + String(".skin"));
+					const String sAbsSkinFilename = sApplicationDrive + sApplicationDir + sSkinFilename;
+					if (cDocument.Save(sAbsSkinFilename))
+						g_pLog->LogFLine(PLLog::Hint, "Created '%s'", sAbsSkinFilename.GetASCII());
 					else
-						g_pLog->LogFLine(PLLog::Error, "Can't create '%s'!", sAbsSkinFilename.c_str());
+						g_pLog->LogFLine(PLLog::Error, "Can't create '%s'!", sAbsSkinFilename.GetASCII());
 
 					// Add a 'skin'
-					pNodeElement->SetAttribute("Skin", sSkinFilename.c_str());
+					pNodeElement->SetAttribute("Skin", sSkinFilename);
 				} else {
 					// [TODO] Handle this situation!?
 					int i = 0;
@@ -198,7 +198,7 @@ void PLSceneObject::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 			PLSceneMaterial *pMaterial = GetScene().AddMaterial(nullptr, *pIGameMaterial);
 			if (pMaterial) {
 				// Add a 'skin'
-				pNodeElement->SetAttribute("Skin", PLTools::GetResourceFilename(PLTools::ResourceMaterial, pMaterial->GetName()).c_str());
+				pNodeElement->SetAttribute("Skin", PLTools::GetResourceFilename(PLTools::ResourceMaterial, pMaterial->GetName()));
 			}
 		}
 	}

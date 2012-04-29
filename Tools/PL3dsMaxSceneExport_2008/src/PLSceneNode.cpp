@@ -40,6 +40,12 @@
 
 
 //[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+using namespace PLCore;
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
@@ -99,7 +105,7 @@ PLSceneNode::EType PLSceneNode::GetType() const
 *  @brief
 *    Returns the name of this scene node which is normally a substring of the given 3ds Max node
 */
-const std::string &PLSceneNode::GetName() const
+String PLSceneNode::GetName() const
 {
 	return m_sName;
 }
@@ -108,7 +114,7 @@ const std::string &PLSceneNode::GetName() const
 *  @brief
 *    Returns the PixelLight class name of this scene node
 */
-const std::string &PLSceneNode::GetClassName() const
+String PLSceneNode::GetClassName() const
 {
 	return m_sClassName;
 }
@@ -117,11 +123,11 @@ const std::string &PLSceneNode::GetClassName() const
 *  @brief
 *    Adds a flag
 */
-void PLSceneNode::AddFlag(const std::string &sFlag)
+void PLSceneNode::AddFlag(const String &sFlag)
 {
-	if (m_sFlags.length()) {
-		m_sFlags.append("|");
-		m_sFlags.append(sFlag);
+	if (m_sFlags.GetLength()) {
+		m_sFlags += '|';
+		m_sFlags += sFlag;
 	} else {
 		m_sFlags = sFlag;
 	}
@@ -148,7 +154,7 @@ bool PLSceneNode::IsRotationFlipped()
 
 		// Get the light object of the given IGame node
 		if (m_pIGameNode && m_pIGameNode->GetMaxNode()) {
-			Object *pMaxObject = m_pIGameNode->GetMaxNode()->GetObjectRef();
+			::Object *pMaxObject = m_pIGameNode->GetMaxNode()->GetObjectRef();
 			if (pMaxObject) {
 				// Check the type of the IGame object
 				if (pMaxObject->SuperClassID() == LIGHT_CLASS_ID) {
@@ -177,7 +183,7 @@ bool PLSceneNode::IsRotationFlipped()
 *  @brief
 *    Constructor
 */
-PLSceneNode::PLSceneNode(PLSceneContainer *pContainer, IGameNode *pIGameNode, const std::string &sName, EType nType, const std::string &sClassName) :
+PLSceneNode::PLSceneNode(PLSceneContainer *pContainer, IGameNode *pIGameNode, const String &sName, EType nType, const String &sClassName) :
 	m_pContainer(pContainer),
 	m_pIGameNode(pIGameNode),
 	m_sName(sName),
@@ -199,10 +205,10 @@ PLSceneNode::PLSceneNode(PLSceneContainer *pContainer, IGameNode *pIGameNode, co
 			m_sClassName = sString;
 
 			// Erase all '"'
-			std::string::size_type i = m_sClassName.find_first_of("\"");
-			while (i != std::string::npos) {
-				m_sClassName.erase(i, 1);
-				i = m_sClassName.find_first_of("\"");
+			int i = m_sClassName.IndexOf("\"");
+			while (i >= 0) {
+				m_sClassName.Delete(i, 1);
+				i = m_sClassName.IndexOf("\"");
 			}
 		}
 
@@ -222,7 +228,7 @@ PLSceneNode::PLSceneNode(PLSceneContainer *pContainer, IGameNode *pIGameNode, co
 		{ // Get the world space bounding box of the scene node. Because this is not 'trival' we're using
 		  // the sample code from "3dsMaxSDK.chm" (3ds Max SDK) -> "The Pipeline and the INode TM Methods"
 		  // to get it working correctly.
-			Object *pMaxObject = pMaxNode->GetObjectRef();
+			::Object *pMaxObject = pMaxNode->GetObjectRef();
 			if (pMaxObject) {
 				TimeValue t = 0;
 				Matrix3 mat;	// The Object TM
@@ -272,7 +278,7 @@ PLSceneNode::~PLSceneNode()
 *  @brief
 *    Writes the scene node position, rotation, scale, bounding box and flags into a file
 */
-void PLSceneNode::WriteToFilePosRotScaleBoxFlags(PLCore::XmlElement &cNodeElement) const
+void PLSceneNode::WriteToFilePosRotScaleBoxFlags(XmlElement &cNodeElement) const
 {
 	// Currently ONLY the center of the container the node is in use used to make it relative
 	const Point3 vParentWorldSpaceCenter = GetContainer() ? GetContainer()->GetWorldSpaceCenter() : Point3(0.0f, 0.0f, 0.0f);
@@ -287,12 +293,12 @@ void PLSceneNode::WriteToFilePosRotScaleBoxFlags(PLCore::XmlElement &cNodeElemen
 	PLTools::XmlElementSetAttributeWithDefault(cNodeElement, "Scale", m_vScale, Point3(1.0f, 1.0f, 1.0f));
 
 	// Are there any flags?
-	if (m_sFlags.length()) {
-		PLCore::String sFlags = cNodeElement.GetAttribute("Flags");
+	if (m_sFlags.GetLength()) {
+		String sFlags = cNodeElement.GetAttribute("Flags");
 		if (sFlags.GetLength())
-			sFlags += '|' + m_sFlags.c_str();
+			sFlags += '|' + m_sFlags;
 		else
-			sFlags = m_sFlags.c_str();
+			sFlags = m_sFlags;
 		sFlags.Trim();
 		cNodeElement.SetAttribute("Flags", sFlags);
 	}
@@ -302,7 +308,7 @@ void PLSceneNode::WriteToFilePosRotScaleBoxFlags(PLCore::XmlElement &cNodeElemen
 *  @brief
 *    Writes the flexible scene node variables
 */
-void PLSceneNode::WriteVariables(PLCore::XmlElement &cNodeElement) const
+void PLSceneNode::WriteVariables(XmlElement &cNodeElement) const
 {
 	// Export variables?
 	if (g_SEOptions.bUserPropVariables) {
@@ -313,25 +319,25 @@ void PLSceneNode::WriteVariables(PLCore::XmlElement &cNodeElement) const
 			TSTR s3dsMaxString;
 			if (pMaxNode->GetUserPropString(_T("Vars"), s3dsMaxString)) {
 				// Get all expressions
-				static PLCore::RegEx cExpressionRegEx("\\s*((\\w*\\s*=\\s*\"[^\"]*\")|(\\w*\\s*=\\s*[\\w|]*))");
-				const PLCore::String sString = s3dsMaxString;
-				PLCore::uint32 nExpressionParsePos = 0;
+				static RegEx cExpressionRegEx("\\s*((\\w*\\s*=\\s*\"[^\"]*\")|(\\w*\\s*=\\s*[\\w|]*))");
+				const String sString = s3dsMaxString;
+				uint32 nExpressionParsePos = 0;
 				while (cExpressionRegEx.Match(sString, nExpressionParsePos)) {
 					// Get expression
-										 nExpressionParsePos = cExpressionRegEx.GetPosition();
-					const PLCore::String sExpression		 = cExpressionRegEx.GetResult(0);
+								 nExpressionParsePos = cExpressionRegEx.GetPosition();
+					const String sExpression		 = cExpressionRegEx.GetResult(0);
 
 					// Process the found expression
-					static PLCore::RegEx cRegEx("\\s*(\\w*)\\s*=\\s*\"?\\s*([^\"]*)\\s*\"?");
+					static RegEx cRegEx("\\s*(\\w*)\\s*=\\s*\"?\\s*([^\"]*)\\s*\"?");
 					if (cRegEx.Match(sExpression)) {
 						// Get name and value
-						const PLCore::String sName  = cRegEx.GetResult(0);
-						const PLCore::String sValue = cRegEx.GetResult(1);
+						const String sName  = cRegEx.GetResult(0);
+						const String sValue = cRegEx.GetResult(1);
 
 						// Flags variable?
 						if (sName == "Flags") {
 							// Update attribute
-							PLCore::String sFlags = cNodeElement.GetAttribute(sName);
+							String sFlags = cNodeElement.GetAttribute(sName);
 							if (sFlags.GetLength())
 								sFlags += '|' + sValue;
 							else
@@ -353,7 +359,7 @@ void PLSceneNode::WriteVariables(PLCore::XmlElement &cNodeElement) const
 *  @brief
 *    Writes the scene node modifiers
 */
-void PLSceneNode::WriteModifiers(PLCore::XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir)
+void PLSceneNode::WriteModifiers(XmlElement &cSceneElement, const String &sApplicationDrive, const String &sApplicationDir)
 {
 	// Is there a 3ds Max node? (no 3ds Max node, no properties)
 	INode *pMaxNode = GetMaxNode();
@@ -384,7 +390,7 @@ void PLSceneNode::WriteModifiers(PLCore::XmlElement &cSceneElement, const std::s
 						INode *pTarget = pPathController->GetNode(0);
 						if (pTarget) {
 							// Get path filename
-							const std::string sPathFilename = PLTools::GetResourceFilename(PLTools::ResourcePath, std::string(pTarget->GetName()) + ".path");
+							const String sPathFilename = PLTools::GetResourceFilename(PLTools::ResourcePath, String(pTarget->GetName()) + ".path");
 
 							// Get the percentage along the path
 							float fPercentageAlongPath = 0.0f;
@@ -397,16 +403,16 @@ void PLSceneNode::WriteModifiers(PLCore::XmlElement &cSceneElement, const std::s
 							}
 
 							{ // Add scene node modifier
-								PLCore::XmlElement *pModifierElement = new PLCore::XmlElement("Modifier");
+								XmlElement *pModifierElement = new XmlElement("Modifier");
 								pModifierElement->SetAttribute("Class",   "PLScene::SNMPositionPath");
-								pModifierElement->SetAttribute("Filename", sPathFilename.c_str());
-								pModifierElement->SetAttribute("Progress", PLCore::String::Format("%f", fPercentageAlongPath));
+								pModifierElement->SetAttribute("Filename", sPathFilename);
+								pModifierElement->SetAttribute("Progress", String::Format("%f", fPercentageAlongPath));
 
 								// [TODO] Any change to setup speed inside 3ds Max?
 								static const float fSpeed = 0.03f;
 								// Automatic animation playback?
 								if (g_SEOptions.bAnimationPlayback)
-									pModifierElement->SetAttribute("Speed", PLCore::String::Format("%f", (pPathController->GetFlip() ? -fSpeed : fSpeed)));
+									pModifierElement->SetAttribute("Speed", String::Format("%f", (pPathController->GetFlip() ? -fSpeed : fSpeed)));
 								else
 									pModifierElement->SetAttribute("Speed", "0.0");
 
@@ -417,7 +423,7 @@ void PLSceneNode::WriteModifiers(PLCore::XmlElement &cSceneElement, const std::s
 							// Follow?
 							if (pPathController->GetFollow()) {
 								// Add scene node modifier
-								PLCore::XmlElement *pModifierElement = new PLCore::XmlElement("Modifier");
+								XmlElement *pModifierElement = new XmlElement("Modifier");
 								pModifierElement->SetAttribute("Class",  "PLScene::SNMRotationMoveDirection");
 
 								// Link modifier element
@@ -470,21 +476,21 @@ void PLSceneNode::WriteModifiers(PLCore::XmlElement &cSceneElement, const std::s
 			bool bUsePosition = false, bUseScale = false, bUseRotation = false;
 
 			// Prepare the position chunk
-			PLCore::Chunk cPositionChunk;
-			cPositionChunk.SetSemantic(PLCore::Chunk::Position);
-			cPositionChunk.Allocate(PLCore::Chunk::Float, 3, nFrameCount);
+			Chunk cPositionChunk;
+			cPositionChunk.SetSemantic(Chunk::Position);
+			cPositionChunk.Allocate(Chunk::Float, 3, nFrameCount);
 			float *pfPositionData = reinterpret_cast<float*>(cPositionChunk.GetData());
 
 			// Prepare the rotation chunk
-			PLCore::Chunk cRotationChunk;
-			cRotationChunk.SetSemantic(PLCore::Chunk::Rotation);
-			cRotationChunk.Allocate(PLCore::Chunk::Float, 4, nFrameCount);
+			Chunk cRotationChunk;
+			cRotationChunk.SetSemantic(Chunk::Rotation);
+			cRotationChunk.Allocate(Chunk::Float, 4, nFrameCount);
 			float *pfRotationData = reinterpret_cast<float*>(cRotationChunk.GetData());
 
 			// Prepare the scale chunk
-			PLCore::Chunk cScaleChunk;
-			cScaleChunk.SetSemantic(PLCore::Chunk::Scale);
-			cScaleChunk.Allocate(PLCore::Chunk::Float, 3, nFrameCount);
+			Chunk cScaleChunk;
+			cScaleChunk.SetSemantic(Chunk::Scale);
+			cScaleChunk.Allocate(Chunk::Float, 3, nFrameCount);
 			float *pfScaleData = reinterpret_cast<float*>(cScaleChunk.GetData());
 
 			// Loop through all frames
@@ -573,10 +579,10 @@ void PLSceneNode::WriteModifiers(PLCore::XmlElement &cSceneElement, const std::s
 			if (bPositionKeyframes && bUsePosition) {
 				// [TODO] Better (and safer) filename
 				// Save chunk
-				const PLCore::String sPositionKeys = PLTools::GetResourceFilename(PLTools::ResourceKeyframes, PLCore::String::Format("%s_PositionKeyframes.chunk", GetName().c_str()).GetASCII()).c_str();
-				if (SaveChunk(cPositionChunk, PLCore::String((sApplicationDrive + sApplicationDir).c_str()) + sPositionKeys)) {
+				const String sPositionKeys = PLTools::GetResourceFilename(PLTools::ResourceKeyframes, String::Format("%s_PositionKeyframes.chunk", GetName().GetASCII()).GetASCII());
+				if (SaveChunk(cPositionChunk, sApplicationDrive + sApplicationDir + sPositionKeys)) {
 					// Add the modifier
-					PLCore::XmlElement *pModifierElement = new PLCore::XmlElement("Modifier");
+					XmlElement *pModifierElement = new XmlElement("Modifier");
 
 					// Set class attribute
 					pModifierElement->SetAttribute("Class", "PLScene::SNMPositionKeyframeAnimation");
@@ -599,10 +605,10 @@ void PLSceneNode::WriteModifiers(PLCore::XmlElement &cSceneElement, const std::s
 			if (bRotationKeyframes && bUseRotation) {
 				// [TODO] Better (and safer) filename
 				// Save chunk
-				const PLCore::String sRotationKeys = PLTools::GetResourceFilename(PLTools::ResourceKeyframes, PLCore::String::Format("%s_RotationKeyframes.chunk", GetName().c_str()).GetASCII()).c_str();
-				if (SaveChunk(cRotationChunk, PLCore::String((sApplicationDrive + sApplicationDir).c_str()) + sRotationKeys)) {
+				const String sRotationKeys = PLTools::GetResourceFilename(PLTools::ResourceKeyframes, String::Format("%s_RotationKeyframes.chunk", GetName().GetASCII()).GetASCII());
+				if (SaveChunk(cRotationChunk, sApplicationDrive + sApplicationDir + sRotationKeys)) {
 					// Add the modifier
-					PLCore::XmlElement *pModifierElement = new PLCore::XmlElement("Modifier");
+					XmlElement *pModifierElement = new XmlElement("Modifier");
 
 					// Set class attribute
 					pModifierElement->SetAttribute("Class", "PLScene::SNMRotationKeyframeAnimation");
@@ -624,10 +630,10 @@ void PLSceneNode::WriteModifiers(PLCore::XmlElement &cSceneElement, const std::s
 			if (bScaleKeyframes && bUseScale) {
 				// [TODO] Better (and safer) filename
 				// Save chunk
-				const PLCore::String sScaleKeys = PLTools::GetResourceFilename(PLTools::ResourceKeyframes, PLCore::String::Format("%s_ScaleKeyframes.chunk", GetName().c_str()).GetASCII()).c_str();
-				if (SaveChunk(cScaleChunk, PLCore::String((sApplicationDrive + sApplicationDir).c_str()) + sScaleKeys)) {
+				const String sScaleKeys = PLTools::GetResourceFilename(PLTools::ResourceKeyframes, String::Format("%s_ScaleKeyframes.chunk", GetName().GetASCII()).GetASCII());
+				if (SaveChunk(cScaleChunk, sApplicationDrive + sApplicationDir + sScaleKeys)) {
 					// Add the modifier
-					PLCore::XmlElement *pModifierElement = new PLCore::XmlElement("Modifier");
+					XmlElement *pModifierElement = new XmlElement("Modifier");
 
 					// Set class attribute
 					pModifierElement->SetAttribute("Class", "PLScene::SNMScaleKeyframeAnimation");
@@ -657,26 +663,26 @@ void PLSceneNode::WriteModifiers(PLCore::XmlElement &cSceneElement, const std::s
 			strcpy(szModifier, "Mod");
 			while (pMaxNode->GetUserPropString(szModifier, s3dsMaxString)) {
 				// Add scene node modifier
-				PLCore::XmlElement *pModifierElement = new PLCore::XmlElement("Modifier");
+				XmlElement *pModifierElement = new XmlElement("Modifier");
 
 				// We really NEED a 'Class' attribute!
 				bool bClassFound = false;
 
 				// Get all expressions
-				static PLCore::RegEx cExpressionRegEx("\\s*((\\w*\\s*=\\s*\"[^\"]*\")|(\\w*\\s*=\\s*[\\w|]*))");
-				const PLCore::String sString = s3dsMaxString;
-				PLCore::uint32 nExpressionParsePos = 0;
+				static RegEx cExpressionRegEx("\\s*((\\w*\\s*=\\s*\"[^\"]*\")|(\\w*\\s*=\\s*[\\w|]*))");
+				const String sString = s3dsMaxString;
+				uint32 nExpressionParsePos = 0;
 				while (cExpressionRegEx.Match(sString, nExpressionParsePos)) {
 					// Get expression
-										 nExpressionParsePos = cExpressionRegEx.GetPosition();
-					const PLCore::String sExpression		 = cExpressionRegEx.GetResult(0);
+								 nExpressionParsePos = cExpressionRegEx.GetPosition();
+					const String sExpression		 = cExpressionRegEx.GetResult(0);
 
 					// Process the found expression
-					static PLCore::RegEx cRegEx("\\s*(\\w*)\\s*=\\s*\"?\\s*([^\"]*)\\s*\"?");
+					static RegEx cRegEx("\\s*(\\w*)\\s*=\\s*\"?\\s*([^\"]*)\\s*\"?");
 					if (cRegEx.Match(sExpression)) {
 						// Get name and value
-						const PLCore::String sName  = cRegEx.GetResult(0);
-						const PLCore::String sValue = cRegEx.GetResult(1);
+						const String sName  = cRegEx.GetResult(0);
+						const String sValue = cRegEx.GetResult(1);
 
 						// Set attribute
 						pModifierElement->SetAttribute(sName, sValue);
@@ -705,10 +711,10 @@ void PLSceneNode::WriteModifiers(PLCore::XmlElement &cSceneElement, const std::s
 *  @brief
 *    Writes a target rotation scene node modifier
 */
-void PLSceneNode::WriteTargetRotationModifier(PLCore::XmlElement &cSceneElement, INode &cTarget, bool bFlip) const
+void PLSceneNode::WriteTargetRotationModifier(XmlElement &cSceneElement, INode &cTarget, bool bFlip) const
 {
 	// Get the PL scene node
-	std::string sTarget;
+	String sTarget;
 	PLSceneNode *pSceneNode = GetScene().GetPLSceneNode(cTarget);
 	if (pSceneNode) {
 		// Same container?
@@ -718,26 +724,26 @@ void PLSceneNode::WriteTargetRotationModifier(PLCore::XmlElement &cSceneElement,
 		} else {
 			// The exported supports only 'one' cell level, else this would be a bit more complex...
 			if (pSceneNode->GetContainer() == &GetScene()) {
-				sTarget.append("Parent.");
-				sTarget.append(pSceneNode->GetName());
+				sTarget += "Parent.";
+				sTarget += pSceneNode->GetName();
 			} else {
-				sTarget.append("Parent.");
-				sTarget.append(pSceneNode->GetContainer()->GetName());
-				sTarget.append(".");
-				sTarget.append(pSceneNode->GetName());
+				sTarget += "Parent.";
+				sTarget += pSceneNode->GetContainer()->GetName();
+				sTarget += '.';
+				sTarget += pSceneNode->GetName();
 			}
 		}
 
 	// Fallback: Use the 3ds Max node name
 	} else {
 		sTarget = cTarget.GetName();
-		g_pLog->LogFLine(PLLog::Warning, "'%s' target node: There's no PL scene node with the name '%s'", m_sName.c_str(), sTarget.c_str());
+		g_pLog->LogFLine(PLLog::Warning, "'%s' target node: There's no PL scene node with the name '%s'", m_sName.GetASCII(), sTarget.GetASCII());
 	}
 
 	// Add scene node modifier
-	PLCore::XmlElement *pModifierElement = new PLCore::XmlElement("Modifier");
+	XmlElement *pModifierElement = new XmlElement("Modifier");
 	pModifierElement->SetAttribute("Class",  "PLScene::SNMRotationTarget");
-	pModifierElement->SetAttribute("Target", sTarget.c_str());
+	pModifierElement->SetAttribute("Target", sTarget);
 	if (bFlip)
 		pModifierElement->SetAttribute("Offset", "0 180 0");
 
@@ -813,38 +819,38 @@ void PLSceneNode::GetPosRotScale(Point3 &vPos, Quat &qRot, Point3 &vScale, TimeV
 *  @brief
 *    Saves a chunk
 */
-bool PLSceneNode::SaveChunk(const PLCore::Chunk &cChunk, const PLCore::String &cAbsFilename) const
+bool PLSceneNode::SaveChunk(const Chunk &cChunk, const String &cAbsFilename) const
 {
 	// Create the directory
-	PLCore::Directory cDirectory = PLCore::Url(cAbsFilename).CutFilename();
+	Directory cDirectory = Url(cAbsFilename).CutFilename();
 	if (cDirectory.CreateRecursive()) {
 		// Create the file
-		PLCore::File cFile = cAbsFilename;
-		if (cFile.Open(PLCore::File::FileWrite | PLCore::File::FileCreate)) {
+		File cFile = cAbsFilename;
+		if (cFile.Open(File::FileWrite | File::FileCreate)) {
 			// Write the header
-			cFile.Write(&PLCore::ChunkLoaderPL::MAGIC,   sizeof(PLCore::uint32), 1);
-			cFile.Write(&PLCore::ChunkLoaderPL::VERSION, sizeof(PLCore::uint32), 1);
+			cFile.Write(&ChunkLoaderPL::MAGIC,   sizeof(uint32), 1);
+			cFile.Write(&ChunkLoaderPL::VERSION, sizeof(uint32), 1);
 
 			// Write the total size of the following chunk (header + data) in bytes
-							//					     Semantic		       Data type		     Components per element			 Number of elements
-			const PLCore::uint32 nSize = sizeof(PLCore::uint32) + sizeof(PLCore::uint32) + sizeof(PLCore::uint32) +         sizeof(PLCore::uint32) +     cChunk.GetTotalNumOfBytes();
-			cFile.Write(&nSize, sizeof(PLCore::uint32), 1);
+							//	 Semantic		  Data type		   Components per element	Number of elements
+			const uint32 nSize = sizeof(uint32) + sizeof(uint32) + sizeof(uint32) +         sizeof(uint32) +     cChunk.GetTotalNumOfBytes();
+			cFile.Write(&nSize, sizeof(uint32), 1);
 
 			// Write semantic
-			const PLCore::uint32 nSemantic = cChunk.GetSemantic();
-			cFile.Write(&nSemantic, sizeof(PLCore::uint32), 1);
+			const uint32 nSemantic = cChunk.GetSemantic();
+			cFile.Write(&nSemantic, sizeof(uint32), 1);
 
 			// Write element type
-			const PLCore::uint32 nElementType = cChunk.GetElementType();
-			cFile.Write(&nElementType, sizeof(PLCore::uint32), 1);
+			const uint32 nElementType = cChunk.GetElementType();
+			cFile.Write(&nElementType, sizeof(uint32), 1);
 
 			// Write number of components per element
-			const PLCore::uint32 nNumOfComponentsPerElement = cChunk.GetNumOfComponentsPerElement();
-			cFile.Write(&nNumOfComponentsPerElement, sizeof(PLCore::uint32), 1);
+			const uint32 nNumOfComponentsPerElement = cChunk.GetNumOfComponentsPerElement();
+			cFile.Write(&nNumOfComponentsPerElement, sizeof(uint32), 1);
 
 			// Write number of elements
-			const PLCore::uint32 nNumOfElements = cChunk.GetNumOfElements();
-			cFile.Write(&nNumOfElements, sizeof(PLCore::uint32), 1);
+			const uint32 nNumOfElements = cChunk.GetNumOfElements();
+			cFile.Write(&nNumOfElements, sizeof(uint32), 1);
 
 			// Write chunk data
 			cFile.Write(cChunk.GetData(), cChunk.GetTotalNumOfBytes(), 1);

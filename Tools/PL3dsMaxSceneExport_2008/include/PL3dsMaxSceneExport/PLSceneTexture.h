@@ -28,7 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <string>
+#include <PLCore/String/String.h>
 
 
 //[-------------------------------------------------------]
@@ -64,7 +64,7 @@ class PLSceneTexture {
 		*  @return
 		*    The texture name
 		*/
-		const std::string &GetName() const;
+		PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -91,7 +91,7 @@ class PLSceneTexture {
 		*  @param[in] bNormalMap_xGxR
 		*    Is this a 'xGxR' normal map?
 		*/
-		PLSceneTexture(PLScene &cScene, const std::string &sName, bool bNormalMap_xGxR = false);
+		PLSceneTexture(PLScene &cScene, const PLCore::String &sName, bool bNormalMap_xGxR = false);
 
 		/**
 		*  @brief
@@ -104,9 +104,9 @@ class PLSceneTexture {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLScene		*m_pScene;			/**< PL owner scene (always valid!) */
-		std::string	 m_sName;			/**< Name of this texture */
-		unsigned int m_nReferenceCount;	/**< Reference count of this texture */
+		PLScene			*m_pScene;			/**< PL owner scene (always valid!) */
+		PLCore::String	 m_sName;			/**< Name of this texture */
+		unsigned int	 m_nReferenceCount;	/**< Reference count of this texture */
 
 
 };

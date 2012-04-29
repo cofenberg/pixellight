@@ -64,7 +64,7 @@ class PLSceneMaterialSRShaderLighting : public PLSceneMaterial {
 		*  @param[in] sName
 		*    Name of this material
 		*/
-		PLSceneMaterialSRShaderLighting(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial, const std::string &sName);
+		PLSceneMaterialSRShaderLighting(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial, const PLCore::String &sName);
 
 		/**
 		*  @brief

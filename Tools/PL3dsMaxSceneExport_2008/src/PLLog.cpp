@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <stdarg.h>
+#include <string.h>
 #include <PLCore/PLCoreWindows.h>	// Depending on the used compiler, nullptr has to be defined by this header
 #include "PL3dsMaxSceneExport/PLLog.h"
 
@@ -35,13 +36,19 @@ PLLog *g_pLog = nullptr;
 
 
 //[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+using namespace PLCore;
+
+
+//[-------------------------------------------------------]
 //[ Public definitions                                    ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Constructor
 */
-PLLog::PLLog(const std::string &sFilename) : PLTextFile(sFilename, true),
+PLLog::PLLog(const String &sFilename) : PLTextFile(sFilename, true),
 	m_nFlags(Error | Warning | Hint),
 	m_nNumOfErrors(0),
 	m_nNumOfWarnings(0),

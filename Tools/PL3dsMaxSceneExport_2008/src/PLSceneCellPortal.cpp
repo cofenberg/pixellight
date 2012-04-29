@@ -42,7 +42,7 @@ using namespace PLCore;
 *  @brief
 *    Returns the name of the target cell
 */
-const std::string &PLSceneCellPortal::GetTargetCell() const
+String PLSceneCellPortal::GetTargetCell() const
 {
 	return m_sTargetCell;
 }
@@ -55,7 +55,7 @@ const std::string &PLSceneCellPortal::GetTargetCell() const
 *  @brief
 *    Constructor
 */
-PLSceneCellPortal::PLSceneCellPortal(PLSceneContainer &cContainer, IGameNode &cIGameNode, const std::string &sName, const std::string &sTargetCell) :
+PLSceneCellPortal::PLSceneCellPortal(PLSceneContainer &cContainer, IGameNode &cIGameNode, const String &sName, const String &sTargetCell) :
 	PLScenePortal(cContainer, cIGameNode, sName, TypeCellPortal, "PLScene::SNCellPortal"),
 	m_sTargetCell(sTargetCell)
 {
@@ -73,18 +73,18 @@ PLSceneCellPortal::~PLSceneCellPortal()
 //[-------------------------------------------------------]
 //[ Private virtual PLSceneNode functions                 ]
 //[-------------------------------------------------------]
-void PLSceneCellPortal::WriteToFile(XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir)
+void PLSceneCellPortal::WriteToFile(XmlElement &cSceneElement, const String &sApplicationDrive, const String &sApplicationDir)
 {
 	// Add scene node
 	XmlElement *pNodeElement = new XmlElement("Node");
-	pNodeElement->SetAttribute("Class", GetClassName().c_str());
-	pNodeElement->SetAttribute("Name",  GetName().c_str());
+	pNodeElement->SetAttribute("Class", GetClassName());
+	pNodeElement->SetAttribute("Name",  GetName());
 
 	// Write position, rotation, scale, bounding box and flags
 	WriteToFilePosRotScaleBoxFlags(*pNodeElement);
 
 	// Target cell
-	pNodeElement->SetAttribute("TargetCell", m_sTargetCell.c_str());
+	pNodeElement->SetAttribute("TargetCell", m_sTargetCell);
 
 	// [TODO] Check this again, within the Dungeon-Demo scene, this test fails for one portal...
 	// Check cell-portal direction and write a warning into the log if the direction looks wrong
@@ -98,7 +98,7 @@ void PLSceneCellPortal::WriteToFile(XmlElement &cSceneElement, const std::string
 		// Check whether the cell-portal looks into the owner cell
 		fDot = DotProd(m_vNormal, vDir);
 		if (fDot < 0.0f)
-			g_pLog->LogFLine(PLLog::Warning, "%s: The cell-portal doesn't look INTO the cell (%s) it is in!!", GetIGameNode()->GetName(), pContainer->GetName().c_str());
+			g_pLog->LogFLine(PLLog::Warning, "%s: The cell-portal doesn't look INTO the cell (%s) it is in!!", GetIGameNode()->GetName(), pContainer->GetName().GetASCII());
 	}
 
 	// Vertices

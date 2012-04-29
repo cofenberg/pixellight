@@ -42,7 +42,7 @@ using namespace PLCore;
 *  @brief
 *    Constructor
 */
-PLSceneCell::PLSceneCell(PLSceneContainer &cContainer, const std::string &sName) :
+PLSceneCell::PLSceneCell(PLSceneContainer &cContainer, const String &sName) :
 	PLSceneContainer(&cContainer, sName, TypeCell)
 {
 }
@@ -59,9 +59,9 @@ PLSceneCell::~PLSceneCell()
 //[-------------------------------------------------------]
 //[ Private virtual PLSceneNode functions                 ]
 //[-------------------------------------------------------]
-void PLSceneCell::WriteToFile(XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir)
+void PLSceneCell::WriteToFile(XmlElement &cSceneElement, const String &sApplicationDrive, const String &sApplicationDir)
 {
-	static const std::string sSCCell = "PLScene::SCCell";
+	static const String sSCCell = "PLScene::SCCell";
 	PLSceneContainer::WriteToFile(cSceneElement, sApplicationDrive, sApplicationDir, sSCCell);
 }
 
@@ -86,10 +86,10 @@ void PLSceneCell::PostProcess()
 					// Add this cell-portal to the list of incoming cell-portals of the target cell
 					static_cast<PLSceneCell*>(pNode)->m_lstIncomingCellPortals.push_back(pCellPortal);
 				} else {
-					g_pLog->LogFLine(PLLog::Error, "Cell-portal '%s': There's a scene node with the name '%s', but this is NO (valid target) cell node! (note: 'Parent.' is added automatically by the exporter if required...)", pCellPortal->GetMaxNode()->GetName(), pCellPortal->GetTargetCell().c_str());
+					g_pLog->LogFLine(PLLog::Error, "Cell-portal '%s': There's a scene node with the name '%s', but this is NO (valid target) cell node! (note: 'Parent.' is added automatically by the exporter if required...)", pCellPortal->GetMaxNode()->GetName(), pCellPortal->GetTargetCell().GetASCII());
 				}
 			} else {
-				g_pLog->LogFLine(PLLog::Error, "Cell-portal '%s': There's no (target) cell with the name '%s'! (note: 'Parent.' is added automatically by the exporter if required...)", pCellPortal->GetMaxNode()->GetName(), pCellPortal->GetTargetCell().c_str());
+				g_pLog->LogFLine(PLLog::Error, "Cell-portal '%s': There's no (target) cell with the name '%s'! (note: 'Parent.' is added automatically by the exporter if required...)", pCellPortal->GetMaxNode()->GetName(), pCellPortal->GetTargetCell().GetASCII());
 			}
 		}
 	}

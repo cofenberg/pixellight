@@ -64,7 +64,7 @@ class PLSceneMaterialBakeShell : public PLSceneMaterial {
 		*  @param[in] sName
 		*    Name of this material
 		*/
-		PLSceneMaterialBakeShell(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial, const std::string &sName);
+		PLSceneMaterialBakeShell(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial, const PLCore::String &sName);
 
 		/**
 		*  @brief

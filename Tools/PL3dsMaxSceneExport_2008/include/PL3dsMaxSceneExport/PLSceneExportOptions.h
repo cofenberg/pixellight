@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <string>
 #include <vector>
+#include <PLCore/String/String.h>
 
 
 //[-------------------------------------------------------]
@@ -46,29 +46,29 @@ class PLSceneExportOptions {
 	//[ Public static data                                    ]
 	//[-------------------------------------------------------]
 	public:
-		static const int         MaxTexCoords = 4;			/**< Maximum number of texture coordinates (no engine limitation!) */
-		static const int         MaxVertexWeights = 8;		/**< Maximum number of vertex weights (no engine limitation!) */
-		static const std::string DefaultOptionsFilename;	/**< Default options filename */
+		static const int			MaxTexCoords = 4;		/**< Maximum number of texture coordinates (no engine limitation!) */
+		static const int			MaxVertexWeights = 8;	/**< Maximum number of vertex weights (no engine limitation!) */
+		static const PLCore::String DefaultOptionsFilename;	/**< Default options filename */
 
 
 	//[-------------------------------------------------------]
 	//[ Public data                                           ]
 	//[-------------------------------------------------------]
 	public:
-		std::string sFilename;						/**< Scene filename */
-		std::string sFilenameOnly;					/**< Scene filename only without the path */
-		bool		bRemoveSpaces;					/**< Remove spaces/tabs within names? */
-		bool		bCorrectPortals;				/**< Correct portals if required? */
-		bool		bPLDirectories;					/**< PL directories? */
-		bool		bSubdirectories;				/**< Subdirectories? (do only use this option in case 'bPLDirectories' is 'true') */
-		bool		bOverwriteAmbientColor;			/**< Overwrite ambient color? */
-		float		fOverwrittenAmbientColor[3];	/**< Overwritten RGB (0-1) ambient color, only used if 'bOverwriteAmbientColor' is true */
-		bool		bAnimationPlayback;				/**< Automatic animation playback? */
-		bool		bShowExportedScene;				/**< Show the exported scene after the export? */
-		bool		bPublish;						/**< Pack everything together required for 'PLViewer'? */
-		std::string sSceneContainer;				/**< Scene container */
-		std::string sSceneRenderer;					/**< Scene renderer */
-		std::string sViewer;						/**< Viewer */
+		PLCore::String sFilename;					/**< Scene filename */
+		PLCore::String sFilenameOnly;				/**< Scene filename only without the path */
+		bool		   bRemoveSpaces;				/**< Remove spaces/tabs within names? */
+		bool		   bCorrectPortals;				/**< Correct portals if required? */
+		bool		   bPLDirectories;				/**< PL directories? */
+		bool		   bSubdirectories;				/**< Subdirectories? (do only use this option in case 'bPLDirectories' is 'true') */
+		bool		   bOverwriteAmbientColor;		/**< Overwrite ambient color? */
+		float		   fOverwrittenAmbientColor[3];	/**< Overwritten RGB (0-1) ambient color, only used if 'bOverwriteAmbientColor' is true */
+		bool		   bAnimationPlayback;			/**< Automatic animation playback? */
+		bool		   bShowExportedScene;			/**< Show the exported scene after the export? */
+		bool		   bPublish;					/**< Pack everything together required for 'PLViewer'? */
+		PLCore::String sSceneContainer;				/**< Scene container */
+		PLCore::String sSceneRenderer;				/**< Scene renderer */
+		PLCore::String sViewer;						/**< Viewer */
 
 	// Log
 		bool bLog;		/**< Create log file? */
@@ -94,8 +94,8 @@ class PLSceneExportOptions {
 		bool bBinormals;						/**< Export vertex binormals? */
 
 	// Other
-		std::vector<std::string*> m_lstSceneContainers;	/**< Scene containers */
-		std::vector<std::string*> m_lstSceneRenderers;	/**< Scene renderers */
+		std::vector<PLCore::String*> m_lstSceneContainers;	/**< Scene containers */
+		std::vector<PLCore::String*> m_lstSceneRenderers;	/**< Scene renderers */
 
 
 	//[-------------------------------------------------------]
@@ -106,8 +106,8 @@ class PLSceneExportOptions {
 		~PLSceneExportOptions();
 		void SetDefaultSettings();
 		void WriteIntoLog();
-		void Load(const std::string &sFilename = DefaultOptionsFilename);
-		void Save(const std::string &sFilename = DefaultOptionsFilename);
+		void Load(const PLCore::String &sFilename = DefaultOptionsFilename);
+		void Save(const PLCore::String &sFilename = DefaultOptionsFilename);
 
 
 	//[-------------------------------------------------------]
@@ -123,7 +123,7 @@ class PLSceneExportOptions {
 		*  @param[out] sAbsFilename
 		*    Will receive the resulting absolute filename
 		*/
-		void GetAbsoluteFilename(const std::string &sFilename, std::string &sAbsFilename) const;
+		void GetAbsoluteFilename(const PLCore::String &sFilename, PLCore::String &sAbsFilename) const;
 
 		/**
 		*  @brief
@@ -150,7 +150,7 @@ class PLSceneExportOptions {
 		*  @param[in] sFilename
 		*    Configuration filename
 		*/
-		void LoadV2(const std::string &sFilename);
+		void LoadV2(const PLCore::String &sFilename);
 
 		/**
 		*  @brief
@@ -159,7 +159,7 @@ class PLSceneExportOptions {
 		*  @param[in] sFilename
 		*    Configuration filename
 		*/
-		void LoadV0orV1(const std::string &sFilename);
+		void LoadV0orV1(const PLCore::String &sFilename);
 
 
 };

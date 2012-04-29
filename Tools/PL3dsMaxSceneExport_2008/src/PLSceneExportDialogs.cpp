@@ -35,6 +35,12 @@
 
 
 //[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+using namespace PLCore;
+
+
+//[-------------------------------------------------------]
 //[ Global functions                                      ]
 //[-------------------------------------------------------]
 static INT_PTR CALLBACK AboutBoxDlgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -162,11 +168,11 @@ void SetupDialog(HWND hWnd)
 	// Scene container
 	SendDlgItemMessage(hWnd, IDC_SCENECONTAINER, CB_RESETCONTENT, 0, 0);
 	int nSelection = 0;
-	for (std::vector<std::string*>::size_type i=0; i<g_SEOptions.m_lstSceneContainers.size(); i++) {
-		std::string *psString = g_SEOptions.m_lstSceneContainers[i];
+	for (std::vector<String*>::size_type i=0; i<g_SEOptions.m_lstSceneContainers.size(); i++) {
+		String *psString = g_SEOptions.m_lstSceneContainers[i];
 		if (psString) {
-			SendDlgItemMessage(hWnd, IDC_SCENECONTAINER, CB_ADDSTRING, 0, reinterpret_cast<LONG>(const_cast<LPSTR>(psString->c_str())));
-			if (!_stricmp(psString->c_str(), g_SEOptions.sSceneContainer.c_str()))
+			SendDlgItemMessage(hWnd, IDC_SCENECONTAINER, CB_ADDSTRING, 0, reinterpret_cast<LONG>(const_cast<LPSTR>(psString->GetASCII())));
+			if (psString->CompareNoCase(g_SEOptions.sSceneContainer))
 				nSelection = static_cast<int>(i);
 		}
 	}
@@ -174,17 +180,17 @@ void SetupDialog(HWND hWnd)
 	// Scene renderer
 	SendDlgItemMessage(hWnd, IDC_SCENERENDERER, CB_RESETCONTENT, 0, 0);
 	nSelection = 0;
-	for (std::vector<std::string*>::size_type i=0; i<g_SEOptions.m_lstSceneRenderers.size(); i++) {
-		std::string *psString = g_SEOptions.m_lstSceneRenderers[i];
+	for (std::vector<String*>::size_type i=0; i<g_SEOptions.m_lstSceneRenderers.size(); i++) {
+		String *psString = g_SEOptions.m_lstSceneRenderers[i];
 		if (psString) {
-			SendDlgItemMessage(hWnd, IDC_SCENERENDERER, CB_ADDSTRING, 0, reinterpret_cast<LONG>(const_cast<LPSTR>(psString->c_str())));
-			if (!_stricmp(psString->c_str(), g_SEOptions.sSceneRenderer.c_str()))
+			SendDlgItemMessage(hWnd, IDC_SCENERENDERER, CB_ADDSTRING, 0, reinterpret_cast<LONG>(const_cast<LPSTR>(psString->GetASCII())));
+			if (psString->CompareNoCase(g_SEOptions.sSceneRenderer))
 				nSelection = static_cast<int>(i);
 		}
 	}
 	SendDlgItemMessage(hWnd, IDC_SCENERENDERER, CB_SETCURSEL, nSelection, 0);
 	// Viewer
-	SetDlgItemText(hWnd, IDC_SCENEVIEWER, g_SEOptions.sViewer.c_str());
+	SetDlgItemText(hWnd, IDC_SCENEVIEWER, g_SEOptions.sViewer.GetASCII());
 
 	// Log
 	SendDlgItemMessage(hWnd, IDC_LOG, CB_RESETCONTENT, 0, 0);
@@ -319,7 +325,7 @@ static INT_PTR CALLBACK ExportOptionsDlgProc(HWND hWnd, UINT msg, WPARAM wParam,
 				{
 					int i = static_cast<int>(SendDlgItemMessage(hWnd, IDC_SCENECONTAINER, CB_GETCURSEL, 0, 0L));
 					if (i >= 0 && i < static_cast<int>(g_SEOptions.m_lstSceneContainers.size())) {
-						std::string *psString = g_SEOptions.m_lstSceneContainers[i];
+						String *psString = g_SEOptions.m_lstSceneContainers[i];
 						if (psString)
 							g_SEOptions.sSceneContainer = *psString;
 					}
@@ -330,7 +336,7 @@ static INT_PTR CALLBACK ExportOptionsDlgProc(HWND hWnd, UINT msg, WPARAM wParam,
 				{
 					int i = static_cast<int>(SendDlgItemMessage(hWnd, IDC_SCENERENDERER, CB_GETCURSEL, 0, 0L));
 					if (i >= 0 && i < static_cast<int>(g_SEOptions.m_lstSceneRenderers.size())) {
-						std::string *psString = g_SEOptions.m_lstSceneRenderers[i];
+						String *psString = g_SEOptions.m_lstSceneRenderers[i];
 						if (psString)
 							g_SEOptions.sSceneRenderer = *psString;
 					}
@@ -462,7 +468,7 @@ static INT_PTR CALLBACK ExportOptionsDlgProc(HWND hWnd, UINT msg, WPARAM wParam,
 						}
 
 						// Document file
-						std::string sDocumentFile;
+						String sDocumentFile;
 
 						// There MUST be a 'Runtime' at the end (first, we check for the public SDK structure)
 						size_t nRuntimeLength = strlen("Runtime");
@@ -472,15 +478,15 @@ static INT_PTR CALLBACK ExportOptionsDlgProc(HWND hWnd, UINT msg, WPARAM wParam,
 							pszBuffer[nLength] = '\0';
 
 							// Construct the absolute filename
-							sDocumentFile = std::string(pszBuffer) + "Docs\\PixelLight3dsMaxSceneExport.pdf";
+							sDocumentFile = String(pszBuffer) + "Docs\\PixelLight3dsMaxSceneExport.pdf";
 						}
 
 						// Cleanup
 						delete [] pszBuffer;
 
 						// Open the help document
-						if (!sDocumentFile.empty())
-							ShellExecute(0, "open", sDocumentFile.c_str(), 0, 0, SW_SHOW);
+						if (sDocumentFile.GetLength())
+							ShellExecute(0, "open", sDocumentFile.GetASCII(), 0, 0, SW_SHOW);
 					}
 					break;
 				}

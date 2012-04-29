@@ -64,9 +64,9 @@ PLSceneEnumProc::PLSceneEnumProc(const TCHAR szName[], Interface &cMaxInterface,
 		// Check version match!
 		if (nRunning3dsMaxVersion < nBuild3dsMaxVersion) {
 			// Show an error message box
-			std::string sError = "Error: 3ds Max version mismatch!\nYou are using version '" + PLTools::ToString(nRunning3dsMaxVersion/1000.0f) +
+			String sError = "Error: 3ds Max version mismatch!\nYou are using version '" + PLTools::ToString(nRunning3dsMaxVersion/1000.0f) +
 				"', but this exporter was build for at least version '" + PLTools::ToString(nBuild3dsMaxVersion/1000.0f) + "'!";
-			MessageBox(nullptr, sError.c_str(), _T("PixelLight scene export error"), MB_OK);
+			MessageBox(nullptr, sError.GetASCII(), _T("PixelLight scene export error"), MB_OK);
 
 			// ARGH! Get us out of here!
 			return;
@@ -83,9 +83,9 @@ PLSceneEnumProc::PLSceneEnumProc(const TCHAR szName[], Interface &cMaxInterface,
 		// Check version match!
 		if (fRunningIGameVersion < fBuildIGameVersion) {
 			// Show an error message box
-			std::string sError = "Error: 'IGame.dll' version mismatch!\nYou are using version '" + PLTools::ToString(fRunningIGameVersion) +
+			String sError = "Error: 'IGame.dll' version mismatch!\nYou are using version '" + PLTools::ToString(fRunningIGameVersion) +
 				"', but this exporter was build for at least version '" + PLTools::ToString(fBuildIGameVersion)+ "'!";
-			MessageBox(nullptr, sError.c_str(), _T("PixelLight scene export error"), MB_OK);
+			MessageBox(nullptr, sError.GetASCII(), _T("PixelLight scene export error"), MB_OK);
 
 			// ARGH! Get us out of here!
 			return;
@@ -99,7 +99,7 @@ PLSceneEnumProc::PLSceneEnumProc(const TCHAR szName[], Interface &cMaxInterface,
 	cMaxInterface.ProgressStart(_T("Export"), true, fn, nullptr);
 	if (!PLSceneOpenExportDialog(cMaxInterface)) {
 		char szApplicationDrive[_MAX_DRIVE], szApplicationDir[_MAX_DIR];
-		std::string sFilename;
+		String sFilename;
 
 		// Save options. Our default filename is quite long, so, there shouldn't be any conflicts with
 		// configuration files of other plugins...
@@ -111,44 +111,44 @@ PLSceneEnumProc::PLSceneEnumProc(const TCHAR szName[], Interface &cMaxInterface,
 		g_SEOptions.sFilenameOnly = pszNameT;
 
 		// Cut of '.scene' extension
-		size_t nIndex = g_SEOptions.sFilenameOnly.find_last_of(".");
-		if (nIndex != std::string::npos)
-			g_SEOptions.sFilenameOnly.erase(nIndex);
+		int nIndex = g_SEOptions.sFilenameOnly.LastIndexOf(".");
+		if (nIndex >= 0)
+			g_SEOptions.sFilenameOnly.Delete(nIndex);
 
 		// Get filename
 		if (g_SEOptions.bPLDirectories) {
 			// Data
-			std::string sDataFilename = std::string(szApplicationDrive) + szApplicationDir + "Data";
-			CreateDirectory(sDataFilename.c_str(), nullptr);
+			String sDataFilename = String(szApplicationDrive) + szApplicationDir + "Data";
+			CreateDirectory(sDataFilename.GetASCII(), nullptr);
 			// Meshes
 			if (g_SEOptions.bExportMeshes) {
 				sFilename = sDataFilename + "\\Meshes\\";
-				CreateDirectory(sFilename.c_str(), nullptr);
+				CreateDirectory(sFilename.GetASCII(), nullptr);
 				if (g_SEOptions.bSubdirectories) {
-					sFilename.append(g_SEOptions.sFilenameOnly);
-					sFilename.append("\\");
-					CreateDirectory(sFilename.c_str(), nullptr);
+					sFilename += g_SEOptions.sFilenameOnly;
+					sFilename += '\\';
+					CreateDirectory(sFilename.GetASCII(), nullptr);
 				}
 			}
 			// Misc
 			sFilename = sDataFilename + "\\Misc\\";
-			CreateDirectory(sFilename.c_str(), nullptr);
+			CreateDirectory(sFilename.GetASCII(), nullptr);
 			if (g_SEOptions.bSubdirectories) {
-				sFilename.append(g_SEOptions.sFilenameOnly);
-				sFilename.append("\\");
-				CreateDirectory(sFilename.c_str(), nullptr);
+				sFilename += g_SEOptions.sFilenameOnly;
+				sFilename += '\\';
+				CreateDirectory(sFilename.GetASCII(), nullptr);
 			}
 			// Scenes
 			sFilename = sDataFilename + "\\Scenes\\";
-			CreateDirectory(sFilename.c_str(), nullptr);
+			CreateDirectory(sFilename.GetASCII(), nullptr);
 			// Materials
 			if (g_SEOptions.bExportMaterials && g_SEOptions.bCreateMaterials) {
 				sFilename = sDataFilename + "\\Materials\\";
-				CreateDirectory(sFilename.c_str(), nullptr);
+				CreateDirectory(sFilename.GetASCII(), nullptr);
 				if (g_SEOptions.bSubdirectories) {
-					sFilename.append(g_SEOptions.sFilenameOnly);
-					sFilename.append("\\");
-					CreateDirectory(sFilename.c_str(), nullptr);
+					sFilename += g_SEOptions.sFilenameOnly;
+					sFilename += '\\';
+					CreateDirectory(sFilename.GetASCII(), nullptr);
 				}
 			}
 			sFilename = sDataFilename + "\\Scenes\\" + pszNameT;
@@ -157,24 +157,26 @@ PLSceneEnumProc::PLSceneEnumProc(const TCHAR szName[], Interface &cMaxInterface,
 		}
 
 		// Ensure that the filename ending is '.scene' and not '.SCENE', '.sCeNe' and so on (may cause troubles)
-		nIndex = sFilename.find_last_of(".");
-		if (nIndex != std::string::npos)
-			sFilename.replace(nIndex, 6, ".scene");
+		nIndex = sFilename.LastIndexOf(".");
+		if (nIndex >= 0) {
+			sFilename.Delete(nIndex);
+			sFilename += ".scene";
+		}
 
 		g_SEOptions.sFilename = szName;
 
 		bool bSelected = (nMaxOptions & SCENE_EXPORT_SELECTED);
 		cMaxInterface.ProgressUpdate(0, 0, _T("Start export..."));
-		PLTextFile cFile(sFilename.c_str());
+		PLTextFile cFile(sFilename);
 		if (cFile.IsValid()) {
 			// Log
 			if (g_SEOptions.bLog) {
 				// Get log filename
-				std::string sLogFilename;
-				std::string sName = szName;
-				nIndex = sName.find_last_of(".");
-				if (nIndex != std::string::npos)
-					sName.erase(nIndex);
+				String sLogFilename;
+				String sName = szName;
+				nIndex = sName.LastIndexOf(".");
+				if (nIndex >= 0)
+					sName.Delete(nIndex);
 				sLogFilename = sName + "Log.txt";
 
 				// Open log
@@ -198,8 +200,8 @@ PLSceneEnumProc::PLSceneEnumProc(const TCHAR szName[], Interface &cMaxInterface,
 			g_pLog->SetFlags(g_SEOptions.nLogFlags);
 
 			// Check the current filename of the loaded 3ds Max scene
-			std::string sCurFilePath = cMaxInterface.GetCurFilePath();
-			if (!sCurFilePath.length())
+			String sCurFilePath = cMaxInterface.GetCurFilePath();
+			if (!sCurFilePath.GetLength())
 				g_pLog->LogFLine(PLLog::Warning, "There's no current 3ds Max scene filename! Maybe scene was loaded using Drag'n'Drop and the scene was not dropped within a render viewport?");
 
 			// Initialize the IGame interface
@@ -233,7 +235,7 @@ PLSceneEnumProc::PLSceneEnumProc(const TCHAR szName[], Interface &cMaxInterface,
 
 				// Save settings
 				cFile.Close();
-				cDocument.Save(sFilename.c_str());
+				cDocument.Save(sFilename);
 
 				// Write some scene statistics into the log
 				pPLScene->OutputStatistics();
@@ -251,32 +253,32 @@ PLSceneEnumProc::PLSceneEnumProc(const TCHAR szName[], Interface &cMaxInterface,
 
 			// Publish?
 			if (g_SEOptions.bPublish)
-				Publish(std::string(szApplicationDrive) + szApplicationDir + std::string("x86"));
+				Publish(String(szApplicationDrive) + szApplicationDir + String("x86"));
 
 			// Close the log
-			std::string sLogFilename = g_pLog->GetFilename();
+			String sLogFilename = g_pLog->GetFilename();
 			delete g_pLog;
 			g_pLog = nullptr;
 
 			// Open the log right now?
 			if (g_SEOptions.bLog && g_SEOptions.bLogOpen)
-				ShellExecute(0, _T("open"), sLogFilename.c_str(), 0, 0, SW_SHOW);
+				ShellExecute(0, _T("open"), sLogFilename.GetASCII(), 0, 0, SW_SHOW);
 
 			// Show the scene right now?
-			if (g_SEOptions.bShowExportedScene && g_SEOptions.sViewer.length()) {
-				std::string sDirectory = g_SEOptions.sViewer;
-				nIndex = sDirectory.find_last_of("/");
-				if (nIndex == std::string::npos)
-					nIndex = sDirectory.find_last_of("\\");
-				if (nIndex != std::string::npos) {
-					sDirectory.erase(nIndex);
-					ShellExecute(0, _T("open"), g_SEOptions.sViewer.c_str(), ("\"" + sFilename + "\"").c_str(), sDirectory.c_str(), SW_SHOW);
+			if (g_SEOptions.bShowExportedScene && g_SEOptions.sViewer.GetLength()) {
+				String sDirectory = g_SEOptions.sViewer;
+				nIndex = sDirectory.LastIndexOf("/");
+				if (nIndex < 0)
+					nIndex = sDirectory.LastIndexOf("\\");
+				if (nIndex >= 0) {
+					sDirectory.Delete(nIndex);
+					ShellExecute(0, _T("open"), g_SEOptions.sViewer.GetASCII(), ("\"" + sFilename + "\"").GetASCII(), sDirectory.GetASCII(), SW_SHOW);
 				}
 			}
 		} else {
 			// Show an error message box
-			std::string sError = "Error: Can't create the file \"" + sFilename + "\"";
-			MessageBox(nullptr, sError.c_str(), _T("PixelLight scene export error"), MB_OK);
+			String sError = "Error: Can't create the file \"" + sFilename + "\"";
+			MessageBox(nullptr, sError.GetASCII(), _T("PixelLight scene export error"), MB_OK);
 		}
 	}
 
@@ -393,7 +395,7 @@ void PLSceneEnumProc::LogUnitDisplayInformation(PLLog &cLog) const
 *  @brief
 *    Packs everything 'PLViewer' requires into the exported directory
 */
-void PLSceneEnumProc::Publish(const std::string &sTargetDirectory) const
+void PLSceneEnumProc::Publish(const String &sTargetDirectory) const
 {
 	// Get get runtime directory
 	char *pszBuffer = PLTools::GetPixelLightRuntimeDirectory();
@@ -404,18 +406,18 @@ void PLSceneEnumProc::Publish(const std::string &sTargetDirectory) const
 			pszBuffer[nLength-1] = '\0';
 			nLength--;
 		}
-		const std::string &sSourceDirectory = pszBuffer;
+		const String &sSourceDirectory = pszBuffer;
 		delete [] pszBuffer;
 
 		// Create the executable (x86) directory
-		CreateDirectory(sTargetDirectory.c_str(), nullptr);
+		CreateDirectory(sTargetDirectory.GetASCII(), nullptr);
 
 		// Physics support?
-		bool bPhysics = !strcmp(g_SEOptions.sSceneContainer.c_str(), "PLPhysics::SCPhysicsWorld");
+		bool bPhysics = (g_SEOptions.sSceneContainer == "PLPhysics::SCPhysicsWorld");
 
 		{ // Copy runtime and data files
 			const int NumOfFiles = 20;
-			static const std::string sFiles[] =
+			static const String sFiles[] =
 			{
 				"PLCore.dll",
 				"PLMath.dll",
@@ -439,79 +441,79 @@ void PLSceneEnumProc::Publish(const std::string &sTargetDirectory) const
 				"..\\Data\\Standard.zip"
 			};
 			for (int i=0; i<NumOfFiles; i++) {
-				const std::string sAbsSourceFilename = sSourceDirectory+"\\"+sFiles[i];
-				const std::string sAbsTargetFilename = sTargetDirectory+"\\"+sFiles[i];
-				CopyFile(sAbsSourceFilename.c_str(), sAbsTargetFilename.c_str(), false);
+				const String sAbsSourceFilename = sSourceDirectory + '\\' + sFiles[i];
+				const String sAbsTargetFilename = sTargetDirectory + '\\' + sFiles[i];
+				CopyFile(sAbsSourceFilename.GetASCII(), sAbsTargetFilename.GetASCII(), false);
 			}
 		}
 
 		{ // Copy PLRenderer files
 			static const int NumOfFiles = 2;
-			static const std::string sFiles[] =
+			static const String sFiles[] =
 			{
 				"PLRendererOpenGL.dll",
 				"PLRendererOpenGL.plugin"
 			};
 			for (int i=0; i<NumOfFiles; i++) {
-				const std::string sAbsSourceFilename = sSourceDirectory+"\\"+sFiles[i];
-				const std::string sAbsTargetFilename = sTargetDirectory+"\\"+sFiles[i];
-				CopyFile(sAbsSourceFilename.c_str(), sAbsTargetFilename.c_str(), false);
+				const String sAbsSourceFilename = sSourceDirectory + '\\' + sFiles[i];
+				const String sAbsTargetFilename = sTargetDirectory + '\\' + sFiles[i];
+				CopyFile(sAbsSourceFilename.GetASCII(), sAbsTargetFilename.GetASCII(), false);
 			}
 		}
 
 		{ // Copy PLScene files
 			static const int NumOfFiles = 2;
-			static const std::string sFiles[] =
+			static const String sFiles[] =
 			{
 				"PLCompositing.dll",
 				"PLCompositing.plugin"
 			};
 			for (int i=0; i<NumOfFiles; i++) {
-				const std::string sAbsSourceFilename = sSourceDirectory+"\\"+sFiles[i];
-				const std::string sAbsTargetFilename = sTargetDirectory+"\\"+sFiles[i];
-				CopyFile(sAbsSourceFilename.c_str(), sAbsTargetFilename.c_str(), false);
+				const String sAbsSourceFilename = sSourceDirectory + '\\' + sFiles[i];
+				const String sAbsTargetFilename = sTargetDirectory + '\\' + sFiles[i];
+				CopyFile(sAbsSourceFilename.GetASCII(), sAbsTargetFilename.GetASCII(), false);
 			}
 		}
 
 		// Copy PLPhysics files
 		if (bPhysics) {
 			static const int NumOfFiles = 3;
-			static const std::string sFiles[] =
+			static const String sFiles[] =
 			{
 				"PLPhysicsNewton.dll",
 				"PLPhysicsNewton.plugin",
 				"newton.dll"
 			};
 			for (int i=0; i<NumOfFiles; i++) {
-				const std::string sAbsSourceFilename = sSourceDirectory+"\\"+sFiles[i];
-				const std::string sAbsTargetFilename = sTargetDirectory+"\\"+sFiles[i];
-				CopyFile(sAbsSourceFilename.c_str(), sAbsTargetFilename.c_str(), false);
+				const String sAbsSourceFilename = sSourceDirectory + '\\' + sFiles[i];
+				const String sAbsTargetFilename = sTargetDirectory + '\\' + sFiles[i];
+				CopyFile(sAbsSourceFilename.GetASCII(), sAbsTargetFilename.GetASCII(), false);
 			}
 		}
 
 		// Copy 'PLViewer.exe'
-		std::string sViewer = PLTools::GetPLViewerFilename();
-		if (sViewer.length()) {
+		String sViewer = PLTools::GetPLViewerFilename();
+		if (sViewer.GetLength()) {
 			// Copy
-			CopyFile(sViewer.c_str(), (sTargetDirectory+"\\"+"PLViewer.exe").c_str(), false);
+			CopyFile(sViewer.GetASCII(), (sTargetDirectory + "\\PLViewer.exe").GetASCII(), false);
 		}
 
 		{ // Copy VC2010 redistributable files
 			const int NumOfFiles = 2;
-			static const std::string sFiles[] =
+			static const String sFiles[] =
 			{
 				"msvcr100.dll",
 				"msvcp100.dll"
 			};
 			for (int i=0; i<NumOfFiles; i++) {
-				const std::string sAbsSourceFilename = sSourceDirectory+"\\VC2010_Redistributable\\"+sFiles[i];
-				const std::string sAbsTargetFilename = sTargetDirectory+"\\"+sFiles[i];
-				CopyFile(sAbsSourceFilename.c_str(), sAbsTargetFilename.c_str(), false);
+				const String sAbsSourceFilename = sSourceDirectory + "\\VC2010_Redistributable\\" + sFiles[i];
+				const String sAbsTargetFilename = sTargetDirectory + '\\' + sFiles[i];
+				CopyFile(sAbsSourceFilename.GetASCII(), sAbsTargetFilename.GetASCII(), false);
 			}
 		}
 
 		{ // Create the 'PLViewer.cfg' file
-			const std::string sAbsFilename = sTargetDirectory + "\\..\\" + "PLViewer.cfg";
+			const String sAbsFilename = sTargetDirectory + "\\..\\PLViewer.cfg";
 
 			// Create XML document
 			XmlDocument cDocument;
@@ -528,7 +530,7 @@ void PLSceneEnumProc::Publish(const std::string &sTargetDirectory) const
 				// Add the 'Group' element
 				XmlElement *pGroupElement = new XmlElement("Group");
 				pGroupElement->SetAttribute("Class", "PLViewerConfig");
-				pGroupElement->SetAttribute("DefaultFilename", String("Data\\Scenes\\") + g_SEOptions.sFilenameOnly.c_str() + ".scene");
+				pGroupElement->SetAttribute("DefaultFilename", "Data\\Scenes\\" + g_SEOptions.sFilenameOnly + ".scene");
 
 				// Link 'Group' element
 				pConfigElement->LinkEndChild(*pGroupElement);
@@ -538,13 +540,13 @@ void PLSceneEnumProc::Publish(const std::string &sTargetDirectory) const
 			cDocument.LinkEndChild(*pConfigElement);
 
 			{ // Before we safe, we need to ensure that the target directory is there, else 'Save()' will fail!
-				Url cUrl = sAbsFilename.c_str();
+				Url cUrl = sAbsFilename;
 				Directory cDirectory(cUrl.CutFilename());
 				cDirectory.CreateRecursive();
 			}
 
 			// Save settings
-			cDocument.Save(sAbsFilename.c_str());
+			cDocument.Save(sAbsFilename);
 		}
 	}
 }

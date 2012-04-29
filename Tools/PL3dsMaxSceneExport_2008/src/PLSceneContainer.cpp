@@ -54,57 +54,57 @@ using namespace PLCore;
 *  @brief
 *    Returns a scene node
 */
-PLSceneNode *PLSceneContainer::Get(const std::string &sName)
+PLSceneNode *PLSceneContainer::Get(const String &sName)
 {
 	// Name not empty?
-	if (!sName.length() || sName.c_str()[0] == '\0')
+	if (!sName.GetLength() || sName.GetASCII()[0] == '\0')
 		return nullptr;
 
 	// Is '.' the first character?
-	if (sName.c_str()[0] == '.')
+	if (sName.GetASCII()[0] == '.')
 		return nullptr; // Error!
 
 	// Is the name 'This' at the beginning?
-	if (!sName.compare(0, 4, "This")) {
+	if (sName.Compare("This", 0, 4)) {
 		// Return this scene node?
-		if (sName.c_str()[4] == '\0')
+		if (sName.GetASCII()[4] == '\0')
 			return this;
 
 		// Did a '.' follow?
-		if (sName.c_str()[4] == '.')
-			return Get(sName.substr(5));
+		if (sName.GetASCII()[4] == '.')
+			return Get(sName.GetSubstring(5));
 	}
 
 	// Is the name 'Root' at the beginning?
-	if (!sName.compare(0, 4, "Root")) {
+	if (sName.Compare("Root", 0, 4)) {
 		// Return root scene node?
-		if (sName.c_str()[4] == '\0')
+		if (sName.GetASCII()[4] == '\0')
 			return &GetScene();
 
 		// Did a '.' follow?
-		if (sName.c_str()[4] == '.')
-			return GetScene().Get(sName.substr(5));
+		if (sName.GetASCII()[4] == '.')
+			return GetScene().Get(sName.GetSubstring(5));
 	}
 
 	// 'Parent' at the beginning?
-	if (!sName.compare(0, 6, "Parent")) {
+	if (sName.Compare("Parent", 0, 6)) {
 		// Return parent scene node?
-		if (sName.c_str()[6] == '\0')
+		if (sName.GetASCII()[6] == '\0')
 			return GetContainer();
 
 		// Did a '.' follow?
-		if (sName.c_str()[6] == '.') {
+		if (sName.GetASCII()[6] == '.') {
 			// Is there a parent container?
-			return GetContainer() ? GetContainer()->Get(sName.substr(7)) : nullptr;
+			return GetContainer() ? GetContainer()->Get(sName.GetSubstring(7)) : nullptr;
 		}
 	}
 
 	// Check for the character '.' within the name
-	const char *pszNameT = sName.c_str();
+	const char *pszNameT = sName.GetASCII();
 	for (unsigned int i=0; *pszNameT!='\0'; i++) {
 		if (*pszNameT == '.') {
 			// Get the name of the scene container
-			std::string sContainerName = sName.substr(0, i);
+			String sContainerName = sName.GetSubstring(0, i);
 
 			// Get the scene node and check whether it is a scene container
 			PLSceneNode *pSceneNode = Get(sContainerName);
@@ -112,14 +112,15 @@ PLSceneNode *PLSceneContainer::Get(const std::string &sName)
 				return nullptr; // Error!
 
 			// Change 'into' this scene container
-			return static_cast<PLSceneContainer*>(pSceneNode)->Get(sName.substr(i+1));
+			return static_cast<PLSceneContainer*>(pSceneNode)->Get(sName.GetSubstring(i+1));
 		}
 		pszNameT++;
 	}
 
 	// Search for a scene node with this name
-	std::string sNameLower = PLTools::ToLower(sName); // Do ONLY use lower case, else the hashing will NOT return the same values!
-	std::map<std::string, PLSceneNode*>::iterator pIterator = m_mapNodes.find(sNameLower);
+	String sNameLower = sName;
+	sNameLower.ToLower(); // Do ONLY use lower case, else the hashing will NOT return the same values!
+	std::map<String, PLSceneNode*>::iterator pIterator = m_mapNodes.find(sNameLower);
 	return (pIterator == m_mapNodes.end()) ? nullptr : pIterator->second;
 }
 
@@ -140,7 +141,7 @@ const Point3 &PLSceneContainer::GetWorldSpaceCenter() const
 *  @brief
 *    Constructor
 */
-PLSceneContainer::PLSceneContainer(PLSceneContainer *pContainer, const std::string &sName, EType nType) :
+PLSceneContainer::PLSceneContainer(PLSceneContainer *pContainer, const String &sName, EType nType) :
 	PLSceneNode(pContainer, nullptr, sName, nType, ""),
 	m_bFixedCenter(false),
 	m_vCenter(0.0f, 0.0f, 0.0f)
@@ -170,26 +171,27 @@ PLSceneContainer::~PLSceneContainer()
 *  @brief
 *    Returns a cell with the given name
 */
-PLSceneCell *PLSceneContainer::GetCell(const std::string &sName, IGameNode &cIGameNode)
+PLSceneCell *PLSceneContainer::GetCell(const String &sName, IGameNode &cIGameNode)
 {
 	// Check the given name
-	if (!sName.size())
+	if (!sName.GetLength())
 		return nullptr; // Error!
 
 	// First at all, IS there already a cell with this name?
-	std::string sNameLower = PLTools::ToLower(sName); // Do ONLY use lower case, else the hashing will NOT return the same values!
-	std::map<std::string, PLSceneCell*>::iterator pIterator = m_mapCells.find(sNameLower);
+	String sNameLower = sName;
+	sNameLower.ToLower(); // Do ONLY use lower case, else the hashing will NOT return the same values!
+	std::map<String, PLSceneCell*>::iterator pIterator = m_mapCells.find(sNameLower);
 	if (pIterator != m_mapCells.end())
 		return pIterator->second;
 
 	// Nope, let's create a cell with this name
-	g_pLog->LogFLine(PLLog::Scene, "Cell '%s' is created by the 3ds Max node '%s'", sName.c_str(), cIGameNode.GetName());
+	g_pLog->LogFLine(PLLog::Scene, "Cell '%s' is created by the 3ds Max node '%s'", sName.GetASCII(), cIGameNode.GetName());
 	PLSceneCell *pCell = new PLSceneCell(*this, sName);
 	if (pCell) {
 		// Register the new cell
 		m_lstSceneNodes.push_back(pCell);
-		m_mapCells.insert(make_pair(sNameLower, pCell));
-		m_mapNodes.insert(make_pair(sNameLower, pCell));
+		m_mapCells.insert(std::make_pair(sNameLower, pCell));
+		m_mapNodes.insert(std::make_pair(sNameLower, pCell));
 
 		// Update the statistics
 		m_sStatistics.nNumOfCells++;
@@ -204,38 +206,38 @@ PLSceneCell *PLSceneContainer::GetCell(const std::string &sName, IGameNode &cIGa
 *  @brief
 *    Checks and corrects names
 */
-void PLSceneContainer::CheckAndCorrectName(std::string &sName, const TCHAR szMaxNode[], const char szType[]) const
+void PLSceneContainer::CheckAndCorrectName(String &sName, const TCHAR szMaxNode[], const char szType[]) const
 {
 	// Check for empty name
-	if (sName.empty()) {
+	if (!sName.GetLength()) {
 		g_pLog->LogFLine(PLLog::Warning, "'%s': There's no %s name!", szMaxNode, szType);
 
 		// Set a dummy name
 		sName = "?";
 
 	// Check for spaces/tabs within the name
-	} else if (sName.find_first_of(" ") != std::string::npos || sName.find_first_of("	") != std::string::npos) {
+	} else if (sName.IndexOf(" ") >= 0 || sName.IndexOf("	") >= 0) {
 		if (g_SEOptions.bRemoveSpaces) {
-			const std::string sOldName = sName;
+			const String sOldName = sName;
 
 			// Remove all spaces
-			std::string::size_type i = sName.find_first_of(" ");
-			while (i != std::string::npos) {
-				sName.erase(i, 1);
-				i = sName.find_first_of(" ");
+			int i = sName.IndexOf(" ");
+			while (i >= 0) {
+				sName.Delete(i, 1);
+				i = sName.IndexOf(" ");
 			}
 
 			// Remove all tabs
-			i = sName.find_first_of("	");
-			while (i != std::string::npos) {
-				sName.erase(i, 1);
-				i = sName.find_first_of("	");
+			i = sName.IndexOf("	");
+			while (i >= 0) {
+				sName.Delete(i, 1);
+				i = sName.IndexOf("	");
 			}
 
 			// Log message
-			g_pLog->LogFLine(PLLog::Warning, "'%s': There are spaces/tabs within the %s name '%s', this is NOT recommended! Changed name into '%s' automatically.", szMaxNode, szType, sOldName.c_str(), sName.c_str());
+			g_pLog->LogFLine(PLLog::Warning, "'%s': There are spaces/tabs within the %s name '%s', this is NOT recommended! Changed name into '%s' automatically.", szMaxNode, szType, sOldName.GetASCII(), sName.GetASCII());
 		} else {
-			g_pLog->LogFLine(PLLog::Warning, "'%s': There are spaces/tabs within the %s name '%s', this is NOT recommended!", szMaxNode, szType, sName.c_str());
+			g_pLog->LogFLine(PLLog::Warning, "'%s': There are spaces/tabs within the %s name '%s', this is NOT recommended!", szMaxNode, szType, sName.GetASCII());
 		}
 	}
 }
@@ -244,12 +246,12 @@ void PLSceneContainer::CheckAndCorrectName(std::string &sName, const TCHAR szMax
 *  @brief
 *    Writes the scene container into a file
 */
-void PLSceneContainer::WriteToFile(XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir, const std::string &sClass)
+void PLSceneContainer::WriteToFile(XmlElement &cSceneElement, const String &sApplicationDrive, const String &sApplicationDir, const String &sClass)
 {
 	// Add scene node
 	XmlElement *pNodeElement = new XmlElement("Container");
-	pNodeElement->SetAttribute("Class", sClass.c_str());
-	pNodeElement->SetAttribute("Name",  GetName().c_str());
+	pNodeElement->SetAttribute("Class", sClass);
+	pNodeElement->SetAttribute("Name",  GetName());
 
 	// [TODO] Currently the bounding boxes are not correct
 /*	if (!PLTools::IsEmpty(m_cBoundingBox)) {
@@ -297,21 +299,21 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 	EType nType = TypeUnknown;
 
 	// Is there a '.' within the node name? If yes, replace it by '-'.
-	std::string sName = cIGameNode.GetName();
-	size_t nIndex = sName.find_first_of(".");
-	if (nIndex != std::string::npos) {
+	String sName = cIGameNode.GetName();
+	int nIndex = sName.IndexOf(".");
+	if (nIndex >= 0) {
 		g_pLog->LogFLine(PLLog::Warning, "Node name '%s' has '.' within it, '.' is replaced by '-' automatically", cIGameNode.GetName());
-		char *pszName = const_cast<char*>(sName.c_str()) + nIndex;
+		char *pszName = const_cast<char*>(sName.GetASCII()) + nIndex;
 		while (*pszName != '\0') {
 			if (*pszName == '.')
 				*pszName = '-';
 			pszName++;
 		}
 	}
-	TCHAR *pszName = const_cast<TCHAR*>(sName.c_str());
+	TCHAR *pszName = const_cast<TCHAR*>(sName.GetASCII());
 
 	// Look for 'cell_' (cell_<cell name>_<node name> or cell_<cell name>_<mesh name>_<instance name>)
-	std::string sSceneCellName, sTargetSceneCellName, sSceneNodeName, sMeshName;
+	String sSceneCellName, sTargetSceneCellName, sSceneNodeName, sMeshName;
 	if (!_strnicmp(pszName, "cell_", 5)) {
 		// Get the name of the cell
 		TCHAR *pszNameT = pszName += 5;
@@ -326,7 +328,7 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 			// Read the cell name
 			while (*pszNameT != '_' && *pszNameT != '\0')
 				pszNameT++;
-			sSceneCellName.insert(0, pszName, pszNameT-pszName);
+			sSceneCellName.Insert(pszName, 0, pszNameT-pszName);
 
 			// Check for '_'
 			if (*pszNameT != '_') {
@@ -341,7 +343,7 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 				pszName = pszNameT;
 				while (*pszNameT != '_' && *pszNameT != '\0')
 					pszNameT++;
-				sMeshName.insert(0, pszName, pszNameT-pszName);
+				sMeshName.Insert(pszName, 0, pszNameT-pszName);
 
 				// Check for '_'
 				if (*pszNameT != '_') {
@@ -362,7 +364,7 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 					pszName = pszNameT;
 					while (*pszNameT != '_' && *pszNameT != '\0')
 						pszNameT++;
-					sSceneNodeName.insert(sSceneNodeName.length(), pszName, pszNameT-pszName);
+					sSceneNodeName.Insert(pszName, sSceneNodeName.GetLength(), pszNameT-pszName);
 
 					// Is there an instance name? - No log hint because people find this behavior annoying...
 				//	if (!(pszNameT-pszName))
@@ -392,7 +394,7 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 			// Read the cell name
 			while (*pszNameT != '_' && *pszNameT != '\0')
 				pszNameT++;
-			sSceneCellName.insert(0, pszName, pszNameT-pszName);
+			sSceneCellName.Insert(pszName, 0, pszNameT-pszName);
 
 			// Check for '_'
 			if (*pszNameT != '_') {
@@ -406,7 +408,7 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 				pszName = pszNameT;
 				while (*pszNameT != '_' && *pszNameT != '\0')
 					pszNameT++;
-				sTargetSceneCellName.insert(0, pszName, pszNameT-pszName);
+				sTargetSceneCellName.Insert(pszName, 0, pszNameT-pszName);
 			}
 		}
 
@@ -427,7 +429,7 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 	// Look for 'antiportal_' (antiportal_<name>)
 	} else if (!_strnicmp(pszName, "antiportal_", 11)) {
 		// Get the name of the anti-portal)
-		sSceneNodeName = std::string("AntiPortal_") + (pszName += 11);
+		sSceneNodeName = String("AntiPortal_") + (pszName += 11);
 
 		// Set the correct scene node type
 		nType = TypeAntiPortal;
@@ -442,37 +444,37 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 	}
 
 	// Check whether the scene cell and node names are valid
-	if (!_stricmp(sSceneCellName.c_str(), "This")) {
-		sSceneCellName.append("-");
-		g_pLog->LogFLine(PLLog::Warning, "'This' is NOT allowed as node name. (3ds Max node '%s') Name is changed into '%s' ", cIGameNode.GetName(), sSceneCellName.c_str());
+	if (sSceneCellName.CompareNoCase("This")) {
+		sSceneCellName += '-';
+		g_pLog->LogFLine(PLLog::Warning, "'This' is NOT allowed as node name. (3ds Max node '%s') Name is changed into '%s' ", cIGameNode.GetName(), sSceneCellName.GetASCII());
 	}
-	if (!_stricmp(sSceneCellName.c_str(), "Root")) {
-		sSceneCellName.append("-");
-		g_pLog->LogFLine(PLLog::Warning, "'Root' is NOT allowed as node name. (3ds Max node '%s') Name is changed into '%s' ", cIGameNode.GetName(), sSceneCellName.c_str());
+	if (sSceneCellName.CompareNoCase("Root")) {
+		sSceneCellName += '-';
+		g_pLog->LogFLine(PLLog::Warning, "'Root' is NOT allowed as node name. (3ds Max node '%s') Name is changed into '%s' ", cIGameNode.GetName(), sSceneCellName.GetASCII());
 	}
-	if (!_stricmp(sSceneCellName.c_str(), "Parent")) {
-		sSceneCellName.append("-");
-		g_pLog->LogFLine(PLLog::Warning, "'Parent' is NOT allowed as node name. (3ds Max node '%s') Name is changed into '%s' ", cIGameNode.GetName(), sSceneCellName.c_str());
+	if (sSceneCellName.CompareNoCase("Parent")) {
+		sSceneCellName += '-';
+		g_pLog->LogFLine(PLLog::Warning, "'Parent' is NOT allowed as node name. (3ds Max node '%s') Name is changed into '%s' ", cIGameNode.GetName(), sSceneCellName.GetASCII());
 	}
-	if (!_stricmp(sSceneNodeName.c_str(), "This")) {
-		sSceneNodeName.append("-");
-		g_pLog->LogFLine(PLLog::Warning, "'This' is NOT allowed as node name. (3ds Max node '%s') Name is changed into '%s' ", cIGameNode.GetName(), sSceneNodeName.c_str());
+	if (sSceneNodeName.CompareNoCase("This")) {
+		sSceneNodeName += '-';
+		g_pLog->LogFLine(PLLog::Warning, "'This' is NOT allowed as node name. (3ds Max node '%s') Name is changed into '%s' ", cIGameNode.GetName(), sSceneNodeName.GetASCII());
 	}
-	if (!_stricmp(sSceneNodeName.c_str(), "Root")) {
-		sSceneNodeName.append("-");
-		g_pLog->LogFLine(PLLog::Warning, "'Root' is NOT allowed as node name. (3ds Max node '%s') Name is changed into '%s' ", cIGameNode.GetName(), sSceneNodeName.c_str());
+	if (sSceneNodeName.CompareNoCase("Root")) {
+		sSceneNodeName += '-';
+		g_pLog->LogFLine(PLLog::Warning, "'Root' is NOT allowed as node name. (3ds Max node '%s') Name is changed into '%s' ", cIGameNode.GetName(), sSceneNodeName.GetASCII());
 	}
-	if (!_stricmp(sSceneNodeName.c_str(), "Parent")) {
-		sSceneNodeName.append("-");
-		g_pLog->LogFLine(PLLog::Warning, "'Root' is NOT allowed as node name. (3ds Max node '%s') Name is changed into '%s' ", cIGameNode.GetName(), sSceneNodeName.c_str());
+	if (sSceneNodeName.CompareNoCase("Parent")) {
+		sSceneNodeName += '-';
+		g_pLog->LogFLine(PLLog::Warning, "'Root' is NOT allowed as node name. (3ds Max node '%s') Name is changed into '%s' ", cIGameNode.GetName(), sSceneNodeName.GetASCII());
 	}
 
 	// Get cell, this scene node is in
 	PLSceneCell *pCell = GetCell(sSceneCellName, cIGameNode);
 
 	// The exporter isn't case sensitive, but compare the 'real' cell names just for sure :)
-	if (pCell && strcmp(pCell->GetName().c_str(), sSceneCellName.c_str()))
-		g_pLog->LogFLine(PLLog::Warning, "Node '%s' is within the cell '%s', but '%s' was written -> It's recommended to take care of lower/upper case!", cIGameNode.GetName(), pCell->GetName().c_str(), sSceneCellName.c_str());
+	if (pCell && pCell->GetName() != sSceneCellName)
+		g_pLog->LogFLine(PLLog::Warning, "Node '%s' is within the cell '%s', but '%s' was written -> It's recommended to take care of lower/upper case!", cIGameNode.GetName(), pCell->GetName().GetASCII(), sSceneCellName.GetASCII());
 
 	// Get the container the new scene node is created in. If no cell was found, create the scene node
 	// within THIS container.
@@ -480,10 +482,11 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 
 	// Check whether there's already an scene node with this name, if so, rename it and write a warning
 	// into the log
-	std::string sSceneNodeNameLower = PLTools::ToLower(sSceneNodeName); // Do ONLY use lower case, else the hashing will NOT return the same values!
-	std::map<std::string, PLSceneNode*>::iterator pIterator = pContainer->m_mapNodes.find(sSceneNodeNameLower);
+	String sSceneNodeNameLower = sSceneNodeName;
+	sSceneNodeNameLower.ToLower(); // Do ONLY use lower case, else the hashing will NOT return the same values!
+	std::map<String, PLSceneNode*>::iterator pIterator = pContainer->m_mapNodes.find(sSceneNodeNameLower);
 	if (pIterator != pContainer->m_mapNodes.end()) {
-		std::string sNewName;
+		String sNewName;
 		int nConflictIndex = 1;
 
 		// Find an unused scene node name
@@ -492,21 +495,22 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 			sNewName += "_Conflict_";
 			sNewName += PLTools::ToString(nConflictIndex);
 			nConflictIndex++;
-			sSceneNodeNameLower = PLTools::ToLower(sNewName); // Do ONLY use lower case, else the hashing will NOT return the same values!
+			sSceneNodeNameLower = sNewName;
+			sSceneNodeNameLower.ToLower(); // Do ONLY use lower case, else the hashing will NOT return the same values!
 			pIterator = pContainer->m_mapNodes.find(sSceneNodeNameLower);
 		} while (pIterator != pContainer->m_mapNodes.end());
 
 		// Write a log message
 		g_pLog->LogFLine(PLLog::Warning, "'%s': There's already a scene node with the name '%s' within the container '%s' -> Changed name into '%s'",
-			cIGameNode.GetName(), sSceneNodeName.c_str(), sSceneCellName.c_str(), sNewName.c_str());
+			cIGameNode.GetName(), sSceneNodeName.GetASCII(), sSceneCellName.GetASCII(), sNewName.GetASCII());
 
 		// Set the new name
 		sSceneNodeName = sNewName;
 	}
 
 	// Construct a 'save' mesh name...
-	if (sMeshName.empty())
-		sMeshName = sSceneCellName.empty() ? sSceneNodeName : sSceneCellName + "_" + sSceneNodeName;
+	if (!sMeshName.GetLength())
+		sMeshName = sSceneCellName.GetLength() ? sSceneCellName + '_' + sSceneNodeName : sSceneNodeName;
 
 	// Are there any children? If yes, we need to create a container for this node containing THIS node AND the children...
 	if (cIGameNode.GetChildCount()) {
@@ -514,8 +518,9 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 
 		// Register the new scene node
 		pContainer->m_lstSceneNodes.push_back(pNewContainer);
-		sSceneNodeNameLower = PLTools::ToLower(sSceneNodeName); // Do ONLY use lower case, else the hashing will NOT return the same values!
-		pContainer->m_mapNodes.insert(make_pair(sSceneNodeNameLower, pNewContainer));
+		sSceneNodeNameLower = sSceneNodeName;
+		sSceneNodeNameLower.ToLower(); // Do ONLY use lower case, else the hashing will NOT return the same values!
+		pContainer->m_mapNodes.insert(std::make_pair(sSceneNodeNameLower, pNewContainer));
 
 		// The new container becomes the current container
 		pContainer = pNewContainer;
@@ -559,7 +564,7 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 						// ?? There's something totally wrong! ??
 						} else {
 							g_pLog->LogFLine(PLLog::Warning, "'%s': This cell-portal is within the container '%s', but cell-portals should only be within cells!",
-											 cIGameNode.GetName(), sTargetSceneCellName.c_str());
+											 cIGameNode.GetName(), sTargetSceneCellName.GetASCII());
 						}
 
 						// Update the statistics
@@ -640,14 +645,13 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 
 		// Register the new scene node
 		pContainer->m_lstSceneNodes.push_back(pSceneNode);
-		sSceneNodeNameLower = PLTools::ToLower(sSceneNodeName); // Do ONLY use lower case, else the hashing will NOT return the same values!
-		pContainer->m_mapNodes.insert(make_pair(sSceneNodeNameLower, pSceneNode));
+		sSceneNodeNameLower = sSceneNodeName;
+		sSceneNodeNameLower.ToLower(); // Do ONLY use lower case, else the hashing will NOT return the same values!
+		pContainer->m_mapNodes.insert(std::make_pair(sSceneNodeNameLower, pSceneNode));
 
-		{ // Add to 3ds Max node to PL node map, bah, std::string is horror. Here I use a hack
-		  // to use the good old sprintf to convert a pointer address into a string...
-			std::string sKey = "XXXXXXXXXXXXXXXXXXXX";
-			sprintf(const_cast<char*>(sKey.c_str()), "%19p", cIGameNode.GetMaxNode());
-			GetScene().m_mapMaxToPLNodes.insert(make_pair(sKey, pSceneNode));
+		{ // Add to 3ds Max node to PL node map
+			String sKey = String::Format("%19p", cIGameNode.GetMaxNode());
+			GetScene().m_mapMaxToPLNodes.insert(std::make_pair(sKey, pSceneNode));
 		}
 
 		// Loop through all child nodes
@@ -724,9 +728,9 @@ void PLSceneContainer::OutputStatistics()
 
 	// Write into log
 	if (GetType() == TypeCell)
-		g_pLog->PrintFLine("Cell '%s':", GetName().c_str());
+		g_pLog->PrintFLine("Cell '%s':", GetName().GetASCII());
 	else
-		g_pLog->PrintFLine("Container '%s':", GetName().c_str());
+		g_pLog->PrintFLine("Container '%s':", GetName().GetASCII());
 	g_pLog->AddSpaces(PLLog::TabSize);
 	if (cScene.m_nTotalNumOfNodes)
 		g_pLog->PrintFLine("Total number of nodes: %d (%g%%)", nTotalNumOfNodes, (static_cast<float>(nTotalNumOfNodes)/static_cast<float>(cScene.m_nTotalNumOfNodes))*100.0f);
@@ -831,8 +835,8 @@ void PLSceneContainer::OutputStatistics()
 //[-------------------------------------------------------]
 //[ Protected virtual PLSceneNode functions               ]
 //[-------------------------------------------------------]
-void PLSceneContainer::WriteToFile(XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir)
+void PLSceneContainer::WriteToFile(XmlElement &cSceneElement, const String &sApplicationDrive, const String &sApplicationDir)
 {
-	static const std::string sSceneContainer = "PLScene::SceneContainer";
+	static const String sSceneContainer = "PLScene::SceneContainer";
 	WriteToFile(cSceneElement, sApplicationDrive, sApplicationDir, sSceneContainer);
 }

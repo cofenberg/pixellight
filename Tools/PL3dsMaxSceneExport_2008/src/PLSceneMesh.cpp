@@ -77,7 +77,7 @@ Object *PLSceneMesh::Get3dsMaxObject() const
 *  @brief
 *    Returns the mesh name
 */
-const std::string &PLSceneMesh::GetName() const
+String PLSceneMesh::GetName() const
 {
 	return m_sName;
 }
@@ -117,7 +117,7 @@ const Array<PLSceneMaterial*> &PLSceneMesh::GetMaterials() const
 *  @brief
 *    Constructor
 */
-PLSceneMesh::PLSceneMesh(PLScene &cScene, IGameNode &cIGameNode, const std::string &sName) :
+PLSceneMesh::PLSceneMesh(PLScene &cScene, IGameNode &cIGameNode, const String &sName) :
 	m_pScene(&cScene),
 	m_pIGameNode(&cIGameNode),
 	m_p3dsMaxObject(nullptr),
@@ -439,7 +439,7 @@ void PLSceneMesh::CollectMeshData(IGameObject &cIGameObject)
 		// Has this mesh a material?
 		IGameMaterial *pIGameMaterial = m_pIGameNode->GetNodeMaterial();
 		if (!pIGameMaterial)
-			g_pLog->LogFLine(PLLog::Hint, "Mesh '%s' has no material! Creating fallback material...", m_sName.c_str());
+			g_pLog->LogFLine(PLLog::Hint, "Mesh '%s' has no material! Creating fallback material...", m_sName.GetASCII());
 
 		// Add vertices
 		// Loop through all faces
@@ -637,7 +637,7 @@ int PLSceneMesh::AddMaterial(IGameMaterial *pParentIGameMaterial, IGameMaterial 
 		// Get material name (and pray that there's no 'real material' with the same name!)
 		char szTemp[32];
 		sprintf(szTemp, "%d", cColor.toRGB());
-		std::string sName = std::string("NoMaterial_WireColorFallback_") + std::string(szTemp) + ".mat";
+		String sName = String("NoMaterial_WireColorFallback_") + String(szTemp) + ".mat";
 
 		// Is this material already within the mesh material list?
 		for (uint32 i=0; i<m_lstMaterials.GetNumOfElements(); i++) {

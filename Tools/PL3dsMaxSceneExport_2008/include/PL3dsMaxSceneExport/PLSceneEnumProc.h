@@ -36,6 +36,9 @@
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 class PLLog;
+namespace PLCore {
+	class String;
+}
 
 
 //[-------------------------------------------------------]
@@ -75,7 +78,7 @@ class PLSceneEnumProc : public ITreeEnumProc {
 		*  @param[in] sTargetDirectory
 		*    Application directory were to copy all data into
 		*/
-		void Publish(const std::string &sTargetDirectory) const;
+		void Publish(const PLCore::String &sTargetDirectory) const;
 
 
 	//[-------------------------------------------------------]

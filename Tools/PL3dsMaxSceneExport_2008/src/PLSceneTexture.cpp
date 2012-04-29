@@ -46,7 +46,7 @@ using namespace PLCore;
 *  @brief
 *    Returns the texture name
 */
-const std::string &PLSceneTexture::GetName() const
+String PLSceneTexture::GetName() const
 {
 	return m_sName;
 }
@@ -68,40 +68,40 @@ unsigned int PLSceneTexture::GetReferenceCount() const
 *  @brief
 *    Constructor
 */
-PLSceneTexture::PLSceneTexture(PLScene &cScene, const std::string &sName, bool bNormalMap_xGxR) :
+PLSceneTexture::PLSceneTexture(PLScene &cScene, const String &sName, bool bNormalMap_xGxR) :
 	m_pScene(&cScene),
 	m_sName(sName),
 	m_nReferenceCount(0)
 {
 	// Cut of the path of the map name - if there's one
-	std::string sAbsBitmapFilename = m_sName;
+	String sAbsBitmapFilename = m_sName;
 
 	// Get the texture name
-	m_sName = sName.c_str();
+	m_sName = sName;
 
 	// Check options
 	if (g_SEOptions.bCopyTextures) {
 		// Can we use the given absolute filename?
-		HANDLE hFile = CreateFile(sAbsBitmapFilename.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+		HANDLE hFile = CreateFile(sAbsBitmapFilename.GetASCII(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 		if (hFile == INVALID_HANDLE_VALUE) {
 			// Get the current path of the loaded 3ds Max scene
-			std::string sCurFilePath = Url(GetCOREInterface()->GetCurFilePath().data()).CutFilename();
-			if (sCurFilePath.length()) {
+			String sCurFilePath = Url(GetCOREInterface()->GetCurFilePath().data()).CutFilename();
+			if (sCurFilePath.GetLength()) {
 				// Compose absolute filename by just concatenating the two filenames (for relative filenames)
-				std::string sBitmapFilename = sCurFilePath + sAbsBitmapFilename;
-				hFile = CreateFile(sBitmapFilename.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+				String sBitmapFilename = sCurFilePath + sAbsBitmapFilename;
+				hFile = CreateFile(sBitmapFilename.GetASCII(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 				if (hFile == INVALID_HANDLE_VALUE) {
 					// Get the filename without any path information
-					std::string sFilenameOnly  = Url(sName.c_str()).GetFilename().GetASCII();
+					String sFilenameOnly  = Url(sName).GetFilename().GetASCII();
 
 					// Compose absolute filename
-					if (sFilenameOnly.length()) {
-						char nLastCharacter = sCurFilePath[sCurFilePath.length()-1];
+					if (sFilenameOnly.GetLength()) {
+						char nLastCharacter = sCurFilePath[sCurFilePath.GetLength()-1];
 						if (nLastCharacter == '\\' || nLastCharacter == '/')
 							sBitmapFilename = sCurFilePath + sFilenameOnly;
 						else
 							sBitmapFilename = sCurFilePath + "\\" + sFilenameOnly;
-						hFile = CreateFile(sBitmapFilename.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+						hFile = CreateFile(sBitmapFilename.GetASCII(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 						if (hFile == INVALID_HANDLE_VALUE) {
 							// Check map directories
 							int nMapDirCount = TheManager->GetMapDirCount();
@@ -113,8 +113,8 @@ PLSceneTexture::PLSceneTexture(PLScene &cScene, const std::string &sName, bool b
 									if (nLastCharacter == '\\' || nLastCharacter == '/')
 										sBitmapFilename = pMapDir + sFilenameOnly;
 									else
-										sBitmapFilename = pMapDir + std::string("\\") + sFilenameOnly;
-									hFile = CreateFile(sBitmapFilename.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+										sBitmapFilename = pMapDir + String('\\') + sFilenameOnly;
+									hFile = CreateFile(sBitmapFilename.GetASCII(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 									if (hFile != INVALID_HANDLE_VALUE)
 										break;
 									else
@@ -139,15 +139,15 @@ PLSceneTexture::PLSceneTexture(PLScene &cScene, const std::string &sName, bool b
 			CloseHandle(hFile);
 
 			// Cut of the filename
-			std::string sFilename = Url(g_SEOptions.sFilename.c_str()).CutFilename();
+			String sFilename = Url(g_SEOptions.sFilename).CutFilename();
 
 			// Construct the absolute target filename
-			size_t nLength = sFilename.length();
+			uint32 nLength = sFilename.GetLength();
 			if (nLength) {
 				sFilename = sFilename + m_sName;
 
 				// Is there already such a file? If yes, check the file times...
-				hFile = CreateFile(sFilename.c_str(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+				hFile = CreateFile(sFilename.GetASCII(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 				if (hFile != INVALID_HANDLE_VALUE) {
 					// Get target file time and close it
 					FILETIME sTargetCreationTime;
@@ -163,23 +163,23 @@ PLSceneTexture::PLSceneTexture(PLScene &cScene, const std::string &sName, bool b
 				}
 
 				{ // Before we copy, we need to ensure that the target directory is there, else 'CopyFile()' will fail!
-					Directory cDirectory(Url(sFilename.c_str()).CutFilename());
+					Directory cDirectory(Url(sFilename).CutFilename());
 					cDirectory.CreateRecursive();
 				}
 
 				// Copy the texture (bitmap)
-				CopyFile(sAbsBitmapFilename.c_str(), sFilename.c_str(), false);
+				CopyFile(sAbsBitmapFilename.GetASCII(), sFilename.GetASCII(), false);
 
 				// If there's a 'plt'-file for the texture, copy it, too
-				size_t nIndex = sFilename.find_last_of(".");
-				if (nIndex != std::string::npos) {
-					sFilename.erase(nIndex);
-					sFilename.append(".plt");
-					nIndex = sAbsBitmapFilename.find_last_of(".");
-					if (nIndex != std::string::npos) {
-						sAbsBitmapFilename.erase(nIndex);
-						sAbsBitmapFilename.append(".plt");
-						if (!CopyFile(sAbsBitmapFilename.c_str(), sFilename.c_str(), false)) {
+				int nIndex = sFilename.LastIndexOf(".");
+				if (nIndex >= 0) {
+					sFilename.Delete(nIndex);
+					sFilename += ".plt";
+					nIndex = sAbsBitmapFilename.LastIndexOf(".");
+					if (nIndex >= 0) {
+						sAbsBitmapFilename.Delete(nIndex);
+						sAbsBitmapFilename += ".plt";
+						if (!CopyFile(sAbsBitmapFilename.GetASCII(), sFilename.GetASCII(), false)) {
 							// Failed to copy the 'plt'-file...
 							if (bNormalMap_xGxR) {
 								// Create an automatic 'plt'-file...
@@ -207,17 +207,17 @@ PLSceneTexture::PLSceneTexture(PLScene &cScene, const std::string &sName, bool b
 								cDocument.LinkEndChild(*pTextureElement);
 
 								// Save settings
-								if (cDocument.Save(sFilename.c_str()))
-									g_pLog->LogFLine(PLLog::Hint, "Created '%s'", sFilename.c_str());
+								if (cDocument.Save(sFilename))
+									g_pLog->LogFLine(PLLog::Hint, "Created '%s'", sFilename.GetASCII());
 								else
-									g_pLog->LogFLine(PLLog::Error, "Can't create '%s'!", sFilename.c_str());
+									g_pLog->LogFLine(PLLog::Error, "Can't create '%s'!", sFilename.GetASCII());
 							}
 						}
 					}
 				}
 			}
 		} else {
-			g_pLog->LogFLine(PLLog::Error, "Can't find texture (bitmap) '%s'!", m_sName.c_str());
+			g_pLog->LogFLine(PLLog::Error, "Can't find texture (bitmap) '%s'!", m_sName.GetASCII());
 		}
 	}
 }

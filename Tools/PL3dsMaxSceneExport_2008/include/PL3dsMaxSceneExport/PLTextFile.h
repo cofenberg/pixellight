@@ -28,8 +28,8 @@
 //[-------------------------------------------------------]
 //[ Include                                               ]
 //[-------------------------------------------------------]
-#include <string>
 #include <stdio.h>
+#include <PLCore/String/String.h>
 
 
 //[-------------------------------------------------------]
@@ -62,7 +62,7 @@ class PLTextFile {
 		*  @param[in] bFlush
 		*    Flush file every time something is written in?
 		*/
-		PLTextFile(const std::string &sFilename, bool bFlush = false);
+		PLTextFile(const PLCore::String &sFilename, bool bFlush = false);
 
 		/**
 		*  @brief
@@ -83,7 +83,7 @@ class PLTextFile {
 		*  @return
 		*    The name of the file we write in
 		*/
-		const std::string &GetFilename() const;
+		PLCore::String GetFilename() const;
 
 		/**
 		*  @brief
@@ -203,12 +203,12 @@ class PLTextFile {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		std::string   m_sFilename;		/**< Name of the file we write in */
-		FILE		 *m_pFile;			/**< File we write in, can be a null pointer */
-		bool		  m_bFlush;			/**< Flush file every time something is written in? */
-		unsigned int  m_nSpaces;		/**< Number of spaces added in front of each row */
-		unsigned int  m_nBufferLength;	/**< Current length of the string buffer (including '\0') */
-		char		 *m_pszBuffer;		/**< String buffer, can be a null pointer */
+		PLCore::String   m_sFilename;		/**< Name of the file we write in */
+		FILE			*m_pFile;			/**< File we write in, can be a null pointer */
+		bool			 m_bFlush;			/**< Flush file every time something is written in? */
+		unsigned int	 m_nSpaces;			/**< Number of spaces added in front of each row */
+		unsigned int	 m_nBufferLength;	/**< Current length of the string buffer (including '\0') */
+		char			*m_pszBuffer;		/**< String buffer, can be a null pointer */
 
 
 };

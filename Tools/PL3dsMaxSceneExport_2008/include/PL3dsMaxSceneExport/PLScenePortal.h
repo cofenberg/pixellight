@@ -61,7 +61,7 @@ class PLScenePortal : public PLSceneNode {
 		*  @param[in] sClassName
 		*    PixelLight class name of this scene node
 		*/
-		PLScenePortal(PLSceneContainer &cContainer, IGameNode &cIGameNode, const std::string &sName, EType nType, const std::string &sClassName);
+		PLScenePortal(PLSceneContainer &cContainer, IGameNode &cIGameNode, const PLCore::String &sName, EType nType, const PLCore::String &sClassName);
 
 		/**
 		*  @brief

@@ -45,7 +45,7 @@ using namespace PLMesh;
 *  @brief
 *    Constructor
 */
-PLScenePLMesh::PLScenePLMesh(PLScene &cScene, IGameNode &cIGameNode, const std::string &sName) : PLSceneMesh(cScene, cIGameNode, sName)
+PLScenePLMesh::PLScenePLMesh(PLScene &cScene, IGameNode &cIGameNode, const String &sName) : PLSceneMesh(cScene, cIGameNode, sName)
 {
 }
 
@@ -63,11 +63,11 @@ PLScenePLMesh::~PLScenePLMesh()
 *  @brief
 *    Saves the mesh
 */
-bool PLScenePLMesh::Save(const std::string &sApplicationDrive, const std::string &sApplicationDir)
+bool PLScenePLMesh::Save(const String &sApplicationDrive, const String &sApplicationDir)
 {
 	// Open file
-	const std::string sFilename = sApplicationDrive + sApplicationDir + PLTools::GetResourceFilename(PLTools::ResourceMesh, m_sName + ".mesh");
-	FILE *pFile = fopen(sFilename.c_str(), "wb");
+	const String sFilename = sApplicationDrive + sApplicationDir + PLTools::GetResourceFilename(PLTools::ResourceMesh, m_sName + ".mesh");
+	FILE *pFile = fopen(sFilename.GetASCII(), "wb");
 	if (pFile) { // If all went fine...
 		// Save
 		ChunkStack cChunkStack;
@@ -160,12 +160,12 @@ bool PLScenePLMesh::WriteMaterials(FILE &cFile, ChunkStack &cChunkStack)
 		for (uint32 i=0; i<cMaterials.nMaterials; i++) {
 			PLSceneMaterial *pMaterial = m_lstMaterials[i];
 			if (pMaterial) {
-				const std::string sMaterialFilename = PLTools::GetResourceFilename(PLTools::ResourceMaterial, pMaterial->GetName());
-				uint32 nLength = (uint32)sMaterialFilename.length();
+				const String sMaterialFilename = PLTools::GetResourceFilename(PLTools::ResourceMaterial, pMaterial->GetName());
+				uint32 nLength = (uint32)sMaterialFilename.GetLength();
 				if (nLength > 255)
 					nLength = 255;
 				char szMatName[256];
-				strncpy(szMatName, sMaterialFilename.c_str(), nLength);
+				strncpy(szMatName, sMaterialFilename.GetASCII(), nLength);
 				szMatName[nLength] = '\0';
 				if (!Write(cFile, szMatName, 256))
 					return false; // Error!

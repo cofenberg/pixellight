@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <max.h>
+#include <PLCore/String/String.h>
 
 
 //[-------------------------------------------------------]
@@ -39,7 +40,6 @@ class IGameNode;
 class PLSceneContainer;
 namespace PLCore {
 	class Chunk;
-	class String;
 	class XmlElement;
 }
 
@@ -148,7 +148,7 @@ class PLSceneNode {
 		*  @return
 		*    The name of this scene node
 		*/
-		const std::string &GetName() const;
+		PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -157,7 +157,7 @@ class PLSceneNode {
 		*  @return
 		*    The PixelLight class name of this scene node (can be empty)
 		*/
-		const std::string &GetClassName() const;
+		PLCore::String GetClassName() const;
 
 		/**
 		*  @brief
@@ -166,7 +166,7 @@ class PLSceneNode {
 		*  @param[in] sFlag
 		*    Flag to add
 		*/
-		void AddFlag(const std::string &sFlag);
+		void AddFlag(const PLCore::String &sFlag);
 
 		/**
 		*  @brief
@@ -209,7 +209,7 @@ class PLSceneNode {
 		*  @param[in] sClassName
 		*    PixelLight class name of this scene node
 		*/
-		PLSceneNode(PLSceneContainer *pContainer, IGameNode *pIGameNode, const std::string &sName, EType nType, const std::string &sClassName);
+		PLSceneNode(PLSceneContainer *pContainer, IGameNode *pIGameNode, const PLCore::String &sName, EType nType, const PLCore::String &sClassName);
 
 		/**
 		*  @brief
@@ -246,7 +246,7 @@ class PLSceneNode {
 		*  @param[in] sApplicationDir
 		*    Application directory
 		*/
-		void WriteModifiers(PLCore::XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir);
+		void WriteModifiers(PLCore::XmlElement &cSceneElement, const PLCore::String &sApplicationDrive, const PLCore::String &sApplicationDir);
 
 		/**
 		*  @brief
@@ -277,7 +277,7 @@ class PLSceneNode {
 		*  @param[in] sApplicationDir
 		*    Application directory
 		*/
-		virtual void WriteToFile(PLCore::XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir) = 0;
+		virtual void WriteToFile(PLCore::XmlElement &cSceneElement, const PLCore::String &sApplicationDrive, const PLCore::String &sApplicationDir) = 0;
 
 
 	//[-------------------------------------------------------]
@@ -339,10 +339,10 @@ class PLSceneNode {
 	private:
 		PLSceneContainer *m_pContainer;			/**< Container this node is in, a null pointer if this is the root container of the scene */
 		IGameNode		 *m_pIGameNode;			/**< IGame node this scene node represents, can be a null pointer */
-		std::string		  m_sName;				/**< Name of this scene node */
+		PLCore::String	  m_sName;				/**< Name of this scene node */
 		EType			  m_nType;				/**< Scene node type */
-		std::string		  m_sClassName;			/**< PixelLight class name of this scene node */
-		std::string		  m_sFlags;				/**< Flags string */
+		PLCore::String	  m_sClassName;			/**< PixelLight class name of this scene node */
+		PLCore::String	  m_sFlags;				/**< Flags string */
 		Point3			  m_vPos;				/**< World space position */
 		Point3			  m_vRot;				/**< World space rotation (in degree) */
 		Point3			  m_vScale;				/**< World space scale */

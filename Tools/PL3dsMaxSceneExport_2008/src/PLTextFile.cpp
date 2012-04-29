@@ -23,6 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <stdio.h>
+#include <string.h>
 #include <stdarg.h>
 #include <PLCore/PLCoreWindows.h>	// Depending on the used compiler, nullptr has to be defined by this header
 #include "PL3dsMaxSceneExport/PLTextFile.h"
@@ -35,15 +37,21 @@ const int PLTextFile::TabSize = 4;
 
 
 //[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+using namespace PLCore;
+
+
+//[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
 /**
 *  @brief
 *    Constructor
 */
-PLTextFile::PLTextFile(const std::string &sFilename, bool bFlush) :
+PLTextFile::PLTextFile(const String &sFilename, bool bFlush) :
 	m_sFilename(sFilename),
-	m_pFile(sFilename.length() ? fopen(sFilename.c_str(), "wt") : nullptr),
+	m_pFile(sFilename.GetLength() ? fopen(sFilename.GetASCII(), "wt") : nullptr),
 	m_bFlush(bFlush),
 	m_nSpaces(0),
 	m_nBufferLength(0),
@@ -80,7 +88,7 @@ void PLTextFile::Close()
 *  @brief
 *    Returns the name of the file we write in
 */
-const std::string &PLTextFile::GetFilename() const
+String PLTextFile::GetFilename() const
 {
 	return m_sFilename;
 }

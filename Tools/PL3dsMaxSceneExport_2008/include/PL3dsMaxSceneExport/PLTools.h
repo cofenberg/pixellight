@@ -28,9 +28,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <string>
 #include <max.h>
 #include <IGame/IGameType.h>
+#include <PLCore/String/String.h>
 
 
 //[-------------------------------------------------------]
@@ -40,7 +40,6 @@ class Quat;
 class Box3;
 class Point3;
 namespace PLCore {
-	class String;
 	class XmlElement;
 }
 
@@ -87,10 +86,9 @@ class PLTools {
 		static void ValidateMinimumMaximum(Box3 &cBox);
 
 		static bool Compare(const Point3 &P1, const Point3 &P2, float fDelta = 0.0005f);
-		static std::string ToString(int nValue);
-		static std::string ToString(unsigned long nValue);
-		static std::string ToString(float fValue);
-		static std::string ToLower(const std::string &sString);
+		static PLCore::String ToString(int nValue);
+		static PLCore::String ToString(unsigned long nValue);
+		static PLCore::String ToString(float fValue);
 		static void XmlElementSetAttributeWithDefault(PLCore::XmlElement &cXmlElement, const PLCore::String &sName, float fValue, float fDefaultValue);
 		static void XmlElementSetAttributeWithDefault(PLCore::XmlElement &cXmlElement, const PLCore::String &sName, const Point3 &cPoint, const Point3 &cDefault);
 
@@ -180,7 +178,7 @@ class PLTools {
 		*  @return
 		*    The absolute filename of 'PLViewer'
 		*/
-		static std::string GetPLViewerFilename();
+		static PLCore::String GetPLViewerFilename();
 
 		/**
 		*  @brief
@@ -194,7 +192,7 @@ class PLTools {
 		*  @return
 		*    Resource filename
 		*/
-		static std::string GetResourceFilename(EResourceType nResourceType, const std::string &sFilename);
+		static PLCore::String GetResourceFilename(EResourceType nResourceType, const PLCore::String &sFilename);
 
 		// [HACK] Wow, "GMatrix::Inverse()" appears to be buggy...
 		static GMatrix Inverse(const GMatrix &mMatrix);

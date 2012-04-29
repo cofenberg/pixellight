@@ -64,7 +64,7 @@ class PLSceneMaterialFX : public PLSceneMaterial {
 		*  @param[in] sName
 		*    Name of this material
 		*/
-		PLSceneMaterialFX(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial, const std::string &sName);
+		PLSceneMaterialFX(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial, const PLCore::String &sName);
 
 		/**
 		*  @brief

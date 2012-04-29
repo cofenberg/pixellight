@@ -71,7 +71,7 @@ class PLSceneObject : public PLSceneNode {
 		*  @param[in] pMesh
 		*    Mesh this object is using, can be a null pointer
 		*/
-		PLSceneObject(PLSceneContainer &cContainer, IGameNode &cIGameNode, const std::string &sName, PLSceneMesh *pMesh);
+		PLSceneObject(PLSceneContainer &cContainer, IGameNode &cIGameNode, const PLCore::String &sName, PLSceneMesh *pMesh);
 
 		/**
 		*  @brief
@@ -100,7 +100,7 @@ class PLSceneObject : public PLSceneNode {
 	//[ Private virtual PLSceneNode functions                 ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void WriteToFile(PLCore::XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir) override;
+		virtual void WriteToFile(PLCore::XmlElement &cSceneElement, const PLCore::String &sApplicationDrive, const PLCore::String &sApplicationDir) override;
 
 
 };

@@ -48,7 +48,7 @@ using namespace PLCore;
 *  @brief
 *    Constructor
 */
-PLSceneMaterialSRShaderLighting::PLSceneMaterialSRShaderLighting(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial, const std::string &sName) :
+PLSceneMaterialSRShaderLighting::PLSceneMaterialSRShaderLighting(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial, const String &sName) :
 	PLSceneMaterial(cScene, pParentIGameMaterial, &cIGameMaterial, sName)
 {
 }

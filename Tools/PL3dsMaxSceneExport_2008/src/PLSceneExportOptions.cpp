@@ -48,7 +48,7 @@ PLSceneExportOptions g_SEOptions;
 //[-------------------------------------------------------]
 //[ Public static data                                    ]
 //[-------------------------------------------------------]
-const std::string PLSceneExportOptions::DefaultOptionsFilename = "PixelLight_SceneExporterSettings.ini";
+const String PLSceneExportOptions::DefaultOptionsFilename = "PixelLight_SceneExporterSettings.ini";
 
 
 //[-------------------------------------------------------]
@@ -120,7 +120,7 @@ void PLSceneExportOptions::WriteIntoLog()
 
 	// General
 	g_pLog->PrintLine("General");
-	g_pLog->PrintFLine("  Filename:             %s", sFilename.c_str());
+	g_pLog->PrintFLine("  Filename:             %s", sFilename.GetASCII());
 	g_pLog->PrintFLine("  Log:                  %d", bLog);			// :)
 	g_pLog->PrintFLine("  Log open:             %d", bLogOpen);
 	g_pLog->PrintFLine("  Log flags:");
@@ -142,9 +142,9 @@ void PLSceneExportOptions::WriteIntoLog()
 	g_pLog->PrintFLine("  Animation playback:   %d", bAnimationPlayback);
 	g_pLog->PrintFLine("  Show exported scene:  %d", bShowExportedScene);
 	g_pLog->PrintFLine("  Publish:              %d", bPublish);
-	g_pLog->PrintFLine("  Scene container:      %s", sSceneContainer.c_str());
-	g_pLog->PrintFLine("  Scene renderer:       %s", sSceneRenderer.c_str());
-	g_pLog->PrintFLine("  Viewer:               %s", sViewer.c_str());
+	g_pLog->PrintFLine("  Scene container:      %s", sSceneContainer.GetASCII());
+	g_pLog->PrintFLine("  Scene renderer:       %s", sSceneRenderer.GetASCII());
+	g_pLog->PrintFLine("  Viewer:               %s", sViewer.GetASCII());
 
 	// User properties
 	g_pLog->PrintLine("User properties");
@@ -169,12 +169,12 @@ void PLSceneExportOptions::WriteIntoLog()
 	g_pLog->PrintLine("");
 }
 
-void PLSceneExportOptions::Load(const std::string &sFilename)
+void PLSceneExportOptions::Load(const String &sFilename)
 {
 	// Get the absolute filename
-	std::string sAbsFilename;
+	String sAbsFilename;
 	GetAbsoluteFilename(sFilename, sAbsFilename);
-	const char *pszAbsFilename = sAbsFilename.c_str();
+	const char *pszAbsFilename = sAbsFilename.GetASCII();
 
 	// First at all, is the configuration file existing?
 	File cFile(pszAbsFilename);
@@ -189,8 +189,8 @@ void PLSceneExportOptions::Load(const std::string &sFilename)
 		// Unknown
 		if (nVersion > 2) {
 			// Show an error message box
-			std::string sError = std::string(pszAbsFilename) + ":\nFormat version is unknown (too new), you may need to update your PixelLight 3ds Max scene exporter version\n... default settings are used...";
-			MessageBox(nullptr, sError.c_str(), "PixelLight scene export error", MB_OK);
+			String sError = String(pszAbsFilename) + ":\nFormat version is unknown (too new), you may need to update your PixelLight 3ds Max scene exporter version\n... default settings are used...";
+			MessageBox(nullptr, sError.GetASCII(), "PixelLight scene export error", MB_OK);
 
 			// Set default settings
 			SetDefaultSettings();
@@ -202,15 +202,15 @@ void PLSceneExportOptions::Load(const std::string &sFilename)
 		// ""/0
 		} else if (nVersion == 0 || nVersion == 1) {
 			// [DEPRECATED] Show an warning message box
-			std::string sWarning = std::string(pszAbsFilename) + ":\nDeprecated format version";
-			MessageBox(nullptr, sWarning.c_str(), "PixelLight scene export warning", MB_OK);
+			String sWarning = String(pszAbsFilename) + ":\nDeprecated format version";
+			MessageBox(nullptr, sWarning.GetASCII(), "PixelLight scene export warning", MB_OK);
 			LoadV0orV1(sFilename);
 
 		// No longer supported format version
 		} else if (nVersion >= 0) {
 			// Show an error message box
-			std::string sError = std::string(pszAbsFilename) + ":\nFormat version is no longer supported\n... default settings are used...";
-			MessageBox(nullptr, sError.c_str(), "PixelLight scene export error", MB_OK);
+			String sError = String(pszAbsFilename) + ":\nFormat version is no longer supported\n... default settings are used...";
+			MessageBox(nullptr, sError.GetASCII(), "PixelLight scene export error", MB_OK);
 
 			// Set default settings
 			SetDefaultSettings();
@@ -218,8 +218,8 @@ void PLSceneExportOptions::Load(const std::string &sFilename)
 		// Invalid format version (negative!)
 		} else {
 			// Show an error message box
-			std::string sError = std::string(pszAbsFilename) + ":\nInvalid format version\n... default settings are used...";
-			MessageBox(nullptr, sError.c_str(), "PixelLight scene export error", MB_OK);
+			String sError = String(pszAbsFilename) + ":\nInvalid format version\n... default settings are used...";
+			MessageBox(nullptr, sError.GetASCII(), "PixelLight scene export error", MB_OK);
 
 			// Set default settings
 			SetDefaultSettings();
@@ -229,12 +229,12 @@ void PLSceneExportOptions::Load(const std::string &sFilename)
 	}
 }
 
-void PLSceneExportOptions::Save(const std::string &sFilename)
+void PLSceneExportOptions::Save(const String &sFilename)
 {
 	// Get the absolute filename
-	std::string sAbsFilename;
+	String sAbsFilename;
 	GetAbsoluteFilename(sFilename, sAbsFilename);
-	const char *pszAbsFilename = sAbsFilename.c_str();
+	const char *pszAbsFilename = sAbsFilename.GetASCII();
 	char szTemp[256], szTemp2[256];
 
 	// Version
@@ -263,11 +263,11 @@ void PLSceneExportOptions::Save(const std::string &sFilename)
 	WritePrivateProfileString("General", "ShowExportedScene", szTemp, pszAbsFilename);
 	sprintf(szTemp, "%d", bPublish);
 	WritePrivateProfileString("General", "Publish", szTemp, pszAbsFilename);
-	sprintf(szTemp, "%s", sSceneContainer.c_str());
+	sprintf(szTemp, "%s", sSceneContainer.GetASCII());
 	WritePrivateProfileString("General", "SceneContainer", szTemp, pszAbsFilename);
-	sprintf(szTemp, "%s", sSceneRenderer.c_str());
+	sprintf(szTemp, "%s", sSceneRenderer.GetASCII());
 	WritePrivateProfileString("General", "SceneRenderer", szTemp, pszAbsFilename);
-	sprintf(szTemp, "%s", sViewer.c_str());
+	sprintf(szTemp, "%s", sViewer.GetASCII());
 	WritePrivateProfileString("General", "Viewer", szTemp, pszAbsFilename);
 
 	// Log
@@ -310,20 +310,20 @@ void PLSceneExportOptions::Save(const std::string &sFilename)
 	WritePrivateProfileString("Meshes", "Binormals", szTemp, pszAbsFilename);
 
 	// Scene containers
-	for (std::vector<std::string*>::size_type i=0; i<m_lstSceneContainers.size(); i++) {
-		const std::string *psString = m_lstSceneContainers[i];
+	for (std::vector<String*>::size_type i=0; i<m_lstSceneContainers.size(); i++) {
+		const String *psString = m_lstSceneContainers[i];
 		if (psString) {
 			sprintf(szTemp, "%d", i);
-			WritePrivateProfileString("SceneContainers", szTemp, psString->c_str(), pszAbsFilename);
+			WritePrivateProfileString("SceneContainers", szTemp, psString->GetASCII(), pszAbsFilename);
 		}
 	}
 
 	// Scene renderers
-	for (std::vector<std::string*>::size_type i=0; i<m_lstSceneRenderers.size(); i++) {
-		const std::string *psString = m_lstSceneRenderers[i];
+	for (std::vector<String*>::size_type i=0; i<m_lstSceneRenderers.size(); i++) {
+		const String *psString = m_lstSceneRenderers[i];
 		if (psString) {
 			sprintf(szTemp, "%d", i);
-			WritePrivateProfileString("SceneRenderers", szTemp, psString->c_str(), pszAbsFilename);
+			WritePrivateProfileString("SceneRenderers", szTemp, psString->GetASCII(), pszAbsFilename);
 		}
 	}
 }
@@ -336,11 +336,11 @@ void PLSceneExportOptions::Save(const std::string &sFilename)
 *  @brief
 *    Returns an absolute configuration filename
 */
-void PLSceneExportOptions::GetAbsoluteFilename(const std::string &sFilename, std::string &sAbsFilename) const
+void PLSceneExportOptions::GetAbsoluteFilename(const String &sFilename, String &sAbsFilename) const
 {
 	// Is this already an absolute filename?
 	char szApplicationDrive[_MAX_DRIVE], szApplicationDir[_MAX_DIR];
-	_splitpath(sFilename.c_str(), szApplicationDrive, szApplicationDir, nullptr, nullptr);
+	_splitpath(sFilename.GetASCII(), szApplicationDrive, szApplicationDir, nullptr, nullptr);
 	if (!strlen(szApplicationDrive)) {
 		// Must be a relative filename
 		const TCHAR *pDir = IPathConfigMgr::GetPathConfigMgr()->GetDir(APP_PLUGCFG_DIR);
@@ -348,9 +348,9 @@ void PLSceneExportOptions::GetAbsoluteFilename(const std::string &sFilename, std
 			const size_t nDirLength = strlen(pDir);
 			if (nDirLength) {
 				if (pDir[nDirLength-1] == '\\' || pDir[nDirLength-1] == '/')
-					sAbsFilename = std::string(pDir) + sFilename;
+					sAbsFilename = String(pDir) + sFilename;
 				else
-					sAbsFilename = std::string(pDir) + "\\" + sFilename;
+					sAbsFilename = String(pDir) + "\\" + sFilename;
 			} else {
 				// Error!
 			}
@@ -369,8 +369,8 @@ void PLSceneExportOptions::GetAbsoluteFilename(const std::string &sFilename, std
 */
 void PLSceneExportOptions::ClearSceneContainers()
 {
-	for (std::vector<std::string*>::size_type i=0; i<m_lstSceneContainers.size(); i++) {
-		std::string *psString = m_lstSceneContainers[i];
+	for (std::vector<String*>::size_type i=0; i<m_lstSceneContainers.size(); i++) {
+		String *psString = m_lstSceneContainers[i];
 		if (psString)
 			delete psString;
 	}
@@ -383,8 +383,8 @@ void PLSceneExportOptions::ClearSceneContainers()
 */
 void PLSceneExportOptions::ClearSceneRenderers()
 {
-	for (std::vector<std::string*>::size_type i=0; i<m_lstSceneRenderers.size(); i++) {
-		std::string *psString = m_lstSceneRenderers[i];
+	for (std::vector<String*>::size_type i=0; i<m_lstSceneRenderers.size(); i++) {
+		String *psString = m_lstSceneRenderers[i];
 		if (psString)
 			delete psString;
 	}
@@ -399,14 +399,14 @@ void PLSceneExportOptions::AddDefaultOptions()
 {
 	if (m_lstSceneContainers.empty()) {
 		// Add default PixelLight scene containers
-		m_lstSceneContainers.push_back(new std::string(""));
-		m_lstSceneContainers.push_back(new std::string("PLPhysics::SCPhysicsWorld"));
+		m_lstSceneContainers.push_back(new String(""));
+		m_lstSceneContainers.push_back(new String("PLPhysics::SCPhysicsWorld"));
 	}
 	if (m_lstSceneRenderers.empty()) {
 		// Add default PixelLight scene renderers
-		m_lstSceneRenderers.push_back(new std::string("FixedFunctions.sr"));
-		m_lstSceneRenderers.push_back(new std::string("Forward.sr"));
-		m_lstSceneRenderers.push_back(new std::string("Deferred.sr"));
+		m_lstSceneRenderers.push_back(new String("FixedFunctions.sr"));
+		m_lstSceneRenderers.push_back(new String("Forward.sr"));
+		m_lstSceneRenderers.push_back(new String("Deferred.sr"));
 	}
 }
 
@@ -414,12 +414,12 @@ void PLSceneExportOptions::AddDefaultOptions()
 *  @brief
 *    Loader implementation for format version 2
 */
-void PLSceneExportOptions::LoadV2(const std::string &sFilename)
+void PLSceneExportOptions::LoadV2(const String &sFilename)
 {
 	// Get the absolute filename
-	std::string sAbsFilename;
+	String sAbsFilename;
 	GetAbsoluteFilename(sFilename, sAbsFilename);
-	const char *pszAbsFilename = sAbsFilename.c_str();
+	const char *pszAbsFilename = sAbsFilename.GetASCII();
 	char szTemp[256], szTemp2[256];
 
 	// General
@@ -499,7 +499,7 @@ void PLSceneExportOptions::LoadV2(const std::string &sFilename)
 	for (int i=0;; i++) {
 		sprintf(szTemp2, "%d", i);
 		if (GetPrivateProfileString("SceneContainers", szTemp2, nullptr, szTemp, 256, pszAbsFilename))
-			m_lstSceneContainers.push_back(new std::string(szTemp));
+			m_lstSceneContainers.push_back(new String(szTemp));
 		else
 			break; // No more scene containers
 	}
@@ -509,7 +509,7 @@ void PLSceneExportOptions::LoadV2(const std::string &sFilename)
 	for (int i=0;; i++) {
 		sprintf(szTemp2, "%d", i);
 		if (GetPrivateProfileString("SceneRenderers", szTemp2, nullptr, szTemp, 256, pszAbsFilename))
-			m_lstSceneRenderers.push_back(new std::string(szTemp));
+			m_lstSceneRenderers.push_back(new String(szTemp));
 		else
 			break; // No more scene renderers
 	}
@@ -522,7 +522,7 @@ void PLSceneExportOptions::LoadV2(const std::string &sFilename)
 *  @brief
 *    Loader implementation for format version 0 or version 1
 */
-void PLSceneExportOptions::LoadV0orV1(const std::string &sFilename)
+void PLSceneExportOptions::LoadV0orV1(const String &sFilename)
 {
 	// Same as version 0 and 1...
 	LoadV2(sFilename);
@@ -532,7 +532,7 @@ void PLSceneExportOptions::LoadV0orV1(const std::string &sFilename)
 	sSceneRenderer = "Forward.sr";
 
 	// Add default PixelLight scene renderers
-	m_lstSceneRenderers.push_back(new std::string("FixedFunctions.sr"));
-	m_lstSceneRenderers.push_back(new std::string("Forward.sr"));
-	m_lstSceneRenderers.push_back(new std::string("Deferred.sr"));
+	m_lstSceneRenderers.push_back(new String("FixedFunctions.sr"));
+	m_lstSceneRenderers.push_back(new String("Forward.sr"));
+	m_lstSceneRenderers.push_back(new String("Deferred.sr"));
 }

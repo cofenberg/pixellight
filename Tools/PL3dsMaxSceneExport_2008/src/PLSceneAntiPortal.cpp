@@ -42,7 +42,7 @@ using namespace PLCore;
 *  @brief
 *    Constructor
 */
-PLSceneAntiPortal::PLSceneAntiPortal(PLSceneContainer &cContainer, IGameNode &cIGameNode, const std::string &sName) :
+PLSceneAntiPortal::PLSceneAntiPortal(PLSceneContainer &cContainer, IGameNode &cIGameNode, const String &sName) :
 	PLScenePortal(cContainer, cIGameNode, sName, TypeAntiPortal, "PLScene::SNAntiPortal")
 {
 }
@@ -59,12 +59,12 @@ PLSceneAntiPortal::~PLSceneAntiPortal()
 //[-------------------------------------------------------]
 //[ Private virtual PLSceneNode functions                 ]
 //[-------------------------------------------------------]
-void PLSceneAntiPortal::WriteToFile(XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir)
+void PLSceneAntiPortal::WriteToFile(XmlElement &cSceneElement, const String &sApplicationDrive, const String &sApplicationDir)
 {
 	// Add scene node
 	XmlElement *pNodeElement = new XmlElement("Node");
-	pNodeElement->SetAttribute("Class", GetClassName().c_str());
-	pNodeElement->SetAttribute("Name",  GetName().c_str());
+	pNodeElement->SetAttribute("Class", GetClassName());
+	pNodeElement->SetAttribute("Name",  GetName());
 
 	// Write position, rotation, scale, bounding box and flags
 	WriteToFilePosRotScaleBoxFlags(*pNodeElement);

@@ -58,7 +58,7 @@ class PLSceneCellPortal : public PLScenePortal {
 		*  @return
 		*    The name of the target cell
 		*/
-		const std::string &GetTargetCell() const;
+		PLCore::String GetTargetCell() const;
 
 
 	//[-------------------------------------------------------]
@@ -78,7 +78,7 @@ class PLSceneCellPortal : public PLScenePortal {
 		*  @param[in] sTargetCell
 		*    Name of the target cell
 		*/
-		PLSceneCellPortal(PLSceneContainer &cContainer, IGameNode &cIGameNode, const std::string &sName, const std::string &sTargetCell);
+		PLSceneCellPortal(PLSceneContainer &cContainer, IGameNode &cIGameNode, const PLCore::String &sName, const PLCore::String &sTargetCell);
 
 		/**
 		*  @brief
@@ -91,14 +91,14 @@ class PLSceneCellPortal : public PLScenePortal {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		std::string m_sTargetCell;	/**< Name of the target cell */
+		PLCore::String m_sTargetCell;	/**< Name of the target cell */
 
 
 	//[-------------------------------------------------------]
 	//[ Private virtual PLSceneNode functions                 ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void WriteToFile(PLCore::XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir) override;
+		virtual void WriteToFile(PLCore::XmlElement &cSceneElement, const PLCore::String &sApplicationDrive, const PLCore::String &sApplicationDir) override;
 
 
 };

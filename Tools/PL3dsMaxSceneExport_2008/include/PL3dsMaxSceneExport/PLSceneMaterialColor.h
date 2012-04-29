@@ -63,7 +63,7 @@ class PLSceneMaterialColor : public PLSceneMaterial {
 		*  @param[in] sName
 		*    Name of this material
 		*/
-		PLSceneMaterialColor(PLScene &cScene, const Color &cColor, const std::string &sName);
+		PLSceneMaterialColor(PLScene &cScene, const Color &cColor, const PLCore::String &sName);
 
 		/**
 		*  @brief

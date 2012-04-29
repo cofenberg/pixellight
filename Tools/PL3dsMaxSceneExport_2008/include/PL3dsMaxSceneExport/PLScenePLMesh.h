@@ -78,7 +78,7 @@ class PLScenePLMesh : public PLSceneMesh {
 		*  @param[in] sName
 		*    Name of this mesh
 		*/
-		PLScenePLMesh(PLScene &cScene, IGameNode &cIGameNode, const std::string &sName);
+		PLScenePLMesh(PLScene &cScene, IGameNode &cIGameNode, const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -98,7 +98,7 @@ class PLScenePLMesh : public PLSceneMesh {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool Save(const std::string &sApplicationDrive, const std::string &sApplicationDir);
+		bool Save(const PLCore::String &sApplicationDrive, const PLCore::String &sApplicationDir);
 
 		// File saving
 		bool WriteMeshFile(FILE &cFile, ChunkStack &cChunkStack);

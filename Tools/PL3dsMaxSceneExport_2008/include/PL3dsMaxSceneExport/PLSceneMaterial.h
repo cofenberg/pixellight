@@ -79,7 +79,7 @@ class PLSceneMaterial {
 		*  @return
 		*    The material name
 		*/
-		const std::string &GetName() const;
+		PLCore::String GetName() const;
 
 		/**
 		*  @brief
@@ -102,7 +102,7 @@ class PLSceneMaterial {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		bool Save(const std::string &sApplicationDrive, const std::string &sApplicationDir);
+		bool Save(const PLCore::String &sApplicationDrive, const PLCore::String &sApplicationDir);
 
 
 	//[-------------------------------------------------------]
@@ -122,7 +122,7 @@ class PLSceneMaterial {
 		*  @param[in] sName
 		*    Name of this material
 		*/
-		PLSceneMaterial(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial *pIGameMaterial, const std::string &sName);
+		PLSceneMaterial(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial *pIGameMaterial, const PLCore::String &sName);
 
 		/**
 		*  @brief
@@ -143,7 +143,7 @@ class PLSceneMaterial {
 		*  @param[in] bNormalMap_xGxR
 		*    Is this a 'xGxR' normal map?
 		*/
-		void SaveTexture(PLCore::XmlElement &cMaterialElement, const std::string &sFilename, const std::string &sSemantic, bool bNormalMap_xGxR = false);
+		void SaveTexture(PLCore::XmlElement &cMaterialElement, const PLCore::String &sFilename, const PLCore::String &sSemantic, bool bNormalMap_xGxR = false);
 
 
 	//[-------------------------------------------------------]
@@ -164,11 +164,11 @@ class PLSceneMaterial {
 	//[ Protected data                                        ]
 	//[-------------------------------------------------------]
 	protected:
-		PLScene		  *m_pScene;				/**< PL owner scene (always valid!) */
-		IGameMaterial *m_pParentIGameMaterial;	/**< Parent of the IGame material, can be a null pointer */
-		IGameMaterial *m_pIGameMaterial;		/**< IGame material this material comes from (always valid!) */
-		std::string	   m_sName;					/**< Name of this material */
-		unsigned int   m_nReferenceCount;		/**< Reference count of this material */
+		PLScene		   *m_pScene;				/**< PL owner scene (always valid!) */
+		IGameMaterial  *m_pParentIGameMaterial;	/**< Parent of the IGame material, can be a null pointer */
+		IGameMaterial  *m_pIGameMaterial;		/**< IGame material this material comes from (always valid!) */
+		PLCore::String  m_sName;				/**< Name of this material */
+		unsigned int    m_nReferenceCount;		/**< Reference count of this material */
 
 
 	//[-------------------------------------------------------]
@@ -191,7 +191,7 @@ class PLSceneMaterial {
 		*  @return
 		*    The created material, a null pointer on error
 		*/
-		static PLSceneMaterial *Create(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial, const std::string &sName);
+		static PLSceneMaterial *Create(PLScene &cScene, IGameMaterial *pParentIGameMaterial, IGameMaterial &cIGameMaterial, const PLCore::String &sName);
 
 
 };

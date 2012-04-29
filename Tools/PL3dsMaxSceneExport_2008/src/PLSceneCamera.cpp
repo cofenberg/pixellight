@@ -43,7 +43,7 @@ using namespace PLCore;
 *  @brief
 *    Constructor
 */
-PLSceneCamera::PLSceneCamera(PLSceneContainer &cContainer, IGameNode &cIGameNode, const std::string &sName) :
+PLSceneCamera::PLSceneCamera(PLSceneContainer &cContainer, IGameNode &cIGameNode, const String &sName) :
 	PLSceneNode(&cContainer, &cIGameNode, sName, TypeCamera, "PLScene::SNCamera")
 {
 }
@@ -60,7 +60,7 @@ PLSceneCamera::~PLSceneCamera()
 //[-------------------------------------------------------]
 //[ Private virtual PLSceneNode functions                 ]
 //[-------------------------------------------------------]
-void PLSceneCamera::WriteToFile(XmlElement &cSceneElement, const std::string &sApplicationDrive, const std::string &sApplicationDir)
+void PLSceneCamera::WriteToFile(XmlElement &cSceneElement, const String &sApplicationDrive, const String &sApplicationDir)
 {
 	TimeValue nTime = GetScene().GetMaxInterface().GetTime();
 	CameraState cCameraState;
@@ -71,8 +71,8 @@ void PLSceneCamera::WriteToFile(XmlElement &cSceneElement, const std::string &sA
 
 	// Add scene node
 	XmlElement *pNodeElement = new XmlElement("Node");
-	pNodeElement->SetAttribute("Class", GetClassName().c_str());
-	pNodeElement->SetAttribute("Name",  GetName().c_str());
+	pNodeElement->SetAttribute("Class", GetClassName());
+	pNodeElement->SetAttribute("Name",  GetName());
 
 	// Write position, rotation, scale, bounding box and flags
 	WriteToFilePosRotScaleBoxFlags(*pNodeElement);
