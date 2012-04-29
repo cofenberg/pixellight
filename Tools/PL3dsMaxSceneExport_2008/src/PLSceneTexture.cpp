@@ -82,14 +82,14 @@ PLSceneTexture::PLSceneTexture(PLScene &cScene, const String &sName, bool bNorma
 	// Check options
 	if (g_SEOptions.bCopyTextures) {
 		// Can we use the given absolute filename?
-		HANDLE hFile = CreateFile(sAbsBitmapFilename.GetASCII(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+		HANDLE hFile = CreateFileW(sAbsBitmapFilename.GetUnicode(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 		if (hFile == INVALID_HANDLE_VALUE) {
 			// Get the current path of the loaded 3ds Max scene
 			String sCurFilePath = Url(GetCOREInterface()->GetCurFilePath().data()).CutFilename();
 			if (sCurFilePath.GetLength()) {
 				// Compose absolute filename by just concatenating the two filenames (for relative filenames)
 				String sBitmapFilename = sCurFilePath + sAbsBitmapFilename;
-				hFile = CreateFile(sBitmapFilename.GetASCII(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+				hFile = CreateFileW(sBitmapFilename.GetUnicode(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 				if (hFile == INVALID_HANDLE_VALUE) {
 					// Get the filename without any path information
 					String sFilenameOnly  = Url(sName).GetFilename().GetASCII();
@@ -101,7 +101,7 @@ PLSceneTexture::PLSceneTexture(PLScene &cScene, const String &sName, bool bNorma
 							sBitmapFilename = sCurFilePath + sFilenameOnly;
 						else
 							sBitmapFilename = sCurFilePath + "\\" + sFilenameOnly;
-						hFile = CreateFile(sBitmapFilename.GetASCII(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+						hFile = CreateFileW(sBitmapFilename.GetUnicode(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 						if (hFile == INVALID_HANDLE_VALUE) {
 							// Check map directories
 							int nMapDirCount = TheManager->GetMapDirCount();
@@ -114,7 +114,7 @@ PLSceneTexture::PLSceneTexture(PLScene &cScene, const String &sName, bool bNorma
 										sBitmapFilename = pMapDir + sFilenameOnly;
 									else
 										sBitmapFilename = pMapDir + String('\\') + sFilenameOnly;
-									hFile = CreateFile(sBitmapFilename.GetASCII(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+									hFile = CreateFileW(sBitmapFilename.GetUnicode(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 									if (hFile != INVALID_HANDLE_VALUE)
 										break;
 									else
@@ -147,7 +147,7 @@ PLSceneTexture::PLSceneTexture(PLScene &cScene, const String &sName, bool bNorma
 				sFilename = sFilename + m_sName;
 
 				// Is there already such a file? If yes, check the file times...
-				hFile = CreateFile(sFilename.GetASCII(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+				hFile = CreateFileW(sFilename.GetUnicode(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 				if (hFile != INVALID_HANDLE_VALUE) {
 					// Get target file time and close it
 					FILETIME sTargetCreationTime;
@@ -168,7 +168,7 @@ PLSceneTexture::PLSceneTexture(PLScene &cScene, const String &sName, bool bNorma
 				}
 
 				// Copy the texture (bitmap)
-				CopyFile(sAbsBitmapFilename.GetASCII(), sFilename.GetASCII(), false);
+				CopyFileW(sAbsBitmapFilename.GetUnicode(), sFilename.GetUnicode(), false);
 
 				// If there's a 'plt'-file for the texture, copy it, too
 				int nIndex = sFilename.LastIndexOf(".");
@@ -179,7 +179,7 @@ PLSceneTexture::PLSceneTexture(PLScene &cScene, const String &sName, bool bNorma
 					if (nIndex >= 0) {
 						sAbsBitmapFilename.Delete(nIndex);
 						sAbsBitmapFilename += ".plt";
-						if (!CopyFile(sAbsBitmapFilename.GetASCII(), sFilename.GetASCII(), false)) {
+						if (!CopyFileW(sAbsBitmapFilename.GetUnicode(), sFilename.GetUnicode(), false)) {
 							// Failed to copy the 'plt'-file...
 							if (bNormalMap_xGxR) {
 								// Create an automatic 'plt'-file...

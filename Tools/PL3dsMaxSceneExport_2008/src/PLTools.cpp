@@ -290,7 +290,7 @@ char *PLTools::GetPixelLightRuntimeDirectory()
 
 		// Read registry key "PixelLight-SDK"
 		HKEY hKey;
-		if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, szSubkeySDK, 0, KEY_READ, &hKey) == ERROR_SUCCESS) {
+		if (RegOpenKeyExA(HKEY_LOCAL_MACHINE, szSubkeySDK, 0, KEY_READ, &hKey) == ERROR_SUCCESS) {
 			DWORD nSize;
 			if (RegQueryValueEx(hKey, _T("Runtime"), 0, nullptr, nullptr, &nSize) == ERROR_SUCCESS) {
 				char *pszBuffer = new char[nSize];
@@ -307,7 +307,7 @@ char *PLTools::GetPixelLightRuntimeDirectory()
 		}
 
 		// Read registry key "PixelLight-Runtime"
-		if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, szSubkeyRT, 0, KEY_READ, &hKey) == ERROR_SUCCESS) {
+		if (RegOpenKeyExA(HKEY_LOCAL_MACHINE, szSubkeyRT, 0, KEY_READ, &hKey) == ERROR_SUCCESS) {
 			DWORD nSize;
 			if (RegQueryValueEx(hKey, _T("Runtime"), 0, nullptr, nullptr, &nSize) == ERROR_SUCCESS) {
 				char *pszBuffer = new char[nSize];

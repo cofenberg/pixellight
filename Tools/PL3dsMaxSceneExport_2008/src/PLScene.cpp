@@ -933,7 +933,7 @@ bool PLScene::AddIGameNode(IGameNode &cIGameNode)
 	int nProgress = m_nProgressMin+static_cast<int>(static_cast<float>(m_nProgressMax-m_nProgressMin)*static_cast<float>(m_nNumOfMaxNodes)/static_cast<float>(m_nTotalNumOfMaxNodes));
 	if (nProgress != m_nProgress) {
 		m_nProgress = nProgress;
-		m_pMaxInterface->ProgressUpdate(m_nProgress, 0, "Collect scene data...");
+		m_pMaxInterface->ProgressUpdate(m_nProgress, 0, _T("Collect scene data..."));
 	}
 
 	// Call base implementation

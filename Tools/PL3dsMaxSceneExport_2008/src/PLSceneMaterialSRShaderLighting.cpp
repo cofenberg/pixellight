@@ -181,7 +181,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 				for (int i=0; i<nNumOfParams; i++) {
 					TSTR pszName = pParamBlock->GetLocalName(i);
 					if (pszName)
-						mapParams.insert(make_pair(std::string(pszName), i));
+						mapParams.insert(std::make_pair(std::string(pszName), i));
 				}
 
 				// Export some general parameters

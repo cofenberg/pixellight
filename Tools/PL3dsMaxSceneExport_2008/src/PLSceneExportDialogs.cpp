@@ -48,7 +48,7 @@ static INT_PTR CALLBACK AboutBoxDlgProc(HWND hWnd, UINT msg, WPARAM wParam, LPAR
 	switch (msg)  {
 		case WM_INITDIALOG:
 			SetDlgItemText(hWnd, IDC_VERSION, PLCore::Runtime::GetVersion().ToString() + "\nPixelLight scene exporter\nCopyright (C) 2002-2012 by The PixelLight Team");
-			SetDlgItemText(hWnd, IDC_BUILD, "Build:  Date: " __DATE__ "  Time: " __TIME__);
+			SetDlgItemText(hWnd, IDC_BUILD, _T("Build:  Date: ") _T(__DATE__) _T("  Time: ") _T(__TIME__));
 			break;
 
 		case WM_COMMAND:
@@ -82,11 +82,11 @@ void GetSettings(HWND hWnd)
 	g_SEOptions.bAnimationPlayback = SendDlgItemMessage(hWnd, IDC_ANIMATIONPLAYBACK, BM_GETCHECK, 0, 0) != 0;
 	g_SEOptions.bShowExportedScene = SendDlgItemMessage(hWnd, IDC_SHOWEXPORTEDSCENE, BM_GETCHECK, 0, 0) != 0;
 	g_SEOptions.bPublish		   = SendDlgItemMessage(hWnd, IDC_PUBLISH,			 BM_GETCHECK, 0, 0) != 0;
-	GetDlgItemText(hWnd, IDC_SCENECONTAINER, szTemp, 256);
+	GetDlgItemTextA(hWnd, IDC_SCENECONTAINER, szTemp, 256);
 	g_SEOptions.sSceneContainer = szTemp;
-	GetDlgItemText(hWnd, IDC_SCENERENDERER, szTemp, 256);
+	GetDlgItemTextA(hWnd, IDC_SCENERENDERER, szTemp, 256);
 	g_SEOptions.sSceneRenderer = szTemp;
-	GetDlgItemText(hWnd, IDC_SCENEVIEWER, szTemp, 256);
+	GetDlgItemTextA(hWnd, IDC_SCENEVIEWER, szTemp, 256);
 	g_SEOptions.sViewer = szTemp;
 
 	// Log
@@ -190,7 +190,7 @@ void SetupDialog(HWND hWnd)
 	}
 	SendDlgItemMessage(hWnd, IDC_SCENERENDERER, CB_SETCURSEL, nSelection, 0);
 	// Viewer
-	SetDlgItemText(hWnd, IDC_SCENEVIEWER, g_SEOptions.sViewer.GetASCII());
+	SetDlgItemTextA(hWnd, IDC_SCENEVIEWER, g_SEOptions.sViewer.GetASCII());
 
 	// Log
 	SendDlgItemMessage(hWnd, IDC_LOG, CB_RESETCONTENT, 0, 0);
@@ -376,7 +376,7 @@ static INT_PTR CALLBACK ExportOptionsDlgProc(HWND hWnd, UINT msg, WPARAM wParam,
 				{
 					char szFilename[_MAX_PATH] = "";
 					char szFilters[] = "Executable (*.exe)" "\0" "*.exe" "\0" "All files (*.*)" "\0" "*.*" "\0" "\0";
-					OPENFILENAME of;
+					OPENFILENAMEA of;
 
 					memset(&of, 0, sizeof(OPENFILENAME));
 					of.lStructSize  = sizeof(OPENFILENAME);
@@ -388,8 +388,8 @@ static INT_PTR CALLBACK ExportOptionsDlgProc(HWND hWnd, UINT msg, WPARAM wParam,
 					of.lpstrTitle   = "Select viewer";
 					of.Flags        = OFN_HIDEREADONLY | OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST;
 					of.lpstrDefExt  = "exe";
-					if (GetOpenFileName(&of)) {
-						SetDlgItemText(hWnd, IDC_SCENEVIEWER, szFilename);
+					if (GetOpenFileNameA(&of)) {
+						SetDlgItemTextA(hWnd, IDC_SCENEVIEWER, szFilename);
 						g_SEOptions.sViewer = szFilename;
 					}
 					break;
@@ -413,7 +413,7 @@ static INT_PTR CALLBACK ExportOptionsDlgProc(HWND hWnd, UINT msg, WPARAM wParam,
 				{
 					char szFilename[_MAX_PATH] = "";
 					char szFilters[] = "Settings (*.ini)" "\0" "*.ini" "\0" "All files (*.*)" "\0" "*.*" "\0" "\0";
-					OPENFILENAME of;
+					OPENFILENAMEA of;
 
 					memset(&of, 0, sizeof(OPENFILENAME));
 					of.lStructSize  = sizeof(OPENFILENAME);
@@ -422,11 +422,11 @@ static INT_PTR CALLBACK ExportOptionsDlgProc(HWND hWnd, UINT msg, WPARAM wParam,
 					of.nFilterIndex = 1;
 					of.lpstrFile    = szFilename;
 					of.nMaxFile     = 256;
-					of.lpstrInitialDir = IPathConfigMgr::GetPathConfigMgr()->GetDir(APP_PLUGCFG_DIR);
+					of.lpstrInitialDir = String(IPathConfigMgr::GetPathConfigMgr()->GetDir(APP_PLUGCFG_DIR)).GetASCII();
 					of.lpstrTitle   = "Load exporter settings";
 					of.Flags        = OFN_HIDEREADONLY | OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST;
 					of.lpstrDefExt  = "ini";
-					if (GetOpenFileName(&of)) {
+					if (GetOpenFileNameA(&of)) {
 						g_SEOptions.Load(szFilename);
 						UpdateDialog(hWnd);
 					}
@@ -437,7 +437,7 @@ static INT_PTR CALLBACK ExportOptionsDlgProc(HWND hWnd, UINT msg, WPARAM wParam,
 				{
 					char szFilename[_MAX_PATH] = "";
 					char szFilters[] = "Settings (*.ini)" "\0" "*.ini" "\0" "All files (*.*)" "\0" "*.*" "\0" "\0";
-					OPENFILENAME of;
+					OPENFILENAMEA of;
 
 					memset(&of, 0, sizeof(OPENFILENAME));
 					of.lStructSize  = sizeof(OPENFILENAME);
@@ -446,11 +446,11 @@ static INT_PTR CALLBACK ExportOptionsDlgProc(HWND hWnd, UINT msg, WPARAM wParam,
 					of.nFilterIndex = 1;
 					of.lpstrFile    = szFilename;
 					of.nMaxFile     = 256;
-					of.lpstrInitialDir = IPathConfigMgr::GetPathConfigMgr()->GetDir(APP_PLUGCFG_DIR);
+					of.lpstrInitialDir = String(IPathConfigMgr::GetPathConfigMgr()->GetDir(APP_PLUGCFG_DIR)).GetASCII();
 					of.lpstrTitle   = "Save exporter settings";
 					of.Flags        = OFN_HIDEREADONLY | OFN_PATHMUSTEXIST;
 					of.lpstrDefExt  = "ini";
-					if (GetOpenFileName(&of))
+					if (GetOpenFileNameA(&of))
 						g_SEOptions.Save(szFilename);
 					break;
 				}
@@ -486,7 +486,7 @@ static INT_PTR CALLBACK ExportOptionsDlgProc(HWND hWnd, UINT msg, WPARAM wParam,
 
 						// Open the help document
 						if (sDocumentFile.GetLength())
-							ShellExecute(0, "open", sDocumentFile.GetASCII(), 0, 0, SW_SHOW);
+							ShellExecuteW(0, L"open", sDocumentFile.GetUnicode(), 0, 0, SW_SHOW);
 					}
 					break;
 				}

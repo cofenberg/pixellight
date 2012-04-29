@@ -66,7 +66,7 @@ PLSceneEnumProc::PLSceneEnumProc(const TCHAR szName[], Interface &cMaxInterface,
 			// Show an error message box
 			String sError = "Error: 3ds Max version mismatch!\nYou are using version '" + PLTools::ToString(nRunning3dsMaxVersion/1000.0f) +
 				"', but this exporter was build for at least version '" + PLTools::ToString(nBuild3dsMaxVersion/1000.0f) + "'!";
-			MessageBox(nullptr, sError.GetASCII(), _T("PixelLight scene export error"), MB_OK);
+			MessageBoxW(nullptr, sError.GetUnicode(), L"PixelLight scene export error", MB_OK);
 
 			// ARGH! Get us out of here!
 			return;
@@ -85,7 +85,7 @@ PLSceneEnumProc::PLSceneEnumProc(const TCHAR szName[], Interface &cMaxInterface,
 			// Show an error message box
 			String sError = "Error: 'IGame.dll' version mismatch!\nYou are using version '" + PLTools::ToString(fRunningIGameVersion) +
 				"', but this exporter was build for at least version '" + PLTools::ToString(fBuildIGameVersion)+ "'!";
-			MessageBox(nullptr, sError.GetASCII(), _T("PixelLight scene export error"), MB_OK);
+			MessageBoxW(nullptr, sError.GetUnicode(), L"PixelLight scene export error", MB_OK);
 
 			// ARGH! Get us out of here!
 			return;
@@ -119,36 +119,36 @@ PLSceneEnumProc::PLSceneEnumProc(const TCHAR szName[], Interface &cMaxInterface,
 		if (g_SEOptions.bPLDirectories) {
 			// Data
 			String sDataFilename = String(szApplicationDrive) + szApplicationDir + "Data";
-			CreateDirectory(sDataFilename.GetASCII(), nullptr);
+			CreateDirectoryW(sDataFilename.GetUnicode(), nullptr);
 			// Meshes
 			if (g_SEOptions.bExportMeshes) {
 				sFilename = sDataFilename + "\\Meshes\\";
-				CreateDirectory(sFilename.GetASCII(), nullptr);
+				CreateDirectoryW(sFilename.GetUnicode(), nullptr);
 				if (g_SEOptions.bSubdirectories) {
 					sFilename += g_SEOptions.sFilenameOnly;
 					sFilename += '\\';
-					CreateDirectory(sFilename.GetASCII(), nullptr);
+					CreateDirectoryW(sFilename.GetUnicode(), nullptr);
 				}
 			}
 			// Misc
 			sFilename = sDataFilename + "\\Misc\\";
-			CreateDirectory(sFilename.GetASCII(), nullptr);
+			CreateDirectoryW(sFilename.GetUnicode(), nullptr);
 			if (g_SEOptions.bSubdirectories) {
 				sFilename += g_SEOptions.sFilenameOnly;
 				sFilename += '\\';
-				CreateDirectory(sFilename.GetASCII(), nullptr);
+				CreateDirectoryW(sFilename.GetUnicode(), nullptr);
 			}
 			// Scenes
 			sFilename = sDataFilename + "\\Scenes\\";
-			CreateDirectory(sFilename.GetASCII(), nullptr);
+			CreateDirectoryW(sFilename.GetUnicode(), nullptr);
 			// Materials
 			if (g_SEOptions.bExportMaterials && g_SEOptions.bCreateMaterials) {
 				sFilename = sDataFilename + "\\Materials\\";
-				CreateDirectory(sFilename.GetASCII(), nullptr);
+				CreateDirectoryW(sFilename.GetUnicode(), nullptr);
 				if (g_SEOptions.bSubdirectories) {
 					sFilename += g_SEOptions.sFilenameOnly;
 					sFilename += '\\';
-					CreateDirectory(sFilename.GetASCII(), nullptr);
+					CreateDirectoryW(sFilename.GetUnicode(), nullptr);
 				}
 			}
 			sFilename = sDataFilename + "\\Scenes\\" + pszNameT;
@@ -262,7 +262,7 @@ PLSceneEnumProc::PLSceneEnumProc(const TCHAR szName[], Interface &cMaxInterface,
 
 			// Open the log right now?
 			if (g_SEOptions.bLog && g_SEOptions.bLogOpen)
-				ShellExecute(0, _T("open"), sLogFilename.GetASCII(), 0, 0, SW_SHOW);
+				ShellExecuteW(0, L"open", sLogFilename.GetUnicode(), 0, 0, SW_SHOW);
 
 			// Show the scene right now?
 			if (g_SEOptions.bShowExportedScene && g_SEOptions.sViewer.GetLength()) {
@@ -272,13 +272,13 @@ PLSceneEnumProc::PLSceneEnumProc(const TCHAR szName[], Interface &cMaxInterface,
 					nIndex = sDirectory.LastIndexOf("\\");
 				if (nIndex >= 0) {
 					sDirectory.Delete(nIndex);
-					ShellExecute(0, _T("open"), g_SEOptions.sViewer.GetASCII(), ("\"" + sFilename + "\"").GetASCII(), sDirectory.GetASCII(), SW_SHOW);
+					ShellExecuteW(0, L"open", g_SEOptions.sViewer.GetUnicode(), ("\"" + sFilename + "\"").GetUnicode(), sDirectory.GetUnicode(), SW_SHOW);
 				}
 			}
 		} else {
 			// Show an error message box
 			String sError = "Error: Can't create the file \"" + sFilename + "\"";
-			MessageBox(nullptr, sError.GetASCII(), _T("PixelLight scene export error"), MB_OK);
+			MessageBoxW(nullptr, sError.GetUnicode(), L"PixelLight scene export error", MB_OK);
 		}
 	}
 
@@ -410,7 +410,7 @@ void PLSceneEnumProc::Publish(const String &sTargetDirectory) const
 		delete [] pszBuffer;
 
 		// Create the executable (x86) directory
-		CreateDirectory(sTargetDirectory.GetASCII(), nullptr);
+		CreateDirectoryW(sTargetDirectory.GetUnicode(), nullptr);
 
 		// Physics support?
 		bool bPhysics = (g_SEOptions.sSceneContainer == "PLPhysics::SCPhysicsWorld");
@@ -443,7 +443,7 @@ void PLSceneEnumProc::Publish(const String &sTargetDirectory) const
 			for (int i=0; i<NumOfFiles; i++) {
 				const String sAbsSourceFilename = sSourceDirectory + '\\' + sFiles[i];
 				const String sAbsTargetFilename = sTargetDirectory + '\\' + sFiles[i];
-				CopyFile(sAbsSourceFilename.GetASCII(), sAbsTargetFilename.GetASCII(), false);
+				CopyFileW(sAbsSourceFilename.GetUnicode(), sAbsTargetFilename.GetUnicode(), false);
 			}
 		}
 
@@ -457,7 +457,7 @@ void PLSceneEnumProc::Publish(const String &sTargetDirectory) const
 			for (int i=0; i<NumOfFiles; i++) {
 				const String sAbsSourceFilename = sSourceDirectory + '\\' + sFiles[i];
 				const String sAbsTargetFilename = sTargetDirectory + '\\' + sFiles[i];
-				CopyFile(sAbsSourceFilename.GetASCII(), sAbsTargetFilename.GetASCII(), false);
+				CopyFileW(sAbsSourceFilename.GetUnicode(), sAbsTargetFilename.GetUnicode(), false);
 			}
 		}
 
@@ -471,7 +471,7 @@ void PLSceneEnumProc::Publish(const String &sTargetDirectory) const
 			for (int i=0; i<NumOfFiles; i++) {
 				const String sAbsSourceFilename = sSourceDirectory + '\\' + sFiles[i];
 				const String sAbsTargetFilename = sTargetDirectory + '\\' + sFiles[i];
-				CopyFile(sAbsSourceFilename.GetASCII(), sAbsTargetFilename.GetASCII(), false);
+				CopyFileW(sAbsSourceFilename.GetUnicode(), sAbsTargetFilename.GetUnicode(), false);
 			}
 		}
 
@@ -487,7 +487,7 @@ void PLSceneEnumProc::Publish(const String &sTargetDirectory) const
 			for (int i=0; i<NumOfFiles; i++) {
 				const String sAbsSourceFilename = sSourceDirectory + '\\' + sFiles[i];
 				const String sAbsTargetFilename = sTargetDirectory + '\\' + sFiles[i];
-				CopyFile(sAbsSourceFilename.GetASCII(), sAbsTargetFilename.GetASCII(), false);
+				CopyFileW(sAbsSourceFilename.GetUnicode(), sAbsTargetFilename.GetUnicode(), false);
 			}
 		}
 
@@ -495,7 +495,7 @@ void PLSceneEnumProc::Publish(const String &sTargetDirectory) const
 		String sViewer = PLTools::GetPLViewerFilename();
 		if (sViewer.GetLength()) {
 			// Copy
-			CopyFile(sViewer.GetASCII(), (sTargetDirectory + "\\PLViewer.exe").GetASCII(), false);
+			CopyFileW(sViewer.GetUnicode(), (sTargetDirectory + "\\PLViewer.exe").GetUnicode(), false);
 		}
 
 		{ // Copy VC2010 redistributable files
@@ -508,7 +508,7 @@ void PLSceneEnumProc::Publish(const String &sTargetDirectory) const
 			for (int i=0; i<NumOfFiles; i++) {
 				const String sAbsSourceFilename = sSourceDirectory + "\\VC2010_Redistributable\\" + sFiles[i];
 				const String sAbsTargetFilename = sTargetDirectory + '\\' + sFiles[i];
-				CopyFile(sAbsSourceFilename.GetASCII(), sAbsTargetFilename.GetASCII(), false);
+				CopyFileW(sAbsSourceFilename.GetUnicode(), sAbsTargetFilename.GetUnicode(), false);
 			}
 		}
 
