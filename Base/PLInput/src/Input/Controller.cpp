@@ -366,11 +366,29 @@ void Controller::InformControl(Control *pControl)
 
 			// Check 'direction' that we must take
 			if (pControl->IsInputControl() && pConnection->GetInputControl() == pControl) {
-				// Input control, pass from connection-input to connection-output
-				pConnection->PassValue();
+				// Get the output control
+				Control *pOutputControl = pConnection->GetOutputControl();
+				if (pOutputControl) {
+					// Get the pointer to the controller that owns the output control
+					// -> In case there's a controller, do only pass on the control event in case the controller is active
+					Controller *pController = pOutputControl->GetController();
+					if (!pController || pController->GetActive()) {
+						// Input control, pass from connection-input to connection-output
+						pConnection->PassValue();
+					}
+				}
 			} else if (!pControl->IsInputControl() && pConnection->GetOutputControl() == pControl) {
-				// Output control, pass backwards: from connection-output to connection-input
-				pConnection->PassValueBackwards();
+				// Get the input control
+				Control *pInputControl = pConnection->GetInputControl();
+				if (pInputControl) {
+					// Get the pointer to the controller that owns the input control
+					// -> In case there's a controller, do only pass on the control event in case the controller is active
+					Controller *pController = pInputControl->GetController();
+					if (!pController || pController->GetActive()) {
+						// Output control, pass backwards: from connection-output to connection-input
+						pConnection->PassValueBackwards();
+					}
+				}
 			}
 		}
 	}
