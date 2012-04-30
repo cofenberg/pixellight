@@ -198,8 +198,8 @@ uniform lowp vec3 DiffuseColor;\n\
 #endif\n\
 uniform lowp vec3 LightColor;	// Light color\n\
 #ifdef FS_SPECULAR\n\
-	uniform lowp vec3  SpecularColor;\n\
-	uniform lowp float SpecularExponent;\n\
+	uniform lowp    vec3  SpecularColor;\n\
+	uniform mediump float SpecularExponent;\n\
 	#ifdef FS_SPECULARMAP\n\
 		uniform lowp sampler2D SpecularMap;\n\
 	#endif\n\
@@ -439,9 +439,9 @@ void main()\n\
 	// Specular color and exponent\n\
 	#ifdef FS_SPECULAR\n\
 		#ifdef FS_SPECULARMAP\n\
-			lowp vec4  specularMapTexel = texture2D(SpecularMap, TexCoord0);\n\
-			lowp vec3  specularColor    = specularMapTexel.rgb*SpecularColor;\n\
-			lowp float specularExponent = specularMapTexel.a*SpecularExponent;\n\
+			lowp    vec4  specularMapTexel = texture2D(SpecularMap, TexCoord0);\n\
+			lowp    vec3  specularColor    = specularMapTexel.rgb*SpecularColor;\n\
+			mediump float specularExponent = specularMapTexel.a*SpecularExponent;\n\
 		#else\n\
 			lowp vec3 specularColor = SpecularColor;\n\
 			#define specularExponent SpecularExponent\n\

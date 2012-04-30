@@ -1,3 +1,11 @@
+>> 30.04.2012
+[CO]
+- Android port related: Figured out why the lighting looked odd within the Mediaeval scene on most smartphones, except Samsung Galaxy S2.
+  Within "SRPDirectionalLightingShaders_GLSL" -> "uniform lowp float SpecularExponent;": After changing it to "uniform mediump float SpecularExponent;"
+  the lighting looks identical to the desktop-PC version. I assume this means that Samsung Galaxy S2 is ignoring the precision qualifiers. Good to know.
+
+
+
 >> 22.04.2012
 [CO]
 - PLCompositing is now using "Renderer::SetDepthRenderTarget()" instead of "SurfaceTextureBuffer::TakeDepthBufferFromSurfaceTextureBuffer()"
