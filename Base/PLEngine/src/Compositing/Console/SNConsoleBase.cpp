@@ -25,7 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLCore/Log/Log.h>
 #include <PLInput/Input/InputManager.h>
-#include <PLInput/Input/Devices/Keyboard.h>
+#include <PLInput/Input/Virtual/VirtualStandardController.h>
 #include <PLScene/Scene/SceneContext.h>
 #include "PLEngine/Application/EngineApplication.h"
 #include "PLEngine/Compositing/Console/ConsoleDefaultCommands.h"
@@ -235,291 +235,269 @@ void SNConsoleBase::ProcessKeyMessage()
 	if (!pCoreApplication || !pCoreApplication->IsInstanceOf("PLEngine::EngineApplication"))
 		return;	// Get us out of here right now!
 	Controller *pController = reinterpret_cast<Controller*>(static_cast<EngineApplication*>(pCoreApplication)->GetInputController());
-	if ((pController && pController->GetActive()) || !pController) {
-		// Get keyboard input device
-		Keyboard *pKeyboard = InputManager::GetInstance()->GetKeyboard();
-		if (pKeyboard) {
-			// Check if console can be activated at all
-			// [TODO] Don't use an external config here, rather have a deactivated-flag *inside* this class
-			//        and set it from *outside* using the config! This is spaghetti logic...
-			bool bActivated = true;
-			CoreApplication *pApplication = CoreApplication::GetApplication();
-			if (pApplication) {
-				bActivated = pApplication->GetConfig().GetVar("PLEngine::Config", "ConsoleActivated").GetBool();
+	if (pController && pController->GetActive() && pController->IsInstanceOf("PLInput::VirtualStandardController")) {
+		// Get virtual standard controller interface
+		// -> Do not use the keyboard directly or the behaviour of not having the focus will be wrong
+		VirtualStandardController *pVirtualStandardController = static_cast<VirtualStandardController*>(pController);
+
+		// Check if console can be activated at all
+		// [TODO] Don't use an external config here, rather have a deactivated-flag *inside* this class
+		//        and set it from *outside* using the config! This is spaghetti logic...
+		bool bActivated = true;
+		CoreApplication *pApplication = CoreApplication::GetApplication();
+		if (pApplication) {
+			bActivated = pApplication->GetConfig().GetVar("PLEngine::Config", "ConsoleActivated").GetBool();
+		}
+
+		// Console toggle
+		if (pVirtualStandardController->KeyboardCircumflex.IsHit()) {
+			if (IsActive() || !bActivated)
+				Deactivate();
+			else
+				Activate();
+
+			// Done
+			return;
+		}
+
+		// Only process keyboard if the console is active
+		if (m_nState == Inactive || m_nState == Deactivating)
+			return;
+
+		// Clear command
+		if (pVirtualStandardController->KeyboardEscape.IsHit()) {
+			m_sCommand      = "";
+			m_sFoundCommand = "";
+			m_nCursor = 0;
+			m_nSelStart = m_nSelEnd = -1;
+
+			// Done
+			return;
+		}
+
+		// Set cursor
+		if (pVirtualStandardController->KeyboardLeft.IsHit()) {
+			// Check selection start
+			if (pVirtualStandardController->KeyboardShift.IsPressed() && m_nSelStart < 0)
+				m_nSelStart = m_nCursor; // Selection start
+
+			// Update current cursor position
+			if (m_nCursor > 0)
+				m_nCursor--;
+
+			// Check selection end
+			if (pVirtualStandardController->KeyboardShift.IsPressed())
+				m_nSelEnd   = m_nCursor;
+			else
+				m_nSelStart = m_nSelEnd = -1;
+
+			// Done
+			return;
+		}
+		if (pVirtualStandardController->KeyboardRight.IsHit()) {
+			// Check selection start
+			if (pVirtualStandardController->KeyboardShift.IsPressed() && m_nSelStart < 0)
+				m_nSelStart = m_nCursor; // Selection start
+
+			// Update current cursor position
+			m_nCursor++;
+			if (m_nCursor > m_sCommand.GetLength())
+				m_nCursor = m_sCommand.GetLength();
+
+			// Check selection end
+			if (pVirtualStandardController->KeyboardShift.IsPressed())
+				m_nSelEnd   = m_nCursor;
+			else
+				m_nSelStart = m_nSelEnd = -1;
+
+			// Done
+			return;
+		}
+		if (pVirtualStandardController->KeyboardHome.IsHit()) {
+			// Check selection start
+			if (pVirtualStandardController->KeyboardShift.IsPressed() && m_nSelStart < 0)
+				m_nSelStart = m_nCursor; // Selection start
+
+			// Update current cursor position
+			m_nCursor = 0;
+
+			// Check selection end
+			if (pVirtualStandardController->KeyboardShift.IsPressed())
+				m_nSelEnd   = m_nCursor;
+			else
+				m_nSelStart = m_nSelEnd = -1;
+
+			// Done
+			return;
+		}
+		if (pVirtualStandardController->KeyboardEnd.IsHit()) {
+			// Check selection start
+			if (pVirtualStandardController->KeyboardShift.IsPressed() && m_nSelStart < 0)
+				m_nSelStart = m_nCursor; // Selection start
+
+			// Update current cursor position
+			m_nCursor = m_sCommand.GetLength();
+
+			// Check selection end
+			if (pVirtualStandardController->KeyboardShift.IsPressed())
+				m_nSelEnd   = m_nCursor;
+			else
+				m_nSelStart = m_nSelEnd = -1;
+
+			// Done
+			return;
+		}
+
+		// Remove the selected text
+		if (pVirtualStandardController->KeyboardBackspace.IsHit()) {
+			if (m_nSelStart < 0 || m_nSelEnd < 0) {
+				if (m_nCursor > 0) {
+					m_sCommand.Delete(m_nCursor-1, 1);
+					m_nCursor--;
+
+					// Complete the command automatically...
+					CompleteCommand();
+				}
+			} else {
+				if (m_nSelStart > m_nSelEnd) {
+					m_sCommand.Delete(m_nSelEnd, m_nSelStart-m_nSelEnd);
+					m_nCursor = m_nSelEnd;
+				} else {
+					m_sCommand.Delete(m_nSelStart, m_nSelEnd-m_nSelStart);
+					m_nCursor = m_nSelStart;
+				}
+				m_nSelStart = m_nSelEnd = -1;
+
+				// Complete the command automatically...
+				CompleteCommand();
 			}
 
-			// Console toggle
-			if (pKeyboard->Circumflex.IsHit()) {
-				if (IsActive() || !bActivated)
-					Deactivate();
-				else
-					Activate();
+			// Done
+			return;
+		}
+
+		// Complete command
+		if (pVirtualStandardController->KeyboardTab.IsHit()) {
+			if (m_sFoundCommand.GetLength()) {
+				m_sCommand = m_sFoundCommand;
+				m_nCursor  = m_sCommand.GetLength();
+				m_nSelStart = m_nSelEnd = -1;
+			}
+
+			// Done
+			return;
+		}
+
+		// Get text from clipboard
+		if ((pVirtualStandardController->KeyboardControl.IsPressed() && pVirtualStandardController->KeyboardV.IsHit()) ||
+			(pVirtualStandardController->KeyboardShift.IsPressed() && pVirtualStandardController->KeyboardInsert.IsHit())) {
+			// Remove the selected text
+			if (m_nSelStart > -1 && m_nSelEnd > -1) {
+				if (m_nSelStart > m_nSelEnd) {
+					m_sCommand.Delete(m_nSelEnd, m_nSelStart-m_nSelEnd);
+					m_nCursor = m_nSelEnd;
+				} else {
+					m_sCommand.Delete(m_nSelStart, m_nSelEnd-m_nSelStart);
+					m_nCursor = m_nSelStart;
+				}
+				m_nSelStart = m_nSelEnd = -1;
+			}
+
+			/*
+			// [TODO] Frontend update: PLEngine is no longer allowed to directly access a GUI system
+			// Get text from clipboard
+			String sClipboardText = Gui::GetSystemGui()->GetClipBoard().GetText();
+			if (sClipboardText.GetLength()) {
+				// Add text from clipboard
+				m_sCommand.Insert(sClipboardText, m_nCursor);
+				m_nCursor += sClipboardText.GetLength();
+			}*/
+
+			// Done
+			return;
+		}
+
+		// Copy text to clipboard
+		if ((pVirtualStandardController->KeyboardControl.IsPressed() && pVirtualStandardController->KeyboardC.IsHit()) ||
+			(pVirtualStandardController->KeyboardControl.IsPressed() && pVirtualStandardController->KeyboardX.IsHit()) ||
+			(pVirtualStandardController->KeyboardShift.IsPressed() && pVirtualStandardController->KeyboardDelete.IsHit())) {
+			/*
+			// [TODO] Frontend update: PLEngine is no longer allowed to directly access a GUI system
+			// Copy the selected text to clipboard
+			if (m_nSelStart > m_nSelEnd)
+				Gui::GetSystemGui()->GetClipBoard().SetText(m_sCommand.GetSubstring(m_nSelEnd, m_nSelStart-m_nSelEnd));
+			else
+				Gui::GetSystemGui()->GetClipBoard().SetText(m_sCommand.GetSubstring(m_nSelStart, m_nSelEnd-m_nSelStart));
+				*/
+
+			// Remove selected text?
+			if (((pVirtualStandardController->KeyboardControl.IsPressed() && pVirtualStandardController->KeyboardX.IsHit()) ||
+				(pVirtualStandardController->KeyboardShift.IsPressed() && pVirtualStandardController->KeyboardDelete.IsHit())) && m_nSelStart > -1 && m_nSelEnd > -1)
+			{
+				if (m_nSelStart > m_nSelEnd) {
+					m_sCommand.Delete(m_nSelEnd, m_nSelStart-m_nSelEnd);
+					m_nCursor = m_nSelEnd;
+				} else {
+					m_sCommand.Delete(m_nSelStart, m_nSelEnd-m_nSelStart);
+					m_nCursor = m_nSelStart;
+				}
+				m_nSelStart = m_nSelEnd = -1;
+			}
+
+			// Done
+			return;
+		}
+
+		// Select a command from the command history
+		if (!m_lstCommandHistory.IsEmpty()) {
+			// Go upwards
+			if (pVirtualStandardController->KeyboardUp.IsHit()) {
+				if (m_nCurrentCommand > 0)
+					m_nCurrentCommand--;
+				m_sCommand = m_lstCommandHistory[m_nCurrentCommand];
+				m_nCursor = 0;
+				m_nSelStart = m_nSelEnd = -1;
+
+				// Complete the command automatically...
+				CompleteCommand();
 
 				// Done
 				return;
 			}
 
-			// Only process keyboard if the console is active
-			if (m_nState == Inactive || m_nState == Deactivating)
-				return;
+			// Go downstairs
+			if (pVirtualStandardController->KeyboardDown.IsHit() && m_nCurrentCommand < m_lstCommandHistory.GetNumOfElements()) {
+				m_nCurrentCommand++;
+				m_sCommand = m_lstCommandHistory[m_nCurrentCommand];
+				m_nCursor = 0;
+				m_nSelStart = m_nSelEnd = -1;
 
-			// Clear command
-			if (pKeyboard->Escape.IsHit()) {
+				// Complete the command automatically...
+				CompleteCommand();
+
+				// Done
+				return;
+			}
+
+			// Remove a command history entry
+			if (pVirtualStandardController->KeyboardDelete.IsHit()) {
 				m_sCommand      = "";
 				m_sFoundCommand = "";
+				if (m_nCurrentCommand < m_lstCommandHistory.GetNumOfElements()) {
+					m_lstCommandHistory.RemoveAtIndex(m_nCurrentCommand);
+					if (m_nCurrentCommand > 0) {
+						m_nCurrentCommand--;
+						m_sCommand = m_lstCommandHistory[m_nCurrentCommand];
+					}
+				}
 				m_nCursor = 0;
 				m_nSelStart = m_nSelEnd = -1;
 
 				// Done
 				return;
 			}
-
-			// Set cursor
-			if (pKeyboard->Left.IsHit()) {
-				// Check selection start
-				if (pKeyboard->Shift.IsPressed() && m_nSelStart < 0)
-					m_nSelStart = m_nCursor; // Selection start
-
-				// Update current cursor position
-				if (m_nCursor > 0)
-					m_nCursor--;
-
-				// Check selection end
-				if (pKeyboard->Shift.IsPressed())
-					m_nSelEnd   = m_nCursor;
-				else
-					m_nSelStart = m_nSelEnd = -1;
-
-				// Done
-				return;
-			}
-			if (pKeyboard->Right.IsHit()) {
-				// Check selection start
-				if (pKeyboard->Shift.IsPressed() && m_nSelStart < 0)
-					m_nSelStart = m_nCursor; // Selection start
-
-				// Update current cursor position
-				m_nCursor++;
-				if (m_nCursor > m_sCommand.GetLength())
-					m_nCursor = m_sCommand.GetLength();
-
-				// Check selection end
-				if (pKeyboard->Shift.IsPressed())
-					m_nSelEnd   = m_nCursor;
-				else
-					m_nSelStart = m_nSelEnd = -1;
-
-				// Done
-				return;
-			}
-			if (pKeyboard->Home.IsHit()) {
-				// Check selection start
-				if (pKeyboard->Shift.IsPressed() && m_nSelStart < 0)
-					m_nSelStart = m_nCursor; // Selection start
-
-				// Update current cursor position
-				m_nCursor = 0;
-
-				// Check selection end
-				if (pKeyboard->Shift.IsPressed())
-					m_nSelEnd   = m_nCursor;
-				else
-					m_nSelStart = m_nSelEnd = -1;
-
-				// Done
-				return;
-			}
-			if (pKeyboard->End.IsHit()) {
-				// Check selection start
-				if (pKeyboard->Shift.IsPressed() && m_nSelStart < 0)
-					m_nSelStart = m_nCursor; // Selection start
-
-				// Update current cursor position
-				m_nCursor = m_sCommand.GetLength();
-
-				// Check selection end
-				if (pKeyboard->Shift.IsPressed())
-					m_nSelEnd   = m_nCursor;
-				else
-					m_nSelStart = m_nSelEnd = -1;
-
-				// Done
-				return;
-			}
-
-			// Remove the selected text
-			if (pKeyboard->Backspace.IsHit()) {
-				if (m_nSelStart < 0 || m_nSelEnd < 0) {
-					if (m_nCursor > 0) {
-						m_sCommand.Delete(m_nCursor-1, 1);
-						m_nCursor--;
-
-						// Complete the command automatically...
-						CompleteCommand();
-					}
-				} else {
-					if (m_nSelStart > m_nSelEnd) {
-						m_sCommand.Delete(m_nSelEnd, m_nSelStart-m_nSelEnd);
-						m_nCursor = m_nSelEnd;
-					} else {
-						m_sCommand.Delete(m_nSelStart, m_nSelEnd-m_nSelStart);
-						m_nCursor = m_nSelStart;
-					}
-					m_nSelStart = m_nSelEnd = -1;
-
-					// Complete the command automatically...
-					CompleteCommand();
-				}
-
-				// Done
-				return;
-			}
-
-			// Complete command
-			if (pKeyboard->Tab.IsHit()) {
-				if (m_sFoundCommand.GetLength()) {
-					m_sCommand = m_sFoundCommand;
-					m_nCursor  = m_sCommand.GetLength();
-					m_nSelStart = m_nSelEnd = -1;
-				}
-
-				// Done
-				return;
-			}
-
-			// Get text from clipboard
-			if ( (pKeyboard->Control.IsPressed() && pKeyboard->V.IsHit()) ||
-				 (pKeyboard->Shift  .IsPressed() && pKeyboard->Insert.IsHit()) )
-			{
-				// Remove the selected text
-				if (m_nSelStart > -1 && m_nSelEnd > -1) {
-					if (m_nSelStart > m_nSelEnd) {
-						m_sCommand.Delete(m_nSelEnd, m_nSelStart-m_nSelEnd);
-						m_nCursor = m_nSelEnd;
-					} else {
-						m_sCommand.Delete(m_nSelStart, m_nSelEnd-m_nSelStart);
-						m_nCursor = m_nSelStart;
-					}
-					m_nSelStart = m_nSelEnd = -1;
-				}
-
-				/*
-				// [TODO] Frontend update: PLEngine is no longer allowed to directly access a GUI system
-				// Get text from clipboard
-				String sClipboardText = Gui::GetSystemGui()->GetClipBoard().GetText();
-				if (sClipboardText.GetLength()) {
-					// Add text from clipboard
-					m_sCommand.Insert(sClipboardText, m_nCursor);
-					m_nCursor += sClipboardText.GetLength();
-				}*/
-
-				// Done
-				return;
-			}
-
-			// Copy text to clipboard
-			if ( (pKeyboard->Control.IsPressed() && pKeyboard->C.IsHit()) ||
-				 (pKeyboard->Control.IsPressed() && pKeyboard->X.IsHit()) ||
-				 (pKeyboard->Shift  .IsPressed() && pKeyboard->Delete.IsHit()) )
-			{
-				/*
-				// [TODO] Frontend update: PLEngine is no longer allowed to directly access a GUI system
-				// Copy the selected text to clipboard
-				if (m_nSelStart > m_nSelEnd)
-					Gui::GetSystemGui()->GetClipBoard().SetText(m_sCommand.GetSubstring(m_nSelEnd, m_nSelStart-m_nSelEnd));
-				else
-					Gui::GetSystemGui()->GetClipBoard().SetText(m_sCommand.GetSubstring(m_nSelStart, m_nSelEnd-m_nSelStart));
-					*/
-
-				// Remove selected text?
-				if ( ( (pKeyboard->Control.IsPressed() && pKeyboard->X.IsHit()) ||
-					   (pKeyboard->Shift  .IsPressed() && pKeyboard->Delete.IsHit()) ) &&
-						m_nSelStart > -1 && m_nSelEnd > -1 )
-				{
-					if (m_nSelStart > m_nSelEnd) {
-						m_sCommand.Delete(m_nSelEnd, m_nSelStart-m_nSelEnd);
-						m_nCursor = m_nSelEnd;
-					} else {
-						m_sCommand.Delete(m_nSelStart, m_nSelEnd-m_nSelStart);
-						m_nCursor = m_nSelStart;
-					}
-					m_nSelStart = m_nSelEnd = -1;
-				}
-
-				// Done
-				return;
-			}
-
-			// Select a command from the command history
-			if (!m_lstCommandHistory.IsEmpty()) {
-				// Go upwards
-				if (pKeyboard->Up.IsHit()) {
-					if (m_nCurrentCommand > 0)
-						m_nCurrentCommand--;
-					m_sCommand = m_lstCommandHistory[m_nCurrentCommand];
-					m_nCursor = 0;
-					m_nSelStart = m_nSelEnd = -1;
-
-					// Complete the command automatically...
-					CompleteCommand();
-
-					// Done
-					return;
-				}
-
-				// Go downstairs
-				if (pKeyboard->Down.IsHit() && m_nCurrentCommand < m_lstCommandHistory.GetNumOfElements()) {
-					m_nCurrentCommand++;
-					m_sCommand = m_lstCommandHistory[m_nCurrentCommand];
-					m_nCursor = 0;
-					m_nSelStart = m_nSelEnd = -1;
-
-					// Complete the command automatically...
-					CompleteCommand();
-
-					// Done
-					return;
-				}
-
-				// Remove a command history entry
-				if (pKeyboard->Delete.IsHit()) {
-					m_sCommand      = "";
-					m_sFoundCommand = "";
-					if (m_nCurrentCommand < m_lstCommandHistory.GetNumOfElements()) {
-						m_lstCommandHistory.RemoveAtIndex(m_nCurrentCommand);
-						if (m_nCurrentCommand > 0) {
-							m_nCurrentCommand--;
-							m_sCommand = m_lstCommandHistory[m_nCurrentCommand];
-						}
-					}
-					m_nCursor = 0;
-					m_nSelStart = m_nSelEnd = -1;
-
-					// Done
-					return;
-				}
-			} else {
-				if (pKeyboard->Delete.IsHit()) {
-					// Clear command line
-					m_sCommand      = "";
-					m_sFoundCommand = "";
-					m_nCursor = 0;
-					m_nSelStart = m_nSelEnd = -1;
-
-					// Done
-					return;
-				}
-			}
-
-			// Execute command
-			if (pKeyboard->Return.IsHit()) {
-				// Add command line to the history
-				m_lstCommandHistory.Add(m_sCommand);
-				m_nCurrentCommand = m_lstCommandHistory.GetNumOfElements();
-
-				// Execute command itself
-				ProcessCommand();
-
+		} else {
+			if (pVirtualStandardController->KeyboardDelete.IsHit()) {
 				// Clear command line
 				m_sCommand      = "";
 				m_sFoundCommand = "";
@@ -529,44 +507,63 @@ void SNConsoleBase::ProcessKeyMessage()
 				// Done
 				return;
 			}
+		}
 
-			// Loop through all keyboard buttons
-			for (uint32 i=0; i<pKeyboard->GetButtons().GetNumOfElements(); i++) {
-				// Get the button
-				Button *pButton = pKeyboard->GetButtons()[i];
+		// Execute command
+		if (pVirtualStandardController->KeyboardReturn.IsHit()) {
+			// Add command line to the history
+			m_lstCommandHistory.Add(m_sCommand);
+			m_nCurrentCommand = m_lstCommandHistory.GetNumOfElements();
 
-				// Was this button hit?
-				if (pButton->IsHit()) {
-					// Get the character of the button
-					String sButtonName = pButton->GetCharacter();
+			// Execute command itself
+			ProcessCommand();
 
-					// The character must have at least a length of 1
-					if (sButtonName.GetLength() == 1) {
-						// Ensure the button name is lower or upper case depending on whether or not the shift key is currently pressed
-						if (pKeyboard->Shift.IsPressed())
-							sButtonName.ToUpper();
-						else
-							sButtonName.ToLower();
+			// Clear command line
+			m_sCommand      = "";
+			m_sFoundCommand = "";
+			m_nCursor = 0;
+			m_nSelStart = m_nSelEnd = -1;
 
-						// Remove the selected text
-						if (m_nSelStart > -1 && m_nSelEnd > -1) {
-							if (m_nSelStart > m_nSelEnd) {
-								m_sCommand.Delete(m_nSelEnd, m_nSelStart-m_nSelEnd);
-								m_nCursor = m_nSelEnd;
-							} else {
-								m_sCommand.Delete(m_nSelStart, m_nSelEnd-m_nSelStart);
-								m_nCursor = m_nSelStart;
-							}
-							m_nSelStart = m_nSelEnd = -1;
+			// Done
+			return;
+		}
+
+		// Loop through all keyboard buttons
+		for (uint32 i=0; i<pVirtualStandardController->GetButtons().GetNumOfElements(); i++) {
+			// Get the button
+			Button *pButton = pVirtualStandardController->GetButtons()[i];
+
+			// Was this button hit?
+			if (pButton->IsHit()) {
+				// Get the character of the button
+				String sButtonName = pButton->GetCharacter();
+
+				// The character must have at least a length of 1
+				if (sButtonName.GetLength() == 1) {
+					// Ensure the button name is lower or upper case depending on whether or not the shift key is currently pressed
+					if (pVirtualStandardController->KeyboardShift.IsPressed())
+						sButtonName.ToUpper();
+					else
+						sButtonName.ToLower();
+
+					// Remove the selected text
+					if (m_nSelStart > -1 && m_nSelEnd > -1) {
+						if (m_nSelStart > m_nSelEnd) {
+							m_sCommand.Delete(m_nSelEnd, m_nSelStart-m_nSelEnd);
+							m_nCursor = m_nSelEnd;
+						} else {
+							m_sCommand.Delete(m_nSelStart, m_nSelEnd-m_nSelStart);
+							m_nCursor = m_nSelStart;
 						}
-
-						// Add character to command line
-						m_sCommand.Insert(sButtonName, m_nCursor);
-						m_nCursor++;
-
-						// Complete the command automatically...
-						CompleteCommand();
+						m_nSelStart = m_nSelEnd = -1;
 					}
+
+					// Add character to command line
+					m_sCommand.Insert(sButtonName, m_nCursor);
+					m_nCursor++;
+
+					// Complete the command automatically...
+					CompleteCommand();
 				}
 			}
 		}

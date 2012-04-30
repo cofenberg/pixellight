@@ -1,3 +1,10 @@
+>> 30.04.2012
+[CO]
+- Bugfix (ID: 3514155) (https://sourceforge.net/tracker/index.php?func=detail&aid=3514155&group_id=507544&atid=2063682): The ingame console was
+  processing input events received while the main window had no focus
+
+
+
 >> 29.02.2012
 [CO]
 - "SceneCreator::ConfigureGenericScene()": The created free camera scene node is now named "FreeCamera" instead of "Camera" to have the same naming
