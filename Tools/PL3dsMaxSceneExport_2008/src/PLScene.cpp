@@ -707,8 +707,16 @@ void PLScene::GetSummaryPropertyValue(XmlElement &cSceneElement, int nSet, int n
 */
 void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 {
+	#ifndef MAX_API_NUM_R150
+		#define MAX_API_NUM_R150 40	// = MAX_API_NUM_R150_ALPHA_UNICODE = MAX_API_NUM_R150
+	#endif
+
 	// Get the 'start camera'
-	ViewExp *pViewport = m_pMaxInterface->GetActiveViewport();
+	#if (MAX_API_NUM < MAX_API_NUM_R150)
+		ViewExp *pViewport = m_pMaxInterface->GetActiveViewport();	// No longer exists in 3ds Max 2013 or above
+	#else
+		ViewExp *pViewport = &m_pMaxInterface->GetActiveViewExp();
+	#endif
 	if (pViewport) {
 		String sName; // Name of the camera node
 
@@ -916,7 +924,11 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 		cSceneElement.LinkEndChild(*pNodeElement);
 
 		// Release the viewport
-		m_pMaxInterface->ReleaseViewport(pViewport);
+	#if (MAX_API_NUM < MAX_API_NUM_R150)
+		m_pMaxInterface->ReleaseViewport(pViewport); // No longer exists in 3ds Max 2013 or above
+	#else
+		// Nothing to do in 3ds Max 2013 or above
+	#endif
 	}
 }
 

@@ -108,10 +108,6 @@ add_compile_defs(
 	PLCORE_STATIC
 	_SECURE_SCL=0
 )
-remove_compile_defs(
-	UNICODE										# Use unicode
-	_UNICODE									# Use unicode
-)
 
 ##################################################
 ## Compiler flags

@@ -1,3 +1,10 @@
+>> 30.04.2012
+[CO]
+- PL3dsMaxSceneExport_2013 is now compiling and working in general, but there are still some Unicode issues in the GUI. Wow, the 2013'er version
+  has the most changes in the API since years.
+
+
+
 >> 28.04.2012
 [CO]
 - Started with the Autodesk 3ds Max 2013 scene exporter support

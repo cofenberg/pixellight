@@ -657,11 +657,11 @@ void PLSceneNode::WriteModifiers(XmlElement &cSceneElement, const String &sAppli
 		// Use modifiers?
 		if (g_SEOptions.bUserPropModifiers) {
 			// Check for modifiers
-			char szModifier[64];
+			MSTR sModifier;
 			int nIndex = 1;
 			TSTR s3dsMaxString;
-			strcpy(szModifier, "Mod");
-			while (pMaxNode->GetUserPropString(szModifier, s3dsMaxString)) {
+			sModifier = _T("Mod");
+			while (pMaxNode->GetUserPropString(sModifier, s3dsMaxString)) {
 				// Add scene node modifier
 				XmlElement *pModifierElement = new XmlElement("Modifier");
 
@@ -700,7 +700,7 @@ void PLSceneNode::WriteModifiers(XmlElement &cSceneElement, const String &sAppli
 					delete pModifierElement;
 
 				// Get next modifier
-				sprintf(szModifier, "Mod%d", nIndex);
+				sModifier.printf(_T("Mod%d"), nIndex);
 				nIndex++;
 			}
 		}
