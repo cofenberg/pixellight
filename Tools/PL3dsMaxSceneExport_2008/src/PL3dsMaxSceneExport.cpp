@@ -24,7 +24,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/PLCoreWindows.h>	// Depending on the used compiler, nullptr has to be defined by this header
+#include <PLCore/String/String.h>
 #include "PL3dsMaxSceneExport/PLToolbar.h"
 #include "PL3dsMaxSceneExport/PLSceneEnumProc.h"
 
@@ -117,7 +117,7 @@ class PLSceneExport : public SceneExport {
 				setlocale(LC_ALL, "C");
 
 				// Export
-				PLSceneEnumProc cExporter(name, *i, options);
+				PLSceneEnumProc cExporter(PLCore::String(name).GetASCII(), *i, options);
 
 				// Be polite and restore the previously set locale
 				setlocale(LC_ALL, pSaveLocale);

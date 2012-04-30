@@ -79,8 +79,8 @@ void PLSceneMaterialBakeShell::SaveParameters(XmlElement &cMaterialElement)
 					Texmap *pTexMap = pMaxMaterial->GetSubTexmap(nSlot);
 					if (pTexMap && pTexMap->ClassID() == Class_ID(BMTEX_CLASS_ID, 0)) {
 						BitmapTex *pBitmapTex = static_cast<BitmapTex*>(pTexMap);
-						TSTR sSlotName = pMaxMaterial->GetSubTexmapSlotName(nSlot);
-						if (!_stricmp(sSlotName, "Self-Illumination")) {
+						const String sSlotName = pMaxMaterial->GetSubTexmapSlotName(nSlot);
+						if (sSlotName.CompareNoCase("Self-Illumination")) {
 							SaveTexture(cMaterialElement, pBitmapTex->GetMapName(), static_cast<const char*>(sSlotName));
 							break;
 						}

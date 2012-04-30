@@ -52,7 +52,7 @@ DWORD WINAPI fn(LPVOID arg)
 //[-------------------------------------------------------]
 //[ Public functions                                      ]
 //[-------------------------------------------------------]
-PLSceneEnumProc::PLSceneEnumProc(const TCHAR szName[], Interface &cMaxInterface, DWORD nMaxOptions)
+PLSceneEnumProc::PLSceneEnumProc(const char szName[], Interface &cMaxInterface, DWORD nMaxOptions)
 {
 	{ // 3ds Max version check
 		// Get the 3ds Max version of the program currently running

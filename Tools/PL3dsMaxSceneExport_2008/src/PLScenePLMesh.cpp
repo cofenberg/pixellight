@@ -547,7 +547,7 @@ bool PLScenePLMesh::WriteMorphTarget(FILE &cFile, ChunkStack &cChunkStack, morph
 
 		// Write morph target header
 		MeshFile::MorphTarget cMorphTarget;
-		strcpy(cMorphTarget.szName, cMorphChannel.mName);
+		strcpy(cMorphTarget.szName, String(cMorphChannel.mName).GetASCII());
 		cMorphTarget.bRelative      = true;
 		cMorphTarget.nVertexIDs     = static_cast<int>(lstPointsMorph.size());
 		cMorphTarget.nVertexBuffers = 1;
@@ -1138,7 +1138,7 @@ bool PLScenePLMesh::WriteSkeleton(FILE &cFile, ChunkStack &cChunkStack)
 			// Set joint name
 			const TCHAR *pszName = pIGameNode->GetName();
 			if (pszName)
-				strcpy(cJoint.szName, pIGameNode->GetName());
+				strcpy(cJoint.szName, String(pIGameNode->GetName()).GetASCII());
 			else
 				strcpy(cJoint.szName, "");
 
@@ -1397,7 +1397,7 @@ bool PLScenePLMesh::WriteMorphTargetAnimation(FILE &cFile, ChunkStack &cChunkSta
 			// Write morph targets
 			for (uint32 i=0; i<sMorphTargetAnimation.nMorphTargets; i++) {
 				char szName[64];
-				strcpy(szName, lstMorphChannels[i]->mName);
+				strcpy(szName, String(lstMorphChannels[i]->mName).GetASCII());
 				if (!Write(cFile, szName, sizeof(char)*64))
 					return false; // Error!
 			}

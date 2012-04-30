@@ -855,13 +855,13 @@ void PLScene::ExportStartCamera(XmlElement &cSceneElement)
 				pszName++;
 			}
 		}
-		TCHAR *pszName = const_cast<TCHAR*>(sName.GetASCII());
+		const char *pszName = sName.GetASCII();
 
 		// Look for 'cell_' (cell_<cell name>_<node name>)
 		String sSceneCellName, sSceneNodeName;
 		if (!_strnicmp(pszName, "cell_", 5)) {
 			// Get the name of the cell
-			TCHAR *pszNameT = pszName += 5;
+			const char *pszNameT = pszName += 5;
 
 			// Check for '\0'
 			if (*pszNameT != '\0') {

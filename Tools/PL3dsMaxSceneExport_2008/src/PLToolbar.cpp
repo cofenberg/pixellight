@@ -25,7 +25,7 @@
 //[-------------------------------------------------------]
 #include <Max.h>
 #include <MaxIcon.h>
-#include <PLCore/PLCoreWindows.h>	// Depending on the used compiler, nullptr has to be defined by this header
+#include <PLCore/String/String.h>
 #include "PL3dsMaxSceneExport/PLSceneEnumProc.h"
 #include "PL3dsMaxSceneExport/PLToolbar.h"
 
@@ -45,6 +45,12 @@ static PLToolbar g_PLToolbar;
 #define ID_TOOLBAR_0 11230
 #define ID_TOOLBAR_1 11231
 #define ID_TOOLBAR_2 11232
+
+
+//[-------------------------------------------------------]
+//[ Namespace                                             ]
+//[-------------------------------------------------------]
+using namespace PLCore;
 
 
 //[-------------------------------------------------------]
@@ -159,9 +165,9 @@ int TooltipMessageHandler::ProcessMessage(UINT nMessage, WPARAM wParam, LPARAM l
 				case ID_TOOLBAR_2:
 				{
 					Interface *pMaxInterface = m_pToolbar->GetMaxInterface();
-					TSTR sFilename = pMaxInterface->GetDir(APP_EXPORT_DIR);
-					sFilename += _T("\\PixelLight");
-					CreateDirectory(sFilename, nullptr);
+					String sFilename = pMaxInterface->GetDir(APP_EXPORT_DIR);
+					sFilename += "\\PixelLight";
+					CreateDirectoryW(sFilename.GetUnicode(), nullptr);
 					if (LOWORD(wParam) == ID_TOOLBAR_2) {
 						ShellExecute(0, _T("open"), sFilename, 0, 0, SW_SHOW);
 					} else {

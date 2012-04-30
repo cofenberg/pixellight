@@ -343,7 +343,7 @@ void PLSceneExportOptions::GetAbsoluteFilename(const String &sFilename, String &
 	_splitpath(sFilename.GetASCII(), szApplicationDrive, szApplicationDir, nullptr, nullptr);
 	if (!strlen(szApplicationDrive)) {
 		// Must be a relative filename
-		const TCHAR *pDir = IPathConfigMgr::GetPathConfigMgr()->GetDir(APP_PLUGCFG_DIR);
+		const char *pDir = String(IPathConfigMgr::GetPathConfigMgr()->GetDir(APP_PLUGCFG_DIR)).GetASCII();
 		if (pDir) {
 			const size_t nDirLength = strlen(pDir);
 			if (nDirLength) {

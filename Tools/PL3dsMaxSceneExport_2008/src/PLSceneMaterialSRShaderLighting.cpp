@@ -73,7 +73,7 @@ void PLSceneMaterialSRShaderLighting::ExportFloat(XmlElement &cMaterialElement, 
 		IPropertyContainer *pPropertyContainer = m_pIGameMaterial->GetIPropertyContainer();
 		if (pPropertyContainer) {
 			// Get the property
-			IGameProperty *pProperty = pPropertyContainer->QueryProperty(pszIGamePropertyName);
+			IGameProperty *pProperty = pPropertyContainer->QueryProperty(String(pszIGamePropertyName));
 			if (pProperty) {
 				if (pProperty->GetType() == IGAME_FLOAT_PROP) {
 					// Get the property value
@@ -129,7 +129,7 @@ void PLSceneMaterialSRShaderLighting::ExportColor(XmlElement &cMaterialElement, 
 		IPropertyContainer *pPropertyContainer = m_pIGameMaterial->GetIPropertyContainer();
 		if (pPropertyContainer) {
 			// Get the property
-			IGameProperty *pProperty = pPropertyContainer->QueryProperty(pszIGamePropertyName);
+			IGameProperty *pProperty = pPropertyContainer->QueryProperty(String(pszIGamePropertyName));
 			if (pProperty && pProperty->GetType() == IGAME_POINT4_PROP) {
 				// Get the property value, as RGBA because just as RGB is not working...
 				Point4 cColor;
@@ -199,10 +199,10 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 						case TYPE_BITMAP:
 						{
 							// Get the name of the parameter
-							TSTR sName = pParamBlock->GetLocalName(i);
+							const String sName = pParamBlock->GetLocalName(i);
 
 							// diffuseMap
-							if (!_stricmp(sName, "diffuseMap")) {
+							if (sName.CompareNoCase("diffuseMap")) {
 								// Get alpha reference
 								float fAlphaReference = 0.0f;
 								std::map<std::string, int>::iterator pIterator = mapParams.find("alphaReference");
@@ -222,20 +222,20 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = static_cast<const char*>(cBInfo.Name());
+										const String sName = cBInfo.Name();
 
 										// If the 'diffuse color' is black, we still NEED the map because of lights!
-										if (pszName && _stricmp(pszName, "None")) {
+										if (!sName.CompareNoCase("None")) {
 											// [TODO] Check whether the used bitmap has an alpha channel!
 //											if (fAlphaReference)
 												ExportFloat(cMaterialElement, "alphaReference", "AlphaReference", 127.0f);
-											SaveTexture(cMaterialElement, pszName, "DiffuseMap");
+											SaveTexture(cMaterialElement, sName, "DiffuseMap");
 										}
 									}
 								}
 
 							// normalMap
-							} else if (!_stricmp(sName, "normalMap")) {
+							} else if (sName.CompareNoCase("normalMap")) {
 								// useNormalMap
 								std::map<std::string, int>::iterator pIterator = mapParams.find("useNormalMap");
 								if (pIterator != mapParams.end() && pParamBlock->GetInt(pIterator->second, t)) {
@@ -243,17 +243,17 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = static_cast<const char*>(cBInfo.Name());
-										if (pszName && _stricmp(pszName, "None")) {
+										const String sName = cBInfo.Name();
+										if (!sName.CompareNoCase("None")) {
 											// Save the texture and take 'compressedNormalMap' into account ('plt'-file...)
 											pIterator = mapParams.find("compressedNormalMap");
-											SaveTexture(cMaterialElement, pszName, "NormalMap", pIterator != mapParams.end() && pParamBlock->GetInt(pIterator->second, t));
+											SaveTexture(cMaterialElement, sName, "NormalMap", pIterator != mapParams.end() && pParamBlock->GetInt(pIterator->second, t));
 										}
 									}
 								}
 
 							// specularMap
-							} else if (!_stricmp(sName, "specularMap")) {
+							} else if (sName.CompareNoCase("specularMap")) {
 								// useSpecularMap
 								std::map<std::string, int>::iterator pIterator = mapParams.find("useSpecularMap");
 								if (pIterator != mapParams.end() && pParamBlock->GetInt(pIterator->second, t)) {
@@ -261,8 +261,8 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = static_cast<const char*>(cBInfo.Name());
-										if (pszName && _stricmp(pszName, "None")) {
+										const String sName = cBInfo.Name();
+										if (!sName.CompareNoCase("None")) {
 											// If the 'specular color' is black, we DON'T need the map!
 											Point4 cValue(1.0f, 1.0f, 1.0f, 1.0f);
 											pIterator = mapParams.find("specularColor");
@@ -270,14 +270,14 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 												pParamBlock->GetValue(pIterator->second, t, cValue, ivalid);
 											if (cValue.x || cValue.y || cValue.z) {
 												// [TODO] useSpecularMapGloss
-												SaveTexture(cMaterialElement, pszName, "SpecularMap");
+												SaveTexture(cMaterialElement, sName, "SpecularMap");
 											}
 										}
 									}
 								}
 
 							// reflection2DMap
-							} else if (!_stricmp(sName, "reflection2DMap")) {
+							} else if (sName.CompareNoCase("reflection2DMap")) {
 								// We can ONLY use 2D OR cube reflection NOT both... within the fx-shader
 								// I found no way to setup the parameters dialog correctly...
 								if (!bReflectionMap) {
@@ -288,8 +288,8 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 										PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 										if (pBitmap) {
 											BitmapInfo &cBInfo = pBitmap->bi;
-											const char *pszName = static_cast<const char*>(cBInfo.Name());
-											if (pszName && _stricmp(pszName, "None")) {
+											const String sName = cBInfo.Name();
+											if (!sName.CompareNoCase("None")) {
 												// If the 'reflection color' is black, we DON'T need the map!
 												Point4 cValue(1.0f, 1.0f, 1.0f, 1.0f);
 												pIterator = mapParams.find("reflectionColor");
@@ -297,7 +297,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 													pParamBlock->GetValue(pIterator->second, t, cValue, ivalid);
 												if (cValue.x || cValue.y || cValue.z) {
 													// [TODO] useReflectionNormalMap
-													SaveTexture(cMaterialElement, pszName, "ReflectionMap");
+													SaveTexture(cMaterialElement, sName, "ReflectionMap");
 													ExportColor(cMaterialElement, "reflectionColor", "ReflectionColor", Point3(1.0f, 1.0f, 1.0f));
 													bReflectionMap = true;
 												}
@@ -307,7 +307,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 								}
 
 							// reflectionCubeMap
-							} else if (!_stricmp(sName, "reflectionCubeMap")) {
+							} else if (sName.CompareNoCase("reflectionCubeMap")) {
 								// We can ONLY use 2D OR cube reflection NOT both... within the fx-shader
 								// I found no way to setup the parameters dialog correctly...
 								if (!bReflectionMap) {
@@ -318,8 +318,8 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 										PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 										if (pBitmap) {
 											BitmapInfo &cBInfo = pBitmap->bi;
-											const char *pszName = static_cast<const char*>(cBInfo.Name());
-											if (pszName && _stricmp(pszName, "None")) {
+											const String sName = cBInfo.Name();
+											if (!sName.CompareNoCase("None")) {
 												// If the 'reflection map color' is black, we DON'T need the map!
 												Point4 cValue(1.0f, 1.0f, 1.0f, 1.0f);
 												pIterator = mapParams.find("reflectionColor");
@@ -327,7 +327,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 													pParamBlock->GetValue(pIterator->second, t, cValue, ivalid);
 												if (cValue.x || cValue.y || cValue.z) {
 													// [TODO] useReflectionNormalMap
-													SaveTexture(cMaterialElement, pszName, "ReflectionMap");
+													SaveTexture(cMaterialElement, sName, "ReflectionMap");
 													ExportColor(cMaterialElement, "reflectionColor", "ReflectionColor", Point3(1.0f, 1.0f, 1.0f));
 													bReflectionMap = true;
 												}
@@ -337,7 +337,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 								}
 
 							// reflectivityMap
-							} else if (!_stricmp(sName, "reflectivityMap")) {
+							} else if (sName.CompareNoCase("reflectivityMap")) {
 								// useReflectivityMap
 								std::map<std::string, int>::iterator pIterator = mapParams.find("useReflectivityMap");
 								if (pIterator != mapParams.end() && pParamBlock->GetInt(pIterator->second, t)) {
@@ -345,14 +345,14 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = static_cast<const char*>(cBInfo.Name());
-										if (pszName && _stricmp(pszName, "None"))
-											SaveTexture(cMaterialElement, pszName, "ReflectivityMap");
+										const String sName = cBInfo.Name();
+										if (!sName.CompareNoCase("None"))
+											SaveTexture(cMaterialElement, sName, "ReflectivityMap");
 									}
 								}
 
 							// emissiveMap
-							} else if (!_stricmp(sName, "emissiveMap")) {
+							} else if (sName.CompareNoCase("emissiveMap")) {
 								// useEmissiveMap
 								std::map<std::string, int>::iterator pIterator = mapParams.find("useEmissiveMap");
 								if (pIterator != mapParams.end() && pParamBlock->GetInt(pIterator->second, t)) {
@@ -360,15 +360,15 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = static_cast<const char*>(cBInfo.Name());
-										if (pszName && _stricmp(pszName, "None")) {
+										const String sName = cBInfo.Name();
+										if (!sName.CompareNoCase("None")) {
 											// If the 'emissive map color' is black, we DON'T need the map!
 											Point4 cValue(1.0f, 1.0f, 1.0f, 1.0f);
 											pIterator = mapParams.find("emissiveMapColor");
 											if (pIterator != mapParams.end())
 												pParamBlock->GetValue(pIterator->second, t, cValue, ivalid);
 											if (cValue.x || cValue.y || cValue.z) {
-												SaveTexture(cMaterialElement, pszName, "EmissiveMap");
+												SaveTexture(cMaterialElement, sName, "EmissiveMap");
 												ExportColor(cMaterialElement, "emissiveMapColor", "EmissiveMapColor", Point3(1.0f, 1.0f, 1.0f));
 											}
 										}
@@ -376,7 +376,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 								}
 
 							// lightMap
-							} else if (!_stricmp(sName, "lightMap")) {
+							} else if (sName.CompareNoCase("lightMap")) {
 								// useLightMap
 								std::map<std::string, int>::iterator pIterator = mapParams.find("useLightMap");
 								if (pIterator != mapParams.end() && pParamBlock->GetInt(pIterator->second, t)) {
@@ -384,15 +384,15 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = static_cast<const char*>(cBInfo.Name());
-										if (pszName && _stricmp(pszName, "None")) {
+										const String sName = cBInfo.Name();
+										if (!sName.CompareNoCase("None")) {
 											// If the 'light map color' is black, we DON'T need the map!
 											Point4 cValue(1.0f, 1.0f, 1.0f, 1.0f);
 											pIterator = mapParams.find("lightMapColor");
 											if (pIterator != mapParams.end())
 												pParamBlock->GetValue(pIterator->second, t, cValue, ivalid);
 											if (cValue.x || cValue.y || cValue.z) {
-												SaveTexture(cMaterialElement, pszName, "LightMap");
+												SaveTexture(cMaterialElement, sName, "LightMap");
 												ExportColor(cMaterialElement, "lightMapColor", "LightMapColor", Point3(1.0f, 1.0f, 1.0f));
 											}
 										}
@@ -400,7 +400,7 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 								}
 
 							// heightMap
-							} else if (!_stricmp(sName, "heightMap")) {
+							} else if (sName.CompareNoCase("heightMap")) {
 								// useParallaxMapping
 								std::map<std::string, int>::iterator pIterator = mapParams.find("useParallaxMapping");
 								if (pIterator != mapParams.end() && pParamBlock->GetInt(pIterator->second, t)) {
@@ -408,8 +408,8 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = static_cast<const char*>(cBInfo.Name());
-										if (pszName && _stricmp(pszName, "None")) {
+										const String sName = cBInfo.Name();
+										if (!sName.CompareNoCase("None")) {
 											// If the 'parallax' is null, we DON'T need the map!
 											float fValue = 0.04f;
 											pIterator = mapParams.find("parallax");
@@ -417,14 +417,14 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 												pParamBlock->GetValue(pIterator->second, t, fValue, ivalid);
 											if (fValue) {
 												ExportFloat(cMaterialElement, "parallax", "Parallax", 0.04f);
-												SaveTexture(cMaterialElement, pszName, "HeightMap");
+												SaveTexture(cMaterialElement, sName, "HeightMap");
 											}
 										}
 									}
 								}
 
 							// diffuseRampMap
-							} else if (!_stricmp(sName, "diffuseRampMap")) {
+							} else if (sName.CompareNoCase("diffuseRampMap")) {
 								// useDiffuseRampMap
 								std::map<std::string, int>::iterator pIterator = mapParams.find("useDiffuseRampMap");
 								if (pIterator != mapParams.end() && pParamBlock->GetInt(pIterator->second, t)) {
@@ -432,14 +432,14 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = static_cast<const char*>(cBInfo.Name());
-										if (pszName && _stricmp(pszName, "None"))
-											SaveTexture(cMaterialElement, pszName, "DiffuseRampMap");
+										const String sName = cBInfo.Name();
+										if (!sName.CompareNoCase("None"))
+											SaveTexture(cMaterialElement, sName, "DiffuseRampMap");
 									}
 								}
 
 							// specularRampMap
-							} else if (!_stricmp(sName, "specularRampMap")) {
+							} else if (sName.CompareNoCase("specularRampMap")) {
 								// useSpecularRampMap
 								std::map<std::string, int>::iterator pIterator = mapParams.find("useSpecularRampMap");
 								if (pIterator != mapParams.end() && pParamBlock->GetInt(pIterator->second, t)) {
@@ -447,14 +447,14 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = static_cast<const char*>(cBInfo.Name());
-										if (pszName && _stricmp(pszName, "None"))
-											SaveTexture(cMaterialElement, pszName, "SpecularRampMap");
+										const String sName = cBInfo.Name();
+										if (!sName.CompareNoCase("None"))
+											SaveTexture(cMaterialElement, sName, "SpecularRampMap");
 									}
 								}
 
 							// edgeRampMap
-							} else if (!_stricmp(sName, "edgeRampMap")) {
+							} else if (sName.CompareNoCase("edgeRampMap")) {
 								// useEdgeRampMap
 								std::map<std::string, int>::iterator pIterator = mapParams.find("useEdgeRampMap");
 								if (pIterator != mapParams.end() && pParamBlock->GetInt(pIterator->second, t)) {
@@ -462,9 +462,9 @@ void PLSceneMaterialSRShaderLighting::SaveParameters(XmlElement &cMaterialElemen
 									PBBitmap *pBitmap = pParamBlock->GetBitmap(i, t);
 									if (pBitmap) {
 										BitmapInfo &cBInfo = pBitmap->bi;
-										const char *pszName = static_cast<const char*>(cBInfo.Name());
-										if (pszName && _stricmp(pszName, "None"))
-											SaveTexture(cMaterialElement, pszName, "EdgeRampMap");
+										const String sName = cBInfo.Name();
+										if (!sName.CompareNoCase("None"))
+											SaveTexture(cMaterialElement, sName, "EdgeRampMap");
 									}
 								}
 							}

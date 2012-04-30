@@ -310,13 +310,13 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 			pszName++;
 		}
 	}
-	TCHAR *pszName = const_cast<TCHAR*>(sName.GetASCII());
+	const char *pszName = sName.GetASCII();
 
 	// Look for 'cell_' (cell_<cell name>_<node name> or cell_<cell name>_<mesh name>_<instance name>)
 	String sSceneCellName, sTargetSceneCellName, sSceneNodeName, sMeshName;
 	if (!_strnicmp(pszName, "cell_", 5)) {
 		// Get the name of the cell
-		TCHAR *pszNameT = pszName += 5;
+		const char *pszNameT = pszName += 5;
 
 		// Check for '\0'
 		if (*pszNameT == '\0') {
@@ -383,7 +383,7 @@ bool PLSceneContainer::AddIGameNode(IGameNode &cIGameNode)
 	// Look for 'portal_' (portal_<from cell>_<to cell>)
 	} else if (!_strnicmp(pszName, "portal_", 7)) {
 		// Get the name of the cell, the cell-portal is a scene node of this cell :)
-		TCHAR *pszNameT = pszName += 7;
+		const char *pszNameT = pszName += 7;
 
 		// Check for '\0'
 		if (*pszNameT == '\0') {
@@ -775,7 +775,7 @@ void PLSceneContainer::OutputStatistics()
 				if (pCellPortal) {
 					if (i != 0)
 						g_pLog->Print(", ");
-					g_pLog->Print(pCellPortal->GetMaxNode()->GetName());
+					g_pLog->Print(String(pCellPortal->GetMaxNode()->GetName()).GetASCII());
 				}
 			}
 			g_pLog->Print("\n");
@@ -794,7 +794,7 @@ void PLSceneContainer::OutputStatistics()
 				if (pCellPortal) {
 					if (i != 0)
 						g_pLog->Print(", ");
-					g_pLog->Print(pCellPortal->GetMaxNode()->GetName());
+					g_pLog->Print(String(pCellPortal->GetMaxNode()->GetName()).GetASCII());
 				}
 			}
 			g_pLog->Print("\n");

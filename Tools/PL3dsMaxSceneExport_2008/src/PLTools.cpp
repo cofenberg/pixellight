@@ -26,7 +26,6 @@
 #include <sstream>
 #include <IGame/IGame.h>
 #include <PixelLight.h>
-#include <PLCore/PLCoreWindows.h>	// Depending on the used compiler, nullptr has to be defined by this header
 #include <PLCore/String/ParseTools.h>
 #if MAX_RELEASE < 13000
 	// The following is required for legacy 3ds Max versions 2008, 2009 and 2010

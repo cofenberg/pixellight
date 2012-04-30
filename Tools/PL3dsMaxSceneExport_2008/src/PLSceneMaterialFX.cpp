@@ -81,8 +81,8 @@ void PLSceneMaterialFX::SaveParameters(XmlElement &cMaterialElement)
 				PBBitmap *pBitmap = pFXMaterial->GetEffectBitmap(i);
 				if (pBitmap) {
 					BitmapInfo &cBInfo = pBitmap->bi;
-					const char *pszName = static_cast<const char*>(cBInfo.Name());
-					if (pszName && _stricmp(pszName, "None")) {
+					const String sName = cBInfo.Name();
+					if (!sName.CompareNoCase("None")) {
 						String sSemantic;
 						switch (pFXMaterial->GetBitmapUsage(i)) {
 							case IDxMaterial2::UNKNOWN_MAP:
@@ -118,7 +118,7 @@ void PLSceneMaterialFX::SaveParameters(XmlElement &cMaterialElement)
 								break;
 						}
 						if (sSemantic.GetLength())
-							SaveTexture(cMaterialElement, pszName, sSemantic);
+							SaveTexture(cMaterialElement, sName, sSemantic);
 					}
 				}
 			}

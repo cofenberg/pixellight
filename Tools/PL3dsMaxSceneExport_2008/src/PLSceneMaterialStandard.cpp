@@ -81,16 +81,16 @@ void PLSceneMaterialStandard::SaveParameters(XmlElement &cMaterialElement)
 				if (pTexMap) {
 					// Is this a "Bitmap" texture map?
 					if (pTexMap->ClassID() == Class_ID(BMTEX_CLASS_ID, 0)) {
-						TSTR sSlotName = pMaxMaterial->GetSubTexmapSlotName(nSlot);
+						const String sSlotName = pMaxMaterial->GetSubTexmapSlotName(nSlot);
 						BitmapTex *pBitmapTex = static_cast<BitmapTex*>(pTexMap);
-						if (!strlen(sSlotName))
+						if (sSlotName.GetLength())
 							g_pLog->LogFLine(PLLog::Warning, "Material '%s': Slot '%d' (value: '%s') has no name!", m_sName.GetASCII(), nSlot, pBitmapTex->GetMapName());
 
 						// Save the texture
-						SaveTexture(cMaterialElement, pBitmapTex->GetMapName(), static_cast<const char*>(sSlotName));
+						SaveTexture(cMaterialElement, pBitmapTex->GetMapName(), sSlotName);
 
 						// Is this a reflection map?
-						if (pMaxStandardMat && !_strnicmp(sSlotName, "Reflection", 10))
+						if (pMaxStandardMat && sSlotName.CompareNoCase("Reflection", 0, 10))
 							fReflectionColor = pMaxStandardMat->GetTexmapAmt(nSlot, m_pScene->GetMaxInterface().GetTime());
 
 					// Is this a "Normal Bump" texture map?

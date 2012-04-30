@@ -25,7 +25,6 @@
 //[-------------------------------------------------------]
 #include <stdarg.h>
 #include <string.h>
-#include <PLCore/PLCoreWindows.h>	// Depending on the used compiler, nullptr has to be defined by this header
 #include "PL3dsMaxSceneExport/PLLog.h"
 
 

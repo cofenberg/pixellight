@@ -832,13 +832,13 @@ void PLSceneMesh::AddNodeTrackAnimations(INode &c3dsMaxNode)
 				const MSTR    &sNote    = pNoteKey->note;
 
 				// start
-				if (!_strnicmp(sNote.data(), "start", 5)) {
+				if (String(sNote.data()).CompareNoCase("start", 0, 5)) {
 					// Startup the animation
 					Animation *pAnimation = new Animation;
 					pAnimation->nStartTime	   = pNoteKey->time;
 					pAnimation->nTicksPerFrame = nTicksPerFrame;
 					MeshFile::Animation &sAnimation = pAnimation->sAnimation;
-					strcpy(sAnimation.szName, &sNote.data()[6]);
+					strcpy(sAnimation.szName, String(&sNote.data()[6]).GetASCII());
 					size_t nAnimationNameLength = strlen(sAnimation.szName);
 					sAnimation.nStart = pNoteKey->time/nTicksPerFrame;
 					sAnimation.fSpeed  = 24.0f;
@@ -876,10 +876,10 @@ void PLSceneMesh::AddNodeTrackAnimations(INode &c3dsMaxNode)
 							pEvent->m_nFrame = pNoteKey->time/nTicksPerFrame-pAnimation->sAnimation.nStart;
 */
 						// stop
-						if (!_strnicmp(sCurrentNote.data(), "stop", 4)) {
+						if (String(sCurrentNote.data()).CompareNoCase("stop", 0, 4)) {
 							// Is this 'our' current animation?
-							const char *pszName = &sCurrentNote.data()[5];
-							if (!_strnicmp(sAnimation.szName, pszName, nAnimationNameLength)) {
+							const String sName = &sCurrentNote.data()[5];
+							if (sName.CompareNoCase(sAnimation.szName, 0, nAnimationNameLength)) {
 								// Finish animation
 								pAnimation->nEndTime = pNoteKey->time;
 								sAnimation = pAnimation->sAnimation;

@@ -106,14 +106,14 @@ PLSceneTexture::PLSceneTexture(PLScene &cScene, const String &sName, bool bNorma
 							// Check map directories
 							int nMapDirCount = TheManager->GetMapDirCount();
 							for (int nMapDir=0; nMapDir<nMapDirCount; nMapDir++) {
-								const TCHAR *pMapDir = TheManager->GetMapDir(nMapDir);
-								size_t nLength = strlen(pMapDir);
+								const String sMapDir = TheManager->GetMapDir(nMapDir);
+								const uint32 nLength = sMapDir.GetLength();
 								if (nLength) {
-									nLastCharacter = pMapDir[nLength-1];
+									nLastCharacter = sMapDir[nLength-1];
 									if (nLastCharacter == '\\' || nLastCharacter == '/')
-										sBitmapFilename = pMapDir + sFilenameOnly;
+										sBitmapFilename = sMapDir + sFilenameOnly;
 									else
-										sBitmapFilename = pMapDir + String('\\') + sFilenameOnly;
+										sBitmapFilename = sMapDir + '\\' + sFilenameOnly;
 									hFile = CreateFileW(sBitmapFilename.GetUnicode(), GENERIC_READ, FILE_SHARE_READ, nullptr, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 									if (hFile != INVALID_HANDLE_VALUE)
 										break;
