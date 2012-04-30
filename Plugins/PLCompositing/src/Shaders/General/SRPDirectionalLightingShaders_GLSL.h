@@ -244,7 +244,7 @@ uniform lowp vec4 DiffuseColor;	// Alpha stores the opacity\n\
 \n\
 #ifdef FS_LIGHTING\n\
 	// Performs the Blinn-Phong lighting calculation\n\
-	lowp vec3 BlinnPhong(mediump vec3 lightVector, lowp vec3 lightColor, mediump vec3 viewVector, mediump vec3 normalVector, lowp vec3 diffuseColor, lowp vec3 specularColor, lowp float specularExponent)\n\
+	lowp vec3 BlinnPhong(mediump vec3 lightVector, lowp vec3 lightColor, mediump vec3 viewVector, mediump vec3 normalVector, lowp vec3 diffuseColor, lowp vec3 specularColor, mediump float specularExponent)\n\
 	{\n\
 		// [TODO] There seem to be invalid normal vectors here (NAN) - IEEE standard: NaN != NaN - I don't use isnan so I can use lower shader versions\n\
 		if (normalVector.x != normalVector.x || normalVector.y != normalVector.y || normalVector.z != normalVector.z)\n\
