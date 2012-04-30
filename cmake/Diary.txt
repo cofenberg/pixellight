@@ -1,3 +1,9 @@
+>> 30.04.2012
+[CO]
+- "LinuxClang.cmake": Added "APPLE" preprocessor definition
+
+
+
 >> 02.03.2012
 [TM]
 - Toolchain-ndk.cmake, android.toolchain.cmake: Updated the cmake toolchains to support android ndk-r7 and ndk-r7b.

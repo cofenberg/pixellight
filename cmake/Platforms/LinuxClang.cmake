@@ -43,6 +43,23 @@ set(LINUX_XCURSOR_LIB	Xcursor)		# X cursor library
 
 
 ##################################################
+## Preprocessor definitions
+##################################################
+
+# Preprocessor definitions
+if(APPLE)
+	# Add a handy APPLE definition (just like WIN32, LINUX and so on)
+	set(LINUX_COMPILE_DEFS
+		${LINUX_COMPILE_DEFS}
+		APPLE							# We are building for an APPLE OS
+	)
+
+	# No visibility compiler flags for now or we get issues with several vtables
+	set(NO_VISIBILITY_CHECK 1)			# Do not add the visibility related compiler flags within "CheckLinuxCompiler.cmake" below
+endif()
+
+
+##################################################
 ## Version checks
 ##################################################
 # Do only this check when using the Makefiles cmake generator
@@ -92,7 +109,6 @@ include(${CMAKETOOLS_DIR}/Modules/CheckLinuxCompiler.cmake)	# Adds e.g. visibili
 ##################################################
 ## Compiler flags
 ##################################################
-
 
 set(LINUX_COMPILE_FLAGS
 	${LINUX_COMPILE_FLAGS}
