@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SkyLoaderPL.h                                  *
+ *  File: TerrainLoader.h                                *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,21 +20,22 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODE_SKYLOADER_PL_H__
-#define __PLSCENE_SCENENODE_SKYLOADER_PL_H__
+#ifndef __PLNATURE_SCENENODE_TERRAINLOADER_H__
+#define __PLNATURE_SCENENODE_TERRAINLOADER_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScene/Scene/SceneNodes/Loader/SkyLoader.h"
+#include <PLCore/Tools/LoaderImpl.h>
+#include "PLNature/PLNature.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScene {
+namespace PLNature {
 
 
 //[-------------------------------------------------------]
@@ -42,71 +43,37 @@ namespace PLScene {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Sky loader implementation for the PixelLight sky XML file format
+*    Abstract terrain loader base class
 */
-class SkyLoaderPL : public SkyLoader {
+class TerrainLoader : public PLCore::LoaderImpl {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SkyLoaderPL, "PLScene", PLScene::SkyLoader, "Sky loader implementation for the PixelLight sky XML file format")
+	pl_class(PLNATURE_RTTI_EXPORT, TerrainLoader, "PLNature", PLCore::LoaderImpl, "Abstract terrain loader base class")
 		// Properties
 		pl_properties
-			pl_property("Formats",	"sky,SKY")
-			pl_property("Load",		"1")
-			pl_property("Save",		"1")
+			pl_property("Type",	"Terrain")
 		pl_properties_end
-		// Constructors
-		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
-		// Methods
-		pl_method_2(Load,	pl_ret_type(bool),	SNSky&,		PLCore::File&,	"Load method",	"")
-		pl_method_2(Save,	pl_ret_type(bool),	SNSky&,		PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
 	//[-------------------------------------------------------]
-	//[ Public RTTI methods                                   ]
+	//[ Protected functions                                   ]
 	//[-------------------------------------------------------]
-	public:
-		PLS_API bool Load(SNSky &cSky, PLCore::File &cFile);
-		PLS_API bool Save(SNSky &cSky, PLCore::File &cFile);
-
-
-	//[-------------------------------------------------------]
-	//[ Public functions                                      ]
-	//[-------------------------------------------------------]
-	public:
+	protected:
 		/**
 		*  @brief
 		*    Default constructor
 		*/
-		PLS_API SkyLoaderPL();
+		PLNATURE_API TerrainLoader();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API virtual ~SkyLoaderPL();
-
-
-	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Loader implementation for format version 1
-		*
-		*  @param[in] cSky
-		*    Sky to load into
-		*  @param[in] cSkyElement
-		*    Sky XML element to read the data from
-		*
-		*  @return
-		*    'true' if all went fine, else 'false'
-		*/
-		bool LoadV1(SNSky &cSky, const PLCore::XmlElement &cSkyElement) const;
+		PLNATURE_API virtual ~TerrainLoader();
 
 
 };
@@ -115,7 +82,7 @@ class SkyLoaderPL : public SkyLoader {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLNature
 
 
-#endif // __PLSCENE_SCENENODE_SKYLOADER_PL_H__
+#endif // __PLNATURE_SCENENODE_TERRAINLOADER_H__

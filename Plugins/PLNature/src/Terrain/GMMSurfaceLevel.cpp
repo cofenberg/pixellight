@@ -25,7 +25,7 @@
 //[-------------------------------------------------------]
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/IndexBuffer.h>
-#include "PLScene/Scene/SceneNodes/Terrain/GMMSurfaceLevel.h"
+#include "PLNature/Terrain/GMMSurfaceLevel.h"
 
 
 //[-------------------------------------------------------]
@@ -33,7 +33,7 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLRenderer;
-namespace PLScene {
+namespace PLNature {
 
 
 //[-------------------------------------------------------]
@@ -402,4 +402,4 @@ void GMMSurfaceLevel::BuildLinkers(uint32 nLevels, uint32 nPatchSize)
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLNature

@@ -1,0 +1,18 @@
+>> 01.05.2012
+[CO]
+- Moved the out-of-date terrain and sky class from the core component "PLScene" into this loose plugin "PLNature". Those two classes
+  are so old, that there's not even a diary entry with a date when it was added. So it's from around 2002 and has not been used or really
+  maintained since then. Within the PixelLight forum, there are frequently questions about terrain... to be honest, it starts to get a
+  little bit annoying because while there are questions about it, no one appears to willing to work on decent terrain, sky, cloud, vegetation
+  and water rendering. Implementing and especially maintaining modern algorithms for these tasks are a task for a single person. I never used
+  those components, don't need them right now and have to work on nearly everything on my own (there's already support for unit tests and some
+  other parts by other persons, this is at least a beginning :) - so no chance that I can cover those thopic as well. At least not when it shouldn't
+  look totally cheap and out-of-date, again.
+  In order to hopefully reduce such questions and to make it easier for someone to get into it, I assume it's best to not have such components
+  within the important and generic core project PLScene.
+  - For cloud rendering: The following source of information looks promising: http://www.markmark.net/clouds/
+  - In general, I assume PLNature has to offer multiple algorithms for every task... to be able to cover many platforms. While e.g. GPU tessellation
+    would be suited to be used for terrain rendering, not every platform has the tessellation feature. Same for other tasks and other features. So,
+    e.g. just throwing in any high map renderer will *not* to the job. This was suffucient 10 years ago, but nowadays it's not. There's a reason why
+    I currently don't dare to touch those topics. There are engines and companies just working on those topics. We *really* have to split&share the work
+    in order to get it done.

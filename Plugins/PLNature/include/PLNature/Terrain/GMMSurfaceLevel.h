@@ -20,15 +20,15 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODE_GMMSURFACELEVEL_H__
-#define __PLSCENE_SCENENODE_GMMSURFACELEVEL_H__
+#ifndef __PLNATURE_SCENENODE_GMMSURFACELEVEL_H__
+#define __PLNATURE_SCENENODE_GMMSURFACELEVEL_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScene/PLScene.h"
+#include "PLNature/PLNature.h"
 
 
 //[-------------------------------------------------------]
@@ -43,7 +43,7 @@ namespace PLRenderer {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScene {
+namespace PLNature {
 
 
 //[-------------------------------------------------------]
@@ -102,13 +102,13 @@ class GMMSurfaceLevel {
 		*  @param[in] cRenderer
 		*    Renderer to use
 		*/
-		PLS_API GMMSurfaceLevel(PLRenderer::Renderer &cRenderer);
+		PLNATURE_API GMMSurfaceLevel(PLRenderer::Renderer &cRenderer);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API ~GMMSurfaceLevel();
+		PLNATURE_API ~GMMSurfaceLevel();
 
 		/**
 		*  @brief
@@ -119,7 +119,7 @@ class GMMSurfaceLevel {
 		*  @param[in] nPatchSize
 		*    Patch size
 		*/
-		PLS_API void BuildBodies(PLCore::uint32 nLevel, PLCore::uint32 nPatchSize);
+		PLNATURE_API void BuildBodies(PLCore::uint32 nLevel, PLCore::uint32 nPatchSize);
 
 		/**
 		*  @brief
@@ -130,7 +130,7 @@ class GMMSurfaceLevel {
 		*  @param[in] nPatchSize
 		*    Patch size
 		*/
-		PLS_API void BuildLinkers(PLCore::uint32 nLevel, PLCore::uint32 nPatchSize);
+		PLNATURE_API void BuildLinkers(PLCore::uint32 nLevel, PLCore::uint32 nPatchSize);
 
 
 	//[-------------------------------------------------------]
@@ -165,7 +165,7 @@ class GMMSurfaceLevel {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLNature
 
 
-#endif // __PLSCENE_SCENENODE_GMMSURFACELEVEL_H__
+#endif // __PLNATURE_SCENENODE_GMMSURFACELEVEL_H__

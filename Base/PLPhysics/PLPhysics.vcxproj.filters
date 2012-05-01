@@ -141,9 +141,6 @@
     <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsBodySphere.cpp">
       <Filter>SceneNodeModifiers</Filter>
     </ClCompile>
-    <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsBodyTerrain.cpp">
-      <Filter>SceneNodeModifiers</Filter>
-    </ClCompile>
     <ClCompile Include="src\SceneNodeModifiers\SNMPhysicsCorrectDistance.cpp">
       <Filter>SceneNodeModifiers</Filter>
     </ClCompile>
@@ -312,9 +309,6 @@
       <Filter>SceneNodeModifiers</Filter>
     </ClInclude>
     <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsBodySphere.h">
-      <Filter>SceneNodeModifiers</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsBodyTerrain.h">
       <Filter>SceneNodeModifiers</Filter>
     </ClInclude>
     <ClInclude Include="include\PLPhysics\SceneNodeModifiers\SNMPhysicsCorrectDistance.h">

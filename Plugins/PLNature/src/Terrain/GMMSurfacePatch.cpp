@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScene/Scene/SceneNodes/Terrain/GMMSurface.h"
-#include "PLScene/Scene/SceneNodes/Terrain/GMMSurfacePatch.h"
+#include "PLNature/Terrain/GMMSurface.h"
+#include "PLNature/Terrain/GMMSurfacePatch.h"
 
 
 //[-------------------------------------------------------]
@@ -32,7 +32,7 @@
 //[-------------------------------------------------------]
 using namespace PLCore;
 using namespace PLMath;
-namespace PLScene {
+namespace PLNature {
 
 
 //[-------------------------------------------------------]
@@ -283,4 +283,4 @@ void GMMSurfacePatch::Update()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLNature

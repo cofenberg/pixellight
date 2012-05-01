@@ -1,5 +1,6 @@
 /*********************************************************\
- *  File: TerrainLoader.cpp                              *
+ *  File: PLNature.h                                     *
+ *      Main header file of this project
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,45 +21,42 @@
 \*********************************************************/
 
 
+#ifndef __PLNATURE_PLNATURE_H__
+#define __PLNATURE_PLNATURE_H__
+#pragma once
+
+
+/**
+*  @mainpage PLNature
+*
+*  @section intro_sec Introduction
+*
+*  This is the PLNature API reference.
+*/
+
+
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLScene/Scene/SceneNodes/Terrain/TerrainLoader.h"
+#include <PLCore/PLCore.h>
 
 
 //[-------------------------------------------------------]
-//[ Namespace                                             ]
+//[ Import/Export                                         ]
 //[-------------------------------------------------------]
-namespace PLScene {
+#ifdef PLNATURE_EXPORTS
+	// To export classes, methods and variables
+	#define PLNATURE_API			PL_GENERIC_API_EXPORT
+
+	// To export RTTI elements
+	#define PLNATURE_RTTI_EXPORT	PL_GENERIC_RTTI_EXPORT
+#else
+	// To import classes, methods and variables
+	#define PLNATURE_API			PL_GENERIC_API_IMPORT
+
+	// To import RTTI elements
+	#define PLNATURE_RTTI_EXPORT	PL_GENERIC_RTTI_IMPORT
+#endif
 
 
-//[-------------------------------------------------------]
-//[ RTTI interface                                        ]
-//[-------------------------------------------------------]
-pl_implement_class(TerrainLoader)
-
-
-//[-------------------------------------------------------]
-//[ Protected functions                                   ]
-//[-------------------------------------------------------]
-/**
-*  @brief
-*    Default constructor
-*/
-TerrainLoader::TerrainLoader()
-{
-}
-
-/**
-*  @brief
-*    Destructor
-*/
-TerrainLoader::~TerrainLoader()
-{
-}
-
-
-//[-------------------------------------------------------]
-//[ Namespace                                             ]
-//[-------------------------------------------------------]
-} // PLScene
+#endif // __PLNATURE_PLNATURE_H__

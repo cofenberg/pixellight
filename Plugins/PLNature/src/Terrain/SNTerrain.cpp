@@ -30,12 +30,12 @@
 #include <PLGraphics/Image/ImageEffects.h>
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Renderer/FixedFunctions.h>
-#include "PLScene/Visibility/VisNode.h"
-#include "PLScene/Scene/SNCamera.h"
-#include "PLScene/Scene/SceneContext.h"
-#include "PLScene/Scene/SceneNodes/Terrain/TerrainLoader.h"
-#include "PLScene/Scene/SceneNodes/Terrain/GMMSurface.h"
-#include "PLScene/Scene/SceneNodes/Terrain/SNTerrain.h"
+#include <PLScene/Visibility/VisNode.h>
+#include <PLScene/Scene/SNCamera.h>
+#include <PLScene/Scene/SceneContext.h>
+#include "PLNature/Terrain/TerrainLoader.h"
+#include "PLNature/Terrain/GMMSurface.h"
+#include "PLNature/Terrain/SNTerrain.h"
 
 
 //[-------------------------------------------------------]
@@ -45,7 +45,8 @@ using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLRenderer;
-namespace PLScene {
+using namespace PLScene;
+namespace PLNature {
 
 
 //[-------------------------------------------------------]
@@ -273,4 +274,4 @@ bool SNTerrain::CallLoadable(File &cFile, Loader &cLoader, const String &sMethod
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLNature

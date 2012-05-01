@@ -30,10 +30,10 @@
 #include <PLRenderer/RendererContext.h>
 #include <PLRenderer/Material/MaterialHandler.h>
 #include <PLRenderer/Material/MaterialManager.h>
-#include "PLScene/Scene/SceneContext.h"
-#include "PLScene/Scene/SceneNodes/Terrain/GMMSurface.h"
-#include "PLScene/Scene/SceneNodes/Terrain/SNTerrain.h"
-#include "PLScene/Scene/SceneNodes/Terrain/TerrainLoaderPL.h"
+#include <PLScene/Scene/SceneContext.h>
+#include "PLNature/Terrain/GMMSurface.h"
+#include "PLNature/Terrain/SNTerrain.h"
+#include "PLNature/Terrain/TerrainLoaderPL.h"
 
 
 //[-------------------------------------------------------]
@@ -43,7 +43,7 @@ using namespace PLCore;
 using namespace PLMath;
 using namespace PLGraphics;
 using namespace PLRenderer;
-namespace PLScene {
+namespace PLNature {
 
 
 //[-------------------------------------------------------]
@@ -226,4 +226,4 @@ bool TerrainLoaderPL::LoadV1(SNTerrain &cSNTerrain, const XmlElement &cTerrainEl
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLNature

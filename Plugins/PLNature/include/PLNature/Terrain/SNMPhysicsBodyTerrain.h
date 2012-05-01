@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: TerrainLoader.h                                *
+ *  File: SNMPhysicsBodyTerrain.h                        *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,22 +20,22 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODE_TERRAINLOADER_H__
-#define __PLSCENE_SCENENODE_TERRAINLOADER_H__
+#ifndef __PLNATURE_SCENENODEMODIFIERS_BODYTERRAIN_H__
+#define __PLNATURE_SCENENODEMODIFIERS_BODYTERRAIN_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLCore/Tools/LoaderImpl.h>
-#include "PLScene/PLScene.h"
+#include <PLPhysics/SceneNodeModifiers/SNMPhysicsBody.h>
+#include "PLNature/PLNature.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScene {
+namespace PLNature {
 
 
 //[-------------------------------------------------------]
@@ -43,37 +43,66 @@ namespace PLScene {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Abstract terrain loader base class
+*    Physics terrain body scene node modifier
 */
-class TerrainLoader : public PLCore::LoaderImpl {
+class SNMPhysicsBodyTerrain : public PLPhysics::SNMPhysicsBody {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, TerrainLoader, "PLScene", PLCore::LoaderImpl, "Abstract terrain loader base class")
+	pl_class(PLNATURE_RTTI_EXPORT, SNMPhysicsBodyTerrain, "PLNature", PLPhysics::SNMPhysicsBody, "Physics terrain body scene node modifier")
 		// Properties
 		pl_properties
-			pl_property("Type",	"Terrain")
+			pl_property("SceneNodeClass",	"PLNature::SNTerrain")
 		pl_properties_end
+		// Attributes
+		pl_attribute(Scale,	PLMath::Vector3,	PLMath::Vector3::One,	ReadWrite,	GetSet,	"Height field scale",	"")
+		// Constructors
+		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
 	pl_class_end
 
 
 	//[-------------------------------------------------------]
-	//[ Protected functions                                   ]
+	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
-	protected:
+	public:
+		PLNATURE_API const PLMath::Vector3 &GetScale() const;
+		PLNATURE_API void SetScale(const PLMath::Vector3 &vValue);
+
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
 		/**
 		*  @brief
-		*    Default constructor
+		*    Constructor
+		*
+		*  @param[in] cSceneNode
+		*    Owner scene node
 		*/
-		PLS_API TerrainLoader();
+		PLNATURE_API SNMPhysicsBodyTerrain(PLScene::SceneNode &cSceneNode);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API virtual ~TerrainLoader();
+		PLNATURE_API virtual ~SNMPhysicsBodyTerrain();
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		PLMath::Vector3 m_vScale;	/**< Height field scale */
+
+
+	//[-------------------------------------------------------]
+	//[ Private virtual PLPhysics::SNMPhysicsBody functions   ]
+	//[-------------------------------------------------------]
+	private:
+		virtual void CreatePhysicsBody() override;
 
 
 };
@@ -82,7 +111,7 @@ class TerrainLoader : public PLCore::LoaderImpl {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLPhysics
 
 
-#endif // __PLSCENE_SCENENODE_TERRAINLOADER_H__
+#endif // __PLNATURE_SCENENODEMODIFIERS_BODYTERRAIN_H__

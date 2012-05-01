@@ -27,15 +27,15 @@
 #include <PLCore/Log/Log.h>
 #include <PLRenderer/Material/Material.h>
 #include <PLMesh/MeshHandler.h>
-#include "PLScene/Scene/SceneNodes/SNSky.h"
-#include "PLScene/Scene/SceneNodes/Loader/SkyLoaderPL.h"
+#include "PLNature/Sky/SNSky.h"
+#include "PLNature/Sky/SkyLoaderPL.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
-namespace PLScene {
+namespace PLNature {
 
 
 //[-------------------------------------------------------]
@@ -220,4 +220,4 @@ bool SkyLoaderPL::LoadV1(SNSky &cSky, const XmlElement &cSkyElement) const
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLNature

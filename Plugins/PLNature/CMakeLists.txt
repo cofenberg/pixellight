@@ -23,124 +23,23 @@
 ##################################################
 ## Project
 ##################################################
-define_project(PLScene)
+define_project(PLNature)
 
 ##################################################
 ## Source files
 ##################################################
 add_sources(
-	src/Scene/SceneNodes/Loader/SkinLoader.cpp
-	src/Scene/SceneNodes/Loader/SkinLoaderPL.cpp
-	src/Scene/SceneNodes/SNCoordinateAxis.cpp
-	src/Scene/SceneNodes/SNLineGrid.cpp
-	src/Scene/SceneNodes/SNString.cpp
-	src/Scene/SceneNodes/SNEventArea.cpp
-	src/Scene/SceneNodes/SNCoordinateAxisRotation.cpp
-	src/Scene/SceneNodes/SNText.cpp
-	src/Scene/SceneNodes/SNText2D.cpp
-	src/Scene/SceneNodes/SNText3D.cpp
-	src/Scene/SceneNodes/SNKeyValue.cpp
-	src/Scene/SceneNodes/SCRenderToTexture.cpp
-	src/Scene/SceneNodes/SNHelper.cpp
-	src/Scene/SceneNodes/SNUnknown.cpp
-	src/Scene/SceneNodes/SCUnknown.cpp
-	src/Scene/SceneNodes/SCMirror.cpp
-	src/Scene/SceneNodes/SNLineBox.cpp
-	src/Scene/SceneNodes/SNCoordinateAxis3D.cpp
-	src/Scene/SceneNodes/SNArea.cpp
-	src/Scene/SceneNodes/SNBitmap.cpp
-	src/Scene/SceneNodes/SNBitmap2D.cpp
-	src/Scene/SceneNodes/SNBitmap3D.cpp
-	src/Scene/SceneNodes/SNLine.cpp
-	src/Scene/SceneNodes/SNPoint.cpp
-	src/Scene/SceneNodes/SNMesh.cpp
-	src/Scene/SceneNodeModifiers/SNMAnchor.cpp
-	src/Scene/SceneNodeModifiers/SNMTransform.cpp
-	src/Scene/SceneNodeModifiers/SNMTransformGizmo.cpp
-	src/Scene/SceneNodeModifiers/SNMTransformGizmoPosition.cpp
-	src/Scene/SceneNodeModifiers/SNMTransformGizmoRotation.cpp
-	src/Scene/SceneNodeModifiers/SNMTransformGizmoScale.cpp
-	src/Scene/SceneNodeModifiers/SNMPositionPath.cpp
-	src/Scene/SceneNodeModifiers/SNMPositionMoveToTarget.cpp
-	src/Scene/SceneNodeModifiers/SNMPositionLinearAnimation.cpp
-	src/Scene/SceneNodeModifiers/SNMPositionKeyframeAnimation.cpp
-	src/Scene/SceneNodeModifiers/SNMScaleKeyframeAnimation.cpp
-	src/Scene/SceneNodeModifiers/SNMRotationTarget.cpp
-	src/Scene/SceneNodeModifiers/SNMRotationFixRoll.cpp
-	src/Scene/SceneNodeModifiers/SNMRotationMoveDirection.cpp
-	src/Scene/SceneNodeModifiers/SNMRotationLinearAnimation.cpp
-	src/Scene/SceneNodeModifiers/SNMRotationKeyframeAnimation.cpp
-	src/Scene/SceneNodeModifiers/SNMBillboard.cpp
-	src/Scene/SceneNodeModifiers/SNMBillboardSpherical.cpp
-	src/Scene/SceneNodeModifiers/SNMBillboardCylindrical.cpp
-	src/Scene/SceneNodeModifiers/SNMMesh.cpp
-	src/Scene/SceneNodeModifiers/SNMMeshMorph.cpp
-	src/Scene/SceneNodeModifiers/SNMMeshJoint.cpp
-	src/Scene/SceneNodeModifiers/SNMMeshUpdate.cpp
-	src/Scene/SceneNodeModifiers/SNMMeshAnimation.cpp
-	src/Scene/SceneNodeModifiers/SNMMeshMorphBlink.cpp
-	src/Scene/SceneNodeModifiers/SNMMeshMorphCameraNear.cpp
-	src/Scene/SceneNodeModifiers/SNMDraw.cpp
-	src/Scene/SceneNodeModifiers/SNMDrawRectangle.cpp
-	src/Scene/SceneNodeModifiers/SNMKeyValue.cpp
-	src/Scene/SceneNodeModifiers/SNMDeactivationOnTimeout.cpp
-	src/Scene/SceneNodeModifiers/SNMOrbiting.cpp
-	src/Scene/SceneNodeModifiers/SNMUnknown.cpp
-	src/Scene/SceneNodeModifiers/SNMCameraZoom.cpp
-	src/Scene/SceneNodeModifiers/SNMPositionRandomAnimation.cpp
-	src/Scene/SceneNodeModifiers/SNMScaleRandomAnimation.cpp
-	src/Scene/SceneNodeModifiers/SNMLightRandomAnimation.cpp
-	src/Scene/SceneLoader/SceneLoader.cpp
-	src/Scene/SceneLoader/SceneLoaderPL.cpp
-	src/Scene/SceneQueries/SQAABoundingBox.cpp
-	src/Scene/SceneQueries/SQPlaneSet.cpp
-	src/Scene/SceneQueries/SQEnumerate.cpp
-	src/Scene/SceneQueries/SQSphere.cpp
-	src/Scene/SceneQueries/SQLine.cpp
-	src/Scene/SceneQueries/SQPoint.cpp
-	src/Scene/SceneQueries/SQByName.cpp
-	src/Scene/SceneQueries/SQByClassName.cpp
-	src/Scene/SceneHierarchies/SHList.cpp
-	src/Scene/SceneHierarchies/SHKdTree.cpp
-	src/Scene/SceneHierarchyNode.cpp
-	src/Scene/SceneContainer.cpp
-	src/Scene/SceneNodeHandler.cpp
-	src/Scene/SNPortal.cpp
-	src/Scene/SNCellPortal.cpp
-	src/Scene/SNAntiPortal.cpp
-	src/Scene/SNEffectLight.cpp
-	src/Scene/SceneNode.cpp
-	src/Scene/SCCell.cpp
-	src/Scene/SNFog.cpp
-	src/Scene/SPScene.cpp
-	src/Scene/SNProjectiveSpotLight.cpp
-	src/Scene/SNSpotLight.cpp
-	src/Scene/SNProjectivePointLight.cpp
-	src/Scene/SceneHierarchyNodeItem.cpp
-	src/Scene/SceneQueryManager.cpp
-	src/Scene/SNLight.cpp
-	src/Scene/SceneContext.cpp
-	src/Scene/SceneQueryHandler.cpp
-	src/Scene/SNPointLight.cpp
-	src/Scene/SceneNodeModifier.cpp
-	src/Scene/SNSphereFog.cpp
-	src/Scene/SNCamera.cpp
-	src/Scene/SceneQuery.cpp
-	src/Scene/SNDirectionalLight.cpp
-	src/Scene/SceneHierarchy.cpp
-	src/Visibility/SQCull.cpp
-	src/Visibility/VisManager.cpp
-	src/Visibility/VisNode.cpp
-	src/Visibility/VisContainer.cpp
-	src/Visibility/VisPortal.cpp
-	src/Compositing/SceneRendererLoaderPL.cpp
-	src/Compositing/SceneRendererLoader.cpp
-	src/Compositing/SceneRenderer.cpp
-	src/Compositing/SceneRendererHandler.cpp
-	src/Compositing/SceneRendererManager.cpp
-	src/Compositing/SceneRendererPass.cpp
-	src/Application/SceneApplication.cpp
-	src/PLScene.cpp
+	src/PLNature.cpp
+	src/Sky/SNSky.cpp
+	src/Sky/SkyLoader.cpp
+	src/Sky/SkyLoaderPL.cpp
+	src/Terrain/TerrainLoaderPL.cpp
+	src/Terrain/TerrainLoader.cpp
+	src/Terrain/GMMSurfaceLevel.cpp
+	src/Terrain/SNTerrain.cpp
+	src/Terrain/GMMSurfacePatch.cpp
+	src/Terrain/GMMSurface.cpp
+	src/Terrain/SNMPhysicsBodyTerrain.cpp
 )
 
 ##################################################
@@ -153,6 +52,9 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
 	${CMAKE_SOURCE_DIR}/Base/PLRenderer/include
 	${CMAKE_SOURCE_DIR}/Base/PLMesh/include
+	${CMAKE_SOURCE_DIR}/Base/PLScene/include
+	${CMAKE_SOURCE_DIR}/Base/PLPhysics/include
+	${CMAKE_SOURCE_DIR}/Base/PLEngine/include
 )
 
 ##################################################
@@ -171,23 +73,16 @@ add_libs(
 	PLGraphics
 	PLRenderer
 	PLMesh
+	PLScene
+	PLPhysics
+	PLEngine
 )
-if(WIN32)
-	##################################################
-	## Win32
-	##################################################
-	add_libs(
-		${WIN32_USER32_LIB}
-		${WIN32_ADVAPI32_LIB}
-		${WIN32_WINMM_LIB}
-	)
-endif()
 
 ##################################################
 ## Preprocessor definitions
 ##################################################
 add_compile_defs(
-	PLSCENE_EXPORTS
+	PLNATURE_EXPORTS
 )
 if(WIN32)
 	##################################################
@@ -252,8 +147,8 @@ pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_RUNTIME_BIN_DIR})
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLGraphics PLRenderer PLMesh)
-add_dependencies(Base                       	${CMAKETOOLS_CURRENT_TARGET})
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	PLCore PLMath PLGraphics PLRenderer PLMesh PLScene PLPhysics PLEngine)
+add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
 
 ##################################################
 ## Post-Build

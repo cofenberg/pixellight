@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODE_GMMSURFACE_H__
-#define __PLSCENE_SCENENODE_GMMSURFACE_H__
+#ifndef __PLNATURE_SCENENODE_GMMSURFACE_H__
+#define __PLNATURE_SCENENODE_GMMSURFACE_H__
 #pragma once
 
 
@@ -29,7 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLMath/Quadtree.h>
-#include "PLScene/PLScene.h"
+#include "PLNature/PLNature.h"
 
 
 //[-------------------------------------------------------]
@@ -42,7 +42,7 @@ namespace PLRenderer {
 	class TextureHandler;
 	class MaterialHandler;
 }
-namespace PLScene {
+namespace PLNature {
 	class GMMSurfacePatch;
 	class GMMSurfaceLevel;
 }
@@ -51,7 +51,7 @@ namespace PLScene {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScene {
+namespace PLNature {
 
 
 //[-------------------------------------------------------]
@@ -98,13 +98,13 @@ class GMMSurface {
 		*  @param[in] cRenderer
 		*    Renderer to use
 		*/
-		PLS_API GMMSurface(PLRenderer::Renderer &cRenderer);
+		PLNATURE_API GMMSurface(PLRenderer::Renderer &cRenderer);
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API ~GMMSurface();
+		PLNATURE_API ~GMMSurface();
 
 		/**
 		*  @brief
@@ -128,13 +128,13 @@ class GMMSurface {
 		*    - The GMM takes place in the single patches of the surface further they
 		*      are used for frustum culling and each patch could have another material
 		*/
-		PLS_API bool Create(PLCore::uint32 nHeightMapSize, float fHeightMap[], PLCore::uint32 nPatchSize = 16, int nGeoMipMaps = -1);
+		PLNATURE_API bool Create(PLCore::uint32 nHeightMapSize, float fHeightMap[], PLCore::uint32 nPatchSize = 16, int nGeoMipMaps = -1);
 
 		/**
 		*  @brief
 		*    Kills the GMM surface
 		*/
-		PLS_API void Destroy();
+		PLNATURE_API void Destroy();
 
 		/**
 		*  @brief
@@ -143,7 +143,7 @@ class GMMSurface {
 		*  @return
 		*    Viewer position
 		*/
-		PLS_API const PLMath::Vector3 &GetViewerPos() const;
+		PLNATURE_API const PLMath::Vector3 &GetViewerPos() const;
 
 		/**
 		*  @brief
@@ -152,7 +152,7 @@ class GMMSurface {
 		*  @param[in] vPos
 		*    Viewer position
 		*/
-		PLS_API void SetViewerPos(const PLMath::Vector3 &vPos);
+		PLNATURE_API void SetViewerPos(const PLMath::Vector3 &vPos);
 
 		/**
 		*  @brief
@@ -161,7 +161,7 @@ class GMMSurface {
 		*  @return
 		*    The size of the height map
 		*/
-		PLS_API PLCore::uint32 GetHeightMapSize() const;
+		PLNATURE_API PLCore::uint32 GetHeightMapSize() const;
 
 		/**
 		*  @brief
@@ -170,7 +170,7 @@ class GMMSurface {
 		*  @return
 		*    Pointer to the height map, can be a null pointer
 		*/
-		PLS_API const float *GetHeightMap() const;
+		PLNATURE_API const float *GetHeightMap() const;
 
 		/**
 		*  @brief
@@ -179,7 +179,7 @@ class GMMSurface {
 		*  @return
 		*    Number of surface vertices
 		*/
-		PLS_API PLCore::uint32 GetVertices() const;
+		PLNATURE_API PLCore::uint32 GetVertices() const;
 
 		/**
 		*  @brief
@@ -191,7 +191,7 @@ class GMMSurface {
 		*  @return
 		*    Pointer to a surface vertex, a null pointer if there was an error
 		*/
-		PLS_API Vertex *GetVertex(PLCore::uint32 nID = 0) const;
+		PLNATURE_API Vertex *GetVertex(PLCore::uint32 nID = 0) const;
 
 		/**
 		*  @brief
@@ -205,7 +205,7 @@ class GMMSurface {
 		*  @return
 		*    The height of a height map coordinate
 		*/
-		PLS_API float GetHeight(PLCore::uint32 nX, PLCore::uint32 nY) const;
+		PLNATURE_API float GetHeight(PLCore::uint32 nX, PLCore::uint32 nY) const;
 
 		/**
 		*  @brief
@@ -225,7 +225,7 @@ class GMMSurface {
 		*    - If a height value in the height map is manipulated the patch using this
 		*      coordinate must be recalculated during the next GMM surface update
 		*/
-		PLS_API bool SetHeight(PLCore::uint32 nX, PLCore::uint32 nY, float fHeight = 0);
+		PLNATURE_API bool SetHeight(PLCore::uint32 nX, PLCore::uint32 nY, float fHeight = 0);
 
 		/**
 		*  @brief
@@ -234,7 +234,7 @@ class GMMSurface {
 		*  @return
 		*    Size of a patch
 		*/
-		PLS_API PLCore::uint32 GetPatchSize() const;
+		PLNATURE_API PLCore::uint32 GetPatchSize() const;
 
 		/**
 		*  @brief
@@ -243,7 +243,7 @@ class GMMSurface {
 		*  @return
 		*    Number of patches per column/row
 		*/
-		PLS_API PLCore::uint32 GetXYPatches() const;
+		PLNATURE_API PLCore::uint32 GetXYPatches() const;
 
 		/**
 		*  @brief
@@ -252,7 +252,7 @@ class GMMSurface {
 		*  @return
 		*    The total number of patches in the GMM surface
 		*/
-		PLS_API PLCore::uint32 GetPatches() const;
+		PLNATURE_API PLCore::uint32 GetPatches() const;
 
 		/**
 		*  @brief
@@ -264,7 +264,7 @@ class GMMSurface {
 		*  @return
 		*    A pointer to the patch with the given ID, a null pointer if there was an error
 		*/
-		PLS_API GMMSurfacePatch *GetPatch(PLCore::uint32 nID) const;
+		PLNATURE_API GMMSurfacePatch *GetPatch(PLCore::uint32 nID) const;
 
 		/**
 		*  @brief
@@ -273,7 +273,7 @@ class GMMSurface {
 		*  @return
 		*    Number of geometrically mip maps
 		*/
-		PLS_API PLCore::uint32 GetGeoMipMaps() const;
+		PLNATURE_API PLCore::uint32 GetGeoMipMaps() const;
 
 		/**
 		*  @brief
@@ -288,8 +288,7 @@ class GMMSurface {
 		*  @param[in] pBottom
 		*    The bottom neighbour GMM surface
 		*/
-		PLS_API void SetNeighbours(GMMSurface *pLeft = nullptr, GMMSurface *pTop    = nullptr,
-								  GMMSurface *pRight = nullptr, GMMSurface *pBottom = nullptr);
+		PLNATURE_API void SetNeighbours(GMMSurface *pLeft = nullptr, GMMSurface *pTop = nullptr, GMMSurface *pRight = nullptr, GMMSurface *pBottom = nullptr);
 
 		/**
 		*  @brief
@@ -298,7 +297,7 @@ class GMMSurface {
 		*  @return
 		*    Surface material handler
 		*/
-		PLS_API PLRenderer::MaterialHandler &GetMaterialHandler();
+		PLNATURE_API PLRenderer::MaterialHandler &GetMaterialHandler();
 
 		/**
 		*  @brief
@@ -307,7 +306,7 @@ class GMMSurface {
 		*  @return
 		*    GMM surface quadtree
 		*/
-		PLS_API PLMath::Quadtree &GetQuadtree();
+		PLNATURE_API PLMath::Quadtree &GetQuadtree();
 
 		/**
 		*  @brief
@@ -316,7 +315,7 @@ class GMMSurface {
 		*  @note
 		*    - Must be done before the GMM surface is drawn!! (updates detail etc.)
 		*/
-		PLS_API void Update();
+		PLNATURE_API void Update();
 
 		/**
 		*  @brief
@@ -325,7 +324,7 @@ class GMMSurface {
 		*  @note
 		*    - The GMM surface must be updated before it's drawn! (updates detail etc.)
 		*/
-		PLS_API void Draw() const;
+		PLNATURE_API void Draw() const;
 
 
 	//[-------------------------------------------------------]
@@ -401,7 +400,7 @@ class GMMSurface {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLNature
 
 
-#endif // __PLSCENE_SCENENODE_GMMSURFACE_H__
+#endif // __PLNATURE_SCENENODE_GMMSURFACE_H__

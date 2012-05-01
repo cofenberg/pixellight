@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODE_GMMSURFACEPATCH_H__
-#define __PLSCENE_SCENENODE_GMMSURFACEPATCH_H__
+#ifndef __PLNATURE_SCENENODE_GMMSURFACEPATCH_H__
+#define __PLNATURE_SCENENODE_GMMSURFACEPATCH_H__
 #pragma once
 
 
@@ -29,13 +29,13 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLMath/Quadtree.h>
-#include "PLScene/PLScene.h"
+#include "PLNature/PLNature.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScene {
+namespace PLNature {
 
 
 //[-------------------------------------------------------]
@@ -72,7 +72,7 @@ class GMMSurfacePatch : public PLMath::QuadtreePatch {
 		*  @return
 		*    'true' if the patch is active, else 'false'
 		*/
-		PLS_API bool IsActive() const;
+		PLNATURE_API bool IsActive() const;
 
 		/**
 		*  @brief
@@ -81,7 +81,7 @@ class GMMSurfacePatch : public PLMath::QuadtreePatch {
 		*  @param[in] bActive
 		*    Should the patch be active?
 		*/
-		PLS_API void SetActive(bool bActive = true);
+		PLNATURE_API void SetActive(bool bActive = true);
 
 		/**
 		*  @brief
@@ -90,13 +90,13 @@ class GMMSurfacePatch : public PLMath::QuadtreePatch {
 		*  @param[out] nOffset
 		*    Will receive the offset
 		*/
-		PLS_API void ComputeVariance(PLCore::uint32 &nOffset);
+		PLNATURE_API void ComputeVariance(PLCore::uint32 &nOffset);
 
 		/**
 		*  @brief
 		*    Updates the patch bounding box
 		*/
-		PLS_API void UpdateBoundingBox();
+		PLNATURE_API void UpdateBoundingBox();
 
 
 	//[-------------------------------------------------------]
@@ -177,7 +177,7 @@ class GMMSurfacePatch : public PLMath::QuadtreePatch {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLNature
 
 
-#endif // __PLSCENE_SCENENODE_GMMSURFACEPATCH_H__
+#endif // __PLNATURE_SCENENODE_GMMSURFACEPATCH_H__

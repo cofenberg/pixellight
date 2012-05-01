@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODE_SKY_H__
-#define __PLSCENE_SCENENODE_SKY_H__
+#ifndef __PLNATURE_SCENENODE_SKY_H__
+#define __PLNATURE_SCENENODE_SKY_H__
 #pragma once
 
 
@@ -29,13 +29,14 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Tools/Loadable.h>
-#include "PLScene/Scene/SceneNode.h"
+#include <PLScene/Scene/SceneNode.h>
+#include "PLNature/PLNature.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScene {
+namespace PLNature {
 
 
 //[-------------------------------------------------------]
@@ -97,7 +98,7 @@ class SkyLayer : public PLCore::Object, public PLCore::Element<SkyLayer> {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SkyLayer, "PLScene", PLCore::Object, "Sky layer")
+	pl_class(PLNATURE_RTTI_EXPORT, SkyLayer, "PLNature", PLCore::Object, "Sky layer")
 		// Attributes
 		pl_attribute(Type,		pl_enum_type(EType),	Unknown,				ReadWrite,	GetSet,	"Sky layer type",															"")
 		pl_attribute(Position,	PLMath::Vector3,		PLMath::Vector3::Zero,	ReadWrite,	GetSet,	"Sky layer position",														"")
@@ -111,14 +112,14 @@ class SkyLayer : public PLCore::Object, public PLCore::Element<SkyLayer> {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API EType GetType() const;
-		PLS_API void SetType(EType nValue);
-		PLS_API const PLMath::Vector3 &GetPosition() const;
-		PLS_API void SetPosition(const PLMath::Vector3 &vValue);
-		PLS_API const PLMath::Vector3 &GetRotation() const;
-		PLS_API void SetRotation(const PLMath::Vector3 &vValue);
-		PLS_API const PLMath::Vector3 &GetScale() const;
-		PLS_API void SetScale(const PLMath::Vector3 &vValue);
+		PLNATURE_API EType GetType() const;
+		PLNATURE_API void SetType(EType nValue);
+		PLNATURE_API const PLMath::Vector3 &GetPosition() const;
+		PLNATURE_API void SetPosition(const PLMath::Vector3 &vValue);
+		PLNATURE_API const PLMath::Vector3 &GetRotation() const;
+		PLNATURE_API void SetRotation(const PLMath::Vector3 &vValue);
+		PLNATURE_API const PLMath::Vector3 &GetScale() const;
+		PLNATURE_API void SetScale(const PLMath::Vector3 &vValue);
 
 
 	//[-------------------------------------------------------]
@@ -129,7 +130,7 @@ class SkyLayer : public PLCore::Object, public PLCore::Element<SkyLayer> {
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API virtual ~SkyLayer();
+		PLNATURE_API virtual ~SkyLayer();
 
 		/**
 		*  @brief
@@ -138,7 +139,7 @@ class SkyLayer : public PLCore::Object, public PLCore::Element<SkyLayer> {
 		*  @return
 		*    The sky this sky layer is in, NEVER a null pointer
 		*/
-		PLS_API SNSky *GetSky() const;
+		PLNATURE_API SNSky *GetSky() const;
 
 		/**
 		*  @brief
@@ -147,7 +148,7 @@ class SkyLayer : public PLCore::Object, public PLCore::Element<SkyLayer> {
 		*  @return
 		*    The mesh of the sky layer handler, a null pointer on error
 		*/
-		PLS_API PLMesh::MeshHandler *GetMeshHandler() const;
+		PLNATURE_API PLMesh::MeshHandler *GetMeshHandler() const;
 
 		/**
 		*  @brief
@@ -161,7 +162,7 @@ class SkyLayer : public PLCore::Object, public PLCore::Element<SkyLayer> {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLS_API bool LoadMaterial(const PLCore::String &sFilename, PLCore::uint32 nMaterial = 0);
+		PLNATURE_API bool LoadMaterial(const PLCore::String &sFilename, PLCore::uint32 nMaterial = 0);
 
 		/**
 		*  @brief
@@ -174,7 +175,7 @@ class SkyLayer : public PLCore::Object, public PLCore::Element<SkyLayer> {
 		*    - If position, rotation or scale was changed, the current transform matrix
 		*      is recalculated internally before it is returned
 		*/
-		PLS_API const PLMath::Matrix3x4 &GetTransformMatrix();
+		PLNATURE_API const PLMath::Matrix3x4 &GetTransformMatrix();
 
 
 	//[-------------------------------------------------------]
@@ -212,13 +213,13 @@ class SkyLayer : public PLCore::Object, public PLCore::Element<SkyLayer> {
 *  @brief
 *    Sky scene node
 */
-class SNSky : public SceneNode, public PLCore::ElementManager<SkyLayer>, public PLCore::Loadable {
+class SNSky : public PLScene::SceneNode, public PLCore::ElementManager<SkyLayer>, public PLCore::Loadable {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNSky, "PLScene", PLScene::SceneNode, "Sky scene node")
+	pl_class(PLNATURE_RTTI_EXPORT, SNSky, "PLNature", PLScene::SceneNode, "Sky scene node")
 		// Attributes
 			// Overwritten SceneNode attributes
 		pl_attribute(Flags,				pl_flag_type(EFlags),	NoCulling,											ReadWrite,	GetSet,		"Flags",																															"")
@@ -236,7 +237,7 @@ class SNSky : public SceneNode, public PLCore::ElementManager<SkyLayer>, public 
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API void SetFilename(const PLCore::String &sValue);
+		PLNATURE_API void SetFilename(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -247,24 +248,24 @@ class SNSky : public SceneNode, public PLCore::ElementManager<SkyLayer>, public 
 		*  @brief
 		*    Default constructor
 		*/
-		PLS_API SNSky();
+		PLNATURE_API SNSky();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API virtual ~SNSky();
+		PLNATURE_API virtual ~SNSky();
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual SceneNode functions                    ]
+	//[ Public virtual PLScene::SceneNode functions           ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void DrawPre(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr) override;
+		PLNATURE_API virtual void DrawPre(PLRenderer::Renderer &cRenderer, const PLScene::VisNode *pVisNode = nullptr) override;
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual SceneNode functions                   ]
+	//[ Private virtual PLScene::SceneNode functions          ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void InitFunction() override;
@@ -282,8 +283,8 @@ class SNSky : public SceneNode, public PLCore::ElementManager<SkyLayer>, public 
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual bool Unload() override;
-		PLS_API virtual PLCore::String GetLoadableTypeName() const override;
+		PLNATURE_API virtual bool Unload() override;
+		PLNATURE_API virtual PLCore::String GetLoadableTypeName() const override;
 
 
 	//[-------------------------------------------------------]
@@ -317,7 +318,7 @@ class SNSky : public SceneNode, public PLCore::ElementManager<SkyLayer>, public 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLNature
 
 
-#endif // __PLSCENE_SCENENODE_SKY_H__
+#endif // __PLNATURE_SCENENODE_SKY_H__

@@ -5,6 +5,8 @@ Changes in PixelLight 0.9.12-R1 (not yet released)
 - Feature: Added support for tessellation evaluation shader (named "domain shader" in DirectX 11) within "PLRenderer"
 - Feature: Added "55RendererTessellation"-sample
 - Feature: Autodesk 3ds Max 2013 scene exporter added
+- Change: Moved out-of-date "PLScene::SNSky" and "PLScene::SNTerrain" into the new plugin project "PLNature" ("PLNature::SNSky", "PLNature::SNTerrain")
+- Change: Moved "PLPhysics::SNMPhysicsBodyTerrain" into "PLNature::SNMPhysicsBodyTerrain"
 - Bugfix (ID: 3502066): "PLGraphics::Color4::IsValid()" alpha-check was invalid
 - Bugfix (ID: 3512436): "pl_implement_class(Keyboard)" was missing within "PLInput"
 - Bugfix (ID: 3514155): The ingame console was processing input events received while the main window had no focus

@@ -28,10 +28,10 @@
 #include <PLRenderer/Renderer/VertexBuffer.h>
 #include <PLRenderer/Renderer/FixedFunctions.h>
 #include <PLRenderer/Material/MaterialHandler.h>
-#include "PLScene/Scene/SNCamera.h"
-#include "PLScene/Scene/SceneNodes/Terrain/GMMSurfacePatch.h"
-#include "PLScene/Scene/SceneNodes/Terrain/GMMSurfaceLevel.h"
-#include "PLScene/Scene/SceneNodes/Terrain/GMMSurface.h"
+#include <PLScene/Scene/SNCamera.h>
+#include "PLNature/Terrain/GMMSurfacePatch.h"
+#include "PLNature/Terrain/GMMSurfaceLevel.h"
+#include "PLNature/Terrain/GMMSurface.h"
 
 
 //[-------------------------------------------------------]
@@ -40,7 +40,8 @@
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLRenderer;
-namespace PLScene {
+using namespace PLScene;
+namespace PLNature {
 
 
 //[-------------------------------------------------------]
@@ -513,4 +514,4 @@ void GMMSurface::Init()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLNature

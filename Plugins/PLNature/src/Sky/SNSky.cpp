@@ -37,9 +37,9 @@
 #include <PLMesh/MeshManager.h>
 #include <PLMesh/MeshLODLevel.h>
 #include <PLMesh/MeshMorphTarget.h>
-#include "PLScene/Scene/SceneContext.h"
-#include "PLScene/Scene/SceneNodes/Loader/SkyLoader.h"
-#include "PLScene/Scene/SceneNodes/SNSky.h"
+#include <PLScene/Scene/SceneContext.h>
+#include "PLNature/Sky/SkyLoader.h"
+#include "PLNature/Sky/SNSky.h"
 
 
 //[-------------------------------------------------------]
@@ -49,7 +49,8 @@ using namespace PLCore;
 using namespace PLMath;
 using namespace PLRenderer;
 using namespace PLMesh;
-namespace PLScene {
+using namespace PLScene;
+namespace PLNature {
 
 
 //[-------------------------------------------------------]
@@ -538,4 +539,4 @@ void SNSky::OnUpdate()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLNature

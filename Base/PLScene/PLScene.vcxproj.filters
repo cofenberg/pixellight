@@ -11,9 +11,6 @@
     <Filter Include="Scene\SceneNodes">
       <UniqueIdentifier>{fb08537b-877c-43b0-a6ea-b3d9315aacf6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene\SceneNodes\Terrain">
-      <UniqueIdentifier>{ee706b66-eaee-43a8-95e1-b7bbde17c2ce}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scene\SceneNodes\Loader">
       <UniqueIdentifier>{13fb1a16-a351-4aa8-9b52-c81d150a8c24}</UniqueIdentifier>
     </Filter>
@@ -175,9 +172,6 @@
     <ClCompile Include="src\Scene\SceneNodes\SNPoint.cpp">
       <Filter>Scene\SceneNodes</Filter>
     </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\SNSky.cpp">
-      <Filter>Scene\SceneNodes</Filter>
-    </ClCompile>
     <ClCompile Include="src\Scene\SceneNodes\SNString.cpp">
       <Filter>Scene\SceneNodes</Filter>
     </ClCompile>
@@ -193,34 +187,10 @@
     <ClCompile Include="src\Scene\SceneNodes\SNUnknown.cpp">
       <Filter>Scene\SceneNodes</Filter>
     </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Terrain\GMMSurface.cpp">
-      <Filter>Scene\SceneNodes\Terrain</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Terrain\GMMSurfaceLevel.cpp">
-      <Filter>Scene\SceneNodes\Terrain</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Terrain\GMMSurfacePatch.cpp">
-      <Filter>Scene\SceneNodes\Terrain</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Terrain\SNTerrain.cpp">
-      <Filter>Scene\SceneNodes\Terrain</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Terrain\TerrainLoader.cpp">
-      <Filter>Scene\SceneNodes\Terrain</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Terrain\TerrainLoaderPL.cpp">
-      <Filter>Scene\SceneNodes\Terrain</Filter>
-    </ClCompile>
     <ClCompile Include="src\Scene\SceneNodes\Loader\SkinLoader.cpp">
       <Filter>Scene\SceneNodes\Loader</Filter>
     </ClCompile>
     <ClCompile Include="src\Scene\SceneNodes\Loader\SkinLoaderPL.cpp">
-      <Filter>Scene\SceneNodes\Loader</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Loader\SkyLoader.cpp">
-      <Filter>Scene\SceneNodes\Loader</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Scene\SceneNodes\Loader\SkyLoaderPL.cpp">
       <Filter>Scene\SceneNodes\Loader</Filter>
     </ClCompile>
     <ClCompile Include="src\Scene\SceneHierarchies\SHKdTree.cpp">
@@ -540,9 +510,6 @@
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNPoint.h">
       <Filter>Scene\SceneNodes</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\SNSky.h">
-      <Filter>Scene\SceneNodes</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNString.h">
       <Filter>Scene\SceneNodes</Filter>
     </ClInclude>
@@ -558,34 +525,10 @@
     <ClInclude Include="include\PLScene\Scene\SceneNodes\SNUnknown.h">
       <Filter>Scene\SceneNodes</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Terrain\GMMSurface.h">
-      <Filter>Scene\SceneNodes\Terrain</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Terrain\GMMSurfaceLevel.h">
-      <Filter>Scene\SceneNodes\Terrain</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Terrain\GMMSurfacePatch.h">
-      <Filter>Scene\SceneNodes\Terrain</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Terrain\SNTerrain.h">
-      <Filter>Scene\SceneNodes\Terrain</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Terrain\TerrainLoader.h">
-      <Filter>Scene\SceneNodes\Terrain</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Terrain\TerrainLoaderPL.h">
-      <Filter>Scene\SceneNodes\Terrain</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SceneNodes\Loader\SkinLoader.h">
       <Filter>Scene\SceneNodes\Loader</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SceneNodes\Loader\SkinLoaderPL.h">
-      <Filter>Scene\SceneNodes\Loader</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Loader\SkyLoader.h">
-      <Filter>Scene\SceneNodes\Loader</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLScene\Scene\SceneNodes\Loader\SkyLoaderPL.h">
       <Filter>Scene\SceneNodes\Loader</Filter>
     </ClInclude>
     <ClInclude Include="include\PLScene\Scene\SceneHierarchies\SHKdTree.h">

@@ -23,12 +23,12 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <PLScene/Scene/SceneNodes/Terrain/SNTerrain.h>
-#include <PLScene/Scene/SceneNodes/Terrain/GMMSurface.h>
-#include "PLPhysics/Body.h"
-#include "PLPhysics/World.h"
-#include "PLPhysics/SceneNodes/SCPhysicsWorld.h"
-#include "PLPhysics/SceneNodeModifiers/SNMPhysicsBodyTerrain.h"
+#include <PLPhysics/Body.h>
+#include <PLPhysics/World.h>
+#include <PLPhysics/SceneNodes/SCPhysicsWorld.h>
+#include "PLNature/Terrain/SNTerrain.h"
+#include "PLNature/Terrain/GMMSurface.h"
+#include "PLNature/Terrain/SNMPhysicsBodyTerrain.h"
 
 
 //[-------------------------------------------------------]
@@ -37,7 +37,8 @@
 using namespace PLCore;
 using namespace PLMath;
 using namespace PLScene;
-namespace PLPhysics {
+using namespace PLPhysics;
+namespace PLNature {
 
 
 //[-------------------------------------------------------]
@@ -112,4 +113,4 @@ void SNMPhysicsBodyTerrain::CreatePhysicsBody()
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLPhysics
+} // PLNature

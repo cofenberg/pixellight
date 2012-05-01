@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SNMPhysicsBodyTerrain.h                        *
+ *  File: SkyLoaderPL.h                                  *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,21 +20,21 @@
 \*********************************************************/
 
 
-#ifndef __PLPHYSICS_SCENENODEMODIFIERS_BODYTERRAIN_H__
-#define __PLPHYSICS_SCENENODEMODIFIERS_BODYTERRAIN_H__
+#ifndef __PLNATURE_SCENENODE_SKYLOADER_PL_H__
+#define __PLNATURE_SCENENODE_SKYLOADER_PL_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLPhysics/SceneNodeModifiers/SNMPhysicsBody.h"
+#include "PLNature/Sky/SkyLoader.h"
 
 
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLPhysics {
+namespace PLNature {
 
 
 //[-------------------------------------------------------]
@@ -42,32 +42,35 @@ namespace PLPhysics {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Physics terrain body scene node modifier
+*    Sky loader implementation for the PixelLight sky XML file format
 */
-class SNMPhysicsBodyTerrain : public SNMPhysicsBody {
+class SkyLoaderPL : public SkyLoader {
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLPHYSICS_RTTI_EXPORT, SNMPhysicsBodyTerrain, "PLPhysics", PLPhysics::SNMPhysicsBody, "Physics terrain body scene node modifier")
+	pl_class(PLNATURE_RTTI_EXPORT, SkyLoaderPL, "PLNature", PLNature::SkyLoader, "Sky loader implementation for the PixelLight sky XML file format")
 		// Properties
 		pl_properties
-			pl_property("SceneNodeClass",	"PLScene::SNTerrain")
+			pl_property("Formats",	"sky,SKY")
+			pl_property("Load",		"1")
+			pl_property("Save",		"1")
 		pl_properties_end
-		// Attributes
-		pl_attribute(Scale,	PLMath::Vector3,	PLMath::Vector3::One,	ReadWrite,	GetSet,	"Height field scale",	"")
 		// Constructors
-		pl_constructor_1(ParameterConstructor,	PLScene::SceneNode&,	"Parameter constructor",	"")
+		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
+		// Methods
+		pl_method_2(Load,	pl_ret_type(bool),	SNSky&,		PLCore::File&,	"Load method",	"")
+		pl_method_2(Save,	pl_ret_type(bool),	SNSky&,		PLCore::File&,	"Save method",	"")
 	pl_class_end
 
 
 	//[-------------------------------------------------------]
-	//[ Public RTTI get/set functions                         ]
+	//[ Public RTTI methods                                   ]
 	//[-------------------------------------------------------]
 	public:
-		PLPHYSICS_API const PLMath::Vector3 &GetScale() const;
-		PLPHYSICS_API void SetScale(const PLMath::Vector3 &vValue);
+		PLNATURE_API bool Load(SNSky &cSky, PLCore::File &cFile);
+		PLNATURE_API bool Save(SNSky &cSky, PLCore::File &cFile);
 
 
 	//[-------------------------------------------------------]
@@ -76,32 +79,34 @@ class SNMPhysicsBodyTerrain : public SNMPhysicsBody {
 	public:
 		/**
 		*  @brief
-		*    Constructor
-		*
-		*  @param[in] cSceneNode
-		*    Owner scene node
+		*    Default constructor
 		*/
-		PLPHYSICS_API SNMPhysicsBodyTerrain(PLScene::SceneNode &cSceneNode);
+		PLNATURE_API SkyLoaderPL();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLPHYSICS_API virtual ~SNMPhysicsBodyTerrain();
+		PLNATURE_API virtual ~SkyLoaderPL();
 
 
 	//[-------------------------------------------------------]
-	//[ Private data                                          ]
-	//[-------------------------------------------------------]
-	private:
-		PLMath::Vector3 m_vScale;	/**< Height field scale */
-
-
-	//[-------------------------------------------------------]
-	//[ Private virtual SNMPhysicsBody functions              ]
+	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
-		virtual void CreatePhysicsBody() override;
+		/**
+		*  @brief
+		*    Loader implementation for format version 1
+		*
+		*  @param[in] cSky
+		*    Sky to load into
+		*  @param[in] cSkyElement
+		*    Sky XML element to read the data from
+		*
+		*  @return
+		*    'true' if all went fine, else 'false'
+		*/
+		bool LoadV1(SNSky &cSky, const PLCore::XmlElement &cSkyElement) const;
 
 
 };
@@ -110,7 +115,7 @@ class SNMPhysicsBodyTerrain : public SNMPhysicsBody {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLPhysics
+} // PLNature
 
 
-#endif // __PLPHYSICS_SCENENODEMODIFIERS_BODYTERRAIN_H__
+#endif // __PLNATURE_SCENENODE_SKYLOADER_PL_H__

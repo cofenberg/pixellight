@@ -20,8 +20,8 @@
 \*********************************************************/
 
 
-#ifndef __PLSCENE_SCENENODE_TERRAIN_H__
-#define __PLSCENE_SCENENODE_TERRAIN_H__
+#ifndef __PLNATURE_SCENENODE_TERRAIN_H__
+#define __PLNATURE_SCENENODE_TERRAIN_H__
 #pragma once
 
 
@@ -29,7 +29,8 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/Tools/Loadable.h>
-#include "PLScene/Scene/SceneNode.h"
+#include <PLScene/Scene/SceneNode.h>
+#include "PLNature/PLNature.h"
 
 
 //[-------------------------------------------------------]
@@ -38,7 +39,7 @@
 namespace PLGraphics {
 	class Image;
 }
-namespace PLScene {
+namespace PLNature {
 	class GMMSurface;
 }
 
@@ -46,7 +47,7 @@ namespace PLScene {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-namespace PLScene {
+namespace PLNature {
 
 
 //[-------------------------------------------------------]
@@ -56,7 +57,7 @@ namespace PLScene {
 *  @brief
 *    Terrain scene node
 */
-class SNTerrain : public SceneNode, public PLCore::Loadable {
+class SNTerrain : public PLScene::SceneNode, public PLCore::Loadable {
 
 
 	//[-------------------------------------------------------]
@@ -69,7 +70,7 @@ class SNTerrain : public SceneNode, public PLCore::Loadable {
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLS_RTTI_EXPORT, SNTerrain, "PLScene", PLScene::SceneNode, "Terrain scene node")
+	pl_class(PLNATURE_RTTI_EXPORT, SNTerrain, "PLNature", PLScene::SceneNode, "Terrain scene node")
 		// Attributes
 		pl_attribute(Filename,	PLCore::String, "",	ReadWrite,	GetSet,	"Terrain filename",	"Type='Terrain'")
 		// Constructors
@@ -81,8 +82,8 @@ class SNTerrain : public SceneNode, public PLCore::Loadable {
 	//[ Public RTTI get/set functions                         ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API PLCore::String GetFilename() const;
-		PLS_API void SetFilename(const PLCore::String &sValue);
+		PLNATURE_API PLCore::String GetFilename() const;
+		PLNATURE_API void SetFilename(const PLCore::String &sValue);
 
 
 	//[-------------------------------------------------------]
@@ -93,13 +94,13 @@ class SNTerrain : public SceneNode, public PLCore::Loadable {
 		*  @brief
 		*    Default constructor
 		*/
-		PLS_API SNTerrain();
+		PLNATURE_API SNTerrain();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLS_API virtual ~SNTerrain();
+		PLNATURE_API virtual ~SNTerrain();
 
 		/**
 		*  @brief
@@ -108,7 +109,7 @@ class SNTerrain : public SceneNode, public PLCore::Loadable {
 		*  @return
 		*    The terrain GMM surface, can be a null pointer
 		*/
-		PLS_API GMMSurface *GetGMMSurface() const;
+		PLNATURE_API GMMSurface *GetGMMSurface() const;
 
 
 	//[-------------------------------------------------------]
@@ -140,14 +141,14 @@ class SNTerrain : public SceneNode, public PLCore::Loadable {
 
 
 	//[-------------------------------------------------------]
-	//[ Public virtual SceneNode functions                    ]
+	//[ Public virtual PLScene::SceneNode functions           ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const VisNode *pVisNode = nullptr) override;
+		PLNATURE_API virtual void DrawSolid(PLRenderer::Renderer &cRenderer, const PLScene::VisNode *pVisNode = nullptr) override;
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual SceneNode functions                   ]
+	//[ Private virtual PLScene::SceneNode functions          ]
 	//[-------------------------------------------------------]
 	private:
 		virtual void InitFunction() override;
@@ -157,8 +158,8 @@ class SNTerrain : public SceneNode, public PLCore::Loadable {
 	//[ Public virtual PLCore::Loadable functions             ]
 	//[-------------------------------------------------------]
 	public:
-		PLS_API virtual bool Unload() override;
-		PLS_API virtual PLCore::String GetLoadableTypeName() const override;
+		PLNATURE_API virtual bool Unload() override;
+		PLNATURE_API virtual PLCore::String GetLoadableTypeName() const override;
 
 
 	//[-------------------------------------------------------]
@@ -174,7 +175,7 @@ class SNTerrain : public SceneNode, public PLCore::Loadable {
 //[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
-} // PLScene
+} // PLNature
 
 
-#endif // __PLSCENE_SCENENODE_TERRAIN_H__
+#endif // __PLNATURE_SCENENODE_TERRAIN_H__
