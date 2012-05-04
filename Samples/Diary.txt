@@ -1,6 +1,7 @@
 >> 04.05.2012
 [CO]
 - "55RendererTessellation"-sample: Added Cg version which is not tested, yet (requires a NVIDIA GPU :/)
+- Added "56RendererInstancing"-sample
 
 
 

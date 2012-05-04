@@ -814,6 +814,9 @@ void Renderer::SetupCapabilities()
 	// Vertex buffer secondary color supported?
 	m_sCapabilities.bVertexBufferSecondaryColor = cExtensions.IsGL_EXT_secondary_color();
 
+	// Geometric primitive instancing supported?
+	m_sCapabilities.bInstancing = cExtensions.IsGL_ARB_draw_instanced();
+
 	// Show renderer capabilities
 	ShowRendererCapabilities();
 }
@@ -2997,7 +3000,7 @@ bool Renderer::SetProgram(PLRenderer::Program *pProgram)
 
 
 //[-------------------------------------------------------]
-//[ Draw                                                  ]
+//[ Draw call                                             ]
 //[-------------------------------------------------------]
 bool Renderer::DrawPrimitives(PLRenderer::Primitive::Enum nType, uint32 nStartIndex, uint32 nNumVertices)
 {
@@ -3038,6 +3041,7 @@ bool Renderer::DrawPrimitives(PLRenderer::Primitive::Enum nType, uint32 nStartIn
 		// Get API primitive type
 		const uint32 &nAPIValue = m_cPLE_PTWrapper[nType];
 		if (&nAPIValue != &Array<uint32>::Null) {
+			// Draw primitive
 			glDrawArrays(nAPIValue, nStartIndex, nNumVertices);
 		} else {
 			// Error, invalid value!
@@ -3049,6 +3053,7 @@ bool Renderer::DrawPrimitives(PLRenderer::Primitive::Enum nType, uint32 nStartIn
 		// Get API primitive type
 		const uint32 &nAPIValue = m_cPLE_PTWrapper[nType];
 		if (&nAPIValue != &Array<uint32>::Null) {
+			// Draw primitive
 			glDrawArrays(nAPIValue, nStartIndex, nNumVertices);
 		} else {
 			// Error, invalid value!
@@ -3193,9 +3198,13 @@ bool Renderer::DrawPatches(uint32 nVerticesPerPatch, uint32 nStartIndex, uint32 
 	// If the vertex buffer is in software mode, try to use compiled vertex array (CVA) for better performance
 	if (m_pFixedFunctions && m_pFixedFunctions->m_ppCurrentVertexBuffer[0] && m_pFixedFunctions->m_ppCurrentVertexBuffer[0]->GetUsage() == PLRenderer::Usage::Software && m_pContext->GetExtensions().IsGL_EXT_compiled_vertex_array()) {
 		glLockArraysEXT(nStartIndex, nNumVertices);
+
+		// Draw primitive
 		glDrawArrays(GL_PATCHES, nStartIndex, nNumVertices);
+
 		glUnlockArraysEXT();
 	} else {
+		// Draw primitive
 		glDrawArrays(GL_PATCHES, nStartIndex, nNumVertices);
 	}
 
@@ -3281,6 +3290,280 @@ bool Renderer::DrawIndexedPatches(uint32 nVerticesPerPatch, uint32 nMinIndex, ui
 			// Draw primitive
 			glDrawElements(GL_PATCHES, nNumVertices, nTypeAPI, BUFFER_OFFSET(nStartIndex*nTypeSize));
 		}
+	}
+
+	// Undefine your offset helper macro because its just used inside this function
+	#undef BUFFER_OFFSET
+
+	// Done
+	return true;
+}
+
+
+//[-------------------------------------------------------]
+//[ Draw call with multiple primitive instances           ]
+//[-------------------------------------------------------]
+bool Renderer::DrawPrimitivesInstanced(PLRenderer::Primitive::Enum nType, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
+{
+	// Required extension available?
+	const Extensions &cExtensions = m_pContext->GetExtensions();
+	if (!cExtensions.IsGL_ARB_draw_instanced())
+		return false; // Error!
+
+	// Draw something?
+	if (!nNumVertices || !nNumOfInstances)
+		return true; // Done
+
+	// Get number of primitives
+	uint32 nPrimitiveCount;
+	switch (nType) {
+		case PLRenderer::Primitive::PointList:	   nPrimitiveCount = nNumVertices;   break;
+		case PLRenderer::Primitive::LineList:	   nPrimitiveCount = nNumVertices-1; break;
+		case PLRenderer::Primitive::LineStrip:	   nPrimitiveCount = nNumVertices-1; break;
+		case PLRenderer::Primitive::TriangleList:  nPrimitiveCount = nNumVertices/3; break;
+		case PLRenderer::Primitive::TriangleStrip: nPrimitiveCount = nNumVertices-2; break;
+		case PLRenderer::Primitive::TriangleFan:   nPrimitiveCount = nNumVertices-2; break;
+		default:								   return false; // Error!
+	}
+
+	// Update statistics
+	m_sStatistics.nDrawPrimitivCalls++;
+	m_sStatistics.nVertices  += nNumVertices*nNumOfInstances;
+	m_sStatistics.nTriangles += nPrimitiveCount*nNumOfInstances;
+
+
+	// [FIXME] If this isn't done HERE the texturing for the point sprites will not work!??
+	// Specify point sprite texture coordinate replacement mode for each texture unit
+	if (nType == PLRenderer::Primitive::PointList && GetRenderState(PLRenderer::RenderState::PointSpriteEnable)) {
+		// Point sprite supported?
+		if (m_sCapabilities.bPointSprite)
+			glTexEnvf(GL_POINT_SPRITE_ARB, GL_COORD_REPLACE_ARB, GL_TRUE);
+	}
+
+	// If the vertex buffer is in software mode, try to use compiled vertex array (CVA) for better performance
+	if (m_pFixedFunctions && m_pFixedFunctions->m_ppCurrentVertexBuffer[0] && m_pFixedFunctions->m_ppCurrentVertexBuffer[0]->GetUsage() == PLRenderer::Usage::Software && m_pContext->GetExtensions().IsGL_EXT_compiled_vertex_array()) {
+		glLockArraysEXT(nStartIndex, nNumVertices);
+
+		// Get API primitive type
+		const uint32 &nAPIValue = m_cPLE_PTWrapper[nType];
+		if (&nAPIValue != &Array<uint32>::Null) {
+			// Draw primitive
+			glDrawArraysInstancedARB(nAPIValue, nStartIndex, nNumVertices, nNumOfInstances);
+		} else {
+			// Error, invalid value!
+			return false;
+		}
+
+		glUnlockArraysEXT();
+	} else {
+		// Get API primitive type
+		const uint32 &nAPIValue = m_cPLE_PTWrapper[nType];
+		if (&nAPIValue != &Array<uint32>::Null) {
+			// Draw primitive
+			glDrawArraysInstancedARB(nAPIValue, nStartIndex, nNumVertices, nNumOfInstances);
+		} else {
+			// Error, invalid value!
+			return false;
+		}
+	}
+
+	// Done
+	return true;
+}
+
+bool Renderer::DrawIndexedPrimitivesInstanced(PLRenderer::Primitive::Enum nType, uint32 nMinIndex,
+											  uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
+{
+	// Index and vertex buffer correct? Is the required extension available?
+	const Extensions &cExtensions = m_pContext->GetExtensions();
+	if (!m_pCurrentIndexBuffer || !cExtensions.IsGL_ARB_draw_instanced())
+		return false; // Error!
+
+	// Draw something?
+	if (!nNumVertices || !nNumOfInstances)
+		return true; // Done
+
+	// Check parameters
+	if (nStartIndex+nNumVertices > m_pCurrentIndexBuffer->GetNumOfElements() || nMinIndex > nMaxIndex)
+		return false; // Definitely NOT good...
+
+	// Define an offset helper macro just used inside this function
+	#define BUFFER_OFFSET(i) (static_cast<char*>(static_cast<IndexBuffer*>(m_pCurrentIndexBuffer)->GetDynamicData())+i)
+
+	// Get API dependent type
+	uint32 nTypeSize;
+	uint32 nTypeAPI = m_pCurrentIndexBuffer->GetElementType();
+	if (nTypeAPI == PLRenderer::IndexBuffer::UInt) {
+		nTypeSize = sizeof(uint32);
+		nTypeAPI  = GL_UNSIGNED_INT;
+	} else if (nTypeAPI == PLRenderer::IndexBuffer::UShort) {
+		nTypeSize = sizeof(uint16);
+		nTypeAPI = GL_UNSIGNED_SHORT;
+	} else if (nTypeAPI == PLRenderer::IndexBuffer::UByte) {
+		nTypeSize = sizeof(uint8);
+		nTypeAPI = GL_UNSIGNED_BYTE;
+	} else {
+		// Error!
+		return false;
+	}
+
+	// Get number of primitives
+	uint32 nPrimitiveCount;
+	switch (nType) {
+		case PLRenderer::Primitive::PointList:	   nPrimitiveCount = nNumVertices;   break;
+		case PLRenderer::Primitive::LineList:	   nPrimitiveCount = nNumVertices-2; break;
+		case PLRenderer::Primitive::LineStrip:	   nPrimitiveCount = nNumVertices-2; break;
+		case PLRenderer::Primitive::TriangleList:  nPrimitiveCount = nNumVertices/3; break;
+		case PLRenderer::Primitive::TriangleStrip: nPrimitiveCount = nNumVertices-2; break;
+		case PLRenderer::Primitive::TriangleFan:   nPrimitiveCount = nNumVertices-2; break;
+		default:								   return false; // Error!
+	}
+
+	// Update statistics
+	m_sStatistics.nDrawPrimitivCalls++;
+	m_sStatistics.nVertices  += nNumVertices*nNumOfInstances;
+	m_sStatistics.nTriangles += nPrimitiveCount*nNumOfInstances;
+
+	// If the vertex buffer is in software mode, try to use compiled vertex array (CVA) for better performance
+	if (m_pFixedFunctions && m_pFixedFunctions->m_ppCurrentVertexBuffer[0] && m_pFixedFunctions->m_ppCurrentVertexBuffer[0]->GetUsage() == PLRenderer::Usage::Software && cExtensions.IsGL_EXT_compiled_vertex_array()) {
+		glLockArraysEXT(nMinIndex, nMaxIndex-nMinIndex+1);
+
+		// Get API primitive type
+		const uint32 &nAPIValue = m_cPLE_PTWrapper[nType];
+		if (&nAPIValue != &Array<uint32>::Null) {
+			// GL_EXT_draw_range_elements can't be used together with GL_ARB_draw_instanced
+
+			// Draw instanced primitive
+			glDrawElementsInstancedARB(nAPIValue, nNumVertices, nTypeAPI, BUFFER_OFFSET(nStartIndex*nTypeSize), nNumOfInstances);
+		} else {
+			// Error, invalid value!
+			return false;
+		}
+
+		glUnlockArraysEXT();
+	} else {
+		// Get API primitive type
+		const uint32 &nAPIValue = m_cPLE_PTWrapper[nType];
+		if (&nAPIValue != &Array<uint32>::Null) {
+			// GL_EXT_draw_range_elements can't be used together with GL_ARB_draw_instanced
+
+			// Draw instanced primitive
+			glDrawElementsInstancedARB(nAPIValue, nNumVertices, nTypeAPI, BUFFER_OFFSET(nStartIndex*nTypeSize), nNumOfInstances);
+		} else {
+			// Error, invalid value!
+			return false;
+		}
+	}
+
+	// Undefine your offset helper macro because its just used inside this function
+	#undef BUFFER_OFFSET
+
+	// Done
+	return true;
+}
+
+bool Renderer::DrawPatchesInstanced(uint32 nVerticesPerPatch, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
+{
+	// Required extensions available?
+	const Extensions &cExtensions = m_pContext->GetExtensions();
+	if (!cExtensions.IsGL_ARB_tessellation_shader() || !cExtensions.IsGL_ARB_draw_instanced())
+		return false; // Error!
+
+	// Draw something?
+	if (!nNumVertices || !nNumOfInstances)
+		return true; // Done
+
+	// Get number of primitives
+	// [TODO] Calculate number of generated triangles?
+	const uint32 nPrimitiveCount = nNumVertices/3;
+
+	// Update statistics
+	m_sStatistics.nDrawPrimitivCalls++;
+	m_sStatistics.nVertices  += nNumVertices*nNumOfInstances;
+	m_sStatistics.nTriangles += nPrimitiveCount*nNumOfInstances;
+
+	// Set number of vertices that will be used to make up a single patch primitive
+	glPatchParameteri(GL_PATCH_VERTICES, nVerticesPerPatch);
+
+	// If the vertex buffer is in software mode, try to use compiled vertex array (CVA) for better performance
+	if (m_pFixedFunctions && m_pFixedFunctions->m_ppCurrentVertexBuffer[0] && m_pFixedFunctions->m_ppCurrentVertexBuffer[0]->GetUsage() == PLRenderer::Usage::Software && m_pContext->GetExtensions().IsGL_EXT_compiled_vertex_array()) {
+		glLockArraysEXT(nStartIndex, nNumVertices);
+
+		// Draw instanced primitive
+		glDrawArraysInstancedARB(GL_PATCHES, nStartIndex, nNumVertices, nNumOfInstances);
+
+		glUnlockArraysEXT();
+	} else {
+		// Draw instanced primitive
+		glDrawArraysInstancedARB(GL_PATCHES, nStartIndex, nNumVertices, nNumOfInstances);
+	}
+
+	// Done
+	return true;
+}
+
+bool Renderer::DrawIndexedPatchesInstanced(uint32 nVerticesPerPatch, uint32 nMinIndex, uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
+{
+	// Index and vertex buffer correct and required extensions available?
+	const Extensions &cExtensions = m_pContext->GetExtensions();
+	if (!m_pCurrentIndexBuffer || !cExtensions.IsGL_ARB_tessellation_shader() || !cExtensions.IsGL_ARB_draw_instanced())
+		return false; // Error!
+
+	// Draw something?
+	if (!nNumVertices || !nNumOfInstances)
+		return true; // Done
+
+	// Check parameters
+	if (nStartIndex+nNumVertices > m_pCurrentIndexBuffer->GetNumOfElements() || nMinIndex > nMaxIndex)
+		return false; // Definitely NOT good...
+
+	// Define an offset helper macro just used inside this function
+	#define BUFFER_OFFSET(i) (static_cast<char*>(static_cast<IndexBuffer*>(m_pCurrentIndexBuffer)->GetDynamicData())+i)
+
+	// Get API dependent type
+	uint32 nTypeSize;
+	uint32 nTypeAPI = m_pCurrentIndexBuffer->GetElementType();
+	if (nTypeAPI == PLRenderer::IndexBuffer::UInt) {
+		nTypeSize = sizeof(uint32);
+		nTypeAPI  = GL_UNSIGNED_INT;
+	} else if (nTypeAPI == PLRenderer::IndexBuffer::UShort) {
+		nTypeSize = sizeof(uint16);
+		nTypeAPI = GL_UNSIGNED_SHORT;
+	} else if (nTypeAPI == PLRenderer::IndexBuffer::UByte) {
+		nTypeSize = sizeof(uint8);
+		nTypeAPI = GL_UNSIGNED_BYTE;
+	} else {
+		// Error!
+		return false;
+	}
+
+	// Get number of primitives
+	// [TODO] Calculate number of generated triangles?
+	const uint32 nPrimitiveCount = nNumVertices/3;
+
+	// Update statistics
+	m_sStatistics.nDrawPrimitivCalls++;
+	m_sStatistics.nVertices  += nNumVertices*nNumOfInstances;
+	m_sStatistics.nTriangles += nPrimitiveCount*nNumOfInstances;
+
+	// Set number of vertices that will be used to make up a single patch primitive
+	glPatchParameteri(GL_PATCH_VERTICES, nVerticesPerPatch);
+
+	// If the vertex buffer is in software mode, try to use compiled vertex array (CVA) for better performance
+	if (m_pFixedFunctions && m_pFixedFunctions->m_ppCurrentVertexBuffer[0] && m_pFixedFunctions->m_ppCurrentVertexBuffer[0]->GetUsage() == PLRenderer::Usage::Software && cExtensions.IsGL_EXT_compiled_vertex_array()) {
+		glLockArraysEXT(nMinIndex, nMaxIndex-nMinIndex+1);
+
+		// GL_EXT_draw_range_elements can't be used together with GL_ARB_draw_instanced
+
+		// Draw instanced primitive
+		glDrawElementsInstancedARB(GL_PATCHES, nNumVertices, nTypeAPI, BUFFER_OFFSET(nStartIndex*nTypeSize), nNumOfInstances);
+
+		glUnlockArraysEXT();
+	} else {
+		// GL_EXT_draw_range_elements can't be used together with GL_ARB_draw_instanced
+
+		// Draw instanced primitive
+		glDrawElementsInstancedARB(GL_PATCHES, nNumVertices, nTypeAPI, BUFFER_OFFSET(nStartIndex*nTypeSize), nNumOfInstances);
 	}
 
 	// Undefine your offset helper macro because its just used inside this function

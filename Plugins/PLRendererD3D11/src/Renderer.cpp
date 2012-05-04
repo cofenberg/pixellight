@@ -312,6 +312,7 @@ void Renderer::SetupCapabilities()
 			m_sCapabilities.nZBufferBits					= 0;		// ?
 			m_sCapabilities.nStencilBits					= 0;		// ?
 			m_sCapabilities.nMultisampleAntialiasingSamples	= 0;		// ?
+			m_sCapabilities.bInstancing						= false;	// [TODO] Geometric primitive instancing
 			break;
 
 		case D3D_FEATURE_LEVEL_9_2:
@@ -340,6 +341,7 @@ void Renderer::SetupCapabilities()
 			m_sCapabilities.nZBufferBits					= 0;		// ?
 			m_sCapabilities.nStencilBits					= 0;		// ?
 			m_sCapabilities.nMultisampleAntialiasingSamples	= 0;		// ?
+			m_sCapabilities.bInstancing						= false;	// [TODO] Geometric primitive instancing
 			break;
 
 		case D3D_FEATURE_LEVEL_9_3:
@@ -368,6 +370,7 @@ void Renderer::SetupCapabilities()
 			m_sCapabilities.nZBufferBits					= 0;		// ?
 			m_sCapabilities.nStencilBits					= 0;		// ?
 			m_sCapabilities.nMultisampleAntialiasingSamples	= 0;		// ?
+			m_sCapabilities.bInstancing						= false;	// [TODO] Geometric primitive instancing
 			break;
 
 		case D3D_FEATURE_LEVEL_10_0:
@@ -396,6 +399,7 @@ void Renderer::SetupCapabilities()
 			m_sCapabilities.nZBufferBits					= 0;		// ?
 			m_sCapabilities.nStencilBits					= 0;		// ?
 			m_sCapabilities.nMultisampleAntialiasingSamples	= 0;		// ?
+			m_sCapabilities.bInstancing						= false;	// [TODO] Geometric primitive instancing
 			break;
 
 		case D3D_FEATURE_LEVEL_10_1:
@@ -424,6 +428,7 @@ void Renderer::SetupCapabilities()
 			m_sCapabilities.nZBufferBits					= 0;		// ?
 			m_sCapabilities.nStencilBits					= 0;		// ?
 			m_sCapabilities.nMultisampleAntialiasingSamples	= 0;		// ?
+			m_sCapabilities.bInstancing						= false;	// [TODO] Geometric primitive instancing
 			break;
 
 		case D3D_FEATURE_LEVEL_11_0:
@@ -452,6 +457,7 @@ void Renderer::SetupCapabilities()
 			m_sCapabilities.nZBufferBits					= 0;		// ?
 			m_sCapabilities.nStencilBits					= 0;		// ?
 			m_sCapabilities.nMultisampleAntialiasingSamples	= 0;		// ?
+			m_sCapabilities.bInstancing						= false;	// [TODO] Geometric primitive instancing
 			break;
 
 		default:
@@ -480,6 +486,7 @@ void Renderer::SetupCapabilities()
 			m_sCapabilities.nZBufferBits					= 0;
 			m_sCapabilities.nStencilBits					= 0;
 			m_sCapabilities.nMultisampleAntialiasingSamples	= 0;
+			m_sCapabilities.bInstancing						= false;
 			break;
 	}
 
@@ -973,7 +980,7 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 
 
 //[-------------------------------------------------------]
-//[ Draw                                                  ]
+//[ Draw call                                             ]
 //[-------------------------------------------------------]
 bool Renderer::DrawPrimitives(PLRenderer::Primitive::Enum nType, uint32 nStartIndex, uint32 nNumVertices)
 {
@@ -1041,6 +1048,42 @@ bool Renderer::DrawPatches(uint32 nVerticesPerPatch, uint32 nStartIndex, uint32 
 }
 
 bool Renderer::DrawIndexedPatches(uint32 nVerticesPerPatch, uint32 nMinIndex, uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices)
+{
+	// [TODO] Implement me
+
+	// Error!
+	return false;
+}
+
+
+//[-------------------------------------------------------]
+//[ Draw call with multiple primitive instances           ]
+//[-------------------------------------------------------]
+bool Renderer::DrawPrimitivesInstanced(PLRenderer::Primitive::Enum nType, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
+{
+	// [TODO] Implement me
+
+	// Error!
+	return false;
+}
+
+bool Renderer::DrawIndexedPrimitivesInstanced(PLRenderer::Primitive::Enum nType, uint32 nMinIndex, uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
+{
+	// [TODO] Implement me
+
+	// Error!
+	return false;
+}
+
+bool Renderer::DrawPatchesInstanced(uint32 nVerticesPerPatch, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
+{
+	// [TODO] Implement me
+
+	// Error!
+	return false;
+}
+
+bool Renderer::DrawIndexedPatchesInstanced(uint32 nVerticesPerPatch, uint32 nMinIndex, uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
 {
 	// [TODO] Implement me
 

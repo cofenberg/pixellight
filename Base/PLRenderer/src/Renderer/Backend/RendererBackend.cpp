@@ -272,6 +272,7 @@ void RendererBackend::ShowRendererCapabilities() const
 	PL_LOG(Info, String("  PointParameters: ")				 + GetBoolString(m_sCapabilities.bPointParameters))
 	PL_LOG(Info, String("  OcclusionQuery: ")				 + GetBoolString(m_sCapabilities.bOcclusionQuery))
 	PL_LOG(Info, String("  VertexBufferSecondaryColor: ")	 + GetBoolString(m_sCapabilities.bVertexBufferSecondaryColor))
+	PL_LOG(Info, String("  Instancing: ")					 + GetBoolString(m_sCapabilities.bInstancing))
 	PL_LOG(Info, " ")
 
 	// Fixed functions

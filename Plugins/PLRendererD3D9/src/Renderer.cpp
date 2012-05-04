@@ -632,6 +632,9 @@ void Renderer::SetupCapabilities()
 	// Multisample antialiasing samples
 	m_sCapabilities.nMultisampleAntialiasingSamples = 0;
 
+	// [TODO] Geometric primitive instancing
+	m_sCapabilities.bInstancing = false;
+
 	// Show renderer capabilities
 	ShowRendererCapabilities();
 }
@@ -1847,7 +1850,7 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 
 
 //[-------------------------------------------------------]
-//[ Draw                                                  ]
+//[ Draw call                                             ]
 //[-------------------------------------------------------]
 bool Renderer::DrawPrimitives(PLRenderer::Primitive::Enum nType, uint32 nStartIndex, uint32 nNumVertices)
 {
@@ -1988,6 +1991,42 @@ bool Renderer::DrawPatches(uint32 nVerticesPerPatch, uint32 nStartIndex, uint32 
 bool Renderer::DrawIndexedPatches(uint32 nVerticesPerPatch, uint32 nMinIndex, uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices)
 {
 	// Error! Tessellation is not supported by DirectX 9!
+	return false;
+}
+
+
+//[-------------------------------------------------------]
+//[ Draw call with multiple primitive instances           ]
+//[-------------------------------------------------------]
+bool Renderer::DrawPrimitivesInstanced(PLRenderer::Primitive::Enum nType, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
+{
+	// [TODO] Implement me
+
+	// Error!
+	return false;
+}
+
+bool Renderer::DrawIndexedPrimitivesInstanced(PLRenderer::Primitive::Enum nType, uint32 nMinIndex, uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
+{
+	// [TODO] Implement me
+
+	// Error!
+	return false;
+}
+
+bool Renderer::DrawPatchesInstanced(uint32 nVerticesPerPatch, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
+{
+	// [TODO] Implement me
+
+	// Error!
+	return false;
+}
+
+bool Renderer::DrawIndexedPatchesInstanced(uint32 nVerticesPerPatch, uint32 nMinIndex, uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
+{
+	// [TODO] Implement me
+
+	// Error!
 	return false;
 }
 

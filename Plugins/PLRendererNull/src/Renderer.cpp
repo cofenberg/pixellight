@@ -230,6 +230,9 @@ void Renderer::SetupCapabilities()
 	// Multisample antialiasing samples
 	m_sCapabilities.nMultisampleAntialiasingSamples = 0;
 
+	// Geometric primitive instancing
+	m_sCapabilities.bInstancing = true;
+
 	// Show renderer capabilities
 	ShowRendererCapabilities();
 }
@@ -685,7 +688,7 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 
 
 //[-------------------------------------------------------]
-//[ Draw                                                  ]
+//[ Draw call                                             ]
 //[-------------------------------------------------------]
 bool Renderer::DrawPrimitives(PLRenderer::Primitive::Enum nType, uint32 nStartIndex, uint32 nNumVertices)
 {
@@ -758,6 +761,82 @@ bool Renderer::DrawIndexedPatches(uint32 nVerticesPerPatch, uint32 nMinIndex, ui
 
 	// Done
 	return true;
+}
+
+
+//[-------------------------------------------------------]
+//[ Draw call with multiple primitive instances           ]
+//[-------------------------------------------------------]
+bool Renderer::DrawPrimitivesInstanced(PLRenderer::Primitive::Enum nType, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
+{
+	// Draw something?
+	if (nNumVertices) {
+		// Get number of primitives
+		uint32 nPrimitiveCount;
+		switch (nType) {
+			case PLRenderer::Primitive::PointList:	   nPrimitiveCount = nNumVertices;   break;
+			case PLRenderer::Primitive::LineList:	   nPrimitiveCount = nNumVertices-1; break;
+			case PLRenderer::Primitive::LineStrip:	   nPrimitiveCount = nNumVertices-1; break;
+			case PLRenderer::Primitive::TriangleList:  nPrimitiveCount = nNumVertices/3; break;
+			case PLRenderer::Primitive::TriangleStrip: nPrimitiveCount = nNumVertices-2; break;
+			case PLRenderer::Primitive::TriangleFan:   nPrimitiveCount = nNumVertices-2; break;
+			default:								   return false; // Error!
+		}
+
+		// Update statistics
+		m_sStatistics.nDrawPrimitivCalls++;
+		m_sStatistics.nVertices  += nNumVertices*nNumOfInstances;
+		m_sStatistics.nTriangles += nPrimitiveCount*nNumOfInstances;
+	}
+
+	// Done
+	return true;
+}
+
+bool Renderer::DrawIndexedPrimitivesInstanced(PLRenderer::Primitive::Enum nType, uint32 nMinIndex, uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
+{
+	// Index buffer correct?
+	if (!m_pCurrentIndexBuffer)
+		return false; // Error!
+
+	// Draw something?
+	if (nNumVertices) {
+		// Get number of primitives
+		uint32 nPrimitiveCount;
+		switch (nType) {
+			case PLRenderer::Primitive::PointList:	   nPrimitiveCount = nNumVertices;   break;
+			case PLRenderer::Primitive::LineList:	   nPrimitiveCount = nNumVertices-2; break;
+			case PLRenderer::Primitive::LineStrip:	   nPrimitiveCount = nNumVertices-2; break;
+			case PLRenderer::Primitive::TriangleList:  nPrimitiveCount = nNumVertices/3; break;
+			case PLRenderer::Primitive::TriangleStrip: nPrimitiveCount = nNumVertices-2; break;
+			case PLRenderer::Primitive::TriangleFan:   nPrimitiveCount = nNumVertices-2; break;
+			default:								   return false; // Error!
+		}
+
+		// Update statistics
+		m_sStatistics.nDrawPrimitivCalls++;
+		m_sStatistics.nVertices  += nNumVertices*nNumOfInstances;
+		m_sStatistics.nTriangles += nPrimitiveCount*nNumOfInstances;
+	}
+
+	// Done
+	return true;
+}
+
+bool Renderer::DrawPatchesInstanced(uint32 nVerticesPerPatch, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
+{
+	// [TODO] Implement me
+
+	// Error!
+	return false;
+}
+
+bool Renderer::DrawIndexedPatchesInstanced(uint32 nVerticesPerPatch, uint32 nMinIndex, uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
+{
+	// [TODO] Implement me
+
+	// Error!
+	return false;
 }
 
 

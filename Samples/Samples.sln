@@ -65,6 +65,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "30Input", "30Input\30Input.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "55RendererTessellation", "55RendererTessellation\55RendererTessellation.vcxproj", "{1602AFF3-4608-4F7B-A616-D43020F366D9}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "56RendererInstancing", "56RendererInstancing\56RendererInstancing.vcxproj", "{0652B60F-C583-4C46-9275-8D401216B753}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -199,6 +201,10 @@ Global
 		{1602AFF3-4608-4F7B-A616-D43020F366D9}.Debug|Win32.Build.0 = Debug|Win32
 		{1602AFF3-4608-4F7B-A616-D43020F366D9}.Release|Win32.ActiveCfg = Release|Win32
 		{1602AFF3-4608-4F7B-A616-D43020F366D9}.Release|Win32.Build.0 = Release|Win32
+		{0652B60F-C583-4C46-9275-8D401216B753}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0652B60F-C583-4C46-9275-8D401216B753}.Debug|Win32.Build.0 = Debug|Win32
+		{0652B60F-C583-4C46-9275-8D401216B753}.Release|Win32.ActiveCfg = Release|Win32
+		{0652B60F-C583-4C46-9275-8D401216B753}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

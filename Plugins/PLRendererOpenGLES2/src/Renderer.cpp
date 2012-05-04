@@ -708,6 +708,9 @@ void Renderer::SetupCapabilities()
 	// There's no such legacy thing as secondary vertex color in OpenGL ES 2.0, it's generic - so, yes, one can say it's supported...
 	m_sCapabilities.bVertexBufferSecondaryColor		= true;
 
+	// Geometric primitive instancing is not supported by OpenGL ES 2.0
+	m_sCapabilities.bInstancing						= false;
+
 	// Show renderer capabilities
 	ShowRendererCapabilities();
 }
@@ -2029,7 +2032,7 @@ bool Renderer::SetProgram(PLRenderer::Program *pProgram)
 
 
 //[-------------------------------------------------------]
-//[ Draw                                                  ]
+//[ Draw call                                             ]
 //[-------------------------------------------------------]
 bool Renderer::DrawPrimitives(PLRenderer::Primitive::Enum nType, uint32 nStartIndex, uint32 nNumVertices)
 {
@@ -2146,6 +2149,34 @@ bool Renderer::DrawPatches(uint32 nVerticesPerPatch, uint32 nStartIndex, uint32 
 bool Renderer::DrawIndexedPatches(uint32 nVerticesPerPatch, uint32 nMinIndex, uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices)
 {
 	// Error! Tessellation is not supported by OpenGL ES 2.0!
+	return false;
+}
+
+
+//[-------------------------------------------------------]
+//[ Draw call with multiple primitive instances           ]
+//[-------------------------------------------------------]
+bool Renderer::DrawPrimitivesInstanced(PLRenderer::Primitive::Enum nType, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
+{
+	// Error! Instancing is not supported by OpenGL ES 2.0!
+	return false;
+}
+
+bool Renderer::DrawIndexedPrimitivesInstanced(PLRenderer::Primitive::Enum nType, uint32 nMinIndex, uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
+{
+	// Error! Instancing is not supported by OpenGL ES 2.0!
+	return false;
+}
+
+bool Renderer::DrawPatchesInstanced(uint32 nVerticesPerPatch, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
+{
+	// Error! Instancing is not supported by OpenGL ES 2.0!
+	return false;
+}
+
+bool Renderer::DrawIndexedPatchesInstanced(uint32 nVerticesPerPatch, uint32 nMinIndex, uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices, uint32 nNumOfInstances)
+{
+	// Error! Instancing is not supported by OpenGL ES 2.0!
 	return false;
 }
 

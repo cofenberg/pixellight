@@ -7,8 +7,13 @@
 - "TextureBuffer": Renamed "Upload()" into "CopyDataFrom()" and "Download()" into "CopyDataTo()". This way the naming is
   consistent to "VertexBuffer" & "IndexBuffer" & "UniformBuffer"& "PLGraphics::ImageBuffer::CopyData()".
 - "TextureBuffer": Renamed "DownloadAsImage()" into "CopyDataToImage()" (naming consistence)
+- "Renderer": Added "DrawPrimitivesInstanced()", "DrawIndexedPrimitivesInstanced()", "DrawPatchesInstanced()" and
+  "DrawIndexedPatchesInstanced()" to allow the generation of multiple geometric primitive instances with a single draw call.
+  First I thought about adding an additional "number of instances"-parameter to "DrawPrimitives()" and so on, but it's probably
+  better to keep this separate in order to avoid making the implementation more complex by adding additional cases.
 PLRendererOpenGL:
 - "Renderer::DrawPatches()" & "Renderer::DrawIndexedPatches()": Added missing "GL_ARB_tessellation_shader"-extension test
+- Added support for "GL_ARB_draw_instanced"
 
 
 

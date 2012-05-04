@@ -153,6 +153,7 @@ bool Extensions::IsGL_ARB_uniform_buffer_object()		const { return m_bGL_ARB_unif
 bool Extensions::IsGL_ARB_half_float_vertex()			const { return m_bGL_ARB_half_float_vertex;			 }
 bool Extensions::IsGL_ARB_tessellation_shader()			const { return m_bGL_ARB_tessellation_shader;		 }
 bool Extensions::IsGL_ARB_depth_clamp()					const { return m_bGL_ARB_depth_clamp;				 }
+bool Extensions::IsGL_ARB_draw_instanced()				const { return m_bGL_ARB_draw_instanced;			 }
 // ATI
 bool Extensions::IsGL_ATI_meminfo()						const { return m_bGL_ATI_meminfo;					 }
 bool Extensions::IsGL_ATI_separate_stencil()			const { return m_bGL_ATI_separate_stencil;			 }
@@ -350,6 +351,7 @@ void Extensions::ResetExtensions()
 	m_bGL_ARB_half_float_vertex				= false;
 	m_bGL_ARB_tessellation_shader			= false;
 	m_bGL_ARB_depth_clamp					= false;
+	m_bGL_ARB_draw_instanced				= false;
 	// ATI
 	m_bGL_ATI_meminfo						= false;
 	m_bGL_ATI_separate_stencil				= false;
@@ -891,6 +893,16 @@ bool Extensions::InitUniversal()
 
 	// GL_ARB_depth_clamp
 	m_bGL_ARB_depth_clamp = IsSupported("GL_ARB_depth_clamp");
+
+	// GL_ARB_draw_instanced
+	m_bGL_ARB_draw_instanced = IsSupported("GL_ARB_draw_instanced");
+	if (m_bGL_ARB_draw_instanced) {
+		// Load the entry points
+		bool bResult = true;	// Success by default
+		IMPORT_FUNC(glDrawArraysInstancedARB)
+		IMPORT_FUNC(glDrawElementsInstancedARB)
+		m_bGL_ARB_draw_instanced = bResult;
+	}
 
 
 	//[-------------------------------------------------------]

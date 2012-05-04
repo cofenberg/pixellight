@@ -478,6 +478,7 @@ struct Capabilities {
 	PLCore::uint32 nZBufferBits;					/**< Z buffer bits (for example 24) */
 	PLCore::uint32 nStencilBits;					/**< Stencil buffer bits (for example 8) */
 	PLCore::uint32 nMultisampleAntialiasingSamples;	/**< Multisample antialiasing samples */
+	bool           bInstancing;						/**< Geometric primitive instancing supported by the hardware? */
 };
 
 /**

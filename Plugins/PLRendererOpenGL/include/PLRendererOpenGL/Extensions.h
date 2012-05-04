@@ -174,6 +174,7 @@ class Extensions {
 		bool IsGL_ARB_half_float_vertex() const;
 		bool IsGL_ARB_tessellation_shader() const;
 		bool IsGL_ARB_depth_clamp() const;
+		bool IsGL_ARB_draw_instanced() const;
 		// ATI
 		bool IsGL_ATI_meminfo() const;
 		bool IsGL_ATI_separate_stencil() const;
@@ -360,6 +361,7 @@ class Extensions {
 		bool m_bGL_ARB_half_float_vertex;
 		bool m_bGL_ARB_tessellation_shader;
 		bool m_bGL_ARB_depth_clamp;
+		bool m_bGL_ARB_draw_instanced;
 		// ATI
 		bool m_bGL_ATI_meminfo;
 		bool m_bGL_ATI_separate_stencil;
@@ -664,6 +666,10 @@ FNDEF_EX(glUniformBlockBinding,			PFNGLUNIFORMBLOCKBINDINGPROC);
 // GL_ARB_tessellation_shader
 FNDEF_EX(glPatchParameteri,		PFNGLPATCHPARAMETERIPROC);
 FNDEF_EX(glPatchParameterfv,	PFNGLPATCHPARAMETERFVPROC);
+
+// GL_ARB_draw_instanced
+FNDEF_EX(glDrawArraysInstancedARB,		PFNGLDRAWARRAYSINSTANCEDARBPROC);
+FNDEF_EX(glDrawElementsInstancedARB,	PFNGLDRAWELEMENTSINSTANCEDARBPROC);
 
 
 //[-------------------------------------------------------]

@@ -3,7 +3,9 @@ Changes in PixelLight 0.9.12-R1 (not yet released)
 - Feature: The loadable system can now also deal with file formats like DICOM which load from directories instead of files
 - Feature: Added support for tessellation control shader (named "hull shader" in DirectX 11) within "PLRenderer"
 - Feature: Added support for tessellation evaluation shader (named "domain shader" in DirectX 11) within "PLRenderer"
+- Feature: Added support for geometric primitive instancing within "PLRenderer"
 - Feature: Added "55RendererTessellation"-sample
+- Feature: Added "56RendererInstancing"-sample
 - Feature: Autodesk 3ds Max 2013 scene exporter added
 - Change: Moved out-of-date "PLScene::SNSky" and "PLScene::SNTerrain" into the new plugin project "PLNature" ("PLNature::SNSky", "PLNature::SNTerrain")
 - Change: Moved "PLPhysics::SNMPhysicsBodyTerrain" into "PLNature::SNMPhysicsBodyTerrain"
