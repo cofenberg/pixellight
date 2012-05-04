@@ -66,7 +66,7 @@ inline PLCore::uint32 VertexBuffer::GetVertexSize() const
 *  @brief
 *    Copies data from a given buffer into this vertex buffer
 */
-inline void VertexBuffer::CopDataFrom(const void *pData)
+inline void VertexBuffer::CopyDataFrom(const void *pData)
 {
 	// Lock the vertex buffer
 	if (Lock(Lock::WriteOnly)) {

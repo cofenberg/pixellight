@@ -80,7 +80,7 @@ class UniformBuffer : public Buffer {
 		*    This ease of use method locks the uniform buffer, copies the
 		*    given data into it and unlocks the uniform buffer when done.
 		*/
-		inline void CopDataFrom(const void *pData);
+		inline void CopyDataFrom(const void *pData);
 
 		/**
 		*  @brief

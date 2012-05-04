@@ -85,7 +85,7 @@ inline bool IndexBuffer::SetElementTypeByMaximumIndex(PLCore::uint32 nMaximumInd
 *  @brief
 *    Copies data from a given buffer into this index buffer
 */
-inline void IndexBuffer::CopDataFrom(const void *pData)
+inline void IndexBuffer::CopyDataFrom(const void *pData)
 {
 	// Lock the index buffer
 	if (Lock(Lock::WriteOnly)) {

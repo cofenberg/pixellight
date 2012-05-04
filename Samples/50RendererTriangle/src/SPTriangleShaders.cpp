@@ -199,7 +199,7 @@ void SPTriangleShaders::OnPaint(Surface &cSurface)
 	//  upload this data to the GPU each time when there's no change within the data)
 	if (m_pUniformBuffer) {
 		// Copy over all the uniform data at once into the uniform buffer
-		m_pUniformBuffer->CopDataFrom(&cUniformBuffer);
+		m_pUniformBuffer->CopyDataFrom(&cUniformBuffer);
 
 		// Create a connection between "Uniform Block" and "Uniform Buffer" at binding point 0
 		// -> When using Cg, this must be done while the program is not active, when using GLSL it doesn't matter

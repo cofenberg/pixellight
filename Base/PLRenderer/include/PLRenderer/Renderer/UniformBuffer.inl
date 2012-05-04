@@ -39,7 +39,7 @@ namespace PLRenderer {
 *  @brief
 *    Copies data from a given buffer into this uniform buffer
 */
-inline void UniformBuffer::CopDataFrom(const void *pData)
+inline void UniformBuffer::CopyDataFrom(const void *pData)
 {
 	// Lock the uniform buffer
 	if (Lock(Lock::WriteOnly)) {
