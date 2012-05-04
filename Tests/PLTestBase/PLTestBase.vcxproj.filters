@@ -91,19 +91,7 @@
     <ClCompile Include="src\Core\ChunkTest.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\ConfigTest.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\Core.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\LocalizationTest.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\ResourceManagementTest.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\ResourceManagerTest.cpp">
       <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
@@ -174,19 +162,7 @@
     <ClInclude Include="include\PLTestBase\Core\ChunkTest.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="include\PLTestBase\Core\ConfigTest.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="include\PLTestBase\Core\Core.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\Core\LocalizationTest.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\Core\ResourceManagementTest.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="include\PLTestBase\Core\ResourceManagerTest.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>

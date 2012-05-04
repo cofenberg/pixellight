@@ -268,11 +268,7 @@
     <ClCompile Include="src\Graphics\Graphics.cpp" />
     <ClCompile Include="src\Graphics\ImageTest.cpp" />
     <ClCompile Include="src\Core\ChunkTest.cpp" />
-    <ClCompile Include="src\Core\ConfigTest.cpp" />
     <ClCompile Include="src\Core\Core.cpp" />
-    <ClCompile Include="src\Core\LocalizationTest.cpp" />
-    <ClCompile Include="src\Core\ResourceManagementTest.cpp" />
-    <ClCompile Include="src\Core\ResourceManagerTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLTestBase\General\General.h" />
@@ -297,11 +293,7 @@
     <ClInclude Include="include\PLTestBase\Graphics\Graphics.h" />
     <ClInclude Include="include\PLTestBase\Graphics\ImageTest.h" />
     <ClInclude Include="include\PLTestBase\Core\ChunkTest.h" />
-    <ClInclude Include="include\PLTestBase\Core\ConfigTest.h" />
     <ClInclude Include="include\PLTestBase\Core\Core.h" />
-    <ClInclude Include="include\PLTestBase\Core\LocalizationTest.h" />
-    <ClInclude Include="include\PLTestBase\Core\ResourceManagementTest.h" />
-    <ClInclude Include="include\PLTestBase\Core\ResourceManagerTest.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
