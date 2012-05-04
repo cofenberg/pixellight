@@ -46,7 +46,6 @@ add_sources(
 	src/SceneNodeModifiers/SNMPhysicsBodyEllipsoid.cpp
 	src/SceneNodeModifiers/SNMPhysicsBodyMesh.cpp
 	src/SceneNodeModifiers/SNMPhysicsBodySphere.cpp
-	src/SceneNodeModifiers/SNMPhysicsBodyTerrain.cpp
 	src/SceneNodeModifiers/SNMPhysicsCorrectDistance.cpp
 	src/SceneNodeModifiers/SNMPhysicsForce.cpp
 	src/SceneNodeModifiers/SNMPhysicsJoint.cpp
