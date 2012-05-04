@@ -3169,6 +3169,11 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 
 bool Renderer::DrawPatches(uint32 nVerticesPerPatch, uint32 nStartIndex, uint32 nNumVertices)
 {
+	// Required extension available?
+	const Extensions &cExtensions = m_pContext->GetExtensions();
+	if (!cExtensions.IsGL_ARB_tessellation_shader())
+		return false; // Error!
+
 	// Draw something?
 	if (!nNumVertices)
 		return true; // Done
@@ -3200,8 +3205,9 @@ bool Renderer::DrawPatches(uint32 nVerticesPerPatch, uint32 nStartIndex, uint32 
 
 bool Renderer::DrawIndexedPatches(uint32 nVerticesPerPatch, uint32 nMinIndex, uint32 nMaxIndex, uint32 nStartIndex, uint32 nNumVertices)
 {
-	// Index and vertex buffer correct?
-	if (!m_pCurrentIndexBuffer)
+	// Index and vertex buffer correct and required extension available?
+	const Extensions &cExtensions = m_pContext->GetExtensions();
+	if (!m_pCurrentIndexBuffer || !cExtensions.IsGL_ARB_tessellation_shader())
 		return false; // Error!
 
 	// Draw something?
@@ -3245,7 +3251,6 @@ bool Renderer::DrawIndexedPatches(uint32 nVerticesPerPatch, uint32 nMinIndex, ui
 	glPatchParameteri(GL_PATCH_VERTICES, nVerticesPerPatch);
 
 	// If the vertex buffer is in software mode, try to use compiled vertex array (CVA) for better performance
-	const Extensions &cExtensions = m_pContext->GetExtensions();
 	if (m_pFixedFunctions && m_pFixedFunctions->m_ppCurrentVertexBuffer[0] && m_pFixedFunctions->m_ppCurrentVertexBuffer[0]->GetUsage() == PLRenderer::Usage::Software && cExtensions.IsGL_EXT_compiled_vertex_array()) {
 		glLockArraysEXT(nMinIndex, nMaxIndex-nMinIndex+1);
 

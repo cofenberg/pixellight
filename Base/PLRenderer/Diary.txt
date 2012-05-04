@@ -7,6 +7,8 @@
 - "TextureBuffer": Renamed "Upload()" into "CopyDataFrom()" and "Download()" into "CopyDataTo()". This way the naming is
   consistent to "VertexBuffer" & "IndexBuffer" & "UniformBuffer"& "PLGraphics::ImageBuffer::CopyData()".
 - "TextureBuffer": Renamed "DownloadAsImage()" into "CopyDataToImage()" (naming consistence)
+PLRendererOpenGL:
+- "Renderer::DrawPatches()" & "Renderer::DrawIndexedPatches()": Added missing "GL_ARB_tessellation_shader"-extension test
 
 
 
