@@ -20,29 +20,36 @@
 \*********************************************************/
 
 
+//[-------------------------------------------------------]
+//[ Define helper macro                                   ]
+//[-------------------------------------------------------]
+#define STRINGIFY(ME) #ME
+
+
 // OpenGL 2.0 ("#version 110") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLCore::String sDeferredLighting_GLSL_VS = "\
-// Attributes\n\
-attribute vec4 VertexPosition;				// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-attribute vec2 VertexTexCoord0;				// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-varying   vec2 VertexTexCoordVS;			// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>) output\n\
-varying   vec2 VertexTexCoordNormalizedVS;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1) output\n\
-\n\
-// Uniforms\n\
-uniform ivec2 TextureSize;	// Texture size in texel\n\
-\n\
-// Programs\n\
-void main()\n\
-{\n\
-	// Pass through the vertex position\n\
-	gl_Position = VertexPosition;\n\
-\n\
-	// Pass through the scaled vertex texture coordinate\n\
-	VertexTexCoordVS = VertexTexCoord0*vec2(TextureSize);\n\
-\n\
-	// Pass through the vertex texture coordinate\n\
-	VertexTexCoordNormalizedVS = VertexTexCoord0;\n\
-}";
+static const PLCore::String sDeferredLighting_GLSL_VS = STRINGIFY(
+// Attributes
+attribute vec4 VertexPosition;				// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+attribute vec2 VertexTexCoord0;				// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)
+varying   vec2 VertexTexCoordVS;			// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>) output
+varying   vec2 VertexTexCoordNormalizedVS;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1) output
+
+// Uniforms
+uniform ivec2 TextureSize;	// Texture size in texel
+
+// Programs
+void main()
+{
+	// Pass through the vertex position
+	gl_Position = VertexPosition;
+
+	// Pass through the scaled vertex texture coordinate
+	VertexTexCoordVS = VertexTexCoord0*vec2(TextureSize);
+
+	// Pass through the vertex texture coordinate
+	VertexTexCoordNormalizedVS = VertexTexCoord0;
+}
+);	// STRINGIFY
 
 
 // OpenGL 2.0 ("#version 110") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
@@ -396,3 +403,9 @@ void main()\n\
 	// Still here? Write any alpha value so all color components were written.\n\
 	gl_FragColor.a = 1.0;\n\
 }";
+
+
+//[-------------------------------------------------------]
+//[ Undefine helper macro                                 ]
+//[-------------------------------------------------------]
+#undef STRINGIFY

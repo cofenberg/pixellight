@@ -1,6 +1,7 @@
 >> 04.05.2012
 [CO]
 - Added "SRPDebugDepthShaders": Shaders based scene renderer pass visualizing the depth buffer for debugging purposes
+- More "STRINGIFY"-macro usage in order to make the shaders more readable
 
 
 

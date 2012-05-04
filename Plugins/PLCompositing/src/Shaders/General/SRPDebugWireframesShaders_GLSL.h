@@ -20,30 +20,44 @@
 \*********************************************************/
 
 
+//[-------------------------------------------------------]
+//[ Define helper macro                                   ]
+//[-------------------------------------------------------]
+#define STRINGIFY(ME) #ME
+
+
 // GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) vertex shader source code, "#version" is added by hand
-static const PLCore::String sDebugWireframes_GLSL_VS = "\
-// Attributes\n\
-attribute highp vec4 VertexPosition;	// Object space vertex position input\n\
-\n\
-// Uniforms\n\
-uniform highp mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix\n\
-\n\
-// Programs\n\
-void main()\n\
-{\n\
-	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	gl_Position = ObjectSpaceToClipSpaceMatrix*VertexPosition;\n\
-}";
+static const PLCore::String sDebugWireframes_GLSL_VS = STRINGIFY(
+// Attributes
+attribute highp vec4 VertexPosition;	// Object space vertex position input
+
+// Uniforms
+uniform highp mat4 ObjectSpaceToClipSpaceMatrix;	// Object space to clip space matrix
+
+// Programs
+void main()
+{
+	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+	gl_Position = ObjectSpaceToClipSpaceMatrix*VertexPosition;
+}
+);	// STRINGIFY
 
 
 // GLSL (OpenGL 2.0 ("#version 110") and OpenGL ES 2.0 ("#version 100")) fragment shader source code, "#version" is added by hand
-static const PLCore::String sDebugWireframes_GLSL_FS = "\
-// Uniforms\n\
-uniform lowp vec4 Color;	// Color\n\
-\n\
-// Programs\n\
-void main()\n\
-{\n\
-	// Just set the output color\n\
-	gl_FragColor = Color;\n\
-}";
+static const PLCore::String sDebugWireframes_GLSL_FS = STRINGIFY(
+// Uniforms
+uniform lowp vec4 Color;	// Color
+
+// Programs
+void main()
+{
+	// Just set the output color
+	gl_FragColor = Color;
+}
+);	// STRINGIFY
+
+
+//[-------------------------------------------------------]
+//[ Undefine helper macro                                 ]
+//[-------------------------------------------------------]
+#undef STRINGIFY

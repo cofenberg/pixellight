@@ -20,49 +20,63 @@
 \*********************************************************/
 
 
+//[-------------------------------------------------------]
+//[ Define helper macro                                   ]
+//[-------------------------------------------------------]
+#define STRINGIFY(ME) #ME
+
+
 // Cg vertex shader source code
-static const PLCore::String sDebugWireframes_Cg_VS = "\
-// Vertex output\n\
-struct VS_OUTPUT {\n\
-	float4 Position : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-};\n\
-\n\
-// Programs\n\
-VS_OUTPUT main(float4   VertexPosition : POSITION,		// Object space vertex position input\n\
-	   uniform float4x4 ObjectSpaceToClipSpaceMatrix)	// Object space to clip space matrix\n\
-{\n\
-	VS_OUTPUT Out;\n\
-\n\
-	// Calculate the clip space vertex position\n\
-	Out.Position = mul(ObjectSpaceToClipSpaceMatrix, VertexPosition);\n\
-\n\
-	// Done\n\
-	return Out;\n\
-}";
+static const PLCore::String sDebugWireframes_Cg_VS = STRINGIFY(
+// Vertex output
+struct VS_OUTPUT {
+	float4 Position : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+};
+
+// Programs
+VS_OUTPUT main(float4   VertexPosition : POSITION,		// Object space vertex position input
+	   uniform float4x4 ObjectSpaceToClipSpaceMatrix)	// Object space to clip space matrix
+{
+	VS_OUTPUT Out;
+
+	// Calculate the clip space vertex position
+	Out.Position = mul(ObjectSpaceToClipSpaceMatrix, VertexPosition);
+
+	// Done
+	return Out;
+}
+);	// STRINGIFY
 
 
 // Cg fragment shader source code
-static const PLCore::String sDebugWireframes_Cg_FS = "\
-// Vertex output\n\
-struct VS_OUTPUT {\n\
-	float4 Position : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-};\n\
-\n\
-// Fragment output\n\
-struct FS_OUTPUT {\n\
-	float4 Color0 : COLOR0;\n\
-};\n\
-\n\
-// Programs\n\
-FS_OUTPUT main(VS_OUTPUT In		// Vertex shader output as fragment shader input\n\
-	, uniform float4     Color	// Color\n\
-)\n\
-{\n\
-	FS_OUTPUT Out;\n\
-\n\
-	// Just set the output color\n\
-	Out.Color0 = Color;\n\
-\n\
-	// Done\n\
-	return Out;\n\
-}";
+static const PLCore::String sDebugWireframes_Cg_FS = STRINGIFY(
+// Vertex output
+struct VS_OUTPUT {
+	float4 Position : POSITION;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+};
+
+// Fragment output
+struct FS_OUTPUT {
+	float4 Color0 : COLOR0;
+};
+
+// Programs
+FS_OUTPUT main(VS_OUTPUT In		// Vertex shader output as fragment shader input
+	, uniform float4     Color	// Color
+)
+{
+	FS_OUTPUT Out;
+
+	// Just set the output color
+	Out.Color0 = Color;
+
+	// Done
+	return Out;
+}
+);	// STRINGIFY
+
+
+//[-------------------------------------------------------]
+//[ Undefine helper macro                                 ]
+//[-------------------------------------------------------]
+#undef STRINGIFY

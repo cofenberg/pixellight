@@ -20,30 +20,37 @@
 \*********************************************************/
 
 
+//[-------------------------------------------------------]
+//[ Define helper macro                                   ]
+//[-------------------------------------------------------]
+#define STRINGIFY(ME) #ME
+
+
 // Cg vertex shader source code
-static const PLCore::String sDeferredHDAO_Cg_VS = "\
-// Vertex output\n\
-struct VS_OUTPUT {\n\
-	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
-};\n\
-\n\
-// Programs\n\
-VS_OUTPUT main(float4 VertexPosition : POSITION,	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-													// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-	   uniform int2	  TextureSize)					// Texture size in texel\n\
-{\n\
-	VS_OUTPUT OUT;\n\
-\n\
-	// Pass through the vertex position\n\
-	OUT.Position = float4(VertexPosition.xy, 0, 1);\n\
-\n\
-	// Pass through the scaled vertex texture coordinate\n\
-	OUT.TexCoord = VertexPosition.zw*TextureSize;\n\
-\n\
-	// Done\n\
-	return OUT;\n\
-}";
+static const PLCore::String sDeferredHDAO_Cg_VS = STRINGIFY(
+// Vertex output
+struct VS_OUTPUT {
+	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+	float2 TexCoord	: TEXCOORD0;	// Vertex texture coordinate, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)
+};
+
+// Programs
+VS_OUTPUT main(float4 VertexPosition : POSITION,	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+													// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)
+	   uniform int2	  TextureSize)					// Texture size in texel
+{
+	VS_OUTPUT OUT;
+
+	// Pass through the vertex position
+	OUT.Position = float4(VertexPosition.xy, 0, 1);
+
+	// Pass through the scaled vertex texture coordinate
+	OUT.TexCoord = VertexPosition.zw*TextureSize;
+
+	// Done
+	return OUT;
+}
+);	// STRINGIFY
 
 
 // Cg fragment shader source code
@@ -333,3 +340,9 @@ FS_OUTPUT main(VS_OUTPUT   IN					// Interpolated output from the vertex stage\n
 	// Done\n\
 	return OUT;\n\
 }";
+
+
+//[-------------------------------------------------------]
+//[ Undefine helper macro                                 ]
+//[-------------------------------------------------------]
+#undef STRINGIFY

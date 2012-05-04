@@ -20,22 +20,29 @@
 \*********************************************************/
 
 
+//[-------------------------------------------------------]
+//[ Define helper macro                                   ]
+//[-------------------------------------------------------]
+#define STRINGIFY(ME) #ME
+
+
 // OpenGL 3.0 ("#version 130") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLCore::String sDeferredHBAO_GLSL_VS = "\
-// Attributes\n\
-in  vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-							// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output, lower/left is (0,0) and upper/right is (1,1)\n\
-\n\
-// Programs\n\
-void main()\n\
-{\n\
-	// Set the clip space vertex position\n\
-	gl_Position = vec4(VertexPosition.xy, 0.0f, 1.0f);\n\
-\n\
-	// Pass through the scaled vertex texture coordinate\n\
-	VertexTexCoordVS = VertexPosition.zw;\n\
-}";
+static const PLCore::String sDeferredHBAO_GLSL_VS = STRINGIFY(
+// Attributes
+in  vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+							// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)
+out vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output, lower/left is (0,0) and upper/right is (1,1)
+
+// Programs
+void main()
+{
+	// Set the clip space vertex position
+	gl_Position = vec4(VertexPosition.xy, 0.0f, 1.0f);
+
+	// Pass through the scaled vertex texture coordinate
+	VertexTexCoordVS = VertexPosition.zw;
+}
+);	// STRINGIFY
 
 
 // OpenGL 3.0 ("#version 130") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
@@ -252,3 +259,9 @@ void main()\n\
 	}\n\
 	gl_FragColor = vec4(1 - aoFinal/NumDir*Contrast);\n\
 }";
+
+
+//[-------------------------------------------------------]
+//[ Undefine helper macro                                 ]
+//[-------------------------------------------------------]
+#undef STRINGIFY

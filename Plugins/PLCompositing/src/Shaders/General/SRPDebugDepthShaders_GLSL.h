@@ -20,25 +20,32 @@
 \*********************************************************/
 
 
+//[-------------------------------------------------------]
+//[ Define helper macro                                   ]
+//[-------------------------------------------------------]
+#define STRINGIFY(ME) #ME
+
+
 // OpenGL 2.0 ("#version 110") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLCore::String sEndHDR_GLSL_VS = "\
-// Attributes\n\
-attribute vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
-								// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)\n\
-varying vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
-\n\
-// Uniforms\n\
-uniform ivec2 TextureSize;		// Texture size in texel\n\
-\n\
-// Programs\n\
-void main()\n\
-{\n\
-	// Set the clip space vertex position\n\
-	gl_Position = vec4(VertexPosition.xy, 0.0, 1.0);\n\
-\n\
-	// Pass through the scaled vertex texture coordinate\n\
-	VertexTexCoordVS = VertexPosition.zw*vec2(TextureSize);\n\
-}";
+static const PLCore::String sEndHDR_GLSL_VS = STRINGIFY(
+// Attributes
+attribute vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
+								// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)
+varying vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 output, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)
+
+// Uniforms
+uniform ivec2 TextureSize;		// Texture size in texel
+
+// Programs
+void main()
+{
+	// Set the clip space vertex position
+	gl_Position = vec4(VertexPosition.xy, 0.0, 1.0);
+
+	// Pass through the scaled vertex texture coordinate
+	VertexTexCoordVS = VertexPosition.zw*vec2(TextureSize);
+}
+);	// STRINGIFY
 
 
 // OpenGL 2.0 ("#version 110") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
@@ -69,3 +76,9 @@ void main()\n\
 	// Set the resulting color\n\
 	gl_FragColor = vec4(sample, sample, sample, 1.0);\n\
 }";
+
+
+//[-------------------------------------------------------]
+//[ Undefine helper macro                                 ]
+//[-------------------------------------------------------]
+#undef STRINGIFY
