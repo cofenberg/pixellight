@@ -29,12 +29,12 @@
 #include <PLGraphics/Image/ImagePart.h>
 #include <PLGraphics/Image/ImageBuffer.h>
 #include "PLRenderer/Renderer/Renderer.h"
-#include "PLRenderer/Renderer/TextureBuffer1D.h"		// For the comfort-method "DownloadAsImage()"
-#include "PLRenderer/Renderer/TextureBuffer2D.h"		// For the comfort-method "DownloadAsImage()"
-#include "PLRenderer/Renderer/TextureBuffer2DArray.h"	// For the comfort-method "DownloadAsImage()"
-#include "PLRenderer/Renderer/TextureBufferRectangle.h"	// For the comfort-method "DownloadAsImage()"
-#include "PLRenderer/Renderer/TextureBuffer3D.h"		// For the comfort-method "DownloadAsImage()"
-#include "PLRenderer/Renderer/TextureBufferCube.h"		// For the comfort-method "DownloadAsImage()"
+#include "PLRenderer/Renderer/TextureBuffer1D.h"		// For the comfort-method "CopyDataToImage()"
+#include "PLRenderer/Renderer/TextureBuffer2D.h"		// For the comfort-method "CopyDataToImage()"
+#include "PLRenderer/Renderer/TextureBuffer2DArray.h"	// For the comfort-method "CopyDataToImage()"
+#include "PLRenderer/Renderer/TextureBufferRectangle.h"	// For the comfort-method "CopyDataToImage()"
+#include "PLRenderer/Renderer/TextureBuffer3D.h"		// For the comfort-method "CopyDataToImage()"
+#include "PLRenderer/Renderer/TextureBufferCube.h"		// For the comfort-method "CopyDataToImage()"
 #include "PLRenderer/Renderer/TextureBuffer.h"
 
 
@@ -653,7 +653,7 @@ bool TextureBuffer::GetFormatForImage(EDataFormat &nDataFormat, EColorFormat &nC
 *  @brief
 *    Returns the texture buffer data as image
 */
-bool TextureBuffer::DownloadAsImage(Image &cImage, bool bMipmaps) const
+bool TextureBuffer::CopyDataToImage(Image &cImage, bool bMipmaps) const
 {
 	// Map the internal texture buffer format as close as possible to image data format and image color format
 	EDataFormat					nDataFormat			= DataByte;

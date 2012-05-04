@@ -414,7 +414,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    'true' if all went fine, else 'false'
 		*/
-		PLRENDERER_API bool DownloadAsImage(PLGraphics::Image &cImage, bool bMipmaps = true) const;
+		PLRENDERER_API bool CopyDataToImage(PLGraphics::Image &cImage, bool bMipmaps = true) const;
 
 		/**
 		*  @brief

@@ -6,6 +6,7 @@
   which makes guessing the method name hopefully easier.
 - "TextureBuffer": Renamed "Upload()" into "CopyDataFrom()" and "Download()" into "CopyDataTo()". This way the naming is
   consistent to "VertexBuffer" & "IndexBuffer" & "UniformBuffer"& "PLGraphics::ImageBuffer::CopyData()".
+- "TextureBuffer": Renamed "DownloadAsImage()" into "CopyDataToImage()" (naming consistence)
 
 
 
