@@ -126,16 +126,18 @@ bool TessellationControlShaderCg::SetSourceCode(const String &sSourceCode, const
 	}
 
 	// Get the profile from a user given string
-	// -> "February 2012 version of Cg 3.1": No GLSL tessellation control shader support, at least one that's not using special NVIDIA-only extensions
-	m_pCgProfile = cgGetProfile(sProfile);
+	// -> [TODO] "February 2012 version of Cg 3.1": No GLSL tessellation control shader support, at least one that's not using special NVIDIA-only extensions
+	m_pCgProfile = cgGLGetLatestProfile(CG_GL_TESSELLATION_CONTROL);
 //	m_pCgProfile = cgGetProfile(sProfile.GetLength() ? sProfile : "?"); // We're using a GLSL profile as default so ATI users have reasonable shader support when using Cg
 
 	// On unknown or invalid profile, choose a fallback profile
-	if (m_pCgProfile == CG_PROFILE_UNKNOWN || (!cgGetProfileProperty(m_pCgProfile, CG_IS_TESSELLATION_CONTROL_PROFILE) && m_pCgProfile != CG_PROFILE_GLSLF)) {
-		m_pCgProfile = cgGLGetLatestProfile(CG_GL_TESSELLATION_CONTROL);
-		if (m_pCgProfile == CG_PROFILE_UNKNOWN && cgGLIsProfileSupported(CG_PROFILE_GLSLF))
-			m_pCgProfile = CG_PROFILE_GLSLF;
-	}
+	// [TODO] GLSL tessellation control program: "February 2012 version of Cg 3.1": No GLSL tessellation control shader support, at least one that's not using special NVIDIA-only extensions
+	// -> Currently, Cg has only "CG_PROFILE_GP5TCP" (NV_tessellation_program5 tessellation control program)
+//	if (m_pCgProfile == CG_PROFILE_UNKNOWN || (!cgGetProfileProperty(m_pCgProfile, CG_IS_TESSELLATION_CONTROL_PROFILE) && m_pCgProfile != ?)) {
+//		m_pCgProfile = cgGLGetLatestProfile(CG_GL_TESSELLATION_CONTROL);
+//		if (m_pCgProfile == CG_PROFILE_UNKNOWN && cgGLIsProfileSupported(?))
+//			m_pCgProfile = ?;
+//	}
 
 	// Create the Cg tessellation control program
 	if (m_pCgProfile != CG_PROFILE_UNKNOWN)

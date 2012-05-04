@@ -150,10 +150,9 @@ void main()
 static const PLCore::String sFragmentShaderSourceCodeGLSL = STRINGIFY(
 // Attributes
 layout(location = 0) out vec4 OutFragmentColor;
-in vec3  gFacetNormal;
-in vec3  gTriDistance;
-in vec3  gPatchDistance;
-in float gPrimitive;
+in vec3 gFacetNormal;
+in vec3 gTriDistance;
+in vec3 gPatchDistance;
 
 // Uniforms
 uniform vec3 LightPosition;

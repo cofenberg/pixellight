@@ -1,3 +1,9 @@
+>> 04.05.2012
+[CO]
+- "55RendererTessellation"-sample: Added Cg version which is not tested, yet (requires a NVIDIA GPU :/)
+
+
+
 >> 25.03.2012
 [CO]
 - Added "55RendererTessellation". The shaders are from http://prideout.net/blog/?p=48 (Philip Rideout, "The Little Grasshopper - Graphics Programming Tips")...

@@ -86,13 +86,15 @@ SPTessellationShaders::SPTessellationShaders(Renderer &cRenderer) : SPTessellati
 			sGeometryShaderSourceCode				= "#version 400\n" + sGeometryShaderSourceCodeGLSL;
 			sFragmentShaderSourceCode				= "#version 400\n" + sFragmentShaderSourceCodeGLSL;
 		} else if (pShaderLanguage->GetShaderLanguage() == "Cg") {
-			// [TODO] Under construction
+			// [TODO] Under construction: Cg version not tested, yet (requires a NVIDIA GPU :/)
+			// [TODO] GLSL tessellation control program: "February 2012 version of Cg 3.1": No GLSL tessellation control shader support, at least one that's not using special NVIDIA-only extensions
+			// [TODO] GLSL tessellation evaluation program: "February 2012 version of Cg 3.1": No GLSL tessellation evaluation shader support, at least one that's not using special NVIDIA-only extensions
 			#include "SPTessellationShaders_Cg.h"
-		//	sVertexShaderSourceCode					= sVertexShaderSourceCodeCg;
-		//	sTessellationControlShaderSourceCode	= sTessellationControlShaderSourceCodeCg;
-		//	sTessellationEvaluationShaderSourceCode	= sTessellationEvaluationShaderSourceCodeCg;
-		//	sGeometryShaderSourceCode				= sGeometryShaderSourceCodeCg;
-		//	sFragmentShaderSourceCode				= sFragmentShaderSourceCodeCg;
+			sVertexShaderSourceCode					= sVertexShaderSourceCodeCg;
+			sTessellationControlShaderSourceCode	= sTessellationControlShaderSourceCodeCg;
+			sTessellationEvaluationShaderSourceCode	= sTessellationEvaluationShaderSourceCodeCg;
+			sGeometryShaderSourceCode				= sGeometryShaderSourceCodeCg;
+			sFragmentShaderSourceCode				= sFragmentShaderSourceCodeCg;
 		}
 
 		// Create the shader instances
