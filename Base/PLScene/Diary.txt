@@ -1,3 +1,9 @@
+>> 01.05.2012
+[CO]
+- Moved the out-of-date terrain and sky class from the core component "PLScene" into this loose plugin "PLNature". See "PLNature"-diary for details.
+
+
+
 > 02.04.2012
 [CO]
 - "Fordward.sr" within "Standard.zip" is now using "R8G8B8" instead of "R8G8B8A8" as default render to texture format. "R8G8B8A8" is causing issues
