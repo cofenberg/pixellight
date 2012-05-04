@@ -681,7 +681,7 @@ bool TextureBuffer::DownloadAsImage(Image &cImage, bool bMipmaps) const
 				pImageBuffer->CreateImage(nDataFormat, nColorFormat, GetUniformSize(nMipmap), nCompression);
 
 				// Download the mipmap texture buffer data from the GPU
-				if (!Download(nMipmap, nTextureBufferFomat, (nCompression == CompressionNone) ? pImageBuffer->GetData() : pImageBuffer->GetCompressedData(), nFace))
+				if (!CopyDataTo(nMipmap, nTextureBufferFomat, (nCompression == CompressionNone) ? pImageBuffer->GetData() : pImageBuffer->GetCompressedData(), nFace))
 					return false;	// Error!
 			}
 		}
@@ -720,7 +720,7 @@ uint32 TextureBuffer::GetNumOfNANValues(uint32 nMipmap, uint8 nFace) const
 				float *pfData = new float[nNumOfElements];
 
 				// Download the texture buffer from the GPU to the host
-				if (Download(nMipmap, m_nFormat, pfData, nFace)) {
+				if (CopyDataTo(nMipmap, m_nFormat, pfData, nFace)) {
 					// Count the number of NANs
 					for (float *pfCurrent=pfData, *pfEnd=pfData+nNumOfElements; pfCurrent<pfEnd; pfCurrent++) {
 						// Is this value a NAN?
@@ -738,7 +738,7 @@ uint32 TextureBuffer::GetNumOfNANValues(uint32 nMipmap, uint8 nFace) const
 				uint16 *pnData = new uint16[nNumOfElements];
 
 				// Download the texture buffer from the GPU to the host
-				if (Download(nMipmap, m_nFormat, pnData, nFace)) {
+				if (CopyDataTo(nMipmap, m_nFormat, pnData, nFace)) {
 					// Count the number of NANs
 					for (uint16 *pnCurrent=pnData, *pnEnd=pnData+nNumOfElements; pnCurrent<pnEnd; pnCurrent++) {
 						// Is this value a NAN?
@@ -786,7 +786,7 @@ uint32 TextureBuffer::FixNANValues(const Color4 &cColor, uint32 nMipmap, uint8 n
 				float *pfData = new float[nNumOfElements];
 
 				// Download the texture buffer from the GPU to the host
-				if (Download(nMipmap, m_nFormat, pfData, nFace)) {
+				if (CopyDataTo(nMipmap, m_nFormat, pfData, nFace)) {
 					// Count the number of NANs
 					for (float *pfCurrent=pfData, *pfEnd=pfData+nNumOfElements; pfCurrent<pfEnd; pfCurrent+=nComponentsPerPixel) {
 						// Loop through the components of the current pixel
@@ -814,7 +814,7 @@ uint32 TextureBuffer::FixNANValues(const Color4 &cColor, uint32 nMipmap, uint8 n
 				}
 
 				// Upload the fixed texture buffer to the GPU
-				Upload(nMipmap, m_nFormat, pfData, nFace);
+				CopyDataFrom(nMipmap, m_nFormat, pfData, nFace);
 
 				// Cleanup
 				delete [] pfData;
@@ -830,7 +830,7 @@ uint32 TextureBuffer::FixNANValues(const Color4 &cColor, uint32 nMipmap, uint8 n
 				uint16 *pnData = new uint16[nNumOfElements];
 
 				// Download the texture buffer from the GPU to the host
-				if (Download(nMipmap, m_nFormat, pnData, nFace)) {
+				if (CopyDataTo(nMipmap, m_nFormat, pnData, nFace)) {
 					// Count the number of NANs
 					for (uint16 *pnCurrent=pnData, *pnEnd=pnData+nNumOfElements; pnCurrent<pnEnd; pnCurrent+=nComponentsPerPixel) {
 						// Loop through the components of the current pixel
@@ -858,7 +858,7 @@ uint32 TextureBuffer::FixNANValues(const Color4 &cColor, uint32 nMipmap, uint8 n
 				}
 
 				// Upload the fixed texture buffer to the GPU
-				Upload(nMipmap, m_nFormat, pnData, nFace);
+				CopyDataFrom(nMipmap, m_nFormat, pnData, nFace);
 
 				// Cleanup
 				delete [] pnData;

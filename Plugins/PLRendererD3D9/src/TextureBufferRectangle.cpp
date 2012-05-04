@@ -360,7 +360,7 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 //[-------------------------------------------------------]
 //[ Public virtual PLRenderer::TextureBuffer functions    ]
 //[-------------------------------------------------------]
-bool TextureBufferRectangle::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *pData, uint8 nFace)
+bool TextureBufferRectangle::CopyDataFrom(uint32 nMipmap, EPixelFormat nFormat, const void *pData, uint8 nFace)
 {
 	// [TODO] At the moment, rectangle texture buffers don't support mipmaps, so nMipmap is always 0
 	// Check parameters and Direct3D 9 texture
@@ -395,7 +395,7 @@ bool TextureBufferRectangle::Upload(uint32 nMipmap, EPixelFormat nFormat, const 
 	return false;
 }
 
-bool TextureBufferRectangle::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
+bool TextureBufferRectangle::CopyDataTo(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
 {
 	// Check parameters and Direct3D 9 texture
 	if (nMipmap <= m_nNumOfMipmaps && nFormat != Unknown && pData && !nFace && m_pD3D9Texture) {

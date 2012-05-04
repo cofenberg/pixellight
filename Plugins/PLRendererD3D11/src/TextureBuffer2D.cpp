@@ -94,13 +94,13 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, const Vector2i
 //[-------------------------------------------------------]
 //[ Public virtual PLRenderer::TextureBuffer functions    ]
 //[-------------------------------------------------------]
-bool TextureBuffer2D::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *pData, uint8 nFace)
+bool TextureBuffer2D::CopyDataFrom(uint32 nMipmap, EPixelFormat nFormat, const void *pData, uint8 nFace)
 {
 	// Error?
 	return !(nMipmap != 0 || nFormat == Unknown || !pData || nFace);
 }
 
-bool TextureBuffer2D::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
+bool TextureBuffer2D::CopyDataTo(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
 {
 	// Error?
 	return !(nMipmap != 0 || nFormat == Unknown || !pData || nFace);

@@ -352,7 +352,7 @@ void TextureBuffer2D::CreateOpenGLTextureBuffer()
 //[-------------------------------------------------------]
 //[ Public virtual PLRenderer::TextureBuffer functions    ]
 //[-------------------------------------------------------]
-bool TextureBuffer2D::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *pData, uint8 nFace)
+bool TextureBuffer2D::CopyDataFrom(uint32 nMipmap, EPixelFormat nFormat, const void *pData, uint8 nFace)
 {
 	// Check parameters
 	if (nMipmap <= m_nNumOfMipmaps && nFormat != Unknown && pData && !nFace) {
@@ -398,7 +398,7 @@ bool TextureBuffer2D::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *p
 	return false;
 }
 
-bool TextureBuffer2D::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
+bool TextureBuffer2D::CopyDataTo(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
 {
 	// Check parameters
 	if (nMipmap > m_nNumOfMipmaps || nFormat == Unknown || !pData || nFace)

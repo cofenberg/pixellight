@@ -92,8 +92,8 @@ class TextureBuffer1D : public PLRenderer::TextureBuffer1D {
 	//[ Public virtual PLRenderer::TextureBuffer functions    ]
 	//[-------------------------------------------------------]
 	public:
-		virtual bool Upload(PLCore::uint32 nMipmap, EPixelFormat nFormat, const void *pData, PLCore::uint8 nFace = 0) override;
-		virtual bool Download(PLCore::uint32 nMipmap, EPixelFormat nFormat, void *pData, PLCore::uint8 nFace = 0) const override;
+		virtual bool CopyDataFrom(PLCore::uint32 nMipmap, EPixelFormat nFormat, const void *pData, PLCore::uint8 nFace = 0) override;
+		virtual bool CopyDataTo(PLCore::uint32 nMipmap, EPixelFormat nFormat, void *pData, PLCore::uint8 nFace = 0) const override;
 
 
 	//[-------------------------------------------------------]

@@ -339,7 +339,7 @@ TextureBufferRectangle::TextureBufferRectangle(PLRenderer::Renderer &cRenderer, 
 //[-------------------------------------------------------]
 //[ Public virtual PLRenderer::TextureBuffer functions    ]
 //[-------------------------------------------------------]
-bool TextureBufferRectangle::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *pData, uint8 nFace)
+bool TextureBufferRectangle::CopyDataFrom(uint32 nMipmap, EPixelFormat nFormat, const void *pData, uint8 nFace)
 {
 	// Check parameters
 	if (nMipmap <= m_nNumOfMipmaps && nFormat != Unknown && pData && !nFace) {
@@ -386,7 +386,7 @@ bool TextureBufferRectangle::Upload(uint32 nMipmap, EPixelFormat nFormat, const 
 	return false;
 }
 
-bool TextureBufferRectangle::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
+bool TextureBufferRectangle::CopyDataTo(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
 {
 	// Check parameters
 	if (nMipmap > m_nNumOfMipmaps || nFormat == Unknown || !pData || nFace)

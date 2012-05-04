@@ -362,7 +362,7 @@ TextureBuffer2D::TextureBuffer2D(PLRenderer::Renderer &cRenderer, const Vector2i
 //[-------------------------------------------------------]
 //[ Public virtual PLRenderer::TextureBuffer functions    ]
 //[-------------------------------------------------------]
-bool TextureBuffer2D::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *pData, uint8 nFace)
+bool TextureBuffer2D::CopyDataFrom(uint32 nMipmap, EPixelFormat nFormat, const void *pData, uint8 nFace)
 {
 	// Check parameters and Direct3D 9 texture
 	if (nMipmap <= m_nNumOfMipmaps && nFormat != Unknown && pData && !nFace && m_pD3D9Texture) {
@@ -394,7 +394,7 @@ bool TextureBuffer2D::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *p
 	return false;
 }
 
-bool TextureBuffer2D::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
+bool TextureBuffer2D::CopyDataTo(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
 {
 	// Check parameters and Direct3D 9 texture
 	if (nMipmap <= m_nNumOfMipmaps && nFormat != Unknown && pData && !nFace && m_pD3D9Texture) {

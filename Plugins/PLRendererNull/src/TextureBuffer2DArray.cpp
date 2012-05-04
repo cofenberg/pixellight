@@ -77,13 +77,13 @@ TextureBuffer2DArray::TextureBuffer2DArray(PLRenderer::Renderer &cRenderer, Imag
 //[-------------------------------------------------------]
 //[ Public virtual PLRenderer::TextureBuffer functions    ]
 //[-------------------------------------------------------]
-bool TextureBuffer2DArray::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *pData, uint8 nFace)
+bool TextureBuffer2DArray::CopyDataFrom(uint32 nMipmap, EPixelFormat nFormat, const void *pData, uint8 nFace)
 {
 	// Error?
 	return !(nMipmap != 0 || nFormat == Unknown || !pData || nFace);
 }
 
-bool TextureBuffer2DArray::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
+bool TextureBuffer2DArray::CopyDataTo(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
 {
 	// Error?
 	return !(nMipmap != 0 || nFormat == Unknown || !pData || nFace);

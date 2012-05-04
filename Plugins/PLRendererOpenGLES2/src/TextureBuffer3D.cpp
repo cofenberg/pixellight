@@ -230,7 +230,7 @@ TextureBuffer3D::TextureBuffer3D(PLRenderer::Renderer &cRenderer, Image &cImage,
 //[-------------------------------------------------------]
 //[ Public virtual PLRenderer::TextureBuffer functions    ]
 //[-------------------------------------------------------]
-bool TextureBuffer3D::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *pData, uint8 nFace)
+bool TextureBuffer3D::CopyDataFrom(uint32 nMipmap, EPixelFormat nFormat, const void *pData, uint8 nFace)
 {
 	// Check parameters
 	if (nMipmap <= m_nNumOfMipmaps && nFormat != Unknown && pData && !nFace) {
@@ -276,7 +276,7 @@ bool TextureBuffer3D::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *p
 	return false;
 }
 
-bool TextureBuffer3D::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
+bool TextureBuffer3D::CopyDataTo(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
 {
 	// "GL_NV_get_tex_image"-extension available?
 	if (static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_NV_get_tex_image()) {

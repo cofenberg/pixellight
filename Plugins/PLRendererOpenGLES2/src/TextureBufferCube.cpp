@@ -299,7 +299,7 @@ TextureBufferCube::TextureBufferCube(PLRenderer::Renderer &cRenderer, uint32 nSi
 //[-------------------------------------------------------]
 //[ Public virtual PLRenderer::TextureBuffer functions    ]
 //[-------------------------------------------------------]
-bool TextureBufferCube::Upload(uint32 nMipmap, EPixelFormat nFormat, const void *pData, uint8 nFace)
+bool TextureBufferCube::CopyDataFrom(uint32 nMipmap, EPixelFormat nFormat, const void *pData, uint8 nFace)
 {
 	// Check parameters
 	if (nMipmap <= m_nNumOfMipmaps && nFormat != Unknown && pData && nFace <= 5) {
@@ -345,7 +345,7 @@ bool TextureBufferCube::Upload(uint32 nMipmap, EPixelFormat nFormat, const void 
 	return false;
 }
 
-bool TextureBufferCube::Download(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
+bool TextureBufferCube::CopyDataTo(uint32 nMipmap, EPixelFormat nFormat, void *pData, uint8 nFace) const
 {
 	// "GL_NV_get_tex_image"-extension available?
 	if (static_cast<Renderer&>(GetRenderer()).GetContext().GetExtensions().IsGL_NV_get_tex_image()) {

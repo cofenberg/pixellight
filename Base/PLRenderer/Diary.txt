@@ -4,6 +4,8 @@
 - Renamed the "CopyFrom()" and "CopyTo()" methods from "VertexBuffer" & "IndexBuffer" & "UniformBuffer" into
   "CopyDataFrom()" and "CopyDataTo()". This way the naming is more consistent to "PLGraphics::ImageBuffer::CopyData()"
   which makes guessing the method name hopefully easier.
+- "TextureBuffer": Renamed "Upload()" into "CopyDataFrom()" and "Download()" into "CopyDataTo()". This way the naming is
+  consistent to "VertexBuffer" & "IndexBuffer" & "UniformBuffer"& "PLGraphics::ImageBuffer::CopyData()".
 
 
 

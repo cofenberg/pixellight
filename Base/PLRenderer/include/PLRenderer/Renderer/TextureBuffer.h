@@ -388,7 +388,7 @@ class TextureBuffer : public Resource {
 		*  @param[out] nCompression
 		*    Receives the required image compression
 		*  @param[out] nTextureBufferFomat
-		*    Receives the required texture buffer format to use within "TextureBuffer::Download()" in order to ask the GPU for the texture buffer data
+		*    Receives the required texture buffer format to use within "TextureBuffer::CopyDataTo()" in order to ask the GPU for the texture buffer data
 		*
 		*  @return
 		*    'true' if all went fine, else 'false'
@@ -529,7 +529,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    'true' if all went fine, else 'false' (invalid mipmap level? invalid data?)
 		*/
-		virtual bool Upload(PLCore::uint32 nMipmap, EPixelFormat nFormat, const void *pData, PLCore::uint8 nFace = 0) = 0;
+		virtual bool CopyDataFrom(PLCore::uint32 nMipmap, EPixelFormat nFormat, const void *pData, PLCore::uint8 nFace = 0) = 0;
 
 		/**
 		*  @brief
@@ -548,7 +548,7 @@ class TextureBuffer : public Resource {
 		*  @return
 		*    'true' if all went fine, else 'false' (invalid mipmap level? invalid data?)
 		*/
-		virtual bool Download(PLCore::uint32 nMipmap, EPixelFormat nFormat, void *pData, PLCore::uint8 nFace = 0) const = 0;
+		virtual bool CopyDataTo(PLCore::uint32 nMipmap, EPixelFormat nFormat, void *pData, PLCore::uint8 nFace = 0) const = 0;
 
 
 	//[-------------------------------------------------------]
