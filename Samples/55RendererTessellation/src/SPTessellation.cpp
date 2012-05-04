@@ -76,7 +76,7 @@ SPTessellation::SPTessellation(Renderer &cRenderer) : SurfacePainter(cRenderer),
 		};
 		m_pVertexBuffer->AddVertexAttribute(VertexBuffer::Position, 0, VertexBuffer::Float3);
 		m_pVertexBuffer->Allocate(sizeof(VertexData)/sizeof(float)/3, Usage::Static);
-		m_pVertexBuffer->CopyFrom(VertexData);
+		m_pVertexBuffer->CopyDataFrom(VertexData);
 	}
 
 	// Setup the renderer index buffer
@@ -105,7 +105,7 @@ SPTessellation::SPTessellation(Renderer &cRenderer) : SurfacePainter(cRenderer),
 		};
 		m_pIndexBuffer->SetElementType(IndexBuffer::UInt);
 		m_pIndexBuffer->Allocate(sizeof(IndexData)/sizeof(int), Usage::Static);
-		m_pIndexBuffer->CopyFrom(IndexData);
+		m_pIndexBuffer->CopyDataFrom(IndexData);
 	} else {
 		// THIS should never, never happen! :)
 	}

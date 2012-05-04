@@ -1,6 +1,9 @@
 >> 04.05.2012
 [CO]
 - "VertexBuffer" & "IndexBuffer": Added ease of use methods "CopyFrom()" and "CopyTo()" ("UniformBuffer" already had them)
+- Renamed the "CopyFrom()" and "CopyTo()" methods from "VertexBuffer" & "IndexBuffer" & "UniformBuffer" into
+  "CopyDataFrom()" and "CopyDataTo()". This way the naming is more consistent to "PLGraphics::ImageBuffer::CopyData()"
+  which makes guessing the method name hopefully easier.
 
 
 

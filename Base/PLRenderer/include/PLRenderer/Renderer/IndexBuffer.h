@@ -148,7 +148,7 @@ class IndexBuffer : public Buffer {
 		*    This ease of use method locks the index buffer, copies the
 		*    given data into it and unlocks the index buffer when done.
 		*/
-		inline void CopyFrom(const void *pData);
+		inline void CopDataFrom(const void *pData);
 
 		/**
 		*  @brief
@@ -161,7 +161,7 @@ class IndexBuffer : public Buffer {
 		*    This ease of use method locks the index buffer, copies the index buffer
 		*    data into the given buffer and unlocks the index buffer when done.
 		*/
-		inline void CopyTo(void *pData);
+		inline void CopyDataTo(void *pData);
 
 		/**
 		*  @brief

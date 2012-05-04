@@ -241,7 +241,7 @@ class VertexBuffer : public Buffer {
 		*    This ease of use method locks the vertex buffer, copies the
 		*    given data into it and unlocks the vertex buffer when done.
 		*/
-		inline void CopyFrom(const void *pData);
+		inline void CopDataFrom(const void *pData);
 
 		/**
 		*  @brief
@@ -254,7 +254,7 @@ class VertexBuffer : public Buffer {
 		*    This ease of use method locks the vertex buffer, copies the vertex buffer
 		*    data into the given buffer and unlocks the vertex buffer when done.
 		*/
-		inline void CopyTo(void *pData);
+		inline void CopyDataTo(void *pData);
 
 		//[-------------------------------------------------------]
 		//[ Tool functions                                        ]
