@@ -21,6 +21,12 @@
 
 
 //[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <PLCore/Core/MemoryManager.h>
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLRenderer {
@@ -54,6 +60,38 @@ inline const VertexBuffer::Attribute *VertexBuffer::GetVertexAttribute(PLCore::u
 inline PLCore::uint32 VertexBuffer::GetVertexSize() const
 {
 	return m_nVertexSize;
+}
+
+/**
+*  @brief
+*    Copies data from a given buffer into this vertex buffer
+*/
+inline void VertexBuffer::CopyFrom(const void *pData)
+{
+	// Lock the vertex buffer
+	if (Lock(Lock::WriteOnly)) {
+		// Copy over all the vertex data at once
+		PLCore::MemoryManager::Copy(GetData(), pData, GetSize());
+
+		// Unlock the vertex buffer
+		Unlock();
+	}
+}
+
+/**
+*  @brief
+*    Copies data from this vertex buffer into a given buffer
+*/
+inline void VertexBuffer::CopyTo(void *pData)
+{
+	// Lock the vertex buffer
+	if (Lock(Lock::ReadOnly)) {
+		// Copy over all the vertex data at once
+		PLCore::MemoryManager::Copy(pData, GetData(), GetSize());
+
+		// Unlock the vertex buffer
+		Unlock();
+	}
 }
 
 

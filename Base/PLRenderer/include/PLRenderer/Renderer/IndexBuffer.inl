@@ -21,6 +21,12 @@
 
 
 //[-------------------------------------------------------]
+//[ Includes                                              ]
+//[-------------------------------------------------------]
+#include <PLCore/Core/MemoryManager.h>
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLRenderer {
@@ -73,6 +79,38 @@ inline bool IndexBuffer::SetElementTypeByMaximumIndex(PLCore::uint32 nMaximumInd
 
 	// Done
 	return true;
+}
+
+/**
+*  @brief
+*    Copies data from a given buffer into this index buffer
+*/
+inline void IndexBuffer::CopyFrom(const void *pData)
+{
+	// Lock the index buffer
+	if (Lock(Lock::WriteOnly)) {
+		// Copy over all the index data at once
+		PLCore::MemoryManager::Copy(GetData(), pData, GetSize());
+
+		// Unlock the index buffer
+		Unlock();
+	}
+}
+
+/**
+*  @brief
+*    Copies data from this index buffer into a given buffer
+*/
+inline void IndexBuffer::CopyTo(void *pData)
+{
+	// Lock the index buffer
+	if (Lock(Lock::ReadOnly)) {
+		// Copy over all the index data at once
+		PLCore::MemoryManager::Copy(pData, GetData(), GetSize());
+
+		// Unlock the index buffer
+		Unlock();
+	}
 }
 
 

@@ -139,6 +139,32 @@ class IndexBuffer : public Buffer {
 
 		/**
 		*  @brief
+		*    Copies data from a given buffer into this index buffer
+		*
+		*  @param[in] pData
+		*    Data to copy into this index buffer, must be valid and must have at least "GetSize()" bytes
+		*
+		*  @remarks
+		*    This ease of use method locks the index buffer, copies the
+		*    given data into it and unlocks the index buffer when done.
+		*/
+		inline void CopyFrom(const void *pData);
+
+		/**
+		*  @brief
+		*    Copies data from this index buffer into a given buffer
+		*
+		*  @param[out] pData
+		*    Buffer to copy into, must be valid and must have at least "GetSize()" bytes
+		*
+		*  @remarks
+		*    This ease of use method locks the index buffer, copies the index buffer
+		*    data into the given buffer and unlocks the index buffer when done.
+		*/
+		inline void CopyTo(void *pData);
+
+		/**
+		*  @brief
 		*    Returns the data of the index buffer
 		*
 		*  @param[in] nIndex

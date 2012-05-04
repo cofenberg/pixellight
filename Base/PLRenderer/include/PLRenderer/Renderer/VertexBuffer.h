@@ -230,6 +230,32 @@ class VertexBuffer : public Buffer {
 		*/
 		PLRENDERER_API VertexBuffer &operator =(const VertexBuffer &cSource);
 
+		/**
+		*  @brief
+		*    Copies data from a given buffer into this vertex buffer
+		*
+		*  @param[in] pData
+		*    Data to copy into this vertex buffer, must be valid and must have at least "GetSize()" bytes
+		*
+		*  @remarks
+		*    This ease of use method locks the vertex buffer, copies the
+		*    given data into it and unlocks the vertex buffer when done.
+		*/
+		inline void CopyFrom(const void *pData);
+
+		/**
+		*  @brief
+		*    Copies data from this vertex buffer into a given buffer
+		*
+		*  @param[out] pData
+		*    Buffer to copy into, must be valid and must have at least "GetSize()" bytes
+		*
+		*  @remarks
+		*    This ease of use method locks the vertex buffer, copies the vertex buffer
+		*    data into the given buffer and unlocks the vertex buffer when done.
+		*/
+		inline void CopyTo(void *pData);
+
 		//[-------------------------------------------------------]
 		//[ Tool functions                                        ]
 		//[-------------------------------------------------------]

@@ -1,3 +1,9 @@
+>> 04.05.2012
+[CO]
+- "VertexBuffer" & "IndexBuffer": Added ease of use methods "CopyFrom()" and "CopyTo()" ("UniformBuffer" already had them)
+
+
+
 >> 27.04.2012
 [CO]
 - Bugfix: "EffectLoaderPL::LoadV1()" was not loading the "Name"-attribute of techniques
