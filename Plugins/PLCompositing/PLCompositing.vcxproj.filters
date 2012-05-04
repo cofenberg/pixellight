@@ -244,6 +244,9 @@
     <ClCompile Include="src\Shaders\PostProcessing\SRPEndFXAA.cpp">
       <Filter>Shaders\PostProcessing</Filter>
     </ClCompile>
+    <ClCompile Include="src\Shaders\General\SRPDebugDepthShaders.cpp">
+      <Filter>Shaders\General</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLCompositing\FullscreenQuad.h">
@@ -611,6 +614,15 @@
     </ClInclude>
     <ClInclude Include="include\PLCompositing\Shaders\PostProcessing\SRPEndFXAA.h">
       <Filter>Shaders\PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shaders\General\SRPDebugDepthShaders_Cg.h">
+      <Filter>Shaders\General</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shaders\General\SRPDebugDepthShaders_GLSL.h">
+      <Filter>Shaders\General</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCompositing\Shaders\General\SRPDebugDepthShaders.h">
+      <Filter>Shaders\General</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

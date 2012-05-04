@@ -260,6 +260,7 @@ copy build\release_x64\PLCompositing.lib ..\..\Bin\Lib\x64\
     <ClCompile Include="src\Shaders\Deferred\SRPDeferredGBufferMaterial.cpp" />
     <ClCompile Include="src\Shaders\Deferred\SRPDeferredSPAAO.cpp" />
     <ClCompile Include="src\Shaders\Deferred\SRPDeferredVolumetricFog.cpp" />
+    <ClCompile Include="src\Shaders\General\SRPDebugDepthShaders.cpp" />
     <ClCompile Include="src\Shaders\General\SRPDebugWireframesShaders.cpp" />
     <ClCompile Include="src\Shaders\General\SRPDirectionalLightingShadersMaterial.cpp" />
     <ClCompile Include="src\Shaders\General\SRPLightingMaterial.cpp" />
@@ -333,6 +334,7 @@ copy build\release_x64\PLCompositing.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLCompositing\Shaders\Deferred\SRPDeferredGBufferMaterial.h" />
     <ClInclude Include="include\PLCompositing\Shaders\Deferred\SRPDeferredSPAAO.h" />
     <ClInclude Include="include\PLCompositing\Shaders\Deferred\SRPDeferredVolumetricFog.h" />
+    <ClInclude Include="include\PLCompositing\Shaders\General\SRPDebugDepthShaders.h" />
     <ClInclude Include="include\PLCompositing\Shaders\General\SRPDebugWireframesShaders.h" />
     <ClInclude Include="include\PLCompositing\Shaders\General\SRPDirectionalLightingShadersMaterial.h" />
     <ClInclude Include="include\PLCompositing\Shaders\General\SRPLightingMaterial.h" />
@@ -406,6 +408,8 @@ copy build\release_x64\PLCompositing.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLCompositing\Shaders\General\SRPDiffuseOnlyShaders.h" />
     <ClInclude Include="src\Shaders\Deferred\SRPDeferredVolumetricFog_Cg.h" />
     <ClInclude Include="src\Shaders\Deferred\SRPDeferredVolumetricFog_GLSL.h" />
+    <ClInclude Include="src\Shaders\General\SRPDebugDepthShaders_Cg.h" />
+    <ClInclude Include="src\Shaders\General\SRPDebugDepthShaders_GLSL.h" />
     <ClInclude Include="src\Shaders\General\SRPDebugWireframesShaders_Cg.h" />
     <ClInclude Include="src\Shaders\General\SRPDebugWireframesShaders_GLSL.h" />
     <ClInclude Include="src\Shaders\General\SRPDiffuseOnlyShaders_Cg.h" />

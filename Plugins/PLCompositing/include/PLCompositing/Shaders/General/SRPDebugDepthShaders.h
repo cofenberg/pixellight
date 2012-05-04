@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: SRPDebugWireframesShaders.h                    *
+ *  File: SRPDebugDepthShaders.h                         *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
@@ -20,29 +20,27 @@
 \*********************************************************/
 
 
-#ifndef __PLCOMPOSITING_GENERAL_DEBUGWIREFRAMES_H__
-#define __PLCOMPOSITING_GENERAL_DEBUGWIREFRAMES_H__
+#ifndef __PLCOMPOSITING_GENERAL_DEBUGDEPTH_H__
+#define __PLCOMPOSITING_GENERAL_DEBUGDEPTH_H__
 #pragma once
 
 
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include "PLCompositing/SRPDebugWireframes.h"
+#include <PLRenderer/Renderer/ProgramGenerator.h>
+#include "PLCompositing/SRPDebug.h"
 
 
 //[-------------------------------------------------------]
 //[ Forward declarations                                  ]
 //[-------------------------------------------------------]
 namespace PLRenderer {
-	class Program;
-	class VertexShader;
-	class FragmentShader;
 	class ProgramUniform;
 	class ProgramAttribute;
 }
-namespace PLMesh {
-	class MeshHandler;
+namespace PLCompositing {
+	class FullscreenQuad;
 }
 
 
@@ -57,17 +55,36 @@ namespace PLCompositing {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Shaders based scene renderer pass drawing just simple wireframes
+*    Shaders based scene renderer pass visualizing the depth buffer for debugging purposes
 */
-class SRPDebugWireframesShaders : public SRPDebugWireframes {
+class SRPDebugDepthShaders : public SRPDebug {
+
+
+	//[-------------------------------------------------------]
+	//[ Public definitions                                    ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Scene renderer pass flags (SceneRendererPass flags extension)
+		*/
+		enum EFlags {
+			NoLinearizedDepth = 1<<1	/**< Do not linearize the depth */
+		};
+		pl_enum(EFlags)
+			pl_enum_base(SRPDebug::EFlags)
+			pl_enum_value(NoLinearizedDepth, "Do not linearize the depth")
+		pl_enum_end
 
 
 	//[-------------------------------------------------------]
 	//[ RTTI interface                                        ]
 	//[-------------------------------------------------------]
-	pl_class(PLCOM_RTTI_EXPORT, SRPDebugWireframesShaders, "PLCompositing", PLCompositing::SRPDebugWireframes, "Shaders based scene renderer pass drawing just simple wireframes")
+	pl_class(PLCOM_RTTI_EXPORT, SRPDebugDepthShaders, "PLCompositing", PLCompositing::SRPDebug, "Shaders based scene renderer pass visualizing the depth buffer for debugging purposes")
 		// Attributes
-		pl_attribute(ShaderLanguage,	PLCore::String,	"",	ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+		pl_attribute(ShaderLanguage,	PLCore::String,			"",	ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",	"")
+			// Overwritten PLScene::SceneRendererPass attributes
+		pl_attribute(Flags,				pl_flag_type(EFlags),	0,	ReadWrite,	GetSet,			"Flags",																																"")
 		// Constructors
 		pl_constructor_0(DefaultConstructor,	"Default constructor",	"")
 	pl_class_end
@@ -81,76 +98,55 @@ class SRPDebugWireframesShaders : public SRPDebugWireframes {
 		*  @brief
 		*    Default constructor
 		*/
-		PLCOM_API SRPDebugWireframesShaders();
+		PLCOM_API SRPDebugDepthShaders();
 
 		/**
 		*  @brief
 		*    Destructor
 		*/
-		PLCOM_API virtual ~SRPDebugWireframesShaders();
+		PLCOM_API virtual ~SRPDebugDepthShaders();
 
 
 	//[-------------------------------------------------------]
-	//[ Private functions                                     ]
-	//[-------------------------------------------------------]
-	private:
-		/**
-		*  @brief
-		*    Draws recursive
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] cCullQuery
-		*    Cull query to use
-		*/
-		void DrawRec(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery) const;
-
-		/**
-		*  @brief
-		*    Draws a mesh
-		*
-		*  @param[in] cRenderer
-		*    Renderer to use
-		*  @param[in] cVisNode
-		*    Visibility node to use
-		*  @param[in] cMeshHandler
-		*    Mesh handler to use
-		*/
-		void DrawMesh(PLRenderer::Renderer &cRenderer, const PLScene::VisNode &cVisNode, const PLMesh::MeshHandler &cMeshHandler) const;
-
-		/**
-		*  @brief
-		*    Called when a program became dirty
-		*
-		*  @param[in] pProgram
-		*    Program which became dirty
-		*/
-		void OnDirty(PLRenderer::Program *pProgram);
-
-
-	//[-------------------------------------------------------]
-	//[ Private event handlers                                ]
+	//[ Private definitions                                   ]
 	//[-------------------------------------------------------]
 	private:
-		PLCore::EventHandler<PLRenderer::Program*> EventHandlerDirty;
+		/**
+		*  @brief
+		*    Fragment shader flags, flag names become to source code definitions
+		*/
+		enum EFragmentShaderFlags {
+			FS_LINEARIZE_DEPTH = 1<<0	/**< Linearize the depth */
+		};
+
+		/**
+		*  @brief
+		*    Direct pointers to uniforms & attributes of a generated program
+		*/
+		struct GeneratedProgramUserData {
+			// Vertex shader attributes
+			PLRenderer::ProgramAttribute *pVertexPosition;
+			// Vertex shader uniforms
+			PLRenderer::ProgramUniform *pTextureSize;
+			// Fragment shader uniforms
+			PLRenderer::ProgramUniform *pTexture;
+			PLRenderer::ProgramUniform *pZNearFar;
+		};
 
 
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		PLRenderer::VertexShader		*m_pVertexShader;								/**< Vertex shader, can be a null pointer */
-		PLRenderer::FragmentShader		*m_pFragmentShader;								/**< Fragment shader, can be a null pointer */
-		PLRenderer::Program				*m_pProgram;									/**< GPU program, can be a null pointer */
-		PLRenderer::ProgramAttribute	*m_pPositionProgramAttribute;					/**< Position program attribute, can be a null pointer */
-		PLRenderer::ProgramUniform		*m_pObjectSpaceToClipSpaceMatrixProgramUniform;	/**< Object space to clip space matrix program uniform, can be a null pointer */
-		PLRenderer::ProgramUniform		*m_pColorProgramUniform;						/**< Color program uniform, can be a null pointer */
+		FullscreenQuad						*m_pFullscreenQuad;		/**< Fullscreen quad instance, can be a null pointer */
+		PLRenderer::ProgramGenerator		*m_pProgramGenerator;	/**< Program generator, can be a null pointer */
+		PLRenderer::ProgramGenerator::Flags	 m_cProgramFlags;		/**< Program flags as class member to reduce dynamic memory allocations */
 
 
 	//[-------------------------------------------------------]
-	//[ Private virtual PLScene::SceneRendererPass functions  ]
+	//[ Protected virtual PLScene::SceneRendererPass functions ]
 	//[-------------------------------------------------------]
-	private:
+	protected:
 		virtual void Draw(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery) override;
 
 
@@ -163,4 +159,4 @@ class SRPDebugWireframesShaders : public SRPDebugWireframes {
 } // PLCompositing
 
 
-#endif // __PLCOMPOSITING_GENERAL_DEBUGWIREFRAMES_H__
+#endif // __PLCOMPOSITING_GENERAL_DEBUGDEPTH_H__
