@@ -97,6 +97,7 @@ add_sources(
 	src/Shaders/PostProcessing/PostProcessManager.cpp
 	src/Shaders/PostProcessing/PostProcessLoader.cpp
 	src/Shaders/PostProcessing/PostProcessLoaderPL.cpp
+	src/Shaders/PostProcessing/SRPMotionBlurShaders.cpp
 	src/Shaders/PostProcessing/SRPEndFXAA.cpp
 	src/SceneNodeModifiers/SNMPostProcess.cpp
 	src/SceneNodeModifiers/SNMPostProcessDepthOfField.cpp

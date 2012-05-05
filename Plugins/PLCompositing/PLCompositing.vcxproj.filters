@@ -247,6 +247,9 @@
     <ClCompile Include="src\Shaders\General\SRPDebugDepthShaders.cpp">
       <Filter>Shaders\General</Filter>
     </ClCompile>
+    <ClCompile Include="src\Shaders\PostProcessing\SRPMotionBlurShaders.cpp">
+      <Filter>Shaders\PostProcessing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\PLCompositing\FullscreenQuad.h">
@@ -623,6 +626,15 @@
     </ClInclude>
     <ClInclude Include="include\PLCompositing\Shaders\General\SRPDebugDepthShaders.h">
       <Filter>Shaders\General</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shaders\PostProcessing\SRPMotionBlurShaders_Cg.h">
+      <Filter>Shaders\PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shaders\PostProcessing\SRPMotionBlurShaders_GLSL.h">
+      <Filter>Shaders\PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLCompositing\Shaders\PostProcessing\SRPMotionBlurShaders.h">
+      <Filter>Shaders\PostProcessing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

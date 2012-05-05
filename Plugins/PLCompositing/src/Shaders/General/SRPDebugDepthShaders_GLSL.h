@@ -27,7 +27,7 @@
 
 
 // OpenGL 2.0 ("#version 110") GLSL vertex shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLCore::String sEndHDR_GLSL_VS = STRINGIFY(
+static const PLCore::String sDebugDepth_GLSL_VS = STRINGIFY(
 // Attributes
 attribute vec4 VertexPosition;	// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
 								// zw = Vertex texture coordinate, lower/left is (0,0) and upper/right is (1,1)
@@ -49,7 +49,7 @@ void main()
 
 
 // OpenGL 2.0 ("#version 110") GLSL fragment shader source code, "#version" is added by "PLRenderer::ProgramGenerator"
-static const PLCore::String sEndHDR_GLSL_FS = "\
+static const PLCore::String sDebugDepth_GLSL_FS = "\
 // GLSL extensions\n\
 #extension GL_ARB_texture_rectangle : enable\n\
 \n\

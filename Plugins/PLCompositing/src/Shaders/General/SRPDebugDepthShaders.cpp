@@ -89,7 +89,7 @@ void SRPDebugDepthShaders::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 	// Get the "PLCompositing::SRPBegin" instance
 	SRPBegin *pSRPBegin = static_cast<SRPBegin*>(GetFirstInstanceOfSceneRendererPassClass("PLCompositing::SRPBegin"));
 	if (pSRPBegin) {
-		// Get the back render target of SRPBegin, this holds the current content
+		// Get the depth render target of SRPBegin
 		TextureBufferRectangle *pTextureBuffer = pSRPBegin->GetTextureBufferDepth();
 		if (pTextureBuffer) {
 			// Create the fullscreen quad instance if required
@@ -115,10 +115,10 @@ void SRPDebugDepthShaders::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					// Choose the shader source codes depending on the requested shader language
 					if (sShaderLanguage == "GLSL") {
 						#include "SRPDebugDepthShaders_GLSL.h"
-						m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sEndHDR_GLSL_VS, "110", sEndHDR_GLSL_FS, "110");	// OpenGL 2.0 ("#version 110")
+						m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDebugDepth_GLSL_VS, "110", sDebugDepth_GLSL_FS, "110");	// OpenGL 2.0 ("#version 110")
 					} else if (sShaderLanguage == "Cg") {
 						#include "SRPDebugDepthShaders_Cg.h"
-						m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sEndHDR_Cg_VS, "glslv", sEndHDR_Cg_FS, "glslf");
+						m_pProgramGenerator = new ProgramGenerator(cRenderer, sShaderLanguage, sDebugDepth_Cg_VS, "glslv", sDebugDepth_Cg_FS, "glslf");
 					}
 				}
 

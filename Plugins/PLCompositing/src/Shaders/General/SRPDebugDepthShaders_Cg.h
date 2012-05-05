@@ -27,7 +27,7 @@
 
 
 // Cg vertex shader source code
-static const PLCore::String sEndHDR_Cg_VS = STRINGIFY(
+static const PLCore::String sDebugDepth_Cg_VS = STRINGIFY(
 // Vertex output
 struct VS_OUTPUT {
 	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
@@ -55,7 +55,7 @@ VS_OUTPUT main(float4 VertexPosition : POSITION	// Clip space vertex position, l
 
 
 // Cg fragment shader source code
-static const PLCore::String sEndHDR_Cg_FS = "\
+static const PLCore::String sDebugDepth_Cg_FS = "\
 // Vertex output\n\
 struct VS_OUTPUT {\n\
 	float4 Position : POSITION;		// Clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)\n\
