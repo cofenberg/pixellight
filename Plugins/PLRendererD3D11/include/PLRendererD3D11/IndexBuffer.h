@@ -29,6 +29,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLRenderer/Renderer/IndexBuffer.h>
+#include "PLRendererD3D11/PLRendererD3D11.h"
 
 
 //[-------------------------------------------------------]
@@ -63,6 +64,15 @@ class IndexBuffer : public PLRenderer::IndexBuffer {
 		*/
 		virtual ~IndexBuffer();
 
+		/**
+		*  @brief
+		*    Returns the Direct3D buffer
+		*
+		*  @return
+		*    Direct3D buffer, can be a null pointer
+		*/
+		ID3D11Buffer *GetD3D11Buffer();
+
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
@@ -94,8 +104,12 @@ class IndexBuffer : public PLRenderer::IndexBuffer {
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
-		void *m_pData;			/**< Dynamic buffer, can be a null pointer (none VBO) */
-		void *m_pLockedData;	/**< Locked data, can be a null pointer */
+		void		 *m_pData;			/**< Dynamic buffer, can be a null pointer (none VBO) */
+		void		 *m_pLockedData;	/**< Locked data, can be a null pointer */
+		ID3D11Buffer *m_pD3D11Buffer;	/**< Direct3D buffer, can be a null pointer */
+		DXGI_FORMAT	  m_nDXGIFormat;	/**< DXGI format */
+		bool		  m_bLockReadOnly;	/**< Read only lock? */
+		bool		  m_bUpdateIBO;		/**< Do we need to update the IBO? */
 
 
 	//[-------------------------------------------------------]
