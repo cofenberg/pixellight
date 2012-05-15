@@ -361,6 +361,10 @@ elseif(LINUX)
 	if(ANDROID)
 		include(${CMAKETOOLS_DIR}/Platforms/LinuxNDK.cmake)
 
+	# NaCL ("CMAKE_CXX_COMPILER_ID" matches also "GNU", so this test must come first)
+	elseif(NACL)
+		include(${CMAKETOOLS_DIR}/Platforms/LinuxNaCL.cmake)
+
 	# GCC
 	elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
 		include(${CMAKETOOLS_DIR}/Platforms/LinuxGCC.cmake)

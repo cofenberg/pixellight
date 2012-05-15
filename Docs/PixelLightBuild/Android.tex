@@ -38,7 +38,7 @@ This tool can't be set within a CMake file automatically, there are several opti
 \item{Use a MinGW installer from e.g. \url{http://www.tdragon.net/recentgcc/} which can set the \emph{PATH} environment variable *overkill because only the 171 KiB \emph{make} is required*}
 \item{Use CMake from inside a command prompt by typing for example (\emph{DCMAKE\_TOOLCHAIN\_FILE} is only required when using a toolchain) \\ *not really comfortable when working with it on a regular basis*
 \begin{lstlisting}[language=sh]
-cmake.exe -G"Unix Makefiles" -DCMAKE\_MAKE\_PROGRAM="<PixelLight root path>/cmake/UsedTools/make/make.exe" -DCMAKE\_TOOLCHAIN\_FILE="<PixelLight root path>/cmake/Toolchains7Toolchain-ndk.cmake"
+cmake.exe -G"Unix Makefiles" -DCMAKE\_MAKE\_PROGRAM="<PixelLight root path>/cmake/UsedTools/make/make.exe" -DCMAKE\_TOOLCHAIN\_FILE="<PixelLight root path>/cmake/Toolchains/Toolchain-ndk.cmake"
 \end{lstlisting}
 }
 \end{itemize}

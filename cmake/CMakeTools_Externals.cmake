@@ -118,6 +118,7 @@ macro(external_command target comment script depends)
 	external_command_add_definition(command PL_RUNTIME_BIN_GITDIR)
 	external_command_add_definition(command LINUX)
 	external_command_add_definition(command ANDROID)
+	external_command_add_definition(command NACL)
 	external_command_add_definition(command ARMEABI_V7A)
 	set(command ${command} "-P" ${CMAKE_CURRENT_SOURCE_DIR}/${script})
 
