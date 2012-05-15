@@ -37,6 +37,9 @@
 namespace PLCore {
 	class XmlElement;
 }
+namespace PLRenderer {
+	class Effect;
+}
 
 
 //[-------------------------------------------------------]

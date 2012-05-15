@@ -38,6 +38,7 @@ namespace PLCore {
 	class XmlElement;
 }
 namespace PLRenderer {
+	class TextureAni;
 	class AniInfoManager;
 }
 

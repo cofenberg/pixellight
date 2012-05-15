@@ -43,6 +43,7 @@ namespace PLRenderer {
 	class IndexBuffer;
 }
 namespace PLMesh {
+	class Mesh;
 	class Weight;
 	class Skeleton;
 	class Geometry;

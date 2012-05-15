@@ -39,6 +39,7 @@ namespace PLCore {
 }
 namespace PLScene {
 	class SceneNode;
+	class SceneContainer;
 	class SceneNodeModifier;
 }
 
