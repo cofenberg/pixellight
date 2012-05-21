@@ -63,7 +63,7 @@ SUITE(Hashmap_Performance) {
 	
 	TEST(C_Hashmap_Add){
 		for (int i=0; i<testloops; i++)
-			CHashmap[static_cast<char>(i+48)] = i;
+			CHashmap[static_cast<char>(i+48),i] = i;	// operator[a] increases the map size by 1 if a not matched 
 	}
 	
 	TEST(PL_Hashmap_Replace){
@@ -96,22 +96,22 @@ SUITE(Hashmap_Performance) {
 			CHashmap.find(static_cast<char>(testloops-i));
 	}
 
-	TEST(PL_Hashmap_RemoveV_Forwards){
+	TEST(PL_Hashmap_Remove_Forwards){
 		for (int i=0; i<testloops; i++)
-			PLHashmap.RemoveValue (i);
+			PLHashmap.Remove(i);
 	}
 
-	TEST(C_Hashmap_RemoveV_Forwards){
+	TEST(C_Hashmap_Remove_Forwards){
 		for (int i=0; i<testloops; i++)
 			CHashmap.erase(static_cast<char>(i));
 	}
 
-	TEST(PL_Hashmap_RemoveV_Backwards){
+	TEST(PL_Hashmap_Remove_Backwards){
 		for (int i=0; i<testloops; i++)
-			PLHashmap.RemoveValue (testloops-i);
+			PLHashmap.Remove(testloops-i);
 	}
 
-	TEST(C_Hashmap_RemoveV_Backwards){
+	TEST(C_Hashmap_Remove_Backwards){
 		for (int i=0; i<testloops; i++)
 			CHashmap.erase(static_cast<char>(testloops-i));
 	}

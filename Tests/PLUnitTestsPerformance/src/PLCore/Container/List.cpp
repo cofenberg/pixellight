@@ -56,14 +56,14 @@ SUITE(List_Performance) {
 
 	TEST(PL_List_Add_front){
 		for (int i=0; i<testloops; i++)
-			PLList->Add(char(i+48));
+			PLList->AddAtIndex(char(i+48),0);
 	}
 
-	TEST(C_List_push_front){
+	TEST(C_List_Add_front){
 		for (int i=0; i<testloops; i++)
 			CList->push_front(char(i+48));
 	}
-	
+
 	TEST(PL_List_Remove_front){
 		for (int i=0; i<testloops; i++)
 			PLList->RemoveAtIndex(0);

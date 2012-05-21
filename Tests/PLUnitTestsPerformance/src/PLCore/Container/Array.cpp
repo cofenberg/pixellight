@@ -54,14 +54,27 @@ SUITE(Array_Performance) {
 	Array<int>* PLArray = new Array<int>();
 	vector<int>* CArray = new vector<int>();
 
-	TEST(PL_Array_AddAtIndex){
+	TEST(PL_Array_Add_at_end){
 		for (int i=0; i<testloops; i++)
 			PLArray->Add(char(i+48));
 	}
 
-	TEST(C_Array_push_back){
+	TEST(C_Array_Add_at_end){
 		for (int i=0; i<testloops; i++)
 			CArray->push_back(char(i+48));
+	}
+
+	TEST(PL_Array_Add_at_Index){
+		for (int i=0; i<testloops; i++)
+			PLArray->AddAtIndex(char(i+48), i);
+	}
+
+	TEST(C_Array_Add_at_Index){
+		vector<int>::iterator it;
+		for (int i=0; i<testloops; i++){
+			CArray->insert(it, 0, char(i+48));
+			it++;
+		}
 	}
 	
 	TEST(PL_Array_GetSize){
@@ -69,15 +82,16 @@ SUITE(Array_Performance) {
 			PLArray->GetSize();
 	}
 
-	TEST(C_Array_size){
+	TEST(C_Array_GetSize){
 		for (int i=0; i<testloops; i++)
 			CArray->size();
 	}
 
-	TEST(PL_Array_ReplaceAtIndex){
+	// No real C function for swapping two ELEMENTS of an array/vector
+	/*TEST(PL_Array_ReplaceAtIndex){
 		for (int i=0; i<testloops; i++)
 			PLArray->ReplaceAtIndex(testloops-i, i);
-	}
+	}*/
 
 	/*TEST(C_Array_swap){
 		for (int i=0; i<testloops; i++)

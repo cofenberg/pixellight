@@ -72,9 +72,6 @@ int UnitTestsPerformance()
 	// Close the results output file
 	outputFile.close();
 
-	// Wait for any key
-	getchar();
-
 	// Done
 	return nResult;
 }

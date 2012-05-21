@@ -1,3 +1,12 @@
+﻿>> 21.05.2012
+[CP]
+PLUnitPerformance:
+- added/renewed array_add tests that same funcionality is given than in C-functions
+- more string methods (insert_begin, insert_mid, instert_ end, substring)
+- more list methods (add_front, remove front, add_back, remove_back)
+
+
+
 >> 30.04.2012
 [JS]
 PLTestBase:

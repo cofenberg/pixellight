@@ -55,17 +55,64 @@ SUITE(String_Performance) {
 	int testloops = 10000;	// number of iterations
 	String* PLString = new String();
 	string* CString = new string();
-
-	TEST(PL_String_insert){
+	
+	TEST(PL_String_insert_begin){
 		for (int i=0; i<testloops; i++)
 			PLString->Insert(static_cast<char>(i+48),0);
 	}
 
-	TEST(C_String_insert){
+	TEST(C_String_insert_begin){
 		char insert[2];
 		insert[1] = '\0';
-		for (int i=0; i<testloops; i++)
+		for (int i=0; i<testloops; i++){
 			insert[0] = char(i+48);
 			CString->insert(0, insert);
+		}
 	}
+
+	TEST(PL_String_insert_mid){
+		for (int i=0; i<testloops; i++)
+			PLString->Insert(static_cast<char>(i+48),i/2);
+	}
+
+	TEST(C_String_insert_mid){
+		char insert[2];
+		insert[1] = '\0';
+		for (int i=0; i<testloops; i++){
+			insert[0] = char(i+48);
+			CString->insert(i/2, insert);
+		}	
+	}
+
+	TEST(PL_String_insert_end){
+		for (int i=0; i<testloops; i++)
+			PLString->Insert(static_cast<char>(i+48),i);
+	}
+
+	TEST(C_String_insert_end){
+		char insert[2];
+		insert[1] = '\0';
+		for (int i=0; i<testloops; i++){
+			insert[0] = char(i+48);
+			CString->insert(i, insert);
+		}	
+	}
+
+	/*
+	Tests for SubString
+	*/
+	TEST(PL_String_Substring){
+		for (int i=0; i<testloops; i++)
+			PLString->GetSubstring(i);
+	}
+
+	TEST(C_String_Substring){
+		char insert[2];
+		insert[1] = '\0';
+		for (int i=0; i<testloops; i++){
+			insert[0] = char(i+48);
+			CString->substr(i, insert[0]);
+		}	
+	}
+
 }
