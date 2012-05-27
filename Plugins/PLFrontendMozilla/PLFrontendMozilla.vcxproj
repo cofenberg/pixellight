@@ -93,7 +93,7 @@
       <AdditionalIncludeDirectories>src;../../Base/PLCore/include;../../External/_Windows_x86_32/xulrunnersdk/include/plugin/;../../External/_Windows_x86_32/xulrunnersdk/include/nspr/;../../External/_Windows_x86_32/xulrunnersdk/include/java/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLFRONTENDMOZILLA_EXPORTS;MOZILLA_STRICT_API;XP_WIN;_X86_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -125,7 +125,7 @@
       <AdditionalIncludeDirectories>src;../../Base/PLCore/include;../../External/_Windows_x86_64/xulrunnersdk/include/plugin/;../../External/_Windows_x86_64/xulrunnersdk/include/nspr/;../../External/_Windows_x86_64/xulrunnersdk/include/java/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLFRONTENDMOZILLA_EXPORTS;MOZILLA_STRICT_API;XP_WIN;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>

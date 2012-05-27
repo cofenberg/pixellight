@@ -89,7 +89,7 @@
       <AdditionalIncludeDirectories>include;../../PixelLight;../../External/_Windows_x86_32/zlib/include/zlib/;../../External/_Windows_x86_32/libpcre/include/pcre/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;PCRE_STATIC;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -150,7 +150,7 @@
       <AdditionalIncludeDirectories>include;../../PixelLight;../../External/_Windows_x86_64/zlib/include/zlib/;../../External/_Windows_x86_64/libpcre/include/pcre/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_LIB;_WINDOWS;_USRDLL;_CRT_SECURE_NO_WARNINGS;PCRE_STATIC;PLCORE_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
