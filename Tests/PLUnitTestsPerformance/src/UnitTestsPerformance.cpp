@@ -46,21 +46,27 @@ int UnitTestsPerformance()
 {
 	// Get the current time as ASCII string
 	char szTime[9];
+	char szDate[11];
+
 	#ifdef WIN32
 		_strtime(szTime);
+		_strdate(szDate);
 		// replace ':' (not valid within filenames) by '-'
 		szTime[2] = szTime[5] = '-';
+		szDate[2] = szDate[5] = '-';
+
 	#else
 		struct tm sTime;
 		struct timeval sNow;
 		gettimeofday(&sNow, nullptr);
 		localtime_r(&sNow.tv_sec, &sTime);
-		sprintf(szTime, "%2d_%2d_%2d", sTime.tm_hour, sTime.tm_min, sTime.tm_sec);
+		sprintf(szTime, "%2d_%2d_%2d_%2d-%2d-%2d", sTime.tm_hour, sTime.tm_min, sTime.tm_sec, sTime.tm_yday, sTime.tm_mon, sTime.tm_year);
 	#endif
 
 	// Open the results output file
 	char szFilename[256];
-	sprintf(szFilename, "PLUnitTestsPerformance_Result_%s.csv", szTime);
+
+	sprintf(szFilename, "PLUnitTestsPerformance_Result_[%s][%s].csv", szTime, szDate);
 	outputFile.open(szFilename);
 
 	// Create an reporter instance
