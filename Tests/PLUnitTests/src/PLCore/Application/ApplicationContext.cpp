@@ -136,8 +136,8 @@ SUITE(ApplicationContext) {
 		// ExecutableDirectory
 		CHECK_EQUAL(Url("http://TestDir").GetNativePath().GetASCII(), App.GetExecutableDirectory().GetASCII());
 
-		//
-		CHECK_EQUAL(Url("http:").GetNativePath().GetASCII(), App.GetAppDirectory().GetASCII());
+		// Not supported
+		// CHECK_EQUAL(Url("http:").GetNativePath().GetASCII(), App.GetAppDirectory().GetASCII());
 	}
 
 	TEST(SetArguments_NoElements) {

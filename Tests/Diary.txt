@@ -1,3 +1,12 @@
+>> 04.06.2012
+[JS]
+PLUnitTests:
+- removed some dummytests
+- excluded http-appdirectory test in ApplicationContext
+- added tests to EulerAngles
+
+
+
 >> 30.04.2012
 [JS]
 PLTestBase:
