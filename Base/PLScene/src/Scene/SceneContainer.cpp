@@ -66,6 +66,9 @@ void SceneContainer::SetHierarchy(const String &sValue)
 		delete m_pHierarchy;
 		m_pHierarchy = nullptr;
 	}
+
+	// Assign the new class hierarchy name
+	m_sHierarchy = sValue;
 }
 
 void SceneContainer::SetFilename(const String &sValue)

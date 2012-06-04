@@ -14,6 +14,7 @@ Changes in PixelLight 0.9.12-R1 (not yet released)
 - Bugfix (ID: 3502066): "PLGraphics::Color4::IsValid()" alpha-check was invalid
 - Bugfix (ID: 3512436): "pl_implement_class(Keyboard)" was missing within "PLInput"
 - Bugfix (ID: 3514155): The ingame console was processing input events received while the main window had no focus
+- Bugfix (ID: 3531730): "PLScene::SceneContainer::SetHierarchy()" did not assign the new given hierarchy type
 - Bugfix: "PLRenderer::Texture::SetTextureBuffer()" did not update the original texture size
 - Bugfix: "PLRenderer::EffectLoaderPL::LoadV1()" was not loading the "Name"-attribute of techniques
 
