@@ -62,7 +62,7 @@ void SceneContainer::SetHierarchy(const String &sValue)
 {
 	// Destroy the current hierarchy, but do NOT create the new one at once - this
 	// is done if the new hierarchy is requested the first time  :)
-	if (m_pHierarchy && m_pHierarchy->GetClass()->GetClassName() != m_sHierarchy) {
+	if (m_pHierarchy && m_pHierarchy->GetClass()->GetClassName() != sValue) {
 		delete m_pHierarchy;
 		m_pHierarchy = nullptr;
 	}

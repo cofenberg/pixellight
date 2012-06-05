@@ -1,3 +1,9 @@
+>> 05.06.2012
+[CO]
+- Bugfix of bugfix ID: 3531730 (I probably shouldn't make bugfixes when I don't have the time to test the change in detail)
+
+
+
 >> 04.06.2012
 [CO]
 - Bugfix (ID: 3531730 - http://sourceforge.net/tracker/index.php?func=detail&aid=3531730&group_id=507544&atid=2063682):
