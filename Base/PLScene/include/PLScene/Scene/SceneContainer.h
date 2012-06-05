@@ -103,7 +103,7 @@ class SceneContainer : public SceneNode, public PLCore::ElementManager<SceneNode
 	//[-------------------------------------------------------]
 	pl_class(PLS_RTTI_EXPORT, SceneContainer, "PLScene", PLScene::SceneNode, "Scene container node (group node) class which is using scene nodes")
 		// Attributes
-		pl_attribute(Hierarchy,	PLCore::String,			"",													ReadWrite,	GetSet,	"Class name of the scene container hierarchy",							"")
+		pl_attribute(Hierarchy,	PLCore::String,			"PLScene::SHList",									ReadWrite,	GetSet,	"Class name of the scene container hierarchy",							"")
 			// Overwritten SceneNode attributes
 		pl_attribute(Flags,		pl_flag_type(EFlags),	0,													ReadWrite,	GetSet,	"Flags",																"")
 		pl_attribute(AABBMin,	PLMath::Vector3,		PLMath::Vector3(-10000.0f, -10000.0f, -10000.0f),	ReadWrite,	GetSet,	"Minimum position of the 'scene node space' axis aligned bounding box",	"")

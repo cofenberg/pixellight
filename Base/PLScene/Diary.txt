@@ -1,6 +1,7 @@
 >> 05.06.2012
 [CO]
 - Bugfix of bugfix ID: 3531730 (I probably shouldn't make bugfixes when I don't have the time to test the change in detail)
+- Bugfix: "SceneContainer": The default value of "Hierarchy" ("PLScene::SHList") was not set within the header
 
 
 
