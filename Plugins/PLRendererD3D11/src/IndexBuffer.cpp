@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/System/System.h>
-#include <PLRenderer/Renderer/Backend/RendererBackend.h>
+#include "PLRendererD3D11/Renderer.h"
 #include "PLRendererD3D11/IndexBuffer.h"
 
 
@@ -50,6 +50,32 @@ IndexBuffer::~IndexBuffer()
 	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nIndexBufferNum--;
 }
 
+/**
+*  @brief
+*    Returns the Direct3D buffer
+*/
+ID3D11Buffer *IndexBuffer::GetD3D11Buffer()
+{
+	// Do we need to update the IBO?
+	if (m_bUpdateIBO && m_pData) {
+		// Upload new data
+		if (m_pD3D11Buffer) {
+			// Get the used D3D11 device context
+			ID3D11DeviceContext *pD3D11DeviceContext = static_cast<Renderer&>(GetRenderer()).GetD3D11DeviceContext();
+			if (pD3D11DeviceContext) {
+				// Upload
+				pD3D11DeviceContext->UpdateSubresource(m_pD3D11Buffer, 0, nullptr, m_pData, 0, 0);
+			}
+		}
+
+		// The data is now up-to-date
+		m_bUpdateIBO = false;
+	}
+
+	// Return the Direct3D buffer
+	return m_pD3D11Buffer;
+}
+
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
@@ -60,7 +86,11 @@ IndexBuffer::~IndexBuffer()
 */
 IndexBuffer::IndexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::IndexBuffer(cRenderer),
 	m_pData(nullptr),
-	m_pLockedData(nullptr)
+	m_pLockedData(nullptr),
+	m_pD3D11Buffer(nullptr),
+	m_nDXGIFormat(DXGI_FORMAT_UNKNOWN),
+	m_bLockReadOnly(false),
+	m_bUpdateIBO(false)
 {
 	// Update renderer statistics
 	static_cast<PLRenderer::RendererBackend&>(cRenderer).GetWritableStatistics().nIndexBufferNum++;
@@ -72,8 +102,20 @@ IndexBuffer::IndexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::IndexBuf
 */
 bool IndexBuffer::MakeCurrent()
 {
-	// Check if there's an index buffer
-	return (m_pData != nullptr);
+	// Get the up-to-date Direct3D buffer
+	ID3D11Buffer *pD3D11Buffer = GetD3D11Buffer();
+	if (pD3D11Buffer) {
+		// Get the used D3D11 device context
+		ID3D11DeviceContext *pD3D11DeviceContext = static_cast<Renderer&>(GetRenderer()).GetD3D11DeviceContext();
+		if (pD3D11DeviceContext) {
+			// Done
+			pD3D11DeviceContext->IASetIndexBuffer(pD3D11Buffer, m_nDXGIFormat, 0);
+			return true;
+		}
+	}
+
+	// Error!
+	return false;
 }
 
 
@@ -89,18 +131,28 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 {
 	// Get API dependent type
 	uint32 nElementSizeAPI;
-	if (m_nElementType == UInt)
+	DXGI_FORMAT nDXGIFormat = DXGI_FORMAT_UNKNOWN;
+	if (m_nElementType == UInt) {
 		nElementSizeAPI = sizeof(uint32);
-	else if (m_nElementType == UShort)
+		nDXGIFormat     = DXGI_FORMAT_R32_UINT;
+	} else if (m_nElementType == UShort) {
 		nElementSizeAPI = sizeof(uint16);
-	else if (m_nElementType == UByte)
+		nDXGIFormat     = DXGI_FORMAT_R16_UINT;
+	} else if (m_nElementType == UByte) {
 		nElementSizeAPI = sizeof(uint8);
-	else
+		nDXGIFormat     = DXGI_FORMAT_R8_UINT;
+	} else {
 		return false; // Error!
+	}
 
 	// Check if we have to reallocate the buffer
 	if (m_nSize == nElementSizeAPI*nElements && nUsage == m_nUsage && m_bManaged == bManaged)
 		return true; // Done
+
+	// Get the used D3D11 device instance
+	ID3D11Device *pD3D11Device = static_cast<Renderer&>(GetRenderer()).GetD3D11Device();
+	if (!pD3D11Device)
+		return false; // Error!
 
 	// Update renderer statistics
 	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nIndexBufferMem -= m_nSize;
@@ -137,33 +189,58 @@ bool IndexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, boo
 	// Restore old data if required
 	if (pDataBackup) {
 		// We can just copy the old data in...
-		if (Lock(PLRenderer::Lock::WriteOnly)) {
-			uint32 nSize = nSizeBackup;
-			if (nSize > m_nSize)
-				nSize = m_nSize;
-			MemoryManager::Copy(GetData(), pDataBackup, nSize);
-			Unlock();
-		}
+		uint32 nSize = nSizeBackup;
+		if (nSize > m_nSize)
+			nSize = m_nSize;
+		MemoryManager::Copy(m_pData, pDataBackup, nSize);
 
 		// Cleanup
 		if (m_nElementType == UInt)
-			delete [] static_cast<uint32*>(m_pData);
+			delete [] pDataBackup;
 		else if (m_nElementType == UShort)
-			delete [] static_cast<uint16*>(m_pData);
+			delete [] pDataBackup;
 		else
-			delete [] static_cast<uint8*>(m_pData);
+			delete [] pDataBackup;
 	}
 
 	// Update renderer statistics
 	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nIndexBufferMem += m_nSize;
 
-	// Done
-	return true;
+	// Fill in a Direct3D buffer description
+	D3D11_BUFFER_DESC sD3D11BufferDesc;
+	sD3D11BufferDesc.Usage			= D3D11_USAGE_DEFAULT;
+	sD3D11BufferDesc.ByteWidth		= m_nSize;
+	sD3D11BufferDesc.BindFlags		= D3D11_BIND_INDEX_BUFFER;
+	sD3D11BufferDesc.CPUAccessFlags	= 0;
+	sD3D11BufferDesc.MiscFlags		= 0;
+
+	// Fill in the Direct3D subresource data
+	D3D11_SUBRESOURCE_DATA sD3D11SubResourceData;
+	sD3D11SubResourceData.pSysMem			= m_pData;
+	sD3D11SubResourceData.SysMemPitch		= 0;
+	sD3D11SubResourceData.SysMemSlicePitch	= 0;
+
+	// Create the Direct3D index buffer
+	m_bLockReadOnly = m_bUpdateIBO = false;
+	if (m_pD3D11Buffer) {
+		m_pD3D11Buffer->Release();
+		m_pD3D11Buffer = nullptr;
+	}
+	m_nDXGIFormat = nDXGIFormat;
+	return SUCCEEDED(pD3D11Device->CreateBuffer(&sD3D11BufferDesc, &sD3D11SubResourceData, &m_pD3D11Buffer));
 }
 
 bool IndexBuffer::Clear()
 {
+	if (!IsAllocated())
+		return false; // Error!
 	ForceUnlock();
+	if (m_pD3D11Buffer) {
+		m_pD3D11Buffer->Release();
+		m_pD3D11Buffer = nullptr;
+	}
+	m_nDXGIFormat = DXGI_FORMAT_UNKNOWN;
+	m_bLockReadOnly = m_bUpdateIBO = false;
 	if (m_pData) {
 		if (m_nElementType == UInt)
 			delete [] static_cast<uint32*>(m_pData);
@@ -199,6 +276,9 @@ void *IndexBuffer::Lock(uint32 nFlag)
 	if (m_pLockedData)
 		return m_pLockedData; // Return the locked data
 
+	// Read only?
+	m_bLockReadOnly = (nFlag == PLRenderer::Lock::ReadOnly);
+
 	// Lock the index buffer
 	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nIndexBufferLocks++;
 	m_nLockStartTime = System::GetInstance()->GetMicroseconds();
@@ -225,6 +305,8 @@ bool IndexBuffer::Unlock()
 		return true; // Nope, it's still used somewhere else...
 
 	// Unlock the index buffer
+	if (m_pData && m_pD3D11Buffer && !m_bLockReadOnly)
+		m_bUpdateIBO = true;
 	m_pLockedData = nullptr;
 	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nIndexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
 

@@ -1,3 +1,10 @@
+>> 13.05.2012
+[CO]
+PLRendererD3D11:
+- "VertexBuffer" & "IndexBuffer": Added a first implementation which is not tested, yet
+
+
+
 >> 04.05.2012
 [CO]
 - "VertexBuffer" & "IndexBuffer": Added ease of use methods "CopyFrom()" and "CopyTo()" ("UniformBuffer" already had them)

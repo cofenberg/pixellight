@@ -93,7 +93,7 @@
       <AdditionalIncludeDirectories>include/;../PLCore/include/;../PLMath/include/;../../External/_Windows_x86_32/libpng/include/png/;../../External/_Windows_x86_32/libjpg/include/jpg/;../../External/_Windows_x86_32/zlib/include/zlib/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;PLGRAPHICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -125,7 +125,7 @@ copy build\debug_x86\PLGraphicsD.lib ..\..\Bin\Lib\x86\
       <AdditionalIncludeDirectories>include/;../PLCore/include/;../PLMath/include/;../../External/_Windows_x86_64/libpng/include/png/;../../External/_Windows_x86_64/libjpg/include/jpg/;../../External/_Windows_x86_64/zlib/include/zlib/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;PLGRAPHICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>

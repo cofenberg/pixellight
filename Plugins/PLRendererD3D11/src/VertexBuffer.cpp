@@ -24,7 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #include <PLCore/System/System.h>
-#include <PLRenderer/Renderer/Backend/RendererBackend.h>
+#include "PLRendererD3D11/Renderer.h"
 #include "PLRendererD3D11/VertexBuffer.h"
 
 
@@ -51,6 +51,32 @@ VertexBuffer::~VertexBuffer()
 	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nVertexBufferNum--;
 }
 
+/**
+*  @brief
+*    Returns the Direct3D buffer
+*/
+ID3D11Buffer *VertexBuffer::GetD3D11Buffer()
+{
+	// Do we need to update the VBO?
+	if (m_bUpdateVBO && m_pData) {
+		// Upload new data
+		if (m_pD3D11Buffer) {
+			// Get the used D3D11 device context
+			ID3D11DeviceContext *pD3D11DeviceContext = static_cast<Renderer&>(GetRenderer()).GetD3D11DeviceContext();
+			if (pD3D11DeviceContext) {
+				// Upload
+				pD3D11DeviceContext->UpdateSubresource(m_pD3D11Buffer, 0, nullptr, m_pData, 0, 0);
+			}
+		}
+
+		// The data is now up-to-date
+		m_bUpdateVBO = false;
+	}
+
+	// Return the Direct3D buffer
+	return m_pD3D11Buffer;
+}
+
 
 //[-------------------------------------------------------]
 //[ Private functions                                     ]
@@ -62,6 +88,9 @@ VertexBuffer::~VertexBuffer()
 VertexBuffer::VertexBuffer(PLRenderer::Renderer &cRenderer) : PLRenderer::VertexBuffer(cRenderer),
 	m_pData(nullptr),
 	m_pLockedData(nullptr),
+	m_pD3D11Buffer(nullptr),
+	m_bLockReadOnly(false),
+	m_bUpdateVBO(false),
 	m_nVertexOffset(0)
 {
 	// Init data
@@ -174,35 +203,35 @@ void VertexBuffer::VertexAttributeAdded(Attribute &cAttribute)
 		// Color (legacy API dependent storage which is no longer required when using modern shader based API's, do always use GetColor() and SetColor()!)
 		case RGBA:
 			cAttribute.nSizeAPI		  = sizeof(float)*4;
-			cAttribute.nTypeAPI		  = 0;
+			cAttribute.nTypeAPI		  = DXGI_FORMAT_R32_FLOAT;
 			cAttribute.nComponentsAPI = 4;
 			break;
 
 		// Float 1 (one component per element, 32 bit floating point per component)
 		case Float1:
 			cAttribute.nSizeAPI		  = sizeof(float);
-			cAttribute.nTypeAPI		  = 0;
+			cAttribute.nTypeAPI		  = DXGI_FORMAT_R32_FLOAT;
 			cAttribute.nComponentsAPI = 1;
 			break;
 
 		// Float 2 (two components per element, 32 bit floating point per component)
 		case Float2:
 			cAttribute.nSizeAPI		  = sizeof(float)*2;
-			cAttribute.nTypeAPI		  = 0;
+			cAttribute.nTypeAPI		  = DXGI_FORMAT_R32_FLOAT;
 			cAttribute.nComponentsAPI = 2;
 			break;
 
 		// Float 3 (three components per element, 32 bit floating point per component)
 		case Float3:
 			cAttribute.nSizeAPI		  = sizeof(float)*3;
-			cAttribute.nTypeAPI		  = 0;
+			cAttribute.nTypeAPI		  = DXGI_FORMAT_R32_FLOAT;
 			cAttribute.nComponentsAPI = 3;
 			break;
 
 		// Float 4 (four components per element, 32 bit floating point per component)
 		case Float4:
 			cAttribute.nSizeAPI		  = sizeof(float)*4;
-			cAttribute.nTypeAPI		  = 0;
+			cAttribute.nTypeAPI		  = DXGI_FORMAT_R32_FLOAT;
 			cAttribute.nComponentsAPI = 4;
 			break;
 
@@ -221,19 +250,33 @@ void VertexBuffer::VertexAttributeAdded(Attribute &cAttribute)
 			break;
 
 		// Half 1 (one component per element, 16 bit floating point per component, may not be supported by each API)
-		// Half 2 (two components per element, 16 bit floating point per component, may not be supported by each API)
-		// Half 3 (three components per element, 16 bit floating point per component, may not be supported by each API)
-		// Half 4 (four components per element, 16 bit floating point per component, may not be supported by each API)
 		case Half1:
+			cAttribute.nSizeAPI		  = sizeof(float)/2;
+			cAttribute.nTypeAPI		  = DXGI_FORMAT_R16_FLOAT;
+			cAttribute.nComponentsAPI = 1;
+			break;
+
+		// Half 2 (two components per element, 16 bit floating point per component, may not be supported by each API)
 		case Half2:
+			cAttribute.nSizeAPI		  = sizeof(float)/2*2;
+			cAttribute.nTypeAPI		  = DXGI_FORMAT_R16_FLOAT;
+			cAttribute.nComponentsAPI = 2;
+			break;
+
+		// Half 3 (three components per element, 16 bit floating point per component, may not be supported by each API)
 		case Half3:
+			cAttribute.nSizeAPI		  = sizeof(float)/2*3;
+			cAttribute.nTypeAPI		  = DXGI_FORMAT_R16_FLOAT;
+			cAttribute.nComponentsAPI = 3;
+			break;
+
+		// Half 4 (four components per element, 16 bit floating point per component, may not be supported by each API)
 		case Half4:
-			// [TODO] Implement me
-			cAttribute.nSizeAPI = 0;
-			cAttribute.nTypeAPI = 0;
+			cAttribute.nSizeAPI		  = sizeof(float)/2*4;
+			cAttribute.nTypeAPI		  = DXGI_FORMAT_R16_FLOAT;
+			cAttribute.nComponentsAPI = 4;
 			break;
 	}
-	cAttribute.nComponentsAPI = 1;
 }
 
 
@@ -249,6 +292,11 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 {
 	// Check if we have to reallocate the buffer
 	if (m_nSize != m_nVertexSize*nElements || m_nUsage != nUsage || m_bManaged != bManaged) {
+		// Get the used D3D11 device instance
+		ID3D11Device *pD3D11Device = static_cast<Renderer&>(GetRenderer()).GetD3D11Device();
+		if (!pD3D11Device)
+			return false; // Error!
+
 		// Check the vertex buffer size
 		if (m_nVertexSize*nElements <= 0)
 			return false; // Error!
@@ -285,13 +333,10 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 		// Restore old data if required
 		if (pDataBackup) {
 			// We can just copy the old data in... vertex size CAN'T change in this situation!
-			if (Lock(PLRenderer::Lock::WriteOnly)) {
-				uint32 nSize = nSizeBackup;
-				if (nSize > m_nSize)
-					nSize = m_nSize;
-				MemoryManager::Copy(GetData(), pDataBackup, nSize);
-				Unlock();
-			}
+			uint32 nSize = nSizeBackup;
+			if (nSize > m_nSize)
+				nSize = m_nSize;
+			MemoryManager::Copy(m_pData, pDataBackup, nSize);
 
 			// Cleanup
 			delete [] pDataBackup;
@@ -299,6 +344,30 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 
 		// Update renderer statistics
 		static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nVertexBufferMem += m_nSize;
+
+		// Fill in a Direct3D buffer description
+		D3D11_BUFFER_DESC sD3D11BufferDesc;
+		sD3D11BufferDesc.Usage			= D3D11_USAGE_DEFAULT;
+		sD3D11BufferDesc.ByteWidth		= m_nSize;
+		sD3D11BufferDesc.BindFlags		= D3D11_BIND_VERTEX_BUFFER;
+		sD3D11BufferDesc.CPUAccessFlags	= 0;
+		sD3D11BufferDesc.MiscFlags		= 0;
+
+		// Fill in the Direct3D subresource data
+		D3D11_SUBRESOURCE_DATA sD3D11SubResourceData;
+		sD3D11SubResourceData.pSysMem			= m_pData;
+		sD3D11SubResourceData.SysMemPitch		= 0;
+		sD3D11SubResourceData.SysMemSlicePitch	= 0;
+
+		// Create the Direct3D vertex buffer
+		m_bLockReadOnly = m_bUpdateVBO = false;
+		if (m_pD3D11Buffer) {
+			m_pD3D11Buffer->Release();
+			m_pD3D11Buffer = nullptr;
+		}
+		HRESULT hResult = pD3D11Device->CreateBuffer(&sD3D11BufferDesc, &sD3D11SubResourceData, &m_pD3D11Buffer);
+		if (FAILED(hResult))
+			return false;	// Error!
 	}
 
 	// Get data attribute offsets
@@ -314,7 +383,14 @@ bool VertexBuffer::Allocate(uint32 nElements, PLRenderer::Usage::Enum nUsage, bo
 
 bool VertexBuffer::Clear()
 {
+	if (!IsAllocated())
+		return false; // Error!
 	ForceUnlock();
+	if (m_pD3D11Buffer) {
+		m_pD3D11Buffer->Release();
+		m_pD3D11Buffer = nullptr;
+	}
+	m_bLockReadOnly = m_bUpdateVBO = false;
 	if (m_pData) {
 		delete [] m_pData;
 		m_pData = nullptr;
@@ -351,6 +427,9 @@ void *VertexBuffer::Lock(uint32 nFlag)
 	if (m_pLockedData || !m_pData)
 		return nullptr; // Error!
 
+	// Read only?
+	m_bLockReadOnly = (nFlag == PLRenderer::Lock::ReadOnly);
+
 	// Lock the vertex buffer
 	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nVertexBufferLocks++;
 	m_nLockStartTime = System::GetInstance()->GetMicroseconds();
@@ -377,6 +456,8 @@ bool VertexBuffer::Unlock()
 		return true; // Nope, it's still used somewhere else...
 
 	// Unlock the vertex buffer
+	if (m_pData && m_pD3D11Buffer && !m_bLockReadOnly)
+		m_bUpdateVBO = true;
 	m_pLockedData = nullptr;
 	static_cast<PLRenderer::RendererBackend&>(GetRenderer()).GetWritableStatistics().nVertexBuffersSetupTime += System::GetInstance()->GetMicroseconds()-m_nLockStartTime;
 

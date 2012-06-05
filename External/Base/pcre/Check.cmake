@@ -49,6 +49,14 @@ if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
 			# md5sum of the 32bit armeabi package
 			set(md5sum "e4fcfa036d57da0950db15772308ca41")
 		endif()
+	elseif(NACL)
+		if(CMAKETOOLS_TARGET_BITSIZE MATCHES "64")
+			# [TODO] md5sum of the 64bit NaCL package
+			set(md5sum "e95d83ce7116d45c76d4313fa11d59e7")
+		else()
+			# [TODO] md5sum of the 32bit NaCL package
+			set(md5sum "e95d83ce7116d45c76d4313fa11d59e7")
+		endif()
 	elseif(APPLE)
 		if(CMAKETOOLS_TARGET_BITSIZE MATCHES "64")
 			# md5sum of the 64bit Apple package

@@ -5,6 +5,20 @@
 
 
 
+>> 27.05.2012
+[CO]
+- Visual Studio project files: In debug build, changed "Basic Runtime Checks" to "Default" in order to enhance the performance
+  while debugging. Within the dungeon demo, I now have within my test 20 FPS instead of 10 FPS.
+  -> See http://randomascii.wordpress.com/2011/07/22/visual-c-debug-buildsfast-checks-cause-5x-slowdowns/ for details
+
+
+
+>> 15.05.2012
+[CO]
+- Started playing around with Google Native Client (NaCL)
+
+
+
 >> 30.12.2011
 [CO]
 - Visual Studio project files of Qt based projects: The generated ui files are now within "build\GeneratedQtFiles"

@@ -30,8 +30,4 @@ SUITE(Quaternion) {
 		// Container for testing
 		PLMath::Quaternion quat;
 	};
-
-	TEST_FIXTURE(ConstructTest, Dummy) {
-		CHECK_IMPLEMENT;
-	}
 }

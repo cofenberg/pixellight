@@ -103,13 +103,6 @@ SUITE(Graph) {
 		// Node F (5)
 		pNodeF->AddNeighbour(*pNodeC, bUsePosition ? -1.0f : 5.0f);
 		pNodeF->AddNeighbour(*pNodeE, bUsePosition ? -1.0f : 2.0f);
-
-		// Save the graph
-		graph.SaveByFilename("Test.graph");
-
-		// Load and save it again
-		graph.LoadByFilename("Test.graph");
-		graph.SaveByFilename("Test_.graph");
 	}
 
 	// [TODO]
@@ -119,8 +112,4 @@ SUITE(Graph) {
 	if (pPath) {
 		delete pPath;
 	}*/
-
-	TEST(Dummy) {
-		CHECK_IMPLEMENT;
-	}
 }

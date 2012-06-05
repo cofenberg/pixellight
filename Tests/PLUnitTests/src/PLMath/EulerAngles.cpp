@@ -76,7 +76,6 @@ SUITE(EulerAngles) {
 					mEulY.FromEulerAngleY(fY);
 					mEulZ.FromEulerAngleZ(fZ);
 
-					// [TODO] is this order ok?
 					mEul = mEulZ * mEulY * mEulX;
 
 					//printf("x=%f y=%f z=%f\n", x, y, z);
@@ -113,7 +112,56 @@ SUITE(EulerAngles) {
             CHECK_MATRIX3X3(mEul, mRot, 0.01f);
     }
 
-	TEST_FIXTURE(ConstructTest, Quaternion_Functions) {
-		CHECK_IMPLEMENT;
+	TEST_FIXTURE(ConstructTest, ToQuaternion) {
+		Quaternion q;
+		EulerAngles::ToQuaternion(fX, fY, fZ, q);
+
+		CHECK_CLOSE(0.0f, q.x, Math::Epsilon);
+		CHECK_CLOSE(0.0f, q.y, Math::Epsilon);
+		CHECK_CLOSE(0.0f, q.z, Math::Epsilon);
+
+		fX = static_cast<float>(Math::Pi2);
+		fY = static_cast<float>(Math::Pi2);
+		fZ = static_cast<float>(Math::Pi2);
+
+		EulerAngles::ToQuaternion(fX, fY, fZ, q);
+
+		CHECK_CLOSE(0.0f, q.x, Math::Epsilon);
+		CHECK_CLOSE(0.0f, q.y, Math::Epsilon);
+		CHECK_CLOSE(0.0f, q.z, Math::Epsilon);
+
+		fX = static_cast<float>(Math::Pi);
+		fY = static_cast<float>(Math::Pi);
+		fZ = static_cast<float>(Math::Pi);
+
+		EulerAngles::ToQuaternion(fX, fY, fZ, q);
+
+		CHECK_CLOSE(0.0f, q.x, Math::Epsilon);
+		CHECK_CLOSE(0.0f, q.y, Math::Epsilon);
+		CHECK_CLOSE(0.0f, q.z, Math::Epsilon);
+
+		//printf("%s\n", q.ToString().GetASCII());
+	}
+
+	TEST_FIXTURE(ConstructTest, FromQuaternion) {
+		Quaternion q(mRotX);
+
+		EulerAngles::FromQuaternion(q, fX, fY, fZ);
+
+		CHECK_CLOSE(0.0f, fX, Math::Epsilon);
+		CHECK_CLOSE(0.0f, fY, Math::Epsilon);
+		CHECK_CLOSE(0.0f, fZ, Math::Epsilon);
+
+		fX = 0;
+		fY = 0;
+		fZ = 0;
+
+		EulerAngles::FromQuaternion(q, fX, fY, fZ);
+
+		CHECK_CLOSE(0.0f, fX, Math::Epsilon);
+		CHECK_CLOSE(0.0f, fY, Math::Epsilon);
+		CHECK_CLOSE(0.0f, fZ, Math::Epsilon);
+
+		//printf("%s\n", q.ToString().GetASCII());
 	}
 }

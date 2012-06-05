@@ -32,6 +32,12 @@
 
 
 //[-------------------------------------------------------]
+//[ Forward declarations                                  ]
+//[-------------------------------------------------------]
+struct ID3D11Buffer;
+
+
+//[-------------------------------------------------------]
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 namespace PLRendererD3D11 {
@@ -62,6 +68,15 @@ class VertexBuffer : public PLRenderer::VertexBuffer {
 		*    Destructor
 		*/
 		virtual ~VertexBuffer();
+
+		/**
+		*  @brief
+		*    Returns the Direct3D buffer
+		*
+		*  @return
+		*    Direct3D buffer, can be a null pointer
+		*/
+		ID3D11Buffer *GetD3D11Buffer();
 
 
 	//[-------------------------------------------------------]
@@ -123,6 +138,9 @@ class VertexBuffer : public PLRenderer::VertexBuffer {
 	private:
 		PLCore::uint8 *m_pData;			/**< Dynamic buffer (none VBO) */
 		void		  *m_pLockedData;	/**< Locked data */
+		ID3D11Buffer  *m_pD3D11Buffer;	/**< Direct3D buffer, can be a null pointer */
+		bool		   m_bLockReadOnly;	/**< Read only lock? */
+		bool		   m_bUpdateVBO;	/**< Do we need to update the VBO? */
 		// Offsets
 		int			   m_nOffset[NumOfSemantics][MaxPipelineChannels];
 		PLCore::uint32 m_nVertexOffset;

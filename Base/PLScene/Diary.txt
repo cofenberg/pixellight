@@ -1,3 +1,10 @@
+>> 04.06.2012
+[CO]
+- Bugfix (ID: 3531730 - http://sourceforge.net/tracker/index.php?func=detail&aid=3531730&group_id=507544&atid=2063682):
+  "PLScene::SceneContainer::SetHierarchy()" did not assign the new given hierarchy type
+
+
+
 >> 01.05.2012
 [CO]
 - Moved the out-of-date terrain and sky class from the core component "PLScene" into this loose plugin "PLNature". See "PLNature"-diary for details.

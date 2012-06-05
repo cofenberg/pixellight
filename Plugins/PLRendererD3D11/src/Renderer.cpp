@@ -151,7 +151,7 @@ Renderer::Renderer(handle nNativeWindowHandle, EMode nMode, uint32 nZBufferBits,
 		}
 	} else {
 		// Error!
-		PL_LOG(Error, "D3D11: Failed to create the D3D11 device instance: " + SystemWindows::ErrorCodeToString(hResult))
+		PL_LOG(Error, "D3D11: Failed to create the D3D11 device instance: " + SystemWindows::ErrorCodeToString(hResult) + " (DirectX end-user runtime installed?)")
 	}
 }
 
@@ -972,6 +972,9 @@ bool Renderer::SetIndexBuffer(PLRenderer::IndexBuffer *pIndexBuffer)
 			// Error!
 			return false;
 		}
+	} else {
+		// No index buffer is used
+		m_pD3D11DeviceContext->IASetIndexBuffer(nullptr, DXGI_FORMAT_UNKNOWN, 0);
 	}
 
 	// Done

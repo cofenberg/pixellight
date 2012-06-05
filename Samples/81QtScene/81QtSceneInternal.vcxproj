@@ -94,7 +94,7 @@
       <AdditionalIncludeDirectories>../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLInput/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../Base/PLEngine/include/;../../Plugins/PLFrontendQt/include/;../../External/_Windows_x86_32/Qt/include/Qt/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -121,7 +121,7 @@
       <AdditionalIncludeDirectories>../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLInput/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../Base/PLEngine/include/;../../Plugins/PLFrontendQt/include/;../../External/_Windows_x86_64/Qt/include/Qt/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
       </PrecompiledHeader>

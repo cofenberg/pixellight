@@ -30,8 +30,4 @@ SUITE(GraphPath) {
 		// Container for testing
 		PLMath::GraphPath graphpath;
 	};
-
-	TEST_FIXTURE(ConstructTest, Dummy) {
-		CHECK_IMPLEMENT;
-	}
 }

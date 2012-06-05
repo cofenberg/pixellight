@@ -124,7 +124,7 @@ class Renderer : public PLRenderer::RendererBackend {
 		*  @return
 		*    Used D3D11 device context, can be a null pointer
 		*/
-		ID3D11DeviceContext	*GetD3D11DeviceContext() const;
+		ID3D11DeviceContext *GetD3D11DeviceContext() const;
 
 		/**
 		*  @brief
