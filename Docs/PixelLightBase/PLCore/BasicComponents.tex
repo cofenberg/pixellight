@@ -175,12 +175,12 @@ PLCore::Event<int> cMyEvent;
 
 // Event handler pointing to a static function
 PLCore::EventHandler<int> cMyEventHandler0(MyFunction);
-cMyEvent.Connect(&cMyEventHandler0);
+cMyEvent.Connect(cMyEventHandler0);
 
 // Event handler pointing to a member method
 MyClass cMyObject;
 PLCore::EventHandler<int> cMyEventHandler1(&MyClass::OnMyEvent, &cMyObject);
-cMyEvent.Connect(&cMyEventHandler1);
+cMyEvent.Connect(cMyEventHandler1);
 
 // Emit cMyEvent event, now MyFunction and MyClass are called
 cMyEvent(42);

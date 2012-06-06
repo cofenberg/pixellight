@@ -1,3 +1,11 @@
+>> 06.06.2012
+[CO]
+- "PixelLightBase"-document: Updated "Using events and event handlers" source code example:
+  - "cMyEvent.Connect(&cMyEventHandler0)" -> "cMyEvent.Connect(cMyEventHandler0)"
+  - "cMyEvent.Connect(&cMyEventHandler1);" -> "cMyEvent.Connect(cMyEventHandler1);"
+
+
+
 >> 01.02.2012
 [CO]
 - "PixelLightBuild"-document: "Windows"-chapter: Added "Using the Build PixelLight Version in MSVC"
