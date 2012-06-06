@@ -130,6 +130,9 @@
     <ClCompile Include="src\PLCore\ResourceManagement.cpp">
       <Filter>PLCore</Filter>
     </ClCompile>
+    <ClCompile Include="src\PLMath\Intersect.cpp">
+      <Filter>PLMath</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\UnitTest++AddIns\RunAllTests.h">

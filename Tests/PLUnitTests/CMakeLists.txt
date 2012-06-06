@@ -70,24 +70,25 @@ add_sources(
 		src/PLCore/ResourceManagement.cpp
 		src/PLCore/ResourceManager.cpp
 	# PLMath
-	src/PLMath/EulerAngles.cpp
-	src/PLMath/Graph.cpp
-	src/PLMath/GraphPath.cpp
-	src/PLMath/Math.cpp
-	src/PLMath/Matrix3x3.cpp
-	src/PLMath/Matrix3x4.cpp
-	src/PLMath/Matrix4x4.cpp
-	src/PLMath/Quaternion.cpp
-	src/PLMath/Vector2.cpp
-	src/PLMath/Vector3.cpp
-	src/PLMath/Vector4.cpp
-	# UnitTest++ AddIns
-	src/UnitTest++AddIns/MyMobileTestReporter.cpp
-	src/UnitTest++AddIns/MyTestReporter.cpp
-	src/UnitTest++AddIns/PLChecks.cpp
-	src/UnitTest++AddIns/RunAllTests.cpp
-	src/UnitTest++AddIns/wchar_template.cpp
-	src/UnitTest++AddIns/LocaleWrapper.cpp
+		src/PLMath/Intersect.cpp
+		src/PLMath/EulerAngles.cpp
+		src/PLMath/Graph.cpp
+		src/PLMath/GraphPath.cpp
+		src/PLMath/Math.cpp
+		src/PLMath/Matrix3x3.cpp
+		src/PLMath/Matrix3x4.cpp
+		src/PLMath/Matrix4x4.cpp
+		src/PLMath/Quaternion.cpp
+		src/PLMath/Vector2.cpp
+		src/PLMath/Vector3.cpp
+		src/PLMath/Vector4.cpp
+		# UnitTest++ AddIns
+		src/UnitTest++AddIns/MyMobileTestReporter.cpp
+		src/UnitTest++AddIns/MyTestReporter.cpp
+		src/UnitTest++AddIns/PLChecks.cpp
+		src/UnitTest++AddIns/RunAllTests.cpp
+		src/UnitTest++AddIns/wchar_template.cpp
+		src/UnitTest++AddIns/LocaleWrapper.cpp
 )
 if(ANDROID)
 	add_sources(

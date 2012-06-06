@@ -55,6 +55,7 @@
     <ClCompile Include="src\PLMath\EulerAngles.cpp" />
     <ClCompile Include="src\PLMath\Graph.cpp" />
     <ClCompile Include="src\PLMath\GraphPath.cpp" />
+    <ClCompile Include="src\PLMath\Intersect.cpp" />
     <ClCompile Include="src\PLMath\Math.cpp" />
     <ClCompile Include="src\PLMath\Matrix3x3.cpp" />
     <ClCompile Include="src\PLMath\Matrix3x4.cpp" />
