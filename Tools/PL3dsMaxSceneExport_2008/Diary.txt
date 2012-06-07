@@ -1,3 +1,11 @@
+>> 07.06.2012
+[CO]
+- PL3dsMaxSceneExport_2013: Fixed Unicode issues within the GUI. I am quite sure there are more Unicode issues, especially when someone
+  is using Unicode within 3ds Max strings. But at least the exporter is now usable. Not tested with previous 3ds Max versions because I
+  currently only have the 2013 version installed (should still work, should).
+
+
+
 >> 30.04.2012
 [CO]
 - PL3dsMaxSceneExport_2013 is now compiling and working in general, but there are still some Unicode issues in the GUI. Wow, the 2013'er version

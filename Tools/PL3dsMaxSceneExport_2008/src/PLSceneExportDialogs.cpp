@@ -142,8 +142,6 @@ void GetSettings(HWND hWnd)
 
 void SetupDialog(HWND hWnd)
 {
-	char szTemp[256];
-
 	// General
 	SendDlgItemMessage(hWnd, IDC_REMOVESPACES,			BM_SETCHECK, g_SEOptions.bRemoveSpaces,			 0);
 	SendDlgItemMessage(hWnd, IDC_CORRECTPORTALS,		BM_SETCHECK, g_SEOptions.bCorrectPortals,		 0);
@@ -171,7 +169,7 @@ void SetupDialog(HWND hWnd)
 	for (std::vector<String*>::size_type i=0; i<g_SEOptions.m_lstSceneContainers.size(); i++) {
 		String *psString = g_SEOptions.m_lstSceneContainers[i];
 		if (psString) {
-			SendDlgItemMessage(hWnd, IDC_SCENECONTAINER, CB_ADDSTRING, 0, reinterpret_cast<LONG>(const_cast<LPSTR>(psString->GetASCII())));
+			SendDlgItemMessageW(hWnd, IDC_SCENECONTAINER, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(psString->GetUnicode()));
 			if (psString->CompareNoCase(g_SEOptions.sSceneContainer))
 				nSelection = static_cast<int>(i);
 		}
@@ -183,7 +181,7 @@ void SetupDialog(HWND hWnd)
 	for (std::vector<String*>::size_type i=0; i<g_SEOptions.m_lstSceneRenderers.size(); i++) {
 		String *psString = g_SEOptions.m_lstSceneRenderers[i];
 		if (psString) {
-			SendDlgItemMessage(hWnd, IDC_SCENERENDERER, CB_ADDSTRING, 0, reinterpret_cast<LONG>(const_cast<LPSTR>(psString->GetASCII())));
+			SendDlgItemMessageW(hWnd, IDC_SCENERENDERER, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(psString->GetUnicode()));
 			if (psString->CompareNoCase(g_SEOptions.sSceneRenderer))
 				nSelection = static_cast<int>(i);
 		}
@@ -194,11 +192,11 @@ void SetupDialog(HWND hWnd)
 
 	// Log
 	SendDlgItemMessage(hWnd, IDC_LOG, CB_RESETCONTENT, 0, 0);
-	SendDlgItemMessage(hWnd, IDC_LOG, CB_ADDSTRING, 0, reinterpret_cast<LONG>(const_cast<LPSTR>("1: Inactive")));
-	SendDlgItemMessage(hWnd, IDC_LOG, CB_ADDSTRING, 0, reinterpret_cast<LONG>(const_cast<LPSTR>("2: Errors")));
-	SendDlgItemMessage(hWnd, IDC_LOG, CB_ADDSTRING, 0, reinterpret_cast<LONG>(const_cast<LPSTR>("3: Warnings")));
-	SendDlgItemMessage(hWnd, IDC_LOG, CB_ADDSTRING, 0, reinterpret_cast<LONG>(const_cast<LPSTR>("4: Hits")));
-	SendDlgItemMessage(hWnd, IDC_LOG, CB_ADDSTRING, 0, reinterpret_cast<LONG>(const_cast<LPSTR>("5: Scene data")));
+	SendDlgItemMessage(hWnd, IDC_LOG, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(_T("1: Inactive")));
+	SendDlgItemMessage(hWnd, IDC_LOG, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(_T("2: Errors")));
+	SendDlgItemMessage(hWnd, IDC_LOG, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(_T("3: Warnings")));
+	SendDlgItemMessage(hWnd, IDC_LOG, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(_T("4: Hits")));
+	SendDlgItemMessage(hWnd, IDC_LOG, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(_T("5: Scene data")));
 	int nLogSelection = 0;
 	if (g_SEOptions.bLog) {
 		// Scene data
@@ -241,16 +239,17 @@ void SetupDialog(HWND hWnd)
 	EnableWindow(GetDlgItem(hWnd, IDC_COMPONENTS),		   g_SEOptions.bExportMeshes);
 	EnableWindow(GetDlgItem(hWnd, IDC_TEXCOORDCOMPONENTS), g_SEOptions.bExportMeshes);
 	SendDlgItemMessage(hWnd, IDC_TEXCOORDLAYER, CB_RESETCONTENT, 0, 0);
+	wchar_t szTemp[256];
 	for (int i=0; i<PLSceneExportOptions::MaxTexCoords; i++) {
-		sprintf(szTemp, "%d", i + 1); // The artists want to see 1 instead 0 for the first texture layer :)
-		SendDlgItemMessage(hWnd, IDC_TEXCOORDLAYER, CB_ADDSTRING, 0, reinterpret_cast<LONG>(const_cast<LPSTR>(szTemp)));
+		swprintf(szTemp, L"%d", i + 1); // The artists want to see 1 instead 0 for the first texture layer :)
+		SendDlgItemMessageW(hWnd, IDC_TEXCOORDLAYER, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(szTemp));
 	}
 	SendDlgItemMessage(hWnd, IDC_TEXCOORDLAYER, CB_SETCURSEL, 0, 0L);
 	SendDlgItemMessage(hWnd, IDC_TEXCOORDCOMPONENTS, CB_RESETCONTENT, 0, 0);
-	SendDlgItemMessage(hWnd, IDC_TEXCOORDCOMPONENTS, CB_ADDSTRING, 0, reinterpret_cast<LONG>(const_cast<LPSTR>("-")));
-	SendDlgItemMessage(hWnd, IDC_TEXCOORDCOMPONENTS, CB_ADDSTRING, 0, reinterpret_cast<LONG>(const_cast<LPSTR>("u")));
-	SendDlgItemMessage(hWnd, IDC_TEXCOORDCOMPONENTS, CB_ADDSTRING, 0, reinterpret_cast<LONG>(const_cast<LPSTR>("uv")));
-	SendDlgItemMessage(hWnd, IDC_TEXCOORDCOMPONENTS, CB_ADDSTRING, 0, reinterpret_cast<LONG>(const_cast<LPSTR>("uvw")));
+	SendDlgItemMessage(hWnd, IDC_TEXCOORDCOMPONENTS, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(_T("-")));
+	SendDlgItemMessage(hWnd, IDC_TEXCOORDCOMPONENTS, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(_T("u")));
+	SendDlgItemMessage(hWnd, IDC_TEXCOORDCOMPONENTS, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(_T("uv")));
+	SendDlgItemMessage(hWnd, IDC_TEXCOORDCOMPONENTS, CB_ADDSTRING, 0, reinterpret_cast<LPARAM>(_T("uvw")));
 	SendDlgItemMessage(hWnd, IDC_TEXCOORDCOMPONENTS, CB_SETCURSEL, g_SEOptions.nTexCoordComponents[0], 0L);
 	// Normals
 	SendDlgItemMessage(hWnd, IDC_NORMALS,   BM_SETCHECK, g_SEOptions.bNormals,   0);
