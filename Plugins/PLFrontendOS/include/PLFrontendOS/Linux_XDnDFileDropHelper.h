@@ -97,7 +97,7 @@ class Linux_XDnDFileDropHelper {
 		*/
 		struct PropertyData {
 			unsigned char  *data;
-			unsigned long	format;
+			int				format;
 			unsigned long	nNumOfItems;
 			Atom			type;
 		};
