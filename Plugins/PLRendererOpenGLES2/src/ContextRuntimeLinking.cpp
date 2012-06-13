@@ -1,5 +1,5 @@
 /*********************************************************\
- *  File: ContextRuntimeLinking.h                        *
+ *  File: ContextRuntimeLinking.cpp                      *
  *
  *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *

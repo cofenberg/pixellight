@@ -102,7 +102,7 @@ class ContextRuntimeLinking : public Context {
 	//[-------------------------------------------------------]
 	public:
 		virtual bool Init(PLCore::uint32 nMultisampleAntialiasingSamples) override;
-		virtual const Extensions &GetExtensions() const;
+		virtual const Extensions &GetExtensions() const override;
 
 
 	//[-------------------------------------------------------]
