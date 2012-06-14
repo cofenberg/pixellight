@@ -57,12 +57,12 @@ elseif(APPLE)
 		src/Frontend.cpp
 		src/OSWindow.cpp
 
-		# [TODO] This is what we really want to use on Mac OS X to stay out of compatibility trouble
-		# src/OSWindowMacOSX.mm	# Cocoa can only be accessed when using Objective-C :/
+		# This is what we really want to use on Mac OS X to stay out of compatibility trouble
+		src/OSWindowMacOSX.mm		# Cocoa can only be accessed when using Objective-C :/
 
-		# [TODO] For now, we reuse the X11 implementation from the Linux port
-		src/OSWindowLinux.cpp
-		src/Linux_XDnDFileDropHelper.cpp
+		# We can also reuse the X11 implementation from the Linux port
+		#src/OSWindowLinux.cpp
+		#src/Linux_XDnDFileDropHelper.cpp
 	)
 elseif(LINUX)
 	##################################################
@@ -173,6 +173,14 @@ if(WIN32)
 	##################################################
 	add_linker_flags(
 		${WIN32_LINKER_FLAGS}
+	)
+elseif(APPLE)
+	##################################################
+	## GCC Compiler
+	##################################################
+	add_linker_flags(
+		${LINUX_LINKER_FLAGS}
+		-framework Cocoa
 	)
 elseif(LINUX)
 	##################################################

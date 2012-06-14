@@ -23,6 +23,9 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#import <Cocoa/Cocoa.h>
+#include <PLCore/Frontend/Frontend.h>
+#include <PLCore/Frontend/FrontendContext.h>
 #include "PLFrontendOS/Frontend.h"
 #include "PLFrontendOS/OSWindowMacOSX.h"
 
@@ -42,12 +45,21 @@ namespace PLFrontendOS {
 *    Constructor
 */
 OSWindowMacOSX::OSWindowMacOSX(Frontend &cFrontendOS) :
-	m_pFrontendOS(&cFrontendOS)
+	m_pFrontendOS(&cFrontendOS),
+	m_pNSApplication([[NSApplication alloc] init]),
+	m_pNSWindow(nullptr)
 {
 	// Tell the frontend about this instance at once because it may already be required during frontend life cycle initialization
 	m_pFrontendOS->m_pOSWindow = this;
 
-	// [TODO] Create the OS window
+	// Create NSWindow instance
+	m_pNSWindow = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 640, 480)
+									styleMask:(NSTitledWindowMask | NSClosableWindowMask | NSMiniaturizableWindowMask | NSResizableWindowMask)
+									backing:NSBackingStoreBuffered
+									defer:NO];
+
+	// Set the window title
+	SetTitle(m_pFrontendOS->GetFrontend() ? m_pFrontendOS->GetFrontend()->GetContext().GetName() : m_pFrontendOS->GetFrontend());
 
 	// Do the frontend life cycle thing - start
 	m_pFrontendOS->OnStart();
@@ -56,12 +68,17 @@ OSWindowMacOSX::OSWindowMacOSX(Frontend &cFrontendOS) :
 	MakeVisible();
 }
 
-/**
+/*
 *  @brief
 *    Destructor
 */
 OSWindowMacOSX::~OSWindowMacOSX()
 {
+	// Destroy the NSWindow implementation
+	[static_cast<NSWindow*>(m_pNSWindow) release];
+
+	// Destroy the NSApplication implementation
+	[static_cast<NSApplication*>(m_pNSApplication) release];
 }
 
 /**
@@ -70,7 +87,14 @@ OSWindowMacOSX::~OSWindowMacOSX()
 */
 void OSWindowMacOSX::MakeVisible()
 {
-	// [TODO] Implement me
+	// Get NSWindow instance
+	NSWindow *pNSWindow = static_cast<NSWindow*>(m_pNSWindow);
+
+	// Bring the NSWindow into the foreground
+	[pNSWindow setLevel:NSMainMenuWindowLevel];
+
+	// Make the NSWindow visible
+	[pNSWindow makeKeyAndOrderFront:nil];
 }
 
 
@@ -79,8 +103,7 @@ void OSWindowMacOSX::MakeVisible()
 //[-------------------------------------------------------]
 handle OSWindowMacOSX::GetNativeWindowHandle() const
 {
-	// [TODO] Implement me
-	return NULL_HANDLE;
+	return reinterpret_cast<handle>(m_pNSWindow);
 }
 
 void OSWindowMacOSX::Redraw()
@@ -90,60 +113,69 @@ void OSWindowMacOSX::Redraw()
 
 bool OSWindowMacOSX::Ping()
 {
-	// [TODO] Implement me
+	// Process all waiting OS events (non-blocking)
+	NSEvent *pNSEvent = nil;
+	do {
+		// Get waiting event
+		pNSEvent = [NSApp nextEventMatchingMask:NSAnyEventMask untilDate:[NSDate distantPast] inMode:NSDefaultRunLoopMode dequeue:YES];
 
-	// Done
-	return true;
+		// Process event
+		[NSApp sendEvent: pNSEvent];
+	}
+	while (nil != pNSEvent);
 }
 
 String OSWindowMacOSX::GetTitle() const
 {
-	// [TODO] Implement me
+	// Get the title of the NSWindow as NSString
+	// [TODO] Memory: pNSString delete? The NSWindow::title documentation does not mention it
+	const NSString *pNSString = [static_cast<NSWindow*>(m_pNSWindow) title];
 
-	// Error!
-	return "";
+	// Get a UTF8 representation of the NSWindow title
+	// -> Memory: The documentation of NSString::UTF8String states that the UTF8 string the returned pointer is pointing to is automatically freed
+	return String::FromUTF8([pNSString UTF8String]);
 }
 
 void OSWindowMacOSX::SetTitle(const String &sTitle)
 {
-	// [TODO] Implement me
+	// Get the window title to set as NSString 
+	NSString *pNSString = [NSString stringWithCString:sTitle.GetUTF8() encoding:NSUTF8StringEncoding];
+
+	// Set the title of the NSWindow
+	[static_cast<NSWindow*>(m_pNSWindow) setTitle: pNSString];
+
+	// Release our NSString instance
+	[pNSString release];
 }
 
 int OSWindowMacOSX::GetX() const
 {
-	// [TODO] Implement me
-
-	// Error!
-	return 0;
+	// Get the x position of the NSWindow content area, meaning excluding the window border and title bar
+	return [static_cast<NSWindow*>(m_pNSWindow) frame].origin.x;
 }
 
 int OSWindowMacOSX::GetY() const
 {
-	// [TODO] Implement me
-
-	// Error!
-	return 0;
+	// Get the y position of the NSWindow content area, meaning excluding the window border and title bar
+	return [static_cast<NSWindow*>(m_pNSWindow) frame].origin.y;
 }
 
 uint32 OSWindowMacOSX::GetWidth() const
 {
-	// [TODO] Implement me
-
-	// Error!
-	return 0;
+	// Get the width of the NSWindow content area, meaning excluding the window border and title bar
+	return [[static_cast<NSWindow*>(m_pNSWindow) contentView] frame].size.width;
 }
 
 uint32 OSWindowMacOSX::GetHeight() const
 {
-	// [TODO] Implement me
-
-	// Error!
-	return 0;
+	// Get the width of the NSWindow content area, meaning excluding the window border and title bar
+	return [[static_cast<NSWindow*>(m_pNSWindow) contentView] frame].size.height;
 }
 
 void OSWindowMacOSX::SetWindowPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
-	// [TODO] Implement me
+	const NSRect sNSRect = { nX, nY, nWidth, nHeight};
+	[static_cast<NSWindow*>(m_pNSWindow) setFrame:sNSRect display:YES];
 }
 
 void OSWindowMacOSX::SetFullscreenAltTab(bool bAllowed)
@@ -164,29 +196,32 @@ void OSWindowMacOSX::RefreshFullscreen()
 bool OSWindowMacOSX::IsMouseOver() const
 {
 	// [TODO] Implement me
-	return false;
+	return true;
 }
 
 int OSWindowMacOSX::GetMousePositionX() const
 {
-	// [TODO] Implement me
+	// Get NSWindow instance
+	NSWindow *pNSWindow = static_cast<NSWindow*>(m_pNSWindow);
 
-	// Error, the mouse cursor is currently not over this window
-	return -1;
+	// Get the mouse cursor position inside this window
+	return [pNSWindow mouseLocationOutsideOfEventStream].x;
 }
 
 int OSWindowMacOSX::GetMousePositionY() const
 {
-	// [TODO] Implement me
+	// Get NSWindow instance
+	NSWindow *pNSWindow = static_cast<NSWindow*>(m_pNSWindow);
 
-	// Error, the mouse cursor is currently not over this window
-	return -1;
+	// Get the mouse cursor position inside this window
+	// -> Window origin is left/bottom, so we need to flip the y-axis
+	return GetHeight() - [pNSWindow mouseLocationOutsideOfEventStream].y;
 }
 
 bool OSWindowMacOSX::IsMouseVisible() const
 {
 	// [TODO] Implement me
-	return false;
+	return true;
 }
 
 void OSWindowMacOSX::SetMouseVisible(bool bVisible)

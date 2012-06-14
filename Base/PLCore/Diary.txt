@@ -1,3 +1,10 @@
+>> 14.06.2012
+[CO]
+PLFrontendOS:
+- Started Mac OS X Cocoa implementation
+
+
+
 >> 02.04.2012
 [CO]
 PLFrontendOS:

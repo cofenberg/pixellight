@@ -118,6 +118,8 @@ class OSWindowMacOSX : public OSWindow {
 	//[-------------------------------------------------------]
 	private:
 		Frontend *m_pFrontendOS;	/**< Owner frontend implementation instance, always valid! */
+		void	 *m_pNSApplication;	/**< NSApplication instance, always valid */
+		void	 *m_pNSWindow;		/**< NSWindow instance, always valid */
 
 
 };
