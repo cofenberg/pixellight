@@ -1,5 +1,5 @@
 \chapter{Mac OS X}
-This chapter explains how to compile PixelLight for \emph{Mac OS X 10.6}.
+This chapter explains how to compile PixelLight for \emph{Mac OS X 10.6}. Because not everyone is familiar with the Apple world, but might want to just compile PixelLight in order to have a first look into it, this chapter also explains some useful Mac OS X basics \footnote{Mac OS X is definitely made for end users, not developers. Stuff which is common on other operation systems, often is quite good hidden from the user in the Mac world.}.
 
 
 \paragraph{Under Construction}
@@ -28,3 +28,37 @@ The maketool script as described in \ref{Chapter:Linux_Maketool} can be used in 
 
 \paragraph{Build and Run}
 You may also want to have a look at the Linux sections \ref{Chapter:Linux_Build} and \ref{Chapter:Linux_RunningFromALocalBuildAndInstalling}.
+
+
+\paragraph{1. Run from a your Local Source Directory}
+Within your home (\emph{\textasciitilde}) directory, open the hidden \emph{\textasciitilde /.bash\_profile} file and follow the Linux section \ref{Chapter:Linux_Build} explaining how to run from a your local source directory.
+
+
+
+\subsection{Mac Newbie}
+Mac geeks can skip this section, all other might find it useful to make a first step into the Apple world while still being able to at least keep some of the hairs.
+
+
+\paragraph{Show Hidden Files in Finder}
+\emph{Finder}, the standard file browser in the Apple world, by default does not show hidden files and offers no \ac{GUI}-option to change that. As developer, you might want to also see and edit hidden files, for example within the hidden Git-repository directory or for files like \emph{\textasciitilde /.bash\_profile}.
+
+So, open a terminal and type
+\begin{lstlisting}[language=sh]
+defaults write com.apple.finder AppleShowAllFiles TRUE
+killall Finder
+\end{lstlisting}
+The first line sets the \emph{Finder} option we're interested in, the second kills all currently opened \emph{Finder} instances. The changed option has only an effect for new \emph{Finder} instances.
+ 
+
+\paragraph{Keyboard}
+It's useful to know which key combination to press to type totally fundamental characters which are usually on decent PC keyboards, but not the standard Apple ones.
+
+\begin{itemize}
+	\item \textasciitilde key, you may need for \emph{\textasciitilde /.bash\_profile}: Press alt-n
+	\item \textbackslash key, alt-shift-7
+	\item $[$ key, alt-5
+	\item $]$ key, alt-6
+	\item \textbar key, alt-7
+	\item \textbraceleft key, alt-8
+	\item \textbraceright key, alt-9
+\end{itemize}

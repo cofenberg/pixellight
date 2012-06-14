@@ -1,3 +1,10 @@
+>> 14.06.2012
+[CO]
+- "PixelLightBuild"-document: Some more words to Mac OS X (primarly for myself because I constantly fight with using
+  Mac OS X, not developing for it)
+
+
+
 >> 06.06.2012
 [CO]
 - "PixelLightBase"-document: Updated "Using events and event handlers" source code example:
