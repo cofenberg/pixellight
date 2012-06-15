@@ -86,11 +86,16 @@ elseif(APPLE)
 	##################################################
 	add_sources(
 		src/MacOSX/ContextMacOSX.cpp
-		src/MacOSX/ContextMacOSX_X11.cpp
 		src/MacOSX/ExtensionsMacOSX.cpp
 		src/MacOSX/SurfaceWindowMacOSX.cpp
-		src/MacOSX/SurfaceWindowMacOSX_X11.cpp
-		src/MacOSX/SurfaceWindowMacOSX_Cocoa.mm	# Cocoa & NSOpenGL can only be accessed when using Objective-C :/
+
+		# We can also reuse the PLFrontendOS X11 implementation from the Linux port
+		# src/MacOSX/ContextMacOSX_X11.cpp
+		# src/MacOSX/SurfaceWindowMacOSX_X11.cpp
+
+		# This is what we really want to use on Mac OS X to stay out of compatibility trouble - Cocoa & NSOpenGL can only be accessed when using Objective-C :/
+		src/MacOSX/ContextMacOSX_Cocoa.mm
+		src/MacOSX/SurfaceWindowMacOSX_Cocoa.mm
 	)
 elseif(LINUX)
 	##################################################

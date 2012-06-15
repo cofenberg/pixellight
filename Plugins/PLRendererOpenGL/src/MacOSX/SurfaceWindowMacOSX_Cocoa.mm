@@ -23,7 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <AppKit/NSOpenGL.h>
+#import <Cocoa/Cocoa.h>
+#import <AppKit/NSOpenGL.h>
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
 #include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSX_Cocoa.h"
@@ -33,6 +34,7 @@
 //[ Namespace                                             ]
 //[-------------------------------------------------------]
 using namespace PLCore;
+using namespace PLMath;
 namespace PLRendererOpenGL {
 
 
@@ -58,10 +60,7 @@ SurfaceWindowMacOSX_Cocoa::~SurfaceWindowMacOSX_Cocoa()
 *    Constructor
 */
 SurfaceWindowMacOSX_Cocoa::SurfaceWindowMacOSX_Cocoa(PLRenderer::SurfaceWindowHandler &cHandler, handle nNativeWindowHandle, const PLRenderer::DisplayMode &sDisplayMode, bool bFullscreen) :
-	// [TODO] This is just a test -> For now, do never ever go into fullscreen or we may have to restart the Mac Mini in order to close an appliation...
-	SurfaceWindowMacOSX_X11(cHandler, nNativeWindowHandle, sDisplayMode, false),
-//	SurfaceWindowMacOSX_X11(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen),
-	m_pNSOpenGLContext(nullptr)
+	SurfaceWindowMacOSX(cHandler, nNativeWindowHandle, sDisplayMode, bFullscreen)
 {
 	// Initialize the OpenGL surface window
 	Init();
@@ -69,64 +68,42 @@ SurfaceWindowMacOSX_Cocoa::SurfaceWindowMacOSX_Cocoa(PLRenderer::SurfaceWindowHa
 
 
 //[-------------------------------------------------------]
-//[ Private virtual PLRenderer::Surface functions         ]
+//[ Public virtual PLRenderer::SurfaceWindow functions    ]
 //[-------------------------------------------------------]
-bool SurfaceWindowMacOSX_Cocoa::Init()
+bool SurfaceWindowMacOSX_Cocoa::GetGamma(float &fRed, float &fGreen, float &fBlue) const
 {
-	// Is it fullscreen?
-	if (m_bIsFullscreen) {
-		// Call base implementation
-		return SurfaceWindowMacOSX_X11::Init();
-	} else {
-		// Get the MacOS X context implementation
-		ContextMacOSX &cContextMacOSX = static_cast<ContextMacOSX&>(static_cast<Renderer&>(GetRenderer()).GetContext());
+	// [TODO] Implement me
 
-		// [TODO] Implement me
-		// Obj-C style object creation
-		NSOpenGLContext *pNSOpenGLContext = [[NSOpenGLContext alloc] initWithFormat:nullptr shareContext:nullptr];
-//		m_pNSOpenGLContext = [[NSOpenGLContext alloc] initWithFormat:nullptr shareContext:cContextMacOSX.GetRenderContext()];
-
-		// [TODO] Implement me
-		return (m_pNSOpenGLContext != nullptr);
-	}
+	// Error!
+	return false;
 }
 
-void SurfaceWindowMacOSX_Cocoa::DeInit()
+bool SurfaceWindowMacOSX_Cocoa::SetGamma(float fRed, float fGreen, float fBlue)
 {
-	// Is it fullscreen?
-	if (m_bIsFullscreen) {
-		// Call base implementation
-		SurfaceWindowMacOSX_X11::DeInit();
-	} else {
-		if (m_pNSOpenGLContext) {
-			delete static_cast<NSOpenGLContext*>(m_pNSOpenGLContext);
-			m_pNSOpenGLContext = nullptr;
-			// [TODO] Implement me
-		}
-	}
+	// [TODO] Implement me
+
+	// Error!
+	return false;
 }
 
-bool SurfaceWindowMacOSX_Cocoa::MakeCurrent(uint8 nFace)
-{
-	// Is it fullscreen?
-	if (m_bIsFullscreen) {
-		// Call base implementation
-		return SurfaceWindowMacOSX_X11::MakeCurrent(nFace);
-	} else {
-		// [TODO] Implement me
-		return false;
-	}
-}
 
-bool SurfaceWindowMacOSX_Cocoa::Present()
+//[-------------------------------------------------------]
+//[ Public virtual PLRenderer::Surface functions          ]
+//[-------------------------------------------------------]
+Vector2i SurfaceWindowMacOSX_Cocoa::GetSize() const
 {
-	// Is it fullscreen?
-	if (m_bIsFullscreen) {
-		// Call base implementation
-		return SurfaceWindowMacOSX_X11::Present();
+	// Get the NSWindow instance
+	NSWindow *pNSWindow = reinterpret_cast<NSWindow*>(GetNativeWindowHandle());
+
+	// Is there a NSWindow instance?
+	if (pNSWindow) {
+		// Get the size of the NSWindow content area, meaning excluding the window border and title bar
+		const NSSize sNSSize = [[pNSWindow contentView] frame].size;
+
+		// Return the window size
+		return Vector2i(sNSSize.width, sNSSize.height);
 	} else {
-		// [TODO] Implement me
-		return false;
+		return Vector2i::Zero;
 	}
 }
 
