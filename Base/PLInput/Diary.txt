@@ -1,3 +1,13 @@
+>> 16.06.2012
+[IJH]
+- Added more additional Keyboard keys to the VirtualStandardController and Keyboard class (from http://msdn.microsoft.com/en-us/library/windows/desktop/dd375731%28v=vs.85%29.aspx)
+  The newly defined OEM# keys are named that way because they serve multiple purposes based on keyboard layout.
+    - For example: VK_OEM_1 -> OEM1 can be both the ':' (Colon key) and ';' (Semicolon key)
+  I have yet to figure out how to have RawInputDevice::ProcessKeyboardData recieve Control and Shift for both left and right separately.
+  The additional keys also need to be defined for Linux and Android which at this point is not done.
+
+
+
 >> 30.04.2012
 [CO]
 - Bug 3514155 related (https://sourceforge.net/tracker/index.php?func=detail&aid=3514155&group_id=507544&atid=2063682): "Controller::InformControl()"
@@ -32,10 +42,10 @@
 
 >> 14.12.2011
 [TM]
-- SplitTouchPad: added a first implementation for the split touchpad device on android. At the moment it uses the first touch point as initial point. 
+- SplitTouchPad: added a first implementation for the split touchpad device on android. At the moment it uses the first touch point as initial point.
   On the left half of the screen is the movement control on the right half the rotation control. We experienced some difficulties with the first touch
   point as initial point so it might be a good idee to provide an interface for setting the initial point to integrate the navigation with some gui/hud etc.
-- SplitTouchPad: some first callibration was done but this has to be much better. Adding some tolerance to the touch events might help to improve 
+- SplitTouchPad: some first callibration was done but this has to be much better. Adding some tolerance to the touch events might help to improve
    the smoth navigation.
 
 
@@ -293,7 +303,7 @@
 - DeviceManager in InputManager umbenannt, da diese Klasse das gesamte Input-System verwaltet und nicht nur die
   Devices. Auch hoffe ich, dass man eher nach Input als nach Device suchen würde, wenn man den Einstiegspunkt von
   PLInput sucht :-)
- 
+
 
 
 >> 31.07.2010
@@ -862,7 +872,7 @@
 - RawInput und HID im Aufbau so verändert, dass die Devices nur noch reine Datenobjekte sind, die Informationen über ein
   Device herausgeben. Der eigentlich Zugriff wird dann über Handler vorgenommen. Das macht das Enumerieren von Devices
   einfacher, so dass die komplizierte Logik für das Auffinden/Hinzufügen/Entfernen von Devices jetzt nur noch im Device-Manager
-  stattzufinden braucht. 
+  stattzufinden braucht.
 - WiiMote implementiert. Es kann auf alle Buttons, LEDs, Rumble, die Beschleunigungssensoren sowie den Infrarotsensor
   zugegriffen werden. Unterstützte Extensions: Nunchuk, Classic-Controller ist noch auskommentiert, da ich den nicht habe
   und daher nicht testen kann. Jetzt fehlt eigentlich nur noch das Abspielen von Sound (ja, auf diesem Controller kann man
@@ -922,7 +932,7 @@
   können (z.B. die Sensitivität bei der Maus). Außerdem sollen diese Handler dann aktiviert oder deaktiviert werden
   können, später kann dann ein Fenster entsprechend den Input für seinen Szenengraphen so komplett deaktivieren
   und später wieder aktivieren. Das ist die bessere Lösung als früher, wo wir pro Frame ständig den Zeiger auf
-  den aktuellen Input veränderten. 
+  den aktuellen Input veränderten.
 - PLSample2DGame habe ich kurzzeitig als Test für PLInput mißbraucht - die Kanone kann nun mit Tastatur, Maus,
   Gamepad oder Joystick gespielt werden. Zum Testen bitte auf die Standard-Devices achten (DeviceManager::GetMouse()/GetKeyboard()),
   und evtl. umändern (z.B. "Keyboard0", "Mouse0").

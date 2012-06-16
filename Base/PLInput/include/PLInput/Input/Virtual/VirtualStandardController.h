@@ -181,6 +181,45 @@ class VirtualStandardController : public VirtualController {
 		Button		KeyboardNumLock;			/**< Num lock */
 		Button		KeyboardScrollLock;			/**< Scroll lock */
 		Button		KeyboardCircumflex;			/**< Circumflex (^) */
+		Button		KeyboardLeftWindows;
+		Button		KeyboardRightWindows;
+		Button		KeyboardApplications;
+		Button		KeyboardF13;
+		Button		KeyboardF14;
+		Button		KeyboardF15;
+		Button		KeyboardF16;
+		Button		KeyboardF17;
+		Button		KeyboardF18;
+		Button		KeyboardF19;
+		Button		KeyboardF20;
+		Button		KeyboardF21;
+		Button		KeyboardF22;
+		Button		KeyboardF23;
+		Button		KeyboardF24;
+		Button		KeyboardLeftShift;
+		Button		KeyboardRightShift;
+		Button		KeyboardLeftControl;
+		Button		KeyboardRightControl;
+		Button		KeyboardVolumeMute;
+		Button		KeyboardVolumeDown;
+		Button		KeyboardVolumeUp;
+		Button		KeyboardMediaNextTrack;
+		Button		KeyboardMediaPreviousTrack;
+		Button		KeyboardMediaStop;
+		Button		KeyboardMediaPlayPause;
+		Button		KeyboardAdd;
+		Button		KeyboardSeparator;
+		Button		KeyboardSubtract;
+		Button		KeyboardDecimal;
+		Button		KeyboardOEM1;
+		Button		KeyboardOEM2;
+		Button		KeyboardOEM3;
+		Button		KeyboardOEM4;
+		Button		KeyboardOEM5;
+		Button		KeyboardOEM6;
+		Button		KeyboardOEM7;
+		Button		KeyboardOEM8;
+		Button		KeyboardOEM102;
 
 		// Main character controls
 		Axis		TransX;						/**< X translation axis: Strafe left/right (+/-) */

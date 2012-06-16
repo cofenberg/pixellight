@@ -155,6 +155,45 @@ class Keyboard : public Device {
 		PLInput::Button	NumLock;			/**< Num lock */
 		PLInput::Button	ScrollLock;			/**< Scroll lock */
 		PLInput::Button	Circumflex;			/**< Circumflex (^) */
+		PLInput::Button LeftWindows;
+		PLInput::Button RightWindows;
+		PLInput::Button Applications;
+		PLInput::Button F13;
+		PLInput::Button F14;
+		PLInput::Button F15;
+		PLInput::Button F16;
+		PLInput::Button F17;
+		PLInput::Button F18;
+		PLInput::Button F19;
+		PLInput::Button F20;
+		PLInput::Button F21;
+		PLInput::Button F22;
+		PLInput::Button F23;
+		PLInput::Button F24;
+		PLInput::Button LeftShift;
+		PLInput::Button RightShift;
+		PLInput::Button LeftControl;
+		PLInput::Button RightControl;
+		PLInput::Button VolumeMute;
+		PLInput::Button VolumeDown;
+		PLInput::Button VolumeUp;
+		PLInput::Button MediaNextTrack;
+		PLInput::Button MediaPreviousTrack;
+		PLInput::Button MediaStop;
+		PLInput::Button MediaPlayPause;
+		PLInput::Button Add;
+		PLInput::Button Separator;
+		PLInput::Button Subtract;
+		PLInput::Button Decimal;
+		PLInput::Button OEM1;
+		PLInput::Button OEM2;
+		PLInput::Button OEM3;
+		PLInput::Button OEM4;
+		PLInput::Button OEM5;
+		PLInput::Button OEM6;
+		PLInput::Button OEM7;
+		PLInput::Button OEM8;
+		PLInput::Button OEM102;
 
 
 	//[-------------------------------------------------------]

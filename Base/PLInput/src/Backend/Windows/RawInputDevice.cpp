@@ -130,7 +130,46 @@ enum EKey {
 	KeyF12				= 0x7B,		/**< F12 */
 	KeyNumLock			= 0x90,		/**< Num lock */
 	KeyScrollLock		= 0x91,		/**< Scroll lock */
-	KeyCircumflex		= 0xDC		/**< Circumflex (^) */
+	KeyCircumflex		= 0xDC,		/**< Circumflex (^) */
+	KeyLeftWindows		= 0x5B,		// Left Windows key (Natural keyboard)
+	KeyRightWindows		= 0x5C,		// Right Windows key (Natural keyboard)
+	KeyApplications		= 0x5D,		// Applications key (Natural keyboard)
+	KeyF13				= 0x7C,		// F13 key
+	KeyF14				= 0x7D,		// F14 key
+	KeyF15				= 0x7E,		// F15 key
+	KeyF16				= 0x7F,		// F16 key
+	KeyF17				= 0x80,		// F17 key
+	KeyF18				= 0x81,		// F18 key
+	KeyF19				= 0x82,		// F19 key
+	KeyF20				= 0x83,		// F20 key
+	KeyF21				= 0x84,		// F21 key
+	KeyF22				= 0x85,		// F22 key
+	KeyF23				= 0x86,		// F23 key
+	KeyF24				= 0x87,		// F24 key
+	KeyLeftShift		= 0xA0,		// Left SHIFT key
+	KeyRightShift		= 0xA1,		// Right SHIFT key
+	KeyLeftControl		= 0xA2,		// Left CONTROL key
+	KeyRightControl		= 0xA3,		// Right CONTROL key
+	KeyVolumeMute		= 0xAD,		// Volume Mute key
+	KeyVolumeDown		= 0xAE,		// Volume Down key
+	KeyVolumeUp			= 0xAF,		// Volume Up key
+	KeyMediaNextTrack		= 0xB0, // Next Track key
+	KeyMediaPreviousTrack	= 0xB1, // Previous Track key
+	KeyMediaStop			= 0xB2, // Stop Media key
+	KeyMediaPlayPause		= 0xB3,	// Play/Pause Media key
+	KeyAdd				= 0xBB,		// For any country/region, the '+' key
+	KeySeparator		= 0xBC,		// For any country/region, the ',' key
+	KeySubtract			= 0xBD,		// For any country/region, the '-' key
+	KeyDecimal			= 0xBE,		// For any country/region, the '.' key
+	KeyOEM1				= 0xBA,		// Used for miscellaneous characters; it can vary by keyboard. For the US standard keyboard, the ';:' key
+	KeyOEM2				= 0xBF,		// Used for miscellaneous characters; it can vary by keyboard. For the US standard keyboard, the '/?' key
+	KeyOEM3				= 0xC0,		// Used for miscellaneous characters; it can vary by keyboard. For the US standard keyboard, the '`~' key
+	KeyOEM4				= 0xDB,		// Used for miscellaneous characters; it can vary by keyboard. For the US standard keyboard, the '[{' key
+	KeyOEM5				= 0xDC,		// Used for miscellaneous characters; it can vary by keyboard. For the US standard keyboard, the '\|' key
+	KeyOEM6				= 0xDD,		// Used for miscellaneous characters; it can vary by keyboard. For the US standard keyboard, the ']}' key
+	KeyOEM7				= 0xDE,		// Used for miscellaneous characters; it can vary by keyboard. For the US standard keyboard, the 'single-quote/double-quote' key
+	KeyOEM8				= 0xDF,		// Used for miscellaneous characters; it can vary by keyboard.
+	KeyOEM102			= 0xE2		// Either the angle bracket key or the backslash key on the RT 102-key keyboard
 };
 
 
@@ -490,6 +529,45 @@ Button *RawInputDevice::GetKeyboardKey(Keyboard *pKeyboard, unsigned short nKey)
 		case KeyNumLock:		return &pKeyboard->NumLock;
 		case KeyScrollLock:		return &pKeyboard->ScrollLock;
 		case KeyCircumflex:		return &pKeyboard->Circumflex;
+		case KeyLeftWindows:	return &pKeyboard->LeftWindows;
+		case KeyRightWindows:	return &pKeyboard->RightWindows;
+		case KeyApplications:	return &pKeyboard->Applications;
+		case KeyF13:			return &pKeyboard->F13;
+		case KeyF14:			return &pKeyboard->F14;
+		case KeyF15:			return &pKeyboard->F15;
+		case KeyF16:			return &pKeyboard->F16;
+		case KeyF17:			return &pKeyboard->F17;
+		case KeyF18:			return &pKeyboard->F18;
+		case KeyF19:			return &pKeyboard->F19;
+		case KeyF20:			return &pKeyboard->F20;
+		case KeyF21:			return &pKeyboard->F21;
+		case KeyF22:			return &pKeyboard->F22;
+		case KeyF23:			return &pKeyboard->F23;
+		case KeyF24:			return &pKeyboard->F24;
+		case KeyLeftShift:		return &pKeyboard->LeftShift; // figure out how we can get these four instead of only Shift and Control
+		case KeyRightShift:		return &pKeyboard->RightShift; // * ^
+		case KeyLeftControl:	return &pKeyboard->LeftControl; // * ^
+		case KeyRightControl:	return &pKeyboard->RightControl; // * ^
+		case KeyVolumeMute:		return &pKeyboard->VolumeMute;
+		case KeyVolumeDown:		return &pKeyboard->VolumeDown;
+		case KeyVolumeUp:		return &pKeyboard->VolumeUp;
+		case KeyMediaNextTrack:		return &pKeyboard->MediaNextTrack;
+		case KeyMediaPreviousTrack:	return &pKeyboard->MediaPreviousTrack;
+		case KeyMediaStop:			return &pKeyboard->MediaStop;
+		case KeyMediaPlayPause:		return &pKeyboard->MediaPlayPause;
+		case KeyAdd:			return &pKeyboard->Add;
+		case KeySeparator:		return &pKeyboard->Separator;
+		case KeySubtract:		return &pKeyboard->Subtract;
+		case KeyDecimal:		return &pKeyboard->Decimal;
+		case KeyOEM1:			return &pKeyboard->OEM1;
+		case KeyOEM2:			return &pKeyboard->OEM2;
+		case KeyOEM3:			return &pKeyboard->OEM3;
+		case KeyOEM4:			return &pKeyboard->OEM4;
+		// case KeyOEM5:			return &pKeyboard->OEM5; // Circumflex was already defined
+		case KeyOEM6:			return &pKeyboard->OEM6;
+		case KeyOEM7:			return &pKeyboard->OEM7;
+		case KeyOEM8:			return &pKeyboard->OEM8;
+		case KeyOEM102:			return &pKeyboard->OEM102;
 		default:				return  nullptr;
 	}
 }
