@@ -181,6 +181,45 @@ class VirtualStandardController : public VirtualController {
 		Button		KeyboardNumLock;			/**< Num lock */
 		Button		KeyboardScrollLock;			/**< Scroll lock */
 		Button		KeyboardCircumflex;			/**< Circumflex (^) */
+		Button		KeyboardLeftWindows;		/**< Left Windows key (natural keyboard) */
+		Button		KeyboardRightWindows;		/**< Right Windows key (natural keyboard) */
+		Button		KeyboardApplications;		/**< Applications key (natural keyboard) */
+		Button		KeyboardF13;				/**< F13 key */
+		Button		KeyboardF14;				/**< F14 key */
+		Button		KeyboardF15;				/**< F15 key */
+		Button		KeyboardF16;				/**< F16 key */
+		Button		KeyboardF17;				/**< F17 key */
+		Button		KeyboardF18;				/**< F18 key */
+		Button		KeyboardF19;				/**< F19 key */
+		Button		KeyboardF20;				/**< F20 key */
+		Button		KeyboardF21;				/**< F21 key */
+		Button		KeyboardF22;				/**< F22 key */
+		Button		KeyboardF23;				/**< F23 key */
+		Button		KeyboardF24;				/**< F24 key */
+		Button		KeyboardLeftShift;			/**< Left shift key */
+		Button		KeyboardRightShift;			/**< Right shift key */
+		Button		KeyboardLeftControl;		/**< Left control key */
+		Button		KeyboardRightControl;		/**< Right control key */
+		Button		KeyboardVolumeMute;			/**< Volume mute key */
+		Button		KeyboardVolumeDown;			/**< Volume down key */
+		Button		KeyboardVolumeUp;			/**< Volume up key */
+		Button		KeyboardMediaNextTrack;		/**< Next track key */
+		Button		KeyboardMediaPreviousTrack;	/**< Previous track key */
+		Button		KeyboardMediaStop;			/**< Stop media key */
+		Button		KeyboardMediaPlayPause;		/**< Play/pause media key */
+		Button		KeyboardAdd;				/**< For any country/region, the '+' key */
+		Button		KeyboardSeparator;			/**< For any country/region, the ',' key */
+		Button		KeyboardSubtract;			/**< For any country/region, the '-' key */
+		Button		KeyboardDecimal;			/**< For any country/region, the '.' key */
+		Button		KeyboardOEM1;				/**< Used for miscellaneous characters; it can vary by keyboard. For the US standard keyboard, the ';:' key. */
+		Button		KeyboardOEM2;				/**< Used for miscellaneous characters; it can vary by keyboard. For the US standard keyboard, the '/?' key. */
+		Button		KeyboardOEM3;				/**< Used for miscellaneous characters; it can vary by keyboard. For the US standard keyboard, the '`~' key. */
+		Button		KeyboardOEM4;				/**< Used for miscellaneous characters; it can vary by keyboard. For the US standard keyboard, the '[{' key. */
+		Button		KeyboardOEM5;				/**< Used for miscellaneous characters; it can vary by keyboard. For the US standard keyboard, the '\|' key. */
+		Button		KeyboardOEM6;				/**< Used for miscellaneous characters; it can vary by keyboard. For the US standard keyboard, the ']}' key. */
+		Button		KeyboardOEM7;				/**< Used for miscellaneous characters; it can vary by keyboard. For the US standard keyboard, the 'single-quote/double-quote' key. */
+		Button		KeyboardOEM8;				/**< Used for miscellaneous characters; it can vary by keyboard. */
+		Button		KeyboardOEM102;				/**< Either the angle bracket key or the backslash key on the RT 102-key keyboard */
 
 		// Main character controls
 		Axis		TransX;						/**< X translation axis: Strafe left/right (+/-) */
