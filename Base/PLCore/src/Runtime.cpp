@@ -77,10 +77,14 @@ Runtime::EType Runtime::GetType()
 	#else
 		// Get the absolute path the PLCore shared library is in
 		// (should never ever fail because this executable is already using this shared library...)
-		const String sAbsPLCorePath = GetPLCoreSharedLibraryDirectory();
+		// -> The result is e.g. "file://C:/PixelLight/Runtime/x86" on Windows
+		// -> To ensure we have a comparable url, add '/'
+		const String sAbsPLCorePath = GetPLCoreSharedLibraryDirectory() + '/';
 
 		// Get the absolute filename of the running process
-		const String sAbsProcessPath = Url(System::GetInstance()->GetExecutableFilename()).CutFilename();
+		// -> "Url::CutFilename()": The protocol is omitted for a local path (e.g. the result will not be "file://C:/Programs/App/")
+		// -> We have to ensure that we have a comparable URL, so use the result of "Url::GetUrl()"
+		const String sAbsProcessPath = Url(Url(System::GetInstance()->GetExecutableFilename()).CutFilename()).GetUrl();
 
 		// Is the PLCore shared library within the same directory as the running process?
 		if (sAbsPLCorePath == sAbsProcessPath) {
@@ -539,10 +543,14 @@ String Runtime::GetDirectory(EType nType)
 		#else
 			// Get the absolute path the PLCore shared library is in
 			// (should never ever fail because this executable is already using this shared library...)
-			const String sAbsPLCorePath = GetPLCoreSharedLibraryDirectory();
+			// -> The result is e.g. "file://C:/PixelLight/Runtime/x86" on Windows
+			// -> To ensure we have a comparable url, add '/'
+			const String sAbsPLCorePath = GetPLCoreSharedLibraryDirectory() + '/';
 
 			// Get the absolute filename of the running process
-			const String sAbsProcessPath = Url(System::GetInstance()->GetExecutableFilename()).CutFilename();
+			// -> "Url::CutFilename()": The protocol is omitted for a local path (e.g. the result will not be "file://C:/Programs/App/")
+			// -> To ensure we have a comparable url, use "Url::GetUrl()"
+			const String sAbsProcessPath = Url(Url(System::GetInstance()->GetExecutableFilename()).CutFilename()).GetUrl();
 
 			// Is the PLCore shared library within the same directory as the running process?
 			if (sAbsPLCorePath == sAbsProcessPath) {

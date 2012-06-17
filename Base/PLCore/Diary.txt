@@ -1,6 +1,12 @@
 >> 17.06.2012
 [CO]
 - Functor: Added support for FuncGenFunPtr and FuncGenMemPtr
+- "Runtime::GetDirectory()" and "Runtime::GetType()" were broken: While Jens Schmer was updating the unit tests it became clear
+  that there are inconsistencies across classes, and back then also inside classes, how urls/filenames are represented.
+  (with/without "file://" at the beginning, with/without "/" at the end of a directory name) Back then, I tried to heavily comment
+  how exactly the result a method is returning looks like, and also tried to have consistency at least inside a class. It
+  appears that since then the mentioned methods were broken, had expected nothing else from such changes (that's why I don't
+  dare to try to make the filenames/URLs consistent across classes on the fly without having more unit tests).
 
 
 
