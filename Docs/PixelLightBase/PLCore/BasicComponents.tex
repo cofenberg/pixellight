@@ -102,6 +102,56 @@ Both, \emph{cMyFunction0} and \emph{cMyFunction1} are functors with a signature 
 \paragraph{Generic Functions and Methods}
 There are situations, like within the Lua script backend, were it's e.g. not possible to create a typed functor because the types are unknown to compile time. In this case, \emph{PLCore::FuncGenFunPtr} or \emph{PLCore::FuncGenMemPtr} using functions/methods with the generic signature \begin{quote}PLCore::Signature<void, PLCore::DynParams\&, void*>\end{quote} can be used. By using these templates, it's possible to pass around and use functions/methods because they're using a generic, common signature.
 
+The following examples will use a generic static function and a generic member method defined within source~code~\ref{Code:GenericStaticFunctionAndGenericMemberMethod}.
+% No float option in here or this source code example will be put someone totally else
+\begin{lstlisting}[label=Code:GenericStaticFunctionAndGenericMemberMethod,caption={Static generic function and generic member method}]
+// Static function
+void MyFunction(PLCore::DynParams &cDynParams, void *pUserData) {
+	// Get the value of the first parameter
+	int nFirst = (cDynParams.GetParameterTypeID(0) == PLCore::TypeInt32) ? *((int*)cDynParams.GetPointerToParameterValue(0)) : 0;
+
+	// Get the value of the second parameter
+	float fSecond = (cDynParams.GetParameterTypeID(1) == PLCore::TypeFloat) ? *((float*)cDynParams.GetPointerToParameterValue(1)) : 0.0f;
+
+	// Set return value
+	if (cDynParams.GetReturnTypeID() == PLCore::TypeDouble)
+		*((double*)cDynParams.GetPointerToReturnValue()) = nFirst*fSecond;
+}
+
+// A class with a method
+class MyClass {
+
+	public:
+		void MyMethod(PLCore::DynParams &cDynParams, void *pUserData) {
+			// Get the value of the first parameter
+			int nFirst = (cDynParams.GetParameterTypeID(0) == PLCore::TypeInt32) ? *((int*)cDynParams.GetPointerToParameterValue(0)) : 0;
+
+			// Get the value of the second parameter
+			float fSecond = (cDynParams.GetParameterTypeID(1) == PLCore::TypeFloat) ? *((float*)cDynParams.GetPointerToParameterValue(1)) : 0.0f;
+
+			// Set return value
+			if (cDynParams.GetReturnTypeID() == PLCore::TypeDouble)
+				*((double*)cDynParams.GetPointerToReturnValue()) = nFirst*fSecond;
+		}
+
+};
+\end{lstlisting}
+Source~code~\ref{Code:UsingGenericFunctorsLikeNativeCppFunctions} shows how functors can be used like native C++ functions.
+\begin{lstlisting}[float=htb,label=Code:UsingGenericFunctorsLikeNativeCppFunctions,caption={Using functors like native C++ functions}]
+// Functor pointing to the genetic static function MyFunction
+PLCore::Functor<double, int, float> cMyFunction0(&MyFunction);
+
+// Functor pointing to the genetic member method MyClass::MyMethod
+MyClass cMyObject;
+PLCore::Functor<MyClass, double, int, float> cMyFunction1(&MyClass::MyMethod, &cMyObject);
+
+// Call the generic static function MyFunction
+double fResult0 = cMyFunction0(42, 3.1415f);
+
+// Call the generic member method MyClass::MyMethod
+double fResult1 = cMyFunction1(42, 3.1415f);
+\end{lstlisting}
+
 
 \paragraph{Dynamic Parameters}
 \label{Functions:DynamicParameters}

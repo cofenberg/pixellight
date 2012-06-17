@@ -2,6 +2,9 @@
 [CO]
 - "PixelLightBuild"-document: Mac OS X: Added a paragraph about ObjC with information I wish I had when
   starting the Mac OS X port over half a year ago.
+- "PixelLightBase"-document: "PLCore" -> "Basic Components" -> "Generic Functions and Methods"-paragraph: Within the
+  forum, there was a question about how to use the feature described within this paragraph ( http://dev.pixellight.org/forum/viewtopic.php?f=6&t=501 ). Added some example source code which is quite similar
+  to the other examples.
 
 
 
