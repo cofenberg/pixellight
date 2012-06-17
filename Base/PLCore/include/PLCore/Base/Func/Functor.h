@@ -3548,7 +3548,7 @@ class Functor<void> : public Func<void> {
 
 		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
-			m_pFunc(new FuncGenMemPtr<void>(pMemFunc, pObject))
+			m_pFunc(new FuncGenMemPtr<CLASS, void>(pMemFunc, pObject))
 		{
 		}
 
