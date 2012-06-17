@@ -333,6 +333,9 @@
     <ClInclude Include="include\PLRendererOpenGL\TessellationEvaluationShaderGLSL.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\PLRendererOpenGL\MacOSX\ContextMacOSX_Cocoa.h">
+      <Filter>MacOSX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
@@ -342,6 +345,9 @@
     </None>
     <None Include="..\..\External\Recommended\OpenGL\Readme.txt">
       <Filter>OpenGL</Filter>
+    </None>
+    <None Include="src\MacOSX\ContextMacOSX_Cocoa.mm">
+      <Filter>MacOSX</Filter>
     </None>
   </ItemGroup>
 </Project>

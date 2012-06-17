@@ -115,8 +115,8 @@ class SurfaceWindowMacOSX_Cocoa : public SurfaceWindowMacOSX {
 	//[-------------------------------------------------------]
 	private:
 		NSOpenGLContext *m_pNSOpenGLContext;	/**< NS OpenGL context, can be a null pointer */
-		
-	
+
+
 };
 
 

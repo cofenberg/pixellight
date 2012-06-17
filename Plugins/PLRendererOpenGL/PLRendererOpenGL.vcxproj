@@ -365,6 +365,7 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLRendererOpenGL\Linux\PLRendererOpenGLLinux.h" />
     <ClInclude Include="include\PLRendererOpenGL\Linux\SurfaceWindowLinux.h" />
     <ClInclude Include="include\PLRendererOpenGL\MacOSX\ContextMacOSX.h" />
+    <ClInclude Include="include\PLRendererOpenGL\MacOSX\ContextMacOSX_Cocoa.h" />
     <ClInclude Include="include\PLRendererOpenGL\MacOSX\ContextMacOSX_X11.h" />
     <ClInclude Include="include\PLRendererOpenGL\MacOSX\SurfaceWindowMacOSX.h" />
     <ClInclude Include="include\PLRendererOpenGL\MacOSX\SurfaceWindowMacOSX_Cocoa.h" />
@@ -410,6 +411,12 @@ copy build\release_x64\PLRendererOpenGL.lib ..\..\Bin\Lib\x64\
     <None Include="..\..\Base\PLRenderer\Diary.txt" />
     <None Include="..\..\External\Recommended\OpenGL\Readme.txt" />
     <None Include="CMakeLists.txt" />
+    <None Include="src\MacOSX\ContextMacOSX_Cocoa.mm">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
     <None Include="src\MacOSX\SurfaceWindowMacOSX_Cocoa.mm">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
