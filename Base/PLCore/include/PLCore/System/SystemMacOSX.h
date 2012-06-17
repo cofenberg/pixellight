@@ -76,6 +76,7 @@ class SystemMacOSX : public SystemLinux {
 	private:
 		virtual String GetPlatform() const override;
 		virtual String GetSharedLibraryExtension() const override;
+		virtual String GetExecutableFilename() const override;
 		virtual String GetModuleFilenameByMemoryAddress(const void *pMemoryAddress) const override;
 
 

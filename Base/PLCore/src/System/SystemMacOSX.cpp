@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <mach-o/dyld.h>	// For _NSGetExecutablePath
 #include "PLCore/System/SystemMacOSX.h"
 
 
@@ -64,6 +65,33 @@ String SystemMacOSX::GetPlatform() const
 String SystemMacOSX::GetModuleFilenameByMemoryAddress(const void *pMemoryAddress) const
 {
 	// [TODO] Test whether or not the Linux implementation works (compiles and runs correctly) for Mac OS X as well
+	return "";
+}
+
+String SystemMacOSX::GetExecutableFilename() const
+{
+	// First of all, get the length of the executable filename (including the terminating zero)
+	uint32_t nSize = 0;
+	_NSGetExecutablePath(nullptr, &nSize);
+	if (nSize) {
+		// Executable filename
+		char *pszTemp = new char[nSize];
+		if (!_NSGetExecutablePath(pszTemp, &nSize)) {
+			// Get the string
+			const String sString = String::FromUTF8(pszTemp);
+
+			// We no longer need the data, so free it
+			delete [] pszTemp;
+
+			// Done
+			return sString;
+		} else {
+			// We no longer need the data, so free it
+			delete [] pszTemp;
+		}
+	}
+
+	// Error!
 	return "";
 }
 

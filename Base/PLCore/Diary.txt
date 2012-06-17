@@ -7,6 +7,7 @@
   how exactly the result a method is returning looks like, and also tried to have consistency at least inside a class. It
   appears that since then the mentioned methods were broken, had expected nothing else from such changes (that's why I don't
   dare to try to make the filenames/URLs consistent across classes on the fly without having more unit tests).
+- Implemented "SystemMacOSX::GetExecutableFilename()"
 
 
 
