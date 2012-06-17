@@ -24,6 +24,7 @@
 //[ Includes                                              ]
 //[-------------------------------------------------------]
 #import <Cocoa/Cocoa.h>
+#include <PLCore/Tools/Timing.h>
 #include <PLCore/Frontend/Frontend.h>
 #include <PLCore/Frontend/FrontendContext.h>
 #include "PLFrontendOS/Frontend.h"
@@ -47,7 +48,8 @@ namespace PLFrontendOS {
 OSWindowMacOSX::OSWindowMacOSX(Frontend &cFrontendOS) :
 	m_pFrontendOS(&cFrontendOS),
 	m_pNSApplication([[NSApplication alloc] init]),
-	m_pNSWindow(nullptr)
+	m_pNSWindow(nullptr),
+	m_bInitialized(true)
 {
 	// Tell the frontend about this instance at once because it may already be required during frontend life cycle initialization
 	m_pFrontendOS->m_pOSWindow = this;
@@ -64,8 +66,14 @@ OSWindowMacOSX::OSWindowMacOSX(Frontend &cFrontendOS) :
 	// Do the frontend life cycle thing - start
 	m_pFrontendOS->OnStart();
 
+	// Initialization is done
+	m_bInitialized = true;
+
 	// If the window is not visible yet, make it visible right now
 	MakeVisible();
+
+	// Do the frontend life cycle thing - resume
+	m_pFrontendOS->OnResume();
 }
 
 /*
@@ -74,6 +82,12 @@ OSWindowMacOSX::OSWindowMacOSX(Frontend &cFrontendOS) :
 */
 OSWindowMacOSX::~OSWindowMacOSX()
 {
+	// Do the frontend life cycle thing - pause
+	m_pFrontendOS->OnPause();
+
+	// Do the frontend life cycle thing - stop
+	m_pFrontendOS->OnStop();
+
 	// Destroy the NSWindow implementation
 	[static_cast<NSWindow*>(m_pNSWindow) release];
 
@@ -108,11 +122,19 @@ handle OSWindowMacOSX::GetNativeWindowHandle() const
 
 void OSWindowMacOSX::Redraw()
 {
-	// [TODO] Implement me
+	// Let the frontend draw into it's window
+	if (m_bInitialized)
+		m_pFrontendOS->OnDraw();
 }
 
 bool OSWindowMacOSX::Ping()
 {
+	// Check if we're allowed to perform an update right now, please note that an update is only allowed when the frontend is fully initialized
+	if (m_bInitialized && Timing::GetInstance()->Update()) {
+		// Let the frontend update it's states (do this before drawing else, e.g. the first frame may have an unwanted content)
+		m_pFrontendOS->OnUpdate();
+	}
+
 	// Process all waiting OS events (non-blocking)
 	NSEvent *pNSEvent = nil;
 	do {
@@ -123,6 +145,9 @@ bool OSWindowMacOSX::Ping()
 		[NSApp sendEvent: pNSEvent];
 	}
 	while (nil != pNSEvent);
+
+	// Do not shut down the application
+	return false;
 }
 
 String OSWindowMacOSX::GetTitle() const

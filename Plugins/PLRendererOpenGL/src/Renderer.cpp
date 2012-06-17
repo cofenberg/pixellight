@@ -550,7 +550,7 @@ Context *Renderer::CreateContext()
 	#elif APPLE
 		// We can also reuse the PLFrontendOS X11 implementation from the Linux port
 		// return new ContextMacOSX_X11(*this);
-		
+
 		// This is what we really want to use on Mac OS X to stay out of compatibility trouble
 		return new ContextMacOSX_Cocoa(*this);
 	#elif LINUX

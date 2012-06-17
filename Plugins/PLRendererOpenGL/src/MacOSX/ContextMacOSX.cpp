@@ -29,7 +29,6 @@
 #include <PLCore/Log/Log.h>
 #include <PLMath/Vector2i.h>
 #include <PLRenderer/Renderer/Types.h>
-#include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSX_Cocoa.h"
 #include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
 #include <IOKit/graphics/IOGraphicsTypes.h>	// Include this after the rest, else we get OS definition issues, again (required for "IO8BitIndexedPixels", "IO16BitIndexedPixels" and "IO32BitIndexedPixels")
 
@@ -83,7 +82,13 @@ ContextMacOSX::ContextMacOSX(Renderer &cRenderer) : Context(),
 	CGLError nCGLError = kCGLNoError;
 
 	// Search for a suitable pixel format
-	CGLPixelFormatAttribute nCGLPixelFormatAttribute[] = {
+	const CGLPixelFormatAttribute nCGLPixelFormatAttribute[] = {
+		kCGLPFAColorSize,		static_cast<CGLPixelFormatAttribute>(24),
+		kCGLPFAAlphaSize,		static_cast<CGLPixelFormatAttribute>(8),
+		kCGLPFAAccelerated,		// No software rendering
+		kCGLPFADoubleBuffer,
+		kCGLPFASampleBuffers,	static_cast<CGLPixelFormatAttribute>(1),
+		kCGLPFASamples,			static_cast<CGLPixelFormatAttribute>(4),
 		static_cast<CGLPixelFormatAttribute>(0)
 	};
 	GLint nNumOfVirtualScreens = 0;
@@ -123,10 +128,12 @@ ContextMacOSX::~ContextMacOSX()
 {
 	// Is there a CGL context object?
 	if (m_pCGLContextObj) {
-		// Destroy the CGL context object (meaning, release our reference)
-		const CGLError nCGLError = CGLDestroyContext(m_pCGLContextObj);
-		if (nCGLError != kCGLNoError)
-			PL_LOG(Error, String("Failed to destroy the CGL context object (\"") + CGLErrorString(nCGLError) + "\")")
+		// Set no CGL context object
+		CGLSetCurrentContext(nullptr);
+
+		// Release the CGL context object
+		// -> Don't use CGLDestroyContext because this CGL context might be used in other NSOpenGLContext instances
+		CGLReleaseContext(m_pCGLContextObj);
 	}
 }
 	

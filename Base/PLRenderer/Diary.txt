@@ -1,3 +1,10 @@
+>> 17.06.2012
+[CO]
+PLRendererOpenGL:
+- Mac OS X & Cocoa: Rendering into a NSWindow is up and running
+
+
+
 >> 15.06.2012
 [CO]
 PLRendererOpenGL:

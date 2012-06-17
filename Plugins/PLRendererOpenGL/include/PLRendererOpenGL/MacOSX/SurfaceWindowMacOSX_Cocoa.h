@@ -28,6 +28,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#import <AppKit/NSOpenGL.h>
 #include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSX.h"
 
 
@@ -99,6 +100,23 @@ class SurfaceWindowMacOSX_Cocoa : public SurfaceWindowMacOSX {
 		virtual PLMath::Vector2i GetSize() const override;
 
 
+	//[-------------------------------------------------------]
+	//[ Private virtual PLRenderer::Surface functions         ]
+	//[-------------------------------------------------------]
+	private:
+		virtual bool Init() override;
+		virtual void DeInit() override;
+		virtual bool MakeCurrent(PLCore::uint8 nFace = 0) override;
+		virtual bool Present() override;
+
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		NSOpenGLContext *m_pNSOpenGLContext;	/**< NS OpenGL context, can be a null pointer */
+		
+	
 };
 
 
