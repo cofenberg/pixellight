@@ -1,3 +1,9 @@
+>> 17.06.2012
+[CO]
+- Functor: Added support for FuncGenFunPtr and FuncGenMemPtr
+
+
+
 >> 14.06.2012
 [CO]
 PLFrontendOS:

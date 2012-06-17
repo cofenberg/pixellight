@@ -31,6 +31,8 @@
 #include "PLCore/Base/Func/Func.h"
 #include "PLCore/Base/Func/FuncFunPtr.h"
 #include "PLCore/Base/Func/FuncMemPtr.h"
+#include "PLCore/Base/Func/FuncGenFunPtr.h"
+#include "PLCore/Base/Func/FuncGenMemPtr.h"
 
 
 //[-------------------------------------------------------]
@@ -177,6 +179,39 @@ class Functor : public Func<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11,
 
 		/**
 		*  @brief
+		*    Constructor
+		*
+		*  @param[in] pFunc
+		*    Pointer to a generic static function
+		*
+		*  @remarks
+		*    Wrap a generic static function pointer
+		*/
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(pFunc))
+		{
+		}
+
+		/**
+		*  @brief
+		*    Constructor
+		*
+		*  @param[in] pMemFunc
+		*    Pointer to a generic member function of a class
+		*  @param[in] pObject
+		*    Pointer to an instance of that class
+		*
+		*  @remarks
+		*    Wrap a generic member function pointer
+		*/
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(pMemFunc, pObject))
+		{
+		}
+
+		/**
+		*  @brief
 		*    Copy constructor
 		*
 		*  @param[in] cFunctor
@@ -303,6 +338,17 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 		{
 		}
 
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15>(pMemFunc, pObject))
+		{
+		}
+
 		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
@@ -396,6 +442,17 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14
 		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(pMemFunc, pObject))
+		{
+		}
+
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(pMemFunc, pObject))
 		{
 		}
 
@@ -496,6 +553,17 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, 
 		{
 		}
 
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14>(pMemFunc, pObject))
+		{
+		}
+
 		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
@@ -588,6 +656,17 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> : p
 		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(pMemFunc, pObject))
+		{
+		}
+
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(pMemFunc, pObject))
 		{
 		}
 
@@ -687,6 +766,17 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13> 
 		{
 		}
 
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13>(pMemFunc, pObject))
+		{
+		}
+
 		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
@@ -778,6 +868,17 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : public
 		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(pMemFunc, pObject))
+		{
+		}
+
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(pMemFunc, pObject))
 		{
 		}
 
@@ -877,6 +978,17 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12> : pub
 		{
 		}
 
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12>(pMemFunc, pObject))
+		{
+		}
+
 		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
@@ -967,6 +1079,17 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public Func
 		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(pMemFunc, pObject))
+		{
+		}
+
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(pMemFunc, pObject))
 		{
 		}
 
@@ -1065,6 +1188,17 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11> : public F
 		{
 		}
 
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11>(pMemFunc, pObject))
+		{
+		}
+
 		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
@@ -1154,6 +1288,17 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<R, T
 		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(pMemFunc, pObject))
+		{
+		}
+
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(pMemFunc, pObject))
 		{
 		}
 
@@ -1251,6 +1396,17 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> : public Func<v
 		{
 		}
 
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10>(pMemFunc, pObject))
+		{
+		}
+
 		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
@@ -1339,6 +1495,17 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<R, T0, T1
 		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>(pMemFunc, pObject))
+		{
+		}
+
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>(pMemFunc, pObject))
 		{
 		}
 
@@ -1434,6 +1601,17 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9> : public Func<void, 
 		{
 		}
 
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>(pMemFunc, pObject))
+		{
+		}
+
 		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
@@ -1521,6 +1699,17 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<R, T0, T1, T2
 		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8>(pMemFunc, pObject))
+		{
+		}
+
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7, T8>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7, T8>(pMemFunc, pObject))
 		{
 		}
 
@@ -1615,6 +1804,17 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7, T8> : public Func<void, T0, 
 		{
 		}
 
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7, T8>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7, T8>(pMemFunc, pObject))
+		{
+		}
+
 		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
@@ -1701,6 +1901,17 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<R, T0, T1, T2, T3
 		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7>(pMemFunc, pObject))
+		{
+		}
+
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5, T6, T7>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6, T7>(pMemFunc, pObject))
 		{
 		}
 
@@ -1794,6 +2005,17 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6, T7> : public Func<void, T0, T1, 
 		{
 		}
 
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6, T7>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6, T7>(pMemFunc, pObject))
+		{
+		}
+
 		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
@@ -1879,6 +2101,17 @@ class Functor<R, T0, T1, T2, T3, T4, T5, T6> : public Func<R, T0, T1, T2, T3, T4
 		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5, T6>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6>(pMemFunc, pObject))
+		{
+		}
+
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5, T6>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5, T6>(pMemFunc, pObject))
 		{
 		}
 
@@ -1971,6 +2204,17 @@ class Functor<void, T0, T1, T2, T3, T4, T5, T6> : public Func<void, T0, T1, T2, 
 		{
 		}
 
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5, T6>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5, T6>(pMemFunc, pObject))
+		{
+		}
+
 		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
@@ -2055,6 +2299,17 @@ class Functor<R, T0, T1, T2, T3, T4, T5> : public Func<R, T0, T1, T2, T3, T4, T5
 		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4, T5>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5>(pMemFunc, pObject))
+		{
+		}
+
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<R, T0, T1, T2, T3, T4, T5>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4, T5>(pMemFunc, pObject))
 		{
 		}
 
@@ -2146,6 +2401,17 @@ class Functor<void, T0, T1, T2, T3, T4, T5> : public Func<void, T0, T1, T2, T3, 
 		{
 		}
 
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<void, T0, T1, T2, T3, T4, T5>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4, T5>(pMemFunc, pObject))
+		{
+		}
+
 		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
@@ -2229,6 +2495,17 @@ class Functor<R, T0, T1, T2, T3, T4> : public Func<R, T0, T1, T2, T3, T4> {
 		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3, T4>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3, T4>(pMemFunc, pObject))
+		{
+		}
+
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<R, T0, T1, T2, T3, T4>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, R, T0, T1, T2, T3, T4>(pMemFunc, pObject))
 		{
 		}
 
@@ -2319,6 +2596,17 @@ class Functor<void, T0, T1, T2, T3, T4> : public Func<void, T0, T1, T2, T3, T4> 
 		{
 		}
 
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<void, T0, T1, T2, T3, T4>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, void, T0, T1, T2, T3, T4>(pMemFunc, pObject))
+		{
+		}
+
 		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
@@ -2401,6 +2689,17 @@ class Functor<R, T0, T1, T2, T3> : public Func<R, T0, T1, T2, T3> {
 		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2, T3>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2, T3>(pMemFunc, pObject))
+		{
+		}
+
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<R, T0, T1, T2, T3>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, R, T0, T1, T2, T3>(pMemFunc, pObject))
 		{
 		}
 
@@ -2490,6 +2789,17 @@ class Functor<void, T0, T1, T2, T3> : public Func<void, T0, T1, T2, T3> {
 		{
 		}
 
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<void, T0, T1, T2, T3>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, void, T0, T1, T2, T3>(pMemFunc, pObject))
+		{
+		}
+
 		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
@@ -2571,6 +2881,17 @@ class Functor<R, T0, T1, T2> : public Func<R, T0, T1, T2> {
 		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1, T2>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1, T2>(pMemFunc, pObject))
+		{
+		}
+
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<R, T0, T1, T2>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, R, T0, T1, T2>(pMemFunc, pObject))
 		{
 		}
 
@@ -2659,6 +2980,17 @@ class Functor<void, T0, T1, T2> : public Func<void, T0, T1, T2> {
 		{
 		}
 
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<void, T0, T1, T2>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, void, T0, T1, T2>(pMemFunc, pObject))
+		{
+		}
+
 		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
@@ -2739,6 +3071,17 @@ class Functor<R, T0, T1> : public Func<R, T0, T1> {
 		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0, T1>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0, T1>(pMemFunc, pObject))
+		{
+		}
+
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<R, T0, T1>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, R, T0, T1>(pMemFunc, pObject))
 		{
 		}
 
@@ -2826,6 +3169,17 @@ class Functor<void, T0, T1> : public Func<void, T0, T1> {
 		{
 		}
 
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<void, T0, T1>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, void, T0, T1>(pMemFunc, pObject))
+		{
+		}
+
 		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
@@ -2905,6 +3259,17 @@ class Functor<R, T0> : public Func<R, T0> {
 		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, R, T0>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, R, T0>(pMemFunc, pObject))
+		{
+		}
+
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<R, T0>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, R, T0>(pMemFunc, pObject))
 		{
 		}
 
@@ -2992,6 +3357,17 @@ class Functor<void, T0> : public Func<void, T0> {
 		{
 		}
 
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<void, T0>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, void, T0>(pMemFunc, pObject))
+		{
+		}
+
 		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
@@ -3073,6 +3449,17 @@ class Functor<R> : public Func<R> {
 		{
 		}
 
+		Functor(const typename Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<R>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<CLASS, R>(pMemFunc, pObject))
+		{
+		}
+
 		Functor(const Functor &cFunctor) : m_pFunc(nullptr)
 		{
 			// Check wrapped function object
@@ -3151,6 +3538,17 @@ class Functor<void> : public Func<void> {
 		template <class CLASS>
 		Functor(const typename MethodSignature<CLASS, void>::MemFuncType &pMemFunc, CLASS *pObject) :
 			m_pFunc(new FuncMemPtr<CLASS, void>(pMemFunc, pObject))
+		{
+		}
+
+		Functor(const Signature<void, PLCore::DynParams&, void*>::FuncType &pFunc) :
+			m_pFunc(new FuncGenFunPtr<void>(pFunc))
+		{
+		}
+
+		template <class CLASS>
+		Functor(const typename MethodSignature<CLASS, void, PLCore::DynParams&, void*>::MemFuncType &pMemFunc, CLASS *pObject) :
+			m_pFunc(new FuncGenMemPtr<void>(pMemFunc, pObject))
 		{
 		}
 
