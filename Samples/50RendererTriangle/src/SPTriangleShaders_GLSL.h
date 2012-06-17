@@ -95,8 +95,8 @@ static const PLCore::String sGeometryShaderSourceCodeGLSL =
 
 STRINGIFY(
 // Attributes
-varying in  highp vec4 VertexColorVS[];	// Interpolated vertex color input from vertex shader
-varying out highp vec4 VertexColorGS;	// Interpolated vertex color output
+varying in  highp vec4 VertexColorVS[3];	// Interpolated vertex color input from vertex shader
+varying out highp vec4 VertexColorGS;		// Interpolated vertex color output
 
 // Programs
 void main()

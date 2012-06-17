@@ -1,3 +1,12 @@
+>> 17.06.2012
+[CO]
+- 50RendererTriangle: Interesting, on Mac OS X the shader compiler told me "Indirect index into implicitly-sized array" when writing
+  "varying in highp vec4 VertexColorVS[]" in a geometry shader, "varying in highp vec4 VertexColorVS[3]" worked. According to "The OpenGL Shading Language"
+  specification 1.30 "4.1.9 Arrays", the shader compiler of Mac OX X is right to blame it. AMD/NVIDIA allow it, I assume they are using the primitive input type
+  as indicator of the array size.
+
+
+
 >> 04.05.2012
 [CO]
 - "55RendererTessellation"-sample: Added Cg version which is not tested, yet (requires a NVIDIA GPU :/)
