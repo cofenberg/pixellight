@@ -41,7 +41,7 @@ namespace PLRendererOpenGL {
 *  @brief
 *    Constructor
 */
-ContextMacOSX_Cocoa::ContextMacOSX_Cocoa(Renderer &cRenderer) : ContextMacOSX(cRenderer)
+ContextMacOSX_Cocoa::ContextMacOSX_Cocoa(Renderer &cRenderer, uint32 nMultisampleAntialiasingSamples) : ContextMacOSX(cRenderer, nMultisampleAntialiasingSamples)
 {
 }
 

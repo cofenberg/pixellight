@@ -549,10 +549,10 @@ Context *Renderer::CreateContext()
 		return new ContextWindows(*this, m_nMultisampleAntialiasingSamples);
 	#elif APPLE
 		// We can also reuse the PLFrontendOS X11 implementation from the Linux port
-		// return new ContextMacOSX_X11(*this);
+		// return new ContextMacOSX_X11(*this, m_nMultisampleAntialiasingSamples);
 
 		// This is what we really want to use on Mac OS X to stay out of compatibility trouble
-		return new ContextMacOSX_Cocoa(*this);
+		return new ContextMacOSX_Cocoa(*this, m_nMultisampleAntialiasingSamples);
 	#elif LINUX
 		return new ContextLinux(*this);
 	#endif

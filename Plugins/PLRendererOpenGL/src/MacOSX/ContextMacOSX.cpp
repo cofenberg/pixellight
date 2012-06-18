@@ -29,6 +29,7 @@
 #include <PLCore/Log/Log.h>
 #include <PLMath/Vector2i.h>
 #include <PLRenderer/Renderer/Types.h>
+#include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/MacOSX/ContextMacOSX.h"
 #include <IOKit/graphics/IOGraphicsTypes.h>	// Include this after the rest, else we get OS definition issues, again (required for "IO8BitIndexedPixels", "IO16BitIndexedPixels" and "IO32BitIndexedPixels")
 
@@ -75,7 +76,7 @@ uint32 GetColorBitsFromDisplayMode(CGDisplayModeRef pCGDisplayMode)
 *  @brief
 *    Constructor
 */
-ContextMacOSX::ContextMacOSX(Renderer &cRenderer) : Context(),
+ContextMacOSX::ContextMacOSX(Renderer &cRenderer, uint32 nMultisampleAntialiasingSamples) : Context(),
 	m_pRenderer(&cRenderer),
 	m_pCGLContextObj(nullptr)
 {
@@ -85,10 +86,12 @@ ContextMacOSX::ContextMacOSX(Renderer &cRenderer) : Context(),
 	const CGLPixelFormatAttribute nCGLPixelFormatAttribute[] = {
 		kCGLPFAColorSize,		static_cast<CGLPixelFormatAttribute>(24),
 		kCGLPFAAlphaSize,		static_cast<CGLPixelFormatAttribute>(8),
+		kCGLPFADepthSize,		static_cast<CGLPixelFormatAttribute>(cRenderer.GetCapabilities().nZBufferBits),
+		kCGLPFAStencilSize,		static_cast<CGLPixelFormatAttribute>(cRenderer.GetCapabilities().nStencilBits),
 		kCGLPFAAccelerated,		// No software rendering
 		kCGLPFADoubleBuffer,
-		kCGLPFASampleBuffers,	static_cast<CGLPixelFormatAttribute>(1),
-		kCGLPFASamples,			static_cast<CGLPixelFormatAttribute>(4),
+		kCGLPFASampleBuffers,	static_cast<CGLPixelFormatAttribute>(nMultisampleAntialiasingSamples ? 1 : 0),
+		kCGLPFASamples,			static_cast<CGLPixelFormatAttribute>(nMultisampleAntialiasingSamples),
 		static_cast<CGLPixelFormatAttribute>(0)
 	};
 	GLint nNumOfVirtualScreens = 0;

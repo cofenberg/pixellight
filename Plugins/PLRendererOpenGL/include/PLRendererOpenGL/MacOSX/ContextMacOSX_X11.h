@@ -64,8 +64,10 @@ class ContextMacOSX_X11 : public ContextMacOSX {
 		*
 		*  @param[in] cRenderer
 		*    The owner renderer
+		*  @param[in] nMultisampleAntialiasingSamples
+		*    Multisample antialiasing samples per pixel, <=1 means no antialiasing
 		*/
-		ContextMacOSX_X11(Renderer &cRenderer);
+		ContextMacOSX_X11(Renderer &cRenderer, PLCore::uint32 nMultisampleAntialiasingSamples);
 
 		/**
 		*  @brief
