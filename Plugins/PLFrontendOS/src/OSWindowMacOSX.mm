@@ -199,7 +199,7 @@ uint32 OSWindowMacOSX::GetHeight() const
 
 void OSWindowMacOSX::SetWindowPositionSize(int nX, int nY, uint32 nWidth, uint32 nHeight)
 {
-	const NSRect sNSRect = { nX, nY, nWidth, nHeight};
+	const NSRect sNSRect = { static_cast<float>(nX), static_cast<float>(nY), static_cast<float>(nWidth), static_cast<float>(nHeight) };
 	[static_cast<NSWindow*>(m_pNSWindow) setFrame:sNSRect display:YES];
 }
 
