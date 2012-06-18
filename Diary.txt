@@ -5,6 +5,13 @@
 
 
 
+>> 18.06.2012
+[CO]
+- PLInstall: When building the project with the Visual Studio project file, the Qt dlls are now copied into the runtime
+  directory. This way, it's possible to just build PLInstall and then being able to start the program at once.
+
+
+
 >> 27.05.2012
 [CO]
 - Visual Studio project files: In debug build, changed "Basic Runtime Checks" to "Default" in order to enhance the performance

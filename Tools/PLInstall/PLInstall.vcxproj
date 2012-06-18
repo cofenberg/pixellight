@@ -117,7 +117,9 @@
       <IgnoreSpecificDefaultLibraries>libcp.lib;libci.lib;msvcirt.lib;libcmt.lib;libcmtd.lib;msvcrt.lib;LIBC.lib;msvcrt.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug_x86\PLInstallD.exe ..\..\Bin\Runtime\x86\</Command>
+      <Command>copy build\debug_x86\PLInstallD.exe ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\Qt\bin\QtCored4.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\Qt\bin\QtGuid4.dll ..\..\Bin\Runtime\x86\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -153,7 +155,9 @@
       <IgnoreSpecificDefaultLibraries>libcp.lib;libci.lib;msvcirt.lib;libcmt.lib;libcmtd.lib;msvcrt.lib;LIBC.lib;</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\debug_x64\PLInstallD.exe ..\..\Bin\Runtime\x64\</Command>
+      <Command>copy build\debug_x64\PLInstallD.exe ..\..\Bin\Runtime\x64\
+copy ..\..\External\_Windows_x86_64\Qt\bin\QtCored4.dll ..\..\Bin\Runtime\x64\
+copy ..\..\External\_Windows_x86_64\Qt\bin\QtGuid4.dll ..\..\Bin\Runtime\x64\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -199,7 +203,9 @@
       <IgnoreSpecificDefaultLibraries>libcp.lib;libci.lib;msvcirt.lib;libcmt.lib;libcmtd.lib;msvcrtd.lib;LIBC.lib;</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release_x86\PLInstall.exe ..\..\Bin\Runtime\x86\</Command>
+      <Command>copy build\release_x86\PLInstall.exe ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\Qt\bin\QtCore4.dll ..\..\Bin\Runtime\x86\
+copy ..\..\External\_Windows_x86_32\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x86\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -248,7 +254,9 @@
       <IgnoreSpecificDefaultLibraries>libcp.lib;libci.lib;msvcirt.lib;libcmt.lib;libcmtd.lib;msvcrtd.lib;LIBC.lib;</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy build\release_x64\PLInstall.exe ..\..\Bin\Runtime\x64\</Command>
+      <Command>copy build\release_x64\PLInstall.exe ..\..\Bin\Runtime\x64\
+copy ..\..\External\_Windows_x86_64\Qt\bin\QtCore4.dll ..\..\Bin\Runtime\x64\
+copy ..\..\External\_Windows_x86_64\Qt\bin\QtGui4.dll ..\..\Bin\Runtime\x64\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
