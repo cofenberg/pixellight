@@ -42,7 +42,7 @@ namespace PLRendererOpenGL {
 *  @brief
 *    Constructor
 */
-ContextMacOSX_X11::ContextMacOSX_X11(Renderer &cRenderer) : ContextMacOSX(cRenderer),
+ContextMacOSX_X11::ContextMacOSX_X11(Renderer &cRenderer, uint32 nMultisampleAntialiasingSamples) : ContextMacOSX(cRenderer, nMultisampleAntialiasingSamples),
 	m_pDisplay(XOpenDisplay(nullptr))
 {
 }
