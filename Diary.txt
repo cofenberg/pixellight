@@ -11,6 +11,15 @@
     "warning: enumeration value ‘<x>’ not handled in switch"
   I assume it's possible to just deactivate this warning, on the other hand, warnings are usually good in order to detect
   real bugs. I already handled many of those warnings, but not all, yet (as mentioned, there are a lot of those warnings).
+- Added the plugins PLLoaderDICOM_GDCM, PLLoaderPVM, PLVolume, PLVolumeRenderer and PLVolumeGui I wrote as part of my
+  master thesis "Scalable Realtime Volume Rendering".
+  -> The thesis can be downloaded at: http://ablazespace.sourceforge.net/as-page/projects/MasterThesis/Ofenberg2012.pdf (in German)
+  -> See http://dev.pixellight.org/forum/viewtopic.php?f=5&t=483#p1339 for more information as well as videos
+  -> I also wrote PLLoaderDICOM_DCMTK but chanceled it during the thesis because DCMTK has no free JPEG 2000 codec
+     (DCMJP2K - DICOM JPEG 2000 Module (http://dicom.offis.de/dcmjp2k.php.en - Is not part of the freeware distribution, must be
+     licensed separately)
+  -> In the Internet, there are several good sources of free available volume data like "The Volume Library" at
+     http://www9.informatik.uni-erlangen.de/External/vollib/
 
 
 
