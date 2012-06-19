@@ -63,7 +63,7 @@ SceneCreatorLoadableTypeVolume::~SceneCreatorLoadableTypeVolume()
 SNCamera *SceneCreatorLoadableTypeVolume::Create(SceneContainer &cSceneContainer) const
 {
 	{ // [HACK][TODO] Scene creator: Make it possible to specify preferred scene renderer
-		const PLCore::String sFilename = "../Data/Volume.sr";
+		const PLCore::String sFilename = "Volume.sr";
 		static_cast<PLEngine::EngineApplication*>(PLCore::CoreApplication::GetApplication())->GetSceneRendererTool().SetSceneRenderer(&cSceneContainer, sFilename, sFilename);
 	}
 
