@@ -81,7 +81,7 @@ SPTriangleShaders::SPTriangleShaders(Renderer &cRenderer) : SPTriangle(cRenderer
 
 				// Is geometric primitive instancing supported?
 				if (cRenderer.GetCapabilities().bInstancing)
-					sVertexShaderSourceCode = "#version 110\n#extension GL_ARB_draw_instanced : enable\n" + Shader::RemovePrecisionQualifiersFromGLSL(sVertexShaderSourceCodeGLSL_Instanced);
+					sVertexShaderSourceCode = "#version 110\n#extension GL_EXT_gpu_shader4 : enable\n#extension GL_ARB_draw_instanced : enable\n" + Shader::RemovePrecisionQualifiersFromGLSL(sVertexShaderSourceCodeGLSL_Instanced);
 				else
 					sVertexShaderSourceCode = "#version 110\n" + Shader::RemovePrecisionQualifiersFromGLSL(sVertexShaderSourceCodeGLSL);
 

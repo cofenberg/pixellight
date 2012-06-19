@@ -1,3 +1,10 @@
+>> 19.06.2012
+[CO]
+- 56RendererInstancing is now also up and running on Mac OS X: Had to add "#extension GL_EXT_gpu_shader4 : enable", else
+  gl_InstanceID was unknown to the shader compiler. Also had to explicitly cast gl_InstanceID to float in my use case.
+
+
+
 >> 17.06.2012
 [CO]
 - 50RendererTriangle: Interesting, on Mac OS X the shader compiler told me "Indirect index into implicitly-sized array" when writing

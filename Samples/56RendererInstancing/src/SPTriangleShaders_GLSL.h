@@ -70,7 +70,7 @@ void main()
 {
 	// Calculate the clip space vertex position, lower/left is (-1,-1) and upper/right is (1,1)
 	// -> Add an offset per geometric primitive instance
-	gl_Position = ObjectSpaceToClipSpaceMatrix*vec4(VertexPosition + vec3(gl_InstanceID*0.1, 0.0, gl_InstanceID*0.01), 1.0);
+	gl_Position = ObjectSpaceToClipSpaceMatrix*vec4(VertexPosition + vec3(float(gl_InstanceID)*0.1, 0.0, float(gl_InstanceID)*0.01), 1.0);
 
 	// Pass through the vertex color
 	VertexColorVS = VertexColor*vec4(0.2, 1.0, 1.0, 1.0);
