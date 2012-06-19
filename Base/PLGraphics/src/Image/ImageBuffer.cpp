@@ -136,6 +136,9 @@ EColorFormat ImageBuffer::GetAlphaChannelColorFormat(EColorFormat nColorFormat)
 		case ColorGrayscale:
 			return ColorGrayscaleA;
 
+		case ColorRGBA:
+		case ColorBGRA:
+		case ColorGrayscaleA:
 		default:
 			return nColorFormat;
 	}
@@ -158,6 +161,9 @@ EColorFormat ImageBuffer::GetNoneAlphaChannelColorFormat(EColorFormat nColorForm
 		case ColorGrayscaleA:
 			return ColorGrayscale;
 
+		case ColorRGB:
+		case ColorBGR:
+		case ColorGrayscale:
 		default:
 			return nColorFormat;
 	}

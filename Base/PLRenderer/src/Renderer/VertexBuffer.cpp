@@ -105,7 +105,8 @@ bool VertexBuffer::AddVertexAttribute(ESemantic nSemantic, uint32 nChannel, ETyp
 
 	// Check whether the channel is correct
 	switch (nSemantic) {
-		case Position: case Normal:
+		case Position:
+		case Normal:
 			if (nChannel > 1)
 				return false; // Error!
 			break;
@@ -113,6 +114,17 @@ bool VertexBuffer::AddVertexAttribute(ESemantic nSemantic, uint32 nChannel, ETyp
 		case Color:
 			if (nChannel > 2)
 				return false; // Error!
+			break;
+
+		case BlendWeight:
+		case FogCoord:
+		case PointSize:
+		case BlendIndices:
+		case TexCoord:
+		case Tangent:
+		case Binormal:
+		default:
+			// Nothing to do in here
 			break;
 	}
 

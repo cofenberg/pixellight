@@ -153,6 +153,11 @@ TextureBuffer::EPixelFormat TextureBuffer::GetFormatFromImage(const Image &cImag
 
 					case CompressionLATC2:
 						return LATC2;
+
+					case CompressionNone:
+					default:
+						// Nothing to do in here, CompressionNone is already handled above
+						break;
 				}
 			}
 		}
@@ -194,6 +199,7 @@ bool TextureBuffer::IsCompressedFormat(EPixelFormat nFormat)
 		case L32F:			return false;
 		case R16G16B16A16F:	return false;
 		case R32G32B32A32F:	return false;
+		case Unknown:		return false; // Error!
 		default:			return false; // Error!
 	}
 }
@@ -205,10 +211,36 @@ bool TextureBuffer::IsCompressedFormat(EPixelFormat nFormat)
 bool TextureBuffer::IsDepthFormat(EPixelFormat nFormat)
 {
 	switch (nFormat) {
-		case D16:	return true;
-		case D24:	return true;
-		case D32:	return true;
-		default:	return false;
+		case D16:
+		case D24:
+		case D32:
+			return true;
+
+		case L8:
+		case L16:
+		case A8:
+		case L4A4:
+		case L8A8:
+		case R3G3B2:
+		case R5G6B5:
+		case R5G5B5A1:
+		case R4G4B4A4:
+		case R8G8B8:
+		case R8G8B8A8:
+		case R10G10B10A2:
+		case R16G16B16A16:
+		case DXT1:
+		case DXT3:
+		case DXT5:
+		case LATC1:
+		case LATC2:
+		case L16F:
+		case L32F:
+		case R16G16B16A16F:
+		case R32G32B32A32F:
+		case Unknown:
+		default:
+			return false;
 	}
 }
 
@@ -222,11 +254,43 @@ TextureBuffer::EPixelFormat TextureBuffer::GetUncompressedFormat(EPixelFormat nF
 	if (IsCompressedFormat(nFormat)) {
 		// Return a proper uncompressed format
 		switch (nFormat) {
-			case DXT1:	return R8G8B8;
-			case DXT3:	return R8G8B8A8;
-			case DXT5:	return R8G8B8A8;
-			case LATC1:	return L8;
-			case LATC2:	return L8A8;
+			case DXT1:
+				return R8G8B8;
+
+			case DXT3:
+				return R8G8B8A8;
+
+			case DXT5:
+				return R8G8B8A8;
+
+			case LATC1:
+				return L8;
+
+			case LATC2:
+				return L8A8;
+
+			case L8:
+			case L16:
+			case A8:
+			case L4A4:
+			case L8A8:
+			case D16:
+			case D24:
+			case D32:
+			case R3G3B2:
+			case R5G6B5:
+			case R5G5B5A1:
+			case R4G4B4A4:
+			case R8G8B8:
+			case R8G8B8A8:
+			case R10G10B10A2:
+			case R16G16B16A16:
+			case L16F:
+			case L32F:
+			case R16G16B16A16F:
+			case R32G32B32A32F:
+			case Unknown:
+				break;
 		}
 	}
 
@@ -266,6 +330,7 @@ bool TextureBuffer::IsFloatingPointFormat(EPixelFormat nFormat)
 		case L32F:			return true;
 		case R16G16B16A16F:	return true;
 		case R32G32B32A32F:	return true;
+		case Unknown:		return false; // Error!
 		default:			return false; // Error!
 	}
 }
@@ -302,6 +367,7 @@ uint32 TextureBuffer::GetComponentsPerPixel(EPixelFormat nFormat)
 		case L32F:			return 1;
 		case R16G16B16A16F:	return 4;
 		case R32G32B32A32F:	return 4;
+		case Unknown:		return 0; // Error!
 		default:			return 0; // Error!
 	}
 }
@@ -338,6 +404,7 @@ uint32 TextureBuffer::GetBytesPerPixelComponent(EPixelFormat nFormat)
 		case L32F:			return 4;
 		case R16G16B16A16F:	return 2;
 		case R32G32B32A32F:	return 4;
+		case Unknown:		return 0; // Error!
 		default:			return 0; // Error!
 	}
 }
@@ -374,6 +441,7 @@ uint32 TextureBuffer::GetBytesPerPixel(EPixelFormat nFormat)
 		case L32F:			return 4;
 		case R16G16B16A16F:	return 8;
 		case R32G32B32A32F:	return 16;
+		case Unknown:		return 0; // Error!
 		default:			return 0; // Error!
 	}
 }
@@ -430,8 +498,19 @@ Vector3i TextureBuffer::GetUniformSize(uint32 nMipmap) const
 			vSize.z = 1;
 			break;
 
+		case TypeIndexBuffer:
+		case TypeVertexBuffer:
+		case TypeUniformBuffer:
+		case TypeOcclusionQuery:
+		case TypeVertexShader:
+		case TypeTessellationControlShader:
+		case TypeTessellationEvaluationShader:
+		case TypeGeometryShader:
+		case TypeFragmentShader:
+		case TypeProgram:
+		case TypeFont:
 		default:
-			break;	// Error! (... we should never ever end up in here...)
+			break;	// Error! This methods only works for texture buffers...
 	}
 
 	// Return the size
@@ -641,6 +720,7 @@ bool TextureBuffer::GetFormatForImage(EDataFormat &nDataFormat, EColorFormat &nC
 			nColorFormat = ColorRGBA;	// RGBA
 			break;
 
+		case Unknown:
 		default:
 			return false; // Error!
 	}

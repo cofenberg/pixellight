@@ -202,6 +202,15 @@ uint32 Geometry::GetNumOfTriangles() const
 
 			case Primitive::TriangleFan:
 				return m_nIndexSize-2;
+
+			case Primitive::PointList:
+			case Primitive::LineList:
+			case Primitive::LineStrip:
+			case Primitive::Number:
+			case Primitive::Unknown:
+			default:
+				// Only triangle based primitives are relevant in this switch
+				break;
 		}
 	}
 

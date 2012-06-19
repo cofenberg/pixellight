@@ -232,6 +232,14 @@ void ImageData::CreateTestImage(ETestImage nTestImage)
 			}
 			break;
 		}
+
+		case TestImageCubeMap:
+			// [TODO] Create a test image
+			break;
+
+		default:
+			// Nothing to do in here
+			break;
 	}
 }
 
@@ -525,6 +533,11 @@ bool ImageData::Decompress()
 			}
 			break;
 		}
+
+		case CompressionNone:
+		default:
+			// Nothing to do in here
+			break;
 	}
 
 	// Done
@@ -626,6 +639,11 @@ void ImageData::CalculateCompressedImageBufferSize()
 			// Avoid slow division by using bit-shift
 			m_nCompressedSize = ((m_vSize.x + 3) >> 2) * ((m_vSize.y + 3) >> 2) * 16;
 		//	m_nCompressedSize = ((m_vSize.x + 3) / 4) * ((m_vSize.y + 3) / 4) * 16;
+			break;
+
+		case CompressionNone:
+		default:
+			// Nothing to do in here
 			break;
 	}
 

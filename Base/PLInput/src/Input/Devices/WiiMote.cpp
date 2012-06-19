@@ -249,6 +249,11 @@ void WiiMote::SetReportMode(EReport nReportMode, bool bContinuous)
 			SetIRMode(IRBasic);
 			break;
 
+		case ReportStatus:
+		case ReportReadMemory:
+		case ReportButtons:
+		case ReportButtonsAccel:
+		case ReportButtonsAccelExt:
 		default:
 			SetIRMode(IROff);
 			break;
@@ -789,8 +794,10 @@ void WiiMote::OnReadIR()
 		// Full mode
 		case IRFull:
 			// Unimplemented
+			return;
 
-		// Unknown
+		// Off/unknown
+		case IROff:
 		default:
 			return;
 	}
@@ -838,6 +845,12 @@ void WiiMote::OnReadExtension(uint32 nOffset)
 		// Classic controller
 		case ExtClassic:
 			OnReadClassic(nOffset);
+			break;
+
+		case ExtNone:
+		case ExtPartiallyInserted:
+		default:
+			// [TODO] Review this: Do we need to handle this case?
 			break;
 	}
 }

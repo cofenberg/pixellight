@@ -350,6 +350,7 @@ uint32 Renderer::GetOpenGLPixelFormat(PLRenderer::TextureBuffer::EPixelFormat nF
 		case PLRenderer::TextureBuffer::L16:
 		case PLRenderer::TextureBuffer::L16F:
 		case PLRenderer::TextureBuffer::L32F:
+		case PLRenderer::TextureBuffer::LATC1:
 			return GL_RED;
 
 		case PLRenderer::TextureBuffer::A8:
@@ -357,6 +358,7 @@ uint32 Renderer::GetOpenGLPixelFormat(PLRenderer::TextureBuffer::EPixelFormat nF
 
 		case PLRenderer::TextureBuffer::L4A4:
 		case PLRenderer::TextureBuffer::L8A8:
+		case PLRenderer::TextureBuffer::LATC2:
 			return GL_LUMINANCE_ALPHA;
 
 		case PLRenderer::TextureBuffer::D16:
@@ -379,6 +381,7 @@ uint32 Renderer::GetOpenGLPixelFormat(PLRenderer::TextureBuffer::EPixelFormat nF
 		case PLRenderer::TextureBuffer::DXT5:
 		case PLRenderer::TextureBuffer::R16G16B16A16F:
 		case PLRenderer::TextureBuffer::R32G32B32A32F:
+		case PLRenderer::TextureBuffer::Unknown:
 		default:
 			return GL_RGBA;
 	}
@@ -428,6 +431,7 @@ uint32 Renderer::GetOpenGLDataFormat(PLRenderer::TextureBuffer::EPixelFormat nFo
 		case PLRenderer::TextureBuffer::R32G32B32A32F:
 			return GL_FLOAT;
 
+		case PLRenderer::TextureBuffer::Unknown:
 		default:
 			return GL_UNSIGNED_BYTE;
 	}
@@ -486,6 +490,31 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 				case PLRenderer::TextureBuffer::DXT3:
 				case PLRenderer::TextureBuffer::DXT5:
 					nChosenInternalFormat = PLRenderer::TextureBuffer::R8G8B8A8;
+					break;
+
+				case PLRenderer::TextureBuffer::L8:
+				case PLRenderer::TextureBuffer::L16:
+				case PLRenderer::TextureBuffer::A8:
+				case PLRenderer::TextureBuffer::L4A4:
+				case PLRenderer::TextureBuffer::L8A8:
+				case PLRenderer::TextureBuffer::D16:
+				case PLRenderer::TextureBuffer::D24:
+				case PLRenderer::TextureBuffer::D32:
+				case PLRenderer::TextureBuffer::R3G3B2:
+				case PLRenderer::TextureBuffer::R5G6B5:
+				case PLRenderer::TextureBuffer::R5G5B5A1:
+				case PLRenderer::TextureBuffer::R4G4B4A4:
+				case PLRenderer::TextureBuffer::R8G8B8:
+				case PLRenderer::TextureBuffer::R8G8B8A8:
+				case PLRenderer::TextureBuffer::R10G10B10A2:
+				case PLRenderer::TextureBuffer::R16G16B16A16:
+				case PLRenderer::TextureBuffer::L16F:
+				case PLRenderer::TextureBuffer::L32F:
+				case PLRenderer::TextureBuffer::R16G16B16A16F:
+				case PLRenderer::TextureBuffer::R32G32B32A32F:
+				case PLRenderer::TextureBuffer::Unknown:
+				default:
+					// Only compressed formats need to be handled in this switch
 					break;
 			}
 		}
@@ -1010,6 +1039,21 @@ void Renderer::RestoreDeviceStates()
 
 			case PLRenderer::Resource::TypeTextureBufferCube:
 				MemoryManager::Set(&static_cast<TextureBufferCube*>(pResource)->m_nSamplerState[0], PLRenderer::Sampler::Unknown, sizeof(uint32)*PLRenderer::Sampler::Number);
+				break;
+
+			case PLRenderer::Resource::TypeIndexBuffer:
+			case PLRenderer::Resource::TypeVertexBuffer:
+			case PLRenderer::Resource::TypeUniformBuffer:
+			case PLRenderer::Resource::TypeOcclusionQuery:
+			case PLRenderer::Resource::TypeVertexShader:
+			case PLRenderer::Resource::TypeTessellationControlShader:
+			case PLRenderer::Resource::TypeTessellationEvaluationShader:
+			case PLRenderer::Resource::TypeGeometryShader:
+			case PLRenderer::Resource::TypeFragmentShader:
+			case PLRenderer::Resource::TypeProgram:
+			case PLRenderer::Resource::TypeFont:
+			default:
+				// Only texture buffer types need to be handled in this switch
 				break;
 		}
 	}

@@ -435,6 +435,7 @@ bool ImageLoaderTGA::Save(const Image &cImage, File &cFile)
 					break;
 				}
 
+				case ColorGrayscaleA:
 				default:
 					// Error; Unsupported color format
 					break;

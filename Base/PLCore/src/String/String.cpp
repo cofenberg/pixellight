@@ -732,6 +732,10 @@ bool String::operator <(const String &sString) const
 
 					case Unicode:
 						return sString.m_pStringBuffer->IsGreaterThan(GetUnicode(), m_pStringBuffer->GetLength());
+
+					case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+					default:
+						return false; // Error!
 				}
 				break; // We should NEVER get in here!
 
@@ -742,12 +746,19 @@ bool String::operator <(const String &sString) const
 
 					case Unicode:
 						return m_pStringBuffer->IsLessThan(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
+
+					case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+					default:
+						return false; // Error!
 				}
 				break; // We should NEVER get in here!
+
+			case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+			default:
+				return false; // Error!
 		}
 
-		// We should NEVER get in here!
-		return false;
+		// We should NEVER get in here! *unreachable code*
 	} else {
 		// Check whether the other string is empty, too
 		if (sString.m_pStringBuffer)
@@ -832,6 +843,10 @@ bool String::operator >(const String &sString) const
 
 					case Unicode:
 						return sString.m_pStringBuffer->IsLessThan(GetUnicode(), m_pStringBuffer->GetLength());
+
+					case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+					default:
+						return false; // Error!
 				}
 				break; // We should NEVER get in here!
 
@@ -842,12 +857,19 @@ bool String::operator >(const String &sString) const
 
 					case Unicode:
 						return m_pStringBuffer->IsGreaterThan(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength()); // Same format
+
+					case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+					default:
+						return false; // Error!
 				}
 				break; // We should NEVER get in here!
+
+			case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+			default:
+				return false; // Error!
 		}
 
-		// We should NEVER get in here!
-		return false;
+		// We should NEVER get in here! *unreachable code*
 	} else {
 		// Because this string is empty the other one is ALWAYS greater or equal
 		return false;
@@ -929,6 +951,10 @@ bool String::Compare(const String &sString, uint32 nPos, int nCount) const
 
 						case Unicode:
 							return m_pStringBuffer->Compare(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : static_cast<uint32>(nCount));
+
+						case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+						default:
+							return false; // Error!
 					}
 					break; // We should NEVER get in here!
 
@@ -939,12 +965,19 @@ bool String::Compare(const String &sString, uint32 nPos, int nCount) const
 
 						case Unicode:
 							return m_pStringBuffer->Compare(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : static_cast<uint32>(nCount));
+
+						case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+						default:
+							return false; // Error!
 					}
 					break; // We should NEVER get in here!
+
+				case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+				default:
+					return false; // Error!
 			}
 
-			// We should NEVER get in here!
-			return false;
+			// We should NEVER get in here! *unreachable code*
 		} else {
 			// Check whether the other string is empty, too
 			if (sString.m_pStringBuffer)
@@ -1047,6 +1080,10 @@ bool String::CompareNoCase(const String &sString, uint32 nPos, int nCount) const
 
 						case Unicode:
 							return m_pStringBuffer->CompareNoCase(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : static_cast<uint32>(nCount));
+
+						case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+						default:
+							return false; // Error!
 					}
 					break; // We should NEVER get in here!
 
@@ -1057,12 +1094,19 @@ bool String::CompareNoCase(const String &sString, uint32 nPos, int nCount) const
 
 						case Unicode:
 							return m_pStringBuffer->CompareNoCase(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, sString.GetLength(), nPos, (nCount < 0) ? 0 : static_cast<uint32>(nCount));
+
+						case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+						default:
+							return false; // Error!
 					}
 					break; // We should NEVER get in here!
+
+				case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+				default:
+					return false; // Error!
 			}
 
-			// We should NEVER get in here!
-			return false;
+			// We should NEVER get in here! *unreachable code*
 		} else {
 			// Check whether the other string is empty, too
 			if (sString.m_pStringBuffer)
@@ -1159,6 +1203,10 @@ bool String::IsSubstring(const String &sString) const
 
 				case Unicode:
 					return m_pStringBuffer->IsSubstring(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, sString.m_pStringBuffer->GetLength());
+
+				case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+				default:
+					return false; // Error!
 			}
 			break; // We should NEVER get in here!
 
@@ -1169,12 +1217,19 @@ bool String::IsSubstring(const String &sString) const
 
 				case Unicode:
 					return m_pStringBuffer->IsSubstring(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, 0); // Same format
+
+				case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+				default:
+					return false; // Error!
 			}
 			break; // We should NEVER get in here!
+
+		case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+		default:
+			return false; // Error!
 	}
 
-	// We should NEVER get in here!
-	return false;
+	// We should NEVER get in here! *unreachable code*
 }
 
 /**
@@ -1236,6 +1291,10 @@ int String::IndexOf(const String &sString, uint32 nPos) const
 
 					case Unicode:
 						return m_pStringBuffer->IndexOf(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, nPos, sString.m_pStringBuffer->GetLength());
+
+					case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+					default:
+						return 0; // Error!
 				}
 				break; // We should NEVER get in here!
 
@@ -1246,8 +1305,16 @@ int String::IndexOf(const String &sString, uint32 nPos) const
 
 					case Unicode:
 						return m_pStringBuffer->IndexOf(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, nPos, 0); // Same format
+
+					case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+					default:
+						return 0; // Error!
 				}
 				break; // We should NEVER get in here!
+
+			case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+			default:
+				return 0; // Error!
 		}
 	}
 
@@ -1316,6 +1383,10 @@ int String::LastIndexOf(const String &sString, int nPos) const
 
 					case Unicode:
 						return m_pStringBuffer->LastIndexOf(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, nPos, sString.GetLength());
+
+					case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+					default:
+						return 0; // Error!
 				}
 				break; // We should NEVER get in here!
 
@@ -1326,8 +1397,16 @@ int String::LastIndexOf(const String &sString, int nPos) const
 
 					case Unicode:
 						return m_pStringBuffer->LastIndexOf(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, nPos, sString.GetLength());
+
+					case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+					default:
+						return 0; // Error!
 				}
 				break; // We should NEVER get in here!
+
+			case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+			default:
+				return 0; // Error!
 		}
 	}
 
@@ -1466,6 +1545,10 @@ String &String::Insert(const String &sString, uint32 nPos, int nCount)
 								case Unicode:
 									SetStringBuffer(m_pStringBuffer->Append(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, static_cast<uint32>(nCount)));
 									break;
+
+								case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+								default:
+									break; // Error!
 							}
 							break;
 
@@ -1478,8 +1561,16 @@ String &String::Insert(const String &sString, uint32 nPos, int nCount)
 								case Unicode:
 									SetStringBuffer(m_pStringBuffer->Append(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, static_cast<uint32>(nCount)));
 									break;
+
+								case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+								default:
+									break; // Error!
 							}
 							break;
+
+						case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+						default:
+							break; // Error!
 					}
 				} else {
 					switch (m_pStringBuffer->GetFormat()) {
@@ -1492,6 +1583,10 @@ String &String::Insert(const String &sString, uint32 nPos, int nCount)
 								case Unicode:
 									SetStringBuffer(m_pStringBuffer->Insert(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, nPos, static_cast<uint32>(nCount)));
 									break;
+
+								case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+								default:
+									break; // Error!
 							}
 							break;
 
@@ -1504,8 +1599,16 @@ String &String::Insert(const String &sString, uint32 nPos, int nCount)
 								case Unicode:
 									SetStringBuffer(m_pStringBuffer->Insert(static_cast<StringBufferUnicode*>(sString.m_pStringBuffer)->m_pszString, nPos, static_cast<uint32>(nCount)));
 									break;
+
+								case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+								default:
+									break; // Error!
 							}
 							break;
+
+						case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+						default:
+							break; // Error!
 					}
 				}
 
@@ -2026,6 +2129,10 @@ char String::GetChar() const
 
 			case Unicode:
 				return static_cast<char>(_wtoi(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString));
+
+			case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+			default:
+				return 0; // Error!
 		}
 	}
 
@@ -2042,6 +2149,10 @@ wchar_t String::GetWideChar() const
 
 			case Unicode:
 				return static_cast<wchar_t>(_wtoi(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString));
+
+			case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+			default:
+				return 0; // Error!
 		}
 	}
 
@@ -2058,6 +2169,10 @@ int String::GetInt() const
 
 			case Unicode:
 				return _wtoi(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString);
+
+			case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+			default:
+				return 0; // Error!
 		}
 	}
 
@@ -2078,6 +2193,10 @@ int64 String::GetInt64() const
 				#elif defined(WIN32)
 					return _wtoi64(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString);
 				#endif
+
+			case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+			default:
+				return 0; // Error!
 		}
 	}
 
@@ -2098,6 +2217,10 @@ uint8 String::GetUInt8() const
 				// We don't use "return _wtol(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);"
 				// because "_wtol" seems to have a different behavior under Linux and Windows (uint32 values from string...)
 				return static_cast<uint8>(wcstoul(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString, nullptr, 10));
+
+			case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+			default:
+				return 0; // Error!
 		}
 	}
 
@@ -2118,6 +2241,10 @@ uint16 String::GetUInt16() const
 				// We don't use "return _wtol(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);"
 				// because "_wtol" seems to have a different behavior under Linux and Windows (uint32 values from string...)
 				return static_cast<uint16>(wcstoul(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString, nullptr, 10));
+
+			case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+			default:
+				return 0; // Error!
 		}
 	}
 
@@ -2138,6 +2265,10 @@ uint32 String::GetUInt32() const
 				// We don't use "return _wtol(((StringBufferUnicode*)m_pStringBuffer)->m_pszString);"
 				// because "_wtol" seems to have a different behavior under Linux and Windows (uint32 values from string...)
 				return wcstoul(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString, nullptr, 10);
+
+			case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+			default:
+				return 0; // Error!
 		}
 	}
 
@@ -2158,6 +2289,10 @@ uint64 String::GetUInt64() const
 				#elif defined(WIN32)
 					return _wtoi64(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString);
 				#endif
+
+			case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
+			default:
+				return 0; // Error!
 		}
 	}
 
@@ -2181,6 +2316,7 @@ float String::GetFloat() const
 				fReturnValue = static_cast<float>(_wtof(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString));
 				break;
 
+			case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
 			default:
 				fReturnValue = 0.0f;
 				break;
@@ -2212,6 +2348,7 @@ double String::GetDouble() const
 				fReturnValue = _wtof(static_cast<StringBufferUnicode*>(m_pStringBuffer)->m_pszString);
 				break;
 
+			case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
 			default:
 				fReturnValue = 0.0;
 				break;

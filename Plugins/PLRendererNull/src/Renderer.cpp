@@ -697,13 +697,34 @@ bool Renderer::DrawPrimitives(PLRenderer::Primitive::Enum nType, uint32 nStartIn
 		// Get number of primitives
 		uint32 nPrimitiveCount;
 		switch (nType) {
-			case PLRenderer::Primitive::PointList:	   nPrimitiveCount = nNumVertices;   break;
-			case PLRenderer::Primitive::LineList:	   nPrimitiveCount = nNumVertices-1; break;
-			case PLRenderer::Primitive::LineStrip:	   nPrimitiveCount = nNumVertices-1; break;
-			case PLRenderer::Primitive::TriangleList:  nPrimitiveCount = nNumVertices/3; break;
-			case PLRenderer::Primitive::TriangleStrip: nPrimitiveCount = nNumVertices-2; break;
-			case PLRenderer::Primitive::TriangleFan:   nPrimitiveCount = nNumVertices-2; break;
-			default:								   return false; // Error!
+			case PLRenderer::Primitive::PointList:
+				nPrimitiveCount = nNumVertices;
+				break;
+
+			case PLRenderer::Primitive::LineList:
+				nPrimitiveCount = nNumVertices-1;
+				break;
+
+			case PLRenderer::Primitive::LineStrip:
+				nPrimitiveCount = nNumVertices-1;
+				break;
+
+			case PLRenderer::Primitive::TriangleList:
+				nPrimitiveCount = nNumVertices/3;
+				break;
+
+			case PLRenderer::Primitive::TriangleStrip:
+				nPrimitiveCount = nNumVertices-2;
+				break;
+
+			case PLRenderer::Primitive::TriangleFan:
+				nPrimitiveCount = nNumVertices-2;
+				break;
+
+			case PLRenderer::Primitive::Number:
+			case PLRenderer::Primitive::Unknown:
+			default:
+				return false; // Error!
 		}
 
 		// Update statistics
@@ -728,13 +749,34 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 		// Get number of primitives
 		uint32 nPrimitiveCount;
 		switch (nType) {
-			case PLRenderer::Primitive::PointList:	   nPrimitiveCount = nNumVertices;   break;
-			case PLRenderer::Primitive::LineList:	   nPrimitiveCount = nNumVertices-2; break;
-			case PLRenderer::Primitive::LineStrip:	   nPrimitiveCount = nNumVertices-2; break;
-			case PLRenderer::Primitive::TriangleList:  nPrimitiveCount = nNumVertices/3; break;
-			case PLRenderer::Primitive::TriangleStrip: nPrimitiveCount = nNumVertices-2; break;
-			case PLRenderer::Primitive::TriangleFan:   nPrimitiveCount = nNumVertices-2; break;
-			default:								   return false; // Error!
+			case PLRenderer::Primitive::PointList:
+				nPrimitiveCount = nNumVertices;
+				break;
+
+			case PLRenderer::Primitive::LineList:
+				nPrimitiveCount = nNumVertices-2;
+				break;
+
+			case PLRenderer::Primitive::LineStrip:
+				nPrimitiveCount = nNumVertices-2;
+				break;
+
+			case PLRenderer::Primitive::TriangleList:
+				nPrimitiveCount = nNumVertices/3;
+				break;
+
+			case PLRenderer::Primitive::TriangleStrip:
+				nPrimitiveCount = nNumVertices-2;
+				break;
+
+			case PLRenderer::Primitive::TriangleFan:
+				nPrimitiveCount = nNumVertices-2;
+				break;
+
+			case PLRenderer::Primitive::Number:
+			case PLRenderer::Primitive::Unknown:
+			default:
+				return false; // Error!
 		}
 
 		// Update statistics
@@ -774,13 +816,34 @@ bool Renderer::DrawPrimitivesInstanced(PLRenderer::Primitive::Enum nType, uint32
 		// Get number of primitives
 		uint32 nPrimitiveCount;
 		switch (nType) {
-			case PLRenderer::Primitive::PointList:	   nPrimitiveCount = nNumVertices;   break;
-			case PLRenderer::Primitive::LineList:	   nPrimitiveCount = nNumVertices-1; break;
-			case PLRenderer::Primitive::LineStrip:	   nPrimitiveCount = nNumVertices-1; break;
-			case PLRenderer::Primitive::TriangleList:  nPrimitiveCount = nNumVertices/3; break;
-			case PLRenderer::Primitive::TriangleStrip: nPrimitiveCount = nNumVertices-2; break;
-			case PLRenderer::Primitive::TriangleFan:   nPrimitiveCount = nNumVertices-2; break;
-			default:								   return false; // Error!
+			case PLRenderer::Primitive::PointList:
+				nPrimitiveCount = nNumVertices;
+				break;
+
+			case PLRenderer::Primitive::LineList:
+				nPrimitiveCount = nNumVertices-1;
+				break;
+
+			case PLRenderer::Primitive::LineStrip:
+				nPrimitiveCount = nNumVertices-1;
+				break;
+
+			case PLRenderer::Primitive::TriangleList:
+				nPrimitiveCount = nNumVertices/3;
+				break;
+
+			case PLRenderer::Primitive::TriangleStrip:
+				nPrimitiveCount = nNumVertices-2;
+				break;
+
+			case PLRenderer::Primitive::TriangleFan:
+				nPrimitiveCount = nNumVertices-2;
+				break;
+
+			case PLRenderer::Primitive::Number:
+			case PLRenderer::Primitive::Unknown:
+			default:
+				return false; // Error!
 		}
 
 		// Update statistics
@@ -804,13 +867,34 @@ bool Renderer::DrawIndexedPrimitivesInstanced(PLRenderer::Primitive::Enum nType,
 		// Get number of primitives
 		uint32 nPrimitiveCount;
 		switch (nType) {
-			case PLRenderer::Primitive::PointList:	   nPrimitiveCount = nNumVertices;   break;
-			case PLRenderer::Primitive::LineList:	   nPrimitiveCount = nNumVertices-2; break;
-			case PLRenderer::Primitive::LineStrip:	   nPrimitiveCount = nNumVertices-2; break;
-			case PLRenderer::Primitive::TriangleList:  nPrimitiveCount = nNumVertices/3; break;
-			case PLRenderer::Primitive::TriangleStrip: nPrimitiveCount = nNumVertices-2; break;
-			case PLRenderer::Primitive::TriangleFan:   nPrimitiveCount = nNumVertices-2; break;
-			default:								   return false; // Error!
+			case PLRenderer::Primitive::PointList:
+				nPrimitiveCount = nNumVertices;
+				break;
+
+			case PLRenderer::Primitive::LineList:
+				nPrimitiveCount = nNumVertices-2;
+				break;
+
+			case PLRenderer::Primitive::LineStrip:
+				nPrimitiveCount = nNumVertices-2;
+				break;
+
+			case PLRenderer::Primitive::TriangleList:
+				nPrimitiveCount = nNumVertices/3;
+				break;
+
+			case PLRenderer::Primitive::TriangleStrip:
+				nPrimitiveCount = nNumVertices-2;
+				break;
+
+			case PLRenderer::Primitive::TriangleFan:
+				nPrimitiveCount = nNumVertices-2;
+				break;
+
+			case PLRenderer::Primitive::Number:
+			case PLRenderer::Primitive::Unknown:
+			default:
+				return false; // Error!
 		}
 
 		// Update statistics
