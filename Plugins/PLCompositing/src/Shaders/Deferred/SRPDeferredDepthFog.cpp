@@ -144,6 +144,11 @@ void SRPDeferredDepthFog::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 							case Exponential2Mode:
 								PL_ADD_FS_FLAG(m_cProgramFlags, FS_EXPONENTIAL2_MODE)
 								break;
+
+							case NumberOfModes:
+							default:
+								// Invalid fog mode
+								break;
 						}
 
 						// Get a program instance from the program generator using the given program flags

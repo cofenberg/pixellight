@@ -154,6 +154,31 @@ uint32 TextureBuffer2D::GetNumOfBytes(uint32 nMipmap, EPixelFormat nFormat) cons
 				case DXT5:
 				case LATC2:
 					return ((vSize.x+3)/4)*((vSize.y+3)/4)*16;
+
+				case L8:
+				case L16:
+				case A8:
+				case L4A4:
+				case L8A8:
+				case D16:
+				case D24:
+				case D32:
+				case R3G3B2:
+				case R5G6B5:
+				case R5G5B5A1:
+				case R4G4B4A4:
+				case R8G8B8:
+				case R8G8B8A8:
+				case R10G10B10A2:
+				case R16G16B16A16:
+				case L16F:
+				case L32F:
+				case R16G16B16A16F:
+				case R32G32B32A32F:
+				case Unknown:
+				default:
+					// Those cases are handled below
+					break;
 			}
 		} else {
 			return GetBytesPerPixel(nFormat)*vSize.x*vSize.y;

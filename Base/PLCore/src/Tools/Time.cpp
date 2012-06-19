@@ -79,6 +79,10 @@ uint8 Time::GetDaysPerMonth(EMonth nMonth, uint32 nYear)
 			else
 				return 28;
 
+		case April:
+		case June:
+		case September:
+		case November:
 		default:
 			return 30;
 	}

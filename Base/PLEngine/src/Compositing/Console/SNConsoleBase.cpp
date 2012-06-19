@@ -672,6 +672,7 @@ void SNConsoleBase::List(bool bDetailed)
 							sSyntax += " <bool>";
 							break;
 
+						case ConsoleCommand::ParamUnknown:
 						default:
 							sSyntax += " <unknown type>";
 							break;

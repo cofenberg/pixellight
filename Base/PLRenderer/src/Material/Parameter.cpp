@@ -124,6 +124,7 @@ bool Parameter::SetManagerParameterValue(Parameters &cManager, const PLCore::Str
 		case Parameters::TextureBuffer:
 			return false; // Error, not supported
 
+		case Parameters::UnknownDataType:
 		default:
 			return false; // Error, not supported
 	}
@@ -219,6 +220,7 @@ bool Parameter::SetManagerParameterValue(Program &cProgram, const PLCore::String
 			case Parameters::TextureBuffer:
 				return false; // Error, not supported
 
+			case Parameters::UnknownDataType:
 			default:
 				return false; // Error, not supported
 		}
@@ -354,6 +356,7 @@ PLCore::String Parameter::GetParameterString() const
 			return pTexture ? pTexture->GetName() : "";
 		}
 
+		case Parameters::UnknownDataType:
 		default:
 			return ""; // Error!
 	}
@@ -544,6 +547,12 @@ bool Parameter::SetParameterString(const PLCore::String &sValue)
 						break;
 				}
 				m_pManager->OnParameterChange(*this);	// Inform the parameter manager about the change
+				break;
+
+			case Parameters::TextureBuffer:
+			case Parameters::UnknownDataType:
+			default:
+				// Nothing to do in here
 				break;
 		}
 
@@ -1000,6 +1009,7 @@ Parameter::Parameter(ParameterManager &cManager, Parameters::EDataType nType, co
 			m_pValue = new TextureHandler();
 			break;
 
+		case Parameters::UnknownDataType:
 		default:
 			m_pValue = nullptr;
 			break;
@@ -1092,6 +1102,11 @@ Parameter::~Parameter()
 
 			case Parameters::TextureBuffer:
 				delete static_cast<TextureHandler*>(m_pValue);
+				break;
+
+			case Parameters::UnknownDataType:
+			default:
+				// Nothing to do in here
 				break;
 		}
 	}

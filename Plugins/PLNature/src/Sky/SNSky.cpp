@@ -196,6 +196,11 @@ void SkyLayer::SetType(EType nValue)
 				if (pMesh)
 					pMesh->SetName(GetSky()->GetAbsoluteName() + "_CylinderLayer");
 				break;
+
+			case Unknown:
+			default:
+				// Nothing to do in here
+				break;
 		}
 
 		// Set the new mesh

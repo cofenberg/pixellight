@@ -398,6 +398,8 @@ bool ImageLoaderBMP::Save(const Image &cImage, File &cFile)
 					return true;
 				}
 
+				case ColorGrayscaleA:
+				case ColorPalette:
 				default:
 					// Error; Unsupported color format
 					break;

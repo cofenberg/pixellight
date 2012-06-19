@@ -206,6 +206,7 @@ void ConsoleCommand::CreateVarsFromString(const String &sParameters)
 				cVar.s = cTokenizer.GetToken();
 				break;
 
+			case ParamUnknown:
 			default:
 				PL_LOG(Warning, "Using unknown type in console message conversion!")
 				break;

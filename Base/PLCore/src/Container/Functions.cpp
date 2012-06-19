@@ -114,6 +114,7 @@ uint32 HashFunction::Hash(const String &sKey)
 			return h;
 		}
 
+		case String::UTF8:	// An UTF8 string is only cached inside the string class, but not used for actual string operations
 		default:
 			return 0; // Error!
 	}

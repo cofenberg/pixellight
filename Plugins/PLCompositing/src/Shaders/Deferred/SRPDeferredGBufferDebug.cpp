@@ -170,6 +170,8 @@ void SRPDeferredGBufferDebug::Draw(Renderer &cRenderer, const SQCull &cCullQuery
 							PL_ADD_FS_FLAG(m_cProgramFlags, FS_SHOW_GLOW)
 							break;
 
+						case UnknownMode:
+						case NumberOfModes:
 						default:
 							PL_ADD_FS_FLAG(m_cProgramFlags, FS_SHOW_BLACK)
 							break;

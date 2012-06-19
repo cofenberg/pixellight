@@ -129,6 +129,13 @@ void Connection::PassValue()
 					static_cast<Axis*>(m_pOutput)->SetValue(pInputAxis->GetValue(), pInputAxis->IsValueRelative());
 				break;
 			}
+
+			case ControlUnknown:
+			case ControlLED:
+			case ControlEffect:
+			default:
+				// There's nothing to pass on
+				break;
 		}
 	}
 }
@@ -149,6 +156,13 @@ void Connection::PassValueBackwards()
 
 			case ControlEffect:
 				static_cast<Effect*>(m_pInput)->SetValue(static_cast<Effect*>(m_pOutput)->GetValue());
+				break;
+
+			case ControlUnknown:
+			case ControlButton:
+			case ControlAxis:
+			default:
+				// There's nothing to pass backwards
 				break;
 		}
 	}

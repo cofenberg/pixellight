@@ -120,6 +120,33 @@ bool PostProcessLoaderPL::Save(PostProcessManager &cPostProcessManager, File &cF
 			case TextureBuffer::R32G32B32A32F:
 				pGeneralElement->SetAttribute("TextureFormat", "R32G32B32A32F");
 				break;
+
+			case TextureBuffer::L8:
+			case TextureBuffer::L16:
+			case TextureBuffer::A8:
+			case TextureBuffer::L4A4:
+			case TextureBuffer::L8A8:
+			case TextureBuffer::D16:
+			case TextureBuffer::D24:
+			case TextureBuffer::D32:
+			case TextureBuffer::R3G3B2:
+			case TextureBuffer::R5G6B5:
+			case TextureBuffer::R5G5B5A1:
+			case TextureBuffer::R4G4B4A4:
+			case TextureBuffer::R8G8B8A8:
+			case TextureBuffer::R10G10B10A2:
+			case TextureBuffer::R16G16B16A16:
+			case TextureBuffer::DXT1:
+			case TextureBuffer::DXT3:
+			case TextureBuffer::DXT5:
+			case TextureBuffer::LATC1:
+			case TextureBuffer::LATC2:
+			case TextureBuffer::L16F:
+			case TextureBuffer::L32F:
+			case TextureBuffer::Unknown:
+			default:
+				// Error, not supported!
+				break;
 		}
 		pPostProcessElement->LinkEndChild(*pGeneralElement);
 	}

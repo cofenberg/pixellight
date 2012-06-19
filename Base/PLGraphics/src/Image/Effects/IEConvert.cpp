@@ -150,6 +150,10 @@ class ConvertData {
 								pDestinationData[1] = AlphaValue;
 							}
 							break;
+
+						case ColorPalette:
+							// [TODO] Implement me?
+							break;
 					}
 					break;
 
@@ -229,6 +233,10 @@ class ConvertData {
 								pDestinationData[1] = static_cast<DestinationType>(pSourceData[3]);
 							}
 							break;
+
+						case ColorPalette:
+							// [TODO] Implement me?
+							break;
 					}
 					break;
 
@@ -305,6 +313,10 @@ class ConvertData {
 								// Set alpha to AlphaValue
 								pDestinationData[1] = AlphaValue;
 							}
+							break;
+
+						case ColorPalette:
+							// [TODO] Implement me?
 							break;
 					}
 					break;
@@ -385,6 +397,10 @@ class ConvertData {
 								pDestinationData[1] = static_cast<DestinationType>(pSourceData[3]);
 							}
 							break;
+
+						case ColorPalette:
+							// [TODO] Implement me?
+							break;
 					}
 					break;
 
@@ -461,6 +477,10 @@ class ConvertData {
 								// Set alpha to AlphaValue
 								pDestinationData[1] = AlphaValue;
 							}
+							break;
+
+						case ColorPalette:
+							// [TODO] Implement me?
 							break;
 					}
 					break;
@@ -543,7 +563,15 @@ class ConvertData {
 								pDestinationData[1] = static_cast<DestinationType>(pSourceData[1]);
 							}
 							break;
+
+						case ColorPalette:
+							// [TODO] Implement me?
+							break;
 					}
+					break;
+
+				case ColorPalette:
+					// [TODO] Implement me?
 					break;
 			}
 		}

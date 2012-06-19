@@ -76,7 +76,7 @@ class SRPDeferredGBufferDebug : public SRPDeferred {
 			ShowSelfIllumination = 6,	/**< Show self illumination (RGB, emissive maps, light maps) */
 			ShowGlow             = 7,	/**< Show glow (Gray scale) */
 			UnknownMode          = 8,	/**< Unknown debug mode (just black result) */
-			NumOfModes           = 9	/**< Number of debug modes */
+			NumberOfModes        = 9	/**< Number of debug modes */
 		};
 		pl_enum(EMode)
 			pl_enum_value(ShowAlbedo,			"Show albedo data (RGB)")

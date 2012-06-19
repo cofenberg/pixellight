@@ -189,6 +189,11 @@ void PGExplosion::OnUpdate()
 				case Remove:
 					Delete();
 					break;
+
+				case None:
+				default:
+					// Nothing to do in here
+					break;
 			}
 		}
 	}

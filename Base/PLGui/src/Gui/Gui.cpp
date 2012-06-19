@@ -489,6 +489,48 @@ void Gui::SendMessage(const GuiMessage &cMessage)
 				UpdateFocusWidget();
 			}
 			break;
+
+		case MessageOnUnknown:
+		case MessageOnInternalMessage:
+		case MessageOnWakeup:
+		case MessageOnThemeChanged:
+		case MessageOnUpdateContent:
+		case MessageOnUpdateChildWidget:
+		case MessageOnAddChildWidget:
+		case MessageOnRemoveChildWidget:
+		case MessageOnClose:
+		case MessageOnCreate:
+		case MessageOnShow:
+		case MessageOnHide:
+		case MessageOnEnable:
+		case MessageOnDisable:
+		case MessageOnActivate:
+		case MessageOnDrawBackground:
+		case MessageOnDraw:
+		case MessageOnMove:
+		case MessageOnSize:
+		case MessageOnWindowState:
+		case MessageOnEnterFullscreen:
+		case MessageOnLeaveFullscreen:
+		case MessageOnPreferredSize:
+		case MessageOnAdjustContent:
+		case MessageOnMouseOver:
+		case MessageOnMouseMove:
+		case MessageOnMouseHover:
+		case MessageOnMousePosUpdate:
+		case MessageOnMouseButtonDown:
+		case MessageOnMouseButtonUp:
+		case MessageOnMouseButtonClick:
+		case MessageOnMouseButtonDoubleClick:
+		case MessageOnMouseWheel:
+		case MessageOnKeyDown:
+		case MessageOnKeyUp:
+		case MessageOnHotkey:
+		case MessageOnDrop:
+		case MessageOnUserMessage:
+		default:
+			// Nothing to do in here
+			break;
 	}
 
 	// Pass message to widget

@@ -620,6 +620,7 @@ bool Texture::LoadByFilename(const String &sFilename, const String &sParams, con
 								m_nCompressionHint = LATC2;
 								break;
 
+							case CompressionNone:
 							default:
 								m_nCompressionHint = None;
 								break;

@@ -128,6 +128,14 @@ class ProcessData {
 					}
 					break;
 				}
+
+				case ColorRGB:
+				case ColorBGR:
+				case ColorGrayscale:
+				case ColorPalette:
+				default:
+					// This is considered to be an error: According to the method documentation the image must have an alpha channel!
+					break;
 			}
 		}
 
