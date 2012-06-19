@@ -97,7 +97,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(PL_ROOT)/Base/PLCore/include/;$(PL_ROOT)/Base/PLMath/include/;$(PL_ROOT)/Base/PLGraphics/include/;include/;../PLVolume/include/;../External/_Windows_x86_32/gdcm/include/;../External/_Windows_x86_32/gdcm/include/gdcm/Common/;../External/_Windows_x86_32/gdcm/include/gdcm/DataDictionary/;../External/_Windows_x86_32/gdcm/include/gdcm/DataStructureAndEncodingDefinition/;../External/_Windows_x86_32/gdcm/include/gdcm/InformationObjectDefinition/;../External/_Windows_x86_32/gdcm/include/gdcm/MediaStorageAndFileFormat/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLVolume/include/;include/;../../External/_Windows_x86_32/gdcm/include/;../../External/_Windows_x86_32/gdcm/include/gdcm/Common/;../../External/_Windows_x86_32/gdcm/include/gdcm/DataDictionary/;../../External/_Windows_x86_32/gdcm/include/gdcm/DataStructureAndEncodingDefinition/;../../External/_Windows_x86_32/gdcm/include/gdcm/InformationObjectDefinition/;../../External/_Windows_x86_32/gdcm/include/gdcm/MediaStorageAndFileFormat/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
@@ -112,7 +112,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLVolumeD.lib;gdcmcharls.lib;gdcmCommon.lib;gdcmDICT.lib;gdcmDSED.lib;gdcmexpat.lib;gdcmgetopt.lib;gdcmIOD.lib;gdcmjpeg8.lib;gdcmjpeg12.lib;gdcmjpeg16.lib;gdcmMSFF.lib;gdcmopenjpeg.lib;gdcmzlib.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(PL_ROOT)/Bin/Lib/x86/;../Lib/x86/;../External/_Windows_x86_32/gdcm/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Bin/Lib/x86/;../../External/_Windows_x86_32/gdcm/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -121,9 +121,9 @@
       <IgnoreSpecificDefaultLibraries>MSVCRT</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)\$(TargetName).dll ..\Bin\x86\
-copy $(OutDir)\$(TargetName).lib ..\Lib\x86\
-$(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugin
+      <Command>copy $(OutDir)\$(TargetName).dll ..\..\Bin\Runtime\x86\
+copy $(OutDir)\$(TargetName).lib ..\..\Bin\Lib\x86\
+..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86\ --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -133,7 +133,7 @@ $(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugi
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(PL_ROOT)/Base/PLCore/include/;$(PL_ROOT)/Base/PLMath/include/;$(PL_ROOT)/Base/PLGraphics/include/;include/;../PLVolume/include/;../External/_Windows_x86_64/gdcm/include/;../External/_Windows_x86_64/gdcm/include/gdcm/Common/;../External/_Windows_x86_64/gdcm/include/gdcm/DataDictionary/;../External/_Windows_x86_64/gdcm/include/gdcm/DataStructureAndEncodingDefinition/;../External/_Windows_x86_64/gdcm/include/gdcm/InformationObjectDefinition/;../External/_Windows_x86_64/gdcm/include/gdcm/MediaStorageAndFileFormat/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLVolume/include/;include/;../../External/_Windows_x86_64/gdcm/include/;../../External/_Windows_x86_64/gdcm/include/gdcm/Common/;../../External/_Windows_x86_64/gdcm/include/gdcm/DataDictionary/;../../External/_Windows_x86_64/gdcm/include/gdcm/DataStructureAndEncodingDefinition/;../../External/_Windows_x86_64/gdcm/include/gdcm/InformationObjectDefinition/;../../External/_Windows_x86_64/gdcm/include/gdcm/MediaStorageAndFileFormat/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
@@ -148,7 +148,7 @@ $(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugi
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLVolumeD.lib;gdcmcharls.lib;gdcmCommon.lib;gdcmDICT.lib;gdcmDSED.lib;gdcmexpat.lib;gdcmgetopt.lib;gdcmIOD.lib;gdcmjpeg8.lib;gdcmjpeg12.lib;gdcmjpeg16.lib;gdcmMSFF.lib;gdcmopenjpeg.lib;gdcmzlib.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(PL_ROOT)/Bin/Lib/x64/;../Lib/x64/;../External/_Windows_x86_64/gdcm/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Bin/Lib/x64/;../../External/_Windows_x86_64/gdcm/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -157,9 +157,9 @@ $(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugi
       <IgnoreSpecificDefaultLibraries>MSVCRT</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)\$(TargetName).dll ..\Bin\x64\
-copy $(OutDir)\$(TargetName).lib ..\Lib\x64\
-$(PL_ROOT)\Bin\Tools\x64\PLProject.exe . --output-path ..\Bin\x64\ --write-plugin
+      <Command>copy $(OutDir)\$(TargetName).dll ..\..\Bin\Runtime\x64\
+copy $(OutDir)\$(TargetName).lib ..\..\Bin\Lib\x64\
+..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64\ --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -171,7 +171,7 @@ $(PL_ROOT)\Bin\Tools\x64\PLProject.exe . --output-path ..\Bin\x64\ --write-plugi
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>$(PL_ROOT)/Base/PLCore/include/;$(PL_ROOT)/Base/PLMath/include/;$(PL_ROOT)/Base/PLGraphics/include/;include/;../PLVolume/include/;../External/_Windows_x86_32/gdcm/include/;../External/_Windows_x86_32/gdcm/include/gdcm/Common/;../External/_Windows_x86_32/gdcm/include/gdcm/DataDictionary/;../External/_Windows_x86_32/gdcm/include/gdcm/DataStructureAndEncodingDefinition/;../External/_Windows_x86_32/gdcm/include/gdcm/InformationObjectDefinition/;../External/_Windows_x86_32/gdcm/include/gdcm/MediaStorageAndFileFormat/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLVolume/include/;include/;../../External/_Windows_x86_32/gdcm/include/;../../External/_Windows_x86_32/gdcm/include/gdcm/Common/;../../External/_Windows_x86_32/gdcm/include/gdcm/DataDictionary/;../../External/_Windows_x86_32/gdcm/include/gdcm/DataStructureAndEncodingDefinition/;../../External/_Windows_x86_32/gdcm/include/gdcm/InformationObjectDefinition/;../../External/_Windows_x86_32/gdcm/include/gdcm/MediaStorageAndFileFormat/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -190,7 +190,7 @@ $(PL_ROOT)\Bin\Tools\x64\PLProject.exe . --output-path ..\Bin\x64\ --write-plugi
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLVolume.lib;gdcmcharls.lib;gdcmCommon.lib;gdcmDICT.lib;gdcmDSED.lib;gdcmexpat.lib;gdcmgetopt.lib;gdcmIOD.lib;gdcmjpeg8.lib;gdcmjpeg12.lib;gdcmjpeg16.lib;gdcmMSFF.lib;gdcmopenjpeg.lib;gdcmzlib.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(PL_ROOT)/Bin/Lib/x86/;../Lib/x86/;../External/_Windows_x86_32/gdcm/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Bin/Lib/x86/;../../External/_Windows_x86_32/gdcm/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -201,9 +201,9 @@ $(PL_ROOT)\Bin\Tools\x64\PLProject.exe . --output-path ..\Bin\x64\ --write-plugi
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)\$(TargetName).dll ..\Bin\x86\
-copy $(OutDir)\$(TargetName).lib ..\Lib\x86\
-$(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugin
+      <Command>copy $(OutDir)\$(TargetName).dll ..\..\Bin\Runtime\x86\
+copy $(OutDir)\$(TargetName).lib ..\..\Bin\Lib\x86\
+..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86\ --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -217,7 +217,7 @@ $(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugi
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>$(PL_ROOT)/Base/PLCore/include/;$(PL_ROOT)/Base/PLMath/include/;$(PL_ROOT)/Base/PLGraphics/include/;include/;../PLVolume/include/;../External/_Windows_x86_64/gdcm/include/;../External/_Windows_x86_64/gdcm/include/gdcm/Common/;../External/_Windows_x86_64/gdcm/include/gdcm/DataDictionary/;../External/_Windows_x86_64/gdcm/include/gdcm/DataStructureAndEncodingDefinition/;../External/_Windows_x86_64/gdcm/include/gdcm/InformationObjectDefinition/;../External/_Windows_x86_64/gdcm/include/gdcm/MediaStorageAndFileFormat/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../PLVolume/include/;include/;../../External/_Windows_x86_64/gdcm/include/;../../External/_Windows_x86_64/gdcm/include/gdcm/Common/;../../External/_Windows_x86_64/gdcm/include/gdcm/DataDictionary/;../../External/_Windows_x86_64/gdcm/include/gdcm/DataStructureAndEncodingDefinition/;../../External/_Windows_x86_64/gdcm/include/gdcm/InformationObjectDefinition/;../../External/_Windows_x86_64/gdcm/include/gdcm/MediaStorageAndFileFormat/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -238,7 +238,7 @@ $(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugi
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLVolume.lib;gdcmcharls.lib;gdcmCommon.lib;gdcmDICT.lib;gdcmDSED.lib;gdcmexpat.lib;gdcmgetopt.lib;gdcmIOD.lib;gdcmjpeg8.lib;gdcmjpeg12.lib;gdcmjpeg16.lib;gdcmMSFF.lib;gdcmopenjpeg.lib;gdcmzlib.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(PL_ROOT)/Bin/Lib/x64/;../Lib/x64/;../External/_Windows_x86_64/gdcm/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Bin/Lib/x64/;../../External/_Windows_x86_64/gdcm/lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -248,9 +248,9 @@ $(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugi
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)\$(TargetName).dll ..\Bin\x64\
-copy $(OutDir)\$(TargetName).lib ..\Lib\x64\
-$(PL_ROOT)\Bin\Tools\x64\PLProject.exe . --output-path ..\Bin\x64\ --write-plugin
+      <Command>copy $(OutDir)\$(TargetName).dll ..\..\Bin\Runtime\x64\
+copy $(OutDir)\$(TargetName).lib ..\..\Bin\Lib\x64\
+..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64\ --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

@@ -20,6 +20,7 @@
      licensed separately)
   -> In the Internet, there are several good sources of free available volume data like "The Volume Library" at
      http://www9.informatik.uni-erlangen.de/External/vollib/
+  -> Until now, these new plugins are only tested on MS Windows 32/64 bit
 
 
 

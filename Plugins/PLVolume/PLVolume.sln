@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLVolume", "PLVolume.vcxproj", "{84F6D80A-5FA0-43C9-BDC9-D6791CA744B1}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLVolume", "PLVolume.vcxproj", "{092633D8-160E-4BC3-9A40-7B1E00C27E1D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -10,14 +10,14 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{84F6D80A-5FA0-43C9-BDC9-D6791CA744B1}.Debug|Win32.ActiveCfg = Debug|Win32
-		{84F6D80A-5FA0-43C9-BDC9-D6791CA744B1}.Debug|Win32.Build.0 = Debug|Win32
-		{84F6D80A-5FA0-43C9-BDC9-D6791CA744B1}.Debug|x64.ActiveCfg = Debug|x64
-		{84F6D80A-5FA0-43C9-BDC9-D6791CA744B1}.Debug|x64.Build.0 = Debug|x64
-		{84F6D80A-5FA0-43C9-BDC9-D6791CA744B1}.Release|Win32.ActiveCfg = Release|Win32
-		{84F6D80A-5FA0-43C9-BDC9-D6791CA744B1}.Release|Win32.Build.0 = Release|Win32
-		{84F6D80A-5FA0-43C9-BDC9-D6791CA744B1}.Release|x64.ActiveCfg = Release|x64
-		{84F6D80A-5FA0-43C9-BDC9-D6791CA744B1}.Release|x64.Build.0 = Release|x64
+		{092633D8-160E-4BC3-9A40-7B1E00C27E1D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{092633D8-160E-4BC3-9A40-7B1E00C27E1D}.Debug|Win32.Build.0 = Debug|Win32
+		{092633D8-160E-4BC3-9A40-7B1E00C27E1D}.Debug|x64.ActiveCfg = Debug|x64
+		{092633D8-160E-4BC3-9A40-7B1E00C27E1D}.Debug|x64.Build.0 = Debug|x64
+		{092633D8-160E-4BC3-9A40-7B1E00C27E1D}.Release|Win32.ActiveCfg = Release|Win32
+		{092633D8-160E-4BC3-9A40-7B1E00C27E1D}.Release|Win32.Build.0 = Release|Win32
+		{092633D8-160E-4BC3-9A40-7B1E00C27E1D}.Release|x64.ActiveCfg = Release|x64
+		{092633D8-160E-4BC3-9A40-7B1E00C27E1D}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

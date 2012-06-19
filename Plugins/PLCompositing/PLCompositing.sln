@@ -3,6 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLCompositing", "PLCompositing.vcxproj", "{A4EFCE15-1178-484A-A59F-343AE41DDD52}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PLPostProcessEffects", "..\PLPostProcessEffects\PLPostProcessEffects.vcxproj", "{C1E61563-AC6C-4E49-89D1-B414C57CABF8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A4EFCE15-1178-484A-A59F-343AE41DDD52} = {A4EFCE15-1178-484A-A59F-343AE41DDD52}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

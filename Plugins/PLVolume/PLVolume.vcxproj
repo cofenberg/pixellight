@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{84F6D80A-5FA0-43C9-BDC9-D6791CA744B1}</ProjectGuid>
+    <ProjectGuid>{092633D8-160E-4BC3-9A40-7B1E00C27E1D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -97,7 +97,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(PL_ROOT)/Base/PLCore/include/;$(PL_ROOT)/Base/PLMath/include/;$(PL_ROOT)/Base/PLGraphics/include/;$(PL_ROOT)/Base/PLRenderer/include/;$(PL_ROOT)/Base/PLMesh/include/;$(PL_ROOT)/Base/PLScene/include/;$(PL_ROOT)/Base/PLEngine/include/;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../Base/PLEngine/include/;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_ITERATOR_DEBUG_LEVEL=0;PLVOLUME_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
@@ -112,7 +112,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;PLEngineD.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(PL_ROOT)/Bin/Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Bin/Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -122,9 +122,9 @@
       </IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)\$(TargetName).dll ..\Bin\x86\
-copy $(OutDir)\$(TargetName).lib ..\Lib\x86\
-$(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugin
+      <Command>copy $(OutDir)\$(TargetName).dll ..\..\Bin\Runtime\x86\
+copy $(OutDir)\$(TargetName).lib ..\..\Bin\Lib\x86\
+..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86\ --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -134,7 +134,7 @@ $(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugi
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(PL_ROOT)/Base/PLCore/include/;$(PL_ROOT)/Base/PLMath/include/;$(PL_ROOT)/Base/PLGraphics/include/;$(PL_ROOT)/Base/PLRenderer/include/;$(PL_ROOT)/Base/PLMesh/include/;$(PL_ROOT)/Base/PLScene/include/;$(PL_ROOT)/Base/PLEngine/include/;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../Base/PLEngine/include/;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;_ITERATOR_DEBUG_LEVEL=0;PLVOLUME_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
@@ -149,7 +149,7 @@ $(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugi
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;PLEngineD.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(PL_ROOT)/Bin/Lib/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Bin/Lib/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -159,9 +159,9 @@ $(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugi
       </IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)\$(TargetName).dll ..\Bin\x64\
-copy $(OutDir)\$(TargetName).lib ..\Lib\x64\
-$(PL_ROOT)\Bin\Tools\x64\PLProject.exe . --output-path ..\Bin\x64\ --write-plugin
+      <Command>copy $(OutDir)\$(TargetName).dll ..\..\Bin\Runtime\x64\
+copy $(OutDir)\$(TargetName).lib ..\..\Bin\Lib\x64\
+..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64\ --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -173,7 +173,7 @@ $(PL_ROOT)\Bin\Tools\x64\PLProject.exe . --output-path ..\Bin\x64\ --write-plugi
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>$(PL_ROOT)/Base/PLCore/include/;$(PL_ROOT)/Base/PLMath/include/;$(PL_ROOT)/Base/PLGraphics/include/;$(PL_ROOT)/Base/PLRenderer/include/;$(PL_ROOT)/Base/PLMesh/include/;$(PL_ROOT)/Base/PLScene/include/;$(PL_ROOT)/Base/PLEngine/include/;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../Base/PLEngine/include/;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLVOLUME_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -192,7 +192,7 @@ $(PL_ROOT)\Bin\Tools\x64\PLProject.exe . --output-path ..\Bin\x64\ --write-plugi
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(PL_ROOT)/Bin/Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Bin/Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -203,9 +203,9 @@ $(PL_ROOT)\Bin\Tools\x64\PLProject.exe . --output-path ..\Bin\x64\ --write-plugi
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)\$(TargetName).dll ..\Bin\x86\
-copy $(OutDir)\$(TargetName).lib ..\Lib\x86\
-$(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugin
+      <Command>copy $(OutDir)\$(TargetName).dll ..\..\Bin\Runtime\x86\
+copy $(OutDir)\$(TargetName).lib ..\..\Bin\Lib\x86\
+..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86\ --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -219,7 +219,7 @@ $(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugi
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>$(PL_ROOT)/Base/PLCore/include/;$(PL_ROOT)/Base/PLMath/include/;$(PL_ROOT)/Base/PLGraphics/include/;$(PL_ROOT)/Base/PLRenderer/include/;$(PL_ROOT)/Base/PLMesh/include/;$(PL_ROOT)/Base/PLScene/include/;$(PL_ROOT)/Base/PLEngine/include/;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../Base/PLEngine/include/;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;PLVOLUME_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -240,7 +240,7 @@ $(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugi
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLEngine.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(PL_ROOT)/Bin/Lib/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Bin/Lib/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -250,9 +250,9 @@ $(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugi
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)\$(TargetName).dll ..\Bin\x64\
-copy $(OutDir)\$(TargetName).lib ..\Lib\x64\
-$(PL_ROOT)\Bin\Tools\x64\PLProject.exe . --output-path ..\Bin\x64\ --write-plugin
+      <Command>copy $(OutDir)\$(TargetName).dll ..\..\Bin\Runtime\x64\
+copy $(OutDir)\$(TargetName).lib ..\..\Bin\Lib\x64\
+..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64\ --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>

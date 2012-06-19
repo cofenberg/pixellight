@@ -97,7 +97,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(PL_ROOT)/Base/PLCore/include/;$(PL_ROOT)/Base/PLMath/include/;$(PL_ROOT)/Base/PLGraphics/include/;$(PL_ROOT)/Base/PLRenderer/include/;$(PL_ROOT)/Base/PLMesh/include/;$(PL_ROOT)/Base/PLScene/include/;$(PL_ROOT)/Base/PLEngine/include/;$(PL_ROOT)/Plugins/PLFrontendQt/include/;$(PL_ROOT)/External/_Windows_x86_32/Qt/include/Qt/;include/;../PLVolume/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../Base/PLEngine/include/;../PLFrontendQt/include/;../../External/_Windows_x86_32/Qt/include/Qt/;../PLVolume/include/;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;_ITERATOR_DEBUG_LEVEL=0;PLVOLUMEGUI_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
@@ -112,7 +112,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;PLEngineD.lib;PLFrontendQtD.lib;PLVolumeD.lib;QtCored4.lib;QtGuid4.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(PL_ROOT)/Bin/Lib/x86/;$(PL_ROOT)/External/_Windows_x86_32/Qt/lib;../Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Bin/Lib/x86/;../../External/_Windows_x86_32/Qt/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -122,9 +122,9 @@
       </IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)\$(TargetName).dll ..\Bin\x86\
-copy $(OutDir)\$(TargetName).lib ..\Lib\x86\
-$(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugin
+      <Command>copy $(OutDir)\$(TargetName).dll ..\..\Bin\Runtime\x86\
+copy $(OutDir)\$(TargetName).lib ..\..\Bin\Lib\x86\
+..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86\ --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -134,7 +134,7 @@ $(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugi
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(PL_ROOT)/Base/PLCore/include/;$(PL_ROOT)/Base/PLMath/include/;$(PL_ROOT)/Base/PLGraphics/include/;$(PL_ROOT)/Base/PLRenderer/include/;$(PL_ROOT)/Base/PLMesh/include/;$(PL_ROOT)/Base/PLScene/include/;$(PL_ROOT)/Base/PLEngine/include/;$(PL_ROOT)/Plugins/PLFrontendQt/include/;$(PL_ROOT)/External/_Windows_x86_64/Qt/include/Qt/;include/;../PLVolume/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../Base/PLEngine/include/;../PLFrontendQt/include/;../../External/_Windows_x86_32/Qt/include/Qt/;../PLVolume/include/;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;_DEBUG;_WINDOWS;_USRDLL;_ITERATOR_DEBUG_LEVEL=0;PLVOLUMEGUI_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>
@@ -149,7 +149,7 @@ $(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugi
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCoreD.lib;PLMathD.lib;PLGraphicsD.lib;PLRendererD.lib;PLMeshD.lib;PLSceneD.lib;PLEngineD.lib;PLFrontendQtD.lib;PLVolumeD.lib;QtCored4.lib;QtGuid4.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(PL_ROOT)/Bin/Lib/x64/;$(PL_ROOT)/External/_Windows_x86_64/Qt/lib;../Lib/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Bin/Lib/x64/;../../External/_Windows_x86_64/Qt/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -159,9 +159,9 @@ $(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugi
       </IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)\$(TargetName).dll ..\Bin\x64\
-copy $(OutDir)\$(TargetName).lib ..\Lib\x64\
-$(PL_ROOT)\Bin\Tools\x64\PLProject.exe . --output-path ..\Bin\x64\ --write-plugin
+      <Command>copy $(OutDir)\$(TargetName).dll ..\..\Bin\Runtime\x64\
+copy $(OutDir)\$(TargetName).lib ..\..\Bin\Lib\x64\
+..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64\ --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -173,7 +173,7 @@ $(PL_ROOT)\Bin\Tools\x64\PLProject.exe . --output-path ..\Bin\x64\ --write-plugi
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>$(PL_ROOT)/Base/PLCore/include/;$(PL_ROOT)/Base/PLMath/include/;$(PL_ROOT)/Base/PLGraphics/include/;$(PL_ROOT)/Base/PLRenderer/include/;$(PL_ROOT)/Base/PLMesh/include/;$(PL_ROOT)/Base/PLScene/include/;$(PL_ROOT)/Base/PLEngine/include/;$(PL_ROOT)/Plugins/PLFrontendQt/include/;$(PL_ROOT)/External/_Windows_x86_32/Qt/include/Qt/;include/;../PLVolume/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../Base/PLEngine/include/;../PLFrontendQt/include/;../../External/_Windows_x86_32/Qt/include/Qt/;../PLVolume/include/;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;PLVOLUMEGUI_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -192,7 +192,7 @@ $(PL_ROOT)\Bin\Tools\x64\PLProject.exe . --output-path ..\Bin\x64\ --write-plugi
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLEngine.lib;PLFrontendQt.lib;PLVolume.lib;QtCore4.lib;QtGui4.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(PL_ROOT)/Bin/Lib/x86/;$(PL_ROOT)/External/_Windows_x86_32/Qt/lib;../Lib/x86/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Bin/Lib/x86/;../../External/_Windows_x86_32/Qt/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -203,9 +203,9 @@ $(PL_ROOT)\Bin\Tools\x64\PLProject.exe . --output-path ..\Bin\x64\ --write-plugi
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)\$(TargetName).dll ..\Bin\x86\
-copy $(OutDir)\$(TargetName).lib ..\Lib\x86\
-$(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugin
+      <Command>copy $(OutDir)\$(TargetName).dll ..\..\Bin\Runtime\x86\
+copy $(OutDir)\$(TargetName).lib ..\..\Bin\Lib\x86\
+..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86\ --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -219,7 +219,7 @@ $(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugi
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <OmitFramePointers>true</OmitFramePointers>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>$(PL_ROOT)/Base/PLCore/include/;$(PL_ROOT)/Base/PLMath/include/;$(PL_ROOT)/Base/PLGraphics/include/;$(PL_ROOT)/Base/PLRenderer/include/;$(PL_ROOT)/Base/PLMesh/include/;$(PL_ROOT)/Base/PLScene/include/;$(PL_ROOT)/Base/PLEngine/include/;$(PL_ROOT)/Plugins/PLFrontendQt/include/;$(PL_ROOT)/External/_Windows_x86_64/Qt/include/Qt/;include/;../PLVolume/include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Base/PLCore/include/;../../Base/PLMath/include/;../../Base/PLGraphics/include/;../../Base/PLRenderer/include/;../../Base/PLMesh/include/;../../Base/PLScene/include/;../../Base/PLEngine/include/;../PLFrontendQt/include/;../../External/_Windows_x86_32/Qt/include/Qt/;../PLVolume/include/;include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_WINDOWS;_USRDLL;PLVOLUMEGUI_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
@@ -240,7 +240,7 @@ $(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugi
     </ClCompile>
     <Link>
       <AdditionalDependencies>PLCore.lib;PLMath.lib;PLGraphics.lib;PLRenderer.lib;PLMesh.lib;PLScene.lib;PLEngine.lib;PLFrontendQt.lib;PLVolume.lib;QtCore4.lib;QtGui4.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(PL_ROOT)/Bin/Lib/x64/;$(PL_ROOT)/External/_Windows_x86_64/Qt/lib;../Lib/x64/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../../Bin/Lib/x64/;../../External/_Windows_x86_64/Qt/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -250,9 +250,9 @@ $(PL_ROOT)\Bin\Tools\x86\PLProject.exe . --output-path ..\Bin\x86\ --write-plugi
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(OutDir)\$(TargetName).dll ..\Bin\x64\
-copy $(OutDir)\$(TargetName).lib ..\Lib\x64\
-$(PL_ROOT)\Bin\Tools\x64\PLProject.exe . --output-path ..\Bin\x64\ --write-plugin
+      <Command>copy $(OutDir)\$(TargetName).dll ..\..\Bin\Runtime\x64\
+copy $(OutDir)\$(TargetName).lib ..\..\Bin\Lib\x64\
+..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64\ --write-plugin
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -271,22 +271,22 @@ $(PL_ROOT)\Bin\Tools\x64\PLProject.exe . --output-path ..\Bin\x64\ --write-plugi
     <ClInclude Include="include\PLVolumeGui\DockWidgetVolumeTransferFunction.h" />
     <ClInclude Include="include\PLVolumeGui\TransferFunctionWidget.h" />
     <CustomBuild Include="include\PLVolumeGui\DockWidgetVolumeTransferFunctionQObject.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(PL_ROOT)/External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">build\GeneratedQtFiles\moc_%(Filename).cpp</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(PL_ROOT)/External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(PL_ROOT)/External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"../../External/_Windows_x86_32/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">build\GeneratedQtFiles\moc_%(Filename).cpp</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(PL_ROOT)/External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(PL_ROOT)/External/_Windows_x86_64/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../External/_Windows_x86_32/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"../../External/_Windows_x86_64/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">build\GeneratedQtFiles\moc_%(Filename).cpp</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(PL_ROOT)/External/_Windows_x86_64/Qt/bin/moc.exe</AdditionalInputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(PL_ROOT)/External/_Windows_x86_64/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../External/_Windows_x86_64/Qt/bin/moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"../../External/_Windows_x86_64/Qt/bin/moc.exe" "%(FullPath)" -o "build\GeneratedQtFiles\moc_%(Filename).cpp"</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compiling %(Filename)%(Extension) using Qt MOC</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">build\GeneratedQtFiles\moc_%(Filename).cpp</Outputs>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(PL_ROOT)/External/_Windows_x86_64/Qt/bin/moc.exe</AdditionalInputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../External/_Windows_x86_64/Qt/bin/moc.exe</AdditionalInputs>
     </CustomBuild>
     <ClInclude Include="include\PLVolumeGui\PLVolumeGui.h" />
   </ItemGroup>
