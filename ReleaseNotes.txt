@@ -9,6 +9,7 @@ Changes in PixelLight 0.9.12-R1 (not yet released)
 - Feature: Added shaders based scene renderer pass "PLCompositing::SRPDebugDepthShaders" visualizing the depth buffer for debugging purposes
 - Feature: Added shaders based scene renderer pass "PLCompositing::SRPMotionBlurShaders" for image based motion blur
 - Feature: Autodesk 3ds Max 2013 scene exporter added
+- Feature: Added plugins for volume rendering
 - Change: Moved out-of-date "PLScene::SNSky" and "PLScene::SNTerrain" into the new plugin project "PLNature" ("PLNature::SNSky", "PLNature::SNTerrain")
 - Change: Moved "PLPhysics::SNMPhysicsBodyTerrain" into "PLNature::SNMPhysicsBodyTerrain"
 - Bugfix (ID: 3502066): "PLGraphics::Color4::IsValid()" alpha-check was invalid

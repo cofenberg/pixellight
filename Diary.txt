@@ -18,9 +18,12 @@
   -> I also wrote PLLoaderDICOM_DCMTK but chanceled it during the thesis because DCMTK has no free JPEG 2000 codec
      (DCMJP2K - DICOM JPEG 2000 Module (http://dicom.offis.de/dcmjp2k.php.en - Is not part of the freeware distribution, must be
      licensed separately)
-  -> In the Internet, there are several good sources of free available volume data like "The Volume Library" at
-     http://www9.informatik.uni-erlangen.de/External/vollib/
   -> Until now, these new plugins are only tested on MS Windows 32/64 bit
+  -> Still need to to some minor PixelLight Git repository integration steps (updating the CMake files, copyright update etc.)
+  -> Across the Internet, there are several good sources of free available volume data like "The Volume Library" at
+     http://www9.informatik.uni-erlangen.de/External/vollib/
+  -> In order to use the new volume rendering feature, just drag'n'drop a resource containing volume data (pvm, DICOM and a
+     few other formats are supported) into PLViewerQt, done
 
 
 
