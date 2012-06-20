@@ -247,12 +247,12 @@ if(NOT CMAKETOOLS_MINIMAL)
 	set (PL_PLUGIN_FRONTEND_PLGUI					"1"					CACHE BOOL "Build plugin 'PLFrontendPLGui'? (requires 'PLGui')")
 	# Qt
 	set (PL_PLUGIN_FRONTEND_QT						"1"					CACHE BOOL "Build plugin 'PLFrontendQt'?")
-	# PLVolume # [TODO] Enable volume rendering as soon as the CMake files are updated/reviewed
-	set (PL_PLUGIN_VOLUME							"0"					CACHE BOOL "Build plugin 'PLVolume'?")
-	set (PL_PLUGIN_VOLUME_RENDERER					"0"					CACHE BOOL "Build plugin 'PLVolumeRenderer'? (requires 'PLVolume')")
-	set (PL_PLUGIN_VOLUME_GUI						"0"					CACHE BOOL "Build plugin 'PLVolumeGui'? (requires 'PLVolume')")
-	set (PL_PLUGIN_VOLUME_LOADER_PVM				"0"					CACHE BOOL "Build plugin 'PLVolumeLoaderPVM'? (requires 'PLVolume')")
-	set (PL_PLUGIN_VOLUME_LOADER_DICOM_GDCM			"0"					CACHE BOOL "Build plugin 'PLVolumeLoaderDICOM_GDCM'? (requires 'PLVolume')")	# By default, don't build this plugin which usually is only interesting for medical applications (GDCM is no lightweight)
+	# PLVolume
+	set (PL_PLUGIN_VOLUME							"1"					CACHE BOOL "Build plugin 'PLVolume'?")
+	set (PL_PLUGIN_VOLUME_RENDERER					"1"					CACHE BOOL "Build plugin 'PLVolumeRenderer'? (requires 'PLVolume')")
+	set (PL_PLUGIN_VOLUME_GUI						"1"					CACHE BOOL "Build plugin 'PLVolumeGui'? (requires 'PLVolume')")
+	set (PL_PLUGIN_VOLUME_LOADER_PVM				"1"					CACHE BOOL "Build plugin 'PLVolumeLoaderPVM'? (requires 'PLVolume')")
+	set (PL_PLUGIN_VOLUME_LOADER_DICOM_GDCM			"1"					CACHE BOOL "Build plugin 'PLVolumeLoaderDICOM_GDCM'? (requires 'PLVolume')")
 	# Tools
 	set (PL_TOOL_PLUPGRADE							"1"					CACHE BOOL "Build plugin 'PLUpgrade'?")
 	# Tests and samples

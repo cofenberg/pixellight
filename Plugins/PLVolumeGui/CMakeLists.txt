@@ -39,6 +39,7 @@ add_include_directories(
 	${CMAKE_SOURCE_DIR}/Base/PLScene/include
 	${CMAKE_SOURCE_DIR}/Base/PLPhysics/include
 	${CMAKE_SOURCE_DIR}/Base/PLEngine/include
+	${CMAKE_SOURCE_DIR}/Plugins/PLFrontendQt/include
 	${CMAKE_SOURCE_DIR}/Plugins/PLVolume/include
 
 	# We need the following to be able to include headers produced by uic in our code

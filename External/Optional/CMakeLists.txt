@@ -42,7 +42,7 @@ endif()
 if(PL_PLUGIN_ENGINE_LIBROCKET)
 	add_subdirectory(libRocket)
 endif()
-if(PL_PLUGIN_LOADER_DICOM_GDCM)
+if(PL_PLUGIN_VOLUME_LOADER_DICOM_GDCM)
 	add_subdirectory(gdcm)
 endif()
 # Script backends
