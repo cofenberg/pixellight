@@ -177,6 +177,7 @@
     <None Include="include\PLVolume\TransferFunctionControl\TransferFunctionChannel.inl">
       <Filter>TransferFunctionControl</Filter>
     </None>
+    <None Include="Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Creator">

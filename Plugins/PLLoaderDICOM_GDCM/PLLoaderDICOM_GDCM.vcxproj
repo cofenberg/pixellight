@@ -255,6 +255,7 @@ copy $(OutDir)\$(TargetName).lib ..\..\Bin\Lib\x64\
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="..\PLVolume\Diary.txt" />
     <None Include="CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>

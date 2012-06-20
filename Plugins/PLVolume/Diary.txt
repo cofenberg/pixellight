@@ -1,0 +1,30 @@
+>> 20.06.2012
+[CO]
+- I assume that the volume renderer plugins contain enough in order to justify an own diary
+  -> Within my master thesis, the focus was on rendering medical datasets. I tried to keep everything as generic as possible, so,
+     adding support rendering volume data containing real color information should be easy. In principle, the volume renderer plugins
+     can also be used to visualize general volumetric data, e.g. in order to debug a "Light Propagation Volumes"-implementation or to
+     render volumetric special effects like clouds, fire, water and so on. The GPU volume raycaster is fully dynamic, meaning that the
+     volume	data is free to change it's content frequently (by rendering to 3D texture or using OpenCL/CUDA).
+- Updated copyright information to integrate it completely into the PixelLight Git repository
+- In the first push to the Git repository I'll make, the CMake files are not integrated into the PixelLight Git repository, yet (do
+  this within one of the following integration steps)
+- I'll also add a downloadable volume rendering demo later on so one can get an idea what volume rendering is about easily
+
+
+
+>> 19.06.2012
+[CO]
+- Added the plugins PLLoaderDICOM_GDCM, PLLoaderPVM, PLVolume, PLVolumeRenderer and PLVolumeGui I wrote as part of my
+  master thesis "Scalable Realtime Volume Rendering".
+  -> The thesis can be downloaded at: http://ablazespace.sourceforge.net/as-page/projects/MasterThesis/Ofenberg2012.pdf (in German)
+  -> See http://dev.pixellight.org/forum/viewtopic.php?f=5&t=483#p1339 for more information as well as videos
+  -> I also wrote PLLoaderDICOM_DCMTK but chanceled it during the thesis because DCMTK has no free JPEG 2000 codec
+     (DCMJP2K - DICOM JPEG 2000 Module (http://dicom.offis.de/dcmjp2k.php.en - Is not part of the freeware distribution, must be
+     licensed separately)
+  -> Until now, these new plugins are only tested on MS Windows 32/64 bit
+  -> Still need to to some minor PixelLight Git repository integration steps (updating the CMake files, copyright update etc.)
+  -> Across the Internet, there are several good sources of free available volume data like "The Volume Library" at
+     http://www9.informatik.uni-erlangen.de/External/vollib/
+  -> In order to use the new volume rendering feature, just drag'n'drop a resource containing volume data (pvm, DICOM and a
+     few other formats are supported) into PLViewerQt, done

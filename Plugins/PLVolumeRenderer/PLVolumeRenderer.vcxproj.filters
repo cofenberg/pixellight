@@ -848,6 +848,7 @@
     <None Include="CMakeLists.txt" />
     <None Include="src\Readme.txt" />
     <None Include="include\PLVolumeRenderer\ShaderCompositionID.inl" />
+    <None Include="..\PLVolume\Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="2.2-FetchScalar">

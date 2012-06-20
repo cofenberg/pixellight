@@ -291,6 +291,7 @@ copy $(OutDir)\$(TargetName).lib ..\..\Bin\Lib\x64\
     <ClInclude Include="include\PLVolumeGui\PLVolumeGui.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\PLVolume\Diary.txt" />
     <None Include="CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

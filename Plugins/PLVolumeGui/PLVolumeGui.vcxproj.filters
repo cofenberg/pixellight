@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
+    <None Include="..\PLVolume\Diary.txt" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="include\PLVolumeGui\DockWidgetVolumeTransferFunctionQObject.h" />

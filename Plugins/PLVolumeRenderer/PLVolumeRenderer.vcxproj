@@ -549,6 +549,7 @@ copy $(OutDir)\$(TargetName).lib ..\..\Bin\Lib\x64\
     <ClInclude Include="src\Shading\Null_GLSL.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\PLVolume\Diary.txt" />
     <None Include="CMakeLists.txt" />
     <None Include="include\PLVolumeRenderer\ShaderCompositionID.inl" />
     <None Include="src\Readme.txt" />

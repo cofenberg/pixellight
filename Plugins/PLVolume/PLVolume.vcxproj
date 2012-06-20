@@ -322,6 +322,7 @@ copy $(OutDir)\$(TargetName).lib ..\..\Bin\Lib\x64\
   </ItemGroup>
   <ItemGroup>
     <None Include="CMakeLists.txt" />
+    <None Include="Diary.txt" />
     <None Include="include\PLVolume\TransferFunctionControl\CubicSpline.inl" />
     <None Include="include\PLVolume\TransferFunctionControl\Histogram.inl" />
     <None Include="include\PLVolume\TransferFunctionControl\TransferControlPoint.inl" />
