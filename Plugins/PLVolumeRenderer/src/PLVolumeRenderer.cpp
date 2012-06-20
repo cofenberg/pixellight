@@ -1,17 +1,22 @@
 /*********************************************************\
  *  File: PLVolumeRenderer.cpp                           *
  *
- *  Master thesis
- *    "Scalable Realtime Volume Rendering"
+ *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
  *
- *  At
- *    Fachhochschule Würzburg-Schweinfurt
- *    Fakultät Informatik, Wirtschaftsinformatik (FIW)
- *    http://www.fh-wuerzburg.de/
+ *  This file is part of PixelLight.
  *
- *  Author
- *    Christian Ofenberg (c.ofenberg@pixellight.org or cofenberg@googlemail.com)
- *    Copyright (C) 2011-2012
+ *  PixelLight is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  PixelLight is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
 \*********************************************************/
 
 
@@ -25,7 +30,7 @@
 //[ Module definition                                     ]
 //[-------------------------------------------------------]
 pl_module_plugin("PLVolumeRenderer")
-	pl_module_vendor("Christian Ofenberg")
-	pl_module_license("Copyright (C) 2011-2012 Christian Ofenberg")
-	pl_module_description("Volume renderer for the master thesis \"Scalable Realtime Volume Rendering\"")
+	pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
+	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
+	pl_module_description("GPU shader based volume renderer. Originally written by Christian Ofenberg as part of his master thesis \"Scalable Realtime Volume Rendering\" ( http://ablazespace.sourceforge.net/as-page/projects/MasterThesis/Ofenberg2012.pdf - in German).")
 pl_module_end
