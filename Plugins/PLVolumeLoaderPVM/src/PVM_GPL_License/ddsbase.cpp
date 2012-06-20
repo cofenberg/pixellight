@@ -23,6 +23,9 @@ The author's contact address is:
 //[-------------------------------------------------------]
 //[ Disable warnings                                      ]
 //[-------------------------------------------------------]
+#ifndef WIN32
+	#include <locale.h>
+#endif
 #include <PLCore/PLCore.h>
 PL_WARNING_DISABLE(4390) // "warning C4390: ';' : empty controlled statement found; is this the intent?"
 PL_WARNING_DISABLE(4127) // "warning C4127: conditional expression is constant"

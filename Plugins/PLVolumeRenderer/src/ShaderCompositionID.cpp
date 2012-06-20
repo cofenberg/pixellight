@@ -123,10 +123,10 @@ String ShaderCompositionID::ToString() const
 		sString += "2.4_Classification=\"" + m_sData.pShaderFunctionClassificationClass->GetClassName() + "\" ";
 
 		// 2.5 - Gradient
-		sString += "2.5_Gradient=\"" + m_sData.pShaderFunctionGradientClass->GetClassName() + '\" ';
+		sString += "2.5_Gradient=\"" + m_sData.pShaderFunctionGradientClass->GetClassName() + "\" ";
 
 		// 2.5 - Gradient Input
-		sString += "2.5_GradientInput=\"" + m_sData.pShaderFunctionGradientInputClass->GetClassName() + '\" ';
+		sString += "2.5_GradientInput=\"" + m_sData.pShaderFunctionGradientInputClass->GetClassName() + "\" ";
 
 		// 2.6 - Illumination
 		sString += "2.6_Illumination=\"" + m_sData.pShaderFunctionIlluminationClass->GetClassName() + '\"';

@@ -59,7 +59,6 @@ pl_implement_class(SRPVolume)
 *    Default constructor
 */
 SRPVolume::SRPVolume() :
-	m_pShaderCompositor(new ShaderCompositorPC()),	// [TODO] Just a fixed build in test
 	ShaderLanguage(this),
 	RaySetup(this),
 	GlobalSampleRateFactor(this),
@@ -69,6 +68,7 @@ SRPVolume::SRPVolume() :
 	AmbientColor(this),
 	IlluminationThreshold(this),
 	Flags(this),
+	m_pShaderCompositor(new ShaderCompositorPC()),	// [TODO] Just a fixed build in test
 	m_pMeshHandler(new MeshHandler())
 {
 }

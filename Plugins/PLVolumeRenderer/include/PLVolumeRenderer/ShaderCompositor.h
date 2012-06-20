@@ -43,6 +43,7 @@ namespace PLScene {
 	class VisNode;
 }
 namespace PLVolumeRenderer {
+	class SRPVolume;
 	class ShaderFunction;
 	class ShaderComposition;
 	class ShaderCompositionID;
