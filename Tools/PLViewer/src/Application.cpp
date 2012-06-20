@@ -181,6 +181,9 @@ bool Application::LoadResource(const String &sFilename, const String &sType)
 	// Clear the scene, after calling this method the scene is empty
 	ClearScene();
 
+	// Destroy the currently used script
+	DestroyScript();
+
 	// Backup the filename of the current resource
 	m_sResourceFilename = sFilename;
 

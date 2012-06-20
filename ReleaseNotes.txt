@@ -18,6 +18,7 @@ Changes in PixelLight 0.9.12-R1 (not yet released)
 - Bugfix (ID: 3531730): "PLScene::SceneContainer::SetHierarchy()" did not assign the new given hierarchy type
 - Bugfix: "PLRenderer::Texture::SetTextureBuffer()" did not update the original texture size
 - Bugfix: "PLRenderer::EffectLoaderPL::LoadV1()" was not loading the "Name"-attribute of techniques
+- Bugfix: When loading a new resource, PLViewer/PLViewerQt did not destroy the currently used script
 
 
 Changes in PixelLight 0.9.11-R1 (released on February 23, 2012)

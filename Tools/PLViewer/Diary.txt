@@ -1,3 +1,9 @@
+>> 20.06.2012
+[CO]
+- Bugfix: When loading a new resource, PLViewer/PLViewerQt did not destroy the currently used script
+
+
+
 >> 29.02.2012
 [CO]
 - "Application::LoadResource()" now emits the "SignalSceneLoadingFinished"-signal in case the resource was not loaded via "LoadScene()",
