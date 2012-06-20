@@ -10,6 +10,8 @@
 - In the first push to the Git repository I'll make, the CMake files are not integrated into the PixelLight Git repository, yet (do
   this within one of the following integration steps)
 - I'll also add a downloadable volume rendering demo later on so one can get an idea what volume rendering is about easily
+- Renamed PLLoaderDICOM_GDCM into PLVolumeLoaderDICOM_GDCM and PLLoaderPVM into PLVolumeLoaderPVM to make it clear that those plugins
+  are PLVolume related
 
 
 
