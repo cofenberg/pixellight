@@ -19,104 +19,57 @@
 #*  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
 #*********************************************************/
 
-
-[TODO] Bring me into PixelLight form
-
-
-cmake_minimum_required(VERSION 2.8.3)
-
+##################################################
+## Project
+##################################################
+define_project(PLVolumeLoaderDICOM_GDCM)
 
 ##################################################
-## Define the project
+## Source files
 ##################################################
-set(CURRENT_TARGET_NAME PLVolumeLoaderDICOM_GDCM)
-project(${CURRENT_TARGET_NAME})
-
-
-##################################################
-## Find packages
-##################################################
-if(ANDROID)
-	find_host_package(PixelLight)	# "find_package"-variant provided by "android.toolchain.cmake", required for PixelLight CMake variables like "PL_PLCORE_INCLUDE_DIR"
-else()
-	find_package(PixelLight REQUIRED)
-endif()
-
-
-##################################################
-## Includes
-##################################################
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)				# The current source directory
-include_directories(${PL_PLCORE_INCLUDE_DIR})							# PLCore headers
-include_directories(${PL_PLMATH_INCLUDE_DIR})							# PLMath headers
-include_directories(${PL_PLGRAPHICS_INCLUDE_DIR})						# PLGraphics headers
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../PLVolume/include/)	# PLVolume
-
-# GDCM (Grassroots DICOM) [TODO] No build in "_Windows_x86_32"
-# -> The header design of GDCM is forcing us to add multiple include directories
-include_directories("../External/_Windows_x86_32/GDCM/include/")											# This is how we want to use it
-include_directories("../External/_Windows_x86_32/GDCM/include/gdcm/Common/")								# Required in order to find includes inside GDCM headers
-include_directories("../External/_Windows_x86_32/GDCM/include/gdcm/DataDictionary/")						# Required in order to find includes inside GDCM headers
-include_directories("../External/_Windows_x86_32/GDCM/include/gdcm/DataStructureAndEncodingDefinition/")	# Required in order to find includes inside GDCM headers
-include_directories("../External/_Windows_x86_32/GDCM/include/gdcm/InformationObjectDefinition/")			# Required in order to find includes inside GDCM headers
-include_directories("../External/_Windows_x86_32/GDCM/include/gdcm/MediaStorageAndFileFormat/")				# Required in order to find includes inside GDCM headers
-
-
-##################################################
-## Source codes
-##################################################
-set(CURRENT_SRC
+add_sources(
 	src/Context_GDCM.cpp
 	src/PLVolumeLoaderDICOM_GDCM.cpp	# Project main file
 	src/ImageLoaderDCM_GDCM.cpp			# Image loader for the file format "dcm" using GDCM (Grassroots DICOM) (http://sourceforge.net/projects/gdcm/)
 	src/VolumeLoaderDCM_GDCM.cpp		# Volume loader for the file format "dcm" using GDCM (Grassroots DICOM) (http://sourceforge.net/projects/gdcm/)
 )
 
+##################################################
+## Include directories
+##################################################
+add_include_directories(
+	include
+	${CMAKE_SOURCE_DIR}/Base/PLCore/include
+	${CMAKE_SOURCE_DIR}/Base/PLMath/include
+	${CMAKE_SOURCE_DIR}/Base/PLGraphics/include
+	${CMAKE_SOURCE_DIR}/Plugins/PLVolume/include
+	${GDCM_INCLUDE_DIRS}
+)
 
 ##################################################
 ## Library directories
 ##################################################
 add_link_directories(
-	# [TODO] No build in "_Windows_x86_32"
-	"../External/_Windows_x86_32/GDCM/lib/"
+	${PL_LIB_DIR}
 )
-
 
 ##################################################
 ## Additional libraries
 ##################################################
 add_libs(
-	${PL_PLCORE_LIBRARY}
-	${PL_PLMATH_LIBRARY}
-	${PL_PLGRAPHICS_LIBRARY}
+	PLCore
+	PLMath
+	PLGraphics
 	PLVolume
+	${GDCM_LIBRARIES}
 )
-if(WIN32)
-	##################################################
-	## Win32
-	##################################################
-	add_libs(
-		gdcmcharls.lib
-		gdcmCommon.lib
-		gdcmDICT.lib
-		gdcmDSED.lib
-		gdcmexpat.lib
-		gdcmgetopt.lib
-		gdcmIOD.lib
-		gdcmjpeg8.lib
-		gdcmjpeg12.lib
-		gdcmjpeg16.lib
-		gdcmMSFF.lib
-		gdcmopenjpeg.lib
-		gdcmzlib.lib
-		wsock32.lib
-	)
-endif()
-
 
 ##################################################
 ## Preprocessor definitions
 ##################################################
+add_compile_defs(
+	PLVOLUMELOADERDICOM_GDCM_EXPORTS
+)
 if(WIN32)
 	##################################################
 	## Win32
@@ -132,7 +85,6 @@ elseif(LINUX)
 		${LINUX_COMPILE_DEFS}
 	)
 endif()
-
 
 ##################################################
 ## Compiler flags
@@ -153,7 +105,6 @@ elseif(LINUX)
 	)
 endif()
 
-
 ##################################################
 ## Linker flags
 ##################################################
@@ -173,31 +124,59 @@ elseif(LINUX)
 	)
 endif()
 
-
 ##################################################
 ## Build
 ##################################################
-add_library(${CURRENT_TARGET_NAME} SHARED ${CURRENT_SRC})
-target_link_libraries (${CURRENT_TARGET_NAME} ${libs})
-set_project_properties(${CURRENT_TARGET_NAME})
-
-
-##################################################
-## Post-Build
-##################################################
-# Executable
-add_custom_command(TARGET ${CURRENT_TARGET_NAME}
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/${CURRENT_TARGET_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX} "${CMAKE_SOURCE_DIR}/Bin/${PL_ARCHBITSIZE}"
-)
-
-# Plugin file
-add_custom_command(TARGET ${CURRENT_TARGET_NAME}
-	COMMAND "${PL_ROOT}/Bin/Tools/${PL_ARCHBITSIZE}/PLProject${CMAKE_EXECUTABLE_SUFFIX}" ${CMAKE_CURRENT_SOURCE_DIR} --output-path "${CMAKE_SOURCE_DIR}/Bin/${PL_ARCHBITSIZE}" --write-plugin
-	WORKING_DIRECTORY ${dir}
-)
-
+build_library(${CMAKETOOLS_CURRENT_TARGET} SHARED)
+pl_create_plugin_description(${CMAKE_CURRENT_SOURCE_DIR} ${PL_RUNTIME_BIN_DIR})
 
 ##################################################
 ## Dependencies
 ##################################################
-add_dependencies(${CURRENT_TARGET_NAME}	PLVolume)
+add_dependencies(${CMAKETOOLS_CURRENT_TARGET}	External-gdcm PLCore PLMath PLGraphics PLVolume)
+add_dependencies(Plugins                       	${CMAKETOOLS_CURRENT_TARGET})
+
+##################################################
+## Post-Build
+##################################################
+
+# Dynamic library
+add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_SHARED_LIB} ${PL_RUNTIME_BIN_DIR}
+)
+
+# Create relative symbolic links?
+if(LINUX AND CMAKETOOLS_DETAILED_VERSION_INFORMATION)
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_VERSION} WORKING_DIRECTORY ${PL_RUNTIME_BIN_DIR}
+		COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKETOOLS_CURRENT_SHARED_LIB} ${CMAKETOOLS_CURRENT_SHARED_LIB_SO_VERSION} WORKING_DIRECTORY ${PL_RUNTIME_BIN_DIR}
+	)
+endif()
+
+# Import library
+if(WIN32)
+	add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
+		COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_STATIC_LIB} ${PL_LIB_DIR}
+	)
+endif()
+
+##################################################
+## Install
+##################################################
+
+# Library
+install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
+	RUNTIME DESTINATION ${PL_INSTALL_RUNTIME_BIN}	COMPONENT Runtime
+	LIBRARY DESTINATION ${PL_INSTALL_RUNTIME_BIN}	COMPONENT Runtime
+	ARCHIVE DESTINATION ${PL_INSTALL_LIB}			COMPONENT SDK
+)
+
+# Include files
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/${CMAKETOOLS_CURRENT_PROJECT}
+	DESTINATION ${PL_INSTALL_INCLUDE} 				COMPONENT SDK		REGEX ${PL_EXCLUDE_FILE_EXTENSIONS} EXCLUDE
+)
+
+# Plugin file
+install(FILES ${PL_RUNTIME_BIN_DIR}/${CMAKETOOLS_CURRENT_PLUGIN}
+	DESTINATION ${PL_INSTALL_RUNTIME_BIN}			COMPONENT Runtime
+)

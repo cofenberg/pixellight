@@ -232,7 +232,6 @@ if(NOT CMAKETOOLS_MINIMAL)
 	set (PL_PLUGIN_ENGINE_PARTICLEGROUPS			"1"					CACHE BOOL "Build plugin 'PLParticleGroups'?")
 	set (PL_PLUGIN_ENGINE_SPARK						"1"					CACHE BOOL "Build plugin 'SPARK_PL'?")
 	set (PL_PLUGIN_ENGINE_LIBROCKET					"1"					CACHE BOOL "Build plugin 'PLlibRocket'?")
-	set (PL_PLUGIN_LOADER_DICOM_GDCM				"0"					CACHE BOOL "Build plugin 'PLLoaderDICOM_GDCM'?")	# By default, don't build this plugin which usually is only interesting for medical applications (GDCM is no lightweight)
 	# PLGraphics image loaders
 	set (PL_PLUGIN_GRAPHICS_PNG						"1"					CACHE BOOL "Build in 'png' support within 'PLGraphics'?")
 	set (PL_PLUGIN_GRAPHICS_JPG						"1"					CACHE BOOL "Build in 'jpg' support within 'PLGraphics'?")
@@ -248,6 +247,12 @@ if(NOT CMAKETOOLS_MINIMAL)
 	set (PL_PLUGIN_FRONTEND_PLGUI					"1"					CACHE BOOL "Build plugin 'PLFrontendPLGui'? (requires 'PLGui')")
 	# Qt
 	set (PL_PLUGIN_FRONTEND_QT						"1"					CACHE BOOL "Build plugin 'PLFrontendQt'?")
+	# PLVolume # [TODO] Enable volume rendering as soon as the CMake files are updated/reviewed
+	set (PL_PLUGIN_VOLUME							"0"					CACHE BOOL "Build plugin 'PLVolume'?")
+	set (PL_PLUGIN_VOLUME_RENDERER					"0"					CACHE BOOL "Build plugin 'PLVolumeRenderer'? (requires 'PLVolume')")
+	set (PL_PLUGIN_VOLUME_GUI						"0"					CACHE BOOL "Build plugin 'PLVolumeGui'? (requires 'PLVolume')")
+	set (PL_PLUGIN_VOLUME_LOADER_PVM				"0"					CACHE BOOL "Build plugin 'PLVolumeLoaderPVM'? (requires 'PLVolume')")
+	set (PL_PLUGIN_VOLUME_LOADER_DICOM_GDCM			"0"					CACHE BOOL "Build plugin 'PLVolumeLoaderDICOM_GDCM'? (requires 'PLVolume')")	# By default, don't build this plugin which usually is only interesting for medical applications (GDCM is no lightweight)
 	# Tools
 	set (PL_TOOL_PLUPGRADE							"1"					CACHE BOOL "Build plugin 'PLUpgrade'?")
 	# Tests and samples
@@ -310,7 +315,6 @@ else()
 	set (PL_PLUGIN_ENGINE_PARTICLEGROUPS			"0"					CACHE BOOL "Build plugin 'PLParticleGroups'?")
 	set (PL_PLUGIN_ENGINE_SPARK						"0"					CACHE BOOL "Build plugin 'SPARK_PL'?")
 	set (PL_PLUGIN_ENGINE_LIBROCKET					"0"					CACHE BOOL "Build plugin 'PLlibRocket'?")
-	set (PL_PLUGIN_LOADER_DICOM_GDCM				"0"					CACHE BOOL "Build plugin 'PLLoaderDICOM_GDCM'?")
 	# Tools
 	set (PL_EXPORTER_3DSMAX_2008					"0"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2008'? (due to legal issues, we can't provide a public downloadable package)")
 	set (PL_EXPORTER_3DSMAX_2009					"0"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2009'? (due to legal issues, we can't provide a public downloadable package)")
@@ -334,6 +338,12 @@ else()
 	set (PL_PLUGIN_FRONTEND_PLGUI					"0"					CACHE BOOL "Build plugin 'PLFrontendPLGui'? (requires 'PLGui')")
 	# Qt
 	set (PL_PLUGIN_FRONTEND_QT						"0"					CACHE BOOL "Build plugin 'PLFrontendQt'?")
+	# PLVolume
+	set (PL_PLUGIN_VOLUME							"0"					CACHE BOOL "Build plugin 'PLVolume'?")
+	set (PL_PLUGIN_VOLUME_RENDERER					"0"					CACHE BOOL "Build plugin 'PLVolumeRenderer'? (requires 'PLVolume')")
+	set (PL_PLUGIN_VOLUME_GUI						"0"					CACHE BOOL "Build plugin 'PLVolumeGui'? (requires 'PLVolume')")
+	set (PL_PLUGIN_VOLUME_LOADER_PVM				"0"					CACHE BOOL "Build plugin 'PLVolumeLoaderPVM'? (requires 'PLVolume')")
+	set (PL_PLUGIN_VOLUME_LOADER_DICOM_GDCM			"0"					CACHE BOOL "Build plugin 'PLVolumeLoaderDICOM_GDCM'? (requires 'PLVolume')")
 	# Tests and samples
 	set (PL_SAMPLES									"0"					CACHE BOOL "Build the samples?")
 	set (PL_TESTS									"0"					CACHE BOOL "Build the tests?")
@@ -385,7 +395,7 @@ if(NOT WIN32)
 	unset (PL_TOOL_PLINSTALL						CACHE)
 
 	# [TODO] The following plugins are not yet supported (create prebuild external packages and test it)
-	unset (PL_PLUGIN_LOADER_DICOM_GDCM				CACHE)
+	unset (PL_PLUGIN_VOLUME_LOADER_DICOM_GDCM		CACHE)
 elseif(X86_64)
 	# Windows x64
 
@@ -420,7 +430,7 @@ if(APPLE)
 	unset (PL_PLUGIN_SOUND_FMODEX					CACHE)
 	unset (PL_PLUGIN_ENGINE_ASSIMP					CACHE)
 	unset (PL_PLUGIN_ENGINE_LIBROCKET				CACHE)
-	unset (PL_PLUGIN_LOADER_DICOM_GDCM				CACHE)
+	unset (PL_PLUGIN_VOLUME_LOADER_DICOM_GDCM		CACHE)
 	unset (PL_PLUGIN_GRAPHICS_PNG					CACHE)
 	unset (PL_PLUGIN_GRAPHICS_JPG					CACHE)
 	unset (PL_PLUGIN_FRONTEND_QT					CACHE)
@@ -438,6 +448,13 @@ if(ANDROID)
 	unset (PL_PLUGIN_FRONTEND_QT					CACHE)
 	unset (PL_TOOL_PLUPGRADE						CACHE)
 
+	# [TODO] PLVolume: There's currently no GLSL ES 2.0 support within the volume renderer
+	unset (PL_PLUGIN_VOLUME							CACHE)
+	unset (PL_PLUGIN_VOLUME_RENDERER				CACHE)
+	unset (PL_PLUGIN_VOLUME_GUI						CACHE)
+	unset (PL_PLUGIN_VOLUME_LOADER_PVM				CACHE)
+	unset (PL_PLUGIN_VOLUME_LOADER_DICOM_GDCM		CACHE)
+
 	# [TODO] The following plugins are not yet supported (create prebuild external packages and test it)
 	unset (PL_PLUGIN_SCRIPT_V8						CACHE)
 	unset (PL_PLUGIN_SCRIPT_PYTHON					CACHE)
@@ -447,7 +464,7 @@ if(ANDROID)
 	unset (PL_PLUGIN_DATABASE_SQLITE				CACHE)
 	unset (PL_PLUGIN_PHYSICS_ODE					CACHE)
 	unset (PL_PLUGIN_ENGINE_IMAGEEXR				CACHE)
-	unset (PL_PLUGIN_LOADER_DICOM_GDCM				CACHE)
+	unset (PL_PLUGIN_VOLUME_LOADER_DICOM_GDCM		CACHE)
 else()
 	# Remove Android only features
 	unset (PL_PLUGIN_SOUND_OPENSLES					CACHE)
