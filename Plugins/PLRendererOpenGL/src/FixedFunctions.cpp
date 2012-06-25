@@ -625,6 +625,8 @@ bool FixedFunctions::SetRenderState(RenderState::Enum nState, uint32 nValue)
 				break;
 			}
 
+			case RenderState::Number:
+			case RenderState::Unknown:
 			default:
 				return false; // Error, invalid render state!
 		}
@@ -686,6 +688,16 @@ const Matrix4x4 &FixedFunctions::GetTransformState(Transform::Enum nState, bool 
 			case Transform::World:
 				return m_mWorld;
 
+			case Transform::Texture0:
+			case Transform::Texture1:
+			case Transform::Texture2:
+			case Transform::Texture3:
+			case Transform::Texture4:
+			case Transform::Texture5:
+			case Transform::Texture6:
+			case Transform::Texture7:
+			case Transform::Number:
+			case Transform::Unknown:
 			default: // Texture transformation matrix
 			{
 				const uint32 nStage = nState - Transform::Texture0;
@@ -730,6 +742,16 @@ bool FixedFunctions::SetTransformState(Transform::Enum nState, const Matrix3x4 &
 				}
 				return true; // Done
 
+			case Transform::Texture0:
+			case Transform::Texture1:
+			case Transform::Texture2:
+			case Transform::Texture3:
+			case Transform::Texture4:
+			case Transform::Texture5:
+			case Transform::Texture6:
+			case Transform::Texture7:
+			case Transform::Number:
+			case Transform::Unknown:
 			default: // Texture transformation matrix
 			{
 				const uint32 nStage = nState - Transform::Texture0;
@@ -785,6 +807,16 @@ bool FixedFunctions::SetTransformState(Transform::Enum nState, const Matrix4x4 &
 				}
 				return true; // Done
 
+			case Transform::Texture0:
+			case Transform::Texture1:
+			case Transform::Texture2:
+			case Transform::Texture3:
+			case Transform::Texture4:
+			case Transform::Texture5:
+			case Transform::Texture6:
+			case Transform::Texture7:
+			case Transform::Number:
+			case Transform::Unknown:
 			default: // Texture transformation matrix
 			{
 				const uint32 nStage = nState - Transform::Texture0;
@@ -948,6 +980,8 @@ void ConfigureTexEnv(FixedFunctions::TextureEnvironment::Enum nTexEnv, bool bIsR
 			glTexEnvi(GL_TEXTURE_ENV, nOperand2,	GL_SRC_ALPHA);
 			break;
 
+		case FixedFunctions::TextureEnvironment::Number:
+		case FixedFunctions::TextureEnvironment::Unknown:
 		default:
 			break;
 	}
@@ -1038,6 +1072,8 @@ bool FixedFunctions::SetTextureStageState(uint32 nStage, TextureStage::Enum nSta
 				}
 				break;
 
+			case TextureStage::Number:
+			case TextureStage::Unknown:
 			default:
 				return false; // Invalid texture stage state!
 		}
@@ -1124,6 +1160,8 @@ bool FixedFunctions::SetMaterialState(MaterialState::Enum nState, uint32 nValue)
 				glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, Tools::UInt32ToFloat(nValue));
 				break;
 
+			case MaterialState::Number:
+			case MaterialState::Unknown:
 			default:
 				return false; // Invalid sampler state!
 		}
@@ -1234,6 +1272,11 @@ bool FixedFunctions::SetLight(uint32 nLightID, const Light &sLight)
 			glLightfv(nID, GL_POSITION, fValue);
 			break;
 		}
+
+		case LightType::Number:
+		case LightType::Unknown:
+		default:
+			return false; // Invalid light state!
 	}
 	glLightf(nID, GL_CONSTANT_ATTENUATION,  sLight.fConstantAttenuation);
 	glLightf(nID, GL_LINEAR_ATTENUATION,    sLight.fLinearAttenuation);

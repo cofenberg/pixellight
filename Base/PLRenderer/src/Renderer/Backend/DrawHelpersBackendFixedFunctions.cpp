@@ -142,6 +142,21 @@ void DrawHelpersBackendFixedFunctions::DrawImage(TextureBuffer &cTextureBuffer, 
 					vImageSize.y = static_cast<float>(static_cast<TextureBufferRectangle&>(cTextureBuffer).GetSize().y);
 					break;
 
+				case Resource::TypeIndexBuffer:
+				case Resource::TypeVertexBuffer:
+				case Resource::TypeUniformBuffer:
+				case Resource::TypeTextureBuffer1D:
+				case Resource::TypeTextureBuffer2DArray:
+				case Resource::TypeTextureBuffer3D:
+				case Resource::TypeTextureBufferCube:
+				case Resource::TypeOcclusionQuery:
+				case Resource::TypeVertexShader:
+				case Resource::TypeTessellationControlShader:
+				case Resource::TypeTessellationEvaluationShader:
+				case Resource::TypeGeometryShader:
+				case Resource::TypeFragmentShader:
+				case Resource::TypeProgram:
+				case Resource::TypeFont:
 				default:
 					return;	// Error, must be 2D or rectangle!
 			}
@@ -255,6 +270,21 @@ void DrawHelpersBackendFixedFunctions::DrawImage(TextureBuffer &cTextureBuffer, 
 					vImageSize.y = static_cast<float>(static_cast<TextureBufferRectangle&>(cTextureBuffer).GetSize().y);
 					break;
 
+				case Resource::TypeIndexBuffer:
+				case Resource::TypeVertexBuffer:
+				case Resource::TypeUniformBuffer:
+				case Resource::TypeTextureBuffer1D:
+				case Resource::TypeTextureBuffer2DArray:
+				case Resource::TypeTextureBuffer3D:
+				case Resource::TypeTextureBufferCube:
+				case Resource::TypeOcclusionQuery:
+				case Resource::TypeVertexShader:
+				case Resource::TypeTessellationControlShader:
+				case Resource::TypeTessellationEvaluationShader:
+				case Resource::TypeGeometryShader:
+				case Resource::TypeFragmentShader:
+				case Resource::TypeProgram:
+				case Resource::TypeFont:
 				default:
 					return;	// Error, must be 2D or rectangle!
 			}

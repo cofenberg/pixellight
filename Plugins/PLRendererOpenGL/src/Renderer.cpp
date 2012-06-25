@@ -1488,6 +1488,44 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							glPolygonOffset(Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::SlopeScaleDepthBias)), Tools::UInt32ToFloat(nValue));
 						}
 						break;
+
+					case PLRenderer::RenderState::BlendEnable:
+					case PLRenderer::RenderState::SrcBlendFunc:
+					case PLRenderer::RenderState::DstBlendFunc:
+					case PLRenderer::RenderState::StencilEnable:
+					case PLRenderer::RenderState::StencilFunc:
+					case PLRenderer::RenderState::StencilRef:
+					case PLRenderer::RenderState::StencilMask:
+					case PLRenderer::RenderState::StencilFail:
+					case PLRenderer::RenderState::StencilZFail:
+					case PLRenderer::RenderState::StencilPass:
+					case PLRenderer::RenderState::TwoSidedStencilMode:
+					case PLRenderer::RenderState::CCWStencilFunc:
+					case PLRenderer::RenderState::CCWStencilFail:
+					case PLRenderer::RenderState::CCWStencilZFail:
+					case PLRenderer::RenderState::CCWStencilPass:
+					case PLRenderer::RenderState::PointSize:
+					case PLRenderer::RenderState::PointScaleEnable:
+					case PLRenderer::RenderState::PointSizeMin:
+					case PLRenderer::RenderState::PointSizeMax:
+					case PLRenderer::RenderState::PointScaleA:
+					case PLRenderer::RenderState::PointScaleB:
+					case PLRenderer::RenderState::PointScaleC:
+					case PLRenderer::RenderState::LineWidth:
+					case PLRenderer::RenderState::TessellationFactor:
+					case PLRenderer::RenderState::TessellationMode:
+					case PLRenderer::RenderState::PointSpriteEnable:
+					case PLRenderer::RenderState::DitherEnable:
+					case PLRenderer::RenderState::ScissorTestEnable:
+					case PLRenderer::RenderState::MultisampleEnable:
+					case PLRenderer::RenderState::DepthClamp:
+					case PLRenderer::RenderState::InvCullMode:
+					case PLRenderer::RenderState::FixedFillMode:
+					case PLRenderer::RenderState::Number:
+					case PLRenderer::RenderState::Unknown:
+					default:
+						// Those are handled below
+						break;			
 				}
 			} else {
 				switch (nState) {
@@ -1926,6 +1964,37 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							}
 						}
 						break;
+
+					case PLRenderer::RenderState::FillMode:
+					case PLRenderer::RenderState::CullMode:
+					case PLRenderer::RenderState::ZEnable:
+					case PLRenderer::RenderState::ZWriteEnable:
+					case PLRenderer::RenderState::ZFunc:
+					case PLRenderer::RenderState::ZBias:
+					case PLRenderer::RenderState::SlopeScaleDepthBias:
+					case PLRenderer::RenderState::DepthBias:
+					case PLRenderer::RenderState::PointSize:
+					case PLRenderer::RenderState::PointScaleEnable:
+					case PLRenderer::RenderState::PointSizeMin:
+					case PLRenderer::RenderState::PointSizeMax:
+					case PLRenderer::RenderState::PointScaleA:
+					case PLRenderer::RenderState::PointScaleB:
+					case PLRenderer::RenderState::PointScaleC:
+					case PLRenderer::RenderState::LineWidth:
+					case PLRenderer::RenderState::TessellationFactor:
+					case PLRenderer::RenderState::TessellationMode:
+					case PLRenderer::RenderState::PointSpriteEnable:
+					case PLRenderer::RenderState::DitherEnable:
+					case PLRenderer::RenderState::ScissorTestEnable:
+					case PLRenderer::RenderState::MultisampleEnable:
+					case PLRenderer::RenderState::DepthClamp:
+					case PLRenderer::RenderState::InvCullMode:
+					case PLRenderer::RenderState::FixedFillMode:
+					case PLRenderer::RenderState::Number:
+					case PLRenderer::RenderState::Unknown:
+					default:
+						// Those are handled above/below
+						break;			
 				}
 			}
 		} else {
@@ -2156,8 +2225,34 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 					}
 					break;
 
+				case PLRenderer::RenderState::FillMode:
+				case PLRenderer::RenderState::CullMode:
+				case PLRenderer::RenderState::ZEnable:
+				case PLRenderer::RenderState::ZWriteEnable:
+				case PLRenderer::RenderState::ZFunc:
+				case PLRenderer::RenderState::ZBias:
+				case PLRenderer::RenderState::SlopeScaleDepthBias:
+				case PLRenderer::RenderState::DepthBias:
+				case PLRenderer::RenderState::BlendEnable:
+				case PLRenderer::RenderState::SrcBlendFunc:
+				case PLRenderer::RenderState::DstBlendFunc:	
+				case PLRenderer::RenderState::StencilEnable:
+				case PLRenderer::RenderState::StencilFunc:
+				case PLRenderer::RenderState::StencilRef:
+				case PLRenderer::RenderState::StencilMask:
+				case PLRenderer::RenderState::StencilFail:
+				case PLRenderer::RenderState::StencilZFail:
+				case PLRenderer::RenderState::StencilPass:
+				case PLRenderer::RenderState::TwoSidedStencilMode:
+				case PLRenderer::RenderState::CCWStencilFunc:
+				case PLRenderer::RenderState::CCWStencilFail:
+				case PLRenderer::RenderState::CCWStencilZFail:
+				case PLRenderer::RenderState::CCWStencilPass:
+				case PLRenderer::RenderState::Number:
+				case PLRenderer::RenderState::Unknown:
 				default:
-					return false; // Error, invalid render state!
+					// Those are handled above
+					break;
 			}
 		}
 	}
@@ -2276,6 +2371,8 @@ bool Renderer::SetSamplerState(uint32 nStage, PLRenderer::Sampler::Enum nState, 
 				}
 				break;
 
+			case PLRenderer::Sampler::Number:
+			case PLRenderer::Sampler::Unknown:
 			default:
 				return false; // Invalid sampler state!
 		}
@@ -2637,6 +2734,20 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 				case PLRenderer::Resource::TypeTextureBufferCube:
 					pnSamplerState = &static_cast<TextureBufferCube*>(pPreviousTextureBuffer)->m_nSamplerState[0];
 					break;
+
+				case PLRenderer::Resource::TypeIndexBuffer:
+				case PLRenderer::Resource::TypeVertexBuffer:
+				case PLRenderer::Resource::TypeUniformBuffer:
+				case PLRenderer::Resource::TypeOcclusionQuery:
+				case PLRenderer::Resource::TypeVertexShader:
+				case PLRenderer::Resource::TypeTessellationControlShader:
+				case PLRenderer::Resource::TypeTessellationEvaluationShader:
+				case PLRenderer::Resource::TypeGeometryShader:
+				case PLRenderer::Resource::TypeFragmentShader:
+				case PLRenderer::Resource::TypeProgram:
+				case PLRenderer::Resource::TypeFont:
+					// Error! Invalid type!
+					break;
 			}
 
 			// Backup internal sampler states
@@ -2687,6 +2798,20 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 					case PLRenderer::Resource::TypeTextureBufferCube:
 						m_nTextureBufferTypes[nStage] = GL_TEXTURE_CUBE_MAP_ARB;
 						glEnable(GL_TEXTURE_CUBE_MAP_ARB);
+						break;
+
+					case PLRenderer::Resource::TypeIndexBuffer:
+					case PLRenderer::Resource::TypeVertexBuffer:
+					case PLRenderer::Resource::TypeUniformBuffer:
+					case PLRenderer::Resource::TypeOcclusionQuery:
+					case PLRenderer::Resource::TypeVertexShader:
+					case PLRenderer::Resource::TypeTessellationControlShader:
+					case PLRenderer::Resource::TypeTessellationEvaluationShader:
+					case PLRenderer::Resource::TypeGeometryShader:
+					case PLRenderer::Resource::TypeFragmentShader:
+					case PLRenderer::Resource::TypeProgram:
+					case PLRenderer::Resource::TypeFont:
+						// Error! Invalid type!
 						break;
 				}
 			} else {
@@ -2761,6 +2886,20 @@ bool Renderer::SetTextureBuffer(int nStage, PLRenderer::TextureBuffer *pTextureB
 						glDisable(GL_TEXTURE_RECTANGLE_ARB);
 						glDisable(GL_TEXTURE_3D_EXT);
 						pnSamplerState = &static_cast<TextureBufferCube*>(pTextureBuffer)->m_nSamplerState[0];
+						break;
+
+					case PLRenderer::Resource::TypeIndexBuffer:
+					case PLRenderer::Resource::TypeVertexBuffer:
+					case PLRenderer::Resource::TypeUniformBuffer:
+					case PLRenderer::Resource::TypeOcclusionQuery:
+					case PLRenderer::Resource::TypeVertexShader:
+					case PLRenderer::Resource::TypeTessellationControlShader:
+					case PLRenderer::Resource::TypeTessellationEvaluationShader:
+					case PLRenderer::Resource::TypeGeometryShader:
+					case PLRenderer::Resource::TypeFragmentShader:
+					case PLRenderer::Resource::TypeProgram:
+					case PLRenderer::Resource::TypeFont:
+						// Error! Invalid type!
 						break;
 				}
 
@@ -2865,6 +3004,20 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 				case PLRenderer::Resource::TypeTextureBufferCube:
 					pnSamplerState = &static_cast<TextureBufferCube*>(pPreviousTextureBuffer)->m_nSamplerState[0];
 					break;
+
+				case PLRenderer::Resource::TypeIndexBuffer:
+				case PLRenderer::Resource::TypeVertexBuffer:
+				case PLRenderer::Resource::TypeUniformBuffer:
+				case PLRenderer::Resource::TypeOcclusionQuery:
+				case PLRenderer::Resource::TypeVertexShader:
+				case PLRenderer::Resource::TypeTessellationControlShader:
+				case PLRenderer::Resource::TypeTessellationEvaluationShader:
+				case PLRenderer::Resource::TypeGeometryShader:
+				case PLRenderer::Resource::TypeFragmentShader:
+				case PLRenderer::Resource::TypeProgram:
+				case PLRenderer::Resource::TypeFont:
+					// Error! Invalid type!
+					break;	
 			}
 
 			// Backup internal sampler states
@@ -2946,6 +3099,20 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 					glDisable(GL_TEXTURE_3D_EXT);
 					pnSamplerState = &static_cast<TextureBufferCube*>(pTextureBuffer)->m_nSamplerState[0];
 					break;
+
+				case PLRenderer::Resource::TypeIndexBuffer:
+				case PLRenderer::Resource::TypeVertexBuffer:
+				case PLRenderer::Resource::TypeUniformBuffer:
+				case PLRenderer::Resource::TypeOcclusionQuery:
+				case PLRenderer::Resource::TypeVertexShader:
+				case PLRenderer::Resource::TypeTessellationControlShader:
+				case PLRenderer::Resource::TypeTessellationEvaluationShader:
+				case PLRenderer::Resource::TypeGeometryShader:
+				case PLRenderer::Resource::TypeFragmentShader:
+				case PLRenderer::Resource::TypeProgram:
+				case PLRenderer::Resource::TypeFont:
+					// Error! Invalid type!
+					break;	
 			}
 
 			// Synchronize internal sampler states
@@ -3060,13 +3227,34 @@ bool Renderer::DrawPrimitives(PLRenderer::Primitive::Enum nType, uint32 nStartIn
 	// Get number of primitives
 	uint32 nPrimitiveCount;
 	switch (nType) {
-		case PLRenderer::Primitive::PointList:	   nPrimitiveCount = nNumVertices;   break;
-		case PLRenderer::Primitive::LineList:	   nPrimitiveCount = nNumVertices-1; break;
-		case PLRenderer::Primitive::LineStrip:	   nPrimitiveCount = nNumVertices-1; break;
-		case PLRenderer::Primitive::TriangleList:  nPrimitiveCount = nNumVertices/3; break;
-		case PLRenderer::Primitive::TriangleStrip: nPrimitiveCount = nNumVertices-2; break;
-		case PLRenderer::Primitive::TriangleFan:   nPrimitiveCount = nNumVertices-2; break;
-		default:								   return false; // Error!
+		case PLRenderer::Primitive::PointList:
+			nPrimitiveCount = nNumVertices;
+			break;
+
+		case PLRenderer::Primitive::LineList:
+			nPrimitiveCount = nNumVertices-1;
+			break;
+
+		case PLRenderer::Primitive::LineStrip:
+			nPrimitiveCount = nNumVertices-1;
+			break;
+
+		case PLRenderer::Primitive::TriangleList:
+			nPrimitiveCount = nNumVertices/3;
+			break;
+
+		case PLRenderer::Primitive::TriangleStrip:
+			nPrimitiveCount = nNumVertices-2;
+			break;
+
+		case PLRenderer::Primitive::TriangleFan:
+			nPrimitiveCount = nNumVertices-2;
+			break;
+
+		case PLRenderer::Primitive::Number:
+		case PLRenderer::Primitive::Unknown:
+		default:
+		   return false; // Error!
 	}
 
 	// Update statistics
@@ -3152,13 +3340,34 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 	// Get number of primitives
 	uint32 nPrimitiveCount;
 	switch (nType) {
-		case PLRenderer::Primitive::PointList:	   nPrimitiveCount = nNumVertices;   break;
-		case PLRenderer::Primitive::LineList:	   nPrimitiveCount = nNumVertices-2; break;
-		case PLRenderer::Primitive::LineStrip:	   nPrimitiveCount = nNumVertices-2; break;
-		case PLRenderer::Primitive::TriangleList:  nPrimitiveCount = nNumVertices/3; break;
-		case PLRenderer::Primitive::TriangleStrip: nPrimitiveCount = nNumVertices-2; break;
-		case PLRenderer::Primitive::TriangleFan:   nPrimitiveCount = nNumVertices-2; break;
-		default:								   return false; // Error!
+		case PLRenderer::Primitive::PointList:
+			nPrimitiveCount = nNumVertices;
+			break;
+
+		case PLRenderer::Primitive::LineList:
+			nPrimitiveCount = nNumVertices-2;
+			break;
+
+		case PLRenderer::Primitive::LineStrip:
+			nPrimitiveCount = nNumVertices-2;
+			break;
+
+		case PLRenderer::Primitive::TriangleList:
+			nPrimitiveCount = nNumVertices/3;
+			break;
+
+		case PLRenderer::Primitive::TriangleStrip:
+			nPrimitiveCount = nNumVertices-2;
+			break;
+
+		case PLRenderer::Primitive::TriangleFan:
+			nPrimitiveCount = nNumVertices-2;
+			break;
+
+		case PLRenderer::Primitive::Number:
+		case PLRenderer::Primitive::Unknown:
+		default:
+			return false; // Error!
 	}
 
 	// Update statistics
@@ -3366,13 +3575,34 @@ bool Renderer::DrawPrimitivesInstanced(PLRenderer::Primitive::Enum nType, uint32
 	// Get number of primitives
 	uint32 nPrimitiveCount;
 	switch (nType) {
-		case PLRenderer::Primitive::PointList:	   nPrimitiveCount = nNumVertices;   break;
-		case PLRenderer::Primitive::LineList:	   nPrimitiveCount = nNumVertices-1; break;
-		case PLRenderer::Primitive::LineStrip:	   nPrimitiveCount = nNumVertices-1; break;
-		case PLRenderer::Primitive::TriangleList:  nPrimitiveCount = nNumVertices/3; break;
-		case PLRenderer::Primitive::TriangleStrip: nPrimitiveCount = nNumVertices-2; break;
-		case PLRenderer::Primitive::TriangleFan:   nPrimitiveCount = nNumVertices-2; break;
-		default:								   return false; // Error!
+		case PLRenderer::Primitive::PointList:
+			nPrimitiveCount = nNumVertices;
+			break;
+
+		case PLRenderer::Primitive::LineList:
+			nPrimitiveCount = nNumVertices-1;
+			break;
+
+		case PLRenderer::Primitive::LineStrip:
+			nPrimitiveCount = nNumVertices-1;
+			break;
+
+		case PLRenderer::Primitive::TriangleList:
+			nPrimitiveCount = nNumVertices/3;
+			break;
+
+		case PLRenderer::Primitive::TriangleStrip:
+			nPrimitiveCount = nNumVertices-2;
+			break;
+
+		case PLRenderer::Primitive::TriangleFan:
+			nPrimitiveCount = nNumVertices-2;
+			break;
+
+		case PLRenderer::Primitive::Number:
+		case PLRenderer::Primitive::Unknown:
+		default:
+			return false; // Error!
 	}
 
 	// Update statistics
@@ -3459,13 +3689,34 @@ bool Renderer::DrawIndexedPrimitivesInstanced(PLRenderer::Primitive::Enum nType,
 	// Get number of primitives
 	uint32 nPrimitiveCount;
 	switch (nType) {
-		case PLRenderer::Primitive::PointList:	   nPrimitiveCount = nNumVertices;   break;
-		case PLRenderer::Primitive::LineList:	   nPrimitiveCount = nNumVertices-2; break;
-		case PLRenderer::Primitive::LineStrip:	   nPrimitiveCount = nNumVertices-2; break;
-		case PLRenderer::Primitive::TriangleList:  nPrimitiveCount = nNumVertices/3; break;
-		case PLRenderer::Primitive::TriangleStrip: nPrimitiveCount = nNumVertices-2; break;
-		case PLRenderer::Primitive::TriangleFan:   nPrimitiveCount = nNumVertices-2; break;
-		default:								   return false; // Error!
+		case PLRenderer::Primitive::PointList:
+			nPrimitiveCount = nNumVertices;
+			break;
+
+		case PLRenderer::Primitive::LineList:
+			nPrimitiveCount = nNumVertices-2;
+			break;
+
+		case PLRenderer::Primitive::LineStrip:
+			nPrimitiveCount = nNumVertices-2;
+			break;
+
+		case PLRenderer::Primitive::TriangleList:
+			nPrimitiveCount = nNumVertices/3;
+			break;
+
+		case PLRenderer::Primitive::TriangleStrip:
+			nPrimitiveCount = nNumVertices-2;
+			break;
+
+		case PLRenderer::Primitive::TriangleFan:
+			nPrimitiveCount = nNumVertices-2;
+			break;
+
+		case PLRenderer::Primitive::Number:
+		case PLRenderer::Primitive::Unknown:
+		default:
+			return false; // Error!
 	}
 
 	// Update statistics

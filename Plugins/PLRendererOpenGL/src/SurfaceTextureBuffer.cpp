@@ -191,6 +191,23 @@ bool SurfaceTextureBuffer::CreateFBO()
 					vSize.x = vSize.y = nSize;
 					break;
 				}
+
+				case PLRenderer::Resource::TypeIndexBuffer:
+				case PLRenderer::Resource::TypeVertexBuffer:
+				case PLRenderer::Resource::TypeUniformBuffer:
+				case PLRenderer::Resource::TypeTextureBuffer1D:
+				case PLRenderer::Resource::TypeTextureBuffer2DArray:
+				case PLRenderer::Resource::TypeTextureBuffer3D:
+				case PLRenderer::Resource::TypeOcclusionQuery:
+				case PLRenderer::Resource::TypeVertexShader:
+				case PLRenderer::Resource::TypeTessellationControlShader:
+				case PLRenderer::Resource::TypeTessellationEvaluationShader:
+				case PLRenderer::Resource::TypeGeometryShader:
+				case PLRenderer::Resource::TypeFragmentShader:
+				case PLRenderer::Resource::TypeProgram:
+				case PLRenderer::Resource::TypeFont:
+				default:
+					return false;	// Error, must be 2D, rectangle or cube!
 			}
 			if (vSize.x > 0 && vSize.y > 0) {
 				// Initialize frame buffer
@@ -266,6 +283,23 @@ Vector2i SurfaceTextureBuffer::GetSize() const
 				const uint32 nSize = static_cast<PLRenderer::TextureBufferCube*>(pTextureBuffer)->GetSize();
 				return Vector2i(nSize, nSize);
 			}
+
+			case PLRenderer::Resource::TypeIndexBuffer:
+			case PLRenderer::Resource::TypeVertexBuffer:
+			case PLRenderer::Resource::TypeUniformBuffer:
+			case PLRenderer::Resource::TypeTextureBuffer1D:
+			case PLRenderer::Resource::TypeTextureBuffer2DArray:
+			case PLRenderer::Resource::TypeTextureBuffer3D:
+			case PLRenderer::Resource::TypeOcclusionQuery:
+			case PLRenderer::Resource::TypeVertexShader:
+			case PLRenderer::Resource::TypeTessellationControlShader:
+			case PLRenderer::Resource::TypeTessellationEvaluationShader:
+			case PLRenderer::Resource::TypeGeometryShader:
+			case PLRenderer::Resource::TypeFragmentShader:
+			case PLRenderer::Resource::TypeProgram:
+			case PLRenderer::Resource::TypeFont:
+			default:
+				break;	// Error, must be 2D, rectangle or cube!
 		}
 	}
 
@@ -393,6 +427,24 @@ bool SurfaceTextureBuffer::UnmakeCurrent()
 				case PLRenderer::Resource::TypeTextureBufferCube:
 					glGenerateMipmapEXT(GL_TEXTURE_CUBE_MAP_ARB);
 					break;
+
+				case PLRenderer::Resource::TypeIndexBuffer:
+				case PLRenderer::Resource::TypeVertexBuffer:
+				case PLRenderer::Resource::TypeUniformBuffer:
+				case PLRenderer::Resource::TypeTextureBuffer1D:
+				case PLRenderer::Resource::TypeTextureBuffer2DArray:
+				case PLRenderer::Resource::TypeTextureBufferRectangle:
+				case PLRenderer::Resource::TypeTextureBuffer3D:
+				case PLRenderer::Resource::TypeOcclusionQuery:
+				case PLRenderer::Resource::TypeVertexShader:
+				case PLRenderer::Resource::TypeTessellationControlShader:
+				case PLRenderer::Resource::TypeTessellationEvaluationShader:
+				case PLRenderer::Resource::TypeGeometryShader:
+				case PLRenderer::Resource::TypeFragmentShader:
+				case PLRenderer::Resource::TypeProgram:
+				case PLRenderer::Resource::TypeFont:
+				default:
+					break;	// Error, must be 2D, rectangle or cube!
 			}
 			cRenderer.SetTextureBuffer(0, pTextureBuffer);
 		}
@@ -420,6 +472,23 @@ bool SurfaceTextureBuffer::UnmakeCurrent()
 				case PLRenderer::Resource::TypeTextureBufferCube:
 					glCopyTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+m_nFace, 0, 0, 0, 0, 0, GetSize().x, GetSize().y);
 					break;
+
+				case PLRenderer::Resource::TypeIndexBuffer:
+				case PLRenderer::Resource::TypeVertexBuffer:
+				case PLRenderer::Resource::TypeUniformBuffer:
+				case PLRenderer::Resource::TypeTextureBuffer1D:
+				case PLRenderer::Resource::TypeTextureBuffer2DArray:
+				case PLRenderer::Resource::TypeTextureBuffer3D:
+				case PLRenderer::Resource::TypeOcclusionQuery:
+				case PLRenderer::Resource::TypeVertexShader:
+				case PLRenderer::Resource::TypeTessellationControlShader:
+				case PLRenderer::Resource::TypeTessellationEvaluationShader:
+				case PLRenderer::Resource::TypeGeometryShader:
+				case PLRenderer::Resource::TypeFragmentShader:
+				case PLRenderer::Resource::TypeProgram:
+				case PLRenderer::Resource::TypeFont:
+				default:
+					break;	// Error, must be 2D, rectangle or cube!
 			}
 		}
 	}

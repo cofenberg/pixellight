@@ -242,6 +242,21 @@ void FrameBufferObject::SwitchTarget(PLRenderer::TextureBuffer &cTextureBuffer, 
 				nTarget = GL_TEXTURE_CUBE_MAP_POSITIVE_X_ARB+nFace;
 				nOpenGLID = static_cast<TextureBufferCube&>(cTextureBuffer).GetOpenGLTexture();
 				break;
+
+			case PLRenderer::Resource::TypeIndexBuffer:
+			case PLRenderer::Resource::TypeVertexBuffer:
+			case PLRenderer::Resource::TypeUniformBuffer:
+			case PLRenderer::Resource::TypeOcclusionQuery:
+			case PLRenderer::Resource::TypeVertexShader:
+			case PLRenderer::Resource::TypeTessellationControlShader:
+			case PLRenderer::Resource::TypeTessellationEvaluationShader:
+			case PLRenderer::Resource::TypeGeometryShader:
+			case PLRenderer::Resource::TypeFragmentShader:
+			case PLRenderer::Resource::TypeProgram:
+			case PLRenderer::Resource::TypeFont:
+			default:
+				// Only texture types in this switch
+				break;
 		}
 		if (nTarget >= 0 && nOpenGLID) {
 			// Check/clamp attach index

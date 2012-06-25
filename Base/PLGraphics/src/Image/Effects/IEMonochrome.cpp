@@ -93,6 +93,16 @@ class ProcessData {
 						pData[2] = nGrayscale;
 					}
 					break;
+
+				case ColorGrayscale:
+				case ColorGrayscaleA:
+					// Already monochrome
+					break;
+
+				case ColorPalette:
+				default:
+					// Error! Not supported!
+					break;
 			}
 		}
 

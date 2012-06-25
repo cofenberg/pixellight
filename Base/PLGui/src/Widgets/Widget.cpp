@@ -2010,6 +2010,14 @@ void Widget::OnMessage(const GuiMessage &cMessage)
 			SignalUserMessage(cMessage.GetData(), cMessage.GetDataPointer());
 			OnUserMessage(cMessage.GetData(), cMessage.GetDataPointer());
 			break;
+
+		case MessageOnUnknown:
+		case MessageOnInternalMessage:
+		case MessageOnWakeup:
+		case MessageOnExit:
+		case MessageOnTimer:
+			// [TODO] Check me: Do we need to handle those cases in here?
+			break;
 	}
 }
 
