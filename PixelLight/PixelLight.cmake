@@ -250,7 +250,7 @@ if(NOT CMAKETOOLS_MINIMAL)
 	# PLVolume
 	set (PL_PLUGIN_VOLUME							"1"					CACHE BOOL "Build plugin 'PLVolume'?")
 	set (PL_PLUGIN_VOLUME_RENDERER					"1"					CACHE BOOL "Build plugin 'PLVolumeRenderer'? (requires 'PLVolume')")
-	set (PL_PLUGIN_VOLUME_GUI						"1"					CACHE BOOL "Build plugin 'PLVolumeGui'? (requires 'PLVolume')")
+	set (PL_PLUGIN_VOLUME_GUI						"1"					CACHE BOOL "Build plugin 'PLVolumeGui'? (requires 'PLVolume' and 'PLFrontendQt')")
 	set (PL_PLUGIN_VOLUME_LOADER_PVM				"1"					CACHE BOOL "Build plugin 'PLVolumeLoaderPVM'? (requires 'PLVolume')")
 	set (PL_PLUGIN_VOLUME_LOADER_DICOM_GDCM			"1"					CACHE BOOL "Build plugin 'PLVolumeLoaderDICOM_GDCM'? (requires 'PLVolume')")
 	# Tools
