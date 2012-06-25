@@ -141,6 +141,7 @@ void ShaderFunctionFetchScalarSampler3D::SetProgram(Program &cProgram, const PLS
 				case PLVolume::SNVolume::TrilinearFiltering:
 				// Tri-cubic filtering (third-order texture filtering, has same basic setup as trilinear filtering)
 				case PLVolume::SNVolume::TriCubicFiltering:
+				case PLVolume::SNVolume::TriCubicKernelFiltering:
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::MagFilter, TextureFiltering::Linear);
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::MinFilter, TextureFiltering::Linear);
 					cRenderer.SetSamplerState(nTextureUnit, Sampler::MipFilter, TextureFiltering::Linear);

@@ -57,7 +57,7 @@ const Vector3 Volume::DefaultVoxelSize(0.001f, 0.001f, 0.001f);
 *  @brief
 *    Constructor
 */
-Volume::Volume(const String &sName, ResourceManager<Volume> *pManager) : Resource<Volume>(sName, pManager),
+Volume::Volume(const String &sName, ResourceManager<Volume> *pManager) : PLCore::Resource<Volume>(sName, pManager),
 	m_vVoxelSize(DefaultVoxelSize),
 	m_pTransferFunctionControl(new TransferFunctionControl()),
 	m_pTextureBufferHandler(new PLRenderer::ResourceHandler())
@@ -362,7 +362,7 @@ Volume &Volume::operator =(const Volume &cSource)
 	Unload();
 
 	// Call base function
-	*static_cast<Resource<Volume>*>(this) = cSource;
+	*static_cast<PLCore::Resource<Volume>*>(this) = cSource;
 
 	// Copy volume
 	m_cVolumeImage		= cSource.m_cVolumeImage;
@@ -386,7 +386,7 @@ bool Volume::Unload()
 	m_pTransferFunctionControl->Unload();
 
 	// Call base implementation
-	return Resource<Volume>::Unload();
+	return PLCore::Resource<Volume>::Unload();
 }
 
 String Volume::GetLoadableTypeName() const

@@ -124,6 +124,13 @@ String ShaderFunctionClipRayPlane::GetSourceCode(const String &sShaderLanguage, 
 
 			case FragmentShaderTemplate:
 				return sSourceCode_Fragment_Template;
+
+			case VertexShaderHeader:
+			case VertexShaderBody:
+			case VertexShaderTemplate:
+			case FragmentShaderHeader:
+				// Nothing to do in here
+				break;
 		}
 	} else if (sShaderLanguage == Cg) {
 		#include "Plane_Cg.h"
@@ -135,6 +142,13 @@ String ShaderFunctionClipRayPlane::GetSourceCode(const String &sShaderLanguage, 
 
 			case FragmentShaderTemplate:
 				return sSourceCode_Fragment_Template;
+
+			case VertexShaderHeader:
+			case VertexShaderBody:
+			case VertexShaderTemplate:
+			case FragmentShaderHeader:
+				// Nothing to do in here
+				break;
 		}
 	}
 

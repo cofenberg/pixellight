@@ -117,6 +117,13 @@ String ShaderFunctionClipPositionEllipsoid::GetSourceCode(const String &sShaderL
 
 			case FragmentShaderTemplate:
 				return sSourceCode_Fragment_Template;
+
+			case VertexShaderHeader:
+			case VertexShaderBody:
+			case VertexShaderTemplate:
+			case FragmentShaderHeader:
+				// Nothing to do in here
+				break;
 		}
 	} else if (sShaderLanguage == Cg) {
 		#include "Ellipsoid_Cg.h"
@@ -128,6 +135,13 @@ String ShaderFunctionClipPositionEllipsoid::GetSourceCode(const String &sShaderL
 
 			case FragmentShaderTemplate:
 				return sSourceCode_Fragment_Template;
+
+			case VertexShaderHeader:
+			case VertexShaderBody:
+			case VertexShaderTemplate:
+			case FragmentShaderHeader:
+				// Nothing to do in here
+				break;
 		}
 	}
 

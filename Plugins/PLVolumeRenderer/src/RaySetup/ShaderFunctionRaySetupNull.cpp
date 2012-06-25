@@ -75,6 +75,13 @@ String ShaderFunctionRaySetupNull::GetSourceCode(const String &sShaderLanguage, 
 
 			case FragmentShaderBody:
 				return sSourceCode_Fragment;
+
+			case VertexShaderHeader:
+			case VertexShaderTemplate:
+			case FragmentShaderHeader:
+			case FragmentShaderTemplate:
+				// Nothing to do in here
+				break;
 		}
 	} else if (sShaderLanguage == Cg) {
 		#include "Null_Cg.h"
@@ -86,6 +93,13 @@ String ShaderFunctionRaySetupNull::GetSourceCode(const String &sShaderLanguage, 
 
 			case FragmentShaderBody:
 				return sSourceCode_Fragment;
+
+			case VertexShaderHeader:
+			case VertexShaderTemplate:
+			case FragmentShaderHeader:
+			case FragmentShaderTemplate:
+				// Nothing to do in here
+				break;
 		}
 	}
 

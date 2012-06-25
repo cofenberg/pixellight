@@ -158,6 +158,13 @@ String ShaderFunctionClipPositionVolumeTexture::GetSourceCode(const String &sSha
 
 			case FragmentShaderTemplate:
 				return sSourceCode_Fragment_Template;
+
+			case VertexShaderHeader:
+			case VertexShaderBody:
+			case VertexShaderTemplate:
+			case FragmentShaderHeader:
+				// Nothing to do in here
+				break;
 		}
 	} else if (sShaderLanguage == Cg) {
 		#include "VolumeTexture_Cg.h"
@@ -169,6 +176,13 @@ String ShaderFunctionClipPositionVolumeTexture::GetSourceCode(const String &sSha
 
 			case FragmentShaderTemplate:
 				return sSourceCode_Fragment_Template;
+
+			case VertexShaderHeader:
+			case VertexShaderBody:
+			case VertexShaderTemplate:
+			case FragmentShaderHeader:
+				// Nothing to do in here
+				break;
 		}
 	}
 

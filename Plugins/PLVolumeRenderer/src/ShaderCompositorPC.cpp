@@ -431,6 +431,20 @@ ShaderComposition *ShaderCompositorPC::Generate(Renderer &cRenderer, const PLSce
 					break;
 				}
 
+				case PLRenderer::Resource::TypeIndexBuffer:
+				case PLRenderer::Resource::TypeVertexBuffer:
+				case PLRenderer::Resource::TypeUniformBuffer:
+				case PLRenderer::Resource::TypeTextureBuffer1D:
+				case PLRenderer::Resource::TypeTextureBufferRectangle:
+				case PLRenderer::Resource::TypeTextureBufferCube:
+				case PLRenderer::Resource::TypeOcclusionQuery:
+				case PLRenderer::Resource::TypeVertexShader:
+				case PLRenderer::Resource::TypeTessellationControlShader:
+				case PLRenderer::Resource::TypeTessellationEvaluationShader:
+				case PLRenderer::Resource::TypeGeometryShader:
+				case PLRenderer::Resource::TypeFragmentShader:
+				case PLRenderer::Resource::TypeProgram:
+				case PLRenderer::Resource::TypeFont:
 				default:
 				{
 					// Catch the RTTI class instance only once to keep the internal overhead as low as possible, but do also keep this optimization local

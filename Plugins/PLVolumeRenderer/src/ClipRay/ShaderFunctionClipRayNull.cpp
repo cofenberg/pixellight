@@ -75,6 +75,13 @@ String ShaderFunctionClipRayNull::GetSourceCode(const String &sShaderLanguage, E
 
 			case FragmentShaderTemplate:
 				return sSourceCode_Fragment_Template;
+
+			case VertexShaderHeader:
+			case VertexShaderTemplate:
+			case VertexShaderBody:
+			case FragmentShaderHeader:
+				// Nothing to do in here
+				break;
 		}
 	} else if (sShaderLanguage == Cg) {
 		#include "Null_Cg.h"
@@ -86,6 +93,13 @@ String ShaderFunctionClipRayNull::GetSourceCode(const String &sShaderLanguage, E
 
 			case FragmentShaderTemplate:
 				return sSourceCode_Fragment_Template;
+
+			case VertexShaderHeader:
+			case VertexShaderTemplate:
+			case VertexShaderBody:
+			case FragmentShaderHeader:
+				// Nothing to do in here
+				break;
 		}
 	}
 

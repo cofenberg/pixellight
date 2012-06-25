@@ -125,6 +125,12 @@ String ShaderFunctionRaySetupColorCube::GetSourceCode(const String &sShaderLangu
 
 			case FragmentShaderBody:
 				return sSourceCode_Fragment;
+
+			case VertexShaderHeader:
+			case VertexShaderTemplate:
+			case FragmentShaderTemplate:
+				// Nothing to do in here
+				break;
 		}
 	} else if (sShaderLanguage == Cg) {
 		#include "ColorCube_Cg.h"
@@ -139,6 +145,12 @@ String ShaderFunctionRaySetupColorCube::GetSourceCode(const String &sShaderLangu
 
 			case FragmentShaderBody:
 				return sSourceCode_Fragment;
+
+			case VertexShaderHeader:
+			case VertexShaderTemplate:
+			case FragmentShaderTemplate:
+				// Nothing to do in here
+				break;
 		}
 	}
 
@@ -221,11 +233,22 @@ void sort_points(Vector3 *points, unsigned point_count, const Plane &plane)
     const Vector3 plane_normal = Vector3(plane.a, plane.b, plane.c);
     const Vector3 origin = points[0];
 
-    std::sort(points, points + point_count, [&](const Vector3 &lhs, const Vector3 &rhs) -> bool {
-        Vector3 v;
-		v.CrossProduct((lhs - origin), (rhs - origin));
-		return (v.DotProduct(plane_normal) < 0);
-    } );
+	// [TODO] Mac OS X 10.7, gcc version 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.1.00)
+	// .../pixellight/Plugins/PLVolumeRenderer/src/RaySetup/ShaderFunctionRaySetupColorCube.cpp: In function ‘void PLVolumeRenderer::sort_points(PLMath::Vector3*, unsigned int, const PLMath::Plane&)’:
+	// .../pixellight/Plugins/PLVolumeRenderer/src/RaySetup/ShaderFunctionRaySetupColorCube.cpp:236: error: expected primary-expression before ‘[’ token
+	// .../pixellight/Plugins/PLVolumeRenderer/src/RaySetup/ShaderFunctionRaySetupColorCube.cpp:236: error: expected primary-expression before ‘]’ token
+	// .../pixellight/Plugins/PLVolumeRenderer/src/RaySetup/ShaderFunctionRaySetupColorCube.cpp:236: error: expected primary-expression before ‘const’
+	// .../pixellight/Plugins/PLVolumeRenderer/src/RaySetup/ShaderFunctionRaySetupColorCube.cpp:236: error: expected primary-expression before ‘const’
+	// .../pixellight/Plugins/PLVolumeRenderer/src/RaySetup/ShaderFunctionRaySetupColorCube.cpp:236: error: expected unqualified-id before ‘bool’
+	// make[3]: *** [Plugins/PLVolumeRenderer/CMakeFiles/PLVolumeRenderer.dir/src/RaySetup/ShaderFunctionRaySetupColorCube.cpp.o] Error 1
+	// -> This functionality is nothing important, so it can be considered to be safe to just ignore it for now on Mac OS X
+	#ifndef APPLE
+		std::sort(points, points + point_count, [&](const Vector3 &lhs, const Vector3 &rhs) -> bool {
+			Vector3 v;
+			v.CrossProduct((lhs - origin), (rhs - origin));
+			return (v.DotProduct(plane_normal) < 0);
+		} );
+	#endif
 }
 void ShaderFunctionRaySetupColorCube::UpdateNearCap(const PLMath::Plane &cPlane)
 {

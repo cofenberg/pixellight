@@ -87,6 +87,12 @@ String ShaderFunctionRaySetupBoundingBoxIntersection::GetSourceCode(const String
 
 			case FragmentShaderBody:
 				return sSourceCode_Fragment;
+
+			case VertexShaderHeader:
+			case VertexShaderTemplate:
+			case FragmentShaderTemplate:
+				// Nothing to do in here
+				break;
 		}
 	} else if (sShaderLanguage == Cg) {
 		#include "BoundingBoxIntersection_Cg.h"
@@ -101,6 +107,12 @@ String ShaderFunctionRaySetupBoundingBoxIntersection::GetSourceCode(const String
 
 			case FragmentShaderBody:
 				return sSourceCode_Fragment;
+
+			case VertexShaderHeader:
+			case VertexShaderTemplate:
+			case FragmentShaderTemplate:
+				// Nothing to do in here
+				break;
 		}
 	}
 

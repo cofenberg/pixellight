@@ -82,6 +82,13 @@ String ShaderFunctionClipRayDepthTexture::GetSourceCode(const String &sShaderLan
 
 			case FragmentShaderTemplate:
 				return sSourceCode_Fragment_Template;
+
+			case VertexShaderHeader:
+			case VertexShaderBody:
+			case VertexShaderTemplate:
+			case FragmentShaderHeader:
+				// Nothing to do in here
+				break;
 		}
 	} else if (sShaderLanguage == Cg) {
 		#include "DepthTexture_Cg.h"
@@ -93,6 +100,13 @@ String ShaderFunctionClipRayDepthTexture::GetSourceCode(const String &sShaderLan
 
 			case FragmentShaderTemplate:
 				return sSourceCode_Fragment_Template;
+
+			case VertexShaderHeader:
+			case VertexShaderBody:
+			case VertexShaderTemplate:
+			case FragmentShaderHeader:
+				// Nothing to do in here
+				break;
 		}
 	}
 

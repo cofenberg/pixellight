@@ -220,6 +220,11 @@ TextureBuffer *TransferFunction::GetTextureBuffer(Renderer &cRenderer, ETextureB
 					m_pTextureBufferHandler[nType]->SetResource(reinterpret_cast<TextureBuffer*>(createPreintegrationTable(cRenderer, nTable)));
 					break;
 				}
+
+				case NumOfTextureBufferTypes:
+				default:
+					// Invalid cases, nothing to do in here
+					break;
 			}
 		}
 
