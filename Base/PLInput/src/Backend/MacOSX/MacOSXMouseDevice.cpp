@@ -67,6 +67,7 @@ void MacOSXMouseDevice::Update()
 		Mouse *pMouse = static_cast<Mouse*>(m_pDevice);
 
 		// [TODO] Implement Mac OS X version
+		// -> "Cocoa Event Handling Guide" page 13 looks promising: https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/EventOverview/EventOverview.pdf
 	}
 }
 
