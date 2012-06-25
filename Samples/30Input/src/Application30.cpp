@@ -278,6 +278,7 @@ void Application30::TestConnections()
 
 		// Main loop
 		m_bExit = false;
+		System::GetInstance()->GetConsole().Print("Ready to receive input\n");
 		while (!m_bExit) {
 			// Update devices
 			InputManager::GetInstance()->Update();
