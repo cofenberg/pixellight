@@ -123,6 +123,11 @@ void CursorLinux::Load(EMouseCursor nCursor)
 		case CursorNone:
 			m_pXCursor = ToolsLinux::CreateEmptyCursor(m_pDisplay);
 			return;
+
+		case CursorCustom:
+		case Cursor_Count:
+			// [TODO] Check me: Do we need to handle those?
+			return;
 	}
 
 	// Load cursor

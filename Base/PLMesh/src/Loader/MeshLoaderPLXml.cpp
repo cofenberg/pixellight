@@ -584,6 +584,13 @@ bool MeshLoaderPLXml::ReadVertexBuffer(VertexBuffer &cVertexBuffer, uint32 nInde
 										static_cast<short*>(pData)[3] = static_cast<short>(nData[3]);
 										break;
 									}
+
+									case VertexBuffer::Half1:
+									case VertexBuffer::Half2:
+									case VertexBuffer::Half3:
+									case VertexBuffer::Half4:
+										// [TODO] Implement me
+										break;
 								}
 							}
 						}
@@ -1326,6 +1333,12 @@ bool MeshLoaderPLXml::WriteGeometry(const Geometry &cGeometry, uint32 nID, XmlEl
 		case Primitive::TriangleList:	pGeometryElement->SetAttribute("PrimitiveType", "TriangleList");	break;
 		case Primitive::TriangleStrip:	pGeometryElement->SetAttribute("PrimitiveType", "TriangleStrip");	break;
 		case Primitive::TriangleFan:	pGeometryElement->SetAttribute("PrimitiveType", "TriangleFan");		break;
+
+		case Primitive::Number:
+		case Primitive::Unknown:
+		default:
+			// Error!
+			break;
 	}
 	pGeometryElement->SetAttribute("Material", cGeometry.GetMaterial());
 	pGeometryElement->SetAttribute("StartIndex", cGeometry.GetStartIndex());
@@ -1508,6 +1521,13 @@ bool MeshLoaderPLXml::WriteVertexBuffer(VertexBuffer &cVertexBuffer, uint32 nID,
 					case VertexBuffer::Float4:	sValue = String::Format("%f %f %f %f", static_cast<const float*>(pData)[0], static_cast<const float*>(pData)[1], static_cast<const float*>(pData)[2], static_cast<const float*>(pData)[3]);		break;
 					case VertexBuffer::Short2:	sValue = String::Format("%d %d", static_cast<const uint16*>(pData)[0], static_cast<const uint16*>(pData)[1]);																					break;
 					case VertexBuffer::Short4:	sValue = String::Format("%d %d %d %d", static_cast<const uint16*>(pData)[0], static_cast<const uint16*>(pData)[1], static_cast<const uint16*>(pData)[2], static_cast<const uint16*>(pData)[3]);	break;
+
+					case VertexBuffer::Half1:
+					case VertexBuffer::Half2:
+					case VertexBuffer::Half3:
+					case VertexBuffer::Half4:
+						// [TODO] Implement me
+						break;
 				}
 				XmlText *pValue = new XmlText(sValue);
 				pElement->LinkEndChild(*pValue);
@@ -1565,6 +1585,13 @@ bool MeshLoaderPLXml::WriteVertexAttribute(const VertexBuffer::Attribute &cVerte
 		case VertexBuffer::Float4:	pVertexAttributeElement->SetAttribute("Type", "Float4");	break;
 		case VertexBuffer::Short2:	pVertexAttributeElement->SetAttribute("Type", "Short2");	break;
 		case VertexBuffer::Short4:	pVertexAttributeElement->SetAttribute("Type", "Short4");	break;
+
+		case VertexBuffer::Half1:
+		case VertexBuffer::Half2:
+		case VertexBuffer::Half3:
+		case VertexBuffer::Half4:
+			// [TODO] Implement me
+			break;
 	}
 
 	// Link vertex attribute element to parent

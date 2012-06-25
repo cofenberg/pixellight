@@ -113,6 +113,23 @@ Vector2i SurfaceTextureBuffer::GetSize() const
 				 const uint32 nSize = static_cast<PLRenderer::TextureBufferCube*>(pTextureBuffer)->GetSize();
 				 return Vector2i(nSize, nSize);
 			}
+
+			case PLRenderer::Resource::TypeIndexBuffer:
+			case PLRenderer::Resource::TypeVertexBuffer:
+			case PLRenderer::Resource::TypeUniformBuffer:
+			case PLRenderer::Resource::TypeTextureBuffer1D:
+			case PLRenderer::Resource::TypeTextureBuffer2DArray:
+			case PLRenderer::Resource::TypeTextureBuffer3D:
+			case PLRenderer::Resource::TypeOcclusionQuery:
+			case PLRenderer::Resource::TypeVertexShader:
+			case PLRenderer::Resource::TypeTessellationControlShader:
+			case PLRenderer::Resource::TypeTessellationEvaluationShader:
+			case PLRenderer::Resource::TypeGeometryShader:
+			case PLRenderer::Resource::TypeFragmentShader:
+			case PLRenderer::Resource::TypeProgram:
+			case PLRenderer::Resource::TypeFont:
+			default:
+				break;	// Error, must be 2D, rectangle or cube!
 		}
 	}
 

@@ -419,6 +419,11 @@ void GuiLinux::PostMessage(const GuiMessage &cMessage)
 		case MessageOnDrop:						/**< Data has been dropped onto the widget */
 			// [TODO]
 			break;
+
+		case MessageOnUnknown:
+		case MessageOnActivate:
+			// [TODO] Check me: Do we need to handle those cases?
+			break;
 	}
 }
 

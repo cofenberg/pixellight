@@ -389,6 +389,16 @@ void Modifier::OnMessage(const GuiMessage &cMessage)
 			// Call virtual function
 			OnUserMessage(cMessage.GetData(), cMessage.GetDataPointer());
 			break;
+
+		case MessageOnUnknown:
+		case MessageOnInternalMessage:
+		case MessageOnWakeup:
+		case MessageOnExit:
+		case MessageOnTimer:
+		case MessageOnThemeChanged:
+		default:
+			// [TODO] Check me: Do we need to handle those cases?
+			break;
 	}
 }
 

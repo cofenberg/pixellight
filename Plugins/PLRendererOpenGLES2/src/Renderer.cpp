@@ -264,6 +264,7 @@ uint32 Renderer::GetOpenGLESPixelFormat(PLRenderer::TextureBuffer::EPixelFormat 
 		case PLRenderer::TextureBuffer::L16:
 		case PLRenderer::TextureBuffer::L16F:
 		case PLRenderer::TextureBuffer::L32F:
+		case PLRenderer::TextureBuffer::LATC1:
 			return GL_LUMINANCE;
 
 		case PLRenderer::TextureBuffer::A8:
@@ -271,6 +272,7 @@ uint32 Renderer::GetOpenGLESPixelFormat(PLRenderer::TextureBuffer::EPixelFormat 
 
 		case PLRenderer::TextureBuffer::L4A4:
 		case PLRenderer::TextureBuffer::L8A8:
+		case PLRenderer::TextureBuffer::LATC2:
 			return GL_LUMINANCE_ALPHA;
 
 		case PLRenderer::TextureBuffer::D16:
@@ -293,6 +295,7 @@ uint32 Renderer::GetOpenGLESPixelFormat(PLRenderer::TextureBuffer::EPixelFormat 
 		case PLRenderer::TextureBuffer::DXT5:
 		case PLRenderer::TextureBuffer::R16G16B16A16F:
 		case PLRenderer::TextureBuffer::R32G32B32A32F:
+		case PLRenderer::TextureBuffer::Unknown:
 		default:
 			return GL_RGBA;
 	}
@@ -346,6 +349,7 @@ uint32 Renderer::GetOpenGLESDataFormat(PLRenderer::TextureBuffer::EPixelFormat n
 		case PLRenderer::TextureBuffer::R32G32B32A32F:
 			return GL_FLOAT;
 
+		case PLRenderer::TextureBuffer::Unknown:
 		default:
 			return GL_UNSIGNED_BYTE;
 	}
@@ -405,6 +409,31 @@ PLRenderer::TextureBuffer::EPixelFormat Renderer::ChooseFormats(PLGraphics::Imag
 				case PLRenderer::TextureBuffer::DXT3:
 				case PLRenderer::TextureBuffer::DXT5:
 					nChosenInternalFormat = PLRenderer::TextureBuffer::R8G8B8A8;
+					break;
+
+				case PLRenderer::TextureBuffer::L8:
+				case PLRenderer::TextureBuffer::L16:
+				case PLRenderer::TextureBuffer::A8:
+				case PLRenderer::TextureBuffer::L4A4:
+				case PLRenderer::TextureBuffer::L8A8:
+				case PLRenderer::TextureBuffer::D16:
+				case PLRenderer::TextureBuffer::D24:
+				case PLRenderer::TextureBuffer::D32:
+				case PLRenderer::TextureBuffer::R3G3B2:
+				case PLRenderer::TextureBuffer::R5G6B5:
+				case PLRenderer::TextureBuffer::R5G5B5A1:
+				case PLRenderer::TextureBuffer::R4G4B4A4:
+				case PLRenderer::TextureBuffer::R8G8B8:
+				case PLRenderer::TextureBuffer::R8G8B8A8:
+				case PLRenderer::TextureBuffer::R10G10B10A2:
+				case PLRenderer::TextureBuffer::R16G16B16A16:
+				case PLRenderer::TextureBuffer::L16F:
+				case PLRenderer::TextureBuffer::L32F:
+				case PLRenderer::TextureBuffer::R16G16B16A16F:
+				case PLRenderer::TextureBuffer::R32G32B32A32F:
+				case PLRenderer::TextureBuffer::Unknown:
+				default:
+					// Only compressed formats need to be handled in this switch
 					break;
 			}
 		}
@@ -1131,6 +1160,44 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							glPolygonOffset(Tools::UInt32ToFloat(GetRenderState(PLRenderer::RenderState::SlopeScaleDepthBias)), Tools::UInt32ToFloat(nValue));
 						}
 						break;
+
+					case PLRenderer::RenderState::BlendEnable:
+					case PLRenderer::RenderState::SrcBlendFunc:
+					case PLRenderer::RenderState::DstBlendFunc:
+					case PLRenderer::RenderState::StencilEnable:
+					case PLRenderer::RenderState::StencilFunc:
+					case PLRenderer::RenderState::StencilRef:
+					case PLRenderer::RenderState::StencilMask:
+					case PLRenderer::RenderState::StencilFail:
+					case PLRenderer::RenderState::StencilZFail:
+					case PLRenderer::RenderState::StencilPass:
+					case PLRenderer::RenderState::TwoSidedStencilMode:
+					case PLRenderer::RenderState::CCWStencilFunc:
+					case PLRenderer::RenderState::CCWStencilFail:
+					case PLRenderer::RenderState::CCWStencilZFail:
+					case PLRenderer::RenderState::CCWStencilPass:
+					case PLRenderer::RenderState::PointSize:
+					case PLRenderer::RenderState::PointScaleEnable:
+					case PLRenderer::RenderState::PointSizeMin:
+					case PLRenderer::RenderState::PointSizeMax:
+					case PLRenderer::RenderState::PointScaleA:
+					case PLRenderer::RenderState::PointScaleB:
+					case PLRenderer::RenderState::PointScaleC:
+					case PLRenderer::RenderState::LineWidth:
+					case PLRenderer::RenderState::TessellationFactor:
+					case PLRenderer::RenderState::TessellationMode:
+					case PLRenderer::RenderState::PointSpriteEnable:
+					case PLRenderer::RenderState::DitherEnable:
+					case PLRenderer::RenderState::ScissorTestEnable:
+					case PLRenderer::RenderState::MultisampleEnable:
+					case PLRenderer::RenderState::DepthClamp:
+					case PLRenderer::RenderState::InvCullMode:
+					case PLRenderer::RenderState::FixedFillMode:
+					case PLRenderer::RenderState::Number:
+					case PLRenderer::RenderState::Unknown:
+					default:
+						// Those are handled below
+						break;
 				}
 			} else {
 				switch (nState) {
@@ -1390,6 +1457,37 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 							}
 						}
 						break;
+
+					case PLRenderer::RenderState::FillMode:
+					case PLRenderer::RenderState::CullMode:
+					case PLRenderer::RenderState::ZEnable:
+					case PLRenderer::RenderState::ZWriteEnable:
+					case PLRenderer::RenderState::ZFunc:
+					case PLRenderer::RenderState::ZBias:
+					case PLRenderer::RenderState::SlopeScaleDepthBias:
+					case PLRenderer::RenderState::DepthBias:
+					case PLRenderer::RenderState::PointSize:
+					case PLRenderer::RenderState::PointScaleEnable:
+					case PLRenderer::RenderState::PointSizeMin:
+					case PLRenderer::RenderState::PointSizeMax:
+					case PLRenderer::RenderState::PointScaleA:
+					case PLRenderer::RenderState::PointScaleB:
+					case PLRenderer::RenderState::PointScaleC:
+					case PLRenderer::RenderState::LineWidth:
+					case PLRenderer::RenderState::TessellationFactor:
+					case PLRenderer::RenderState::TessellationMode:
+					case PLRenderer::RenderState::PointSpriteEnable:
+					case PLRenderer::RenderState::DitherEnable:
+					case PLRenderer::RenderState::ScissorTestEnable:
+					case PLRenderer::RenderState::MultisampleEnable:
+					case PLRenderer::RenderState::DepthClamp:
+					case PLRenderer::RenderState::InvCullMode:
+					case PLRenderer::RenderState::FixedFillMode:
+					case PLRenderer::RenderState::Number:
+					case PLRenderer::RenderState::Unknown:
+					default:
+						// Those are handled above/below
+						break;
 				}
 			}
 		} else {
@@ -1514,8 +1612,34 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 					// Not supported by OpenGL ES 2.0
 					break;
 
+				case PLRenderer::RenderState::FillMode:
+				case PLRenderer::RenderState::CullMode:
+				case PLRenderer::RenderState::ZEnable:
+				case PLRenderer::RenderState::ZWriteEnable:
+				case PLRenderer::RenderState::ZFunc:
+				case PLRenderer::RenderState::ZBias:
+				case PLRenderer::RenderState::SlopeScaleDepthBias:
+				case PLRenderer::RenderState::DepthBias:
+				case PLRenderer::RenderState::BlendEnable:
+				case PLRenderer::RenderState::SrcBlendFunc:
+				case PLRenderer::RenderState::DstBlendFunc:	
+				case PLRenderer::RenderState::StencilEnable:
+				case PLRenderer::RenderState::StencilFunc:
+				case PLRenderer::RenderState::StencilRef:
+				case PLRenderer::RenderState::StencilMask:
+				case PLRenderer::RenderState::StencilFail:
+				case PLRenderer::RenderState::StencilZFail:
+				case PLRenderer::RenderState::StencilPass:
+				case PLRenderer::RenderState::TwoSidedStencilMode:
+				case PLRenderer::RenderState::CCWStencilFunc:
+				case PLRenderer::RenderState::CCWStencilFail:
+				case PLRenderer::RenderState::CCWStencilZFail:
+				case PLRenderer::RenderState::CCWStencilPass:
+				case PLRenderer::RenderState::Number:
+				case PLRenderer::RenderState::Unknown:
 				default:
-					return false; // Error, invalid render state!
+					// Those are handled above
+					break;
 			}
 		}
 	}
@@ -1586,6 +1710,21 @@ bool Renderer::SetSamplerState(uint32 nStage, PLRenderer::Sampler::Enum nState, 
 
 				case PLRenderer::Resource::TypeTextureBufferCube:
 					nOpenGLESTextureTarget = GL_TEXTURE_CUBE_MAP;
+					break;
+
+				case PLRenderer::Resource::TypeTextureBufferRectangle:
+				case PLRenderer::Resource::TypeIndexBuffer:
+				case PLRenderer::Resource::TypeVertexBuffer:
+				case PLRenderer::Resource::TypeUniformBuffer:
+				case PLRenderer::Resource::TypeOcclusionQuery:
+				case PLRenderer::Resource::TypeVertexShader:
+				case PLRenderer::Resource::TypeTessellationControlShader:
+				case PLRenderer::Resource::TypeTessellationEvaluationShader:
+				case PLRenderer::Resource::TypeGeometryShader:
+				case PLRenderer::Resource::TypeFragmentShader:
+				case PLRenderer::Resource::TypeProgram:
+				case PLRenderer::Resource::TypeFont:
+					// Error! Invalid type!
 					break;
 			}
 		}
@@ -1684,6 +1823,8 @@ bool Renderer::SetSamplerState(uint32 nStage, PLRenderer::Sampler::Enum nState, 
 					}
 					break;
 
+				case PLRenderer::Sampler::Number:
+				case PLRenderer::Sampler::Unknown:
 				default:
 					return false; // Invalid sampler state!
 			}
@@ -2043,13 +2184,34 @@ bool Renderer::DrawPrimitives(PLRenderer::Primitive::Enum nType, uint32 nStartIn
 	// Get number of primitives
 	uint32 nPrimitiveCount;
 	switch (nType) {
-		case PLRenderer::Primitive::PointList:	   nPrimitiveCount = nNumVertices;   break;
-		case PLRenderer::Primitive::LineList:	   nPrimitiveCount = nNumVertices-1; break;
-		case PLRenderer::Primitive::LineStrip:	   nPrimitiveCount = nNumVertices-1; break;
-		case PLRenderer::Primitive::TriangleList:  nPrimitiveCount = nNumVertices/3; break;
-		case PLRenderer::Primitive::TriangleStrip: nPrimitiveCount = nNumVertices-2; break;
-		case PLRenderer::Primitive::TriangleFan:   nPrimitiveCount = nNumVertices-2; break;
-		default:								   return false; // Error!
+		case PLRenderer::Primitive::PointList:
+			nPrimitiveCount = nNumVertices;
+			break;
+
+		case PLRenderer::Primitive::LineList:
+			nPrimitiveCount = nNumVertices-1;
+			break;
+
+		case PLRenderer::Primitive::LineStrip:
+			nPrimitiveCount = nNumVertices-1;
+			break;
+
+		case PLRenderer::Primitive::TriangleList:
+			nPrimitiveCount = nNumVertices/3;
+			break;
+
+		case PLRenderer::Primitive::TriangleStrip:
+			nPrimitiveCount = nNumVertices-2;
+			break;
+
+		case PLRenderer::Primitive::TriangleFan:
+			nPrimitiveCount = nNumVertices-2;
+			break;
+
+		case PLRenderer::Primitive::Number:
+		case PLRenderer::Primitive::Unknown:
+		default:
+			return false; // Error!
 	}
 
 	// Update statistics
@@ -2112,13 +2274,34 @@ bool Renderer::DrawIndexedPrimitives(PLRenderer::Primitive::Enum nType, uint32 n
 	// Get number of primitives
 	uint32 nPrimitiveCount;
 	switch (nType) {
-		case PLRenderer::Primitive::PointList:	   nPrimitiveCount = nNumVertices;   break;
-		case PLRenderer::Primitive::LineList:	   nPrimitiveCount = nNumVertices-2; break;
-		case PLRenderer::Primitive::LineStrip:	   nPrimitiveCount = nNumVertices-2; break;
-		case PLRenderer::Primitive::TriangleList:  nPrimitiveCount = nNumVertices/3; break;
-		case PLRenderer::Primitive::TriangleStrip: nPrimitiveCount = nNumVertices-2; break;
-		case PLRenderer::Primitive::TriangleFan:   nPrimitiveCount = nNumVertices-2; break;
-		default:								   return false; // Error!
+		case PLRenderer::Primitive::PointList:
+			nPrimitiveCount = nNumVertices;
+			break;
+
+		case PLRenderer::Primitive::LineList:
+			nPrimitiveCount = nNumVertices-2;
+			break;
+
+		case PLRenderer::Primitive::LineStrip:
+			nPrimitiveCount = nNumVertices-2;
+			break;
+
+		case PLRenderer::Primitive::TriangleList:
+			nPrimitiveCount = nNumVertices/3;
+			break;
+
+		case PLRenderer::Primitive::TriangleStrip:
+			nPrimitiveCount = nNumVertices-2;
+			break;
+
+		case PLRenderer::Primitive::TriangleFan:
+			nPrimitiveCount = nNumVertices-2;
+			break;
+
+		case PLRenderer::Primitive::Number:
+		case PLRenderer::Primitive::Unknown:
+		default:
+			return false; // Error!
 	}
 
 	// Update statistics

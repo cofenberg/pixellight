@@ -248,6 +248,16 @@ const Matrix4x4 &FixedFunctions::GetTransformState(Transform::Enum nState, bool 
 			case Transform::World:
 				return m_mWorld;
 
+			case Transform::Texture0:
+			case Transform::Texture1:
+			case Transform::Texture2:
+			case Transform::Texture3:
+			case Transform::Texture4:
+			case Transform::Texture5:
+			case Transform::Texture6:
+			case Transform::Texture7:
+			case Transform::Number:
+			case Transform::Unknown:
 			default: // Texture transformation matrix
 			{
 				const uint32 nStage = nState - Transform::Texture0;
@@ -280,6 +290,16 @@ bool FixedFunctions::SetTransformState(Transform::Enum nState, const Matrix3x4 &
 				m_mWorld = mTrans;
 				return true; // Done
 
+			case Transform::Texture0:
+			case Transform::Texture1:
+			case Transform::Texture2:
+			case Transform::Texture3:
+			case Transform::Texture4:
+			case Transform::Texture5:
+			case Transform::Texture6:
+			case Transform::Texture7:
+			case Transform::Number:
+			case Transform::Unknown:
 			default: // Texture transformation matrix
 			{
 				const uint32 nStage = nState - Transform::Texture0;
@@ -313,6 +333,16 @@ bool FixedFunctions::SetTransformState(Transform::Enum nState, const Matrix4x4 &
 				m_mWorld = mTrans;
 				return true; // Done
 
+			case Transform::Texture0:
+			case Transform::Texture1:
+			case Transform::Texture2:
+			case Transform::Texture3:
+			case Transform::Texture4:
+			case Transform::Texture5:
+			case Transform::Texture6:
+			case Transform::Texture7:
+			case Transform::Number:
+			case Transform::Unknown:
 			default: // Texture transformation matrix
 			{
 				const uint32 nStage = nState - Transform::Texture0;
