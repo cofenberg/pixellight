@@ -38,6 +38,9 @@
     <Filter Include="Backend\Android">
       <UniqueIdentifier>{fecbd9d9-2512-4511-918d-79158f110f0b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Backend\MacOSX">
+      <UniqueIdentifier>{7c7f8bfb-d689-45d0-96d9-82eb5248301d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\PLInput.cpp">
@@ -192,6 +195,15 @@
     </ClCompile>
     <ClCompile Include="src\Backend\Android\AndroidSplitTouchPadDevice.cpp">
       <Filter>Backend\Android</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Backend\MacOSX\MacOSXMouseDevice.cpp">
+      <Filter>Backend\MacOSX</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Backend\MacOSX\MacOSXProvider.cpp">
+      <Filter>Backend\MacOSX</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Backend\MacOSX\MacOSXKeyboardDevice.cpp">
+      <Filter>Backend\MacOSX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -359,6 +371,15 @@
     </ClInclude>
     <ClInclude Include="include\PLInput\Backend\Android\AndroidSplitTouchPadDevice.h">
       <Filter>Backend\Android</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLInput\Backend\MacOSX\MacOSXKeyboardDevice.h">
+      <Filter>Backend\MacOSX</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLInput\Backend\MacOSX\MacOSXMouseDevice.h">
+      <Filter>Backend\MacOSX</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PLInput\Backend\MacOSX\MacOSXProvider.h">
+      <Filter>Backend\MacOSX</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

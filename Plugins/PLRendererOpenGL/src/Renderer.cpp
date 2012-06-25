@@ -1525,7 +1525,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 					case PLRenderer::RenderState::Unknown:
 					default:
 						// Those are handled below
-						break;			
+						break;
 				}
 			} else {
 				switch (nState) {
@@ -1994,7 +1994,7 @@ bool Renderer::SetRenderState(PLRenderer::RenderState::Enum nState, uint32 nValu
 					case PLRenderer::RenderState::Unknown:
 					default:
 						// Those are handled above/below
-						break;			
+						break;
 				}
 			}
 		} else {
@@ -3017,7 +3017,7 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 				case PLRenderer::Resource::TypeProgram:
 				case PLRenderer::Resource::TypeFont:
 					// Error! Invalid type!
-					break;	
+					break;
 			}
 
 			// Backup internal sampler states
@@ -3112,7 +3112,7 @@ bool Renderer::SetShaderProgramTextureBuffer(int nStage, PLRenderer::TextureBuff
 				case PLRenderer::Resource::TypeProgram:
 				case PLRenderer::Resource::TypeFont:
 					// Error! Invalid type!
-					break;	
+					break;
 			}
 
 			// Synchronize internal sampler states
@@ -3254,7 +3254,7 @@ bool Renderer::DrawPrimitives(PLRenderer::Primitive::Enum nType, uint32 nStartIn
 		case PLRenderer::Primitive::Number:
 		case PLRenderer::Primitive::Unknown:
 		default:
-		   return false; // Error!
+			return false; // Error!
 	}
 
 	// Update statistics

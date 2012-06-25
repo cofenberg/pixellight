@@ -1,3 +1,9 @@
+>> 25.06.2012
+[CO]
+- Added empty backend for Mac OS X to have something to start with
+
+
+
 >> 16.06.2012
 [IJH]
 - Added more additional Keyboard keys to the VirtualStandardController and Keyboard class (from http://msdn.microsoft.com/en-us/library/windows/desktop/dd375731%28v=vs.85%29.aspx)

@@ -88,11 +88,13 @@ elseif(ANDROID)
 		src/Backend/HID/HIDLinux.cpp
 	)
 elseif(APPLE)
-	# [TODO] Apple input implementation
 	##################################################
 	## Apple
 	##################################################
 	add_sources(
+		src/Backend/MacOSX/MacOSXProvider.cpp
+		src/Backend/MacOSX/MacOSXKeyboardDevice.cpp
+		src/Backend/MacOSX/MacOSXMouseDevice.cpp
 		src/Backend/HID/HIDLinux.cpp
 	)
 elseif(LINUX)
