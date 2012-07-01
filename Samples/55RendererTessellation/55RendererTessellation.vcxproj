@@ -10,6 +10,19 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Application55.h" />
+    <ClInclude Include="src\SPTessellation.h" />
+    <ClInclude Include="src\SPTessellationShaders.h" />
+    <ClInclude Include="src\SPTessellationShaders_Cg.h" />
+    <ClInclude Include="src\SPTessellationShaders_GLSL.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Application55.cpp" />
+    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\SPTessellation.cpp" />
+    <ClCompile Include="src\SPTessellationShaders.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{1602AFF3-4608-4F7B-A616-D43020F366D9}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -117,21 +130,6 @@
       <Command>copy build\debug_x86\55RendererTessellationD.exe ..\Bin\x86\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\Application50.cpp" />
-    <ClCompile Include="src\SPTriangle.cpp" />
-    <ClCompile Include="src\SPTriangleFixedFunctions.cpp" />
-    <ClCompile Include="src\SPTriangleShaders.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Application50.h" />
-    <ClInclude Include="src\SPTriangle.h" />
-    <ClInclude Include="src\SPTriangleFixedFunctions.h" />
-    <ClInclude Include="src\SPTriangleShaders.h" />
-    <ClInclude Include="src\SPTriangleShaders_Cg.h" />
-    <ClInclude Include="src\SPTriangleShaders_GLSL.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
