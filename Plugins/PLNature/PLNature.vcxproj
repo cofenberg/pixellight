@@ -115,6 +115,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug_x86\PLNatureD.dll ..\..\Bin\Runtime\x86\
+copy build\debug_x86\PLNatureD.lib ..\..\Bin\Lib\x86\
 ..\..\Bin\Tools\x86\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
@@ -151,6 +152,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\debug_x64\PLNatureD.dll ..\..\Bin\Runtime\x64\
+copy build\debug_x64\PLNatureD.lib ..\..\Bin\Lib\x64\
 ..\..\Bin\Tools\x64\PLProjectD.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
@@ -196,6 +198,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\release_x86\PLNature.dll ..\..\Bin\Runtime\x86\
+copy build\release_x86\PLNature.lib ..\..\Bin\Lib\x86\
 ..\..\Bin\Tools\x86\PLProject.exe . --output-path ..\..\Bin\Runtime\x86 --write-plugin
 </Command>
     </PostBuildEvent>
@@ -244,6 +247,7 @@
     </Link>
     <PostBuildEvent>
       <Command>copy build\release_x64\PLNature.dll ..\..\Bin\Runtime\x64\
+copy build\release_x64\PLNature.lib ..\..\Bin\Lib\x64\
 ..\..\Bin\Tools\x64\PLProject.exe . --output-path ..\..\Bin\Runtime\x64 --write-plugin
 </Command>
     </PostBuildEvent>
