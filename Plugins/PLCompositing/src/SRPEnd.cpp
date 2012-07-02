@@ -100,10 +100,10 @@ void SRPEnd::Draw(Renderer &cRenderer, const SQCull &cCullQuery)
 					DrawHelpers &cDrawHelpers = cRenderer.GetDrawHelpers();
 					cDrawHelpers.Begin2DMode();
 
-						// Draw the result (we have to flip the result upside-down...)
+						// Draw the result without filtering (we have to flip the result upside-down...)
 						SamplerStates cSamplerStates;
-						cSamplerStates.Set(Sampler::MipFilter, TextureFiltering::None);
-						cSamplerStates.Set(Sampler::MipFilter, TextureFiltering::None);
+						cSamplerStates.Set(Sampler::MagFilter, TextureFiltering::None);
+						cSamplerStates.Set(Sampler::MinFilter, TextureFiltering::None);
 						cSamplerStates.Set(Sampler::MipFilter, TextureFiltering::None);
 						cDrawHelpers.DrawImage(*pSurfaceTextureBuffer->GetTextureBuffer(), cSamplerStates, Vector2::Zero, Vector2::One, Color4::White, 1.0f, Vector2(0.0f, 1.0f), Vector2(1.0f, -1.0f));
 
