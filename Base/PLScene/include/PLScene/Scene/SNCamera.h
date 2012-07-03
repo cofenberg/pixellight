@@ -152,6 +152,9 @@ class SNCamera : public SceneNode {
 		*
 		*  @return
 		*    The current set camera, a null pointer if no camera is currently set
+		*
+		*  @note
+		*    - Depreciated, will be removed in the future
 		*/
 		static PLS_API SNCamera *GetCamera();
 
@@ -163,6 +166,9 @@ class SNCamera : public SceneNode {
 		*    The current set camera, a null pointer if no camera is currently set
 		*  @param[in] pRenderer
 		*    Renderer to use, if a null pointer nothing happens
+		*
+		*  @note
+		*    - Depreciated, will be removed in the future
 		*/
 		static PLS_API void SetCamera(SNCamera *pCamera, PLRenderer::Renderer *pRenderer);
 

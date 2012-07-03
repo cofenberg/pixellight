@@ -1,3 +1,10 @@
+>> 03.07.2012
+[CO]
+- PLScene::SNCamera::GetCamera() & PLScene::SNCamera::SetCamera(): Added "deprecated"-comments
+  (see http://dev.pixellight.org/forum/viewtopic.php?f=6&t=512 )
+
+
+
 >> 05.06.2012
 [CO]
 - Bugfix of bugfix ID: 3531730 (I probably shouldn't make bugfixes when I don't have the time to test the change in detail)
