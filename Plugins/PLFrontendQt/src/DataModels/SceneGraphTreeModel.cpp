@@ -69,7 +69,7 @@ class SceneGraphNodeModifierTreeItem : public SceneGraphNodeTreeItemBase {
 				m_nodeObj->SignalDestroyed.Disconnect(EventHandlerOnDestroyed);
 		}
 
-		virtual QVariant data(const int column, const int role) //override
+		virtual QVariant data(const int column, const int role) override
 		{
 			if (column == 0) {
 				if (role == Qt::DisplayRole || role == Qt::ToolTipRole)
@@ -199,7 +199,7 @@ class SceneGraphNodeTreeItem : public SceneGraphNodeTreeItemBase {
 			return img;
 		}
 
-		virtual QVariant data(const int column, const int role) //override
+		virtual QVariant data(const int column, const int role) override
 		{
 			if (role == Qt::DecorationRole)
 				return m_Icon;
