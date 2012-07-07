@@ -1679,7 +1679,7 @@ class FuncGenMemPtr<CLASS, R> : public Func<R> {
 		virtual _R operator ()() override {
 			if (m_pMemFunc && m_pObject) {
 				// Get typed params
-				Params<R> cParams();
+				Params<R> cParams;
 
 				// Make the generic method call
 				((*m_pObject).*m_pMemFunc)(cParams, m_pUserData);
