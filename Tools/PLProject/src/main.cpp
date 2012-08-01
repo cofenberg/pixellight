@@ -493,7 +493,7 @@ bool CreatePluginFile(Project &cProject)
 		return true;
 	} else {
 		// Error!
-		Message(ERR, "Could not write to file! "+cProject.sOutputPlugin);
+		Message(ERR, "Could not write to file! " + cProject.sOutputPlugin);
 		return false;
 	}
 }
