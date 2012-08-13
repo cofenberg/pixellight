@@ -216,7 +216,7 @@ class ClassInfoAttributeTreeItem : public ClassInfoTreeItemBase<VarDesc> {
 
 
 	public:
-		ClassInfoAttributeTreeItem(const VarDesc &cVarDesc, TreeItemBase *parent = nullptr) : ClassInfoTreeItemBase(cVarDesc, parent),
+		ClassInfoAttributeTreeItem(const VarDesc &cVarDesc, TreeItemBase *parent = nullptr) : ClassInfoTreeItemBase<VarDesc>(cVarDesc, parent),
 			m_sType(QtStringAdapter::PLToQt(cVarDesc.GetTypeName())),
 			m_sDefault(QtStringAdapter::PLToQt(cVarDesc.GetDefault()))
 		{
@@ -240,7 +240,7 @@ class ClassInfoMemberWithSignatureDescTreeItem : public ClassInfoTreeItemBase<Me
 
 	public:
 		ClassInfoMemberWithSignatureDescTreeItem(const QString tooltipTitle, const T &cMemberDesc, TreeItemBase *parent = nullptr) :
-			ClassInfoTreeItemBase(cMemberDesc, parent),
+			ClassInfoTreeItemBase<MemberDesc>(cMemberDesc, parent),
 			m_sSignature(QtStringAdapter::PLToQt(cMemberDesc.GetSignature()))
 		{
 			SetToolTipText(QObject::tr("<table>"

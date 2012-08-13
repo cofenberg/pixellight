@@ -299,12 +299,12 @@ if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 		# Set COPY_SOURCE to files which should be copied (this variable is used by the "copy.cmake"-script)
 		set(COPY_SOURCE ${QT_EXTERNAL_DIR}/lib/libQtCore.so
 						${QT_EXTERNAL_DIR}/lib/libQtCore.so.4
-						${QT_EXTERNAL_DIR}/lib/libQtCore.so.4.7
-						${QT_EXTERNAL_DIR}/lib/libQtCore.so.4.7.3
+						${QT_EXTERNAL_DIR}/lib/libQtCore.so.4.8
+						${QT_EXTERNAL_DIR}/lib/libQtCore.so.4.8.2
 						${QT_EXTERNAL_DIR}/lib/libQtGui.so
 						${QT_EXTERNAL_DIR}/lib/libQtGui.so.4
-						${QT_EXTERNAL_DIR}/lib/libQtGui.so.4.7
-						${QT_EXTERNAL_DIR}/lib/libQtGui.so.4.7.3)
+						${QT_EXTERNAL_DIR}/lib/libQtGui.so.4.8
+						${QT_EXTERNAL_DIR}/lib/libQtGui.so.4.8.2)
 
 		# Set COPY_DEST to a directory to which the files in COPY_SOURCE should be copied into (this variable is used by the "copy.cmake"-script)
 		set(COPY_DEST ${PL_RUNTIME_BIN_DIR})
@@ -398,8 +398,8 @@ if(LINUX AND NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	# Copy shared libraries
 	install(FILES	${QT_EXTERNAL_DIR}/lib/libQtCore.so.4
 					${QT_EXTERNAL_DIR}/lib/libQtGui.so.4
-					${QT_EXTERNAL_DIR}/lib/libQtCore.so.4.7.3
-					${QT_EXTERNAL_DIR}/lib/libQtGui.so.4.7.3
+					${QT_EXTERNAL_DIR}/lib/libQtCore.so.4.8.2
+					${QT_EXTERNAL_DIR}/lib/libQtGui.so.4.8.2
 		DESTINATION ${PL_INSTALL_RUNTIME_BIN}		COMPONENT SDK
 	)
 
