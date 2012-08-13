@@ -75,8 +75,21 @@ if(WIN32)
 		${WIN32_COMPILE_DEFS}
 		_WINDOWS
 		XP_WIN
-		_X86_
 	)
+	if(X86_64)
+		add_compile_defs(
+			${WIN32_COMPILE_DEFS}
+			_WIN64
+			_AMD64_
+			_X86_64_
+		)
+	else()
+		add_compile_defs(
+			${WIN32_COMPILE_DEFS}
+			_WIN32
+			_X86_
+		)
+	endif()
 elseif(LINUX)
 	##################################################
 	## Linux
