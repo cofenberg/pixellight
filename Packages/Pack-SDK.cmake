@@ -225,11 +225,20 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		set(CPACK_GENERATOR		"NSIS")
 		set(CPACK_OUTPUT_FILE	"${CPACK_PACKAGE_FILE_NAME}.exe")
 	elseif(LINUX)
-#		set(CPACK_GENERATOR		"TGZ")
-#		set(CPACK_OUTPUT_FILE	"${CPACK_PACKAGE_FILE_NAME}.tar.gz")
+		#set(CPACK_GENERATOR		"DEB;TGZ")
 		set(CPACK_GENERATOR		"DEB")
+		#set(CPACK_OUTPUT_FILE	"${CPACK_PACKAGE_FILE_NAME}.deb;${CPACK_PACKAGE_FILE_NAME}.tar.gz")
 		set(CPACK_OUTPUT_FILE	"${CPACK_PACKAGE_FILE_NAME}.deb")
 	endif()
+
+	##################################################
+	## Setup copy commands for custom target
+	##################################################
+	set(CPACK_COPY_PACKAGE_FILE_TARGET_DIR "${PL_BIN_DIR}/Packages")
+	set(CPACK_COPY_PACKAGE_FILE_COMMANDS "")
+	foreach ( _File ${CPACK_OUTPUT_FILE} )
+		set(CPACK_COPY_PACKAGE_FILE_COMMANDS ${CPACK_COPY_PACKAGE_FILE_COMMANDS} COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${_File} "${CPACK_COPY_PACKAGE_FILE_TARGET_DIR}")
+	endforeach()
 
 	##################################################
 	## CPack
@@ -264,7 +273,7 @@ add_dependencies(Pack			Pack-SDK)
 ## Post-Build
 ##################################################
 add_custom_command(TARGET Pack-SDK
-	COMMAND ${CMAKE_COMMAND} -E make_directory "${PL_BIN_DIR}/Packages"
-	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/${CPACK_OUTPUT_FILE} "${PL_BIN_DIR}/Packages"
+	COMMAND ${CMAKE_COMMAND} -E make_directory "${CPACK_COPY_PACKAGE_FILE_TARGET_DIR}"
+	${CPACK_COPY_PACKAGE_FILE_COMMANDS}
 )
 
