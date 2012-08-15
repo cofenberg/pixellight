@@ -377,6 +377,15 @@ if(X86_64)
 	endif()
 endif()
 
+if(GCC44)
+	# With gcc 4.4.x pl_volumen doesn't compile
+	unset (PL_PLUGIN_VOLUME							CACHE)
+	unset (PL_PLUGIN_VOLUME_RENDERER				CACHE)
+	unset (PL_PLUGIN_VOLUME_GUI						CACHE)
+	unset (PL_PLUGIN_VOLUME_LOADER_PVM				CACHE)
+	unset (PL_PLUGIN_VOLUME_LOADER_DICOM_GDCM		CACHE)
+endif()
+
 # Not Windows
 if(NOT WIN32)
 	# Windows only features, for other targets, don't show this options
