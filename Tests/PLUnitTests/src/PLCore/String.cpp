@@ -4193,7 +4193,11 @@ SUITE(String) {
 		PL_WARNING_POP
 
 		// Get the current set locale, we REALLY need to backup the locale because it "may" be changed by "setlocale"
-		setlocale(LC_ALL, "German"); // Set another local, now normally a ',' instead of '.'
+		#ifdef LINUX
+			setlocale(LC_ALL, "de_DE"); // Set another local, now normally a ',' instead of '.'
+		#else
+			setlocale(LC_ALL, "German"); // Set another local, now normally a ',' instead of '.'
+		#endif
 									 // is used by printf and so on... (but our string class ignores that :)
 		CHECK_EQUAL("5.12", String::Format("%g", 5.12f).GetASCII());
 
@@ -4204,5 +4208,42 @@ SUITE(String) {
 	TEST_FIXTURE(ConstructTest, Special_Test_String_5_12_GetFloat) {
 		float fValue = String("5.12").GetFloat();
 		CHECK_CLOSE(5.12, fValue, 0.00001);
+		
+		PL_WARNING_PUSH
+			PL_WARNING_DISABLE(4996)    // "warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details."
+			// Now, change the locale...
+			char *pLocalSave = strdup(setlocale(LC_ALL, nullptr));
+		PL_WARNING_POP
+
+		// Get the current set locale, we REALLY need to backup the locale because it "may" be changed by "setlocale"
+		#ifdef LINUX
+			setlocale(LC_ALL, "de_DE"); // Set another local, now normally a ',' instead of '.'
+		#else
+			setlocale(LC_ALL, "German"); // Set another local, now normally a ',' instead of '.'
+		#endif
+									 // is used by printf and so on... (but our string class ignores that :)
+		fValue = String("5,12").GetFloat();
+		CHECK_CLOSE(5.0f, fValue, 0.00001);
+	}
+	
+	TEST_FIXTURE(ConstructTest, Special_Test_String_5_12_GetDouble) {
+		double dValue = String("5.12").GetDouble();
+		CHECK_CLOSE(5.12, dValue, 0.00001);
+		
+		PL_WARNING_PUSH
+			PL_WARNING_DISABLE(4996)    // "warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details."
+			// Now, change the locale...
+			char *pLocalSave = strdup(setlocale(LC_ALL, nullptr));
+		PL_WARNING_POP
+
+		// Get the current set locale, we REALLY need to backup the locale because it "may" be changed by "setlocale"
+		#ifdef LINUX
+			setlocale(LC_ALL, "de_DE"); // Set another local, now normally a ',' instead of '.'
+		#else
+			setlocale(LC_ALL, "German"); // Set another local, now normally a ',' instead of '.'
+		#endif
+									 // is used by printf and so on... (but our string class ignores that :)
+		dValue = String("5,12").GetDouble();
+		CHECK_CLOSE(5.0, dValue, 0.00001);
 	}
 }
