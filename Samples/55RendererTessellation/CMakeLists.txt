@@ -149,6 +149,10 @@ else()
 	)
 endif()
 
+if(LINUX AND NOT ANDROID)
+	add_runner_shell_script()
+endif()
+
 ##################################################
 ## Install
 ##################################################
@@ -163,6 +167,13 @@ else()
 	# Executable
 	install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
 		RUNTIME DESTINATION ${PL_INSTALL_SAMPLES_BIN}	COMPONENT SDK
+	)
+endif()
+
+if(LINUX AND NOT ANDROID)
+	# Install runner script
+	install(PROGRAMS "${CMAKE_TOOLS_CURRENT_RUNNERSCRIPT}"
+		DESTINATION ${PL_INSTALL_SAMPLES_BIN}	COMPONENT SDK
 	)
 endif()
 

@@ -155,6 +155,10 @@ add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 	COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_EXECUTABLE} ${PL_TOOLS_BIN_DIR}
 )
 
+if(LINUX AND NOT ANDROID)
+	add_runner_shell_script()
+endif()
+
 ##################################################
 ## Install
 ##################################################
@@ -163,3 +167,10 @@ add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
 install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
 	DESTINATION ${PL_INSTALL_TOOLS_BIN}	COMPONENT SDK
 )
+
+if(LINUX AND NOT ANDROID)
+	# Install runner script
+	install(PROGRAMS "${CMAKE_TOOLS_CURRENT_RUNNERSCRIPT}"
+		DESTINATION ${PL_INSTALL_TOOLS_BIN}	COMPONENT SDK
+	)
+endif()

@@ -39,6 +39,12 @@ file(MAKE_DIRECTORY ${PL_BIN_DIR}/Samples/Data)
 file(MAKE_DIRECTORY "${PL_BIN_DIR}/Samples/Data")
 copy_files("${CMAKE_SOURCE_DIR}/Bin/Samples/Data/*.*" "${PL_BIN_DIR}/Samples/Data")
 
+if(LINUX AND NOT ANDROID)
+	# Setup executable suffix under linux
+	# This is needed so that the helper runner script works
+	SET(CMAKE_EXECUTABLE_SUFFIX "-bin")
+endif()
+
 ##################################################
 ## Target
 ##################################################

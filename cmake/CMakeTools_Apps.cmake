@@ -391,3 +391,22 @@ macro(add_activex_interface target src)
 		${src} 
 	)
 endmacro(add_activex_interface target src)
+
+##################################################
+## MACRO: add_runner_shell_script
+##
+## Creates an runner shell script (only workable under LINUX)
+## The script setups PL_RUNTIME and LD_LIBRARY_PATH so that the PL app can run properly
+## Part of the path in both env vars is generated from the var CMAKE_INSTALL_PREFIX
+## So the generated script is only useful after an make install
+##
+## The script assumes that the real binary has following name
+## {CMAKETOOLS_CURRENT_TARGET}-bin
+## For this to work you should set CMAKE_EXECUTABLE_SUFFIX to -bin when compiling for LINUX (NOT ANDROID)
+##################################################
+macro(add_runner_shell_script)
+	# Create runner script
+	configure_file("${CMAKE_SOURCE_DIR}/PixelLight/runplapp.sh" "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_TARGET}" @ONLY NEWLINE_STYLE UNIX)
+
+	set(CMAKE_TOOLS_CURRENT_RUNNERSCRIPT "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_TARGET}")
+endmacro(add_runner_shell_script target scriptsource install_target)
