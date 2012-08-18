@@ -39,7 +39,7 @@ if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
 			set(md5sum "4336a6f858bee7f78b0a11b2951efbda")
 		else()
 			# md5sum of the 32bit Windows package
-			set(md5sum "888c172ed3942bf56cc50607eaf36724")
+			set(md5sum "b8af5c67b5c3485f7a1257c58e9781a4")
 		endif()
 	elseif(ANDROID)
 		if(ARMEABI_V7A)
