@@ -56,7 +56,7 @@ namespace PLVolumeLoaderPVM {
 *    - Lookout! Due to the lack of an image file format specification, this loader is using GPL code from the V^3 volume rendering package -> Don't use this loader when you're e.g. using LGPL...
 *    - The file format is part of the V^3 volume rendering package available at http://www.stereofx.org/volume.html and it appears that there's no format specification, just source code
 *    - Sample data sets are available at http://www9.informatik.uni-erlangen.de/External/vollib/
-*    - The image loader is only able to deal with the volumetric image data, not with volumetic specific additional information like voxel size
+*    - The image loader is only able to deal with the volumetric image data, not with volumetric specific additional information like voxel size
 */
 class ImageLoaderPVM : public PLGraphics::ImageLoader {
 

@@ -22,7 +22,7 @@
 
 
 // Shader template: We want to be able to apply multiple clip position functions at one and the same time
-// -> From the outside, only one "ClipPosition()"-function should be called to keep the overal structure manageable
+// -> From the outside, only one "ClipPosition()"-function should be called to keep the overall structure manageable
 // -> C++ configures this shader and adds multiple "ClipPosition()"-function calls in here
 
 

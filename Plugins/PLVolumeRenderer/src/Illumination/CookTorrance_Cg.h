@@ -208,7 +208,7 @@ float3 Illumination(float3 SurfaceColor, float3 SurfaceNormal, float3 ViewingDir
 );	// STRINGIFY
 
 
-// Buggy: Produces at certain angles ugly lighting artefacts and also NAN values
+// Buggy: Produces at certain angles ugly lighting artifacts and also NAN values
 // -> "Cook-Torrance local illumination" as described within the book "Real-Time Volume Graphics", section "5.4.2 Other Shading Models" (page 121).
 // -> Set "DebugCheckAndFixNANValues"-flag within "PLCompositing::SRPEndHDR" in order to check for NAN values (in case something is found, you will be informed)
 /*

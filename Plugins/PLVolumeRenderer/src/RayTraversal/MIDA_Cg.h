@@ -87,7 +87,7 @@ float4 RayTraversal(float3 StartPosition, int NumberOfSteps, float3 StepPosition
 				// Apply the given opacity
 				sourceColor.a *= Opacity;
 
-				// Pre-multipy color by their corresponding opacity value
+				// Pre-multiply color by their corresponding opacity value
 				sourceColor.rgb *= sourceColor.a;
 
 				// Front-to-back compositing

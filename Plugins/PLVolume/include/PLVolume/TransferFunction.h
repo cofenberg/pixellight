@@ -64,7 +64,7 @@ class TransferFunction : public PLCore::Loadable {
 	public:
 		enum ETextureBufferType {
 			StandardTextureBuffer,		/**< Texture buffer without any special applied features */
-			PreMultipliedTextureBuffer,	/**< Texture buffer with pre-multipied color by their corresponding opacity value in order to avoid color bleeding due to interpolation */
+			PreMultipliedTextureBuffer,	/**< Texture buffer with pre-multiplied color by their corresponding opacity value in order to avoid color bleeding due to interpolation */
 			PreIntegratedTextureBuffer,	/**< Texture buffer with pre-integration */
 			// Number of texture buffer types
 			NumOfTextureBufferTypes

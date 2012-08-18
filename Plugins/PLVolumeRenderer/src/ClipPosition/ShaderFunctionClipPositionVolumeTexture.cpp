@@ -93,7 +93,7 @@ void ShaderFunctionClipPositionVolumeTexture::SetVolumeTexture(Program &cProgram
 	// Get the renderer texture buffer holding the 3D voxel data
 	PLRenderer::TextureBuffer *pVolumeTextureBuffer = pVolume->GetVolumeTextureBuffer(cRenderer);
 	if (!pVolumeTextureBuffer || pVolumeTextureBuffer->GetType() != PLRenderer::Resource::TypeTextureBuffer3D)
-		return;	// Early escape, there's no sense in continuingm we only support 3D textures
+		return;	// Early escape, there's no sense in continuing we only support 3D textures
 
 	// Calculate the volume space to clip volume texture space matrix
 	// Volume space to view space

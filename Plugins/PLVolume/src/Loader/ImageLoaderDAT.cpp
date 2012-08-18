@@ -55,7 +55,7 @@ bool ImageLoaderDAT::Load(Image &cImage, File &cFile)
 	Vector3i vResolution;
 	EDataFormat nFormat = DataByte;
 
-	{ // Use the tokenizer in order to gather all required informaton, ignore the rest
+	{ // Use the tokenizer in order to gather all required information, ignore the rest
 		// A "dat"-file (simple ASCII) looks like this
 		/*
 			ObjectFileName: Teddybear.raw

@@ -79,7 +79,7 @@ SNCamera *SceneCreatorLoadableTypeVolume::Create(SceneContainer &cSceneContainer
 	SNCamera *pCamera = SceneCreator::ConfigureGenericScene(cSceneContainer, pPrimarySceneNode);
 
 	// When using volume rendering, a common use case is to move the camera really close to or even into the volume
-	// -> The default value of the camera z-near plane is 0.1 because this value has proofen
+	// -> The default value of the camera z-near plane is 0.1 because this value has proven
 	//    to be useful when trying to cover many use cases with a single default value
 	// -> When using a small scaled volume, a z-near plane value of 0.1 may cause the premature clipping of the
 	//    volume, so use a smaller value instead

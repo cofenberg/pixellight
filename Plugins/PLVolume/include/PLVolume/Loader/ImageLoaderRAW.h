@@ -56,7 +56,7 @@ namespace PLVolume {
 *  @note
 *    - Primitive chunk of a certain data type
 *    - Lookout! This loader requires the user to provide correct loader parameters! (data type, width, height and depth)
-*    - The image loader is only able to deal with the volumetric image data, not with volumetic specific additional information like voxel size
+*    - The image loader is only able to deal with the volumetric image data, not with volumetric specific additional information like voxel size
 */
 class ImageLoaderRAW : public PLGraphics::ImageLoader {
 

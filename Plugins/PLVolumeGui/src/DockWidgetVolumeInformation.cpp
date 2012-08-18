@@ -159,7 +159,7 @@ void DockWidgetVolumeInformation::FillStandardItemModel(QStandardItemModel &cQSt
 	if (pVolume) {
 		int nCurrentRow = 0;
 
-		// Get the image holding the volumtric data
+		// Get the image holding the volumetric data
 		Image cVolumeImage;
 		{
 			// In here, we're interested in all data we can get, so, try to use the data used by the GPU for rendering
@@ -172,7 +172,7 @@ void DockWidgetVolumeInformation::FillStandardItemModel(QStandardItemModel &cQSt
 				pTextureBuffer->CopyDataToImage(cVolumeImage);
 			}
 			if (!cVolumeImage.GetNumOfParts()) {
-				// Get the image holding the volumtric data (internal image data is not copied, just shared, so this is pretty lightweight)
+				// Get the image holding the volumetric data (internal image data is not copied, just shared, so this is pretty lightweight)
 				cVolumeImage = pVolume->GetVolumeImage();
 			}
 		}

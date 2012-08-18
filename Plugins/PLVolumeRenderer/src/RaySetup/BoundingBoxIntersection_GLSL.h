@@ -146,7 +146,7 @@ void main()
 
 	// Call the ray traversal function
 	//     vec4 RayTraversal(vec3 StartPosition, int NumberOfSteps, vec3 StepPositionDelta, float MaximumTravelLength)
-	// -> Clamp the result to [0, 1] interval, else the image might flicker uggly on NVIDIA GPU's while working fine on AMD GPU'S (HDR only issue)
+	// -> Clamp the result to [0, 1] interval, else the image might flicker ugly on NVIDIA GPU's while working fine on AMD GPU'S (HDR only issue)
 	OutFragmentColor = (maximumTravelLength > 0.0) ? clamp(RayTraversal(rayStartPosition, int(maximumTravelLength/StepSize), stepPositionDelta, maximumTravelLength), vec4(0.0, 0.0, 0.0, 0.0), vec4(1.0, 1.0, 1.0, 1.0)) : vec4(0.0, 0.0, 0.0, 0.0);
 }
 );	// STRINGIFY

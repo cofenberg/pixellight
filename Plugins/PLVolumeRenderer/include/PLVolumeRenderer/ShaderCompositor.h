@@ -118,7 +118,7 @@ class ShaderCompositor : public PLCore::Object {
 	//[-------------------------------------------------------]
 	public:
 		// [TODO] Just a test
-		// Do not destroy the returnd instance, can be a null pointer
+		// Do not destroy the returned instance, can be a null pointer
 		virtual ShaderComposition *Generate(PLRenderer::Renderer &cRenderer, const PLScene::SQCull &cCullQuery, const PLScene::VisNode &cVisNode, SRPVolume &cSRPVolume) = 0;
 
 

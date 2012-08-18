@@ -17,6 +17,41 @@
 	 to know what's going on. :D
   -> Removed the "CMakeList.txt" check to keep the change as local as possible without having the risk of forgetting to remove
      this later on when the project is compiling, should still be deactivated for this GCC version
+- The next planned release is PixelLight 1.0.0-R1 which will be released on August 19, 2012 if no problems occur. This time it's
+  not the 23'th and the last release is now older then two months. It's hard to keep a fixed release cycle within a spare-time
+  project when the "real"-life undergoes some heavy changes.
+  We started the development of PixelLight back on 16 September, 2002 and made the first public PixelLight 0.9.2-R1 release on
+  August 23, 2010. Two years below version number 1.0.0 has to be enough and over the past few months only a few major changes
+  were made, but a lot of bug fixes. It's also time for some more major changes in the PixelLight project which will e.g. break
+  interfaces. So, there are a lot of reasons for the 1.0.0 version cut and now starting the development of PixelLight 2.0.0 while
+  maintaining the current state as 1.x.x. It would be cool if we would find some additional maintainers for PixelLight 1.x.x.
+  It will probably take some time until PixelLight 2.0.0 will be as stable as PixelLight 1.0.0, but now we have the opportunity to
+  make some bigger changes:
+  - Since two and a half months I work on a new renderer system. The currently used PLRenderer project was started back in 2002
+    and was since then incrementally updated. Since then, the graphics APIs like OpenGL or DirectX have undergone dramatic changes
+	from fixed function to 100% shader based without fixed function support. APIs like DirectX are now heavily buffer oriented
+	and individually set render states are no longer appropriate - and OpenGL also changes into this direction. This just the
+	tip of the iceberg. Parallel with the renderer system, implementations for OpenGL (1.x-4.3), OpenGL ES 2 (probably soon also for 3)
+	and DirectX 9 & 10 & 11 as well as a lot of renderer examples from most primitive, showing several basic features up to fully lit
+	3-D models are written. That's why it takes so long. Replacing the current PLRenderer project with the new one will probably also
+	be a lot of work and I assume several legacy features will be dropped in this process.
+  - PixelLight was designed in a way where every module/plugin is a shared library. While this approach is still good, it does not
+    work well with some new platforms/systems introduced in the past few years. For instance NaCL requires that everything is statically
+	linked, and as far as I can see iOS has the same requirement. The Android port is currently using shared libraries. While this
+	works with some tricks, I assume for this port it would also be more efficient to use only statically linked libraries inside the shipped
+	APK file. Statically building and using PixelLight in this way is working in general, I already made experiments. But several RTTI
+	classes will be thrown away by the linker because for the linker it looks like those are unreferenced symbols. I already figured
+	out some hacks to some kind of solve this, but nothing I would dare to commit in the repository. So, there's probably a refactoring
+	required to be able to use PixelLight without any issues as shared library or static library.
+  - There's another RTTI related issue: The header size
+    Currently, all RTTI declarations are made inside headers. While the design is fantastic and it makes fun to use the system, the header
+	size and number of symbols defined inside headers quickly reach a point were the compile and link times are really getting painful. One and
+	a half year ago, when adding scripting support, I already had to use a light-hack inside the headers to only process RTTI method
+	declarations inside the project they are owned by. Back then I had to add a lot of RTTI methods and in the end the compile and link times
+	reached a level were it was no longer really possible to continue the development in a reasonable way. This means that there's need
+	for some refactoring by moving everything possible from the header into the source file of a RTTI class - without sacrificing fancy RTTI
+	features making PixelLight in my opinion unique in the open-source world.
+   ... those are just a few reason for PixelLight 1.0.0 and PixelLight 2.0.0 ...
 
 
 

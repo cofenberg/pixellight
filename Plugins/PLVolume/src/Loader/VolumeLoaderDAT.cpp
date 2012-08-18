@@ -57,10 +57,10 @@ bool VolumeLoaderDAT::Load(Volume &cVolume, File &cFile)
 	Vector3i vResolution;
 	EDataFormat nFormat = DataByte;
 
-	// Get the image holding the volumtric data
+	// Get the image holding the volumetric data
 	Image &cImage = cVolume.GetVolumeImage();
 
-	{ // Use the tokenizer in order to gather all required informaton, ignore the rest
+	{ // Use the tokenizer in order to gather all required information, ignore the rest
 		// A "dat"-file (simple ASCII) looks like this
 		/*
 			ObjectFileName: Teddybear.raw
@@ -172,7 +172,7 @@ bool VolumeLoaderDAT::Load(Volume &cVolume, File &cFile)
 
 bool VolumeLoaderDAT::Save(const Volume &cVolume, File &cFile)
 {
-	// Get the image holding the volumtric data
+	// Get the image holding the volumetric data
 	const Image &cImage = cVolume.GetVolumeImage();
 
 	// Get image buffer, we only support the data type "byte" and "word"
