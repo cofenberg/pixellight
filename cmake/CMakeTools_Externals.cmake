@@ -235,4 +235,11 @@ macro(external_clean)
 		Clean.cmake
 		NO_DEPENDS
 	)
+
+	# The used 'external_command'-macro above added the target '${CMAKETOOLS_CURRENT_TARGET}-Clean'
+	# -> Exclude this target from the default build
+	# -> If we don't do this, extracted external packages might get removed while
+	#    building everything resulting in compiler errors like 'file <x> not found'
+	#    (without exclusion there might be no issues on one system, but another system might constantly fail)
+	set_target_properties(${CMAKETOOLS_CURRENT_TARGET}-Clean PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)
 endmacro(external_clean)

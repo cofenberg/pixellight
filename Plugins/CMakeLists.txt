@@ -169,7 +169,7 @@ if(PL_PLUGIN_SOUND_FMODEX)
 	add_subdirectory(PLSoundFMODEx)
 endif()
 # PLVolume
-if(PL_PLUGIN_VOLUME AND NOT GCC44)
+if(PL_PLUGIN_VOLUME)
 	add_subdirectory(PLVolume)
 	if(PL_PLUGIN_VOLUME_RENDERER)
 		add_subdirectory(PLVolumeRenderer)

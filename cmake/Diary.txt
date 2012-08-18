@@ -1,3 +1,22 @@
+>> 18.08.2012
+- On 14.08.2012 I had a PixelLight-day with Prof. Dr. Frank Deinzer. First step was to compile PixelLight using CMake
+  and the generated Visual Studio 2012 project solution. I'am now using this combination since several years, but
+  when compiling everything on Franks system there were frequently build errors like "file <x>" not found. When having
+  a look into it, it became obvious that the missing files came from exctracted external packages. When looking for
+  the missing files, they were not there but the downloaded packed external packages were there. While analysing the build
+  process we saw that the external packages were extracted correctly, but in some cases the extracted files were suddently
+  disappearing while building the projects using those files. It turned out that the problem was introduced by the
+  "External-<x>-Clean"-projects which were "build" in the Visual Studio solution just like all the other projects.
+  The multithreaded build explains why this worked on my systems, but now failed on another system. It's more or less
+  "random" whether or not this works. A first quick test was to comment out the content of the "external_clean"-macro resulting
+  in no longer created "External-<x>-Clean"-projects and the issue was completly gone. Zero errors, always.
+  The "External-Clean"-target already used "set_target_properties(External-Clean PROPERTIES EXCLUDE_FROM_DEFAULT_BUILD 1)"
+  to disable the build of this clean-project when using the default build. Added such an exclusion within the
+  "external_clean"-macro for all generated clean-projects. As far as I can see this is not introducing new issues, and
+  should solve the issue for generated Visual Studio projects without using a hack as solution. :D
+
+
+
 >> 30.04.2012
 [CO]
 - "LinuxClang.cmake": Added "APPLE" preprocessor definition
