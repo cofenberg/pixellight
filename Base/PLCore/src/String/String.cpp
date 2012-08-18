@@ -62,57 +62,96 @@ namespace PLCore {
 
 
 //[-------------------------------------------------------]
-//[ Global functions                                      ]
+//[ Local classes                                         ]
 //[-------------------------------------------------------]
-// This global locale stuff is really nasty and shouldn't be visible within the string header, so, global functions are used.
-// We REALLY need to set the locale to a known setting... else we may get floats like "1,123" instead of "1.123"! (meaning hell breaks loose!)
 /**
 *  @brief
-*    Backup the current locale and set it back to the "C"-default
-*
-*  @return
-*    Previously set locale, can be a null pointer, if not null, don't forget to free the memory when you're done
+*    Changes the current locale to 'C' locale temporaly. (RAII, Resource Acquisition Is Initialization)
+*    When this instance gets destroyed the old locale setting is restored
+*    => Not possible to forget the restore anymore ;)
 */
-inline char *ResetLocaleToC()
+class CLocaleChanger
 {
-	// Get the currently set locale, if it's a null pointer or already "C" just do nothing
-	const char *pszCurrentLocale = setlocale(LC_ALL, nullptr);
-	if (pszCurrentLocale && pszCurrentLocale[0] != 'C') {
-		// Do never ever pass a null pointer into "strdup" because the behavior isn't specified in POSIX (http://pubs.opengroup.org/onlinepubs/9699919799/functions/strdup.html)
-		// -> On MS Windows and Linux a null pointer will be returned, on Android it just crashes...
 
-		// Duplicate the string
-		char *pszLocaleBackup = strdup(pszCurrentLocale);
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Constructor
+		* */
+		CLocaleChanger() : m_pstrSavedLocale(nullptr)
+		{
+			// Get the currently set locale, if it's a null pointer or already "C" just do nothing
+			const char *pszCurrentLocale = setlocale(LC_ALL, nullptr);
+			if (pszCurrentLocale && pszCurrentLocale[0] != 'C') {
+				// Do never ever pass a null pointer into "strdup" because the behavior isn't specified in POSIX (http://pubs.opengroup.org/onlinepubs/9699919799/functions/strdup.html)
+				// -> On MS Windows and Linux a null pointer will be returned, on Android it just crashes...
 
-		// Set the locale back to the default
-		setlocale(LC_ALL, "C");
+				// Duplicate the string
+				m_pstrSavedLocale = strdup(pszCurrentLocale);
 
-		// Return the saved locale, the user is responsible to free it
-		return pszLocaleBackup;
-	} else {
-		// Nothing to do
-		return nullptr;
-	}
-}
+				// Set the locale back to the default
+				setlocale(LC_ALL, "C");
+			}
+		}
 
-/**
-*  @brief
-*    Restores the previously set locale
-*
-*  @param[in] pszPreviousLocale
-*    Previously set locale, can be a null pointer, if it's no null pointer the memory will be freed within this function
-*/
-inline void RestorePreviousLocale(char *pszPreviousLocale)
-{
-	if (pszPreviousLocale) {
-		// Be polite and restore the previously set locale
-		setlocale(LC_ALL, pszPreviousLocale);
+		/**
+		*  @brief
+		*    Destructor
+		*/
+		~CLocaleChanger()
+		{
+			if (m_pstrSavedLocale) {
+				// Be polite and restore the previously set locale
+				setlocale(LC_ALL, m_pstrSavedLocale);
 
-		// ... and don't forget to free the memory of our locale backup...
-		free(pszPreviousLocale);
-	}
-}
+				// ... and don't forget to free the memory of our locale backup...
+				free(m_pstrSavedLocale);
+			}
+		}
 
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Copy constructor
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*/
+		CLocaleChanger(const CLocaleChanger &cSource) : m_pstrSavedLocale(nullptr)
+		{
+			// No implementation because the copy constructor is never used
+		}
+		
+
+		/**
+		*  @brief
+		*    Copy operator
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
+		*/
+		CLocaleChanger &operator =(const CLocaleChanger &cSource)
+		{
+			// No implementation because the copy operator is never used
+			return *this;
+		}
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		char * m_pstrSavedLocale;
+};
 
 //[-------------------------------------------------------]
 //[ Static functions                                      ]
@@ -128,7 +167,9 @@ String String::Format(const char *pszFormat, ...)
 	// Check format string
 	if (pszFormat && pszFormat[0] != '\0') {
 		// Ensure that the locale is set to the C default
-		char *pszPreviousLocale = ResetLocaleToC();
+		// When this instance gets destroyed the locale is restored automatically
+		// Not possible to forget the restore anymore ;)
+		CLocaleChanger cLocale;
 
 		// Get the required buffer length, does not include the terminating zero character
 		va_list vaList;
@@ -155,9 +196,6 @@ String String::Format(const char *pszFormat, ...)
 				pStringBufferASCII->m_nLength = nLength;
 			}
 		}
-
-		// Be polite and restore the previously set locale (memory is freed automatically in this function)
-		RestorePreviousLocale(pszPreviousLocale);
 	}
 
 	// Return new string
@@ -171,7 +209,9 @@ String String::Format(const wchar_t *pszFormat, ...)
 	// Check format string
 	if (pszFormat && pszFormat[0] != L'\0') {
 		// Ensure that the locale is set to the C default
-		char *pszPreviousLocale = ResetLocaleToC();
+		// When this instance gets destroyed the locale is restored automatically
+		// Not possible to forget the restore anymore ;)
+		CLocaleChanger cLocale;
 
 		// Get the required buffer length, does not include the terminating zero character
 		va_list vaList;
@@ -198,9 +238,6 @@ String String::Format(const wchar_t *pszFormat, ...)
 				pStringBufferUnicode->m_nLength = nLength;
 			}
 		}
-
-		// Be polite and restore the previously set locale (memory is freed automatically in this function)
-		RestorePreviousLocale(pszPreviousLocale);
 	}
 
 	// Return new string
@@ -2304,7 +2341,9 @@ float String::GetFloat() const
 {
 	if (m_pStringBuffer) {
 		// Ensure that the locale is set to the C default
-		char *pszPreviousLocale = ResetLocaleToC();
+		// When this instance gets destroyed the locale is restored automatically
+		// Not possible to forget the restore anymore ;)
+		CLocaleChanger cLocale;
 
 		float fReturnValue;
 		switch (m_pStringBuffer->GetFormat()) {
@@ -2322,9 +2361,6 @@ float String::GetFloat() const
 				break;
 		}
 
-		// Be polite and restore the previously set locale (memory is freed automatically in this function)
-		RestorePreviousLocale(pszPreviousLocale);
-
 		return fReturnValue;
 	} else {
 		// No string buffer => just return zero
@@ -2336,7 +2372,9 @@ double String::GetDouble() const
 {
 	if (m_pStringBuffer) {
 		// Ensure that the locale is set to the C default
-		char *pszPreviousLocale = ResetLocaleToC();
+		// When this instance gets destroyed the locale is restored automatically
+		// Not possible to forget the restore anymore ;)
+		CLocaleChanger cLocale;
 
 		double fReturnValue;
 		switch (m_pStringBuffer->GetFormat()) {
@@ -2353,9 +2391,6 @@ double String::GetDouble() const
 				fReturnValue = 0.0;
 				break;
 		}
-
-		// Be polite and restore the previously set locale (memory is freed automatically in this function)
-		RestorePreviousLocale(pszPreviousLocale);
 
 		return fReturnValue;
 	} else {

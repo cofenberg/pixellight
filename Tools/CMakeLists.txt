@@ -39,6 +39,12 @@ file(MAKE_DIRECTORY ${PL_BIN_DIR}/Tools)
 set(PL_TOOLS_BIN_DIR "${PL_BIN_DIR}/Tools/${CMAKETOOLS_TARGET_ARCHBITSIZE}")
 file(MAKE_DIRECTORY ${PL_TOOLS_BIN_DIR})
 
+if(LINUX AND NOT ANDROID)
+	# Setup executable suffix under linux
+	# This is needed so that the helper runner script works
+	SET(CMAKE_EXECUTABLE_SUFFIX "-bin")
+endif()
+
 ##################################################
 ## Projects
 ##################################################
