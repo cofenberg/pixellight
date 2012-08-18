@@ -377,7 +377,6 @@ if(X86_64)
 	endif()
 endif()
 
-
 # Not Windows
 if(NOT WIN32)
 	# Windows only features, for other targets, don't show this options
