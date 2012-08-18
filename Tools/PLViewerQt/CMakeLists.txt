@@ -26,6 +26,15 @@
 define_project(PLViewerQt NOSUFFIX)
 
 ##################################################
+## Prerequisites
+##################################################
+if(LINUX AND NOT ANDROID)
+	# Setup executable suffix under linux
+	# This is needed so that the helper runner script works
+	SET(CMAKE_EXECUTABLE_SUFFIX "-bin")
+endif()
+
+##################################################
 ## Special Qt stuff (see http://www.qtcentre.org/wiki/index.php?title=Compiling_Qt4_apps_with_CMake for more information)
 ##################################################
 # Include files with Qt relevant information
