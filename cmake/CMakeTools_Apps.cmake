@@ -401,12 +401,12 @@ endmacro(add_activex_interface target src)
 ## So the generated script is only useful after an make install
 ##
 ## The script assumes that the real binary has following name
-## {CMAKETOOLS_CURRENT_TARGET}-bin
+## {CMAKETOOLS_CURRENT_OUTPUT_NAME}-bin
 ## For this to work you should set CMAKE_EXECUTABLE_SUFFIX to -bin when compiling for LINUX (NOT ANDROID)
 ##################################################
 macro(add_runner_shell_script)
 	# Create runner script
-	configure_file("${CMAKE_SOURCE_DIR}/PixelLight/runplapp.sh" "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_TARGET}" @ONLY NEWLINE_STYLE UNIX)
+	configure_file("${CMAKE_SOURCE_DIR}/PixelLight/runplapp.sh" "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_OUTPUT_NAME}" @ONLY NEWLINE_STYLE UNIX)
 
-	set(CMAKE_TOOLS_CURRENT_RUNNERSCRIPT "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_TARGET}")
+	set(CMAKE_TOOLS_CURRENT_RUNNERSCRIPT "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_OUTPUT_NAME}")
 endmacro(add_runner_shell_script target scriptsource install_target)

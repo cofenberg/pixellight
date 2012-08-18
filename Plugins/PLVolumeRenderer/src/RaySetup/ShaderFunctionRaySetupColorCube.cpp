@@ -226,6 +226,68 @@ void calc_plane_aabb_intersection_points(const Plane &plane,
         out_points[out_point_count++] = orig + dir * t;
 }
 
+
+#ifdef NO_LAMDA_EXPRESSION_SUPPORT
+//[-------------------------------------------------------]
+//[ Local classes                                         ]
+//[-------------------------------------------------------]
+/**
+*  @brief
+*   Implements an sort compare class for Vector3 objects usable with std::sort
+*/
+
+class pl_vector3_compare
+{
+
+	//[-------------------------------------------------------]
+	//[ Public functions                                      ]
+	//[-------------------------------------------------------]
+	public:
+		/**
+		*  @brief
+		*    Constructor
+		* */
+		pl_vector3_compare(const Vector3 plane_normal, const Vector3 origin) : m_cPlane_normal(plane_normal), m_cOrigin(origin)
+		{
+		}
+
+		bool operator() (const Vector3 &lhs, const Vector3 &rhs)
+		{
+			Vector3 v;
+			v.CrossProduct((lhs - m_cOrigin), (rhs - m_cOrigin));
+			return (v.DotProduct(m_cPlane_normal) < 0);
+		}
+
+	//[-------------------------------------------------------]
+	//[ Private functions                                     ]
+	//[-------------------------------------------------------]
+	private:
+		/**
+		*  @brief
+		*    Copy operator
+		*
+		*  @param[in] cSource
+		*    Source to copy from
+		*
+		*  @return
+		*    Reference to this instance
+		*/
+		pl_vector3_compare &operator =(const pl_vector3_compare &cSource)
+		{
+			// No implementation because the copy operator is never used
+			return *this;
+		}
+
+	//[-------------------------------------------------------]
+	//[ Private data                                          ]
+	//[-------------------------------------------------------]
+	private:
+		const Vector3 m_cPlane_normal;
+		const Vector3 m_cOrigin;
+};
+
+#endif
+
 void sort_points(Vector3 *points, unsigned point_count, const Plane &plane)
 {
     if (point_count == 0) return;
@@ -233,22 +295,16 @@ void sort_points(Vector3 *points, unsigned point_count, const Plane &plane)
     const Vector3 plane_normal = Vector3(plane.a, plane.b, plane.c);
     const Vector3 origin = points[0];
 
-	// [TODO] Mac OS X 10.7, gcc version 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2336.1.00)
-	// .../pixellight/Plugins/PLVolumeRenderer/src/RaySetup/ShaderFunctionRaySetupColorCube.cpp: In function ‘void PLVolumeRenderer::sort_points(PLMath::Vector3*, unsigned int, const PLMath::Plane&)’:
-	// .../pixellight/Plugins/PLVolumeRenderer/src/RaySetup/ShaderFunctionRaySetupColorCube.cpp:236: error: expected primary-expression before ‘[’ token
-	// .../pixellight/Plugins/PLVolumeRenderer/src/RaySetup/ShaderFunctionRaySetupColorCube.cpp:236: error: expected primary-expression before ‘]’ token
-	// .../pixellight/Plugins/PLVolumeRenderer/src/RaySetup/ShaderFunctionRaySetupColorCube.cpp:236: error: expected primary-expression before ‘const’
-	// .../pixellight/Plugins/PLVolumeRenderer/src/RaySetup/ShaderFunctionRaySetupColorCube.cpp:236: error: expected primary-expression before ‘const’
-	// .../pixellight/Plugins/PLVolumeRenderer/src/RaySetup/ShaderFunctionRaySetupColorCube.cpp:236: error: expected unqualified-id before ‘bool’
-	// make[3]: *** [Plugins/PLVolumeRenderer/CMakeFiles/PLVolumeRenderer.dir/src/RaySetup/ShaderFunctionRaySetupColorCube.cpp.o] Error 1
-	// -> This functionality is nothing important, so it can be considered to be safe to just ignore it for now on Mac OS X
-	#ifndef APPLE
-		std::sort(points, points + point_count, [&](const Vector3 &lhs, const Vector3 &rhs) -> bool {
+#ifdef NO_LAMDA_EXPRESSION_SUPPORT
+	pl_vector3_compare cCompareObj(plane_normal, origin);
+	std::sort(points, points + point_count, cCompareObj);
+#else
+	std::sort(points, points + point_count, [&](const Vector3 &lhs, const Vector3 &rhs) -> bool {
 			Vector3 v;
 			v.CrossProduct((lhs - origin), (rhs - origin));
 			return (v.DotProduct(plane_normal) < 0);
 		} );
-	#endif
+#endif
 }
 void ShaderFunctionRaySetupColorCube::UpdateNearCap(const PLMath::Plane &cPlane)
 {

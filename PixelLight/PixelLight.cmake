@@ -377,16 +377,6 @@ if(X86_64)
 	endif()
 endif()
 
-#[TODO] With gcc 4.4.x PLVolume doesn't compile, review it (should be usual C++ code)
-if(GCC_VERSION VERSION_LESS "4.5" OR Clang_VERSION VERSION_LESS "3.1")
-	unset (PL_PLUGIN_VOLUME							CACHE)
-	unset (PL_PLUGIN_VOLUME_RENDERER				CACHE)
-	unset (PL_PLUGIN_VOLUME_GUI						CACHE)
-	unset (PL_PLUGIN_VOLUME_LOADER_PVM				CACHE)
-	unset (PL_PLUGIN_VOLUME_LOADER_DICOM_GDCM		CACHE)
-	message(AUTHOR_WARNING "[TODO] With gcc < 4.5.x or < clang-3.1 PLVolume doesn't compile, because PL_PLUGIN_VOLUME_RENDERER uses lambda expressions which isn't support by the current compiler")
-endif()
-
 
 # Not Windows
 if(NOT WIN32)
