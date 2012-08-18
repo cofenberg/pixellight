@@ -208,14 +208,6 @@ elseif(LINUX)
 	)
 endif()
 
-if(LINUX OR APPLE)
-	if(GCC_VERSION VERSION_LESS "4.5" OR Clang_VERSION VERSION_LESS "3.1")
-		add_compile_defs(
-			NO_LAMDA_EXPRESSION_SUPPORT
-		)
-	endif()
-endif()
-
 ##################################################
 ## Compiler flags
 ##################################################

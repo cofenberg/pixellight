@@ -159,7 +159,11 @@ String ShaderFunctionRaySetupColorCube::GetSourceCode(const String &sShaderLangu
 }
 
 
-// -> http://www.asawicki.info/news_1428_finding_polygon_of_plane-aabb_intersection.html
+
+
+// Quick'n'Dirty experiment using source code from http://www.asawicki.info/news_1428_finding_polygon_of_plane-aabb_intersection.html
+// -> Modified in order to get rid of Lambda-expressions which would limit the number of usable compilers
+
 // OutVD > 0 means ray is back-facing the plane
 // returns false if there is no intersection because ray is perpendicular to plane
 bool ray_to_plane(const Vector3 &RayOrig, const Vector3 &RayDir, const Plane &Plane, float *OutT, float *OutVD)
@@ -227,17 +231,15 @@ void calc_plane_aabb_intersection_points(const Plane &plane,
 }
 
 
-#ifdef NO_LAMDA_EXPRESSION_SUPPORT
 //[-------------------------------------------------------]
 //[ Local classes                                         ]
 //[-------------------------------------------------------]
 /**
 *  @brief
-*   Implements an sort compare class for Vector3 objects usable with std::sort
+*    Implements a sort compare class for Vector3 objects usable with std::sort
 */
+class pl_vector3_compare {
 
-class pl_vector3_compare
-{
 
 	//[-------------------------------------------------------]
 	//[ Public functions                                      ]
@@ -246,8 +248,10 @@ class pl_vector3_compare
 		/**
 		*  @brief
 		*    Constructor
-		* */
-		pl_vector3_compare(const Vector3 plane_normal, const Vector3 origin) : m_cPlane_normal(plane_normal), m_cOrigin(origin)
+		*/
+		pl_vector3_compare(const Vector3 plane_normal, const Vector3 origin) :
+			m_cPlane_normal(plane_normal),
+			m_cOrigin(origin)
 		{
 		}
 
@@ -257,6 +261,7 @@ class pl_vector3_compare
 			v.CrossProduct((lhs - m_cOrigin), (rhs - m_cOrigin));
 			return (v.DotProduct(m_cPlane_normal) < 0);
 		}
+
 
 	//[-------------------------------------------------------]
 	//[ Private functions                                     ]
@@ -278,15 +283,16 @@ class pl_vector3_compare
 			return *this;
 		}
 
+
 	//[-------------------------------------------------------]
 	//[ Private data                                          ]
 	//[-------------------------------------------------------]
 	private:
 		const Vector3 m_cPlane_normal;
 		const Vector3 m_cOrigin;
-};
 
-#endif
+
+};
 
 void sort_points(Vector3 *points, unsigned point_count, const Plane &plane)
 {
@@ -295,16 +301,8 @@ void sort_points(Vector3 *points, unsigned point_count, const Plane &plane)
     const Vector3 plane_normal = Vector3(plane.a, plane.b, plane.c);
     const Vector3 origin = points[0];
 
-#ifdef NO_LAMDA_EXPRESSION_SUPPORT
 	pl_vector3_compare cCompareObj(plane_normal, origin);
 	std::sort(points, points + point_count, cCompareObj);
-#else
-	std::sort(points, points + point_count, [&](const Vector3 &lhs, const Vector3 &rhs) -> bool {
-			Vector3 v;
-			v.CrossProduct((lhs - origin), (rhs - origin));
-			return (v.DotProduct(plane_normal) < 0);
-		} );
-#endif
 }
 void ShaderFunctionRaySetupColorCube::UpdateNearCap(const PLMath::Plane &cPlane)
 {
@@ -316,13 +314,11 @@ void ShaderFunctionRaySetupColorCube::UpdateNearCap(const PLMath::Plane &cPlane)
 
 	calc_plane_aabb_intersection_points(cPlane, vMin, vMax, vPolygonPoints, nNumOfPolygonPoints);
 	if (nNumOfPolygonPoints) {
-		int ii1 = 0;
 		sort_points(vPolygonPoints, nNumOfPolygonPoints, cPlane);
-		int ii2 = 0;
 	}
-
-	int ii3 = 0;
 }
+
+
 
 
 void ShaderFunctionRaySetupColorCube::SetProgram(Program &cProgram, const PLScene::SQCull &cCullQuery, const PLScene::VisNode &cVisNode, SRPVolume &cSRPVolume)
@@ -471,9 +467,7 @@ void ShaderFunctionRaySetupColorCube::UpdateFrontTexture(const Program &cProgram
 					uint32 nNumOfPolygonPoints = 0;
 					calc_plane_aabb_intersection_points(cPlane, vMin, vMax, vPolygonPoints, nNumOfPolygonPoints);
 					if (nNumOfPolygonPoints) {
-						int ii1 = 0;
 						sort_points(vPolygonPoints, nNumOfPolygonPoints, cPlane);
-						int ii2 = 0;
 
 
 						if (!m_pCapVertexBuffer) {
