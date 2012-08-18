@@ -23,8 +23,8 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <Max.h>
-#include <MaxIcon.h>
+#include <max.h>
+#include <maxicon.h>
 #include <PLCore/String/String.h>
 #include "PL3dsMaxSceneExport/PLSceneEnumProc.h"
 #include "PL3dsMaxSceneExport/PLToolbar.h"
