@@ -463,14 +463,18 @@ void Gui::ResetAndFillQFileSystemWatcher()
 		// Add files to the Qt file system watcher instance
 		const String sResourceFilename = m_pApplication->GetResourceFilename();
 		if (sResourceFilename.GetLength()) {
-			QString cRessourceFile = QtStringAdapter::PLToQt(Url(sResourceFilename).GetNativePath());
-			QFileInfo cFileInfo(cRessourceFile);
-			
-			// Check if path is not absolute and file does not exits
-			// then prepend Application base directory to path
-			if(!cFileInfo.isAbsolute() && !cFileInfo.exists())
-				cRessourceFile =  QtStringAdapter::PLToQt(GetApplication().GetBaseDirectory()) + cRessourceFile;
-			
+			// Lookout!
+			// -> The current resource filename (e.g. "Data\Scripts\Lua\Main.lua") can be relative to the base directory received by
+			//    "PLEngine::ScriptApplication::GetBaseDirectory()" (e.g. "C:\MyApplication\")
+			// -> Concatenating the two filenames results in the valid absolute path (e.g. "C:\MyApplication\Data\Scripts\Lua\Main.lua")
+			// -> We can't provide "QFileSystemWatcher::addPath()" just with the relative filename because this filename is considered to be relative
+			//    to the base directory (e.g. "C:\MyApplication\"), not the current system directory (e.g. "C:\MyApplication\x86") you can query by
+			//    using "PLCore::System::GetCurrentDir()". Qt can only know the current system directory and the result would be potentially
+			//    wrong (e.g. "C:\MyApplication\x86\Data\Scripts\Lua\Main.lua").
+			// -> Solution: Feed "QFileSystemWatcher::addPath()" only with absolute filenames!
+			const Url cUrl = Url(sResourceFilename);
+			const QString cRessourceFile = QtStringAdapter::PLToQt(cUrl.IsAbsolute() ? cUrl.GetNativePath() : (GetApplication().GetBaseDirectory() + cUrl.GetNativePath()));
+
 			// Add the resource file itself
 			m_pQFileSystemWatcher->addPath(cRessourceFile);
 

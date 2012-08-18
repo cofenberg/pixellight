@@ -1,3 +1,26 @@
+>> 18.08.2012
+[CO]
+PLViewerQt:
+- While working on some new Linux demo packages, Stephan Wezel noticed that "QFileSystemWatcher::addPath()", which is used inside
+  "Gui::ResetAndFillQFileSystemWatcher()", was unable to find the files when feeding it with relative paths. After having a look into
+  it the issue became clear to me:
+  -> The current resource filename (e.g. "Data\Scripts\Lua\Main.lua") can be relative to the base directory received by
+    "PLEngine::ScriptApplication::GetBaseDirectory()" (e.g. "C:\MyApplication\")
+  -> Concatenating the two filenames results in the valid absolute path (e.g. "C:\MyApplication\Data\Scripts\Lua\Main.lua")
+  -> We can't provide "QFileSystemWatcher::addPath()" just with the relative filename because this filename is considered to be relative
+     to the base directory (e.g. "C:\MyApplication\"), not the current system directory (e.g. "C:\MyApplication\x86") you can query by
+     using "PLCore::System::GetCurrentDir()". Qt can only know the current system directory and the result would be potentially
+     wrong (e.g. "C:\MyApplication\x86\Data\Scripts\Lua\Main.lua").
+  -> Solution: Feed "QFileSystemWatcher::addPath()" only with absolute filenames! (Stephans solution, but I wanted to understand what's
+     going on in detail :)
+  ... and yes, there are some directory syntax inconsistencies across multiple projects. One time a directory filename has a "\" at the end
+  and another time it hasn't. Some time ago, it wasn't documented in detail how exactly the returned result is assumed to look like, and
+  there was no written filename convention. After one decade of development, it became mixed up and since becoming aware of this issue, I
+  started to heavily document the results. This is something we have to clean-up in PixelLight 2.0 by creating filename convention, but this
+  is nothing I dare to do "on the fly" in PixelLight 1.0.
+
+
+
 >> 20.06.2012
 [CO]
 - Bugfix: When loading a new resource, PLViewer/PLViewerQt did not destroy the currently used script
