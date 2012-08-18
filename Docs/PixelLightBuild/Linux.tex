@@ -215,7 +215,7 @@ In order to make all projects using four \ac{CPU} cores to significantly speed u
 \begin{lstlisting}[language=sh]
 make -j 4 -k
 \end{lstlisting}
-
+\clearpage
 
 
 
@@ -241,7 +241,7 @@ Or use maketool to do it for you:
 \begin{lstlisting}[language=sh]
 ./maketool pack
 \end{lstlisting}
-
+\clearpage
 
 
 
@@ -251,9 +251,22 @@ Please note that the following information should only be required during develo
 
 Once you have built PixelLight, you may want to run e.g. the sample applications. In order for this to work correctly, PixelLight must know where to search for data files and plugins, which is not always an easy task on Linux systems. You have several options here.
 
+\subsection{1. Changes in Pixellight 1.0.0}
+With PixelLight 1.0.0 the name of the executables of the Samples and Tools (which links dynamically to PLCore, currently all Samples, PLViewer, and PLViewerQt) has changed to support an out of the box experience without fiddeling with the system environment (e.g. setting env vars or add additional paths to the ld.so.conf)
 
+The name of the executable has an suffix named \emph{"-bin"} e.g. \emph{PLViewer-bin}. Additional an helper shellscript is generated with the name of the project e.g. \emph{PLViewer}. The shellscript setups the environment so that the app can find all needed libraries and the PixelLight Runtime. The shellscript will not be copied to the Bin-Linux directory. Because the shellscript contains an path which points to
+$<CMAKE\_INSTALL\_PREFIX>$/share/pixellight/Runtime/$<ARCH>$ e.g. /usr/local/share/pixellight/Runtime/x86
+$\Rightarrow$ the shellscript is only useable when the build is installed via an \emph{make install}
 
-\subsection{1. Run from a your Local Source Directory}
+\paragraph{Note:}Due this change the name of some Sample log and configuration files has changed. This affects currently all Samples which number prefix is lower then 30. e.g. 01Application (old $\to$ new):
+
+01Application.log $\to$ 01Application-bin.log
+
+01Application.cfg $\to$ 01Application-bin.cfg
+\\
+\\In general all applications are affected using PixelLight which doesn't set explicitly the name for the configuration or log file (e.g via using the macros pl\_module\_application or pl\_module\_application\_frontend, FrontendContext::SetName, ApplicationContext::SetLogFilename or ApplicationContext::SetConfigFilename)
+
+\subsection{2. Run from a your Local Source Directory}
 This means that everything stays in your source directory. All libraries and applications have already been copied into the directory \emph{Bin-Linux} by means of post-build commands.
 
 Now you only have to tell PixelLight where it can find the runtime and data files. This can be done by setting the environment variable \emph{PL\_RUNTIME} to the \emph{Runtime} directory.
@@ -291,29 +304,38 @@ You may also want to have a look into the \emph{LD\_LIBRARY\_PATH} environment v
 
 
 
-\subsection{2. Install the PixelLight \ac{SDK} Locally}
-Installing means copying the files built by the project into your local Linux system so that the libraries and applications can be found there. The CMake build script therefore provides you with an \emph{install} target that installs everything on your local machine into the \emph{/usr/local} directory.
+\subsection{3. Install the PixelLight \ac{SDK} Locally}
+Installing means copying the files built by the project into your local Linux system so that the libraries and applications can be found there. The CMake build script therefore provides you with an \emph{install} target that installs everything on your local machine into the \emph{/usr/local} directory (default) or any path to which the cmake var \emph{CMAKE\_INSTALL\_PREFIX} was set to.
 
 Change into the build directory, e.g.:
 \begin{lstlisting}[language=sh]
 cd build-Release
 \end{lstlisting}
 
-Install: (This has to be done as root. Use e.g. \emph{sudo} or \emph{su} for this task.)
+Install: (when \emph{CMAKE\_INSTALL\_PREFIX} was set to an path to which an normal user has no right to write into then this has to be done as root. Use e.g. \emph{sudo} or \emph{su} for this task.)
 \begin{lstlisting}[language=sh]
 make install
 \end{lstlisting}
 
-Update libraries: (This has to be done as root. Use e.g. \emph{sudo} or \emph{su} for this task.)
+Update libraries: (This has to be done as root. Use e.g. \emph{sudo} or \emph{su} for this task. With PixelLight 1.0.0 not needed)
 \begin{lstlisting}[language=sh]
 ldconfig /usr/local/lib
 \end{lstlisting}
 (if this is not done, new dynamic libs may not be found correctly)
 
-If you have installed Pixellight, you will find the runtime in \emph{/usr/local/share/pixellight/Runtime}, and the samples e.g. in \emph{/usr/local/share/pixellight/Samples}.
+If you have installed Pixellight, you will find the runtime in $<CMAKE\_INSTALL\_PREFIX>$/share/pixellight/Runtime,
+
+and the samples in $<CMAKE\_INSTALL\_PREFIX>$/share/pixellight/Samples
+
+e.g \emph{/usr/local/share/pixellight/Runtime} and \emph{/usr/local/share/pixellight/Samples}.
 
 Now you should be able to run the applications built by the PixelLight project, e.g. run one of the samples:
 \begin{lstlisting}[language=sh]
-cd Bin-Linux/Samples/x86
+cd /usr/local/share/pixellight/Samples/Bin/x86
 ./50RendererTriangle
+\end{lstlisting}
+
+What also works (due the helper shellscript since PxielLight 1.0.0 ):
+\begin{lstlisting}[language=sh]
+/usr/local/share/pixellight/Samples/Bin/x86/50RendererTriangle
 \end{lstlisting}
