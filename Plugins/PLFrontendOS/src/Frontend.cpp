@@ -108,6 +108,11 @@ int Frontend::Run(const String &sExecutableFilename, const Array<String> &lstArg
 		}
 	}
 
+	if (!m_bQuit && !m_pFrontend->IsRunning()) {
+		// Do the frontend life cycle thing - stop
+		OnStop();
+	}
+
 	// Destroy the OS specific window implementation
 	if (m_pOSWindow) {
 		delete m_pOSWindow;
