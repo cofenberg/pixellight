@@ -85,34 +85,34 @@ ShaderComposition *ShaderCompositorPC::Generate(Renderer &cRenderer, const PLSce
 	if (!pVolume)
 		return nullptr;	// Early escape, there's no sense in continuing
 
-	// Analyse the scene
+	// Analyze the scene
 	Array<const VisNode*> lstClipPlanes;
-	if (!(cSRPVolume.GetFlags() & SRPVolume::NoClipRay)) {	// Analyse scene renderer
+	if (!(cSRPVolume.GetFlags() & SRPVolume::NoClipRay)) {	// Analyze scene renderer
 		const Class *pClass = ClassManager::GetInstance()->GetClass("PLVolume::SNClipPrimitivePlane");
 		if (pClass)
 			cSRPVolume.GetIntersectingInstancesOf(cCullQuery, *pSNVolume, *pClass, lstClipPlanes);
 	}
 	Array<const VisNode*> lstClipBoxes;
-	if (!(cSRPVolume.GetFlags() & SRPVolume::NoClipPosition)) {	// Analyse scene renderer
+	if (!(cSRPVolume.GetFlags() & SRPVolume::NoClipPosition)) {	// Analyze scene renderer
 		const Class *pClass = ClassManager::GetInstance()->GetClass("PLVolume::SNClipPrimitiveBox");
 		if (pClass)
 			cSRPVolume.GetIntersectingInstancesOf(cCullQuery, *pSNVolume, *pClass, lstClipBoxes);
 	}
 	Array<const VisNode*> lstClipEllipsoids;
-	if (!(cSRPVolume.GetFlags() & SRPVolume::NoClipPosition)) {	// Analyse scene renderer
+	if (!(cSRPVolume.GetFlags() & SRPVolume::NoClipPosition)) {	// Analyze scene renderer
 		const Class *pClass = ClassManager::GetInstance()->GetClass("PLVolume::SNClipPrimitiveEllipsoid");
 		if (pClass)
 			cSRPVolume.GetIntersectingInstancesOf(cCullQuery, *pSNVolume, *pClass, lstClipEllipsoids);
 	}
 	Array<const VisNode*> lstClipVolumeTextures;
-	if (!(cSRPVolume.GetFlags() & SRPVolume::NoClipPosition)) {	// Analyse scene renderer
+	if (!(cSRPVolume.GetFlags() & SRPVolume::NoClipPosition)) {	// Analyze scene renderer
 		const Class *pClass = ClassManager::GetInstance()->GetClass("PLVolume::SNClipVolumeTexture");
 		if (pClass)
 			cSRPVolume.GetIntersectingInstancesOf(cCullQuery, *pSNVolume, *pClass, lstClipVolumeTextures);
 	}
-	bool bLighting = !(cSRPVolume.GetFlags() & SRPVolume::NoShading);	// Analyse scene renderer
+	bool bLighting = !(cSRPVolume.GetFlags() & SRPVolume::NoShading);	// Analyze scene renderer
 	if (bLighting) {
-		// Analyse the volume scene node
+		// Analyze the volume scene node
 		bLighting = !(pSNVolume->GetFlags() & SceneNode::NoLighting);
 		if (bLighting) {
 			// Get a list of all visible scene node instances intersecting with the given scene node
@@ -128,7 +128,7 @@ ShaderComposition *ShaderCompositorPC::Generate(Renderer &cRenderer, const PLSce
 		// [TODO] Give this information to the shader function instance
 	}
 
-	// Analyse scene renderer
+	// Analyze scene renderer
 	uint8 nNumOfDepthTextures = 0;
 	if (!(cSRPVolume.GetFlags() & SRPVolume::NoDepthTexture)) {
 		// Get the "PLCompositing::SRPBegin" instance
@@ -162,7 +162,7 @@ ShaderComposition *ShaderCompositorPC::Generate(Renderer &cRenderer, const PLSce
 				break;
 			}
 
-			// Ray setup using bounding box itersection
+			// Ray setup using bounding box intersection
 			case SRPVolume::RaySetupBoundingBoxIntersection:
 			{	// Catch the RTTI class instance only once to keep the internal overhead as low as possible, but do also keep this optimization local
 				static const Class *pClass = cClassManager.GetClass("PLVolumeRenderer::ShaderFunctionRaySetupBoundingBoxIntersection");
@@ -170,7 +170,7 @@ ShaderComposition *ShaderCompositorPC::Generate(Renderer &cRenderer, const PLSce
 				break;
 			}
 
-			// Ray setup using a combination of color cube and bounding box itersection
+			// Ray setup using a combination of color cube and bounding box intersection
 			case SRPVolume::RaySetupHybrid:
 			{	// Catch the RTTI class instance only once to keep the internal overhead as low as possible, but do also keep this optimization local
 				static const Class *pClass = cClassManager.GetClass("PLVolumeRenderer::ShaderFunctionRaySetupHybrid");
@@ -509,7 +509,7 @@ ShaderComposition *ShaderCompositorPC::Generate(Renderer &cRenderer, const PLSce
 				break;
 			}
 
-			// Debug normal shading: Show normalized normal as used for the illumination, simliar to gradient, but in case of an invalid normal the previous valid normal will be reused
+			// Debug normal shading: Show normalized normal as used for the illumination, similar to gradient, but in case of an invalid normal the previous valid normal will be reused
 			case PLVolume::SNVolume::ShadingDebugNormal:
 			{
 				// Catch the RTTI class instance only once to keep the internal overhead as low as possible, but do also keep this optimization local

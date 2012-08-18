@@ -47,7 +47,7 @@ SUITE(SimpleList_PrimitiveInt) {
 	}
 
 	TEST_FIXTURE(ConstructTestSimpleList, Add) {
-		// Add() return uninitilized Value, don't check it!
+		// Add() return uninitialized Value, don't check it!
 		Lst.Add();
 		CHECK_EQUAL(1U, Lst.GetNumOfElements());
 

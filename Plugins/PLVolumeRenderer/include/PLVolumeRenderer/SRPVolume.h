@@ -77,8 +77,8 @@ class SRPVolume : public PLVolume::SRPVolume {
 		enum ERaySetup {
 			RaySetupNull                    = 0,	/**< No ray setup */
 			RaySetupColorCube               = 1,	/**< Ray setup using a color cube rasterization */
-			RaySetupBoundingBoxIntersection = 2,	/**< Ray setup using bounding box itersection */
-			RaySetupHybrid                  = 3		/**< Ray setup using a combination of color cube and bounding box itersection */
+			RaySetupBoundingBoxIntersection = 2,	/**< Ray setup using bounding box intersection */
+			RaySetupHybrid                  = 3		/**< Ray setup using a combination of color cube and bounding box intersection */
 		};
 		pl_enum(ERaySetup)
 			pl_enum_value(RaySetupNull,						"No ray setup")
@@ -164,7 +164,7 @@ class SRPVolume : public PLVolume::SRPVolume {
 		pl_attribute(ShaderLanguage,				PLCore::String,						"",										ReadWrite,	DirectValue,	"Shader language to use (for example \"GLSL\" or \"Cg\"), if empty string, the default shader language of the renderer will be used",																"")
 		// 1.0 - Ray Setup
 		pl_attribute(RaySetup,						pl_enum_type(ERaySetup),			RaySetupHybrid,							ReadWrite,	DirectValue,	"Technique to use for the ray setup (1.0 - Ray Setup)",																																				"")
-		pl_attribute(GlobalSampleRateFactor,		float,								1.0f,									ReadWrite,	DirectValue,	"Global sample rate factor to use (1.0 = 100% for correct result, 0.0 = 50% = take only half of the samples) (1.0 - Ray Setup), simply multiplicated with the per scene node sampling rate factor",	"Max='10'")
+		pl_attribute(GlobalSampleRateFactor,		float,								1.0f,									ReadWrite,	DirectValue,	"Global sample rate factor to use (1.0 = 100% for correct result, 0.0 = 50% = take only half of the samples) (1.0 - Ray Setup), simply multiplied with the per scene node sampling rate factor",	"Max='10'")
 		// 1.2 - Jitter Position
 		pl_attribute(JitterPosition,				pl_enum_type(EJitterPosition),		JitterPositionTrigonometric,			ReadWrite,	DirectValue,	"Technique to use for jitter ray start position (1.2 - Jitter Position, jitter the start position of the ray in order to reduce wooden grain effect)",												"")
 		pl_attribute(DitherRay,						float,								1.0f,									ReadWrite,	DirectValue,	"Scale factor for dithering the ray's start position in order to avoid wooden grain effects (usually value between 0...1) (1.2 - Jitter Position)",													"")

@@ -1663,7 +1663,7 @@ SUITE(String) {
 	TEST_FIXTURE(ConstructTest, IsAlphabetic_Unicode) {
 #ifdef LINUX
 		// Under linux we have to change the locale != C because iswalpha is locale dependent and the "C" locale doesn't know anything about unicode
-		// We assume that the active locale on the system is unicode capable, because we can't know wich locale are available on the system to set it to a sepcific one
+		// We assume that the active locale on the system is unicode capable, because we can't know which locale are available on the system to set it to a specific one
 		LocaleWrapper changeLocale;
 #endif
 		sString = L"";
@@ -1729,7 +1729,7 @@ SUITE(String) {
 	TEST_FIXTURE(ConstructTest, IsAlphaNumeric_Unicode) {
 #ifdef LINUX
 		// Under linux we have to change the locale != C because iswalpha is locale dependent and the "C" locale doesn't know anything about unicode
-		// We assume that the active locale on the system is unicode capable, because we can't know wich locale are available on the system to set it to a sepcific one
+		// We assume that the active locale on the system is unicode capable, because we can't know which locale are available on the system to set it to a specific one
 		LocaleWrapper changeLocale;
 #endif
 		sString = L"";

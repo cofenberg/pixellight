@@ -201,7 +201,7 @@ class ShaderComposition {
 		*  @param[in] cShaderCompositionID
 		*    Shader composition ID
 		*  @param[in] cProgram
-		*    GPU program of this shader composition, we're now resposible for destroying this instance
+		*    GPU program of this shader composition, we're now responsible for destroying this instance
 		*  @param[in] lstShaderFunction
 		*    Shader function instances this shader composition consists of, the given instance are just shared (do not destroy them)
 		*/

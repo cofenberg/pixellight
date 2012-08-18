@@ -52,7 +52,7 @@ pl_implement_class(VolumeLoaderRAW)
 //[-------------------------------------------------------]
 bool VolumeLoaderRAW::LoadParams(Volume &cVolume, File &cFile, uint8 nDataType, uint16 nWidth, uint16 nHeight, uint16 nDepth)
 {
-	// Get the image holding the volumtric data
+	// Get the image holding the volumetric data
 	Image &cImage = cVolume.GetVolumeImage();
 
 	// Create image buffer
@@ -68,7 +68,7 @@ bool VolumeLoaderRAW::LoadParams(Volume &cVolume, File &cFile, uint8 nDataType, 
 
 bool VolumeLoaderRAW::Save(const Volume &cVolume, File &cFile)
 {
-	// Get the image holding the volumtric data
+	// Get the image holding the volumetric data
 	const Image &cImage = cVolume.GetVolumeImage();
 
 	// Get image buffer

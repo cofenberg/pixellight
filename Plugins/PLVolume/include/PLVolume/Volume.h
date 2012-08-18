@@ -95,19 +95,19 @@ class Volume : public PLCore::Resource<Volume> {
 
 		/**
 		*  @brief
-		*    Returns the image holding the volumtric data
+		*    Returns the image holding the volumetric data
 		*
 		*  @return
-		*    The image holding the volumtric data
+		*    The image holding the volumetric data
 		*/
 		PLVOLUME_API PLGraphics::Image &GetVolumeImage();
 
 		/**
 		*  @brief
-		*    Returns the image holding the volumtric data
+		*    Returns the image holding the volumetric data
 		*
 		*  @return
-		*    The image holding the volumtric data
+		*    The image holding the volumetric data
 		*/
 		PLVOLUME_API const PLGraphics::Image &GetVolumeImage() const;
 
@@ -293,7 +293,7 @@ class Volume : public PLCore::Resource<Volume> {
 	//[ Private functions                                     ]
 	//[-------------------------------------------------------]
 	private:
-		PLGraphics::Image			 m_cVolumeImage;				/**< Image holding the volumetic data */
+		PLGraphics::Image			 m_cVolumeImage;				/**< Image holding the volumetric data */
 		PLMath::Vector3				 m_vVoxelSize;					/**< Size of one voxel (without metric, but usually one unit is equal to one meter) */
 		TransferFunctionControl		*m_pTransferFunctionControl;	/**< Transfer function control, always valid */
 		// Cached texture buffer

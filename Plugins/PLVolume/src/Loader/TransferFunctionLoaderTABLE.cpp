@@ -65,7 +65,7 @@ bool TransferFunctionLoaderTABLE::Load(TransferFunction &cTransferFunction, File
 		. . . .
 	*/
 
-	// Use the tokenizer in order to gather all required informaton, ignore the rest
+	// Use the tokenizer in order to gather all required information, ignore the rest
 	// Startup the tokenizer
 	Tokenizer cTokenizer;
 	cTokenizer.Start(cFile.GetContentAsString());

@@ -49,7 +49,7 @@ namespace PLVolumeRenderer {
 *    the volume. There's no guarantee that due to clip operations the ray is only
 *    clipped by modifying the ray origin or the maximum travel length. The ray will
 *    potentially be segmented. Thus, while performing clip operations, the performance
-*    may be reduced due to additional calculations performed while travelling through the
+*    may be reduced due to additional calculations performed while traveling through the
 *    volume.
 */
 class ShaderFunctionClipPosition : public ShaderFunction {

@@ -87,7 +87,7 @@ vec4 RayTraversal(vec3 StartPosition, int NumberOfSteps, vec3 StepPositionDelta,
 				// Apply the given opacity
 				sourceColor.a *= Opacity;
 
-				// Pre-multipy color by their corresponding opacity value
+				// Pre-multiply color by their corresponding opacity value
 				sourceColor.rgb *= sourceColor.a;
 
 				// Front-to-back compositing

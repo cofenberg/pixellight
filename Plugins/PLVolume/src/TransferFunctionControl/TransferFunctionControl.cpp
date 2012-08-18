@@ -82,7 +82,7 @@ TransferFunctionControl::~TransferFunctionControl()
 */
 TransferFunctionChannel &TransferFunctionControl::AddChannel()
 {
-	// Cached image ise now considered to be dirty
+	// Cached image is now considered to be dirty
 	m_bImageDirty = true;
 
 	// Create transfer function channel instance
@@ -108,7 +108,7 @@ void TransferFunctionControl::RemoveAllChannels()
 	// Clear the internal channel list
 	m_lstTransferControlChannels.Clear();
 
-	// Cached image ise now considered to be dirty
+	// Cached image is now considered to be dirty
 	m_bImageDirty = true;
 }
 

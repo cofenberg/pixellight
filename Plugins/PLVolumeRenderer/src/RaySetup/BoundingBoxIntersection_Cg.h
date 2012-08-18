@@ -169,7 +169,7 @@ FS_OUTPUT main(VS_OUTPUT In)	// Vertex shader output as fragment shader input
 
 	// Call the ray traversal function
 	//     float4 RayTraversal(float3 StartPosition, int NumberOfSteps, float3 StepPositionDelta, float MaximumTravelLength)
-	// -> Clamp the result to [0, 1] interval, else the image might flicker uggly on NVIDIA GPU's while working fine on AMD GPU'S (HDR only issue)
+	// -> Clamp the result to [0, 1] interval, else the image might flicker ugly on NVIDIA GPU's while working fine on AMD GPU'S (HDR only issue)
 	Out.Color0 = (maximumTravelLength > 0.0) ? clamp(RayTraversal(rayStartPosition, int(maximumTravelLength/StepSize), stepPositionDelta, maximumTravelLength), float4(0.0, 0.0, 0.0, 0.0), float4(1.0, 1.0, 1.0, 1.0)) : float4(0.0, 0.0, 0.0, 0.0);
 
 	// Done

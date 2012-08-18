@@ -161,7 +161,7 @@ String ShaderFunctionRaySetupColorCube::GetSourceCode(const String &sShaderLangu
 
 // -> http://www.asawicki.info/news_1428_finding_polygon_of_plane-aabb_intersection.html
 // OutVD > 0 means ray is back-facing the plane
-// returns false if there is no intersection because ray is perpedicular to plane
+// returns false if there is no intersection because ray is perpendicular to plane
 bool ray_to_plane(const Vector3 &RayOrig, const Vector3 &RayDir, const Plane &Plane, float *OutT, float *OutVD)
 {
     *OutVD = Plane.a * RayDir.x + Plane.b * RayDir.y + Plane.c * RayDir.z;
@@ -345,7 +345,7 @@ void ShaderFunctionRaySetupColorCube::UpdateFrontTexture(const Program &cProgram
 	}
 
 	// Create the front color render target
-	// -> Lookout! Must be floating-point (R16G16B16A16F), not e.g. R8G8B8... else we will see that the available precision is not engough to hold the positions...
+	// -> Lookout! Must be floating-point (R16G16B16A16F), not e.g. R8G8B8... else we will see that the available precision is not enough to hold the positions...
 	if (!m_pColorTargetFront)
 		m_pColorTargetFront = cRenderer.CreateSurfaceTextureBuffer2D(vViewportSize, TextureBuffer::R16G16B16A16F, SurfaceTextureBuffer::Depth|SurfaceTextureBuffer::NoMultisampleAntialiasing);
 

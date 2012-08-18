@@ -92,7 +92,7 @@ Volume::~Volume()
 
 /**
 *  @brief
-*    Returns the image holding the volumtric data
+*    Returns the image holding the volumetric data
 */
 Image &Volume::GetVolumeImage()
 {
@@ -101,7 +101,7 @@ Image &Volume::GetVolumeImage()
 
 /**
 *  @brief
-*    Returns the image holding the volumtric data
+*    Returns the image holding the volumetric data
 */
 const Image &Volume::GetVolumeImage() const
 {
@@ -267,7 +267,7 @@ float Volume::GetStepSize(float fVolumeTextureLOD, float fSampleRateFactor, floa
 */
 Histogram *Volume::CreateHistogram()
 {
-	// Get the image holding the volumtric data (internal image data is not copied, just shared, so this is pretty lightweight)
+	// Get the image holding the volumetric data (internal image data is not copied, just shared, so this is pretty lightweight)
 	Image cImage = m_cVolumeImage;
 
 	// Do we need to download the volume data from the GPU?
@@ -379,7 +379,7 @@ Volume &Volume::operator =(const Volume &cSource)
 //[-------------------------------------------------------]
 bool Volume::Unload()
 {
-	// Unload the image holding the volumetic data
+	// Unload the image holding the volumetric data
 	m_cVolumeImage.Unload();
 
 	// Unload the transfer function

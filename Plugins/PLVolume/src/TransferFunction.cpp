@@ -151,13 +151,13 @@ TextureBuffer *TransferFunction::GetTextureBuffer(Renderer &cRenderer, ETextureB
 					m_pTextureBufferHandler[nType]->SetResource(reinterpret_cast<TextureBuffer*>(cRenderer.CreateTextureBuffer1D(cSourceImage, TextureBuffer::Unknown, 0)));
 					break;
 
-				// Texture buffer with pre-multipied color by their corresponding opacity value in order to avoid color bleeding due to interpolation
+				// Texture buffer with pre-multiplied color by their corresponding opacity value in order to avoid color bleeding due to interpolation
 				case PreMultipliedTextureBuffer:
 				{
 					// Get the number of bins
 					const uint32 nNumOfBins = GetNumOfBins();
 
-					// Pre-multipy color by their corresponding opacity value in order to avoid color bleeding due to interpolation
+					// Pre-multiply color by their corresponding opacity value in order to avoid color bleeding due to interpolation
 					Image cPreMultipliedImage = Image::CreateImage(DataFloat, ColorRGBA, Vector3i(nNumOfBins, 1, 1));
 					const uint8 *pnSourceData = cSourceImage.GetBuffer()->GetData();
 					float *pfDestinationData = reinterpret_cast<float*>(cPreMultipliedImage.GetBuffer()->GetData());
@@ -165,15 +165,15 @@ TextureBuffer *TransferFunction::GetTextureBuffer(Renderer &cRenderer, ETextureB
 						// Get alpha
 						const float fAlpha = static_cast<float>(pnSourceData[3])/255.0f;
 
-						// Pre-multipy red
+						// Pre-multiply red
 						*pfDestinationData = static_cast<float>(pnSourceData[0])/255.0f*fAlpha;
 						pfDestinationData++;
 
-						// Pre-multipy green
+						// Pre-multiply green
 						*pfDestinationData = static_cast<float>(pnSourceData[1])/255.0f*fAlpha;
 						pfDestinationData++;
 
-						// Pre-multipy blue
+						// Pre-multiply blue
 						*pfDestinationData = static_cast<float>(pnSourceData[2])/255.0f*fAlpha;
 						pfDestinationData++;
 

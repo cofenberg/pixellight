@@ -59,7 +59,7 @@ bool VolumeLoaderPVM::Load(Volume &cVolume, File &cFile)
 
 bool VolumeLoaderPVM::LoadParams(Volume &cVolume, File &cFile, bool bForce8Bit)
 {
-	// Get the image holding the volumtric data
+	// Get the image holding the volumetric data
 	Image &cImage = cVolume.GetVolumeImage();
 
 	// [TODO] Just a test until transfer functions also properly work with 16 bit
@@ -99,7 +99,7 @@ bool VolumeLoaderPVM::LoadParams(Volume &cVolume, File &cFile, bool bForce8Bit)
 
 bool VolumeLoaderPVM::Save(const Volume &cVolume, File &cFile)
 {
-	// Get the image holding the volumtric data
+	// Get the image holding the volumetric data
 	const Image &cImage = cVolume.GetVolumeImage();
 
 	// Get image buffer, we only support the data type "byte" and "word"

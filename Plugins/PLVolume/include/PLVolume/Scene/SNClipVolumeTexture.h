@@ -65,13 +65,13 @@ class SNClipVolumeTexture : public SNClip {
 		enum EFlags {
 			NoTextureCompression = 1<<11,	/**< Disable the usage of texture compression? Has only an effect when loading new volume data. Lookout! When using compression, it may take a moment to compress if no compressed data is provided. */
 			NoTextureMipmapping  = 1<<12,	/**< Disable the usage of mipmaps? Has only an effect when loading new volume data. Lookout! When using mipmaps, it may take a moment to generate mipmaps if no mipmap data is provided. */
-			NoVolumeScale        = 1<<13	/**< When loading, do not use volume scale information to modifiy the scale of this scene node */
+			NoVolumeScale        = 1<<13	/**< When loading, do not use volume scale information to modify the scale of this scene node */
 		};
 		pl_enum(EFlags)
 			pl_enum_base(PLVolume::SNClip::EFlags)
 			pl_enum_value(NoTextureCompression,	"Disable the usage of texture compression? Has only an effect when loading new volume data. Lookout! When using compression, it may take a moment to compress if no compressed data is provided.")
 			pl_enum_value(NoTextureMipmapping,	"Disable the usage of mipmaps? Has only an effect when loading new volume data. Lookout! When using mipmaps, it may take a moment to generate mipmaps if no mipmap data is provided.")
-			pl_enum_value(NoVolumeScale,		"When loading, do not use volume scale information to modifiy the scale of this scene node")
+			pl_enum_value(NoVolumeScale,		"When loading, do not use volume scale information to modify the scale of this scene node")
 		pl_enum_end
 
 

@@ -120,7 +120,7 @@ class SNVolume : public PLScene::SceneNode {
 			ShadingDebugPosition         = 2,	/**< Debug shading: Show current position along the ray inside the volume, within the interval [(0, 0, 0) .. (1, 1, 1)] */
 			ShadingDebugClassification   = 3,	/**< Debug shading: Show classification result */
 			ShadingDebugGradient         = 4,	/**< Debug shading: Show gradient, only normalized if length is greater than one */
-			ShadingDebugNormal           = 5,	/**< Debug shading: Show normalized normal as used for the illumination, simliar to gradient, but in case of an invalid normal the previous valid normal will be reused */
+			ShadingDebugNormal           = 5,	/**< Debug shading: Show normalized normal as used for the illumination, similar to gradient, but in case of an invalid normal the previous valid normal will be reused */
 			ShadingDebugViewingDirection = 6,	/**< Debug shading: Show normalized viewing direction */
 			ShadingDebugLightDirection   = 7,	/**< Debug shading: Show normalized light direction */
 			ShadingLighting              = 8	/**< Shading with lighting (gradient-based shading) */
@@ -131,7 +131,7 @@ class SNVolume : public PLScene::SceneNode {
 			pl_enum_value(ShadingDebugPosition,			"Debug shading: Show current position along the ray inside the volume, within the interval [(0, 0, 0) .. (1, 1, 1)]")
 			pl_enum_value(ShadingDebugClassification,	"Debug shading: Show classification result")
 			pl_enum_value(ShadingDebugGradient,			"Debug shading: Show gradient, only normalized if length is greater than one")
-			pl_enum_value(ShadingDebugNormal,			"Debug shading: Show normalized normal as used for the illumination, simliar to gradient, but in case of an invalid normal the previous valid normal will be reused")
+			pl_enum_value(ShadingDebugNormal,			"Debug shading: Show normalized normal as used for the illumination, similar to gradient, but in case of an invalid normal the previous valid normal will be reused")
 			pl_enum_value(ShadingDebugViewingDirection,	"Debug shading: Show normalized viewing direction")
 			pl_enum_value(ShadingDebugLightDirection,	"Debug shading: Show normalized light direction")
 			pl_enum_value(ShadingLighting,				"Shading with lighting (gradient-based shading)")
@@ -199,13 +199,13 @@ class SNVolume : public PLScene::SceneNode {
 		enum EFlags {
 			NoTextureCompression = 1<<10,	/**< Disable the usage of texture compression? Has only an effect when loading new volume data. Lookout! When using compression, it may take a moment to compress if no compressed data is provided. */
 			NoTextureMipmapping  = 1<<11,	/**< Disable the usage of mipmaps? Has only an effect when loading new volume data. Lookout! When using mipmaps, it may take a moment to generate mipmaps if no mipmap data is provided. */
-			NoVolumeScale        = 1<<12	/**< When loading, do not use volume scale information to modifiy the scale of this scene node */
+			NoVolumeScale        = 1<<12	/**< When loading, do not use volume scale information to modify the scale of this scene node */
 		};
 		pl_enum(EFlags)
 			pl_enum_base(PLScene::SceneNode::EFlags)
 			pl_enum_value(NoTextureCompression,	"Disable the usage of texture compression? Has only an effect when loading new volume data. Lookout! When using compression, it may take a moment to compress if no compressed data is provided.")
 			pl_enum_value(NoTextureMipmapping,	"Disable the usage of mipmaps? Has only an effect when loading new volume data. Lookout! When using mipmaps, it may take a moment to generate mipmaps if no mipmap data is provided.")
-			pl_enum_value(NoVolumeScale,		"When loading, do not use volume scale information to modifiy the scale of this scene node")
+			pl_enum_value(NoVolumeScale,		"When loading, do not use volume scale information to modify the scale of this scene node")
 		pl_enum_end
 
 
@@ -234,7 +234,7 @@ class SNVolume : public PLScene::SceneNode {
 		pl_attribute(ScalarClassificationThreshold,	float,								0.06f,								ReadWrite,	DirectValue,	"Scalar classification threshold (2.4 - Classification)",																												"")
 		// 2.5 - Gradient
 		pl_attribute(Gradient,						pl_enum_type(EGradient),			GradientCentralDifferences,			ReadWrite,	DirectValue,	"Technique to use for the gradient (2.5 - Gradient)",																													"")
-		pl_attribute(PostClassificationGradient,	bool,								false,								ReadWrite,	DirectValue,	"If 'true', the gradient is calculated using the alpha channel of the classificated scalar, else the unclassified scalar is used (better performance)(2.5 - Gradient)",	"")
+		pl_attribute(PostClassificationGradient,	bool,								false,								ReadWrite,	DirectValue,	"If 'true', the gradient is calculated using the alpha channel of the classified scalar, else the unclassified scalar is used (better performance)(2.5 - Gradient)",	"")
 		// 2.6 - Illumination
 		pl_attribute(Illumination,					pl_enum_type(EIllumination),		IlluminationBlinnPhong,				ReadWrite,	DirectValue,	"Technique to use for the illumination (2.6 - Illumination)",																											"")
 			// Overwritten PLScene::SceneNode attributes

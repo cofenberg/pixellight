@@ -72,7 +72,7 @@ bool VolumeLoaderDCM_GDCM::LoadParams(Volume &cVolume, File &cFile, bool bForce8
 {
 	// [TODO] bForce8Bit
 
-	// Get the image holding the volumtric data
+	// Get the image holding the volumetric data
 	Image &cImage = cVolume.GetVolumeImage();
 
 	// Load in the DICOM image
@@ -148,7 +148,7 @@ bool VolumeLoaderDCM_GDCM::LoadDirectory(Volume &cVolume, Directory &cDirectory)
 
 bool VolumeLoaderDCM_GDCM::LoadDirectoryParams(Volume &cVolume, Directory &cDirectory, bool bForce8Bit)
 {
-	// Get the image holding the volumtric data
+	// Get the image holding the volumetric data
 	Image &cImage = cVolume.GetVolumeImage();
 
 	// Load the directory

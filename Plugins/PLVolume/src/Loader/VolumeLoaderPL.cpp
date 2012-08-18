@@ -101,7 +101,7 @@ bool VolumeLoaderPL::Save(const Volume &cVolume, File &cFile)
 	XmlDeclaration *pDeclaration = new XmlDeclaration("1.0", "", "");
 	cDocument.LinkEndChild(*pDeclaration);
 
-	// Add volme
+	// Add volume
 	XmlElement *pVolumeElement = new XmlElement("Volume");
 	pVolumeElement->SetAttribute("Version", "1");
 

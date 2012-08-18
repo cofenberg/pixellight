@@ -54,7 +54,7 @@ void ClipRay_x_(inout float3 RayOrigin, float3 RayDirection, inout float Maximum
 
 	// Are both positions on the same side of the plane?
 	if (rayOriginDistanceFromPlane*rayEndDistanceFromPlane > 0.0) {
-		// Both positions are on the same side of the plane, are we completly clipped?
+		// Both positions are on the same side of the plane, are we completely clipped?
 		if (rayOriginDistanceFromPlane < 0.0)
 			MaximumTravelLength = -1.0;
 	} else {

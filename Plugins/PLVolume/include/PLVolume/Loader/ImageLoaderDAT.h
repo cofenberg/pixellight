@@ -56,7 +56,7 @@ namespace PLVolume {
 *  @note
 *    - The file format specification is online available at http://openqvis.sourceforge.net/docu/fileformat.html
 *    - Sample data sets are available at http://openqvis.sourceforge.net/ and http://www.voreen.org/108-Data-Sets.html
-*    - The image loader is only able to deal with the volumetric image data, not with volumetic specific additional information like voxel size
+*    - The image loader is only able to deal with the volumetric image data, not with volumetric specific additional information like voxel size
 */
 class ImageLoaderDAT : public PLGraphics::ImageLoader {
 
