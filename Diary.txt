@@ -4,6 +4,21 @@
 
 
 
+>> 18.08.2012
+[CO]
+- Saw the "PL_Volume isn't compileable with gcc 4.4.x -> deactivate it completely"-change
+	15.08.2012
+	"SHA-1: c4e7cae6b3e5a3e8249211f99f73ea8f661cb538"
+	* PL_Volume isn't compileable with gcc 4.4.x -> deactivate it completely
+  -> Added a TODO as well as an error message so that it can be seen that there's currently something not working
+     (otherwise one might wonder why the volume projects are not buildable, but only when using a particular GCC version :)
+  -> Interesting, the project is usual C++ code. As far as I remember I tested it with a GCC version (don't remember which)
+     and it compiled. Probably some usual C++ compiler difference and the code just needs a minor update. Would be nice
+	 to know what's going on. :D
+  -> Removed the "CMakeList.txt" check to keep the change as local as possible without having the risk of forgetting to remove
+     this later on when the project is compiling, should still be deactivated for this GCC version
+
+
 
 >> 19.06.2012
 [CO]

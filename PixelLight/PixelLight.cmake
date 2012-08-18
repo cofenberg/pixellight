@@ -377,13 +377,15 @@ if(X86_64)
 	endif()
 endif()
 
+# [TODO] With gcc 4.4.x PLVolume doesn't compile, review it (should be usual C++ code)
 if(GCC44)
-	# With gcc 4.4.x pl_volumen doesn't compile
 	unset (PL_PLUGIN_VOLUME							CACHE)
 	unset (PL_PLUGIN_VOLUME_RENDERER				CACHE)
 	unset (PL_PLUGIN_VOLUME_GUI						CACHE)
 	unset (PL_PLUGIN_VOLUME_LOADER_PVM				CACHE)
 	unset (PL_PLUGIN_VOLUME_LOADER_DICOM_GDCM		CACHE)
+else()
+	message(ERROR "[TODO] With gcc 4.4.x PLVolume doesn't compile, review it (should be usual C++ code)")
 endif()
 
 # Not Windows
