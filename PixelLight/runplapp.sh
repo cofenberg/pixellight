@@ -1,6 +1,6 @@
 #!/bin/sh
 # Change to game directory
-CANONPATH="$0"
+CANONPATH=`readlink -f $0`
 apppath=`dirname "${CANONPATH}"`
 appname=`basename "${CANONPATH}"`-bin
 

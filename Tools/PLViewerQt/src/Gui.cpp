@@ -463,8 +463,16 @@ void Gui::ResetAndFillQFileSystemWatcher()
 		// Add files to the Qt file system watcher instance
 		const String sResourceFilename = m_pApplication->GetResourceFilename();
 		if (sResourceFilename.GetLength()) {
+			QString cRessourceFile = QtStringAdapter::PLToQt(Url(sResourceFilename).GetNativePath());
+			QFileInfo cFileInfo(cRessourceFile);
+			
+			// Check if path is not absolute and file does not exits
+			// then prepend Application base directory to path
+			if(!cFileInfo.isAbsolute() && !cFileInfo.exists())
+				cRessourceFile =  QtStringAdapter::PLToQt(GetApplication().GetBaseDirectory()) + cRessourceFile;
+			
 			// Add the resource file itself
-			m_pQFileSystemWatcher->addPath(QtStringAdapter::PLToQt(Url(sResourceFilename).GetNativePath()));
+			m_pQFileSystemWatcher->addPath(cRessourceFile);
 
 			// In case the resource is a script, do also take the associated filenames into account
 			Script *pScript = m_pApplication->GetScript();
