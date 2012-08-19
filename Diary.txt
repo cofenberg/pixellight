@@ -4,6 +4,14 @@
 
 
 
+>> 19.08.2012
+[CO]
+- "PixelLight.cmake": Added "CMAKETOOLS_SDK"-trigger which is similar to the "CMAKETOOLS_MINIMAL"-trigger. When "CMAKETOOLS_SDK"
+  is active when first configuring the CMake project, only the projects will be enabled which should be within the public
+  PixelLight SDK.
+
+
+
 >> 18.08.2012
 [CO]
 - Saw the "PL_Volume isn't compileable with gcc 4.4.x -> deactivate it completely"-change
