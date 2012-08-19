@@ -301,12 +301,21 @@ elseif(CMAKETOOLS_SDK)
 	set (PL_PLUGIN_RENDERER_D3D11					"0"					CACHE BOOL "Build plugin 'PLRendererD3D11'? (due to legal issues, we can't provide a public downloadable package)")
 	set (PL_PLUGIN_FRONTEND_ACTIVEX					"0"					CACHE BOOL "Build plugin 'PLFrontendActiveX'?")
 	set (PL_PLUGIN_FRONTEND_MOZILLA					"0"					CACHE BOOL "Build plugin 'PLFrontendMozilla'?")
-	set (PL_EXPORTER_3DSMAX_2008					"1"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2008'? (due to legal issues, we can't provide a public downloadable package)")	# ${PL_USE_NONPUBLIC}
-	set (PL_EXPORTER_3DSMAX_2009					"1"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2009'? (due to legal issues, we can't provide a public downloadable package)")	# ${PL_USE_NONPUBLIC}
-	set (PL_EXPORTER_3DSMAX_2010					"1"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2010'? (due to legal issues, we can't provide a public downloadable package)")	# ${PL_USE_NONPUBLIC}
-	set (PL_EXPORTER_3DSMAX_2011					"1"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2011'? (due to legal issues, we can't provide a public downloadable package)")	# ${PL_USE_NONPUBLIC}
-	set (PL_EXPORTER_3DSMAX_2012					"1"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2012'? (due to legal issues, we can't provide a public downloadable package)")	# ${PL_USE_NONPUBLIC}
-	set (PL_EXPORTER_3DSMAX_2013					"1"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2013'? (due to legal issues, we can't provide a public downloadable package)")	# ${PL_USE_NONPUBLIC}
+	if(WIN32)
+		set (PL_EXPORTER_3DSMAX_2008					"1"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2008'? (due to legal issues, we can't provide a public downloadable package)")	# ${PL_USE_NONPUBLIC}
+		set (PL_EXPORTER_3DSMAX_2009					"1"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2009'? (due to legal issues, we can't provide a public downloadable package)")	# ${PL_USE_NONPUBLIC}
+		set (PL_EXPORTER_3DSMAX_2010					"1"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2010'? (due to legal issues, we can't provide a public downloadable package)")	# ${PL_USE_NONPUBLIC}
+		set (PL_EXPORTER_3DSMAX_2011					"1"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2011'? (due to legal issues, we can't provide a public downloadable package)")	# ${PL_USE_NONPUBLIC}
+		set (PL_EXPORTER_3DSMAX_2012					"1"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2012'? (due to legal issues, we can't provide a public downloadable package)")	# ${PL_USE_NONPUBLIC}
+		set (PL_EXPORTER_3DSMAX_2013					"1"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2013'? (due to legal issues, we can't provide a public downloadable package)")	# ${PL_USE_NONPUBLIC}
+	else()
+		set (PL_EXPORTER_3DSMAX_2008					"0"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2008'? (due to legal issues, we can't provide a public downloadable package)")	# ${PL_USE_NONPUBLIC}
+		set (PL_EXPORTER_3DSMAX_2009					"0"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2009'? (due to legal issues, we can't provide a public downloadable package)")	# ${PL_USE_NONPUBLIC}
+		set (PL_EXPORTER_3DSMAX_2010					"0"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2010'? (due to legal issues, we can't provide a public downloadable package)")	# ${PL_USE_NONPUBLIC}
+		set (PL_EXPORTER_3DSMAX_2011					"0"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2011'? (due to legal issues, we can't provide a public downloadable package)")	# ${PL_USE_NONPUBLIC}
+		set (PL_EXPORTER_3DSMAX_2012					"0"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2012'? (due to legal issues, we can't provide a public downloadable package)")	# ${PL_USE_NONPUBLIC}
+		set (PL_EXPORTER_3DSMAX_2013					"0"					CACHE BOOL "Build exporter plugin 'PL3dsMaxSceneExport_2013'? (due to legal issues, we can't provide a public downloadable package)")	# ${PL_USE_NONPUBLIC}
+	endif()
 	set (PL_PLUGIN_ENGINE_IMAGEEXR					"1"					CACHE BOOL "Build plugin 'PLImageLoaderEXR'?")
 	set (PL_TOOL_PLINSTALL							"1"					CACHE BOOL "Build plugin 'PLInstall'?")
 	set (PL_PLUGIN_RENDERER_NULL					"1"					CACHE BOOL "Build plugin 'PLRendererNull'?")
@@ -476,6 +485,10 @@ if(ANDROID)
 else()
 	# Remove Android only features
 	unset (PL_PLUGIN_SOUND_OPENSLES					CACHE)
+endif()
+
+if(PL_PLUGIN_ENGINE_POSTPROCESS AND NOT PL_PLUGIN_RENDERER_OPENGLCG)
+	message(WARNING "PL_PLUGIN_ENGINE_POSTPROCESS needs PL_PLUGIN_RENDERER_OPENGLCG -> Postprocess effects might not work")
 endif()
 
 
