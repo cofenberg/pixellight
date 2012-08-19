@@ -3,9 +3,10 @@
 CANONPATH=`readlink -f $0`
 apppath=`dirname "${CANONPATH}"`
 appname=`basename "${CANONPATH}"`-bin
+basepath=`readlink -f ${apppath}@CMAKETOOLS_BASEPATH_GO_UPS@`
 
 # path to the pixellight runtime
-PLRuntimePath="@CMAKE_INSTALL_PREFIX@/share/pixellight/Runtime/@CMAKETOOLS_TARGET_ARCHBITSIZE@"
+PLRuntimePath="${basepath}/Runtime/@CMAKETOOLS_TARGET_ARCHBITSIZE@"
 
 shift
 cd $apppath > /dev/null
