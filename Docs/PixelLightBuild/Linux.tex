@@ -252,11 +252,9 @@ Please note that the following information should only be required during develo
 Once you have built PixelLight, you may want to run e.g. the sample applications. In order for this to work correctly, PixelLight must know where to search for data files and plugins, which is not always an easy task on Linux systems. You have several options here.
 
 \subsection{1. Changes in Pixellight 1.0.0}
-With PixelLight 1.0.0 the name of the executables of the Samples and Tools (which links dynamically to PLCore, currently all Samples, PLViewer, and PLViewerQt) has changed to support an out of the box experience without fiddeling with the system environment (e.g. setting env vars or add additional paths to the ld.so.conf)
+With PixelLight 1.0.0 the name of the executables of the Samples and Tools (which links dynamically to PLCore, currently all Samples, PLViewer, and PLViewerQt) has changed to support an out of the box experience without fiddeling with the system environment (e.g. setting env vars or add additional paths to ld.so.conf)
 
-The name of the executable has an suffix named \emph{"-bin"} e.g. \emph{PLViewer-bin}. Additional an helper shellscript is generated with the name of the project e.g. \emph{PLViewer}. The shellscript setups the environment so that the app can find all needed libraries and the PixelLight Runtime. The shellscript will not be copied to the Bin-Linux directory. Because the shellscript contains an path which points to
-$<CMAKE\_INSTALL\_PREFIX>$/share/pixellight/Runtime/$<ARCH>$ e.g. /usr/local/share/pixellight/Runtime/x86
-$\Rightarrow$ the shellscript is only useable when the build is installed via an \emph{make install}
+The name of the executable has an suffix named \emph{"-bin"} e.g. \emph{PLViewer-bin}. Additional an helper shellscript is generated with the name of the project e.g. \emph{PLViewer}. The shellscript setups the environment so that the app can find all needed libraries and the PixelLight Runtime.
 
 \paragraph{Note:}Due this change the name of some Sample log and configuration files has changed. This affects currently all Samples which number prefix is lower then 30. e.g. 01Application (old $\to$ new):
 
