@@ -39,7 +39,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	set(CMAKE_MODULE_PATH		${CMAKE_SOURCE_DIR}/Packages/SDK)
 	set(CPACK_PL_PACKAGE_PATH	${CMAKE_SOURCE_DIR}/Packages)
 	if(MSVC10)
-		include(${CMAKE_SOURCE_DIR}/External/Base/VC2010/Package.cmake  ${CMAKETOOLS_DIR}/CMakeTools_Packs.cmake)
+		include(${CMAKE_SOURCE_DIR}/External/Base/VC2010/Package.cmake ${CMAKETOOLS_DIR}/CMakeTools_Packs.cmake)
 	endif()
 
 	##################################################
@@ -83,8 +83,8 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	set(CPACK_DEBIAN_PACKAGE_DESCRIPTION	${CPACK_PACKAGE_DESCRIPTION_SUMMARY})
 	set(CPACK_DEBIAN_PACKAGE_SECTION		"devel")
 	set(CPACK_DEBIAN_PACKAGE_PRIORITY		"optional")
-#	set(CPACK_DEBIAN_PACKAGE_RECOMMENDS 	"")
-#	set(CPACK_DEBIAN_PACKAGE_SUGGESTS	 	"")
+#	set(CPACK_DEBIAN_PACKAGE_RECOMMENDS		"")	# We don't use this
+#	set(CPACK_DEBIAN_PACKAGE_SUGGESTS		"")	# We don't use this
 	set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA	"")
 
 	##################################################
@@ -97,7 +97,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	## Start menu icons
 	##################################################
 	# Add icons
-	set(CPACK_NSIS_CREATE_ICONS " 
+	set(CPACK_NSIS_CREATE_ICONS "
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\SDK-Browser.lnk\\\" \\\"$INSTDIR\\\\SDKBrowser.chm\\\"
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\Website.lnk\\\" \\\"http://www.pixellight.org/\\\"
 		CreateShortCut \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\ReleaseNotes.lnk\\\" \\\"$INSTDIR\\\\ReleaseNotes.txt\\\"
@@ -137,7 +137,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	")
 
 	# Delete icons
-	set(CPACK_NSIS_DELETE_ICONS " 
+	set(CPACK_NSIS_DELETE_ICONS "
 		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\SDK-Browser.lnk\\\"
 		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\Website.lnk\\\"
 		Delete \\\"$SMPROGRAMS\\\\$MUI_TEMP\\\\ReleaseNotes.lnk\\\"
@@ -225,10 +225,11 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 		set(CPACK_GENERATOR		"NSIS")
 		set(CPACK_OUTPUT_FILE	"${CPACK_PACKAGE_FILE_NAME}.exe")
 	elseif(LINUX)
-		#set(CPACK_GENERATOR		"DEB;TGZ")
 		set(CPACK_GENERATOR		"DEB")
-		#set(CPACK_OUTPUT_FILE	"${CPACK_PACKAGE_FILE_NAME}.deb;${CPACK_PACKAGE_FILE_NAME}.tar.gz")
 		set(CPACK_OUTPUT_FILE	"${CPACK_PACKAGE_FILE_NAME}.deb")
+		# We could also create ".tar.gz"-archives as seen below, but we don't need them
+		# set(CPACK_GENERATOR	"DEB;TGZ")
+		# set(CPACK_OUTPUT_FILE	"${CPACK_PACKAGE_FILE_NAME}.deb;${CPACK_PACKAGE_FILE_NAME}.tar.gz")
 	endif()
 
 	##################################################
@@ -276,4 +277,3 @@ add_custom_command(TARGET Pack-SDK
 	COMMAND ${CMAKE_COMMAND} -E make_directory "${CPACK_COPY_PACKAGE_FILE_TARGET_DIR}"
 	${CPACK_COPY_PACKAGE_FILE_COMMANDS}
 )
-
