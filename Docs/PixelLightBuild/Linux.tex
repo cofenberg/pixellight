@@ -96,7 +96,6 @@ apt-get install libpcre3-dev libjpeg62-dev libpng12-dev libfreetype6-dev libopen
 
 
 
-
 \section{External Packages}
 \label{Chapter:Linux_ExternalPackages}
 Just like the Windows build, it is necessary to obtain all the external packages used by the engine and install them in the right place for the build. Have a look at the \emph{External} directory, there you find a readme file for every library that describes what files are needed.
@@ -219,6 +218,7 @@ make -j 4 -k
 
 
 
+
 \section{Create Documentation and Packages}
 To create the documentation, build project \emph{Docs}:
 \begin{lstlisting}[language=sh]
@@ -245,26 +245,32 @@ Or use maketool to do it for you:
 
 
 
+
 \section{Running from a Local Build and Installing}
 \label{Chapter:Linux_RunningFromALocalBuildAndInstalling}
 Please note that the following information should only be required during development using PixelLight. Release versions of your application should always contain everything so it can be run out-of-the-box. It should not be required to manipulate an \emph{environment variable} on the system of end-users.
 
 Once you have built PixelLight, you may want to run e.g. the sample applications. In order for this to work correctly, PixelLight must know where to search for data files and plugins, which is not always an easy task on Linux systems. You have several options here.
 
-\subsection{1. Changes in Pixellight 1.0.0}
-With PixelLight 1.0.0 the name of the executables of the Samples and Tools (which links dynamically to PLCore, currently all Samples, PLViewer, and PLViewerQt) has changed to support an out of the box experience without fiddeling with the system environment (e.g. setting env vars or add additional paths to ld.so.conf)
 
-The name of the executable has an suffix named \emph{"-bin"} e.g. \emph{PLViewer-bin}. Additional an helper shellscript is generated with the name of the project e.g. \emph{PLViewer}. The shellscript setups the environment so that the app can find all needed libraries and the PixelLight Runtime.
 
-\paragraph{Note:}Due this change the name of some Sample log and configuration files has changed. This affects currently all Samples which number prefix is lower then 30. e.g. 01Application (old $\to$ new):
+\subsection{Changes in PixelLight 1.0.0}
+With PixelLight 1.0.0, the name of the executables of the samples and tools which link dynamically to PLCore\footnote{Currently all samples, PLViewer, and PLViewerQt} have been changed. This enables an out-of-the-box experience without fiddeling with the system environment by setting for instance environment variables or by adding additional paths to \emph{ld.so.conf}.
 
-01Application.log $\to$ 01Application-bin.log
+The name of the executable has a suffix named \emph{"-bin"}, for example \emph{PLViewer-bin}. In addition to this, a helper shell script like \emph{PLViewer} is generated with the name of the project. The shell script configures the environment so that the appplication can find all required libraries and the PixelLight runtime.
 
-01Application.cfg $\to$ 01Application-bin.cfg
-\\
-\\In general all applications are affected using PixelLight which doesn't set explicitly the name for the configuration or log file (e.g via using the macros pl\_module\_application or pl\_module\_application\_frontend, FrontendContext::SetName, ApplicationContext::SetLogFilename or ApplicationContext::SetConfigFilename)
 
-\subsection{2. Run from a your Local Source Directory}
+\paragraph{Note}
+Due to this change, the name of some sample log and configuration files have been changed. At the moment, this affects all samples which number prefix is lower then 30. e.g. 01Application (old $\to$ new):
+\begin{itemize}
+	\item 01Application.log $\to$ 01Application-bin.log
+	\item 01Application.cfg $\to$ 01Application-bin.cfg
+\end{itemize}
+In general, all PixelLight based applications which do not set the name explicitly for the configuration or log file \footnote{For instance by using the macros pl\_module\_application or pl\_module\_application\_frontend, FrontendContext::SetName, ApplicationContext::SetLogFilename or ApplicationContext::SetConfigFilename} are affected.
+
+
+
+\subsection{Option 1: Run from a your Local Source Directory}
 This means that everything stays in your source directory. All libraries and applications have already been copied into the directory \emph{Bin-Linux} by means of post-build commands.
 
 Now you only have to tell PixelLight where it can find the runtime and data files. This can be done by setting the environment variable \emph{PL\_RUNTIME} to the \emph{Runtime} directory.
@@ -301,8 +307,7 @@ You may also want to have a look into the \emph{LD\_LIBRARY\_PATH} environment v
 
 
 
-
-\subsection{3. Install the PixelLight \ac{SDK} Locally}
+\subsection{Option 2: Install the PixelLight \ac{SDK} Locally}
 Installing means copying the files built by the project into your local Linux system so that the libraries and applications can be found there. The CMake build script therefore provides you with an \emph{install} target that installs everything on your local machine into the \emph{/usr/local} directory (default) or any path to which the cmake var \emph{CMAKE\_INSTALL\_PREFIX} was set to.
 
 Change into the build directory, e.g.:
@@ -310,22 +315,18 @@ Change into the build directory, e.g.:
 cd build-Release
 \end{lstlisting}
 
-Install: (when \emph{CMAKE\_INSTALL\_PREFIX} was set to an path to which an normal user has no right to write into then this has to be done as root. Use e.g. \emph{sudo} or \emph{su} for this task.)
+Install: (When \emph{CMAKE\_INSTALL\_PREFIX} was set to a path to which a normal user has no right to write into then this has to be done as root. Use e.g. \emph{sudo} or \emph{su} for this task.)
 \begin{lstlisting}[language=sh]
 make install
 \end{lstlisting}
 
-Update libraries: (This has to be done as root. Use e.g. \emph{sudo} or \emph{su} for this task. With PixelLight 1.0.0 not needed)
+Update libraries: (This has to be done as root. Use e.g. \emph{sudo} or \emph{su} for this task. With PixelLight 1.0.0 not needed.)
 \begin{lstlisting}[language=sh]
 ldconfig /usr/local/lib
 \end{lstlisting}
-(if this is not done, new dynamic libs may not be found correctly)
+(if this is not done, new dynamic libraries may not be found correctly)
 
-If you have installed Pixellight, you will find the runtime in $<CMAKE\_INSTALL\_PREFIX>$/share/pixellight/Runtime,
-
-and the samples in $<CMAKE\_INSTALL\_PREFIX>$/share/pixellight/Samples
-
-e.g \emph{/usr/local/share/pixellight/Runtime} and \emph{/usr/local/share/pixellight/Samples}.
+If you have installed PixelLight, you will find the runtime in $<CMAKE\_INSTALL\_PREFIX>$/share/pixellight/Runtime, and the samples in $<CMAKE\_INSTALL\_PREFIX>$/share/pixellight/Samples e.g \emph{/usr/local/share/pixellight/Runtime} and \emph{/usr/local/share/pixellight/Samples}.
 
 Now you should be able to run the applications built by the PixelLight project, e.g. run one of the samples:
 \begin{lstlisting}[language=sh]
@@ -333,7 +334,7 @@ cd /usr/local/share/pixellight/Samples/Bin/x86
 ./50RendererTriangle
 \end{lstlisting}
 
-What also works (due the helper shellscript since PxielLight 1.0.0 ):
+What also works (due the helper shell script since PixelLight 1.0.0 ):
 \begin{lstlisting}[language=sh]
 /usr/local/share/pixellight/Samples/Bin/x86/50RendererTriangle
 \end{lstlisting}
