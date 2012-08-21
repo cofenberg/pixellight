@@ -33,10 +33,10 @@ if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	## Use system libraries
 	##################################################
 	find_package(PNG)
-	# The find module from cmake itself doesn't add the XXX_LIBRARIES var and XXX_INCLUDE_DIR var to the cache, which is the correct behaviour.
-	# This vars should normaly only be visible within the cmake file in which the find module was called.
-	# Otherwise the vars would be visible for all other projects if wanted or not
-	# We want this, because this vars are used in other cmake files, which doesn't include this file, so we add the vars to the cache
+	# The find module from CMake itself doesn't add the XXX_LIBRARIES variable and XXX_INCLUDE_DIR variable to the cache, which is the correct behaviour.
+	# These variables should normaly only be visible within the CMake file in which the find module was called.
+	# Otherwise the variables would be visible for all other projects if wanted or not
+	# We want this, because this variables are used in other CMake files, which doesn't include this file, so we add the variables to the cache
 	set(PNG_LIBRARIES ${PNG_LIBRARIES} CACHE INTERNAL "")
 	set(PNG_INCLUDE_DIR ${PNG_INCLUDE_DIR} CACHE INTERNAL "")
 else(CMAKETOOLS_USE_SYSTEM_LIBS)

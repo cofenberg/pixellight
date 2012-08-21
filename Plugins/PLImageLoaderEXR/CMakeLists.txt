@@ -105,7 +105,7 @@ elseif(LINUX)
 	##################################################
 	add_compile_flags(
 		${LINUX_COMPILE_FLAGS}
-		-fexceptions	# Enable exceptions for this project, needed to compile it with clang
+		-fexceptions	# Enable exceptions for this project, needed to compile it with Clang
 	)
 endif()
 

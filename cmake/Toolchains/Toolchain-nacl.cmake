@@ -101,7 +101,7 @@ elseif(CMAKE_HOST_WIN32)
 elseif( CMAKE_HOST_UNIX )
 	# [TODO] Implement me
 else()
-	message(FATAL_ERROR "Cross-compilation on your platform is not supported by this cmake toolchain")
+	message(FATAL_ERROR "Cross-compilation on your platform is not supported by this CMake toolchain")
 endif()
 
 # Toolchain name

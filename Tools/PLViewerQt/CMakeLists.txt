@@ -29,7 +29,7 @@ define_project(PLViewerQt NOSUFFIX)
 ## Prerequisites
 ##################################################
 if(LINUX AND NOT ANDROID)
-	# Setup executable suffix under linux
+	# Setup executable suffix under Linux
 	# This is needed so that the helper runner script works
 	set(CMAKE_EXECUTABLE_SUFFIX "-bin")
 	set(CMAKETOOLS_BASEPATH_GO_UPS "/../../")

@@ -1,5 +1,5 @@
 #*********************************************************#
-#*  File: CheckLinuxCompiler.cmake                                 *
+#*  File: CheckLinuxCompiler.cmake                       *
 #*
 #*  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
 #*
@@ -23,7 +23,7 @@
 ##################################################
 ## CheckLinuxCompiler
 ##
-## Additional checks for the used compiler (e.g. gcc or clang) under linux
+## Additional checks for the used compiler (e.g. GCC or Clang) under Linux
 ##
 ##
 ## Variables:

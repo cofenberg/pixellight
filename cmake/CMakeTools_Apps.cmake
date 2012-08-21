@@ -395,8 +395,8 @@ endmacro(add_activex_interface target src)
 ##################################################
 ## MACRO: add_runner_shell_script
 ##
-## Creates an runner shell script (only workable under LINUX)
-## The script asumes following directory structure:
+## Creates a runner shell script (works only under Linux)
+## The script assumes following directory structure:
 ## <install_prefix>/share/
 ##	-> pixellight (basepath)
 ##		-> Runtime
@@ -406,12 +406,12 @@ endmacro(add_activex_interface target src)
 ##				->  <ARCH> (e.g. x86)
 ##		-> Tools
 ##			->  <ARCH> (e.g. x86)
-## The cmake var CMAKETOOLS_BASEPATH_GO_UPS tells the script how many directories it must go "up" to come to the base directory (<install_prefix>/share/pixellight)
-## For the Samples the CMAKETOOLS_BASEPATH_GO_UPS is set to go 3 directories up (/../../../)
-## For the Tools the CMAKETOOLS_BASEPATH_GO_UPS is set to go 2 directories up (/../../)
-## The script setups PL_RUNTIME and LD_LIBRARY_PATH so that the PL app can run properly
-## Part of the path in both env vars is generated from the calculated "base directory"
-## So the generated script is only useful when the above listed directory structure exists
+## The CMake variable CMAKETOOLS_BASEPATH_GO_UPS tells the script how many directories it must go "up" to come to the base directory (<install_prefix>/share/pixellight)
+## For the samples the CMAKETOOLS_BASEPATH_GO_UPS is set to go three directories up (/../../../)
+## For the tools the CMAKETOOLS_BASEPATH_GO_UPS is set to go two directories up (/../../)
+## The script configures PL_RUNTIME and LD_LIBRARY_PATH so that the PL application can run properly
+## A part of the path in both environment variables is generated from the calculated "base directory"
+## So, the generated script is only useful when the above listed directory structure exists
 ##
 ## The script assumes that the real binary has following name
 ## {CMAKETOOLS_CURRENT_OUTPUT_NAME}-bin

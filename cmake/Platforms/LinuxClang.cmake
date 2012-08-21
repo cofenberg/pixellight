@@ -21,9 +21,9 @@
 
 
 ##################################################
-## Linux/clang platform definitions
+## Linux/Clang platform definitions
 ##
-## This file contains compiler and linker settings which are specific to the clang compiler suit under linux
+## This file contains compiler and linker settings which are specific to the Clang compiler suit under Linux
 ##################################################
 
 
@@ -62,9 +62,9 @@ endif()
 ##################################################
 ## Version checks
 ##################################################
-# Do only this check when using the Makefiles cmake generator
+# Do only this check when using the Makefiles CMake generator
 if(CMAKE_GENERATOR MATCHES "Makefiles")
-	message(STATUS "Check for clang compiler version")
+	message(STATUS "Check for Clang compiler version")
 	set(CMAKE_TEST_COMPILER ${CMAKE_C_COMPILER})
 	if(NOT CMAKE_C_COMPILER)
 		set(CMAKE_TEST_COMPILER ${CMAKE_CXX_COMPILER})
@@ -80,7 +80,7 @@ if(CMAKE_GENERATOR MATCHES "Makefiles")
 			"Determining the version of compiler passed with the following output:\n"
 			"${CMAKE_COMPILER_OUTPUT}\n\n")
 		string(REGEX REPLACE "\n" " " compilerVersion "${CMAKE_COMPILER_OUTPUT}")
-		message(STATUS "Check for clang compiler version - ${compilerVersion}")
+		message(STATUS "Check for Clang compiler version - ${compilerVersion}")
 		set(Cang3)
 		string(REGEX REPLACE "^.*[ ]([0-9]+)\\.[0-9].*$" "\\1" CLANG_MAJOR "${compilerVersion}")
 		string(REGEX REPLACE "^.*[ ][0-9]+\\.([0-9]).*$" "\\1" CLANG_MINOR "${compilerVersion}")
@@ -100,7 +100,7 @@ if(CMAKE_GENERATOR MATCHES "Makefiles")
 endif(CMAKE_GENERATOR MATCHES "Makefiles")
 
 # Check compiler features
-# currently clang < 3.2 has problems with visibility and template instances which gets exported in a library (see http://llvm.org/bugs/show_bug.cgi?id=10113)
+# currently Clang < 3.2 has problems with visibility and template instances which gets exported in a library (see http://llvm.org/bugs/show_bug.cgi?id=10113)
 # and it adds references to methods to the export table which shouldn't be there (e.g. PLMesh: PLCore::ElementManager<PLRenderer::Animation>::GetByIndex(unsigned int) const) see http://llvm.org/bugs/show_bug.cgi?id=12714
 if(Clang_VERSION VERSION_LESS "3.2")
 	set(NO_VISIBILITY_CHECK 1)

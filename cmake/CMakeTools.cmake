@@ -23,7 +23,7 @@
 ##################################################
 ## CMakeTools
 ##
-## CMakeTools is a collection of cmake scripts and macros that provides
+## CMakeTools is a collection of CMake scripts and macros that provides
 ## a simplified build system framework to build C++ applications, libraries,
 ## documentation and packages for your project.
 ##

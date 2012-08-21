@@ -425,11 +425,11 @@ endmacro(external_run_configure2 dir)
 ##################################################
 ## MACRO: external_run_cmake
 ##
-## Use cmake to configure a project
+## Use CMake to configure a project
 ##################################################
 macro(external_run_cmake dir)
 	# Message
-	external_message(STATUS "Running cmake")
+	external_message(STATUS "Running CMake")
 
 	# Set generator
 	if(CMAKETOOLS_TARGET_SYSTEM STREQUAL "Windows")

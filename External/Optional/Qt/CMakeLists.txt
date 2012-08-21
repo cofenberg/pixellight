@@ -44,10 +44,10 @@ if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	find_package(Qt4 4.7 REQUIRED)
 	include(${QT_USE_FILE})
 
-	# The find module from cmake itself doesn't add the XXX_LIBRARIES variable and XXX_INCLUDE_DIR variable to the cache, which is the correct behaviour.
-	# This variables should normaly only be visible within the cmake file in which the find module was called.
+	# The find module from CMake itself doesn't add the XXX_LIBRARIES variable and XXX_INCLUDE_DIR variable to the cache, which is the correct behaviour.
+	# These variables should normaly only be visible within the CMake file in which the find module was called.
 	# Otherwise the variables would be visible for all other projects if wanted or not.
-	# We want this, because this variables are used in other cmake files, which doesn't include this file, so we add the variables to the cache.
+	# We want this, because this variables are used in other CMake files, which doesn't include this file, so we add the variables to the cache.
 	set(QT_LIBRARIES ${QT_LIBRARIES} CACHE INTERNAL "")
 	set(QT_INCLUDE_DIRS ${QT_INCLUDE_DIR} ${QT_INCLUDE_DIR}/QtCore ${QT_INCLUDE_DIR}/QtGui CACHE INTERNAL "")
 else()
@@ -83,7 +83,7 @@ else()
 	unset(QT_QMAKE_EXECUTABLE_LAST CACHE)
 
 	# We have to set following variables otherwise the FindQt4.cmake won't find either the executables uic, rcc, moc and the qt library path
-	# The QT_INCLUDE_DIR path has also be set, because this var is an additional condition that FindQt4.cmake sets QT_FOUND to true
+	# The QT_INCLUDE_DIR path has also be set, because this variable is an additional condition that FindQt4.cmake sets QT_FOUND to true
 	set(QT_INCLUDE_DIR	${QT_EXTERNAL_DIR}/include/	)	# Path to "include" of Qt4
 	set(QT_BINARY_DIR 	${LOCAL_QT_DIR}/			)	# Path to "bin" of Qt4
 	set(QT_LIBRARY_DIR	${QT_EXTERNAL_DIR}/lib/		)	# Path to "lib" of Qt4
