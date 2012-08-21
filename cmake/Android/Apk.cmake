@@ -70,7 +70,7 @@ macro(android_create_apk name apk_directory shared_libraries assets data_directo
 	if(ANDROID_APK_CREATE)
 		# Construct the current package name and theme
 		set(ANDROID_APK_PACKAGE "${ANDROID_APK_TOP_LEVEL_DOMAIN}.${ANDROID_APK_DOMAIN}.${ANDROID_APK_SUBDOMAIN}")
-		if (ANDROID_APK_FULLSCREEN)
+		if(ANDROID_APK_FULLSCREEN)
 			set(ANDROID_APK_THEME "android:theme=\"@android:style/Theme.NoTitleBar.Fullscreen\"")
 		else()
 			set(ANDROID_APK_THEME "")
@@ -97,9 +97,9 @@ macro(android_create_apk name apk_directory shared_libraries assets data_directo
 			get_filename_component(shared_library_filename ${value} NAME_WE)
 
 			# "shared_library_filename" is e.g. "libPLCore", but we need "PLCore"
-			STRING(LENGTH ${shared_library_filename} shared_library_filename_length)
+			string(LENGTH ${shared_library_filename} shared_library_filename_length)
 			math(EXPR shared_library_filename_length ${shared_library_filename_length}-3)
-			STRING(SUBSTRING ${shared_library_filename} 3 ${shared_library_filename_length} shared_library_filename)
+			string(SUBSTRING ${shared_library_filename} 3 ${shared_library_filename_length} shared_library_filename)
 
 			# "shared_library_filename" is now e.g. "PLCore", this is what we want -> Add it to the list
 			set(ANDROID_SHARED_LIBRARIES_TO_LOAD ${ANDROID_SHARED_LIBRARIES_TO_LOAD} ${shared_library_filename})
@@ -178,7 +178,7 @@ macro(android_create_apk name apk_directory shared_libraries assets data_directo
 			)
 
 			# Install current version on the device/emulator
-			if (ANDROID_APK_INSTALL OR ANDROID_APK_RUN)
+			if(ANDROID_APK_INSTALL OR ANDROID_APK_RUN)
 				add_custom_command(TARGET ${ANDROID_NAME}
 					COMMAND adb install -r bin/${ANDROID_NAME}.apk
 					WORKING_DIRECTORY "${apk_directory}"
@@ -192,7 +192,7 @@ macro(android_create_apk name apk_directory shared_libraries assets data_directo
 			)
 
 			# Install current version on the device/emulator
-			if (ANDROID_APK_INSTALL OR ANDROID_APK_RUN)
+			if(ANDROID_APK_INSTALL OR ANDROID_APK_RUN)
 				add_custom_command(TARGET ${ANDROID_NAME}
 					COMMAND adb install -r bin/${ANDROID_NAME}-debug.apk
 					WORKING_DIRECTORY "${apk_directory}"
@@ -201,7 +201,7 @@ macro(android_create_apk name apk_directory shared_libraries assets data_directo
 		endif()
 
 		# Start the application
-		if (ANDROID_APK_RUN)
+		if(ANDROID_APK_RUN)
 			add_custom_command(TARGET ${ANDROID_NAME}
 				COMMAND adb shell am start -n ${ANDROID_APK_PACKAGE}/${ANDROID_APK_PACKAGE}.LoadLibraries
 			)
@@ -220,7 +220,7 @@ macro(android_copy_files src dest)
 
 	# Get exclude option
 	set(exclude)
-	if ("${ARGV2}" STREQUAL "EXCLUDE")
+	if("${ARGV2}" STREQUAL "EXCLUDE")
 		set(exclude ${ARGV3})
 	endif()
 

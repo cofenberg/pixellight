@@ -26,7 +26,7 @@
 #  LIBVORBIS_INCLUDE_DIRS - where to find vorbisfile.h, etc.
 #  LIBVORBIS_LIBRARIES   - List of libraries when using libvorbis.
 
-include (CheckLibraryExists)
+include(CheckLibraryExists)
 
 find_path(LIBVORBIS_INCLUDE_DIRS vorbis/vorbisfile.h)
 find_library(LIBVORBIS_LIBRARY NAMES vorbis)
@@ -36,8 +36,8 @@ set(LIBVORBIS_LIBRARIES ${LIBVORBIS_LIBRARY} ${LIBVORBISFILE_LIBRARY} CACHE INTE
 
 # handle the QUIETLY and REQUIRED arguments and set OPENAL_FOUND to TRUE if
 # all listed variables are TRUE
-INCLUDE(FindPackageHandleStandardArgs)
+include(FindPackageHandleStandardArgs)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(Vorbis  DEFAULT_MSG  LIBVORBIS_LIBRARIES LIBVORBIS_INCLUDE_DIRS)
 
-MARK_AS_ADVANCED(LIBVORBIS_LIBRARIES LIBVORBIS_INCLUDE_DIRS)
+mark_as_advanced(LIBVORBIS_LIBRARIES LIBVORBIS_INCLUDE_DIRS)
 

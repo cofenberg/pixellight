@@ -31,7 +31,7 @@ define_project(PLViewer NOSUFFIX)
 if(LINUX AND NOT ANDROID)
 	# Setup executable suffix under linux
 	# This is needed so that the helper runner script works
-	SET(CMAKE_EXECUTABLE_SUFFIX "-bin")
+	set(CMAKE_EXECUTABLE_SUFFIX "-bin")
 	set(CMAKETOOLS_BASEPATH_GO_UPS "/../../")
 endif()
 

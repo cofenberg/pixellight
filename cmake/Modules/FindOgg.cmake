@@ -26,7 +26,7 @@
 #  LIBOGG_INCLUDE_DIRS - where to find ogg.h, etc.
 #  LIBOGG_LIBRARIES    - List of libraries when using libogg.
 
-include (CheckLibraryExists)
+include(CheckLibraryExists)
 
 find_path(LIBOGG_INCLUDE_DIRS ogg/ogg.h)
 
@@ -36,7 +36,7 @@ set(LIBOGG_LIBRARIES ${LIBOGG_LIBRARY} CACHE INTERNAL "")
 
 # handle the QUIETLY and REQUIRED arguments and set OPENAL_FOUND to TRUE if
 # all listed variables are TRUE
-INCLUDE(FindPackageHandleStandardArgs)
+include(FindPackageHandleStandardArgs)
 FIND_PACKAGE_HANDLE_STANDARD_ARGS(Ogg  DEFAULT_MSG  LIBOGG_LIBRARY LIBOGG_INCLUDE_DIRS)
 
-MARK_AS_ADVANCED(LIBOGG_LIBRARY LIBOGG_INCLUDE_DIRS)
+mark_as_advanced(LIBOGG_LIBRARY LIBOGG_INCLUDE_DIRS)

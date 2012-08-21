@@ -136,7 +136,7 @@ macro(copy_files src dest)
 
 	# Get exclude option
 	set(exclude)
-	if ("${ARGV2}" STREQUAL "EXCLUDE")
+	if("${ARGV2}" STREQUAL "EXCLUDE")
 		set(exclude ${ARGV3})
 	endif()
 
@@ -254,11 +254,11 @@ cmaketools_debug_variable(CMAKE_MODULE_PATH)
 # within the directory of the executable (see http://www.cmake.org/Wiki/CMake_RPATH_handling)
 # Type e.g. "objdump -x libPLCore.so" and have a look at "Dynamic Section"->"RPATH",
 # should be "$ORIGIN" when this option is enabled
-if (CMAKETOOLS_SET_RPATH_TO_ORIGIN)
-	SET(CMAKE_SKIP_BUILD_RPATH				TRUE)		# TRUE for standalone
-	SET(CMAKE_BUILD_WITH_INSTALL_RPATH		ON) 		# ON for standalone
-	SET(CMAKE_INSTALL_RPATH					"$ORIGIN")	# NOT "." for the same directory, the executable is in!
-	SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH	FALSE)
+if(CMAKETOOLS_SET_RPATH_TO_ORIGIN)
+	set(CMAKE_SKIP_BUILD_RPATH				TRUE)		# TRUE for standalone
+	set(CMAKE_BUILD_WITH_INSTALL_RPATH		ON) 		# ON for standalone
+	set(CMAKE_INSTALL_RPATH					"$ORIGIN")	# NOT "." for the same directory, the executable is in!
+	set(CMAKE_INSTALL_RPATH_USE_LINK_PATH	FALSE)
 endif()
 
 # Get host system

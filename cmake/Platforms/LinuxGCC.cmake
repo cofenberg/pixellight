@@ -99,7 +99,7 @@ if(APPLE)
 	# No visibility compiler flags for now or we get issues with several vtables
 	set(NO_VISIBILITY_CHECK 1)			# Do not add the visibility related compiler flags within "CheckLinuxCompiler.cmake" below
 endif()
-if (GCC44 AND GCC_VERSION VERSION_LESS "4.4.6")
+if(GCC44 AND GCC_VERSION VERSION_LESS "4.4.6")
 	# Add ALWAYS_RTTI_EXPORT define because with this compiler version the RTTI elements must always be exported
 	set(LINUX_COMPILE_DEFS
 		${LINUX_COMPILE_DEFS}

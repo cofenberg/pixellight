@@ -63,46 +63,46 @@ endif()
 ## Version checks
 ##################################################
 # Do only this check when using the Makefiles cmake generator
-IF(CMAKE_GENERATOR MATCHES "Makefiles")
-	MESSAGE(STATUS "Check for clang compiler version")
-	SET(CMAKE_TEST_COMPILER ${CMAKE_C_COMPILER})
-	IF (NOT CMAKE_C_COMPILER)
-		SET(CMAKE_TEST_COMPILER ${CMAKE_CXX_COMPILER})
-	ENDIF(NOT CMAKE_C_COMPILER)
+if(CMAKE_GENERATOR MATCHES "Makefiles")
+	message(STATUS "Check for clang compiler version")
+	set(CMAKE_TEST_COMPILER ${CMAKE_C_COMPILER})
+	if(NOT CMAKE_C_COMPILER)
+		set(CMAKE_TEST_COMPILER ${CMAKE_CXX_COMPILER})
+	endif(NOT CMAKE_C_COMPILER)
 
-	EXEC_PROGRAM(${CMAKE_TEST_COMPILER}
+	exec_program(${CMAKE_TEST_COMPILER}
 		ARGS --version
 		OUTPUT_VARIABLE CMAKE_COMPILER_OUTPUT
 		RETURN_VALUE CMAKE_COMPILER_RETURN
 	)
-	IF(NOT CMAKE_COMPILER_RETURN)
-		FILE(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeOutput.log
+	if(NOT CMAKE_COMPILER_RETURN)
+		file(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeOutput.log
 			"Determining the version of compiler passed with the following output:\n"
 			"${CMAKE_COMPILER_OUTPUT}\n\n")
-		STRING(REGEX REPLACE "\n" " " compilerVersion "${CMAKE_COMPILER_OUTPUT}")
-		MESSAGE(STATUS "Check for clang compiler version - ${compilerVersion}")
-		SET(Cang3)
+		string(REGEX REPLACE "\n" " " compilerVersion "${CMAKE_COMPILER_OUTPUT}")
+		message(STATUS "Check for clang compiler version - ${compilerVersion}")
+		set(Cang3)
 		string(REGEX REPLACE "^.*[ ]([0-9]+)\\.[0-9].*$" "\\1" CLANG_MAJOR "${compilerVersion}")
 		string(REGEX REPLACE "^.*[ ][0-9]+\\.([0-9]).*$" "\\1" CLANG_MINOR "${compilerVersion}")
-		SET(Clang${CLANG_MAJOR} 1)
-		SET(Clang_VERSION "${CLANG_MAJOR}.${CLANG_MINOR}")
-	ELSE(NOT CMAKE_COMPILER_RETURN)
-		MESSAGE(STATUS "Check for Clang compiler version - failed")
-		FILE(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeError.log
+		set(Clang${CLANG_MAJOR} 1)
+		set(Clang_VERSION "${CLANG_MAJOR}.${CLANG_MINOR}")
+	else(NOT CMAKE_COMPILER_RETURN)
+		message(STATUS "Check for Clang compiler version - failed")
+		file(APPEND ${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/CMakeError.log
 			"Determining the version of compiler failed with the following output:\n"
 			"${CMAKE_COMPILER_OUTPUT}\n\n")
-	ENDIF(NOT CMAKE_COMPILER_RETURN)
+	endif(NOT CMAKE_COMPILER_RETURN)
 
-	SET(MIN_CLANG_VERSION "3.0")
-	IF(Clang_VERSION VERSION_LESS MIN_CLANG_VERSION)
-		Message(FATAL_ERROR "Clang version \"${Clang_VERSION}\" not supported at least Clang version ${MIN_CLANG_VERSION} is needed")
+	set(MIN_CLANG_VERSION "3.0")
+	if(Clang_VERSION VERSION_LESS MIN_CLANG_VERSION)
+		message(FATAL_ERROR "Clang version \"${Clang_VERSION}\" not supported at least Clang version ${MIN_CLANG_VERSION} is needed")
 	endif()
-ENDIF(CMAKE_GENERATOR MATCHES "Makefiles")
+endif(CMAKE_GENERATOR MATCHES "Makefiles")
 
 # Check compiler features
 # currently clang < 3.2 has problems with visibility and template instances which gets exported in a library (see http://llvm.org/bugs/show_bug.cgi?id=10113)
 # and it adds references to methods to the export table which shouldn't be there (e.g. PLMesh: PLCore::ElementManager<PLRenderer::Animation>::GetByIndex(unsigned int) const) see http://llvm.org/bugs/show_bug.cgi?id=12714
-IF(Clang_VERSION VERSION_LESS "3.2")
+if(Clang_VERSION VERSION_LESS "3.2")
 	set(NO_VISIBILITY_CHECK 1)
 endif()
 include(${CMAKETOOLS_DIR}/Modules/CheckLinuxCompiler.cmake)	# Adds e.g. visibility attribute (http://gcc.gnu.org/wiki/Visibility)

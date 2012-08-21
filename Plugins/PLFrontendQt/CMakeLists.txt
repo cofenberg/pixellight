@@ -50,7 +50,7 @@ add_include_directories(
 ## Special Qt stuff (see http://www.qtcentre.org/wiki/index.php?title=Compiling_Qt4_apps_with_CMake for more information)
 ##################################################
 # Include files with Qt relevant information
-SET(INC_FILES
+set(INC_FILES
 	include/PLFrontendQt/QPLContext.h
 	include/PLFrontendQt/Application.h
 	include/PLFrontendQt/QPLDebugDialog.h
@@ -80,12 +80,12 @@ SET(INC_FILES
 )
 
 # Qt .ui files
-SET(UI_FILES
+set(UI_FILES
 	include/PLFrontendQt/QPLDebugDialog.ui
 )
 
 # Qt .qrc files
-SET(QRC_FILES
+set(QRC_FILES
 	ressources/ressources.qrc
 )
 

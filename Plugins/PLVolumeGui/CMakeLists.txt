@@ -52,17 +52,17 @@ add_include_directories(
 ## Special Qt stuff (see http://www.qtcentre.org/wiki/index.php?title=Compiling_Qt4_apps_with_CMake for more information)
 ##################################################
 # Include files with Qt relevant information
-SET(INC_FILES
+set(INC_FILES
 	include/PLVolumeGui/DockWidgetVolumeTransferFunctionQObject.h
 )
 
 # Qt .ui files
-SET(UI_FILES
+set(UI_FILES
 	# Nothing required in here
 )
 
 # Qt .qrc files
-SET(QRC_FILES
+set(QRC_FILES
 	# Nothing required in here
 )
 

@@ -52,7 +52,7 @@ macro(external_check_download dir checksum)
 	endif()
 
 	# Get the download URL
-	if (PL_EXTERNAL_USER AND PL_EXTERNAL_PASS)
+	if(PL_EXTERNAL_USER AND PL_EXTERNAL_PASS)
 		# With
 		set(url "http://${PL_EXTERNAL_USER}:${PL_EXTERNAL_PASS}@${PL_EXTERNAL_REPOSITORY}/${CMAKETOOLS_CONFIG_NAME}_${CMAKETOOLS_TARGET_ARCH}_${CMAKETOOLS_TARGET_BITSIZE}/${path}${CMAKETOOLS_CURRENT_NAME}.tar.gz")
 	else()

@@ -139,20 +139,20 @@ macro(_pixellight_find_lib varname header library basepath)
 	unset(${varname}_LIBRARY CACHE)
 
 	# Include
-	FIND_PATH(${varname}_INCLUDE_DIR 		${header}
+	find_path(${varname}_INCLUDE_DIR 		${header}
 				"${PL_INCLUDE_DIR}"
 				"${PL_ROOT}/${basepath}"
 	)
 
 	# Library
-	FIND_LIBRARY(${varname}_LIBRARY			${library}${suffix}
+	find_library(${varname}_LIBRARY			${library}${suffix}
 				"${PL_RUNTIME_BIN_DIR}"
 				"${PL_LIB_DIR}"
 	)
 
 	# Try without suffix
 	if(NOT ${varname}_LIBRARY)
-		FIND_LIBRARY(${varname}_LIBRARY		${library}
+		find_library(${varname}_LIBRARY		${library}
 				"${PL_RUNTIME_BIN_DIR}"
 				"${PL_LIB_DIR}"
 		)
@@ -160,7 +160,7 @@ macro(_pixellight_find_lib varname header library basepath)
 
 	# Check if found
 	if(${varname}_INCLUDE_DIR AND ${varname}_LIBRARY)
-		SET(${varname}_FOUND 1)
+		set(${varname}_FOUND 1)
 	endif()
 endmacro(_pixellight_find_lib varname header library basepath)
 

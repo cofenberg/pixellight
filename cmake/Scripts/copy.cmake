@@ -35,5 +35,5 @@
 #	# Add custom command to call the created file after target was built
 #	add_custom_command(TARGET <TargetName> COMMAND ${CMAKE_COMMAND} -P <DestinationPath>/<filename>)
 # If the generated file is located in the build output directory you can simple use the filename as argument for the -P parameter.
-FILE(COPY ${COPY_SOURCE} DESTINATION ${COPY_DEST})
+file(COPY ${COPY_SOURCE} DESTINATION ${COPY_DEST})
 

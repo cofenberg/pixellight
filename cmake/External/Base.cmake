@@ -438,7 +438,7 @@ macro(external_run_cmake dir)
 	endif()
 
 	# Set toolchain
-	SET(toolchain "")
+	set(toolchain "")
 	if(CMAKE_TOOLCHAIN_FILE)
 		set(toolchain -DCMAKE_TOOLCHAIN_FILE:STRING=${CMAKE_TOOLCHAIN_FILE})
 	endif()
