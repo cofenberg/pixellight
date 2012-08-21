@@ -1,4 +1,4 @@
-Changes in PixelLight 1.0.0-R1 (released on August 19, 2012)
+Changes in PixelLight 1.0.0-R1 (released on August 23, 2012)
 - Feature: The loadable system can now also deal with file formats which don't have any file extension
 - Feature: The loadable system can now also deal with file formats like DICOM which load from directories instead of files
 - Feature: Added support for tessellation control shader (named "hull shader" in DirectX 11) within "PLRenderer"
