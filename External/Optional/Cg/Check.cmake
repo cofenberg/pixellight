@@ -50,7 +50,7 @@ if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
 			set(md5sum "1b502e197c91123925723b697fea34a9")
 		endif()
 	endif()
-	external_check_download("nonpublic" ${md5sum})
+	external_check_download("" ${md5sum})
 
 	# Unpack the package
 	external_check_unpack()

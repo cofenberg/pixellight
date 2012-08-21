@@ -4,6 +4,49 @@
 
 
 
+>> 21.08.2012
+[CO]
+- Since Git commit
+  "
+    Revision: fbcb91d7c4eac6f3882a8ee8e1ca7f49f98ba188
+    Author: Stephan Wezel
+    Date: 19.08.2012 13:47:59
+    Message:
+    Reviewed Commit 7228460cdd92877c1cf665ab1f8f589155797649: Disable windows only projects under non windows build target when CMAKETOOLS_SDK is set
+
+    Added a warning when PL_PLUGIN_ENGINE_POSTPROCESS is set but not PL_PLUGIN_RENDERER_OPENGLCG
+    (-> Some postprocess effect doesn't work without Cg support)
+    ----
+    Modified: PixelLight/PixelLight.cmake
+  "
+  There's now always the red output warning
+  "
+    CMake Warning at PixelLight/PixelLight.cmake:562 (message):
+      PL_PLUGIN_ENGINE_POSTPROCESS needs PL_PLUGIN_RENDERER_OPENGLCG ->
+      Postprocess effects might not work
+    Call Stack (most recent call first):
+      CMakeLists.txt:40 (include)"
+      "
+  when cloning the Git repository and building PixelLight using CMake without additional configuration. I assume that this will lead to questions
+  like "Why do I always get a red warning?" In general, such validation checks are fine because they reduce ?!?! later on. Currently the Cg external
+  dependency is marked as "nonpublic". I read the Cg licensing terms again carefully and
+  "
+    2.1.1 Rights. Customer may use, reproduce, distribute, publicly display and publicly
+    perform the SOFTWARE.
+  "
+  sounds to me as if I it's allowed to distribute content of the Cg SDK. There's no paragraph about additional restrictions like within the DirectX SDK
+  which tells you that you are only allowed to redistribute the official redistributable files, which do not contain headers or libraries.
+  I looked around in the Internet to see whether or not I understood this correctly. The Ogre external packages at
+    http://ignum.dl.sourceforge.net/project/ogre/ogre-dependencies-vc%2B%2B/1.9/OgreDependencies_MSVC_20120819.zip
+  contains Cg SDK content as well as
+    http://trac.cafu.de/browser/cafu/tags/new-repository-init/ExtLibs/Cg?rev=526
+    http://code.google.com/p/shadertest/source/browse/trunk/Cg/include/Cg/cgGL_profiles.h?r=2
+  so it appears to be fine to redistribute those files.
+  -> Made the Cg external package "public" and enabled Cg support by default. This means that there's no longer a red warning when just using
+     default configurations.
+
+
+
 >> 19.08.2012
 [CO]
 - "PixelLight.cmake": Added "CMAKETOOLS_SDK"-trigger which is similar to the "CMAKETOOLS_MINIMAL"-trigger. When "CMAKETOOLS_SDK"
