@@ -1,3 +1,18 @@
+>> 21.08.2012
+- Another checksum related issue at: http://dev.pixellight.org/forum/viewtopic.php?f=6&t=531
+  Some time ago, I changed the log message "File 'libpng.tar.gz' MD5 sum is incorrect!" into
+  "File 'libpng.tar.gz' MD5 sum is incorrect! Should be 'ac1c767baf21319d85e0a6265b8672e5' but is 'c7ecf0b73d1e681f2621b8781aed4cdd'!"
+  to provide more information. This forum post shows me that there's need for some more information in the error:
+  "The external package on the server might have been updated, is your source code copy up-to-date? Is the downloaded file corrupt
+   due to a blocked or cancelled download?"
+  Other solutions might be to remove the checksum test at all and risking following issues or to never ever again update an
+  external package. I assume that both of those are no real options. Having a separate external dependencies directory for every
+  commit would be crazy. A separate external dependencies package for every PixelLight release might be idea, but on the other hand
+  we already offer an external dependencies archive for every PixelLight release. Difficult topic because I assume that we shouldn't
+  upload to much data or we might get into trouble with SourceForge.
+
+
+
 >> 18.08.2012
 - On 14.08.2012 I had a PixelLight-day with Prof. Dr. Frank Deinzer. First step was to compile PixelLight using CMake
   and the generated Visual Studio 2012 project solution. I'am now using this combination since several years, but
