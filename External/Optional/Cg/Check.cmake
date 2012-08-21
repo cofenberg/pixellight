@@ -36,18 +36,18 @@ if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
 	if(WIN32)
 		if(CMAKETOOLS_TARGET_BITSIZE MATCHES "64")
 			# md5sum of the 64bit Windows package
-			set(md5sum "e35e40edf735cdd634e7a9d6c69657bb")
+			set(md5sum "e19e535fa799e1f3680a8cefaa2a39eb")
 		else()
 			# md5sum of the 32bit Windows package
-			set(md5sum "54eee7133fa76fe4f5ed3c9c600e66c9")
+			set(md5sum "b7e1d646081b3d1bf33aee4bc9e3bb9b")
 		endif()
 	elseif(LINUX)
 		if(CMAKETOOLS_TARGET_BITSIZE MATCHES "64")
 			# md5sum of the 64bit Linux package
-			set(md5sum "2ed95337b5de24c9b8394e5cf37d5aa8")
+			set(md5sum "51f5efac3761303a4fe6d0cd65a7ca63")
 		else()
 			# md5sum of the 32bit Linux package
-			set(md5sum "1b502e197c91123925723b697fea34a9")
+			set(md5sum "008a4097c6f38e56bd1b1159686bac47")
 		endif()
 	endif()
 	external_check_download("" ${md5sum})

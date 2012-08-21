@@ -1,4 +1,4 @@
-Cg Toolkit 3.1 - February 2012
+Cg Toolkit 3.1 - April 2012
 - Used by the renderer backend "PLRendererOpenGLCg" (external Windows dependencies: "cg.dll" and "cgGL.dll")
 - Used by the renderer backend "PLRendererD3D9" (external Windows dependencies: "cg.dll" and "cgD3D9.dll")
 - Download from: http://developer.nvidia.com/object/cg_toolkit.html
