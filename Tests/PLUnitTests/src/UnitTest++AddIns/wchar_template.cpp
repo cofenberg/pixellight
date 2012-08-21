@@ -18,8 +18,8 @@
  *  You should have received a copy of the GNU Lesser General Public License
  *  along with PixelLight. If not, see <http://www.gnu.org/licenses/>.
 \*********************************************************/
-#include "UnitTest++AddIns/wchar_template.h"
 #include <stdlib.h>
+#include "UnitTest++AddIns/wchar_template.h"
 
 namespace UnitTest {
 	void CheckWcharEqual(TestResults& results, wchar_t const* expected, wchar_t const* actual,
