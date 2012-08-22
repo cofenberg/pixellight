@@ -23,7 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#include <SQLite/sqlite3.h>
+#include <sqlite3.h>
 #include <PLCore/Log/Log.h>
 #include "PLDatabaseSQLite/DatabaseQuery.h"
 #include "PLDatabaseSQLite/Database.h"

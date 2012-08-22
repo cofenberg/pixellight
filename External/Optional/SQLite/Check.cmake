@@ -43,11 +43,11 @@ if(NOT EXISTS ${CMAKETOOLS_CURRENT_BUILT_FILE})
 		endif()
 	elseif(LINUX)
 		if(CMAKETOOLS_TARGET_BITSIZE MATCHES "64")
-			# md5sum of the 64bit Linux package [TODO]
-			set(md5sum "")
+			# md5sum of the 64bit Linux package
+			set(md5sum "77aaef0ecbf1ea1cf0797ced34184e8d")
 		else()
 			# md5sum of the 32bit Linux package
-			set(md5sum "286b2df13829de9897f092c3b88403fa")
+			set(md5sum "f7aa15fb7a6066f25200119c2d6f832e")
 		endif()
 	endif()
 	external_check_download("" ${md5sum})

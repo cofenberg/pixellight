@@ -1,4 +1,4 @@
-﻿SQLite 3.5.6
+﻿SQLite 3.5.6 (Linux 3.7.13)
 - License: "Public Domain", see "license.txt" (taken from source code)
 - Used by the database backend "PLDatabaseSQLite" (no additional external dependencies)
 - Download from: http://www.sqlite.org/

@@ -173,14 +173,24 @@ if(WIN32)
 endif()
 
 # External dependencies, but only when not using system-libs
-# [TODO] Uncomment this as soon as there's support for system-libs
-#if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
+if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	if(LINUX)
-		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET}
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKETOOLS_CURRENT_EXT_DIR}/SQLite/lib/libsqlite.so   ${PL_RUNTIME_BIN_DIR}
-		)
+		# Set COPY_SOURCE to files which should be copied (this variable is used by the "copy.cmake"-script)
+		set(COPY_SOURCE ${CMAKETOOLS_CURRENT_EXT_DIR}/SQLite/lib/libsqlite3.so
+						${CMAKETOOLS_CURRENT_EXT_DIR}/SQLite/lib/libsqlite3.so.0 
+						${CMAKETOOLS_CURRENT_EXT_DIR}/SQLite/lib/libsqlite3.so.0.8.6 
+		   )
+
+		# Set COPY_DEST to a directory to which the files in COPY_SOURCE should be copied into (this variable is used by the "copy.cmake"-script)
+		set(COPY_DEST ${PL_RUNTIME_BIN_DIR})
+
+		# Create the "copy_to_runtime.cmake"-file in the build directory of the current target (the configure file replaces the variable references with the value of the variable)
+		configure_file("${CMAKETOOLS_DIR}/Scripts/copy.cmake" ${CMAKETOOLS_CURRENT_OUTPUT_DIR}/copy_to_runtime.cmake)
+
+		# Add custom command to call the created "copy_to_runtime.cmake"-file after the target was built
+		add_custom_command(TARGET ${CMAKETOOLS_CURRENT_TARGET} COMMAND ${CMAKE_COMMAND} -P "copy_to_runtime.cmake")
 	endif()
-#endif()
+endif()
 
 ##################################################
 ## Install
@@ -204,11 +214,13 @@ install(FILES ${PL_RUNTIME_BIN_DIR}/${CMAKETOOLS_CURRENT_PLUGIN}
 )
 
 # External dependencies, but only when not using system-libs
-# [TODO] Uncomment this as soon as there's support for system-libs
-#if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
+if(NOT CMAKETOOLS_USE_SYSTEM_LIBS)
 	if(LINUX)
-		install(FILES ${PL_RUNTIME_BIN_DIR}/libsqlite.so
-			DESTINATION ${PL_INSTALL_RUNTIME_BIN}	COMPONENT Runtime
+		# Copy shared libraries
+		install(FILES	${CMAKETOOLS_CURRENT_EXT_DIR}/SQLite/lib/libsqlite3.so
+						${CMAKETOOLS_CURRENT_EXT_DIR}/SQLite/lib/libsqlite3.so.0 
+						${CMAKETOOLS_CURRENT_EXT_DIR}/SQLite/lib/libsqlite3.so.0.8.6
+			DESTINATION ${PL_INSTALL_RUNTIME_BIN}		COMPONENT Runtime
 		)
 	endif()
-#endif()
+endif()

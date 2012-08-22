@@ -458,14 +458,14 @@ if(X86_64)
 	unset (PL_PLUGIN_RENDERER_OPENGLES2_EMULATOR	CACHE)
 
 	# [TODO] The following plugins are not yet supported (create prebuild external packages and test it)
-	if(LINUX AND NOT APPLE AND NOT ANDROID)
+	# Disable only when not building an 32bit target
+	if(LINUX AND NOT APPLE AND NOT ANDROID AND NOT CMAKETOOLS_TARGET_ARCHBITSIZE MATCHES "x86")
 		# Linux x64
 		unset (PL_PLUGIN_SCRIPT_V8					CACHE)
 		unset (PL_PLUGIN_SCRIPT_PYTHON				CACHE)
 		unset (PL_PLUGIN_SCRIPT_ANGELSCRIPT			CACHE)
 		unset (PL_PLUGIN_DATABASE_MYSQL				CACHE)
 		unset (PL_PLUGIN_DATABASE_POSTGRESQL		CACHE)
-		unset (PL_PLUGIN_DATABASE_SQLITE			CACHE)
 		unset (PL_PLUGIN_PHYSICS_ODE				CACHE)
 	endif()
 endif()

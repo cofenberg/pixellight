@@ -28,13 +28,12 @@ define_external_project(SQLite)
 ##################################################
 ## INCLUDES AND LIBRARIES
 ##################################################
-# [TODO] System libs possible for SQLite?
-#if(CMAKETOOLS_USE_SYSTEM_LIBS)
+if(CMAKETOOLS_USE_SYSTEM_LIBS)
 	##################################################
 	## Use system libraries
 	##################################################
-#	find_package(SQLITE)
-#else()
+	find_package(Sqlite)
+else()
 	# Build external
 	message(STATUS "Using build script for external '${CMAKETOOLS_CURRENT_NAME}'")
 
@@ -43,11 +42,11 @@ define_external_project(SQLite)
 	##################################################
 	add_dependencies(External-Optional ${CMAKETOOLS_CURRENT_TARGET})
 	add_dependencies(External-Clean ${CMAKETOOLS_CURRENT_TARGET}-Clean)
-	set(SQLITE_INCLUDE_DIRS ${CMAKETOOLS_CURRENT_INCLUDE_DIR} CACHE INTERNAL "")
+	set(SQLITE_INCLUDE_DIRS ${CMAKETOOLS_CURRENT_INCLUDE_DIR}/SQLite CACHE INTERNAL "")
 	if(WIN32)
 		set(SQLITE_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/SQLite.lib CACHE INTERNAL "")
 	elseif(LINUX)
-		set(SQLITE_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/libsqlite.so CACHE INTERNAL "")
+		set(SQLITE_LIBRARIES ${CMAKETOOLS_CURRENT_LIB_DIR}/libsqlite3.so CACHE INTERNAL "")
 	endif()
 
 	##################################################
@@ -79,5 +78,4 @@ define_external_project(SQLite)
 	## Clean
 	##################################################
 	external_clean()
-# [TODO] System libs possible for SQLite?
-#endif()
+endif()
