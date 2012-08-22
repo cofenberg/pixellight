@@ -62,8 +62,8 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 	m_bVisible(false),
 	m_bIsMouseOver(false),
 	m_bMouseVisible(true),
-	m_bPause(true),
 	m_nInvisibleCursor(0),
+	m_bPause(true),
 	// Atoms
 	WM_DELETE_WINDOW	(XInternAtom(m_pDisplay, "WM_DELETE_WINDOW",	 True)),
 	UTF8_STRING			(XInternAtom(m_pDisplay, "UTF8_STRING",			 False)),
