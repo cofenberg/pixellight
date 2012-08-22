@@ -90,6 +90,16 @@ set(CMAKETOOLS_USE_SYSTEM_LIBS "0" CACHE BOOL "Use system libraries or build own
 
 # The following is Linux only
 if(LINUX)
+	if (X86_64 AND CMAKETOOLS_TARGET_ARCHBITSIZE MATCHES "x86")
+		message(STATUS "Setup additional paths to find 32bit system libs instead of the 64bit ones" )
+
+		# we are doing a "cross compilation" (building an 32bit app on an 64Bit host)
+		set(CMAKE_PREFIX_PATH 
+			/usr/lib32
+			/lib32
+			/opt/nvidia-cg-toolkit/lib32 # special case under gentoo
+		)
+	endif()
 	# Linux standalone: Set Linux RPATH to "$ORIGIN" so shared libraries are first searched
 	# within the directory of the executable (see http://www.cmake.org/Wiki/CMake_RPATH_handling)
 	# Type e.g. "objdump -x libPLCore.so" and have a look at "Dynamic Section"->"RPATH",
