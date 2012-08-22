@@ -569,7 +569,7 @@ endif()
 ## Validation
 ##################################################
 # PLPostProcessEffects requires Cg support
-if(PL_PLUGIN_ENGINE_POSTPROCESS AND NOT PL_PLUGIN_RENDERER_OPENGLCG)
+if(NOT ANDROID AND PL_PLUGIN_ENGINE_POSTPROCESS AND NOT PL_PLUGIN_RENDERER_OPENGLCG)
 	message(WARNING "PL_PLUGIN_ENGINE_POSTPROCESS needs PL_PLUGIN_RENDERER_OPENGLCG -> Postprocess effects might not work")
 endif()
 
