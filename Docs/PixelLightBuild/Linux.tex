@@ -260,10 +260,13 @@ The name of the executable has a suffix named \emph{"-bin"}, for example \emph{P
 
 \paragraph{Note}
 Due to this change, the name of some sample log and configuration files have been changed. At the moment, this affects all samples which number prefix is lower then 30. e.g. 01Application (old $\to$ new):
-\begin{itemize}
-	\item 01Application.log $\to$ 01Application-bin.log
-	\item 01Application.cfg $\to$ 01Application-bin.cfg
-\end{itemize}
+\begin{samepage}
+	\begin{itemize}
+		\item 01Application.log $\to$ 01Application-bin.log
+		\item 01Application.cfg $\to$ 01Application-bin.cfg
+	\end{itemize}
+\end{samepage}
+
 In general, all PixelLight based applications which do not set the name explicitly for the configuration or log file \footnote{For instance by using the macros pl\_module\_application or pl\_module\_application\_frontend, FrontendContext::SetName, ApplicationContext::SetLogFilename or ApplicationContext::SetConfigFilename} are affected.
 
 
