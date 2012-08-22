@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Log/Log.h>
 #include <PLCore/File/File.h>
 #include <PLMath/Vector3i.h>
 #include <PLGraphics/Image/Image.h>
@@ -56,6 +57,8 @@ bool ImageLoaderPVM::Load(Image &cImage, File &cFile)
 
 bool ImageLoaderPVM::LoadParams(Image &cImage, File &cFile, bool bForce8Bit)
 {
+	bool bResult = false; // We're pessimism, so, error by default
+
 	// Read the PVM volume
 	unsigned int nWidth = 0, nHeight = 0, nDepth = 0, nComponents = 0;
 	unsigned char *pszPVMvolume = readPVMvolume(cFile.GetUrl().GetNativePath().GetASCII(), &nWidth, &nHeight, &nDepth, &nComponents);
@@ -71,17 +74,19 @@ bool ImageLoaderPVM::LoadParams(Image &cImage, File &cFile, bool bForce8Bit)
 		if (nComponents == 1 || nComponents == 2) {
 			// Create image - don't takeover the data because it was allocated using malloc
 			cImage = Image::CreateImageAndCopyData((nComponents == 1) ? DataByte : DataWord, ColorGrayscale, Vector3i(nWidth, nHeight, nDepth), CompressionNone, pszPVMvolume);
+
+			// Hooray, success!
+			bResult = true;
+		} else {
+			PL_LOG(Error, "PVM image loader: Only 8 bit and 16 bit images are supported")
 		}
 
 		// Cleanup
 		MemoryManager::Deallocator(MemoryManager::Free, pszPVMvolume);
-
-		// Done
-		return true;
 	}
 
-	// Error!
-	return false;
+	// Done
+	return bResult;
 }
 
 bool ImageLoaderPVM::Save(const Image &cImage, File &cFile)

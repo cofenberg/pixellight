@@ -23,6 +23,7 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
+#include <PLCore/Log/Log.h>
 #include <PLCore/File/File.h>
 #include <PLMath/Vector3i.h>
 #include <PLGraphics/Image/Image.h>
@@ -59,6 +60,8 @@ bool VolumeLoaderPVM::Load(Volume &cVolume, File &cFile)
 
 bool VolumeLoaderPVM::LoadParams(Volume &cVolume, File &cFile, bool bForce8Bit)
 {
+	bool bResult = false; // We're pessimism, so, error by default
+
 	// Get the image holding the volumetric data
 	Image &cImage = cVolume.GetVolumeImage();
 
@@ -81,6 +84,11 @@ bool VolumeLoaderPVM::LoadParams(Volume &cVolume, File &cFile, bool bForce8Bit)
 		if (nComponents == 1 || nComponents == 2) {
 			// Create image - don't takeover the data because it was allocated using malloc
 			cImage = Image::CreateImageAndCopyData((nComponents == 1) ? DataByte : DataWord, ColorGrayscale, Vector3i(nWidth, nHeight, nDepth), CompressionNone, pszPVMvolume);
+
+			// Hooray, success!
+			bResult = true;
+		} else {
+			PL_LOG(Error, "PVM volume loader: Only 8 bit and 16 bit volumes are supported")
 		}
 
 		// Cleanup
@@ -88,13 +96,10 @@ bool VolumeLoaderPVM::LoadParams(Volume &cVolume, File &cFile, bool bForce8Bit)
 
 		// Set the size of one voxel (without metric, but usually one unit is equal to one meter)
 		cVolume.SetVoxelSize(Volume::DefaultVoxelSize*vScale);
-
-		// Done
-		return true;
 	}
 
-	// Error!
-	return false;
+	// Done
+	return bResult;
 }
 
 bool VolumeLoaderPVM::Save(const Volume &cVolume, File &cFile)
