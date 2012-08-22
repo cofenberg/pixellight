@@ -1,3 +1,25 @@
+>> 22.08.2012
+[CO]
+PLFrontendOS:
+- Reviewed commit
+  "
+    Revision: 6d291f614dc1f37c58a10e9d453ff4f836c1090f
+    Author: Stephan Wezel
+    Date: 18.08.2012 23:05:03
+    Message:
+    Fixed frontend lifecycle handling in PLFrontendOS (OnStop wasn't called when the application was closed via Frontend::IsRunning = false)
+  "
+  in detail because a design goal was to only call e.g. "OnStop()" at a single, well defined place inside the program flow to avoid calling
+  it multiple times. It turned out that on Windows, "OnStop()" was now really called twice.
+  -> MS Windows: "OSWindowWindows::~OSWindowWindows()" -> "DestroyWindow(m_hWnd)" -> "OSWindowWindows::WndProc()" -> "WM_DESTROY"
+  -> Linux: "OSWindowLinux::~OSWindowLinux()" -> "XDestroyWindow(m_pDisplay, m_nNativeWindowHandle)" ... does not result in directly
+     processed events as under MS Windows. Events are processed inside "OSWindowLinux::Ping()". Meaning under Linux, "OnPause()" and "OnStop()"
+     were not called when terminating the application without closing the window.
+  -> "OnStop()" is now called inside "OSWindowLinux::~OSWindowLinux()", which is identical to "OSWindowMacOSX::~OSWindowMacOSX()"
+  -> See "AbstractLifecycle" class documentation for more information about the life cycle
+
+
+
 >> 17.06.2012
 [CO]
 - Functor: Added support for FuncGenFunPtr and FuncGenMemPtr

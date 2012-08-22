@@ -185,6 +185,7 @@ class OSWindowLinux : public OSWindow {
 		bool	   m_bIsMouseOver;			/**< Is the mouse cursor currently over the window? */
 		bool	   m_bMouseVisible;			/**< Is the mouse cursor visible? */
 		::Cursor   m_nInvisibleCursor;		/**< The invisible cursor, can be null */
+		bool	   m_bPause;				/**< Are we're currently within the pause-state? (used to avoid calling "OnPause()"-twice) */
 		// Atoms
 		::Atom					 WM_DELETE_WINDOW;		/**< System atom for delete */
 		::Atom					 UTF8_STRING;			/**< Atom for the type of a window title */

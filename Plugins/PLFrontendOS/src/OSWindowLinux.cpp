@@ -62,6 +62,7 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 	m_bVisible(false),
 	m_bIsMouseOver(false),
 	m_bMouseVisible(true),
+	m_bPause(true),
 	m_nInvisibleCursor(0),
 	// Atoms
 	WM_DELETE_WINDOW	(XInternAtom(m_pDisplay, "WM_DELETE_WINDOW",	 True)),
@@ -127,6 +128,19 @@ OSWindowLinux::OSWindowLinux(Frontend &cFrontendOS) :
 */
 OSWindowLinux::~OSWindowLinux()
 {
+	// Do the frontend life cycle thing - pause
+	// -> "OnPause()" is already handled inside "OSWindowLinux::Ping()"
+	// -> Life cycle methods should only be called from a single point in the program flow in order to ensure correctness
+	// -> We could put the event processing inside "OSWindowLinux::Ping()" into a separate method and then calling it in
+	//    here, but this would not bring many benefits. So, this comment block and a direct method call has to do the job
+	//    to perform a clean life cycle.
+	// -> Before calling "OnPause()", ensure that we're currently not within the pause-state, else we would call "OnPause()" twice
+	if (!m_bPause)
+		m_pFrontendOS->OnPause();
+
+	// Do the frontend life cycle thing - stop
+	m_pFrontendOS->OnStop();
+
 	// Destroy the drag'n'drop helper instance
 	if (m_pDropHelper)
 		delete m_pDropHelper;
@@ -256,12 +270,14 @@ bool OSWindowLinux::Ping()
 
 			case UnmapNotify:
 			case FocusOut:
+				m_bPause = true;
 				m_pFrontendOS->OnPause();
 				break;
 
 			case MapNotify:
 			case FocusIn:
 				m_pFrontendOS->OnResume();
+				m_bPause = false;
 				break;
 
 			case ClientMessage:
@@ -303,12 +319,6 @@ bool OSWindowLinux::Ping()
 				m_bIsMouseOver = false;
 				break;
 		}
-	}
-
-	// Quit?
-	if (bQuit) {
-		// Do the frontend life cycle thing - stop
-		m_pFrontendOS->OnStop();
 	}
 
 	// Done
