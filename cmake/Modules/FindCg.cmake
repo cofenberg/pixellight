@@ -109,6 +109,7 @@ ELSE (APPLE)
       /usr/include
       /usr/local/include
       ${CG_COMPILER_SUPER_DIR}/include
+      ${CG_COMPILER_SUPER_DIR}/nvidia-cg-toolkit/include # gentoo specific
       DOC "The directory where Cg/cg.h resides"
       )
     FIND_LIBRARY( CG_LIBRARY Cg
@@ -119,6 +120,8 @@ ELSE (APPLE)
       /usr/local/lib
       ${CG_COMPILER_SUPER_DIR}/lib64
       ${CG_COMPILER_SUPER_DIR}/lib
+      ${CG_COMPILER_SUPER_DIR}/nvidia-cg-toolkit/lib # gentoo specific
+      ${CG_COMPILER_SUPER_DIR}/nvidia-cg-toolkit/lib64 # gentoo specific
       DOC "The Cg runtime library"
       )
 	SET(CG_LIBRARY ${CG_LIBRARY} -lpthread)
@@ -130,6 +133,8 @@ ELSE (APPLE)
       /usr/local/lib
       ${CG_COMPILER_SUPER_DIR}/lib64
       ${CG_COMPILER_SUPER_DIR}/lib
+      ${CG_COMPILER_SUPER_DIR}/nvidia-cg-toolkit/lib # gentoo specific
+      ${CG_COMPILER_SUPER_DIR}/nvidia-cg-toolkit/lib64 # gentoo specific
       DOC "The Cg runtime library"
       )
   ENDIF (WIN32)

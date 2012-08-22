@@ -25,11 +25,11 @@
 //[-------------------------------------------------------]
 #include <PLRendererOpenGL/VertexBuffer.h>
 #include "PLRendererOpenGLCg/ProgramAttributeCgGLSL.h"
-#include "../../../../External/Recommended/OpenGL/gl.h"
+#include "../../../External/Recommended/OpenGL/gl.h"
 #ifdef LINUX
-	#include "../../../../External/Recommended/OpenGL/glx.h"	// For "glXGetProcAddressARB"
+	#include "../../../External/Recommended/OpenGL/glx.h"	// For "glXGetProcAddressARB"
 #endif
-#include "../../../../External/Recommended/OpenGL/glext.h"
+#include "../../../External/Recommended/OpenGL/glext.h"
 
 
 //[-------------------------------------------------------]
