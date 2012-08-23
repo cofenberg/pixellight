@@ -1,3 +1,9 @@
+>> 22.08.2012
+[SW][CO]
+- Updated from "SQLite 3.5.6" to "SQLite 3.7.13"
+
+
+
 >> 21.08.2012
 [CO]
 - Updated from "Cg Toolkit 3.1 - February 2012" to "Cg Toolkit 3.1 - April 2012"

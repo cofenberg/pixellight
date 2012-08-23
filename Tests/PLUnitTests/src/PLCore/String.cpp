@@ -4212,7 +4212,7 @@ SUITE(String) {
 		PL_WARNING_PUSH
 			PL_WARNING_DISABLE(4996)    // "warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details."
 			// Now, change the locale...
-			char *pLocalSave = strdup(setlocale(LC_ALL, nullptr));
+			strdup(setlocale(LC_ALL, nullptr));
 		PL_WARNING_POP
 
 		// Get the current set locale, we REALLY need to backup the locale because it "may" be changed by "setlocale"
@@ -4233,7 +4233,7 @@ SUITE(String) {
 		PL_WARNING_PUSH
 			PL_WARNING_DISABLE(4996)    // "warning C4996: 'strdup': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _strdup. See online help for details."
 			// Now, change the locale...
-			char *pLocalSave = strdup(setlocale(LC_ALL, nullptr));
+			strdup(setlocale(LC_ALL, nullptr));
 		PL_WARNING_POP
 
 		// Get the current set locale, we REALLY need to backup the locale because it "may" be changed by "setlocale"

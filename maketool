@@ -49,6 +49,7 @@ my $buildExternalURL;	# URL to externals repository ("" for default)
 my $buildExternalUser;	# Username for access to restricted externals
 my $buildExternalPass;	# Password for access to restricted externals
 my $buildMinimal;		# Build minimal projects ("1"/"0")?
+my $buildSDK;			# Build SDK projects ("1"/"0")?
 my $buildCodeBlocks;	# Create Code::Blocks project?
 
 # Get system
@@ -88,6 +89,7 @@ sub Setup {
 	print("-- ExternalURL  = '$buildExternalURL'\n");
 	print("-- ExternalUser = '$buildExternalUser'\n");
 	print("-- Minimal      = '$buildMinimal'\n");
+	print("-- SDK          = '$buildSDK'\n");
 	print("\n");
 
 	# Call CMake
@@ -106,6 +108,7 @@ sub Setup {
 	if ($buildExternalUser ne "") { $cmake .= " -DPL_EXTERNAL_USER=\"$buildExternalUser\""; }
 	if ($buildExternalPass ne "") { $cmake .= " -DPL_EXTERNAL_PASS=\"$buildExternalPass\""; }
 	if ($buildMinimal      ==  1) { $cmake .= " -DCMAKETOOLS_MINIMAL=\"$buildMinimal\" -DPL_NATIVE_PLPROJECT=\"0\""; }
+	if ($buildSDK          ==  1) { $cmake .= " -DCMAKETOOLS_SDK=\"$buildSDK\""; }
 
 	$cmake .= " ..";
 	print("Running CMake ...\n");
@@ -212,6 +215,7 @@ $buildNightly = "0";
 $buildSuffixSet = 0;
 $buildSysLibs = 0;
 $buildMinimal = 0;
+$buildSDK = 0;
 $buildExternalURL  = "";
 $buildExternalUser = "";
 $buildExternalPass = "";
@@ -259,6 +263,8 @@ for ($i=0; $i<$numArgs; $i++) {
 		$buildMobile = 1;
 	} elsif ($ARGV[$i] eq "--minimal") {
 		$buildMinimal = 1;
+	} elsif ($ARGV[$i] eq "--sdk") {
+		$buildSDK = 1;
 	} elsif ($ARGV[$i] eq "--suffix" || $ARGV[$i] eq "-s") {
 		$buildSuffix = $ARGV[$i+1];
 		$buildSuffixSet = 1;

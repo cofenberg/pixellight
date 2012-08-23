@@ -80,7 +80,7 @@ if(PL_ARCHBITSIZE MATCHES "x64")
 else()
 	set(PL_BITSIZE "32" CACHE STRING "Target bitsize")
 endif()
-if(WIN32)
+if(WIN32 OR ANDROID OR APPLE)
 	# Get general variables
 	get_filename_component(PL_ROOT				"${PL_RUNTIME_BIN_DIR}/../../.."				ABSOLUTE)
 	get_filename_component(PL_RUNTIME_BIN_DIR	"${PL_RUNTIME_BIN_DIR}"							ABSOLUTE)

@@ -175,6 +175,7 @@ Here's a list of the most important \emph{maketool}-options:
 \item{\verb+--bitsize+								- Bit size (e.g. \emph{32} or \emph{64})}
 \item{\verb+--syslibs+								- Use system libraries}
 \item{\verb+--minimal+								- Do only compile the most important projects}
+\item{\verb+--sdk+									- Do only compile the SDK projects}
 \end{itemize}
 
 To avoid setting the parameters \verb+--externals+, \verb+--username+ and \verb+--password+ over and over again, create a file \emph{pl\_config.cfg} in your home directory (Perl-Script, included and just executed) with the following content:
@@ -266,11 +267,11 @@ Now you only have to tell PixelLight where it can find the runtime and data file
 
 If you're in the root of the source tree, you can use the script \emph{profile} to do this for you:
 \begin{lstlisting}[language=sh]
-source ./profile
+source profile
 \end{lstlisting}
 or
 \begin{lstlisting}[language=sh]
-. ./profile
+. profile
 \end{lstlisting}
 (sets the environment variable \emph{PL\_RUNTIME})
 

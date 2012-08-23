@@ -90,16 +90,17 @@ set(CMAKETOOLS_USE_SYSTEM_LIBS "0" CACHE BOOL "Use system libraries or build own
 
 # The following is Linux only
 if(LINUX)
-	if (X86_64 AND CMAKETOOLS_TARGET_ARCHBITSIZE MATCHES "x86")
-		message(STATUS "Setup additional paths to find 32bit system libs instead of the 64bit ones" )
+	if(X86_64 AND CMAKETOOLS_TARGET_ARCHBITSIZE MATCHES "x86")
+		message(STATUS "Setup additional paths to find 32bit system libraries instead of the 64bit ones")
 
-		# we are doing a "cross compilation" (building an 32bit app on an 64Bit host)
-		set(CMAKE_PREFIX_PATH 
+		# We are doing a "cross compilation" (building an 32bit application on a 64Bit host)
+		set(CMAKE_PREFIX_PATH
 			/usr/lib32
 			/lib32
-			/opt/nvidia-cg-toolkit/lib32 # special case under gentoo
+			/opt/nvidia-cg-toolkit/lib32 # Special case under Gentoo
 		)
 	endif()
+
 	# Linux standalone: Set Linux RPATH to "$ORIGIN" so shared libraries are first searched
 	# within the directory of the executable (see http://www.cmake.org/Wiki/CMake_RPATH_handling)
 	# Type e.g. "objdump -x libPLCore.so" and have a look at "Dynamic Section"->"RPATH",
@@ -568,7 +569,7 @@ endif()
 ## Validation
 ##################################################
 # PLPostProcessEffects requires Cg support
-if(PL_PLUGIN_ENGINE_POSTPROCESS AND NOT PL_PLUGIN_RENDERER_OPENGLCG)
+if(NOT ANDROID AND PL_PLUGIN_ENGINE_POSTPROCESS AND NOT PL_PLUGIN_RENDERER_OPENGLCG)
 	message(WARNING "PL_PLUGIN_ENGINE_POSTPROCESS needs PL_PLUGIN_RENDERER_OPENGLCG -> Postprocess effects might not work")
 endif()
 

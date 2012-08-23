@@ -138,7 +138,7 @@ EColorFormat ImageBuffer::GetAlphaChannelColorFormat(EColorFormat nColorFormat)
 
 		case ColorPalette:
 			// Error, this is not supported!
-			break;
+			return ColorPalette;
 
 		case ColorRGBA:
 		case ColorBGRA:
@@ -167,7 +167,7 @@ EColorFormat ImageBuffer::GetNoneAlphaChannelColorFormat(EColorFormat nColorForm
 
 		case ColorPalette:
 			// Error, this is not supported!
-			break;
+			return ColorPalette;
 
 		case ColorRGB:
 		case ColorBGR:

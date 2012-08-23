@@ -32,5 +32,5 @@
 pl_module_plugin("PLDatabaseSQLite")
 	pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
 	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
-	pl_module_description("SQLite 3.5.6 (http://www.sqlite.org/) database implementation")
+	pl_module_description("SQLite 3.7.13 (http://www.sqlite.org/) database implementation")
 pl_module_end
