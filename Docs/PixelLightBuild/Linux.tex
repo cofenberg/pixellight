@@ -256,7 +256,7 @@ Once you have built PixelLight, you may want to run e.g. the sample applications
 \subsection{Option 1: Run by Helper Shell Script}
 For each tool or sample \footnote{Which are dynamically linked against PLCore} a helper shell script is generated with the same name as the project (e.g. PLViewer). The shell script configures the environment so that the appplication can find all required libraries and the PixelLight runtime.
 
-This enables an out-of-the-box experience without fiddeling with the system environment by setting for instance environment variables or by adding additional paths to \emph{ld.so.conf}. The script files are not located in the same directory as the executable. The shell script checks the host architecture (x86 for 32Bit and x86\_64 for 64Bit OS) and selects the corresponding exectuable. For example, the script \emph{Samples/Bin/60Scene} is started on an 64Bit host, as result the shell script will start the executable \emph{Samples/Bin/x64/60Scene}. Under a 32bit host, the same script file will start \emph{Samples/Bin/x86/60Scene}.
+This enables an out-of-the-box experience without fiddeling with the system environment by setting for instance environment variables or by adding additional paths to \emph{ld.so.conf}. The script files are not located in the same directory as the executable. The shell script checks the host architecture (x86 for \SI{32}{\bit} and x86\_64 for \SI{64}{\bit} \ac{OS}) and selects the corresponding exectuable. For example, the script \emph{Samples/Bin/60Scene} is started on an \SI{64}{\bit} host, as result the shell script will start the executable \emph{Samples/Bin/x64/60Scene}. Under a \SI{32}{\bit} host, the same script file will start \emph{Samples/Bin/x86/60Scene}.
 
 
 
