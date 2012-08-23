@@ -29,10 +29,8 @@ define_project(PLViewer NOSUFFIX)
 ## Prerequisites
 ##################################################
 if(LINUX AND NOT ANDROID)
-	# Setup executable suffix under Linux
 	# This is needed so that the helper runner script works
-	set(CMAKE_EXECUTABLE_SUFFIX "-bin")
-	set(CMAKETOOLS_BASEPATH_GO_UPS "/../../")
+	set(CMAKETOOLS_BASEPATH_GO_UPS "/../")
 endif()
 
 ##################################################
@@ -181,6 +179,6 @@ install(TARGETS ${CMAKETOOLS_CURRENT_TARGET}
 if(LINUX AND NOT ANDROID)
 	# Install runner script
 	install(PROGRAMS "${CMAKE_TOOLS_CURRENT_RUNNERSCRIPT}"
-		DESTINATION ${PL_INSTALL_TOOLS_BIN}	COMPONENT SDK
+		DESTINATION ${PL_INSTALL_TOOLS_BIN}/../	COMPONENT SDK
 	)
 endif()

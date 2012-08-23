@@ -407,19 +407,14 @@ endmacro(add_activex_interface target src)
 ##		-> Tools
 ##			->  <ARCH> (e.g. x86)
 ## The CMake variable CMAKETOOLS_BASEPATH_GO_UPS tells the script how many directories it must go "up" to come to the base directory (<install_prefix>/share/pixellight)
-## For the samples the CMAKETOOLS_BASEPATH_GO_UPS is set to go three directories up (/../../../)
-## For the tools the CMAKETOOLS_BASEPATH_GO_UPS is set to go two directories up (/../../)
+## For the samples the CMAKETOOLS_BASEPATH_GO_UPS is set to go three directories up (/../../)
+## For the tools the CMAKETOOLS_BASEPATH_GO_UPS is set to go two directories up (/../)
 ## The script configures PL_RUNTIME and LD_LIBRARY_PATH so that the PL application can run properly
 ## A part of the path in both environment variables is generated from the calculated "base directory"
 ## So, the generated script is only useful when the above listed directory structure exists
-##
-## The script assumes that the real binary has following name
-## {CMAKETOOLS_CURRENT_OUTPUT_NAME}-bin
-## For this to work you should set CMAKE_EXECUTABLE_SUFFIX to -bin when compiling for LINUX (NOT ANDROID)
 ##################################################
 macro(add_runner_shell_script)
+	set(CMAKE_TOOLS_CURRENT_RUNNERSCRIPT "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/helperscript/${CMAKETOOLS_CURRENT_OUTPUT_NAME}")
 	# Create runner script
-	configure_file("${CMAKE_SOURCE_DIR}/PixelLight/runplapp.sh" "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_OUTPUT_NAME}" @ONLY NEWLINE_STYLE UNIX)
-
-	set(CMAKE_TOOLS_CURRENT_RUNNERSCRIPT "${CMAKETOOLS_CURRENT_OUTPUT_DIR}/${CMAKETOOLS_CURRENT_OUTPUT_NAME}")
+	configure_file("${CMAKE_SOURCE_DIR}/PixelLight/runplapp.sh" "${CMAKE_TOOLS_CURRENT_RUNNERSCRIPT}" @ONLY NEWLINE_STYLE UNIX)
 endmacro(add_runner_shell_script target scriptsource install_target)

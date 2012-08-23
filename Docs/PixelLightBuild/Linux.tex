@@ -252,26 +252,14 @@ Once you have built PixelLight, you may want to run e.g. the sample applications
 
 
 
-\subsection{Changes in PixelLight 1.0.0}
-With PixelLight 1.0.0, the name of the executables of the samples and tools which link dynamically to PLCore\footnote{Currently all samples, PLViewer, and PLViewerQt} have been changed. This enables an out-of-the-box experience without fiddeling with the system environment by setting for instance environment variables or by adding additional paths to \emph{ld.so.conf}.
+\subsection{Option 1: Run by Helper Shell Script}
+For each tool or sample \footnote{Which are dynamically linked against PLCore} a helper shell script is generated with the same name as the project (e.g. PLViewer). The shell script configures the environment so that the appplication can find all required libraries and the PixelLight runtime.
 
-The name of the executable has a suffix named \emph{"-bin"}, for example \emph{PLViewer-bin}. In addition to this, a helper shell script like \emph{PLViewer} is generated with the name of the project. The shell script configures the environment so that the appplication can find all required libraries and the PixelLight runtime.
-
-
-\paragraph{Note}
-Due to this change, the name of some sample log and configuration files have been changed. At the moment, this affects all samples which number prefix is lower then 30. e.g. 01Application (old $\to$ new):
-\begin{samepage}
-	\begin{itemize}
-		\item 01Application.log $\to$ 01Application-bin.log
-		\item 01Application.cfg $\to$ 01Application-bin.cfg
-	\end{itemize}
-\end{samepage}
-
-In general, all PixelLight based applications which do not set the name explicitly for the configuration or log file \footnote{For instance by using the macros pl\_module\_application or pl\_module\_application\_frontend, FrontendContext::SetName, ApplicationContext::SetLogFilename or ApplicationContext::SetConfigFilename} are affected.
+This enables an out-of-the-box experience without fiddeling with the system environment by setting for instance environment variables or by adding additional paths to \emph{ld.so.conf}. The script files are not located in the same directory as the executable. The shell script checks the host architecture (x86 for 32Bit and x86\_64 for 64Bit OS) and selects the corresponding exectuable. For example, the script \emph{Samples/Bin/60Scene} is started on an 64Bit host, as result the shell script will start the executable \emph{Samples/Bin/x64/60Scene}. Under a 32bit host, the same script file will start \emph{Samples/Bin/x86/60Scene}.
 
 
 
-\subsection{Option 1: Run from a your Local Source Directory}
+\subsection{Option 2: Run from a your Local Source Directory}
 This means that everything stays in your source directory. All libraries and applications have already been copied into the directory \emph{Bin-Linux} by means of post-build commands.
 
 Now you only have to tell PixelLight where it can find the runtime and data files. This can be done by setting the environment variable \emph{PL\_RUNTIME} to the \emph{Runtime} directory.
@@ -308,7 +296,7 @@ You may also want to have a look into the \emph{LD\_LIBRARY\_PATH} environment v
 
 
 
-\subsection{Option 2: Install the PixelLight \ac{SDK} Locally}
+\subsection{Option 3: Install the PixelLight \ac{SDK} Locally}
 Installing means copying the files built by the project into your local Linux system so that the libraries and applications can be found there. The CMake build script therefore provides you with an \emph{install} target that installs everything on your local machine into the \emph{/usr/local} directory (default) or any path to which the cmake var \emph{CMAKE\_INSTALL\_PREFIX} was set to.
 
 Change into the build directory, e.g.:
@@ -321,7 +309,7 @@ Install: (When \emph{CMAKE\_INSTALL\_PREFIX} was set to a path to which a normal
 make install
 \end{lstlisting}
 
-Update libraries: (This has to be done as root. Use e.g. \emph{sudo} or \emph{su} for this task. With PixelLight 1.0.0 not needed.)
+Update libraries: (This has to be done as root. Use e.g. \emph{sudo} or \emph{su} for this task.)
 \begin{lstlisting}[language=sh]
 ldconfig /usr/local/lib
 \end{lstlisting}
@@ -335,7 +323,12 @@ cd /usr/local/share/pixellight/Samples/Bin/x86
 ./50RendererTriangle
 \end{lstlisting}
 
-What also works (due the helper shell script since PixelLight 1.0.0 ):
+Due the helper shell script, the following works also:
 \begin{lstlisting}[language=sh]
-/usr/local/share/pixellight/Samples/Bin/x86/50RendererTriangle
+/usr/local/share/pixellight/Samples/Bin/50RendererTriangle
+\end{lstlisting}
+or
+\begin{lstlisting}[language=sh]
+cd /usr/local/share/pixellight/Samples/Bin
+./50RendererTriangle
 \end{lstlisting}
