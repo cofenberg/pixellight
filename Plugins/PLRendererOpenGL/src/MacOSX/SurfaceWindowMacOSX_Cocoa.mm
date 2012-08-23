@@ -23,11 +23,11 @@
 //[-------------------------------------------------------]
 //[ Includes                                              ]
 //[-------------------------------------------------------]
-#import <Cocoa/Cocoa.h>
-#import <AppKit/NSOpenGL.h>
 #include "PLRendererOpenGL/Renderer.h"
 #include "PLRendererOpenGL/MacOSX/ContextMacOSX_Cocoa.h"
 #include "PLRendererOpenGL/MacOSX/SurfaceWindowMacOSX_Cocoa.h"
+#import <Cocoa/Cocoa.h>	// Don't try to include this as first header, else you will get compiler errors due to definition differences
+#import <AppKit/NSOpenGL.h>	// Don't try to include this as first header, else you will get compiler errors due to definition differences
 
 
 //[-------------------------------------------------------]
