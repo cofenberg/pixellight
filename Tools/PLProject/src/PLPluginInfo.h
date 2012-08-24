@@ -59,7 +59,7 @@ class PLPluginClassInfo;
 *    cPluginInfo.SetPluginFileVersion("1");				// Set version of the plugin file
 *    cPluginInfo.SetDelayed(true);						// Set delayed value
 *    cPluginInfo.SetActive(true);						// Set active value
-*    cPluginInfo.SetPLVersion("PixelLight 1.0.0-R1");	// Set version string of PixelLight
+*    cPluginInfo.SetPLVersion("PixelLight 1.0.1-R1");	// Set version string of PixelLight
 *    cPluginInfo.SetLibraryName(sLibraryName);			// Set the name of the library to which the sources gets compiled
 *    cPluginInfo.ParseMainModuleFile(sMainModulePath);	// Let the class parse the main module source file for an pl_plugin_module pl_module_end block
 *    cPluginInfo.ParseIncludeFiles(sIncludePath);		// Let the class parse all include files at the given path for pl_class pl_class_end blocks
@@ -68,7 +68,7 @@ class PLPluginClassInfo;
 *
 *    Example output:
 *    <?xml version="1.0" ?>
-*    <Plugin Version="1" PixelLightVersion="PixelLight 1.0.0-R1">
+*    <Plugin Version="1" PixelLightVersion="PixelLight 1.0.1-R1">
 *       <Active>1</Active>
 *       <Delayed>1</Delayed>
 *       <Name>MyExample</Name>

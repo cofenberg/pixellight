@@ -1,3 +1,7 @@
+Changes in PixelLight 1.0.1-R1 (not released, yet)
+-
+
+
 Changes in PixelLight 1.0.0-R1 (released on August 23, 2012)
 - Feature: The loadable system can now also deal with file formats which don't have any file extension
 - Feature: The loadable system can now also deal with file formats like DICOM which load from directories instead of files
