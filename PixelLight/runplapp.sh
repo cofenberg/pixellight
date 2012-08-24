@@ -1,5 +1,5 @@
 #!/bin/sh
-# Change to game directory
+# Change to application directory
 CANONPATH=`readlink -f $0`
 apppath=`dirname "${CANONPATH}"`
 appname=`basename "${CANONPATH}"`
@@ -19,11 +19,10 @@ then
 	apppath=${appPath64}
 fi
 
-# path to the pixellight runtime
+# Path to the PixelLight runtime
 PLRuntimePath="${basepath}/Runtime/${runtimeArch}"
 
-shift
 cd $apppath > /dev/null
-# the env var PL_RUNTIME is read by pixellight itself to get the path to its runtime directory
-# LD_LIBRARY_PATH must be set to the pl runtime path also, otherwise the linux lib loader wont find all pl libs on app start
+# The environment variable PL_RUNTIME is read by PixelLight itself to get the path to its runtime directory
+# LD_LIBRARY_PATH must be set to the PixelLight runtime path also, otherwise the Linux library loader wont find all PixelLight libraries on application start
 PL_RUNTIME=${PLRuntimePath} LD_LIBRARY_PATH=${PLRuntimePath} ./${appname} $@
