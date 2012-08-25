@@ -43,9 +43,6 @@ static const PLCore::String sEndFXAA_GLSL_FS = "\
 // Constants\n\
 //const vec2 InvTextureSize;	// 1/(texture size) - set when creating the shader\n\
 \n\
-// GLSL extensions\n\
-#extension GL_ARB_texture_rectangle : enable\n\
-\n\
 // Attributes\n\
 varying vec2 VertexTexCoordVS;	// Vertex texture coordinate 0 input from vertex shader, lower/left is (0,0) and upper/right is (<TextureWidth>,<TextureHeight>)\n\
 \n\

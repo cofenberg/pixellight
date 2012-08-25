@@ -1,3 +1,12 @@
+>> 25.08.2012
+[CO]
+- "PLCompositing::SRPEndFXAA": Removed "#extension GL_ARB_texture_rectangle : enable" because it was not required and even worse, it
+  was causing issues on some shader compilers because it was not right after the GLSL version definition. See
+    http://sourceforge.net/tracker/index.php?func=detail&aid=3561401&group_id=507544&atid=2063682
+  for details.
+
+
+
 >> 05.05.2012
 [CO]
 - Added shaders based scene renderer pass "SRPMotionBlurShaders" for image based motion blur. It's activated by default within the

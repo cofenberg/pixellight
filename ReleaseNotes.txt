@@ -1,5 +1,5 @@
 Changes in PixelLight 1.0.1-R1 (not released, yet)
--
+- Bugfix: Due to a violation of the official GLSL specification, "PLCompositing::SRPEndFXAA" failed on some shader compilers while it worked on others
 
 
 Changes in PixelLight 1.0.0-R1 (released on August 23, 2012)
