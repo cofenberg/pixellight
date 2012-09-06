@@ -137,6 +137,8 @@ void PrintDescription(uint32 nIndent, const String &sText)
 			// Print word
 			System::GetInstance()->GetConsole().Print(sWord);
 		}
+	// Break line for next Option
+	System::GetInstance()->GetConsole().Print('\n');
 	}
 }
 
