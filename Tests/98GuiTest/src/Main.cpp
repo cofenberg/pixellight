@@ -41,7 +41,7 @@ using namespace PLCore;
 //[-------------------------------------------------------]
 pl_module("98GuiTest")
 	pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
-	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
+	pl_module_license("\"MIT License\" which is also known as \"X11 License\" or \"MIT X License\" (mit-license.org)")
 	pl_module_description("PixelLight Sample 98 - GuiTest")
 pl_module_end
 

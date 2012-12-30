@@ -33,6 +33,6 @@
 //[-------------------------------------------------------]
 pl_module_plugin("SPARK_PL")
 	pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
-	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
+	pl_module_license("\"MIT License\" which is also known as \"X11 License\" or \"MIT X License\" (mit-license.org)")
 	pl_module_description("Integrates the free open source particle engine \"SPARK\" (http://spark.developpez.com) 1.5.5 as a plugin into PixelLight")
 pl_module_end

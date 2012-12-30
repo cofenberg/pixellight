@@ -33,7 +33,7 @@
 //[-------------------------------------------------------]
 pl_module_plugin("PLScriptV8")
 	pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
-	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
+	pl_module_license("\"MIT License\" which is also known as \"X11 License\" or \"MIT X License\" (mit-license.org)")
 	pl_module_description("V8 (ECMA-262 compliant JavaScript engine, see http://code.google.com/p/v8/) 3.3.1 script implementation")
 	pl_module_dependencies_windows_32_release("v8.dll")
 	pl_module_dependencies_windows_32_debug("v8.dll")

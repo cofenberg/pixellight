@@ -33,7 +33,7 @@
 //[-------------------------------------------------------]
 pl_module_plugin("PLSoundOpenAL")
 	pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
-	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
+	pl_module_license("\"MIT License\" which is also known as \"X11 License\" or \"MIT X License\" (mit-license.org)")
 	pl_module_description("OpenAL 1.1 (http://www.openal.org/) sound implementation")
 	pl_module_dependencies_windows_32_release("OpenAL32.dll wrap_oal.dll")
 	pl_module_dependencies_windows_32_debug("OpenAL32.dll wrap_oal.dll")

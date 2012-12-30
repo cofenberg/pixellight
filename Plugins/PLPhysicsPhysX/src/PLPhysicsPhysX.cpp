@@ -33,7 +33,7 @@
 //[-------------------------------------------------------]
 pl_module_plugin("PLPhysicsPhysX")
 	pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
-	pl_module_license("GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version")
+	pl_module_license("\"MIT License\" which is also known as \"X11 License\" or \"MIT X License\" (mit-license.org)")
 	pl_module_description("PhysX 2.8.1 (http://developer.nvidia.com/object/physx.html) physics implementation (\"PhysX SDK System Software\" must be installed)")
 	pl_module_dependencies_windows_32_release("PhysXLoader.dll")
 	pl_module_dependencies_windows_32_debug("PhysXLoader.dll")
