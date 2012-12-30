@@ -32,7 +32,7 @@ namespace PLCore {
 //[-------------------------------------------------------]
 /**
 *  @brief
-*    Constructor
+*    Default constructor
 */
 inline Stopwatch::Stopwatch() :
 	m_bRunning(false),
@@ -45,7 +45,10 @@ inline Stopwatch::Stopwatch() :
 *  @brief
 *    Constructor
 */
-inline Stopwatch::Stopwatch(bool bStartAtOnce)
+inline Stopwatch::Stopwatch(bool bStartAtOnce) :
+	m_bRunning(false),
+	m_nStart(0),
+	m_nStop(0)
 {
 	if (bStartAtOnce)
 		Start();

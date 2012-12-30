@@ -1,3 +1,11 @@
+>> 30.12.2012
+[CO]
+PLRendererOpenGL & PLRendererOpenGLES2:
+- Fixed a memory leak inside "FontGlyphTexture" ("FT_Done_Glyph()" was missing)
+- Fixed a memory leak inside "FontManager" ("FT_Done_FreeType()" was missing)
+
+
+
 >> 17.06.2012
 [CO]
 PLRendererOpenGL:

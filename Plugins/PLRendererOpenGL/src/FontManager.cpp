@@ -76,8 +76,10 @@ FontManager::~FontManager()
 		delete m_pVertexBuffer;
 
 	// Destroy the FreeType library object
-	if (m_pFTLibrary)
+	if (m_pFTLibrary) {
+		FT_Done_FreeType(*m_pFTLibrary);
 		delete m_pFTLibrary;
+	}
 }
 
 /**

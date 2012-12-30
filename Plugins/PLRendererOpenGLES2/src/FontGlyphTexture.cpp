@@ -87,6 +87,9 @@ FontGlyphTexture::FontGlyphTexture(FontTexture &cFontTexture, unsigned long nCha
 				// Calculate the normalized maximum glyph texture coordinate inside the glyph texture atlas
 				m_vTexCoordMax.x = static_cast<float>(vPosition.x + m_nSize.x)/static_cast<float>(vGlyphTextureAtlasSize.x);
 				m_vTexCoordMax.y = static_cast<float>(vPosition.y + m_nSize.y)/static_cast<float>(vGlyphTextureAtlasSize.y);
+
+				// Release the created FreeType glyph
+				FT_Done_Glyph(sFTGlyph);
 			}
 		}
 	}

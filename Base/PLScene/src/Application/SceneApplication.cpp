@@ -127,8 +127,10 @@ bool SceneApplication::OnStart()
 void SceneApplication::OnStop()
 {
 	// Destroy the scene context
-	if (m_pSceneContext)
+	if (m_pSceneContext) {
 		delete m_pSceneContext;
+		m_pSceneContext = nullptr;
+	}
 
 	// Call base implementation
 	RendererApplication::OnStop();
