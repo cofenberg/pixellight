@@ -66,8 +66,6 @@ file(MAKE_DIRECTORY ${PL_LIB_DIR})
 # Copy copyright and notes
 copy_file(${CMAKE_SOURCE_DIR}/AUTHORS			${PL_BIN_DIR})
 copy_file(${CMAKE_SOURCE_DIR}/COPYING			${PL_BIN_DIR})
-copy_file(${CMAKE_SOURCE_DIR}/gpl-3.0.txt		${PL_BIN_DIR})
-copy_file(${CMAKE_SOURCE_DIR}/lgpl-3.0.txt		${PL_BIN_DIR})
 copy_file(${CMAKE_SOURCE_DIR}/cc-by-nc-sa-3.txt	${PL_BIN_DIR})
 copy_file(${CMAKE_SOURCE_DIR}/ReleaseNotes.txt	${PL_BIN_DIR})
 
@@ -104,8 +102,6 @@ add_subdirectory(Docs EXCLUDE_FROM_ALL)
 # Copyright and notes
 install(FILES	${CMAKE_SOURCE_DIR}/AUTHORS
 				${CMAKE_SOURCE_DIR}/COPYING
-				${CMAKE_SOURCE_DIR}/gpl-3.0.txt
-				${CMAKE_SOURCE_DIR}/lgpl-3.0.txt
 				${CMAKE_SOURCE_DIR}/cc-by-nc-sa-3.txt
 				${CMAKE_SOURCE_DIR}/ReleaseNotes.txt
 	DESTINATION ${PL_INSTALL_ROOT}				COMPONENT SDK

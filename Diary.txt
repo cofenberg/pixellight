@@ -4,6 +4,12 @@
 
 
 
+>> 30.12.2012
+[CO]
+- License change from "LGPL 3 License" to "MIT License" which is also known as "X11 License" or "MIT X License" (mit-license.org)
+
+
+
 >> 21.08.2012
 [CO]
 - Since Git commit

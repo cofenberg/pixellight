@@ -64,7 +64,7 @@ class PLPluginClassInfo;
 *    cPluginInfo.SetPLVersion("PixelLight 1.0.1-R1");	// Set version string of PixelLight
 *    cPluginInfo.SetLibraryName(sLibraryName);			// Set the name of the library to which the sources gets compiled
 *    cPluginInfo.ParseMainModuleFile(sMainModulePath);	// Let the class parse the main module source file for an pl_plugin_module pl_module_end block
-*    cPluginInfo.ParseIncludeFiles(sIncludePath);		// Let the class parse all include files at the given path for pl_class pl_class_end blocks
+*    cPluginInfo.(sIncludePath);		// Let the class parse all include files at the given path for pl_class pl_class_end blocks
 *
 *    cPluginInfo.Save(File::StandardOutput); // Print the result to the standard output
 *
@@ -75,7 +75,7 @@ class PLPluginClassInfo;
 *       <Delayed>1</Delayed>
 *       <Name>MyExample</Name>
 *       <Vendor>Copyright (C) 2002-2012 by The PixelLight Team</Vendor>
-*       <License>GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version</License>
+*       <License>"MIT License" which is also known as "X11 License" or "MIT X License" (mit-license.org)</License>
 *       <Description>Example Plugin Module Description</Description>
 *       <Platform Name="Win32">
 *           <Library Type="Release">MyExamplePlugin.dll</Library>
@@ -202,6 +202,15 @@ class PLPluginInfo {
 
 		/**
 		*  @brief
+		*    Parses the found cpp files in the given source path for pl_class_metadata..pl_class_metadata_end blocks
+		*
+		*  @parse[in] sSourcePath
+		*    Source path to parse
+		*/
+		void ParseSourceFiles(const PLCore::String &sSourcePath);
+
+		/**
+		*  @brief
 		*    Parses the given main module source file for pl_module_plugin..pl_module_end blocks
 		*
 		*  @parse[in] sMainModuleFilename
@@ -246,6 +255,15 @@ class PLPluginInfo {
 		*    Name of the file to parse
 		*/
 		void ParseFile(const PLCore::String &sFilename);
+
+		/**
+		*  @brief
+		*    Parses a single file for an pl_class_metadata..pl_class_metadata_end block
+		*
+		*  @param[in] sFilename
+		*    Name of the file to parse
+		*/
+		void ParseFileMetaData(const PLCore::String &sFilename);
 
 		/**
 		*  @brief

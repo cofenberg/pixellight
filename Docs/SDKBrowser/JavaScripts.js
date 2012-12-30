@@ -68,8 +68,6 @@ function scene_exe_shortcut(shortcut_id, shortcut_path) {
 
 
 // License text shortcuts
-text_shortcut("License_gpl30",			"gpl-3.0.txt");
-text_shortcut("License_lgpl30",			"lgpl-3.0.txt");
 text_shortcut("License_cc_by_nc_sa_3",	"cc-by-nc-sa-3.txt");
 
 

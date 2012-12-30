@@ -110,12 +110,12 @@ void MainWindow::InitTextAndLabels()
 
 	// Setup installer description
 	wnd_main_ui.lbl_description->setText("<br>"\
-		"PixelLight Installer will set all needed variables for the PixelLight Runtime.<br>"\
+		"PixelLight installer will set all needed variables for the PixelLight runtime.<br>"\
 		"<br>"\
 		"Homepage: <a href='http://www.pixellight.org'>www.pixellight.org</a><br>"\
 		"Forum: <a href='http://dev.pixellight.org/forum/'>dev.pixellight.org/forum/</a><br>"\
 		"<br>"\
-		"PixelLight is released under the terms of the <a href='http://pixellight.org/site/index.php/page/11.html'> GNU Lesser General Public License</a>.");
+		"PixelLight is released under the terms of the \"MIT License\" which is also known as \"X11 License\" or \"MIT X License\" (<a href='mit-license.org'>mit-license.org</a>).");
 
 	// Setup button text "cancel"
 	wnd_main_ui.btn_cancel->setText("Cancel");
