@@ -2,7 +2,7 @@
  *  File: DebugPosition_GLSL.h                           *
  *      Fragment shader source code - GLSL (OpenGL 3.3 ("#version 330")
  *
- *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2013 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *

@@ -4,7 +4,7 @@
  *      and texturing sample scenes will be shown. The main frame consists
  *      of three scenes whereby each is rendered using another viewport.
  *
- *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2013 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -35,7 +35,7 @@
 //[ Module definition                                     ]
 //[-------------------------------------------------------]
 pl_module_application_frontend("53RendererMultiView", "Application53", "PLFrontendPLGui::Frontend")	// Using e.g. "PLFrontendOS::Frontend" instead of "PLFrontendPLGui::Frontend" will work as well (meaning mixing frontends)
-	pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
+	pl_module_vendor("Copyright (C) 2002-2013 by The PixelLight Team")
 	pl_module_license("\"MIT License\" which is also known as \"X11 License\" or \"MIT X License\" (mit-license.org)")
 	pl_module_description("PixelLight multi view sample")
 pl_module_end

@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: PLVolumeLoaderPVM.cpp                          *
  *
- *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2013 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -32,7 +32,7 @@
 //[ Module definition                                     ]
 //[-------------------------------------------------------]
 pl_module_plugin("PLVolumeLoaderPVM")
-	pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
+	pl_module_vendor("Copyright (C) 2002-2013 by The PixelLight Team")
 	pl_module_license("GPL (see http://www.gnu.org/copyleft/ for more information on the license)")
 	pl_module_description("Loader implementation for the \"pvm\" image data file format. Originally written by Christian Ofenberg as part of his master thesis \"Scalable Realtime Volume Rendering\" ( http://ablazespace.sourceforge.net/as-page/projects/MasterThesis/Ofenberg2012.pdf - in German)")
 pl_module_end

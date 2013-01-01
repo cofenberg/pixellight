@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: PLSoundFMODEx.cpp                              *
  *
- *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2013 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -32,7 +32,7 @@
 //[ Module definition                                     ]
 //[-------------------------------------------------------]
 pl_module_plugin("PLSoundFMODEx")
-	pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
+	pl_module_vendor("Copyright (C) 2002-2013 by The PixelLight Team")
 	pl_module_license("\"MIT License\" which is also known as \"X11 License\" or \"MIT X License\" (mit-license.org)")
 	pl_module_description("FMOD Ex 4.36.04 (http://www.fmod.org/) sound implementation, FMOD Sound System, copyright Firelight Technologies Pty, Ltd., 1994-2011.")
 	pl_module_dependencies_windows_32_release("fmodex.dll")

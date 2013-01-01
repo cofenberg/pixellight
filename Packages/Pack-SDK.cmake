@@ -1,7 +1,7 @@
 #*********************************************************#
 #*  File: Pack-SDK.cmake                                 *
 #*
-#*  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
+#*  Copyright (C) 2002-2013 The PixelLight Team (http://www.pixellight.org/)
 #*
 #*  This file is part of PixelLight.
 #*
@@ -59,7 +59,7 @@ if(EXISTS "${CMAKE_ROOT}/Modules/CPack.cmake")
 	set(CPACK_PACKAGE_VERSION_MINOR			"${CMAKETOOLS_PROJECT_VERSION_MINOR}")
 	set(CPACK_PACKAGE_VERSION_PATCH			"${CMAKETOOLS_PROJECT_VERSION_PATCH}")
 	set(CPACK_PACKAGE_VERSION_RELEASE		"0") # The last one must be a number - too, because we're using something like 'R1', we just don't mention the last number in here...
-	set(CPACK_PACKAGE_LEGAL					"Copyright (C) 2002-2012 by The PixelLight Team")
+	set(CPACK_PACKAGE_LEGAL					"Copyright (C) 2002-2013 by The PixelLight Team")
 	set(CPACK_RESOURCE_FILE_LICENSE			"${CMAKE_SOURCE_DIR}/Packages/Files/copyright.txt")
 	set(CPACK_RESOURCE_FILE_README			"${CMAKE_SOURCE_DIR}/Packages/Files/readme.txt")
 	set(CPACK_RESOURCE_FILE_WELCOME			"${CMAKE_SOURCE_DIR}/Packages/Files/welcome.txt")

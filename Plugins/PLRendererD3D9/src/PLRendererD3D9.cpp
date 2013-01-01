@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: PLRendererD3D9.cpp                             *
  *
- *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2013 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -32,7 +32,7 @@
 //[ Module definition                                     ]
 //[-------------------------------------------------------]
 pl_module_plugin("PLRendererD3D9")
-	pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
+	pl_module_vendor("Copyright (C) 2002-2013 by The PixelLight Team")
 	pl_module_license("\"MIT License\" which is also known as \"X11 License\" or \"MIT X License\" (mit-license.org)")
 	pl_module_description("DirectX 9 (November 2007, http://msdn.microsoft.com/directx/) renderer implementation")
 	pl_module_dependencies_windows_32_release("cg.dll cgD3D9.dll")

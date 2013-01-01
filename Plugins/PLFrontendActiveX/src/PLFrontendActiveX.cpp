@@ -79,7 +79,7 @@ STDAPI DllInstall(BOOL bInstall, LPCWSTR pszCmdLine)
 //[ Module definition                                     ]
 //[-------------------------------------------------------]
 pl_module_plugin("PLFrontendActiveX")
-	pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
+	pl_module_vendor("Copyright (C) 2002-2013 by The PixelLight Team")
 	pl_module_license("\"MIT License\" which is also known as \"X11 License\" or \"MIT X License\" (mit-license.org)")
 	pl_module_description("ActiveX frontend implementation")
 pl_module_end

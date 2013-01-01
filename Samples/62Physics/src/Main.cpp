@@ -8,7 +8,7 @@
  *      APIs. The information text is drawn using an own special scene node.
  *      If a command line parameter is provided, the given physics API is used automatically. (for instance 'PLPhysicsNewton::World')
  *
- *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2013 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -39,7 +39,7 @@
 //[ Module definition                                     ]
 //[-------------------------------------------------------]
 pl_module_application("62Physics", "Application62")
-	pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
+	pl_module_vendor("Copyright (C) 2002-2013 by The PixelLight Team")
 	pl_module_license("\"MIT License\" which is also known as \"X11 License\" or \"MIT X License\" (mit-license.org)")
 	pl_module_description("PixelLight physics")
 pl_module_end

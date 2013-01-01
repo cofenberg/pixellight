@@ -2,7 +2,7 @@
  *  File: Vector3.inl                                    *
  *      3D vector inline implementation
  *
- *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2013 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *

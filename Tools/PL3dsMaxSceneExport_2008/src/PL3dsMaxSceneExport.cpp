@@ -2,7 +2,7 @@
  *  File: PL3dsMaxSceneExport.cpp                        *
  *      Scene export plugin for 3ds Max - main plugin stuff
  *
- *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2013 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -78,7 +78,7 @@ class PLSceneExport : public SceneExport {
 
 		const TCHAR *AuthorName()
 		{
-			return _T("Copyright (C) 2002-2012 by The PixelLight Team");
+			return _T("Copyright (C) 2002-2013 by The PixelLight Team");
 		}
 
 		const TCHAR *CopyrightMessage()

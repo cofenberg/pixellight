@@ -1,7 +1,7 @@
 /*********************************************************\
  *  File: ConsoleDefaultCommands.cpp                     *
  *
- *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2013 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -99,7 +99,7 @@ void PLConsoleCommandAbout(ConsoleCommand &cCommand)
 {
 	PL_LOG(Info, "")
 	PL_LOG(Info, Runtime::GetVersion().ToString())
-	PL_LOG(Info, "Copyright (C) 2002-2012 by The PixelLight Team")
+	PL_LOG(Info, "Copyright (C) 2002-2013 by The PixelLight Team")
 	PL_LOG(Info, "")
 	Log::GetInstance()->Flush();
 }

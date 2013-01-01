@@ -2,7 +2,7 @@
  *  File: Main.cpp                                       *
  *      PixelLight sample showing how to use "PLEngine::ScriptApplication" in order to load in and execute a scripted stand-alone application
  *
- *  Copyright (C) 2002-2012 The PixelLight Team (http://www.pixellight.org/)
+ *  Copyright (C) 2002-2013 The PixelLight Team (http://www.pixellight.org/)
  *
  *  This file is part of PixelLight.
  *
@@ -39,7 +39,7 @@ using namespace PLCore;
 //[ Module definition                                     ]
 //[-------------------------------------------------------]
 pl_module("45ScriptApplication")
-	pl_module_vendor("Copyright (C) 2002-2012 by The PixelLight Team")
+	pl_module_vendor("Copyright (C) 2002-2013 by The PixelLight Team")
 	pl_module_license("\"MIT License\" which is also known as \"X11 License\" or \"MIT X License\" (mit-license.org)")
 	pl_module_description("PixelLight sample showing how to use \"PLEngine::ScriptApplication\" in order to load in and execute a scripted stand-alone application")
 pl_module_end
