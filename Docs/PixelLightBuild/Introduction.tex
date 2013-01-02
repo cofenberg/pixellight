@@ -22,7 +22,7 @@ Due to the really small development team compared to the dimension of the projec
 \end{itemize}
 If you stick to those, you should be on the safe side. Other compilers and compiler versions may work as well, but are untested. There's support for \SI{32}{\bit} and \SI{64}{\bit}.
 
-In general, if you encounter time consuming pitfalls not yet described in this document, please tell us by using e.g. the official forum at \url{http://dev.pixellight.org/forum/} or the bugtracker at \url{http://sourceforge.net/tracker/?group_id=507544&atid=2063682}. If there's no feedback, we can't improve things to make it even easier to use PixelLight in the future.
+In general, if you encounter time consuming pitfalls not yet described in this document, please tell us by using e.g. the official forum at \url{http://pixellight.sourceforge.net/forum/} or the bugtracker at \url{http://sourceforge.net/p/pixellight/bugs/}. If there's no feedback, we can't improve things to make it even easier to use PixelLight in the future.
 
 
 \paragraph{Linux}
@@ -42,31 +42,31 @@ We use Git\footnote{\url{http://www.git-scm.com}} version control to manage our 
 
 To checkout the current source code, use the following Git command line:
 \begin{lstlisting}[language=sh]
-git clone git://pixellight.git.sourceforge.net/gitroot/pixellight/pixellight
+git clone git://git.code.sf.net/p/pixellight/code
 \end{lstlisting}
 
 In case you're a PixelLight team member, you might want to clone by using your SourceForge username by writing
 \begin{lstlisting}[language=sh]
-git clone ssh://<user name>@pixellight.git.sourceforge.net/gitroot/pixellight/pixellight
+git clone ssh://<user name>@git.code.sf.net/p/pixellight/code
 \end{lstlisting}
 Example:
 \begin{lstlisting}[language=sh]
-git clone ssh://bob42@pixellight.git.sourceforge.net/gitroot/pixellight/pixellight
+git clone ssh://bob42@git.code.sf.net/p/pixellight/code
 \end{lstlisting}
 Using the \emph{ssh}-protocol might reduce the risk of firewall problems.
 
 Or use this \ac{URL} to checkout the source code with your favourite Git client:
 \begin{lstlisting}[language=sh]
-git://pixellight.git.sourceforge.net/gitroot/pixellight/pixellight
+git://git.code.sf.net/p/pixellight/code
 \end{lstlisting}
 
 In case you get for instance the following error message during cloning the Git repository
 \begin{quotation}
 fatal: Unable to look up pixellight.git.sourceforge.net (port 9418) (No such host is known. )
 \end{quotation}
-you might want to check your firewall settings. Additionally you can browse the Git repository within your web browser by opening  \url{pixellight.git.sourceforge.net/git/gitweb.cgi?p=pixellight/pixellight;a=summary} to ensure that the server is not down (doesn't happen that often).
+you might want to check your firewall settings. Additionally you can browse the Git repository within your web browser by opening \url{http://sourceforge.net/p/pixellight/code/} to ensure that the server is not down (doesn't happen that often).
 
 You can use the following \ac{RSS} feed to get informed automatically about changes within the public Git repository:
 \begin{lstlisting}[language=sh]
-http://pixellight.git.sourceforge.net/git/gitweb.cgi?p=pixellight/pixellight;a=rss
+http://sourceforge.net/p/pixellight/code/feed/
 \end{lstlisting}

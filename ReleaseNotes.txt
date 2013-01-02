@@ -1,4 +1,5 @@
 Changes in PixelLight 1.0.1-R1 (not released, yet)
+- Change: License change from "LGPL 3 License" to "MIT License" which is also known as "X11 License" or "MIT X License" (mit-license.org)
 - Bugfix: Due to a violation of the official GLSL specification, "PLCompositing::SRPEndFXAA" failed on some shader compilers while it worked on others
 - Bugfix: "PLRendererOpenGL" & "PLRendererOpenGLES2": Fixed a memory leak inside "FontGlyphTexture" ("FT_Done_Glyph()" was missing)
 - Bugfix: "PLRendererOpenGL" & "PLRendererOpenGLES2": Fixed a memory leak inside "FontManager" ("FT_Done_FreeType()" was missing)
