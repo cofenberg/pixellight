@@ -49,7 +49,7 @@ It's also possible to store such flags in a string like \emph{1|8|64}. For this 
 
 
 \section{Program Entry Point}
-To write applications which are totally platform independent one have to write different program entry points (\emph{WinMain}/\emph{main}) for the different platforms. PixelLight offers you a macro called \emph{PLMain} so you don't have to brother your self every time with this when writing a new program.
+To write applications which are totally platform independent one have to write different program entry points (\emph{WinMain}/\emph{main}) for the different platforms. PixelLight offers you a macro called \emph{PLMain} so you don't have to bother your self every time with this when writing a new program.
 
 \begin{lstlisting}[caption=Program entry point example]
 //[-------------------------------------------------------]
@@ -77,7 +77,7 @@ int PLMain(const String &sExecutableFilename, const Array<String> &lstArguments)
 \begin{itemize}
 \item{This function returns \emph{0} (normally the standard error code of operation systems) if all went fine, else another number.}
 \item{\emph{sExecutableFilename} is the absolute application filename.}
-\item{\emph{lstArguments} is a list of arguments given to the application - because the string class is used, you don't brother yourself with Unicode, \ac{ASCII} and so on. There's a class called \emph{CommandLine} you can use to parse the given arguments.}
+\item{\emph{lstArguments} is a list of arguments given to the application - because the string class is used, you don't bother yourself with Unicode, \ac{ASCII} and so on. There's a class called \emph{CommandLine} you can use to parse the given arguments.}
 
 If an application is started, it's current directory may differ from the one the executable is in - for instance if it's started using a link. In the most cases this is undesired because the data the application is using is relative to the current directory - in this cases, the directory the executable is in. You can add the following lines of code into you \emph{PLMain()} function to change the current directory to the one the application executable is in:
 

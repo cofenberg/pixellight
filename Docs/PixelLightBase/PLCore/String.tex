@@ -40,7 +40,7 @@ sS = L"\u65e5\u672c\u8a9e";
 sS = PLCore::String::FromUTF8("Mini");
 \end{lstlisting}
 
-As you can see the well known \emph{char*} and \emph{wchar\_t*} are used for \ac{ASCII} and Unicode strings. We strongly recommend that you don't brother yourself with this stuff as long as not necessary. So, just use \emph{String sS = "Mini";} instead of \emph{String sS = L"Mini";}. It's more readable and \ac{ASCII} is more performant and requires less memory. The \emph{String}-class takes automatically care of \ac{ASCII}/Unicode for you, so you can even mix strings with different internal formats!
+As you can see the well known \emph{char*} and \emph{wchar\_t*} are used for \ac{ASCII} and Unicode strings. We strongly recommend that you don't bother yourself with this stuff as long as not necessary. So, just use \emph{String sS = "Mini";} instead of \emph{String sS = L"Mini";}. It's more readable and \ac{ASCII} is more performant and requires less memory. The \emph{String}-class takes automatically care of \ac{ASCII}/Unicode for you, so you can even mix strings with different internal formats!
 
 We strongly recommend to use only this class when working with strings and not using for instance \emph{c}-functions like \emph{strcmp()}. Do also avoid to use the string data you can get from the \emph{String::GetASCII()} directly to search for substrings and so on - use the provided string functions instead. By doing so, the string class will automatically take care of tricky stuff mentioned above.
 
@@ -98,7 +98,7 @@ When using strings as function parameters and/or return values we recommend the 
 PLCore::String GetOtherString(const PLCore::String &sString);
 \end{lstlisting}
 
-The string parameter is given as reference which is quite performant as you may now. The returned string on the other hand is an object on the runtime stack - please note that this is not performance critical because the internal string data is not copied, it's only shared as long as possible! By doing so, you can avoid tricky situations like giving a function a reference to it's own internal string you received from another function of the same class.
+The string parameter is given as reference which is quite performant as you may know. The returned string on the other hand is an object on the runtime stack - please note that this is not performance critical because the internal string data is not copied, it's only shared as long as possible! By doing so, you can avoid tricky situations like giving a function a reference to it's own internal string you received from another function of the same class.
 
 Example:
 
